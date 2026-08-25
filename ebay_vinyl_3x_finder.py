@@ -50,7 +50,7 @@ from datetime import datetime
 
 EBAY_CLIENT_ID = "ВСТАВЬ_СЮДА_EBAY_APP_ID"
 EBAY_CLIENT_SECRET = "ВСТАВЬ_СЮДА_EBAY_CERT_ID"
-DISCOGS_TOKEN = "ВСТАВЬ_СЮДА_DISCOGS_TOKEN"
+DISCOGS_TOKEN = "TiwOLoCfLsKOGriQiFBBvUvbaEdPGSeBdVJgtueN"
 
 # Ключевые слова / запросы для поиска на eBay.
 # Можно расширять — каждая строка это отдельный поисковый запрос.
