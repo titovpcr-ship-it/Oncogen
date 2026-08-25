@@ -30,10 +30,17 @@ Discogs public API официально не отдаёт "низкая/меди
            низкая ИЗ ПРОДАННЫХ", а из выставленных сейчас на продажу).
   - median/high = marketplace/price_suggestions -> цены по грейдам
            (Very Good Plus / Mint) — это ЦЕНОВЫЕ ПОДСКАЗКИ Discogs для
-           продавца, не статистика проданных лотов. Endpoint иногда
-           недоступен для не-seller токенов (403) — тогда median/high
-           отсутствуют и лот пропускается (valuation.reject_on_missing_stats
-           в конфиге), а не притворяется, что данные есть.
+           продавца, не статистика проданных лотов. Проверено вживую:
+           endpoint требует заполненных Seller Settings у владельца
+           токена (404 "You must fill out your seller settings first"),
+           даже без намерения реально продавать. Пользователь решил не
+           заводить seller-профиль ради этого — поэтому используемый
+           здесь токен работает в DEGRADED MODE: median и high берутся
+           РАВНЫМИ low (см. discogs_get_stats). Это менее точно, чем
+           задуманная в конфиге condition-adjusted median/high логика
+           (нет сигнала "high перекрывает x3, а median — нет", нет
+           реального spread_ratio) — подробности см. в комментарии
+           discogs_get_stats().
   - eBay Browse API НЕ отдаёт watchers/views (это данные, видимые только
     продавцу в Seller Hub). bid_count пытаемся читать из ответа, но он
     не гарантированно присутствует для каждого аукциона. Это значит,
@@ -375,8 +382,11 @@ def discogs_lowest_price(release_id):
 def discogs_price_suggestions(release_id):
     """median/high аппроксимируются через price_suggestions по грейду
     (Very Good Plus / Mint) — это ценовые ПОДСКАЗКИ Discogs, не статистика
-    проданных лотов. Endpoint может быть недоступен (403) для обычного
-    токена — тогда возвращаем None, а не выдумываем цифру."""
+    проданных лотов. Endpoint требует заполненных Seller Settings у
+    владельца токена (проверено вживую: без них — 404 "You must fill out
+    your seller settings first", даже без намерения реально продавать).
+    Возвращаем None, а не выдумываем цифру — discogs_get_stats() ниже
+    сам решает, как деградировать без median/high."""
     headers = {"Authorization": f"Discogs token={DISCOGS_TOKEN}"}
     resp = requests.get(
         DISCOGS_PRICE_SUGGESTIONS_URL.format(release_id=release_id),
@@ -391,15 +401,38 @@ def discogs_price_suggestions(release_id):
 
 
 def discogs_get_stats(release_id):
-    """Возвращает {'low','median','high'} или None, если чего-то не хватает
-    (valuation.reject_on_missing_stats в конфиге -> лот пропускается)."""
+    """Возвращает {'low','median','high'} или None, если даже low
+    недоступен (valuation.reject_on_missing_stats в конфиге -> лот
+    пропускается).
+
+    DEGRADED MODE: у используемого Discogs-токена не заполнены Seller
+    Settings -> price_suggestions (median/high) всегда 404. Пользователь
+    предпочёл не заводить PayPal/seller-профиль ради этого, поэтому
+    вместо REJECT-всего-подряд (что дал бы честный reject_on_missing_stats
+    без fallback) используем low как единственную доступную оценку и для
+    median, и для high. Это ЗАВЕДОМО МЕНЕЕ ТОЧНО, чем задуманная в конфиге
+    condition-adjusted median/high логика:
+      - spread_ratio всегда 1.0 -> сигнал "extreme spread, будь осторожнее"
+        (§3) не работает, его просто нет;
+      - сигнал "high перекрывает x3, а median — нет" (§4, WATCH-ветка) не
+        работает — high==median здесь;
+      - т.к. lowest_price обычно НИЖЕ настоящей медианы продаж, PASS/WATCH
+        будут срабатывать реже и на более скромных числах, чем если бы
+        median/high были настоящими — то есть промахи скорее в сторону
+        пропущенных лотов, а не ложных PASS. Если/когда Seller Settings на
+        Discogs заполнят — просто уберётся необходимость в фоллбэке, весь
+        остальной код (calib.evaluate) не потребует изменений."""
     low = discogs_lowest_price(release_id)
     time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
+    if low is None:
+        return None
+
     median, high = discogs_price_suggestions(release_id)
     time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
+    if median is None or high is None:
+        median = low
+        high = low
 
-    if low is None or median is None or high is None:
-        return None
     return {"low": low, "median": float(median), "high": float(high)}
 
 
