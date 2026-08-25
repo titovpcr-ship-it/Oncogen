@@ -1,0 +1,527 @@
+# =====================================================================
+# eBay Vinyl "3x Finder" — sniper_config.yaml
+# =====================================================================
+# Собрано по итогам ручного разбора 10 реальных лотов (ECM jazz, eBay,
+# 25.08.2026) в параллельной сессии. Логика ниже — не абстрактная,
+# а прямое обобщение того, как мы считали margin вручную весь день.
+#
+# ВАЖНО: это конфиг (пороги/веса/справочники). Он не чинит баги в
+# самом скрипте. Ниже, в блоке `known_code_issues`, — список того,
+# что нужно поправить в коде отдельно от конфига. Прочитай его первым.
+# =====================================================================
+
+meta:
+  config_version: 1
+  last_calibrated: "2026-08-25"
+  notes: >
+    Discogs price stats (low/median/high) плавают день ото дня —
+    пересматривать calibration_examples раз в 1-2 месяца, иначе
+    пороги разъедутся с реальностью.
+
+
+# ---------------------------------------------------------------------
+# 1. КАК СЧИТАТЬ СЕБЕСТОИМОСТЬ (landed cost)
+# ---------------------------------------------------------------------
+# Текущий баг в коде: landed_cost = price + $15 (флэт). Это неверно —
+# по факту на 10 разобранных лотах доставка внутри США была $5-6.60,
+# а не $15. Флэт $15 либо режет реальные профитные лоты, либо (хуже)
+# маскирует реальную маржу если продавец берёт дороже.
+landed_cost:
+  # Бери РЕАЛЬНУЮ доставку из листинга, если она указана. $15 — только
+  # fallback, если доставку не удалось распарсить.
+  use_listed_shipping_when_available: true
+  fallback_shipping_usd:
+    domestic_us: 6.00      # калибровано по реальным лотам сегодня ($5-6.60)
+    canada: 18.00
+    eu: 27.50
+    other_international: 24.00
+
+  # ДОБАВЛЕНО: конечная точка — Москва, а не США. Все разобранные лоты
+  # покупаются у US-продавцов → везде есть ВТОРАЯ нога доставки, от
+  # форвардера/консолидатора в США до Москвы. Тариф — $22 за КГ, не за
+  # штуку, поэтому нужен вес, а не флэт-число. Скрипт должен прикидывать
+  # вес по формату лота (см. weight_estimation_kg ниже), т.к. реальный
+  # вес посылки узнаётся только на складе форвардера, а решение о ставке
+  # нужно принять до этого.
+  international_forwarding:
+    enabled: true
+    destination: "Moscow"
+    rate_usd_per_kg: 22.00
+    # Форвардеры почти всегда округляют вес вверх до шага тарификации —
+    # ПРОВЕРЬ у своего конкретного форвардера, это либо 0.5кг, либо 1кг.
+    # 0.5 — консервативная дефолт-прикидка, если округление на самом деле
+    # до целого кг — реальный форвардинг может быть выше, особенно на
+    # лёгких лотах (1 пластинка), где округление съедает больше всего.
+    round_up_to_kg: 0.5
+    # per_item — считаем forwarding отдельно для каждого лота (безопасно,
+    # если покупаешь и забираешь по одному). per_shipment — вес и
+    # стоимость считаются на ВСЮ отправку сразу, если консолидируешь
+    # несколько лотов у форвардера перед отправкой в Москву (дешевле на
+    # позицию за счёт разового округления и авиатарифа) — переключи,
+    # когда появится реальная практика объединения посылок.
+    basis: "per_item"
+
+  # Вес одной пластинки со всем упаковочным весом — прикидка, не
+  # взвешено реально. Промаркирована как ГРУБАЯ ОЦЕНКА (см. ниже) —
+  # используется, чтобы скрипт мог прикинуть forwarding_cost ДО покупки,
+  # когда точный вес ещё неизвестен.
+  weight_estimation_kg:
+    # ~120-180г сам винил (стандартный вес) + обложка + внутренний
+    # конверт + упаковочный материал продавца (жёсткий mailer/коробка).
+    packaging_kg: 0.15        # разовая тара, добавляется один раз на отправку
+    single_lp_kg: 0.25        # 1 стандартный LP (не gatefold, не 180g audiophile)
+    gatefold_lp_kg: 0.30      # gatefold-обложка тяжелее
+    heavy_180g_lp_kg: 0.30    # если явно указано "180g" в листинге
+    double_lp_kg: 0.45        # 2LP в одном gatefold/box
+    extra_disc_kg: 0.20       # доп. вес за каждый диск сверх первого (для box-сетов и лотов из нескольких LP)
+    # ЭТО ПРИКИДКА, не проверенные цифры — если появятся реальные веса
+    # с почтовых квитанций, замени на них и заново прогони калибровку.
+
+  # ИТОГОВАЯ ФОРМУЛА:
+  # est_weight_kg = packaging_kg + Σ(вес по формату каждой пластинки в лоте)
+  # billed_weight_kg = roundup(est_weight_kg, round_up_to_kg)
+  # forwarding_cost = billed_weight_kg * rate_usd_per_kg
+  # landed_cost = price + us_domestic_shipping (из листинга, либо fallback)
+  #               + forwarding_cost
+  #
+  # Для аукциона current_bid ≠ финальная цена. Если ставок 0 и до конца
+  # >24ч — считай landed_cost и по current_bid (нижняя граница), и по
+  # прогнозной цене (см. auction_timing.projected_final_price).
+  compute_both_current_and_projected: true
+
+
+# ---------------------------------------------------------------------
+# 2. СОПОСТАВЛЕНИЕ С DISCOGS — САМОЕ КРИТИЧНОЕ МЕСТО
+# ---------------------------------------------------------------------
+# Главный источник ложных срабатываний за сегодня: одно и то же
+# название существует в 5-10 прессах (US/Germany/Japan/reissue/promo/
+# test pressing) с РАЗБРОСОМ цены в 3-10 раз между прессами.
+# Пример: Bennie Maupin — US Polydor press median $76, но есть и
+# German/Japan прессы с совсем другими цифрами.
+discogs_matching:
+  # НЕ бери статистику с master-страницы (она мешает все прессы в кучу).
+  # Всегда резолвь до конкретного release id.
+  require_exact_release_match: true
+  match_fields:
+    - catalog_number     # читай с лейбла на фото/в описании, не с обложки
+    - country
+    - label               # включая суб-лейбл/дистрибьютора (напр. "Polydor Incorporated")
+    - format_details      # Stereo/Mono, LP/Album, Promo/Test Pressing/Reissue
+  # Если каталожный номер не удалось однозначно распарсить (плохое фото,
+  # обрезанный лейбл) — не гадай по мастер-странице, помечай candidate
+  # как needs_manual_catalog_check и не давай авто-PASS.
+  on_ambiguous_catalog: "manual_review"
+  # Каталожные номера пишутся в 3-4 разных форматах у одного и того же
+  # пресса (ECM 1057 ST / ECM-1-1057 / ECM 1-1057-ST) — нормализуй перед
+  # сравнением (убрать дефисы/пробелы, привести к нижнему регистру).
+  normalize_catalog_number: true
+
+
+# ---------------------------------------------------------------------
+# 3. ОЦЕНКА СТОИМОСТИ ПЕРЕПРОДАЖИ
+# ---------------------------------------------------------------------
+valuation:
+  # discogs_marketplace_stats должен возвращать low/median/high, а не
+  # только минимальную цену (текущее имя функции подразумевает только
+  # минимум — это тоже баг в коде, см. known_code_issues).
+  required_fields: [low, median, high, num_sold_recent]
+  # Если Discogs вернул null/insufficient data по любому из
+  # low/median/high — не считать лот, пропускать (REJECT молча в лог,
+  # не в candidates.csv).
+  reject_on_missing_stats: true
+
+  # Базовая оценка цены продажи — не медиана "в лоб", а медиана,
+  # скорректированная на состояние конкретного экземпляра (Discogs
+  # мешает в статистику все состояния от Poor до NM).
+  method: "condition_adjusted_median"
+
+  # Эвристические коэффициенты (не верифицированы количественно —
+  # это прикидка по опыту сегодняшнего разбора, требует калибровки на
+  # твоих реальных продажах). 1.0 = медиана Discogs соответствует
+  # среднему по рынку состоянию (примерно VG+/VG++).
+  condition_multiplier:
+    "M": 1.6
+    "NM": 1.4
+    "VG++": 1.0
+    "VG+": 0.75
+    "VG": 0.55
+    "VG-": 0.40
+    "G+": 0.25
+    "G": 0.15
+    "Poor": 0.08
+    # ИЗМЕНЕНО после прогона калибровки: было 0.6 ("пессимистично").
+    # Это было необосновано — если грейд не указан явно, Discogs median
+    # УЖЕ усреднён по всем состояниям на рынке, включая плохие. Занижать
+    # его ещё раз без причины — задвоенный штраф. Нет данных о грейде =
+    # нейтрально доверяем median, не штрафуем на ровном месте.
+    unknown: 1.0
+
+  # Доп. штраф применяется ТОЛЬКО когда явного грейда нет (unknown-ветка).
+  # ИЗМЕНЕНО после калибровки: изначально штраф стакался ПОВЕРХ явного
+  # numeric-грейда (напр. VG-) — это задвоение: сам грейд VG- уже
+  # отражает такие дефекты (наклейка/потёртости), доп. штраф поверх него
+  # утапливал оценку ниже, чем показывает здравый смысл (проверено на
+  # кейсе Bennie Maupin — см. calibration_examples). Если грейд указан
+  # явно — используем только condition_multiplier[грейд], без стекинга.
+  defect_penalty_applies_only_when_grade_unknown: true
+  defect_penalty_keywords:
+    "sticker residue on label": 0.85
+    "writing on label": 0.7
+    "seam split": 0.9
+    "warped": 0.5
+    "skip" : 0.4          # проигрывает со скипами — почти не имеет смысла для продажи
+    "promo stamp / not for sale": 0.85
+    "cutout notch/corner": 0.85
+
+  # Если high/low > extreme_spread_ratio — это значит цена очень
+  # чувствительна к состоянию (как у Gismonti Solo: $4 - $53). В таких
+  # случаях НЕ давать авто-PASS даже если median проходит порог —
+  # только manual_review.
+  extreme_spread_ratio: 6.0
+
+
+# ---------------------------------------------------------------------
+# 4. ПОРОГИ МАРЖИ И ВЕРДИКТ
+# ---------------------------------------------------------------------
+margin_targets:
+  target_margin: 3.0          # твоя цель "x3"
+  floor_margin_on_low: 1.0    # даже в худшем случае (discogs "low") не должно быть в минус
+  grey_zone_lower: 1.8        # margin ниже цели, но не мусор — на watchlist
+  # ДОБАВЛЕНО после калибровки: изначальные правила смотрели только на
+  # margin по median и полностью игнорировали discogs.high. На практике
+  # половина сегодняшних "интересных, но не факт" лотов (A.R.C., Towner,
+  # Gismonti, Sacred Hymns) — это случаи "high перекрывает x3, median —
+  # нет". Без этого сигнала чекер отправлял их всех в REJECT, хотя
+  # руками мы верно квалифицировали их как WATCH (апсайд есть, но не
+  # гарантирован). watch_on_high_threshold_pct — с каким запасом high
+  # должен перекрывать target_margin, чтобы это считалось сигналом
+  # (0.9 = high даёт хотя бы 90% от x3, не обязательно ровно x3).
+  watch_on_high_threshold_pct: 0.9
+
+  verdict_rules:
+    # PASS — можно смело считать кандидатом на снайп/авто-ставку.
+    # Намеренно строгое условие: PASS должен быть редким. Если он
+    # срабатывает часто — пороги слишком мягкие, проверь на
+    # calibration_examples (там ни один из 10 реальных лотов не PASS).
+    - if: "NOT is_bundle AND margin_condition_adjusted >= target_margin AND margin_on_low >= floor_margin_on_low AND catalog_match == exact AND spread_ratio < extreme_spread_ratio"
+      then: "PASS"
+    # WATCH — median не дотягивает, но есть реальный апсайд (high) ИЛИ
+    # median в серой зоне. Для лотов-бандлов (несколько пластинок одним
+    # лотом) PASS в принципе не выдаём — бандл всегда требует ручного
+    # решения о part-out, поэтому потолок для него — WATCH.
+    - if: "margin_on_high >= target_margin * watch_on_high_threshold_pct OR margin_condition_adjusted >= grey_zone_lower"
+      then: "WATCH"
+    - default: "REJECT"
+
+
+# ---------------------------------------------------------------------
+# 4.5. БЮДЖЕТ И УПОР НА НЕДООЦЕНЁННОЕ
+# ---------------------------------------------------------------------
+# ДОБАВЛЕНО: бюджет ограничен, поэтому цель — не "любой лот с margin>=3x",
+# а именно НЕДООЦЕНЁННЫЕ лоты: низкая текущая цена (мало кто заметил/
+# участвует), а не разогретые торги, где высокая ставка уже отражает
+# то, что покупатели и так видят ценность.
+budget_constraints:
+  # Жёсткий фильтр ДО расчёта margin: если текущая цена (ставка/BIN, БЕЗ
+  # доставки) выше — лот вообще не рассматриваем, независимо от маржи.
+  # Не "цена, которую готов заплатить в конце", а именно текущая — цель
+  # смотреть на лоты, которые ЕЩЁ дёшевы, а не разгонять бюджет на
+  # аукционах, где цена уже выросла выше твоего потолка.
+  max_current_price_usd: 10.00
+  # current_price — это current_bid для аукциона или BIN-цена, ВСЕГДА
+  # без учёта доставки/forwarding (сравниваем с этим же полем, которое
+  # видно в листинге сразу, чтобы можно было быстро отсеивать без похода
+  # в Discogs).
+  applies_to_field: "current_price_no_shipping"
+  on_exceed: "skip_before_discogs_lookup"   # не трать Discogs API-квоту на заведомо дорогие лоты
+
+# Приоритизация внутри того, что прошло бюджетный фильтр и margin-пороги:
+# сортируем не просто по margin, а по признакам "это ещё никто не
+# заметил" — при прочих равных такой лот безопаснее закрыть по низкой
+# цене, чем уже разогретый.
+undervalued_priority:
+  enabled: true
+  # Сигналы низкой конкуренции (чем их больше — тем выше приоритет):
+  #   - bid_count == 0 или 1
+  #   - watchers/favorites <= 2 (сравни с Bennie Maupin: 15 watchers —
+  #     сигнал, что цена почти наверняка уйдёт вверх, такой лот менее
+  #     "недооценён", даже если текущая ставка низкая)
+  #   - "Just listed" / первые 1-3 дня показа
+  #   - views за день низкий (мало кто вообще смотрел)
+  low_competition_signals: ["bid_count<=1", "watchers<=2", "just_listed", "low_daily_views"]
+  # Итоговый score для сортировки кандидатов (не строгая формула, эвристика):
+  # priority_score = margin_condition_adjusted * (1 + 0.15 * count(low_competition_signals_matched))
+  # WATCH-лоты с несколькими сигналами низкой конкуренции стоит проверять
+  # РАНЬШЕ, чем PASS-лоты с толпой watchers — у вторых меньше шансов
+  # закрыться по цене, которая давала расчётную маржу.
+
+
+# ---------------------------------------------------------------------
+# 5. ЛИКВИДНОСТЬ / ДОСТАТОЧНОСТЬ ДАННЫХ
+# ---------------------------------------------------------------------
+liquidity_filters:
+  min_recent_sales: 3         # если по релизу продано <3 раз за история — не доверять median
+  max_stats_age_days: 60       # если данные явно старые/не обновлялись — WATCH, не PASS
+  min_want_have_ratio: null    # опционально: want/have как индикатор спроса (не обязателен)
+
+
+# ---------------------------------------------------------------------
+# 6. КОМИССИИ И РАСХОДЫ НА ПЕРЕПРОДАЖУ
+# ---------------------------------------------------------------------
+# ПРОВЕРЬ актуальные цифры сам — комиссии eBay/Discogs меняются,
+# у меня нет доступа к твоему актуальному fee schedule.
+resale_costs:
+  ebay_final_value_fee_pct: 13.25   # ballpark для media/music категории, УТОЧНИ в Seller Hub
+  ebay_fixed_fee_usd: 0.30
+  discogs_seller_fee_pct: 9.0        # если план продавать через Discogs вместо eBay
+  payment_processing_pct: 0          # обычно уже включено в eBay managed payments fee выше
+  resale_shipping_cost_usd: 6.00     # media mail / bubble mailer, домашний рынок
+  packaging_materials_usd: 1.50
+  # Итоговая формула net-маржи для верификации перед покупкой:
+  # net_proceeds = resale_price*(1-ebay_final_value_fee_pct/100) - ebay_fixed_fee_usd
+  #                - resale_shipping_cost_usd - packaging_materials_usd
+  # net_margin = net_proceeds / landed_cost
+
+
+# ---------------------------------------------------------------------
+# 7. АУКЦИОННАЯ ТАЙМИНГ-ЛОГИКА (снайпинг)
+# ---------------------------------------------------------------------
+auction_timing:
+  # current_bid на лоте с 0-1 ставками и днями до конца — НЕ финальная
+  # цена. За сегодня видели: лот с $8 стартом и 15 watchers почти
+  # наверняка уйдёт выше $30-60 (Bennie Maupin), а лот с $8 стартом и
+  # 0 watchers может остаться на $8 (Barre Phillips).
+  projected_final_price:
+    enabled: true
+    # грубая эвристика: чем больше watchers/views и чем ближе к концу,
+    # тем выше множитель к текущей цене. Требует калибровки на
+    # реальных исходах твоих аукционов — цифры ниже это стартовая прикидка.
+    watcher_multiplier:
+      "0-2": 1.0
+      "3-6": 1.3
+      "7-15": 1.8
+      "15+": 2.5
+  # Ставь не сразу, а в последние минуты — чтобы не разгонять цену
+  # самому и не палить интерес другим участникам раньше времени.
+  snipe_window_minutes_before_end: 3
+  # Не участвуй в псевдо-аукционах с ставками руками на раннем этапе —
+  # только добавляй в watchlist и пересчитывай margin по мере роста ставок.
+  early_bid_policy: "watchlist_only"
+  # Макс. цена, которую готов заплатить, чтобы даже при худшем (low)
+  # раскладе не уйти в минус:
+  # max_bid = (discogs_low * condition_multiplier) / floor_margin_on_low - shipping - fees_buffer
+  max_bid_formula: "auto"
+
+
+# ---------------------------------------------------------------------
+# 8. СКОУП ПОИСКА
+# ---------------------------------------------------------------------
+search_scope:
+  labels_priority:
+    - "ECM Records"          # основной фокус сегодняшнего разбора
+    - "Blue Note"
+    - "Impulse!"
+    - "Verve"
+    - "Atlantic (jazz)"
+  exclude_format_keywords: ["CD", "cassette", "8-track", "digital"]
+  flag_not_autoreject_keywords:   # не отбрасывай авто, но помечай для ручной проверки
+    - "promo"
+    - "test pressing"
+    - "white label"
+  hard_exclude_keywords:
+    - "repro"
+    - "bootleg"
+    - "unofficial"
+    - "no record"          # "cover only" листинги
+
+
+# ---------------------------------------------------------------------
+# 9. ВЫВОД
+# ---------------------------------------------------------------------
+output:
+  csv_path: "candidates_{date}.csv"
+  columns:
+    - listing_url
+    - title
+    - current_price
+    - shipping
+    - landed_cost
+    - projected_final_price
+    - discogs_release_url
+    - catalog_match_confidence   # exact | fuzzy | manual_review
+    - discogs_low
+    - discogs_median
+    - discogs_high
+    - spread_ratio
+    - condition_listed
+    - condition_multiplier_applied
+    - resale_estimate
+    - margin_on_low
+    - margin_condition_adjusted
+    - verdict                    # PASS | WATCH | REJECT
+    - notes
+
+
+# =====================================================================
+# KNOWN CODE ISSUES (не конфиг — правится в самом скрипте)
+# =====================================================================
+known_code_issues:
+  - "landed_cost сейчас = price + flat $15. Заменить на use_listed_shipping_when_available (см. §1)."
+  - "discogs_marketplace_stats судя по названию возвращает только минимальную цену. Нужно тянуть low/median/high — это разные числа Discogs API (price_suggestions/marketplace stats), одной минималки недостаточно для расчёта margin_condition_adjusted."
+  - "Сопоставление лота с Discogs идёт, похоже, через master-страницу/поиск по названию. Нужно резолвить до конкретного release по catalog_number+country (см. §2) — иначе на one в 3-10 раз ошибка в оценке, как было с Bennie Maupin/Bill Connors сегодня."
+  - "Нет obработки 'нет данных' (null low/median/high) — такие релизы не должны попадать в PASS."
+  - "EBAY_CLIENT_ID/SECRET всё ещё плейсхолдеры — без них скрипт не может вообще ничего проверить, это блокер #1 прямо сейчас, config тут не поможет."
+
+
+# =====================================================================
+# CALIBRATION EXAMPLES — 10 реальных лотов, разобранных вручную
+# 25.08.2026. Использовать как regression-тесты для verdict-логики.
+# Discogs-цифры актуальны на дату разбора и со временем устареют.
+# =====================================================================
+# landed_cost больше НЕ хардкодится — считается динамически в чекере
+# по формуле §1 (price + us shipping + forwarding по весу). listing_price
+# здесь — это current_price_no_shipping для budget_constraints (§4.5).
+# watchers/bid_count — из скриншотов листингов, для undervalued_priority.
+calibration_examples:
+
+  - title: "Bill Connors - Theme To The Gaurdian (Germany, ECM 1057 ST)"
+    listing_price: 8.00
+    shipping: 6.00
+    format: "single_lp"
+    watchers: 4
+    bid_count: 1
+    discogs: { low: 8.00, median: 13.24, high: 34.77 }
+    actual_condition: "VG++"   # заявлено в тайтле листинга
+    expected_verdict: "REJECT"
+    reason: "high едва дотягивает до x2.5, median ниже cost"
+
+  - title: "A.R.C. - Chick Corea/Holland/Altschul (US, ECM-1-1009, Pitman Pressing)"
+    listing_price: 1.99
+    shipping: 5.13
+    format: "single_lp"
+    watchers: 2
+    bid_count: 1
+    discogs: { low: 4.99, median: 9.52, high: 27.91 }
+    expected_verdict: "REJECT"
+    reason: >
+      ИСПРАВЛЕНО после добавления forwarding в Москву ($22/кг): landed
+      cost вырос с $7.12 (только США) до $18.12 (+$11 форвардинг на
+      1 пластинку, округление 0.4кг → 0.5кг). margin_on_high теперь
+      27.91/18.12=1.54x — далеко не дотягивает даже до WATCH-порога
+      (2.7x). При старой (domestic-only) себестоимости WATCH был
+      оправдан high'ом ($27.91/$7.12=3.9x) — но с реальной доставкой в
+      Москву апсайд этого лота съеден почти полностью.
+
+  - title: "Steve Swallow - Home (US, ECM 1-1160, promo stamp)"
+    listing_price: 8.00
+    shipping: 6.00
+    format: "single_lp"
+    watchers: 4
+    bid_count: 0
+    discogs: { low: 5.50, median: 10.00, high: 28.99 }
+    actual_condition: "VG++/VG+"   # заявлено в тайтле (пластинка/обложка)
+    expected_verdict: "REJECT"
+    reason: "cost уже выше median — типичный исход убыточен"
+
+  - title: "Ralph Towner - Old Friends, New Friends (US, ECM-1-1153)"
+    listing_price: 8.00
+    shipping: 6.00
+    format: "single_lp"
+    watchers: 2
+    bid_count: 0
+    discogs: { low: 3.50, median: 10.00, high: 41.25 }
+    actual_condition: "VG+"   # заявлено в тайтле
+    expected_verdict: "REJECT"
+    reason: >
+      ИСПРАВЛЕНО после прогона чекера: в живом чате 25.08 я сравнил high
+      ($41.25) с cost БЕЗ поправки на заявленный VG+ грейд — отсюда
+      "почти x3". При том же подходе, что применён ко всем остальным 9
+      лотам (грейд учитывается и для high тоже, не только для median):
+      $41.25*0.75/$14 = 2.21x — ниже даже WATCH-порога (2.7x). Это была
+      непоследовательность в ручной оценке, не ошибка чекера.
+
+  - title: "Barre Phillips - Three Day Moon (US, ECM-1-1123)"
+    listing_price: 8.00
+    shipping: 6.00
+    format: "single_lp"
+    watchers: 2
+    bid_count: 0
+    discogs: { low: 8.25, median: 14.64, high: 29.07 }
+    actual_condition: "VG++"   # заявлено в тайтле
+    expected_verdict: "REJECT"
+    reason: "даже high даёт только ~x2, потолок известен и он ниже цели"
+
+  - title: "Egberto Gismonti - Solo (US, ECM-1-1136, 1979)"
+    listing_price: 9.00
+    shipping: 6.00
+    format: "single_lp"
+    watchers: 1
+    bid_count: 0
+    discogs: { low: 4.00, median: 9.25, high: 53.49 }
+    expected_verdict: "REJECT"
+    reason: >
+      ИСПРАВЛЕНО после добавления forwarding в Москву: landed cost
+      $15→$26 (+$11 форвардинг). margin_on_high = 53.49/26=2.06x —
+      ниже WATCH-порога (2.7x), несмотря на то что spread по-прежнему
+      экстремальный (~13x low/high). До учёта доставки в Москву апсайд
+      этого лота выглядел интереснее, чем есть на деле — при $22/кг
+      маленькие дешёвые лоты (1 пластинка ~$9) особенно чувствительны,
+      т.к. округление веса (0.4кг→0.5кг) даёт минимум $11 форвардинга
+      почти вне зависимости от реальной массы посылки."
+
+  - title: "Bennie Maupin - The Jewel In The Lotus (US, ECM 1043 ST / Polydor)"
+    listing_price: 8.00
+    shipping: 6.00
+    format: "single_lp"
+    watchers: 15
+    bid_count: 1
+    discogs: { low: 50.00, median: 76.01, high: 232.56 }
+    actual_condition: "VG-"   # грейд пластинки; "sticker residue" — уже часть смысла VG-, не штрафуем повторно
+    expected_verdict: "WATCH"
+    reason: >
+      ИСПРАВЛЕНО после прогона чекера: изначально стояло PASS — это было
+      оптимистично, посчитано на глаз без единой формулы. Честно по
+      условию VG-: median-based оценка ~$76*0.40=$30.4 → margin
+      ~2.17x, ниже чистого порога x3. High всё ещё даёт большой апсайд
+      (~6.6x) — поэтому WATCH, а не REJECT. ВАЖНО для undervalued_priority:
+      15 watchers — это САМЫЙ разогретый лот из всех десяти, по духу
+      "недооценённое" здесь уже под вопросом, даже если цифры маржи
+      хорошие — вероятно уйдёт заметно выше текущей ставки."
+
+  - title: "Keith Jarrett - Sacred Hymns (US, ECM-1-1174, Wakefield Pressing)"
+    listing_price: 5.00
+    shipping: 5.00
+    format: "single_lp"
+    watchers: 2
+    bid_count: 0
+    discogs: { low: 1.23, median: 5.39, high: 46.51 }
+    expected_verdict: "REJECT"
+    reason: >
+      ИСПРАВЛЕНО после добавления forwarding в Москву: landed cost
+      $10→$21 (+$11 форвардинг). margin_on_high = 46.51/21=2.21x —
+      ниже WATCH-порога. При domestic-only себестоимости ($10) high
+      давал 4.65x — солидный запас; после $11 форвардинга на дешёвом
+      лоте этот запас почти исчез. Показательный пример того, что $22/кг
+      сильнее всего бьёт по лотам с низкой стартовой ценой — форвардинг
+      на них съедает непропорционально большую долю потенциальной маржи."
+
+  - title: "Art Lande - Rubisa Patrol (US, ECM 1081, 1976)"
+    listing_price: 5.00
+    shipping: 5.00
+    format: "single_lp"
+    watchers: 3
+    bid_count: 0
+    discogs: { low: 5.99, median: 8.90, high: 14.00 }
+    expected_verdict: "REJECT"
+    reason: "потолок цены ($14) известен и он ниже x3 цели — невозможно математически"
+
+  - title: "Jazz Lot of 5 LPs (Ellington/Hancock&Corea/MJQ/Swingles-MJQ/Art Tatum)"
+    listing_price: 7.99
+    shipping: 6.60
+    format: "bundle_single_lp"
+    record_count: 5
+    watchers: 2
+    bid_count: 1
+    discogs_bundle_sum: { median_sum: 28.66, high_sum: 154.28 }
+    expected_verdict: "WATCH"
+    reason: "лот из 5 позиций — сумма медиан даёт только ~x2, x3 возможен только при поштучной перепродаже и удаче в верхнем диапазоне 1-2 позиций; доп. расходы при парт-ауте съедают часть маржи, учитывать это в net_margin"
