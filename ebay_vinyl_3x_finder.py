@@ -47,12 +47,18 @@ Discogs public API официально не отдаёт "низкая/меди
     что undervalued_priority (сигнал "мало watchers") в среднем будет
     слабее, чем при ручном разборе в браузере, где скрин листинга
     показывает watchers напрямую.
-  - Каталожный номер извлекается regex-эвристикой из заголовка eBay-
-    листинга (см. CATALOG_PATTERNS ниже) — это не замена чтения фото
-    лейбла, как рекомендует конфиг (§2), а лучшее, что можно сделать
-    без анализа изображений. Если номер не найден/не совпал с Discogs —
-    catalog_match_confidence="manual_review", и по правилам конфига
-    PASS для такого лота не даётся (максимум WATCH).
+  - Каталожный номер СНАЧАЛА пытается извлечься regex-эвристикой из
+    заголовка (CATALOG_PATTERNS) — но по опыту разбора 25.08.2026 он
+    там почти никогда не встречается, только на фото лейбла. Поэтому
+    для лотов, которые уже прошли margin/budget по тексту (WATCH/PASS),
+    но не дали exact catalog_match, process_item() дополнительно тянет
+    фото лота (fetch_ebay_item_photos) и кладёт ссылки в колонку
+    photo_review_urls. Дальше это ЧЕЛОВЕЧЕСКИЙ/vision-шаг — сам скрипт
+    фото не анализирует (без Anthropic API ключа): во время прогона
+    ежедневного/периодического Routine Claude открывает эти ссылки,
+    читает номер с фото и сверяет вручную. Пока это не сделано —
+    catalog_match_confidence="manual_review", PASS не даётся (максимум
+    WATCH), как и раньше.
   - Лоты-бандлы (несколько пластинок в одном листинге) НЕ разбираются
     автоматически на отдельные релизы — Discogs-сопоставление для них
     слишком ненадёжно по одному заголовку. Такие лоты просто
@@ -294,6 +300,40 @@ def search_ebay(token, query, cfg, limit=30):
     return results
 
 
+def fetch_ebay_item_photos(item_id, token):
+    """П.1 обратной связи (25.08.2026): каталожный номер практически
+    никогда не встречается в тексте листинга — только на фото лейбла.
+    item_summary из search НЕ содержит доп. фото, нужен отдельный вызов
+    item detail. Дорого гонять на каждый лот, поэтому вызывается ТОЧЕЧНО
+    из process_item() — только для лотов, уже прошедших margin/budget по
+    тексту, но без exact catalog_match. Возвращает [] тихо при любой
+    ошибке (доп. фото — bonus-step, не должен ронять обработку лота)."""
+    if not item_id:
+        return []
+    url = f"https://api.ebay.com/buy/browse/v1/item/{item_id}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
+    }
+    try:
+        resp = requests.get(url, headers=headers, timeout=30)
+    except requests.exceptions.RequestException:
+        return []
+    if resp.status_code != 200:
+        return []
+    data = resp.json()
+
+    urls = []
+    primary = (data.get("image") or {}).get("imageUrl")
+    if primary:
+        urls.append(primary)
+    for img in data.get("additionalImages") or []:
+        u = img.get("imageUrl")
+        if u:
+            urls.append(u)
+    return urls
+
+
 # ============ ЛИСТИНГ -> ФОРМАТ / КОЛИЧЕСТВО ПЛАСТИНОК / БАНДЛ ============
 
 def parse_format_and_count(title):
@@ -477,7 +517,7 @@ def discogs_get_stats(release_id):
 
 # ============ ОСНОВНАЯ ЛОГИКА ============
 
-def build_output_row(item, release, stats, example, result, prio, cfg):
+def build_output_row(item, release, stats, example, result, prio, cfg, photo_urls=None):
     columns = cfg["output"]["columns"]
     values = {
         "listing_url": item["item_url"],
@@ -498,9 +538,16 @@ def build_output_row(item, release, stats, example, result, prio, cfg):
         "margin_on_low": round(result["margin_on_low"], 2) if result["margin_on_low"] is not None else "",
         "margin_condition_adjusted": round(result["margin_median"], 2),
         "verdict": result["verdict"],
+        # П.1 обратной связи: фото лота для ручной/vision-сверки каталожного
+        # номера, заполняется только когда текстовый catno не дал exact-матч
+        # (см. process_item). Во время прогона Routine Claude открывает эти
+        # ссылки, читает номер с фото лейбла и сверяет с discogs_release_url.
+        "photo_review_urls": "; ".join(photo_urls) if photo_urls else "",
         "notes": "; ".join(
             filter(None, [
-                "нужна ручная проверка каталожного номера" if release["confidence"] != "exact" else "",
+                "нужна ручная проверка каталожного номера (см. photo_review_urls)"
+                if photo_urls else
+                ("нужна ручная проверка каталожного номера" if release["confidence"] != "exact" else ""),
                 ("проверить вручную: " + ", ".join(item["manual_review_keywords"]))
                 if item["manual_review_keywords"] else "",
             ])
@@ -509,12 +556,13 @@ def build_output_row(item, release, stats, example, result, prio, cfg):
     return {col: values.get(col, "") for col in columns}
 
 
-def process_item(item, cfg):
+def process_item(item, cfg, token=None):
     """Обрабатывает один лот от парсинга формата до вердикта. Возвращает
     (row_dict, priority_score) или None, если лот не PASS/WATCH.
     Кидает исключение наружу при неожиданной ошибке — process_item
     вызывается из-под try/except в main(), так что один битый лот не
-    останавливает весь батч."""
+    останавливает весь батч. token нужен только для fetch_ebay_item_photos
+    (доп. фото для сверки каталожного номера, см. build_output_row)."""
     fmt, record_count, is_bundle = parse_format_and_count(item["title"])
     if is_bundle:
         return "bundle"
@@ -554,11 +602,21 @@ def process_item(item, cfg):
     if result["verdict"] == "REJECT":
         return "reject"
 
+    # П.1 обратной связи (25.08.2026): каталожный номер почти никогда не
+    # встречается в тексте листинга — только на фото лейбла. Раз лот уже
+    # интересен по тексту (WATCH/PASS), но regex не нашёл exact catno —
+    # подтягиваем доп. фото ОДИН раз здесь (не на каждый лот из поиска),
+    # чтобы Claude во время прогона Routine сверил номер по фото сам.
+    photo_urls = []
+    if release["confidence"] != "exact" and token:
+        photo_urls = fetch_ebay_item_photos(item["item_id"], token)
+
     prio = calib.priority_score(example, result, cfg)
-    row = build_output_row(item, release, stats, example, result, prio, cfg)
+    row = build_output_row(item, release, stats, example, result, prio, cfg, photo_urls)
     print(f"  {result['verdict']}: {item['title'][:60]} | "
           f"цена ${item['price_usd']} | landed ${result['landed_cost']:.2f} | "
-          f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}")
+          f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}"
+          + (" | ФОТО ДЛЯ СВЕРКИ КАТАЛОГА" if photo_urls else ""))
     return (row, prio)
 
 
@@ -670,7 +728,7 @@ def main():
 
             for item in items:
                 try:
-                    outcome = process_item(item, cfg)
+                    outcome = process_item(item, cfg, token)
                 except Exception as e:
                     # Один битый лот (неожиданный формат ответа API, сетевой
                     # обрыв мимо discogs_get) не должен останавливать весь

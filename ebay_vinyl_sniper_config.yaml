@@ -349,6 +349,10 @@ output:
     - projected_final_price
     - discogs_release_url
     - catalog_match_confidence   # exact | fuzzy | manual_review
+    - photo_review_urls          # ДОБАВЛЕНО (п.1 обратной связи 25.08.2026): заполняется,
+                                  # когда catalog_match_confidence != exact — фото лота для
+                                  # ручной/vision-сверки номера с лейбла, т.к. каталожный
+                                  # номер почти никогда не встречается в тексте листинга
     - discogs_low
     - discogs_median
     - discogs_high
