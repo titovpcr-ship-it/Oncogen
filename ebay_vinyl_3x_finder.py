@@ -90,7 +90,6 @@ Discogs public API официально не отдаёт "низкая/меди
 """
 
 import re
-import sys
 import time
 from datetime import datetime
 from pathlib import Path
@@ -141,6 +140,32 @@ CONDITION_STRIP_RE = re.compile(
     r"\b(LP|VINYL|RECORD|NM|VG\+?|EX|SEALED|ORIGINAL|PROMO|1ST|FIRST PRESS)\b",
     re.IGNORECASE,
 )
+
+
+def discogs_get(url, params=None):
+    """Общий GET к Discogs API: один повтор при 429 (rate limit) и
+    возврат None вместо падения при сетевой ошибке — чтобы обрыв связи
+    на одном запросе не убивал весь батч из сотен лотов."""
+    headers = {"Authorization": f"Discogs token={DISCOGS_TOKEN}"}
+    for attempt in range(2):
+        try:
+            resp = requests.get(url, headers=headers, params=params, timeout=30)
+        except requests.exceptions.RequestException:
+            return None
+        if resp.status_code == 429 and attempt == 0:
+            time.sleep(5)
+            continue
+        return resp
+    return None
+
+
+def discogs_search(**extra_params):
+    """type=release, format=Vinyl всегда; extra_params (q/catno) — сверху."""
+    params = {"type": "release", "format": "Vinyl", **extra_params}
+    resp = discogs_get(DISCOGS_SEARCH_URL, params=params)
+    if resp is None or resp.status_code != 200:
+        return None
+    return resp.json().get("results", [])
 
 
 def load_config():
@@ -226,15 +251,18 @@ def search_ebay(token, query, cfg, limit=30):
             kw for kw in scope["flag_not_autoreject_keywords"] if kw.lower() in title_l
         ]
 
-        shipping_opts = it.get("shippingOptions") or []
-        shipping_cost = None
-        if shipping_opts:
+        # Берём МИНИМАЛЬНУЮ из предложенных опций доставки (обычно
+        # standard/economy), а не первую в списке — порядок опций в
+        # ответе Browse API не гарантированно "от дешёвой к дорогой".
+        shipping_costs = []
+        for opt in (it.get("shippingOptions") or []):
             try:
-                val = shipping_opts[0].get("shippingCost", {}).get("value")
+                val = opt.get("shippingCost", {}).get("value")
                 if val is not None:
-                    shipping_cost = float(val)
+                    shipping_costs.append(float(val))
             except (TypeError, ValueError):
-                shipping_cost = None
+                continue
+        shipping_cost = min(shipping_costs) if shipping_costs else None
 
         country = (it.get("itemLocation") or {}).get("country", "US")
 
@@ -328,15 +356,18 @@ def discogs_resolve_release(item, cfg):
     catno = extract_catalog_number(item["title"])
     clean_title = clean_title_for_search(item["title"])
 
-    headers = {"Authorization": f"Discogs token={DISCOGS_TOKEN}"}
-    params = {"q": clean_title, "type": "release", "format": "Vinyl"}
     if catno:
-        params["catno"] = catno
+        # Ищем СНАЧАЛА по одному catno — комбинация catno+q может дать 0
+        # результатов, если название на Discogs сформулировано иначе, чем
+        # в заголовке eBay (сокращение/порядок слов), а catno при этом
+        # верный. Точность всё равно проверяется постфактум сравнением
+        # catno ниже, так что сужать поиск текстом не обязательно.
+        results = discogs_search(catno=catno)
+        if not results:
+            results = discogs_search(q=clean_title, catno=catno)
+    else:
+        results = discogs_search(q=clean_title)
 
-    resp = requests.get(DISCOGS_SEARCH_URL, headers=headers, params=params, timeout=30)
-    if resp.status_code != 200:
-        return None
-    results = resp.json().get("results", [])
     if not results:
         return None
 
@@ -366,12 +397,10 @@ def discogs_resolve_release(item, cfg):
 def discogs_lowest_price(release_id):
     """low = текущая минимальная цена среди активных Marketplace-листингов
     (НЕ "самая низкая из проданных" — см. ЧЕСТНО О ГРАНИЦАХ вверху файла)."""
-    headers = {"Authorization": f"Discogs token={DISCOGS_TOKEN}"}
-    resp = requests.get(
-        DISCOGS_STATS_URL.format(release_id=release_id),
-        headers=headers, params={"curr_abbr": "USD"}, timeout=30,
+    resp = discogs_get(
+        DISCOGS_STATS_URL.format(release_id=release_id), params={"curr_abbr": "USD"},
     )
-    if resp.status_code != 200:
+    if resp is None or resp.status_code != 200:
         return None
     lowest = resp.json().get("lowest_price")
     if lowest is None:
@@ -387,12 +416,8 @@ def discogs_price_suggestions(release_id):
     your seller settings first", даже без намерения реально продавать).
     Возвращаем None, а не выдумываем цифру — discogs_get_stats() ниже
     сам решает, как деградировать без median/high."""
-    headers = {"Authorization": f"Discogs token={DISCOGS_TOKEN}"}
-    resp = requests.get(
-        DISCOGS_PRICE_SUGGESTIONS_URL.format(release_id=release_id),
-        headers=headers, timeout=30,
-    )
-    if resp.status_code != 200:
+    resp = discogs_get(DISCOGS_PRICE_SUGGESTIONS_URL.format(release_id=release_id))
+    if resp is None or resp.status_code != 200:
         return None, None
     data = resp.json()
     median = data.get("Very Good Plus (VG+)", {}).get("value")
@@ -470,93 +495,68 @@ def build_output_row(item, release, stats, example, result, prio, cfg):
     return {col: values.get(col, "") for col in columns}
 
 
-def main():
-    if "ВСТАВЬ_СЮДА" in EBAY_CLIENT_ID or "ВСТАВЬ_СЮДА" in DISCOGS_TOKEN:
-        print("Заполни EBAY_CLIENT_ID, EBAY_CLIENT_SECRET и DISCOGS_TOKEN в начале файла.")
-        return
+def process_item(item, cfg):
+    """Обрабатывает один лот от парсинга формата до вердикта. Возвращает
+    (row_dict, priority_score) или None, если лот не PASS/WATCH.
+    Кидает исключение наружу при неожиданной ошибке — process_item
+    вызывается из-под try/except в main(), так что один битый лот не
+    останавливает весь батч."""
+    fmt, record_count, is_bundle = parse_format_and_count(item["title"])
+    if is_bundle:
+        return "bundle"
 
-    cfg = load_config()
-    search_queries = build_search_queries(cfg)
+    release = discogs_resolve_release(item, cfg)
+    time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
+    if not release:
+        return "no_release"
 
-    print("Получаю eBay токен...")
-    token = get_ebay_token()
+    stats = discogs_get_stats(release["release_id"])
+    if not stats:
+        return "no_stats"
 
-    rows = []          # (row_dict, priority_score) — уйдут в CSV, только PASS/WATCH
-    skipped_bundles = 0
-    skipped_no_release = 0
-    skipped_no_stats = 0
+    shipping = get_shipping_cost(item, cfg)
+    example = {
+        "listing_price": item["price_usd"],
+        "shipping": shipping,
+        "format": fmt,
+        "record_count": record_count,
+        "watchers": 0,        # недоступно через Browse API, см. ограничения
+        "bid_count": item["bid_count"] or 0,
+        "actual_condition": item["title"],
+        "reason": item["condition"] or "",
+        "discogs": stats,
+    }
 
-    for query in search_queries:
-        print(f"\nИщу на eBay: '{query}'")
-        try:
-            items = search_ebay(token, query, cfg, limit=MAX_RESULTS_PER_QUERY)
-        except requests.HTTPError as e:
-            print(f"  Ошибка eBay API: {e}")
-            continue
+    result = calib.evaluate(example, cfg)
 
-        print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
+    # Слой поверх calib.evaluate(): конфиг требует catalog_match == exact
+    # для PASS (§2, §4), но evaluate() из test_calibration.py этого не
+    # проверяет (в calibration_examples каталог всегда считался точным
+    # вручную) — здесь принудительно понижаем PASS без точного катало-
+    # жного совпадения до WATCH, чтобы не выдавать авто-PASS на угадку.
+    if result["verdict"] == "PASS" and release["confidence"] != "exact":
+        result["verdict"] = "WATCH"
 
-        for item in items:
-            fmt, record_count, is_bundle = parse_format_and_count(item["title"])
+    if result["verdict"] == "REJECT":
+        return "reject"
 
-            if is_bundle:
-                # Бандлы (несколько пластинок в одном листинге) требуют
-                # разбора по позициям — автоматически это ненадёжно, см.
-                # ЧЕСТНО О ГРАНИЦАХ вверху файла. Логируем и пропускаем.
-                skipped_bundles += 1
-                print(f"  БАНДЛ (ручной разбор): {item['title'][:70]}")
-                continue
+    prio = calib.priority_score(example, result, cfg)
+    row = build_output_row(item, release, stats, example, result, prio, cfg)
+    print(f"  {result['verdict']}: {item['title'][:60]} | "
+          f"цена ${item['price_usd']} | landed ${result['landed_cost']:.2f} | "
+          f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}")
+    return (row, prio)
 
-            release = discogs_resolve_release(item, cfg)
-            time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
-            if not release:
-                skipped_no_release += 1
-                continue
 
-            stats = discogs_get_stats(release["release_id"])
-            if not stats:
-                skipped_no_stats += 1
-                continue
-
-            shipping = get_shipping_cost(item, cfg)
-            example = {
-                "listing_price": item["price_usd"],
-                "shipping": shipping,
-                "format": fmt,
-                "record_count": record_count,
-                "watchers": 0,        # недоступно через Browse API, см. ограничения
-                "bid_count": item["bid_count"] or 0,
-                "actual_condition": item["title"],
-                "reason": item["condition"] or "",
-                "discogs": stats,
-            }
-
-            result = calib.evaluate(example, cfg)
-
-            # Слой поверх calib.evaluate(): конфиг требует catalog_match == exact
-            # для PASS (§2, §4), но evaluate() из test_calibration.py этого не
-            # проверяет (в calibration_examples каталог всегда считался точным
-            # вручную) — здесь принудительно понижаем PASS без точного катало-
-            # жного совпадения до WATCH, чтобы не выдавать авто-PASS на угадку.
-            if result["verdict"] == "PASS" and release["confidence"] != "exact":
-                result["verdict"] = "WATCH"
-
-            if result["verdict"] == "REJECT":
-                continue
-
-            prio = calib.priority_score(example, result, cfg)
-            row = build_output_row(item, release, stats, example, result, prio, cfg)
-            rows.append((row, prio))
-
-            print(f"  {result['verdict']}: {item['title'][:60]} | "
-                  f"цена ${item['price_usd']} | landed ${result['landed_cost']:.2f} | "
-                  f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}")
-
+def finalize(rows, counters, cfg):
+    """Сортирует и сохраняет то, что успели найти — вызывается и при
+    штатном завершении, и из finally при обрыве батча, чтобы неожиданная
+    ошибка на лоте №400 из 500 не стёрла уже найденные 399."""
     rows.sort(key=lambda r: r[1], reverse=True)
 
-    print(f"\nПропущено: {skipped_bundles} бандлов (ручной разбор), "
-          f"{skipped_no_release} без сопоставления с Discogs, "
-          f"{skipped_no_stats} без полных данных о цене (low/median/high).")
+    print(f"\nПропущено: {counters['bundles']} бандлов (ручной разбор), "
+          f"{counters['no_release']} без сопоставления с Discogs, "
+          f"{counters['no_stats']} без полных данных о цене (low/median/high).")
 
     if not rows:
         print("\nНичего не найдено с вердиктом PASS/WATCH. "
@@ -574,6 +574,63 @@ def main():
         writer.writerows(row for row, _ in rows)
 
     print(f"\nГотово. {len(rows)} лотов (PASS/WATCH) сохранено в {filename}")
+
+
+def main():
+    if "ВСТАВЬ_СЮДА" in EBAY_CLIENT_ID or "ВСТАВЬ_СЮДА" in DISCOGS_TOKEN:
+        print("Заполни EBAY_CLIENT_ID, EBAY_CLIENT_SECRET и DISCOGS_TOKEN в начале файла.")
+        return
+
+    cfg = load_config()
+    search_queries = build_search_queries(cfg)
+
+    print("Получаю eBay токен...")
+    try:
+        token = get_ebay_token()
+    except requests.exceptions.RequestException as e:
+        print(f"Не удалось получить eBay OAuth-токен: {e}\n"
+              f"Проверь EBAY_CLIENT_ID/EBAY_CLIENT_SECRET — должен быть "
+              f"Production keyset (не Sandbox), без лишних пробелов.")
+        return
+
+    rows = []          # (row_dict, priority_score) — уйдут в CSV, только PASS/WATCH
+    counters = {"bundles": 0, "no_release": 0, "no_stats": 0}
+
+    try:
+        for query in search_queries:
+            print(f"\nИщу на eBay: '{query}'")
+            try:
+                items = search_ebay(token, query, cfg, limit=MAX_RESULTS_PER_QUERY)
+            except requests.exceptions.RequestException as e:
+                print(f"  Ошибка eBay API: {e}")
+                continue
+
+            print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
+
+            for item in items:
+                try:
+                    outcome = process_item(item, cfg)
+                except Exception as e:
+                    # Один битый лот (неожиданный формат ответа API, сетевой
+                    # обрыв мимо discogs_get) не должен останавливать весь
+                    # батч из сотен лотов.
+                    print(f"  Пропуск лота из-за ошибки обработки: "
+                          f"{item['title'][:50]} — {e}")
+                    continue
+
+                if outcome == "bundle":
+                    counters["bundles"] += 1
+                    print(f"  БАНДЛ (ручной разбор): {item['title'][:70]}")
+                elif outcome == "no_release":
+                    counters["no_release"] += 1
+                elif outcome == "no_stats":
+                    counters["no_stats"] += 1
+                elif outcome == "reject":
+                    pass
+                elif outcome is not None:
+                    rows.append(outcome)
+    finally:
+        finalize(rows, counters, cfg)
 
 
 if __name__ == "__main__":
