@@ -371,6 +371,47 @@ known_code_issues:
   - "Сопоставление лота с Discogs идёт, похоже, через master-страницу/поиск по названию. Нужно резолвить до конкретного release по catalog_number+country (см. §2) — иначе на one в 3-10 раз ошибка в оценке, как было с Bennie Maupin/Bill Connors сегодня."
   - "Нет obработки 'нет данных' (null low/median/high) — такие релизы не должны попадать в PASS."
   - "EBAY_CLIENT_ID/SECRET всё ещё плейсхолдеры — без них скрипт не может вообще ничего проверить, это блокер #1 прямо сейчас, config тут не поможет."
+  - >
+    ДОБАВЛЕНО после первого живого прогона (25.08.2026): у используемого
+    Discogs-токена не заполнены Seller Settings -> marketplace/price_suggestions
+    всегда 404 ("You must fill out your seller settings first"), даже без
+    намерения реально продавать. Пользователь решил не заводить seller-профиль
+    ради этого, поэтому скрипт работает в DEGRADED MODE: median и high
+    приравниваются к low (см. discogs_get_stats() в ebay_vinyl_3x_finder.py).
+    Практическое следствие для verdict_rules (§4): т.к. margin_on_high теперь
+    ВСЕГДА равен margin_condition_adjusted, ветка WATCH "margin_on_high >=
+    target*watch_on_high_threshold_pct" перестаёт быть независимым сигналом —
+    она математически поглощается условием "margin_condition_adjusted >=
+    grey_zone_lower" (grey_zone_lower=1.8 ниже, чем target*0.9=2.7, значит
+    более мягкое условие всегда решает первым). Именно ради этой ветки A.R.C.,
+    Gismonti Solo и Sacred Hymns в calibration_examples получали WATCH — с
+    настоящими Discogs-цифрами. В deграded mode такой сигнал "high перекрывает
+    x3, а median — нет" физически не может сработать: spread_ratio тоже всегда
+    1.0, поэтому extreme_spread_ratio (§3) тоже не имеет эффекта. Это не
+    поломка чекера — PASS/WATCH логика внутренне непротиворечива и на всех 10
+    calibration_examples по-прежнему даёт 10/10 (см. test_calibration.py) — а
+    системное сужение того, что вообще может пройти дальше low. На сегодняшних
+    10 лотах расхождений с live-скриптом нет ЧИСТО ПО СОВПАДЕНИЮ: у всех трёх
+    (A.R.C., Gismonti, Sacred Hymns) после добавления forwarding в Москву
+    margin_on_high и так упал ниже WATCH-порога, REJECT совпал бы в любом
+    случае. Для новых лотов это совпадение не гарантировано — деградированный
+    режим будет пропускать часть реальных WATCH-кандидатов, где ИМЕННО high
+    (а не median) перекрывает цель. Единственные пути вернуть двухуровневую
+    median/high логику: (1) заполнить Discogs Seller Settings и разблокировать
+    price_suggestions, либо (2) скрейпить блок 'Price Statistics' со страницы
+    релиза на discogs.com напрямую — так считались calibration_examples
+    вручную, это ДРУГОЙ источник данных, с price_suggestions не сверялся и
+    может не совпадать с ним даже при доступном API.
+  - >
+    ДОБАВЛЕНО: eBay Browse API не отдаёт watchers/views (см. ЧЕСТНО О
+    ГРАНИЦАХ в шапке ebay_vinyl_3x_finder.py) — undervalued_priority (§4.5)
+    реально работает только по сигналу bid_count<=1, сигнал watchers<=2
+    никогда не участвует (watchers всегда захардкожен в 0 при сборке
+    example). Для практического использования это не критично: список
+    кандидатов после margin+budget фильтра короткий, watchers можно
+    проверить глазами в браузере перед решением о ставке — именно на этом
+    шаге стоило бы заметить 15 watchers у Bennie Maupin вручную, а не
+    полагаться на автоматику.
 
 
 # =====================================================================
