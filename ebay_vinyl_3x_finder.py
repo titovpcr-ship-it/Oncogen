@@ -89,6 +89,7 @@ Discogs public API официально не отдаёт "низкая/меди
 ======================================================================
 """
 
+import csv
 import re
 import time
 from datetime import datetime
@@ -108,6 +109,19 @@ EBAY_CLIENT_SECRET = "ВСТАВЬ_СЮДА_EBAY_CERT_ID"
 DISCOGS_TOKEN = "TiwOLoCfLsKOGriQiFBBvUvbaEdPGSeBdVJgtueN"
 
 CONFIG_PATH = Path(__file__).with_name("ebay_vinyl_sniper_config.yaml")
+
+# §3 обратной связи (см. известные ограничения в конфиге): накопительный
+# лог рекомендаций поверх per-run candidates_*.csv — не перетирается между
+# запусками, чтобы через 20-30 сделок можно было пересчитать
+# condition_multiplier/margin_targets на реальных исходах, а не на разовой
+# калибровке 25.08.2026.
+DECISIONS_LOG_PATH = Path(__file__).with_name("decisions_log.csv")
+DECISIONS_LOG_COLUMNS = [
+    "run_date", "verdict", "title", "listing_url", "current_price", "landed_cost",
+    "discogs_median", "margin_condition_adjusted", "catalog_match_confidence",
+    "bought", "bought_price_usd", "sold_price_usd", "sold_date",
+    "actual_grade_received", "notes_outcome",
+]
 
 # Сколько максимум лотов запрашивать с eBay на один поисковый запрос
 MAX_RESULTS_PER_QUERY = 30
@@ -566,14 +580,61 @@ def finalize(rows, counters, cfg):
         return
 
     filename = cfg["output"]["csv_path"].format(date=datetime.now().strftime("%Y%m%d_%H%M"))
-    import csv as csv_module
     columns = cfg["output"]["columns"]
     with open(filename, "w", newline="", encoding="utf-8") as f:
-        writer = csv_module.DictWriter(f, fieldnames=columns)
+        writer = csv.DictWriter(f, fieldnames=columns)
         writer.writeheader()
         writer.writerows(row for row, _ in rows)
 
     print(f"\nГотово. {len(rows)} лотов (PASS/WATCH) сохранено в {filename}")
+
+    appended = append_decisions_log(rows)
+    if appended:
+        print(f"Добавлено {appended} новых записей в {DECISIONS_LOG_PATH.name} "
+              f"(колонки bought_price_usd/sold_price_usd/sold_date/actual_grade_received "
+              f"заполняются вручную после сделки — см. §3 в известных ограничениях конфига).")
+
+
+def append_decisions_log(rows):
+    """Копит рекомендации across запусков (не перетирается, в отличие от
+    per-run candidates_*.csv) — дедуп по listing_url, чтобы повторный
+    запуск не плодил дубли одного и того же лота. Столбцы с исходом
+    сделки (bought_price_usd/sold_price_usd/sold_date/actual_grade_received/
+    notes_outcome) скрипт оставляет пустыми — их дописывают вручную после
+    факта, это и есть накопление данных для будущей перекалибровки."""
+    if not rows:
+        return 0
+
+    existing_urls = set()
+    file_exists = DECISIONS_LOG_PATH.exists()
+    if file_exists:
+        with open(DECISIONS_LOG_PATH, newline="", encoding="utf-8") as f:
+            existing_urls = {r.get("listing_url", "") for r in csv.DictReader(f)}
+
+    run_date = datetime.now().strftime("%Y-%m-%d")
+    new_rows = [row for row, _ in rows if row["listing_url"] not in existing_urls]
+    if not new_rows:
+        return 0
+
+    with open(DECISIONS_LOG_PATH, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=DECISIONS_LOG_COLUMNS)
+        if not file_exists:
+            writer.writeheader()
+        for row in new_rows:
+            writer.writerow({
+                "run_date": run_date,
+                "verdict": row["verdict"],
+                "title": row["title"],
+                "listing_url": row["listing_url"],
+                "current_price": row["current_price"],
+                "landed_cost": row["landed_cost"],
+                "discogs_median": row["discogs_median"],
+                "margin_condition_adjusted": row["margin_condition_adjusted"],
+                "catalog_match_confidence": row["catalog_match_confidence"],
+                "bought": "", "bought_price_usd": "", "sold_price_usd": "",
+                "sold_date": "", "actual_grade_received": "", "notes_outcome": "",
+            })
+    return len(new_rows)
 
 
 def main():
