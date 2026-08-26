@@ -433,6 +433,11 @@ def discogs_resolve_release(item, cfg):
         # catno ниже, так что сужать поиск текстом не обязательно.
         results = discogs_search(catno=catno)
         if not results:
+            # Пауза между двумя реальными HTTP-вызовами Discogs внутри
+            # одного "логического шага" — иначе они улетают подряд без
+            # DISCOGS_RATE_LIMIT_SLEEP (та пауза стоит только СНАРУЖИ,
+            # после всей функции), что рвёт равномерный темп ~60 запросов/мин.
+            time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
             results = discogs_search(q=clean_title, catno=catno)
     else:
         results = discogs_search(q=clean_title)
@@ -643,7 +648,13 @@ def finalize(rows, counters, cfg):
 
     print(f"\nПропущено: {counters['bundles']} бандлов (ручной разбор), "
           f"{counters['no_release']} без сопоставления с Discogs, "
-          f"{counters['no_stats']} без полных данных о цене (low/median/high).")
+          f"{counters['no_stats']} без полных данных о цене (low/median/high), "
+          f"{counters['duplicates']} дублей между пересекающимися поисковыми запросами.")
+
+    needs_photo = sum(1 for row, _ in rows if row.get("photo_review_urls"))
+    if rows:
+        print(f"Из {len(rows)} найденных: {len(rows) - needs_photo} с exact catalog_match, "
+              f"{needs_photo} требуют фото-сверки каталожного номера (photo_review_urls).")
 
     if not rows:
         print("\nНичего не найдено с вердиктом PASS/WATCH. "
@@ -728,7 +739,15 @@ def main():
         return
 
     rows = []          # (row_dict, priority_score) — уйдут в CSV, только PASS/WATCH
-    counters = {"bundles": 0, "no_release": 0, "no_stats": 0}
+    counters = {"bundles": 0, "no_release": 0, "no_stats": 0, "duplicates": 0}
+    # Дедуп между 12 (частично пересекающимися) поисковыми запросами —
+    # один и тот же реальный лот легко попадает в выдачу двух разных
+    # запросов (напр. заголовок с упоминанием двух лейблов). Без этого
+    # он бы тратил Discogs-квоту повторно и, если проходил бы фильтры,
+    # дублировался в candidates_*.csv/decisions_log.csv в рамках одного
+    # прогона (append_decisions_log дедупит только против уже
+    # сохранённого файла, не против дублей внутри текущего батча).
+    seen_item_ids = set()
 
     try:
         for query in search_queries:
@@ -742,6 +761,13 @@ def main():
             print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
 
             for item in items:
+                dedup_key = item.get("item_id") or item.get("item_url")
+                if dedup_key and dedup_key in seen_item_ids:
+                    counters["duplicates"] += 1
+                    continue
+                if dedup_key:
+                    seen_item_ids.add(dedup_key)
+
                 try:
                     outcome = process_item(item, cfg, token)
                 except Exception as e:
@@ -749,7 +775,7 @@ def main():
                     # обрыв мимо discogs_get) не должен останавливать весь
                     # батч из сотен лотов.
                     print(f"  Пропуск лота из-за ошибки обработки: "
-                          f"{item['title'][:50]} — {e}")
+                          f"{item.get('title', '?')[:50]} — {e}")
                     continue
 
                 if outcome == "bundle":
