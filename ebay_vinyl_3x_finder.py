@@ -146,8 +146,14 @@ DECISIONS_LOG_COLUMNS = [
     "actual_grade_received", "notes_outcome",
 ]
 
-# Сколько максимум лотов запрашивать с eBay на один поисковый запрос
-MAX_RESULTS_PER_QUERY = 30
+# Сколько максимум лотов запрашивать с eBay на один поисковый запрос.
+# ПОВЫШЕНО 26.08.2026 (было 30) — обнаружили вживую, что eBay сортирует
+# "Best Match" нестабильно между запусками: реальный активный лот (John
+# Coltrane - Crescent) выпал из топ-30 уже на следующем прогоне, хотя
+# всё ещё был живым и в бюджете. Bump до 100 не бьёт по rate limit —
+# это дешёвый eBay-запрос (не Discogs), а дальше всё равно проходит
+# бюджетный фильтр §4.5 до похода в Discogs.
+MAX_RESULTS_PER_QUERY = 100
 
 DISCOGS_SEARCH_URL = "https://api.discogs.com/database/search"
 DISCOGS_STATS_URL = "https://api.discogs.com/marketplace/stats/{release_id}"
