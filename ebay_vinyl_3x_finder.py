@@ -720,6 +720,37 @@ def discogs_resolve_release(item, cfg):
     else:
         confidence = "manual_review" if dm.get("on_ambiguous_catalog") == "manual_review" else "fuzzy"
 
+        # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, Jackie McLean —
+        # 4, 5 And 6, "OJC Prestige" без единой цифры в тексте лота):
+        # даже когда в самом листинге catno вообще не напечатан, у
+        # резолвнутого фаззи-поиском релиза почти всегда ЕСТЬ свой catno
+        # на Discogs — и он может быть так же задублирован (несколько
+        # отдельных карточек одного тиража, см. most_liquid выше), как и
+        # catno, добытый из текста листинга. Не ограничиваемся первым
+        # попавшимся фаззи-хитом: смотрим, сколько всего релизов делят
+        # catno найденного топа, и при необходимости пересаживаемся на
+        # самую торгуемую карточку тем же способом (совпадение названия,
+        # потом страна, потом ликвидность). confidence остаётся
+        # manual_review/fuzzy — этот catno не подтверждён текстом лота,
+        # только Discogs-данными самого топ-результата.
+        discogs_catno = top.get("catno")
+        if discogs_catno:
+            time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
+            dup_norm = normalize_catno(discogs_catno)
+            dup_results = discogs_search(catno=discogs_catno)
+            same_catno = [r for r in dup_results if normalize_catno(r.get("catno", "")) == dup_norm]
+            if len(same_catno) > 1:
+                by_title = [r for r in same_catno if titles_overlap(r.get("title", ""), item["title"])]
+                candidates = by_title if by_title else same_catno
+                country_hint = guess_country_hint(item["title"])
+                matching_country = [
+                    r for r in candidates
+                    if country_hint and country_hint.lower() in (r.get("country") or "").lower()
+                ]
+                pool = matching_country if matching_country else candidates
+                top = most_liquid(pool)
+                release_id = top.get("id", release_id)
+
     # Финальный барьер (не только для многозначного catno — так же для
     # чистого фаззи-поиска по названию, catno=None): если итоговый
     # release всё равно не имеет НИ ОДНОГО общего значимого слова с
