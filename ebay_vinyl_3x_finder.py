@@ -595,8 +595,20 @@ def most_liquid(results):
 # Jazz"), а ценовая разница огромна. Если у резолвнутого релиза есть один
 # из этих маркеров формата, а в тексте листинга — ни намёка на него,
 # значит скорее всего попали не в то издание.
-PREMIUM_EDITION_MARKERS = {"Limited Edition", "Numbered", "Box Set", "45 RPM"}
-PREMIUM_EDITION_HINTS = ("limited", "numbered", "box set", "boxset", "45 rpm", "45rpm")
+# ДОПОЛНЕНО 26.08.2026 (ручной разбор пользователя, Ornette Coleman —
+# Shape Of Jazz To Come): "Club Edition" пропущен в первой версии
+# списка — а это ровно та же ловушка, что и Limited/Numbered/45 RPM:
+# Vinyl Me, Please продаёт эксклюзивные для подписчиков переиздания
+# именно под этой меткой формата, и обычный продавец, пишущий в
+# заголовке просто "Reissue", их не имеет в виду. Живой пример: фаззи-
+# поиск взял release/24779189 (2022, VMP Club Edition, 180g) вместо
+# обычного US-рессиза 1974 года (release/1151114) — тот же паттерн, что
+# с Coltrane Jazz box set, но под другим форматным маркером.
+PREMIUM_EDITION_MARKERS = {"Limited Edition", "Numbered", "Box Set", "45 RPM", "Club Edition"}
+PREMIUM_EDITION_HINTS = (
+    "limited", "numbered", "box set", "boxset", "45 rpm", "45rpm",
+    "club edition", "vmp", "vinyl me please", "vinyl me, please",
+)
 
 
 def has_unlisted_premium_edition(result, ebay_title):
@@ -762,20 +774,24 @@ def discogs_resolve_release(item, cfg):
     # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
     # reissue -> нумерованный box set 45RPM 2025 года): та же проблема,
     # что с compilation ниже, но по КЛАССУ ИЗДАНИЯ, а не по тому, что это
-    # другой альбом. Пытаемся найти среди тех же результатов вариант без
-    # непрошенных премиум-маркеров, который тоже проходит по названию —
-    # если есть, берём его (понижая confidence, раз пришлось выбирать);
-    # если нет ни одного подходящего — не угадываем, отбрасываем совсем.
+    # другой альбом. Ищем среди тех же результатов ВСЕ варианты без
+    # непрошенных премиум-маркеров, которые тоже проходят по названию —
+    # если такие есть, берём среди них самый ликвидный (most_liquid, см.
+    # выше), а не первый по порядку выдачи Discogs: порядок релевантности
+    # Discogs — это не то же самое, что "какой пресс реально продают на
+    # eBay" (см. разбор Ornette Coleman 26.08 — наивный next() брал
+    # первую попавшуюся не-премиум карточку по счастливому совпадению
+    # порядка, а не по каким-либо реальным основаниям). Если нет ни
+    # одного подходящего — не угадываем, отбрасываем совсем.
     if has_unlisted_premium_edition(top, item["title"]):
-        fallback = next(
-            (r for r in results
-             if titles_overlap(r.get("title", ""), item["title"])
-             and not has_unlisted_premium_edition(r, item["title"])),
-            None,
-        )
-        if not fallback:
+        fallback_candidates = [
+            r for r in results
+            if titles_overlap(r.get("title", ""), item["title"])
+            and not has_unlisted_premium_edition(r, item["title"])
+        ]
+        if not fallback_candidates:
             return None
-        top = fallback
+        top = most_liquid(fallback_candidates)
         release_id = top.get("id", release_id)
         confidence = "manual_review"
 
