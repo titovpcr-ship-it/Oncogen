@@ -566,6 +566,28 @@ def titles_overlap(discogs_title, ebay_title):
     return bool(discogs_significant & title_words(ebay_title))
 
 
+# НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
+# reissue -> зарезолвился в нумерованный box set 45RPM 2025 года): одно и
+# то же название альбома существует в изданиях радикально разного класса
+# — обычный современный 180g реиздание vs лимитированный нумерованный
+# audiophile-бокс. titles_overlap() тут бессилен (оба буквально "Coltrane
+# Jazz"), а ценовая разница огромна. Если у резолвнутого релиза есть один
+# из этих маркеров формата, а в тексте листинга — ни намёка на него,
+# значит скорее всего попали не в то издание.
+PREMIUM_EDITION_MARKERS = {"Limited Edition", "Numbered", "Box Set", "45 RPM"}
+PREMIUM_EDITION_HINTS = ("limited", "numbered", "box set", "boxset", "45 rpm", "45rpm")
+
+
+def has_unlisted_premium_edition(result, ebay_title):
+    descs = set()
+    for fmt in (result.get("formats") or []):
+        descs.update(fmt.get("descriptions") or [])
+    if not (descs & PREMIUM_EDITION_MARKERS):
+        return False
+    t = ebay_title.lower()
+    return not any(hint in t for hint in PREMIUM_EDITION_HINTS)
+
+
 def discogs_resolve_release(item, cfg):
     """§2: резолвит до конкретного release_id, требует точного совпадения
     каталожного номера для catalog_match_confidence == 'exact'.
@@ -676,6 +698,26 @@ def discogs_resolve_release(item, cfg):
     # Такое не должно попадать в кандидаты вообще, даже с manual_review.
     if not titles_overlap(top.get("title", ""), item["title"]):
         return None
+
+    # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
+    # reissue -> нумерованный box set 45RPM 2025 года): та же проблема,
+    # что с compilation ниже, но по КЛАССУ ИЗДАНИЯ, а не по тому, что это
+    # другой альбом. Пытаемся найти среди тех же результатов вариант без
+    # непрошенных премиум-маркеров, который тоже проходит по названию —
+    # если есть, берём его (понижая confidence, раз пришлось выбирать);
+    # если нет ни одного подходящего — не угадываем, отбрасываем совсем.
+    if has_unlisted_premium_edition(top, item["title"]):
+        fallback = next(
+            (r for r in results
+             if titles_overlap(r.get("title", ""), item["title"])
+             and not has_unlisted_premium_edition(r, item["title"])),
+            None,
+        )
+        if not fallback:
+            return None
+        top = fallback
+        release_id = top.get("id", release_id)
+        confidence = "manual_review"
 
     # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, POST BOP -> Atlantic
     # Jazz): сборники ("Various Artists" / format содержит "Compilation")
