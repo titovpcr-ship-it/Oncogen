@@ -35,12 +35,17 @@ Discogs public API официально не отдаёт "низкая/меди
            токена (404 "You must fill out your seller settings first"),
            даже без намерения реально продавать. Пользователь решил не
            заводить seller-профиль ради этого — поэтому используемый
-           здесь токен работает в DEGRADED MODE: median и high берутся
-           РАВНЫМИ low (см. discogs_get_stats). Это менее точно, чем
-           задуманная в конфиге condition-adjusted median/high логика
-           (нет сигнала "high перекрывает x3, а median — нет", нет
-           реального spread_ratio) — подробности см. в комментарии
-           discogs_get_stats().
+           здесь токен работает в DEGRADED MODE: median и high оцениваются
+           как low × DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR (≈2.0, эмпирика
+           с калибровки 25.08.2026 — см. константу выше по файлу). ИСПРАВЛЕНО
+           26.08.2026: раньше здесь стояло median=high=low БЕЗ коэффициента,
+           из-за чего margin_targets.target_margin=3.0 (рассчитанный под
+           настоящую median) фактически требовал ~6.6x от low — вдвое
+           жёстче задуманного, почти ничего не находилось. Это по-прежнему
+           менее точно, чем задуманная в конфиге condition-adjusted
+           median/high логика (нет сигнала "high перекрывает x3, а median —
+           нет", spread_ratio — artefact формулы, не измерение) —
+           подробности см. в комментарии discogs_get_stats().
   - eBay Browse API НЕ отдаёт watchers/views (это данные, видимые только
     продавцу в Seller Hub). bid_count пытаемся читать из ответа, но он
     не гарантированно присутствует для каждого аукциона. Это значит,
@@ -150,6 +155,22 @@ DISCOGS_PRICE_SUGGESTIONS_URL = "https://api.discogs.com/marketplace/price_sugge
 
 # Discogs просит не превышать ~60 запросов/мин на бесплатном токене
 DISCOGS_RATE_LIMIT_SLEEP = 1.1
+
+# DEGRADED MODE: коэффициент, которым домножается low, чтобы получить
+# оценку median/high, когда price_suggestions недоступен (см.
+# discogs_get_stats). Посчитан 26.08.2026 на 9 из 10 calibration_examples
+# в конфиге, где известны и low, и настоящая median: median/low = от 1.49x
+# до 4.38x, среднее 2.19x. Округлено до 2.0 — не изображаем точность,
+# которой нет при разбросе такого масштаба. НЕ трогает
+# margin_targets.target_margin/grey_zone_lower в конфиге (те калиброваны
+# под настоящую median и должны остаться рабочими, если/когда Seller
+# Settings на Discogs заполнят и фоллбэк перестанет быть нужен) — вместо
+# этого корректируем сам вход. Эффект: практический порог PASS становится
+# ~target_margin/DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR = 3.0/2.0 = 1.5x от
+# low, а не буквально 3.0x от low (что при low систематически ниже
+# настоящей median эквивалентно требованию ~6.6x от неё — см. обсуждение
+# 26.08.2026, пользователь выбрал это как разумный компромисс).
+DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR = 2.0
 
 EU_COUNTRIES = {
     "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
@@ -637,19 +658,27 @@ def discogs_get_stats(release_id):
     Settings -> price_suggestions (median/high) всегда 404. Пользователь
     предпочёл не заводить PayPal/seller-профиль ради этого, поэтому
     вместо REJECT-всего-подряд (что дал бы честный reject_on_missing_stats
-    без fallback) используем low как единственную доступную оценку и для
-    median, и для high. Это ЗАВЕДОМО МЕНЕЕ ТОЧНО, чем задуманная в конфиге
-    condition-adjusted median/high логика:
-      - spread_ratio всегда 1.0 -> сигнал "extreme spread, будь осторожнее"
-        (§3) не работает, его просто нет;
-      - сигнал "high перекрывает x3, а median — нет" (§4, WATCH-ветка) не
-        работает — high==median здесь;
-      - т.к. lowest_price обычно НИЖЕ настоящей медианы продаж, PASS/WATCH
-        будут срабатывать реже и на более скромных числах, чем если бы
-        median/high были настоящими — то есть промахи скорее в сторону
-        пропущенных лотов, а не ложных PASS. Если/когда Seller Settings на
-        Discogs заполнят — просто уберётся необходимость в фоллбэке, весь
-        остальной код (calib.evaluate) не потребует изменений."""
+    без fallback) оцениваем median/high через low, домноженный на
+    DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR (см. константу выше — эмпирически
+    ~2x, посчитано на калибровочных данных 25.08.2026). ИСПРАВЛЕНО
+    26.08.2026: раньше здесь стояло median=high=low БЕЗ коэффициента —
+    из-за этого требование margin_targets.target_margin=3.0 (рассчитанное
+    под настоящую median) фактически означало ~6.6x от low, вдвое жёстче
+    задуманного, и почти ничего не проходило. С коэффициентом 2.0
+    практический порог — ~1.5x от low, что и обсуждали с пользователем.
+
+    Это по-прежнему МЕНЕЕ ТОЧНО, чем настоящая condition-adjusted
+    median/high логика конфига:
+      - spread_ratio теперь не 1.0, а ровно DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR
+        (т.к. high=low*factor) — не отражает реальный разброс цен между
+        состояниями, это artefact формулы, не измерение;
+      - сигнал "high перекрывает x3, а median — нет" (§4, WATCH-ветка)
+        по-прежнему не работает — high==median здесь;
+      - margin_on_low считается от НЕДОМНОЖЕННОГО low (честный "пол"),
+        margin_median/high — от домноженной оценки. Если/когда Seller
+        Settings на Discogs заполнят — эта функция просто перестанет
+        домножать, весь остальной код (calib.evaluate) не потребует
+        изменений."""
     low = discogs_lowest_price(release_id)
     time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
     if low is None:
@@ -658,8 +687,8 @@ def discogs_get_stats(release_id):
     median, high = discogs_price_suggestions(release_id)
     time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
     if median is None or high is None:
-        median = low
-        high = low
+        median = low * DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR
+        high = low * DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR
 
     return {"low": low, "median": float(median), "high": float(high)}
 
