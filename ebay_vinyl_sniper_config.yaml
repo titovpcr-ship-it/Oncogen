@@ -318,11 +318,26 @@ auction_timing:
 # ---------------------------------------------------------------------
 search_scope:
   labels_priority:
-    - "ECM Records"          # основной фокус сегодняшнего разбора
+    - "ECM Records"          # основной фокус разбора 25.08.2026
     - "Blue Note"
     - "Impulse!"
     - "Verve"
-    - "Atlantic (jazz)"
+    - "Atlantic Records jazz"   # ИСПРАВЛЕНО: было "Atlantic (jazz)" — скобки как
+                                # часть текста поискового запроса eBay не
+                                # дизамбигуируют лейбл от рок-каталога Atlantic,
+                                # просто портят выдачу; "jazz" обычным словом
+                                # сужает точнее (build_search_queries просто
+                                # добавляет "vinyl lp" к каждой строке ниже)
+    # ДОБАВЛЕНО (расширение поиска по просьбе пользователя 25.08.2026) —
+    # тот же фокус (джаз), шире охват: лейблы с сильным коллекционным
+    # спросом на Discogs, не только "большая четвёрка" выше
+    - "Prestige Records"
+    - "Riverside Records"
+    - "Contemporary Records"
+    - "CTI Records"
+    - "Black Saint Soul Note"
+    - "SteepleChase Records"
+    - "Pablo Records"
   exclude_format_keywords: ["CD", "cassette", "8-track", "digital"]
   flag_not_autoreject_keywords:   # не отбрасывай авто, но помечай для ручной проверки
     - "promo"
