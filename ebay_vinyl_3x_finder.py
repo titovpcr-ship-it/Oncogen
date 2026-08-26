@@ -1303,6 +1303,27 @@ def main():
                 print(f"\nИщу на eBay: '{query}' (sort={sort})")
                 try:
                     items = search_ebay(token, query, cfg, limit=MAX_RESULTS_PER_QUERY, sort=sort)
+                except requests.exceptions.HTTPError as e:
+                    # НАЙДЕНО 26.08.2026 (живой прогон после расширения охвата
+                    # до 93 запросов): OAuth-токен eBay (client_credentials)
+                    # получается ОДИН РАЗ в начале main() и живёт ограниченное
+                    # время (~2ч у eBay). Раньше при истечении токена ВСЕ
+                    # оставшиеся запросы до конца прогона молча падали с 401 и
+                    # пропускались — на живом прогоне это стоило 23 из 31
+                    # лейблов (почти все новые, только что добавленные ради
+                    # охвата). Теперь при 401 обновляем токен и повторяем
+                    # РОВНО этот запрос один раз — не весь прогон целиком.
+                    if e.response is not None and e.response.status_code == 401:
+                        print("  eBay-токен истёк — обновляю и повторяю запрос...")
+                        try:
+                            token = get_ebay_token()
+                            items = search_ebay(token, query, cfg, limit=MAX_RESULTS_PER_QUERY, sort=sort)
+                        except requests.exceptions.RequestException as e2:
+                            print(f"  Ошибка eBay API после обновления токена: {e2}")
+                            continue
+                    else:
+                        print(f"  Ошибка eBay API: {e}")
+                        continue
                 except requests.exceptions.RequestException as e:
                     print(f"  Ошибка eBay API: {e}")
                     continue
