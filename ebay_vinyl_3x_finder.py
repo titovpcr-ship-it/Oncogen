@@ -284,10 +284,22 @@ def search_ebay(token, query, cfg, limit=30):
             continue
 
         try:
-            price = float(it.get("price", {}).get("value", 0))
+            price = float((it.get("price") or {}).get("value"))
         except (TypeError, ValueError):
-            continue
-        if price <= 0:
+            price = None
+
+        # НАЙДЕНО 26.08.2026: у аукционов item_summary/search регулярно
+        # отдаёт price.value = null (проверено вживую — сам аукцион при
+        # этом активен, ставки могут быть). Реальная цена (текущая ставка
+        # или минимальная цена для ставки) есть в item detail. Без этого
+        # фикса такие лоты тихо терялись на float(None) -> TypeError ->
+        # continue — а это чаще всего аукционы с 0-1 ставками, то есть
+        # именно те "непримеченные руками" лоты, ради которых вообще
+        # стоит смотреть аукционы, а не только Buy It Now.
+        if price is None and "AUCTION" in (it.get("buyingOptions") or []):
+            price = fetch_ebay_item_current_price(it.get("itemId"), token)
+
+        if price is None or price <= 0:
             continue
         # Бюджетный фильтр §4.5: жёсткий отсев ДО похода в Discogs —
         # не тратим API-квоту на заведомо дорогие лоты.
@@ -327,16 +339,14 @@ def search_ebay(token, query, cfg, limit=30):
     return results
 
 
-def fetch_ebay_item_photos(item_id, token):
-    """П.1 обратной связи (25.08.2026): каталожный номер практически
-    никогда не встречается в тексте листинга — только на фото лейбла.
-    item_summary из search НЕ содержит доп. фото, нужен отдельный вызов
-    item detail. Дорого гонять на каждый лот, поэтому вызывается ТОЧЕЧНО
-    из process_item() — только для лотов, уже прошедших margin/budget по
-    тексту, но без exact catalog_match. Возвращает [] тихо при любой
-    ошибке (доп. фото — bonus-step, не должен ронять обработку лота)."""
+def fetch_ebay_item_detail(item_id, token):
+    """GET /buy/browse/v1/item/{id} — полная карточка лота (доп. фото,
+    currentBidPrice и т.д.), которой нет в item_summary/search. Общий
+    хелпер для fetch_ebay_item_photos() и fetch_ebay_item_current_price().
+    Возвращает None тихо при любой ошибке — оба вызывающих места это
+    доп./восстановительные шаги, не должны ронять обработку лота."""
     if not item_id:
-        return []
+        return None
     url = f"https://api.ebay.com/buy/browse/v1/item/{item_id}"
     headers = {
         "Authorization": f"Bearer {token}",
@@ -345,10 +355,40 @@ def fetch_ebay_item_photos(item_id, token):
     try:
         resp = requests.get(url, headers=headers, timeout=30)
     except requests.exceptions.RequestException:
-        return []
+        return None
     if resp.status_code != 200:
+        return None
+    return resp.json()
+
+
+def fetch_ebay_item_current_price(item_id, token):
+    """НАЙДЕНО 26.08.2026: item_summary/search регулярно отдаёт
+    price.value = null для активных аукционов (лот при этом реальный,
+    ставки могут быть) — подтверждено вживую на нескольких ECM-лотах.
+    item detail эту цену отдаёт (currentBidPrice, а если ставок 0 — то
+    же значение, что и minimumPriceToBid). Без этого фикса такие лоты
+    молча терялись в search_ebay() на float(None) -> TypeError ->
+    continue, а это обычно самые непримеченные лоты (0-1 ставок)."""
+    data = fetch_ebay_item_detail(item_id, token)
+    if not data:
+        return None
+    val = ((data.get("currentBidPrice") or data.get("price") or {})).get("value")
+    try:
+        return float(val)
+    except (TypeError, ValueError):
+        return None
+
+
+def fetch_ebay_item_photos(item_id, token):
+    """П.1 обратной связи (25.08.2026): каталожный номер практически
+    никогда не встречается в тексте листинга — только на фото лейбла.
+    item_summary из search НЕ содержит доп. фото, нужен отдельный вызов
+    item detail. Дорого гонять на каждый лот, поэтому вызывается ТОЧЕЧНО
+    из process_item() — только для лотов, уже прошедших margin/budget по
+    тексту, но без exact catalog_match."""
+    data = fetch_ebay_item_detail(item_id, token)
+    if not data:
         return []
-    data = resp.json()
 
     urls = []
     primary = (data.get("image") or {}).get("imageUrl")
