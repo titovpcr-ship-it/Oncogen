@@ -677,6 +677,20 @@ def discogs_resolve_release(item, cfg):
     if not titles_overlap(top.get("title", ""), item["title"]):
         return None
 
+    # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, POST BOP -> Atlantic
+    # Jazz): сборники ("Various Artists" / format содержит "Compilation")
+    # особенно уязвимы для фаззи-поиска по названию — разные тома одной
+    # серии-сэмплера (Atlantic Jazz Gallery, Pablo In-Store Sampler и
+    # т.п.) делят почти идентичные общие слова в названии, так что
+    # titles_overlap() выше их не ловит вообще (оба тома буквально
+    # "Atlantic Jazz ..."). Без ТОЧНОГО catalog match для сборника
+    # доверять его release_id нельзя — не просто понижаем confidence,
+    # а не отдаём релиз совсем (как с бандлами, §см. is_bundle в
+    # process_item), раз всё равно не сможем отличить один том от
+    # другого текстом.
+    if "Compilation" in (top.get("format") or []) and confidence != "exact":
+        return None
+
     return {
         "release_id": release_id,
         "confidence": confidence,
