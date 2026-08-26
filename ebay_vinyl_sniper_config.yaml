@@ -338,6 +338,44 @@ search_scope:
     - "Black Saint Soul Note"
     - "SteepleChase Records"
     - "Pablo Records"
+    # ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя — максимальный
+    # охват): те же критерии (джаз, сильный коллекционный спрос на
+    # Discogs), лейблы, которых раньше не было в scope вообще.
+    - "Milestone Records jazz"
+    - "Muse Records jazz"
+    - "Strata-East Records"
+    - "Xanadu Records jazz"
+    - "Savoy Records jazz"
+    - "MPS Records jazz"
+    - "Black Lion Records jazz"
+    - "Delmark Records"
+    - "Enja Records"
+    - "Argo Cadet jazz"
+    - "Vee-Jay Records jazz"
+    - "Pacific Jazz Records"
+    - "World Pacific Records jazz"
+    - "Flying Dutchman Records"
+    - "Black Jazz Records"
+    - "Cobblestone Records jazz"
+    - "Mainstream Records jazz"
+    - "Three Blind Mice jazz"     # японский аудиофильский джаз-лейбл
+    - "Trio Records Japan jazz"
+  # Дополнительные проходы сортировки eBay Browse API на каждый запрос
+  # выше (добавлено 26.08.2026, см. search_ebay() в
+  # ebay_vinyl_3x_finder.py) — дефолтный Best Match ранжирует по
+  # вовлечённости и систематически прячет именно недооценённые лоты
+  # (0-1 ставок, никто не заметил). newlyListed ловит лоты ДО того, как
+  # их вообще кто-то увидел; endingSoonest — аукционы на грани закрытия,
+  # где ни у кого физически не было времени взвинтить цену. Проверено
+  # вживую 26.08.2026 — оба реально меняют порядок выдачи. Цена этого —
+  # кратный рост числа запросов к eBay и (после дедупа) объёма лотов,
+  # доходящих до Discogs — с deep mode вместе они делают прогон заметно
+  # длиннее одного бюджетного цикла, это осознанный компромисс "не
+  # быстро, а максимально широко".
+  sort_passes:
+    - "bestMatch"
+    - "newlyListed"
+    - "endingSoonest"
   exclude_format_keywords: ["CD", "cassette", "8-track", "digital"]
   flag_not_autoreject_keywords:   # не отбрасывай авто, но помечай для ручной проверки
     - "promo"

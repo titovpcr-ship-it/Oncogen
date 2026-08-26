@@ -279,9 +279,23 @@ def get_ebay_token():
 
 # ============ EBAY: поиск лотов ============
 
-def search_ebay(token, query, cfg, limit=30):
+def search_ebay(token, query, cfg, limit=30, sort=None):
     """Ищет активные листинги на eBay по ключевому слову через Browse API,
-    применяет бюджетный фильтр (§4.5) и exclude-списки (§8) ДО Discogs-запросов."""
+    применяет бюджетный фильтр (§4.5) и exclude-списки (§8) ДО Discogs-запросов.
+
+    ВАЖНО (найдено 26.08.2026, по вопросу пользователя об "охвате"):
+    без явного sort eBay Browse API отдаёт результаты по Best Match —
+    ранжирование по вовлечённости (клики/ставки/просмотры). Это ровно
+    ПРОТИВОПОЛОЖНОЕ тому, что нужно для поиска недооценённых лотов: лот
+    с 0-1 ставками, которого никто не заметил, — именно то, что ищем,
+    и Best Match его систематически прячет вниз выдачи (см. также
+    нестабильность Best Match между прогонами — MAX_RESULTS_PER_QUERY).
+    Поэтому main() теперь дополнительно прогоняет каждый запрос через
+    sort='newlyListed' (свежие листинги до того, как их вообще кто-то
+    увидел) и sort='endingSoonest' (аукционы на грани закрытия — где
+    физически нет времени на конкуренцию за цену). Проверено вживую:
+    оба параметра реально меняют порядок выдачи (endingSoonest
+    подтверждённо сортирует по itemEndDate по возрастанию)."""
     url = "https://api.ebay.com/buy/browse/v1/item_summary/search"
     headers = {
         "Authorization": f"Bearer {token}",
@@ -293,6 +307,8 @@ def search_ebay(token, query, cfg, limit=30):
         "limit": str(limit),
         "filter": "buyingOptions:{FIXED_PRICE|AUCTION}",
     }
+    if sort and sort != "bestMatch":
+        params["sort"] = sort
 
     resp = requests.get(url, headers=headers, params=params, timeout=30)
     resp.raise_for_status()
@@ -1272,46 +1288,56 @@ def main():
     # сохранённого файла, не против дублей внутри текущего батча).
     seen_item_ids = set()
 
+    # Охват (добавлено 26.08.2026 по прямой просьбе пользователя —
+    # "захватить максимально много"): один и тот же запрос гоняем через
+    # несколько сортировок eBay, не только дефолтный Best Match — см.
+    # search_ebay() про то, почему Best Match сам по себе прячет именно
+    # недооценённые лоты. seen_item_ids ниже и так дедупит между
+    # проходами, так что пересечение (тот же лот попал и в bestMatch, и
+    # в newlyListed) не тратит Discogs-квоту повторно.
+    sort_passes = cfg["search_scope"].get("sort_passes", ["bestMatch"])
+
     try:
         for query in search_queries:
-            print(f"\nИщу на eBay: '{query}'")
-            try:
-                items = search_ebay(token, query, cfg, limit=MAX_RESULTS_PER_QUERY)
-            except requests.exceptions.RequestException as e:
-                print(f"  Ошибка eBay API: {e}")
-                continue
-
-            print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
-
-            for item in items:
-                dedup_key = item.get("item_id") or item.get("item_url")
-                if dedup_key and dedup_key in seen_item_ids:
-                    counters["duplicates"] += 1
-                    continue
-                if dedup_key:
-                    seen_item_ids.add(dedup_key)
-
+            for sort in sort_passes:
+                print(f"\nИщу на eBay: '{query}' (sort={sort})")
                 try:
-                    outcome = process_item(item, cfg, token)
-                except Exception as e:
-                    # Один битый лот (неожиданный формат ответа API, сетевой
-                    # обрыв мимо discogs_get) не должен останавливать весь
-                    # батч из сотен лотов.
-                    print(f"  Пропуск лота из-за ошибки обработки: "
-                          f"{item.get('title', '?')[:50]} — {e}")
+                    items = search_ebay(token, query, cfg, limit=MAX_RESULTS_PER_QUERY, sort=sort)
+                except requests.exceptions.RequestException as e:
+                    print(f"  Ошибка eBay API: {e}")
                     continue
 
-                if outcome == "bundle":
-                    counters["bundles"] += 1
-                    print(f"  БАНДЛ (ручной разбор): {item['title'][:70]}")
-                elif outcome == "no_release":
-                    counters["no_release"] += 1
-                elif outcome == "no_stats":
-                    counters["no_stats"] += 1
-                elif outcome == "reject":
-                    pass
-                elif outcome is not None:
-                    rows.append(outcome)
+                print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
+
+                for item in items:
+                    dedup_key = item.get("item_id") or item.get("item_url")
+                    if dedup_key and dedup_key in seen_item_ids:
+                        counters["duplicates"] += 1
+                        continue
+                    if dedup_key:
+                        seen_item_ids.add(dedup_key)
+
+                    try:
+                        outcome = process_item(item, cfg, token)
+                    except Exception as e:
+                        # Один битый лот (неожиданный формат ответа API, сетевой
+                        # обрыв мимо discogs_get) не должен останавливать весь
+                        # батч из сотен лотов.
+                        print(f"  Пропуск лота из-за ошибки обработки: "
+                              f"{item.get('title', '?')[:50]} — {e}")
+                        continue
+
+                    if outcome == "bundle":
+                        counters["bundles"] += 1
+                        print(f"  БАНДЛ (ручной разбор): {item['title'][:70]}")
+                    elif outcome == "no_release":
+                        counters["no_release"] += 1
+                    elif outcome == "no_stats":
+                        counters["no_stats"] += 1
+                    elif outcome == "reject":
+                        pass
+                    elif outcome is not None:
+                        rows.append(outcome)
     finally:
         finalize(rows, counters, cfg)
 
