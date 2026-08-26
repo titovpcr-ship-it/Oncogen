@@ -76,7 +76,10 @@ Discogs public API официально не отдаёт "низкая/меди
        * Cert ID (Client Secret)
    - Скрипт использует Browse API (production), поэтому нужен
      Production keyset, не Sandbox.
-   - Вписать App ID и Cert ID ниже в EBAY_CLIENT_ID / EBAY_CLIENT_SECRET.
+   - Передать через переменные окружения (НЕ вписывать в код — GitHub
+     Push Protection блокирует push с такими секретами внутри файла):
+       export EBAY_CLIENT_ID="..."
+       export EBAY_CLIENT_SECRET="..."
 
 2) Discogs Personal Access Token (бесплатно):
    - Зайти на https://www.discogs.com/settings/developers
@@ -96,6 +99,7 @@ Discogs public API официально не отдаёт "низкая/меди
 """
 
 import csv
+import os
 import re
 import time
 from datetime import datetime
@@ -110,8 +114,16 @@ import test_calibration as calib
 
 # ============ КОНФИГ — ЗАПОЛНИ ЭТИ ПОЛЯ ============
 
-EBAY_CLIENT_ID = "ВСТАВЬ_СЮДА_EBAY_APP_ID"
-EBAY_CLIENT_SECRET = "ВСТАВЬ_СЮДА_EBAY_CERT_ID"
+# eBay production-ключи GitHub Push Protection распознаёт как секрет и
+# блокирует push, если их вписать буквально сюда (проверено на практике
+# 26.08.2026). Поэтому — переменные окружения, не хардкод:
+#   export EBAY_CLIENT_ID="..."
+#   export EBAY_CLIENT_SECRET="..."
+# Discogs-токен остаётся хардкодом ниже — это было осознанное решение
+# пользователя ранее (личный access-токен, не production keyset, и
+# GitHub его секретом не считает).
+EBAY_CLIENT_ID = os.environ.get("EBAY_CLIENT_ID", "ВСТАВЬ_СЮДА_EBAY_APP_ID")
+EBAY_CLIENT_SECRET = os.environ.get("EBAY_CLIENT_SECRET", "ВСТАВЬ_СЮДА_EBAY_CERT_ID")
 DISCOGS_TOKEN = "TiwOLoCfLsKOGriQiFBBvUvbaEdPGSeBdVJgtueN"
 
 CONFIG_PATH = Path(__file__).with_name("ebay_vinyl_sniper_config.yaml")
