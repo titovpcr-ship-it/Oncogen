@@ -208,6 +208,7 @@ CATALOG_PATTERNS = [
     r"\bCTI[\s-]?6\d{3}(?:\s?S1)?\b",            # CTI 6021 S1
     r"\bSC[SC][\s-]?\d{4}\b",                    # SteepleChase SCS 1001 / SCC 6001
     r"\b2[0-9]{3}-\d{2,3}\b",                    # Pablo 2310-701 / 2405-418
+    r"\bOJC[\s-]?\d{2,4}\b",                     # Original Jazz Classics OJC-127
 ]
 
 CONDITION_STRIP_RE = re.compile(
@@ -566,6 +567,26 @@ def titles_overlap(discogs_title, ebay_title):
     return bool(discogs_significant & title_words(ebay_title))
 
 
+# НАЙДЕНО 26.08.2026 (ручной разбор пользователя, Hank Mobley — Tenor
+# Conclave OJC-127): один и тот же рессиз-catno регулярно принадлежит
+# НЕСКОЛЬКИМ отдельным release-записям на Discogs, которые не отличаются
+# ни названием, ни (часто) страной — просто дублирующиеся карточки одной
+# и той же пластинки (разные заводы/годы допечатки, иногда просто дубли
+# базы). titles_overlap() и guess_country_hint() тут не спасают: всё
+# совпадает. Разница в другом — у каждой карточки СВОЙ, отдельный
+# Marketplace, и на тонком рынке (мало выставленных лотов) цена — шум,
+# а не оценка. Живой пример: у OJC-127 было 5 таких карточек, low
+# варьировался от $14.96 (have=201) до $35 (have=52, единственный
+# дорогой лот). Карточка с наибольшим community.have+want — самая
+# "популярная" запись этого тиража на Discogs, к ней ближе всего
+# привязана реальная торговля, и её статистика надёжнее.
+def most_liquid(results):
+    def liquidity(r):
+        c = r.get("community") or {}
+        return (c.get("have") or 0) + (c.get("want") or 0)
+    return max(results, key=liquidity)
+
+
 # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
 # reissue -> зарезолвился в нумерованный box set 45RPM 2025 года): одно и
 # то же название альбома существует в изданиях радикально разного класса
@@ -681,11 +702,19 @@ def discogs_resolve_release(item, cfg):
                         # тексту листинга, какой из них — нельзя. Честно
                         # manual_review вместо угадывания; уйдёт в
                         # photo-review, где страна прессинга обычно видна на
-                        # самом лейбле. Если есть хотя бы один вариант с
-                        # совпадающим названием — берём его как лучшую
-                        # оценку вместо случайного results[0].
-                        if by_title:
-                            top = by_title[0]
+                        # самом лейбле. Если есть кандидаты с совпадающим
+                        # названием (и, если применимо, страной) — берём
+                        # среди них НЕ первый по порядку выдачи Discogs, а
+                        # самый "ликвидный" (most_liquid, см. выше) — тонкий
+                        # рынок отдельной дублирующейся карточки даёт шумную
+                        # цену, у популярной карточки статистика надёжнее.
+                        fallback_pool = (
+                            matching_country if (country_hint and matching_country)
+                            else by_title if by_title
+                            else None
+                        )
+                        if fallback_pool:
+                            top = most_liquid(fallback_pool)
                             release_id = top.get("id", release_id)
                         confidence = "manual_review"
     else:
