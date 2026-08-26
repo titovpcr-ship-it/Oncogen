@@ -580,11 +580,13 @@ def titles_overlap(discogs_title, ebay_title):
 # дорогой лот). Карточка с наибольшим community.have+want — самая
 # "популярная" запись этого тиража на Discogs, к ней ближе всего
 # привязана реальная торговля, и её статистика надёжнее.
+def release_liquidity(r):
+    c = r.get("community") or {}
+    return (c.get("have") or 0) + (c.get("want") or 0)
+
+
 def most_liquid(results):
-    def liquidity(r):
-        c = r.get("community") or {}
-        return (c.get("have") or 0) + (c.get("want") or 0)
-    return max(results, key=liquidity)
+    return max(results, key=release_liquidity)
 
 
 # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
@@ -663,10 +665,36 @@ def discogs_resolve_release(item, cfg):
     if not results:
         return None
 
+    # НАЙДЕНО живой проверкой глубокого режима 26.08.2026 (Mingus — Mingus
+    # Plays Piano, Impulse A-60): лейблы иногда переиспользуют тот же
+    # catno для промо-сингла 7" из того же альбома (тут — Impulse A-60
+    # промо-сингл 45 RPM, Japan 1970) — это не другой пресс LP, а
+    # совсем другой физический продукт. titles_overlap() его не ловит
+    # (тот же альбом/трек в названии), а most_liquid() у единичного
+    # выбора почти всегда его обходит за счёт веса — но для ансамбля
+    # (см. discogs_ensemble_stats) он всё равно попадает в выборку и
+    # тянет её к нерелевантной цене. Отсекаем сразу, до любой
+    # дизамбигуации — синглы никогда не то, что ищем (ищем LP).
+    results = [r for r in results if not ({"Single", '7"'} & set(r.get("format") or []))] or results
+
     top = results[0]
     release_id = top.get("id")
     if not release_id:
         return None
+
+    # Глубокий режим (добавлено 26.08.2026 по инициативе пользователя,
+    # см. commit message и known_code_issues): `pool` — это НЕ просто
+    # "top на всякий случай", а полный список всех кандидатов, которые
+    # реально рассматривались как правдоподобная замена top при
+    # дизамбигуации. Пока кандидат один (exact) — pool из одного
+    # элемента, доп. вызовов Discogs не требуется. Как только мы входим
+    # в любую ветку "несколько прессов делят catno/название" — pool
+    # расширяется до ВСЕЙ группы, чтобы дальше (см. process_item) можно
+    # было посчитать ансамблевую (взвешенную по ликвидности) оценку
+    # цены по всем правдоподобным прессам разом, а не только по одному
+    # угаданному — см. разбор Ornette Coleman/Jobim/Mingus Piano 26.08,
+    # где именно выбор ОДНОГО релиза давал маржу, далёкую от реальности.
+    pool = [top]
 
     if dm.get("require_exact_release_match", True) and catno:
         normalize = dm.get("normalize_catalog_number", True)
@@ -698,6 +726,7 @@ def discogs_resolve_release(item, cfg):
                     top = by_title[0]
                     release_id = top.get("id", release_id)
                     confidence = "exact"
+                    pool = [top]
                 else:
                     country_hint = guess_country_hint(item["title"])
                     candidates = by_title if by_title else same_catno
@@ -709,25 +738,23 @@ def discogs_resolve_release(item, cfg):
                         top = matching_country[0]
                         release_id = top.get("id", release_id)
                         confidence = "exact"
+                        pool = [top]
                     else:
                         # Несколько релизов делят один catno, и разобрать по
                         # тексту листинга, какой из них — нельзя. Честно
                         # manual_review вместо угадывания; уйдёт в
                         # photo-review, где страна прессинга обычно видна на
-                        # самом лейбле. Если есть кандидаты с совпадающим
-                        # названием (и, если применимо, страной) — берём
-                        # среди них НЕ первый по порядку выдачи Discogs, а
-                        # самый "ликвидный" (most_liquid, см. выше) — тонкий
-                        # рынок отдельной дублирующейся карточки даёт шумную
-                        # цену, у популярной карточки статистика надёжнее.
+                        # самом лейбле. top — самый "ликвидный" (most_liquid,
+                        # см. выше) кандидат, для отображения/ссылки; pool —
+                        # ВСЯ группа, для ансамблевой оценки цены.
                         fallback_pool = (
                             matching_country if (country_hint and matching_country)
                             else by_title if by_title
-                            else None
+                            else same_catno
                         )
-                        if fallback_pool:
-                            top = most_liquid(fallback_pool)
-                            release_id = top.get("id", release_id)
+                        top = most_liquid(fallback_pool)
+                        release_id = top.get("id", release_id)
+                        pool = fallback_pool
                         confidence = "manual_review"
     else:
         confidence = "manual_review" if dm.get("on_ambiguous_catalog") == "manual_review" else "fuzzy"
@@ -750,7 +777,11 @@ def discogs_resolve_release(item, cfg):
             time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
             dup_norm = normalize_catno(discogs_catno)
             dup_results = discogs_search(catno=discogs_catno)
-            same_catno = [r for r in dup_results if normalize_catno(r.get("catno", "")) == dup_norm]
+            same_catno = [
+                r for r in dup_results
+                if normalize_catno(r.get("catno", "")) == dup_norm
+                and not ({"Single", '7"'} & set(r.get("format") or []))
+            ]
             if len(same_catno) > 1:
                 by_title = [r for r in same_catno if titles_overlap(r.get("title", ""), item["title"])]
                 candidates = by_title if by_title else same_catno
@@ -759,9 +790,10 @@ def discogs_resolve_release(item, cfg):
                     r for r in candidates
                     if country_hint and country_hint.lower() in (r.get("country") or "").lower()
                 ]
-                pool = matching_country if matching_country else candidates
-                top = most_liquid(pool)
+                group = matching_country if matching_country else candidates
+                top = most_liquid(group)
                 release_id = top.get("id", release_id)
+                pool = group
 
     # Финальный барьер (не только для многозначного catno — так же для
     # чистого фаззи-поиска по названию, catno=None): если итоговый
@@ -770,6 +802,9 @@ def discogs_resolve_release(item, cfg):
     # Такое не должно попадать в кандидаты вообще, даже с manual_review.
     if not titles_overlap(top.get("title", ""), item["title"]):
         return None
+    # Ансамбль тоже фильтруем этим барьером — не тащить в оценку цены
+    # кандидатов, которые сами по себе оказались бы совсем другим альбомом.
+    pool = [r for r in pool if titles_overlap(r.get("title", ""), item["title"])] or [top]
 
     # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
     # reissue -> нумерованный box set 45RPM 2025 года): та же проблема,
@@ -777,12 +812,13 @@ def discogs_resolve_release(item, cfg):
     # другой альбом. Ищем среди тех же результатов ВСЕ варианты без
     # непрошенных премиум-маркеров, которые тоже проходят по названию —
     # если такие есть, берём среди них самый ликвидный (most_liquid, см.
-    # выше), а не первый по порядку выдачи Discogs: порядок релевантности
-    # Discogs — это не то же самое, что "какой пресс реально продают на
-    # eBay" (см. разбор Ornette Coleman 26.08 — наивный next() брал
-    # первую попавшуюся не-премиум карточку по счастливому совпадению
-    # порядка, а не по каким-либо реальным основаниям). Если нет ни
-    # одного подходящего — не угадываем, отбрасываем совсем.
+    # выше) для отображения, а ВСЮ группу — как ансамбль для оценки цены.
+    # Порядок релевантности Discogs — это не то же самое, что "какой
+    # пресс реально продают на eBay" (см. разбор Ornette Coleman 26.08 —
+    # наивный next() брал первую попавшуюся не-премиум карточку по
+    # счастливому совпадению порядка, а не по каким-либо реальным
+    # основаниям). Если нет ни одного подходящего — не угадываем,
+    # отбрасываем совсем.
     if has_unlisted_premium_edition(top, item["title"]):
         fallback_candidates = [
             r for r in results
@@ -794,6 +830,20 @@ def discogs_resolve_release(item, cfg):
         top = most_liquid(fallback_candidates)
         release_id = top.get("id", release_id)
         confidence = "manual_review"
+        # ВАЖНО (найдено живой проверкой глубокого режима 26.08.2026,
+        # Ornette Coleman): fallback_candidates — это ЛЮБОЙ результат
+        # чистого фаззи-поиска по названию, у которого есть хоть одно
+        # общее значимое слово с листингом — на большом альбоме это
+        # может быть 30+ совершенно разных изданий/годов/стран. Годится
+        # как пул, из которого most_liquid() выбирает ОДНОГО
+        # представителя (шум одного лишнего кандидата тонет), но для
+        # ансамбля (усреднение ЦЕН) это катастрофа — тащит в оценку
+        # медианы записи, которые вообще не тот же пресс, что top.
+        # Сужаем ансамбль до одной "семьи" — только записи с ТЕМ ЖЕ
+        # catno, что и выбранный top (как и во всех остальных pool'ах
+        # в этой функции).
+        top_norm = normalize_catno(top.get("catno", ""))
+        pool = [r for r in fallback_candidates if normalize_catno(r.get("catno", "")) == top_norm] or [top]
 
     # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, POST BOP -> Atlantic
     # Jazz): сборники ("Various Artists" / format содержит "Compilation")
@@ -809,11 +859,22 @@ def discogs_resolve_release(item, cfg):
     if "Compilation" in (top.get("format") or []) and confidence != "exact":
         return None
 
+    # dedup по id, top всегда первый (используется как "представитель"
+    # для release_id/release_url в выводе).
+    seen = set()
+    deduped_pool = []
+    for r in [top] + pool:
+        rid = r.get("id")
+        if rid and rid not in seen:
+            seen.add(rid)
+            deduped_pool.append(r)
+
     return {
         "release_id": release_id,
         "confidence": confidence,
         "release_url": f"https://www.discogs.com/release/{release_id}",
         "catno_found": catno,
+        "candidates": deduped_pool,
     }
 
 
@@ -894,6 +955,99 @@ def discogs_get_stats(release_id):
     return {"low": low, "median": float(median), "high": float(high)}
 
 
+# ГЛУБОКИЙ РЕЖИМ (добавлено 26.08.2026 по инициативе пользователя — "не
+# быстро, а максимально глубоко"): прямой ответ на сегодняшние баги
+# (Ornette Coleman, Jobim Wave, Mingus Plays Piano и др.), где маржа
+# оказывалась далёкой от реальности не из-за отсутствия матчинга, а
+# из-за того, что расчёт шёл против ОДНОГО угаданного пресса из
+# нескольких легитимных — а другой пресс стоил в разы дешевле/дороже.
+# discogs_resolve_release() теперь возвращает "candidates" — всю группу
+# правдоподобных прессов, прошедших те же барьеры (titles_overlap,
+# не premium, не unqualified compilation), что и обычный выбор top.
+# Вместо статистики одного release_id считаем ВЗВЕШЕННОЕ ПО ЛИКВИДНОСТИ
+# среднее по всем кандидатам с доступной ценой — это не решает, какой
+# именно пресс продают (для этого всё равно нужно фото лейбла), но
+# даёт куда более устойчивую оценку диапазона цен, чем ставка на один
+# случайно выигравший release_id.
+# Потолок на размер ансамбля — НАЙДЕНО живой проверкой 26.08.2026: у
+# каталожных номеров крупных лейблов (напр. Jobim "Wave" SP-3002)
+# catno не менялся десятилетиями — на Discogs набирается 30+ ОТДЕЛЬНЫХ
+# карточек одного и того же catno (разные страны/годы допечаток за
+# 1967-1983), и это не ошибка каталогизации, а реальность. Считать
+# ансамбль по всем 30+ последовательными вызовами Discogs (с паузой
+# между каждым ради rate limit) на ОДИН лот — уже не "глубоко", а
+# нежизнеспособно долго при прогоне сотен лотов за раз. Берём top-N по
+# ликвидности (have+want) — самые торгуемые карточки уже дают
+# устойчивую взвешенную оценку, длинный хвост из карточек с have=1-3
+# всё равно получил бы мизерный вес и погоды не делает.
+ENSEMBLE_MAX_CANDIDATES = 8
+
+
+def weighted_median(value_weight_pairs):
+    """Взвешенная медиана — значение, где накопленный вес впервые
+    достигает половины суммарного. НАЙДЕНО живой проверкой глубокого
+    режима 26.08.2026 (Mingus — Mingus Plays Piano): простое взвешенное
+    СРЕДНЕЕ оказалось систематически смещено вверх — на тонких рынках
+    (мало активных лоукто на Marketplace) 'самая низкая текущая цена'
+    почти всегда выше, чем на глубоком рынке (меньше продавцов —
+    меньше конкуренции за самую низкую цену), а не просто "шумит" в обе
+    стороны. Несколько таких тонких дублей с ЗАВЫШЕННЫМ low (напр. по
+    A-60: $86/$93/$100/$175 против $40 у доминирующей карточки)
+    перевешивали среднее почти в 1.5 раза, даже получив меньший вес
+    каждый по отдельности. Медиана устойчива к этому: если у одной
+    карточки вес превышает половину суммарного (обычно так и есть —
+    доминирующий пресс на порядок ликвиднее любого дубля), результат
+    просто равен её цене, как и должно быть."""
+    items = sorted(value_weight_pairs, key=lambda vw: vw[0])
+    total = sum(w for _, w in items)
+    if total <= 0:
+        return None
+    half = total / 2.0
+    cum = 0.0
+    for value, weight in items:
+        cum += weight
+        if cum >= half:
+            return value
+    return items[-1][0]
+
+
+def discogs_ensemble_stats(candidates):
+    """candidates — список Discogs search-result dict'ов (с полем
+    'community' для веса ликвидности), обычно release['candidates'] из
+    discogs_resolve_release(). Возвращает {'low','median','high'} в
+    том же формате, что discogs_get_stats, но каждое число — взвешенная
+    по ликвидности МЕДИАНА (см. weighted_median) по top-
+    ENSEMBLE_MAX_CANDIDATES кандидатам из числа тех, у кого нашлась
+    цена (без доступной цены кандидат просто выпадает из ансамбля, а не
+    обнуляет его). Кандидат без community-данных получает вес 1 (не
+    пропадает целиком), а не 0."""
+    seen_ids = set()
+    deduped = []
+    for cand in candidates:
+        rid = cand.get("id")
+        if rid and rid not in seen_ids:
+            seen_ids.add(rid)
+            deduped.append(cand)
+    top_candidates = sorted(deduped, key=release_liquidity, reverse=True)[:ENSEMBLE_MAX_CANDIDATES]
+
+    per_key_pairs = {"low": [], "median": [], "high": []}
+    got_any = False
+    for i, cand in enumerate(top_candidates):
+        if i > 0:
+            time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
+        stats = discogs_get_stats(cand["id"])
+        if not stats:
+            continue
+        weight = max(release_liquidity(cand), 1)
+        for key in per_key_pairs:
+            per_key_pairs[key].append((stats[key], weight))
+        got_any = True
+
+    if not got_any:
+        return None
+    return {key: weighted_median(pairs) for key, pairs in per_key_pairs.items()}
+
+
 # ============ ОСНОВНАЯ ЛОГИКА ============
 
 def build_output_row(item, release, stats, example, result, prio, cfg, photo_urls=None):
@@ -951,7 +1105,17 @@ def process_item(item, cfg, token=None):
     if not release:
         return "no_release"
 
-    stats = discogs_get_stats(release["release_id"])
+    # Глубокий режим: если резолв не однозначен (несколько правдоподобных
+    # прессов в candidates) — считаем ансамблевую, взвешенную по
+    # ликвидности оценку по ВСЕМ им, а не только по одному выбранному
+    # release_id (см. discogs_ensemble_stats). Однозначный exact-матч
+    # (candidates из одного элемента) идёт старым, дешёвым путём — без
+    # лишних вызовов Discogs там, где и так нет неоднозначности.
+    candidates = release.get("candidates") or [{"id": release["release_id"]}]
+    if len(candidates) > 1:
+        stats = discogs_ensemble_stats(candidates)
+    else:
+        stats = discogs_get_stats(release["release_id"])
     if not stats:
         return "no_stats"
 
