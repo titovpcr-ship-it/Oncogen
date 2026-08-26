@@ -418,9 +418,55 @@ def clean_title_for_search(title):
     return CONDITION_STRIP_RE.sub("", title).strip()
 
 
+# Подсказки страны прессинга, если встречаются в тексте листинга — см.
+# discogs_resolve_release: один и тот же catno регулярно переиспользован
+# НЕСКОЛЬКИМИ разными релизами на Discogs (разные страны прессинга,
+# иногда просто дублирующиеся записи одной и той же пластинки).
+# Подтверждено live-смоук-тестом 26.08.2026 на реальных ECM-номерах —
+# см. smoke_test_mock_lots.py. Список не исчерпывающий, только частые
+# случаи для джазовых лейблов в search_scope.
+COUNTRY_HINTS = [
+    ("germany", "German"), ("german", "German"),
+    ("japan", "Japan"), ("japanese", "Japan"),
+    ("netherlands", "Netherlands"), ("holland", "Netherlands"), ("dutch", "Netherlands"),
+    ("france", "France"), ("french", "France"),
+    ("italy", "Italy"), ("italian", "Italy"),
+    ("canada", "Canada"), ("canadian", "Canada"),
+    ("uk", "UK"), ("britain", "UK"), ("british", "UK"), ("england", "UK"),
+    ("usa", "US"), ("u.s.a", "US"), ("american", "US"),
+]
+
+
+def guess_country_hint(title):
+    """Ищет упоминание страны прессинга в заголовке eBay-листинга
+    (иногда продавцы пишут это прямо в тексте, напр. 'germany press').
+    Возвращает подстроку для сравнения с полем country у Discogs
+    (не точный справочник, а эвристика — см. COUNTRY_HINTS)."""
+    t = title.lower()
+    for keyword, country_substr in COUNTRY_HINTS:
+        if re.search(rf"\b{re.escape(keyword)}\b", t):
+            return country_substr
+    return None
+
+
 def discogs_resolve_release(item, cfg):
     """§2: резолвит до конкретного release_id, требует точного совпадения
-    каталожного номера для catalog_match_confidence == 'exact'."""
+    каталожного номера для catalog_match_confidence == 'exact'.
+
+    ВАЖНО (найдено live-смоук-тестом 26.08.2026, см. smoke_test_mock_lots.py):
+    один и тот же catno регулярно принадлежит НЕСКОЛЬКИМ разным release_id
+    на Discogs — разные страны прессинга (US/Germany/Spain для одного и
+    того же ECM-каталожного номера) или прямые дубли записей. Просто
+    взять results[0] и объявить "exact" по совпадению catno — снова
+    открывает ту самую проблему разброса цен между прессами, ради
+    которой каталожное сопоставление вообще вводили (§2 шапки конфига).
+    Поэтому: если catno-поиск вернул НЕСКОЛЬКО релизов с этим catno —
+    пытаемся дизамбигуировать по стране прессинга, если она упомянута в
+    тексте листинга (guess_country_hint). Однозначно получилось —
+    exact. Не получилось — честно manual_review (тем самым уходит в
+    photo-review fallback наравне с "catno вообще не нашёлся" —
+    человеку/vision всё равно придётся смотреть на лейбл, там страна
+    прессинга обычно видна)."""
     dm = cfg["discogs_matching"]
     catno = extract_catalog_number(item["title"])
     clean_title = clean_title_for_search(item["title"])
@@ -454,7 +500,38 @@ def discogs_resolve_release(item, cfg):
         normalize = dm.get("normalize_catalog_number", True)
         our_norm = normalize_catno(catno) if normalize else catno
         their_norm = normalize_catno(top.get("catno", "")) if normalize else top.get("catno", "")
-        confidence = "exact" if our_norm and our_norm == their_norm else "manual_review"
+
+        if not (our_norm and our_norm == their_norm):
+            confidence = "manual_review"
+        else:
+            # catno совпал у результата №0 — но сколько ВСЕГО результатов
+            # реально имеют этот catno? (Discogs's catno-фильтр обычно
+            # точный, но перестрахуемся и не доверяем чужому порядку
+            # сортировки вслепую.)
+            same_catno = [
+                r for r in results
+                if normalize_catno(r.get("catno", "")) == our_norm
+            ] if normalize else [r for r in results if r.get("catno") == catno]
+
+            if len(same_catno) <= 1:
+                confidence = "exact"
+            else:
+                country_hint = guess_country_hint(item["title"])
+                matching_country = [
+                    r for r in same_catno
+                    if country_hint and country_hint.lower() in (r.get("country") or "").lower()
+                ]
+                if country_hint and len(matching_country) == 1:
+                    top = matching_country[0]
+                    release_id = top.get("id", release_id)
+                    confidence = "exact"
+                else:
+                    # Несколько релизов делят один catno, и разобрать по
+                    # тексту листинга, какой из них — нельзя. Честно
+                    # manual_review вместо угадывания; уйдёт в
+                    # photo-review, где страна прессинга обычно видна на
+                    # самом лейбле.
+                    confidence = "manual_review"
     else:
         confidence = "manual_review" if dm.get("on_ambiguous_catalog") == "manual_review" else "fuzzy"
 

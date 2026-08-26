@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 candidates_*.csv
+smoke_test_candidates.csv
+smoke_test_decisions_log.csv
