@@ -190,7 +190,7 @@ CATALOG_PATTERNS = [
     r"\bECM[\s-]?1?-?\d{3,5}(?:[\s-]?ST)?\b",   # ECM 1057 ST / ECM-1-1057 / ECM 1-1160
     r"\bBLP[\s-]?\d{3,5}\b",                     # Blue Note mono BLP 4003
     r"\bBST[\s-]?\d{3,5}\b",                     # Blue Note stereo BST 84003
-    r"\bAS[\s-]?\d{3,5}\b",                      # Impulse! AS-9120
+    r"\bAS[\s-]?\d{2,5}\b",                      # Impulse! AS-9120 / AS-66
     r"\bV6?[\s-]?\d{4,5}\b",                     # Verve V-8409 / V6-8409
     r"\b(?:SD|CS|SN)[\s-]?\d{3,5}\b",            # Atlantic SD 1578 и т.п.
     # ДОБАВЛЕНО (расширение поиска 25.08.2026, см. known_code_issues):
@@ -528,6 +528,44 @@ def guess_country_hint(title):
     return None
 
 
+# Слова, которых слишком много в любом листинге виниле, чтобы что-то
+# доказывать по совпадению — исключаем из сверки названий (см.
+# titles_overlap).
+TITLE_STOPWORDS = {
+    "the", "and", "lp", "vinyl", "record", "records", "album", "original",
+    "press", "pressing", "stereo", "mono", "gatefold", "reissue", "promo",
+}
+
+
+def title_words(s):
+    """Значимые слова из строки для грубой сверки названий — токены
+    длиной >=3 без частых 'мусорных' слов формата листинга."""
+    words = re.findall(r"[a-zA-Z0-9]+", (s or "").lower())
+    return {w for w in words if len(w) >= 3 and w not in TITLE_STOPWORDS}
+
+
+def titles_overlap(discogs_title, ebay_title):
+    """НАЙДЕНО 26.08.2026 живой проверкой (см. decisions_log.csv и разбор
+    в чате): один и тот же catno может принадлежать СОВСЕМ другому
+    альбому (Coltrane 'Crescent' -> 'Various - Play:Back' по catno
+    AS-66; Mingus 'Mingus x5' -> 'The Black Saint And The Sinner Lady'
+    по фаззи-поиску текста) — ни каталожный номер, ни страна тут не
+    спасают, потому что дело не в прессе, а в том, что это ДРУГОЙ
+    релиз целиком. discogs_title обычно в формате 'Artist - Release
+    Title' — сравниваем именно ЧАСТЬ ПОСЛЕ ПЕРВОГО ' - ', т.к.
+    совпадения по одному артисту недостаточно (тот же исполнитель,
+    другой альбом — тоже неверный матч). Требуем хотя бы одно общее
+    значимое слово. Это грубая сеть, не панацея — ловит явно другой
+    альбом, не ловит "тот же альбом, но не тот сборник/сэмплер с
+    похожими словами в названии" (см. известные ограничения)."""
+    parts = (discogs_title or "").split(" - ", 1)
+    album_part = parts[1] if len(parts) > 1 else discogs_title
+    discogs_significant = title_words(album_part)
+    if not discogs_significant:
+        return True  # нечего сравнивать — не блокируем на пустом месте
+    return bool(discogs_significant & title_words(ebay_title))
+
+
 def discogs_resolve_release(item, cfg):
     """§2: резолвит до конкретного release_id, требует точного совпадения
     каталожного номера для catalog_match_confidence == 'exact'.
@@ -595,24 +633,49 @@ def discogs_resolve_release(item, cfg):
             if len(same_catno) <= 1:
                 confidence = "exact"
             else:
-                country_hint = guess_country_hint(item["title"])
-                matching_country = [
-                    r for r in same_catno
-                    if country_hint and country_hint.lower() in (r.get("country") or "").lower()
-                ]
-                if country_hint and len(matching_country) == 1:
-                    top = matching_country[0]
+                # НАЙДЕНО 26.08.2026: один catno может принадлежать
+                # СОВСЕМ другому альбому (не просто другому прессу) —
+                # сверка названия надёжнее подсказки страны (та зависит
+                # от того, упомянул ли продавец страну в тексте, что
+                # редкость), поэтому пробуем её первой.
+                by_title = [r for r in same_catno if titles_overlap(r.get("title", ""), item["title"])]
+                if len(by_title) == 1:
+                    top = by_title[0]
                     release_id = top.get("id", release_id)
                     confidence = "exact"
                 else:
-                    # Несколько релизов делят один catno, и разобрать по
-                    # тексту листинга, какой из них — нельзя. Честно
-                    # manual_review вместо угадывания; уйдёт в
-                    # photo-review, где страна прессинга обычно видна на
-                    # самом лейбле.
-                    confidence = "manual_review"
+                    country_hint = guess_country_hint(item["title"])
+                    candidates = by_title if by_title else same_catno
+                    matching_country = [
+                        r for r in candidates
+                        if country_hint and country_hint.lower() in (r.get("country") or "").lower()
+                    ]
+                    if country_hint and len(matching_country) == 1:
+                        top = matching_country[0]
+                        release_id = top.get("id", release_id)
+                        confidence = "exact"
+                    else:
+                        # Несколько релизов делят один catno, и разобрать по
+                        # тексту листинга, какой из них — нельзя. Честно
+                        # manual_review вместо угадывания; уйдёт в
+                        # photo-review, где страна прессинга обычно видна на
+                        # самом лейбле. Если есть хотя бы один вариант с
+                        # совпадающим названием — берём его как лучшую
+                        # оценку вместо случайного results[0].
+                        if by_title:
+                            top = by_title[0]
+                            release_id = top.get("id", release_id)
+                        confidence = "manual_review"
     else:
         confidence = "manual_review" if dm.get("on_ambiguous_catalog") == "manual_review" else "fuzzy"
+
+    # Финальный барьер (не только для многозначного catno — так же для
+    # чистого фаззи-поиска по названию, catno=None): если итоговый
+    # release всё равно не имеет НИ ОДНОГО общего значимого слова с
+    # заголовком eBay — это не "другой пресс", а другой альбом целиком.
+    # Такое не должно попадать в кандидаты вообще, даже с manual_review.
+    if not titles_overlap(top.get("title", ""), item["title"]):
+        return None
 
     return {
         "release_id": release_id,
