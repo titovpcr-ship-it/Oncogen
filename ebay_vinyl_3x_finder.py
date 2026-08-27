@@ -1374,10 +1374,17 @@ def process_item(item, cfg, token=None):
 
     prio = calib.priority_score(example, result, cfg)
     row = build_output_row(item, release, stats, example, result, prio, cfg, photo_urls)
+    # ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя — выхватывать ценное
+    # прямо по ходу прогона, кликабельно): раньше ссылка на лот попадала
+    # только в финальный CSV (см. finalize()), и чтобы дать пользователю
+    # рабочую ссылку на что-то найденное посреди прогона, приходилось
+    # отдельно повторно искать через eBay API. Печатаем listing_url сразу
+    # в консоли — теперь его можно взять прямо из лога, без лишнего вызова.
     print(f"  {result['verdict']}: {item['title'][:60]} | "
           f"цена ${item['price_usd']} | landed ${result['landed_cost']:.2f} | "
           f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}"
-          + (" | ФОТО ДЛЯ СВЕРКИ КАТАЛОГА" if photo_urls else ""))
+          + (" | ФОТО ДЛЯ СВЕРКИ КАТАЛОГА" if photo_urls else "")
+          + f"\n    {item['item_url']}")
     return (row, prio)
 
 
