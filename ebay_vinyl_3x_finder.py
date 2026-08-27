@@ -256,7 +256,27 @@ def discogs_search(**extra_params):
 
 def load_config():
     import yaml
-    return yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
+    cfg = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
+
+    # ДОБАВЛЕНО 27.08.2026 (по просьбе пользователя — "Режим 2: до $1"):
+    # отдельная, куда более узкая ветка поиска для совсем дешёвых
+    # ($0.99 и т.п.) листингов — их часто выставляют как "разгонные"
+    # аукционные старты, и джазовая редкость там прячется не реже, чем
+    # в обычном бюджете. Не трогаем основной конфиг (max_current_price_usd
+    # остаётся 10 по умолчанию, Режим 1 не меняется вообще) — переопределяем
+    # бюджет только если явно попросили через переменную окружения:
+    #   MAX_PRICE_USD=1 python3 ebay_vinyl_3x_finder.py
+    # Остальная логика (Discogs-резолв, deep mode, verdict) не меняется —
+    # разница только в том, какие сырые лоты вообще проходят фильтр цены
+    # в search_ebay(). Пишет в тот же decisions_log.csv (дедуп по URL уже
+    # есть, так что пересечение с Режимом 1 не даёт дублей).
+    override = os.environ.get("MAX_PRICE_USD")
+    if override:
+        try:
+            cfg["budget_constraints"]["max_current_price_usd"] = float(override)
+        except ValueError:
+            print(f"MAX_PRICE_USD='{override}' не число, игнорирую — использую бюджет из конфига.")
+    return cfg
 
 
 def build_search_queries(cfg):
