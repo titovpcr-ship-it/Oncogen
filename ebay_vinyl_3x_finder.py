@@ -316,7 +316,13 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         "q": query,
         "category_ids": "176985",  # категория "Vinyl Records" на eBay
         "limit": str(limit),
-        "filter": "buyingOptions:{FIXED_PRICE|AUCTION}",
+        # ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя): только продавцы
+        # из США — исключает лоты, где вместо нашего форвардера (флэт
+        # $22/кг из США) была бы отдельная международная логистика с
+        # других расчётов (см. разбор McCoy Tyner — прямая доставка из
+        # Японии, другая экономика). Проверено вживую: itemLocationCountry
+        # реально фильтрует — все результаты приходят с country='US'.
+        "filter": "buyingOptions:{FIXED_PRICE|AUCTION},itemLocationCountry:US",
     }
     if sort and sort != "bestMatch":
         params["sort"] = sort
@@ -454,6 +460,42 @@ def fetch_ebay_item_photos(item_id, token):
         if u:
             urls.append(u)
     return urls
+
+
+# ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя): заголовок листинга
+# почти никогда не содержит настоящий грейд — только в описании лота
+# ("COVER: VG+ ... RECORD: VG+ ...", как на скрине из приложения eBay).
+# extract_grade() (test_calibration.py) ожидает строку вида "грейд
+# винила / грейд обложки" и берёт ПЕРВЫЙ сегмент до "/" как грейд
+# винила — поэтому строим именно такую строку из описания, а не просто
+# приклеиваем сырой текст к заголовку.
+HTML_TAG_RE = re.compile(r"<[^>]+>")
+RECORD_GRADE_RE = re.compile(r"\bRECORD\s*:?\s*([A-Za-z][A-Za-z+-]{0,3})", re.IGNORECASE)
+COVER_GRADE_RE = re.compile(r"\bCOVER\s*:?\s*([A-Za-z][A-Za-z+-]{0,3})", re.IGNORECASE)
+
+
+def strip_html(text):
+    text = HTML_TAG_RE.sub(" ", text or "")
+    text = text.replace("&nbsp;", " ")
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def fetch_ebay_item_description(item_id, token):
+    """Возвращает "грейд_винила / грейд_обложки" из описания лота, если
+    продавец указал их явно в формате RECORD:/COVER: (частый паттерн у
+    специализированных джазовых продавцов) — или None, если не нашли
+    и стоит остаться на заголовке. Вызывается точечно (см. process_item),
+    не на каждый сырой результат поиска."""
+    data = fetch_ebay_item_detail(item_id, token)
+    if not data:
+        return None
+    text = strip_html(data.get("description"))
+    record_m = RECORD_GRADE_RE.search(text)
+    if not record_m:
+        return None
+    cover_m = COVER_GRADE_RE.search(text)
+    cover_grade = cover_m.group(1) if cover_m else ""
+    return f"{record_m.group(1)} / {cover_grade}".rstrip(" /")
 
 
 # ============ ЛИСТИНГ -> ФОРМАТ / КОЛИЧЕСТВО ПЛАСТИНОК / БАНДЛ ============
@@ -1302,11 +1344,30 @@ def process_item(item, cfg, token=None):
     if result["verdict"] == "REJECT":
         return "reject"
 
+    # ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя): заголовок листинга
+    # почти никогда не содержит настоящий грейд продавца — тот обычно
+    # написан в описании лота ("COVER: VG+ ... RECORD: VG+ ..."). Раз
+    # лот уже прошёл текстовый фильтр (WATCH/PASS) — подтягиваем
+    # описание и пересчитываем маржу по РЕАЛЬНОМУ грейду, а не по
+    # заголовку. Если реальное состояние хуже, чем подразумевал
+    # заголовок (или заголовок вообще не содержал грейда), лот может
+    # уйти в reject именно на этом шаге — раньше такие случаи молча
+    # проходили с неверно оптимистичной маржой.
+    if token:
+        described_condition = fetch_ebay_item_description(item["item_id"], token)
+        if described_condition:
+            example["actual_condition"] = described_condition
+            result = calib.evaluate(example, cfg)
+            if result["verdict"] == "PASS" and release["confidence"] != "exact":
+                result["verdict"] = "WATCH"
+            if result["verdict"] == "REJECT":
+                return "reject"
+
     # П.1 обратной связи (25.08.2026): каталожный номер почти никогда не
     # встречается в тексте листинга — только на фото лейбла. Раз лот уже
     # интересен по тексту (WATCH/PASS), но regex не нашёл exact catno —
     # подтягиваем доп. фото ОДИН раз здесь (не на каждый лот из поиска),
-    # чтобы Claude во время прогона Routine сверил номер по фото сам.
+    # чтобы Claude во время прогона Routine сверил номер по фото лейбла.
     photo_urls = []
     if release["confidence"] != "exact" and token:
         photo_urls = fetch_ebay_item_photos(item["item_id"], token)
