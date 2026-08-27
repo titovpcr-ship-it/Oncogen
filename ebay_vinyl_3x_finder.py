@@ -601,6 +601,30 @@ def filter_by_reissue_hint(candidates, ebay_title):
     return candidates
 
 
+# НАЙДЕНО 26.08.2026 (ручной разбор пользователя, McCoy Tyner — Today
+# And Tomorrow, Impulse AS-63): top корректно резолвился в настоящий
+# оригинал 1964г. (release/2398813, US, ~$300 по нашей оценке) — сам
+# выбор верный, точное совпадение с источником пользователя. Но пул для
+# АНСАМБЛЯ всё ещё тащит 6 более поздних репрессов того же catno
+# (1966-1973гг., все явно помечены 'Reissue' на Discogs, $64-168) —
+# зеркальная ситуация filter_by_reissue_hint: там лот СКАЗАЛ, что это
+# рессиз, и мы сужали до рессизов; здесь мы УЖЕ выбрали оригинал (не
+# рессиз), а лот не намекает на рессиз вообще — значит рессизы того же
+# catno тут посторонние примеси, а не альтернативные кандидаты, и
+# смешивать их цену с ценой оригинала в ансамбль не имеет смысла
+# (получится число, не отражающее ни один из двух реальных рынков).
+def exclude_unwanted_reissues(candidates, top, ebay_title):
+    t = ebay_title.lower()
+    if any(hint in t for hint in REISSUE_HINT_WORDS):
+        return candidates  # лот сам назвал себя рессизом — не наш случай
+    if "Reissue" in (top.get("format") or []):
+        return candidates  # top и сам рессиз — фильтровать нечего
+    non_reissue = [c for c in candidates if "Reissue" not in (c.get("format") or [])]
+    if non_reissue and len(non_reissue) < len(candidates):
+        return non_reissue
+    return candidates
+
+
 # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, Don Wilkerson — Preach
 # Brother!, Blue Note BST-84107): most_liquid() по 'have' выбрал
 # France 1983 reissue (have=225) вместо настоящего US-пресса эпохи
@@ -999,6 +1023,8 @@ def discogs_resolve_release(item, cfg):
         if rid and rid not in seen:
             seen.add(rid)
             deduped_pool.append(r)
+
+    deduped_pool = exclude_unwanted_reissues(deduped_pool, top, item["title"])
 
     return {
         "release_id": release_id,
