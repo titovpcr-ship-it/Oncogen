@@ -571,6 +571,28 @@ def filter_by_reissue_hint(candidates, ebay_title):
     return candidates
 
 
+# НАЙДЕНО 26.08.2026 (ручной разбор пользователя, Don Wilkerson — Preach
+# Brother!, Blue Note BST-84107): most_liquid() по 'have' выбрал
+# France 1983 reissue (have=225) вместо настоящего US-пресса эпохи
+# Liberty Records (have=95) — хотя в тексте лота НЕТ ни намёка на
+# Францию, только "Liberty"/"Van Gelder" (явная американская эра Blue
+# Note). Иностранный рессиз может быть шире растиражирован (больше
+# have), чем менее распространённый оригинал/репресс США — 'have' сам
+# по себе тут снова путает "распространённость" с "это то, что
+# продают". Раз guess_country_hint() ничего не нашёл в тексте — это НЕ
+# повод считать страну неважной; это повод по умолчанию не давать
+# иностранному прессу обойти американский только за счёт большего have
+# (eBay US listing без упоминания страны почти всегда — обычный
+# американский экземпляр).
+def prefer_domestic(candidates, ebay_title):
+    if guess_country_hint(ebay_title):
+        return candidates  # явная подсказка есть — ей и решать, сюда не лезем
+    us_only = [c for c in candidates if (c.get("country") or "").strip().upper() == "US"]
+    if us_only and len(us_only) < len(candidates):
+        return us_only
+    return candidates
+
+
 # Слова, которых слишком много в любом листинге виниле, чтобы что-то
 # доказывать по совпадению — исключаем из сверки названий (см.
 # titles_overlap).
@@ -771,6 +793,7 @@ def discogs_resolve_release(item, cfg):
                 if normalize_catno(r.get("catno", "")) == our_norm
             ] if normalize else [r for r in results if r.get("catno") == catno]
             same_catno = filter_by_reissue_hint(same_catno, item["title"])
+            same_catno = prefer_domestic(same_catno, item["title"])
 
             if len(same_catno) <= 1:
                 # Подсказка "reissue" могла сузить группу до кандидата,
@@ -852,6 +875,7 @@ def discogs_resolve_release(item, cfg):
                 and not ({"Single", '7"'} & set(r.get("format") or []))
             ]
             same_catno = filter_by_reissue_hint(same_catno, item["title"])
+            same_catno = prefer_domestic(same_catno, item["title"])
             if len(same_catno) == 1:
                 # Подсказка "reissue" в тексте лота сузила группу до
                 # одного кандидата — используем его напрямую, не даём
