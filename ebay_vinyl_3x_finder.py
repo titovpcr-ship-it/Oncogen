@@ -681,9 +681,18 @@ def exclude_unwanted_reissues(candidates, top, ebay_title):
 # (eBay US listing без упоминания страны почти всегда — обычный
 # американский экземпляр).
 def prefer_domestic(candidates, ebay_title):
+    """НАЙДЕНО 27.08.2026 (живой прогон, Mingus — The Black Saint And
+    The Sinner Lady, UME 2021 рессиз): country='Worldwide' — это не
+    'иностранный пресс', а глобальный одновременный релиз, который
+    продаётся в т.ч. в США (современные UME/большие лейблы часто и
+    печатают/дистрибьютируют так). Первая версия фильтра считала 'не
+    ровно US' поводом отсеять — это вычеркнуло настоящий массовый тираж
+    (have=7582, Worldwide) и оставило только редкий Test Pressing
+    (have=38, US), что развернуло выбор ровно наоборот, чем задумано."""
     if guess_country_hint(ebay_title):
         return candidates  # явная подсказка есть — ей и решать, сюда не лезем
-    us_only = [c for c in candidates if (c.get("country") or "").strip().upper() == "US"]
+    ACCEPTABLE = {"US", "WORLDWIDE"}
+    us_only = [c for c in candidates if (c.get("country") or "").strip().upper() in ACCEPTABLE]
     if us_only and len(us_only) < len(candidates):
         return us_only
     return candidates
