@@ -545,6 +545,32 @@ def guess_country_hint(title):
     return None
 
 
+# НАЙДЕНО 26.08.2026 (ручной разбор пользователя, Roy Brooks — The Free
+# Slave, Muse MR-5003): та же catno делят редкий оригинал 1972г. (Discogs
+# медиана $280, have=527/want=1660) и современный бюджетный рессиз 2002г.
+# от Scorpio (типично $15-35 новым, have=442 — тоже прилично "ликвиден",
+# просто потому что массово растиражирован и дёшев). most_liquid() по
+# 'have' тут выбирает ОРИГИНАЛ (527>442) — не потому что это редкий
+# случай, а потому что оба тиража популярны каждый по-своему. Но продавец
+# ПРЯМЫМ ТЕКСТОМ пишет "scorpio reissue" — это не намёк, а прямое
+# указание, какой конкретно из кандидатов продают. Если лот явно назван
+# рессизом, а среди кандидатов есть с форматом "Reissue" и без — сужаем
+# пул до "Reissue"-кандидатов ДО того, как выбирать самый ликвидный,
+# вместо того чтобы дать более раскрученному оригиналу выиграть по чистой
+# популярности и задать неверную (в разы завышенную) цену.
+REISSUE_HINT_WORDS = ("reissue", "re-issue", "scorpio")
+
+
+def filter_by_reissue_hint(candidates, ebay_title):
+    t = ebay_title.lower()
+    if not any(hint in t for hint in REISSUE_HINT_WORDS):
+        return candidates
+    reissue_only = [c for c in candidates if "Reissue" in (c.get("format") or [])]
+    if reissue_only and len(reissue_only) < len(candidates):
+        return reissue_only
+    return candidates
+
+
 # Слова, которых слишком много в любом листинге виниле, чтобы что-то
 # доказывать по совпадению — исключаем из сверки названий (см.
 # titles_overlap).
@@ -744,8 +770,19 @@ def discogs_resolve_release(item, cfg):
                 r for r in results
                 if normalize_catno(r.get("catno", "")) == our_norm
             ] if normalize else [r for r in results if r.get("catno") == catno]
+            same_catno = filter_by_reissue_hint(same_catno, item["title"])
 
             if len(same_catno) <= 1:
+                # Подсказка "reissue" могла сузить группу до кандидата,
+                # ОТЛИЧНОГО от исходного top (results[0]) — напр. top был
+                # редким оригиналом, а лот явно продаёт современный
+                # рессиз (см. Roy Brooks — The Free Slave, Scorpio).
+                # Пересаживаемся на него явно, не оставляем top от
+                # старого выбора.
+                if same_catno:
+                    top = same_catno[0]
+                    release_id = top.get("id", release_id)
+                    pool = same_catno
                 confidence = "exact"
             else:
                 # НАЙДЕНО 26.08.2026: один catno может принадлежать
@@ -814,7 +851,15 @@ def discogs_resolve_release(item, cfg):
                 if normalize_catno(r.get("catno", "")) == dup_norm
                 and not ({"Single", '7"'} & set(r.get("format") or []))
             ]
-            if len(same_catno) > 1:
+            same_catno = filter_by_reissue_hint(same_catno, item["title"])
+            if len(same_catno) == 1:
+                # Подсказка "reissue" в тексте лота сузила группу до
+                # одного кандидата — используем его напрямую, не даём
+                # исходному (возможно неверному) top пережить фильтр.
+                top = same_catno[0]
+                release_id = top.get("id", release_id)
+                pool = same_catno
+            elif len(same_catno) > 1:
                 by_title = [r for r in same_catno if titles_overlap(r.get("title", ""), item["title"])]
                 candidates = by_title if by_title else same_catno
                 country_hint = guess_country_hint(item["title"])
