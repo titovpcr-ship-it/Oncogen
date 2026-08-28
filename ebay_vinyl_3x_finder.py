@@ -107,7 +107,7 @@ import csv
 import os
 import re
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -276,6 +276,36 @@ def load_config():
             cfg["budget_constraints"]["max_current_price_usd"] = float(override)
         except ValueError:
             print(f"MAX_PRICE_USD='{override}' не число, игнорирую — использую бюджет из конфига.")
+
+    # ДОБАВЛЕНО 28.08.2026 (по просьбе пользователя — "Режим 3: аукционы,
+    # закрывающиеся в ближайшие 18ч, landed_cost <= $11"): третья, отдельная
+    # ветка поиска — только AUCTION (не FIXED_PRICE — там нет "закрытия",
+    # снайпить нечего), только лоты, чей itemEndDate попадает в ближайшее
+    # окно, и бюджет считается по landed_cost (цена + доставка ДО
+    # форвардера, БЕЗ международного плеча в РФ), а не по голой цене лота
+    # — это другая величина, чем max_current_price_usd Режима 1/2 (см.
+    # get_shipping_cost). Активируется только через AUCTION_ENDING_HOURS,
+    # Режимы 1/2 полностью не затронуты при отсутствии переменной:
+    #   AUCTION_ENDING_HOURS=18 MAX_LANDED_USD=11 python3 ebay_vinyl_3x_finder.py
+    cfg["mode3"] = {"enabled": False}
+    ending_hours = os.environ.get("AUCTION_ENDING_HOURS")
+    if ending_hours:
+        try:
+            hours = float(ending_hours)
+        except ValueError:
+            print(f"AUCTION_ENDING_HOURS='{ending_hours}' не число, игнорирую — Режим 3 выключен.")
+        else:
+            max_landed_raw = os.environ.get("MAX_LANDED_USD", "11")
+            try:
+                max_landed_usd = float(max_landed_raw)
+            except ValueError:
+                print(f"MAX_LANDED_USD='{max_landed_raw}' не число, использую 11.0.")
+                max_landed_usd = 11.0
+            cfg["mode3"] = {
+                "enabled": True,
+                "ending_within_hours": hours,
+                "max_landed_usd": max_landed_usd,
+            }
     return cfg
 
 
@@ -332,6 +362,11 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         "Authorization": f"Bearer {token}",
         "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
     }
+    mode3 = cfg.get("mode3") or {"enabled": False}
+    # Режим 3: только AUCTION — у FIXED_PRICE нет "закрытия", снайпить
+    # нечего, а искать среди них по itemEndDate бессмысленно (его у них и
+    # не будет).
+    buying_options = "AUCTION" if mode3.get("enabled") else "FIXED_PRICE|AUCTION"
     params = {
         "q": query,
         "category_ids": "176985",  # категория "Vinyl Records" на eBay
@@ -342,7 +377,7 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         # других расчётов (см. разбор McCoy Tyner — прямая доставка из
         # Японии, другая экономика). Проверено вживую: itemLocationCountry
         # реально фильтрует — все результаты приходят с country='US'.
-        "filter": "buyingOptions:{FIXED_PRICE|AUCTION},itemLocationCountry:US",
+        "filter": f"buyingOptions:{{{buying_options}}},itemLocationCountry:US",
     }
     if sort and sort != "bestMatch":
         params["sort"] = sort
@@ -355,6 +390,7 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
     max_price = cfg["budget_constraints"]["max_current_price_usd"]
 
     results = []
+    now = datetime.now(timezone.utc)
     for it in items:
         title = it.get("title", "")
         title_l = title.lower()
@@ -378,14 +414,40 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         # именно те "непримеченные руками" лоты, ради которых вообще
         # стоит смотреть аукционы, а не только Buy It Now.
         if price is None and "AUCTION" in (it.get("buyingOptions") or []):
-            price = fetch_ebay_item_current_price(it.get("itemId"), token)
+            # НАЙДЕНО 28.08.2026 (Режим 3): currentBidPrice уже лежит прямо
+            # в ответе item_summary/search (проверено вживую — 5/5 живых
+            # AUCTION-лотов) и покрывает 0-ставочный случай тем же
+            # значением, что и minimumPriceToBid (см. fetch_ebay_item_
+            # current_price). Берём напрямую — экономит отдельный вызов
+            # item detail на КАЖДЫЙ лот, что критично для Режима 3, где
+            # 100% результатов — аукционы, а не редкое исключение.
+            try:
+                price = float((it.get("currentBidPrice") or {}).get("value"))
+            except (TypeError, ValueError):
+                price = None
+            if price is None:
+                price = fetch_ebay_item_current_price(it.get("itemId"), token)
 
         if price is None or price <= 0:
             continue
-        # Бюджетный фильтр §4.5: жёсткий отсев ДО похода в Discogs —
-        # не тратим API-квоту на заведомо дорогие лоты.
-        if price > max_price:
-            continue
+
+        # Режим 3: аукцион должен закрываться в ближайшем окне — проверяем
+        # ДО бюджетного фильтра и до похода в Discogs, чтобы не тратить
+        # квоту на лоты, которые физически не успеем выкупить снайпом.
+        # При mode3.enabled сам buying_options уже AUCTION-only (см. выше),
+        # так что отсутствие itemEndDate здесь — не легитимный случай, а
+        # неожиданный ответ API; честно пропускаем такой лот.
+        item_end_date = it.get("itemEndDate")
+        if mode3.get("enabled"):
+            if not item_end_date:
+                continue
+            try:
+                end_dt = datetime.fromisoformat(item_end_date.replace("Z", "+00:00"))
+            except ValueError:
+                continue
+            hours_left = (end_dt - now).total_seconds() / 3600
+            if hours_left < 0 or hours_left > mode3["ending_within_hours"]:
+                continue
 
         needs_manual_flag = [
             kw for kw in scope["flag_not_autoreject_keywords"] if kw.lower() in title_l
@@ -406,6 +468,22 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
 
         country = (it.get("itemLocation") or {}).get("country", "US")
 
+        # Бюджетный фильтр §4.5: в Режиме 1/2 — жёсткий отсев ДО похода в
+        # Discogs по голой цене лота. В Режиме 3 пользователь явно просил
+        # capping по landed_cost (цена + доставка ДО форвардера, БЕЗ
+        # международного плеча) — та же формула, что get_shipping_cost()
+        # применит позже в process_item() для самого landed_cost в выводе,
+        # посчитанная здесь заранее на временном dict, чтобы не дублировать
+        # fallback-логику по стране продавца.
+        if mode3.get("enabled"):
+            tmp_item = {"shipping_cost_listed": shipping_cost, "seller_country": country}
+            landed = price + get_shipping_cost(tmp_item, cfg)
+            if landed > mode3["max_landed_usd"]:
+                continue
+        else:
+            if price > max_price:
+                continue
+
         results.append({
             "title": title,
             "price_usd": price,
@@ -415,6 +493,7 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
             "shipping_cost_listed": shipping_cost,
             "seller_country": country,
             "bid_count": it.get("bidCount"),  # не всегда присутствует в Browse API
+            "item_end_date": item_end_date,
             "manual_review_keywords": needs_manual_flag,
         })
     return results
@@ -1403,6 +1482,20 @@ def process_item(item, cfg, token=None):
 
     prio = calib.priority_score(example, result, cfg)
     row = build_output_row(item, release, stats, example, result, prio, cfg, photo_urls)
+
+    # Режим 3 (добавлено 28.08.2026): показываем, сколько времени осталось
+    # до закрытия аукциона — прямо в строке находки, чтобы приоритизировать
+    # снайп-ставки по срочности, не открывая каждую ссылку. Безвредно и для
+    # Режима 1/2 — item_end_date просто пуст для FIXED_PRICE-лотов.
+    end_note = ""
+    if item.get("item_end_date"):
+        try:
+            end_dt = datetime.fromisoformat(item["item_end_date"].replace("Z", "+00:00"))
+            hours_left = (end_dt - datetime.now(timezone.utc)).total_seconds() / 3600
+            end_note = f" | закрытие через {hours_left:.1f}ч"
+        except ValueError:
+            pass
+
     # ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя — выхватывать ценное
     # прямо по ходу прогона, кликабельно): раньше ссылка на лот попадала
     # только в финальный CSV (см. finalize()), и чтобы дать пользователю
@@ -1412,6 +1505,7 @@ def process_item(item, cfg, token=None):
     print(f"  {result['verdict']}: {item['title'][:60]} | "
           f"цена ${item['price_usd']} | landed ${result['landed_cost']:.2f} | "
           f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}"
+          + end_note
           + (" | ФОТО ДЛЯ СВЕРКИ КАТАЛОГА" if photo_urls else "")
           + f"\n    {item['item_url']}")
     return (row, prio)
@@ -1534,6 +1628,12 @@ def main():
     # проходами, так что пересечение (тот же лот попал и в bestMatch, и
     # в newlyListed) не тратит Discogs-квоту повторно.
     sort_passes = cfg["search_scope"].get("sort_passes", ["bestMatch"])
+    # Режим 3: buying_options и так AUCTION-only (см. search_ebay), а
+    # itemEndDate-фильтр всё равно отсеет почти всё, что не пришло по
+    # endingSoonest, — bestMatch/newlyListed тут только тратят Discogs-
+    # квоту и время на лоты, которых мы не хотим (не закрываются скоро).
+    if cfg.get("mode3", {}).get("enabled"):
+        sort_passes = ["endingSoonest"]
 
     try:
         for query in search_queries:
@@ -1566,7 +1666,11 @@ def main():
                     print(f"  Ошибка eBay API: {e}")
                     continue
 
-                print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
+                if cfg.get("mode3", {}).get("enabled"):
+                    print(f"  Аукционы <={cfg['mode3']['ending_within_hours']:.0f}ч до закрытия, "
+                          f"landed<=${cfg['mode3']['max_landed_usd']:.0f}: {len(items)} лотов")
+                else:
+                    print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
 
                 for item in items:
                     dedup_key = item.get("item_id") or item.get("item_url")
