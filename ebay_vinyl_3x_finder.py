@@ -289,6 +289,7 @@ def load_config():
     #   AUCTION_ENDING_HOURS=18 MAX_LANDED_USD=11 python3 ebay_vinyl_3x_finder.py
     cfg["mode3"] = {"enabled": False}
     ending_hours = os.environ.get("AUCTION_ENDING_HOURS")
+    fp_max_landed_raw = os.environ.get("FP_MAX_LANDED_USD")
     if ending_hours:
         try:
             hours = float(ending_hours)
@@ -303,9 +304,35 @@ def load_config():
                 max_landed_usd = 11.0
             cfg["mode3"] = {
                 "enabled": True,
+                "buying_options": "AUCTION",
                 "ending_within_hours": hours,
                 "max_landed_usd": max_landed_usd,
             }
+    elif fp_max_landed_raw:
+        # ДОБАВЛЕНО 28.08.2026 (по просьбе пользователя — "убери фильтр
+        # закрытия сегодня, прошерсти Buy It Now/Best Offer с этим же
+        # capping'ом до $11 landed"): тот же принцип бюджета (цена +
+        # доставка до форвардера, БЕЗ международного плеча), что и Режим 3
+        # выше, но без ограничения по времени закрытия (FIXED_PRICE-лоты
+        # и не закрываются в привычном смысле) и без ограничения на
+        # AUCTION — наоборот, только FIXED_PRICE (Buy It Now/Best Offer;
+        # Best Offer всегда идёт вместе с FIXED_PRICE в buyingOptions, см.
+        # комментарий в search_ebay про то, что отдельный фильтр под него
+        # не нужен). Активируется через FP_MAX_LANDED_USD, если
+        # AUCTION_ENDING_HOURS не задан — Режимы 1/2/3(аукционный) не
+        # затронуты:
+        #   FP_MAX_LANDED_USD=11 python3 ebay_vinyl_3x_finder.py
+        try:
+            max_landed_usd = float(fp_max_landed_raw)
+        except ValueError:
+            print(f"FP_MAX_LANDED_USD='{fp_max_landed_raw}' не число, использую 11.0.")
+            max_landed_usd = 11.0
+        cfg["mode3"] = {
+            "enabled": True,
+            "buying_options": "FIXED_PRICE",
+            "ending_within_hours": None,
+            "max_landed_usd": max_landed_usd,
+        }
     return cfg
 
 
@@ -363,10 +390,11 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
     }
     mode3 = cfg.get("mode3") or {"enabled": False}
-    # Режим 3: только AUCTION — у FIXED_PRICE нет "закрытия", снайпить
-    # нечего, а искать среди них по itemEndDate бессмысленно (его у них и
-    # не будет).
-    buying_options = "AUCTION" if mode3.get("enabled") else "FIXED_PRICE|AUCTION"
+    # Режим 3 (два варианта, см. load_config): AUCTION-only с окном по
+    # времени закрытия, либо FIXED_PRICE-only (Buy It Now/Best Offer) без
+    # окна — оба используют landed_cost вместо голой цены как бюджет, см.
+    # ниже. Без mode3 — исходное поведение Режима 1/2 (оба варианта сразу).
+    buying_options = mode3.get("buying_options", "FIXED_PRICE|AUCTION") if mode3.get("enabled") else "FIXED_PRICE|AUCTION"
     params = {
         "q": query,
         "category_ids": "176985",  # категория "Vinyl Records" на eBay
@@ -431,14 +459,17 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         if price is None or price <= 0:
             continue
 
-        # Режим 3: аукцион должен закрываться в ближайшем окне — проверяем
-        # ДО бюджетного фильтра и до похода в Discogs, чтобы не тратить
-        # квоту на лоты, которые физически не успеем выкупить снайпом.
-        # При mode3.enabled сам buying_options уже AUCTION-only (см. выше),
-        # так что отсутствие itemEndDate здесь — не легитимный случай, а
+        # Режим 3 (вариант "аукционы"): должен закрываться в ближайшем окне
+        # — проверяем ДО бюджетного фильтра и до похода в Discogs, чтобы не
+        # тратить квоту на лоты, которые физически не успеем выкупить
+        # снайпом. ending_within_hours is None (вариант "Buy It
+        # Now/Best Offer", см. load_config) — пропускаем эту проверку
+        # целиком, у FIXED_PRICE нет осмысленного "закрытия". При заданном
+        # окне buying_options уже AUCTION-only (см. выше), так что
+        # отсутствие itemEndDate здесь — не легитимный случай, а
         # неожиданный ответ API; честно пропускаем такой лот.
         item_end_date = it.get("itemEndDate")
-        if mode3.get("enabled"):
+        if mode3.get("enabled") and mode3.get("ending_within_hours") is not None:
             if not item_end_date:
                 continue
             try:
@@ -1628,11 +1659,14 @@ def main():
     # проходами, так что пересечение (тот же лот попал и в bestMatch, и
     # в newlyListed) не тратит Discogs-квоту повторно.
     sort_passes = cfg["search_scope"].get("sort_passes", ["bestMatch"])
-    # Режим 3: buying_options и так AUCTION-only (см. search_ebay), а
-    # itemEndDate-фильтр всё равно отсеет почти всё, что не пришло по
-    # endingSoonest, — bestMatch/newlyListed тут только тратят Discogs-
-    # квоту и время на лоты, которых мы не хотим (не закрываются скоро).
-    if cfg.get("mode3", {}).get("enabled"):
+    # Режим 3, вариант "аукционы": buying_options и так AUCTION-only (см.
+    # search_ebay), а itemEndDate-фильтр всё равно отсеет почти всё, что не
+    # пришло по endingSoonest, — bestMatch/newlyListed тут только тратят
+    # Discogs-квоту и время на лоты, которых мы не хотим (не закрываются
+    # скоро). Вариант "Buy It Now/Best Offer" (ending_within_hours is None)
+    # такого ограничения не имеет — там как раз нужен максимальный охват,
+    # как в Режиме 1/2, обычные sort_passes из конфига не трогаем.
+    if cfg.get("mode3", {}).get("enabled") and cfg["mode3"].get("ending_within_hours") is not None:
         sort_passes = ["endingSoonest"]
 
     try:
@@ -1667,8 +1701,12 @@ def main():
                     continue
 
                 if cfg.get("mode3", {}).get("enabled"):
-                    print(f"  Аукционы <={cfg['mode3']['ending_within_hours']:.0f}ч до закрытия, "
-                          f"landed<=${cfg['mode3']['max_landed_usd']:.0f}: {len(items)} лотов")
+                    m3 = cfg["mode3"]
+                    if m3.get("ending_within_hours") is not None:
+                        print(f"  Аукционы <={m3['ending_within_hours']:.0f}ч до закрытия, "
+                              f"landed<=${m3['max_landed_usd']:.0f}: {len(items)} лотов")
+                    else:
+                        print(f"  Buy It Now/Best Offer, landed<=${m3['max_landed_usd']:.0f}: {len(items)} лотов")
                 else:
                     print(f"  В бюджете (<=${cfg['budget_constraints']['max_current_price_usd']:.0f}): {len(items)} лотов")
 
