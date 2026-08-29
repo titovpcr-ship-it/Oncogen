@@ -344,6 +344,45 @@ def load_config():
             "ending_within_hours": None,
             "max_landed_usd": max_landed_usd,
         }
+
+    # ДОБАВЛЕНО 29.08.2026 (по просьбе пользователя — "Золотой/бриллиантовый
+    # режим": Buy It Now/Best Offer БЕЗ аукционов, ЦЕНОВОЙ КОРИДОР $40-210
+    # за одну пластинку — не landed_cost, как в Режиме 3, а голая цена
+    # листинга (та же величина, что max_current_price_usd Режима 1/2, но
+    # теперь ещё и с НИЖНЕЙ границей — цель не "дёшево", а "настоящий
+    # желаемый лот", на который в принципе не выставляют цену ниже $40),
+    # и ЖЁСТКОЕ требование margin_median >= 3.0 — пользователь явно не
+    # хочет здесь grey-zone WATCH (обычный порог grey_zone_lower=1.8),
+    # только уверенный 3x+. Активируется через GOLDEN_MIN_PRICE, полностью
+    # независимо от Режима 1/2/3 (при отсутствии переменной golden_mode
+    # остаётся выключенным):
+    #   GOLDEN_MIN_PRICE=40 GOLDEN_MAX_PRICE=210 python3 ebay_vinyl_3x_finder.py
+    cfg["golden_mode"] = {"enabled": False}
+    golden_min_raw = os.environ.get("GOLDEN_MIN_PRICE")
+    if golden_min_raw:
+        try:
+            golden_min = float(golden_min_raw)
+        except ValueError:
+            print(f"GOLDEN_MIN_PRICE='{golden_min_raw}' не число, игнорирую — Золотой режим выключен.")
+        else:
+            golden_max_raw = os.environ.get("GOLDEN_MAX_PRICE", "210")
+            try:
+                golden_max = float(golden_max_raw)
+            except ValueError:
+                print(f"GOLDEN_MAX_PRICE='{golden_max_raw}' не число, использую 210.0.")
+                golden_max = 210.0
+            golden_margin_raw = os.environ.get("GOLDEN_MIN_MARGIN", "3.0")
+            try:
+                golden_min_margin = float(golden_margin_raw)
+            except ValueError:
+                print(f"GOLDEN_MIN_MARGIN='{golden_margin_raw}' не число, использую 3.0.")
+                golden_min_margin = 3.0
+            cfg["golden_mode"] = {
+                "enabled": True,
+                "min_price_usd": golden_min,
+                "max_price_usd": golden_max,
+                "min_margin": golden_min_margin,
+            }
     return cfg
 
 
@@ -401,11 +440,20 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
     }
     mode3 = cfg.get("mode3") or {"enabled": False}
+    golden = cfg.get("golden_mode") or {"enabled": False}
     # Режим 3 (два варианта, см. load_config): AUCTION-only с окном по
     # времени закрытия, либо FIXED_PRICE-only (Buy It Now/Best Offer) без
     # окна — оба используют landed_cost вместо голой цены как бюджет, см.
-    # ниже. Без mode3 — исходное поведение Режима 1/2 (оба варианта сразу).
-    buying_options = mode3.get("buying_options", "FIXED_PRICE|AUCTION") if mode3.get("enabled") else "FIXED_PRICE|AUCTION"
+    # ниже. Золотой режим — тоже FIXED_PRICE-only (аукционы принципиально
+    # исключены, см. load_config), но с ценовым КОРИДОРОМ вместо потолка.
+    # Без mode3/golden_mode — исходное поведение Режима 1/2 (оба варианта
+    # сразу).
+    if golden.get("enabled"):
+        buying_options = "FIXED_PRICE"
+    elif mode3.get("enabled"):
+        buying_options = mode3.get("buying_options", "FIXED_PRICE|AUCTION")
+    else:
+        buying_options = "FIXED_PRICE|AUCTION"
     params = {
         "q": query,
         "category_ids": "176985",  # категория "Vinyl Records" на eBay
@@ -516,8 +564,14 @@ def search_ebay(token, query, cfg, limit=30, sort=None):
         # международного плеча) — та же формула, что get_shipping_cost()
         # применит позже в process_item() для самого landed_cost в выводе,
         # посчитанная здесь заранее на временном dict, чтобы не дублировать
-        # fallback-логику по стране продавца.
-        if mode3.get("enabled"):
+        # fallback-логику по стране продавца. Золотой режим — ЦЕНОВОЙ
+        # КОРИДОР по голой цене листинга (не landed): цель не "дёшево", а
+        # "настоящий желаемый лот" — снизу отсекаем то, что заведомо не
+        # может быть таким лотом по одной только цене.
+        if golden.get("enabled"):
+            if price < golden["min_price_usd"] or price > golden["max_price_usd"]:
+                continue
+        elif mode3.get("enabled"):
             tmp_item = {"shipping_cost_listed": shipping_cost, "seller_country": country}
             landed = price + get_shipping_cost(tmp_item, cfg)
             if landed > mode3["max_landed_usd"]:
@@ -1513,6 +1567,17 @@ def process_item(item, cfg, token=None):
             if result["verdict"] == "REJECT":
                 return "reject"
 
+    # Золотой режим (добавлено 29.08.2026, по просьбе пользователя):
+    # обычный verdict-порог — grey_zone_lower=1.8 для WATCH, только PASS
+    # требует полный target_margin (обычно 3.0, см. margin_targets в
+    # конфиге). Пользователь здесь явно исключил grey zone — только
+    # уверенный margin_median >= golden_mode.min_margin (по умолчанию
+    # 3.0), даже для WATCH. Проверяем ПОСЛЕ пересчёта по реальному
+    # описанию выше — итоговое margin_median к этому моменту финальное,
+    # независимо от того, какой из двух calib.evaluate() его посчитал.
+    if cfg.get("golden_mode", {}).get("enabled") and result["margin_median"] < cfg["golden_mode"]["min_margin"]:
+        return "reject"
+
     # П.1 обратной связи (25.08.2026): каталожный номер почти никогда не
     # встречается в тексте листинга — только на фото лейбла. Раз лот уже
     # интересен по тексту (WATCH/PASS), но regex не нашёл exact catno —
@@ -1724,7 +1789,11 @@ def main():
                     print(f"  Ошибка eBay API: {e}")
                     continue
 
-                if cfg.get("mode3", {}).get("enabled"):
+                if cfg.get("golden_mode", {}).get("enabled"):
+                    g = cfg["golden_mode"]
+                    print(f"  Золотой режим (Buy It Now/Best Offer, ${g['min_price_usd']:.0f}-${g['max_price_usd']:.0f}, "
+                          f"margin>={g['min_margin']:.1f}x): {len(items)} лотов")
+                elif cfg.get("mode3", {}).get("enabled"):
                     m3 = cfg["mode3"]
                     if m3.get("ending_within_hours") is not None:
                         print(f"  Аукционы <={m3['ending_within_hours']:.0f}ч до закрытия, "
