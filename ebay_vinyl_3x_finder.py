@@ -1527,6 +1527,19 @@ def process_item(item, cfg, token=None):
         except ValueError:
             pass
 
+    # Режим 3 (добавлено 28.08.2026): result["landed_cost"] всегда включает
+    # forwarding_cost (международное плечо форвардер->РФ, см. calib.
+    # forwarding_cost/evaluate) — это ДРУГАЯ, БОЛЬШАЯ величина, чем то, что
+    # реально ограничивает MAX_LANDED_USD в search_ebay() (цена + доставка
+    # ДО форвардера, БЕЗ международного плеча — именно так пользователь
+    # сформулировал бюджет Режима 3). Без пояснения "landed $X" в консоли
+    # выглядел бы как нарушение заявленного лимита $11 — печатаем обе
+    # величины, чтобы не путать одно с другим.
+    to_forwarder_note = ""
+    if cfg.get("mode3", {}).get("enabled"):
+        to_forwarder = item["price_usd"] + get_shipping_cost(item, cfg)
+        to_forwarder_note = f" | до форвардера ${to_forwarder:.2f}"
+
     # ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя — выхватывать ценное
     # прямо по ходу прогона, кликабельно): раньше ссылка на лот попадала
     # только в финальный CSV (см. finalize()), и чтобы дать пользователю
@@ -1534,7 +1547,7 @@ def process_item(item, cfg, token=None):
     # отдельно повторно искать через eBay API. Печатаем listing_url сразу
     # в консоли — теперь его можно взять прямо из лога, без лишнего вызова.
     print(f"  {result['verdict']}: {item['title'][:60]} | "
-          f"цена ${item['price_usd']} | landed ${result['landed_cost']:.2f} | "
+          f"цена ${item['price_usd']}{to_forwarder_note} | landed ${result['landed_cost']:.2f} | "
           f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}"
           + end_note
           + (" | ФОТО ДЛЯ СВЕРКИ КАТАЛОГА" if photo_urls else "")
