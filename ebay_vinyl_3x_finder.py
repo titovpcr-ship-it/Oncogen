@@ -1079,19 +1079,29 @@ def discogs_resolve_release(item, cfg):
     if dm.get("require_exact_release_match", True) and catno:
         normalize = dm.get("normalize_catalog_number", True)
         our_norm = normalize_catno(catno) if normalize else catno
-        their_norm = normalize_catno(top.get("catno", "")) if normalize else top.get("catno", "")
 
-        if not (our_norm and our_norm == their_norm):
+        # НАЙДЕНО 29.08.2026 (ручной разбор пользователя, Eric Dolphy — Out
+        # To Lunch, BST 84163, $200 лот): раньше здесь сравнивался ТОЛЬКО
+        # top.catno (=results[0]) с нашим catno — если Discogs вернул
+        # первым результатом СХОЖИЙ, но не идентичный catno-вариант (тут
+        # немецкий "BST 84163 K" с суффиксом), код сразу сдавался в
+        # manual_review с pool=[top] из ЭТОГО неверного кандидата, даже
+        # когда чуть ниже в том же results — множество релизов с ТОЧНО
+        # нашим catno (включая нужный пользователю release/2790342, US
+        # 1966 Liberty), просто оказавшихся не на первой позиции по
+        # версии Discogs. Итог — ансамблевая оценка на пустом месте ушла
+        # в $651 медиану (совсем другого немецкого пресса), 3.00x margin
+        # оказался построен на несуществующем прессе. Теперь ищем ТОЧНОЕ
+        # совпадение catno по ВСЕМ results, а не только по позиции №0 —
+        # порядок сортировки Discogs не гарантирует точный матч первым.
+        same_catno = [
+            r for r in results
+            if normalize_catno(r.get("catno", "")) == our_norm
+        ] if normalize else [r for r in results if r.get("catno") == catno]
+
+        if not (our_norm and same_catno):
             confidence = "manual_review"
         else:
-            # catno совпал у результата №0 — но сколько ВСЕГО результатов
-            # реально имеют этот catno? (Discogs's catno-фильтр обычно
-            # точный, но перестрахуемся и не доверяем чужому порядку
-            # сортировки вслепую.)
-            same_catno = [
-                r for r in results
-                if normalize_catno(r.get("catno", "")) == our_norm
-            ] if normalize else [r for r in results if r.get("catno") == catno]
             same_catno = filter_by_reissue_hint(same_catno, item["title"])
             same_catno = prefer_domestic(same_catno, item["title"])
 
