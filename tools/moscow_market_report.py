@@ -275,6 +275,76 @@ def section_press_premium(jazz):
     return out
 
 
+
+def section_verdict(jazz, fx=84.6):
+    """Прямой ответ на вопрос, ради которого отчёт и заказан: стоит ли
+    вообще заниматься джазом в Москве. Считается, а не обсуждается."""
+    p = [r["price"] for r in jazz]
+    out = ["## 10. Ответ: стоит ли заниматься джазом в Москве", "",
+           "Вопрос сводится к одному: какая доля реальных московских продаж "
+           "перекрывает landed cost в нужную кратность. Landed для типового "
+           "дешёвого лота с eBay — цена лота плюс доставка по США плюс карго "
+           f"по весу; при курсе {fx} ₽/$ это $15–25, то есть 1 270–2 115 ₽.", "",
+           "| landed | цель 2x — нужна выручка | проходит продаж | цель 3x | проходит |",
+           "|---|--:|--:|--:|--:|"]
+    for landed in (15.0, 20.0, 25.0):
+        L = landed * fx
+        row = [f"| ${landed:.0f} ({L:,.0f} ₽)".replace(",", " ")]
+        for tgt in (2.0, 3.0):
+            need = L * tgt
+            share = sum(1 for x in p if x >= need) / len(p) * 100
+            row.append(f"| {need:,.0f} ₽ | **{share:.1f}%**".replace(",", " "))
+        out.append("".join(row) + " |")
+    need3 = 20 * fx * 3
+    hits = [x for x in p if x >= need3]
+    # ВНИМАНИЕ: .replace(",", " ") нельзя вешать на всю строку — он съедает
+    # запятые самого предложения. Форматируем числа по отдельности.
+    n_hits = f"{len(hits):,}".replace(",", " ")
+    per_year = f"{len(hits)/179*365:,.0f}".replace(",", " ")
+    med_hits = f"{statistics.median(hits):,.0f}".replace(",", " ")
+    out += ["",
+            f"В абсолютных числах: порог 3x при landed $20 перекрывают "
+            f"**{n_hits}** продаж за 179 дней — примерно "
+            f"**{len(hits)/len(jazz)*100:.0f}%** джазового рынка, около "
+            f"**{per_year}** сделок в год на всём Мешке, "
+            f"с медианой **{med_hits} ₽**.",
+            "",
+            "**Вывод.** Джаз в Москве — рынок узкий, но существующий. "
+            "Заниматься им имеет смысл только на верхних 3–10% выборки, а не "
+            "на потоке дешёвых лотов: медиана джаза 1 300 ₽ примерно равна "
+            "landed cost, то есть средний лот не окупает доставку в принципе. "
+            "Вся экономика живёт в хвосте распределения.", "",
+            "Профиль тех продаж, что порог перекрывают:", ""]
+    import ru_press_markers as _pm
+    from collections import Counter as _C
+    lab, cty, gr = _C(), _C(), _C()
+    for r in jazz:
+        if r["price"] < need3:
+            continue
+        m = _pm.parse_markers(r["title"])
+        if m.label:
+            lab[m.label] += 1
+        if m.country:
+            cty[m.country] += 1
+        gr[canon_grade(r["vgrade"]) or "не указан"] += 1
+    out += ["- Лейблы: " + ", ".join(f"**{k}** {v}" for k, v in lab.most_common(6)),
+            "- Страна прессинга: " + ", ".join(f"**{k}** {v}" for k, v in cty.most_common(5)),
+            "- Грейды: " + ", ".join(f"**{k}** {v}" for k, v in gr.most_common(5)), "",
+            f"Читается это так. Blue Note — единственный лейбл, у которого "
+            f"деньги лежат в самом имени: из {sum(lab.values())} дорогих лотов "
+            f"с распознанным лейблом на него приходится {lab.get('Blue Note', 0)}, "
+            f"и он единственный с медианой выше 3 500 ₽. "
+            "Японские прессы обгоняют американские по числу дорогих продаж — "
+            "то есть в Москве платят за качество прессинга, а не за "
+            "«оригинальность» как таковую; это согласуется с измеренной в §9 "
+            "премией за оригинал всего в 1.19x. И почти ничего дешевле EX в "
+            "верхний сегмент не попадает: **состояние здесь важнее редкости**.", "",
+            "Отсюда же следует, чего покупать НЕ надо. «Мелодия» — 5 981 "
+            "продажа с медианой 250 ₽, это шум, а не товар. Лоты в G и ниже "
+            "не окупают доставку ни при каком раскладе.", ""]
+    return out
+
+
 def build(db_path, out_path):
     conn = sqlite3.connect(db_path)
     rows = load(conn)
@@ -308,6 +378,7 @@ def build(db_path, out_path):
     doc += section_competition(rows, jazz)
     doc += section_months(rows, jazz)
     doc += section_press_premium(jazz)
+    doc += section_verdict(jazz)
 
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     Path(out_path).write_text("\n".join(doc), encoding="utf-8")

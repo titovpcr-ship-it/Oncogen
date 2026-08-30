@@ -97,6 +97,13 @@ def main():
     # --- выбор драйвера --------------------------------------------------
     import os
     saved = {k: os.environ.get(k) for k in ("TG_BOT_TOKEN", "TG_CHAT_ID", "NTFY_TOPIC")}
+    # Изолировать надо И окружение, И .env: pick_driver читает оба, причём
+    # .env реального проекта уже содержит телеграм-ключи. Без этой подмены
+    # тест проверял бы содержимое рабочего .env, а не логику выбора.
+    # Патчим саму функцию: у load_env путь связан значением по умолчанию на
+    # этапе def, поэтому подмена notify.ENV_PATH ничего бы не дала.
+    real_load_env = notify.load_env
+    notify.load_env = lambda *a, **kw: {}
     try:
         os.environ["NTFY_TOPIC"] = "x" * 40
         os.environ.pop("TG_BOT_TOKEN", None)
@@ -108,6 +115,7 @@ def main():
         check(notify.Notifier.pick_driver().name == "telegram",
               "с токенами в окружении сам переключается на telegram", state)
     finally:
+        notify.load_env = real_load_env
         for k, v in saved.items():
             if v is None:
                 os.environ.pop(k, None)
