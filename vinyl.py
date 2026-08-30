@@ -18,6 +18,7 @@ import argparse
 import sys
 
 import vinyl_db as db
+import vision_queue as vq
 
 
 def cmd_init(args):
@@ -115,6 +116,49 @@ def cmd_stats(args):
     print(f"расхождений обещанный/фактический грейд: {grade_infl}")
 
 
+def cmd_vision_ingest(args):
+    """P1-4 (§3 «Решений»): загрузка разбора по фото обратно в БД."""
+    db.init_db()
+    raw = open(args.path, encoding="utf-8").read()
+    try:
+        answers = vq.parse_answers(raw)
+    except ValueError as e:
+        sys.exit(f"Файл ответов не разобран: {e}")
+
+    saved, unknown = 0, []
+    with db.connect() as conn:
+        for a in answers:
+            iid = str(a["item_id"])
+            if not conn.execute("SELECT 1 FROM items WHERE ebay_item_id=?", (iid,)).fetchone():
+                unknown.append(iid)
+            db.record_press_id(conn, iid, a)
+            saved += 1
+    print(f"Загружено разборов: {saved}")
+    for a in answers:
+        print(f"  {a['item_id']}: {a.get('press_generation')} "
+              f"(уверенность {a.get('press_confidence')})"
+              + (f" — {a.get('rim_text')}" if a.get("rim_text") else ""))
+    if unknown:
+        print(f"ВНИМАНИЕ: этих лотов нет в базе, разбор сохранён без привязки: "
+              f"{', '.join(unknown)}")
+
+
+def cmd_vision_show(args):
+    with db.connect() as conn:
+        rows = conn.execute(
+            "SELECT p.*, i.title FROM press_ids p LEFT JOIN items i "
+            "ON i.ebay_item_id=p.ebay_item_id ORDER BY p.created_at DESC LIMIT ?",
+            (args.limit,)).fetchall()
+    if not rows:
+        print("Разборов по фото пока нет.")
+        return
+    for r in rows:
+        print(f"{r['ebay_item_id']}  {r['press_generation']:<14} "
+              f"{r['press_confidence'] or '':<7} {(r['title'] or '')[:44]}")
+        if r["rim_text"]:
+            print(f"    обод: {r['rim_text']}")
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="vinyl", description="База сделок винил-снайпера")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -152,6 +196,15 @@ def build_parser():
     upd.add_argument("--sold-date", help="YYYY-MM-DD")
     upd.add_argument("--notes")
     upd.set_defaults(func=cmd_deal_update)
+
+    vis = sub.add_parser("vision", help="разбор прессов по фото (P1-4)")
+    vsub = vis.add_subparsers(dest="vision_cmd", required=True)
+    ving = vsub.add_parser("ingest", help="загрузить ответы разбора (JSON)")
+    ving.add_argument("path", nargs="?", default="answers.json")
+    ving.set_defaults(func=cmd_vision_ingest)
+    vshow = vsub.add_parser("show", help="показать последние разборы")
+    vshow.add_argument("--limit", type=int, default=20)
+    vshow.set_defaults(func=cmd_vision_show)
 
     lst = dsub.add_parser("list", help="список сделок")
     lst.add_argument("--status", choices=db.DEAL_STATUSES)

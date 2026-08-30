@@ -148,6 +148,26 @@ CREATE TABLE IF NOT EXISTS deals (
 );
 CREATE INDEX IF NOT EXISTS idx_deals_status ON deals(status);
 
+-- P1-4 через очередь ручного разбора (vision_queue.py). Поколение пресса,
+-- прочитанное с фото — то, что снимает главный потолок точности: при
+-- коллизии catno скрипт вместо понижения доверия делает выбор.
+CREATE TABLE IF NOT EXISTS press_ids (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    ebay_item_id      TEXT REFERENCES items(ebay_item_id),
+    created_at        TEXT NOT NULL,
+    press_generation  TEXT,   -- original | early_repress | later_repress | unknown
+    press_confidence  TEXT,   -- high | medium | low
+    catno_on_label    TEXT,
+    rim_text          TEXT,
+    deep_groove       INTEGER,
+    runout            TEXT,
+    mono_stereo       TEXT,
+    condition_notes   TEXT,
+    press_evidence    TEXT,   -- JSON-массив наблюдений
+    chosen_release_id INTEGER
+);
+CREATE INDEX IF NOT EXISTS idx_press_ids_item ON press_ids(ebay_item_id);
+
 CREATE TABLE IF NOT EXISTS deal_events (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     deal_id     INTEGER REFERENCES deals(id),
@@ -252,6 +272,31 @@ def finish_run(conn, run_id, n_queries=0, n_items_seen=0, n_candidates=0):
 
 
 # ---------- сделки ----------
+
+def record_press_id(conn, ebay_item_id, answer: dict):
+    """Кладёт разбор по фото. Возвращает id записи."""
+    dg = answer.get("deep_groove")
+    cur = conn.execute(
+        "INSERT INTO press_ids (ebay_item_id, created_at, press_generation, "
+        "press_confidence, catno_on_label, rim_text, deep_groove, runout, "
+        "mono_stereo, condition_notes, press_evidence, chosen_release_id) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+        (str(ebay_item_id), utcnow(), answer.get("press_generation"),
+         answer.get("press_confidence"), answer.get("catno_on_label"),
+         answer.get("rim_text"), None if dg is None else int(bool(dg)),
+         answer.get("runout"), answer.get("mono_stereo"),
+         answer.get("condition_notes"),
+         json.dumps(answer.get("press_evidence") or [], ensure_ascii=False),
+         answer.get("chosen_release_id")),
+    )
+    return cur.lastrowid
+
+
+def latest_press_id(conn, ebay_item_id):
+    return conn.execute(
+        "SELECT * FROM press_ids WHERE ebay_item_id=? ORDER BY created_at DESC LIMIT 1",
+        (str(ebay_item_id),)).fetchone()
+
 
 def create_deal(conn, ebay_item_id, release_id=None, status="seen", **fields):
     now = utcnow()
