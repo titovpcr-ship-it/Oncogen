@@ -138,6 +138,10 @@ CREATE TABLE IF NOT EXISTS deals (
     bought_price_usd      REAL,
     actual_shipping_usd   REAL,
     actual_weight_kg      REAL,
+    final_price_usd       REAL,   -- за сколько ушёл лот (в т.ч. ПРОИГРАННЫЙ):
+                                  -- показывает реальную конкуренцию и потолок рынка
+                                  -- по сегменту. Раньше эта информация терялась
+                                  -- полностью, а она бесплатная.
     promised_grade        TEXT,
     actual_grade          TEXT,   -- для инфляции грейда по продавцам (P2-8)
     listed_price_rub      REAL,

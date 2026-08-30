@@ -45,6 +45,7 @@ def cmd_deal_new(args):
             conn, args.item_id,
             release_id=row["release_id"] if row else None,
             status=args.status, max_bid_usd=args.max_bid,
+            final_price_usd=args.final_price,
             promised_grade=args.promised_grade, notes=args.notes,
         )
     print(f"Сделка #{deal_id} создана (лот {args.item_id}, статус {args.status})")
@@ -54,6 +55,7 @@ def cmd_deal_update(args):
     fields = {
         "max_bid_usd": args.max_bid,
         "bought_price_usd": args.bought_price,
+        "final_price_usd": args.final_price,
         "actual_shipping_usd": args.actual_shipping,
         "actual_weight_kg": args.actual_weight,
         "promised_grade": args.promised_grade,
@@ -114,6 +116,20 @@ def cmd_stats(args):
     print(f"сделок по статусам: " + (", ".join(f"{r['status']}={r['c']}" for r in by_status) or "нет"))
     print(f"закрытых сделок: {closed} (для калибровки P2-8 нужно 20-30)")
     print(f"расхождений обещанный/фактический грейд: {grade_infl}")
+    with db.connect() as conn:
+        lost = conn.execute(
+            "SELECT COUNT(*) c, AVG(final_price_usd) a FROM deals "
+            "WHERE status='lost' AND final_price_usd IS NOT NULL").fetchone()
+        overbid = conn.execute(
+            "SELECT COUNT(*) c FROM deals WHERE status='lost' "
+            "AND final_price_usd IS NOT NULL AND max_bid_usd IS NOT NULL "
+            "AND final_price_usd > max_bid_usd").fetchone()["c"]
+    if lost["c"]:
+        print(f"проигранных с известной ценой: {lost['c']} (средняя ${lost['a']:.2f}); "
+              f"из них ушли выше нашего потолка: {overbid}")
+    else:
+        print("проигранных аукционов с ценой: 0 — заносите их тоже, "
+              "они калибруют потолок рынка бесплатно")
 
 
 def cmd_vision_ingest(args):
@@ -178,6 +194,7 @@ def build_parser():
     new.add_argument("item_id", help="ebay item id (цифры из /itm/...)")
     new.add_argument("--status", default="seen", choices=db.DEAL_STATUSES)
     new.add_argument("--max-bid", type=float)
+    new.add_argument("--final-price", type=float)
     new.add_argument("--promised-grade")
     new.add_argument("--notes")
     new.set_defaults(func=cmd_deal_new)
@@ -187,6 +204,8 @@ def build_parser():
     upd.add_argument("--status", choices=db.DEAL_STATUSES)
     upd.add_argument("--max-bid", type=float)
     upd.add_argument("--bought-price", type=float)
+    upd.add_argument("--final-price", type=float,
+                     help="за сколько ушёл лот (нужно и для ПРОИГРАННЫХ — калибрует потолок рынка)")
     upd.add_argument("--actual-shipping", type=float)
     upd.add_argument("--actual-weight", type=float)
     upd.add_argument("--promised-grade")
