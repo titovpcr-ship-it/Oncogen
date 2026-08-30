@@ -85,9 +85,17 @@ def test_margin_ru():
                     ru_expected_price_rub=10000)
     e = ec.compute_ru_economics(landed, comps, CFG)
     fx = CFG["ru_market"]["fx_rate_rub_per_usd"]
-    expect_net = round(10000 * 0.9 - 400 - 150, 2)
-    check("net_ru учитывает комиссию, доставку и упаковку",
+    # «Решения» §1: net считается по ЛУЧШЕМУ каналу, а не по плоским 10%.
+    # Комп с Мешка не включает доставку -> вычитать её не за что.
+    meshok = next(c for c in CFG["ru_market"]["channels"] if c["name"] == "meshok")
+    expect_net = round(10000 * (1 - meshok["commission_pct"])
+                       - CFG["ru_market"]["packaging_rub"] - meshok["promo_rub"], 2)
+    check("net_ru считается по лучшему каналу, доставка не вычитается вслепую",
           e.net_ru_rub == expect_net, f"{e.net_ru_rub} vs {expect_net}")
+    check("лучший канал определён и назван", e.best_channel == "meshok", str(e.best_channel))
+    check("есть разбивка по всем каналам",
+          set(e.channel_breakdown) == {c["name"] for c in CFG["ru_market"]["channels"]},
+          str(e.channel_breakdown))
     check("landed переведён в рубли по курсу конфига",
           e.landed_rub == round(landed.standalone_usd * fx, 2), f"{e.landed_rub}")
     check("margin_ru = net / landed", e.margin_ru == round(e.net_ru_rub / e.landed_rub, 3))
@@ -101,6 +109,31 @@ def test_margin_ru():
     check("без цены РФ margin_ru не считается", e2.margin_ru is None)
     check("без цены РФ явно сказано про потолок WATCH",
           any("WATCH" in n for n in e2.notes), str(e2.notes))
+
+
+def test_delivery_double_count():
+    """«Решения» §1: главная ошибка старой модели — безусловный вычет 400₽."""
+    print("\n-- §1: доставка вычитается только когда её реально платит продавец --")
+    ru = CFG["ru_market"]
+    # источник, где цена НЕ включает доставку (Мешок) — вычета быть не должно
+    net_no_del, ch, _ = ec._best_channel_net(10000, "meshok_sold", CFG)
+    meshok = next(c for c in ru["channels"] if c["name"] == "meshok")
+    check("комп без доставки -> доставка НЕ вычитается",
+          net_no_del == round(10000 * (1 - meshok["commission_pct"]) - ru["packaging_rub"], 2),
+          f"{net_no_del}")
+
+    # тот же источник, но помеченный как «цена с доставкой»
+    cfg2 = {**CFG, "ru_market": {**ru,
+            "price_includes_delivery_by_source": {**ru["price_includes_delivery_by_source"],
+                                                  "meshok_sold": True}}}
+    net_with_del, ch2, breakdown = ec._best_channel_net(10000, "meshok_sold", cfg2)
+    check("комп с доставкой -> у канала, где платит продавец, вычет появляется",
+          breakdown["avito"] < net_with_del or breakdown["avito"] <
+          round(10000 * 0.9 - ru["packaging_rub"] - 300, 2) + 1,
+          str(breakdown))
+    check("промо-расход учтён отдельной строкой (Авито)",
+          breakdown["avito"] <= round(10000 * 0.9 - ru["packaging_rub"], 2) - 300 + 0.01,
+          str(breakdown["avito"]))
 
 
 def test_ranking():
@@ -161,8 +194,11 @@ def test_acceptance_bennie_green():
     check("потолок ставки — двузначное число долларов, а не сотни",
           e.max_bid_usd is not None and 5 <= e.max_bid_usd <= 40,
           f"${e.max_bid_usd}")
-    # Диапазон ТЗ ($21-25) посчитан от ВАЛОВОЙ цены 10 000₽ без издержек сбыта.
-    # Наша формула вычитает комиссию/доставку/упаковку, поэтому потолок ниже.
+    # Двухголовая диагностика («Решения» §1: оставить). Расхождение net/gross
+    # показывает вес издержек сбыта в конкретном сегменте. После перехода на
+    # поканальную модель разрыв почти закрылся ($20.38 против $22.15) — то есть
+    # прежние $16.04 объяснялись не конвенцией, а завышенными издержками:
+    # плоские 10% вместо 3% у Мешка и безусловный вычет доставки.
     gross_budget_rub = 10000 / 3.0
     fx = CFG["ru_market"]["fx_rate_rub_per_usd"]
     tz_style = round(gross_budget_rub / fx - landed.non_item_usd(False), 2)
@@ -177,6 +213,7 @@ def main():
     test_weight_and_landed()
     test_liquidity()
     test_margin_ru()
+    test_delivery_double_count()
     test_ranking()
     test_illiquid_3x()
     test_acceptance_bennie_green()

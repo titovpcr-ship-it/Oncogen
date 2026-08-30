@@ -71,6 +71,8 @@ class RuEconomics:
     expected_days_to_sale: int | None = None
     max_bid_usd: float | None = None
     basis: str = "standalone"      # standalone | marginal
+    best_channel: str | None = None  # канал с лучшим net (он же подсказка, куда выставлять)
+    channel_breakdown: dict = field(default_factory=dict)  # net по каждому каналу
     liquidity_flag: str = "unknown"  # liquid | illiquid | saturated | unknown
     notes: list[str] = field(default_factory=list)
 
@@ -214,14 +216,48 @@ def classify_liquidity(ru_sold_n: int, ru_supply_count: int, cfg) -> str:
 
 # ───────────────────────── P0-2: главная формула ─────────────────────────
 
+def _best_channel_net(expected_price_rub: float, price_source: str, cfg):
+    """«Решения» §1: издержки сбыта — свойство канала, а не одна константа.
+
+    Считаем чистое поступление по каждому каналу и берём ЛУЧШИЙ; его имя
+    попадает в вывод как подсказка, куда выставлять.
+
+    Доставка вычитается НЕ всегда. Вычитаем только когда одновременно:
+      * комп-цена включает доставку (свойство ИСТОЧНИКА цены — это про то,
+        что означает само число), и
+      * на этом канале доставку платит продавец.
+    Иначе получается двойной счёт: на мешковских компах цена — это цена
+    лота, доставку сверху платит покупатель, и вычитать её из нашей выручки
+    не за что. Прежний безусловный вычет 400₽ был именно такой ошибкой.
+    """
+    ru = cfg.get("ru_market") or {}
+    channels = ru.get("channels") or []
+    if not channels:
+        return None, None, {}
+
+    delivery = float(ru.get("delivery_rub", 400))
+    packaging = float(ru.get("packaging_rub", 150))
+    src_flags = ru.get("price_includes_delivery_by_source") or {}
+    comp_includes_delivery = bool(src_flags.get(price_source, False))
+
+    breakdown = {}
+    for ch in channels:
+        commission = float(ch.get("commission_pct", 0.10))
+        promo = float(ch.get("promo_rub", 0))
+        pays_delivery = bool(ch.get("seller_pays_delivery", False))
+        deduct_delivery = delivery if (comp_includes_delivery and pays_delivery) else 0.0
+        net = expected_price_rub * (1 - commission) - deduct_delivery - packaging - promo
+        breakdown[ch.get("name", "?")] = round(net, 2)
+
+    best = max(breakdown, key=breakdown.get)
+    return breakdown[best], best, breakdown
+
+
 def compute_ru_economics(landed: LandedCost, comps, cfg,
                          use_marginal=False) -> RuEconomics:
     """comps — ru_market.RuComps (или любой объект с теми же полями)."""
     ru = cfg.get("ru_market") or {}
     fx = float(ru.get("fx_rate_rub_per_usd", 84.6))
-    commission = float(ru.get("marketplace_commission", 0.10))
-    delivery = float(ru.get("delivery_rub", 400))
-    packaging = float(ru.get("packaging_rub", 150))
 
     e = RuEconomics(basis="marginal" if use_marginal else "standalone")
     landed_usd = landed.marginal_usd if use_marginal else landed.standalone_usd
@@ -238,8 +274,13 @@ def compute_ru_economics(landed: LandedCost, comps, cfg,
         e.notes.append("нет российской цены — margin_ru не считается, вердикт не выше WATCH")
         return e
 
-    e.net_ru_rub = round(expected_price * (1 - commission) - delivery - packaging, 2)
-    if e.landed_rub and e.landed_rub > 0:
+    # «Решения» §1: net считается ПО КАЖДОМУ каналу, берётся лучший.
+    src = getattr(comps, "ru_price_source", None) or "segment_model"
+    e.net_ru_rub, e.best_channel, e.channel_breakdown = _best_channel_net(
+        expected_price, src, cfg)
+    if e.best_channel:
+        e.notes.append(f"лучший канал сбыта: {e.best_channel}")
+    if e.landed_rub and e.landed_rub > 0 and e.net_ru_rub is not None:
         e.margin_ru = round(e.net_ru_rub / e.landed_rub, 3)
 
     profit_rub = (e.net_ru_rub or 0) - (e.landed_rub or 0)
