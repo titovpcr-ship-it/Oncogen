@@ -6,3 +6,6 @@ smoke_test_decisions_log.csv
 .env
 .pw-profile/
 .mv_sitemap_cache/
+vinyl.db
+vinyl.db-journal
+vinyl.db-wal
