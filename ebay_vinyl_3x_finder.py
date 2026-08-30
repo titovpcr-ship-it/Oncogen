@@ -129,6 +129,7 @@ Discogs public API официально не отдаёт "низкая/меди
 import csv
 import os
 import re
+import sqlite3
 import statistics
 import time
 from datetime import datetime, timezone
@@ -1756,10 +1757,75 @@ def discogs_ensemble_stats(candidates):
     if not got_any:
         return None
     result = {key: weighted_median(pairs) for key, pairs in per_key_pairs.items()}
+    # НЕвзвешенная медиана по прессам — это «сколько стоит АЛЬБОМ вообще»,
+    # в отличие от взвешенной, которая тянется к самому ликвидному прессу.
+    # Отношение одной к другой и есть press_ratio из формулы §3a
+    # (см. ru_price_model): им московская альбомная цена поправляется на
+    # конкретный пресс.
+    result["world_album_median"] = statistics.median(
+        [m for _, m in per_candidate_median])
     result["candidate_count"] = len(per_candidate_median)
     result["resolution_confidence"] = ensemble_resolution_confidence(per_candidate_median)
     result["pricing_source"] = "degraded_2x_low" if "degraded_2x_low" in pricing_sources else "price_suggestions"
     return result
+
+
+
+# ────────────────── российский контур: подключение ──────────────────
+# Модули ru-контура опциональны: без локального архива скрипт обязан
+# работать ровно как раньше, а не падать. Отсюда мягкий импорт.
+try:
+    import ru_price_model as _RU_MODEL
+    import ru_economics as _RU_ECON
+except Exception:                       # noqa: BLE001
+    _RU_MODEL = _RU_ECON = None
+
+_RU_DB_PATH = os.environ.get("VINYL_DB", "vinyl.db")
+_RU_STATE = {"conn": None, "coeffs": None, "tried": False}
+
+
+def _ru_state():
+    """Соединение с архивом и шкала грейдов — один раз на прогон.
+    Коэффициенты грейдов ИЗМЕРЯЮТСЯ по архиву, поэтому считать их на
+    каждый лот бессмысленно и дорого."""
+    if _RU_STATE["tried"]:
+        return _RU_STATE
+    _RU_STATE["tried"] = True
+    if not _RU_MODEL or not os.path.exists(_RU_DB_PATH):
+        return _RU_STATE
+    try:
+        conn = sqlite3.connect(_RU_DB_PATH)
+        n = conn.execute("SELECT COUNT(*) FROM meshok_sold").fetchone()[0]
+        if not n:
+            return _RU_STATE
+        _RU_STATE["conn"] = conn
+        _RU_STATE["coeffs"] = _RU_MODEL.grade_coefficients(conn)
+        print(f"  российский контур: архив Мешка на {n} лотов подключён")
+    except Exception as e:              # noqa: BLE001
+        print(f"  российский контур недоступен ({type(e).__name__}) — "
+              f"считаем только мировую маржу")
+    return _RU_STATE
+
+
+def _ru_contour(item, release, stats, result, cfg, fmt="single_lp", record_count=1):
+    """Московская цена, margin_ru и потолок ставки для одного лота."""
+    st = _ru_state()
+    if not st["conn"] or not _RU_ECON:
+        return {}
+    cand = (release.get("candidates") or [{}])[0]
+    grade = calib.extract_grade(item.get("title", "")) or None
+    landed = _RU_ECON.compute_landed(
+        item["price_usd"], get_shipping_cost(item, cfg),
+        fmt or "single_lp", record_count or 1, cfg)
+    return _RU_MODEL.contour_for_listing(
+        st["conn"], cfg,
+        discogs_title=cand.get("title"),
+        grade=grade,
+        landed=landed,
+        world_press_price=stats.get("median"),
+        world_album_median=stats.get("world_album_median"),
+        title_for_markers=item.get("title"),
+        coeffs=st["coeffs"])
 
 
 # ============ ОСНОВНАЯ ЛОГИКА ============
@@ -1859,6 +1925,9 @@ def process_item(item, cfg, token=None):
             # осторожность, что и раньше выражалась через catalog_match_
             # confidence != exact -> WATCH, теперь явно и в этом поле тоже).
             stats["candidate_count"] = 1
+            # Единственный пресс: альбомная медиана и есть медиана пресса,
+            # поправка §3a вырождается в 1.0 — так и должно быть.
+            stats["world_album_median"] = stats["median"]
             stats["resolution_confidence"] = "high" if release["confidence"] == "exact" else "medium"
     if not stats:
         debug_print(f"NO_STATS (Discogs low/price_suggestions недоступны для release/{release['release_id']}): "
@@ -1979,8 +2048,24 @@ def process_item(item, cfg, token=None):
     if release["confidence"] != "exact" and token:
         photo_urls = fetch_ebay_item_photos(item["item_id"], token)
 
+    # ─── российский контур (ТЗ «архив и margin_ru» §3, §5) ───
+    # Мировая маржа отвечает на вопрос «насколько этот пресс ценен
+    # глобально», а продавать — в Москве. Здесь считается вторая,
+    # настоящая величина: цена по локальному архиву Мешка, поправленная на
+    # грейд и на пресс, и максимальная ставка, которая из неё следует.
+    ru = _ru_contour(item, release, stats, result, cfg, fmt, record_count)
+    if ru.get("margin_ru") is not None:
+        result["margin_ru"] = ru["margin_ru"]
+    capped, why = _RU_MODEL.cap_verdict_on_zero_sales(
+        result["verdict"], ru.get("ru_sold_n", 0), cfg) if _RU_MODEL else (result["verdict"], None)
+    if why:
+        result["verdict"] = capped
+        debug_print(f"{capped} (было выше): {why} — {item['title'][:60]}")
+
     prio = calib.priority_score(example, result, cfg)
     row = build_output_row(item, release, stats, example, result, prio, cfg, photo_urls)
+    for k, v in ru.items():
+        row[k] = v
 
     # Режим 3 (добавлено 28.08.2026): показываем, сколько времени осталось
     # до закрытия аукциона — прямо в строке находки, чтобы приоритизировать
@@ -2014,9 +2099,16 @@ def process_item(item, cfg, token=None):
     # рабочую ссылку на что-то найденное посреди прогона, приходилось
     # отдельно повторно искать через eBay API. Печатаем listing_url сразу
     # в консоли — теперь его можно взять прямо из лога, без лишнего вызова.
+    ru_note = ""
+    if ru.get("margin_ru") is not None:
+        mb = ru.get("ru_max_bid_usd")
+        ru_note = (f" | МОСКВА: {ru['margin_ru']:.2f}x, продаж {ru['ru_sold_n']}"
+                   + (f", макс. ставка ${mb:.2f}" if mb is not None else ""))
+    elif ru.get("ru_sold_n") == 0:
+        ru_note = " | МОСКВА: продаж 0 за окно"
     print(f"  {result['verdict']}: {item['title'][:60]} | "
           f"цена ${item['price_usd']}{to_forwarder_note} | landed ${result['landed_cost']:.2f} | "
-          f"margin {result['margin_median']:.2f}x | catalog={release['confidence']}"
+          f"margin {result['margin_median']:.2f}x{ru_note} | catalog={release['confidence']}"
           + end_note
           + (" | ФОТО ДЛЯ СВЕРКИ КАТАЛОГА" if photo_urls else "")
           + f"\n    {item['item_url']}")

@@ -394,6 +394,22 @@ search_scope:
 output:
   csv_path: "candidates_{date}.csv"
   columns:
+    # Российский контур (ТЗ «архив и margin_ru» §3). Дописаны в конец
+    # схемы — старые CSV не ломаются.
+    - margin_ru                 # net в Москве / landed. ГЛАВНОЕ число, а не мировая маржа
+    - ru_expected_price_rub     # цена ЭТОГО экземпляра: альбом -> грейд -> пресс
+    - ru_album_median_rub       # альбомная медиана до поправок, для сверки
+    - ru_sold_n                 # продаж за окно архива; 0 ограничивает вердикт
+    - ru_sold_n_comparable      # из них сопоставимых по прессу
+    - ru_days_between_sales     # средний интервал между продажами
+    - ru_max_bid_usd            # потолок ставки — то самое число для аукциона
+    - ru_best_channel
+    - ru_liquidity
+    - press_ratio               # world_press_price / world_album_median
+    - press_multiplier          # 1 + beta * (press_ratio - 1), зажат в [0.4, 3.0]
+    - beta_used
+    - ru_confidence             # выше medium не поднимается, пока beta не откалибрована
+    - ru_notes
     - listing_url
     - title
     - current_price

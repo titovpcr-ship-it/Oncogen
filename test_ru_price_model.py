@@ -135,6 +135,54 @@ def main():
     check(rj.ru_album_median_rub == 9000,
           "медиана посчитана по оригиналам, а не по смеси с японцами", st)
 
+    # ---------- §3d в вердикте: ноль продаж ограничивает жёстко ----------
+    cfg_cap = {"ru_market": {"zero_sales_caps_verdict_at": "WATCH"}}
+    v, why = m.cap_verdict_on_zero_sales("PASS", 0, cfg_cap)
+    check(v == "WATCH" and why, "PASS при нуле продаж понижается до WATCH", st)
+    v2, why2 = m.cap_verdict_on_zero_sales("WATCH", 0, cfg_cap)
+    check(v2 == "WATCH" and why2 is None, "WATCH при нуле продаж не трогается", st)
+    v3, why3 = m.cap_verdict_on_zero_sales("REJECT", 0, cfg_cap)
+    check(v3 == "REJECT" and why3 is None,
+          "REJECT не ПОВЫШАЕТСЯ до потолка — ограничение работает в одну сторону", st)
+    v4, _ = m.cap_verdict_on_zero_sales("PASS", 12, cfg_cap)
+    check(v4 == "PASS", "есть продажи -> вердикт не трогается", st)
+
+    # ---------- контур целиком ----------
+    import ru_economics as rue
+    full_cfg = dict(CFG)
+    full_cfg["ru_market"] = dict(CFG["ru_market"])
+    full_cfg["ru_market"].update({
+        "fx_rate_rub_per_usd": 84.6, "cargo_rate_usd_per_kg": 22.0,
+        "min_margin_ru_pass": 2.0,
+        "channels": [{"name": "meshok", "commission_pct": 3.0}]})
+    full_cfg["landed_cost"] = {
+        "international_forwarding": {"rate_usd_per_kg": 22.0, "round_up_to_kg": 0.5},
+        "weight_estimation_kg": {"single_lp_kg": 0.25, "gatefold_lp_kg": 0.3,
+                                 "heavy_180g_lp_kg": 0.35, "double_lp_kg": 0.45,
+                                 "extra_disc_kg": 0.2, "packaging_kg": 0.15}}
+    landed = rue.compute_landed(8.0, 6.0, "single_lp", 1, full_cfg)
+    got = m.contour_for_listing(
+        conn, full_cfg, discogs_title="A - X", grade="NM", landed=landed,
+        world_press_price=120.0, world_album_median=60.0, coeffs=k)
+    check(got["ru_sold_n"] == 150, "контур нашёл продажи в архиве", st)
+    check(got["margin_ru"] is not None, "margin_ru посчитан", st)
+    check(got["press_ratio"] == 2.0, "press_ratio протащен наружу", st)
+    check(got["ru_confidence"] == "medium", "уверенность не выше medium", st)
+
+    # Неразбираемое название не должно ронять прогон.
+    bad = m.contour_for_listing(conn, full_cfg, discogs_title="БезРазделителя",
+                                grade="NM", landed=landed, world_press_price=1.0,
+                                world_album_median=1.0, coeffs=k)
+    check(bad["margin_ru"] is None and "исполнител" in bad["ru_notes"],
+          "неразбираемое название -> пустой результат с объяснением, без исключения", st)
+
+    # Сорванный контур не имеет права уронить прогон из сотен лотов.
+    broken = m.contour_for_listing(None, full_cfg, discogs_title="A - X", grade="NM",
+                                   landed=landed, world_press_price=1.0,
+                                   world_album_median=1.0, coeffs=k)
+    check(broken["margin_ru"] is None and "не посчитан" in broken["ru_notes"],
+          "битое соединение -> ошибка проглочена и объяснена, исключения нет", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)

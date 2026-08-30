@@ -287,3 +287,77 @@ def estimate(conn, cfg, *, artist=None, album=None, title_like=None,
                        f"а совпадение")
     r.notes.append("beta не откалибрована по своим сделкам — потолок доверия medium")
     return r
+
+
+# ───────────────────── интеграция с прогоном eBay (ТЗ §5) ─────────────────────
+
+def contour_for_listing(conn, cfg, *, discogs_title, grade, landed,
+                        world_press_price, world_album_median,
+                        title_for_markers=None, coeffs=None) -> dict:
+    """Минимальный рабочий контур: московская цена -> margin_ru -> потолок ставки.
+
+    Возвращает плоский dict для строки CSV и для пуша. Никогда не кидает
+    наружу: сорванный ru-контур не должен ронять прогон из сотен лотов —
+    лот просто останется с мировой маржой и пометкой, что Москва
+    не посчиталась.
+    """
+    import ru_economics as rue
+    import ru_market
+    import ru_press_markers as pkm
+    import meshok_archive as ma
+
+    out = {"margin_ru": None, "ru_expected_price_rub": None, "ru_sold_n": 0,
+           "ru_max_bid_usd": None, "ru_confidence": "none", "ru_notes": ""}
+    try:
+        artist, album = ma.parse_artist_album(discogs_title or "")
+        if not artist:
+            out["ru_notes"] = "не разобрать исполнителя из названия Discogs"
+            return out
+
+        est = estimate(
+            conn, cfg, artist=artist, album=album, target_grade=grade,
+            target_markers=pkm.parse_markers(title_for_markers or ""),
+            world_press_price=world_press_price,
+            world_album_median=world_album_median,
+            channel=None, coeffs=coeffs)
+
+        comps = ru_market.RuComps(
+            ru_sold_median_rub=est.ru_album_median_rub,
+            ru_sold_n=est.ru_sold_n_comparable or est.ru_sold_n,
+            ru_price_source="meshok_sold" if est.ru_press_price_rub else "none",
+            ru_expected_price_rub=est.ru_press_price_rub,
+            ru_confidence=est.confidence)
+        e = rue.compute_ru_economics(landed, comps, cfg, use_marginal=False)
+
+        out.update({
+            "margin_ru": e.margin_ru,
+            "ru_expected_price_rub": est.ru_press_price_rub,
+            "ru_album_median_rub": est.ru_album_median_rub,
+            "ru_sold_n": est.ru_sold_n,
+            "ru_sold_n_comparable": est.ru_sold_n_comparable,
+            "ru_days_between_sales": est.ru_days_between_sales,
+            "ru_max_bid_usd": e.max_bid_usd,
+            "ru_best_channel": e.best_channel,
+            "ru_liquidity": e.liquidity_flag,
+            "press_ratio": est.press_ratio,
+            "press_multiplier": est.press_multiplier,
+            "beta_used": est.beta_used,
+            "ru_confidence": est.confidence,
+            "ru_notes": "; ".join(est.notes + e.notes),
+        })
+    except Exception as exc:            # noqa: BLE001 — см. докстринг
+        out["ru_notes"] = f"ru-контур не посчитан: {type(exc).__name__}: {exc}"
+    return out
+
+
+def cap_verdict_on_zero_sales(verdict: str, ru_sold_n: int, cfg) -> tuple[str, str | None]:
+    """ТЗ §3d: ноль продаж за окно ограничивает вердикт, и это ОТВЕТ,
+    а не отсутствие данных. Возвращает (вердикт, причина-или-None)."""
+    if ru_sold_n and ru_sold_n > 0:
+        return verdict, None
+    cap = ((cfg.get("ru_market") or {}).get("zero_sales_caps_verdict_at") or "WATCH").upper()
+    order = ["REJECT", "WATCH", "PASS"]
+    if verdict in order and cap in order and order.index(verdict) > order.index(cap):
+        return cap, (f"в Москве за окно архива не продано ни одного — "
+                     f"вердикт ограничен {cap}")
+    return verdict, None
