@@ -4,3 +4,5 @@ candidates_*.csv
 smoke_test_candidates.csv
 smoke_test_decisions_log.csv
 .env
+.pw-profile/
+.mv_sitemap_cache/

@@ -48,10 +48,20 @@ ROBOTS (проверено вживую 30.08.2026, см. tests):
   * marketvinila.ru — есть отдельная секция «AI-ассистенты: доступ
     разрешён» с ClaudeBot/Claude-User/Claude-SearchBot: Allow: /, запрещены
     /login /cart /register /forgot /confirmmessage /unsubscribe и «/*?».
-    ВАЖНО: запрет «/*?» означает, что URL с query-строкой брать нельзя —
-    только path-адреса (/search/release/... ). Для группы «*» запрещён ещё
-    и /search целиком, поэтому User-Agent обязан честно представляться
-    Claude-агентом (см. USER_AGENT) — иначе применяется строгая секция.
+    ВАЖНО: запрет «/*?» означает, что URL с query-строкой брать нельзя.
+    Для группы «*» запрещён ещё и /search целиком, поэтому User-Agent
+    обязан честно представляться Claude-агентом (см. USER_AGENT) — иначе
+    применяется строгая секция.
+    ДОБАВЛЕНО ПОСЛЕ РАЗВЕДКИ 30.08.2026: path-формы поиска не существует
+    (sitemap-base.xml перечисляет весь не-товарный контур сайта, /search
+    там нет), так что «ходить по path вместо ?q=» невозможно. Взамен
+    найдено лучшее: id в URL МаркетВинила — это id Discogs, карточка
+    релиза лежит по /release/<discogs_release_id>-<slug>. Поиск не нужен.
+    Ещё одна тонкость: HTML-страницы 301-редиректятся на
+    en.marketvinila.ru, а у ЭТОГО хоста robots.txt содержит добавленный
+    Cloudflare блок «User-agent: ClaudeBot / Disallow: /». Claude-User там
+    не назван, поэтому наш UA остаётся разрешённым — но переключать
+    USER_AGENT на ClaudeBot нельзя, это будет прямое нарушение.
   * meshok.net — секции для «*» нет вообще (только Yandex/Semrush/Petal/
     Amazon), то есть по стандарту robots ограничений на нас нет.
 """
@@ -141,8 +151,15 @@ def robots_allows(url: str) -> tuple[bool, str]:
 
     if host.endswith("marketvinila.ru"):
         if query:
+            # Разведка 30.08.2026: path-формы поиска у МаркетВинила нет
+            # (sitemap-base.xml перечисляет весь не-товарный контур, /search
+            # там отсутствует), поэтому «взять path вместо ?q=» — не выход.
+            # Зато карточки лежат по детерминированному path-URL с id
+            # Discogs: /release/<discogs_release_id>-<slug>. Ходить нужно
+            # туда. См. docs/ru_market_notes.md §2.
             return False, ("marketvinila.ru запрещает «/*?» — URL с query-строкой. "
-                           "Использовать path-адрес (/search/release/...), а не ?q=")
+                           "Поиска в path-форме у них нет; карточка берётся по "
+                           "/release/<discogs_release_id>-<slug>")
         for blocked in ("/login", "/cart", "/register", "/forgot",
                         "/confirmmessage", "/unsubscribe"):
             if path.startswith(blocked):
@@ -219,7 +236,9 @@ class Fetcher:
 
 def _looks_like_cf_challenge(html: str) -> bool:
     h = (html or "")[:4000].lower()
-    return ("just a moment" in h or "cf-challenge" in h
+    # «Один момент…» — тот же интерстишл при Accept-Language: ru;
+    # без него ru-локаль молча проходила проверку как валидная страница.
+    return ("just a moment" in h or "один момент" in h or "cf-challenge" in h
             or "challenge-platform" in h or "cf_chl_opt" in h)
 
 
