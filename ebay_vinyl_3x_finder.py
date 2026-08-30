@@ -106,6 +106,7 @@ Discogs public API официально не отдаёт "низкая/меди
 import csv
 import os
 import re
+import statistics
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -144,6 +145,11 @@ DECISIONS_LOG_COLUMNS = [
     "discogs_median", "margin_condition_adjusted", "catalog_match_confidence",
     "bought", "bought_price_usd", "sold_price_usd", "sold_date",
     "actual_grade_received", "notes_outcome",
+    # ДОБАВЛЕНО 29.08.2026 (ТЗ п.3) — в конец списка, не переставляя старые
+    # колонки; decisions_log.csv смигрирован под новый header отдельно
+    # (см. миграционный скрипт в git-истории), старые строки получили
+    # пустые значения для этих полей.
+    "resolution_confidence", "candidate_count", "degraded_pricing", "pricing_source",
 ]
 
 # Сколько максимум лотов запрашивать с eBay на один поисковый запрос.
@@ -154,6 +160,20 @@ DECISIONS_LOG_COLUMNS = [
 # это дешёвый eBay-запрос (не Discogs), а дальше всё равно проходит
 # бюджетный фильтр §4.5 до похода в Discogs.
 MAX_RESULTS_PER_QUERY = 100
+
+# ТЗ п.2 (логирование): раньше REJECT/no_release/no_stats/bundle были
+# ПОЛНОСТЬЮ немы в консоли — main() видел только счётчики (см. finalize),
+# без единой возможности посмотреть, ПОЧЕМУ конкретный лот не прошёл, не
+# перезапуская вручную resolve-функции. DEBUG_VERDICTS=1 включает печать
+# причины отсева на каждом REJECT-выходе process_item() — по умолчанию
+# выключено (не засорять обычный вывод, где интересны только WATCH/PASS).
+DEBUG_VERDICTS = os.environ.get("DEBUG_VERDICTS") == "1"
+
+
+def debug_print(msg):
+    if DEBUG_VERDICTS:
+        print(f"  [debug] {msg}")
+
 
 DISCOGS_SEARCH_URL = "https://api.discogs.com/database/search"
 DISCOGS_STATS_URL = "https://api.discogs.com/marketplace/stats/{release_id}"
@@ -247,30 +267,73 @@ CONDITION_STRIP_RE = re.compile(
 )
 
 
+# ТЗ п.2 (retries/backoff): раньше был ровно один повтор при 429, фикс.
+# 5с паузой, а сетевая ошибка (обрыв соединения, таймаут) сразу отдавала
+# None БЕЗ единой попытки повтора и БЕЗ единого сообщения в консоль —
+# лот в этом случае тихо терялся (no_release), неотличимо от "Discogs
+# реально не нашёл ничего". Теперь: до 4 попыток с экспоненциальной
+# паузой (2/4/8с) при 429 ИЛИ 5xx (временная перегрузка сервера — та же
+# природа проблемы, что и rate limit), сетевые ошибки тоже ретраятся тем
+# же способом вместо мгновенной сдачи. Печатаем предупреждение только
+# когда ВСЕ попытки исчерпаны — не на каждый промежуточный 429 (это
+# обычный, ожидаемый rate limit, не авария).
+DISCOGS_GET_MAX_ATTEMPTS = 4
+DISCOGS_GET_BACKOFF_SECONDS = [2, 4, 8]
+
+
 def discogs_get(url, params=None):
-    """Общий GET к Discogs API: один повтор при 429 (rate limit) и
-    возврат None вместо падения при сетевой ошибке — чтобы обрыв связи
-    на одном запросе не убивал весь батч из сотен лотов."""
+    """Общий GET к Discogs API с экспоненциальным backoff на 429/5xx/
+    сетевые ошибки (см. константы выше). Возвращает None, только если
+    ВСЕ попытки исчерпаны — тогда лот, ради которого шёл этот запрос,
+    достанется process_item() как 'no_release'/'no_stats', но хотя бы
+    видно ПОЧЕМУ (см. печать ниже), а не молча."""
     headers = {"Authorization": f"Discogs token={DISCOGS_TOKEN}"}
-    for attempt in range(2):
+    last_status = None
+    for attempt in range(DISCOGS_GET_MAX_ATTEMPTS):
         try:
             resp = requests.get(url, headers=headers, params=params, timeout=30)
-        except requests.exceptions.RequestException:
-            return None
-        if resp.status_code == 429 and attempt == 0:
-            time.sleep(5)
-            continue
-        return resp
+        except requests.exceptions.RequestException as e:
+            last_status = f"сетевая ошибка: {e}"
+            resp = None
+        else:
+            if resp.status_code not in (429, 500, 502, 503, 504):
+                return resp
+            last_status = f"HTTP {resp.status_code}"
+
+        if attempt < len(DISCOGS_GET_BACKOFF_SECONDS):
+            time.sleep(DISCOGS_GET_BACKOFF_SECONDS[attempt])
+
+    print(f"  Discogs API не ответил после {DISCOGS_GET_MAX_ATTEMPTS} попыток "
+          f"({last_status}) — лот пропущен (не молча, см. это сообщение).")
     return None
+
+
+# ТЗ п.2 (кэширование Discogs lookup в рамках одного прогона): один и тот
+# же catno/название реально повторяется между разными лотами и режимами
+# за прогон (напр. один и тот же альбом продают несколько продавцов, или
+# он попадает в выдачу двух пересекающихся поисковых запросов) — раньше
+# каждый такой повтор бил по Discogs API заново. Кэш — простой dict на
+# время процесса (не переживает перезапуск скрипта, что и не нужно — цены
+# всё равно устаревают между прогонами). НЕ кэшируем неудачу (None после
+# исчерпанных retry в discogs_get) — временный сбой не должен "застыть"
+# на весь оставшийся прогон, следующий такой же запрос честно попробует
+# API заново.
+_DISCOGS_SEARCH_CACHE = {}
+_DISCOGS_STATS_CACHE = {}
 
 
 def discogs_search(**extra_params):
     """type=release, format=Vinyl всегда; extra_params (q/catno) — сверху."""
+    cache_key = tuple(sorted(extra_params.items()))
+    if cache_key in _DISCOGS_SEARCH_CACHE:
+        return _DISCOGS_SEARCH_CACHE[cache_key]
     params = {"type": "release", "format": "Vinyl", **extra_params}
     resp = discogs_get(DISCOGS_SEARCH_URL, params=params)
     if resp is None or resp.status_code != 200:
         return None
-    return resp.json().get("results", [])
+    result = resp.json().get("results", [])
+    _DISCOGS_SEARCH_CACHE[cache_key] = result
+    return result
 
 
 def load_config():
@@ -391,7 +454,47 @@ def load_config():
                 "max_price_usd": golden_max,
                 "min_margin": golden_min_margin,
             }
+    validate_config(cfg)
     return cfg
+
+
+# ТЗ п.2 (валидация конфига): опечатка в любом из порогов режимов раньше
+# давала тихо неверные вердикты весь прогон (напр. GOLDEN_MIN_PRICE >
+# GOLDEN_MAX_PRICE — коридор пустой, ничего не находится, но без единой
+# ошибки, чтобы это заметить сразу). Падаем сразу и явно вместо этого.
+def validate_config(cfg):
+    errors = []
+
+    max_price = cfg["budget_constraints"]["max_current_price_usd"]
+    if max_price <= 0:
+        errors.append(f"budget_constraints.max_current_price_usd={max_price} должен быть > 0")
+
+    mode3 = cfg.get("mode3") or {}
+    if mode3.get("enabled"):
+        max_landed = mode3.get("max_landed_usd")
+        if max_landed is None or max_landed <= 0:
+            errors.append(f"Режим 3: max_landed_usd={max_landed} должен быть > 0")
+        ending_hours = mode3.get("ending_within_hours")
+        if ending_hours is not None and ending_hours <= 0:
+            errors.append(f"Режим 3: ending_within_hours={ending_hours} должен быть > 0 (или не задан вовсе)")
+
+    golden = cfg.get("golden_mode") or {}
+    if golden.get("enabled"):
+        gmin, gmax, gmargin = golden.get("min_price_usd"), golden.get("max_price_usd"), golden.get("min_margin")
+        if gmin is None or gmin <= 0:
+            errors.append(f"Золотой режим: min_price_usd={gmin} должен быть > 0")
+        if gmax is None or gmax <= 0:
+            errors.append(f"Золотой режим: max_price_usd={gmax} должен быть > 0")
+        if gmin is not None and gmax is not None and gmin >= gmax:
+            errors.append(f"Золотой режим: min_price_usd={gmin} должен быть МЕНЬШЕ max_price_usd={gmax}")
+        if gmargin is None or gmargin <= 0:
+            errors.append(f"Золотой режим: min_margin={gmargin} должен быть > 0")
+
+    if errors:
+        raise SystemExit(
+            "Некорректная конфигурация (падаем сразу, а не даём тихо неверные вердикты):\n"
+            + "\n".join(f"  - {e}" for e in errors)
+        )
 
 
 def build_search_queries(cfg):
@@ -786,11 +889,32 @@ CATNO_PREFIX_STRIP_RE = re.compile(
 )
 
 
-def normalize_catno_loose(s):
-    """normalize_catno() + снятие ОДНОГО известного буквенного префикса
-    с начала — используй для сравнения catno, извлечённого из текста
-    лота, против catno у кандидатов Discogs (см. docstring выше)."""
-    return CATNO_PREFIX_STRIP_RE.sub("", normalize_catno(s))
+# ТЗ п.1.3 (найдено при написании unit-теста на normalize_catno_loose):
+# снимать префикс с ОБЕИХ сторон сразу — риск. 'PRLP 7200' (моно) и
+# 'PRST 7200' (стерео) после снятия обоих префиксов стали бы одинаковым
+# '7200', хотя это РАЗНЫЕ каталожные номера (тот же паттерн, что различает
+# 'BLP'/'BST' у Blue Note) — просто нам повезло не напороться на это
+# сегодня. catno_equivalent() ниже разрешает снятие префикса ТОЛЬКО когда
+# ровно одна из сторон голая (без префикса вообще), а другая — с
+# префиксом: именно тот случай, что реально нашёлся у Miles Davis Quintet
+# (Discogs хранит оригинал ГОЛЫМ числом). Если префиксы есть у ОБЕИХ
+# сторон (даже разные) — не совпадает, это не наш случай.
+def catno_equivalent(a, b):
+    """Единая функция сравнения catno — используется везде, где catno из
+    текста лота или из одного Discogs-результата сравнивается с catno
+    другого Discogs-результата (см. discogs_resolve_release)."""
+    na, nb = normalize_catno(a), normalize_catno(b)
+    if na and na == nb:
+        return True
+    stripped_a = CATNO_PREFIX_STRIP_RE.sub("", na)
+    stripped_b = CATNO_PREFIX_STRIP_RE.sub("", nb)
+    has_prefix_a = stripped_a != na
+    has_prefix_b = stripped_b != nb
+    if has_prefix_a and not has_prefix_b:
+        return bool(nb) and stripped_a == nb
+    if has_prefix_b and not has_prefix_a:
+        return bool(na) and stripped_b == na
+    return False
 
 
 # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, Jack DeJohnette's
@@ -966,6 +1090,24 @@ def titles_overlap(discogs_title, ebay_title):
     return bool(discogs_significant & title_words(ebay_title))
 
 
+# ТЗ п.1.5 (ручной разбор пользователя, три ложных срабатывания подряд
+# 28-29.08.2026): поиск по названию лейбла ("<label> vinyl lp" в
+# build_search_queries) — чистое совпадение подстроки в заголовке eBay, не
+# проверяет, что за словом реально стоит нужный лейбл/жанр. "The Four
+# Seasons" на запросе Vee-Jay (поп-группа, не джаз), "Music From
+# Riverside..." на запросе Riverside Records (церковный хор, не лейбл
+# Билла Грауэра), "The Mariachi Brass" на запросе World Pacific — во всех
+# трёх резолвнутый Discogs-релиз имел genre без "Jazz" вообще. Не
+# трактуем ПУСТОЙ genre как "не джаз" — это отсутствие метаданных у
+# релиза, а не сигнал жанрового несовпадения (рискованно отклонять на
+# пустом месте).
+def release_genre_looks_non_jazz(candidate):
+    genres = candidate.get("genre") or []
+    if not genres:
+        return False
+    return "jazz" not in {g.lower() for g in genres}
+
+
 # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, Hank Mobley — Tenor
 # Conclave OJC-127): один и тот же рессиз-catno регулярно принадлежит
 # НЕСКОЛЬКИМ отдельным release-записям на Discogs, которые не отличаются
@@ -1138,13 +1280,12 @@ def discogs_resolve_release(item, cfg):
         # ТОЖЕ хранит полный префикс), поэтому проверка "только если
         # строгое ничего не нашло" не спасала — same_catno выглядел
         # непустым и вроде бы валидным, просто без оригинала внутри.
-        # normalize_catno_loose() — доказуемо надмножество normalize_catno
-        # (снятие одного и того же префикса с уже равных строк оставляет
-        # их равными), поэтому используем его как единственное сравнение
-        # без потери точности там, где строгое и так работало.
+        # catno_equivalent() покрывает строгое совпадение как частный
+        # случай (na==nb) — используем его как единственное сравнение без
+        # потери точности там, где строгое и так работало.
         same_catno = [
             r for r in results
-            if normalize_catno_loose(r.get("catno", "")) == normalize_catno_loose(catno)
+            if catno_equivalent(r.get("catno", ""), catno)
         ] if normalize else [r for r in results if r.get("catno") == catno]
 
         if not (our_norm and same_catno):
@@ -1225,11 +1366,14 @@ def discogs_resolve_release(item, cfg):
         discogs_catno = top.get("catno")
         if discogs_catno:
             time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
-            dup_norm = normalize_catno(discogs_catno)
+            # ТЗ п.1.3: единая функция сравнения везде, где сравниваются
+            # catno — тот же риск несовпадения префикса (см.
+            # catno_equivalent), просто источник catno другой (top.catno
+            # вместо текста лота).
             dup_results = discogs_search(catno=discogs_catno)
             same_catno = [
                 r for r in dup_results
-                if normalize_catno(r.get("catno", "")) == dup_norm
+                if catno_equivalent(r.get("catno", ""), discogs_catno)
                 and not ({"Single", '7"'} & set(r.get("format") or []))
             ]
             same_catno = filter_by_reissue_hint(same_catno, item["title"])
@@ -1264,6 +1408,22 @@ def discogs_resolve_release(item, cfg):
     # Ансамбль тоже фильтруем этим барьером — не тащить в оценку цены
     # кандидатов, которые сами по себе оказались бы совсем другим альбомом.
     pool = [r for r in pool if titles_overlap(r.get("title", ""), item["title"])] or [top]
+
+    # ТЗ п.1.5 (ручной разбор пользователя — "The Four Seasons" на запросе
+    # Vee-Jay, "Music From Riverside..." (церковный хор) на запросе
+    # Riverside Records, "The Mariachi Brass" на запросе World Pacific,
+    # все три 28-29.08.2026): поиск по названию лейбла — чистое совпадение
+    # подстроки в заголовке eBay, никак не проверяет жанр. У всех трёх
+    # ложных срабатываний резолвнутый Discogs-релиз имел genre БЕЗ "Jazz"
+    # вообще (Electronic/Rock, Classical, скорее всего Latin/Stage&Screen).
+    # Проверяем СРАЗУ после резолва — до discogs_ensemble_stats()/
+    # discogs_get_stats() (лишние вызовы Discogs) и тем более до
+    # fetch_ebay_item_description() в process_item() (вызов eBay API) —
+    # см. ТЗ п.1.5 про экономию rate limit. Пустой/отсутствующий genre не
+    # отклоняем — это отсутствие данных, не сигнал "не джаз" (см.
+    # release_genre_looks_non_jazz).
+    if release_genre_looks_non_jazz(top):
+        return None
 
     # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
     # reissue -> нумерованный box set 45RPM 2025 года): та же проблема,
@@ -1301,8 +1461,8 @@ def discogs_resolve_release(item, cfg):
         # Сужаем ансамбль до одной "семьи" — только записи с ТЕМ ЖЕ
         # catno, что и выбранный top (как и во всех остальных pool'ах
         # в этой функции).
-        top_norm = normalize_catno(top.get("catno", ""))
-        pool = [r for r in fallback_candidates if normalize_catno(r.get("catno", "")) == top_norm] or [top]
+        top_catno = top.get("catno", "")
+        pool = [r for r in fallback_candidates if catno_equivalent(r.get("catno", ""), top_catno)] or [top]
 
     # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, POST BOP -> Atlantic
     # Jazz): сборники ("Various Artists" / format содержит "Compilation")
@@ -1402,6 +1562,13 @@ def discogs_get_stats(release_id):
         Settings на Discogs заполнят — эта функция просто перестанет
         домножать, весь остальной код (calib.evaluate) не потребует
         изменений."""
+    # ТЗ п.2 — кэш по release_id: тот же пресс регулярно всплывает как
+    # кандидат в ансамблях НЕСКОЛЬКИХ разных лотов за прогон (см.
+    # docstring _DISCOGS_STATS_CACHE выше). Не кэшируем None — временный
+    # сбой должен даться следующей попытке шанс, а не "застыть".
+    if release_id in _DISCOGS_STATS_CACHE:
+        return _DISCOGS_STATS_CACHE[release_id]
+
     low = discogs_lowest_price(release_id)
     time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
     if low is None:
@@ -1409,11 +1576,23 @@ def discogs_get_stats(release_id):
 
     median, high = discogs_price_suggestions(release_id)
     time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
+    # ДОБАВЛЕНО 29.08.2026 (ТЗ п.1.4 — прозрачность degraded mode): раньше
+    # ничто в выводе не отличало "median пришёл от настоящего Discogs
+    # price_suggestions" от "median = low*2, потому что endpoint 404".
+    # pricing_source протаскивается дальше в discogs_ensemble_stats() и
+    # build_output_row() (колонки degraded_pricing/pricing_source) — и
+    # используется в process_item() как жёсткий потолок: в degraded mode
+    # PASS не выдаётся вообще, максимум WATCH (см. §1.4 ТЗ).
     if median is None or high is None:
         median = low * DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR
         high = low * DEGRADED_MODE_LOW_TO_MEDIAN_FACTOR
+        pricing_source = "degraded_2x_low"
+    else:
+        pricing_source = "price_suggestions"
 
-    return {"low": low, "median": float(median), "high": float(high)}
+    result = {"low": low, "median": float(median), "high": float(high), "pricing_source": pricing_source}
+    _DISCOGS_STATS_CACHE[release_id] = result
+    return result
 
 
 # ГЛУБОКИЙ РЕЖИМ (добавлено 26.08.2026 по инициативе пользователя — "не
@@ -1472,16 +1651,59 @@ def weighted_median(value_weight_pairs):
     return items[-1][0]
 
 
+# НАЙДЕНО 29.08.2026 (ТЗ п.1.1 — три подтверждённых живых случая переоценки
+# за один день: Eric Dolphy Out To Lunch $85 и $200, Shamek Farrah — The
+# World Of The Children): weighted_median() возвращает ЦЕНУ САМОГО ЛИКВИДНОГО
+# (по have) кандидата целиком, если его вес превышает половину суммарного —
+# и не "усредняет", а просто отдаёт эту цену как есть. Для культовых
+# альбомов самый ликвидный по have кандидат систематически оказывается
+# ДОРОГИМ ОРИГИНАЛОМ (тысячи коллекционеров занесли его в полку именно
+# потому, что это грааль), а не тем прессом, что реально продаётся в лоте.
+# Реальную цену КОНКРЕТНОГО пресса без фото лейбла узнать нельзя — вместо
+# того чтобы придумывать новую формулу (см. явный запрет в ТЗ п.4 "не
+# выдумывать источник данных"), явно ловим этот паттерн (топ по весу сам по
+# себе — ценовой выброс относительно всех остальных кандидатов) и помечаем
+# результат как resolution_confidence='low' — process_item() понижает
+# итоговый вердикт на ступень для таких случаев (PASS->WATCH, WATCH->REJECT),
+# вместо того чтобы молча выдавать завышенную маржу.
+ENSEMBLE_OUTLIER_RATIO = 2.5
+
+
+def ensemble_resolution_confidence(weight_median_pairs):
+    """weight_median_pairs — список (weight, median_price) по кандидатам,
+    у которых нашлась цена (см. discogs_ensemble_stats). 'high' зарезервирован
+    для единственного exact-совпадения (задаётся вызывающим кодом, не здесь);
+    ансамбль по определению неоднозначен, поэтому даже без выброса — не выше
+    'medium'. 'low' — когда топ-по-ликвидности кандидат сам по себе (по своей
+    медиане) в ENSEMBLE_OUTLIER_RATIO+ раз дороже медианы ВСЕХ ОСТАЛЬНЫХ
+    кандидатов (см. docstring константы выше)."""
+    if len(weight_median_pairs) < 2:
+        return "medium"
+    top_weight, top_median = max(weight_median_pairs, key=lambda wm: wm[0])
+    others = [m for w, m in weight_median_pairs if not (w == top_weight and m == top_median)]
+    if not others:
+        return "medium"
+    others_median = statistics.median(others)
+    if others_median > 0 and top_median / others_median >= ENSEMBLE_OUTLIER_RATIO:
+        return "low"
+    return "medium"
+
+
 def discogs_ensemble_stats(candidates):
     """candidates — список Discogs search-result dict'ов (с полем
     'community' для веса ликвидности), обычно release['candidates'] из
-    discogs_resolve_release(). Возвращает {'low','median','high'} в
-    том же формате, что discogs_get_stats, но каждое число — взвешенная
-    по ликвидности МЕДИАНА (см. weighted_median) по top-
+    discogs_resolve_release(). Возвращает {'low','median','high',
+    'resolution_confidence','candidate_count','pricing_source'} — низкоуровневые
+    low/median/high в том же формате, что discogs_get_stats, но каждое
+    число — взвешенная по ликвидности МЕДИАНА (см. weighted_median) по top-
     ENSEMBLE_MAX_CANDIDATES кандидатам из числа тех, у кого нашлась
     цена (без доступной цены кандидат просто выпадает из ансамбля, а не
     обнуляет его). Кандидат без community-данных получает вес 1 (не
-    пропадает целиком), а не 0."""
+    пропадает целиком), а не 0. resolution_confidence см.
+    ensemble_resolution_confidence(); pricing_source='degraded_2x_low', если
+    хотя бы один из кандидатов в ансамбле оценивался в degraded mode (см.
+    discogs_get_stats) — конкретный источник может отличаться по кандидатам,
+    но на практике degraded mode либо включён для всего аккаунта, либо нет."""
     seen_ids = set()
     deduped = []
     for cand in candidates:
@@ -1492,6 +1714,8 @@ def discogs_ensemble_stats(candidates):
     top_candidates = sorted(deduped, key=release_liquidity, reverse=True)[:ENSEMBLE_MAX_CANDIDATES]
 
     per_key_pairs = {"low": [], "median": [], "high": []}
+    per_candidate_median = []
+    pricing_sources = set()
     got_any = False
     for i, cand in enumerate(top_candidates):
         if i > 0:
@@ -1502,11 +1726,17 @@ def discogs_ensemble_stats(candidates):
         weight = max(release_liquidity(cand), 1)
         for key in per_key_pairs:
             per_key_pairs[key].append((stats[key], weight))
+        per_candidate_median.append((weight, stats["median"]))
+        pricing_sources.add(stats.get("pricing_source", "price_suggestions"))
         got_any = True
 
     if not got_any:
         return None
-    return {key: weighted_median(pairs) for key, pairs in per_key_pairs.items()}
+    result = {key: weighted_median(pairs) for key, pairs in per_key_pairs.items()}
+    result["candidate_count"] = len(per_candidate_median)
+    result["resolution_confidence"] = ensemble_resolution_confidence(per_candidate_median)
+    result["pricing_source"] = "degraded_2x_low" if "degraded_2x_low" in pricing_sources else "price_suggestions"
+    return result
 
 
 # ============ ОСНОВНАЯ ЛОГИКА ============
@@ -1532,6 +1762,17 @@ def build_output_row(item, release, stats, example, result, prio, cfg, photo_url
         "margin_on_low": round(result["margin_on_low"], 2) if result["margin_on_low"] is not None else "",
         "margin_condition_adjusted": round(result["margin_median"], 2),
         "verdict": result["verdict"],
+        # ДОБАВЛЕНО 29.08.2026 (ТЗ п.3 — прозрачность вердикта): раньше
+        # находки с валидными, но ненадёжными данными (ансамблевый выброс
+        # ликвидности, degraded-mode median = low*2 вместо настоящей
+        # рыночной медианы) были неотличимы в выводе от высокоуверенных.
+        # См. ensemble_resolution_confidence()/discogs_get_stats() —
+        # resolution_confidence='high' только для подтверждённого exact-
+        # катало­жного совпадения без неоднозначности.
+        "resolution_confidence": stats.get("resolution_confidence", "medium"),
+        "candidate_count": stats.get("candidate_count", 1),
+        "degraded_pricing": stats.get("pricing_source") == "degraded_2x_low",
+        "pricing_source": stats.get("pricing_source", "price_suggestions"),
         # П.1 обратной связи: фото лота для ручной/vision-сверки каталожного
         # номера, заполняется только когда текстовый catno не дал exact-матч
         # (см. process_item). Во время прогона Routine Claude открывает эти
@@ -1559,11 +1800,14 @@ def process_item(item, cfg, token=None):
     (доп. фото для сверки каталожного номера, см. build_output_row)."""
     fmt, record_count, is_bundle = parse_format_and_count(item["title"])
     if is_bundle:
+        debug_print(f"BUNDLE: {item['title'][:70]}")
         return "bundle"
 
     release = discogs_resolve_release(item, cfg)
     time.sleep(DISCOGS_RATE_LIMIT_SLEEP)
     if not release:
+        debug_print(f"NO_RELEASE (нет catno-совпадения / titles_overlap провалился / genre != Jazz): "
+                    f"{item['title'][:70]}")
         return "no_release"
 
     # Глубокий режим: если резолв не однозначен (несколько правдоподобных
@@ -1577,8 +1821,45 @@ def process_item(item, cfg, token=None):
         stats = discogs_ensemble_stats(candidates)
     else:
         stats = discogs_get_stats(release["release_id"])
+        if stats:
+            # ВАЖНО: discogs_get_stats() теперь кэширует результат по
+            # release_id (см. _DISCOGS_STATS_CACHE, ТЗ п.2) — тот же
+            # словарь может вернуться для ДРУГОГО лота с другим catalog_
+            # match_confidence. Копируем перед мутацией ниже, иначе поля
+            # candidate_count/resolution_confidence одного лота протекут
+            # в кэш и испортят оценку следующего лота с тем же release_id.
+            stats = dict(stats)
+            # Единственный кандидат — либо подтверждённый exact-матч (catno
+            # текста лота совпал буква-в-букву), либо единичный фаззи-хит без
+            # неоднозначности вообще (не было других претендентов, которых
+            # стоило бы сравнивать). Первое — 'high', второе — 'medium' (та же
+            # осторожность, что и раньше выражалась через catalog_match_
+            # confidence != exact -> WATCH, теперь явно и в этом поле тоже).
+            stats["candidate_count"] = 1
+            stats["resolution_confidence"] = "high" if release["confidence"] == "exact" else "medium"
     if not stats:
+        debug_print(f"NO_STATS (Discogs low/price_suggestions недоступны для release/{release['release_id']}): "
+                    f"{item['title'][:70]}")
         return "no_stats"
+
+    # ТЗ п.1.2 (голые catno без префикса — Sonny Clark 27.08, "1588" ->
+    # Classic Records 2004 вместо реального UME-рессиза 2014г.; Blue Train
+    # 29.08, "1577" -> американский Vinyl Initiative 2014 вместо реального
+    # европейского Back To Blue 2014, ХОТЯ ансамбль тут не пуст и P1.1's
+    # outlier-ratio его не поймал — топ по ликвидности и второй по
+    # ликвидности кандидат оказались близки по have, просто РАЗНЫМИ
+    # переизданиями): когда в тексте лота вообще НЕТ каталожного номера
+    # (release["catno_found"] пуст), резолв строится на чистом фаззи-поиске
+    # по названию — Discogs может вернуть верный пресс, а может вернуть
+    # любой из десятков одноимённых переизданий, и текстовых сигналов для
+    # различения (год, "reissue", страна) часто просто нет в самом лоте.
+    # Не пытаемся угадать точнее — честно понижаем resolution_confidence
+    # до 'low' в ЛЮБОМ случае отсутствия catno, не только когда ансамбль
+    # даёт единственного кандидата (см. stats["candidate_count"]==1 выше) —
+    # это применимо и к ансамблю тоже, если сам факт отсутствия catno уже
+    # означает "не подтверждено текстом лота, только Discogs-эвристиками".
+    if not release.get("catno_found"):
+        stats["resolution_confidence"] = "low"
 
     shipping = get_shipping_cost(item, cfg)
     example = {
@@ -1604,6 +1885,8 @@ def process_item(item, cfg, token=None):
         result["verdict"] = "WATCH"
 
     if result["verdict"] == "REJECT":
+        debug_print(f"REJECT по заголовку (margin={result['margin_median']:.2f}x, "
+                    f"release/{release['release_id']}): {item['title'][:70]}")
         return "reject"
 
     # ДОБАВЛЕНО 26.08.2026 (по просьбе пользователя): заголовок листинга
@@ -1623,7 +1906,33 @@ def process_item(item, cfg, token=None):
             if result["verdict"] == "PASS" and release["confidence"] != "exact":
                 result["verdict"] = "WATCH"
             if result["verdict"] == "REJECT":
+                debug_print(f"REJECT по реальному описанию (грейд хуже заголовка, "
+                            f"margin={result['margin_median']:.2f}x): {item['title'][:70]}")
                 return "reject"
+
+    # ДОБАВЛЕНО 29.08.2026 (ТЗ п.1.1/1.4 — три подтверждённых случая
+    # переоценки за день + постоянный degraded mode): два независимых
+    # понижения поверх уже посчитанного result, оба на основе stats
+    # (не меняются между двумя evaluate() выше, поэтому проверяем здесь
+    # один раз, после финального result). (1) resolution_confidence='low'
+    # — топ-по-ликвидности кандидат ансамбля сам по себе ценовой выброс
+    # (см. ensemble_resolution_confidence) — понижаем на ступень, а не
+    # выдумываем более "правильную" цену без фото лейбла. (2) degraded
+    # mode (Discogs Seller Settings не заполнены, median/high = low*2,
+    # см. discogs_get_stats) — PASS в этом режиме не выдаётся вообще,
+    # т.к. это не настоящая рыночная медиана.
+    if stats.get("resolution_confidence") == "low":
+        if result["verdict"] == "PASS":
+            result["verdict"] = "WATCH"
+        elif result["verdict"] == "WATCH":
+            result["verdict"] = "REJECT"
+    if stats.get("pricing_source") == "degraded_2x_low" and result["verdict"] == "PASS":
+        result["verdict"] = "WATCH"
+    if result["verdict"] == "REJECT":
+        debug_print(f"REJECT после понижения по resolution_confidence="
+                    f"{stats.get('resolution_confidence')} (margin был {result['margin_median']:.2f}x, "
+                    f"candidate_count={stats.get('candidate_count')}): {item['title'][:70]}")
+        return "reject"
 
     # Золотой режим (добавлено 29.08.2026, по просьбе пользователя):
     # обычный verdict-порог — grey_zone_lower=1.8 для WATCH, только PASS
@@ -1634,6 +1943,8 @@ def process_item(item, cfg, token=None):
     # описанию выше — итоговое margin_median к этому моменту финальное,
     # независимо от того, какой из двух calib.evaluate() его посчитал.
     if cfg.get("golden_mode", {}).get("enabled") and result["margin_median"] < cfg["golden_mode"]["min_margin"]:
+        debug_print(f"REJECT Золотым режимом (margin={result['margin_median']:.2f}x < "
+                    f"{cfg['golden_mode']['min_margin']}x): {item['title'][:70]}")
         return "reject"
 
     # П.1 обратной связи (25.08.2026): каталожный номер почти никогда не
@@ -1766,6 +2077,10 @@ def append_decisions_log(rows):
                 "catalog_match_confidence": row["catalog_match_confidence"],
                 "bought": "", "bought_price_usd": "", "sold_price_usd": "",
                 "sold_date": "", "actual_grade_received": "", "notes_outcome": "",
+                "resolution_confidence": row.get("resolution_confidence", ""),
+                "candidate_count": row.get("candidate_count", ""),
+                "degraded_pricing": row.get("degraded_pricing", ""),
+                "pricing_source": row.get("pricing_source", ""),
             })
     return len(new_rows)
 
