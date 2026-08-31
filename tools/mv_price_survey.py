@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS mv_prices (
     mv_median_rub INTEGER,
     mv_max_rub   INTEGER,
     grades       TEXT,
+    card_kind    TEXT,        -- release | master: цена пресса или альбома
     error        TEXT,
     fetched_at   TEXT NOT NULL
 );
@@ -119,6 +120,10 @@ def resolve_release_ids(plan, cfg, progress=print):
             progress(f"  [{i}/{len(plan)}] {title[:44]}: ошибка резолва {type(e).__name__}")
         p = dict(p)
         p["release_id"] = (rel or {}).get("release_id")
+        # master_id нужен для фолбэка: карточка конкретного пресса есть
+        # далеко не всегда, а мастер объединяет все прессы альбома.
+        cands = (rel or {}).get("candidates") or []
+        p["master_id"] = next((c.get("master_id") for c in cands if c.get("master_id")), None)
         out.append(p)
         if i % 10 == 0:
             got = sum(1 for x in out if x["release_id"])
@@ -126,17 +131,18 @@ def resolve_release_ids(plan, cfg, progress=print):
     return out
 
 
-def fetch_card(release_id, session=None):
-    """Карточка релиза по КАНОНИЧЕСКОМУ адресу. Возвращает (url, статус, html)."""
-    url = mvu.release_url(release_id, session=session)
+def fetch_card(release_id, master_id=None, session=None):
+    """Карточка по КАНОНИЧЕСКОМУ адресу: сначала пресс, потом мастер-релиз.
+    Возвращает (url, статус, html, что_нашли)."""
+    url, kind = mvu.card_url(release_id, master_id, session=session)
     if not url:
-        return None, None, None
+        return None, None, None, kind
     allowed, why = ru_market.robots_allows(url)
     if not allowed:
-        return url, None, f"robots: {why}"
+        return url, None, f"robots: {why}", kind
     s = session or requests
     r = s.get(url, headers={"User-Agent": ru_market.USER_AGENT}, timeout=40)
-    return url, r.status_code, r.text
+    return url, r.status_code, r.text, kind
 
 
 def parse_offers(html):
@@ -163,13 +169,14 @@ def survey(plan, db_path, progress=print):
     now = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     blocked = 0
     for i, p in enumerate(plan, 1):
-        url = status = err = None
+        url = status = err = kind = None
         prices, grades = [], []
         try:
-            if not p.get("release_id"):
+            if not p.get("release_id") and not p.get("master_id"):
                 err = "не резолвится в Discogs release_id"
             else:
-                url, status, html = fetch_card(p["release_id"], session=sess)
+                url, status, html, kind = fetch_card(
+                    p.get("release_id"), p.get("master_id"), session=sess)
                 if url is None:
                     err = "нет карточки в каталоге МаркетВинила"
                 elif isinstance(html, str) and html.startswith("robots:"):
@@ -183,14 +190,14 @@ def survey(plan, db_path, progress=print):
         conn.execute(
             "INSERT INTO mv_prices (release_id,artist,album,stratum,is_jazz,"
             "meshok_median_rub,meshok_sold_n,url,http_status,offers_n,mv_min_rub,"
-            "mv_median_rub,mv_max_rub,grades,error,fetched_at) "
-            "VALUES (" + ",".join("?" * 16) + ")",
+            "mv_median_rub,mv_max_rub,grades,card_kind,error,fetched_at) "
+            "VALUES (" + ",".join("?" * 17) + ")",
             (p.get("release_id"), p["artist"], p["album"], p["stratum"],
              p.get("is_jazz"), p["median_rub"], p["sold_n"], url, status,
              len(prices), min(prices) if prices else None,
              int(statistics.median(prices)) if prices else None,
              max(prices) if prices else None, ",".join(grades[:12]) or None,
-             err, now))
+             kind, err, now))
         conn.commit()
         if i % 10 == 0 or err:
             progress(f"  [{i}/{len(plan)}] {p['artist'][:22]} — {p['album'][:22]}: "

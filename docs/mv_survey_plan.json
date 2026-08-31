@@ -18,7 +18,8 @@
   "days_between": 25.6,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 3326,
@@ -39,7 +40,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 867694
+  "release_id": 867694,
+  "master_id": 20208
  },
  {
   "id": 2658,
@@ -60,7 +62,8 @@
   "days_between": 16.3,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 6339359
+  "release_id": 6339359,
+  "master_id": 30577
  },
  {
   "id": 3219,
@@ -81,7 +84,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 6228619
+  "release_id": 6228619,
+  "master_id": 18949
  },
  {
   "id": 3168,
@@ -102,7 +106,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 35122367
+  "release_id": 35122367,
+  "master_id": 3974243
  },
  {
   "id": 2621,
@@ -123,7 +128,8 @@
   "days_between": 13.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 4289876
+  "release_id": 4289876,
+  "master_id": 45415
  },
  {
   "id": 3302,
@@ -144,7 +150,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2974,
@@ -165,7 +172,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 2090633
+  "release_id": 2090633,
+  "master_id": 218097
  },
  {
   "id": 3336,
@@ -186,7 +194,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 722509
+  "release_id": 722509,
+  "master_id": 36645
  },
  {
   "id": 3206,
@@ -207,7 +216,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 1121585
+  "release_id": 1121585,
+  "master_id": 56430
  },
  {
   "id": 2909,
@@ -228,7 +238,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 2968069
+  "release_id": 2968069,
+  "master_id": 264877
  },
  {
   "id": 3225,
@@ -249,7 +260,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2766,
@@ -270,7 +282,8 @@
   "days_between": 29.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 3129,
@@ -291,7 +304,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 3001470
+  "release_id": 3001470,
+  "master_id": 813312
  },
  {
   "id": 2942,
@@ -312,7 +326,8 @@
   "days_between": 35.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 1800734
+  "release_id": 1800734,
+  "master_id": 43124
  },
  {
   "id": 2638,
@@ -333,7 +348,8 @@
   "days_between": 17.9,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 1156598
+  "release_id": 1156598,
+  "master_id": 498
  },
  {
   "id": 2736,
@@ -354,7 +370,8 @@
   "days_between": 25.6,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2946,
@@ -375,7 +392,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 36894766
+  "release_id": 36894766,
+  "master_id": 4175980
  },
  {
   "id": 3343,
@@ -396,7 +414,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": 25047373
+  "release_id": 25047373,
+  "master_id": 5720
  },
  {
   "id": 3109,
@@ -417,7 +436,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "3.5–6 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2889,
@@ -438,7 +458,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 419995
+  "release_id": 419995,
+  "master_id": 41155
  },
  {
   "id": 2945,
@@ -459,7 +480,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 2028195
+  "release_id": 2028195,
+  "master_id": 217434
  },
  {
   "id": 2763,
@@ -480,7 +502,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 4142267
+  "release_id": 4142267,
+  "master_id": 505383
  },
  {
   "id": 2916,
@@ -501,7 +524,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2834,
@@ -522,7 +546,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 2062223
+  "release_id": 2062223,
+  "master_id": 271309
  },
  {
   "id": 2592,
@@ -543,7 +568,8 @@
   "days_between": 29.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2673,
@@ -564,7 +590,8 @@
   "days_between": 35.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 6266472
+  "release_id": 6266472,
+  "master_id": 8928
  },
  {
   "id": 2769,
@@ -585,7 +612,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2808,
@@ -606,7 +634,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2778,
@@ -627,7 +656,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 637459
+  "release_id": 637459,
+  "master_id": 127993
  },
  {
   "id": 2921,
@@ -648,7 +678,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 3409405
+  "release_id": 3409405,
+  "master_id": 16783
  },
  {
   "id": 2955,
@@ -669,7 +700,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 4950700
+  "release_id": 4950700,
+  "master_id": 185312
  },
  {
   "id": 2937,
@@ -690,7 +722,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 10880501
+  "release_id": 10880501,
+  "master_id": 59393
  },
  {
   "id": 2803,
@@ -711,7 +744,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2911,
@@ -732,7 +766,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 2541460
+  "release_id": 2541460,
+  "master_id": 29364
  },
  {
   "id": 2767,
@@ -753,7 +788,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 16810713
+  "release_id": 16810713,
+  "master_id": 51722
  },
  {
   "id": 2672,
@@ -774,7 +810,8 @@
   "days_between": 35.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 2730602
+  "release_id": 2730602,
+  "master_id": 6599
  },
  {
   "id": 2957,
@@ -795,7 +832,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 300316
+  "release_id": 300316,
+  "master_id": 4888
  },
  {
   "id": 2686,
@@ -816,7 +854,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 3444298
+  "release_id": 3444298,
+  "master_id": 19546
  },
  {
   "id": 2801,
@@ -837,7 +876,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "6–10 тыс",
-  "release_id": 10921866
+  "release_id": 10921866,
+  "master_id": 182019
  },
  {
   "id": 2627,
@@ -858,7 +898,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 1663799
+  "release_id": 1663799,
+  "master_id": 357747
  },
  {
   "id": 2599,
@@ -879,7 +920,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 20016106
+  "release_id": 20016106,
+  "master_id": 2273482
  },
  {
   "id": 2603,
@@ -900,7 +942,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2561,
@@ -921,7 +964,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2598,
@@ -942,7 +986,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2564,
@@ -963,7 +1008,8 @@
   "days_between": 35.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 911132
+  "release_id": 911132,
+  "master_id": 49965
  },
  {
   "id": 2567,
@@ -984,7 +1030,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 6214608
+  "release_id": 6214608,
+  "master_id": 180807
  },
  {
   "id": 2724,
@@ -1005,7 +1052,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 1697432
+  "release_id": 1697432,
+  "master_id": 50041
  },
  {
   "id": 2708,
@@ -1026,7 +1074,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 17617195
+  "release_id": 17617195,
+  "master_id": 5720
  },
  {
   "id": 2661,
@@ -1047,7 +1096,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 2829131
+  "release_id": 2829131,
+  "master_id": 276541
  },
  {
   "id": 2730,
@@ -1068,7 +1118,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2552,
@@ -1089,7 +1140,8 @@
   "days_between": 35.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 6030012
+  "release_id": 6030012,
+  "master_id": 666600
  },
  {
   "id": 2542,
@@ -1110,7 +1162,8 @@
   "days_between": 22.4,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": 5487449
+  "release_id": 5487449,
+  "master_id": 377127
  },
  {
   "id": 2520,
@@ -1131,7 +1184,8 @@
   "days_between": 11.2,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "10 тыс+",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2733,
@@ -1152,7 +1206,8 @@
   "days_between": 35.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 19269490
+  "release_id": 19269490,
+  "master_id": 185785
  },
  {
   "id": 3235,
@@ -1173,7 +1228,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 1346082
+  "release_id": 1346082,
+  "master_id": 240145
  },
  {
   "id": 3237,
@@ -1194,7 +1250,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 1104463
+  "release_id": 1104463,
+  "master_id": 47891
  },
  {
   "id": 3339,
@@ -1215,7 +1272,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 22471831
+  "release_id": 22471831,
+  "master_id": 32305
  },
  {
   "id": 2920,
@@ -1236,7 +1294,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 3125,
@@ -1257,7 +1316,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 31384796
+  "release_id": 31384796,
+  "master_id": 62235
  },
  {
   "id": 3341,
@@ -1278,7 +1338,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 3169,
@@ -1299,7 +1360,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 3599408
+  "release_id": 3599408,
+  "master_id": 62462
  },
  {
   "id": 3255,
@@ -1320,7 +1382,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2831,
@@ -1341,7 +1404,8 @@
   "days_between": 29.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 1798995
+  "release_id": 1798995,
+  "master_id": 34081
  },
  {
   "id": 3042,
@@ -1362,7 +1426,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 3217,
@@ -1383,7 +1448,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 670021
+  "release_id": 670021,
+  "master_id": 63355
  },
  {
   "id": 2781,
@@ -1404,7 +1470,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 3472053
+  "release_id": 3472053,
+  "master_id": 374521
  },
  {
   "id": 2899,
@@ -1425,7 +1492,8 @@
   "days_between": 35.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 461782
+  "release_id": 461782,
+  "master_id": 44699
  },
  {
   "id": 2847,
@@ -1446,7 +1514,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 532432
+  "release_id": 532432,
+  "master_id": 32364
  },
  {
   "id": 3003,
@@ -1467,7 +1536,8 @@
   "days_between": 44.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": null
+  "release_id": null,
+  "master_id": null
  },
  {
   "id": 2725,
@@ -1488,7 +1558,8 @@
   "days_between": 25.6,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 16312236
+  "release_id": 16312236,
+  "master_id": 192306
  },
  {
   "id": 3141,
@@ -1509,7 +1580,8 @@
   "days_between": 59.7,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 5567717
+  "release_id": 5567717,
+  "master_id": 370993
  },
  {
   "id": 2797,
@@ -1530,7 +1602,8 @@
   "days_between": 25.6,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 20316430
+  "release_id": 20316430,
+  "master_id": 47828
  },
  {
   "id": 2794,
@@ -1551,6 +1624,7 @@
   "days_between": 29.8,
   "built_at": "2026-08-31T10:00:31+00:00",
   "stratum": "джаз",
-  "release_id": 16953990
+  "release_id": 16953990,
+  "master_id": 155008
  }
 ]

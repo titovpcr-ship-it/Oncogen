@@ -27,7 +27,7 @@ from pathlib import Path
 import requests
 
 REPO = Path(__file__).resolve().parent.parent
-OUT = REPO / "tests" / "fixtures" / "mv_release_sitemap_ranges.json"
+OUT_TMPL = str(REPO / "tests" / "fixtures" / "mv_{kind}_sitemap_ranges.json")
 INDEX_URL = "https://marketvinila.ru/sitemap.xml"
 USER_AGENT = "Claude-User/1.0 (+https://claude.ai; vinyl price research)"
 THROTTLE_S = 0.7
@@ -36,15 +36,16 @@ THROTTLE_S = 0.7
 def main():
     h = {"User-Agent": USER_AGENT}
     idx = requests.get(INDEX_URL, headers=h, timeout=60).text
+    kind = sys.argv[1] if len(sys.argv) > 1 else "release"
     files = [u for u in re.findall(r"<loc>([^<]+)</loc>", idx)
-             if re.search(r"/sitemap-release\d+\.xml$", u)]
-    files.sort(key=lambda u: int(re.search(r"release(\d+)\.xml$", u).group(1)))
-    print(f"{len(files)} sitemap-release файлов")
+             if re.search(rf"/sitemap-{kind}\d+\.xml$", u)]
+    files.sort(key=lambda u: int(re.search(rf"{kind}(\d+)\.xml$", u).group(1)))
+    print(f"{len(files)} sitemap-{kind} файлов")
 
     rows = []
     for i, url in enumerate(files, 1):
         r = requests.get(url, headers={**h, "Range": "bytes=-400"}, timeout=60)
-        ids = [int(x) for x in re.findall(r"/release/(\d+)-", r.text)]
+        ids = [int(x) for x in re.findall(rf"/{kind}/(\d+)-", r.text)]
         if not ids:
             print(f"  {url}: хвост не разобран (HTTP {r.status_code}) — пропуск")
             continue
@@ -54,10 +55,11 @@ def main():
         time.sleep(THROTTLE_S)
 
     rows.sort(key=lambda x: x["last_id"])
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({"source": INDEX_URL, "files": rows},
+    out = Path(OUT_TMPL.format(kind=kind))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps({"source": INDEX_URL, "files": rows},
                               ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"-> {OUT} ({len(rows)} файлов, max id {rows[-1]['last_id']})")
+    print(f"-> {out} ({len(rows)} файлов, max id {rows[-1]['last_id']})")
     return 0
 
 

@@ -91,12 +91,65 @@ def main():
         check("build_mv_release_index" in str(e),
               "сообщение называет команду, которой чинится", state)
 
+    # ── мастер-релиз: правка метода после замера покрытия (18 из 53) ──
+    MASTER_XML = """<?xml version="1.0" encoding="UTF-8"?><urlset>
+ <url><loc>https://marketvinila.ru/master/125-Earth-Leakage-Trip-Psychotronic-EP</loc></url>
+ <url><loc>https://marketvinila.ru/master/128-Model-500-Ocean-To-Ocean</loc></url>
+</urlset>"""
+    murls = m.parse_master_urls(MASTER_XML)
+    check(set(murls) == {125, 128}, "разобраны id мастер-релизов", state)
+    check(murls[125].endswith("125-Earth-Leakage-Trip-Psychotronic-EP"),
+          "master 125 -> Earth Leakage Trip (совпадает с Discogs)", state)
+    check(m.parse_release_urls(MASTER_XML) == {},
+          "разбор релизов не хватает /master/ URL и наоборот", state)
+
+    mranges = FIX / "_tmp_master_ranges.json"
+    mranges.write_text(json.dumps({"files": [
+        {"url": "https://marketvinila.ru/sitemap-master1.xml", "last_id": 128}]}),
+        encoding="utf-8")
+    try:
+        m.CACHE_DIR.mkdir(exist_ok=True)
+        (m.CACHE_DIR / "sitemap-master1.xml").write_text(MASTER_XML, encoding="utf-8")
+        sess = FakeSession(MASTER_XML)
+        got = m.master_url(128, ranges_path=mranges, session=sess)
+        check(got.endswith("128-Model-500-Ocean-To-Ocean"), "master_url по индексу", state)
+        check(m.master_url(127, ranges_path=mranges, session=sess) is None,
+              "отсутствующий мастер -> None (это не ошибка)", state)
+    finally:
+        mranges.unlink(missing_ok=True)
+        (m.CACHE_DIR / "sitemap-master1.xml").unlink(missing_ok=True)
+
+    # card_url: пресс точнее, мастер полнее — порядок и ЯРЛЫК того, что нашли.
+    # Ярлык обязателен: без него в отчёте смешаются цена пресса и цена
+    # альбома, а это подмена уровня измерения (ПРАВИЛО 1 устава).
+    orig_r, orig_m = m.release_url, m.master_url
+    try:
+        m.release_url = lambda rid, **kw: "/release/7-x" if rid == 7 else None
+        m.master_url = lambda mid, **kw: "/master/8-x" if mid == 8 else None
+        check(m.card_url(7, 8) == ("/release/7-x", "release"),
+              "есть пресс -> берётся пресс, а не мастер", state)
+        check(m.card_url(6, 8) == ("/master/8-x", "master"),
+              "пресса нет -> откат на мастер, ярлык меняется", state)
+        check(m.card_url(6, 9) == (None, "none"),
+              "нет ни того ни другого -> (None, 'none')", state)
+        check(m.card_url(None, 8) == ("/master/8-x", "master"),
+              "без release_id мастер всё равно пробуется", state)
+    finally:
+        m.release_url, m.master_url = orig_r, orig_m
+
     # Реальный индекс, если он собран: 98 файлов, монотонные границы.
     if m.RANGES_PATH.exists():
         real = m.load_ranges()
         lasts = [f["last_id"] for f in real]
         check(lasts == sorted(lasts), f"реальный индекс отсортирован ({len(real)} файлов)", state)
         check(len(set(lasts)) == len(lasts), "границы файлов не дублируются", state)
+
+    if m.MASTER_RANGES_PATH.exists():
+        real = m.load_ranges(m.MASTER_RANGES_PATH)
+        lasts = [f["last_id"] for f in real]
+        check(lasts == sorted(lasts),
+              f"мастер-индекс отсортирован ({len(real)} файлов)", state)
+        check(len(set(lasts)) == len(lasts), "границы мастер-файлов не дублируются", state)
 
     print("\nВСЁ ПРОШЛО" if not state["failed"] else f"\n{state['failed']} ПРОВАЛОВ")
     if state["failed"]:

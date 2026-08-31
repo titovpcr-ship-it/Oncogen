@@ -36,10 +36,12 @@ import requests
 
 REPO = Path(__file__).resolve().parent
 RANGES_PATH = REPO / "tests" / "fixtures" / "mv_release_sitemap_ranges.json"
+MASTER_RANGES_PATH = REPO / "tests" / "fixtures" / "mv_master_sitemap_ranges.json"
 CACHE_DIR = REPO / ".mv_sitemap_cache"
 USER_AGENT = "Claude-User/1.0 (+https://claude.ai; vinyl price research)"
 
 LOC_RE = re.compile(r"<loc>(https://[^<]*/release/(\d+)-[^<]*)</loc>")
+MASTER_LOC_RE = re.compile(r"<loc>(https://[^<]*/master/(\d+)-[^<]*)</loc>")
 
 
 class MvIndexUnavailable(RuntimeError):
@@ -95,3 +97,43 @@ def release_url(release_id: int, *, ranges_path=RANGES_PATH, session=None) -> st
     if sm is None:
         return None
     return parse_release_urls(fetch_sitemap(sm, session=session)).get(int(release_id))
+
+
+# ───────────────── мастер-релиз («Установки» §4.4, правка метода) ─────────────────
+# ЗАМЕРЕНО: карточка КОНКРЕТНОГО пресса нашлась лишь у 18 из 53 позиций.
+# Причина не в каталоге, а в сопоставлении: «исполнитель + альбом»
+# резолвится в какой-то один релиз Discogs, а МаркетВинила держит другой
+# пресс того же альбома. Мастер-релиз объединяет все прессы, поэтому по
+# нему попадание кратно выше — и для АЛЬБОМНОЙ цены он и нужен.
+
+
+def parse_master_urls(xml: str) -> dict[int, str]:
+    return {int(mid): url for url, mid in MASTER_LOC_RE.findall(xml)}
+
+
+def master_url(master_id: int, *, ranges_path=MASTER_RANGES_PATH, session=None) -> str | None:
+    """URL страницы мастер-релиза или None, если его нет в каталоге."""
+    files = load_ranges(ranges_path)
+    sm = pick_sitemap(int(master_id), files)
+    if sm is None:
+        return None
+    return parse_master_urls(fetch_sitemap(sm, session=session)).get(int(master_id))
+
+
+def card_url(release_id=None, master_id=None, *, session=None) -> tuple[str | None, str]:
+    """(url, что_нашли). Сначала конкретный пресс, потом мастер-релиз.
+
+    Порядок именно такой: пресс точнее, мастер полнее. Возвращается ещё и
+    признак того, ЧТО нашли, — иначе в отчёте смешаются цена пресса и
+    цена альбома, а это ровно та подмена уровня, от которой предостерегает
+    ПРАВИЛО 1 устава.
+    """
+    if release_id:
+        u = release_url(release_id, session=session)
+        if u:
+            return u, "release"
+    if master_id:
+        u = master_url(master_id, session=session)
+        if u:
+            return u, "master"
+    return None, "none"
