@@ -379,8 +379,15 @@ def main(argv=None):
     for seller, lots in sorted(by_seller.items(), key=lambda kv: -len(kv[1])):
         in_bundle = seller in bundle_sellers
         for e, lot, ceil in lots:
-            grade, has_photos = (None, False)
-            if details < a.max_details:
+            # Грейд СНАЧАЛА из заголовка выдачи — он уже у нас на руках и
+            # ничего не стоит. НАЙДЕНО СВЕРКОЙ 31.08.2026: лот «QUEEN - A
+            # DAY AT THE RACES LP 6E-101 - NM/ w/inner» ушёл в разряд
+            # «грейд неизвестен» с целью 3.5x вместо 2.5x — не потому что
+            # состояние неизвестно, а потому что бюджет детальных
+            # запросов кончился раньше. Грейд стоял в заголовке.
+            grade = calib.extract_grade(lot.get("title"))
+            has_photos = False
+            if not grade and details < a.max_details:
                 grade, has_photos = item_grade(token, lot["item_id"])
                 details += 1
                 time.sleep(THROTTLE_S)

@@ -440,7 +440,19 @@ _WRONG_FORMAT = re.compile(
     # Лот без конверта или с варпом московскую медиану не берёт: в верхнем
     # сегменте почти всё — NM/EX с конвертом. Проверено на живой выдаче,
     # где «DISC ONLY, NO COVER, WARPED» проходил все пороги.
-    r"disc only|no cover|without cover|warped|record only)\b", re.I)
+    r"disc only|no cover|without cover|warped|record only|"
+    # ШЕСТОЙ КЛАСС, найден сверкой 31.08.2026: лот «MICHAEL JACKSON -
+    # THRILLER INSERT / REPRO / MJ MERCH» — это вообще не пластинка, а
+    # репродукция вкладыша, и он дошёл до предпоследнего отбора с
+    # кратностью 3.48x. Московская медиана альбома к нему отношения не
+    # имеет никакого.
+    #
+    # Голое «insert» и «sticker» в список НЕ входят намеренно: «w/ insert»
+    # и «hype sticker» — приметы полного оригинального издания, и по ним
+    # отсеялись бы как раз лучшие лоты. Проверено на выдаче: широкий
+    # вариант ловил 4 заголовка, из которых 3 были законными.
+    r"repro|reproduction|merch|merchandise|insert only|press kit|"
+    r"poster only|t-?shirt|karaoke|tribute band)\b", re.I)
 
 
 def wrong_format(title) -> bool:
