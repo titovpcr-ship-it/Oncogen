@@ -204,11 +204,26 @@ _MIN_HIT_RATIO = 0.6
 # больше — нет: на трёх проскакивали «COREY HART, Fields Of Fire» и
 # «Various - Songs Of The Beatles Tribute».
 _ARTIST_MAX_POS = 1
+# Сколько посторонних содержательных слов терпит одноимённый альбом,
+# названный в заголовке один раз.
+_SELF_TITLED_MAX_EXTRA = 2
 
 
 def _tokens(s):
     s = re.sub(r"[^\w\s]", " ", (s or "").lower(), flags=re.U)
     return [t for t in s.split() if t and t not in _STOP]
+
+
+# Разделитель «исполнитель — альбом» в заголовке лота.
+_SEPARATOR = re.compile(r"\s[-–—:|]\s|\s{2,}")
+
+
+def _split_head(title):
+    """Часть заголовка до первого разделителя. Если разделителя нет —
+    весь заголовок: тогда проверка ниже просто не сработает, и решает
+    позиция токена."""
+    parts = _SEPARATOR.split(title or "", maxsplit=1)
+    return parts[0] if len(parts) > 1 else (title or "")
 
 
 def _phrase_pos(hay_tokens, want_tokens):
@@ -245,25 +260,65 @@ def title_matches(entry, lot_title) -> bool:
     hay_set = set(hay)
 
     artist = _tokens(entry["artist"])
+    album = _tokens(entry["album"])
     if artist:
         pos = _phrase_pos(hay_body, artist)
-        if pos < 0 or pos > _ARTIST_MAX_POS:
+        if pos < 0:
             return False
+        # ТРЕТЬЯ ИТЕРАЦИЯ. Односложное имя, перед которым стоит ещё одно
+        # слово, — это почти всегда ЧУЖАЯ фамилия: «Irving Fields»,
+        # «Shep Fields», «Herbie Fields Sextet», «WC Fields», «Judy Fields»
+        # приезжали по позиции «Fields». Для однословного исполнителя
+        # допуск нулевой; для многословного один ведущий токен оставляем —
+        # продавцы любят приписки.
+        max_pos = 0 if len(artist) == 1 else _ARTIST_MAX_POS
+        if pos > max_pos:
+            return False
+        # И ещё один сигнал для односложного имени: на eBay заголовок почти
+        # всегда «ИСПОЛНИТЕЛЬ - Альбом ...», и если до разделителя стоит не
+        # одно слово, а длинное чужое название, это другой исполнитель.
+        # Так отсеивается «The Queen City Jazz Band - Here 'Tis Again!»,
+        # который по позиции токена «queen» неотличим от Queen.
+        if len(artist) == 1:
+            head = _tokens(_split_head(lot_title))
+            extra = [t for t in head
+                     if t not in artist and t not in _LEAD_NOISE and not t.isdigit()]
+            if len(extra) > 1:
+                return False
 
-    album = _tokens(entry["album"])
     if album:
         hits = sum(1 for t in album if t in hay_set)
         need = len(album) if len(album) == 1 else max(
             1, int(len(album) * _MIN_HIT_RATIO + 0.999))
         if hits < need:
             return False
+
+    # ОДНОИМЁННЫЙ АЛЬБОМ. Проверка выше для него вырождена: и исполнитель,
+    # и название — одно слово, так что «Whitesnake – Live In The Heart Of
+    # The City» проходил как «Whitesnake — Whitesnake», а «Quartz — Camel
+    # In The City» как «CAMEL — Camel». Настоящий одноимённый лот либо
+    # называет имя ДВАЖДЫ («Fields - Fields», «Kingdom Come - Kingdom
+    # Come»), либо не несёт другого названия вовсе («Whitesnake LP 1987
+    # Geffen»). Чужое название выдаёт себя лишними содержательными словами.
+    if artist and album and artist == album:
+        occurrences = sum(1 for i in range(len(hay) - len(artist) + 1)
+                          if hay[i:i + len(artist)] == artist)
+        if occurrences < 2:
+            extra = [t for t in hay
+                     if t not in artist and t not in _LEAD_NOISE and not t.isdigit()]
+            if len(extra) > _SELF_TITLED_MAX_EXTRA:
+                return False
     return True
 
 
 # Форматы, которые в московскую медиану по LP не превращаются.
 _WRONG_FORMAT = re.compile(
     r"\b(7\"|7 inch|45 ?rpm|single|ep\b|cd\b|cassette|dvd|blu-?ray|reel|"
-    r"shellac|78 ?rpm|box ?set|poster|sleeve only|cover only)\b", re.I)
+    r"shellac|78 ?rpm|box ?set|poster|sleeve only|cover only|"
+    # Лот без конверта или с варпом московскую медиану не берёт: в верхнем
+    # сегменте почти всё — NM/EX с конвертом. Проверено на живой выдаче,
+    # где «DISC ONLY, NO COVER, WARPED» проходил все пороги.
+    r"disc only|no cover|without cover|warped|record only)\b", re.I)
 
 
 def wrong_format(title) -> bool:

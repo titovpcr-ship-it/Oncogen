@@ -153,6 +153,41 @@ def main():
         check(got == exp,
               f"одноимённые: {e['artist']} vs «{t[:38]}» -> {got}", st)
 
+    # ТРЕТЬЯ ИТЕРАЦИЯ — три класса, найденные ручной проверкой всех 18
+    # прошедших лотов второго обхода. Каждый выглядел находкой.
+    third = [
+        # чужая фамилия на месте односложного имени
+        ({"artist": "Fields", "album": "Fields"},
+         "Irving Fields 50 Songs You'll Always Love by Suffolk Records", False),
+        ({"artist": "Fields", "album": "Fields"},
+         "HERBIE FIELDS SEXTET: Blow Hot Blow Cool LP '55 Decca", False),
+        ({"artist": "Fields", "album": "Fields"},
+         "WC FIELDS On Radio w/ Edgar Bergan 1969 Vinyl LP", False),
+        # одноимённый альбом против ДРУГОГО альбома того же исполнителя
+        ({"artist": "Whitesnake", "album": "Whitesnake"},
+         "Whitesnake - Live... In The Heart Of The City - VINYL LP", False),
+        ({"artist": "Whitesnake", "album": "Whitesnake"}, "Whitesnake LP 1987 Geffen", True),
+        ({"artist": "CAMEL", "album": "Camel"},
+         'Quartz LP "Camel In The City" Promo NM', False),
+        ({"artist": "CAMEL", "album": "Camel"}, "Camel - Camel LP 1973 MCA", True),
+        # длинное чужое название до разделителя
+        ({"artist": "Queen", "album": "Jazz"},
+         "The Queen City Jazz Band - Here 'Tis Again! - VINYL RECORD LP", False),
+        ({"artist": "Queen", "album": "Jazz"}, "QUEEN - Jazz LP 1978 Elektra", True),
+    ]
+    for e, t, exp in third:
+        got = sweep.title_matches(e, t)
+        check(got == exp, f"третья итерация: «{t[:40]}» -> {got}", st)
+
+    # Пластинка без конверта московскую медиану не берёт: в верхнем сегменте
+    # почти всё — NM/EX с конвертом. Проходило все пороги на живой выдаче.
+    for t in ("STEPPENWOLF - LIVE STEPPENWOLF - VINYL RECORD LP (DISC ONLY)",
+              "CREAM - DISRAELI GEARS (DISC ONLY, NO COVER) WARPED",
+              "Some LP - record only"):
+        check(sweep.wrong_format(t), f"без конверта/с варпом отсеивается: «{t[:34]}»", st)
+    check(not sweep.wrong_format("Queen - Jazz LP 1978 Elektra"),
+          "нормальный лот не отсеивается", st)
+
     # Ведущий шум перед именем допустим — продавцы так пишут постоянно.
     check(sweep.title_matches({"artist": "Pink Floyd", "album": "The Dark Side Of The Moon"},
                               "NM! Pink Floyd - Dark Side Of The Moon LP"),
