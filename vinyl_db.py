@@ -388,3 +388,148 @@ def import_decisions_log_csv(conn, csv_path):
 if __name__ == "__main__":
     p = init_db()
     print(f"Схема создана/актуализирована: {p}")
+
+# ───────── кандидаты обхода («Установки 01.09.2026» §5.4 / §6) ─────────
+# Раньше кандидаты жили только в логе, и любая проверка гипотезы стоила
+# нового прогона на 40 минут. Хуже того: без них невозможно исполнить
+# ПРАВИЛО 2 устава («ноль находок проверяется так же придирчиво, как
+# находка») — нечем ответить, посмотрела система или нет.
+SWEEP_SCHEMA = """
+CREATE TABLE IF NOT EXISTS sweep_runs (
+    run_id      INTEGER PRIMARY KEY AUTOINCREMENT,
+    started_at  TEXT NOT NULL,
+    finished_at TEXT,
+    positions   INTEGER,
+    candidates  INTEGER,
+    sellers     INTEGER,
+    bundles     INTEGER,
+    details     INTEGER,
+    findings    INTEGER,
+    params      TEXT
+);
+CREATE TABLE IF NOT EXISTS sweep_candidates (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id       INTEGER REFERENCES sweep_runs(run_id),
+    ebay_item_id TEXT,
+    title        TEXT,
+    seller       TEXT,
+    price_usd    REAL,
+    shipping_usd REAL,
+    country      TEXT,
+    url          TEXT,
+    wl_artist    TEXT,
+    wl_album     TEXT,
+    wl_median_rub INTEGER,
+    wl_sold_n    INTEGER,
+    in_bundle    INTEGER,
+    grade        TEXT,
+    ru_price_rub INTEGER,
+    target       REAL,
+    tier         TEXT,
+    margin_ru    REAL,
+    max_bid_usd  REAL,
+    profit_rub   REAL,
+    manual_review INTEGER,
+    passed       INTEGER NOT NULL,
+    reject_why   TEXT,
+    seen_at      TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_sc_run    ON sweep_candidates(run_id);
+CREATE INDEX IF NOT EXISTS idx_sc_passed ON sweep_candidates(passed);
+CREATE INDEX IF NOT EXISTS idx_sc_why    ON sweep_candidates(reject_why);
+"""
+
+
+def init_sweep(conn):
+    conn.executescript(SWEEP_SCHEMA)
+
+
+def start_sweep(conn, params) -> int:
+    init_sweep(conn)
+    cur = conn.execute(
+        "INSERT INTO sweep_runs (started_at, params) VALUES (?,?)",
+        (datetime.now(timezone.utc).isoformat(timespec="seconds"), json.dumps(
+            params, ensure_ascii=False)))
+    conn.commit()
+    return cur.lastrowid
+
+
+def finish_sweep(conn, run_id, **counts):
+    fields = ", ".join(f"{k}=?" for k in counts)
+    conn.execute(
+        f"UPDATE sweep_runs SET finished_at=?, {fields} WHERE run_id=?",
+        (datetime.now(timezone.utc).isoformat(timespec="seconds"),
+         *counts.values(), run_id))
+    conn.commit()
+
+
+def record_candidate(conn, run_id, *, lot, entry, verdict, in_bundle):
+    """Пишется КАЖДЫЙ кандидат, и прошедший, и отклонённый, вместе с
+    причиной отказа. Отказы здесь важнее находок: по ним видно, чем именно
+    режет контур, и не режет ли он по ошибке."""
+    conn.execute(
+        "INSERT INTO sweep_candidates (run_id,ebay_item_id,title,seller,price_usd,"
+        "shipping_usd,country,url,wl_artist,wl_album,wl_median_rub,wl_sold_n,"
+        "in_bundle,grade,ru_price_rub,target,tier,margin_ru,max_bid_usd,profit_rub,"
+        "manual_review,passed,reject_why,seen_at) VALUES (" + ",".join("?" * 24) + ")",
+        (run_id, lot.get("item_id"), lot.get("title"), lot.get("seller"),
+         lot.get("price"), lot.get("shipping"), lot.get("country"), lot.get("url"),
+         entry.get("artist"), entry.get("album"), entry.get("median_rub"),
+         entry.get("sold_n"), int(bool(in_bundle)), verdict.get("grade"),
+         verdict.get("ru_price_rub"), verdict.get("target"), verdict.get("tier"),
+         verdict.get("margin_ru"), verdict.get("max_bid"), verdict.get("profit_rub"),
+         int(bool(verdict.get("manual_review"))), int(bool(verdict.get("ok"))),
+         verdict.get("gate_why") or ("" if verdict.get("ok") else "цена выше потолка"),
+         datetime.now(timezone.utc).isoformat(timespec="seconds")))
+
+
+# Классы отказа. Группировать надо по НИМ, а не по тексту: в тексте стоят
+# конкретные числа, и «кратность 1.90x ниже 3.5x» превращалась в отдельную
+# строку разбора для каждого лота — читать такое невозможно, а правило 2
+# требует именно читаемого ответа.
+REJECT_CLASSES = (
+    ("кратность ниже целевой", ("кратность",)),
+    ("прибыль ниже пола", ("прибыль", "не окупает")),
+    ("нет российской цены", ("нет российской", "не посчитан")),
+    ("цена выше потолка ставки", ("цена выше потолка",)),
+)
+
+
+def classify_reject(why: str) -> str:
+    low = (why or "").lower()
+    for name, keys in REJECT_CLASSES:
+        if any(k in low for k in keys):
+            return name
+    return "прочее"
+
+
+def sweep_audit(conn, run_id=None) -> dict:
+    """ПРАВИЛО 2 устава: ответ на вопрос «посмотрела система или нет»,
+    без перепрогона.
+
+    Разбивка по классам отказа отвечает на него прямо: если всё упирается
+    в кратность или прибыль — система посмотрела и отказала. Если в «нет
+    российской цены» или «прочее» — не посмотрела, и это дефект.
+    """
+    init_sweep(conn)
+    where, args = ("WHERE run_id=?", (run_id,)) if run_id else ("", ())
+    total = conn.execute(f"SELECT COUNT(*) FROM sweep_candidates {where}", args).fetchone()[0]
+    joiner = " AND" if where else "WHERE"
+    passed = conn.execute(
+        f"SELECT COUNT(*) FROM sweep_candidates {where}{joiner} passed=1", args).fetchone()[0]
+    rows = conn.execute(
+        f"SELECT reject_why FROM sweep_candidates {where}{joiner} passed=0", args).fetchall()
+    counts = {}
+    for (why,) in rows:
+        k = classify_reject(why)
+        counts[k] = counts.get(k, 0) + 1
+    ranked = sorted(counts.items(), key=lambda kv: -kv[1])
+    # «Посмотрела и отказала» — это отказ по экономике. Всё остальное
+    # означает, что до экономики дело не дошло.
+    economic = sum(n for k, n in ranked
+                   if k in ("кратность ниже целевой", "прибыль ниже пола",
+                            "цена выше потолка ставки"))
+    return {"candidates": total, "passed": passed,
+            "rejected_by": [{"why": k, "n": n} for k, n in ranked],
+            "looked_and_declined": economic,
+            "did_not_look": total - passed - economic}

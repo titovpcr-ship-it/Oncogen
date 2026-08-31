@@ -45,6 +45,7 @@ wrong_format = wl.wrong_format
 import ru_economics as rue                     # noqa: E402
 import ru_market                               # noqa: E402
 import ru_price_model as rpm                   # noqa: E402
+import vinyl_db                                # noqa: E402
 import test_calibration as calib               # noqa: E402
 
 SEARCH_URL = "https://api.ebay.com/buy/browse/v1/item_summary/search"
@@ -199,7 +200,8 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
     """Вердикт по одному лоту: потолок ставки против его цены."""
     target, tier = rpm.margin_target_for(cfg, grade=grade,
                                          ru_sold_n=entry["sold_n"],
-                                         has_photos=has_photos)
+                                         has_photos=has_photos,
+                                         price_usd=lot["price"])
     ru_price = entry["median_rub"]
     if grade:
         # НАЙДЕНО РУЧНОЙ ПРОВЕРКОЙ НАХОДОК: первая версия умножала медиану
@@ -244,6 +246,7 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
             "landed": landed.marginal_usd if in_bundle else landed.standalone_usd,
             "margin_ru": e.margin_ru, "max_bid": e.max_bid_usd,
             "profit_rub": profit, "gate_why": gate_why if not gate_ok else "",
+            "manual_review": rpm.requires_manual_review(c, lot["price"]),
             "ok": affordable and gate_ok}
 
 
@@ -284,7 +287,13 @@ def main(argv=None):
         raise SystemExit("want-list пуст — сначала python3 moscow_wantlist.py")
 
     token = ebay_token()
-    print(f"обход {len(entries)} позиций, страны {','.join(countries)}")
+    # §5.4: кандидаты пишутся в базу. Без этого невозможно исполнить
+    # ПРАВИЛО 2 устава — нечем ответить, посмотрела система или нет.
+    db = sqlite3.connect(a.db)
+    vinyl_db.init_sweep(db)
+    run_id = vinyl_db.start_sweep(db, vars(a))
+    print(f"обход {len(entries)} позиций, страны {','.join(countries)} "
+          f"(прогон #{run_id})")
 
     # Стадия 1: широкий отсев по самому мягкому потолку.
     survivors = []
@@ -366,13 +375,37 @@ def main(argv=None):
                 time.sleep(THROTTLE_S)
             v = evaluate(e, lot, cfg, in_bundle=in_bundle, grade=grade,
                          has_photos=has_photos)
+            vinyl_db.record_candidate(db, run_id, lot=lot, entry=e, verdict=v,
+                                      in_bundle=in_bundle)
             if v["ok"]:
                 findings.append((e, lot, v, in_bundle))
+    db.commit()
+    vinyl_db.finish_sweep(db, run_id, positions=len(entries),
+                          candidates=len(survivors), sellers=len(by_seller),
+                          bundles=len(bundle_sellers), details=details,
+                          findings=len(findings))
     print(f"стадия 2: детальных запросов {details}, проходных лотов {len(findings)}")
+
+    # ПРАВИЛО 2 устава: ноль находок проверяется так же придирчиво, как
+    # находка. Прогон обязан сам ответить, чем именно он режет.
+    audit = vinyl_db.sweep_audit(db, run_id)
+    print(f"\nПРАВИЛО 2 — разбор нуля (прогон #{run_id}, "
+          f"{audit['candidates']} кандидатов, прошло {audit['passed']}):")
+    for r in audit["rejected_by"]:
+        print(f"   {r['n']:>4} — {r['why']}")
+    print(f"   посмотрела и отказала: {audit['looked_and_declined']}; "
+          f"до экономики не дошло: {audit['did_not_look']}")
+    if audit["did_not_look"] > audit["looked_and_declined"]:
+        print("   ⚠ большинство отказов НЕ экономические — это дефект контура, "
+              "а не вывод о рынке")
+    db.close()
 
     findings.sort(key=lambda f: -(f[2]["max_bid"] - f[1]["price"]))
     for e, lot, v, in_bundle in findings:
         flags = wl.risk_flags(e)
+        if v.get("manual_review"):
+            flags.insert(0, f"дороже ${cfg['ru_market']['manual_review_above_usd']} — "
+                            f"сверка ОБЯЗАТЕЛЬНА до ставки")
         print(f"  ПРОХОДИТ ${lot['price']:.2f} <= ${v['max_bid']:.2f} "
               f"({v['tier']}, {v['target']}x, грейд {v['grade'] or '?'}, "
               f"прибыль {v['profit_rub']:.0f} ₽, "

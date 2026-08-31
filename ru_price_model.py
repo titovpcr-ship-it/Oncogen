@@ -361,7 +361,8 @@ def contour_for_listing(conn, cfg, *, discogs_title, grade, landed,
         # числа на все случаи. Подменяем цель в копии конфига, чтобы
         # _max_bid считал потолок по нужному уровню.
         target, tier = margin_target_for(
-            cfg, grade=grade, ru_sold_n=comps.ru_sold_n, has_photos=has_photos)
+            cfg, grade=grade, ru_sold_n=comps.ru_sold_n, has_photos=has_photos,
+            price_usd=landed.item_usd)
         cfg_tier = dict(cfg)
         cfg_tier["ru_market"] = {**(cfg.get("ru_market") or {}),
                                  "min_margin_ru_pass": target}
@@ -405,7 +406,8 @@ def cap_verdict_on_zero_sales(verdict: str, ru_sold_n: int, cfg) -> tuple[str, s
 
 # ───────────────────── §4: порог кратности по измеренному риску ─────────────────────
 
-def margin_target_for(cfg, *, grade=None, ru_sold_n=0, has_photos=False) -> tuple[float, str]:
+def margin_target_for(cfg, *, grade=None, ru_sold_n=0, has_photos=False,
+                      price_usd=None) -> tuple[float, str]:
     """Целевая кратность и имя уровня.
 
     Правило 3x было прокси на риск, пока риск не был измерен. Теперь он
@@ -433,10 +435,31 @@ def margin_target_for(cfg, *, grade=None, ru_sold_n=0, has_photos=False) -> tupl
             continue
         if t.get("requires_photos") and not has_photos:
             continue
-        return float(t["margin"]), t.get("name", "tier")
+        return _raise_for_price(cfg, float(t["margin"]), t.get("name", "tier"),
+                                price_usd)
 
     fallback = next((t for t in tiers if t.get("grades") is None), tiers[-1])
-    return float(fallback["margin"]), fallback.get("name", "fallback")
+    return _raise_for_price(cfg, float(fallback["margin"]),
+                            fallback.get("name", "fallback"), price_usd)
+
+
+def _raise_for_price(cfg, margin, tier, price_usd):
+    """«Установки 01.09.2026» §4.2: вместе с ценой растёт цена ошибки.
+    Дорогой лот не может получить мягкий порог, каким бы ни был заявленный
+    грейд — грейд заявлен продавцом, а не измерен."""
+    ru = cfg.get("ru_market") or {}
+    limit = ru.get("manual_review_above_usd")
+    floor = float(ru.get("min_margin_above_manual_review", 0) or 0)
+    if price_usd is None or not limit or price_usd <= float(limit) or margin >= floor:
+        return margin, tier
+    return floor, f"{tier}+дорогой_лот"
+
+
+def requires_manual_review(cfg, price_usd) -> bool:
+    """Лоты дороже порога уходят на ручную сверку ПЕРЕД ставкой,
+    без исключений."""
+    limit = (cfg.get("ru_market") or {}).get("manual_review_above_usd")
+    return bool(limit and price_usd is not None and price_usd > float(limit))
 
 
 def passes_ru_floor(cfg, ru_price_rub) -> bool:
