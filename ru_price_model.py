@@ -155,6 +155,9 @@ def _monotonic_fix(k: dict) -> dict:
 
 # ───────────────────── §3c: медиана с поправкой на грейд ─────────────────────
 
+MIN_DIRECT_OBSERVATIONS = 3   # с этого числа мерим по самому альбому
+
+
 def graded_median(prices_by_grade: dict, target_grade: str | None,
                   coeffs: dict) -> tuple[float | None, float | None, str | None]:
     """Медиана, приведённая к грейду оцениваемого лота.
@@ -164,6 +167,22 @@ def graded_median(prices_by_grade: dict, target_grade: str | None,
     на коэффициент целевого грейда. Лоты без грейда участвуют в базе как
     есть: их 48% выборки, выбросить их значило бы потерять половину рынка.
     """
+    tg = canon_grade(target_grade)
+
+    # ПРЯМОЕ ИЗМЕРЕНИЕ ГЛАВНЕЕ РЫНОЧНОГО КОЭФФИЦИЕНТА.
+    # НАЙДЕНО НА ЖИВЫХ ДАННЫХ: коэффициент Sealed = 4.25 измерен ПО ВСЕМУ
+    # рынку, где «запечатано» коррелирует с аудиофильскими переизданиями и
+    # редкостями. Внутри массового альбома всё наоборот: запечатанные — это
+    # дешёвые современные репрессы, а дорого стоят оригиналы независимо от
+    # грейда. Для Michael Jackson — Thriller модель выдавала 12 461 ₽, тогда
+    # как реальная медиана запечатанных — 3 250 ₽, НИЖЕ общей в 4 200 ₽.
+    # Завышение вчетверо, и ровно на тех лотах, которые проходят порог.
+    # Поэтому: если у самого альбома есть достаточно продаж в нужном грейде,
+    # берём их медиану напрямую, а рыночный коэффициент не трогаем вовсе.
+    direct = prices_by_grade.get(tg) if tg else None
+    if direct and len(direct) >= MIN_DIRECT_OBSERVATIONS:
+        return round(statistics.median(direct)), None, tg
+
     normalized = []
     for g, prices in prices_by_grade.items():
         k = coeffs.get(g) if g else None
@@ -172,9 +191,18 @@ def graded_median(prices_by_grade: dict, target_grade: str | None,
     if not normalized:
         return None, None, None
     base = statistics.median(normalized)
-    tg = canon_grade(target_grade)
     k = coeffs.get(tg, 1.0) if tg else 1.0
-    return round(base * k), k, tg
+    predicted = base * k
+
+    # Потолок здравого смысла: даже при нехватке прямых наблюдений нельзя
+    # предсказывать цену выше всего, что по этому альбому вообще видели.
+    # Экстраполяция рыночным множителем за пределы собственной выборки —
+    # это и есть механизм, который выдал 12 461 ₽ там, где максимум 16 500,
+    # а типичная цена вчетверо ниже.
+    observed = [p for prices in prices_by_grade.values() for p in prices]
+    if observed:
+        predicted = min(predicted, max(observed))
+    return round(predicted), k, tg
 
 
 # ───────────────────── §3a: премия за пресс ─────────────────────
@@ -418,3 +446,46 @@ def passes_ru_floor(cfg, ru_price_rub) -> bool:
     if not floor:
         return True
     return bool(ru_price_rub) and float(ru_price_rub) >= floor
+
+
+# ───────────────────── §4: двойной гейт ─────────────────────
+
+def passes_double_gate(cfg, *, margin_ru, target_margin,
+                       expected_profit_rub) -> tuple[bool, str]:
+    """(проходит, причина отказа). «Ответ на отчёт» §4.
+
+    Оба условия обязательны и отвечают за РАЗНОЕ:
+      * кратность — за вероятность НЕ получить прибыль (риск состояния);
+      * абсолютный пол — за то, окупает ли сделка само действие.
+
+    Кратность одна не годится: 3x от 1 500 ₽ — работа за 1 000 ₽.
+    Абсолютная прибыль одна тоже: она не отличает запечатанную пластинку
+    от безымянного G+.
+    """
+    ru = cfg.get("ru_market") or {}
+    floor = float(ru.get("min_expected_profit_rub") or 0)
+
+    if margin_ru is None:
+        return False, "нет российской цены — кратность не посчитана"
+    if target_margin and margin_ru < target_margin:
+        return False, (f"кратность {margin_ru:.2f}x ниже целевой "
+                       f"{target_margin}x для этого уровня риска")
+    if floor:
+        if expected_profit_rub is None:
+            return False, "прибыль не посчитана"
+        if expected_profit_rub < floor:
+            return False, (f"прибыль {expected_profit_rub:.0f} ₽ ниже пола "
+                           f"{floor:.0f} ₽ — сделка не окупает само действие")
+    return True, ""
+
+
+def gross_profit_rub(net_ru_rub, landed_rub) -> float | None:
+    """Прибыль ДО поправки на вероятность продажи.
+
+    Отдельно от expected_profit_rub из ru_economics, который умножен на
+    p_sale_90d: пол §4 назначен на прибыль СДЕЛКИ, а не на её матожидание.
+    Смешивать их — тот же двойной счёт, что уже ловили на грейдах.
+    """
+    if net_ru_rub is None or landed_rub is None:
+        return None
+    return net_ru_rub - landed_rub

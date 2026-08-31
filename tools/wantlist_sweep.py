@@ -134,6 +134,67 @@ def item_grade(token, item_id):
         return None, False
 
 
+
+
+_FILLER_CACHE = {}
+
+
+def _filler_index(cfg):
+    """Широкий список позиций, годных в наполнитель. Строится один раз."""
+    if "rows" not in _FILLER_CACHE:
+        conn = sqlite3.connect(wl.DB_PATH)
+        _FILLER_CACHE["rows"] = wl.build_filler_index(conn, cfg=cfg)
+        conn.close()
+        print(f"  индекс наполнителя: {len(_FILLER_CACHE['rows'])} позиций")
+    return _FILLER_CACHE["rows"]
+
+
+def _filler_worth_it(lot, fillers) -> bool:
+    """Лот годится в наполнитель, если архив вообще знает его цену и она
+    выше порога. Кратность здесь не проверяется — задача наполнителя не
+    заработать, а не потерять, разложив доставку."""
+    if wl.wrong_format(lot["title"]):
+        return False
+    for e in fillers:
+        if wl.title_matches(e, lot["title"]):
+            return True
+    return False
+
+
+def seller_inventory(token, seller, countries, limit=100):
+    """Весь активный инвентарь продавца — через фильтр sellers:{...},
+    который уже починен диагнозом по buyingOptions (P1-5)."""
+    out = []
+    try:
+        r = requests.get(SEARCH_URL,
+            headers={"Authorization": f"Bearer {token}",
+                     "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"},
+            params={"category_ids": VINYL_CATEGORY, "limit": limit, "sort": "price",
+                    "filter": ("buyingOptions:{AUCTION|FIXED_PRICE},"
+                               f"sellers:{{{seller}}}")},
+            timeout=40)
+        if r.status_code != 200:
+            return out
+        for it in (r.json().get("itemSummaries") or []):
+            if not it.get("price"):
+                continue
+            ship = (it.get("shippingOptions") or [{}])[0]
+            out.append({
+                "item_id": it["itemId"].split("|")[1] if "|" in it["itemId"] else it["itemId"],
+                "title": it.get("title", ""),
+                "price": float(it["price"]["value"]),
+                "shipping": float((ship.get("shippingCost") or {}).get("value") or 0),
+                "extra_ship": float((ship.get("additionalShippingCostPerUnit") or {})
+                                    .get("value") or 0),
+                "seller": seller,
+                "url": (it.get("itemWebUrl") or "").split("?")[0],
+            })
+    except requests.RequestException:
+        pass
+    time.sleep(THROTTLE_S)
+    return out
+
+
 def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
     """Вердикт по одному лоту: потолок ставки против его цены."""
     target, tier = rpm.margin_target_for(cfg, grade=grade,
@@ -169,10 +230,21 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
     landed = rue.compute_landed(lot["price"], dom, "single_lp", 1, c,
                                 open_shipment_kg=1.5 if in_bundle else None)
     e = rue.compute_ru_economics(landed, comps, c, use_marginal=in_bundle)
+
+    # §4: двойной гейт. Кратность отвечает за вероятность НЕ получить
+    # прибыль, пол — за то, окупает ли сделка само действие. Прибыль
+    # берётся ВАЛОВАЯ (net минус landed), а не матожидание из
+    # compute_ru_economics: пол назначен на прибыль сделки, а домножать его
+    # ещё и на p_sale_90d — тот же двойной счёт, что ловили на грейдах.
+    profit = rpm.gross_profit_rub(e.net_ru_rub, e.landed_rub)
+    gate_ok, gate_why = rpm.passes_double_gate(
+        c, margin_ru=e.margin_ru, target_margin=target, expected_profit_rub=profit)
+    affordable = e.max_bid_usd is not None and e.max_bid_usd >= lot["price"]
     return {"target": target, "tier": tier, "grade": grade, "ru_price_rub": ru_price,
             "landed": landed.marginal_usd if in_bundle else landed.standalone_usd,
             "margin_ru": e.margin_ru, "max_bid": e.max_bid_usd,
-            "ok": e.max_bid_usd is not None and e.max_bid_usd >= lot["price"]}
+            "profit_rub": profit, "gate_why": gate_why if not gate_ok else "",
+            "ok": affordable and gate_ok}
 
 
 def main(argv=None):
@@ -184,6 +256,11 @@ def main(argv=None):
     p.add_argument("--push", action="store_true")
     p.add_argument("--max-details", type=int, default=60,
                    help="потолок детальных запросов за прогон")
+    p.add_argument("--no-inventory", dest="check_inventory", action="store_false",
+                   help="не проверять инвентарь продавцов (быстрее, но партии "
+                        "считаются по старому узкому критерию)")
+    p.add_argument("--max-sellers", type=int, default=40,
+                   help="скольким продавцам проверять инвентарь за прогон")
     a = p.parse_args(argv)
 
     cfg = finder.load_config()
@@ -213,20 +290,52 @@ def main(argv=None):
             print(f"  {i}/{len(entries)} … кандидатов {len(survivors)}")
     print(f"стадия 1: {len(survivors)} кандидатов дешевле потолка 2x")
 
-    # §5: партия — правило. Группируем по продавцу.
+    # §3 «Ответа на отчёт»: критерий партии переформулирован.
+    # Было: 5 лотов ИЗ want-list у одного продавца -> 3 продавца на 837
+    # позиций. Это проверяло не то: партия нужна, чтобы разложить
+    # фиксированную доставку, а наполнитель не обязан быть находкой.
+    # Стало: достаточно ОДНОГО попадания, дальше смотрим весь инвентарь
+    # продавца и добираем лотами, которые окупают собственный вес.
     by_seller = defaultdict(list)
     for e, lot, ceil in survivors:
         by_seller[lot["seller"]].append((e, lot, ceil))
-    min_bundle = int(((cfg.get("ru_market") or {}).get("bundle") or {})
-                     .get("min_lots_per_seller", 5))
-    bundles = {s: v for s, v in by_seller.items() if len(v) >= min_bundle}
-    print(f"продавцов с партией (>={min_bundle} лотов): {len(bundles)} "
-          f"из {len(by_seller)}")
+    bcfg = ((cfg.get("ru_market") or {}).get("bundle") or {})
+    min_bundle = int(bcfg.get("min_lots_per_seller", 5))
+    min_hits = int(bcfg.get("min_wantlist_hits_per_seller", 1))
+
+    candidates_for_bundle = {s: v for s, v in by_seller.items()
+                             if s and len(v) >= min_hits}
+    print(f"продавцов хотя бы с одним попаданием: {len(candidates_for_bundle)}")
+
+    bundle_sellers = set()
+    if a.check_inventory and candidates_for_bundle:
+        fillers = _filler_index(cfg)
+        checked = 0
+        for seller, hits in sorted(candidates_for_bundle.items(),
+                                   key=lambda kv: -len(kv[1])):
+            if checked >= a.max_sellers:
+                break
+            checked += 1
+            inv = seller_inventory(token, seller, countries)
+            usable = len(hits) + sum(
+                1 for lot in inv
+                if lot["item_id"] not in {l["item_id"] for _, l, _ in hits}
+                and _filler_worth_it(lot, fillers))
+            if usable >= min_bundle:
+                bundle_sellers.add(seller)
+                print(f"  партия у {seller}: {len(hits)} попаданий + наполнитель "
+                      f"= {usable} лотов из {len(inv)} в инвентаре")
+        print(f"продавцов с партией (>= {min_bundle} пригодных лотов): "
+              f"{len(bundle_sellers)} из {checked} проверенных")
+    else:
+        bundle_sellers = {s for s, v in by_seller.items() if len(v) >= min_bundle}
+        print(f"инвентарь не проверялся (--no-inventory): партий по старому "
+              f"критерию {len(bundle_sellers)}")
 
     # Стадия 2: грейд из описания только у выживших, с потолком запросов.
     findings, details = [], 0
     for seller, lots in sorted(by_seller.items(), key=lambda kv: -len(kv[1])):
-        in_bundle = len(lots) >= min_bundle
+        in_bundle = seller in bundle_sellers
         for e, lot, ceil in lots:
             grade, has_photos = (None, False)
             if details < a.max_details:
@@ -241,11 +350,14 @@ def main(argv=None):
 
     findings.sort(key=lambda f: -(f[2]["max_bid"] - f[1]["price"]))
     for e, lot, v, in_bundle in findings:
+        flags = wl.risk_flags(e)
         print(f"  ПРОХОДИТ ${lot['price']:.2f} <= ${v['max_bid']:.2f} "
               f"({v['tier']}, {v['target']}x, грейд {v['grade'] or '?'}, "
+              f"прибыль {v['profit_rub']:.0f} ₽, "
               f"{'партия' if in_bundle else 'одиночно'}) "
-              f"| {e['artist']} — {e['album']} | Москва {v['ru_price_rub']} ₽\n"
-              f"    {lot['url']}")
+              f"| {e['artist']} — {e['album']} | Москва {v['ru_price_rub']} ₽"
+              + (f"\n    ⚠ СВЕРИТЬ ГЛАЗАМИ: {', '.join(flags)}" if flags else "")
+              + f"\n    {lot['url']}")
 
     if a.push and findings:
         import notify

@@ -197,7 +197,18 @@ _STOP = {"lp", "vinyl", "record", "records", "album", "the", "a", "of", "and"}
 _LEAD_NOISE = {"nm", "ex", "vg", "vgplus", "mint", "sealed", "new", "used",
                "og", "orig", "original", "rare", "lot", "2lp", "3lp", "ep",
                "стерео", "stereo", "mono", "reissue", "re", "vintage", "classic",
-               "promo", "japan", "usa", "uk", "german", "germany", "import"}
+               "promo", "japan", "usa", "uk", "german", "germany", "import",
+               # Русские ведущие слова: матчер применяется и к заголовкам
+               # архива Мешка, где «пластинка Nirvana – Nevermind» —
+               # обычная форма. Без них половина архива не находилась.
+               "пластинка", "пластинки", "винил", "виниловая", "грампластинка",
+               "новый", "новая", "запечатан", "запечатана", "запечатанная",
+               "редкость", "распродажа", "оригинал", "лот"}
+# Служебные слова издания: не имена, поэтому в «уликах» не участвуют.
+_EDITION_WORDS = {"edition", "anniversary", "remaster", "remastered", "expanded",
+                  "limited", "deluxe", "expanded", "2x", "3x", "digipak",
+                  "издание", "юбилейное", "переиздание"}
+_NON_NAME = _LEAD_NOISE | _EDITION_WORDS
 _MIN_HIT_RATIO = 0.6
 # Насколько глубоко в заголовке допустимо начинаться имени исполнителя.
 # Один произвольный ведущий токен допускаем (продавцы любят приписки),
@@ -280,9 +291,16 @@ def title_matches(entry, lot_title) -> bool:
         # Так отсеивается «The Queen City Jazz Band - Here 'Tis Again!»,
         # который по позиции токена «queen» неотличим от Queen.
         if len(artist) == 1:
+            # Улика чужого имени — посторонние СОДЕРЖАТЕЛЬНЫЕ слова до
+            # разделителя. Слова самого альбома уликой не являются: когда
+            # разделителя нет («NIRVANA 1989 BLEACH (2x LP) Deluxe Edition»),
+            # в голову попадает и альбом, и без этого исключения правило
+            # отвергало правильные лоты. Служебные слова издания
+            # (edition, anniversary, 2x) тоже не имена.
             head = _tokens(_split_head(lot_title))
             extra = [t for t in head
-                     if t not in artist and t not in _LEAD_NOISE and not t.isdigit()]
+                     if t not in artist and t not in album
+                     and t not in _NON_NAME and not t.isdigit()]
             if len(extra) > 1:
                 return False
 
@@ -323,6 +341,43 @@ _WRONG_FORMAT = re.compile(
 
 def wrong_format(title) -> bool:
     return bool(_WRONG_FORMAT.search(title or ""))
+
+
+def build_filler_index(conn, *, min_n=2, min_median_rub=None, cfg=None) -> list[dict]:
+    """Более широкий список — для НАПОЛНИТЕЛЯ партии («Ответ на отчёт» §3).
+
+    Партия существует, чтобы разложить фиксированную доставку по США, и
+    наполнитель не обязан быть находкой: его задача — не приносить убытка,
+    окупив собственный предельный вес (0.3 кг x $22 = 660 ₽ плюс запас).
+    Порог кратности к нему не применяется, поэтому и планка ниже, чем у
+    want-list: ~6 300 позиций против 837.
+    """
+    if min_median_rub is None:
+        min_median_rub = float(((cfg or {}).get("ru_market") or {})
+                               .get("bundle", {}).get("filler_min_ru_price_rub", 1500))
+    return build(conn, min_sold_n=min_n, min_median_rub=min_median_rub)
+
+
+def risk_flags(entry: dict) -> list[str]:
+    """Признаки, при которых автоматическому совпадению верить нельзя
+    («Ответ на отчёт» §5). Не отменяют пороги, а требуют ручной сверки.
+
+    Односложные имя или название — тот самый класс, который трижды за
+    проект давал ложные находки: «Fields», «Camel», «Queen», «Live».
+    Одноимённый альбом — отдельно, потому что у него проверка названия
+    вырождена в проверку имени.
+    """
+    flags = []
+    a, al = _tokens(entry.get("artist")), _tokens(entry.get("album"))
+    if len(a) == 1:
+        flags.append("односложный исполнитель")
+    if len(al) == 1:
+        flags.append("односложное название")
+    if a and a == al:
+        flags.append("одноимённый альбом")
+    if entry.get("sold_n") is not None and entry["sold_n"] < 5:
+        flags.append(f"мало продаж ({entry['sold_n']})")
+    return flags
 
 
 def ebay_query(entry: dict) -> str:

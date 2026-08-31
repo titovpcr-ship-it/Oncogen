@@ -111,7 +111,14 @@ def main():
                    world_press_price=120.0, world_album_median=60.0,
                    channel="meshok", coeffs=k)
     check(r.ru_sold_n == 150, "нашлись все 150 продаж", st)
-    check(r.grade_used == "NM" and abs(r.grade_k - 2.0) < 1e-9, "грейд лота учтён", st)
+    # У этой выборки 50 прямых наблюдений в NM, поэтому берётся ИХ медиана
+    # (2000 ₽), а рыночный коэффициент не применяется — grade_k пуст.
+    # Прежнее ожидание (grade_k == 2.0) описывало поведение до правила
+    # «прямое измерение главнее коэффициента».
+    check(r.grade_used == "NM" and r.grade_k is None,
+          "грейд лота учтён прямым измерением, а не множителем", st)
+    check(abs(r.ru_graded_median_rub - 2000) < 1,
+          f"цена равна медиане NM-продаж этого альбома ({r.ru_graded_median_rub} ₽)", st)
     check(r.ru_press_price_rub > r.ru_graded_median_rub,
           "дорогой пресс поднял цену выше приведённой к грейду", st)
     check(r.confidence == "medium",
@@ -182,6 +189,48 @@ def main():
                                    world_album_median=1.0, coeffs=k)
     check(broken["margin_ru"] is None and "не посчитан" in broken["ru_notes"],
           "битое соединение -> ошибка проглочена и объяснена, исключения нет", st)
+
+    # ---------- прямое измерение главнее рыночного коэффициента ----------
+    # НАЙДЕНО НА ЖИВЫХ ДАННЫХ (Michael Jackson — Thriller): коэффициент
+    # Sealed = 4.25 измерен ПО РЫНКУ, где «запечатано» коррелирует с
+    # аудиофильскими переизданиями. Внутри массового альбома наоборот —
+    # запечатанные это дешёвые репрессы. Модель выдавала 12 461 ₽ при
+    # реальных 3 250 ₽.
+    mixed_grades = {"Sealed": [3000, 3200, 3300], None: [4200, 4300, 4400]}
+    coeffs_market = {"Sealed": 4.25, "VG++": 1.0}
+    got, k_used, tg = graded = m.graded_median(mixed_grades, "Sealed", coeffs_market)
+    check(2900 <= got <= 3400,
+          f"есть 3 прямых наблюдения в Sealed -> берём их медиану ({got} ₽), "
+          f"а не рыночный x4.25", st)
+    check(k_used is None, "рыночный коэффициент при прямом измерении не применяется", st)
+
+    # Мало прямых наблюдений -> коэффициент применяется, но не выше
+    # собственного максимума альбома.
+    thin = {"Sealed": [3000], None: [4200, 4300, 4400]}
+    got2, k2, _ = m.graded_median(thin, "Sealed", coeffs_market)
+    check(got2 <= max(sum(thin.values(), [])),
+          f"предсказание не превышает максимум собственной выборки "
+          f"({got2} <= {max(sum(thin.values(), []))})", st)
+    check(k2 == 4.25, "при нехватке прямых наблюдений коэффициент всё же берётся", st)
+
+    # ---------- §4: двойной гейт ----------
+    cfg_gate = {"ru_market": {"min_expected_profit_rub": 2500}}
+    ok_g, _ = m.passes_double_gate(cfg_gate, margin_ru=3.0, target_margin=2.0,
+                                   expected_profit_rub=4000)
+    check(ok_g, "кратность и прибыль в норме -> проходит", st)
+    ok_g, why = m.passes_double_gate(cfg_gate, margin_ru=3.0, target_margin=2.0,
+                                     expected_profit_rub=1200)
+    check(not ok_g and "не окупает" in why,
+          "кратность есть, но прибыль ниже пола -> отказ", st)
+    ok_g, why = m.passes_double_gate(cfg_gate, margin_ru=1.5, target_margin=2.0,
+                                     expected_profit_rub=9000)
+    check(not ok_g and "кратность" in why,
+          "денег много, но риск выше допустимого -> отказ", st)
+    ok_g, _ = m.passes_double_gate(cfg_gate, margin_ru=None, target_margin=2.0,
+                                   expected_profit_rub=9000)
+    check(not ok_g, "нет российской цены -> отказ", st)
+    check(m.gross_profit_rub(5000, 1800) == 3200, "валовая прибыль = net - landed", st)
+    check(m.gross_profit_rub(None, 1800) is None, "нет net -> прибыли нет", st)
 
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
