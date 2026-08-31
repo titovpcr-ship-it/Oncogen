@@ -231,6 +231,24 @@ def main():
     check(not rpm.passes_ru_floor(CFG, None), "нет цены — не проходит", st)
     check(rpm.passes_ru_floor({"ru_market": {}}, 1), "без пола в конфиге пропускаем всё", st)
 
+    # ---------- двойной счёт по грейду ----------
+    # НАЙДЕНО РУЧНОЙ ПРОВЕРКОЙ НАХОДОК: обход умножал медиану want-list'а
+    # на коэффициент грейда напрямую. Но в медиане УЖЕ сидят продажи в NM,
+    # и умножение завышало цену вдвое — ровно на тех лотах, которые
+    # проходят порог. Правильный путь нормализует каждую наблюдённую цену
+    # по её собственному грейду и только потом умножает на целевой.
+    nm_only = mkdb([("A – X", "A", "X", 6000, "Near Mint", "2026-05-0%d" % i, 2228)
+                    for i in range(1, 6)])
+    k_nm = rpm.grade_coefficients(nm_only, jazz_only=True)
+    est = rpm.estimate(nm_only, {"ru_market": {}}, artist="A", album="X",
+                       target_grade="NM", coeffs=k_nm)
+    check(abs(est.ru_graded_median_rub - 6000) < 600,
+          f"выборка целиком в NM, лот в NM -> цена та же 6000 ₽ "
+          f"(получено {est.ru_graded_median_rub})", st)
+    naive = 6000 * (k_nm.get("NM") or 1)
+    check(naive > est.ru_graded_median_rub * 1.3 or abs(k_nm.get("NM", 1) - 1) < 0.1,
+          f"наивное умножение дало бы {naive:.0f} ₽ — вот цена ошибки", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)

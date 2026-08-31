@@ -139,18 +139,22 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
     target, tier = rpm.margin_target_for(cfg, grade=grade,
                                          ru_sold_n=entry["sold_n"],
                                          has_photos=has_photos)
-    coeffs = None
     ru_price = entry["median_rub"]
     if grade:
-        # Медиана want-list'а — по всем грейдам сразу. Приводим её к грейду
-        # конкретного лота, иначе Sealed и G оцениваются одинаково.
+        # НАЙДЕНО РУЧНОЙ ПРОВЕРКОЙ НАХОДОК: первая версия умножала медиану
+        # want-list'а на коэффициент грейда напрямую. Это ДВОЙНОЙ СЧЁТ —
+        # в самой медиане уже сидят продажи в NM, и умножение на 1.97
+        # завышало цену вдвое (Hunky Dory: 12 695 ₽ вместо 6 461 ₽) ровно
+        # на тех лотах, которые проходят порог. Правильный путь —
+        # rpm.estimate: он сначала приводит КАЖДУЮ наблюдённую цену к базе
+        # по её собственному грейду и только потом умножает на целевой.
         try:
             conn = sqlite3.connect(wl.DB_PATH)
-            coeffs = rpm.grade_coefficients(conn, jazz_only=bool(entry["is_jazz"]))
+            est = rpm.estimate(conn, cfg, artist=entry["artist"],
+                               album=entry["album"], target_grade=grade)
             conn.close()
-            k = coeffs.get(rpm.canon_grade(grade))
-            if k:
-                ru_price = int(entry["median_rub"] * k)
+            if est.ru_graded_median_rub:
+                ru_price = est.ru_graded_median_rub
         except Exception:                       # noqa: BLE001
             pass
 
