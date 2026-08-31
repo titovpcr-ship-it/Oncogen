@@ -79,6 +79,41 @@ def ebay_token() -> str:
     return r.json()["access_token"]
 
 
+class ApiRefused(RuntimeError):
+    """eBay отказал в обслуживании (квота, блокировка, сбой).
+
+    ПРАВИЛО 2 УСТАВА В КОДЕ. Прежняя версия на любой не-200 делала
+    `continue`, и прогон #5 (31.08.2026) отрапортовал «0 кандидатов» на
+    837 позициях, хотя на самом деле исчерпал суточную квоту eBay и не
+    посмотрел НИ ОДНУ. Нулевой результат выглядел точно так же, как
+    честный отказ по экономике.
+
+    Ноль, полученный из отказов, — не результат, а дефект, и прогон обязан
+    падать, а не выдавать его за вывод о рынке.
+    """
+
+
+# Сколько отказов подряд считать исчерпанием квоты, а не единичным сбоем.
+_REFUSALS_TO_ABORT = 25
+_refusals = {"streak": 0, "total": 0}
+
+
+def _note_http(status: int | None):
+    """Учесть исход запроса и прервать прогон, если отказы пошли подряд."""
+    if status == 200:
+        _refusals["streak"] = 0
+        return
+    _refusals["streak"] += 1
+    _refusals["total"] += 1
+    if _refusals["streak"] >= _REFUSALS_TO_ABORT:
+        raise ApiRefused(
+            f"eBay отказал {_refusals['streak']} раз подряд "
+            f"(последний код {status}). Прогон ПРЕРВАН: продолжать значит "
+            f"выдать «ноль находок» за вывод о рынке, тогда как рынок никто "
+            f"не смотрел. Если код 429 — исчерпана суточная квота, "
+            f"повторять до её сброса бессмысленно.")
+
+
 def search(token, query, countries, limit=50):
     out = []
     for cc in countries:
@@ -91,6 +126,7 @@ def search(token, query, countries, limit=50):
                         "filter": ("buyingOptions:{AUCTION|FIXED_PRICE},"
                                    f"itemLocationCountry:{cc}")},
                 timeout=40)
+            _note_http(r.status_code)
             if r.status_code != 200:
                 continue
             for it in (r.json().get("itemSummaries") or []):

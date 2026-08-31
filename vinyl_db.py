@@ -503,6 +503,20 @@ def classify_reject(why: str) -> str:
     return "прочее"
 
 
+def mark_run_invalid(conn, run_id, why: str) -> None:
+    """Пометить прогон недостоверным (ПРАВИЛО 2 устава).
+
+    Нужно потому, что нулевой прогон, полученный из отказов API, лежит в
+    базе рядом с честными и по цифрам от них не отличается. Без метки
+    любой последующий анализ смешает «рынок пуст» и «нас не пустили»."""
+    init_sweep(conn)
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(sweep_runs)")]
+    if "invalid_why" not in cols:
+        conn.execute("ALTER TABLE sweep_runs ADD COLUMN invalid_why TEXT")
+    conn.execute("UPDATE sweep_runs SET invalid_why=? WHERE run_id=?", (why, run_id))
+    conn.commit()
+
+
 def sweep_audit(conn, run_id=None) -> dict:
     """ПРАВИЛО 2 устава: ответ на вопрос «посмотрела система или нет»,
     без перепрогона.
