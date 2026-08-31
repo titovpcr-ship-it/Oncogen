@@ -74,6 +74,8 @@ CREATE TABLE IF NOT EXISTS moscow_wantlist (
     is_jazz        INTEGER NOT NULL DEFAULT 0,
     top_grade      TEXT,             -- самый частый грейд среди продаж
     top_country    TEXT,             -- самая частая страна прессинга
+    lp_count       INTEGER NOT NULL DEFAULT 1,  -- 2 у двойников: карго вдвое
+    lp_mixed       INTEGER NOT NULL DEFAULT 0,  -- продажи расходятся, нужна сверка
     last_sold_day  TEXT,
     days_between   REAL,
     built_at       TEXT NOT NULL,
@@ -97,6 +99,58 @@ def _pct(vals, p):
     k = (len(s) - 1) * p
     lo, hi = int(k), min(int(k) + 1, len(s) - 1)
     return int(s[lo] + (s[hi] - s[lo]) * (k - lo))
+
+
+# ЧИСЛО ПЛАСТИНОК В ИЗДАНИИ. Найдено сверкой находок 31.08.2026: обход
+# считал карго ВСЕМ позициям как одиночной пластинке (0.3 кг), включая
+# двойные альбомы. По архиву таких позиций 223 из 824 — 27%, то есть
+# ошибка не редкий случай, а каждая четвёртая позиция.
+#
+# Цена ошибки: 0.45 - 0.3 = 0.15 кг x $22 x 100 ₽ = 330 ₽ недосчитанного
+# карго. Для «Traffic — On The Road» это ровно разница между прибылью
+# 2 740 ₽ и падением ниже пола в 2 500 ₽.
+#
+# Считаем по МОСКОВСКИМ продажам, а не по заголовку лота eBay: москвичи
+# описывают издание подробнее, и именно их цена стоит в правой части
+# уравнения. Требуется большинство, а не «хоть одно упоминание», — иначе
+# одна оговорка продавца переводит позицию в двойники.
+_MULTI_LP = re.compile(
+    r"(?<![\w])(2\s?x?\s?lp|2\s?х\s?lp|двойн\w*|double\s+(?:lp|album)|"
+    r"3\s?x?\s?lp|3\s?х\s?lp|тройн\w*)(?![\w])", re.I | re.U)
+
+
+def lp_count_from_titles(titles) -> int:
+    """Сколько пластинок считать в издании этой позиции.
+
+    Правило НЕ «большинство», а «хоть одно упоминание», и это осознанный
+    выбор в пользу дорогой стороны. Замерено по архиву: маркер 2LP есть
+    хоть у одной продажи у 275 позиций из 824, единогласен у 157, а у 118
+    позиций продажи расходятся — Москва продавала под одним названием и
+    одинарное, и двойное издание.
+
+    «Traffic — On The Road» ровно такая: маркер стоит у одной продажи из
+    трёх. Правило большинства объявило бы её одиночником, карго
+    недосчиталось бы на 330 ₽, и лот прошёл бы гейт с прибылью 2 740 ₽
+    при поле 2 500 ₽ — то есть за счёт ошибки в весе.
+
+    Ошибиться в бОльшую сторону значит потерять находку. Ошибиться в
+    меньшую — купить убыток и узнать об этом после оплаты карго. Из двух
+    ошибок выбираем ту, которая ничего не стоит.
+    """
+    titles = [t for t in titles if t]
+    if not titles:
+        return 1
+    return 2 if any(_MULTI_LP.search(t) for t in titles) else 1
+
+
+def lp_count_is_mixed(titles) -> bool:
+    """Продажи расходятся: часть изданий двойные, часть — нет. Позиция
+    просит сверки глазами так же, как позиция с большим разбросом цен."""
+    titles = [t for t in titles if t]
+    if not titles:
+        return False
+    hits = sum(1 for t in titles if _MULTI_LP.search(t))
+    return 0 < hits < len(titles)
 
 
 def _most_common(vals):
@@ -149,6 +203,8 @@ def build(conn, *, jazz_only=False, min_sold_n=MIN_SOLD_N,
             "is_jazz": int(sum(1 for i in items if i[6] in JAZZ_CATS) * 2 > len(items)),
             "top_grade": _most_common([i[3] for i in items]),
             "top_country": _most_common(countries),
+            "lp_count": lp_count_from_titles([i[5] for i in items]),
+            "lp_mixed": int(lp_count_is_mixed([i[5] for i in items])),
             "last_sold_day": max(i[4] for i in items),
             "days_between": round(window_days / len(items), 1),
         })
@@ -163,11 +219,12 @@ def store(conn, entries) -> int:
     conn.executemany(
         "INSERT INTO moscow_wantlist (artist_key,album_key,artist,album,sold_n,"
         "median_rub,p25_rub,p75_rub,max_rub,money_rub,is_jazz,top_grade,"
-        "top_country,last_sold_day,days_between,built_at) "
-        "VALUES (" + ",".join("?" * 16) + ")",
+        "top_country,lp_count,lp_mixed,last_sold_day,days_between,built_at) "
+        "VALUES (" + ",".join("?" * 18) + ")",
         [(e["artist_key"], e["album_key"], e["artist"], e["album"], e["sold_n"],
           e["median_rub"], e["p25_rub"], e["p75_rub"], e["max_rub"], e["money_rub"],
-          e["is_jazz"], e["top_grade"], e["top_country"], e["last_sold_day"],
+          e["is_jazz"], e["top_grade"], e["top_country"], e["lp_count"],
+          e["lp_mixed"], e["last_sold_day"],
           e["days_between"], now) for e in entries])
     conn.commit()
     return len(entries)
@@ -344,7 +401,36 @@ def title_matches(entry, lot_title) -> bool:
                      if t not in artist and t not in _LEAD_NOISE and not t.isdigit()]
             if len(extra) > _SELF_TITLED_MAX_EXTRA:
                 return False
+
+    # ПЯТЫЙ КЛАСС ЛОЖНЫХ СРАБАТЫВАНИЙ, найден сверкой находок 31.08.2026.
+    # Название альбома бывает ЧАСТЬЮ имени исполнителя: «Grand Funk
+    # Railroad — Grand Funk», «Black Sabbath — Black Sabbath». Тогда слова
+    # альбома находятся в заголовке всегда — их приносит само имя
+    # исполнителя, — и позиции доставались ЧУЖИЕ альбомы того же артиста:
+    # «Good Singin Good Playin», «On Time», «Phoenix» — все трое прошли
+    # гейт как «Grand Funk». Хуже того, «On Time» — отдельная позиция
+    # want-list со своей, более низкой медианой (3 500 против 4 121 ₽),
+    # так что подмена ещё и завышала цену.
+    #
+    # Проверка: вычесть из заголовка вхождение имени исполнителя и
+    # спросить, осталось ли название альбома в остатке. Если в остатке
+    # лежит другое содержательное название — это другой альбом.
+    if artist and album and album != artist and set(album) <= set(artist):
+        rest = _strip_phrase(hay, artist)
+        if _phrase_pos(rest, album) < 0:
+            leftover = [t for t in rest if t not in _LEAD_NOISE
+                        and t not in _NON_NAME and not t.isdigit()]
+            if leftover:
+                return False
     return True
+
+
+def _strip_phrase(tokens, phrase):
+    """Убрать ПЕРВОЕ вхождение фразы из списка токенов."""
+    i = _phrase_pos(tokens, phrase)
+    if i < 0:
+        return list(tokens)
+    return list(tokens[:i]) + list(tokens[i + len(phrase):])
 
 
 # Форматы, которые в московскую медиану по LP не превращаются.

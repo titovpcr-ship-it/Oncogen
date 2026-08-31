@@ -229,7 +229,11 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
         ru_sold_n=entry["sold_n"], ru_price_source="meshok_sold",
         ru_expected_price_rub=ru_price, ru_confidence="medium")
     dom = lot["extra_ship"] if in_bundle else lot["shipping"]
-    landed = rue.compute_landed(lot["price"], dom, "single_lp", 1, c,
+    # Двойной альбом весит вдвое, и карго по нему вдвое. Раньше обход
+    # считал 0.3 кг ВСЕМ позициям — по архиву 223 из 824 позиций (27%)
+    # это двойники, то есть ошибка касалась каждой четвёртой.
+    fmt = "double_lp" if int(entry.get("lp_count") or 1) > 1 else "single_lp"
+    landed = rue.compute_landed(lot["price"], dom, fmt, 1, c,
                                 open_shipment_kg=1.5 if in_bundle else None)
     e = rue.compute_ru_economics(landed, comps, c, use_marginal=in_bundle)
 
@@ -243,6 +247,8 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
         c, margin_ru=e.margin_ru, target_margin=target, expected_profit_rub=profit)
     affordable = e.max_bid_usd is not None and e.max_bid_usd >= lot["price"]
     return {"target": target, "tier": tier, "grade": grade, "ru_price_rub": ru_price,
+            "lp_count": int(entry.get("lp_count") or 1),
+            "lp_mixed": bool(entry.get("lp_mixed")),
             "landed": landed.marginal_usd if in_bundle else landed.standalone_usd,
             "margin_ru": e.margin_ru, "max_bid": e.max_bid_usd,
             "profit_rub": profit, "gate_why": gate_why if not gate_ok else "",
@@ -411,6 +417,10 @@ def main(argv=None):
         if v.get("manual_review"):
             flags.insert(0, f"дороже ${cfg['ru_market']['manual_review_above_usd']} — "
                             f"сверка ОБЯЗАТЕЛЬНА до ставки")
+        if v.get("lp_mixed"):
+            flags.insert(0, "издание неоднозначно: часть московских продаж — "
+                            "двойники, часть нет; карго посчитано по двойному, "
+                            "проверить, что именно продаётся")
         if v.get("heterogeneous"):
             flags.insert(0, f"разброс цен внутри позиции {v['spread_ratio']:.1f}x "
                             f"(типично 1.3x) — под одним названием разные прессы, "

@@ -24,7 +24,20 @@ import yaml
 
 # Токены грейдов — порядок важен: длинные варианты проверяем раньше
 # коротких, иначе "VG" матчится внутри "VG++"/"VG-" раньше времени.
-GRADE_TOKENS = ["VG++", "VG+", "VG-", "NM", "M", "VG", "G+", "G", "Poor"]
+# "Fair" добавлен 31.08.2026 по итогам сверки находок. Лот
+# «Rolling Stones – Beggars Banquet (Vinyl LP, 1968) London Records –
+# PS-539 - FAIR» получал грейд None, попадал в разряд «грейд неизвестен»
+# и оценивался по ПОЛНОЙ медиане позиции 4 834 ₽, тогда как все шесть
+# московских продаж — EX/NM/Mint. Fair ниже VG- и по такой цене в Москве
+# не уходит. Слово было известно canon_grade ("fair" -> "F"), но не
+# извлекалось из заголовка — правая рука не знала про левую.
+#
+# ИЗВЕСТНЫЙ ПРОБЕЛ, СОЗНАТЕЛЬНО НЕ ЗАКРЫТЫЙ ЗДЕСЬ: "Sealed" тоже
+# известен canon_grade, но в токены не добавлен. Это подняло бы оценки и
+# добавило находок, а измеренный рыночный коэффициент Sealed = 4.25 уже
+# один раз соврал вчетверо внутри сегмента. Трогать без отдельного замера
+# нельзя (ПРАВИЛО 1).
+GRADE_TOKENS = ["VG++", "VG+", "VG-", "NM", "M", "VG", "G+", "G", "Fair", "Poor"]
 
 
 def extract_grade(actual_condition: str | None):
@@ -45,7 +58,14 @@ def extract_grade(actual_condition: str | None):
     segment = actual_condition.split("/")[0]
     for token in GRADE_TOKENS:
         pattern = r"(?<![A-Za-z])" + re.escape(token) + r"(?![A-Za-z])"
-        if re.search(pattern, segment):
+        # Регистр игнорируется только у СЛОВ. Продавцы пишут «FAIR», «FAIR
+        # CONDITION», «fair» вперемешку, и регистрозависимый поиск их
+        # пропускал (так и уцелел лот «... PS-539 - FAIR»). Но распускать
+        # регистр на однобуквенные токены нельзя: «180 g» — это граммы, а
+        # не грейд Good, и «м» встречается в русских описаниях. Поэтому
+        # послабление ровно для многобуквенных слов.
+        flags = re.I if len(token) > 2 and token.isalpha() else 0
+        if re.search(pattern, segment, flags):
             return token
     return None
 
@@ -188,7 +208,33 @@ def priority_score(example: dict, result: dict, cfg: dict) -> float:
     return result["margin_median"] * (1 + 0.15 * signals)
 
 
+def _test_fair_grade():
+    """Грейд Fair извлекается из заголовка (сверка находок 31.08.2026).
+
+    Лот «... London Records – PS-539 - FAIR» получал грейд None, шёл в
+    разряд «грейд неизвестен» и оценивался по полной медиане позиции.
+    Слово знал canon_grade, но не знал извлекатель.
+    """
+    cases = [("Rolling Stones – Beggars Banquet (LP, 1968) PS-539 - FAIR", "Fair"),
+             ("Some LP in fair condition", "Fair"),
+             ("POOR condition, plays through", "Poor"),
+             ("Fairport Convention - Liege and Lief LP", None),
+             ("Blue Note 180 g audiophile pressing", None),
+             ("ECM 1064 My Song LP", None),
+             ("Traffic - On The Road LP Very Good Plus (VG+)/Good Plus (G+)", "VG+")]
+    bad = 0
+    for text, want in cases:
+        got = extract_grade(text)
+        ok = got == want
+        bad += not ok
+        print(("OK   " if ok else "FAIL ") + f"{str(got):>5} (ждали {want}) | {text[:52]}")
+    if bad:
+        raise SystemExit(f"{bad} ПРОВАЛОВ в разборе грейда")
+
+
+
 def main():
+    _test_fair_grade()
     config_path = Path(sys.argv[1] if len(sys.argv) > 1 else "ebay_vinyl_sniper_config.yaml")
     cfg = yaml.safe_load(config_path.read_text())
 

@@ -276,6 +276,41 @@ def main():
     check(naive > est.ru_graded_median_rub * 1.3 or abs(k_nm.get("NM", 1) - 1) < 0.1,
           f"наивное умножение дало бы {naive:.0f} ₽ — вот цена ошибки", st)
 
+    # ── пятый класс ложных срабатываний: альбом внутри имени артиста ──
+    # Сверка находок 31.08.2026: позиции «Grand Funk Railroad — Grand Funk»
+    # доставались ЧУЖИЕ альбомы того же артиста, потому что слова альбома
+    # приносило само имя исполнителя. Все три прошли двойной гейт.
+    gf = {"artist": "Grand Funk Railroad", "album": "Grand Funk"}
+    for title, want in [
+        ("Grand Funk Railroad-Good Singin Good Playin-LP Vinyl MCA 1044", False),
+        ('Grand Funk Railroad On Time 12" Black Vinyl LP Rock Capitol', False),
+        ("Grand Funk Railroad - Phoenix SMAS 11099 Capitol LP 1972", False),
+        ("Grand Funk Railroad - Grand Funk LP Capitol SKAO-406 1969", True),
+        ("GRAND FUNK RAILROAD Grand Funk 1969 Capitol vinyl", True),
+    ]:
+        check(wl.title_matches(gf, title) == want,
+              f"{'принят' if want else 'отвергнут'}: {title[:46]}", st)
+
+    # ── число пластинок в издании: карго двойника вдвое ──
+    # Правило намеренно НЕ «большинство»: у «Traffic — On The Road» маркер
+    # стоит у одной продажи из трёх, и правило большинства недосчитало бы
+    # 330 ₽ карго — ровно столько, сколько отделяло лот от пола прибыли.
+    check(wl.lp_count_from_titles(["Pink Floyd - The Wall, 2LP",
+                                   "Pink Floyd The Wall Japan LP"]) == 2,
+          "хоть один маркер 2LP -> считаем двойником", st)
+    check(wl.lp_count_from_titles(["Metallica ...And Justice For All (2хLP)"]) == 2,
+          "кириллическое «2хLP» тоже маркер", st)
+    check(wl.lp_count_from_titles(["Miles Davis - Kind Of Blue LP 1959"]) == 1,
+          "обычный LP остаётся одиночником", st)
+    check(wl.lp_count_from_titles(["Something double-sided single LP"]) == 1,
+          "«double-sided» — не двойной альбом", st)
+    check(wl.lp_count_from_titles([]) == 1, "нет продаж -> одиночник, а не ошибка", st)
+    check(wl.lp_count_is_mixed(["Traffic On The Road 1973 JAPAN 2LP",
+                                "TRAFFIC - ON THE ROAD. 1973 Japan. LP"]),
+          "продажи расходятся -> позиция помечена смешанной", st)
+    check(not wl.lp_count_is_mixed(["A 2LP", "B 2LP"]),
+          "единогласные двойники смешанными не считаются", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)
