@@ -415,6 +415,20 @@ def title_matches(entry, lot_title) -> bool:
     # Проверка: вычесть из заголовка вхождение имени исполнителя и
     # спросить, осталось ли название альбома в остатке. Если в остатке
     # лежит другое содержательное название — это другой альбом.
+    # СЕДЬМОЙ КЛАСС, найден сверкой 31.08.2026. Альбом из ОДНОГО ходового
+    # слова («New» Пола Маккартни, «Live», «Hits») находится в каждом
+    # втором заголовке маркетплейса: «... Silver Vinyl Record New Sealed»
+    # прошло как альбом «New» и дошло до финального списка с прибылью
+    # 2 600 ₽, хотя лот — «McCartney III Imagined», совсем другая
+    # пластинка. Такие слова уже перечислены как шум (_NON_NAME), и
+    # ровно поэтому они не могут нести совпадение сами по себе: требуем,
+    # чтобы слово стояло СРАЗУ за именем исполнителя.
+    if artist and album and len(album) == 1 and album[0] in _NON_NAME:
+        pos = _phrase_pos(hay_body, artist)
+        after = hay_body[pos + len(artist):] if pos >= 0 else []
+        if not after or after[0] != album[0]:
+            return False
+
     if artist and album and album != artist and set(album) <= set(artist):
         rest = _strip_phrase(hay, artist)
         if _phrase_pos(rest, album) < 0:

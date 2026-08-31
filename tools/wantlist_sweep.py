@@ -152,6 +152,43 @@ def search(token, query, countries, limit=50):
     return out
 
 
+# Как продавцы подписывают состояние в описании. Порядок важен: сначала
+# пластинка, потом конверт — для оценки продажи важнее играбельность, а
+# не косметика конверта («Media: VG+ / Sleeve: VG» -> VG+, не VG).
+_GRADE_LABELS = re.compile(
+    r"(?:media|vinyl|record|disc|disque)\s*(?:condition|grade|grading)?\s*[:\-–—]\s*"
+    r"([A-Za-z+\- ]{1,14})", re.I)
+_SLEEVE_LABELS = re.compile(
+    r"(?:sleeve|cover|jacket)\s*(?:condition|grade|grading)?\s*[:\-–—]\s*"
+    r"([A-Za-z+\- ]{1,14})", re.I)
+
+
+def grade_from_labels(text: str):
+    """Грейд из ПОДПИСАННОГО поля описания.
+
+    Общий разбор по всему тексту опасен: описание содержит и грейд
+    конверта, и рекламные «mint condition collection», и названия
+    альбомов. Подписанное поле снимает эту неоднозначность — если
+    продавец написал «Media: VG+», это грейд пластинки, а не эпитет.
+    Конверт берётся только когда пластинка не подписана вовсе.
+    """
+    if not text:
+        return None
+    for rx in (_GRADE_LABELS, _SLEEVE_LABELS):
+        for m in rx.finditer(text):
+            words = m.group(1).split()
+            # Захват может прихватить начало следующего поля («Good
+            # Jacket»), а правило края у голого «Good» тогда не
+            # срабатывает. Поэтому пробуем от полного захвата к первому
+            # слову: «Near Mint» должно остаться двумя словами, а «Good
+            # Jacket» — свернуться до «Good».
+            for n in range(len(words), 0, -1):
+                g = calib.extract_grade(" ".join(words[:n]))
+                if g:
+                    return g
+    return None
+
+
 def item_grade(token, item_id):
     """Грейд из описания продавца. Заголовок его почти никогда не содержит."""
     try:
@@ -166,7 +203,13 @@ def item_grade(token, item_id):
         text = re.sub(r"<[^>]+>", " ", desc)
         text = re.sub(r"\s+", " ", text)
         has_photos = len(d.get("additionalImages") or []) >= 2
-        return calib.extract_grade(text) or calib.extract_grade(d.get("title", "")), has_photos
+        # «Рабочие установки» п.5: сначала ЯВНОЕ поле продавца
+        # («Media: VG+», «Record Grading — NM»), потом общий разбор.
+        # Замерено: заголовок даёт грейд лишь у трети лотов, потому что
+        # состояние живёт в описании, а там оно почти всегда подписано.
+        return (grade_from_labels(text)
+                or calib.extract_grade(text)
+                or calib.extract_grade(d.get("title", ""))), has_photos
     except requests.RequestException:
         return None, False
 
@@ -270,7 +313,8 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
     # это двойники, то есть ошибка касалась каждой четвёртой.
     fmt = "double_lp" if int(entry.get("lp_count") or 1) > 1 else "single_lp"
     landed = rue.compute_landed(lot["price"], dom, fmt, 1, c,
-                                open_shipment_kg=1.5 if in_bundle else None)
+                                open_shipment_kg=1.5 if in_bundle else None,
+                                country=lot.get("country"))
     e = rue.compute_ru_economics(landed, comps, c, use_marginal=in_bundle)
 
     # §4: двойной гейт. Кратность отвечает за вероятность НЕ получить
@@ -279,8 +323,13 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
     # compute_ru_economics: пол назначен на прибыль сделки, а домножать его
     # ещё и на p_sale_90d — тот же двойной счёт, что ловили на грейдах.
     profit = rpm.gross_profit_rub(e.net_ru_rub, e.landed_rub)
-    gate_ok, gate_why = rpm.passes_double_gate(
-        c, margin_ru=e.margin_ru, target_margin=target, expected_profit_rub=profit)
+    # «Рабочие установки» 31.08.2026: гейт целиком, а не только двойной.
+    # Порядок проверок внутри working_gate — от безусловных к денежным,
+    # чтобы причина отказа называла настоящее препятствие.
+    gate_ok, gate_why = rpm.working_gate(
+        c, grade=grade, price_usd=lot["price"], ru_sold_n=entry["sold_n"],
+        p25_rub=entry.get("p25_rub"), p75_rub=entry.get("p75_rub"),
+        margin_ru=e.margin_ru, target_margin=target, expected_profit_rub=profit)
     affordable = e.max_bid_usd is not None and e.max_bid_usd >= lot["price"]
     return {"target": target, "tier": tier, "grade": grade, "ru_price_rub": ru_price,
             "lp_count": int(entry.get("lp_count") or 1),
@@ -470,7 +519,11 @@ def main(argv=None):
               "а не вывод о рынке")
     db.close()
 
-    findings.sort(key=lambda f: -(f[2]["max_bid"] - f[1]["price"]))
+    # ОСНОВНОЙ КРИТЕРИЙ — ЧИСТЫЕ РУБЛИ НА ЛОТ («Рабочие установки» §1).
+    # Прежняя сортировка по запасу до потолка ставки — это опять
+    # кратность, только в профиль: она поднимает наверх дешёвый лот с
+    # большим относительным запасом и топит дорогой с большими деньгами.
+    findings.sort(key=lambda f: -(f[2]["profit_rub"] or 0))
     for e, lot, v, in_bundle in findings:
         flags = wl.risk_flags(e)
         if v.get("manual_review"):

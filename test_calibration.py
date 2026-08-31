@@ -37,7 +37,24 @@ import yaml
 # добавило находок, а измеренный рыночный коэффициент Sealed = 4.25 уже
 # один раз соврал вчетверо внутри сегмента. Трогать без отдельного замера
 # нельзя (ПРАВИЛО 1).
-GRADE_TOKENS = ["VG++", "VG+", "VG-", "NM", "M", "VG", "G+", "G", "Fair", "Poor"]
+# Словесные формы добавлены 31.08.2026 по «Рабочим установкам»: там грейд
+# G/F/P — ЖЁСТКИЙ РЕДЖЕКТ, поэтому нераспознанное «Good» означает покупку
+# лота в состоянии G по полной медиане. Замерено на 532 живых заголовках:
+# словесные формы дают грейд ещё у 21 лота, из них ложных 2 — оба «Good
+# Singin' Good Playin'», где Good это часть НАЗВАНИЯ АЛЬБОМА. Отсюда
+# _GOOD_NEEDS_EDGE ниже.
+#
+# Порядок важен вдвойне: длинные формы раньше коротких, иначе «Very Good»
+# отдаст G вместо VG.
+GRADE_TOKENS = ["VG++", "VG+", "VG-", "NM", "Near Mint",
+                "Very Good Plus", "Very Good ++", "Very Good +", "Very Good",
+                "Good Plus", "Excellent", "M", "VG", "G+", "G",
+                "Good", "Fair", "Poor"]
+
+# Голое «Good» считается грейдом, только если за ним конец строки или
+# не-буква («... PS 539 Good», «Nice Good/VG», «1970 Good +»). Если следом
+# идёт слово — это название альбома, а не состояние.
+_GOOD_NEEDS_EDGE = {"Good"}
 
 
 def extract_grade(actual_condition: str | None):
@@ -64,7 +81,9 @@ def extract_grade(actual_condition: str | None):
         # регистр на однобуквенные токены нельзя: «180 g» — это граммы, а
         # не грейд Good, и «м» встречается в русских описаниях. Поэтому
         # послабление ровно для многобуквенных слов.
-        flags = re.I if len(token) > 2 and token.isalpha() else 0
+        flags = re.I if len(token) > 2 and token.replace(" ", "").isalpha() else 0
+        if token in _GOOD_NEEDS_EDGE:
+            pattern += r"\s*(?:[^A-Za-z\s]|$)"
         if re.search(pattern, segment, flags):
             return token
     return None

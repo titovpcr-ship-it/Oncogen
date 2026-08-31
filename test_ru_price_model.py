@@ -252,6 +252,44 @@ def main():
     check(m.SPREAD_MANUAL_REVIEW >= 2.29,
           "порог не ниже 95-го процентиля замеренного разброса", st)
 
+    # ── «Рабочие установки» 31.08.2026: гейт на оси рублей ──
+    import yaml as _yaml
+    wcfg = _yaml.safe_load(open("ebay_vinyl_sniper_config.yaml", encoding="utf-8"))
+    check(m.rejected_grade(wcfg, "Good"), "грейд Good — жёсткий реджект", st)
+    check(m.rejected_grade(wcfg, "Fair"), "грейд Fair — жёсткий реджект", st)
+    check(not m.rejected_grade(wcfg, "VG+"), "VG+ реджекту не подлежит", st)
+    check(not m.rejected_grade(wcfg, None), "отсутствие грейда — не реджект, а другой путь", st)
+
+    # Потолок цены заменяет наценку к кратности: убыток равен ЦЕНЕ ЛОТА,
+    # а не доле кратности (лот в Fair стоил 0.07x, а не 3.91x).
+    check(m.price_cap_for_unknown_grade(wcfg, grade=None, price_usd=39.99),
+          "неизвестный грейд дороже потолка -> отказ", st)
+    check(m.price_cap_for_unknown_grade(wcfg, grade=None, price_usd=25.0) is None,
+          "неизвестный грейд дешевле потолка -> проходит", st)
+    check(m.price_cap_for_unknown_grade(wcfg, grade="NM", price_usd=250.0) is None,
+          "известный грейд потолком неизвестного не ограничен", st)
+
+    check(m.passes_liquidity(wcfg, 3), "три продажи — не рынок, а совпадение", st)
+    check(m.passes_liquidity(wcfg, 4) is None, "четыре продажи проходят", st)
+    check(m.passes_spread(wcfg, 4667, 17800), "разброс 3.8x не допускается", st)
+    check(m.passes_spread(wcfg, 4000, 5080) is None, "типичный разброс 1.27x проходит", st)
+
+    # Гейт целиком: причина отказа должна называть НАСТОЯЩЕЕ препятствие.
+    ok_w, why_w = m.working_gate(wcfg, grade="Good", price_usd=5.0, ru_sold_n=10,
+                                 p25_rub=4000, p75_rub=5000, margin_ru=9.0,
+                                 target_margin=1.85, profit_rub=9000)
+    check(not ok_w and "реджект" in why_w,
+          "грейд G режет лот, каким бы прибыльным он ни был", st)
+    ok_w, why_w = m.working_gate(wcfg, grade=None, price_usd=39.99, ru_sold_n=10,
+                                 p25_rub=4000, p75_rub=5000, margin_ru=3.0,
+                                 target_margin=1.85, profit_rub=6000)
+    check(not ok_w and "потолка" in why_w,
+          "дорогой лот без грейда режется ценой, а не кратностью", st)
+    ok_w, _ = m.working_gate(wcfg, grade="VG+", price_usd=20.0, ru_sold_n=6,
+                             p25_rub=4000, p75_rub=5000, margin_ru=2.0,
+                             target_margin=1.85, profit_rub=3200)
+    check(ok_w, "кратность 2.0x при прибыли 3 200 ₽ теперь ПРОХОДИТ", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)

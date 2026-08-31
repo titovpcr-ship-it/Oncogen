@@ -41,9 +41,9 @@ GRADE_CANON = {
     "sealed": "Sealed", "mint": "M", "near mint": "NM", "nm": "NM",
     "excellent": "EX", "ex": "EX",
     "very good ++": "VG++", "vg++": "VG++",
-    "very good +": "VG+", "vg+": "VG+",
+    "very good plus": "VG+", "very good +": "VG+", "vg+": "VG+",
     "very good": "VG", "vg": "VG",
-    "good +": "G+", "g+": "G+", "good": "G", "g": "G",
+    "good plus": "G+", "good +": "G+", "g+": "G+", "good": "G", "g": "G",
     "fair": "F", "poor": "P",
 }
 BASE_GRADE = "VG++"
@@ -500,6 +500,76 @@ def requires_manual_review(cfg, price_usd) -> bool:
     без исключений."""
     limit = (cfg.get("ru_market") or {}).get("manual_review_above_usd")
     return bool(limit and price_usd is not None and price_usd > float(limit))
+
+
+# ═══════ «Рабочие установки» 31.08.2026: гейт на оси рублей ═══════
+
+def rejected_grade(cfg, grade) -> bool:
+    """Грейд из чёрного списка (G/F/P) — жёсткий реджект без обсуждения.
+
+    Убыток на таком лоте равен цене лота: пластинка в состоянии Good
+    в Москве не уходит по медиане позиции ни при какой цене покупки."""
+    bad = set((cfg.get("ru_market") or {}).get("reject_grades") or [])
+    return bool(bad) and canon_grade(grade) in bad
+
+
+def price_cap_for_unknown_grade(cfg, *, grade, price_usd) -> str | None:
+    """Причина отказа или None. Заменяет наценку к кратности.
+
+    Незнание состояния — риск ПОТЕРЯТЬ УПЛАЧЕННОЕ, а не недозаработать.
+    Множительная надбавка от этого не защищает: она одинаково душит лот
+    за 900 ₽, где терять нечего, и лот за 9 000 ₽, где терять есть что.
+    Управлять надо ценой лота."""
+    ru = cfg.get("ru_market") or {}
+    cap = ru.get("unknown_grade_max_price_rub")
+    if not cap or canon_grade(grade) or price_usd is None:
+        return None
+    rub = float(price_usd) * float(ru.get("fx_rate_rub_per_usd") or 100.0)
+    if rub > float(cap):
+        return (f"грейд неизвестен, цена лота {rub:.0f} ₽ выше потолка "
+                f"{float(cap):.0f} ₽ для неизвестного состояния")
+    return None
+
+
+def passes_liquidity(cfg, ru_sold_n) -> str | None:
+    """Прокси ликвидности: позиция без N продаж за окно — не рынок,
+    а совпадение."""
+    need = int((cfg.get("ru_market") or {}).get("min_sold_n_for_gate") or 0)
+    if need and int(ru_sold_n or 0) < need:
+        return f"продаж в Москве {int(ru_sold_n or 0)}, нужно от {need}"
+    return None
+
+
+def passes_spread(cfg, p25_rub, p75_rub) -> str | None:
+    """Прокси риска ИЗДАНИЯ: широкий разброс означает, что под одним
+    названием Москва продавала разные вещи."""
+    limit = (cfg.get("ru_market") or {}).get("max_price_spread_for_gate")
+    if not limit:
+        return None
+    r = spread_ratio(p25_rub, p75_rub)
+    if r is not None and r >= float(limit):
+        return (f"разброс цен внутри позиции {r:.1f}x при потолке "
+                f"{float(limit)}x — под одним названием разные издания")
+    return None
+
+
+def working_gate(cfg, *, grade, price_usd, ru_sold_n, p25_rub, p75_rub,
+                 margin_ru, target_margin, profit_rub) -> tuple[bool, str]:
+    """Гейт «Рабочих установок» целиком: (проходит, причина отказа).
+
+    Порядок проверок — от самых дешёвых и безусловных к денежным, чтобы
+    причина отказа называла НАСТОЯЩЕЕ препятствие, а не первое попавшееся.
+    """
+    if rejected_grade(cfg, grade):
+        return False, f"грейд {canon_grade(grade)} — жёсткий реджект"
+    for why in (passes_liquidity(cfg, ru_sold_n),
+                passes_spread(cfg, p25_rub, p75_rub),
+                price_cap_for_unknown_grade(cfg, grade=grade, price_usd=price_usd)):
+        if why:
+            return False, why
+    return passes_double_gate(cfg, margin_ru=margin_ru,
+                              target_margin=target_margin,
+                              expected_profit_rub=profit_rub)
 
 
 def passes_ru_floor(cfg, ru_price_rub) -> bool:

@@ -125,13 +125,41 @@ def estimate_weight(fmt: str, record_count: int, cfg) -> tuple[float, float, boo
     return discs, w["packaging_kg"], True
 
 
+class CargoRateMissing(RuntimeError):
+    """Тариф карго для страны продавца не задан.
+
+    Прогон обязан упасть, а не подставить американскую ставку: 22 $/кг —
+    тариф форвардера в США, и применить его к Японии значит повторить
+    дефект 3 («карго двойника считалось как одинарного») в большем
+    масштабе, но уже незаметно, потому что цифра выглядит правдоподобно.
+    """
+
+
+def cargo_rate_for(cfg, country: str | None) -> float:
+    """Ставка $/кг для страны продавца. Нет ставки — исключение."""
+    fwd = (cfg.get("landed_cost") or {}).get("international_forwarding") or {}
+    by = fwd.get("rate_usd_per_kg_by_country") or {}
+    if country and country in by:
+        rate = by[country]
+        if rate is None:
+            raise CargoRateMissing(
+                f"не задан тариф карго для страны {country}: заполнить "
+                f"landed_cost.international_forwarding."
+                f"rate_usd_per_kg_by_country.{country}. Считать по "
+                f"американской ставке 22 $/кг нельзя — это другая логистика.")
+        return float(rate)
+    ru = cfg.get("ru_market") or {}
+    return float(ru.get("cargo_rate_usd_per_kg", fwd.get("rate_usd_per_kg", 22.0)))
+
+
 def compute_landed(item_usd, dom_ship_usd, fmt, record_count, cfg,
-                   open_shipment_kg: float | None = None) -> LandedCost:
+                   open_shipment_kg: float | None = None,
+                   country: str | None = None) -> LandedCost:
     """P1-6. standalone — лот едет сам по себе; marginal — добавлен в уже
     формируемую отправку (тара уже оплачена, округление уже съедено)."""
     ru = cfg.get("ru_market") or {}
     fwd = cfg["landed_cost"]["international_forwarding"]
-    rate = ru.get("cargo_rate_usd_per_kg", fwd.get("rate_usd_per_kg", 22.0))
+    rate = cargo_rate_for(cfg, country)
     step = fwd.get("round_up_to_kg", 0.5) or 0.5
 
     discs_kg, pack_kg, estimated = estimate_weight(fmt, record_count, cfg)
