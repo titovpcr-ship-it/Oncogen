@@ -232,6 +232,26 @@ def main():
     check(m.gross_profit_rub(5000, 1800) == 3200, "валовая прибыль = net - landed", st)
     check(m.gross_profit_rub(None, 1800) is None, "нет net -> прибыли нет", st)
 
+    # ── сторож разброса внутри позиции (ПРАВИЛО 1 устава) ──
+    # Данные настоящие: Wonderwall Music — три продажи 1734 / 7600 / 28000 ₽,
+    # то есть японский репресс, UK-оригинал и UK mono 1st press. Медиана
+    # 7 600 ₽ не называет цену ни одного из трёх, а лот был четвёртым
+    # объектом — американским прессом ST-3350.
+    check(abs(m.spread_ratio(4667, 17800) - 3.81) < 0.01,
+          "разброс Wonderwall Music = 3.81x", st)
+    check(m.heterogeneous_position(4667, 17800),
+          "позиция с разбросом 3.81x уходит на сверку глазами", st)
+    check(not m.heterogeneous_position(4000, 5080),
+          "типичный разброс 1.27x на сверку НЕ уходит", st)
+    check(not m.heterogeneous_position(None, 17800),
+          "без квартилей сторож молчит, а не выдумывает признак", st)
+    check(not m.heterogeneous_position(0, 17800),
+          "нулевой p25 не роняет деление", st)
+    check(m.spread_ratio(0, 100) is None, "spread_ratio при нулевом p25 -> None", st)
+    # Порог помечает хвост, а не половину рынка: замерено 3% из 837 позиций.
+    check(m.SPREAD_MANUAL_REVIEW >= 2.29,
+          "порог не ниже 95-го процентиля замеренного разброса", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)

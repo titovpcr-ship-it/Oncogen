@@ -247,6 +247,11 @@ def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
             "margin_ru": e.margin_ru, "max_bid": e.max_bid_usd,
             "profit_rub": profit, "gate_why": gate_why if not gate_ok else "",
             "manual_review": rpm.requires_manual_review(c, lot["price"]),
+            # Разброс цен внутри позиции: под одним названием могут лежать
+            # разные товары, и тогда медиана не называет цену ни одного.
+            "spread_ratio": rpm.spread_ratio(entry.get("p25_rub"), entry.get("p75_rub")),
+            "heterogeneous": rpm.heterogeneous_position(
+                entry.get("p25_rub"), entry.get("p75_rub")),
             "ok": affordable and gate_ok}
 
 
@@ -406,6 +411,11 @@ def main(argv=None):
         if v.get("manual_review"):
             flags.insert(0, f"дороже ${cfg['ru_market']['manual_review_above_usd']} — "
                             f"сверка ОБЯЗАТЕЛЬНА до ставки")
+        if v.get("heterogeneous"):
+            flags.insert(0, f"разброс цен внутри позиции {v['spread_ratio']:.1f}x "
+                            f"(типично 1.3x) — под одним названием разные прессы, "
+                            f"медиана НЕ называет цену этого лота; сверка "
+                            f"ОБЯЗАТЕЛЬНА до ставки")
         print(f"  ПРОХОДИТ ${lot['price']:.2f} <= ${v['max_bid']:.2f} "
               f"({v['tier']}, {v['target']}x, грейд {v['grade'] or '?'}, "
               f"прибыль {v['profit_rub']:.0f} ₽, "
@@ -423,7 +433,9 @@ def main(argv=None):
             lines += [f"• {e['artist']} — {e['album']}",
                       f"  ${lot['price']:.2f} при потолке ${v['max_bid']:.2f} "
                       f"({v['target']}x, {v['grade'] or 'грейд ?'})",
-                      f"  Москва {v['ru_price_rub']} ₽, продаж {e['sold_n']}",
+                      f"  Москва {v['ru_price_rub']} ₽, продаж {e['sold_n']}"
+                      + (f" ⚠ разброс {v['spread_ratio']:.1f}x — разные прессы"
+                         if v.get("heterogeneous") else ""),
                       f"  {lot['url']}", ""]
         n.send("\n".join(lines), click_url=findings[0][1]["url"])
         print("отправлено в", n.name)
