@@ -1825,28 +1825,15 @@ def _load_wantlist():
     return _WANTLIST["rows"]
 
 
-_WL_STOP = {"lp", "vinyl", "record", "records", "album", "the", "a", "of", "and"}
-
-
-def _wl_tokens(s):
-    s = re.sub(r"[^\w\s]", " ", (s or "").lower(), flags=re.U)
-    return [t for t in s.split() if t and t not in _WL_STOP]
-
-
-def _wl_match(entry, title_tokens):
-    """И исполнитель, и альбом обязаны присутствовать в заголовке лота.
-    Односложные названия («Jazz», «Bad») требуют точного токена: частичное
-    совпадение по ним бессмысленно и даёт мусор — проверено живьём, когда
-    запрос «Queen Jazz» поймал «Joann Castle, Queen of the Ragtime Piano»."""
-    for field in ("artist", "album"):
-        want = _wl_tokens(entry[field])
-        if not want:
-            continue
-        hits = sum(1 for t in want if t in title_tokens)
-        need = len(want) if len(want) == 1 else max(1, int(len(want) * 0.6 + 0.999))
-        if hits < need:
-            return False
-    return True
+# Сверка «заголовок лота против позиции want-list» живёт в moscow_wantlist —
+# ОДНОЙ реализацией на скрипт и на обход. Разъехавшиеся копии этой проверки
+# уже стоили 35 ложных находок по позиции «Fields — Fields».
+def _wl_match(entry, title):
+    try:
+        import moscow_wantlist as _wl
+        return _wl.title_matches(entry, title)
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def _ru_floor_rub():
@@ -1863,11 +1850,8 @@ def ru_floor_prefilter(title, cfg):
     rows = _load_wantlist()
     if not floor or not rows:
         return True, None
-    toks = set(_wl_tokens(title))
-    if not toks:
-        return False, None
     for e in rows:
-        if _wl_match(e, toks):
+        if _wl_match(e, title):
             return e["median_rub"] >= floor, e
     return False, None
 

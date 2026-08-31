@@ -48,6 +48,13 @@ def main():
     check(len(t1) >= 32, f"тема достаточно длинная ({len(t1)} символов)", state)
     check(t1.startswith("vinyl-"), "тема с узнаваемым префиксом", state)
 
+    # Изоляция от ОКРУЖЕНИЯ, а не только от файла: ensure_topic по замыслу
+    # предпочитает переменную окружения файлу, и когда рабочий .env засорсен
+    # в шелл (а он сорсится при каждом запуске обхода), NTFY_TOPIC виден
+    # тесту и «первый вызов создаёт тему» законно не срабатывает.
+    # Проявлялось как редкий провал, зависящий от способа запуска.
+    import os as _os
+    _saved_topic = _os.environ.pop("NTFY_TOPIC", None)
     with tempfile.TemporaryDirectory() as d:
         env = Path(d) / ".env"
         a, created_a = notify.ensure_topic(path=env)
@@ -61,6 +68,8 @@ def main():
         check(body.count("NTFY_TOPIC=") == 1,
               "повторная запись не плодит вторую тему", state)
         check(oct(env.stat().st_mode)[-3:] == "600", ".env закрыт от чужих глаз", state)
+    if _saved_topic is not None:
+        _os.environ["NTFY_TOPIC"] = _saved_topic
 
     # --- отправка -------------------------------------------------------
     sess = FakeSession()

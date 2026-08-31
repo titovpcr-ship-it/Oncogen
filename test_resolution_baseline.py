@@ -93,6 +93,14 @@ def run_case(cfg, case, idx):
 
 def main():
     cfg = f.load_config()
+    # Этот файл проверяет РЕЗОЛВЕР, а не экономику. Пол по московской цене
+    # («Решения после архива» §2) срабатывает ДО резолва и отсекал бы
+    # половину кейсов, не дав им дойти до проверяемого кода: Blue Mitchell
+    # «Blue's Moods» — честный джаз, которого просто нет в want-list'е.
+    # Поэтому пол здесь снят: иначе тест молча перестал бы проверять то,
+    # ради чего написан.
+    cfg = dict(cfg)
+    cfg["ru_market"] = {**(cfg.get("ru_market") or {}), "min_ru_price_rub": 0}
     failed = 0
     for i, case in enumerate(CASES):
         outcome = run_case(cfg, case, i)

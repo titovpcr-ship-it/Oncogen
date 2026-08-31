@@ -127,6 +127,44 @@ def main():
           "частичное совпадение длинного названия допустимо", st)
     check(not sweep.title_matches(e_pf, "Pink Floyd Animals LP"),
           "другой альбом не проходит даже при совпавшем исполнителе", st)
+    # РЕГРЕСС на класс, стоивший 35 ложных находок за один прогон: у
+    # ОДНОИМЁННОГО альбома исполнитель и альбом — одно слово, и первая
+    # версия проверки вырождалась в один токен. Приезжали «Joseph Fields —
+    # Flower Drum Song» и «Harry Chapin — On The Road To Kingdom Come».
+    self_titled = [
+        ({"artist": "Fields", "album": "Fields"},
+         "Rodgers & Hammerstein In Association With Joseph Fields - Flower Drum Song", False),
+        ({"artist": "Fields", "album": "Fields"}, "COREY HART, Fields Of Fire EMI 1986", False),
+        ({"artist": "Fields", "album": "Fields"}, "ACADEMY ST. MARTIN-IN-THE FIELDS", False),
+        ({"artist": "Fields", "album": "Fields"}, "Fields - Fields 1969 LP USA Uni", True),
+        ({"artist": "Kingdom Come", "album": "Kingdom Come"},
+         "Harry Chapin - On The Road To Kingdom Come", False),
+        ({"artist": "Kingdom Come", "album": "Kingdom Come"},
+         "Kingdom Come - Kingdom Come LP 1988", True),
+        ({"artist": "The Beatles", "album": "The Beatles"},
+         "Various - Songs Of The Beatles Tribute LP", False),
+        ({"artist": "The Beatles", "album": "The Beatles"},
+         "The Beatles - The Beatles (White Album) 2LP Apple", True),
+        ({"artist": "Michael Jackson", "album": "Thriller"},
+         "Thriller Tribute Band - Plays Michael Jackson", False),
+    ]
+    for e, t, exp in self_titled:
+        got = sweep.title_matches(e, t)
+        check(got == exp,
+              f"одноимённые: {e['artist']} vs «{t[:38]}» -> {got}", st)
+
+    # Ведущий шум перед именем допустим — продавцы так пишут постоянно.
+    check(sweep.title_matches({"artist": "Pink Floyd", "album": "The Dark Side Of The Moon"},
+                              "NM! Pink Floyd - Dark Side Of The Moon LP"),
+          "грейд перед именем исполнителя не мешает", st)
+    check(sweep.title_matches({"artist": "Pink Floyd", "album": "The Dark Side Of The Moon"},
+                              "Vintage 1973 Pink Floyd Dark Side Of The Moon"),
+          "год и «vintage» перед именем не мешают", st)
+
+    # Одна реализация на скрипт и на обход — копии уже расходились.
+    check(sweep.title_matches is wl.title_matches,
+          "обход и скрипт используют ОДНУ функцию сверки, а не копии", st)
+
     check(sweep.wrong_format('Pink Floyd Dark Side 7" single'), "7\" отсеивается", st)
     check(sweep.wrong_format("Queen Jazz CD"), "CD отсеивается", st)
     check(not sweep.wrong_format("Queen Jazz LP 1978"), "LP не отсеивается", st)

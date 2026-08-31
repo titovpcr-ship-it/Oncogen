@@ -185,6 +185,91 @@ def load(conn, limit=None, jazz_only=False) -> list[dict]:
     return [dict(zip(cols, r)) for r in cur.fetchall()]
 
 
+# НАЙДЕНО ПЕРВЫМ ЖЕ ПРОГОНОМ: eBay ищет по релевантности, а не по точному
+# совпадению, и по запросу «Queen Jazz lp» отдал «Joann Castle, Queen of the
+# Ragtime Piano». Без сверки заголовка обход производит мусор, а не находки.
+# Поэтому: и исполнитель, и альбом обязаны реально присутствовать в названии
+# лота. Короткие названия («Jazz», «Bad») требуют точного токена — по ним
+# частичное совпадение бессмысленно.
+_STOP = {"lp", "vinyl", "record", "records", "album", "the", "a", "of", "and"}
+# Шум в начале заголовка, который не мешает исполнителю быть «первым»:
+# формат и грейд продавцы регулярно ставят перед именем.
+_LEAD_NOISE = {"nm", "ex", "vg", "vgplus", "mint", "sealed", "new", "used",
+               "og", "orig", "original", "rare", "lot", "2lp", "3lp", "ep",
+               "стерео", "stereo", "mono", "reissue", "re", "vintage", "classic",
+               "promo", "japan", "usa", "uk", "german", "germany", "import"}
+_MIN_HIT_RATIO = 0.6
+# Насколько глубоко в заголовке допустимо начинаться имени исполнителя.
+# Один произвольный ведущий токен допускаем (продавцы любят приписки),
+# больше — нет: на трёх проскакивали «COREY HART, Fields Of Fire» и
+# «Various - Songs Of The Beatles Tribute».
+_ARTIST_MAX_POS = 1
+
+
+def _tokens(s):
+    s = re.sub(r"[^\w\s]", " ", (s or "").lower(), flags=re.U)
+    return [t for t in s.split() if t and t not in _STOP]
+
+
+def _phrase_pos(hay_tokens, want_tokens):
+    """Позиция, с которой want идёт в hay ПОДРЯД. -1, если не идёт."""
+    n = len(want_tokens)
+    for i in range(len(hay_tokens) - n + 1):
+        if hay_tokens[i:i + n] == want_tokens:
+            return i
+    return -1
+
+
+def title_matches(entry, lot_title) -> bool:
+    """И исполнитель, и альбом обязаны реально присутствовать в заголовке.
+
+    ВТОРАЯ ИТЕРАЦИЯ. Первая проверяла только наличие токенов и на полном
+    обходе дала 35 «находок» по позиции «Fields — Fields»: у ОДНОИМЁННОГО
+    альбома исполнитель и альбом — одно слово, проверка вырождалась в один
+    токен, и лоту достаточно было содержать слово «fields» где угодно.
+    Приезжали «Joseph Fields — Flower Drum Song», «Corey Hart, Fields Of
+    Fire», «Academy St. Martin-in-the-Fields».
+
+    Поэтому имя исполнителя обязано идти ПОДРЯД и БЛИЗКО К НАЧАЛУ: на eBay
+    заголовок почти всегда начинается с исполнителя, а вот в чужих
+    названиях нужное слово оказывается в середине. Формат и грейд перед
+    именем допускаются (_LEAD_NOISE).
+    """
+    hay = _tokens(lot_title)
+    if not hay:
+        return False
+    lead = 0
+    while lead < len(hay) and (hay[lead] in _LEAD_NOISE or hay[lead].isdigit()):
+        lead += 1
+    hay_body = hay[lead:]
+    hay_set = set(hay)
+
+    artist = _tokens(entry["artist"])
+    if artist:
+        pos = _phrase_pos(hay_body, artist)
+        if pos < 0 or pos > _ARTIST_MAX_POS:
+            return False
+
+    album = _tokens(entry["album"])
+    if album:
+        hits = sum(1 for t in album if t in hay_set)
+        need = len(album) if len(album) == 1 else max(
+            1, int(len(album) * _MIN_HIT_RATIO + 0.999))
+        if hits < need:
+            return False
+    return True
+
+
+# Форматы, которые в московскую медиану по LP не превращаются.
+_WRONG_FORMAT = re.compile(
+    r"\b(7\"|7 inch|45 ?rpm|single|ep\b|cd\b|cassette|dvd|blu-?ray|reel|"
+    r"shellac|78 ?rpm|box ?set|poster|sleeve only|cover only)\b", re.I)
+
+
+def wrong_format(title) -> bool:
+    return bool(_WRONG_FORMAT.search(title or ""))
+
+
 def ebay_query(entry: dict) -> str:
     """Строка поиска для eBay. Намеренно короткая: длинные запросы с
     подзаголовками и годами на eBay дают ноль результатов чаще, чем

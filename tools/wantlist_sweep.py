@@ -40,6 +40,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import ebay_vinyl_3x_finder as finder          # noqa: E402
 import moscow_wantlist as wl                   # noqa: E402
+title_matches = wl.title_matches
+wrong_format = wl.wrong_format
 import ru_economics as rue                     # noqa: E402
 import ru_market                               # noqa: E402
 import ru_price_model as rpm                   # noqa: E402
@@ -50,46 +52,6 @@ ITEM_URL = "https://api.ebay.com/buy/browse/v1/item/v1|{iid}|0"
 VINYL_CATEGORY = "176985"
 THROTTLE_S = 0.35
 
-
-
-# НАЙДЕНО ПЕРВЫМ ЖЕ ПРОГОНОМ: eBay ищет по релевантности, а не по точному
-# совпадению, и по запросу «Queen Jazz lp» отдал «Joann Castle, Queen of the
-# Ragtime Piano». Без сверки заголовка обход производит мусор, а не находки.
-# Поэтому: и исполнитель, и альбом обязаны реально присутствовать в названии
-# лота. Короткие названия («Jazz», «Bad») требуют точного токена — по ним
-# частичное совпадение бессмысленно.
-_STOP = {"lp", "vinyl", "record", "records", "album", "the", "a", "of", "and"}
-_MIN_HIT_RATIO = 0.6
-
-
-def _tokens(s):
-    s = re.sub(r"[^\w\s]", " ", (s or "").lower(), flags=re.U)
-    return [t for t in s.split() if t and t not in _STOP]
-
-
-def title_matches(entry, lot_title) -> bool:
-    hay = set(_tokens(lot_title))
-    if not hay:
-        return False
-    for field in ("artist", "album"):
-        want = _tokens(entry[field])
-        if not want:
-            continue
-        hits = sum(1 for t in want if t in hay)
-        need = len(want) if len(want) == 1 else max(1, int(len(want) * _MIN_HIT_RATIO + 0.999))
-        if hits < need:
-            return False
-    return True
-
-
-# Форматы, которые в московскую медиану по LP не превращаются.
-_WRONG_FORMAT = re.compile(
-    r"\b(7\"|7 inch|45 ?rpm|single|ep\b|cd\b|cassette|dvd|blu-?ray|reel|"
-    r"shellac|78 ?rpm|box ?set|poster|sleeve only|cover only)\b", re.I)
-
-
-def wrong_format(title) -> bool:
-    return bool(_WRONG_FORMAT.search(title or ""))
 
 
 def ebay_token() -> str:
