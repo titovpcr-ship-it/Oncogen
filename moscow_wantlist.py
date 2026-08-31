@@ -229,6 +229,13 @@ def _tokens(s):
 _SEPARATOR = re.compile(r"\s[-–—:|]\s|\s{2,}")
 
 
+def _split_tail(title):
+    """Часть заголовка ПОСЛЕ первого разделителя — там, где обычно стоит
+    название альбома. Нет разделителя — весь заголовок."""
+    parts = _SEPARATOR.split(title or "", maxsplit=1)
+    return parts[1] if len(parts) > 1 else (title or "")
+
+
 def _split_head(title):
     """Часть заголовка до первого разделителя. Если разделителя нет —
     весь заголовок: тогда проверка ниже просто не сработает, и решает
@@ -310,6 +317,17 @@ def title_matches(entry, lot_title) -> bool:
             1, int(len(album) * _MIN_HIT_RATIO + 0.999))
         if hits < need:
             return False
+        # ЧЕТВЁРТАЯ ИТЕРАЦИЯ. Односложное название проходило, если его слово
+        # стояло где угодно в хвосте: по позиции «King Diamond — Abigail»
+        # приезжал лот «King Diamond - Tells The Tale Of Abigail» — другой
+        # релиз. Настоящее название стоит в начале хвоста, а не в конце
+        # чужой фразы. Флаг риска на этот случай уже был и сработал, но
+        # флаг требует человека, а отсев — нет.
+        if len(album) == 1:
+            tail = _tokens(_split_tail(lot_title))
+            pos = _phrase_pos(tail, album)
+            if pos < 0 or pos > 1:
+                return False
 
     # ОДНОИМЁННЫЙ АЛЬБОМ. Проверка выше для него вырождена: и исполнитель,
     # и название — одно слово, так что «Whitesnake – Live In The Heart Of

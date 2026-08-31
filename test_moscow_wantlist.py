@@ -188,6 +188,33 @@ def main():
     check(not sweep.wrong_format("Queen - Jazz LP 1978 Elektra"),
           "нормальный лот не отсеивается", st)
 
+    # ЧЕТВЁРТАЯ ИТЕРАЦИЯ: односложное НАЗВАНИЕ, стоящее в конце чужой фразы.
+    # По позиции «King Diamond — Abigail» приезжал «King Diamond - Tells The
+    # Tale Of Abigail» — другой релиз. Флаг риска на этот случай уже был и
+    # сработал, но флаг требует человека, а отсев — нет.
+    fourth = [
+        ({"artist": "King Diamond", "album": "Abigail"},
+         "King Diamond - Tells The Tale Of Abigail vinyl LP 2015 Red Colored", False),
+        ({"artist": "King Diamond", "album": "Abigail"},
+         "King Diamond - Abigail LP 1987 Roadrunner", True),
+        ({"artist": "Nirvana", "album": "Bleach Deluxe"},
+         "NIRVANA 1989 BLEACH (2x LP) Deluxe Edition EU  ВИНИЛ НОВЫЙ", True),
+        ({"artist": "Nirvana", "album": "Nevermind"},
+         "пластинка Nirvana – Nevermind 1991 EU", True),
+    ]
+    for e, t, exp in fourth:
+        got = sweep.title_matches(e, t)
+        check(got == exp, f"четвёртая итерация: «{t[:40]}» -> {got}", st)
+
+    # Флаги риска: они не отменяют пороги, а требуют ручной сверки.
+    fl = wl.risk_flags({"artist": "Fields", "album": "Fields", "sold_n": 3})
+    check("односложный исполнитель" in fl and "одноимённый альбом" in fl,
+          "флаги риска ловят односложное имя и одноимённый альбом", st)
+    check(any("мало продаж" in f for f in fl), "тонкая выборка тоже флаг", st)
+    check(wl.risk_flags({"artist": "Pink Floyd", "album": "The Dark Side Of The Moon",
+                         "sold_n": 40}) == [],
+          "надёжная позиция флагов не получает", st)
+
     # Ведущий шум перед именем допустим — продавцы так пишут постоянно.
     check(sweep.title_matches({"artist": "Pink Floyd", "album": "The Dark Side Of The Moon"},
                               "NM! Pink Floyd - Dark Side Of The Moon LP"),

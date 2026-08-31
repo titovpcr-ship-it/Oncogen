@@ -259,15 +259,27 @@ def main(argv=None):
     p.add_argument("--no-inventory", dest="check_inventory", action="store_false",
                    help="не проверять инвентарь продавцов (быстрее, но партии "
                         "считаются по старому узкому критерию)")
-    p.add_argument("--max-sellers", type=int, default=40,
+    p.add_argument("--order", choices=("ceiling", "money"), default="ceiling",
+                   help="ceiling — по потолку ставки (по умолчанию, см. комментарий "
+                        "в коде); money — по обороту позиции")
+    p.add_argument("--max-sellers", type=int, default=120,
                    help="скольким продавцам проверять инвентарь за прогон")
     a = p.parse_args(argv)
 
     cfg = finder.load_config()
     countries = [c.strip().upper() for c in a.countries.split(",") if c.strip()]
     conn = sqlite3.connect(a.db)
-    entries = wl.load(conn, limit=a.top, jazz_only=a.jazz)
+    # НАЙДЕНО ПРОГОНОМ: want-list отсортирован по ДЕНЬГАМ (медиана x число
+    # продаж), и обход брал верх этого списка. Но деньги тянут наверх
+    # массовые дешёвые альбомы, а двойной гейт §4 пропускает дорогие —
+    # порядок работал против гейта. На топ-150 по деньгам находок ноль,
+    # а на топ-30 по ПОТОЛКУ СТАВКИ — 64 лота под потолком.
+    # Поэтому по умолчанию сортируем по потолку.
+    entries = wl.load(conn, jazz_only=a.jazz)
     conn.close()
+    if a.order == "ceiling":
+        entries.sort(key=lambda e: -(wl.max_bid_usd(e, cfg, target_margin=2.0) or 0))
+    entries = entries[:a.top]
     if not entries:
         raise SystemExit("want-list пуст — сначала python3 moscow_wantlist.py")
 
@@ -311,8 +323,18 @@ def main(argv=None):
     if a.check_inventory and candidates_for_bundle:
         fillers = _filler_index(cfg)
         checked = 0
-        for seller, hits in sorted(candidates_for_bundle.items(),
-                                   key=lambda kv: -len(kv[1])):
+        # НАЙДЕНО ПРОГОНОМ: сортировка по ЧИСЛУ попаданий возвращала старое
+        # поведение с чёрного хода. По новому критерию хватает одного
+        # попадания, значит почти у всех продавцов их ровно одно, и они
+        # оказывались в конце очереди — до них не доходил лимит проверок.
+        # Лоты этих продавцов считались одиночными и отсеивались, хотя в
+        # партии проходили (Pink Floyd — Piper: ранг 20, в партии проходит,
+        # одиночно нет). Сортируем по ЗАПАСУ до потолка: сначала те, у кого
+        # есть что покупать.
+        def _headroom(kv):
+            return -max((ceil - lot["price"]) for _, lot, ceil in kv[1])
+
+        for seller, hits in sorted(candidates_for_bundle.items(), key=_headroom):
             if checked >= a.max_sellers:
                 break
             checked += 1
