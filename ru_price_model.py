@@ -293,7 +293,8 @@ def estimate(conn, cfg, *, artist=None, album=None, title_like=None,
 
 def contour_for_listing(conn, cfg, *, discogs_title, grade, landed,
                         world_press_price, world_album_median,
-                        title_for_markers=None, coeffs=None) -> dict:
+                        title_for_markers=None, coeffs=None,
+                        has_photos=False, use_marginal=False) -> dict:
     """Минимальный рабочий контур: московская цена -> margin_ru -> потолок ставки.
 
     Возвращает плоский dict для строки CSV и для пуша. Никогда не кидает
@@ -307,7 +308,8 @@ def contour_for_listing(conn, cfg, *, discogs_title, grade, landed,
     import meshok_archive as ma
 
     out = {"margin_ru": None, "ru_expected_price_rub": None, "ru_sold_n": 0,
-           "ru_max_bid_usd": None, "ru_confidence": "none", "ru_notes": ""}
+           "ru_max_bid_usd": None, "ru_confidence": "none",
+           "ru_margin_target": None, "ru_margin_tier": None, "ru_notes": ""}
     try:
         artist, album = ma.parse_artist_album(discogs_title or "")
         if not artist:
@@ -327,7 +329,15 @@ def contour_for_listing(conn, cfg, *, discogs_title, grade, landed,
             ru_price_source="meshok_sold" if est.ru_press_price_rub else "none",
             ru_expected_price_rub=est.ru_press_price_rub,
             ru_confidence=est.confidence)
-        e = rue.compute_ru_economics(landed, comps, cfg, use_marginal=False)
+        # §4: порог зависит от ИЗМЕРЕННОГО риска состояния, а не от одного
+        # числа на все случаи. Подменяем цель в копии конфига, чтобы
+        # _max_bid считал потолок по нужному уровню.
+        target, tier = margin_target_for(
+            cfg, grade=grade, ru_sold_n=comps.ru_sold_n, has_photos=has_photos)
+        cfg_tier = dict(cfg)
+        cfg_tier["ru_market"] = {**(cfg.get("ru_market") or {}),
+                                 "min_margin_ru_pass": target}
+        e = rue.compute_ru_economics(landed, comps, cfg_tier, use_marginal=use_marginal)
 
         out.update({
             "margin_ru": e.margin_ru,
@@ -343,6 +353,8 @@ def contour_for_listing(conn, cfg, *, discogs_title, grade, landed,
             "press_multiplier": est.press_multiplier,
             "beta_used": est.beta_used,
             "ru_confidence": est.confidence,
+            "ru_margin_target": target,
+            "ru_margin_tier": tier,
             "ru_notes": "; ".join(est.notes + e.notes),
         })
     except Exception as exc:            # noqa: BLE001 — см. докстринг
@@ -361,3 +373,48 @@ def cap_verdict_on_zero_sales(verdict: str, ru_sold_n: int, cfg) -> tuple[str, s
         return cap, (f"в Москве за окно архива не продано ни одного — "
                      f"вердикт ограничен {cap}")
     return verdict, None
+
+
+# ───────────────────── §4: порог кратности по измеренному риску ─────────────────────
+
+def margin_target_for(cfg, *, grade=None, ru_sold_n=0, has_photos=False) -> tuple[float, str]:
+    """Целевая кратность и имя уровня.
+
+    Правило 3x было прокси на риск, пока риск не был измерен. Теперь он
+    измерен, и это риск СОСТОЯНИЯ: разброс медиан по грейдам 0.38…4.25,
+    то есть 11x — самая большая величина во всём отчёте по рынку.
+    Запечатанная пластинка не может приехать хуже описания: главный риск
+    модели у неё равен нулю, и держать для неё ту же подушку, что для
+    безымянного G+, бессмысленно. И наоборот — для лота без грейда 3x мало.
+
+    Это не снижение планки, а перенос строгости туда, где риск есть.
+    """
+    ru = cfg.get("ru_market") or {}
+    tiers = ru.get("margin_tiers") or []
+    if not tiers:
+        return float(ru.get("min_margin_ru_pass", 2.0)), "default"
+
+    g = canon_grade(grade)
+    for t in tiers:
+        grades = t.get("grades")
+        if grades is None:              # последний уровень — ловушка для всего
+            continue
+        if g not in grades:
+            continue
+        if ru_sold_n < int(t.get("min_sold_n", 0)):
+            continue
+        if t.get("requires_photos") and not has_photos:
+            continue
+        return float(t["margin"]), t.get("name", "tier")
+
+    fallback = next((t for t in tiers if t.get("grades") is None), tiers[-1])
+    return float(fallback["margin"]), fallback.get("name", "fallback")
+
+
+def passes_ru_floor(cfg, ru_price_rub) -> bool:
+    """§2: лот, который в Москве стоит меньше пола, не окупается ни при
+    какой цене покупки. Проверяется ДО дорогих вызовов Discogs."""
+    floor = float(((cfg.get("ru_market") or {}).get("min_ru_price_rub") or 0))
+    if not floor:
+        return True
+    return bool(ru_price_rub) and float(ru_price_rub) >= floor

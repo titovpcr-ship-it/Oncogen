@@ -1,0 +1,167 @@
+"""Оффлайновые тесты разворота пайплайна («Решения после архива» §2–§5).
+
+Проверяются: построение want-list'а, пол по московской цене, три уровня
+порога и сверка заголовка при обходе eBay. Сети не требуют.
+
+Запуск: python3 test_moscow_wantlist.py
+"""
+import sqlite3
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "tools"))
+
+import meshok_archive as ma
+import moscow_wantlist as wl
+import ru_price_model as rpm
+import wantlist_sweep as sweep
+
+CFG = {"ru_market": {
+    "min_ru_price_rub": 3500,
+    "min_margin_ru_pass": 2.0,
+    "margin_tiers": [
+        {"name": "sealed_nm_liquid", "grades": ["Sealed", "M", "NM"],
+         "min_sold_n": 5, "margin": 2.0},
+        {"name": "ex_vgplus_with_photos", "grades": ["EX", "VG++", "VG+"],
+         "min_sold_n": 3, "requires_photos": True, "margin": 2.5},
+        {"name": "unknown_or_thin", "margin": 3.5},
+    ]}}
+
+
+def mkdb(rows):
+    conn = sqlite3.connect(":memory:")
+    ma.init_db(conn)
+    ins = ("INSERT INTO meshok_sold (lot_id,title,artist,album,price_rub,end_date,"
+           "end_day,lot_type,bids_count,sold_quantity,vinyl_grade,category_id,fetched_at)"
+           " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
+    for i, (title, artist, album, price, grade, day, cat) in enumerate(rows):
+        conn.execute(ins, (i + 1, title, artist, album, price, day + "T12:00:00Z",
+                           day, "fixedPrice", 0, 1, grade, cat, "now"))
+    conn.commit()
+    return conn
+
+
+def check(cond, msg, st):
+    print(("OK   " if cond else "FAIL ") + msg)
+    if not cond:
+        st["failed"] += 1
+
+
+def main():
+    st = {"failed": 0}
+
+    # ---------- нормализация склеивает дробящиеся имена ----------
+    check(wl.normalize("The Miles Davis Quintet") == wl.normalize("Miles Davis"),
+          "«The Miles Davis Quintet» и «Miles Davis» — один ключ", st)
+    check(wl.normalize("Steamin'  With The Miles Davis Quintet")
+          == wl.normalize("Steamin With Miles Davis"),
+          "апострофы и лишние пробелы не создают второй ключ", st)
+    check(wl.normalize("A Love Supreme") != wl.normalize("Ascension"),
+          "разные альбомы не склеиваются", st)
+
+    # ---------- построение и фильтры ----------
+    rows = (
+        # проходит: 4 продажи, медиана 5000
+        [("Herbie Hancock – Head Hunters USA", "Herbie Hancock", "Head Hunters",
+          p, "Near Mint", "2026-05-0%d" % (i + 1), 2228)
+         for i, p in enumerate([4000, 5000, 5000, 9000])] +
+        # не проходит по цене: медиана 1000
+        [("Мелодия – Джаз 65", "Мелодия", "Джаз 65", 1000, None,
+          "2026-05-0%d" % (i + 1), 2228) for i in range(5)] +
+        # не проходит по ликвидности: 2 продажи
+        [("Rare Thing – Only Twice", "Rare Thing", "Only Twice", 9000, "EX",
+          "2026-06-0%d" % (i + 1), 2228) for i in range(2)] +
+        # рок: дороже и ликвиднее — должен встать выше джаза по деньгам
+        [("Pink Floyd – The Wall", "Pink Floyd", "The Wall", 4000, "Near Mint",
+          "2026-07-%02d" % (i + 1), 13283) for i in range(20)]
+    )
+    conn = mkdb(rows)
+    entries = wl.build(conn, min_sold_n=3, min_median_rub=3500)
+    names = [(e["artist"], e["album"]) for e in entries]
+    check(("Herbie Hancock", "Head Hunters") in names, "ликвидная дорогая позиция вошла", st)
+    check(("Мелодия", "Джаз 65") not in names, "дешёвая позиция отсеяна полом", st)
+    check(("Rare Thing", "Only Twice") not in names,
+          "дорогая, но с двумя продажами — отсеяна по ликвидности", st)
+
+    # ---------- ранжирование по ДЕНЬГАМ, а не по цене ----------
+    check(entries[0]["artist"] == "Pink Floyd",
+          "выше стоит позиция с бОльшим оборотом, а не с бОльшей ценой", st)
+    hh = next(e for e in entries if e["artist"] == "Herbie Hancock")
+    check(hh["median_rub"] > entries[0]["median_rub"],
+          "при этом её медиана НИЖЕ — значит сортировка точно не по цене", st)
+    check(entries[0]["money_rub"] == entries[0]["median_rub"] * entries[0]["sold_n"],
+          "оборот = медиана x число продаж", st)
+
+    # ---------- джазовый флаг по большинству ----------
+    check(hh["is_jazz"] == 1, "джазовая позиция помечена", st)
+    check(entries[0]["is_jazz"] == 0, "рок не помечен джазом", st)
+    mixed = mkdb([("X – Y", "X", "Y", 5000, None, "2026-05-01", 2228)] +
+                 [("X – Y", "X", "Y", 5000, None, "2026-05-0%d" % i, 13283)
+                  for i in range(2, 5)])
+    e_mixed = wl.build(mixed, min_sold_n=3, min_median_rub=3500)[0]
+    check(e_mixed["is_jazz"] == 0,
+          "одна продажа в джазовом разделе не делает позицию джазовой", st)
+
+    # ---------- хранение и чтение ----------
+    n = wl.store(conn, entries)
+    check(n == len(entries), "want-list записан в БД", st)
+    loaded = wl.load(conn)
+    check([l["money_rub"] for l in loaded] == sorted(
+        [l["money_rub"] for l in loaded], reverse=True),
+        "из БД читается уже отсортированным по деньгам", st)
+
+    # ---------- запрос к eBay ----------
+    q = wl.ebay_query({"artist": "Pink Floyd", "album": "The Wall"})
+    check(q == "Pink Floyd The Wall lp", "запрос короткий и без лишнего", st)
+
+    # ---------- сверка заголовка (§3, поймано живьём) ----------
+    e_queen = {"artist": "Queen", "album": "Jazz"}
+    check(not sweep.title_matches(e_queen, "Joann Castle, Queen of the Ragtime Piano LP"),
+          "«Queen of the Ragtime Piano» не выдаётся за Queen — Jazz", st)
+    check(sweep.title_matches(e_queen, "QUEEN - Jazz LP 1978 Elektra"),
+          "настоящий Queen — Jazz проходит", st)
+    check(not sweep.title_matches(e_queen, "Queen News Of The World LP"),
+          "другой альбом того же исполнителя не проходит", st)
+    e_pf = {"artist": "Pink Floyd", "album": "The Dark Side Of The Moon"}
+    check(sweep.title_matches(e_pf, "Pink Floyd Dark Side Of The Moon LP Harvest"),
+          "частичное совпадение длинного названия допустимо", st)
+    check(not sweep.title_matches(e_pf, "Pink Floyd Animals LP"),
+          "другой альбом не проходит даже при совпавшем исполнителе", st)
+    check(sweep.wrong_format('Pink Floyd Dark Side 7" single'), "7\" отсеивается", st)
+    check(sweep.wrong_format("Queen Jazz CD"), "CD отсеивается", st)
+    check(not sweep.wrong_format("Queen Jazz LP 1978"), "LP не отсеивается", st)
+
+    # ---------- §4: три уровня порога ----------
+    cases = [
+        ("Sealed", 8, False, 2.0, "запечатанное с ликвидностью -> 2.0x"),
+        ("NM", 8, False, 2.0, "NM с ликвидностью -> 2.0x"),
+        ("NM", 2, False, 3.5, "NM, но продаж мало -> 3.5x"),
+        ("EX", 5, True, 2.5, "EX с фото -> 2.5x"),
+        ("EX", 5, False, 3.5, "EX без фото -> 3.5x"),
+        (None, 20, True, 3.5, "грейда нет -> 3.5x, сколько бы ни было продаж"),
+        ("G", 20, True, 3.5, "плохой грейд -> 3.5x"),
+    ]
+    for grade, n_sold, photos, expect, msg in cases:
+        got, _ = rpm.margin_target_for(CFG, grade=grade, ru_sold_n=n_sold,
+                                       has_photos=photos)
+        check(got == expect, f"{msg} (получено {got}x)", st)
+
+    # Порог для запечатанного обязан быть МЯГЧЕ, чем для безымянного —
+    # в этом вся мысль §4.
+    sealed, _ = rpm.margin_target_for(CFG, grade="Sealed", ru_sold_n=9)
+    unknown, _ = rpm.margin_target_for(CFG, grade=None, ru_sold_n=9)
+    check(sealed < unknown, "риск состояния перенесён в порог, а не размазан", st)
+
+    # ---------- §2: пол ----------
+    check(rpm.passes_ru_floor(CFG, 3500), "ровно пол — проходит", st)
+    check(not rpm.passes_ru_floor(CFG, 3499), "на рубль ниже — не проходит", st)
+    check(not rpm.passes_ru_floor(CFG, None), "нет цены — не проходит", st)
+    check(rpm.passes_ru_floor({"ru_market": {}}, 1), "без пола в конфиге пропускаем всё", st)
+
+    print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
+    if st["failed"]:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()

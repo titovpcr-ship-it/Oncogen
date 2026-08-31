@@ -1,0 +1,301 @@
+#!/usr/bin/env python3
+"""Ежедневный обход московского want-list по eBay («Решения после архива» §3).
+
+РАЗВЁРНУТЫЙ ПАЙПЛАЙН. Раньше: сканируем eBay -> спрашиваем, сколько это
+стоит в Москве. Это перебор безграничной стороны в надежде попасть в
+дефицитную; 385 проверенных лотов и ноль попаданий — исход закономерный.
+
+Здесь: берём перечисленную дефицитную сторону (`moscow_wantlist`) и идём
+искать её на eBay. Никакого сканирования 30 лейблов вслепую.
+
+Две стадии, чтобы не жечь запросы:
+  1. дешёвый поиск по каждой позиции, отсев по САМОМУ ШИРОКОМУ потолку (2x);
+  2. только у выживших — детальный запрос за грейдом из описания, и уже по
+     нему выбирается уровень порога (§4).
+
+Партия — правило, а не опция (§5). Кандидаты группируются по продавцу;
+у кого набралось `min_lots_per_seller`, тот считается по ПРЕДЕЛЬНОМУ
+landed (доставка по США амортизирована), остальные — по одиночному, и
+почти всегда отсеиваются. Это правильный исход, а не потеря.
+
+Запуск:
+    python3 tools/wantlist_sweep.py --top 100
+    python3 tools/wantlist_sweep.py --top 300 --countries US,JP --push
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+import os
+import re
+import sqlite3
+import sys
+import time
+from collections import defaultdict
+from pathlib import Path
+
+import requests
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+import ebay_vinyl_3x_finder as finder          # noqa: E402
+import moscow_wantlist as wl                   # noqa: E402
+import ru_economics as rue                     # noqa: E402
+import ru_market                               # noqa: E402
+import ru_price_model as rpm                   # noqa: E402
+import test_calibration as calib               # noqa: E402
+
+SEARCH_URL = "https://api.ebay.com/buy/browse/v1/item_summary/search"
+ITEM_URL = "https://api.ebay.com/buy/browse/v1/item/v1|{iid}|0"
+VINYL_CATEGORY = "176985"
+THROTTLE_S = 0.35
+
+
+
+# НАЙДЕНО ПЕРВЫМ ЖЕ ПРОГОНОМ: eBay ищет по релевантности, а не по точному
+# совпадению, и по запросу «Queen Jazz lp» отдал «Joann Castle, Queen of the
+# Ragtime Piano». Без сверки заголовка обход производит мусор, а не находки.
+# Поэтому: и исполнитель, и альбом обязаны реально присутствовать в названии
+# лота. Короткие названия («Jazz», «Bad») требуют точного токена — по ним
+# частичное совпадение бессмысленно.
+_STOP = {"lp", "vinyl", "record", "records", "album", "the", "a", "of", "and"}
+_MIN_HIT_RATIO = 0.6
+
+
+def _tokens(s):
+    s = re.sub(r"[^\w\s]", " ", (s or "").lower(), flags=re.U)
+    return [t for t in s.split() if t and t not in _STOP]
+
+
+def title_matches(entry, lot_title) -> bool:
+    hay = set(_tokens(lot_title))
+    if not hay:
+        return False
+    for field in ("artist", "album"):
+        want = _tokens(entry[field])
+        if not want:
+            continue
+        hits = sum(1 for t in want if t in hay)
+        need = len(want) if len(want) == 1 else max(1, int(len(want) * _MIN_HIT_RATIO + 0.999))
+        if hits < need:
+            return False
+    return True
+
+
+# Форматы, которые в московскую медиану по LP не превращаются.
+_WRONG_FORMAT = re.compile(
+    r"\b(7\"|7 inch|45 ?rpm|single|ep\b|cd\b|cassette|dvd|blu-?ray|reel|"
+    r"shellac|78 ?rpm|box ?set|poster|sleeve only|cover only)\b", re.I)
+
+
+def wrong_format(title) -> bool:
+    return bool(_WRONG_FORMAT.search(title or ""))
+
+
+def ebay_token() -> str:
+    cid = os.environ.get("EBAY_CLIENT_ID")
+    secret = os.environ.get("EBAY_CLIENT_SECRET")
+    if not cid or not secret:
+        env = {}
+        p = Path(__file__).resolve().parent.parent / ".env"
+        if p.exists():
+            for line in p.read_text(encoding="utf-8").splitlines():
+                if "=" in line and not line.startswith("#"):
+                    k, v = line.split("=", 1)
+                    env[k.strip()] = v.strip()
+        cid, secret = env.get("EBAY_CLIENT_ID"), env.get("EBAY_CLIENT_SECRET")
+    if not cid or not secret:
+        raise SystemExit("нет EBAY_CLIENT_ID / EBAY_CLIENT_SECRET (в окружении или .env)")
+    b = base64.b64encode(f"{cid}:{secret}".encode()).decode()
+    r = requests.post("https://api.ebay.com/identity/v1/oauth2/token",
+                      headers={"Authorization": f"Basic {b}",
+                               "Content-Type": "application/x-www-form-urlencoded"},
+                      data={"grant_type": "client_credentials",
+                            "scope": "https://api.ebay.com/oauth/api_scope"}, timeout=30)
+    r.raise_for_status()
+    return r.json()["access_token"]
+
+
+def search(token, query, countries, limit=50):
+    out = []
+    for cc in countries:
+        try:
+            r = requests.get(SEARCH_URL,
+                headers={"Authorization": f"Bearer {token}",
+                         "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"},
+                params={"q": query, "category_ids": VINYL_CATEGORY, "limit": limit,
+                        "sort": "price",
+                        "filter": ("buyingOptions:{AUCTION|FIXED_PRICE},"
+                                   f"itemLocationCountry:{cc}")},
+                timeout=40)
+            if r.status_code != 200:
+                continue
+            for it in (r.json().get("itemSummaries") or []):
+                if not it.get("price"):
+                    continue
+                ship = (it.get("shippingOptions") or [{}])[0]
+                out.append({
+                    "item_id": it["itemId"].split("|")[1] if "|" in it["itemId"] else it["itemId"],
+                    "title": it.get("title", ""),
+                    "price": float(it["price"]["value"]),
+                    "shipping": float((ship.get("shippingCost") or {}).get("value") or 0),
+                    "extra_ship": float((ship.get("additionalShippingCostPerUnit") or {})
+                                        .get("value") or 0),
+                    "seller": (it.get("seller") or {}).get("username"),
+                    "country": cc,
+                    "url": (it.get("itemWebUrl") or "").split("?")[0],
+                    "end": it.get("itemEndDate"),
+                    "bids": it.get("bidCount"),
+                })
+        except requests.RequestException:
+            continue
+        time.sleep(THROTTLE_S)
+    return out
+
+
+def item_grade(token, item_id):
+    """Грейд из описания продавца. Заголовок его почти никогда не содержит."""
+    try:
+        r = requests.get(ITEM_URL.format(iid=item_id),
+                         headers={"Authorization": f"Bearer {token}",
+                                  "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}, timeout=30)
+        if r.status_code != 200:
+            return None, False
+        d = r.json()
+        desc = re.sub(r"<style.*?</style>", " ", d.get("description") or "",
+                      flags=re.S | re.I)
+        text = re.sub(r"<[^>]+>", " ", desc)
+        text = re.sub(r"\s+", " ", text)
+        has_photos = len(d.get("additionalImages") or []) >= 2
+        return calib.extract_grade(text) or calib.extract_grade(d.get("title", "")), has_photos
+    except requests.RequestException:
+        return None, False
+
+
+def evaluate(entry, lot, cfg, *, in_bundle, grade=None, has_photos=False):
+    """Вердикт по одному лоту: потолок ставки против его цены."""
+    target, tier = rpm.margin_target_for(cfg, grade=grade,
+                                         ru_sold_n=entry["sold_n"],
+                                         has_photos=has_photos)
+    coeffs = None
+    ru_price = entry["median_rub"]
+    if grade:
+        # Медиана want-list'а — по всем грейдам сразу. Приводим её к грейду
+        # конкретного лота, иначе Sealed и G оцениваются одинаково.
+        try:
+            conn = sqlite3.connect(wl.DB_PATH)
+            coeffs = rpm.grade_coefficients(conn, jazz_only=bool(entry["is_jazz"]))
+            conn.close()
+            k = coeffs.get(rpm.canon_grade(grade))
+            if k:
+                ru_price = int(entry["median_rub"] * k)
+        except Exception:                       # noqa: BLE001
+            pass
+
+    c = dict(cfg)
+    c["ru_market"] = {**cfg["ru_market"], "min_margin_ru_pass": target,
+                      "illiquid_requires_3x": {"enabled": False}}
+    comps = ru_market.RuComps(
+        ru_supply_count=0, ru_sold_median_rub=entry["median_rub"],
+        ru_sold_n=entry["sold_n"], ru_price_source="meshok_sold",
+        ru_expected_price_rub=ru_price, ru_confidence="medium")
+    dom = lot["extra_ship"] if in_bundle else lot["shipping"]
+    landed = rue.compute_landed(lot["price"], dom, "single_lp", 1, c,
+                                open_shipment_kg=1.5 if in_bundle else None)
+    e = rue.compute_ru_economics(landed, comps, c, use_marginal=in_bundle)
+    return {"target": target, "tier": tier, "grade": grade, "ru_price_rub": ru_price,
+            "landed": landed.marginal_usd if in_bundle else landed.standalone_usd,
+            "margin_ru": e.margin_ru, "max_bid": e.max_bid_usd,
+            "ok": e.max_bid_usd is not None and e.max_bid_usd >= lot["price"]}
+
+
+def main(argv=None):
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--top", type=int, default=100, help="сколько позиций обойти")
+    p.add_argument("--countries", default="US")
+    p.add_argument("--jazz", action="store_true")
+    p.add_argument("--db", default=wl.DB_PATH)
+    p.add_argument("--push", action="store_true")
+    p.add_argument("--max-details", type=int, default=60,
+                   help="потолок детальных запросов за прогон")
+    a = p.parse_args(argv)
+
+    cfg = finder.load_config()
+    countries = [c.strip().upper() for c in a.countries.split(",") if c.strip()]
+    conn = sqlite3.connect(a.db)
+    entries = wl.load(conn, limit=a.top, jazz_only=a.jazz)
+    conn.close()
+    if not entries:
+        raise SystemExit("want-list пуст — сначала python3 moscow_wantlist.py")
+
+    token = ebay_token()
+    print(f"обход {len(entries)} позиций, страны {','.join(countries)}")
+
+    # Стадия 1: широкий отсев по самому мягкому потолку.
+    survivors = []
+    for i, e in enumerate(entries, 1):
+        ceiling = wl.max_bid_usd(e, cfg, target_margin=2.0) or 0
+        if ceiling <= 0:
+            continue
+        for lot in search(token, wl.ebay_query(e), countries):
+            if lot["price"] > ceiling:
+                continue
+            if not title_matches(e, lot["title"]) or wrong_format(lot["title"]):
+                continue
+            survivors.append((e, lot, ceiling))
+        if i % 25 == 0:
+            print(f"  {i}/{len(entries)} … кандидатов {len(survivors)}")
+    print(f"стадия 1: {len(survivors)} кандидатов дешевле потолка 2x")
+
+    # §5: партия — правило. Группируем по продавцу.
+    by_seller = defaultdict(list)
+    for e, lot, ceil in survivors:
+        by_seller[lot["seller"]].append((e, lot, ceil))
+    min_bundle = int(((cfg.get("ru_market") or {}).get("bundle") or {})
+                     .get("min_lots_per_seller", 5))
+    bundles = {s: v for s, v in by_seller.items() if len(v) >= min_bundle}
+    print(f"продавцов с партией (>={min_bundle} лотов): {len(bundles)} "
+          f"из {len(by_seller)}")
+
+    # Стадия 2: грейд из описания только у выживших, с потолком запросов.
+    findings, details = [], 0
+    for seller, lots in sorted(by_seller.items(), key=lambda kv: -len(kv[1])):
+        in_bundle = len(lots) >= min_bundle
+        for e, lot, ceil in lots:
+            grade, has_photos = (None, False)
+            if details < a.max_details:
+                grade, has_photos = item_grade(token, lot["item_id"])
+                details += 1
+                time.sleep(THROTTLE_S)
+            v = evaluate(e, lot, cfg, in_bundle=in_bundle, grade=grade,
+                         has_photos=has_photos)
+            if v["ok"]:
+                findings.append((e, lot, v, in_bundle))
+    print(f"стадия 2: детальных запросов {details}, проходных лотов {len(findings)}")
+
+    findings.sort(key=lambda f: -(f[2]["max_bid"] - f[1]["price"]))
+    for e, lot, v, in_bundle in findings:
+        print(f"  ПРОХОДИТ ${lot['price']:.2f} <= ${v['max_bid']:.2f} "
+              f"({v['tier']}, {v['target']}x, грейд {v['grade'] or '?'}, "
+              f"{'партия' if in_bundle else 'одиночно'}) "
+              f"| {e['artist']} — {e['album']} | Москва {v['ru_price_rub']} ₽\n"
+              f"    {lot['url']}")
+
+    if a.push and findings:
+        import notify
+        n = notify.Notifier()
+        lines = [f"Обход want-list: {len(findings)} проходных из "
+                 f"{len(survivors)} кандидатов", ""]
+        for e, lot, v, in_bundle in findings[:10]:
+            lines += [f"• {e['artist']} — {e['album']}",
+                      f"  ${lot['price']:.2f} при потолке ${v['max_bid']:.2f} "
+                      f"({v['target']}x, {v['grade'] or 'грейд ?'})",
+                      f"  Москва {v['ru_price_rub']} ₽, продаж {e['sold_n']}",
+                      f"  {lot['url']}", ""]
+        n.send("\n".join(lines), click_url=findings[0][1]["url"])
+        print("отправлено в", n.name)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

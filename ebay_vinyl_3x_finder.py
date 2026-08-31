@@ -1125,7 +1125,25 @@ def titles_overlap(discogs_title, ebay_title):
 # трактуем ПУСТОЙ genre как "не джаз" — это отсутствие метаданных у
 # релиза, а не сигнал жанрового несовпадения (рискованно отклонять на
 # пустом месте).
-def release_genre_looks_non_jazz(candidate):
+def release_genre_looks_non_jazz(candidate, cfg=None):
+    """Жанровый отсев. ВЫКЛЮЧЕН ПО УМОЛЧАНИЮ с 31.08.2026.
+
+    Он ставился, когда охват задавался списком джазовых лейблов и жанр был
+    единственной защитой от «чужой» пластинки, поймавшей джазовый catno.
+    Теперь релевантность задаёт want-list (см. ru_floor_prefilter): лот
+    обязан совпасть с конкретной позицией «исполнитель + альбом», за
+    которую Москва платит. Это фильтр строже жанрового.
+
+    А оставлять жанровый поверх него стало прямо вредно: в want-list'е
+    35 джазовых позиций из 837, верх занимают Pink Floyd, Michael Jackson,
+    Queen. Жанровый отсев резал бы весь разворот пайплайна («Решения после
+    архива» §1.2, §3, §10) — проверено живьём: Dark Side Of The Moon
+    уходил в no_release.
+
+    Включается обратно флагом discogs_matching.restrict_to_jazz_genre.
+    """
+    if not (cfg or {}).get("discogs_matching", {}).get("restrict_to_jazz_genre", False):
+        return False
     genres = candidate.get("genre") or []
     if not genres:
         return False
@@ -1446,7 +1464,7 @@ def discogs_resolve_release(item, cfg):
     # см. ТЗ п.1.5 про экономию rate limit. Пустой/отсутствующий genre не
     # отклоняем — это отсутствие данных, не сигнал "не джаз" (см.
     # release_genre_looks_non_jazz).
-    if release_genre_looks_non_jazz(top):
+    if release_genre_looks_non_jazz(top, cfg):
         return None
 
     # НАЙДЕНО 26.08.2026 (ручной разбор пользователя, "Coltrane Jazz" 180g
@@ -1771,6 +1789,89 @@ def discogs_ensemble_stats(candidates):
 
 
 
+
+# ────────── §2 «Решений после архива»: пол по московской цене ──────────
+# Лот, который в Москве стоит меньше min_ru_price_rub, не окупается НИ ПРИ
+# КАКОЙ цене покупки: постоянные издержки на пластинку в партии — 1 210 ₽
+# (карго 660 + доставка с упаковкой 550) против медианы джаза 1 300 ₽.
+# Отсекаем ДО резолва Discogs — это и экономит запросы, и резко ускоряет
+# прогон.
+#
+# Откуда берётся московская цена ДО Discogs: из want-list'а (§3), который
+# перечисляет то, за что Москва реально платит. Позиция, которой в нём нет,
+# по построению либо неликвидна (меньше 3 продаж за полгода), либо дешевле
+# пола. И то и другое — отказ.
+_WANTLIST = {"loaded": False, "rows": []}
+
+
+def _load_wantlist():
+    if _WANTLIST["loaded"]:
+        return _WANTLIST["rows"]
+    _WANTLIST["loaded"] = True
+    if not os.path.exists(_RU_DB_PATH):
+        return []
+    try:
+        conn = sqlite3.connect(_RU_DB_PATH)
+        cur = conn.execute("SELECT artist, album, median_rub, sold_n FROM moscow_wantlist")
+        rows = [{"artist": a, "album": al, "median_rub": m, "sold_n": n}
+                for a, al, m, n in cur.fetchall()]
+        conn.close()
+        if rows:
+            print(f"  want-list: {len(rows)} позиций, пол "
+                  f"{_ru_floor_rub()} ₽ — лоты вне списка отсеиваются до Discogs")
+        _WANTLIST["rows"] = rows
+    except Exception as e:  # noqa: BLE001
+        print(f"  want-list недоступен ({type(e).__name__}) — пол не применяется")
+    return _WANTLIST["rows"]
+
+
+_WL_STOP = {"lp", "vinyl", "record", "records", "album", "the", "a", "of", "and"}
+
+
+def _wl_tokens(s):
+    s = re.sub(r"[^\w\s]", " ", (s or "").lower(), flags=re.U)
+    return [t for t in s.split() if t and t not in _WL_STOP]
+
+
+def _wl_match(entry, title_tokens):
+    """И исполнитель, и альбом обязаны присутствовать в заголовке лота.
+    Односложные названия («Jazz», «Bad») требуют точного токена: частичное
+    совпадение по ним бессмысленно и даёт мусор — проверено живьём, когда
+    запрос «Queen Jazz» поймал «Joann Castle, Queen of the Ragtime Piano»."""
+    for field in ("artist", "album"):
+        want = _wl_tokens(entry[field])
+        if not want:
+            continue
+        hits = sum(1 for t in want if t in title_tokens)
+        need = len(want) if len(want) == 1 else max(1, int(len(want) * 0.6 + 0.999))
+        if hits < need:
+            return False
+    return True
+
+
+def _ru_floor_rub():
+    try:
+        return float((load_config().get("ru_market") or {}).get("min_ru_price_rub") or 0)
+    except Exception:  # noqa: BLE001
+        return 0.0
+
+
+def ru_floor_prefilter(title, cfg):
+    """(проходит, позиция_want_list_или_None). Пустой список -> пропускаем
+    всё: без архива прежнее поведение обязано сохраниться."""
+    floor = float((cfg.get("ru_market") or {}).get("min_ru_price_rub") or 0)
+    rows = _load_wantlist()
+    if not floor or not rows:
+        return True, None
+    toks = set(_wl_tokens(title))
+    if not toks:
+        return False, None
+    for e in rows:
+        if _wl_match(e, toks):
+            return e["median_rub"] >= floor, e
+    return False, None
+
+
 # ────────────────── российский контур: подключение ──────────────────
 # Модули ru-контура опциональны: без локального архива скрипт обязан
 # работать ровно как раньше, а не падать. Отсюда мягкий импорт.
@@ -1807,7 +1908,8 @@ def _ru_state():
     return _RU_STATE
 
 
-def _ru_contour(item, release, stats, result, cfg, fmt="single_lp", record_count=1):
+def _ru_contour(item, release, stats, result, cfg, fmt="single_lp", record_count=1,
+                has_photos=False):
     """Московская цена, margin_ru и потолок ставки для одного лота."""
     st = _ru_state()
     if not st["conn"] or not _RU_ECON:
@@ -1825,7 +1927,8 @@ def _ru_contour(item, release, stats, result, cfg, fmt="single_lp", record_count
         world_press_price=stats.get("median"),
         world_album_median=stats.get("world_album_median"),
         title_for_markers=item.get("title"),
-        coeffs=st["coeffs"])
+        coeffs=st["coeffs"],
+        has_photos=has_photos)
 
 
 # ============ ОСНОВНАЯ ЛОГИКА ============
@@ -1887,6 +1990,14 @@ def process_item(item, cfg, token=None):
     вызывается из-под try/except в main(), так что один битый лот не
     останавливает весь батч. token нужен только для fetch_ebay_item_photos
     (доп. фото для сверки каталожного номера, см. build_output_row)."""
+    # §2: пол по московской цене — ДО любых запросов к Discogs.
+    ok_floor, wl_entry = ru_floor_prefilter(item["title"], cfg)
+    if not ok_floor:
+        debug_print(f"REJECT полом по Москве (нет в want-list или дешевле "
+                    f"{(cfg.get('ru_market') or {}).get('min_ru_price_rub')} ₽): "
+                    f"{item['title'][:70]}")
+        return "reject"
+
     fmt, record_count, is_bundle = parse_format_and_count(item["title"])
     if is_bundle:
         debug_print(f"BUNDLE: {item['title'][:70]}")
@@ -2053,7 +2164,8 @@ def process_item(item, cfg, token=None):
     # глобально», а продавать — в Москве. Здесь считается вторая,
     # настоящая величина: цена по локальному архиву Мешка, поправленная на
     # грейд и на пресс, и максимальная ставка, которая из неё следует.
-    ru = _ru_contour(item, release, stats, result, cfg, fmt, record_count)
+    ru = _ru_contour(item, release, stats, result, cfg, fmt, record_count,
+                     has_photos=bool(photo_urls))
     if ru.get("margin_ru") is not None:
         result["margin_ru"] = ru["margin_ru"]
     capped, why = _RU_MODEL.cap_verdict_on_zero_sales(
@@ -2102,7 +2214,9 @@ def process_item(item, cfg, token=None):
     ru_note = ""
     if ru.get("margin_ru") is not None:
         mb = ru.get("ru_max_bid_usd")
-        ru_note = (f" | МОСКВА: {ru['margin_ru']:.2f}x, продаж {ru['ru_sold_n']}"
+        ru_note = (f" | МОСКВА: {ru['margin_ru']:.2f}x при цели "
+                   f"{ru.get('ru_margin_target')}x ({ru.get('ru_margin_tier')}), "
+                   f"продаж {ru['ru_sold_n']}"
                    + (f", макс. ставка ${mb:.2f}" if mb is not None else ""))
     elif ru.get("ru_sold_n") == 0:
         ru_note = " | МОСКВА: продаж 0 за окно"
