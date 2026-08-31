@@ -554,7 +554,7 @@ def passes_spread(cfg, p25_rub, p75_rub) -> str | None:
 
 
 def working_gate(cfg, *, grade, price_usd, ru_sold_n, p25_rub, p75_rub,
-                 margin_ru, target_margin, profit_rub) -> tuple[bool, str]:
+                 margin_ru, target_margin, expected_profit_rub) -> tuple[bool, str]:
     """Гейт «Рабочих установок» целиком: (проходит, причина отказа).
 
     Порядок проверок — от самых дешёвых и безусловных к денежным, чтобы
@@ -569,7 +569,7 @@ def working_gate(cfg, *, grade, price_usd, ru_sold_n, p25_rub, p75_rub,
             return False, why
     return passes_double_gate(cfg, margin_ru=margin_ru,
                               target_margin=target_margin,
-                              expected_profit_rub=profit_rub)
+                              expected_profit_rub=expected_profit_rub)
 
 
 def passes_ru_floor(cfg, ru_price_rub) -> bool:

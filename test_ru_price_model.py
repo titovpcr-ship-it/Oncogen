@@ -277,17 +277,17 @@ def main():
     # Гейт целиком: причина отказа должна называть НАСТОЯЩЕЕ препятствие.
     ok_w, why_w = m.working_gate(wcfg, grade="Good", price_usd=5.0, ru_sold_n=10,
                                  p25_rub=4000, p75_rub=5000, margin_ru=9.0,
-                                 target_margin=1.85, profit_rub=9000)
+                                 target_margin=1.85, expected_profit_rub=9000)
     check(not ok_w and "реджект" in why_w,
           "грейд G режет лот, каким бы прибыльным он ни был", st)
     ok_w, why_w = m.working_gate(wcfg, grade=None, price_usd=39.99, ru_sold_n=10,
                                  p25_rub=4000, p75_rub=5000, margin_ru=3.0,
-                                 target_margin=1.85, profit_rub=6000)
+                                 target_margin=1.85, expected_profit_rub=6000)
     check(not ok_w and "потолка" in why_w,
           "дорогой лот без грейда режется ценой, а не кратностью", st)
     ok_w, _ = m.working_gate(wcfg, grade="VG+", price_usd=20.0, ru_sold_n=6,
                              p25_rub=4000, p75_rub=5000, margin_ru=2.0,
-                             target_margin=1.85, profit_rub=3200)
+                             target_margin=1.85, expected_profit_rub=3200)
     check(ok_w, "кратность 2.0x при прибыли 3 200 ₽ теперь ПРОХОДИТ", st)
 
     # ── арифметика A/B/C из «Рабочих установок»: гейт обязан пропускать
@@ -302,7 +302,7 @@ def main():
                                      has_photos=True, price_usd=price)
         got, _why = m.working_gate(wcfg, grade="NM", price_usd=price, ru_sold_n=6,
                                    p25_rub=4000, p75_rub=5000, margin_ru=margin,
-                                   target_margin=tgt, profit_rub=profit)
+                                   target_margin=tgt, expected_profit_rub=profit)
         check(got == want,
               f"лот {name} (${price:.0f}, {margin}x, {profit} ₽) -> "
               f"{'проходит' if want else 'отказ'}", st)
