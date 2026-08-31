@@ -538,7 +538,9 @@ def main(argv=None):
                             f"(типично 1.3x) — под одним названием разные прессы, "
                             f"медиана НЕ называет цену этого лота; сверка "
                             f"ОБЯЗАТЕЛЬНА до ставки")
-        print(f"  ПРОХОДИТ ${lot['price']:.2f} <= ${v['max_bid']:.2f} "
+        zone = float((cfg["ru_market"] or {}).get("target_profit_rub") or 0)
+        mark = "★ ЦЕЛЕВАЯ ЗОНА " if zone and (v["profit_rub"] or 0) >= zone else ""
+        print(f"  {mark}ПРОХОДИТ ${lot['price']:.2f} <= ${v['max_bid']:.2f} "
               f"({v['tier']}, {v['target']}x, грейд {v['grade'] or '?'}, "
               f"прибыль {v['profit_rub']:.0f} ₽, "
               f"{'партия' if in_bundle else 'одиночно'}) "
@@ -549,10 +551,17 @@ def main(argv=None):
     if a.push and findings:
         import notify
         n = notify.Notifier()
+        zone = float((cfg["ru_market"] or {}).get("target_profit_rub") or 0)
+        in_zone = sum(1 for _, _, v, _ in findings
+                      if zone and (v["profit_rub"] or 0) >= zone)
         lines = [f"Обход want-list: {len(findings)} проходных из "
-                 f"{len(survivors)} кандидатов", ""]
+                 f"{len(survivors)} кандидатов"
+                 + (f", из них {in_zone} в целевой зоне (от {zone:.0f} ₽)"
+                    if in_zone else ""), ""]
         for e, lot, v, in_bundle in findings[:10]:
-            lines += [f"• {e['artist']} — {e['album']}",
+            zmark = "★ " if zone and (v["profit_rub"] or 0) >= zone else ""
+            lines += [f"{zmark}• {e['artist']} — {e['album']}",
+                      f"  прибыль {v['profit_rub']:.0f} ₽",
                       f"  ${lot['price']:.2f} при потолке ${v['max_bid']:.2f} "
                       f"({v['target']}x, {v['grade'] or 'грейд ?'})",
                       f"  Москва {v['ru_price_rub']} ₽, продаж {e['sold_n']}"

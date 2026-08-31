@@ -290,6 +290,25 @@ def main():
                              target_margin=1.85, profit_rub=3200)
     check(ok_w, "кратность 2.0x при прибыли 3 200 ₽ теперь ПРОХОДИТ", st)
 
+    # ── арифметика A/B/C из «Рабочих установок»: гейт обязан пропускать
+    #    лучшие по деньгам, а не лучшие по кратности ──
+    # Раньше min_margin_above_manual_review поднимал планку до 2.5x для
+    # лотов дороже $60 и блокировал лот C — лучший из трёх по деньгам.
+    for name, price, margin, profit, want in [
+            ("A", 9.0, 3.5, 1262, False),   # худший по деньгам, лучший по кратности
+            ("B", 45.0, 2.0, 3220, True),
+            ("C", 90.0, 1.9, 6415, True)]:
+        tgt, _ = m.margin_target_for(wcfg, grade="NM", ru_sold_n=6,
+                                     has_photos=True, price_usd=price)
+        got, _why = m.working_gate(wcfg, grade="NM", price_usd=price, ru_sold_n=6,
+                                   p25_rub=4000, p75_rub=5000, margin_ru=margin,
+                                   target_margin=tgt, profit_rub=profit)
+        check(got == want,
+              f"лот {name} (${price:.0f}, {margin}x, {profit} ₽) -> "
+              f"{'проходит' if want else 'отказ'}", st)
+    check(m.requires_manual_review(wcfg, 90.0),
+          "дорогой лот всё ещё требует сверки глазами — метка осталась", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)
