@@ -385,11 +385,27 @@ def main(argv=None):
             # «грейд неизвестен» с целью 3.5x вместо 2.5x — не потому что
             # состояние неизвестно, а потому что бюджет детальных
             # запросов кончился раньше. Грейд стоял в заголовке.
+            # Грейд читается из заголовка выдачи бесплатно — он уже на
+            # руках. НАЙДЕНО СВЕРКОЙ 31.08.2026: лот «QUEEN - A DAY AT THE
+            # RACES LP 6E-101 - NM/ w/inner» ушёл в разряд «грейд
+            # неизвестен» только потому, что бюджет детальных запросов
+            # кончился, — грейд стоял в заголовке.
+            #
+            # НО детальный запрос всё равно делается, пока есть бюджет:
+            # он даёт ВТОРОЙ сигнал, has_photos, а тот отдельно участвует
+            # в выборе уровня риска (requires_photos). Первая версия этой
+            # правки запрос пропускала — и лоты теряли уровень
+            # ex_vgplus_with_photos (2.5x), проваливаясь в 3.5x. Разряд
+            # «грейд неизвестен» вырос с 461 до 506 из 524, то есть
+            # «экономия» запросов ужесточила гейт вместо того, чтобы
+            # смягчить. Заголовок — это ФОЛБЭК на исчерпанный бюджет,
+            # а не замена детальному запросу.
             grade = calib.extract_grade(lot.get("title"))
             has_photos = False
-            if not grade and details < a.max_details:
-                grade, has_photos = item_grade(token, lot["item_id"])
+            if details < a.max_details:
+                detail_grade, has_photos = item_grade(token, lot["item_id"])
                 details += 1
+                grade = detail_grade or grade
                 time.sleep(THROTTLE_S)
             v = evaluate(e, lot, cfg, in_bundle=in_bundle, grade=grade,
                          has_photos=has_photos)
