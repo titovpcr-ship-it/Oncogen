@@ -118,17 +118,31 @@ def main(argv=None):
     out, stats = [], {"есть карточка": 0, "нет карточки": 0, "не резолвится": 0}
     for i, e in enumerate(todo, 1):
         rid, mid, label = resolve(e["query"], DISCOGS_TOKEN)
+        if not rid and not mid:
+            # ВТОРАЯ ПОПЫТКА КОРОЧЕ. Замерено: «Marilyn Manson Antichrist
+            # Superstar LTD 2LP PICTURE» не находится, хотя альбом на
+            # Discogs есть — мешают слова варианта издания. Первые четыре
+            # слова почти всегда «исполнитель + начало названия».
+            short = " ".join(e["query"].split()[:4])
+            if short != e["query"] and len(short) > 5:
+                time.sleep(GAP)
+                rid, mid, label = resolve(short, DISCOGS_TOKEN)
+                if rid or mid:
+                    e["query_used"] = short
         e["release_id"], e["master_id"], e["discogs"] = rid, mid, label
         if not rid and not mid:
             e["card_url"], e["card_kind"] = None, "не резолвится"
             stats["не резолвится"] += 1
         else:
-            try:
-                url, kind = mvu.card_url(rid, mid)
-            except Exception as ex:                 # noqa: BLE001
-                url, kind = None, f"ошибка: {type(ex).__name__}"
-            e["card_url"], e["card_kind"] = url, kind
-            stats["есть карточка" if url else "нет карточки"] += 1
+            # Сайтмап НЕ спрашиваем: он подтверждает наличие, но его
+            # молчание ничего не значит (проверено — все 23 позиции,
+            # записанные в «карточки нет», карточку отдали). Отдаём
+            # адреса-кандидаты, проверку делает тот, кто открывает.
+            cands = mvu.candidate_urls(rid, mid)
+            e["candidates"] = [{"url": u, "kind": k} for u, k in cands]
+            e["card_url"] = cands[0][0] if cands else None
+            e["card_kind"] = cands[0][1] if cands else "none"
+            stats["есть карточка" if cands else "нет карточки"] += 1
         out.append(e)
         if i % 20 == 0:
             print(f"  {i}/{len(todo)} … с карточкой {stats['есть карточка']}")

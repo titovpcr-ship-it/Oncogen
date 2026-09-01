@@ -120,6 +120,41 @@ def master_url(master_id: int, *, ranges_path=MASTER_RANGES_PATH, session=None) 
     return parse_master_urls(fetch_sitemap(sm, session=session)).get(int(master_id))
 
 
+# СЛАГ В URL НЕ НУЖЕН. Проверено сессией со сбора цен 01.09.2026:
+# `/master/6599` открывает карточку без всякого слага, и все 23 позиции,
+# которые мы по индексу сайтмапов записали в «карточки нет», на самом
+# деле карточку отдали.
+#
+# Отсюда важный вывод о МЕТОДЕ: наличие id в сайтмапе — достаточное
+# условие существования карточки, но НЕ необходимое. Сайтмап перечисляет
+# не всё. Значит «нет в сайтмапе» нельзя выдавать за «карточки нет» —
+# это ровно тот случай, когда «не посмотрели» выдаётся за результат.
+MV_BASE = "https://marketvinila.ru"
+
+
+def direct_url(kind: str, ident) -> str | None:
+    """Канонический адрес карточки по одному id, без слага."""
+    if not ident:
+        return None
+    return f"{MV_BASE}/{kind}/{int(ident)}"
+
+
+def candidate_urls(release_id=None, master_id=None) -> list[tuple[str, str]]:
+    """Адреса, которые СТОИТ проверить, в порядке точности.
+
+    Сайтмап здесь не спрашивается вовсе: он умеет только подтверждать
+    наличие, а его молчание ничего не значит. Проверку существования
+    делает тот, кто открывает карточку, — и обязан ловить soft-404:
+    несуществующий id отдаёт шаблон главной страницы, а не 404.
+    """
+    out = []
+    if release_id:
+        out.append((direct_url("release", release_id), "release"))
+    if master_id:
+        out.append((direct_url("master", master_id), "master"))
+    return out
+
+
 def card_url(release_id=None, master_id=None, *, session=None) -> tuple[str | None, str]:
     """(url, что_нашли). Сначала конкретный пресс, потом мастер-релиз.
 
