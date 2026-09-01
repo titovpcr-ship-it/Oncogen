@@ -21,10 +21,12 @@
 from __future__ import annotations
 
 import argparse
-import os
 import sqlite3
 import sys
+import time
 from pathlib import Path
+
+import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -41,6 +43,89 @@ CFG_PATH = Path(__file__).resolve().parent.parent / "ebay_vinyl_sniper_config.ya
 
 def load_cfg():
     return yaml.safe_load(CFG_PATH.read_text(encoding="utf-8"))
+
+
+SEARCH_URL = "https://api.ebay.com/buy/browse/v1/item_summary/search"
+VINYL_CATEGORY = "176985"          # Music > Records
+THROTTLE_S = 0.35
+PAGE = 200                          # потолок Browse API на страницу
+
+
+def search_upper_segment(token, cfg, *, limit=200, country="US", progress=print):
+    """Лоты верхнего сегмента прямо с eBay, БЕЗ списка запросов.
+
+    ПОЧЕМУ ПОИСК ИДЁТ ПО КАТЕГОРИИ И ЦЕНЕ, А НЕ ПО НАЗВАНИЯМ. Спросовый
+    обход перебирает want-list, но для верхнего сегмента его нет и быть
+    не может: у МаркетВинила нет истории продаж, а мешковский список
+    упирается в 25 000 ₽. Значит перечислить, ЧТО искать, нечем — зато
+    сама популяция мала и обозрима: дорогой винил на eBay это тысячи
+    лотов, а не миллионы. Его можно взять целиком по ценовому фильтру.
+
+    Это осознанный возврат к предложенческому пайплайну — но не «все
+    пластинки», а сразу верхняя полка.
+    """
+    lo = float((cfg.get("budget_constraints") or {}).get("min_current_price_usd") or 0)
+    hi = float((cfg.get("budget_constraints") or {}).get("max_current_price_usd") or 0)
+    flt = (f"buyingOptions:{{AUCTION|FIXED_PRICE}},"
+           f"itemLocationCountry:{country},"
+           f"price:[{lo:.0f}..{hi:.0f}],priceCurrency:USD")
+    out, offset, refused = [], 0, 0
+    while len(out) < limit:
+        want = min(PAGE, limit - len(out))
+        try:
+            r = requests.get(
+                SEARCH_URL,
+                headers={"Authorization": f"Bearer {token}",
+                         "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"},
+                params={"category_ids": VINYL_CATEGORY, "limit": want,
+                        "offset": offset, "filter": flt,
+                        "sort": "newlyListed"},
+                timeout=40)
+        except requests.RequestException as e:               # noqa: BLE001
+            progress(f"  сеть: {type(e).__name__}")
+            break
+        if r.status_code != 200:
+            # ПРАВИЛО 2: отказ обязан быть виден и обязан прерывать, а не
+            # молча превращаться в «ничего не нашлось».
+            refused += 1
+            progress(f"  eBay отказал: HTTP {r.status_code}")
+            if refused >= 3:
+                raise RuntimeError(
+                    f"eBay отказал {refused} раза подряд (последний "
+                    f"{r.status_code}). Прогон ПРЕРВАН: ноль лотов сейчас "
+                    f"означал бы «не посмотрели», а не «верхнего сегмента нет».")
+            time.sleep(3)
+            continue
+        refused = 0
+        d = r.json()
+        items = d.get("itemSummaries") or []
+        if not items:
+            break
+        for it in items:
+            pr = (it.get("price") or {}).get("value")
+            if pr is None:
+                continue
+            ship = (it.get("shippingOptions") or [{}])[0]
+            iid = it["itemId"]
+            out.append({
+                "item_id": iid.split("|")[1] if "|" in iid else iid,
+                "title": it.get("title", ""),
+                "price": float(pr),
+                "shipping": float((ship.get("shippingCost") or {}).get("value") or 0),
+                "country": (it.get("itemLocation") or {}).get("country") or country,
+                "seller": (it.get("seller") or {}).get("username"),
+                "url": it.get("itemWebUrl"),
+                "condition": it.get("condition"),
+                "bids": it.get("bidCount"),
+            })
+        total = d.get("total")
+        offset += len(items)
+        progress(f"  собрано {len(out)}"
+                 + (f" из {total} в выдаче" if total is not None else ""))
+        if total is not None and offset >= total:
+            break
+        time.sleep(THROTTLE_S)
+    return out
 
 
 def evaluate_lot(conn, cfg, lot, *, release_id=None, master_id=None,
@@ -138,10 +223,46 @@ def main(argv=None):
         print("    сегменте: см. docs/ru_market_notes.md §6.")
 
     if not a.dry:
-        print("\n  Живой обход eBay требует квоты Browse API. Проверьте её")
-        print("  перед запуском; при отказах обход упадёт с ApiRefused,")
-        print("  и это правильное поведение (ПРАВИЛО 2).")
-        print("  Пока квота не сброшена — запускайте с --dry.")
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from wantlist_sweep import ebay_token          # noqa: E402
+        print(f"\nищу на eBay: категория «Записи», ${lo:.0f}–${hi:.0f}, "
+              f"продавцы США, потолок {a.limit} лотов")
+        lots = search_upper_segment(ebay_token(), cfg, limit=a.limit)
+        print(f"\nнайдено лотов верхнего сегмента: {len(lots)}")
+        if not lots:
+            print("  ноль лотов — это результат поиска, а не отказ: обход")
+            print("  падает при отказах, значит популяция действительно пуста")
+            conn.close()
+            return 0
+
+        import statistics
+        pr = sorted(x["price"] for x in lots)
+        print(f"  цены: медиана ${statistics.median(pr):.0f}, "
+              f"от ${pr[0]:.0f} до ${pr[-1]:.0f}")
+
+        reasons, passed = {}, []
+        for lot in lots:
+            v = evaluate_lot(conn, cfg, lot)
+            if v["ok"]:
+                passed.append((lot, v))
+            else:
+                key = " ".join(v["why"].split(" ")[:4])
+                reasons[key] = reasons.get(key, 0) + 1
+
+        print(f"\nПРОШЛО: {len(passed)} из {len(lots)}")
+        print("разбор отказов (ПРАВИЛО 2):")
+        for k, n in sorted(reasons.items(), key=lambda kv: -kv[1])[:10]:
+            print(f"  {n:>4} — {k}")
+        for lot, v in sorted(passed, key=lambda x: -(x[1]["profit_rub"] or 0)):
+            print(f"  ПРОХОДИТ ${v['price_usd']:.2f} | {v['profit_rub']:.0f} ₽ | "
+                  f"цена из {v['ru_source']} | {lot['title'][:60]}")
+            print(f"    {lot['url']}")
+
+        # Даже при нулевом проходе сама выдача — новые данные: верхнюю
+        # полку eBay мы не смотрели ни разу.
+        print("\nчто вообще лежит в верхнем сегменте (первые 15 по цене):")
+        for lot in sorted(lots, key=lambda x: -x["price"])[:15]:
+            print(f"  ${lot['price']:>7.2f}  {lot['title'][:72]}")
         conn.close()
         return 0
 
