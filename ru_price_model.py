@@ -31,6 +31,7 @@
 from __future__ import annotations
 
 import sqlite3
+import re
 import statistics
 from dataclasses import dataclass, field
 
@@ -56,10 +57,46 @@ FALLBACK_GRADE_K = {"Sealed": 2.5, "M": 1.6, "NM": 1.4, "EX": 1.2,
                     "G": 0.15, "F": 0.10, "P": 0.08}
 
 
+# Формы записи грейда на МаркетВинила (замерено на срезе 01.09.2026).
+# Сайт пишет один и тот же грейд то полностью, то сокращённо, то обеими
+# формами сразу: «Very Good Plus (VG+)» и «VG+», «Near Mint (NM or M-)»,
+# «NM or M-» и «NM». Без приведения к одному значению медиана по грейду
+# считается по половине выборки, а вторая половина молча выпадает.
+_PAREN_ABBR = re.compile(r"\(([^)]{1,10})\)")
+# «NM or M-» — принятая на Discogs запись Near Mint. Берём первую часть:
+# это грейд, а «or M-» — пояснение, что M- считается тем же уровнем.
+_OR_FORM = re.compile(r"^\s*([A-Za-z+\-]{1,4})\s+or\s+", re.I)
+
+
 def canon_grade(g):
+    """Грейд к единому виду, каким бы способом он ни был записан.
+
+    Порядок попыток от самого надёжного к самому общему:
+      1. точное совпадение со словарём;
+      2. аббревиатура в скобках — «Very Good Plus (VG+)» -> VG+. Это
+         запись самого сайта, и она однозначнее словесной части;
+      3. форма «NM or M-» — берём то, что до «or»: остальное поясняет,
+         что соседний уровень считается тем же;
+      4. словесная часть до скобок — «Very Good (VG)» -> very good.
+    """
     if not g:
         return None
-    return GRADE_CANON.get(str(g).strip().lower())
+    raw = str(g).strip()
+    hit = GRADE_CANON.get(raw.lower())
+    if hit:
+        return hit
+    m = _PAREN_ABBR.search(raw)
+    if m:
+        hit = GRADE_CANON.get(m.group(1).strip().lower())
+        if hit:
+            return hit
+    m = _OR_FORM.match(raw)
+    if m:
+        hit = GRADE_CANON.get(m.group(1).strip().lower())
+        if hit:
+            return hit
+    head = raw.split("(")[0].strip().lower()
+    return GRADE_CANON.get(head)
 
 
 @dataclass

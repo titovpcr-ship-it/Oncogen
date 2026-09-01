@@ -309,6 +309,25 @@ def main():
     check(m.requires_manual_review(wcfg, 90.0),
           "дорогой лот всё ещё требует сверки глазами — метка осталась", st)
 
+    # ── формы записи грейда на МаркетВинила (срез 01.09.2026) ──
+    # Сайт пишет один грейд то полностью, то сокращённо, то обеими
+    # формами сразу. Без приведения медиана по грейду считалась бы по
+    # половине выборки, а вторая половина молча выпадала: в загруженном
+    # срезе «Mint (M)» и «M» лежали как разные значения.
+    for raw, want in [("Very Good Plus (VG+)", "VG+"),
+                      ("Near Mint (NM or M-)", "NM"),
+                      ("NM or M-", "NM"),
+                      ("Mint (M)", "M"),
+                      ("Very Good (VG)", "VG"),
+                      ("Good Plus (G+)", "G+"),
+                      ("VG+", "VG+"),
+                      ("Fair", "F")]:
+        check(m.canon_grade(raw) == want,
+              f"«{raw}» -> {want} (получено {m.canon_grade(raw)})", st)
+    check(m.canon_grade("ерунда") is None,
+          "неизвестная строка -> None, а не выдуманный грейд", st)
+    check(m.canon_grade(None) is None, "пустой грейд -> None", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)

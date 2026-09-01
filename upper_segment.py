@@ -54,6 +54,11 @@ CREATE TABLE IF NOT EXISTS mv_prices (
     album        TEXT,
     price_rub    INTEGER NOT NULL,
     grade        TEXT,
+    grade_sleeve TEXT,
+    media        TEXT,        -- Vinyl | 2xVinyl | CD | Cassette ...
+    edition      TEXT,        -- страна и год: единственный способ отличить
+                              -- оригинал от переиздания на карточке мастера
+    seller       TEXT,
     card_kind    TEXT,        -- release | master: цена пресса или альбома
     url          TEXT,
     fetched_at   TEXT NOT NULL
@@ -192,15 +197,22 @@ class RuPrice:
 def mv_price(conn, *, release_id=None, master_id=None, min_n=1) -> RuPrice:
     """Цена по МаркетВинила. Это ASK — выставленная цена, не сделка."""
     init(conn)
+    # ФИЛЬТР ПО НОСИТЕЛЮ ДО ВСЯКОЙ АРИФМЕТИКИ. Карточка агрегирует винил,
+    # CD, кассеты и SACD в одном блоке. Замерено на срезе 01.09.2026: из
+    # 165 предложений 44 — не винил, и на семи позициях винила в продаже
+    # нет вовсе. Би-2 «Мяу Кисс Ми»: минимальное предложение 630 ₽ — это
+    # компакт-диск, тогда как Мешок продал пластинку за 24 500 ₽.
+    # Ошибка в 39 раз, и ниоткуда, кроме поля носителя, она не видна.
+    VINYL = "AND (media IS NULL OR lower(media) LIKE '%vinyl%')"
     rows = []
     if release_id:
         rows = [r[0] for r in conn.execute(
-            "SELECT price_rub FROM mv_prices WHERE release_id=? ORDER BY price_rub",
-            (int(release_id),))]
+            f"SELECT price_rub FROM mv_prices WHERE release_id=? {VINYL} "
+            f"ORDER BY price_rub", (int(release_id),))]
     if not rows and master_id:
         rows = [r[0] for r in conn.execute(
-            "SELECT price_rub FROM mv_prices WHERE master_id=? ORDER BY price_rub",
-            (int(master_id),))]
+            f"SELECT price_rub FROM mv_prices WHERE master_id=? {VINYL} "
+            f"ORDER BY price_rub", (int(master_id),))]
     if len(rows) < min_n:
         return RuPrice(source="none", n=len(rows))
     import statistics
@@ -231,13 +243,19 @@ def ru_price_for(conn, cfg, *, release_id=None, master_id=None,
 
 
 def record_mv_price(conn, *, price_rub, release_id=None, master_id=None,
-                    artist=None, album=None, grade=None, card_kind=None, url=None):
+                    artist=None, album=None, grade=None, grade_sleeve=None,
+                    media=None, edition=None, seller=None,
+                    card_kind=None, url=None, fetched_at=None):
     """Записать цену с МаркетВинила (из среза или выгрузки)."""
     init(conn)
     conn.execute(
         "INSERT INTO mv_prices (release_id,master_id,artist,album,price_rub,"
-        "grade,card_kind,url,fetched_at) VALUES (?,?,?,?,?,?,?,?,datetime('now'))",
-        (release_id, master_id, artist, album, int(price_rub), grade, card_kind, url))
+        "grade,grade_sleeve,media,edition,seller,card_kind,url,fetched_at) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        (release_id, master_id, artist, album, int(price_rub), grade, grade_sleeve,
+         media, edition, seller, card_kind, url,
+         fetched_at or __import__("datetime").datetime.now(
+             __import__("datetime").timezone.utc).isoformat(timespec="seconds")))
     conn.commit()
 
 
