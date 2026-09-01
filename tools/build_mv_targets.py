@@ -78,6 +78,43 @@ def resolve(query, token, session=None):
     return top.get("id"), top.get("master_id"), top.get("title", "")[:70]
 
 
+def verify_match(ebay_title: str, discogs_title: str) -> bool:
+    """Правда ли, что Discogs нашёл ТОТ ЖЕ альбом.
+
+    БЕЗ ЭТОЙ ПРОВЕРКИ КОРОТКИЙ ПОВТОР ВРЁТ. Замерено: из десяти позиций,
+    найденных укороченным запросом, четыре указывали на ЧУЖОЙ альбом —
+    «Sonic Evolution … Mad Season» стало «Sabrina Carpenter — Evolution»,
+    «Pearl Jam PJ20» стало «Pearl Jam — Vs.», «Three Dog Night HARD
+    LABOR» стало одноимённым альбомом. Короткий запрос отбрасывает
+    название и попадает в самый популярный релиз исполнителя.
+
+    Отправить сборщика по такому адресу значит получить цену другой
+    пластинки — та же подмена уровня, что запрещает правило 1, только
+    совершённая на входе.
+
+    ПРОВЕРКУ ДЕЛАЕТ moscow_wantlist.title_matches, А НЕ СВОЯ ЛОГИКА.
+    Первая версия писала собственное сравнение по пересечению слов и
+    провалилась ровно на тех классах, которые тот матчер уже умеет:
+    одноимённый альбом («Three Dog Night — Three Dog Night»), название
+    внутри имени артиста («Bob Dylan — The Freewheelin' Bob Dylan»),
+    слишком короткое название («Vs.»). Их там семь, и каждый найден
+    запуском на живых данных.
+    """
+    if not discogs_title or not ebay_title:
+        return False
+    import moscow_wantlist as wl                   # noqa: E402
+    parts = re.split(r"\s+[-–—=]\s+", discogs_title, maxsplit=1)
+    if len(parts) < 2:
+        return False
+    # «Splinter (2) = スプリンター*» — Discogs дописывает номер омонима и
+    # перевод; на сопоставление они только мешают.
+    artist = re.sub(r"\s*\(\d+\)", "", parts[0]).split("=")[0].strip()
+    album = parts[1].split("=")[0].strip()
+    if not artist or not album:
+        return False
+    return wl.title_matches({"artist": artist, "album": album}, ebay_title)
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--db", default="vinyl.db")
@@ -130,8 +167,15 @@ def main(argv=None):
                 if rid or mid:
                     e["query_used"] = short
         e["release_id"], e["master_id"], e["discogs"] = rid, mid, label
+        if (rid or mid) and not verify_match(e["sample_title"], label):
+            # Нашлось, но не то. Это ХУЖЕ, чем «не нашлось»: адрес выглядит
+            # рабочим и уводит на цену чужой пластинки.
+            rid = mid = None
+            e["release_id"] = e["master_id"] = None
+            e["reject"] = "Discogs нашёл другой альбом"
         if not rid and not mid:
-            e["card_url"], e["card_kind"] = None, "не резолвится"
+            e["card_url"] = None
+            e["card_kind"] = e.get("reject", "не резолвится")
             stats["не резолвится"] += 1
         else:
             # Сайтмап НЕ спрашиваем: он подтверждает наличие, но его

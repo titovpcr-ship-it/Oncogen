@@ -311,6 +311,26 @@ def main():
     check(not wl.lp_count_is_mixed(["A 2LP", "B 2LP"]),
           "единогласные двойники смешанными не считаются", st)
 
+    # ── восьмой класс: название альбома СОДЕРЖИТ имя исполнителя ──
+    # Найден 01.09.2026 при сверке резолва Discogs. Слова «bob» и «dylan»
+    # в заголовке приносит сам исполнитель, и они подтверждают название
+    # сами собой: лот «Bob Dylan Mfsl Mofi Vinyl 2xLP» проходил как
+    # «The Freewheelin' Bob Dylan», хотя о нём в заголовке ни слова.
+    fw = {"artist": "Bob Dylan", "album": "The Freewheelin' Bob Dylan"}
+    check(not wl.title_matches(fw, "Bob Dylan Mfsl Mofi Vinyl 2xLP"),
+          "имя артиста внутри названия не подтверждает название само собой", st)
+    check(wl.title_matches(fw, "Bob Dylan The Freewheelin Bob Dylan 1963 Columbia LP"),
+          "настоящее упоминание названия по-прежнему принимается", st)
+
+    # Порог одноимённых ужесточён с 2 до 1 лишнего слова: по позиции
+    # «Three Dog Night — Three Dog Night» проезжал лот «THREE DOG NIGHT
+    # HARD LABOR», где лишних слов было ровно два.
+    tdn = {"artist": "Three Dog Night", "album": "Three Dog Night"}
+    check(not wl.title_matches(tdn, "THREE DOG NIGHT HARD LABOR Vinyl Record LP"),
+          "одноимённый: чужой альбом с двумя лишними словами отвергнут", st)
+    check(wl.title_matches(tdn, "Three Dog Night - Three Dog Night 1969 Dunhill LP"),
+          "одноимённый: настоящий лот принят", st)
+
     print(f"\n{'ВСЁ ПРОШЛО' if not st['failed'] else str(st['failed']) + ' ПРОВАЛОВ'}")
     if st["failed"]:
         raise SystemExit(1)

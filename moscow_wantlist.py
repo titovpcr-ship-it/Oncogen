@@ -274,7 +274,7 @@ _MIN_HIT_RATIO = 0.6
 _ARTIST_MAX_POS = 1
 # Сколько посторонних содержательных слов терпит одноимённый альбом,
 # названный в заголовке один раз.
-_SELF_TITLED_MAX_EXTRA = 2
+_SELF_TITLED_MAX_EXTRA = 1
 
 
 def _tokens(s):
@@ -369,9 +369,22 @@ def title_matches(entry, lot_title) -> bool:
                 return False
 
     if album:
-        hits = sum(1 for t in album if t in hay_set)
-        need = len(album) if len(album) == 1 else max(
-            1, int(len(album) * _MIN_HIT_RATIO + 0.999))
+        # ВОСЬМОЙ КЛАСС, найден 01.09.2026 при сверке резолва Discogs.
+        # Название альбома может СОДЕРЖАТЬ имя исполнителя: «Bob Dylan —
+        # The Freewheelin' Bob Dylan». Тогда слова «bob» и «dylan» в
+        # заголовке приносит сам исполнитель, и они подтверждают название
+        # сами собой: лот «Bob Dylan Mfsl Mofi Vinyl 2xLP» проходил как
+        # «Freewheelin'», хотя о нём в заголовке ни слова.
+        #
+        # Считаем только те слова названия, которых НЕТ в имени артиста:
+        # лишь они несут доказательство. Если после вычитания не осталось
+        # ничего — название целиком совпало с именем, и это одноимённый
+        # альбом, у которого своя проверка ниже.
+        artist_set = set(artist)
+        evidence = [t for t in album if t not in artist_set] or list(album)
+        hits = sum(1 for t in evidence if t in hay_set)
+        need = len(evidence) if len(evidence) == 1 else max(
+            1, int(len(evidence) * _MIN_HIT_RATIO + 0.999))
         if hits < need:
             return False
         # ЧЕТВЁРТАЯ ИТЕРАЦИЯ. Односложное название проходило, если его слово
