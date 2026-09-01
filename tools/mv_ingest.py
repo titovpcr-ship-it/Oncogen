@@ -53,29 +53,45 @@ def is_vinyl(media):
     return "vinyl" in (media or "").lower()
 
 
+def position_key(r):
+    """Чем отличать одну позицию от другой.
+
+    Формат менялся: в первом срезе была сквозная нумерация `position`, в
+    новом её нет — список собирается из выдачи eBay, и естественный ключ
+    там адрес карточки. Загрузчик обязан принимать оба, иначе споткнётся
+    ровно в тот момент, когда данные наконец пришли.
+    """
+    if r.get("position") is not None:
+        return ("position", r["position"])
+    if r.get("url"):
+        return ("url", r["url"])
+    return ("ids", r.get("release_id"), r.get("master_id"))
+
+
 def check(rows, progress=print):
     """Проверки ДО записи. Возвращает список замечаний."""
     problems = []
     by_pos = {}
     for r in rows:
-        by_pos.setdefault(r["position"], []).append(r)
+        by_pos.setdefault(position_key(r), []).append(r)
 
-    for pos, rs in sorted(by_pos.items()):
-        title = rs[0].get("task_title", "?")
+    for pos, rs in sorted(by_pos.items(), key=lambda kv: str(kv[0])):
+        title = (rs[0].get("task_title")
+                 or f"{rs[0].get('artist', '?')} — {rs[0].get('album', '?')}")
         offers = [r for r in rs if r.get("price_rub") is not None]
         shown, total = parse_counter(rs[0].get("offers_counter"))
         # ЧИСЛО СТРОК ОБЯЗАНО СХОДИТЬСЯ СО СЧЁТЧИКОМ. Ловит самый опасный
         # класс ошибки извлечения — молча недобранный список.
         if total is not None and total != len(offers):
             problems.append(
-                f"поз.{pos} «{title[:34]}»: счётчик обещает {total} предложений, "
+                f"«{title[:38]}»: счётчик обещает {total} предложений, "
                 f"в файле {len(offers)}")
         for r in offers:
             p = price_from_verbatim(r.get("price_verbatim"))
             if p is not None and p != r["price_rub"]:
                 problems.append(
-                    f"поз.{pos}: price_rub={r['price_rub']} расходится с "
-                    f"дословной «{r.get('price_verbatim')}»")
+                    f"«{title[:38]}»: price_rub={r['price_rub']} расходится "
+                    f"с дословной «{r.get('price_verbatim')}»")
     return problems
 
 
@@ -115,7 +131,7 @@ def main(argv=None):
     vinyl = [r for r in offers if is_vinyl(r.get("media"))]
     print(f"  предложений {len(offers)}, из них винил {len(vinyl)}, "
           f"не винил {len(offers) - len(vinyl)}")
-    print(f"  позиций {len({r['position'] for r in rows})}")
+    print(f"  позиций {len({position_key(r) for r in rows})}")
 
     problems = check(rows)
     if problems:
