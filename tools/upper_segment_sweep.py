@@ -69,9 +69,14 @@ def search_upper_segment(token, cfg, *, limit=200, country="US", progress=print)
     flt = (f"buyingOptions:{{AUCTION|FIXED_PRICE}},"
            f"itemLocationCountry:{country},"
            f"price:[{lo:.0f}..{hi:.0f}],priceCurrency:USD")
+    # ОГРАНИЧЕНИЕ BROWSE API, НАЙДЕНО ЗАПУСКОМ: «The 'offset' value must be
+    # either zero or a multiple of the 'limit' value». Первая версия
+    # урезала limit на последней странице (min(PAGE, сколько_осталось)) —
+    # и кратность ломалась ровно на четвёртой: offset 600 при limit 45.
+    # Поэтому размер страницы ПОСТОЯННЫЙ, а лишнее срезается в конце.
     out, offset, refused = [], 0, 0
     while len(out) < limit:
-        want = min(PAGE, limit - len(out))
+        want = PAGE
         try:
             r = requests.get(
                 SEARCH_URL,
@@ -119,13 +124,45 @@ def search_upper_segment(token, cfg, *, limit=200, country="US", progress=print)
                 "bids": it.get("bidCount"),
             })
         total = d.get("total")
-        offset += len(items)
+        offset += want
         progress(f"  собрано {len(out)}"
                  + (f" из {total} в выдаче" if total is not None else ""))
         if total is not None and offset >= total:
             break
         time.sleep(THROTTLE_S)
-    return out
+    return out[:limit]
+
+
+LOTS_SCHEMA = """
+CREATE TABLE IF NOT EXISTS upper_lots (
+    item_id    TEXT PRIMARY KEY,
+    title      TEXT,
+    price_usd  REAL,
+    shipping   REAL,
+    country    TEXT,
+    seller     TEXT,
+    condition  TEXT,
+    bids       INTEGER,
+    url        TEXT,
+    seen_at    TEXT NOT NULL
+);
+"""
+
+
+def store_lots(conn, lots):
+    """Сохранить выдачу. Верхнюю полку eBay мы не смотрели ни разу, и её
+    состав — самостоятельные данные, независимо от того, проходит ли
+    что-то гейт."""
+    conn.executescript(LOTS_SCHEMA)
+    conn.executemany(
+        "INSERT OR REPLACE INTO upper_lots (item_id,title,price_usd,shipping,"
+        "country,seller,condition,bids,url,seen_at) "
+        "VALUES (?,?,?,?,?,?,?,?,?,datetime('now'))",
+        [(l["item_id"], l["title"], l["price"], l["shipping"], l["country"],
+          l.get("seller"), l.get("condition"), l.get("bids"), l.get("url"))
+         for l in lots])
+    conn.commit()
+    return len(lots)
 
 
 def evaluate_lot(conn, cfg, lot, *, release_id=None, master_id=None,
@@ -235,6 +272,7 @@ def main(argv=None):
             conn.close()
             return 0
 
+        store_lots(conn, lots)
         import statistics
         pr = sorted(x["price"] for x in lots)
         print(f"  цены: медиана ${statistics.median(pr):.0f}, "
