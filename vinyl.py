@@ -21,6 +21,43 @@ import vinyl_db as db
 import vision_queue as vq
 
 
+def cmd_weight(args):
+    """Учёт ФАКТИЧЕСКИХ весов приходов.
+
+    Зачем отдельная команда: вес посылки задаёт карго, карго задаёт
+    вердикт, а заложенная в конфиг прикидка 0.45 кг оказалась вдвое ниже
+    факта. Каждый новый приход уточняет медиану — это единственный
+    способ, потому что вес зависит от упаковки продавца, а не от формата.
+    """
+    with db.connect() as conn:
+        if args.weight_cmd == "add":
+            db.record_parcel_weight(conn, incoming_id=args.incoming_id,
+                                    title=args.title, weight_kg=args.kg,
+                                    fmt=args.fmt, ebay_item_id=args.item,
+                                    note=args.note)
+            med, n = db.measured_weight(conn, args.fmt)
+            print(f"записано: {args.incoming_id} — {args.kg} кг ({args.fmt})")
+            if med:
+                print(f"медиана по {n} замерам: {med} кг")
+            else:
+                print(f"замеров пока {n}, нужно от 3 — расчёт продолжает "
+                      f"брать значение из конфига")
+        elif args.weight_cmd == "list":
+            db.init_weights(conn)
+            rows = list(conn.execute(
+                "SELECT incoming_id,title,weight_kg,fmt,added_at FROM parcel_weights "
+                "ORDER BY weight_kg"))
+            if not rows:
+                print("замеров нет")
+            for inc, t, kg, fmt, _when in rows:
+                print(f"  {kg:>5.2f} кг | {fmt:<12} | {inc or '—':<12} | {(t or '')[:46]}")
+            for fmt in sorted({r[3] for r in rows}):
+                med, n = db.measured_weight(conn, fmt)
+                print(f"\n  {fmt}: медиана "
+                      + (f"{med} кг по {n} замерам" if med
+                         else f"НЕ применяется, замеров {n} (нужно от 3)"))
+
+
 def cmd_init(args):
     print(f"Схема создана/актуализирована: {db.init_db()}")
 
@@ -216,6 +253,8 @@ def build_parser():
     upd.add_argument("--notes")
     upd.set_defaults(func=cmd_deal_update)
 
+    _add_weight_parser(sub)
+
     vis = sub.add_parser("vision", help="разбор прессов по фото (P1-4)")
     vsub = vis.add_subparsers(dest="vision_cmd", required=True)
     ving = vsub.add_parser("ingest", help="загрузить ответы разбора (JSON)")
@@ -235,6 +274,22 @@ def build_parser():
 def main(argv=None):
     args = build_parser().parse_args(argv)
     args.func(args)
+
+
+
+def _add_weight_parser(sub):
+    w = sub.add_parser("weight", help="фактические веса приходов (задают карго)")
+    ws = w.add_subparsers(dest="weight_cmd", required=True)
+    a = ws.add_parser("add", help="записать вес пришедшей посылки")
+    a.add_argument("kg", type=float, help="вес с весов форвардера, кг")
+    a.add_argument("--incoming-id", required=True, help="номер прихода, напр. INC-001280")
+    a.add_argument("--title", default=None, help="как подписана посылка")
+    a.add_argument("--fmt", default="single_lp",
+                   choices=("single_lp", "gatefold_lp", "double_lp", "heavy_180g_lp"))
+    a.add_argument("--item", default=None, help="eBay item id, если известен")
+    a.add_argument("--note", default=None)
+    ws.add_parser("list", help="показать все замеры и медианы")
+    w.set_defaults(func=cmd_weight)
 
 
 if __name__ == "__main__":

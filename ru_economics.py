@@ -102,12 +102,65 @@ def check_rates_freshness(cfg) -> str | None:
 
 # ───────────────────────── P1-6: вес и landed ─────────────────────────
 
-def estimate_weight(fmt: str, record_count: int, cfg) -> tuple[float, float, bool]:
+def measured_weight_kg(fmt: str, db_path=None, min_n: int = 3):
+    """Медиана ФАКТИЧЕСКИХ весов приходов или None.
+
+    ПРАВИЛО 1 УСТАВА: прямое измерение главнее коэффициента. Вес посылки
+    определяется не форматом пластинки, а тем, КАК ЕЁ УПАКОВАЛ ПРОДАВЕЦ,
+    поэтому моделировать его по формату бессмысленно — надо мерить.
+
+    Замерено по приходам форвардера: одинарник 0.4 / 0.7 / 0.8 / 0.8 кг
+    при заложенных в конфиге 0.45. Три из четырёх тарифицируются вдвое
+    дороже (1.0 кг вместо 0.5), то есть недосчёт 1 100 ₽ на лот при поле
+    прибыли 2 500 ₽.
+    """
+    try:
+        import sqlite3
+        import vinyl_db as _db
+        conn = sqlite3.connect(f"file:{db_path or _db.DB_PATH}?mode=ro", uri=True)
+        try:
+            med, _n = _db.measured_weight(conn, fmt, min_n=min_n)
+            return med
+        finally:
+            conn.close()
+    except Exception:                              # noqa: BLE001
+        # Нет базы, нет таблицы, нет прав — расчёт продолжается по конфигу.
+        # Отсутствие замеров не должно ронять прогон, но и молчать о себе
+        # не должно: estimate_weight возвращает признак estimated.
+        return None
+
+
+def estimate_weight(fmt: str, record_count: int, cfg,
+                    use_measured: bool = True) -> tuple[float, float, bool]:
     """(вес_дисков_кг, вес_тары_кг, это_прикидка).
 
     Тара вынесена отдельно от дисков СПЕЦИАЛЬНО: в предельной стоимости её
     быть не должно — вторая пластинка едет в уже оплаченной коробке.
+
+    Если по этому формату есть хотя бы три ЗАМЕРА приходов, берётся их
+    медиана, и она включает тару — форвардер взвешивает посылку целиком.
+    Тогда третий элемент кортежа = False: это не прикидка.
     """
+    w = cfg["landed_cost"]["weight_estimation_kg"]
+    surplus, measured = 0.0, False
+    if use_measured:
+        # ИЗЛИШЕК ЗАМЕРА ПРИБАВЛЯЕТСЯ, А НЕ ЗАМЕЩАЕТ. Первая версия
+        # подставляла замеренные 0.75 кг вместо расчёта для одинарника — и
+        # гейтфолд (0.50 по конфигу) оказался ЛЕГЧЕ одинарника. Абсурд,
+        # пойманный тестом.
+        #
+        # Причина в том, ЧТО именно замерено. Разница 0.75 - 0.45 = 0.30 кг
+        # — это не пластинка, это картон и мейлер, которые добавил
+        # продавец. Упаковка идёт НА ПОСЫЛКУ, а не на диск, поэтому её
+        # излишек прибавляется ко всем форматам одинаково и порядок
+        # «одинарник < гейтфолд < двойник» сохраняется.
+        #
+        # Переносить сам замер на другие форматы было бы ровно подменой
+        # уровня, запрещённой ПРАВИЛОМ 1: замерен одинарник, а не двойник.
+        med = measured_weight_kg("single_lp")
+        if med:
+            surplus = max(0.0, med - (w["single_lp_kg"] + w["packaging_kg"]))
+            measured = surplus > 0
     w = cfg["landed_cost"]["weight_estimation_kg"]
     per_disc = {
         "single_lp": "single_lp_kg",
@@ -122,7 +175,10 @@ def estimate_weight(fmt: str, record_count: int, cfg) -> tuple[float, float, boo
         discs = w[per_disc] + w["extra_disc_kg"] * (count - 1)
     else:
         discs = w[per_disc] * count
-    return discs, w["packaging_kg"], True
+    # Излишек — это тара, поэтому он ложится на тару, а не на диски: в
+    # ПРЕДЕЛЬНОЙ стоимости (вторая пластинка в уже открытой посылке) тары
+    # быть не должно, и добавленный картон её тоже не касается.
+    return discs, w["packaging_kg"] + surplus, not measured
 
 
 class CargoRateMissing(RuntimeError):
@@ -157,7 +213,6 @@ def compute_landed(item_usd, dom_ship_usd, fmt, record_count, cfg,
                    country: str | None = None) -> LandedCost:
     """P1-6. standalone — лот едет сам по себе; marginal — добавлен в уже
     формируемую отправку (тара уже оплачена, округление уже съедено)."""
-    ru = cfg.get("ru_market") or {}
     fwd = cfg["landed_cost"]["international_forwarding"]
     rate = cargo_rate_for(cfg, country)
     step = fwd.get("round_up_to_kg", 0.5) or 0.5

@@ -36,13 +36,20 @@ def test_weight_and_landed():
     # (диск + тара), а не число, иначе тест ломается на каждой правке
     # экономики, ничего при этом не проверяя.
     w = CFG["landed_cost"]["weight_estimation_kg"]
-    check("вес 1LP = диск + тара",
-          abs(one.weight_kg - (w["single_lp_kg"] + w["packaging_kg"])) < 1e-6,
+    # ОБНОВЛЕНО 31.08.2026 ПО ФАКТУ ВЕСОВ ФОРВАРДЕРА. Раньше здесь стояло
+    # равенство конфигу (0.45 кг) и карго $11. Приходы взвешены: 0.4 /
+    # 0.7 / 0.8 / 0.8 кг, медиана 0.75. Излишек 0.30 кг — это картон
+    # продавца, он ложится на тару и прибавляется ко всем форматам.
+    # Тест теперь проверяет СВЯЗЬ, а не старое число: вес = диск + тара,
+    # где тара включает замеренный излишек.
+    check("вес 1LP = диск + тара (с замеренным излишком)",
+          abs(one.weight_kg - (w["single_lp_kg"] + w["packaging_kg"] + 0.30)) < 1e-6,
           f"{one.weight_kg} кг")
-    check("вес помечен как прикидка", one.weight_estimated is True)
-    check("карго = округлённый вес x ставка", one.cargo_usd == 11.0, f"${one.cargo_usd}")
+    check("вес НЕ прикидка, когда есть замеры приходов",
+          one.weight_estimated is False)
+    check("карго = округлённый вес x ставка", one.cargo_usd == 22.0, f"${one.cargo_usd}")
     check("landed standalone = лот + доставка США + карго",
-          one.standalone_usd == round(8.0 + 6.25 + 11.0, 2), f"${one.standalone_usd}")
+          one.standalone_usd == round(8.0 + 6.25 + 22.0, 2), f"${one.standalone_usd}")
     check("без открытой отправки marginal == standalone",
           one.marginal_usd == one.standalone_usd)
 
@@ -155,8 +162,15 @@ def test_ranking():
     pricey = ec.compute_ru_economics(
         landed_exp, RuComps(ru_sold_n=4, ru_supply_count=1,
                             ru_expected_price_rub=42000), CFG)
-    check("у дешёвого кратность выше", cheap.margin_ru > pricey.margin_ru,
-          f"{cheap.margin_ru} vs {pricey.margin_ru}")
+    # ПЕРЕСМОТРЕНО 31.08.2026. Прежнее утверждение «у дешёвого кратность
+    # выше» держалось на заниженном карго. При реальных 22 $/кг
+    # фиксированные издержки бьют по дешёвому лоту сильнее, и кратность у
+    # него больше НЕ выше автоматически. Это и есть довод «Рабочих
+    # установок» за перенос гейта с кратности на рубли, так что тест
+    # проверяет то, ради чего гейт переставляли.
+    check("дорогой лот не проигрывает дешёвому по кратности при реальном карго",
+          pricey.margin_ru >= cheap.margin_ru,
+          f"дорогой {pricey.margin_ru} против дешёвого {cheap.margin_ru}")
     check("у дорогого ожидаемая прибыль выше",
           pricey.expected_profit_rub > cheap.expected_profit_rub,
           f"{pricey.expected_profit_rub} vs {cheap.expected_profit_rub}")
@@ -198,8 +212,11 @@ def test_acceptance_bennie_green():
           e.margin_ru is not None and e.margin_ru < 5,
           f"margin_ru={e.margin_ru}")
     check("неликвид опознан (копий в РФ нет)", e.liquidity_flag == "illiquid")
-    check("потолок ставки — двузначное число долларов, а не сотни",
-          e.max_bid_usd is not None and 5 <= e.max_bid_usd <= 40,
+    # Смысл проверки прежний — потолок не в сотнях, — но нижняя граница
+    # снята: при реальном карго 22 $/кг потолок для неликвида уходит в
+    # единицы долларов, и это правильный ответ, а не поломка.
+    check("потолок ставки не в сотнях долларов",
+          e.max_bid_usd is not None and 0 < e.max_bid_usd <= 40,
           f"${e.max_bid_usd}")
     # Двухголовая диагностика («Решения» §1: оставить). Расхождение net/gross
     # показывает вес издержек сбыта в конкретном сегменте. После перехода на
@@ -237,3 +254,67 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def test_measured_weight():
+    """Вес берётся из ЗАМЕРОВ приходов, а не из прикидки по формату.
+
+    Самая дорогая ошибка проекта: конфиг закладывал одинарник в 0.45 кг
+    (тариф 0.5), а форвардер взвесил 0.4 / 0.7 / 0.8 / 0.8. Три из
+    четырёх тарифицируются вдвое дороже — недосчёт 1 100 ₽ на лот при
+    поле прибыли 2 500 ₽. Из 16 находок нового гейта поправку переживают
+    три.
+    """
+    import sqlite3
+    import tempfile
+    from pathlib import Path
+    import vinyl_db as vdb
+    import yaml as _yaml
+
+    cfg = _yaml.safe_load(open("ebay_vinyl_sniper_config.yaml", encoding="utf-8"))
+    fails = 0
+
+    def ck(cond, msg):
+        nonlocal fails
+        print(("OK   " if cond else "FAIL ") + msg)
+        if not cond:
+            fails += 1
+
+    with tempfile.TemporaryDirectory() as d:
+        path = Path(d) / "w.db"
+        conn = sqlite3.connect(path)
+        vdb.init_weights(conn)
+        med, n = vdb.measured_weight(conn, "single_lp")
+        ck(med is None and n == 0, "нет замеров -> None, а не выдуманное число")
+
+        for i, kg in enumerate([0.4, 0.7]):
+            vdb.record_parcel_weight(conn, incoming_id=f"T{i}", title="x",
+                                     weight_kg=kg, fmt="single_lp")
+        med, n = vdb.measured_weight(conn, "single_lp")
+        ck(med is None and n == 2,
+           "два замера — не распределение, медиана не применяется")
+
+        for i, kg in enumerate([0.8, 0.8], start=2):
+            vdb.record_parcel_weight(conn, incoming_id=f"T{i}", title="x",
+                                     weight_kg=kg, fmt="single_lp")
+        med, n = vdb.measured_weight(conn, "single_lp")
+        ck(med == 0.75 and n == 4, f"четыре замера -> медиана 0.75 кг (получено {med})")
+        ck(vdb.measured_weight(conn, "double_lp")[0] is None,
+           "замеры одного формата не переносятся на другой (ПРАВИЛО 1)")
+        conn.close()
+
+    # Замер должен ВЫТЕСНЯТЬ прикидку, и признак estimated обязан это показать.
+    d_kg, p_kg, estimated = ru_economics.estimate_weight("single_lp", 1, cfg)
+    ck(abs((d_kg + p_kg) - 0.75) < 1e-6,
+       f"расчёт берёт замеренные 0.75 кг (получено {d_kg + p_kg:.2f})")
+    ck(estimated is False, "замеренный вес помечен как НЕ прикидка")
+
+    d2, p2, est2 = ru_economics.estimate_weight("single_lp", 1, cfg, use_measured=False)
+    ck(est2 is True and abs((d2 + p2) - 0.45) < 1e-6,
+       "с выключенными замерами возвращается прежняя прикидка 0.45 кг")
+
+    if fails:
+        raise SystemExit(f"{fails} ПРОВАЛОВ в замере веса")
+
+
+test_measured_weight()

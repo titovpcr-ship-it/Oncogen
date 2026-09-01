@@ -23,6 +23,7 @@ decisions_log.csv задним числом — старый CSV импорти�
 import csv
 import json
 import sqlite3
+import statistics
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -438,6 +439,75 @@ CREATE INDEX IF NOT EXISTS idx_sc_run    ON sweep_candidates(run_id);
 CREATE INDEX IF NOT EXISTS idx_sc_passed ON sweep_candidates(passed);
 CREATE INDEX IF NOT EXISTS idx_sc_why    ON sweep_candidates(reject_why);
 """
+
+
+# ═══════════ ИЗМЕРЕННЫЕ ВЕСА ПОСЫЛОК ═══════════
+# НАЙДЕНО 31.08.2026 ПО ФАКТУ ФОРВАРДЕРА, и это самая дорогая ошибка
+# проекта из всех. Расчёт закладывал одинарную пластинку как 0.30 кг
+# плюс 0.15 кг тары = 0.45 кг, что тарифицируется как 0.5 кг.
+#
+# Реальные приходы:
+#     Nirvana — Nevermind Target        0.4 кг -> тариф 0.5
+#     Arvo Pärt — Tabula Rasa (OG ECM)  0.8 кг -> тариф 1.0
+#     Wes Montgomery — Full House       0.8 кг -> тариф 1.0
+#     Eric Dolphy — Last Date           0.7 кг -> тариф 1.0
+#
+# Три из четырёх тарифицируются ВДВОЕ дороже заложенного: 2 200 ₽ вместо
+# 1 100 ₽. Недосчёт 1 100 ₽ на лот при поле прибыли 2 500 ₽ — это не
+# поправка, это переворот вердикта: из 16 находок нового гейта поправку
+# переживают три.
+#
+# Вес не угадывается по формату: он определяется тем, КАК ПРОДАВЕЦ
+# УПАКОВАЛ. Значит его надо не моделировать, а МЕРИТЬ — по приходам.
+# ПРАВИЛО 1 устава: прямое измерение главнее коэффициента.
+WEIGHT_SCHEMA = """
+CREATE TABLE IF NOT EXISTS parcel_weights (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    incoming_id  TEXT UNIQUE,        -- номер прихода у форвардера (INC-001280)
+    title        TEXT,               -- как подписана посылка
+    weight_kg    REAL NOT NULL,      -- ФАКТ с весов форвардера
+    fmt          TEXT,               -- single_lp | double_lp | gatefold_lp | ...
+    ebay_item_id TEXT,               -- если удалось связать с лотом
+    note         TEXT,
+    added_at     TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_pw_fmt ON parcel_weights(fmt);
+"""
+
+
+def init_weights(conn):
+    conn.executescript(WEIGHT_SCHEMA)
+    conn.commit()
+    return conn
+
+
+def record_parcel_weight(conn, *, incoming_id, title, weight_kg, fmt="single_lp",
+                         ebay_item_id=None, note=None) -> int:
+    """Записать ФАКТИЧЕСКИЙ вес пришедшей посылки."""
+    init_weights(conn)
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    cur = conn.execute(
+        "INSERT OR REPLACE INTO parcel_weights "
+        "(incoming_id,title,weight_kg,fmt,ebay_item_id,note,added_at) "
+        "VALUES (?,?,?,?,?,?,?)",
+        (incoming_id, title, float(weight_kg), fmt, ebay_item_id, note, now))
+    conn.commit()
+    return cur.lastrowid
+
+
+def measured_weight(conn, fmt="single_lp", *, min_n=3):
+    """(медиана_кг, сколько_замеров) или (None, n), если замеров мало.
+
+    Порог min_n — тот же принцип, что в graded_median: две посылки это не
+    распределение. Пока замеров меньше, честнее вернуть None и пусть
+    расчёт берёт конфиг, чем выдавать медиану двух чисел за измерение.
+    """
+    init_weights(conn)
+    rows = [r[0] for r in conn.execute(
+        "SELECT weight_kg FROM parcel_weights WHERE fmt=? ORDER BY weight_kg", (fmt,))]
+    if len(rows) < min_n:
+        return None, len(rows)
+    return statistics.median(rows), len(rows)
 
 
 def init_sweep(conn):
