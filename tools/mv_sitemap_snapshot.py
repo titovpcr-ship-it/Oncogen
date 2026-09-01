@@ -206,21 +206,122 @@ def report(conn):
         print("ушедших пока нет — время на витрине появится со второго полного снимка")
 
 
+# ───────── ВЫГРУЗКА РЯДА В РЕПОЗИТОРИЙ ─────────
+# БЕЗ ЭТОГО ПАНЕЛЬ БЕССМЫСЛЕННА. Она живёт в vinyl.db, а база — 689 МБ,
+# в git не попадает и умирает вместе с контейнером. Ряд же ценен именно
+# длиной: снимок без предыдущих снимков не говорит ничего.
+#
+# Решение — хранить не базу, а сам факт «какие id существовали в эту
+# дату». Идентификаторы идут почти подряд, поэтому дельта-кодирование
+# сжимает список миллиона id до 0.2 МБ (замерено). Пятьдесят два снимка
+# в год — десять мегабайт, это спокойно живёт в репозитории.
+#
+# Любая будущая сессия восстанавливает панель из этих файлов командой
+# rebuild, не обращаясь к сайту.
+EXPORT_DIR = Path(__file__).resolve().parent.parent / "data" / "mv_snapshots"
+
+
+def export_snapshot(conn, taken_on=None, out_dir=EXPORT_DIR) -> Path:
+    """Сохранить список id снимка дельтами под gzip."""
+    import gzip
+    taken_on = taken_on or dt.date.today().isoformat()
+    out_dir.mkdir(parents=True, exist_ok=True)
+    ids = [r[0] for r in conn.execute(
+        "SELECT product_id FROM mv_listings WHERE last_seen_on=? "
+        "ORDER BY product_id", (taken_on,))]
+    prev, deltas = 0, []
+    for i in ids:
+        deltas.append(i - prev)
+        prev = i
+    path = out_dir / f"{taken_on}.ids.gz"
+    path.write_bytes(gzip.compress(
+        ("\n".join(str(d) for d in deltas)).encode(), 9))
+    return path
+
+
+def load_export(path) -> list[int]:
+    import gzip
+    txt = gzip.decompress(Path(path).read_bytes()).decode()
+    ids, prev = [], 0
+    for line in txt.split("\n"):
+        if line:
+            prev += int(line)
+            ids.append(prev)
+    return ids
+
+
+def rebuild(conn, out_dir=EXPORT_DIR, progress=print):
+    """Восстановить панель из выгруженных снимков.
+
+    Порядок дат важен: панель — это последовательность наблюдений, и
+    «исчез» определяется только относительно СЛЕДУЮЩЕГО снимка.
+    """
+    init(conn)
+    files = sorted(Path(out_dir).glob("*.ids.gz"))
+    if not files:
+        progress("выгруженных снимков нет")
+        return 0
+    conn.execute("DELETE FROM mv_listings")
+    prev_ids = set()
+    for f in files:
+        day = f.name.split(".")[0]
+        ids = load_export(f)
+        cur = set(ids)
+        for pid in ids:
+            row = conn.execute("SELECT 1 FROM mv_listings WHERE product_id=?",
+                               (pid,)).fetchone()
+            if row:
+                conn.execute("UPDATE mv_listings SET last_seen_on=?, gone_on=NULL,"
+                             " days_on_shelf=NULL WHERE product_id=?", (day, pid))
+            else:
+                conn.execute("INSERT INTO mv_listings (product_id,first_seen_on,"
+                             "last_seen_on) VALUES (?,?,?)", (pid, day, day))
+        for pid in prev_ids - cur:
+            r = conn.execute("SELECT first_seen_on,last_seen_on FROM mv_listings "
+                             "WHERE product_id=? AND gone_on IS NULL",
+                             (pid,)).fetchone()
+            if r:
+                days = (dt.date.fromisoformat(r[1]) - dt.date.fromisoformat(r[0])).days
+                conn.execute("UPDATE mv_listings SET gone_on=?, days_on_shelf=? "
+                             "WHERE product_id=?", (day, days, pid))
+        prev_ids = cur
+        progress(f"  {day}: {len(ids)} предложений")
+    conn.commit()
+    return len(files)
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--db", default="vinyl.db")
     p.add_argument("--limit", type=int, default=None,
                    help="взять только первые N файлов (проверочный прогон)")
     p.add_argument("--report", action="store_true")
+    p.add_argument("--rebuild", action="store_true",
+                   help="восстановить панель из data/mv_snapshots (без сети)")
+    p.add_argument("--export-only", action="store_true",
+                   help="только выгрузить последний снимок в репозиторий")
     a = p.parse_args(argv)
     conn = sqlite3.connect(a.db)
     if a.report:
         report(conn)
+    elif a.rebuild:
+        n = rebuild(conn)
+        print(f"панель восстановлена из {n} снимков")
+        report(conn)
+    elif a.export_only:
+        path = export_snapshot(conn)
+        print(f"выгружено: {path} ({path.stat().st_size / 1e6:.2f} МБ)")
     else:
         res = snapshot(conn, limit=a.limit)
         print(f"\nснимок: {res['listings']} предложений, "
               f"новых {res['appeared']}, ушло {res['disappeared']}, "
               f"файлов {res['files_ok']} ok / {res['files_failed']} сбой")
+        if res["complete"]:
+            path = export_snapshot(conn)
+            print(f"ряд сохранён в репозиторий: {path.name} "
+                  f"({path.stat().st_size / 1e6:.2f} МБ)")
+        else:
+            print("неполный снимок в ряд НЕ выгружен")
         report(conn)
     conn.close()
     return 0
