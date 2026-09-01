@@ -165,6 +165,49 @@ def store_lots(conn, lots):
     return len(lots)
 
 
+def build_price_index(conn):
+    """Индекс «исполнитель+альбом -> чем это оценить».
+
+    БЕЗ ЭТОГО ШАГА ЖИВОЙ ПРОГОН БЕССМЫСЛЕН. Первая версия звала
+    evaluate_lot без release_id, и 585 лотов из 600 получили «нет
+    московской цены» — не потому, что цены нет, а потому что лот ни с чем
+    не сопоставлялся. Это класс «не посмотрели», выданный за результат.
+
+    Сопоставление идёт по названию, тем же сопоставителем, что и обход
+    want-list: он пережил семь классов ложных срабатываний и знает про
+    альбом внутри имени артиста, односложные ходовые слова и неверные
+    форматы.
+    """
+    import moscow_wantlist as wl                   # noqa: E402
+    idx = []
+    for r in conn.execute(
+            "SELECT artist, album, release_id, master_id, COUNT(*) n "
+            "FROM mv_prices WHERE lower(media) LIKE '%vinyl%' "
+            "GROUP BY artist, album"):
+        idx.append({"artist": r[0], "album": r[1], "release_id": r[2],
+                    "master_id": r[3], "mv_offers": r[4],
+                    "median_rub": None, "sold_n": 0, "src": "mv"})
+    have = {(e["artist"].lower(), e["album"].lower()) for e in idx}
+    for r in conn.execute(
+            "SELECT artist, album, median_rub, sold_n FROM moscow_wantlist"):
+        if (r[0].lower(), r[1].lower()) in have:
+            continue
+        idx.append({"artist": r[0], "album": r[1], "release_id": None,
+                    "master_id": None, "mv_offers": 0,
+                    "median_rub": r[2], "sold_n": r[3], "src": "meshok"})
+    return idx, wl
+
+
+def match_lot(idx, wl, title):
+    """Первая позиция индекса, чьё название совпало с заголовком лота."""
+    if wl.wrong_format(title):
+        return None
+    for e in idx:
+        if wl.title_matches(e, title):
+            return e
+    return None
+
+
 def evaluate_lot(conn, cfg, lot, *, release_id=None, master_id=None,
                  meshok_median_rub=None, meshok_n=0, grade=None,
                  discogs_ref=None):
@@ -264,7 +307,8 @@ def main(argv=None):
         from wantlist_sweep import ebay_token          # noqa: E402
         print(f"\nищу на eBay: категория «Записи», ${lo:.0f}–${hi:.0f}, "
               f"продавцы США, потолок {a.limit} лотов")
-        lots = search_upper_segment(ebay_token(), cfg, limit=a.limit)
+        token = ebay_token()
+        lots = search_upper_segment(token, cfg, limit=a.limit)
         print(f"\nнайдено лотов верхнего сегмента: {len(lots)}")
         if not lots:
             print("  ноль лотов — это результат поиска, а не отказ: обход")
@@ -278,22 +322,57 @@ def main(argv=None):
         print(f"  цены: медиана ${statistics.median(pr):.0f}, "
               f"от ${pr[0]:.0f} до ${pr[-1]:.0f}")
 
-        reasons, passed = {}, []
+        idx, wl = build_price_index(conn)
+        mv_n = sum(1 for e in idx if e["src"] == "mv")
+        print(f"\nиндекс оценки: {mv_n} позиций с ценой МаркетВинила + "
+              f"{len(idx) - mv_n} с ценой Мешка")
+
+        # ГРЕЙД В ЭТОМ КОНТУРЕ НЕ ИЗВЛЕКАЛСЯ ВООБЩЕ — grade=None у всех
+        # лотов. При потолке 3 000 ₽ для неизвестного состояния это
+        # означало автоматический отказ КАЖДОМУ лоту дороже $30, то есть
+        # всей выборке. Ноль был предрешён устройством кода, а не рынком.
+        #
+        # Сначала бесплатно из заголовка, потом детальный запрос — но
+        # только по СОПОСТАВЛЕННЫМ лотам: их единицы, и тратить бюджет на
+        # остальные незачем.
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import test_calibration as calib                      # noqa: E402
+        from wantlist_sweep import item_grade                 # noqa: E402
+
+        reasons, passed, matched, details = {}, [], 0, 0
         for lot in lots:
-            v = evaluate_lot(conn, cfg, lot)
+            e = match_lot(idx, wl, lot["title"])
+            grade = calib.extract_grade(lot["title"])
+            has_photos = False
+            if e:
+                matched += 1
+                if details < 60:
+                    g2, has_photos = item_grade(token, lot["item_id"])
+                    details += 1
+                    grade = g2 or grade
+            lot["has_photos"] = has_photos
+            v = evaluate_lot(conn, cfg, lot,
+                             release_id=(e or {}).get("release_id"),
+                             master_id=(e or {}).get("master_id"),
+                             meshok_median_rub=(e or {}).get("median_rub"),
+                             meshok_n=(e or {}).get("sold_n") or 0,
+                             grade=grade)
+            v["matched"] = e["artist"] + " — " + e["album"] if e else None
             if v["ok"]:
                 passed.append((lot, v))
             else:
                 key = " ".join(v["why"].split(" ")[:4])
                 reasons[key] = reasons.get(key, 0) + 1
 
-        print(f"\nПРОШЛО: {len(passed)} из {len(lots)}")
+        print(f"\nсопоставлено с известной позицией: {matched} из {len(lots)}")
+        print(f"ПРОШЛО: {len(passed)} из {len(lots)}")
         print("разбор отказов (ПРАВИЛО 2):")
         for k, n in sorted(reasons.items(), key=lambda kv: -kv[1])[:10]:
             print(f"  {n:>4} — {k}")
         for lot, v in sorted(passed, key=lambda x: -(x[1]["profit_rub"] or 0)):
             print(f"  ПРОХОДИТ ${v['price_usd']:.2f} | {v['profit_rub']:.0f} ₽ | "
-                  f"цена из {v['ru_source']} | {lot['title'][:60]}")
+                  f"цена из {v['ru_source']} ({v.get('ru_kind')}) | "
+                  f"{v.get('matched')} | {lot['title'][:56]}")
             print(f"    {lot['url']}")
 
         # Даже при нулевом проходе сама выдача — новые данные: верхнюю
