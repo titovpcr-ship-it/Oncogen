@@ -258,6 +258,16 @@ def main():
     cfg = yaml.safe_load(config_path.read_text())
 
     examples = cfg["calibration_examples"]
+    min_price = cfg.get("budget_constraints", {}).get("min_current_price_usd")
+    if min_price:
+        # Нижняя граница закупки — решение владельца, а не измерение.
+        # Тест проверяет только связность: минимум ниже максимума и
+        # выше порога обязательной сверки глазами.
+        assert min_price < cfg["budget_constraints"]["max_current_price_usd"], \
+            "минимум закупки не может быть выше максимума"
+        mr = cfg["ru_market"].get("manual_review_above_usd")
+        assert not mr or min_price > float(mr), (
+            "минимум закупки ниже порога сверки — часть лотов пройдёт без сверки")
     max_price = cfg.get("budget_constraints", {}).get("max_current_price_usd")
     mismatches = 0
     rows = []

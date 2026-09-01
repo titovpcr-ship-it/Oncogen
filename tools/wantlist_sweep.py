@@ -391,21 +391,43 @@ def main(argv=None):
     print(f"обход {len(entries)} позиций, страны {','.join(countries)} "
           f"(прогон #{run_id})")
 
+    # РЕШЕНИЕ ВЛАДЕЛЬЦА 31.08.2026: нижняя граница закупки. Разворот
+    # прежней логики — раньше искали «ещё дешёвые» лоты, теперь дешёвые
+    # отсекаются первыми, до всякого расчёта.
+    bc = cfg.get("budget_constraints") or {}
+    min_price = float(bc.get("min_current_price_usd") or 0)
+    max_price = float(bc.get("max_current_price_usd") or 0)
+    if min_price:
+        print(f"нижняя граница закупки: ${min_price:.0f} "
+              f"(дешевле не рассматриваем вовсе)")
+
     # Стадия 1: широкий отсев по самому мягкому потолку.
     survivors = []
+    too_cheap = 0
     for i, e in enumerate(entries, 1):
         ceiling = wl.max_bid_usd(e, cfg, target_margin=2.0) or 0
         if ceiling <= 0:
             continue
         for lot in search(token, wl.ebay_query(e), countries):
+            # ПРАВИЛО 2: «слишком дёшев» считается отдельно от «дороже
+            # потолка». Иначе нулевой прогон не отличить от прогона, где
+            # весь рынок просто ниже нижней границы.
+            if min_price and lot["price"] < min_price:
+                too_cheap += 1
+                continue
+            if max_price and lot["price"] > max_price:
+                continue
             if lot["price"] > ceiling:
                 continue
             if not title_matches(e, lot["title"]) or wrong_format(lot["title"]):
                 continue
             survivors.append((e, lot, ceiling))
         if i % 25 == 0:
-            print(f"  {i}/{len(entries)} … кандидатов {len(survivors)}")
+            print(f"  {i}/{len(entries)} … кандидатов {len(survivors)}"
+                  + (f", дешевле ${min_price:.0f}: {too_cheap}" if min_price else ""))
     print(f"стадия 1: {len(survivors)} кандидатов дешевле потолка 2x")
+    if min_price:
+        print(f"  отсеяно дешевле ${min_price:.0f}: {too_cheap} лотов")
 
     # §3 «Ответа на отчёт»: критерий партии переформулирован.
     # Было: 5 лотов ИЗ want-list у одного продавца -> 3 продавца на 837
