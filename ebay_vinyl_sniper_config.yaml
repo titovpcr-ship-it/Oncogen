@@ -1420,3 +1420,47 @@ calibration_examples:
     discogs_bundle_sum: { median_sum: 28.66, high_sum: 154.28 }
     expected_verdict: "WATCH"
     reason: "лот из 5 позиций — сумма медиан даёт только ~x2, x3 возможен только при поштучной перепродаже и удаче в верхнем диапазоне 1-2 позиций; доп. расходы при парт-ауте съедают часть маржи, учитывать это в net_margin"
+
+# ─────────────────────── РЕЖИМ «НОВАЯ ПОПСА» ───────────────────────
+# Задан владельцем 02.09.2026. Логика другая, чем у охоты за редкостями:
+# там мы ищем недооценённый пресс и сверяем его со справкой Discogs,
+# здесь — ходовой новодел, у которого справка не нужна вовсе. Тезис
+# владельца: топовая попса в слюде продаётся в Москве сама, вопрос
+# только в цене входа.
+#
+# ПОЭТОМУ ЗДЕСЬ НЕТ НИ DISCOGS, НИ СВЕРКИ ПРЕССА. Пресс у запечатанного
+# новодела один, подменить его нечем, и весь риск сводится к цене.
+new_pop:
+  enabled: true
+  # Потолок ДО ФОРВАРДЕРА: цена лота плюс доставка по США. Карго до
+  # Москвы сюда НЕ входит — владелец задал порог именно так.
+  max_landed_to_forwarder_usd: 25.0
+  # Доставка, когда продавец её не назвал. Ноль подставлять нельзя —
+  # это уже стоило нам 52% занижённых landed на аукционах.
+  assumed_shipping_usd: 5.0
+  require_sealed: true
+  # СПИСОК — ЗАТРАВКА, А НЕ ИЗМЕРЕНИЕ. Это ходовые виниловые тиражи по
+  # состоянию рынка на начало 2026 года; проверяемого API «топ продаж
+  # винила в мире» не существует, поэтому список задан явно и правится
+  # руками. Каждая строка идёт в eBay как поисковый запрос.
+  titles:
+    - "Taylor Swift The Tortured Poets Department vinyl"
+    - "Taylor Swift Midnights vinyl"
+    - "Taylor Swift 1989 Taylor's Version vinyl"
+    - "Olivia Rodrigo GUTS vinyl"
+    - "Billie Eilish Hit Me Hard and Soft vinyl"
+    - "Sabrina Carpenter Short n Sweet vinyl"
+    - "Harry Styles Harry's House vinyl"
+    - "SZA SOS vinyl"
+    - "The Weeknd After Hours vinyl"
+    - "Lana Del Rey Born To Die vinyl"
+    - "Arctic Monkeys AM vinyl"
+    - "Fleetwood Mac Rumours vinyl"
+    - "Pink Floyd The Dark Side of the Moon vinyl"
+    - "Nirvana Nevermind vinyl"
+    - "Amy Winehouse Back to Black vinyl"
+    - "Michael Jackson Thriller vinyl"
+    - "Queen Greatest Hits vinyl"
+    - "The Beatles Abbey Road vinyl"
+    - "Bob Marley Legend vinyl"
+    - "Kendrick Lamar good kid m.A.A.d city vinyl"
