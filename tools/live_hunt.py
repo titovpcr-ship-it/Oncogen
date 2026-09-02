@@ -276,7 +276,7 @@ def pressing_mismatch(title, rel):
                if rel.get("year") else ""))
 
 
-def eye_check_flags(lot, ref_n, ratio):
+def eye_check_flags(lot, ref_n, ratio, rel=None):
     """Что человек обязан проверить до ставки. Пустой список не бывает:
     хотя бы одна строка есть всегда, потому что вердикт не сверен."""
     f = []
@@ -290,6 +290,20 @@ def eye_check_flags(lot, ref_n, ratio):
         f.append("ставок нет — цена ещё не найдена торгами, может вырасти")
     f.append("сверить пресс: справка Discogs даёт МИРОВОЙ ПОЛ ПРЕДЛОЖЕНИЯ, "
              "а не цену сделки")
+    # САМЫЙ ОПАСНЫЙ СЛУЧАЙ: справка от винтажного оригинала, а заголовок
+    # не даёт ни номера, ни года. Автомат тут бессилен — сверять нечего,
+    # — но именно здесь и живут подмены: пять из двенадцати верхних
+    # кандидатов 02.09.2026 оказались справкой не о том прессе, и
+    # дешёвый лот с безликим заголовком получал цену оригинала.
+    ry = (rel or {}).get("year")
+    if (ry and ry < 1980
+            and not extract_catalog_number(lot["title"])
+            and not _loose_catno(lot["title"])
+            and not re.search(r"\b(19[3-9]\d|20[0-2]\d)\b", lot["title"])):
+        f.insert(0, f"ГЛАВНОЕ: справка относится к оригиналу {ry} года, "
+                    f"а заголовок лота не называет ни каталожного номера, "
+                    f"ни года. Это может быть переиздание — решают фото "
+                    f"этикетки и раннаута")
     return f
 
 
@@ -555,7 +569,7 @@ def main(argv=None):
         else:
             found += 1
             h = hours_left(lot["ends_at"])
-            flags = eye_check_flags(lot, ref.num_for_sale, ratio)
+            flags = eye_check_flags(lot, ref.num_for_sale, ratio, rel)
             msg = (f"НАХОДКА +${profit:.0f} ({ratio:.2f}x) — "
                    f"закрытие через {h:.1f} ч\n\n"
                    f"{lot['title'][:90]}\n\n"
@@ -568,9 +582,13 @@ def main(argv=None):
                    f"Discogs, мировой пол предложения ${ref.lowest_price_usd:.2f}\n"
                    f"прибыль до продажи ${profit:.2f}\n"
                    f"копий в мировой продаже: {ref.num_for_sale}\n"
-                   + (f"пресс сверен по каталожному номеру\n"
-                      if extract_catalog_number(lot["title"]) else
-                      "каталожного номера в заголовке НЕТ — пресс не сверен\n")
+                   + f"справка о пресcе: {rel.get('country')} {rel.get('year')}, "
+                   + "/".join((l.get("catno") or "?")
+                              for l in (rel.get("labels") or [])[:2]) + "\n"
+                   + ("пресс сверен по каталожному номеру\n"
+                      if (extract_catalog_number(lot["title"])
+                          or _loose_catno(lot["title"])) else
+                      "ПРЕСС НЕ СВЕРЕН: в заголовке нет ни номера, ни года\n")
                    + (f"спрос want/have {dr:.1f}\n" if dr is not None else "")
                    + "\n"
                    f"НЕ СВЕРЕНО ГЛАЗАМИ. До ставки проверить:\n"

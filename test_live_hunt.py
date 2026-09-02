@@ -177,6 +177,35 @@ def test_demand_ratio_izmerenie_a_ne_verdikt():
     check("нет community — None", lh.demand_ratio({}) is None)
 
 
+def test_preduprezhdenie_kogda_press_nechem_sverit():
+    """Справка от винтажного оригинала при безликом заголовке — самый
+    опасный случай, и автомат тут бессилен. Значит человек обязан
+    увидеть предупреждение ПЕРВОЙ строкой.
+
+    Лот «Hank Mobley And His All-Stars Vinyl Album Blue Note Ex» за $60
+    прошёл все сторожа с прибылью $525.98: справка от BLP 1544, US 1957.
+    Ни номера, ни года в заголовке нет — сверять было нечем.
+    """
+    lot = {"title": "Hank Mobley And His All-Stars Vinyl Album Blue Note Ex",
+           "bids": 0}
+    rel_1957 = {"year": 1957, "country": "US", "labels": [{"catno": "BLP 1544"}]}
+    flags = lh.eye_check_flags(lot, 8, 7.88, rel_1957)
+    check("предупреждение стоит первой строкой",
+          flags and "ГЛАВНОЕ" in flags[0], str(flags[:1]))
+    check("в предупреждении назван год справки",
+          flags and "1957" in flags[0])
+
+    rel_2016 = {"year": 2016, "country": "US", "labels": [{"catno": "X"}]}
+    flags2 = lh.eye_check_flags(lot, 8, 7.88, rel_2016)
+    check("для свежей карточки предупреждения нет",
+          not any("ГЛАВНОЕ" in x for x in flags2))
+
+    lot_catno = {"title": "Hank Mobley Blue Note BLP 1544 mono", "bids": 0}
+    flags3 = lh.eye_check_flags(lot_catno, 8, 7.88, rel_1957)
+    check("когда номер в заголовке есть — предупреждения нет",
+          not any("ГЛАВНОЕ" in x for x in flags3))
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -242,6 +271,7 @@ def main():
                test_baza_ne_padaet_ot_chitatelya,
                test_press_a_ne_tolko_albom,
                test_demand_ratio_izmerenie_a_ne_verdikt,
+               test_preduprezhdenie_kogda_press_nechem_sverit,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,
