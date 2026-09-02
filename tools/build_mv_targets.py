@@ -118,8 +118,22 @@ def query_ladder(title: str, widths=(7, 5, 3)):
     return out
 
 
+class ApiRefused(Exception):
+    """Discogs отказал (429, 5xx, сеть). НЕ ОТВЕТ О ПЛАСТИНКЕ.
+
+    Отдельный тип нужен, потому что вызывающий код обязан различать
+    «спросили, и пластинки нет» и «спросить не удалось». Строкой в
+    третьем элементе кортежа это различие не переживало ни одного
+    вызова: лестница запросов гасила его в «не опознал», и лот уходил
+    в журнал проверенных навсегда.
+    """
+
+
 def resolve(query, token, session=None):
-    """(release_id, master_id, подпись) или (None, None, причина)."""
+    """(release_id, master_id, подпись) или (None, None, причина).
+
+    Бросает ApiRefused, если Discogs не ответил по существу.
+    """
     s = session or requests
     try:
         r = s.get(DISCOGS_SEARCH,
@@ -129,10 +143,10 @@ def resolve(query, token, session=None):
                           "per_page": 3},
                   timeout=25)
     except requests.RequestException as e:          # noqa: BLE001
-        return None, None, f"сеть: {type(e).__name__}"
+        raise ApiRefused(f"сеть: {type(e).__name__}") from e
     if r.status_code != 200:
         # ПРАВИЛО 2: отказ не равен «не нашлось».
-        return None, None, f"Discogs отказал: HTTP {r.status_code}"
+        raise ApiRefused(f"Discogs отказал: HTTP {r.status_code}")
     res = r.json().get("results") or []
     if not res:
         return None, None, "Discogs ничего не нашёл"
@@ -214,9 +228,28 @@ def main(argv=None):
     todo = uniq[:a.limit]
     print(f"резолвлю {len(todo)} (лимит Discogs 60/мин -> ~{len(todo) * GAP / 60:.0f} мин)\n")
 
-    out, stats = [], {"есть карточка": 0, "нет карточки": 0, "не резолвится": 0}
+    out, stats = [], {"есть карточка": 0, "нет карточки": 0,
+                      "не резолвится": 0, "API отказал": 0}
+    refused = 0
     for i, e in enumerate(todo, 1):
-        rid, mid, label = resolve(e["query"], DISCOGS_TOKEN)
+        # Отказ API — не ответ о пластинке: позиция помечается отдельно и
+        # остаётся кандидатом на следующий прогон, а не уходит в «не
+        # резолвится» навсегда. Двадцать пять отказов подряд означают,
+        # что дальше идти бессмысленно — Discogs нас не обслуживает.
+        try:
+            rid, mid, label = resolve(e["query"], DISCOGS_TOKEN)
+        except ApiRefused as ex:
+            refused += 1
+            e["card_url"], e["card_kind"] = None, f"API отказал: {ex}"
+            stats["API отказал"] += 1
+            out.append(e)
+            if refused >= 25:
+                print(f"\nDiscogs отказывает подряд {refused} раз — "
+                      f"останавливаюсь, чтобы не записать отказы как ответы")
+                break
+            time.sleep(GAP)
+            continue
+        refused = 0
         if not rid and not mid:
             # ВТОРАЯ ПОПЫТКА КОРОЧЕ. Замерено: «Marilyn Manson Antichrist
             # Superstar LTD 2LP PICTURE» не находится, хотя альбом на
@@ -225,7 +258,10 @@ def main(argv=None):
             short = " ".join(e["query"].split()[:4])
             if short != e["query"] and len(short) > 5:
                 time.sleep(GAP)
-                rid, mid, label = resolve(short, DISCOGS_TOKEN)
+                try:
+                    rid, mid, label = resolve(short, DISCOGS_TOKEN)
+                except ApiRefused:
+                    rid = mid = None
                 if rid or mid:
                     e["query_used"] = short
         e["release_id"], e["master_id"], e["discogs"] = rid, mid, label

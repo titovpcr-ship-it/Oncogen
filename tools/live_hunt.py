@@ -41,7 +41,8 @@ import yaml                                       # noqa: E402
 
 import moscow_wantlist as wl                      # noqa: E402
 import upper_segment as us                        # noqa: E402
-from build_mv_targets import query_ladder, resolve, verify_match  # noqa: E402
+from build_mv_targets import (ApiRefused, query_ladder, resolve,  # noqa: E402
+                              verify_match)
 
 CFG = Path(__file__).resolve().parent.parent / "ebay_vinyl_sniper_config.yaml"
 
@@ -172,6 +173,25 @@ def eye_check_flags(lot, ref_n, ratio):
     return f
 
 
+def order_key(row, urgent_hours):
+    """Ключ очереди: срочное раньше перспективного.
+
+    ВНУТРИ СРОЧНЫХ РЕШАЕТ СРОК, А НЕ ОЧКИ. Первая версия ставила очки
+    первыми во всей выборке, и лот с закрытием через час уходил за лот
+    с закрытием через два только потому, что у второго была метка.
+    Срочные потому и срочные, что среди них решает молоток: очки
+    помогают выбрать, кого смотреть, а не кого успеть.
+
+    Функция вынесена на уровень модуля НАМЕРЕННО. Пока сортировка жила
+    лямбдой внутри main, тест был вынужден повторять её у себя — и
+    прошёл бы даже на сломанном коде, потому что проверял собственную
+    копию.
+    """
+    urgent = row["_h"] < urgent_hours
+    return (not urgent,
+            (row["_h"], 0.0) if urgent else (float(-row["_score"]), row["_h"]))
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--db", default="vinyl.db")
@@ -215,7 +235,19 @@ def main(argv=None):
     fx = float(ru.get("fx_rate_rub_per_usd", 100.0))
 
     from ebay_vinyl_3x_finder import DISCOGS_TOKEN      # noqa: E402
-    conn = sqlite3.connect(a.db)
+    # ЖДАТЬ БЛОКИРОВКУ, А НЕ ПАДАТЬ ОТ НЕЁ. По умолчанию sqlite ждёт
+    # пять секунд и бросает «database is locked». Прогон длится часами,
+    # база весит под гигабайт, и любой посторонний читатель — отчёт,
+    # разбор воронки, ручной запрос — держит её дольше пяти секунд.
+    # Проверено ценой упавшего прогона: охота умерла на 189-м лоте
+    # ровно из-за читающего запроса рядом.
+    #
+    # WAL снимает причину, а не следствие: в этом режиме читатели не
+    # блокируют писателя вовсе. Таймаут остаётся как страховка на
+    # случай второго ПИШУЩЕГО процесса, от которого WAL не спасает.
+    conn = sqlite3.connect(a.db, timeout=60.0)
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA busy_timeout=60000")
     conn.row_factory = sqlite3.Row
     for stmt in SEEN_SCHEMA.split(";"):
         if not stmt.strip():
@@ -246,7 +278,14 @@ def main(argv=None):
     # ПОРЯДОК: сначала всё, что закрывается в ближайшие часы — иначе
     # находка истечёт, пока мы смотрим более перспективный лот с торгами
     # до завтра. Остальное — по перспективности, а не по времени.
-    todo.sort(key=lambda r: (r["_h"] >= a.urgent_hours, -r["_score"], r["_h"]))
+    #
+    # ВНУТРИ СРОЧНЫХ СОРТИРУЕМ ПО СРОКУ, А НЕ ПО ОЧКАМ. Первая версия
+    # ставила очки первыми во всей выборке, и лот с закрытием через час
+    # уходил за лот с закрытием через два часа только потому, что у
+    # второго была метка. Срочные потому и срочные, что среди них
+    # решает молоток, а не перспективность: очки помогают выбрать, кого
+    # смотреть, а не кого успеть.
+    todo.sort(key=lambda r: order_key(r, a.urgent_hours))
     todo = todo[:a.limit]
     print(f"аукционов к проверке (закрытие в ближайшие {a.ends_within:.0f} ч): "
           f"{len(todo)}, порядок — перспективность, затем срок")
@@ -259,7 +298,7 @@ def main(argv=None):
           f"потолок копий в мире {cap if cap else 'снят'}\n")
 
     lim = us.RateLimiter(55)
-    found, reasons = 0, {}
+    found, reasons, refused = 0, {}, 0
     notifier = None
     for i, lot in enumerate(todo, 1):
         why = None
@@ -278,17 +317,48 @@ def main(argv=None):
                 # пустоту на пластинках, которые в базе есть. Это был
                 # класс «не посмотрели», а не «посмотрели и отказали».
                 rid = label = None
-                for q in ladder:
-                    lim.wait()
-                    rid, mid, label = resolve(q, DISCOGS_TOKEN)
-                    if rid and verify_match(lot["title"], label):
+                try:
+                    for q in ladder:
+                        lim.wait()
+                        rid, mid, label = resolve(q, DISCOGS_TOKEN)
+                        if rid and verify_match(lot["title"], label):
+                            break
+                        rid = None
+                except ApiRefused as ex:
+                    # ОТКАЗ API — НЕ ОТВЕТ О ПЛАСТИНКЕ. Раньше 429 от
+                    # Discogs гасился лестницей в «не опознал», лот
+                    # уходил в журнал проверенных и БОЛЬШЕ НИКОГДА не
+                    # попадал в выборку: следующий прогон исключает всё,
+                    # что в журнале. Долгий отказ похоронил бы тысячи
+                    # лотов молча. Теперь лот не записывается вовсе и
+                    # остаётся кандидатом.
+                    refused += 1
+                    print(f"  [{i}] {ex} — лот оставлен непроверенным")
+                    if refused >= 25:
+                        print(f"\nDiscogs отказывает подряд {refused} раз. "
+                              f"Останавливаюсь: писать отказы в журнал как "
+                              f"ответы нельзя.")
                         break
-                    rid = None
+                    continue
+                refused = 0
                 if not rid:
                     why = "Discogs не опознал (лестница исчерпана)"
                 else:
                     lim.wait()
                     ref = us.fetch_discogs_stats(rid, DISCOGS_TOKEN, conn=conn)
+                    refusal = next((n for n in ref.notes
+                                    if "отказал" in n or "сеть недоступна" in n), None)
+                    if refusal:
+                        # То же самое на втором запросе: upper_segment
+                        # честно кладёт причину в notes, а вызывающий их
+                        # выбрасывал и записывал «нет справки о цене».
+                        refused += 1
+                        print(f"  [{i}] {refusal} — лот оставлен непроверенным")
+                        if refused >= 25:
+                            print(f"\nDiscogs отказывает подряд {refused} раз. "
+                                  f"Останавливаюсь.")
+                            break
+                        continue
                     if ref.lowest_price_usd is None:
                         why = "нет справки о цене"
                     elif cap and ref.num_for_sale and ref.num_for_sale > cap:
@@ -321,13 +391,22 @@ def main(argv=None):
                             why = (f"деньги есть (+${profit:.2f}), но спроса "
                                    f"нет: want/have ниже порога")
 
-        conn.execute("INSERT OR REPLACE INTO hunt_checked "
-                     "(item_id,release_id,ratio,profit,why,checked_at) "
-                     "VALUES (?,?,?,?,?,datetime('now'))",
-                     (lot["item_id"], rid, ratio, profit, why))
-        conn.commit()
+        # ЖУРНАЛ ПИШЕТСЯ СРАЗУ ТОЛЬКО ДЛЯ ОТКАЗОВ. Для НАХОДКИ запись
+        # откладывается до успешной отправки: журнал исключает лот из
+        # всех будущих выборок, и находка, записанная до отправки,
+        # исчезает навсегда, если отправка не состоялась — упал Телеграм,
+        # оборвалась сеть, процесс убили между двумя строками. Ровно этот
+        # порядок дважды за сегодня прошёл в шаге от потери: прогон
+        # останавливали сигналом.
+        def journal():
+            conn.execute("INSERT OR REPLACE INTO hunt_checked "
+                         "(item_id,release_id,ratio,profit,why,checked_at) "
+                         "VALUES (?,?,?,?,?,datetime('now'))",
+                         (lot["item_id"], rid, ratio, profit, why))
+            conn.commit()
 
         if why:
+            journal()
             # Ключ без чисел: иначе «прибыль $12.12 ниже $50» и
             # «прибыль $11.90 ниже $50» станут разными причинами и
             # разбор отказов (ПРАВИЛО 2) распадётся на сотню строк по
@@ -354,15 +433,30 @@ def main(argv=None):
                    + "\n".join(f"• {x}" for x in flags)
                    + f"\n\n{lot['url']}")
             print(f"\n=== {msg}\n")
-            if not a.dry:
-                if notifier is None:
-                    import notify
-                    notifier = notify.Notifier()
-                notifier.send(msg, click_url=lot["url"])
-                conn.execute("INSERT OR REPLACE INTO hunt_seen "
-                             "(item_id,ratio,pushed_at) VALUES (?,?,datetime('now'))",
-                             (lot["item_id"], ratio))
-                conn.commit()
+            if a.dry:
+                # В сухом прогоне находка НЕ помечается проверенной.
+                # Иначе она исключается из боевой выборки и не уходит в
+                # Телеграм никогда: сухих прогонов сегодня было пять.
+                print("  (сухой прогон: в журнал не пишу, находка "
+                      "останется кандидатом)")
+            else:
+                try:
+                    if notifier is None:
+                        import notify
+                        notifier = notify.Notifier()
+                    notifier.send(msg, click_url=lot["url"])
+                except Exception as ex:                    # noqa: BLE001
+                    # Отправка не состоялась — лот остаётся кандидатом,
+                    # чтобы следующий прогон попробовал снова. Падать
+                    # всем прогоном из-за одного пуша тоже нельзя.
+                    print(f"  ОТПРАВКА НЕ УДАЛАСЬ ({type(ex).__name__}: {ex}). "
+                          f"Лот НЕ записан в журнал, попробуем в следующий раз.")
+                else:
+                    journal()
+                    conn.execute("INSERT OR REPLACE INTO hunt_seen "
+                                 "(item_id,ratio,pushed_at) VALUES (?,?,datetime('now'))",
+                                 (lot["item_id"], ratio))
+                    conn.commit()
         if i % 25 == 0:
             print(f"  {i}/{len(todo)} … находок {found}")
 
