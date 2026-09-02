@@ -201,6 +201,58 @@ def _loose_catno(title):
     return None
 
 
+def conservative_reference(master_id, token, conn=None, max_versions=14):
+    """Пол предложения по САМОМУ ДЕШЁВОМУ прессу семейства.
+
+    ЗАЧЕМ. Когда заголовок лота не называет ни каталожного номера, ни
+    года, мы не знаем, какой пресс держим в руках. Discogs-поиск при
+    этом отдаёт первым самый заметный релиз — как правило оригинал, у
+    которого пол предложения выше всех. То есть в точности там, где мы
+    знаем меньше всего, конвейер брал самую дорогую справку. Это
+    систематическое завышение прибыли, а не случайная ошибка.
+
+    ПРОВЕРЕНО НА ЖИВОМ ЛОТЕ 02.09.2026. «Hank Mobley And His All-Stars
+    Blue Note Ex» за $60 получил справку от BLP 1544, США 1957 — 553
+    евро, прибыль $525.98, и ушёл в Телеграм. Владелец сверил по фото:
+    это United Artists 1973 года, BST-81544, электронное псевдостерео,
+    мировая медиана продаж $26. У мастера 369544 двадцать девять
+    версий, пол по ним расходится от $28.12 до $817.50 — в тридцать раз
+    на одном и том же альбоме.
+
+    МЕДИАНА ЗДЕСЬ НЕ ГОДИТСЯ. Она даёт $172.25 и всё ещё показывает
+    прибыль $95.75, потому что Discogs отдаёт версии по возрастанию
+    года и в первую страницу попадают оригиналы. Минимум — единственная
+    величина, которую можно утверждать, не зная пресса: лот стоит брать
+    только если он выгоден ДАЖЕ БУДУЧИ самым дешёвым прессом семейства.
+    По минимуму $28.12 прибыль равна -$48.38, и лот честно отклоняется.
+    """
+    import requests
+    hdr = {"Authorization": f"Discogs token={token}",
+           "User-Agent": "VinylArbitrage/1.0"}
+    try:
+        r = requests.get(f"https://api.discogs.com/masters/{int(master_id)}/versions",
+                         headers=hdr, params={"per_page": 100}, timeout=30)
+    except requests.RequestException as e:                 # noqa: BLE001
+        raise ApiRefused(f"сеть: {type(e).__name__}") from e
+    if r.status_code != 200:
+        raise ApiRefused(f"Discogs отказал: HTTP {r.status_code}")
+    vers = (r.json().get("versions") or [])
+    if not vers:
+        return None, 0
+    # Равномерная выборка по всему списку, а не первая страница: список
+    # отсортирован по году, и первые записи — сплошь оригиналы.
+    step = max(1, len(vers) // max_versions)
+    sample = vers[::step][:max_versions]
+    lo, n = None, 0
+    for v in sample:
+        ref = us.fetch_discogs_stats(v.get("id"), token, conn=conn)
+        if ref.lowest_price_usd is None:
+            continue
+        n += 1
+        lo = ref.lowest_price_usd if lo is None else min(lo, ref.lowest_price_usd)
+    return lo, n
+
+
 def pressing_mismatch(title, rel):
     """Тот ли это пресс, о котором справка. Причина отказа или None.
 
@@ -436,7 +488,7 @@ def main(argv=None):
     notifier = None
     for i, lot in enumerate(todo, 1):
         why = None
-        rid = ratio = profit = dr = None
+        rid = ratio = profit = dr = ref_note = None
         if wl.wrong_format(lot["title"]):
             why = "не пластинка"
         else:
@@ -529,6 +581,31 @@ def main(argv=None):
                             rel = release_info(rid, DISCOGS_TOKEN)
                             mism = pressing_mismatch(lot["title"], rel)
                             dr = demand_ratio(rel)
+                            # ПРЕСС НЕ ОПОЗНАН — СПРАВКА ПО САМОМУ
+                            # ДЕШЁВОМУ ПРЕССУ СЕМЕЙСТВА. Заголовок без
+                            # номера и года не даёт права взять цену
+                            # конкретного релиза: Discogs отдаёт первым
+                            # самый заметный, обычно оригинал, и прибыль
+                            # завышается именно там, где мы знаем меньше
+                            # всего. Лишние запросы тратятся только на
+                            # кандидатов, уже прошедших порог, — их
+                            # единицы.
+                            unverified = not (extract_catalog_number(lot["title"])
+                                              or _loose_catno(lot["title"]))
+                            if not mism and unverified and rel.get("master_id"):
+                                lo, n = conservative_reference(
+                                    rel["master_id"], DISCOGS_TOKEN, conn=conn)
+                                if lo is not None:
+                                    profit = lo - landed
+                                    ratio = lo / landed if landed else 0
+                                    ref_note = (f"пресс не опознан; справка по "
+                                                f"самому дешёвому из {n} прессов "
+                                                f"семейства ${lo:.2f}")
+                                    if min_profit is not None and profit < min_profit:
+                                        why = (f"пресс не опознан: по самому "
+                                               f"дешёвому прессу семейства "
+                                               f"(${lo:.2f} из {n}) прибыль "
+                                               f"${profit:.2f} ниже ${min_profit:.0f}")
                             if mism:
                                 # ПРИБЫЛЬ СТИРАЕТСЯ ВМЕСТЕ С ОТКАЗОМ. Она
                                 # посчитана против ДРУГОГО предмета и
@@ -582,6 +659,7 @@ def main(argv=None):
                    f"Discogs, мировой пол предложения ${ref.lowest_price_usd:.2f}\n"
                    f"прибыль до продажи ${profit:.2f}\n"
                    f"копий в мировой продаже: {ref.num_for_sale}\n"
+                   + (f"{ref_note}\n" if ref_note else "")
                    + f"справка о пресcе: {rel.get('country')} {rel.get('year')}, "
                    + "/".join((l.get("catno") or "?")
                               for l in (rel.get("labels") or [])[:2]) + "\n"
