@@ -41,7 +41,7 @@ import yaml                                       # noqa: E402
 
 import moscow_wantlist as wl                      # noqa: E402
 import upper_segment as us                        # noqa: E402
-from build_mv_targets import clean_query, resolve, verify_match   # noqa: E402
+from build_mv_targets import query_ladder, resolve, verify_match  # noqa: E402
 
 CFG = Path(__file__).resolve().parent.parent / "ebay_vinyl_sniper_config.yaml"
 
@@ -147,7 +147,16 @@ def main(argv=None):
     min_profit = None if min_profit is None else float(min_profit)
     min_ratio = None if min_ratio is None else float(min_ratio)
     cargo = float(ru.get("west_cargo_kg", 0.75)) * 22.0
-    cap = int((ru.get("discogs_reference") or {}).get("max_num_for_sale") or 8)
+    # ПОТОЛОК КОПИЙ — ЭТО МЕРА РЕДКОСТИ, А КРИТЕРИЙ ТЕПЕРЬ ПРИБЫЛЬ.
+    # Значение 8 пришло из времён кратности, когда редкость служила
+    # косвенным признаком дохода. При абсолютной прибыли оно не значит
+    # ничего: пластинка с сорока копиями в продаже и полом $200 приносит
+    # столько же, сколько редкая. Замерено: этот потолок отсёк 346 лотов
+    # из 1798 проверенных (19.2%), ни один из них не был оценён по
+    # деньгам. Свой ключ, чтобы не трогать российский путь.
+    cap = ru.get("west_max_num_for_sale",
+                 (ru.get("discogs_reference") or {}).get("max_num_for_sale"))
+    cap = None if cap in (None, 0) else int(cap)
     assumed_ship = float(ru.get("assumed_us_shipping_usd", 5.0))
     min_wh = float(ru.get("min_want_have_ratio", 0) or 0)
     fx = float(ru.get("fx_rate_rub_per_usd", 100.0))
@@ -175,7 +184,7 @@ def main(argv=None):
     if min_ratio is not None:
         crit.append(f"кратность от {min_ratio}x")
     print(f"критерий: {' и '.join(crit)}; карго ${cargo:.2f}, "
-          f"потолок копий в мире {cap}\n")
+          f"потолок копий в мире {cap if cap else 'снят'}\n")
 
     lim = us.RateLimiter(55)
     found, reasons = 0, {}
@@ -186,22 +195,31 @@ def main(argv=None):
         if wl.wrong_format(lot["title"]):
             why = "не пластинка"
         else:
-            q = clean_query(lot["title"])
-            if len(q) < 6:
+            ladder = query_ladder(lot["title"])
+            if not ladder:
                 why = "заголовок не даёт запроса"
             else:
-                lim.wait()
-                rid, mid, label = resolve(q, DISCOGS_TOKEN)
-                if not rid and not mid:
-                    why = "Discogs ничего не нашёл"
-                elif not verify_match(lot["title"], label):
-                    why = "Discogs нашёл другой альбом"
+                # ЛЕСТНИЦА, А НЕ ОДИН ЗАПРОС. Разбор 1798 проверенных
+                # лотов показал, что 56% отсеивались на опознании, а не
+                # на экономике: одиночный запрос уходил в Discogs с
+                # мусором из состояния и каталожного номера и возвращал
+                # пустоту на пластинках, которые в базе есть. Это был
+                # класс «не посмотрели», а не «посмотрели и отказали».
+                rid = label = None
+                for q in ladder:
+                    lim.wait()
+                    rid, mid, label = resolve(q, DISCOGS_TOKEN)
+                    if rid and verify_match(lot["title"], label):
+                        break
+                    rid = None
+                if not rid:
+                    why = "Discogs не опознал (лестница исчерпана)"
                 else:
                     lim.wait()
                     ref = us.fetch_discogs_stats(rid, DISCOGS_TOKEN, conn=conn)
                     if ref.lowest_price_usd is None:
                         why = "нет справки о цене"
-                    elif ref.num_for_sale and ref.num_for_sale > cap:
+                    elif cap and ref.num_for_sale and ref.num_for_sale > cap:
                         why = f"копий в мире {ref.num_for_sale} — тираж, не редкость"
                     elif min_wh and not demand_ok(rid, DISCOGS_TOKEN, min_wh):
                         why = "спроса нет: want/have ниже порога"

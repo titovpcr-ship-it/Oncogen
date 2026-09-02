@@ -40,20 +40,82 @@ GAP = 60.0 / 55                                    # лимит Discogs 60/ми�
 # Шум маркетплейса: слова, которые не помогают найти релиз, но сбивают
 # поиск. Замерено на живых заголовках верхней полки.
 _NOISE = re.compile(
-    r"\b(lp|vinyl|record|records|album|rare|og|orig|original|first|1st|"
+    r"\b(lp|lps|vinyl|record|records|album|rare|og|orig|original|first|1st|"
     r"press|pressing|sealed|new|mint|nm|vg\+*|ex|near|used|copy|reissue|"
     r"remaster(ed)?|gatefold|180g?r?a?m?|test|promo|limited|edition|"
-    r"collector'?s?|exclusive|shrink|inner|insert|hype|sticker|lot|of)\b",
+    r"collector'?s?|exclusive|shrink|inner|insert|hype|sticker|lot|of|"
+    r"numbered|comp|rpm|stereo|mono|vintage|booklet|poster)\b",
     re.I)
+
+# Служебные и оценочные слова. Они не сужают поиск, но занимают места в
+# запросе. ЗАМЕРЕНО НА ЖИВЫХ ЗАГОЛОВКАХ: «Grant Green Sunday Mornin\'
+# Vinyl LP Album from 1966 in VG+ Condition Blue Note» уходил в Discogs
+# строкой «Grant Green Sunday Mornin\' from in Condition Blue» — три
+# места из восьми съели from/in/Condition, а «Note» не поместилось
+# вовсе. Пластинка при этом самая обыкновенная и на Discogs есть.
+_STOP = {
+    "the", "a", "an", "and", "or", "in", "on", "at", "by", "for", "from",
+    "to", "with", "is", "was", "this", "that", "it", "its", "as", "be",
+    "are", "his", "her", "their", "w", "yr", "no", "not", "all", "very",
+    "good", "condition", "cond", "excellent", "play", "plays", "tested",
+    "cover", "sleeve", "jacket", "disc", "set", "seller", "ships", "free",
+    "shipping", "great", "nice", "clean", "super", "fast", "import",
+    "usa", "us", "uk", "mexican", "germany", "german", "japan",
+    "japanese", "french", "canada", "canadian", "described",
+}
+
+# Каталожный номер, номер экземпляра в тираже, размер. Discogs ищет по
+# названию; такие токены обнуляют выдачу, потому что в названии релиза
+# их нет.
+_CATNO = re.compile(r"^(?:[a-z]{1,4}[-\s]?\d{2,6}[a-z]?|\d+|\d+x\w+|"
+                    r"\d+/\d+|\d+-\d+.*)$", re.I)
+
+
+def clean_tokens(title: str):
+    """Заголовок -> значимые слова в исходном порядке."""
+    t = title or ""
+    # Тире, слэши и скобки СКЛЕИВАЮТ слова, если их не разбить. Замерено
+    # на «Jimi Hendrix--3LP--The BBC Sessions--Numbered»: весь заголовок
+    # уходил в Discogs четырьмя нечитаемыми токенами.
+    t = re.sub(r"[\u2010-\u2015/|+*_,:;!?()\[\]{}\"\u201c\u201d~#]", " ", t)
+    t = re.sub(r"-+", " ", t)
+    t = re.sub(r"[^\w\s'&]", " ", t)
+    t = _NOISE.sub(" ", t)
+    t = re.sub(r"\b\d{4}\b", " ", t)               # годы ищутся хуже, чем мешают
+    out = []
+    for w in t.split():
+        if len(w) < 2 or w.lower() in _STOP or _CATNO.match(w):
+            continue
+        out.append(w)
+    return out
 
 
 def clean_query(title: str) -> str:
     """Заголовок -> запрос к Discogs. Шум режется, порядок слов сохраняется."""
-    t = re.sub(r"[^\w\s'&-]", " ", title or "")
-    t = _NOISE.sub(" ", t)
-    t = re.sub(r"\b\d{4}\b", " ", t)               # годы ищутся хуже, чем мешают
-    words = [w for w in t.split() if len(w) > 1]
-    return " ".join(words[:8])
+    return " ".join(clean_tokens(title)[:7])
+
+
+def query_ladder(title: str, widths=(7, 5, 3)):
+    """Лестница запросов от подробного к короткому.
+
+    Короткий запрос опасен сам по себе: он отбрасывает название и
+    попадает в самый популярный релиз исполнителя — так «Pearl Jam PJ20»
+    стало «Pearl Jam — Vs.». Но опасен он только БЕЗ проверки; verify_match
+    её делает, и тогда лестница даёт второй и третий шанс там, где
+    подробный запрос вернул пустоту.
+
+    ЗАМЕРЕНО на 60 заголовках, которые прежний одиночный запрос не
+    опознал: лестница опознаёт и проверяет 9 из 60 (15%) ценой 2.5
+    запроса на лот вместо одного.
+    """
+    toks = clean_tokens(title)
+    seen, out = set(), []
+    for n in widths:
+        q = " ".join(toks[:n])
+        if len(q) >= 6 and q not in seen:
+            seen.add(q)
+            out.append(q)
+    return out
 
 
 def resolve(query, token, session=None):
