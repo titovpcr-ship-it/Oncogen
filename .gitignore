@@ -9,3 +9,7 @@ smoke_test_decisions_log.csv
 vinyl.db
 vinyl.db-journal
 vinyl.db-wal
+
+# Логи прогонов: файл растёт во время работы и делает дерево грязным
+# на каждой проверке. Результат прогона живёт в vinyl.db, не в логе.
+logs/
