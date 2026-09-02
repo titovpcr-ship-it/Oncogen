@@ -97,6 +97,45 @@ def test_ladder_ne_teryaet_slova():
           sorted((len(x.split()) for x in bmt.query_ladder(t)), reverse=True))
 
 
+def test_press_a_ne_tolko_albom():
+    """Цена принадлежит прессу, а не альбому.
+
+    БАГ, НАЙДЕННЫЙ НА ЖИВОЙ НАХОДКЕ 02.09.2026: лот «NM! Jackie McLean
+    LP Lights Out! 1970 Prestige PRST7757 RVG» прошёл все сторожа с
+    прибылью $550.45 и ушёл в Телеграм. Справка относилась к Esquire
+    32-041, Великобритания, 1957 — другому предмету, дороже в тридцать
+    раз. verify_match сверяет исполнителя и название и для рессиза
+    честно говорит «тот же альбом».
+    """
+    rel_uk_original = {"labels": [{"catno": "32-041", "name": "Esquire"}],
+                       "country": "UK", "year": 1957}
+    t = "NM! Jackie McLean LP Lights Out! 1970 Prestige PRST7757 RVG"
+    why = lh.pressing_mismatch(t, rel_uk_original)
+    check("рессиз не выдаётся за оригинал", why is not None and "PRST7757" in why, str(why))
+
+    rel_same = {"labels": [{"catno": "PRST 7757", "name": "Prestige"}],
+                "country": "US", "year": 1970}
+    check("тот же пресс проходит", lh.pressing_mismatch(t, rel_same) is None)
+
+    # Discogs хранит номер оригинала голым числом — это НЕ расхождение
+    rel_bare = {"labels": [{"catno": "7757", "name": "Prestige"}],
+                "country": "US", "year": 1970}
+    check("голый номер у Discogs не считается другим прессом",
+          lh.pressing_mismatch(t, rel_bare) is None)
+
+    check("без номера в заголовке проверять нечем — не отказ",
+          lh.pressing_mismatch("Jackie McLean Lights Out", rel_uk_original) is None)
+
+
+def test_demand_ratio_izmerenie_a_ne_verdikt():
+    """Кэш обязан хранить измерение, а не вывод из него."""
+    check("отношение считается", lh.demand_ratio(
+        {"community": {"want": 302, "have": 38}}) == 302 / 38)
+    check("нет have — нет отношения, а не ноль",
+          lh.demand_ratio({"community": {"want": 5, "have": 0}}) is None)
+    check("нет community — None", lh.demand_ratio({}) is None)
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -160,6 +199,8 @@ def test_hours_left_bez_chasovogo_poyasa():
 def main():
     for fn in [test_promise_marka_vesit_bolshe_summy,
                test_baza_ne_padaet_ot_chitatelya,
+               test_press_a_ne_tolko_albom,
+               test_demand_ratio_izmerenie_a_ne_verdikt,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,

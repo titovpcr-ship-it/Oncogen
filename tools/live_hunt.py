@@ -43,6 +43,8 @@ import moscow_wantlist as wl                      # noqa: E402
 import upper_segment as us                        # noqa: E402
 from build_mv_targets import (ApiRefused, query_ladder, resolve,  # noqa: E402
                               verify_match)
+from ebay_vinyl_3x_finder import (catno_equivalent,  # noqa: E402
+                                  extract_catalog_number)
 
 CFG = Path(__file__).resolve().parent.parent / "ebay_vinyl_sniper_config.yaml"
 
@@ -121,39 +123,95 @@ def hours_left(ends_at):
     return (t - dt.datetime.now(dt.timezone.utc)).total_seconds() / 3600
 
 
-_DEMAND_CACHE = {}
+_RELEASE_CACHE = {}
 
 
-def demand_ok(release_id, token, min_ratio):
-    """Спрос по Discogs: хотят / имеют.
+def release_info(release_id, token):
+    """Карточка релиза Discogs, один запрос на релиз.
 
-    ДАННЫЕ ЛЕЖАЛИ В API И НЕ ИСПОЛЬЗОВАЛИСЬ. Разбор лота Georgia Gibbs
-    02.09.2026 показал, чего это стоило: у релиза 47 want против 10 have,
-    но это коллекционеры обложки, а не музыки, и в Москве спроса нет
-    вовсе. Отношение — не панацея, но предмет, который никто не ищет,
-    оно отсекает бесплатно, одним запросом к карточке релиза.
+    ОДИН ЗАПРОС НА ДВЕ ПРОВЕРКИ. Раньше карточка тянулась только ради
+    want/have; теперь из неё же берётся каталожный номер пресса. Второй
+    запрос за теми же данными был бы платой ни за что: лимит Discogs —
+    60 в минуту, и он единственный дефицитный ресурс охоты.
+
+    Отказ API поднимает ApiRefused, а не возвращает пустоту: лот тогда
+    остаётся непроверенным и вернётся в следующую выборку. Проглотить
+    отказ здесь значило бы решить судьбу лота по данным, которых нет.
     """
-    # КЭШИРУЕТСЯ ОТНОШЕНИЕ, А НЕ ВЕРДИКТ. Первая версия клала в кэш
-    # булев ответ, и при смене порога отдавала старое решение: вызов с
-    # порогом 6.0 вернул True для отношения 4.7, потому что до него был
-    # вызов с порогом 1.5. Кэш обязан хранить измеренное, а не выводы из
-    # него — иначе он молча подменяет ответ на вопрос, который ему не
-    # задавали.
-    if release_id in _DEMAND_CACHE:
-        r = _DEMAND_CACHE[release_id]
-        return True if r is None else r >= min_ratio
+    if release_id in _RELEASE_CACHE:
+        return _RELEASE_CACHE[release_id]
     import requests
     try:
         r = requests.get(f"https://api.discogs.com/releases/{int(release_id)}",
                          headers={"Authorization": f"Discogs token={token}",
                                   "User-Agent": "VinylArbitrage/1.0"}, timeout=25)
-        com = r.json().get("community") or {} if r.status_code == 200 else {}
-    except Exception:                              # noqa: BLE001
-        com = {}
+    except requests.RequestException as e:          # noqa: BLE001
+        raise ApiRefused(f"сеть: {type(e).__name__}") from e
+    if r.status_code != 200:
+        raise ApiRefused(f"Discogs отказал: HTTP {r.status_code}")
+    d = r.json()
+    _RELEASE_CACHE[release_id] = d
+    return d
+
+
+def demand_ratio(rel):
+    """want/have или None, если Discogs не даёт чисел.
+
+    ВОЗВРАЩАЕТСЯ ИЗМЕРЕНИЕ, А НЕ ВЕРДИКТ. Первая версия кэшировала
+    булев ответ, и при смене порога отдавала старое решение: вызов с
+    порогом 6.0 вернул True для отношения 4.7, потому что до него был
+    вызов с порогом 1.5. Хранить выводы вместо измерений значит молча
+    подменять ответ на вопрос, который не задавали.
+
+    Разбор лота Georgia Gibbs 02.09.2026 показал, зачем это вообще:
+    у релиза 47 want против 10 have, но это коллекционеры обложки, а не
+    музыки. Отношение — не панацея, но предмет, который никто не ищет,
+    оно отсекает бесплатно.
+    """
+    com = rel.get("community") or {}
     want, have = com.get("want"), com.get("have")
-    ratio = None if (want is None or not have) else want / have
-    _DEMAND_CACHE[release_id] = ratio
-    return True if ratio is None else ratio >= min_ratio
+    return None if (want is None or not have) else want / have
+
+
+def pressing_mismatch(title, rel):
+    """Тот ли это пресс, о котором справка. Причина отказа или None.
+
+    НАЙДЕНО НА ЖИВОЙ НАХОДКЕ 02.09.2026, И ЭТО БЫЛ ПОЧТИ УБЫТОК.
+    Лот «NM! Jackie McLean LP Lights Out! 1970 Prestige PRST7757 RVG»
+    прошёл все сторожа с прибылью $550.45 и ушёл в Телеграм. Справка
+    относилась к релизу 2324445 — Esquire 32-041, Великобритания, 1957,
+    моно, мировой пол 533 евро. В лоте же американский рессиз 1970 года
+    за $7.99. Один альбом, один исполнитель — и два разных предмета,
+    отличающиеся в тридцать раз.
+
+    verify_match сверяет исполнителя и название и на этом
+    останавливается; для рессиза он честно говорит «тот же альбом». Но
+    цена принадлежит не альбому, а прессу, и перенос цены с оригинала
+    на рессиз — ровно та подмена уровня, которую запрещает правило 1.
+
+    Каталожный номер — единственный признак, различающий прессы
+    надёжно. Сравнение делает catno_equivalent из основного модуля, а
+    не своя логика: там уже учтено, что Discogs хранит номер оригинала
+    голым числом ('7200' против 'PRLP 7200'), и что снимать префикс с
+    обеих сторон нельзя, потому что PRLP и PRST — разные номера.
+
+    Если номера в заголовке нет, проверить нечем: возвращаем None и
+    оставляем предупреждение человеку в списке сверки.
+    """
+    cn = extract_catalog_number(title)
+    if not cn:
+        return None
+    catnos = [(lab.get("catno") or "").strip()
+              for lab in (rel.get("labels") or [])]
+    catnos = [c for c in catnos if c]
+    if not catnos:
+        return None
+    if any(catno_equivalent(cn, c) for c in catnos):
+        return None
+    return (f"справка о другом прессе: в лоте {cn}, "
+            f"в карточке {'/'.join(catnos[:3])}"
+            + (f" ({rel.get('country')}, {rel.get('year')})"
+               if rel.get("year") else ""))
 
 
 def eye_check_flags(lot, ref_n, ratio):
@@ -302,7 +360,7 @@ def main(argv=None):
     notifier = None
     for i, lot in enumerate(todo, 1):
         why = None
-        rid = ratio = profit = None
+        rid = ratio = profit = dr = None
         if wl.wrong_format(lot["title"]):
             why = "не пластинка"
         else:
@@ -387,9 +445,19 @@ def main(argv=None):
                                    f"${min_profit:.0f}")
                         elif min_ratio is not None and ratio < min_ratio:
                             why = f"кратность {ratio:.2f}x ниже {min_ratio}x"
-                        elif min_wh and not demand_ok(rid, DISCOGS_TOKEN, min_wh):
-                            why = (f"деньги есть (+${profit:.2f}), но спроса "
-                                   f"нет: want/have ниже порога")
+                        else:
+                            # Карточка релиза тянется ТОЛЬКО для тех, кто
+                            # уже прошёл деньги, — их единицы, и один
+                            # запрос на такого кандидата не жалко. Из
+                            # неё сразу и пресс, и спрос.
+                            rel = release_info(rid, DISCOGS_TOKEN)
+                            mism = pressing_mismatch(lot["title"], rel)
+                            dr = demand_ratio(rel)
+                            if mism:
+                                why = f"деньги есть (+${profit:.2f}), но {mism}"
+                            elif min_wh and dr is not None and dr < min_wh:
+                                why = (f"деньги есть (+${profit:.2f}), но спроса "
+                                       f"нет: want/have {dr:.1f} ниже {min_wh}")
 
         # ЖУРНАЛ ПИШЕТСЯ СРАЗУ ТОЛЬКО ДЛЯ ОТКАЗОВ. Для НАХОДКИ запись
         # откладывается до успешной отправки: журнал исключает лот из
@@ -428,7 +496,12 @@ def main(argv=None):
                    f"итого landed ${landed:.2f}\n"
                    f"Discogs, мировой пол предложения ${ref.lowest_price_usd:.2f}\n"
                    f"прибыль до продажи ${profit:.2f}\n"
-                   f"копий в мировой продаже: {ref.num_for_sale}\n\n"
+                   f"копий в мировой продаже: {ref.num_for_sale}\n"
+                   + (f"пресс сверен по каталожному номеру\n"
+                      if extract_catalog_number(lot["title"]) else
+                      "каталожного номера в заголовке НЕТ — пресс не сверен\n")
+                   + (f"спрос want/have {dr:.1f}\n" if dr is not None else "")
+                   + "\n"
                    f"НЕ СВЕРЕНО ГЛАЗАМИ. До ставки проверить:\n"
                    + "\n".join(f"• {x}" for x in flags)
                    + f"\n\n{lot['url']}")
