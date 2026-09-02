@@ -173,6 +173,34 @@ def demand_ratio(rel):
     return None if (want is None or not have) else want / have
 
 
+# Запасной извлекатель каталожного номера. Основной, из
+# ebay_vinyl_3x_finder, знает конкретные серии и на «MGV-4004» (Verve,
+# 1957) молчит — а именно этот лот получил справку от переиздания
+# Analogue Productions 2012 года. Здесь берётся общая форма: две-четыре
+# буквы, разделитель, три-шесть цифр. Три цифры минимум — иначе в номера
+# попадут «LP 33», «RPM 45» и «Vol 12».
+_LOOSE_CATNO = re.compile(r"\b([A-Z]{1,4})[-\s]?(\d{3,6})\b")
+_NOT_CATNO = {"LP", "EP", "RPM", "VOL", "NO", "G", "GR", "CD", "US", "UK",
+              "ORIG", "OG", "NM", "VG", "EX", "MINT", "STEREO", "MONO",
+              "RVG", "PROMO", "RE", "LTD", "SEALED", "PRESS"}
+
+
+def _loose_catno(title):
+    for m in _LOOSE_CATNO.finditer(title or ""):
+        if m.group(1).upper() in _NOT_CATNO:
+            continue
+        # ЧЕТЫРЁХЗНАЧНОЕ ЧИСЛО БЕЗ ДЕФИСА — ЭТО ГОД, А НЕ НОМЕР. Первая
+        # версия вытащила «ORIG 1965» из «ORIG 1965 Motown STEREO» и
+        # «B 1952» — и сверила бы по ним пресс. Дефис снимает сомнение:
+        # «MGV-4004» номер, «ORIG 1965» нет.
+        digits = m.group(2)
+        if (len(digits) == 4 and 1900 <= int(digits) <= 2030
+                and "-" not in m.group(0)):
+            continue
+        return m.group(0)
+    return None
+
+
 def pressing_mismatch(title, rel):
     """Тот ли это пресс, о котором справка. Причина отказа или None.
 
@@ -198,7 +226,41 @@ def pressing_mismatch(title, rel):
     Если номера в заголовке нет, проверить нечем: возвращаем None и
     оставляем предупреждение человеку в списке сверки.
     """
-    cn = extract_catalog_number(title)
+    # ГОД. Самый широкий признак, и работает там, где номера в заголовке
+    # нет вовсе. Замерено на двенадцати верхних кандидатах 02.09.2026:
+    # пять оказались подменой пресса, и в четырёх из пяти карточка была
+    # СОВРЕМЕННЫМ переизданием, а лот — оригиналом или наоборот.
+    # «STEVIE NICKS Rock a Little (1985) True US 1st Pressing» получил
+    # справку от Mobile Fidelity 2026 года; «Ella Fitzgerald … MGV-4004»
+    # (Verve, 1957) — от Analogue Productions 2012 года. Пол предложения
+    # у свежего аудиофильского переиздания высок именно потому, что оно
+    # свежее, и вся «прибыль» была разницей между двумя разными
+    # предметами.
+    ry = rel.get("year")
+    if ry:
+        years = [int(y) for y in re.findall(r"\b(19[3-9]\d|20[0-2]\d)\b", title)]
+        # Берём ближайший к карточке: в заголовке может стоять и год
+        # записи, и год пресса, и мы не знаем какой. Отказ выносится,
+        # только если НИ ОДИН год из заголовка не сходится с карточкой.
+        if years and min(abs(y - ry) for y in years) > 2:
+            return (f"справка о другом прессе: в лоте год "
+                    f"{'/'.join(str(y) for y in sorted(set(years)))}, "
+                    f"в карточке {ry} ({rel.get('country')})")
+
+    # НОМЕР ТОМА. «Amazing Bud Powell, Vol 1» получил справку от
+    # «The Amazing Bud Powell, Vol. 3 — Bud!». Для verify_match это один
+    # альбом: исполнитель тот же, слова названия те же. Номер тома —
+    # часть личности пластинки, а не украшение.
+    def _vol(x):
+        m = re.search(r"\bvol(?:ume)?\.?\s*(\d+)\b", x or "", re.I)
+        return int(m.group(1)) if m else None
+
+    v_lot, v_card = _vol(title), _vol(rel.get("title") or "")
+    if v_lot and v_card and v_lot != v_card:
+        return (f"справка о другом томе: в лоте vol. {v_lot}, "
+                f"в карточке vol. {v_card}")
+
+    cn = extract_catalog_number(title) or _loose_catno(title)
     if not cn:
         return None
     catnos = [(lab.get("catno") or "").strip()

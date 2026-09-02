@@ -111,7 +111,18 @@ def test_press_a_ne_tolko_albom():
                        "country": "UK", "year": 1957}
     t = "NM! Jackie McLean LP Lights Out! 1970 Prestige PRST7757 RVG"
     why = lh.pressing_mismatch(t, rel_uk_original)
-    check("рессиз не выдаётся за оригинал", why is not None and "PRST7757" in why, str(why))
+    # Проверяем ОТКАЗ, а не его формулировку: у лота расходятся и год, и
+    # каталожный номер, и какой сторож сработает первым — деталь
+    # реализации. Первая версия теста требовала конкретной строки и
+    # покраснела от добавления проверки по году, хотя вердикт не менялся.
+    check("рессиз не выдаётся за оригинал", why is not None, str(why))
+
+    rel_no_year = {"labels": [{"catno": "32-041", "name": "Esquire"}],
+                   "country": "UK"}
+    why2 = lh.pressing_mismatch("Jackie McLean Lights Out Prestige PRST7757",
+                                rel_no_year)
+    check("без года отказ выносится по каталожному номеру",
+          why2 is not None and "PRST7757" in why2, str(why2))
 
     rel_same = {"labels": [{"catno": "PRST 7757", "name": "Prestige"}],
                 "country": "US", "year": 1970}
@@ -125,6 +136,36 @@ def test_press_a_ne_tolko_albom():
 
     check("без номера в заголовке проверять нечем — не отказ",
           lh.pressing_mismatch("Jackie McLean Lights Out", rel_uk_original) is None)
+
+    # ГОД. Ловит подмену там, где номера в заголовке нет вовсе. Замерено
+    # на двенадцати верхних кандидатах: в четырёх из пяти подмен
+    # карточка была современным переизданием, а лот оригиналом.
+    mfsl_2026 = {"title": "Rock A Little", "year": 2026, "country": "US",
+                 "labels": [{"catno": "MFSL 2-603"}]}
+    check("оригинал 1985 не берёт справку у переиздания 2026",
+          lh.pressing_mismatch(
+              "STEVIE NICKS – Rock a Little (1985) True US 1st Pressing",
+              mfsl_2026) is not None)
+    check("совпадающий год проходит",
+          lh.pressing_mismatch(
+              'David Bowie - Blackstar 12" Stereo Columbia 2016- First',
+              {"title": "★ (Blackstar)", "year": 2016, "country": "Worldwide",
+               "labels": [{"catno": "88875173871"}]}) is None)
+
+    # НОМЕР ТОМА — часть личности пластинки, а не украшение.
+    check("vol. 1 не берёт справку у vol. 3",
+          lh.pressing_mismatch(
+              "Amazing Bud Powell, Vol 1 (Blue Note Classic Vinyl) 180G",
+              {"title": "The Amazing Bud Powell, Vol. 3 - Bud!", "year": 1957,
+               "country": "US", "labels": [{"catno": "BLP 1571"}]}) is not None)
+
+    # Запасной извлекатель номера: MGV-4004 основной не берёт.
+    check("запасной извлекатель берёт MGV-4004",
+          lh._loose_catno('Ella Fitzgerald … Verve 12" LP Jazz MGV-4004') == "MGV-4004")
+    check("год без дефиса за номер не принимается",
+          lh._loose_catno("ORIG 1965 Motown STEREO HOLLYWOOD PRESSING") is None)
+    check("слово состояния за номер не принимается",
+          lh._loose_catno("NM 1200 copies pressed") is None)
 
 
 def test_demand_ratio_izmerenie_a_ne_verdikt():
