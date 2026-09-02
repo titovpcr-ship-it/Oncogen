@@ -135,7 +135,12 @@ def main():
     pd = us.ru_price_for(conn, CFG, release_id=777)
     check(pd.source == "discogs" and pd.kind == "ask_world",
           "Discogs — источник цены с меткой ask_world", st)
-    check(pd.price_rub == 40000, f"400 USD x 100 = 40 000 ₽ (получено {pd.price_rub})", st)
+    # Курс берётся из конфига, а не зашит в тест: 02.09.2026 он изменён
+    # с круглой сотни на курс ЦБ 86.75, и тест обязан следовать за
+    # конфигом, а не требовать от него старого значения.
+    fx = float(CFG["ru_market"]["fx_rate_rub_per_usd"])
+    check(pd.price_rub == int(400.0 * fx),
+          f"400 USD x {fx} = {int(400 * fx)} ₽ (получено {pd.price_rub})", st)
     check(pd.note and "нельзя" in pd.note,
           "метка прямо говорит: продавать на Discogs из РФ нельзя", st)
     check(us.ru_price_for(conn, CFG, release_id=999999).source == "none",
