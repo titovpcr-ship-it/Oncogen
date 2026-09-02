@@ -37,7 +37,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import moscow_wantlist as wl                      # noqa: E402
-from live_hunt import disc_count                  # noqa: E402
+from live_hunt import cargo_usd, disc_count       # noqa: E402
 import notify                                      # noqa: E402
 
 CFG = Path(__file__).resolve().parent.parent / "ebay_vinyl_sniper_config.yaml"
@@ -68,7 +68,60 @@ _SEALED = re.compile(
 # другие деньги, пустой конверт, набор карточек.
 _NOT_THE_THING = re.compile(
     r"\b(poster|signed|autograph|proof|promo\s+only|empty\s+sleeve|"
-    r"card|slipmat|tote|t-?shirt|hoodie|cassette|cd\b|box\s+of\s+cards)\b", re.I)
+    r"card|slipmat|tote|t-?shirt|hoodie|cassette|cd\b|box\s+of\s+cards|"
+    # Игрушечные мини-винилы. Найдено на сухом прогоне: «MGA'S MINI
+    # VERSE REAL MUSIC VINYLS SERIES 1 AMY WINEHOUSE BACK TO BLACK
+    # SEALED» за $10 прошёл как находка. Это фигурка, а не пластинка.
+    r"mini\s*verse|miniverse|miniature|funko|figure|keychain|"
+    r"doll|playset|3\s*inch|3\"|toy)\b", re.I)
+
+# Семидюймовые синглы. Исследование владельца говорит про АЛЬБОМЫ:
+# розница 3500-9000 рублей — это цена альбома, а не сингла, и
+# применять её к семидюймовке значит подменить предмет.
+# ГРАНИЦА СЛОВА ПОСЛЕ КАВЫЧКИ НЕ СТАВИТСЯ. Первая версия писала
+# \b(7")\b и пропускала «... color vinyl 7"» — кавычка не словесный
+# символ, и \b после неё никогда не срабатывает.
+_SEVEN_INCH = re.compile(
+    r"(?:\b7\s*(?:\"|''|”|inch\b|in\b)|\b45\s*rpm\b|\b45\b(?=\s|$)|"
+    r"\bsingle\b)", re.I)
+
+
+_WORD = re.compile(r"[a-z0-9]+")
+_SKIP = {"the", "a", "an", "of", "and", "&"}
+
+
+def _tokens(x):
+    return [w for w in _WORD.findall((x or "").lower()) if w not in _SKIP]
+
+
+def same_release(artist, album, title):
+    """Тот ли это артист и альбом. Отдельная проверка, НЕ title_matches.
+
+    ПОЧЕМУ НЕ ПЕРЕИСПОЛЬЗУЕМ ТОТ МАТЧЕР. moscow_wantlist.title_matches
+    писался под охоту за редкостями, где цена ошибки — купленная не та
+    пластинка, и он намеренно строг: восемь классов защиты от ложных
+    срабатываний, включая особую логику для одноимённых альбомов.
+    Замерено на живых заголовках: он отвергает «Metallica Master Of
+    Puppets Black Vinyl LP + Sticker Target Exclusive New Sealed» и
+    «Queen Greatest Hits 2LP Half-Speed Master Sealed» — оба очевидно
+    те самые. Здесь задача другая: ходовой новодел, где ошибка стоит
+    двадцати долларов, а пропущенная позиция — всей находки.
+
+    Правило простое и проверяемое: все значимые слова артиста должны
+    быть в заголовке; из слов альбома — не меньше двух третей, а для
+    коротких названий («IV», «Gold») — все.
+    """
+    t = set(_tokens(title))
+    a = _tokens(artist)
+    if not a or not set(a) <= t:
+        return False
+    if not album:
+        return True
+    al = _tokens(album)
+    if not al:
+        return True
+    need = len(al) if len(al) <= 2 else max(2, (len(al) * 2 + 2) // 3)
+    return sum(1 for w in al if w in t) >= need
 
 
 def ebay_token():
@@ -141,7 +194,13 @@ def main(argv=None):
     cap = a.max_landed or float(np_cfg["max_landed_to_forwarder_usd"])
     assumed = float(np_cfg.get("assumed_shipping_usd", 5.0))
     need_sealed = bool(np_cfg.get("require_sealed", True))
-    titles = np_cfg["titles"]
+    # Записи списка — либо строка (старый формат), либо словарь с
+    # query, ru_price_rub и require_any. Оба вида читаются, чтобы
+    # правка конфига руками не требовала знания схемы.
+    entries = []
+    for t in np_cfg["titles"]:
+        entries.append({"query": t} if isinstance(t, str) else dict(t))
+    fx = float((cfg.get("ru_market") or {}).get("fx_rate_rub_per_usd") or 100.0)
 
     conn = sqlite3.connect(a.db, timeout=60.0)
     conn.execute("PRAGMA journal_mode=WAL")
@@ -150,12 +209,16 @@ def main(argv=None):
     conn.commit()
 
     token = ebay_token()
-    print(f"НОВАЯ ПОПСА: {len(titles)} позиций, потолок до форвардера "
+    print(f"НОВАЯ ПОПСА: {len(entries)} позиций, потолок до форвардера "
           f"${cap:.2f}, только «предложить цену», состояние New"
           + (", слюда обязательна" if need_sealed else "") + "\n")
 
     found, reasons, notifier = 0, {}, None
-    for i, q in enumerate(titles, 1):
+    for i, e in enumerate(entries, 1):
+        q = e["query"]
+        need_any = [w.lower() for w in (e.get("require_any") or [])]
+        artist, album = e.get("artist"), e.get("album")
+        ru_lo, ru_hi = (e.get("ru_price_rub") or [None, None])[:2] or (None, None)
         items, ok = search(token, q, limit=100)
         if not ok:
             reasons["eBay отказал"] = reasons.get("eBay отказал", 0) + 1
@@ -168,6 +231,26 @@ def main(argv=None):
                 continue
             if wl.wrong_format(title) or _NOT_THE_THING.search(title):
                 reasons["не пластинка"] = reasons.get("не пластинка", 0) + 1
+                continue
+            if _SEVEN_INCH.search(title):
+                reasons["семидюймовка, а не альбом"] = \
+                    reasons.get("семидюймовка, а не альбом", 0) + 1
+                continue
+            # ТА ЖЕ ВЕЩЬ, А НЕ ТЕ ЖЕ СЛОВА. Запрос «Queen Greatest Hits
+            # vinyl» возвращал «Tina Turner — The Queen» и «Shania Twain
+            # — Queen Of Me». Сверку делает title_matches, у которого
+            # уже восемь классов ложных срабатываний за плечами.
+            if artist and not same_release(artist, album, title):
+                reasons["другой артист или альбом"] = \
+                    reasons.get("другой артист или альбом", 0) + 1
+                continue
+            # Требование варианта: исследование владельца прямо
+            # говорит, что по современной попсе берут ТОЛЬКО цветные и
+            # лимитированные прессы, а чёрный стандарт лежит. Значит
+            # чёрный стандарт здесь не находка, а трата внимания.
+            if need_any and not any(w in title.lower() for w in need_any):
+                reasons["не тот вариант (нужен цветной/лимитка)"] = \
+                    reasons.get("не тот вариант (нужен цветной/лимитка)", 0) + 1
                 continue
             if need_sealed and not _SEALED.search(title):
                 reasons["слюда не заявлена"] = reasons.get("слюда не заявлена", 0) + 1
@@ -203,7 +286,12 @@ def main(argv=None):
                    + f"\nдо форвардера ${landed:.2f} при потолке ${cap:.2f}\n"
                    f"состояние: {it.get('condition')}, в заголовке заявлена слюда\n"
                    f"продавец: {(it.get('seller') or {}).get('username')}, "
-                   f"отзывов {(it.get('seller') or {}).get('feedbackScore')}\n\n"
+                   f"отзывов {(it.get('seller') or {}).get('feedbackScore')}\n"
+                   + (f"\nрозница РФ по исследованию: {ru_lo}-{ru_hi} руб "
+                      f"(${ru_lo/fx:.0f}-{ru_hi/fx:.0f}), "
+                      f"карго добавит ${cargo_usd(title, cfg):.2f}\n"
+                      if ru_lo else "")
+                   + "\n"
                    "НЕ СВЕРЕНО ГЛАЗАМИ. До покупки проверить:\n"
                    "• фото: слюда целая, не вскрыт стикер\n"
                    "• это пластинка, а не постер и не карточки\n"
@@ -236,7 +324,7 @@ def main(argv=None):
                      None if ship_assumed else ship, landed,
                      it.get("itemWebUrl")))
                 conn.commit()
-        print(f"  {i:>2}/{len(titles)} {q[:46]:46} лотов {len(items):>3}, "
+        print(f"  {i:>2}/{len(entries)} {q[:44]:44} лотов {len(items):>3}, "
               f"подошло {hit}")
         time.sleep(0.3)
 

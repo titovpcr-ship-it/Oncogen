@@ -1464,28 +1464,133 @@ new_pop:
   # это уже стоило нам 52% занижённых landed на аукционах.
   assumed_shipping_usd: 5.0
   require_sealed: true
-  # СПИСОК — ЗАТРАВКА, А НЕ ИЗМЕРЕНИЕ. Это ходовые виниловые тиражи по
-  # состоянию рынка на начало 2026 года; проверяемого API «топ продаж
-  # винила в мире» не существует, поэтому список задан явно и правится
-  # руками. Каждая строка идёт в eBay как поисковый запрос.
+  # СПИСОК ИЗ ИССЛЕДОВАНИЯ ВЛАДЕЛЬЦА «Топ-20 нового запечатанного
+  # винила: ходовой товар в РФ/СНГ», собран 02.09.2026 по раскрытым
+  # данным Wildberries, Ozon и Яндекс Маркета, витринам профильных
+  # магазинов и чарту Official Charts UK за 1П2026.
+  #
+  # ВАЖНАЯ ОГОВОРКА ИЗ САМОГО ИССЛЕДОВАНИЯ: официального чарта продаж
+  # винила в России не существует, ранжирование ПОРЯДКОВОЕ, а не
+  # позиционное — позиции 1-5 и 15-20 различаются уверенно, соседние
+  # внутри блока нет. Список правится руками, это не измерение.
+  #
+  # ru_price_rub — розница в РФ из того же исследования. В гейт она НЕ
+  # входит (критерий владельца — цена входа до форвардера), но
+  # печатается в пуше, чтобы решение принималось с обеими цифрами.
+  #
+  # require_any — там, где исследование прямо говорит, что берут
+  # ТОЛЬКО определённый вариант. Позиция 20: «берут только цветные и
+  # лимитированные прессы, чёрный стандарт лежит».
+  # artist/album НУЖНЫ ДЛЯ ПРОВЕРКИ, А НЕ ДЛЯ ПОИСКА. Замерено на
+  # сухом прогоне: запрос «Queen Greatest Hits vinyl» вернул «Tina
+  # Turner — The Queen» и «Shania Twain — Queen Of Me», запрос по Amy
+  # Winehouse — игрушечный мини-винил MGA Mini Verse. Совпадение слов
+  # не равно совпадению вещи — та же болезнь, что лечили в охоте за
+  # редкостями. Сверку делает moscow_wantlist.title_matches, у которого
+  # уже восемь классов ложных срабатываний за плечами.
+  #
+  # album опущен там, где берём любой альбом артиста (позиция 20
+  # исследования — актуальные новинки, окно 2-6 месяцев).
   titles:
-    - "Taylor Swift The Tortured Poets Department vinyl"
-    - "Taylor Swift Midnights vinyl"
-    - "Taylor Swift 1989 Taylor's Version vinyl"
-    - "Olivia Rodrigo GUTS vinyl"
-    - "Billie Eilish Hit Me Hard and Soft vinyl"
-    - "Sabrina Carpenter Short n Sweet vinyl"
-    - "Harry Styles Harry's House vinyl"
-    - "SZA SOS vinyl"
-    - "The Weeknd After Hours vinyl"
-    - "Lana Del Rey Born To Die vinyl"
-    - "Arctic Monkeys AM vinyl"
-    - "Fleetwood Mac Rumours vinyl"
-    - "Pink Floyd The Dark Side of the Moon vinyl"
-    - "Nirvana Nevermind vinyl"
-    - "Amy Winehouse Back to Black vinyl"
-    - "Michael Jackson Thriller vinyl"
-    - "Queen Greatest Hits vinyl"
-    - "The Beatles Abbey Road vinyl"
-    - "Bob Marley Legend vinyl"
-    - "Kendrick Lamar good kid m.A.A.d city vinyl"
+    - query: "Michael Jackson Thriller vinyl"
+      artist: "Michael Jackson"
+      album: "Thriller"
+      ru_price_rub: [3500, 4500]
+    - query: "Pink Floyd Dark Side of the Moon 180g vinyl"
+      artist: "Pink Floyd"
+      album: "The Dark Side Of The Moon"
+      ru_price_rub: [4500, 7600]
+    - query: "Queen Greatest Hits vinyl"
+      artist: "Queen"
+      album: "Greatest Hits"
+      ru_price_rub: [4000, 7000]
+    - query: "Nirvana Nevermind 180g vinyl"
+      artist: "Nirvana"
+      album: "Nevermind"
+      ru_price_rub: [4100, 5500]
+    - query: "Metallica Master of Puppets vinyl"
+      artist: "Metallica"
+      album: "Master Of Puppets"
+      ru_price_rub: [5000, 6500]
+    - query: "Rammstein Mutter vinyl"
+      artist: "Rammstein"
+      album: "Mutter"
+      ru_price_rub: [5500, 9000]
+    - query: "Lana Del Rey Born To Die vinyl"
+      artist: "Lana Del Rey"
+      album: "Born To Die"
+      ru_price_rub: [4500, 8000]
+    - query: "AC/DC Back in Black 180g vinyl"
+      artist: "AC/DC"
+      album: "Back In Black"
+      ru_price_rub: [4000, 5500]
+    - query: "Led Zeppelin IV remaster vinyl"
+      artist: "Led Zeppelin"
+      album: "IV"
+      ru_price_rub: [5000, 7000]
+    - query: "The Beatles Abbey Road 2019 vinyl"
+      artist: "The Beatles"
+      album: "Abbey Road"
+      ru_price_rub: [5500, 8000]
+    - query: "Depeche Mode Violator vinyl"
+      artist: "Depeche Mode"
+      album: "Violator"
+      ru_price_rub: [4000, 6000]
+    - query: "Eagles Hotel California 180g vinyl"
+      artist: "Eagles"
+      album: "Hotel California"
+      ru_price_rub: [4500, 5500]
+    - query: "Fleetwood Mac Rumours vinyl"
+      artist: "Fleetwood Mac"
+      album: "Rumours"
+      ru_price_rub: [4000, 5500]
+    # Позиция 14 исследования — «самый недооценённый сегмент: мало
+    # продавцов, у покупателя нет ценового якоря».
+    - query: "Interstellar soundtrack vinyl"
+      artist: "Hans Zimmer"
+      album: "Interstellar"
+      ru_price_rub: [5000, 17600]
+    - query: "Arcane soundtrack vinyl"
+      artist: "Various"
+      album: "Arcane"
+      ru_price_rub: [5000, 17600]
+    - query: "Cyberpunk 2077 soundtrack vinyl"
+      artist: "Various"
+      album: "Cyberpunk 2077"
+      ru_price_rub: [5000, 17600]
+    - query: "Sade Diamond Life vinyl"
+      artist: "Sade"
+      album: "Diamond Life"
+      ru_price_rub: [4000, 6000]
+    - query: "Frank Sinatra Platinum Collection vinyl"
+      artist: "Frank Sinatra"
+      album: "The Platinum Collection"
+      ru_price_rub: [3700, 7000]
+    - query: "ABBA Gold Greatest Hits vinyl"
+      artist: "ABBA"
+      album: "Gold Greatest Hits"
+      ru_price_rub: [4000, 6500]
+    - query: "Bob Marley Legend vinyl"
+      artist: "Bob Marley"
+      album: "Legend"
+      ru_price_rub: [3500, 5000]
+    - query: "Amy Winehouse Back to Black vinyl"
+      artist: "Amy Winehouse"
+      album: "Back To Black"
+      ru_price_rub: [4500, 9000]
+    # Позиция 20: окно продажи 2-6 месяцев, и берут ТОЛЬКО цветное.
+    - query: "Sabrina Carpenter vinyl colored"
+      artist: "Sabrina Carpenter"
+      ru_price_rub: [5000, 9000]
+      require_any: ["color", "coloured", "colored", "limited", "picture disc",
+                    "splatter", "clear", "translucent", "marbled", "glow"]
+    - query: "Olivia Rodrigo vinyl colored"
+      artist: "Olivia Rodrigo"
+      ru_price_rub: [5000, 9000]
+      require_any: ["color", "coloured", "colored", "limited", "picture disc",
+                    "splatter", "clear", "translucent", "marbled", "glow"]
+    - query: "Taylor Swift vinyl colored"
+      artist: "Taylor Swift"
+      ru_price_rub: [5000, 9000]
+      require_any: ["color", "coloured", "colored", "limited", "picture disc",
+                    "splatter", "clear", "translucent", "marbled", "glow"]
