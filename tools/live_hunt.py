@@ -516,7 +516,16 @@ def main(argv=None):
                             mism = pressing_mismatch(lot["title"], rel)
                             dr = demand_ratio(rel)
                             if mism:
+                                # ПРИБЫЛЬ СТИРАЕТСЯ ВМЕСТЕ С ОТКАЗОМ. Она
+                                # посчитана против ДРУГОГО предмета и
+                                # фактом о нашем лоте не является. Пока
+                                # число оставалось в журнале, каждый
+                                # отчёт «лучшая прибыль» показывал
+                                # фантом: сначала $550 (Jackie McLean),
+                                # потом $99 (A Love Supreme), потом $103
+                                # (Chick Corea) — все три подмены пресса.
                                 why = f"деньги есть (+${profit:.2f}), но {mism}"
+                                profit = ratio = None
                             elif min_wh and dr is not None and dr < min_wh:
                                 why = (f"деньги есть (+${profit:.2f}), но спроса "
                                        f"нет: want/have {dr:.1f} ниже {min_wh}")
