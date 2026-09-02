@@ -103,22 +103,43 @@ def main():
     check(p.source == "none" and p.price_rub is None,
           "Мешок отключён: без цены МаркетВинила цены НЕТ, а не 4 200 ₽", st)
 
+    # ОБНОВЛЕНО 01.09.2026: команда владельца — ориентир только на
+    # Discogs, русские площадки отключены. МаркетВинила выключена как
+    # источник, её механика ниже проверяется НАПРЯМУЮ, минуя приоритеты
+    # конфига: код остаётся рабочим на случай возврата.
     for rub in (30000, 34000, 38000):
-        us.record_mv_price(conn, price_rub=rub, release_id=42, grade="NM")
+        us.record_mv_price(conn, price_rub=rub, release_id=42,
+                           media="Vinyl", grade="NM")
     p = us.ru_price_for(conn, CFG, release_id=42, meshok_median_rub=4200, meshok_n=6)
-    check(p.source == "marketvinila" and p.price_rub == 34000,
-          "МаркетВинила вытесняет Мешок и даёт медиану 34 000 ₽", st)
-    check(p.kind == "ask" and "не сделка" in (p.note or ""),
+    check(p.source != "marketvinila",
+          "МаркетВинила отключена в конфиге и в приоритетах НЕ участвует", st)
+    direct = us.mv_price(conn, release_id=42)
+    check(direct.source == "marketvinila" and direct.price_rub == 34000,
+          "сама механика МаркетВинила жива: медиана 34 000 ₽", st)
+    check(direct.kind == "ask" and "не сделка" in (direct.note or ""),
           "цена МаркетВинила помечена как ask, а не как сделка", st)
 
-    # Мастер-релиз как фолбэк — но только когда по прессу ничего нет.
-    us.record_mv_price(conn, price_rub=51000, master_id=99, grade="NM")
-    pm = us.ru_price_for(conn, CFG, release_id=1234, master_id=99)
-    check(pm.source == "marketvinila" and pm.price_rub == 51000,
-          "нет цены по прессу -> берётся мастер-релиз", st)
-    pboth = us.ru_price_for(conn, CFG, release_id=42, master_id=99)
+    us.record_mv_price(conn, price_rub=51000, master_id=99,
+                       media="Vinyl", grade="NM")
+    pm = us.mv_price(conn, release_id=1234, master_id=99)
+    check(pm.price_rub == 51000, "нет цены по прессу -> берётся мастер-релиз", st)
+    pboth = us.mv_price(conn, release_id=42, master_id=99)
     check(pboth.price_rub == 34000,
           "есть цена по прессу -> мастер НЕ подменяет её (уровень точнее)", st)
+
+    # ── Discogs как единственный источник: это ASK МИРА, не выручка ──
+    conn.execute("INSERT OR REPLACE INTO discogs_stats "
+                 "(release_id,num_for_sale,lowest_price,currency,fetched_at) "
+                 "VALUES (?,?,?,?,datetime('now'))", (777, 3, 400.0, "USD"))
+    conn.commit()
+    pd = us.ru_price_for(conn, CFG, release_id=777)
+    check(pd.source == "discogs" and pd.kind == "ask_world",
+          "Discogs — источник цены с меткой ask_world", st)
+    check(pd.price_rub == 40000, f"400 USD x 100 = 40 000 ₽ (получено {pd.price_rub})", st)
+    check(pd.note and "нельзя" in pd.note,
+          "метка прямо говорит: продавать на Discogs из РФ нельзя", st)
+    check(us.ru_price_for(conn, CFG, release_id=999999).source == "none",
+          "нет справки -> цены нет, а не ноль", st)
 
     # Ни одного источника — это отдельный исход, не ноль.
     pn = us.ru_price_for(conn, CFG, release_id=999999)
