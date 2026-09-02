@@ -97,7 +97,14 @@ def collect(token, cfg, *, db="vinyl.db", progress=print):
                   or (it.get("currentBidPrice") or {}).get("value"))
             if pr is None:
                 continue
+            # НЕИЗВЕСТНАЯ ДОСТАВКА — ЭТО NULL, А НЕ НОЛЬ. Замерено
+            # 02.09.2026: у 60% лотов тип CALCULATED и суммы в сводке
+            # поиска нет вовсе — она зависит от адреса и известна только
+            # в карточке. Первая версия писала 0.0, то есть «бесплатно»,
+            # и занижала landed у 52% базы. Это «не посмотрели»,
+            # выданное за данные, — ровно то, что запрещает правило 2.
             ship = (it.get("shippingOptions") or [{}])[0]
+            ship_cost = (ship.get("shippingCost") or {}).get("value")
             iid = it["itemId"]
             conn.execute(
                 "INSERT OR REPLACE INTO auction_lots (item_id,title,price_usd,"
@@ -105,7 +112,7 @@ def collect(token, cfg, *, db="vinyl.db", progress=print):
                 "VALUES (?,?,?,?,?,?,?,?,?,datetime('now'))",
                 (iid.split("|")[1] if "|" in iid else iid,
                  it.get("title", ""), float(pr),
-                 float((ship.get("shippingCost") or {}).get("value") or 0),
+                 float(ship_cost) if ship_cost is not None else None,
                  it.get("bidCount"), it.get("itemEndDate"),
                  (it.get("seller") or {}).get("username"),
                  it.get("condition"), it.get("itemWebUrl")))

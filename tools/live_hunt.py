@@ -71,6 +71,41 @@ def hours_left(ends_at):
     return (t - dt.datetime.now(dt.timezone.utc)).total_seconds() / 3600
 
 
+_DEMAND_CACHE = {}
+
+
+def demand_ok(release_id, token, min_ratio):
+    """Спрос по Discogs: хотят / имеют.
+
+    ДАННЫЕ ЛЕЖАЛИ В API И НЕ ИСПОЛЬЗОВАЛИСЬ. Разбор лота Georgia Gibbs
+    02.09.2026 показал, чего это стоило: у релиза 47 want против 10 have,
+    но это коллекционеры обложки, а не музыки, и в Москве спроса нет
+    вовсе. Отношение — не панацея, но предмет, который никто не ищет,
+    оно отсекает бесплатно, одним запросом к карточке релиза.
+    """
+    # КЭШИРУЕТСЯ ОТНОШЕНИЕ, А НЕ ВЕРДИКТ. Первая версия клала в кэш
+    # булев ответ, и при смене порога отдавала старое решение: вызов с
+    # порогом 6.0 вернул True для отношения 4.7, потому что до него был
+    # вызов с порогом 1.5. Кэш обязан хранить измеренное, а не выводы из
+    # него — иначе он молча подменяет ответ на вопрос, который ему не
+    # задавали.
+    if release_id in _DEMAND_CACHE:
+        r = _DEMAND_CACHE[release_id]
+        return True if r is None else r >= min_ratio
+    import requests
+    try:
+        r = requests.get(f"https://api.discogs.com/releases/{int(release_id)}",
+                         headers={"Authorization": f"Discogs token={token}",
+                                  "User-Agent": "VinylArbitrage/1.0"}, timeout=25)
+        com = r.json().get("community") or {} if r.status_code == 200 else {}
+    except Exception:                              # noqa: BLE001
+        com = {}
+    want, have = com.get("want"), com.get("have")
+    ratio = None if (want is None or not have) else want / have
+    _DEMAND_CACHE[release_id] = ratio
+    return True if ratio is None else ratio >= min_ratio
+
+
 def eye_check_flags(lot, ref_n, ratio):
     """Что человек обязан проверить до ставки. Пустой список не бывает:
     хотя бы одна строка есть всегда, потому что вердикт не сверен."""
@@ -102,6 +137,8 @@ def main(argv=None):
     min_ratio = float(ru.get("west_min_ratio", 2.0))
     cargo = float(ru.get("west_cargo_kg", 0.75)) * 22.0
     cap = int((ru.get("discogs_reference") or {}).get("max_num_for_sale") or 8)
+    assumed_ship = float(ru.get("assumed_us_shipping_usd", 5.0))
+    min_wh = float(ru.get("min_want_have_ratio", 0) or 0)
     fx = float(ru.get("fx_rate_rub_per_usd", 100.0))
 
     from ebay_vinyl_3x_finder import DISCOGS_TOKEN      # noqa: E402
@@ -150,8 +187,15 @@ def main(argv=None):
                         why = "нет справки о цене"
                     elif ref.num_for_sale and ref.num_for_sale > cap:
                         why = f"копий в мире {ref.num_for_sale} — тираж, не редкость"
+                    elif min_wh and not demand_ok(rid, DISCOGS_TOKEN, min_wh):
+                        why = "спроса нет: want/have ниже порога"
                     else:
-                        landed = lot["price_usd"] + (lot["shipping"] or 0) + cargo
+                        # Неизвестная доставка НЕ равна нулю: берём
+                        # консервативное допущение и помечаем его.
+                        ship = lot["shipping"]
+                        ship_assumed = ship is None
+                        ship = assumed_ship if ship_assumed else ship
+                        landed = lot["price_usd"] + ship + cargo
                         ratio = ref.lowest_price_usd / landed if landed else 0
                         if ratio < min_ratio:
                             why = f"кратность {ratio:.2f}x ниже {min_ratio}x"
@@ -172,9 +216,11 @@ def main(argv=None):
             msg = (f"НАХОДКА {ratio:.2f}x — закрытие через {h:.1f} ч\n\n"
                    f"{lot['title'][:90]}\n\n"
                    f"ставка сейчас ${lot['price_usd']:.2f}"
-                   + (f" + ${lot['shipping']:.2f} доставка" if lot["shipping"] else "")
+                   + (f" + ${ship:.2f} доставка"
+                      + (" (ДОПУЩЕНИЕ: продавец не назвал)" if ship_assumed else "")
+                      if ship else "")
                    + f"\nкарго до Москвы ${cargo:.2f}\n"
-                   f"итого landed ${lot['price_usd'] + (lot['shipping'] or 0) + cargo:.2f}\n"
+                   f"итого landed ${landed:.2f}\n"
                    f"Discogs, мировой пол предложения ${ref.lowest_price_usd:.2f}\n"
                    f"копий в мировой продаже: {ref.num_for_sale}\n\n"
                    f"НЕ СВЕРЕНО ГЛАЗАМИ. До ставки проверить:\n"
