@@ -64,6 +64,45 @@ ALTER TABLE hunt_checked ADD COLUMN profit REAL;
 """
 
 
+# Признаки коллекционного пресса в заголовке. Считаются даром, до
+# единого запроса к Discogs, и нужны не для вердикта, а для ОЧЕРЕДИ.
+#
+# ЗАЧЕМ ОЧЕРЕДЬ. Замер 141 опознанного лота показал, чего стоит
+# сплошной обход: медианный мировой пол у лотов со ставкой до $10
+# составил $2.20. Это не редкости, это ходовой ширпотреб, который на
+# Discogs отдают за два евро, и никакая логистика такую позицию не
+# спасёт — при БЕСПЛАТНОЙ доставке порог $50 не взял бы ни один лот из
+# 141. Мы тратили лимит Discogs на population, где прибыли нет по
+# устройству, и делали это в порядке закрытия торгов, то есть случайно.
+#
+# Метки не обещают прибыли. Они лишь говорят, что лот стоит запроса
+# раньше остальных.
+_MARKS = re.compile(
+    r"\b(blue note|mfsl|mobile fidelity|impulse|verve|prestige|riverside|"
+    r"obi|japan(ese)? press|deep groove|rvg|van gelder|lexington|63rd|"
+    r"first press(ing)?|1st press(ing)?|original press(ing)?|audiophile|"
+    r"half.?speed|analogue productions|acoustic sounds|test press|"
+    r"white label|matrix|plum label|orange label|red label|misprint|"
+    r"withdrawn|banned cover)\b", re.I)
+
+
+def promise(lot):
+    """Насколько лот стоит запроса к Discogs РАНЬШЕ прочих.
+
+    Ищем недооценённый коллекционный пресс, поэтому метка прессa даёт
+    очки, а высокая ставка их отнимает: дорогой лот торгами уже оценён,
+    и разрыв с мировым полом в нём закрыт.
+    """
+    t = lot["title"] or ""
+    score = 2 if _MARKS.search(t) else 0
+    p = lot["price_usd"] or 0
+    if p < 30:
+        score += 1
+    if (lot["bids"] or 0) == 0:
+        score += 1                     # цена ещё не найдена торгами
+    return score
+
+
 def hours_left(ends_at):
     if not ends_at:
         return None
@@ -133,6 +172,10 @@ def main(argv=None):
                    help="брать аукционы, закрывающиеся в ближайшие N часов")
     p.add_argument("--limit", type=int, default=400, help="сколько проверить за прогон")
     p.add_argument("--dry", action="store_true", help="не отправлять, только печатать")
+    p.add_argument("--min-promise", type=int, default=0,
+                   help="брать только лоты с оценкой перспективности не ниже")
+    p.add_argument("--urgent-hours", type=float, default=4.0,
+                   help="лоты с закрытием раньше этого срока идут вне очереди")
     a = p.parse_args(argv)
 
     cfg = yaml.safe_load(CFG.read_text(encoding="utf-8"))
@@ -189,9 +232,17 @@ def main(argv=None):
         h = hours_left(r["ends_at"])
         if h is None or h < 0.25 or h > a.ends_within:
             continue
+        r["_h"], r["_score"] = h, promise(r)
+        if r["_score"] < a.min_promise:
+            continue
         todo.append(r)
+    # ПОРЯДОК: сначала всё, что закрывается в ближайшие часы — иначе
+    # находка истечёт, пока мы смотрим более перспективный лот с торгами
+    # до завтра. Остальное — по перспективности, а не по времени.
+    todo.sort(key=lambda r: (r["_h"] >= a.urgent_hours, -r["_score"], r["_h"]))
     todo = todo[:a.limit]
-    print(f"аукционов к проверке (закрытие в ближайшие {a.ends_within:.0f} ч): {len(todo)}")
+    print(f"аукционов к проверке (закрытие в ближайшие {a.ends_within:.0f} ч): "
+          f"{len(todo)}, порядок — перспективность, затем срок")
     crit = []
     if min_profit is not None:
         crit.append(f"прибыль от ${min_profit:.0f}")
