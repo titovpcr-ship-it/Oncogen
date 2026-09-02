@@ -134,7 +134,18 @@ def main(argv=None):
 
     cfg = yaml.safe_load(CFG.read_text(encoding="utf-8"))
     ru = cfg["ru_market"]
-    min_ratio = float(ru.get("west_min_ratio", 2.0))
+    # КРАТНОСТЬ ОТМЕНЕНА 02.09.2026. Мерилом сделки стала АБСОЛЮТНАЯ
+    # прибыль в долларах: карго стоит фиксированные ~$16.5 за посылку,
+    # и на дешёвом лоте эта константа съедает любую кратность, а на
+    # дорогом — почти ничего. Кратность мерила долю фиксированных
+    # издержек, а не заработок.
+    min_profit = ru.get("west_min_profit_usd")
+    min_ratio = ru.get("west_min_ratio")
+    if min_profit is None and min_ratio is None:
+        raise SystemExit("в конфиге не задан ни west_min_profit_usd, "
+                         "ни west_min_ratio — критерия отбора нет")
+    min_profit = None if min_profit is None else float(min_profit)
+    min_ratio = None if min_ratio is None else float(min_ratio)
     cargo = float(ru.get("west_cargo_kg", 0.75)) * 22.0
     cap = int((ru.get("discogs_reference") or {}).get("max_num_for_sale") or 8)
     assumed_ship = float(ru.get("assumed_us_shipping_usd", 5.0))
@@ -158,7 +169,12 @@ def main(argv=None):
         todo.append(r)
     todo = todo[:a.limit]
     print(f"аукционов к проверке (закрытие в ближайшие {a.ends_within:.0f} ч): {len(todo)}")
-    print(f"порог кратности {min_ratio}x, карго ${cargo:.2f}, "
+    crit = []
+    if min_profit is not None:
+        crit.append(f"прибыль от ${min_profit:.0f}")
+    if min_ratio is not None:
+        crit.append(f"кратность от {min_ratio}x")
+    print(f"критерий: {' и '.join(crit)}; карго ${cargo:.2f}, "
           f"потолок копий в мире {cap}\n")
 
     lim = us.RateLimiter(55)
@@ -166,7 +182,7 @@ def main(argv=None):
     notifier = None
     for i, lot in enumerate(todo, 1):
         why = None
-        rid = ratio = None
+        rid = ratio = profit = None
         if wl.wrong_format(lot["title"]):
             why = "не пластинка"
         else:
@@ -197,7 +213,11 @@ def main(argv=None):
                         ship = assumed_ship if ship_assumed else ship
                         landed = lot["price_usd"] + ship + cargo
                         ratio = ref.lowest_price_usd / landed if landed else 0
-                        if ratio < min_ratio:
+                        profit = ref.lowest_price_usd - landed
+                        if min_profit is not None and profit < min_profit:
+                            why = (f"прибыль ${profit:.2f} ниже "
+                                   f"${min_profit:.0f}")
+                        elif min_ratio is not None and ratio < min_ratio:
                             why = f"кратность {ratio:.2f}x ниже {min_ratio}x"
 
         conn.execute("INSERT OR REPLACE INTO hunt_checked "
@@ -207,13 +227,18 @@ def main(argv=None):
         conn.commit()
 
         if why:
-            key = why.split(" ")[0] + " " + " ".join(why.split(" ")[1:3])
+            # Ключ без чисел: иначе «прибыль $12.12 ниже $50» и
+            # «прибыль $11.90 ниже $50» станут разными причинами и
+            # разбор отказов (ПРАВИЛО 2) распадётся на сотню строк по
+            # одной штуке вместо одной честной цифры.
+            key = re.sub(r"[-+]?\$?\d+[\d.,]*x?", "N", why)
             reasons[key] = reasons.get(key, 0) + 1
         else:
             found += 1
             h = hours_left(lot["ends_at"])
             flags = eye_check_flags(lot, ref.num_for_sale, ratio)
-            msg = (f"НАХОДКА {ratio:.2f}x — закрытие через {h:.1f} ч\n\n"
+            msg = (f"НАХОДКА +${profit:.0f} ({ratio:.2f}x) — "
+                   f"закрытие через {h:.1f} ч\n\n"
                    f"{lot['title'][:90]}\n\n"
                    f"ставка сейчас ${lot['price_usd']:.2f}"
                    + (f" + ${ship:.2f} доставка"
@@ -222,6 +247,7 @@ def main(argv=None):
                    + f"\nкарго до Москвы ${cargo:.2f}\n"
                    f"итого landed ${landed:.2f}\n"
                    f"Discogs, мировой пол предложения ${ref.lowest_price_usd:.2f}\n"
+                   f"прибыль до продажи ${profit:.2f}\n"
                    f"копий в мировой продаже: {ref.num_for_sale}\n\n"
                    f"НЕ СВЕРЕНО ГЛАЗАМИ. До ставки проверить:\n"
                    + "\n".join(f"• {x}" for x in flags)
