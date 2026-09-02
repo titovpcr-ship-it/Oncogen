@@ -221,6 +221,38 @@ def mv_price(conn, *, release_id=None, master_id=None, min_n=1) -> RuPrice:
                    note="выставленная цена, не сделка")
 
 
+def discogs_price(conn, cfg, *, release_id=None) -> RuPrice:
+    """Мировой пол предложения из кэша Discogs, переведённый в рубли.
+
+    ЭТО НЕ ВЫРУЧКА. price_suggestions отдаёт 404 без продавецкого
+    профиля (замерено 31.08.2026), поэтому единственное число, которое
+    Discogs даёт, — lowest_price: самое дешёвое ПРЕДЛОЖЕНИЕ в мире.
+    Продавать туда из РФ нельзя с 2022 года, значит вердикт по нему
+    отвечает на вопрос «дешевле ли мы покупаем, чем просит мир», а не
+    «сколько выручим».
+
+    Метка kind='ask_world' обязана доехать до отчёта: назвать эту
+    величину прибылью — та самая подмена уровня, что запрещает
+    правило 1.
+    """
+    if not release_id:
+        return RuPrice(source="none")
+    init(conn)
+    row = conn.execute(
+        "SELECT lowest_price, currency, num_for_sale FROM discogs_stats "
+        "WHERE release_id=?", (int(release_id),)).fetchone()
+    if not row or row[0] is None:
+        return RuPrice(source="none")
+    usd = _to_usd(row[0], row[1])
+    if usd is None:
+        return RuPrice(source="none", note="валюта не пересчитывается наугад")
+    fx = float((cfg.get("ru_market") or {}).get("fx_rate_rub_per_usd") or 100.0)
+    return RuPrice(price_rub=int(usd * fx), source="discogs", kind="ask_world",
+                   n=int(row[2] or 0),
+                   note="мировой пол ПРЕДЛОЖЕНИЯ, не выручка: продавать "
+                        "на Discogs из РФ нельзя")
+
+
 def ru_price_for(conn, cfg, *, release_id=None, master_id=None,
                  meshok_median_rub=None, meshok_n=0) -> RuPrice:
     """Московская цена по приоритету источников, С МЕТКОЙ.
@@ -230,7 +262,11 @@ def ru_price_for(conn, cfg, *, release_id=None, master_id=None,
     ошибку, которая в этом проекте уже стоила четырёх неверных вердиктов.
     """
     for src in ((cfg.get("ru_market") or {}).get("ru_price_sources") or []):
-        if src.get("name") == "marketvinila":
+        if src.get("name") == "discogs":
+            p = discogs_price(conn, cfg, release_id=release_id)
+            if p.price_rub:
+                return p
+        elif src.get("name") == "marketvinila":
             p = mv_price(conn, release_id=release_id, master_id=master_id)
             if p.price_rub:
                 return p

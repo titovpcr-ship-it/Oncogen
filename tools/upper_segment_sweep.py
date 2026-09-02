@@ -322,6 +322,9 @@ def main(argv=None):
         print(f"  цены: медиана ${statistics.median(pr):.0f}, "
               f"от ${pr[0]:.0f} до ${pr[-1]:.0f}")
 
+        # ТОЛЬКО DISCOGS: индекс по названиям больше не нужен — цена
+        # берётся по release_id из кэша справок. Сопоставление остаётся
+        # ради release_id, но источник цены один.
         idx, wl = build_price_index(conn)
         mv_n = sum(1 for e in idx if e["src"] == "mv")
         print(f"\nиндекс оценки: {mv_n} позиций с ценой МаркетВинила + "
