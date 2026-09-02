@@ -289,6 +289,28 @@ def test_tonkaya_spravka_ravna_neopoznannomu_pressu():
           and "if len(same) >= 3:" in src)
 
 
+def test_tsep_otkazov_ne_padaet_na_none():
+    """Каждый сторож обнулял profit по-своему, а следующий всё ещё
+    печатал его — прогон падал на NoneType.__format__ ровно тогда,
+    когда лот доходил до второго сторожа. Живое падение 02.09.2026.
+    """
+    rej = {"G", "G+", "F", "P"}
+    check("чужой пресс отказывает первым",
+          "другой пресс" in (lh.verdict(100.0, "другой пресс", "G+", rej, 0.1, 1.5) or ""))
+    check("состояние отказывает, когда пресс сошёлся",
+          "состояние G+" in (lh.verdict(100.0, None, "G+", rej, 5.0, 1.5) or ""))
+    check("спрос отказывает последним",
+          "спроса нет" in (lh.verdict(100.0, None, "VG+", rej, 0.1, 1.5) or ""))
+    check("чистый лот проходит",
+          lh.verdict(100.0, None, "VG+", rej, 5.0, 1.5) is None)
+    check("нет данных о спросе — не отказ",
+          lh.verdict(100.0, None, "NM", rej, None, 1.5) is None)
+    check("сумма печатается во всех отказах",
+          all("$100.00" in (lh.verdict(100.0, m, g, rej, d, 1.5) or "$100.00")
+              for m, g, d in [("x", None, None), (None, "G", None),
+                              (None, "VG+", 0.1)]))
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -358,6 +380,7 @@ def main():
                test_kargo_po_chislu_plastinok,
                test_sostoyanie_ekzemplyara,
                test_tonkaya_spravka_ravna_neopoznannomu_pressu,
+               test_tsep_otkazov_ne_padaet_na_none,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,
