@@ -58,6 +58,9 @@ CREATE TABLE IF NOT EXISTS hunt_checked (
     why        TEXT,
     checked_at TEXT NOT NULL
 );
+-- Прибыль в журнале, а не только кратность: критерий теперь она, и без
+-- неё нельзя ответить, сколько лотов было близко к порогу.
+ALTER TABLE hunt_checked ADD COLUMN profit REAL;
 """
 
 
@@ -164,7 +167,18 @@ def main(argv=None):
     from ebay_vinyl_3x_finder import DISCOGS_TOKEN      # noqa: E402
     conn = sqlite3.connect(a.db)
     conn.row_factory = sqlite3.Row
-    conn.executescript(SEEN_SCHEMA)
+    for stmt in SEEN_SCHEMA.split(";"):
+        if not stmt.strip():
+            continue
+        try:
+            conn.execute(stmt)
+        except sqlite3.OperationalError as e:
+            # ALTER TABLE ... ADD COLUMN не идемпотентен: на втором
+            # запуске он падает «duplicate column». Остальные ошибки
+            # схемы глушить нельзя — они настоящие.
+            if "duplicate column" not in str(e):
+                raise
+    conn.commit()
     us.init(conn)
 
     rows = [dict(r) for r in conn.execute(
@@ -221,11 +235,19 @@ def main(argv=None):
                         why = "нет справки о цене"
                     elif cap and ref.num_for_sale and ref.num_for_sale > cap:
                         why = f"копий в мире {ref.num_for_sale} — тираж, не редкость"
-                    elif min_wh and not demand_ok(rid, DISCOGS_TOKEN, min_wh):
-                        why = "спроса нет: want/have ниже порога"
                     else:
-                        # Неизвестная доставка НЕ равна нулю: берём
-                        # консервативное допущение и помечаем его.
+                        # ЭКОНОМИКА СЧИТАЕТСЯ ДО ПРОВЕРКИ СПРОСА, И ЭТО
+                        # НЕ ПЕРЕСТАНОВКА РАДИ КРАСОТЫ. Пока спрос стоял
+                        # первым, он снимал половину дошедших сюда лотов
+                        # (77 из 150 на прогоне 02.09.2026), и про каждый
+                        # из них мы так и не узнавали, была ли там
+                        # прибыль. Это класс «не посмотрели», который
+                        # ПРАВИЛО 2 запрещает выдавать за ответ.
+                        #
+                        # Заодно дешевле: расчёт прибыли не стоит ни
+                        # одного запроса, а спрос стоит запрос к карточке
+                        # релиза. Теперь этот запрос тратится только на
+                        # лоты, которые деньги уже прошли.
                         ship = lot["shipping"]
                         ship_assumed = ship is None
                         ship = assumed_ship if ship_assumed else ship
@@ -237,11 +259,14 @@ def main(argv=None):
                                    f"${min_profit:.0f}")
                         elif min_ratio is not None and ratio < min_ratio:
                             why = f"кратность {ratio:.2f}x ниже {min_ratio}x"
+                        elif min_wh and not demand_ok(rid, DISCOGS_TOKEN, min_wh):
+                            why = (f"деньги есть (+${profit:.2f}), но спроса "
+                                   f"нет: want/have ниже порога")
 
         conn.execute("INSERT OR REPLACE INTO hunt_checked "
-                     "(item_id,release_id,ratio,why,checked_at) "
-                     "VALUES (?,?,?,?,datetime('now'))",
-                     (lot["item_id"], rid, ratio, why))
+                     "(item_id,release_id,ratio,profit,why,checked_at) "
+                     "VALUES (?,?,?,?,?,datetime('now'))",
+                     (lot["item_id"], rid, ratio, profit, why))
         conn.commit()
 
         if why:
