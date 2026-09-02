@@ -231,6 +231,39 @@ def test_kargo_po_chislu_plastinok():
           lh.disc_count("Hank Mobley Blue Note BLP 1544 mono") == 1)
 
 
+def test_sostoyanie_ekzemplyara():
+    """Справка Discogs — пол ПРЕДЛОЖЕНИЯ, а предлагают VG+ и выше.
+    Применить её к копии G+ значит перенести цену с одной выборки на
+    другую: ровно то, что запрещает правило 1.
+
+    БАГ: состояние не читалось вообще. Лот Bennie Green (Prestige PRLP
+    7049, оригинал 1956, пресс сверен буквально) прошёл все сторожа с
+    прибылью $181.34, хотя продавец честно писал «Vinyl Condition: G+ …
+    quarter size heat mark … plays with moderate static».
+    """
+    t = ("Item Details & Condition. Vinyl Condition: G+ Vinyl S1 looks G "
+         "but overall G+ scuffs and scratches with quarter size heat mark "
+         "side A song 2, plays with moderate static.")
+    check("грейд читается из описания продавца", lh.grade_from_text(t) == "G+")
+    check("вес пластинки не становится грейдом",
+          lh.grade_from_text("Blue Note 180 g audiophile reissue sealed") is None)
+    check("форма «NM or M-» читается",
+          lh.grade_from_text("Media: NM or M-  Sleeve: VG+") == "NM")
+    check("словесная форма со скобками читается",
+          lh.grade_from_text("Record: Very Good Plus (VG+) Cover: VG") == "VG+")
+    check("чистый VG+ не отклоняется",
+          lh.grade_from_text("Rare original JAPAN pressing LP in sweet VG+ "
+                             "condition") == "VG+")
+
+    import yaml
+    cfg = yaml.safe_load(
+        (Path(__file__).resolve().parent / "ebay_vinyl_sniper_config.yaml")
+        .read_text("utf-8"))
+    rej = set(cfg["ru_market"]["west_reject_grades"])
+    check("G+ в списке отказа западного пути", "G+" in rej)
+    check("VG+ не в списке отказа", "VG+" not in rej)
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -298,6 +331,7 @@ def main():
                test_demand_ratio_izmerenie_a_ne_verdikt,
                test_preduprezhdenie_kogda_press_nechem_sverit,
                test_kargo_po_chislu_plastinok,
+               test_sostoyanie_ekzemplyara,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,

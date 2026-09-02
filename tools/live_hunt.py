@@ -40,6 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import yaml                                       # noqa: E402
 
 import moscow_wantlist as wl                      # noqa: E402
+import ru_price_model as rpm                      # noqa: E402
 import upper_segment as us                        # noqa: E402
 from build_mv_targets import (ApiRefused, query_ladder, resolve,  # noqa: E402
                               verify_match)
@@ -152,6 +153,95 @@ def cargo_usd(title, cfg):
     per_disc = float(ru.get("west_per_disc_kg", 0.45))
     packaging = float(ru.get("west_packaging_kg", 0.30))
     return rate * (packaging + per_disc * disc_count(title))
+
+
+# ─────────── СОСТОЯНИЕ ЭКЗЕМПЛЯРА ───────────
+# Состояние не читалось вообще, и это стоило владельцу двух ручных
+# разборов подряд. Лот Bennie Green (Prestige PRLP 7049, оригинал 1956,
+# DG, RVG — пресс сверен буквально) прошёл все сторожа с прибылью
+# $181.34. Продавец при этом честно написал в описании: «Vinyl
+# Condition: G+ … scuffs and scratches with quarter size heat mark …
+# plays with moderate static». Разница между G+ и VG+ по этой позиции —
+# четыре-шесть раз по цене, то есть состояние решает сделку целиком, а
+# мы про него не спрашивали.
+#
+# Правило «жёсткий отказ по G/F/P» есть в конфиге с самого начала
+# (reject_grades) и применялось на российском пути. Западный путь его
+# просто не вызывал.
+
+# Помеченная форма надёжнее голого токена: «Vinyl Condition: G+» это
+# заявление продавца, а «180 g» — вес пластинки. Первое ищем first.
+_GRADE_LABELLED = re.compile(
+    r"\b(?:vinyl|media|record|disc|vinyl\s+condition|grade|wax)\s*"
+    r"(?:condition)?\s*[:\-]\s*([A-Za-z][A-Za-z+\-\s]{0,18})", re.I)
+_GRADE_BARE = re.compile(
+    r"(?<![\w.])(NM|M-|VG\+{1,2}|VG|EX\+?|G\+|VG-|F|P|"
+    r"near\s+mint|very\s+good\s+plus|very\s+good|good\s+plus|"
+    r"fair|poor|mint)(?![\w])", re.I)
+
+# Слова, за которыми стоит физический дефект, а не мнение продавца.
+_DEFECTS = [
+    (re.compile(r"\bheat\s*mark|warp(ed|ing)?\b", re.I),
+     "термодеформация или коробление — риск для трекинга, а не косметика"),
+    (re.compile(r"\bskip(s|ping)?\b", re.I), "заявлен перескок иглы"),
+    (re.compile(r"\bstatic|crackl|surface\s+noise|pops?\b", re.I),
+     "заявлен шум при проигрывании"),
+    (re.compile(r"\bscuff|scratch|groove\s*wear|scrs?\b", re.I),
+     "заявлены царапины или износ канавки"),
+    (re.compile(r"\bseam\s*split|split\s*seam|water\s*damage|mold|mildew\b", re.I),
+     "повреждён конверт"),
+    (re.compile(r"\bwrite|writing|name\s+on|sticker|stain\b", re.I),
+     "надписи или наклейки"),
+]
+
+
+def grade_from_text(text):
+    """Грейд винила из текста продавца или None.
+
+    Помеченная форма («Vinyl Condition: G+») читается первой: она
+    заявление, а не совпадение букв. Голый токен берётся только если
+    помеченной формы нет — и с оглядкой на старую ошибку, когда «180 g»
+    превращалось в грейд G.
+    """
+    if not text:
+        return None
+    m = _GRADE_LABELLED.search(text)
+    if m:
+        g = rpm.canon_grade(m.group(1).strip())
+        if g:
+            return g
+        m2 = _GRADE_BARE.search(m.group(1))
+        if m2:
+            g = rpm.canon_grade(m2.group(1))
+            if g:
+                return g
+    m = _GRADE_BARE.search(text)
+    return rpm.canon_grade(m.group(1)) if m else None
+
+
+def condition_report(item_id, token):
+    """Состояние экземпляра по карточке eBay: (грейд, дефекты, текст).
+
+    Один запрос на кандидата, уже прошедшего деньги. Отказ API поднимает
+    ApiRefused — судьбу лота нельзя решать по данным, которых нет.
+    """
+    import requests
+    try:
+        r = requests.get(
+            f"https://api.ebay.com/buy/browse/v1/item/v1|{item_id}|0",
+            headers={"Authorization": f"Bearer {token}",
+                     "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}, timeout=30)
+    except requests.RequestException as e:                  # noqa: BLE001
+        raise ApiRefused(f"сеть eBay: {type(e).__name__}") from e
+    if r.status_code != 200:
+        raise ApiRefused(f"eBay отказал: HTTP {r.status_code}")
+    d = r.json()
+    parts = [d.get("conditionDescription"), d.get("shortDescription")]
+    html = d.get("description") or ""
+    parts.append(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)))
+    text = " ".join(x for x in parts if x)[:4000]
+    defects = [why for pat, why in _DEFECTS if pat.search(text)]
+    return grade_from_text(text), defects, text
 
 
 def promise(lot):
@@ -489,6 +579,18 @@ def main(argv=None):
                  (ru.get("discogs_reference") or {}).get("max_num_for_sale"))
     cap = None if cap in (None, 0) else int(cap)
     assumed_ship = float(ru.get("assumed_us_shipping_usd", 5.0))
+    reject_grades = set(ru.get("west_reject_grades")
+                        or ru.get("reject_grades") or [])
+    try:
+        from new_pop import ebay_token
+        ebay_tok = ebay_token()
+    except Exception as ex:                        # noqa: BLE001
+        # Без токена eBay состояние не прочесть. Это НЕ повод молча
+        # пропускать проверку: печатаем и продолжаем, но каждая находка
+        # уйдёт с пометкой, что состояние не читалось.
+        print(f"eBay недоступен ({type(ex).__name__}) — состояние "
+              f"экземпляра проверяться НЕ будет")
+        ebay_tok = None
     min_wh = float(ru.get("min_want_have_ratio", 0) or 0)
     fx = float(ru.get("fx_rate_rub_per_usd", 100.0))
 
@@ -562,6 +664,7 @@ def main(argv=None):
     for i, lot in enumerate(todo, 1):
         why = None
         rid = ratio = profit = dr = ref_note = None
+        grade = defects = None
         if wl.wrong_format(lot["title"]):
             why = "не пластинка"
         else:
@@ -680,6 +783,19 @@ def main(argv=None):
                                                f"дешёвому прессу семейства "
                                                f"(${lo:.2f} из {n}) прибыль "
                                                f"${profit:.2f} ниже ${min_profit:.0f}")
+                            # СОСТОЯНИЕ ЭКЗЕМПЛЯРА — последний сторож,
+                            # и он тоже стоит одного запроса на
+                            # кандидата, уже прошедшего деньги.
+                            grade = defects = None
+                            if not mism and ebay_tok:
+                                grade, defects, _ = condition_report(
+                                    lot["item_id"], ebay_tok)
+                                if grade and grade in reject_grades:
+                                    why = (f"деньги есть (+${profit:.2f}), но "
+                                           f"состояние {grade}: справка Discogs "
+                                           f"даёт пол предложения, а предлагают "
+                                           f"VG+ и выше")
+                                    profit = ratio = None
                             if mism:
                                 # ПРИБЫЛЬ СТИРАЕТСЯ ВМЕСТЕ С ОТКАЗОМ. Она
                                 # посчитана против ДРУГОГО предмета и
@@ -733,6 +849,11 @@ def main(argv=None):
                    f"Discogs, мировой пол предложения ${ref.lowest_price_usd:.2f}\n"
                    f"прибыль до продажи ${profit:.2f}\n"
                    f"копий в мировой продаже: {ref.num_for_sale}\n"
+                   + (f"состояние по описанию продавца: {grade}\n"
+                      if grade else
+                      ("состояние в описании не названо\n" if ebay_tok
+                       else "состояние НЕ ПРОВЕРЯЛОСЬ (eBay недоступен)\n"))
+                   + ("".join(f"дефект: {d}\n" for d in (defects or [])))
                    + (f"{ref_note}\n" if ref_note else "")
                    + f"справка о пресcе: {rel.get('country')} {rel.get('year')}, "
                    + "/".join((l.get("catno") or "?")
