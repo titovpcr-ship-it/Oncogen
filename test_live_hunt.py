@@ -206,6 +206,31 @@ def test_preduprezhdenie_kogda_press_nechem_sverit():
           not any("ГЛАВНОЕ" in x for x in flags3))
 
 
+def test_kargo_po_chislu_plastinok():
+    """Карго берётся за килограмм, значит бокс не равен одинарнику.
+
+    БАГ, НАЙДЕННЫЙ НА ЖИВОМ ЛОТЕ: бокс Creedence «Absolute Originals»
+    (восемь дисков по 180 г, брутто ~4.5 кг) считался по фиксированным
+    0.75 кг — $16.50 вместо примерно $86.
+    """
+    import yaml
+    cfg = yaml.safe_load(
+        (Path(__file__).resolve().parent / "ebay_vinyl_sniper_config.yaml")
+        .read_text("utf-8"))
+    check("одинарник считается как раньше",
+          abs(lh.cargo_usd("John Coltrane Black Pearls LP Prestige", cfg) - 16.50) < 0.01,
+          str(lh.cargo_usd("John Coltrane Black Pearls LP", cfg)))
+    check("бокс дороже одинарника",
+          lh.cargo_usd("CCR Absolute Originals Vinyl Box", cfg) > 50)
+    check("7xLP распознаётся", lh.disc_count("Elvis His Greatest Hits (7xLP, Box)") == 7)
+    check("словесная форма Double считается за два",
+          lh.disc_count("Vintage Pair Of Beatles Double LP's") >= 2)
+    check("округление в тяжёлую сторону: бокс без числа не одинарник",
+          lh.disc_count("Some Artist Box Set") > 1)
+    check("обычный лот остаётся одинарником",
+          lh.disc_count("Hank Mobley Blue Note BLP 1544 mono") == 1)
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -272,6 +297,7 @@ def main():
                test_press_a_ne_tolko_albom,
                test_demand_ratio_izmerenie_a_ne_verdikt,
                test_preduprezhdenie_kogda_press_nechem_sverit,
+               test_kargo_po_chislu_plastinok,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,

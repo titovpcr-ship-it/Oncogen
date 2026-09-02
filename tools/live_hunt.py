@@ -89,6 +89,71 @@ _MARKS = re.compile(
     r"withdrawn|banned cover)\b", re.I)
 
 
+# Сколько пластинок в лоте. Нужно для КАРГО: тариф форвардера берётся
+# за килограмм, и бокс из восьми дисков едет вчетверо дороже одинарника.
+_COUNT_PAT = re.compile(
+    r"\b(\d{1,2})\s*(?:x\s*)?(?:lp'?s?|records?|discs?|albums?|vinyls?)\b|"
+    r"\b(\d{1,2})\s*-\s*(?:lp|record|disc)\b", re.I)
+_BOX_PAT = re.compile(r"\bbox\s*set\b|\bboxset\b|\bbox\b", re.I)
+# Словесные формы: «Double LP», «Pair of», «Triple». Замерено — они
+# встречаются не реже цифровых, а прежний счётчик их не видел вовсе:
+# «Vintage Pair Of Beatles Double LP's» считался одинарником.
+_WORD_COUNT = [(re.compile(r"\b(double|dbl|pair)\b", re.I), 2),
+               (re.compile(r"\b(triple|trip)\b", re.I), 3),
+               (re.compile(r"\b(quad|quadruple)\b", re.I), 4)]
+# «Box» без числа. Число дисков в боксе заголовок часто не называет, а
+# недооценить бокс дороже, чем переоценить: бокс Creedence оказался
+# восьмидисковым при брутто 4.5 кг. Шесть — середина между четырьмя
+# (минимум, какой вообще бывает) и восемью (замеренный случай), взятая
+# в тяжёлую сторону от минимума.
+_BOX_DEFAULT_DISCS = 6
+
+
+def disc_count(title):
+    """Число пластинок в лоте, с округлением В БОЛЬШУЮ сторону.
+
+    ОШИБАТЬСЯ НАДО В ТЯЖЁЛУЮ СТОРОНУ, и это то же правило, что уже
+    записано в lp_count_from_titles: переоценка веса стоит потерянной
+    находки, недооценка — купленного убытка, о котором узнаёшь после
+    оплаты карго. Из двух ошибок выбираем ту, которая ничего не стоит.
+
+    НАЙДЕНО НА ЖИВОМ ЛОТЕ 02.09.2026. Бокс Creedence «Absolute
+    Originals» — восемь пластинок по 180 г, брутто около 4.5 кг. Охота
+    считала карго по фиксированным 0.75 кг для ЛЮБОГО лота: $16.50
+    вместо примерно $86. Недосчёт в семьдесят долларов на позиции, где
+    весь спор шёл о сотне.
+
+    «Box» без числа считается за четыре диска: боксов меньше четырёх
+    почти не бывает, а недооценить бокс дороже, чем переоценить.
+    """
+    t = title or ""
+    n = 0
+    for m in _COUNT_PAT.finditer(t):
+        v = int(m.group(1) or m.group(2))
+        if 2 <= v <= 20:
+            n = max(n, v)
+    for pat, v in _WORD_COUNT:
+        if pat.search(t):
+            n = max(n, v)
+    if not n and _BOX_PAT.search(t):
+        n = _BOX_DEFAULT_DISCS
+    return max(1, n)
+
+
+def cargo_usd(title, cfg):
+    """Карго до Москвы в долларах, по числу пластинок.
+
+    Тара считается один раз на посылку, диски — по числу. Одинарник даёт
+    0.30 + 0.45 = 0.75 кг, то есть в точности замеренную по приходам
+    форвардера медиану: формула не спорит с измерением, а обобщает его.
+    """
+    ru = cfg["ru_market"]
+    rate = float((ru.get("rate_usd_per_kg_by_country") or {}).get("US") or 22.0)
+    per_disc = float(ru.get("west_per_disc_kg", 0.45))
+    packaging = float(ru.get("west_packaging_kg", 0.30))
+    return rate * (packaging + per_disc * disc_count(title))
+
+
 def promise(lot):
     """Насколько лот стоит запроса к Discogs РАНЬШЕ прочих.
 
@@ -347,6 +412,11 @@ def eye_check_flags(lot, ref_n, ratio, rel=None):
     # — но именно здесь и живут подмены: пять из двенадцати верхних
     # кандидатов 02.09.2026 оказались справкой не о том прессе, и
     # дешёвый лот с безликим заголовком получал цену оригинала.
+    if (_BOX_PAT.search(lot["title"] or "")
+            and not _COUNT_PAT.search(lot["title"] or "")):
+        f.append(f"бокс: число дисков в заголовке не названо, карго "
+                 f"посчитано по {_BOX_DEFAULT_DISCS} — уточнить у продавца, "
+                 f"каждый лишний диск это ещё ~$10 карго")
     ry = (rel or {}).get("year")
     if (ry and ry < 1980
             and not extract_catalog_number(lot["title"])
@@ -405,7 +475,9 @@ def main(argv=None):
                          "ни west_min_ratio — критерия отбора нет")
     min_profit = None if min_profit is None else float(min_profit)
     min_ratio = None if min_ratio is None else float(min_ratio)
-    cargo = float(ru.get("west_cargo_kg", 0.75)) * 22.0
+    # Карго больше НЕ константа: считается по числу пластинок в лоте.
+    # Прежние 0.75 кг остаются одинарным случаем той же формулы.
+    cargo_flat = float(ru.get("west_cargo_kg", 0.75)) * 22.0
     # ПОТОЛОК КОПИЙ — ЭТО МЕРА РЕДКОСТИ, А КРИТЕРИЙ ТЕПЕРЬ ПРИБЫЛЬ.
     # Значение 8 пришло из времён кратности, когда редкость служила
     # косвенным признаком дохода. При абсолютной прибыли оно не значит
@@ -480,7 +552,8 @@ def main(argv=None):
         crit.append(f"прибыль от ${min_profit:.0f}")
     if min_ratio is not None:
         crit.append(f"кратность от {min_ratio}x")
-    print(f"критерий: {' и '.join(crit)}; карго ${cargo:.2f}, "
+    print(f"критерий: {' и '.join(crit)}; карго от ${cargo_flat:.2f} "
+          f"(одинарник) по числу дисков, "
           f"потолок копий в мире {cap if cap else 'снят'}\n")
 
     lim = us.RateLimiter(55)
@@ -565,6 +638,7 @@ def main(argv=None):
                         ship = lot["shipping"]
                         ship_assumed = ship is None
                         ship = assumed_ship if ship_assumed else ship
+                        cargo = cargo_usd(lot["title"], cfg)
                         landed = lot["price_usd"] + ship + cargo
                         ratio = ref.lowest_price_usd / landed if landed else 0
                         profit = ref.lowest_price_usd - landed
