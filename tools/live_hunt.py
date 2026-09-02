@@ -356,7 +356,8 @@ def _loose_catno(title):
     return None
 
 
-def conservative_reference(master_id, token, conn=None, max_versions=14):
+def conservative_reference(master_id, token, conn=None, max_versions=14,
+                           country=None):
     """Пол предложения по САМОМУ ДЕШЁВОМУ прессу семейства.
 
     ЗАЧЕМ. Когда заголовок лота не называет ни каталожного номера, ни
@@ -394,6 +395,19 @@ def conservative_reference(master_id, token, conn=None, max_versions=14):
     vers = (r.json().get("versions") or [])
     if not vers:
         return None, 0
+    # СРАВНИВАЕМ С ПРЕССАМИ ТОЙ ЖЕ СТРАНЫ, если их достаточно.
+    # Найдено при разборе Savoy Brown: минимум по ВСЕМУ семейству дал
+    # $7.42 — это дешёвые британские и американские переиздания, а лот
+    # японский, и японские прессы стоят системно дороже (у этого,
+    # по фото владельца, ещё и декковские матрицы ZAL 8276/8277).
+    # Минимум по чужой стране — тот же перенос величины с одной
+    # популяции на другую, только в обратную сторону: он не завышает
+    # прибыль, а обнуляет её, и настоящая находка теряется.
+    if country:
+        same = [v for v in vers
+                if (v.get("country") or "").lower() == country.lower()]
+        if len(same) >= 3:
+            vers = same
     # Равномерная выборка по всему списку, а не первая страница: список
     # отсортирован по году, и первые записи — сплошь оригиналы.
     step = max(1, len(vers) // max_versions)
@@ -579,6 +593,7 @@ def main(argv=None):
                  (ru.get("discogs_reference") or {}).get("max_num_for_sale"))
     cap = None if cap in (None, 0) else int(cap)
     assumed_ship = float(ru.get("assumed_us_shipping_usd", 5.0))
+    min_nfs = int(ru.get("west_min_num_for_sale") or 0)
     reject_grades = set(ru.get("west_reject_grades")
                         or ru.get("reject_grades") or [])
     try:
@@ -769,20 +784,36 @@ def main(argv=None):
                             # единицы.
                             unverified = not (extract_catalog_number(lot["title"])
                                               or _loose_catno(lot["title"]))
-                            if not mism and unverified and rel.get("master_id"):
+                            # ТОНКАЯ СПРАВКА РАВНОСИЛЬНА НЕОПОЗНАННОМУ
+                            # ПРЕССУ. Одна копия в продаже — это мнение
+                            # одного продавца, и продавать он может
+                            # другую вещь под тем же номером релиза:
+                            # справка 1720 евро по Savoy Brown стояла на
+                            # единственной копии, и ею оказался white
+                            # label promo с оби, тогда как единственная
+                            # зафиксированная продажа позиции — $127.91.
+                            thin = (ref.num_for_sale is not None
+                                    and ref.num_for_sale < min_nfs)
+                            if (not mism and (unverified or thin)
+                                    and rel.get("master_id")):
                                 lo, n = conservative_reference(
-                                    rel["master_id"], DISCOGS_TOKEN, conn=conn)
+                                    rel["master_id"], DISCOGS_TOKEN, conn=conn,
+                                    country=rel.get("country"))
                                 if lo is not None:
                                     profit = lo - landed
                                     ratio = lo / landed if landed else 0
-                                    ref_note = (f"пресс не опознан; справка по "
-                                                f"самому дешёвому из {n} прессов "
-                                                f"семейства ${lo:.2f}")
+                                    cause = ("пресс не опознан" if unverified
+                                             else f"копий в продаже "
+                                                  f"{ref.num_for_sale} — "
+                                                  f"справка тонкая")
+                                    ref_note = (f"{cause}; взят самый дешёвый "
+                                                f"из {n} прессов семейства "
+                                                f"${lo:.2f}")
                                     if min_profit is not None and profit < min_profit:
-                                        why = (f"пресс не опознан: по самому "
-                                               f"дешёвому прессу семейства "
-                                               f"(${lo:.2f} из {n}) прибыль "
-                                               f"${profit:.2f} ниже ${min_profit:.0f}")
+                                        why = (f"{cause}: по самому дешёвому "
+                                               f"прессу семейства (${lo:.2f} из "
+                                               f"{n}) прибыль ${profit:.2f} "
+                                               f"ниже ${min_profit:.0f}")
                             # СОСТОЯНИЕ ЭКЗЕМПЛЯРА — последний сторож,
                             # и он тоже стоит одного запроса на
                             # кандидата, уже прошедшего деньги.

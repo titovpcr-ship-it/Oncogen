@@ -264,6 +264,31 @@ def test_sostoyanie_ekzemplyara():
     check("VG+ не в списке отказа", "VG+" not in rej)
 
 
+def test_tonkaya_spravka_ravna_neopoznannomu_pressu():
+    """Одна копия в продаже — мнение одного продавца, а не рынок.
+
+    БАГ: справка 1720 евро по Savoy Brown (London SLC 283, Japan)
+    стояла на ЕДИНСТВЕННОЙ копии, и этой копией оказался white label
+    promo с оби — другая вещь под тем же номером релиза. Единственная
+    зафиксированная продажа позиции — $127.91, в тринадцать раз ниже.
+    Прибыль показывалась как +$1839.31.
+    """
+    import yaml
+    cfg = yaml.safe_load(
+        (Path(__file__).resolve().parent / "ebay_vinyl_sniper_config.yaml")
+        .read_text("utf-8"))
+    mn = cfg["ru_market"]["west_min_num_for_sale"]
+    check("пол по числу копий задан", isinstance(mn, int) and mn >= 3, str(mn))
+
+    src = (Path(__file__).resolve().parent / "tools" / "live_hunt.py").read_text("utf-8")
+    check("тонкая справка ведёт к консервативной оценке",
+          "thin = (ref.num_for_sale is not None" in src
+          and "unverified or thin" in src)
+    check("страна пресса учитывается при консервативной оценке",
+          "country=rel.get(\"country\")" in src
+          and "if len(same) >= 3:" in src)
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -332,6 +357,7 @@ def main():
                test_preduprezhdenie_kogda_press_nechem_sverit,
                test_kargo_po_chislu_plastinok,
                test_sostoyanie_ekzemplyara,
+               test_tonkaya_spravka_ravna_neopoznannomu_pressu,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,
