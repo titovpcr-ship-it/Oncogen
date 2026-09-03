@@ -336,6 +336,13 @@ def demand_ratio(rel):
 # попадут «LP 33», «RPM 45» и «Vol 12».
 # Форма с дефисом надёжна и при коротком номере: «NPS-3», «SD-33».
 # Без дефиса минимум три цифры, иначе в номера полезут «LP 33» и «Vol 12».
+# СОСТАВНОЙ НОМЕР ЧИТАЕТСЯ ЦЕЛИКОМ И ПЕРВЫМ. Найдено на живом отказе:
+# лот «MAXI Self titled … BLUE NOTE BN-LA738-H» нёс номер полностью, а
+# извлекатель откусывал от него «LA738» — и сторож пресса объявлял
+# расхождение с карточкой, где стоит ровно «BN-LA738-H». Ложный отказ
+# на позиции с прибылью $46.37.
+_COMPOUND_CATNO = re.compile(
+    r"\b([A-Z]{2,4}-[A-Z]{0,3}\d{2,6}(?:-[A-Z]\d?)?)\b")
 _LOOSE_CATNO = re.compile(r"\b([A-Z]{2,4})-(\d{1,6})\b|\b([A-Z]{1,4})\s?(\d{3,6})\b")
 _NOT_CATNO = {"LP", "EP", "RPM", "VOL", "NO", "G", "GR", "CD", "US", "UK",
               "ORIG", "OG", "NM", "VG", "EX", "MINT", "STEREO", "MONO",
@@ -343,6 +350,9 @@ _NOT_CATNO = {"LP", "EP", "RPM", "VOL", "NO", "G", "GR", "CD", "US", "UK",
 
 
 def _loose_catno(title):
+    m = _COMPOUND_CATNO.search(title or "")
+    if m and (m.group(1).split("-")[0].upper() not in _NOT_CATNO):
+        return m.group(1)
     for m in _LOOSE_CATNO.finditer(title or ""):
         letters = m.group(1) or m.group(3)
         digits = m.group(2) or m.group(4)

@@ -311,6 +311,51 @@ def test_tsep_otkazov_ne_padaet_na_none():
                               (None, "VG+", 0.1)]))
 
 
+def test_sostavnoy_nomer_chitaetsya_tselikom():
+    """Составной номер откусывался, и сторож пресса объявлял ложное
+    расхождение. Лот «MAXI Self titled … BLUE NOTE BN-LA738-H» нёс
+    номер полностью, извлекатель брал «LA738», карточка держала
+    «BN-LA738-H» — отказ на позиции с прибылью $46.37.
+    """
+    check("BN-LA738-H читается целиком",
+          lh._loose_catno("MAXI Self titled SOUL FUNK BLUE NOTE BN-LA738-H WHITE")
+          == "BN-LA738-H")
+    check("суффикс с цифрой не теряется",
+          lh._loose_catno('Chick Corea 12" Blue Note BN-LA395-H2') == "BN-LA395-H2")
+    check("ложного расхождения больше нет",
+          lh.pressing_mismatch(
+              "MAXI Self titled SOUL FUNK BLUE NOTE BN-LA738-H",
+              {"labels": [{"catno": "BN-LA738-H"}], "country": "US",
+               "year": 1977}) is None)
+    check("настоящее расхождение по-прежнему ловится",
+          lh.pressing_mismatch(
+              'Chick Corea Blue Note BN-LA395-H2',
+              {"labels": [{"catno": "8321"}], "country": "Argentina",
+               "year": 1977}) is not None)
+    check("короткий номер с дефисом читается",
+          lh._loose_catno("The Rolling Stone London NPS-3 1969") == "NPS-3")
+
+
+def test_opoznanie_po_nomeru():
+    """Строгая проверка убивала верные совпадения по номеру.
+
+    Замерено на 19 лотах: verify_match подтверждал 4, проверка по
+    исполнителю — 17. Отвергались Dion, McCoy Tyner, Beatles, Elvis,
+    Eagles, Velvet Underground.
+    """
+    ok = [("Dion Ruby Baby 1963 Stereo Vinyl LP Columbia", "Dion (3) - Ruby Baby"),
+          ("Van Halen S/T LP 1978 BSK 3075 Early Press", "Van Halen - Van Halen"),
+          ("the Beatles Let it Be ~ Made in Japan", "The Beatles - Let It Be")]
+    for t, lab in ok:
+        check(f"проходит: {lab[:30]}", lh.artist_matches(t, lab))
+    bad = [("EX! Definitive Jazz Scene V2 LP Coltrane",
+            "Daniela Ricar - Gebet 2000 Nach Erich"),
+           ("However- Sudden Dusk Random Radar RRR011",
+            "Singer Tempa / Horace Andy - Reggae")]
+    for t, lab in bad:
+        check(f"отсекается: {lab[:30]}", not lh.artist_matches(t, lab))
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -381,6 +426,8 @@ def main():
                test_sostoyanie_ekzemplyara,
                test_tonkaya_spravka_ravna_neopoznannomu_pressu,
                test_tsep_otkazov_ne_padaet_na_none,
+               test_sostavnoy_nomer_chitaetsya_tselikom,
+               test_opoznanie_po_nomeru,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,
