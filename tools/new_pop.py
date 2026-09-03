@@ -45,6 +45,17 @@ SEARCH = "https://api.ebay.com/buy/browse/v1/item_summary/search"
 CATEGORY = "176985"
 
 SCHEMA = """
+-- ФАКТИЧЕСКИ УПЛАЧЕННОЕ. Допущение о доставке решало судьбу трёх лотов
+-- из четырёх (74% идут с CALCULATED и без суммы), и проверить его было
+-- нечем, пока не появились настоящие покупки. Правило 1 устава: прямое
+-- измерение главнее коэффициента.
+CREATE TABLE IF NOT EXISTS newpop_paid (
+    item_id     TEXT PRIMARY KEY,
+    price_usd   REAL,      -- цена, как стояла в листинге
+    offer_usd   REAL,      -- цена, о которой договорились через «предложить цену»
+    paid_usd    REAL,      -- сколько ушло с карты всего
+    recorded_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS newpop_seen (
     item_id    TEXT PRIMARY KEY,
     query      TEXT,
@@ -141,6 +152,54 @@ def ebay_token():
     return r.json()["access_token"]
 
 
+def measured_discount(conn, min_n=3):
+    """Медиана СКИДКИ, полученной через «предложить цену», или None.
+
+    ЭТО ИЗМЕРЕНИЕ, А НЕ ОБЕЩАНИЕ. Три из трёх продавцов согласились на
+    пять долларов ниже листинга — но согласие каждого следующего никем
+    не гарантировано, и в сообщение оно уходит отдельной строкой, чтобы
+    человек видел, на чём построен расчёт.
+    """
+    rows = [r[0] for r in conn.execute(
+        "SELECT price_usd - offer_usd FROM newpop_paid "
+        "WHERE offer_usd IS NOT NULL AND price_usd IS NOT NULL")]
+    rows = [x for x in rows if x is not None and x >= 0]
+    if len(rows) < min_n:
+        return None, len(rows)
+    rows.sort()
+    n = len(rows)
+    return (rows[n // 2] if n % 2 else (rows[n // 2 - 1] + rows[n // 2]) / 2), n
+
+
+def measured_shipping(conn, min_n=3):
+    """Медиана ФАКТИЧЕСКОЙ надбавки к цене лота, или None.
+
+    Считается как уплачено минус цена листинга: в эту разницу входит и
+    доставка, и налог штата — то есть ровно то, что реально уходит с
+    карты сверх цены. Разделять их незачем: платим мы сумму.
+
+    Возвращает None, пока покупок меньше min_n. Три — тот же порог, что
+    у замера веса посылок: одна покупка это случай, три уже медиана.
+    """
+    # ОТ ДОГОВОРНОЙ ЦЕНЫ, А НЕ ОТ ЦЕНЫ ЛИСТИНГА. Первая версия считала
+    # надбавку как уплачено минус листинг и объявила доставку
+    # бесплатной. Между этими числами стоит ТОРГ: владелец предлагал на
+    # пять долларов ниже и получал согласие. С поправкой на него
+    # надбавка равна $6.13, $5.13 и $5.14 — то есть допущение в $5 было
+    # верным почти до цента, а «бесплатная доставка» была моей ошибкой
+    # чтения, а не свойством рынка.
+    rows = [r[0] for r in conn.execute(
+        "SELECT paid_usd - COALESCE(offer_usd, price_usd) FROM newpop_paid "
+        "WHERE paid_usd IS NOT NULL")]
+    rows = [x for x in rows if x is not None and x >= 0]
+    if len(rows) < min_n:
+        return None, len(rows)
+    rows.sort()
+    n = len(rows)
+    med = rows[n // 2] if n % 2 else (rows[n // 2 - 1] + rows[n // 2]) / 2
+    return med, n
+
+
 def shipping_usd(item):
     """Доставка по США или None, если продавец её не назвал.
 
@@ -208,6 +267,31 @@ def main(argv=None):
     conn.executescript(SCHEMA)
     conn.commit()
 
+    # ЗАМЕР ВЫТЕСНЯЕТ ДОПУЩЕНИЕ, КОГДА ЕГО ХВАТАЕТ НА МЕДИАНУ. Первые
+    # три покупки владельца показали надбавку $1.13, $0.13 и $0.14 при
+    # заложенных $5: доставка по всем трём оказалась бесплатной, а
+    # разница — налог штата. Допущение в пять долларов выбрасывало всё,
+    # что стоит от $20 до $25, то есть середину заданного диапазона.
+    med, n_paid = measured_shipping(conn)
+    disc, n_disc = measured_discount(conn)
+    if med is not None:
+        print(f"надбавка по {n_paid} фактическим покупкам: ${med:.2f} "
+              f"(допущение в конфиге ${assumed:.2f})")
+        assumed = med
+    elif n_paid:
+        print(f"фактических покупок пока {n_paid}, для медианы нужно 3 — "
+              f"работаю по допущению ${assumed:.2f}")
+    # СКИДКА ВЫЧИТАЕТСЯ ИЗ ЦЕНЫ ВХОДА. Замер трёх покупок: торг на $5
+    # вниз и надбавка $5.14 гасят друг друга, и уплаченное почти равно
+    # цене листинга ($17.50 -> $18.63, $20.00 -> $20.13, $19.99 ->
+    # $20.13). Считать landed как «цена плюс пять» значит выбрасывать
+    # весь диапазон от $20 до $25 — середину заданного владельцем.
+    if disc is not None:
+        print(f"скидка по торгу, медиана {n_disc} покупок: ${disc:.2f} — "
+              f"вычитается из цены листинга")
+    else:
+        disc = 0.0
+
     token = ebay_token()
     print(f"НОВАЯ ПОПСА: {len(entries)} позиций, потолок до форвардера "
           f"${cap:.2f}, только «предложить цену», состояние New"
@@ -270,7 +354,8 @@ def main(argv=None):
             # занижать landed у двойников.
             n_discs = disc_count(title)
             assumed_here = assumed + 2.0 * (n_discs - 1)
-            landed = price + (assumed_here if ship_assumed else ship)
+            entry = max(0.0, price - disc)
+            landed = entry + (assumed_here if ship_assumed else ship)
             if landed > cap:
                 reasons["дороже потолка"] = reasons.get("дороже потолка", 0) + 1
                 continue
@@ -279,7 +364,10 @@ def main(argv=None):
             hit += 1
             msg = ("НОВАЯ ПОПСА\n\n"
                    f"{title[:100]}\n\n"
-                   f"цена ${price:.2f}"
+                   f"цена в листинге ${price:.2f}"
+                   + (f", после торга ~${entry:.2f} (скидка ${disc:.0f} "
+                      f"получена у {n_disc} из {n_disc} продавцов, "
+                      f"но никем не гарантирована)" if disc else "")
                    + (f" + ${ship:.2f} доставка по США" if not ship_assumed
                       else f" + ${assumed_here:.2f} доставка (ДОПУЩЕНИЕ: "
                            f"продавец не назвал, {n_discs} диск(ов))")

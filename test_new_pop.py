@@ -90,10 +90,43 @@ def test_dostavka_ne_nol():
               {"shippingCost": {"value": "6.25"}}]}) == 6.25)
 
 
+def test_nadbavka_schitaetsya_ot_dogovornoy_tseny():
+    """Между уплаченным и ценой листинга стоит ТОРГ.
+
+    Первая версия считала надбавку как уплачено минус листинг и
+    объявила доставку бесплатной. С поправкой на торг ($5 вниз)
+    надбавка равна $6.13, $5.13 и $5.14 — то есть допущение в $5 было
+    верным почти до цента.
+    """
+    import sqlite3
+    conn = sqlite3.connect(":memory:")
+    conn.executescript(np.SCHEMA)
+    for iid, price, offer, paid in [("a", 17.50, 12.50, 18.63),
+                                    ("b", 20.00, 15.00, 20.13),
+                                    ("c", 19.99, 14.99, 20.13)]:
+        conn.execute("INSERT INTO newpop_paid "
+                     "(item_id,price_usd,offer_usd,paid_usd,recorded_at) "
+                     "VALUES (?,?,?,?,datetime('now'))", (iid, price, offer, paid))
+    med, n = np.measured_shipping(conn)
+    check("надбавка считается от договорной цены", abs(med - 5.14) < 0.01, str(med))
+    check("покупок учтено три", n == 3)
+    disc, nd = np.measured_discount(conn)
+    check("скидка по торгу измерена", abs(disc - 5.00) < 0.01, str(disc))
+
+    conn2 = sqlite3.connect(":memory:")
+    conn2.executescript(np.SCHEMA)
+    conn2.execute("INSERT INTO newpop_paid "
+                  "(item_id,price_usd,offer_usd,paid_usd,recorded_at) "
+                  "VALUES ('x',20.0,15.0,20.13,datetime('now'))")
+    check("одной покупки мало для медианы",
+          np.measured_shipping(conn2)[0] is None)
+
+
 def main():
     for fn in [test_ta_zhe_veshch_a_ne_te_zhe_slova, test_ne_ta_veshch_voobshche,
                test_semidyuymovka_ne_albom, test_slyuda_ne_ravna_novomu,
-               test_dostavka_ne_nol]:
+               test_dostavka_ne_nol,
+               test_nadbavka_schitaetsya_ot_dogovornoy_tseny]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
