@@ -572,6 +572,34 @@ def resolve_by_catno(title, token):
     return None
 
 
+# Хвостовой суффикс стороны или матрицы: «-A», «-H», «-H2». Discogs
+# часто хранит его в каталожном номере, а продавец пишет номер без
+# него.
+_CATNO_SIDE_SUFFIX = re.compile(r"-[A-Z]\d?$", re.I)
+
+
+def _catno_same(a, b):
+    """Один ли это каталожный номер, с поправкой на хвостовой суффикс.
+
+    НАЙДЕНО НА ЛОТЕ ЦЕНОЙ $404.05. «Elvis (CPM1-0818) HAVING FUN ON
+    STAGE» отклонён как другой пресс, потому что карточка держит
+    «CPM1-0818-A»: тот же номер плюс буква стороны. Сравнение отвергало
+    его буквально.
+
+    Снимается ТОЛЬКО хвост вида дефис-буква-цифра. Числовой хвост не
+    трогаем ни при каких условиях: «NPS-3» и «SD-33» — полноценные
+    номера, а «A-77» против «AS-77» это моно против стерео, и разница
+    там в ПРЕФИКСЕ, который не снимается никогда.
+    """
+    if catno_equivalent(a, b):
+        return True
+    sa = _CATNO_SIDE_SUFFIX.sub("", (a or "").strip())
+    sb = _CATNO_SIDE_SUFFIX.sub("", (b or "").strip())
+    if (sa != (a or "").strip() or sb != (b or "").strip()):
+        return catno_equivalent(sa, sb)
+    return False
+
+
 def pressing_mismatch(title, rel):
     """Тот ли это пресс, о котором справка. Причина отказа или None.
 
@@ -639,7 +667,7 @@ def pressing_mismatch(title, rel):
     catnos = [c for c in catnos if c]
     if not catnos:
         return None
-    if any(catno_equivalent(cn, c) for c in catnos):
+    if any(_catno_same(cn, c) for c in catnos):
         return None
     return (f"справка о другом прессе: в лоте {cn}, "
             f"в карточке {'/'.join(catnos[:3])}"

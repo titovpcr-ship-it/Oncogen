@@ -390,6 +390,22 @@ def test_svertka_karto4ki_ne_ubivaet_vernoe():
         check(f"отсекает ({why}): {lab[:26]}", not lh.card_matches(t, lab))
 
 
+def test_hvostovoy_suffiks_nomera():
+    """Discogs хранит букву стороны в номере, продавец её не пишет.
+
+    БАГ ЦЕНОЙ $404.05: «Elvis (CPM1-0818) HAVING FUN ON STAGE» отклонён
+    как другой пресс, потому что карточка держит «CPM1-0818-A».
+    """
+    check("хвост -A снимается", lh._catno_same("CPM1-0818", "CPM1-0818-A"))
+    check("хвост -H2 против -H", lh._catno_same("BN-LA395-H2", "BN-LA395-H"))
+    check("моно против стерео НЕ склеивается",
+          not lh._catno_same("A-77", "AS-77"))
+    check("числовой хвост не трогается", not lh._catno_same("SD-33", "SD-34"))
+    check("короткий номер с дефисом цел", lh._catno_same("NPS-3", "NPS-3"))
+    check("чужой номер остаётся чужим",
+          not lh._catno_same("PRST7757", "32-041"))
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -461,6 +477,7 @@ def main():
                test_tonkaya_spravka_ravna_neopoznannomu_pressu,
                test_tsep_otkazov_ne_padaet_na_none,
                test_sostavnoy_nomer_chitaetsya_tselikom,
+               test_hvostovoy_suffiks_nomera,
                test_opoznanie_po_nomeru,
                test_svertka_karto4ki_ne_ubivaet_vernoe,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
