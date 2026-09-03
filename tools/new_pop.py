@@ -86,12 +86,28 @@ _NOT_THE_THING = re.compile(
     r"mini\s*verse|miniverse|miniature|funko|figure|keychain|"
     r"doll|playset|3\s*inch|3\"|toy)\b", re.I)
 
+# НАКЛЕЙКА КАК ТОВАР, А НЕ КАК ПРИЛОЖЕНИЕ. Найдено при ручном просмотре
+# 44 позиций: «Replacement Hype Sticker for Lana Del Rey Born To Die» за
+# $14 шёл первой строкой как самый дешёвый landed. Просто запретить
+# слово «sticker» нельзя — «Metallica … LP + Sticker Target Exclusive»
+# это пластинка со стикером, и она была настоящей находкой. Отличает их
+# не слово, а то, ДЛЯ ЧЕГО оно: «sticker for X» и «replacement sticker»
+# описывают сам предмет, «LP + sticker» — приложение к нему.
+_STICKER_AS_ITEM = re.compile(
+    r"\b(replacement|repro(duction)?|custom)\s+[\w\s]{0,20}sticker|"
+    r"\bsticker\s+for\b|\bsticker\s+only\b|^\s*sticker\b", re.I)
+
 # Семидюймовые синглы. Исследование владельца говорит про АЛЬБОМЫ:
 # розница 3500-9000 рублей — это цена альбома, а не сингла, и
 # применять её к семидюймовке значит подменить предмет.
 # ГРАНИЦА СЛОВА ПОСЛЕ КАВЫЧКИ НЕ СТАВИТСЯ. Первая версия писала
 # \b(7")\b и пропускала «... color vinyl 7"» — кавычка не словесный
 # символ, и \b после неё никогда не срабатывает.
+# Заявление продавца словами, когда про слюду он молчит. Отличать эти
+# два случая надо в самом сообщении: «new» — обещание, пустота — нет.
+_CLAIM_NEW = re.compile(
+    r"\b(new|never\s+played|unplayed|still\s+in\s+shrink|nos|mint)\b", re.I)
+
 _SEVEN_INCH = re.compile(
     r"(?:\b7\s*(?:\"|''|”|inch\b|in\b)|\b45\s*rpm\b|\b45\b(?=\s|$)|"
     r"\bsingle\b)", re.I)
@@ -313,7 +329,8 @@ def main(argv=None):
             if conn.execute("SELECT 1 FROM newpop_seen WHERE item_id=?",
                             (iid,)).fetchone():
                 continue
-            if wl.wrong_format(title) or _NOT_THE_THING.search(title):
+            if (wl.wrong_format(title) or _NOT_THE_THING.search(title)
+                    or _STICKER_AS_ITEM.search(title)):
                 reasons["не пластинка"] = reasons.get("не пластинка", 0) + 1
                 continue
             if _SEVEN_INCH.search(title):
@@ -372,8 +389,12 @@ def main(argv=None):
                       else f" + ${assumed_here:.2f} доставка (ДОПУЩЕНИЕ: "
                            f"продавец не назвал, {n_discs} диск(ов))")
                    + f"\nдо форвардера ${landed:.2f} при потолке ${cap:.2f}\n"
-                   f"состояние: {it.get('condition')}, в заголовке заявлена слюда\n"
-                   f"продавец: {(it.get('seller') or {}).get('username')}, "
+                   f"состояние: {it.get('condition')} по кнопке eBay; "
+                   + ("в заголовке заявлена слюда\n" if _SEALED.search(title)
+                      else ("продавец пишет «новое», но про слюду молчит\n"
+                            if _CLAIM_NEW.search(title)
+                            else "ПРО УПАКОВКУ В ЗАГОЛОВКЕ НИЧЕГО НЕ СКАЗАНО\n"))
+                   + f"продавец: {(it.get('seller') or {}).get('username')}, "
                    f"отзывов {(it.get('seller') or {}).get('feedbackScore')}\n"
                    + (f"\nрозница РФ по исследованию: {ru_lo}-{ru_hi} руб "
                       f"(${ru_lo/fx:.0f}-{ru_hi/fx:.0f}), "
@@ -381,8 +402,11 @@ def main(argv=None):
                       if ru_lo else "")
                    + "\n"
                    "НЕ СВЕРЕНО ГЛАЗАМИ. До покупки проверить:\n"
-                   "• фото: слюда целая, не вскрыт стикер\n"
-                   "• это пластинка, а не постер и не карточки\n"
+                   + ("• фото: слюда целая, не вскрыт стикер\n"
+                      if _SEALED.search(title) else
+                      "• УПАКОВКА НЕ ЗАЯВЛЕНА: смотреть фото и описание, "
+                      "запечатан ли экземпляр. Кнопка «New» этого не значит\n")
+                   + "• это пластинка, а не постер и не карточки\n"
                    "• кнопка «предложить цену» на месте — торг возможен\n"
                    + ("• доставка НЕ названа продавцом, взято допущение\n"
                       if ship_assumed else "")

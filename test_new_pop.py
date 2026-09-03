@@ -54,6 +54,24 @@ def test_ne_ta_veshch_voobshche():
               "Michael Jackson - Thriller NEW Sealed Vinyl LP Album"))
 
 
+def test_nakleyka_kak_tovar():
+    """«Replacement Hype Sticker for Lana Del Rey» за $14 шёл первой
+    строкой как самый дешёвый landed. Но запретить слово «sticker»
+    нельзя: «Metallica … LP + Sticker Target Exclusive» — пластинка со
+    стикером, и она была настоящей находкой."""
+    check("наклейка как товар отсекается",
+          bool(np._STICKER_AS_ITEM.search(
+              "Replacement Hype Sticker for Lana Del Rey Born To Die")))
+    check("«sticker only» отсекается",
+          bool(np._STICKER_AS_ITEM.search("Sticker only - Pink Floyd")))
+    check("пластинка СО стикером проходит",
+          not np._STICKER_AS_ITEM.search(
+              "Metallica Master Of Puppets LP + Sticker Target Exclusive"))
+    check("hype sticker как приложение проходит",
+          not np._STICKER_AS_ITEM.search(
+              "The Beatles Abbey Road w/ Hype Sticker Sealed"))
+
+
 def test_semidyuymovka_ne_albom():
     """Граница слова после кавычки не ставится: \\b(7")\\b никогда не
     срабатывал, и «... color vinyl 7"» проходил как альбом. Розница из
@@ -124,6 +142,7 @@ def test_nadbavka_schitaetsya_ot_dogovornoy_tseny():
 
 def main():
     for fn in [test_ta_zhe_veshch_a_ne_te_zhe_slova, test_ne_ta_veshch_voobshche,
+               test_nakleyka_kak_tovar,
                test_semidyuymovka_ne_albom, test_slyuda_ne_ravna_novomu,
                test_dostavka_ne_nol,
                test_nadbavka_schitaetsya_ot_dogovornoy_tseny]:
