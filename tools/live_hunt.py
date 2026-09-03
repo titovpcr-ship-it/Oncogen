@@ -342,7 +342,11 @@ def demand_ratio(rel):
 # расхождение с карточкой, где стоит ровно «BN-LA738-H». Ложный отказ
 # на позиции с прибылью $46.37.
 _COMPOUND_CATNO = re.compile(
-    r"\b([A-Z]{2,4}-[A-Z]{0,3}\d{2,6}(?:-[A-Z]\d?)?)\b")
+    r"\b([A-Z]{2,4}-[A-Z]{0,3}\d{2,6}(?:-[A-Z]\d?)?)\b|"
+    # Форма с номером диска перед дефисом: «SRM 2-7001» (Mercury),
+    # «ABC 2-1006». Найдена на живом остатке: «RUSH Exit ... Stage Left
+    # 2 x LP Record Mercury SRM 2-7001» уходил без номера вовсе.
+    r"\b([A-Z]{2,4}\s?\d-\d{3,6})\b")
 _LOOSE_CATNO = re.compile(r"\b([A-Z]{2,4})-(\d{1,6})\b|\b([A-Z]{1,4})\s?(\d{3,6})\b")
 _NOT_CATNO = {"LP", "EP", "RPM", "VOL", "NO", "G", "GR", "CD", "US", "UK",
               "ORIG", "OG", "NM", "VG", "EX", "MINT", "STEREO", "MONO",
@@ -351,8 +355,10 @@ _NOT_CATNO = {"LP", "EP", "RPM", "VOL", "NO", "G", "GR", "CD", "US", "UK",
 
 def _loose_catno(title):
     m = _COMPOUND_CATNO.search(title or "")
-    if m and (m.group(1).split("-")[0].upper() not in _NOT_CATNO):
-        return m.group(1)
+    if m:
+        cn = m.group(1) or m.group(2)
+        if cn and cn.split("-")[0].split()[0].upper() not in _NOT_CATNO:
+            return cn
     for m in _LOOSE_CATNO.finditer(title or ""):
         letters = m.group(1) or m.group(3)
         digits = m.group(2) or m.group(4)
