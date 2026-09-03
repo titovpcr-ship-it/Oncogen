@@ -334,7 +334,9 @@ def demand_ratio(rel):
 # Analogue Productions 2012 года. Здесь берётся общая форма: две-четыре
 # буквы, разделитель, три-шесть цифр. Три цифры минимум — иначе в номера
 # попадут «LP 33», «RPM 45» и «Vol 12».
-_LOOSE_CATNO = re.compile(r"\b([A-Z]{1,4})[-\s]?(\d{3,6})\b")
+# Форма с дефисом надёжна и при коротком номере: «NPS-3», «SD-33».
+# Без дефиса минимум три цифры, иначе в номера полезут «LP 33» и «Vol 12».
+_LOOSE_CATNO = re.compile(r"\b([A-Z]{2,4})-(\d{1,6})\b|\b([A-Z]{1,4})\s?(\d{3,6})\b")
 _NOT_CATNO = {"LP", "EP", "RPM", "VOL", "NO", "G", "GR", "CD", "US", "UK",
               "ORIG", "OG", "NM", "VG", "EX", "MINT", "STEREO", "MONO",
               "RVG", "PROMO", "RE", "LTD", "SEALED", "PRESS"}
@@ -342,13 +344,14 @@ _NOT_CATNO = {"LP", "EP", "RPM", "VOL", "NO", "G", "GR", "CD", "US", "UK",
 
 def _loose_catno(title):
     for m in _LOOSE_CATNO.finditer(title or ""):
-        if m.group(1).upper() in _NOT_CATNO:
+        letters = m.group(1) or m.group(3)
+        digits = m.group(2) or m.group(4)
+        if (letters or "").upper() in _NOT_CATNO:
             continue
         # ЧЕТЫРЁХЗНАЧНОЕ ЧИСЛО БЕЗ ДЕФИСА — ЭТО ГОД, А НЕ НОМЕР. Первая
         # версия вытащила «ORIG 1965» из «ORIG 1965 Motown STEREO» и
         # «B 1952» — и сверила бы по ним пресс. Дефис снимает сомнение:
         # «MGV-4004» номер, «ORIG 1965» нет.
-        digits = m.group(2)
         if (len(digits) == 4 and 1900 <= int(digits) <= 2030
                 and "-" not in m.group(0)):
             continue
@@ -420,6 +423,76 @@ def conservative_reference(master_id, token, conn=None, max_versions=14,
         n += 1
         lo = ref.lowest_price_usd if lo is None else min(lo, ref.lowest_price_usd)
     return lo, n
+
+
+def artist_matches(lot_title, card_label):
+    """Совпадает ли ИСПОЛНИТЕЛЬ. Проверка для находок по номеру.
+
+    ЗДЕСЬ НЕ ГОДИТСЯ verify_match, И ЭТО ИЗМЕРЕНО. Тот матчер сверяет
+    исполнителя И название и писался под свободный текстовый поиск, где
+    Discogs может отдать что угодно. Поиск по каталожному номеру — метод
+    другой природы: номер уже задаёт конкретный пресс, и название
+    альбома в заголовке лота может отсутствовать вовсе («Styx Self
+    titled», «Van Halen S/T», «Killer Dwarfs Self Titled»).
+
+    Замерено на 19 лотах с номером из числа неопознанных: строгая
+    проверка подтвердила 4, проверка по исполнителю — 17. Среди
+    тринадцати отвергнутых были Dion — Ruby Baby, McCoy Tyner — Asante,
+    Beatles — Let It Be, Elvis — Something For Everybody, Eagles —
+    Desperado, Velvet Underground & Nico. Все очевидно те самые.
+
+    Исполнитель всё равно нужен: каталожные номера повторяются между
+    лейблами. Из тех же 19 два отсеялись правильно — «A100» указал на
+    немецкую пластинку, «RRR011» на регги-сборник.
+    """
+    if not card_label:
+        return False
+    artist = card_label.split(" - ")[0] if " - " in card_label else ""
+    artist = re.sub(r"\s*\(\d+\)", "", artist.split("=")[0])
+    toks = [w for w in re.findall(r"[a-z0-9]+", artist.lower()) if len(w) > 1]
+    if not toks:
+        return False
+    hay = set(re.findall(r"[a-z0-9]+", (lot_title or "").lower()))
+    return sum(1 for w in toks if w in hay) >= max(1, (len(toks) + 1) // 2)
+
+
+def resolve_by_catno(title, token):
+    """(release_id, подпись, карточка) по КАТАЛОЖНОМУ НОМЕРУ, или None.
+
+    СТРУКТУРНЫЙ ПОИСК ВМЕСТО СВОБОДНОГО ТЕКСТА. Разбор 1852 неопознанных
+    лотов показал, чего стоит вольная строка: «Styx Self titled Vinyl LP
+    A&M SP-4559» не находится никак — в заголовке нет названия альбома,
+    оно заменено словами «self titled». Поиск по SP-4559 отдаёт «Styx —
+    Equinox» первым же ответом. Так же «STAN GETZ … VERVE V6-8523» ->
+    «Jazz Samba Encore!», «Impulse! (IMP-166)» -> «Duke Ellington & John
+    Coltrane».
+
+    Номер решает и вторую задачу разом: найденный по нему релиз — тот
+    самый пресс, а не однофамилец из другой страны и другого года.
+    Свободный текст этого не гарантирует никогда.
+
+    Артист всё равно сверяется: каталожные номера повторяются между
+    лейблами, и «SD-33» бывает у полудюжины разных фирм.
+    """
+    import requests
+    cn = extract_catalog_number(title) or _loose_catno(title)
+    if not cn:
+        return None
+    try:
+        r = requests.get("https://api.discogs.com/database/search",
+                         headers={"Authorization": f"Discogs token={token}",
+                                  "User-Agent": "VinylArbitrage/1.0"},
+                         params={"catno": cn, "type": "release",
+                                 "format": "Vinyl", "per_page": 5}, timeout=25)
+    except requests.RequestException as e:                  # noqa: BLE001
+        raise ApiRefused(f"сеть: {type(e).__name__}") from e
+    if r.status_code != 200:
+        raise ApiRefused(f"Discogs отказал: HTTP {r.status_code}")
+    for x in (r.json().get("results") or []):
+        label = x.get("title") or ""
+        if artist_matches(title, label):
+            return x.get("id"), label, x
+    return None
 
 
 def pressing_mismatch(title, rel):
@@ -705,6 +778,7 @@ def main(argv=None):
     for i, lot in enumerate(todo, 1):
         why = None
         rid = ratio = profit = dr = ref_note = None
+        by_catno = False
         grade = defects = None
         if wl.wrong_format(lot["title"]):
             why = "не пластинка"
@@ -720,13 +794,25 @@ def main(argv=None):
                 # пустоту на пластинках, которые в базе есть. Это был
                 # класс «не посмотрели», а не «посмотрели и отказали».
                 rid = label = None
+                by_catno = False
                 try:
-                    for q in ladder:
-                        lim.wait()
-                        rid, mid, label = resolve(q, DISCOGS_TOKEN)
-                        if rid and verify_match(lot["title"], label):
-                            break
-                        rid = None
+                    # НОМЕР ПЕРВЫМ, ТЕКСТ ВТОРЫМ. Каталожный номер —
+                    # структурный запрос: он задаёт конкретный пресс и
+                    # находит альбом даже там, где заголовок его не
+                    # называет («Styx Self titled» -> Equinox). Замерено
+                    # на 70 ранее неопознанных лотах: номер вытаскивает
+                    # 17, то есть каждый четвёртый, ценой одного запроса.
+                    got = resolve_by_catno(lot["title"], DISCOGS_TOKEN)
+                    if got:
+                        rid, label, _card = got
+                        by_catno = True
+                    else:
+                        for q in ladder:
+                            lim.wait()
+                            rid, mid, label = resolve(q, DISCOGS_TOKEN)
+                            if rid and verify_match(lot["title"], label):
+                                break
+                            rid = None
                 except ApiRefused as ex:
                     # ОТКАЗ API — НЕ ОТВЕТ О ПЛАСТИНКЕ. Раньше 429 от
                     # Discogs гасился лестницей в «не опознал», лот
@@ -808,8 +894,13 @@ def main(argv=None):
                             # всего. Лишние запросы тратятся только на
                             # кандидатов, уже прошедших порог, — их
                             # единицы.
-                            unverified = not (extract_catalog_number(lot["title"])
-                                              or _loose_catno(lot["title"]))
+                            # Лот, опознанный ПО НОМЕРУ, сверен по
+                            # построению: номер и есть пресс. Гнать его
+                            # через консервативную справку значит
+                            # наказывать за точность.
+                            unverified = not by_catno and not (
+                                extract_catalog_number(lot["title"])
+                                or _loose_catno(lot["title"]))
                             # ТОНКАЯ СПРАВКА РАВНОСИЛЬНА НЕОПОЗНАННОМУ
                             # ПРЕССУ. Одна копия в продаже — это мнение
                             # одного продавца, и продавать он может
