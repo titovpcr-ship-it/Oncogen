@@ -441,6 +441,67 @@ def conservative_reference(master_id, token, conn=None, max_versions=14,
     return lo, n
 
 
+def card_matches(lot_title, card_label):
+    """Та ли пластинка. Правило собрано из ДВУХ проверок по замеру.
+
+    ЗАМЕР, РАДИ КОТОРОГО ЭТО НАПИСАНО. Разбор хвоста неопознанных
+    показал, что Discogs НАХОДИЛ нужные пластинки, а отвергала их наша
+    проверка. «SOMETHING WARM - OSCAR PETERSON» против карточки «Oscar
+    Peterson — Something Warm», «Ira Sullivan Horizons Atlantic 1476»
+    против «Ira Sullivan — Horizons» — verify_match говорил «нет» на
+    обоих. Это был не отказ рынка, а отказ нашего кода, и он стоил
+    полутора тысяч лотов.
+
+    Но заменить строгую проверку мягкой нельзя: на тех же примерах
+    мягкая принимает «Charlie Byrd — Charlie Byrd» для лота «Charlie
+    Byrd BYRD'S WORD» и «Eric Clapton — Eric Clapton» для промо-сингла
+    «Blues Power». Одноимённый альбом — классическая ловушка, и восемь
+    классов защиты в title_matches выросли именно из таких случаев.
+
+    Поэтому развилка по природе карточки, а не по строгости вкуса:
+
+      * карточка ОДНОИМЁННАЯ (альбом повторяет имя артиста) — решает
+        title_matches, у которого эта ловушка учтена;
+      * карточка обычная — достаточно, чтобы совпал исполнитель и не
+        меньше двух третей слов названия.
+    """
+    if not card_label or " - " not in card_label:
+        return False
+    artist, album = card_label.split(" - ", 1)
+    artist = re.sub(r"\s*\(\d+\)", "", artist.split("=")[0]).strip()
+    album = album.split("=")[0].strip()
+    if not artist or not album:
+        return False
+    ar = _norm_tokens(artist)
+    al = _norm_tokens(album)
+    if not ar or not al:
+        return False
+    if set(al) <= set(ar):                 # одноимённая карточка
+        return wl.title_matches({"artist": artist, "album": album}, lot_title)
+    hay = set(_norm_tokens(lot_title))
+    if not set(ar) <= hay:
+        return False
+    # ИМЯ АРТИСТА ВНУТРИ НАЗВАНИЯ АЛЬБОМА НЕ ЯВЛЯЕТСЯ ДОКАЗАТЕЛЬСТВОМ.
+    # Замерено: лот «WILSON PICKETT If You Need Me 7" DJ/PROMO 45»
+    # принимал карточку сборника «Wilson Pickett — The Best Of Wilson
+    # Pickett», потому что два слова из трёх в названии — это само имя
+    # артиста, уже засчитанное отдельно. Совпадать должно то, что
+    # ОТЛИЧАЕТ альбом от других альбомов того же артиста.
+    evidence = [w for w in al if w not in set(ar)] or al
+    need = (len(evidence) if len(evidence) <= 2
+            else max(2, (len(evidence) * 2 + 2) // 3))
+    return sum(1 for w in evidence if w in hay) >= need
+
+
+_STOPW = {"the", "a", "an", "and", "or", "of", "in", "on", "at", "by",
+          "for", "from", "to", "with", "is"}
+
+
+def _norm_tokens(x):
+    return [w for w in re.findall(r"[a-z0-9]+", (x or "").lower())
+            if len(w) > 1 and w not in _STOPW]
+
+
 def artist_matches(lot_title, card_label):
     """Совпадает ли ИСПОЛНИТЕЛЬ. Проверка для находок по номеру.
 
@@ -818,6 +879,13 @@ def main(argv=None):
                     # называет («Styx Self titled» -> Equinox). Замерено
                     # на 70 ранее неопознанных лотах: номер вытаскивает
                     # 17, то есть каждый четвёртый, ценой одного запроса.
+                    # ЛИМИТ СОБЛЮДАЕТСЯ И ЗДЕСЬ. Запрос по номеру —
+                    # такой же запрос к Discogs, как и текстовый, и
+                    # первая версия шла мимо ограничителя: шестьдесят
+                    # обращений в минуту делятся на всех, а не на
+                    # каждый способ поиска отдельно.
+                    if extract_catalog_number(lot["title"]) or _loose_catno(lot["title"]):
+                        lim.wait()
                     got = resolve_by_catno(lot["title"], DISCOGS_TOKEN)
                     if got:
                         rid, label, _card = got
@@ -826,7 +894,7 @@ def main(argv=None):
                         for q in ladder:
                             lim.wait()
                             rid, mid, label = resolve(q, DISCOGS_TOKEN)
-                            if rid and verify_match(lot["title"], label):
+                            if rid and card_matches(lot["title"], label):
                                 break
                             rid = None
                 except ApiRefused as ex:

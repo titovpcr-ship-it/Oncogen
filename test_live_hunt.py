@@ -356,6 +356,40 @@ def test_opoznanie_po_nomeru():
         check(f"отсекается: {lab[:30]}", not lh.artist_matches(t, lab))
 
 
+def test_svertka_karto4ki_ne_ubivaet_vernoe():
+    """Discogs НАХОДИЛ нужные пластинки — отвергала наша проверка.
+
+    Замер на 60 неопознанных лотах: старая verify_match подтвердила
+    НОЛЬ, новая card_matches — 21. Терялись «Oscar Peterson — Something
+    Warm», «Carole King — Tapestry», «Genesis — Invisible Touch»,
+    «Commodores — Greatest Hits». Это был отказ кода, а не рынка, и он
+    стоил полутора тысяч лотов.
+    """
+    ok = [("SOMETHING WARM - OSCAR PETERSON, 1967 VERVE STERE0",
+           "Oscar Peterson - Something Warm"),
+          ("Ira Sullivan Horizons Atlantic 1476 MONO 1967",
+           "Ira Sullivan - Horizons"),
+          ("Carole King ~ Tapestry ~ LP ~ Vinyl", "Carole King - Tapestry"),
+          ("Metallica Master Of Puppets Target Exclusive",
+           "Metallica - Master Of Puppets")]
+    for t, lab in ok:
+        check(f"принимает: {lab[:32]}", lh.card_matches(t, lab), t[:40])
+
+    # Ловушки, ради которых строгий матчер и писался. Заменить его
+    # мягкой проверкой целиком было нельзя.
+    traps = [("Charlie Byrd * BYRD'S WORD * Deep Groove Riverside LP 448",
+              "Charlie Byrd - Charlie Byrd", "одноимённый альбом"),
+             ("ERIC CLAPTON Blues Power promo 45 RSO White Label",
+              "Eric Clapton - Eric Clapton", "одноимённый альбом"),
+             ('WILSON PICKETT If You Need Me 7" DJ/PROMO 45',
+              "Wilson Pickett - The Best Of Wilson Pickett",
+              "имя артиста внутри названия"),
+             ("Bob Dylan Blood On The Tracks LP",
+              "Bob Dylan - The Freewheelin' Bob Dylan", "чужой альбом")]
+    for t, lab, why in traps:
+        check(f"отсекает ({why}): {lab[:26]}", not lh.card_matches(t, lab))
+
+
 def test_journal_ne_horonit_nahodku():
     """Находка не должна попадать в журнал раньше отправки.
 
@@ -428,6 +462,7 @@ def main():
                test_tsep_otkazov_ne_padaet_na_none,
                test_sostavnoy_nomer_chitaetsya_tselikom,
                test_opoznanie_po_nomeru,
+               test_svertka_karto4ki_ne_ubivaet_vernoe,
                test_resolve_otkaz_ne_ravno_ne_nashlos,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,
