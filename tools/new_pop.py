@@ -260,6 +260,9 @@ def main(argv=None):
     p.add_argument("--dry", action="store_true")
     p.add_argument("--max-landed", type=float, default=None,
                    help="переопределить потолок до форвардера")
+    p.add_argument("--batch", type=int, default=0,
+                   help="слать группами по N позиций вместо отдельных "
+                        "сообщений; 0 — по одному")
     a = p.parse_args(argv)
 
     cfg = yaml.safe_load(CFG.read_text(encoding="utf-8"))
@@ -314,6 +317,40 @@ def main(argv=None):
           + (", слюда обязательна" if need_sealed else "") + "\n")
 
     found, reasons, notifier = 0, {}, None
+    # ГРУППОВАЯ ОТПРАВКА НУЖНА НЕ ДЛЯ КРАСОТЫ. При потолке $25 находок
+    # одна-две за прогон, и отдельное сообщение на каждую — правильно.
+    # При $30 их оказалось 105: сто пять уведомлений подряд не читаются,
+    # а тонут. Размер группы задаёт владелец ключом --batch, а не
+    # догадка кода.
+    pending = []
+
+    def flush(force=False):
+        """Отправить накопленное. Журнал пишется ТОЛЬКО после успеха —
+        то же правило, что и для одиночных находок: запись исключает лот
+        из будущих выборок, и записанный до отправки исчезает навсегда."""
+        nonlocal notifier
+        while pending and (force or len(pending) >= a.batch):
+            part = pending[:a.batch or len(pending)]
+            lines = [f"НОВАЯ ПОПСА — {len(part)} позиций, потолок ${cap:.0f}", ""]
+            for row in part:
+                lines += [row["short"], row["url"], ""]
+            try:
+                if notifier is None:
+                    notifier = notify.Notifier()
+                notifier.send("\n".join(lines))
+            except Exception as ex:                    # noqa: BLE001
+                print(f"  ОТПРАВКА ГРУППЫ НЕ УДАЛАСЬ ({type(ex).__name__}: "
+                      f"{ex}) — {len(part)} позиций остаются кандидатами")
+                del pending[:len(part)]
+                continue
+            for row in part:
+                conn.execute(
+                    "INSERT OR REPLACE INTO newpop_seen "
+                    "(item_id,query,title,price_usd,shipping,landed,url,"
+                    "pushed_at) VALUES (?,?,?,?,?,?,?,datetime('now'))",
+                    row["rec"])
+            conn.commit()
+            del pending[:len(part)]
     for i, e in enumerate(entries, 1):
         q = e["query"]
         need_any = [w.lower() for w in (e.get("require_any") or [])]
@@ -418,6 +455,33 @@ def main(argv=None):
                       if not ((it.get("seller") or {}).get("feedbackScore"))
                       else "")
                    + f"\n{it.get('itemWebUrl')}")
+            if a.batch:
+                marks = []
+                if _SEALED.search(title):
+                    marks.append("слюда")
+                elif _CLAIM_NEW.search(title):
+                    marks.append("new")
+                else:
+                    marks.append("упаковка не заявлена")
+                if ship_assumed:
+                    marks.append(f"доставка ${assumed_here:.2f} допущ.")
+                if not ((it.get("seller") or {}).get("feedbackScore")):
+                    marks.append("продавец без отзывов")
+                short = (f"${landed:.2f} landed (листинг ${price:.2f}"
+                         + (f", торг -${disc:.0f}" if disc else "")
+                         + (f", доставка ${ship:.2f}" if not ship_assumed else "")
+                         + ")  [" + " | ".join(marks) + "]\n" + title[:88]
+                         + (f"\nрозница РФ {ru_lo}-{ru_hi} руб, карго "
+                            f"+${cargo_usd(title, cfg):.2f}" if ru_lo else ""))
+                print(f"  + {short.splitlines()[0]}")
+                if not a.dry:
+                    pending.append({
+                        "short": short, "url": it.get("itemWebUrl"),
+                        "rec": (iid, q, title, price,
+                                None if ship_assumed else ship, landed,
+                                it.get("itemWebUrl"))})
+                    flush()
+                continue
             print(f"\n=== {msg}\n")
             if not a.dry:
                 if notifier is None:
@@ -440,6 +504,8 @@ def main(argv=None):
               f"подошло {hit}")
         time.sleep(0.3)
 
+    if a.batch and not a.dry:
+        flush(force=True)
     print(f"\nвсего подошло: {found}")
     print("разбор отказов (ПРАВИЛО 2):")
     for k, n in sorted(reasons.items(), key=lambda kv: -kv[1]):
