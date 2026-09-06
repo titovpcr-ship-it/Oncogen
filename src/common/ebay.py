@@ -79,11 +79,29 @@ def search_page(token, *, category_id, flt, limit=200, offset=0,
         params["q"] = q
     if fieldgroups:
         params["fieldgroups"] = fieldgroups
-    r = requests.get(SEARCH, headers=_headers(token), params=params,
-                     timeout=timeout)
-    if r.status_code != 200:
-        raise ApiRefused(f"HTTP {r.status_code}: {r.text[:200]}")
-    return r.json()
+    # СЕТЕВОЙ СБОЙ — ТОЖЕ ОТКАЗ API, И ЗАВОРАЧИВАТЬ ЕГО ОБЯЗАТЕЛЬНО.
+    # 07.09.2026 прогон по 89 альбомам дошёл до 87-го и упал целиком на
+    # разрыве TLS (SSLEOFError), потеряв весь результат: ApiRefused
+    # поднимался только на не-200, а requests.SSLError летел мимо всех
+    # обработчиков. Одна оборванная страница не должна стоить прогона.
+    #
+    # Две попытки с паузой — потому что разрыв TLS у прокси бывает
+    # разовым; если он повторился, это уже состояние сети, а не икота.
+    last = None
+    for attempt in range(2):
+        try:
+            r = requests.get(SEARCH, headers=_headers(token), params=params,
+                             timeout=timeout)
+        except requests.RequestException as e:              # noqa: PERF203
+            last = e
+            if attempt == 0:
+                time.sleep(3.0)
+                continue
+            raise ApiRefused(f"сеть eBay: {type(e).__name__}") from e
+        if r.status_code != 200:
+            raise ApiRefused(f"HTTP {r.status_code}: {r.text[:200]}")
+        return r.json()
+    raise ApiRefused(f"сеть eBay: {type(last).__name__}")
 
 
 def search_all(token, *, category_id, flt, max_items=1000, page=200,

@@ -253,6 +253,54 @@ def scan(token, t, option, rate, target, limit=200):
     return hits, None, reasons
 
 
+def run_targets(token, rate, a, allhits):
+    """Пройти все цели и все способы покупки, копя находки в allhits."""
+    for t in TARGETS:
+        for option, label in MODES:
+            hits, err, reasons = scan(token, t, option, rate, a.target,
+                                      a.limit)
+            for h in (hits or []):
+                h["album"] = f"{t['artist']} — {t['album']}"
+                h["mode"] = label
+                h["src"] = t.get("src", "")
+                allhits.append(h)
+            if a.quiet:
+                continue
+            head = f"--- {t['artist']} — {t['album']} / {label} ---"
+            if err:
+                print(f"{head}\n    eBay отказал: {err}")
+                continue
+            good = [h for h in (hits or []) if h["ratio_ebay"] >= a.target]
+            print(f"{head}  подходящих {len(good)} из {len(hits)} опознанных")
+            for h in good[:10]:
+                bid = (f", ставок {h['bids']}" if h["bids"] is not None else "")
+                print(f"    ${h['entry']:6.2f} вход"
+                      f" (лот ${h['price']:.2f} + доставка ${h['ship']:.2f}"
+                      f"{'  ДОПУЩЕНИЕ' if h['ship_assumed'] else ''}{bid})")
+                print(f"      кратность к цене eBay {h['ratio_ebay']:.2f}x,"
+                      f" к полной себестоимости {h['ratio_landed']:.2f}x"
+                      f"  (приземлённая ${h['landed']:.2f})")
+                if option == "AUCTION":
+                    cap = t["ru_rub"] / rate / a.target - h["ship"]
+                    print(f"      АУКЦИОН: СТАВИТЬ НЕ ВЫШЕ ${cap:.2f}. "
+                          f"Текущая ставка — не цена покупки (O-39).")
+                print(f"      {h['title'][:78]}")
+            if not good and hits:
+                print("      цели не достиг никто; три самых выгодных:")
+                for h in hits[:3]:
+                    need = (t["ru_rub"] / rate / a.target) - h["ship"]
+                    print(f"        ${h['entry']:6.2f} вход "
+                          f"({h['ratio_ebay']:.2f}x к цене eBay, "
+                          f"{h['ratio_landed']:.2f}x к себестоимости) — "
+                          f"чтобы дать {a.target}x, лот должен стоить "
+                          f"${need:.2f}")
+                    print(f"          {h['title'][:70]}")
+            if reasons:
+                top = sorted(reasons.items(), key=lambda x: -x[1])[:4]
+                print("      отсеяно: "
+                      + "; ".join(f"{v} — {k}" for k, v in top))
+
+
 def push_best(allhits, plus, rate, target):
     """Отправить в Телеграм итог прогона.
 
@@ -325,60 +373,18 @@ def main():
 
     total_found = 0
     allhits = []
-    for t in TARGETS:
-        for option, label in MODES:
-            hits, err, reasons = scan(token, t, option, rate, a.target,
-                                      a.limit)
-            for h in (hits or []):
-                h["album"] = f"{t['artist']} — {t['album']}"
-                h["mode"] = label
-                h["src"] = t.get("src", "")
-                allhits.append(h)
-            if a.quiet:
-                continue
-            head = f"--- {t['artist']} — {t['album']} / {label} ---"
-            if err:
-                print(f"{head}\n    eBay отказал: {err}")
-                continue
-            good = [h for h in hits if h["ratio_ebay"] >= a.target]
-            print(f"{head}  подходящих {len(good)} из {len(hits)} "
-                  f"опознанных")
-            for h in good[:10]:
-                total_found += 1
-                bid = (f", ставок {h['bids']}" if h["bids"] is not None else "")
-                print(f"    ${h['entry']:6.2f} вход"
-                      f" (лот ${h['price']:.2f} + доставка ${h['ship']:.2f}"
-                      f"{'  ДОПУЩЕНИЕ' if h['ship_assumed'] else ''}{bid})")
-                print(f"      кратность к цене eBay {h['ratio_ebay']:.2f}x,"
-                      f" к полной себестоимости {h['ratio_landed']:.2f}x"
-                      f"  (приземлённая ${h['landed']:.2f})")
-                if option == "AUCTION":
-                    cap = t["ru_rub"] / rate / a.target - h["ship"]
-                    print(f"      АУКЦИОН: СТАВИТЬ НЕ ВЫШЕ ${cap:.2f}. "
-                          f"Текущая ставка — не цена покупки (O-39).")
-                print(f"      {h['title'][:78]}")
-                print(f"      продавец {h['seller']} ({h['feedback']}) "
-                      f"{h['url']}")
-            # НОЛЬ БЕЗ РАССТОЯНИЯ — БЕСПОЛЕЗНЫЙ ОТВЕТ. «Подходящих 0»
-            # не говорит, промахнулись мы на доллар или втрое. Поэтому
-            # печатаем три самых дешёвых опознанных лота даже когда они
-            # цели не достигли: это и есть ответ на вопрос «а сколько
-            # реально стоит вход».
-            if not good and hits:
-                print("      цели не достиг никто; три самых выгодных:")
-                for h in hits[:3]:
-                    need = (t["ru_rub"] / rate / a.target) - h["ship"]
-                    print(f"        ${h['entry']:6.2f} вход "
-                          f"({h['ratio_ebay']:.2f}x к цене eBay, "
-                          f"{h['ratio_landed']:.2f}x к себестоимости) — "
-                          f"чтобы дать {a.target}x, лот должен стоить "
-                          f"${need:.2f}")
-                    print(f"          {h['title'][:70]}")
-            if reasons:
-                top = sorted(reasons.items(), key=lambda x: -x[1])[:4]
-                print("      отсеяно: "
-                      + "; ".join(f"{v} — {k}" for k, v in top))
-        print()
+    # ПРОГОН НЕ ИМЕЕТ ПРАВА ПОТЕРЯТЬ ВСЁ ИЗ-ЗА ОДНОГО АЛЬБОМА.
+    # 07.09.2026 разрыв TLS на 87-м альбоме из 89 обнулил результат по
+    # всем предыдущим: сводка печаталась после цикла, а до неё дело не
+    # дошло. Теперь любое исключение прерывает цикл, но не отчёт.
+    try:
+        run_targets(token, rate, a, allhits)
+    except KeyboardInterrupt:
+        print("\nпрервано вручную — считаю по тому, что успели")
+    except Exception as e:                                   # noqa: BLE001
+        print(f"\nПРОГОН ОБОРВАЛСЯ: {type(e).__name__}: {e}")
+        print("сводка ниже — по альбомам, которые успели пройти")
+    total_found = sum(1 for h in allhits if h["ratio_ebay"] >= a.target)
     # ГЛАВНАЯ СВОДКА — ПО ДЕНЬГАМ, А НЕ ПО КРАТНОСТИ К ЦЕНЕ eBay.
     # Кратность к цене на eBay льстит: она не знает про карго. В деньги
     # превращается только отношение московской цены к ПОЛНОЙ
