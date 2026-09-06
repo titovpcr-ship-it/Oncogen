@@ -37,7 +37,13 @@ BLACKLIST = re.compile(
 # Аксессуары и упаковка вместо товара — замер выше.
 ACCESSORY = re.compile(
     r"\b(display\s+case|acrylic|lid\s+protector|top\s?loader|toploader|"
-    r"card\s+saver|penny\s+sleeves?|binder|portfolio|deck\s+box|"
+    r"card\s+saver|penny\s+sleeves?|protective\s+sleeves?|card\s+sleeves?|"
+    # «Protective Sleeves - x50» найдено на прогоне 06.09.2026: разбор
+    # количества прочитал «x50» как пятьдесят паков, и лот попал в
+    # немногочисленную выдачу многопаковых. Слово «sleeves» безопасно
+    # запрещать только во множественном числе: «Sleeved Booster Pack» —
+    # настоящий товар, и он пишется через «sleeved».
+    r"binder|portfolio|deck\s+box|"
     r"playmat|play\s+mat|sleeves?\s+for|storage\s+box|magnetic\s+holder|"
     r"screw\s?down|graded\s+slab|psa|bgs|cgc)\b", re.I)
 

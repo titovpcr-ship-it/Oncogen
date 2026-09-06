@@ -242,6 +242,11 @@ def load_sealed(db_path=None):
             "set_abbr": g.get("abbreviation"),
             "set_aliases": set_aliases(g),
             "set_category": g.get("category_id"),
+            # Дата выхода набора нужна вердикту: пак невышедшего набора —
+            # это предзаказ или подделка, но никак не товар, который можно
+            # повезти. Берётся из каталога, а не из списка в голове:
+            # список протухает через месяц.
+            "published_on": g.get("published_on"),
         })
     return out
 

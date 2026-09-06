@@ -18,11 +18,12 @@ COLUMNS = [
     "title", "subtitle", "item_url", "seller", "seller_fb_pct",
     "seller_fb_score", "additional_images", "buying_options",
     "condition", "condition_id",
-    "price_usd", "us_ship_usd", "ship_estimated",
+    "price_usd", "unit_price_usd", "packs", "us_ship_usd", "ship_estimated",
     "kind", "qty", "weight_g_net", "weight_kg", "weight_kg_billable",
     "weight_unknown",
     "tcg_product_id", "tcg_market_price_usd", "price_vs_market_pct",
-    "set_name", "set_resolved", "ru_price_rub", "ru_comp_basis",
+    "set_name", "set_resolved", "set_published_on", "days_since_release",
+    "ru_price_rub", "ru_comp_basis",
     "ru_comp_source", "ru_discount_applied", "ru_comp_usable", "need_ru_comp",
     "landed_solo_usd", "landed_batch_usd", "cargo_batch_usd", "resale_usd",
     "usdrub", "rate_stale", "category_id", "listed_at", "item_id", "scan_ts",
@@ -126,8 +127,13 @@ def batch_plan_md(baskets, *, usdrub, rate_stale=False, coverage_note="",
 
 NEED_COLUMNS = ["rank_potential_usd", "set_code_hint", "set_name",
                 "product_kind", "lots_seen", "profit_per_kg_at_1_75x",
+                "release_age_months", "age_penalty", "min_unit_price_usd",
                 "min_price_usd", "max_price_usd", "example_title",
                 "example_url"]
+
+# Вердикты, при которых мерить цену в Москве незачем: товар либо не наш,
+# либо ещё не вышел, либо мы его в любом случае не купим.
+NEED_SKIP_VERDICTS = {"PREORDER", "OUT_OF_SCOPE", "REJECT"}
 
 
 def _median(xs):
@@ -157,14 +163,22 @@ def write_need_comps(rows, path, cfg=None, usdrub=None):
     hyp = float(cfg.get("min_multiple_packs", 1.75))
     pess = float(cfg.get("weight_pessimism", 1.30))
     agg = {}
+    penalty_months = float(cfg.get("release_age_penalty_months", 18))
     for r in rows:
         if not r.get("need_ru_comp") or not r.get("set_name") or not r.get("kind"):
+            continue
+        # ПРЕДЗАКАЗ И ЧУЖОЙ ТОВАР НЕ ЗАДИРАЮТ СПИСОК. Живой случай:
+        # «бустер-пак ME06 Delta Reign за $5.78» стоял в верху списка
+        # «что померить» при дате выхода набора 06.11.2026 — через два
+        # месяца. Мерить цену на то, чего нельзя купить, — трата дня.
+        if r.get("verdict") in NEED_SKIP_VERDICTS:
             continue
         key = (r["set_name"], r["kind"])
         a = agg.setdefault(key, {"set_name": r["set_name"],
                                  "product_kind": r["kind"],
                                  "lots_seen": 0, "min_price_usd": None,
                                  "max_price_usd": None, "_ppk": [],
+                                 "min_unit_price_usd": None, "_days": [],
                                  "example_title": r.get("title"),
                                  "example_url": r.get("item_url")})
         a["lots_seen"] += 1
@@ -172,6 +186,12 @@ def write_need_comps(rows, path, cfg=None, usdrub=None):
         if pr is not None:
             a["min_price_usd"] = pr if a["min_price_usd"] is None else min(a["min_price_usd"], pr)
             a["max_price_usd"] = pr if a["max_price_usd"] is None else max(a["max_price_usd"], pr)
+        up = r.get("unit_price_usd")
+        if up is not None:
+            a["min_unit_price_usd"] = up if a["min_unit_price_usd"] is None \
+                else min(a["min_unit_price_usd"], up)
+        if r.get("days_since_release") is not None:
+            a["_days"].append(r["days_since_release"])
         landed = r.get("landed_batch_usd")
         kg = r.get("weight_kg")
         if landed and kg:
@@ -186,8 +206,18 @@ def write_need_comps(rows, path, cfg=None, usdrub=None):
     for a in agg.values():
         ppk = _median(a["_ppk"])
         a["profit_per_kg_at_1_75x"] = round(ppk, 1) if ppk is not None else None
-        a["rank_potential_usd"] = (round(ppk * a["lots_seen"], 1)
-                                   if ppk is not None else 0.0)
+        base = ppk * a["lots_seen"] if ppk is not None else 0.0
+        # ШТРАФ ЗА ВОЗРАСТ НАБОРА. Не запрет: купить старый набор можно,
+        # если комп его прямо подтверждает. Но наверх списка «что
+        # померить» он подниматься не должен — в Москве спрос идёт на
+        # текущую серию, а одиночные паки пятилетней давности приходят
+        # из давно вскрытых боксов, то есть из зоны перевзвешивания.
+        days = _median(a["_days"])
+        months = round(days / 30.44, 1) if days is not None else None
+        a["release_age_months"] = months
+        old = months is not None and months > penalty_months
+        a["age_penalty"] = 0.5 if old else 1.0
+        a["rank_potential_usd"] = round(base * a["age_penalty"], 1)
         name = a["set_name"] or ""
         a["set_code_hint"] = name.split(":", 1)[0].strip() if ":" in name else name
         out.append(a)

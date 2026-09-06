@@ -14,8 +14,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from src.pokemon import catalog, fakes, resolve, ru_comps      # noqa: E402
 from src.pokemon.batching import plan                          # noqa: E402
 from src.pokemon.econ import (BUY, OUT_OF_SCOPE, PASS,          # noqa: E402
-                              REJECT, WATCH, discount_for,
-                              economics, landed, verdict)
+                              PREORDER, REJECT, WATCH,
+                              days_since_release, discount_for,
+                              economics, landed, packs_in_lot,
+                              unit_price, verdict)
 from src.pokemon.weights import (billable_kg, detect_kind,     # noqa: E402
                                  detect_qty, weigh)
 
@@ -36,7 +38,13 @@ CFG = {"cargo_usd_per_kg": 22.0, "cargo_min_kg": 1.0, "cargo_round_step_kg": 1.0
        "kind_denylist": ["mini_tin", "tin", "build_and_battle", "etb"],
        "ru_discount_by_basis": {"avito_sold": 0.95, "avito_ask": 0.72,
                                 "pokemarket": 0.80, "shelf": 0.55,
-                                "derived": None}}
+                                "derived": None},
+       "min_unit_price_usd": 5.0, "max_unit_price_usd": 13.0,
+       "max_lot_price_usd": 120.0, "min_units_per_lot": 5,
+       "min_days_since_release": 14, "release_age_penalty_months": 18,
+       "packs_per_unit": {"booster_pack": 1, "sleeved_booster": 1,
+                          "blister_checklane": 1, "blister_3pack": 3,
+                          "booster_bundle_6": 6}}
 
 FX = 86.5857
 
@@ -217,6 +225,16 @@ def test_musor_v_kategorii_sealed():
                "Pack") == "HIGH")
     check("настоящий пак остаётся LOW",
           risk("Pokemon Surging Sparks Booster Pack Factory Sealed") == "LOW")
+    # НАЙДЕНО 06.09.2026 НА ПРОГОНЕ С ПОЛОСОЙ ЗА ПАК. Разбор количества
+    # прочитал «x50» в заголовке чехлов как пятьдесят паков, и лот попал
+    # в скудную выдачу многопаковых позиций. Слово «sleeves» безопасно
+    # запрещать только во множественном числе: «Sleeved Booster Pack» —
+    # настоящий товар.
+    check("чехлы «Protective Sleeves - x50» — аксессуар",
+          risk("Pokemon Booster Pack Protective Sleeves - x50 Self Sealing")
+          == "HIGH")
+    check("«Sleeved Booster Pack» под запрет не попадает",
+          risk("Pokemon Surging Sparks Sleeved Booster Pack") == "LOW")
 
 
 def test_bez_vida_ne_beryom_chuzhuyu_tsenu():
@@ -582,6 +600,157 @@ def test_tins_excluded():
           v == OUT_OF_SCOPE, v)
 
 
+# --- Решения, раунд 2 (06.09.2026) ----------------------------------
+
+GOOD = {"multiple": 2.2, "profit_per_kg": 400.0,
+        "profit_per_kg_pessimistic": 310.0, "ru_comp_usable": True}
+
+
+def _v(**kw):
+    base = dict(fake_risk="LOW", kind="booster_pack", weight_unknown=False,
+                ru_price_rub=1700, econ=GOOD, cfg=CFG, set_resolved=True,
+                days_since_rel=400)
+    base.update(kw)
+    return verdict(**base)
+
+
+def test_price_band_is_per_unit():
+    """Полоса $5-13 — цена за ПАК, а не за лот.
+
+    Ошибка первой редакции: потолок применялся к цене лота, и лот из
+    десяти паков за $60 не попадал в выдачу вообще — отсекался ровно
+    тот товар, ради которого ветка затевалась. Деньгами это полторы
+    landed: доставка по США $4.50 берётся за отправление, и на одном
+    паке она даёт +82% к цене, на десяти — +8%.
+    """
+    check("десять паков за $60 — это $6.00 за пак",
+          abs(unit_price(60.0, packs_in_lot("booster_pack", 10, CFG)) - 6.0)
+          < 1e-9)
+    check("один пак за $60 — это $60 за пак",
+          abs(unit_price(60.0, packs_in_lot("booster_pack", 1, CFG)) - 60.0)
+          < 1e-9)
+
+    v, why = _v(unit_price_usd=6.0, packs=10)
+    check("лот «10 packs, $60» проходит", v == BUY, f"{v}: {why}")
+
+    v2, why2 = _v(unit_price_usd=60.0, packs=1)
+    check("лот «1 pack, $60» отсекается", v2 == PASS, f"{v2}: {why2}")
+    check("причина называет цену за пак", "за пак" in why2, why2)
+
+    v3, _ = _v(unit_price_usd=3.0, packs=10)
+    check("ниже полосы тоже отсекается", v3 == PASS, v3)
+
+    # Бандл — одна позиция и шесть паков. Отсекать его как одиночный лот
+    # значит судить по упаковке, а не по экономике.
+    check("бустер-бандл считается шестью паками",
+          packs_in_lot("booster_bundle_6", 1, CFG) == 6)
+    check("блистер-тройка — тремя",
+          packs_in_lot("blister_3pack", 1, CFG) == 3)
+    v4, why4 = _v(kind="booster_bundle_6", unit_price_usd=6.0, packs=6)
+    check("один бандл проходит порог по пакам", v4 == BUY, f"{v4}: {why4}")
+
+
+def test_single_unit_lot_never_buys():
+    """Одиночный лот — максимум WATCH, каким бы ни был мультипликатор."""
+    great = {"multiple": 9.0, "profit_per_kg": 9000.0,
+             "profit_per_kg_pessimistic": 7000.0, "ru_comp_usable": True}
+    v, why = _v(econ=great, unit_price_usd=6.0, packs=1)
+    check("один пак не даёт BUY даже при девятикратной прибыли",
+          v == WATCH, f"{v}: {why}")
+    check("причина называет доставку по США", "доставка по США" in why, why)
+
+    v2, _ = _v(econ=great, unit_price_usd=6.0, packs=4)
+    check("четыре пака — всё ещё мало", v2 == WATCH, v2)
+    v3, _ = _v(econ=great, unit_price_usd=6.0, packs=5)
+    check("пять паков — порог пройден", v3 == BUY, v3)
+
+
+def test_unreleased_set_is_preorder():
+    """Невышедший набор — PREORDER, не REJECT и не BUY.
+
+    Дата берётся из каталога и сравнивается с сегодняшним днём, а не с
+    захардкоженным списком наборов: список протухнет через месяц.
+    """
+    import datetime as dt
+    today = dt.date.today()
+    future = (today + dt.timedelta(days=61)).isoformat()
+    past = (today - dt.timedelta(days=400)).isoformat()
+    fresh = (today - dt.timedelta(days=3)).isoformat()
+
+    check("набор из будущего даёт отрицательный возраст",
+          days_since_release(future) == -61, str(days_since_release(future)))
+    check("вышедший давно — положительный",
+          days_since_release(past) == 400)
+
+    v, why = _v(days_since_rel=days_since_release(future))
+    check("невышедший набор → PREORDER", v == PREORDER, f"{v}: {why}")
+    check("это не REJECT", v != REJECT)
+    check("это не BUY", v != BUY)
+    check("причина называет срок", "через 61" in why, why)
+
+    v2, why2 = _v(days_since_rel=days_since_release(fresh))
+    check("вышедший три дня назад тоже PREORDER", v2 == PREORDER,
+          f"{v2}: {why2}")
+    v3, _ = _v(days_since_rel=days_since_release(past))
+    check("давно вышедший идёт дальше по цепи", v3 == BUY, v3)
+
+    # Живой набор из каталога: проверяем не список в тесте, а данные.
+    from src.pokemon.catalog import load_sealed
+    try:
+        dates = {p["set_name"]: p["published_on"] for p in load_sealed()}
+    except Exception:
+        dates = {}
+    if dates:
+        me06 = days_since_release(dates.get("ME06: Delta Reign"))
+        check("ME06 Delta Reign в каталоге ещё не вышел",
+              me06 is not None and me06 < 0, str(me06))
+
+
+def test_old_set_penalised_in_need_comps():
+    """Старый набор ниже свежего при равном числе лотов."""
+    from src.pokemon.report import write_need_comps
+    import csv as _csv
+    import tempfile
+
+    def lot(set_name, days, n):
+        return [{"need_ru_comp": True, "set_name": set_name,
+                 "kind": "booster_pack", "verdict": "WATCH",
+                 "price_usd": 6.0, "unit_price_usd": 6.0,
+                 "landed_batch_usd": 7.16, "weight_kg": 0.0253,
+                 "days_since_release": days, "title": set_name,
+                 "item_url": "u"} for _ in range(n)]
+
+    rows = lot("ME04: Chaos Rising", 107, 3) + lot("SWSH06: Chilling Reign",
+                                                   1900, 3)
+    with tempfile.TemporaryDirectory() as d:
+        pth = Path(d) / "need.csv"
+        write_need_comps(rows, pth, cfg=CFG)
+        got = list(_csv.DictReader(pth.open(encoding="utf-8")))
+    by = {r["set_name"]: r for r in got}
+    check("оба набора попали в список", len(got) == 2, str(len(got)))
+    check("свежий набор без штрафа",
+          by["ME04: Chaos Rising"]["age_penalty"] == "1.0")
+    check("старый набор со штрафом 0.5",
+          by["SWSH06: Chilling Reign"]["age_penalty"] == "0.5")
+    check("свежий стоит выше старого",
+          float(by["ME04: Chaos Rising"]["rank_potential_usd"])
+          > float(by["SWSH06: Chilling Reign"]["rank_potential_usd"]))
+    check("порядок строк в файле тот же",
+          got[0]["set_name"] == "ME04: Chaos Rising", got[0]["set_name"])
+
+    # Предзаказ в список «что померить» не попадает вовсе.
+    pre = lot("ME06: Delta Reign", -61, 4)
+    for r in pre:
+        r["verdict"] = "PREORDER"
+    with tempfile.TemporaryDirectory() as d:
+        pth = Path(d) / "need2.csv"
+        write_need_comps(rows + pre, pth, cfg=CFG)
+        got2 = list(_csv.DictReader(pth.open(encoding="utf-8")))
+    check("предзаказ не задирает список",
+          all(r["set_name"] != "ME06: Delta Reign" for r in got2),
+          str([r["set_name"] for r in got2]))
+
+
 def main():
     for fn in [test_sealed_classifier, test_set_aliases, test_weight_parsing,
                test_cargo_rounding, test_fake_filter,
@@ -596,7 +765,11 @@ def main():
                test_derived_basis_never_buys,
                test_market_gap_floor,
                test_out_of_scope_not_watch,
-               test_tins_excluded]:
+               test_tins_excluded,
+               test_price_band_is_per_unit,
+               test_single_unit_lot_never_buys,
+               test_unreleased_set_is_preorder,
+               test_old_set_penalised_in_need_comps]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

@@ -28,8 +28,9 @@ from ..common.env import repo_root
 from ..common.fx import usdrub as get_usdrub
 from . import catalog, ebay as pk_ebay, fakes, resolve, ru_comps
 from .batching import plan
-from .econ import (BUY, OUT_OF_SCOPE, PASS, REJECT, WATCH,
-                   economics, verdict)
+from .econ import (BUY, OUT_OF_SCOPE, PASS, PREORDER, REJECT, WATCH,
+                   days_since_release, economics, packs_in_lot, unit_price,
+                   verdict)
 from .report import (append_decisions, batch_plan_md,
                      seller_concentration, write_candidates,
                      write_need_comps)
@@ -61,6 +62,8 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     # виду, потому что от него зависит рыночная цена.
     scope = resolve.match_set(lot["title"], rx_index)
     lot["set_resolved"] = scope is not None
+    lot["set_published_on"] = (scope or {}).get("published_on")
+    lot["days_since_release"] = days_since_release(lot["set_published_on"])
     prod = resolve.match(lot["title"], rx_index, kind)
     lot["tcg_product_id"] = prod["product_id"] if prod else None
     lot["tcg_market_price_usd"] = prod["market_price"] if prod else None
@@ -89,6 +92,11 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     lot["ru_comp_source"] = src
     lot["need_ru_comp"] = rub is None
 
+    # Паки, а не позиции: бандл из шести паков — одна позиция, но
+    # доставка по США на нём размазана как на шести.
+    lot["packs"] = packs_in_lot(kind, qty, cfg)
+    lot["unit_price_usd"] = unit_price(lot.get("price_usd"), lot["packs"])
+
     ship = lot.get("us_ship_usd")
     if ship is None:
         ship = float(cfg.get("us_ship_fallback_usd", 4.50))
@@ -101,7 +109,10 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     v, why = verdict(fake_risk=risk, kind=kind, weight_unknown=unknown,
                      ru_price_rub=rub, econ=econ, cfg=cfg,
                      fake_reasons=reasons,
-                     set_resolved=lot["set_resolved"])
+                     set_resolved=lot["set_resolved"],
+                     unit_price_usd=lot["unit_price_usd"],
+                     packs=lot["packs"],
+                     days_since_rel=lot["days_since_release"])
     lot["verdict"], lot["reason"] = v, why
     return lot
 
@@ -200,10 +211,23 @@ def main(argv=None):
           f"{len(comps) - n_priced} заготовок без цены")
 
     token = ebay_token()
-    cap_price = a.max_price or cfg.get("max_item_price_usd", 13.0)
-    floor_price = a.min_price or cfg.get("min_item_price_usd", 5.0)
+    # ФИЛЬТР eBay РАБОТАЕТ ПО ЦЕНЕ ЛОТА, и сужать его до потолка за пак
+    # нельзя: лот из десяти паков за $60 отсеялся бы до всякого разбора.
+    # Полоса за единицу применяется после парсинга количества.
+    cap_price = a.max_price or cfg.get("max_lot_price_usd", 120.0)
+    unit_lo = float(cfg.get("min_unit_price_usd", 5.0))
+    # Пол по лоту выводится из полосы за пак и порога по числу паков:
+    # дешевле — покупкой стать не может. В разведке пол снимается.
+    derived_floor = unit_lo * int(cfg.get("min_units_per_lot", 1))
+    if mode == "discover" and cfg.get("discover_ignores_lot_floor", True):
+        floor_price = a.min_price or unit_lo
+    else:
+        floor_price = (a.min_price or cfg.get("min_lot_price_usd")
+                       or derived_floor)
     sort = a.sort or cfg.get("ebay_sort", "price")
-    print(f"полоса цен: ${floor_price:g}-${cap_price:g}, сортировка {sort}")
+    print(f"фильтр eBay по лоту: ${floor_price:g}-${cap_price:g}; "
+          f"полоса за пак ${cfg.get('min_unit_price_usd', 5.0):g}-"
+          f"${cfg.get('max_unit_price_usd', 13.0):g}; сортировка {sort}")
     lots, refused = [], []
 
     if mode in ("targeted", "both", "discover"):
@@ -275,7 +299,8 @@ def main(argv=None):
     buys.sort(key=lambda l: -(l.get("profit_per_kg") or 0))
 
     out_dir = ROOT / "out"
-    order = {BUY: 0, WATCH: 1, PASS: 2, REJECT: 3, OUT_OF_SCOPE: 4}
+    order = {BUY: 0, WATCH: 1, PREORDER: 2, PASS: 3, REJECT: 4,
+             OUT_OF_SCOPE: 5}
     csv_path = write_candidates(
         sorted(uniq, key=lambda l: (order[l["verdict"]],
                                     -(l.get("profit_per_kg") or 0))),
@@ -286,12 +311,12 @@ def main(argv=None):
                    cargo_usd_per_kg=cfg.get("cargo_usd_per_kg", 22.0),
                    cargo_min_kg=cfg.get("cargo_min_kg", 1.0),
                    cargo_round_step_kg=cfg.get("cargo_round_step_kg", 1.0))
-    note = (f"Режим: {mode}. "
-            f"Покрытие частичное: обойдено {len(uniq)} лотов из "
-            f"46 807 + 14 070 в категориях 183456/183457 при цене до "
-            f"${cfg.get('max_item_price_usd', 20.0):g}. Это верх выдачи по "
-            f"цене, а не вся категория — предел не наш, а суточная квота "
-            f"Browse API.")
+    note = (f"Режим: {mode}. Покрытие частичное: обойдено {len(uniq)} лотов "
+            f"из 46 807 + 14 070 в категориях 183456/183457. Фильтр eBay по "
+            f"цене лота ${floor_price:g}-${cap_price:g}, полоса за пак "
+            f"${cfg.get('min_unit_price_usd', 5.0):g}-"
+            f"${cfg.get('max_unit_price_usd', 13.0):g}. Это часть выдачи, а "
+            f"не вся категория — предел не наш, а суточная квота Browse API.")
     if refused:
         note += " Отказы API: " + "; ".join(f"{c}: {e}" for c, e in refused)
     md_path = out_dir / f"pokemon_batch_plan_{run_tag}.md"
@@ -308,6 +333,33 @@ def main(argv=None):
     need_path, n_need = write_need_comps(
         uniq, out_dir / f"pokemon_need_comps_{run_tag}.csv", cfg=cfg, usdrub=fx)
     print(f"чего не хватает для оценки: {need_path} ({n_need} пар набор+вид)")
+
+    # ДИАГНОСТИКА ПО РАЗМЕРУ ЛОТА. Порог min_units_per_lot стоит раньше
+    # в цепи, чем большинство лотов до него доживает: они отсеиваются на
+    # отсутствии цены РФ. Поэтому распределение по числу паков считается
+    # отдельно — иначе не видно, отсекает ли порог реальное предложение
+    # или только гипотетическое.
+    seg = [l for l in uniq
+           if l.get("set_resolved") and l.get("kind")
+           and l["verdict"] not in (REJECT, OUT_OF_SCOPE, PREORDER)]
+    band = [l for l in seg if l.get("unit_price_usd") is not None
+            and float(cfg.get("min_unit_price_usd", 5.0))
+            <= l["unit_price_usd"] <= float(cfg.get("max_unit_price_usd", 13.0))]
+    need_units = int(cfg.get("min_units_per_lot", 1))
+    big = [l for l in band if (l.get("packs") or 0) >= need_units]
+    if seg:
+        dist = {}
+        for l in band:
+            dist[l.get("packs")] = dist.get(l.get("packs"), 0) + 1
+        print(f"размер лота: опознано в сегменте {len(seg)}, из них в полосе "
+              f"за пак {len(band)}, из них от {need_units} паков — {len(big)}")
+        if dist:
+            print("   по числу паков: " + ", ".join(
+                f"{k}×{v}" for k, v in sorted(dist.items(),
+                                              key=lambda kv: (kv[0] or 0))))
+        if band and not big:
+            print(f"   ВНИМАНИЕ: порог min_units_per_lot={need_units} "
+                  f"запрещает BUY на всём предложении, которое видно")
 
     need = [l for l in uniq if l.get("need_ru_comp") and l["verdict"] == WATCH]
     if need:

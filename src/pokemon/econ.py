@@ -27,6 +27,9 @@ REJECT, BUY, WATCH, PASS = "REJECT", "BUY", "WATCH", "PASS"
 # из 1 186 смешивалась с теми, что мы просто не смогли оценить. Это
 # разные вещи: «не мой товар» и «мой товар, но не хватает данных».
 OUT_OF_SCOPE = "OUT_OF_SCOPE"
+# Товар настоящий, но ещё не вышел. НЕ REJECT: смешивать предзаказ с
+# подделкой нельзя — это разные вещи и разные действия.
+PREORDER = "PREORDER"
 
 
 def landed(price_usd, us_ship_usd, weight_kg, *, cargo_usd_per_kg=22.0,
@@ -119,6 +122,45 @@ def economics(*, price_usd, us_ship_usd, weight_kg, qty, ru_price_rub,
     return out
 
 
+def packs_in_lot(kind, qty, cfg):
+    """Сколько ПАКОВ в лоте, а не сколько позиций.
+
+    Один бустер-бандл — это одна позиция и шесть паков, и доставка по
+    США размазана на нём ровно так же, как на лоте из шести отдельных
+    паков. Считать его одиночным лотом значит отсечь товар по признаку
+    упаковки, а не по экономике.
+    """
+    if kind is None or qty is None:
+        return None
+    table = (cfg or {}).get("packs_per_unit") or {}
+    return int(qty) * int(table.get(kind, 1))
+
+
+def days_since_release(published_on, today=None):
+    """Сколько дней прошло с выхода набора. Отрицательное — ещё не вышел.
+
+    Дата берётся из каталога TCGCSV, а не из списка в коде: список
+    наборов протухает через месяц, а поле publishedOn обновляется само.
+    """
+    if not published_on:
+        return None
+    import datetime as _dt
+    txt = str(published_on)[:10]
+    try:
+        d = _dt.date.fromisoformat(txt)
+    except ValueError:
+        return None
+    now = today or _dt.date.today()
+    return (now - d).days
+
+
+def unit_price(price_usd, packs):
+    """Цена за пак. Именно она сравнивается с полосой, а не цена лота."""
+    if price_usd is None or not packs:
+        return None
+    return float(price_usd) / int(packs)
+
+
 def min_multiple_for(kind, cfg):
     """Один порог на все виды сегмента.
 
@@ -150,7 +192,8 @@ def in_scope(kind, cfg):
 
 
 def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
-            fake_reasons=(), set_resolved=True):
+            fake_reasons=(), set_resolved=True, unit_price_usd=None,
+            packs=None, days_since_rel=None):
     """(вердикт, причина) — одна цепь, вынесенная на уровень модуля.
 
     ВЫНЕСЕНА НАРОЧНО. В винильной ветке та же логика жила внутри main,
@@ -176,6 +219,30 @@ def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
     if not ok:
         return OUT_OF_SCOPE, why
 
+    # ГЕЙТ ПО ДАТЕ ВЫХОДА. Пак набора, который выйдет через два месяца,
+    # — это предзаказ: деньги заморожены, срок неизвестен, карго ждать
+    # нечего. Живой случай: ME06 Delta Reign за $5.78 в сентябре при
+    # дате выхода 06.11.2026 стоял в верху списка «что померить».
+    need_days = int(cfg.get("min_days_since_release", 14))
+    if days_since_rel is not None and days_since_rel < need_days:
+        if days_since_rel < 0:
+            return PREORDER, (f"набор выйдет через {-days_since_rel} дн. — "
+                              f"предзаказ, а не товар")
+        return PREORDER, (f"набор вышел {days_since_rel} дн. назад, нужно "
+                          f"{need_days} — цена ещё не устоялась")
+
+    # ПОЛОСА ЦЕН — НА ЕДИНИЦУ. Лот из десяти паков за $60 обязан
+    # проходить, лот из одного пака за $60 — нет.
+    lo = cfg.get("min_unit_price_usd")
+    hi = cfg.get("max_unit_price_usd")
+    if unit_price_usd is not None:
+        if hi is not None and unit_price_usd > float(hi):
+            return PASS, (f"${unit_price_usd:.2f} за пак выше полосы "
+                          f"${float(hi):.2f} — рынок съедает маржу")
+        if lo is not None and unit_price_usd < float(lo):
+            return PASS, (f"${unit_price_usd:.2f} за пак ниже полосы "
+                          f"${float(lo):.2f} — зона подделок")
+
     if weight_unknown or kind is None:
         return WATCH, "вид товара не опознан — вес неизвестен, карго не посчитать"
 
@@ -185,6 +252,15 @@ def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
     if not econ.get("ru_comp_usable", True):
         return WATCH, ("цена в Москве расчётная (derived) — BUY по ней "
                        "запрещён: она получена делением, а не измерена")
+
+    # ОДИНОЧНЫЙ ЛОТ НЕ ПОЛУЧАЕТ BUY НИКОГДА. Не потому, что плох, а
+    # потому, что доставка по США берётся за отправление: $4.50 на один
+    # пак — это +82% к цене, на десять — +8%. Разница в landed
+    # полуторная, и вся она здесь.
+    need_units = int(cfg.get("min_units_per_lot", 1))
+    if packs is not None and packs < need_units:
+        return WATCH, (f"одиночный лот ({packs} пак(ов) при пороге "
+                       f"{need_units}) — доставка по США съедает маржу")
 
     mult = econ.get("multiple")
     # ГЕЙТ СТОИТ НА ПЕССИМИСТИЧНОЙ ПРИБЫЛИ НА КИЛОГРАММ, в отчёт идут обе.

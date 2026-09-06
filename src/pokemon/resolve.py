@@ -96,4 +96,6 @@ def match_set(title, ix):
         return None
     prod = ix[best][0]
     return {"set_name": prod.get("set_name"), "set_abbr": prod.get("set_abbr"),
-            "set_aliases": prod.get("set_aliases") or set(), "phrase": best}
+            "set_aliases": prod.get("set_aliases") or set(),
+            "published_on": prod.get("published_on"),
+            "set_category": prod.get("set_category"), "phrase": best}
