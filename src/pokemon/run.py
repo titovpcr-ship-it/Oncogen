@@ -28,9 +28,11 @@ from ..common.env import repo_root
 from ..common.fx import usdrub as get_usdrub
 from . import catalog, ebay as pk_ebay, fakes, resolve, ru_comps
 from .batching import plan
-from .econ import BUY, PASS, REJECT, WATCH, economics, verdict
+from .econ import (BUY, OUT_OF_SCOPE, PASS, REJECT, WATCH,
+                   economics, verdict)
 from .report import (append_decisions, batch_plan_md,
-                     write_candidates, write_need_comps)
+                     seller_concentration, write_candidates,
+                     write_need_comps)
 from .weights import billable_kg, weigh
 
 ROOT = repo_root()
@@ -53,11 +55,17 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
                     kg, cfg.get("cargo_min_kg", 1.0),
                     cfg.get("cargo_round_step_kg", 1.0))})
 
+    # Набор для ВЕРДИКТА и набор для ЦЕНЫ — разные вопросы, и решают их
+    # разные функции. match_set отвечает «покемоновский ли это набор
+    # вообще» и в деньги не попадает никогда; match обязан совпасть и по
+    # виду, потому что от него зависит рыночная цена.
+    scope = resolve.match_set(lot["title"], rx_index)
+    lot["set_resolved"] = scope is not None
     prod = resolve.match(lot["title"], rx_index, kind)
     lot["tcg_product_id"] = prod["product_id"] if prod else None
     lot["tcg_market_price_usd"] = prod["market_price"] if prod else None
-    lot["set_name"] = prod["set_name"] if prod else None
-    aliases = prod["set_aliases"] if prod else set()
+    lot["set_name"] = (prod or scope or {}).get("set_name")
+    aliases = (prod or scope or {}).get("set_aliases") or set()
     mp = lot["tcg_market_price_usd"]
     lot["price_vs_market_pct"] = (
         round(100.0 * lot["price_usd"] / mp, 1)
@@ -66,6 +74,7 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     risk, reasons = fakes.assess(
         lot, market_price=mp,
         cheap_fraction=cfg.get("cheap_fraction_of_market", 0.60),
+        market_gap_min_usd=cfg.get("market_gap_min_usd", 3.00),
         set_denylist=cfg.get("set_denylist"),
         seller_min_pct=cfg.get("seller_min_feedback_pct", 98.5),
         seller_min_score=cfg.get("seller_min_feedback_score", 100),
@@ -73,7 +82,8 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     lot["fake_risk"] = risk
     lot["fake_reasons"] = "; ".join(reasons)
 
-    rub, basis, src = ru_comps.lookup(comp_ix, aliases, kind)
+    rub, basis, src = ru_comps.lookup(comp_ix, aliases, kind,
+                                      cfg.get("ru_discount_by_basis"))
     lot["ru_price_rub"] = rub
     lot["ru_comp_basis"] = basis
     lot["ru_comp_source"] = src
@@ -84,13 +94,14 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
         ship = float(cfg.get("us_ship_fallback_usd", 4.50))
     econ = economics(price_usd=lot.get("price_usd"), us_ship_usd=ship,
                      weight_kg=kg, qty=qty, ru_price_rub=rub,
-                     usdrub=fx, cfg=cfg)
+                     usdrub=fx, cfg=cfg, ru_comp_basis=basis)
     lot.update(econ)
     lot["us_ship_usd"] = ship
 
     v, why = verdict(fake_risk=risk, kind=kind, weight_unknown=unknown,
                      ru_price_rub=rub, econ=econ, cfg=cfg,
-                     fake_reasons=reasons)
+                     fake_reasons=reasons,
+                     set_resolved=lot["set_resolved"])
     lot["verdict"], lot["reason"] = v, why
     return lot
 
@@ -140,17 +151,32 @@ def main(argv=None):
     p.add_argument("--max-price", type=float, default=None)
     p.add_argument("--no-detail", action="store_true",
                    help="не добирать карточки товара (экономия запросов)")
-    p.add_argument("--mode", choices=["targeted", "sweep", "both"],
-                   default="both",
-                   help="targeted — только наборы с ценой в Москве; "
-                        "sweep — обход категорий; both — оба")
+    p.add_argument("--mode", choices=["targeted", "sweep", "both", "discover"],
+                   default=None,
+                   help="targeted — только наборы с ценой в Москве (по "
+                        "умолчанию); discover — разведка с жёстким бюджетом, "
+                        "вердиктов не выдаёт, кормит need_comps; sweep — "
+                        "обход категорий; both — targeted + sweep")
+    p.add_argument("--min-price", type=float, default=None)
+    p.add_argument("--sort", choices=["price", "-price"], default=None,
+                   help="переопределить сортировку: нужно, чтобы решение о "
+                        "ней проверялось прогоном, а не спором")
     a = p.parse_args(argv)
 
     cfg, weights = load_cfg(a.config)
+    mode = a.mode or cfg.get("default_mode", "targeted")
     stamp = time.strftime("%Y-%m-%d")
+    # ИМЯ ФАЙЛА НЕСЁТ РЕЖИМ И ВРЕМЯ. Два прогона за день с разными
+    # режимами затирали друг друга, и заметить это можно было только
+    # вспомнив, что запускал раньше.
+    # СЕКУНДЫ, А НЕ МИНУТЫ. Первая версия ставила %H%M — и два прогона
+    # сравнения сортировок, запущенные подряд, попали в одну минуту и
+    # снова затёрли друг друга. Ровно тот баг, который правка чинила.
+    run_tag = f"{stamp}_{mode}_{time.strftime('%H%M%S')}"
 
     if a.refresh_catalog:
-        catalog.refresh()
+        cats = cfg.get("catalog_categories") or [catalog.CATEGORY_POKEMON]
+        catalog.refresh_all([int(c) for c in cats])
 
     if a.refresh_ru_comps:
         # Парсер витрины Pokebarn в этой поставке НЕ реализован. Молча
@@ -174,23 +200,35 @@ def main(argv=None):
           f"{len(comps) - n_priced} заготовок без цены")
 
     token = ebay_token()
-    cap_price = a.max_price or cfg.get("max_item_price_usd", 20.0)
+    cap_price = a.max_price or cfg.get("max_item_price_usd", 13.0)
+    floor_price = a.min_price or cfg.get("min_item_price_usd", 5.0)
+    sort = a.sort or cfg.get("ebay_sort", "price")
+    print(f"полоса цен: ${floor_price:g}-${cap_price:g}, сортировка {sort}")
     lots, refused = [], []
 
-    if a.mode in ("targeted", "both"):
+    if mode in ("targeted", "both", "discover"):
         queries = pk_ebay.queries_from_comps(comps, sealed)
+        budget = (int(cfg.get("discover_budget_calls", 500))
+                  if mode == "discover" else None)
         print(f"точечный режим: {len(queries)} запросов по наборам с ценой "
-              f"в Москве")
-        got, ref = pk_ebay.collect_targeted(token, queries,
-                                            max_price_usd=cap_price)
+              f"в Москве" + (f", бюджет {budget} вызовов" if budget else ""))
+        got, ref = pk_ebay.collect_targeted(
+            token, queries, max_price_usd=cap_price,
+            min_price_usd=floor_price, sort=sort, budget_calls=budget)
         lots += got
         refused += ref
         print(f"  точечно собрано: {len(got)} лотов")
 
-    if a.mode in ("sweep", "both"):
+    if mode in ("sweep", "both", "discover"):
+        per_cat = a.limit or cfg.get("per_category_items", 1000)
+        if mode == "discover":
+            # Разведка ходит широко, но дёшево: её задача — увидеть, чего
+            # нет в таблице цен, а не выдать вердикт.
+            per_cat = min(per_cat, 200 * int(cfg.get("discover_budget_calls",
+                                                     500)) // 4)
         got, ref = pk_ebay.collect(
-            token, max_price_usd=cap_price,
-            per_category=a.limit or cfg.get("per_category_items", 1000))
+            token, max_price_usd=cap_price, min_price_usd=floor_price,
+            per_category=per_cat, sort=sort)
         lots += got
         refused += ref
 
@@ -212,11 +250,20 @@ def main(argv=None):
         enrich(l, cfg=cfg, weights=weights, rx_index=rx_index,
                comp_ix=comp_ix, fx=fx)
 
-    if not a.no_detail:
+    if not a.no_detail and mode != "discover":
         touched = refine_shipping(token, uniq, cfg)
         for l in touched:
             enrich(l, cfg=cfg, weights=weights, rx_index=rx_index,
                    comp_ix=comp_ix, fx=fx)
+
+    if mode == "discover":
+        # РАЗВЕДКА ВЕРДИКТОВ НЕ ВЫДАЁТ. Она ходит по наборам, цены на
+        # которые мы заведомо не знаем, и любой её «вердикт» был бы
+        # утверждением о том, чего мы не мерили.
+        for l in uniq:
+            if l["verdict"] in (BUY, PASS):
+                l["verdict"] = WATCH
+                l["reason"] = "режим разведки: вердикты не выдаются"
 
     counts = {}
     for l in uniq:
@@ -228,17 +275,18 @@ def main(argv=None):
     buys.sort(key=lambda l: -(l.get("profit_per_kg") or 0))
 
     out_dir = ROOT / "out"
+    order = {BUY: 0, WATCH: 1, PASS: 2, REJECT: 3, OUT_OF_SCOPE: 4}
     csv_path = write_candidates(
-        sorted(uniq, key=lambda l: ({BUY: 0, WATCH: 1, PASS: 2, REJECT: 3}[l["verdict"]],
+        sorted(uniq, key=lambda l: (order[l["verdict"]],
                                     -(l.get("profit_per_kg") or 0))),
-        out_dir / f"pokemon_candidates_{stamp}.csv")
+        out_dir / f"pokemon_candidates_{run_tag}.csv")
     fresh, dup = append_decisions(uniq, out_dir / "pokemon_decisions_log.csv")
 
     baskets = plan(buys, watches,
                    cargo_usd_per_kg=cfg.get("cargo_usd_per_kg", 22.0),
                    cargo_min_kg=cfg.get("cargo_min_kg", 1.0),
                    cargo_round_step_kg=cfg.get("cargo_round_step_kg", 1.0))
-    note = (f"Режим: {a.mode}. "
+    note = (f"Режим: {mode}. "
             f"Покрытие частичное: обойдено {len(uniq)} лотов из "
             f"46 807 + 14 070 в категориях 183456/183457 при цене до "
             f"${cfg.get('max_item_price_usd', 20.0):g}. Это верх выдачи по "
@@ -246,16 +294,19 @@ def main(argv=None):
             f"Browse API.")
     if refused:
         note += " Отказы API: " + "; ".join(f"{c}: {e}" for c, e in refused)
-    md_path = out_dir / f"pokemon_batch_plan_{stamp}.md"
+    md_path = out_dir / f"pokemon_batch_plan_{run_tag}.md"
     md_path.parent.mkdir(parents=True, exist_ok=True)
     md_path.write_text(batch_plan_md(baskets, usdrub=fx, rate_stale=stale,
-                                     coverage_note=note), encoding="utf-8")
+                                     coverage_note=note,
+                                     sellers=seller_concentration(uniq)),
+                       encoding="utf-8")
 
     print(f"кандидаты: {csv_path}")
     print(f"журнал: новых {fresh}, уже виденных {dup}")
     print(f"план посылки: {md_path} ({len(baskets)} корзин)")
 
-    need_path, n_need = write_need_comps(uniq, out_dir / f"pokemon_need_comps_{stamp}.csv")
+    need_path, n_need = write_need_comps(
+        uniq, out_dir / f"pokemon_need_comps_{run_tag}.csv", cfg=cfg, usdrub=fx)
     print(f"чего не хватает для оценки: {need_path} ({n_need} пар набор+вид)")
 
     need = [l for l in uniq if l.get("need_ru_comp") and l["verdict"] == WATCH]

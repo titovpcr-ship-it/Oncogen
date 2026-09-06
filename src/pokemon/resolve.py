@@ -73,3 +73,27 @@ def match(title, ix, kind=None):
             if detect_kind(prod["name"]) == kind:
                 return prod
     return None
+
+
+def match_set(title, ix):
+    """Набор, названный в заголовке, или None. ЦЕНУ НЕ ВОЗВРАЩАЕТ.
+
+    Отдельная функция от match() нарочно. match() обязан совпасть и по
+    виду товара, потому что от него зависит рыночная цена, а ошибка в
+    ней уже стоила ложных отказов (сингл Zigzagoon получал $285.69 от
+    бустер-бокса). Здесь вопрос другой и дешевле: покемоновский ли это
+    вообще набор. Ответ используется только для вердикта OUT_OF_SCOPE и
+    никогда для денег.
+    """
+    t = norm(title)
+    if not t:
+        return None
+    best = None
+    for phrase in ix:
+        if phrase in t and (best is None or len(phrase) > len(best)):
+            best = phrase
+    if best is None:
+        return None
+    prod = ix[best][0]
+    return {"set_name": prod.get("set_name"), "set_abbr": prod.get("set_abbr"),
+            "set_aliases": prod.get("set_aliases") or set(), "phrase": best}

@@ -13,7 +13,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from src.pokemon import catalog, fakes, resolve, ru_comps      # noqa: E402
 from src.pokemon.batching import plan                          # noqa: E402
-from src.pokemon.econ import (BUY, PASS, REJECT, WATCH,        # noqa: E402
+from src.pokemon.econ import (BUY, OUT_OF_SCOPE, PASS,          # noqa: E402
+                              REJECT, WATCH, discount_for,
                               economics, landed, verdict)
 from src.pokemon.weights import (billable_kg, detect_kind,     # noqa: E402
                                  detect_qty, weigh)
@@ -25,9 +26,17 @@ WEIGHTS = {"booster_pack": 22, "sleeved_booster": 30, "blister_3pack": 85,
            "tin": 350, "build_and_battle": 250, "etb": 800}
 
 CFG = {"cargo_usd_per_kg": 22.0, "cargo_min_kg": 1.0, "cargo_round_step_kg": 1.0,
-       "pack_overhead": 1.15, "ru_discount": 0.65, "min_multiple_packs": 2.0,
-       "min_multiple_tins": 2.6, "min_profit_per_kg_usd": 150.0,
-       "watch_multiple": 1.6, "us_ship_fallback_usd": 4.50}
+       "pack_overhead": 1.15, "min_multiple_packs": 1.75,
+       "min_profit_per_kg_usd": 150.0, "watch_multiple": 1.4,
+       "us_ship_fallback_usd": 4.50, "weight_pessimism": 1.30,
+       "market_gap_min_usd": 3.00,
+       "kind_allowlist": ["booster_pack", "sleeved_booster",
+                          "blister_checklane", "blister_3pack",
+                          "booster_bundle_6"],
+       "kind_denylist": ["mini_tin", "tin", "build_and_battle", "etb"],
+       "ru_discount_by_basis": {"avito_sold": 0.95, "avito_ask": 0.72,
+                                "pokemarket": 0.80, "shelf": 0.55,
+                                "derived": None}}
 
 FX = 86.5857
 
@@ -235,7 +244,8 @@ def test_no_ru_comp_never_buys():
     """Жёсткое правило ветки. Оценка «на глаз» — то, из-за чего
     винильная ветка за полгода не дала ни одной сделки."""
     econ = economics(price_usd=3.0, us_ship_usd=0.0, weight_kg=0.0253, qty=1,
-                     ru_price_rub=None, usdrub=FX, cfg=CFG)
+                     ru_price_rub=None, usdrub=FX, cfg=CFG,
+                     ru_comp_basis=None)
     v, why = verdict(fake_risk="LOW", kind="booster_pack", weight_unknown=False,
                      ru_price_rub=None, econ=econ, cfg=CFG)
     check("нет строки в ru_comps → WATCH, не BUY", v == WATCH, f"{v}: {why}")
@@ -245,10 +255,11 @@ def test_no_ru_comp_never_buys():
     # Заготовка с пустой ценой — это отсутствие компла, а не ноль рублей.
     rows = ru_comps.load()
     ix = ru_comps.index(rows)
+    d = CFG["ru_discount_by_basis"]
     check("заготовка SV08/booster_pack не даёт цену",
-          ru_comps.lookup(ix, {"SV08", "SSP"}, "booster_pack")[0] is None)
+          ru_comps.lookup(ix, {"SV08", "SSP"}, "booster_pack", d)[0] is None)
     check("заполненная строка 30C/mini_tin даёт цену",
-          ru_comps.lookup(ix, {"30C"}, "mini_tin")[0] == 5290.0)
+          ru_comps.lookup(ix, {"30C"}, "mini_tin", d)[0] == 5290.0)
 
 
 # --- 6. Аномальная дешевизна (задание, тест 6) -----------------------
@@ -273,13 +284,19 @@ def test_packs_beat_tins():
     а то, что модель это воспроизводит.
     """
     pack = economics(price_usd=55.0, us_ship_usd=4.50, weight_kg=0.253, qty=10,
-                     ru_price_rub=2698, usdrub=FX, cfg=CFG)
+                     ru_price_rub=2698, usdrub=FX, cfg=CFG,
+                     ru_comp_basis="avito_sold")
     tin = economics(price_usd=18.0, us_ship_usd=4.50, weight_kg=0.253, qty=1,
-                    ru_price_rub=5290, usdrub=FX, cfg=CFG)
+                    ru_price_rub=5290, usdrub=FX, cfg=CFG,
+                    ru_comp_basis="avito_sold")
     check("десяток паков даёт больше $400/кг", pack["profit_per_kg"] > 400,
           f"{pack['profit_per_kg']:.0f}")
-    check("мини-тин даёт меньше $100/кг", tin["profit_per_kg"] < 100,
-          f"{tin['profit_per_kg']:.0f}")
+    # Даже по самой щедрой цене РФ (avito_sold, коэффициент 0.95) тин не
+    # дотягивает до гейта $150/кг — и это при том, что гейт считается по
+    # пессимистичному весу, то есть на 30% строже.
+    check("мини-тин не дотягивает до гейта $150/кг",
+          tin["profit_per_kg_pessimistic"] < 150,
+          f"{tin['profit_per_kg_pessimistic']:.0f}")
     check("разрыв не меньше пятикратного",
           pack["profit_per_kg"] / max(tin["profit_per_kg"], 1e-9) > 5)
 
@@ -288,24 +305,22 @@ def test_packs_beat_tins():
     vt, _ = verdict(fake_risk="LOW", kind="mini_tin", weight_unknown=False,
                     ru_price_rub=5290, econ=tin, cfg=CFG)
     check("десяток паков → BUY", vp == BUY, vp)
-    check("мини-тин по этой цене не проходит", vt in (PASS, WATCH), vt)
-
-    # У тина отдельный, более жёсткий порог — 2.6 против 2.0.
-    from src.pokemon.econ import min_multiple_for
-    check("порог тина жёстче порога пака",
-          min_multiple_for("mini_tin", CFG) > min_multiple_for("booster_pack", CFG))
+    check("мини-тин исключён из сегмента", vt == OUT_OF_SCOPE, vt)
 
 
 def test_breakeven_solo_is_reported():
     """Одиночная посылка и корзина — РАЗНАЯ экономика, и обе в отчёте."""
     e = economics(price_usd=6.0, us_ship_usd=4.50, weight_kg=0.0253, qty=1,
-                  ru_price_rub=2698, usdrub=FX, cfg=CFG)
+                  ru_price_rub=2698, usdrub=FX, cfg=CFG,
+                  ru_comp_basis="avito_sold")
     check("в корзине лот дешевле, чем в одиночку",
           e["landed_batch_usd"] < e["landed_solo_usd"])
     check("один пак отдельной посылкой не окупается",
           e["breakeven_solo"] is False)
     check("но в корзине даёт больше $300/кг", e["profit_per_kg"] > 300,
           f"{e['profit_per_kg']:.0f}")
+    check("пессимистичная прибыль на кг ниже рабочей ровно в 1.30",
+          abs(e["profit_per_kg"] / e["profit_per_kg_pessimistic"] - 1.30) < 1e-9)
 
 
 def test_unknown_weight_never_buys():
@@ -406,6 +421,167 @@ def test_ssylka_doezzhaet_do_otcheta():
           str(unknown))
 
 
+# --- Решения от 06.09.2026 ------------------------------------------
+
+def test_gate_uses_pessimistic_weight():
+    """Гейт стоит на пессимистичном весе, в отчёт идут ОБЕ цифры.
+
+    Веса в weights_g.yaml не замерены. Ждать весов как условия запуска
+    решено не было: вес пака известен публично с точностью ±10%, а
+    настоящая неопределённость — упаковка и перепаковка на складе
+    карго. Запас в 30% снимает вопрос сегодня.
+    """
+    e = economics(price_usd=9.50, us_ship_usd=1.20, weight_kg=0.0253, qty=1,
+                  ru_price_rub=1700, usdrub=FX, cfg=CFG,
+                  ru_comp_basis="avito_sold")
+    check("считаются обе прибыли на килограмм",
+          e["profit_per_kg"] is not None
+          and e["profit_per_kg_pessimistic"] is not None)
+    check("пессимистичная ровно в weight_pessimism раз меньше",
+          abs(e["profit_per_kg"] / e["profit_per_kg_pessimistic"] - 1.30) < 1e-9)
+
+    # Лот, который проходит по рабочему весу и НЕ проходит по
+    # пессимистичному, обязан остаться без BUY.
+    borderline = {"multiple": 2.0, "profit_per_kg": 170.0,
+                  "profit_per_kg_pessimistic": 130.0, "ru_comp_usable": True}
+    v, why = verdict(fake_risk="LOW", kind="booster_pack",
+                     weight_unknown=False, ru_price_rub=1700,
+                     econ=borderline, cfg=CFG)
+    check("рабочие $170/кг не спасают при пессимистичных $130", v != BUY,
+          f"{v}: {why}")
+    check("причина называет пессимистичный вес", "пессимистич" in why, why)
+
+    solid = dict(borderline, profit_per_kg=250.0,
+                 profit_per_kg_pessimistic=190.0)
+    v2, why2 = verdict(fake_risk="LOW", kind="booster_pack",
+                       weight_unknown=False, ru_price_rub=1700,
+                       econ=solid, cfg=CFG)
+    check("запас по весу пройден — BUY", v2 == BUY, f"{v2}: {why2}")
+
+
+def test_derived_basis_never_buys():
+    """Расчётная цена не даёт BUY ни при каком мультипликаторе.
+
+    Строка booster_pack = 2 698 ₽ в сид-таблице получена делением
+    16 190 ₽ на шесть и относится к 30th Celebration — юбилейному
+    премиум-набору. Перенести её на обычный пак ME01 значит подменить
+    товар. Такая строка опаснее отсутствия строки: она выглядит как
+    данные.
+    """
+    disc, usable = discount_for("derived", CFG)
+    check("для derived коэффициента нет", disc is None and not usable)
+
+    e = economics(price_usd=6.0, us_ship_usd=1.0, weight_kg=0.0253, qty=1,
+                  ru_price_rub=2698, usdrub=FX, cfg=CFG,
+                  ru_comp_basis="derived")
+    check("выручка по расчётной цене не считается", e["resale_usd"] is None)
+    v, why = verdict(fake_risk="LOW", kind="booster_pack",
+                     weight_unknown=False, ru_price_rub=2698, econ=e,
+                     cfg=CFG)
+    check("derived → WATCH, не BUY", v == WATCH, f"{v}: {why}")
+    check("причина названа вслух", "derived" in why or "расчётн" in why, why)
+
+    # Та же цена с честным основанием проходит нормальный путь.
+    e2 = economics(price_usd=6.0, us_ship_usd=1.0, weight_kg=0.0253, qty=1,
+                   ru_price_rub=2698, usdrub=FX, cfg=CFG,
+                   ru_comp_basis="avito_sold")
+    check("измеренная цена считается", e2["resale_usd"] is not None)
+    check("коэффициент avito_sold строже витринного",
+          discount_for("avito_sold", CFG)[0] > discount_for("shelf", CFG)[0])
+
+
+def test_market_gap_floor():
+    """Правило 60% не срабатывает, когда разрыв меньше абсолютного пола.
+
+    Живой случай: «2024 Pokémon TCG Trick or Trade BOOster Bundle» за
+    $1.50 при рынке $2.67 — это 56% и REJECT как подделка, хотя разрыв
+    всего $1.17. Процент без абсолютного пола — плохая мера на
+    копеечном товаре.
+    """
+    cheap = {"title": "Pokemon Trick or Trade BOOster Bundle",
+             "price_usd": 1.50, "seller_fb_pct": 100.0,
+             "seller_fb_score": 900, "additional_images": 3}
+    risk, why = fakes.assess(cheap, market_price=2.67,
+                             market_gap_min_usd=3.00)
+    check("копеечный разрыв не считается подделкой", risk == "LOW",
+          f"{risk} {why}")
+
+    # На дорогом товаре защита работает в полную силу.
+    big = {"title": "Pokemon Prismatic Evolutions Booster Box",
+           "price_usd": 20.0, "seller_fb_pct": 100.0,
+           "seller_fb_score": 900, "additional_images": 3}
+    risk2, why2 = fakes.assess(big, market_price=50.0,
+                               market_gap_min_usd=3.00)
+    check("$20 при рынке $50 — по-прежнему HIGH", risk2 == "HIGH",
+          f"{risk2} {why2}")
+    check("в причине назван и процент, и разрыв",
+          "разрыв" in " ".join(why2), str(why2))
+
+
+def test_out_of_scope_not_watch():
+    """Не наш товар получает СВОЙ вердикт, а не тонет в WATCH.
+
+    Из 1 186 лотов первого прогона 321 остался без вида и лежал в WATCH
+    с формулировкой «вес неизвестен». Там были UniVersus, Force of
+    Will, Zatchbell, Akora — чужие игры. Пополнять словарь чужих игр
+    бессмысленно, он бездонный: правило перевёрнуто на положительное —
+    набор обязан найтись в каталоге TCGCSV.
+    """
+    v, why = verdict(fake_risk="LOW", kind="booster_pack",
+                     weight_unknown=False, ru_price_rub=1700,
+                     econ={"multiple": 3.0, "profit_per_kg": 500.0,
+                           "profit_per_kg_pessimistic": 380.0,
+                           "ru_comp_usable": True},
+                     cfg=CFG, set_resolved=False)
+    check("набор не из каталога → OUT_OF_SCOPE", v == OUT_OF_SCOPE, f"{v}: {why}")
+    check("это не WATCH", v != WATCH)
+
+    # А вот покемоновский набор с неопознанным ВИДОМ — это «не смотрел»,
+    # а не «чужой товар»: отвечать за него должен сторож веса.
+    v2, why2 = verdict(fake_risk="LOW", kind=None, weight_unknown=True,
+                       ru_price_rub=None, econ={}, cfg=CFG,
+                       set_resolved=True)
+    check("свой набор без вида остаётся WATCH", v2 == WATCH, f"{v2}: {why2}")
+
+    # Положительная проверка на живом каталоге: чужая игра не резолвится.
+    prods = [{"product_id": 1, "name": "Surging Sparks Booster Pack",
+              "set_name": "SV08: Surging Sparks", "set_abbr": "SSP",
+              "market_price": 6.0, "set_aliases": {"SSP"}}]
+    ix = resolve.build_index(prods)
+    check("UniVersus не находится в каталоге покемонов",
+          resolve.match_set("UniVersus Attack on Titan Demo Kit X1", ix) is None)
+    check("покемоновский набор находится",
+          resolve.match_set("Pokemon Surging Sparks Booster Pack", ix)
+          is not None)
+    check("match_set цену не отдаёт",
+          "market_price" not in (resolve.match_set(
+              "Pokemon Surging Sparks Booster Pack", ix) or {}))
+
+
+def test_tins_excluded():
+    """Мини-тин не может получить BUY: он вне сегмента по устройству.
+
+    Расчёт на весах × 1.15, карго $22/кг: пак 25 г брутто даёт ~$330/кг,
+    мини-тин 253 г — ~$76/кг и не проходит гейт $150/кг ни при какой
+    реалистичной цене в Москве. Это свойство товара, а не настройка,
+    поэтому убран весь вид, а не подкручен порог.
+    """
+    from src.pokemon.econ import in_scope
+    for kind in ("mini_tin", "tin", "etb", "build_and_battle"):
+        ok, why = in_scope(kind, CFG)
+        check(f"«{kind}» вне сегмента", not ok, why)
+    for kind in ("booster_pack", "blister_checklane", "blister_3pack",
+                 "booster_bundle_6"):
+        check(f"«{kind}» в сегменте", in_scope(kind, CFG)[0])
+
+    great = {"multiple": 9.0, "profit_per_kg": 9000.0,
+             "profit_per_kg_pessimistic": 7000.0, "ru_comp_usable": True}
+    v, _ = verdict(fake_risk="LOW", kind="mini_tin", weight_unknown=False,
+                   ru_price_rub=5290, econ=great, cfg=CFG)
+    check("тин не проходит даже при девятикратной прибыли",
+          v == OUT_OF_SCOPE, v)
+
+
 def main():
     for fn in [test_sealed_classifier, test_set_aliases, test_weight_parsing,
                test_cargo_rounding, test_fake_filter,
@@ -415,7 +591,12 @@ def main():
                test_packs_beat_tins, test_breakeven_solo_is_reported,
                test_unknown_weight_never_buys, test_resolve_by_phrase,
                test_batch_plan_fills_a_kilogram,
-               test_ssylka_doezzhaet_do_otcheta]:
+               test_ssylka_doezzhaet_do_otcheta,
+               test_gate_uses_pessimistic_weight,
+               test_derived_basis_never_buys,
+               test_market_gap_floor,
+               test_out_of_scope_not_watch,
+               test_tins_excluded]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

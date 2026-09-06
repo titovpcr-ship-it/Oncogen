@@ -112,7 +112,9 @@ Discogs public API официально не отдаёт "низкая/меди
 2) Discogs Personal Access Token (бесплатно):
    - Зайти на https://www.discogs.com/settings/developers
    - Нажать "Generate new token"
-   - Скопировать токен в DISCOGS_TOKEN ниже.
+   - Положить токен в .env рядом со скриптом: DISCOGS_TOKEN=...
+     В КОД НЕ ВСТАВЛЯТЬ: прежний токен так и попал в историю git
+     (коммит 8081baa от 25.08.2026) и подлежит отзыву.
 
 3) Установить зависимости:
    pip install requests pyyaml --break-system-packages
@@ -152,9 +154,31 @@ import test_calibration as calib
 # Discogs-токен остаётся хардкодом ниже — это было осознанное решение
 # пользователя ранее (личный access-токен, не production keyset, и
 # GitHub его секретом не считает).
+def _env_file(path=None):
+    """Минимальный .env-ридер. Дублировать notify.load_env нельзя было бы,
+    но этот модуль запускается и отдельно, до всякого импорта пакета."""
+    from pathlib import Path as _P
+    p = _P(path) if path else _P(__file__).resolve().parent / ".env"
+    out = {}
+    if not p.exists():
+        return out
+    for line in p.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        out[k.strip()] = v.strip().strip('"').strip("'")
+    return out
+
+
 EBAY_CLIENT_ID = os.environ.get("EBAY_CLIENT_ID", "ВСТАВЬ_СЮДА_EBAY_APP_ID")
 EBAY_CLIENT_SECRET = os.environ.get("EBAY_CLIENT_SECRET", "ВСТАВЬ_СЮДА_EBAY_CERT_ID")
-DISCOGS_TOKEN = "TiwOLoCfLsKOGriQiFBBvUvbaEdPGSeBdVJgtueN"
+# ТОКЕН БОЛЬШЕ НЕ ЖИВЁТ В КОДЕ. Он лежал здесь константой с августа и
+# попал в историю git — перенести его в .env НЕДОСТАТОЧНО, старый обязан
+# быть отозван в кабинете Discogs и выпущен заново. Ключ читается из
+# .env (файл в .gitignore, режим 600), как все остальные учётные данные.
+DISCOGS_TOKEN = os.environ.get("DISCOGS_TOKEN") or _env_file().get(
+    "DISCOGS_TOKEN", "")
 
 CONFIG_PATH = Path(__file__).with_name("ebay_vinyl_sniper_config.yaml")
 

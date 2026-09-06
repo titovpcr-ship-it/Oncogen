@@ -13,7 +13,8 @@ from pathlib import Path
 
 COLUMNS = [
     "verdict", "reason", "fake_risk", "fake_reasons",
-    "multiple", "profit_usd", "profit_per_kg", "breakeven_solo",
+    "multiple", "profit_usd", "profit_per_kg", "profit_per_kg_pessimistic",
+    "breakeven_solo",
     "title", "subtitle", "item_url", "seller", "seller_fb_pct",
     "seller_fb_score", "additional_images", "buying_options",
     "condition", "condition_id",
@@ -21,8 +22,8 @@ COLUMNS = [
     "kind", "qty", "weight_g_net", "weight_kg", "weight_kg_billable",
     "weight_unknown",
     "tcg_product_id", "tcg_market_price_usd", "price_vs_market_pct",
-    "set_name", "ru_price_rub", "ru_comp_basis", "ru_comp_source",
-    "need_ru_comp",
+    "set_name", "set_resolved", "ru_price_rub", "ru_comp_basis",
+    "ru_comp_source", "ru_discount_applied", "ru_comp_usable", "need_ru_comp",
     "landed_solo_usd", "landed_batch_usd", "cargo_batch_usd", "resale_usd",
     "usdrub", "rate_stale", "category_id", "listed_at", "item_id", "scan_ts",
 ]
@@ -63,13 +64,22 @@ def _money(x, digits=2):
     return "—" if x is None else f"${x:,.{digits}f}"
 
 
-def batch_plan_md(baskets, *, usdrub, rate_stale=False, coverage_note=""):
+def batch_plan_md(baskets, *, usdrub, rate_stale=False, coverage_note="",
+                  sellers=()):
     out = ["# План сборной посылки", ""]
     out.append(f"Курс: {usdrub:.4f} ₽/$" +
                (" **(курс несвежий, ЦБ был недоступен)**" if rate_stale else ""))
     if coverage_note:
         out.append("")
         out.append(coverage_note)
+    if sellers:
+        out.append("")
+        out.append("**Объединённая доставка.** У этих продавцов набралось "
+                   "по несколько интересных лотов — доставку по США считаем "
+                   "по каждому отдельно, так что запрос на объединение "
+                   "уменьшает реальную себестоимость против расчётной:")
+        for sid, lots in sellers[:10]:
+            out.append(f"- `{sid}` — {len(lots)} лотов")
     out.append("")
     if not baskets:
         out.append("Корзин нет: ни один лот не получил вердикт BUY.")
@@ -114,21 +124,38 @@ def batch_plan_md(baskets, *, usdrub, rate_stale=False, coverage_note=""):
     return "\n".join(out)
 
 
-NEED_COLUMNS = ["set_code_hint", "set_name", "product_kind", "lots_seen",
+NEED_COLUMNS = ["rank_potential_usd", "set_code_hint", "set_name",
+                "product_kind", "lots_seen", "profit_per_kg_at_1_75x",
                 "min_price_usd", "max_price_usd", "example_title",
                 "example_url"]
 
 
-def write_need_comps(rows, path):
-    """Список «сходи померь цену» — набор и вид, которые мы видим на eBay,
-    но оценить не можем.
+def _median(xs):
+    xs = sorted(x for x in xs if x is not None)
+    if not xs:
+        return None
+    n = len(xs)
+    return xs[n // 2] if n % 2 else (xs[n // 2 - 1] + xs[n // 2]) / 2
 
-    ЗАЧЕМ ОТДЕЛЬНЫМ ФАЙЛОМ. Правило ветки — без строки в ru_comps.csv
-    вердикт BUY невозможен, и на первом живом прогоне 06.09.2026 по
-    этой причине встали ВСЕ 535 уцелевших лотов. Значит узкое место
-    ветки не eBay и не пороги, а таблица цен, и она заполняется руками.
-    Файл говорит, какие именно строки принесут больше всего.
+
+def write_need_comps(rows, path, cfg=None, usdrub=None):
+    """Список «сходи померь цену», отсортированный по ПОТЕНЦИАЛЬНОЙ ПРИБЫЛИ.
+
+    ПОЧЕМУ НЕ ПО ЧИСЛУ ЛОТОВ. Первая версия ранжировала по количеству
+    потерянных позиций, и наверх поднялись 13 лотов First Partner Pack
+    по $18.95-20.00 — товар, который не нужен ни при какой цене в
+    Москве, потому что при рынке $7.90 за пак он не окупается в
+    принципе. Считать надо не сколько лотов мы теряем, а сколько денег.
+
+    Оценка: при гипотетическом мультипликаторе 1.75 (порог покупки)
+    прибыль равна 0.75 от себестоимости в корзине, а прибыль на
+    килограмм — она же, делённая на пессимистичный вес. Умножаем на
+    число лотов. Это оценка сверху, и она нужна только для порядка
+    строк, а не для решения.
     """
+    cfg = cfg or {}
+    hyp = float(cfg.get("min_multiple_packs", 1.75))
+    pess = float(cfg.get("weight_pessimism", 1.30))
     agg = {}
     for r in rows:
         if not r.get("need_ru_comp") or not r.get("set_name") or not r.get("kind"):
@@ -137,7 +164,7 @@ def write_need_comps(rows, path):
         a = agg.setdefault(key, {"set_name": r["set_name"],
                                  "product_kind": r["kind"],
                                  "lots_seen": 0, "min_price_usd": None,
-                                 "max_price_usd": None,
+                                 "max_price_usd": None, "_ppk": [],
                                  "example_title": r.get("title"),
                                  "example_url": r.get("item_url")})
         a["lots_seen"] += 1
@@ -145,10 +172,27 @@ def write_need_comps(rows, path):
         if pr is not None:
             a["min_price_usd"] = pr if a["min_price_usd"] is None else min(a["min_price_usd"], pr)
             a["max_price_usd"] = pr if a["max_price_usd"] is None else max(a["max_price_usd"], pr)
-    out = sorted(agg.values(), key=lambda x: -x["lots_seen"])
-    for a in out:
+        landed = r.get("landed_batch_usd")
+        kg = r.get("weight_kg")
+        if landed and kg:
+            a["_ppk"].append((hyp - 1.0) * landed / (kg * pess))
+        # Пример показываем самый дешёвый: он ближе к тому, ради чего
+        # строку вообще стоит заводить.
+        if pr is not None and (a["min_price_usd"] is None or pr <= a["min_price_usd"]):
+            a["example_title"] = r.get("title")
+            a["example_url"] = r.get("item_url")
+
+    out = []
+    for a in agg.values():
+        ppk = _median(a["_ppk"])
+        a["profit_per_kg_at_1_75x"] = round(ppk, 1) if ppk is not None else None
+        a["rank_potential_usd"] = (round(ppk * a["lots_seen"], 1)
+                                   if ppk is not None else 0.0)
         name = a["set_name"] or ""
         a["set_code_hint"] = name.split(":", 1)[0].strip() if ":" in name else name
+        out.append(a)
+    out.sort(key=lambda x: -(x["rank_potential_usd"] or 0))
+
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as fh:
@@ -157,3 +201,24 @@ def write_need_comps(rows, path):
         for a in out:
             w.writerow(a)
     return path, len(out)
+
+
+def seller_concentration(rows, min_lots=3):
+    """Продавцы, у которых набралось несколько интересных лотов.
+
+    Модель складывает доставку по США по каждому лоту отдельно — то
+    есть ЗАНИЖАЕТ прибыль, и это безопасная сторона. Менять модель ради
+    точности не стоит, а вот попросить объединённую доставку у
+    продавца, у которого мы берём три лота, стоит. Работа переговорная,
+    и отчёт только называет, к кому идти.
+    """
+    by = {}
+    for r in rows:
+        if r.get("verdict") not in ("BUY", "WATCH"):
+            continue
+        sid = r.get("seller")
+        if not sid:
+            continue
+        by.setdefault(sid, []).append(r)
+    return sorted(((k, v) for k, v in by.items() if len(v) >= min_lots),
+                  key=lambda kv: -len(kv[1]))

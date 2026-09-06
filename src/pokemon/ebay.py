@@ -28,10 +28,16 @@ BASE_FILTER = ("buyingOptions:{FIXED_PRICE|BEST_OFFER},"
                "conditions:{NEW}")
 
 
-def build_filter(max_price_usd):
+def build_filter(max_price_usd, min_price_usd=1.0):
+    """Ценовая полоса, а не только потолок.
+
+    Пол появился 06.09.2026 вместе с разворотом сортировки: ниже $5
+    лежит зона подделок и цифровых кодов, туда же смотрит правило 60%.
+    Полоса дешевле, чем фильтровать это потом на своей стороне.
+    """
     return ("buyingOptions:{FIXED_PRICE|BEST_OFFER},"
             "itemLocationCountry:US,"
-            f"price:[1..{max_price_usd:g}],priceCurrency:USD,"
+            f"price:[{min_price_usd:g}..{max_price_usd:g}],priceCurrency:USD,"
             "conditions:{NEW}")
 
 
@@ -114,18 +120,26 @@ def queries_from_comps(comps, sealed_products):
     return out
 
 
-def collect_targeted(token, queries, *, max_price_usd=20.0, per_query=200,
-                     categories=None, verbose=True):
+def collect_targeted(token, queries, *, max_price_usd=13.0, min_price_usd=5.0,
+                     per_query=200, categories=None, sort="price",
+                     budget_calls=None, verbose=True):
     """Точечный поиск по наборам с известной ценой в Москве."""
     cats = categories or list(CATEGORIES)
-    flt = build_filter(max_price_usd)
+    flt = build_filter(max_price_usd, min_price_usd)
+    spent = 0
     out, refused = [], []
     for spec in queries:
         for cid in cats:
+            if budget_calls is not None and spent >= budget_calls:
+                if verbose:
+                    print(f"  бюджет запросов исчерпан на {spent} — "
+                          f"остальные наборы не смотрели")
+                return out, refused
             try:
                 items = search_all(token, category_id=cid, flt=flt,
                                    max_items=per_query, page=200,
-                                   sort="-price", q=spec["q"])
+                                   sort=sort, q=spec["q"])
+                spent += max(1, -(-per_query // 200))
             except ApiRefused as e:
                 refused.append((f"{cid}/{spec['q']}", str(e)))
                 continue
@@ -136,23 +150,27 @@ def collect_targeted(token, queries, *, max_price_usd=20.0, per_query=200,
     return out, refused
 
 
-def collect(token, *, max_price_usd=20.0, per_category=1000, categories=None,
-            sort="-price", verbose=True):
+def collect(token, *, max_price_usd=13.0, min_price_usd=5.0, per_category=1000,
+            categories=None, sort="price", verbose=True):
     """Лоты по каждой категории ОТДЕЛЬНО.
 
     category_ids принимает ровно одну категорию: запрос с двумя отдаёт
     HTTP 400, errorId 12030, allowedMaxCategories=1. Проверено живьём
     06.09.2026 — в задании было записано обратное.
 
-    СОРТИРОВКА ПО УБЫВАНИЮ ЦЕНЫ, А НЕ ПО ВОЗРАСТАНИЮ. В задании стоял
-    sort=price. Замер 06.09.2026 на 1190 лотах показал, чем это
-    оборачивается: снизу выдачи стоят цифровые коды за $1, синглы и
-    энергокарты, а настоящий запечатанный товар — бустер-бандлы,
-    блистеры, лоты из нескольких паков — живёт у потолка в $20. Восход
-    по цене тратит всю квоту на мусор.
+    СОРТИРОВКА ВЕРНУЛАСЬ К ВОЗРАСТАНИЮ 06.09.2026. Разворот на -price
+    делался, когда снизу выдачи лез мусор — цифровые коды за $1, синглы,
+    энергокарты. Но мусор создавали баги B-2 и B-3, а они закрыты
+    сторожами: причина разворота исчезла. Последствие же осталось и
+    стоило всей маржи ветки — у потолка в $20 стоят лоты вдвое дороже
+    рынка (современный бустер-пак: $7.90 PriceCharting, $7.97
+    TCGplayer), и никакая цена в Москве их не окупает.
+
+    Сортировка берётся из конфига, чтобы решение можно было проверить
+    прогоном в обе стороны, а не спорить о нём.
     """
     cats = categories or list(CATEGORIES)
-    flt = build_filter(max_price_usd)
+    flt = build_filter(max_price_usd, min_price_usd)
     out, refused = [], []
     for cid in cats:
         try:

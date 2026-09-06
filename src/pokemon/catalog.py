@@ -37,6 +37,15 @@ from ..common.env import repo_root
 
 BASE = "https://tcgcsv.com/tcgplayer"
 CATEGORY_POKEMON = 3
+# Отдельный каталог японских покемонов. ВЫКЛЮЧЕН ПО УМОЛЧАНИЮ, и это
+# решение владельца, а не умолчание кода. Замер 06.09.2026: в полосе
+# $5-13 нижний край выдачи — почти сплошь японские, корейские и
+# китайские паки (Snow Hazard SV2P, Raging Surf SV3a, Time Gazer S10D,
+# промо KFC и Indomilk). Английского товара дешевле $9 в категории
+# практически нет. То есть дешёвое предложение существует, но это
+# ДРУГОЙ товар: другая цена в Москве, другой вес, другой спрос.
+# Включать — только вместе со строками в ru_comps.csv под него.
+CATEGORY_POKEMON_JAPAN = 85
 UA = ("OncogenTcgBot/1.0 (private cross-border arbitrage research; "
       "contact: titovkld@gmail.com)")
 DB = repo_root() / "data" / "tcg_catalog.db"
@@ -46,7 +55,8 @@ CREATE TABLE IF NOT EXISTS groups (
     group_id     INTEGER PRIMARY KEY,
     name         TEXT,
     abbreviation TEXT,
-    published_on TEXT
+    published_on TEXT,
+    category_id  INTEGER
 );
 CREATE TABLE IF NOT EXISTS products (
     product_id   INTEGER PRIMARY KEY,
@@ -122,6 +132,16 @@ def set_aliases(group: dict) -> set:
     return {x for x in out if x}
 
 
+def refresh_all(categories=(CATEGORY_POKEMON,), db_path=None, **kw):
+    """Выгрузка нескольких каталогов подряд. Итоги складываются."""
+    total = {"groups": 0, "products": 0, "sealed": 0, "prices": 0}
+    for cat in categories:
+        got = refresh(db_path=db_path, category=int(cat), **kw)
+        for k in total:
+            total[k] += got[k]
+    return total
+
+
 def refresh(db_path=None, category=CATEGORY_POKEMON, pause=0.3,
             only_groups=None, verbose=True):
     """Суточная выгрузка каталога в локальный SQLite.
@@ -142,9 +162,9 @@ def refresh(db_path=None, category=CATEGORY_POKEMON, pause=0.3,
         keep = {int(g) for g in only_groups}
         groups = [g for g in groups if int(g["groupId"]) in keep]
     conn.executemany(
-        "INSERT OR REPLACE INTO groups VALUES (?,?,?,?)",
+        "INSERT OR REPLACE INTO groups VALUES (?,?,?,?,?)",
         [(g["groupId"], g.get("name"), g.get("abbreviation"),
-          g.get("publishedOn")) for g in groups])
+          g.get("publishedOn"), category) for g in groups])
     conn.commit()
 
     n_prod = n_seal = n_price = 0
@@ -221,6 +241,7 @@ def load_sealed(db_path=None):
             "set_name": g.get("name"),
             "set_abbr": g.get("abbreviation"),
             "set_aliases": set_aliases(g),
+            "set_category": g.get("category_id"),
         })
     return out
 

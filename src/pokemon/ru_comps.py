@@ -80,12 +80,23 @@ def index(rows):
     return ix
 
 
-def lookup(ix, set_aliases, kind):
+def lookup(ix, set_aliases, kind, discounts=None):
     """(цена в рублях, основание, источник) или (None, None, None).
 
     set_aliases — множество псевдонимов набора из каталога: сид-таблица
     зовёт Surging Sparks кодом «SV08», TCGCSV — аббревиатурой «SSP»,
     и обе формы обязаны находиться.
+
+    ВЫБОР МЕЖДУ НЕСКОЛЬКИМИ СТРОКАМИ. Сравнивать цены в рублях напрямую
+    нельзя: 5 290 ₽ с витрины и 3 000 ₽ реально ушедших — величины
+    разной природы, и после умножения на свои коэффициенты (0.55 и
+    0.95) порядок может перевернуться. Поэтому сравнивается ВЫРУЧКА
+    после коэффициента, и берётся наименьшая — занижать себе выручку
+    безопаснее, чем завышать.
+
+    Строки, непригодные для BUY (basis=derived), возвращаются только
+    если ничего другого нет: пусть вердикт скажет «расчётная цена»
+    вслух, а не молчит об отсутствии данных.
     """
     if not kind:
         return None, None, None
@@ -95,9 +106,21 @@ def lookup(ix, set_aliases, kind):
     priced = [r for r in cands if r["ru_price_rub"] is not None]
     if not priced:
         return None, None, None
-    sold = [r for r in priced if r["price_basis"] == SOLD_BASIS]
-    pool = sold or priced
-    best = min(pool, key=lambda r: r["ru_price_rub"])
+
+    table = discounts if discounts is not None else {}
+
+    def factor(r):
+        if r["price_basis"] in table:
+            return table[r["price_basis"]]
+        return table.get("shelf", 1.0) if table else 1.0
+
+    usable = [r for r in priced if factor(r) is not None]
+    if usable:
+        sold = [r for r in usable if r["price_basis"] == SOLD_BASIS]
+        pool = sold or usable
+        best = min(pool, key=lambda r: r["ru_price_rub"] * (factor(r) or 1.0))
+    else:
+        best = min(priced, key=lambda r: r["ru_price_rub"])
     return best["ru_price_rub"], best["price_basis"], best["source"]
 
 

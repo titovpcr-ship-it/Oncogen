@@ -117,6 +117,11 @@ VINTAGE_DEFAULT = ["base set", "jungle", "fossil", "team rocket", "neo",
 # Порог аномальной дешевизны: ниже этой доли от marketPrice sealed не
 # бывает честным. Значение живёт в конфиге, здесь — только умолчание.
 CHEAP_FRACTION = 0.60
+# Абсолютный пол разрыва. Процент без него — плохая мера на копеечном
+# товаре: «Trick or Trade BOOster Bundle» за $1.50 при рынке $2.67 даёт
+# 56% и получал REJECT, хотя разрыв всего $1.17 — это шум. На товаре за
+# $50 три доллара ничего не значат, и защита работает в полную силу.
+MARKET_GAP_MIN_USD = 3.00
 
 
 def _text(lot):
@@ -127,6 +132,7 @@ def _text(lot):
 
 
 def assess(lot, *, market_price=None, cheap_fraction=CHEAP_FRACTION,
+           market_gap_min_usd=MARKET_GAP_MIN_USD,
            set_denylist=None, seller_min_pct=98.5, seller_min_score=100,
            require_images=True):
     """(risk, [причины]) — risk из LOW / MEDIUM / HIGH.
@@ -167,10 +173,12 @@ def assess(lot, *, market_price=None, cheap_fraction=CHEAP_FRACTION,
 
     price = lot.get("price_usd")
     if market_price and price is not None:
-        frac = price / float(market_price)
-        if frac < cheap_fraction:
+        mp = float(market_price)
+        frac = price / mp
+        gap = mp - price
+        if frac < cheap_fraction and gap >= market_gap_min_usd:
             bump(HIGH, f"цена {frac*100:.0f}% от рынка TCGplayer "
-                       f"(${price:.2f} против ${float(market_price):.2f})")
+                       f"(${price:.2f} против ${mp:.2f}, разрыв ${gap:.2f})")
 
     if LOOSE_HINT.search(title) and not PROVENANCE_OK.search(txt):
         bump(MEDIUM, "одиночный пак без указания, откуда он")

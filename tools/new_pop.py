@@ -41,6 +41,12 @@ from live_hunt import cargo_usd, disc_count       # noqa: E402
 import notify                                      # noqa: E402
 
 CFG = Path(__file__).resolve().parent.parent / "ebay_vinyl_sniper_config.yaml"
+
+# Сколько сделок и сколько ОТКАЗОВ нужно, чтобы замер вернулся в расчёт.
+# Отказ — единственное наблюдение, показывающее, насколько скидка вообще
+# надёжна: без него мы знаем только про согласившихся.
+MIN_TRADES = 20
+MIN_REFUSALS = 5
 SEARCH = "https://api.ebay.com/buy/browse/v1/item_summary/search"
 CATEGORY = "176985"
 
@@ -55,6 +61,14 @@ CREATE TABLE IF NOT EXISTS newpop_paid (
     offer_usd   REAL,      -- цена, о которой договорились через «предложить цену»
     paid_usd    REAL,      -- сколько ушло с карты всего
     recorded_at TEXT NOT NULL
+);
+-- ОТКАЗЫ В ТОРГЕ. Таблицу заводит record_buy.py, но читает её теперь и
+-- прогон: без неё запрос падал бы на чистой базе, а отсутствие отказов
+-- — это состояние, а не ошибка.
+CREATE TABLE IF NOT EXISTS newpop_refused (
+    item_id   TEXT PRIMARY KEY,
+    asked_usd REAL,
+    at        TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS newpop_seen (
     item_id    TEXT PRIMARY KEY,
@@ -275,29 +289,30 @@ def main(argv=None):
     conn.executescript(SCHEMA)
     conn.commit()
 
-    # ЗАМЕР ВЫТЕСНЯЕТ ДОПУЩЕНИЕ, КОГДА ЕГО ХВАТАЕТ НА МЕДИАНУ. Первые
-    # три покупки владельца показали надбавку $1.13, $0.13 и $0.14 при
-    # заложенных $5: доставка по всем трём оказалась бесплатной, а
-    # разница — налог штата. Допущение в пять долларов выбрасывало всё,
-    # что стоит от $20 до $25, то есть середину заданного диапазона.
+    # ЗАМЕР ОТКЛЮЧЁН ОТ РАСЧЁТА ДО ДОСТАТОЧНОГО ЧИСЛА СДЕЛОК.
+    # Решение владельца 06.09.2026: три согласия и НОЛЬ отказов — это
+    # не медиана, а три числа. Скидка $5.00 и надбавка $5.14 выведены
+    # из выборки, где продавец согласился каждый раз; знаменателя, то
+    # есть отказов, у неё нет вовсе. Показанное число начинают
+    # использовать, поэтому оно и не показывается.
+    #
+    # Порог возврата: не меньше MIN_TRADES сделок И не меньше
+    # MIN_REFUSALS отказов. Отказы пишутся руками:
+    #     python3 tools/record_buy.py --url <ссылка> --refused
+    # Торг до тех пор ведётся руками, а расчёт идёт по допущению из
+    # конфига — тому самому, которое стояло до всяких замеров.
     med, n_paid = measured_shipping(conn)
     disc, n_disc = measured_discount(conn)
-    if med is not None:
-        print(f"надбавка по {n_paid} фактическим покупкам: ${med:.2f} "
-              f"(допущение в конфиге ${assumed:.2f})")
+    n_ref = conn.execute("SELECT COUNT(*) FROM newpop_refused").fetchone()[0]
+    enough = (n_paid >= MIN_TRADES and n_ref >= MIN_REFUSALS)
+    if enough and med is not None:
+        print(f"надбавка по {n_paid} покупкам и {n_ref} отказам: ${med:.2f}")
         assumed = med
-    elif n_paid:
-        print(f"фактических покупок пока {n_paid}, для медианы нужно 3 — "
-              f"работаю по допущению ${assumed:.2f}")
-    # СКИДКА ВЫЧИТАЕТСЯ ИЗ ЦЕНЫ ВХОДА. Замер трёх покупок: торг на $5
-    # вниз и надбавка $5.14 гасят друг друга, и уплаченное почти равно
-    # цене листинга ($17.50 -> $18.63, $20.00 -> $20.13, $19.99 ->
-    # $20.13). Считать landed как «цена плюс пять» значит выбрасывать
-    # весь диапазон от $20 до $25 — середину заданного владельцем.
-    if disc is not None:
-        print(f"скидка по торгу, медиана {n_disc} покупок: ${disc:.2f} — "
-              f"вычитается из цены листинга")
     else:
+        print(f"замер в расчёт НЕ идёт: покупок {n_paid} (нужно "
+              f"{MIN_TRADES}), отказов {n_ref} (нужно {MIN_REFUSALS}). "
+              f"Работаю по допущению ${assumed:.2f}, торг — руками.")
+    if not (enough and disc is not None):
         disc = 0.0
 
     token = ebay_token()
