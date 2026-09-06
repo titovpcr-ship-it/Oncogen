@@ -73,7 +73,7 @@ def load_targets():
                 "query": f"{r['artist']} {r['album']} vinyl",
                 "artist": r["artist"], "album": r["album"],
                 "discs": int(r["discs"]), "ru_rub": int(r["ru_price_rub"]),
-                "n": int(r["ru_n"]),
+                "n": int(r["ru_n"]), "src": r.get("price_source", ""),
             })
     return out
 
@@ -253,10 +253,55 @@ def scan(token, t, option, rate, target, limit=200):
     return hits, None, reasons
 
 
+def push_best(allhits, plus, rate, target):
+    """Отправить в Телеграм итог прогона.
+
+    ОТПРАВЛЯЕТСЯ ИТОГ, А НЕ ТОЛЬКО НАХОДКА. Пустой прогон — тоже
+    результат, и молчать о нём значит оставить владельца думать, что
+    сканер ещё работает. Правило 2 устава: каждый ноль обязан ответить,
+    смотрели мы или нет.
+    """
+    import notify
+    n = notify.Notifier()
+    if not allhits:
+        n.send("Прогон по картотеке закончен. Опознанных лотов НОЛЬ — "
+               "искать было не в чем.")
+        return
+    best = allhits[0]
+    prof = best["ratio_landed"] * best["landed"] - best["landed"]
+    head = (f"ПРОГОН ПО КАРТОТЕКЕ: {len(allhits)} лотов опознано, "
+            f"прибыльных {len(plus)}.")
+    if best["ratio_landed"] <= 1.0:
+        body = (f"{head}\n\nПРИБЫЛЬНЫХ НЕТ ВООБЩЕ.\n"
+                f"Лучшее из найденного всё равно в убыток:\n"
+                f"{best['album']}\n{best['title'][:120]}\n"
+                f"вход ${best['entry']:.2f} + карго = ${best['landed']:.2f}, "
+                f"Москва даёт {best['ratio_landed']:.2f}x, "
+                f"то есть минус ${-prof:.2f}.")
+    else:
+        body = (f"{head}\n\nЛУЧШАЯ НАХОДКА\n{best['album']}\n"
+                f"{best['title'][:120]}\n"
+                f"вход ${best['entry']:.2f} + карго = ${best['landed']:.2f}\n"
+                f"кратность к себестоимости {best['ratio_landed']:.2f}x, "
+                f"прибыль ${prof:.2f}\n"
+                f"способ покупки: {best['mode']}"
+                + ("\nЦЕНА ПРОДАЖИ — ОЦЕНКА (Ozon x0.7), не замер"
+                   if best["src"].startswith("ozon") else "")
+                + f"\n{best['url']}")
+    body += "\n\nНЕ СВЕРЕНО ГЛАЗАМИ. Ставки и покупка — руками."
+    ok = n.send(body, click_url=best.get("url"))
+    print(f"\nв Телеграм: {'отправлено' if ok else 'НЕ ОТПРАВЛЕНО'} "
+          f"({n.name})")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--target", type=float, default=3.0)
     ap.add_argument("--limit", type=int, default=200)
+    ap.add_argument("--push", action="store_true",
+                    help="отправить лучшую находку в Телеграм")
+    ap.add_argument("--quiet", action="store_true",
+                    help="только итоговая сводка, без разбора по альбомам")
     a = ap.parse_args()
 
     rate, stale = usdrub()
@@ -279,10 +324,18 @@ def main():
     print()
 
     total_found = 0
+    allhits = []
     for t in TARGETS:
         for option, label in MODES:
             hits, err, reasons = scan(token, t, option, rate, a.target,
                                       a.limit)
+            for h in (hits or []):
+                h["album"] = f"{t['artist']} — {t['album']}"
+                h["mode"] = label
+                h["src"] = t.get("src", "")
+                allhits.append(h)
+            if a.quiet:
+                continue
             head = f"--- {t['artist']} — {t['album']} / {label} ---"
             if err:
                 print(f"{head}\n    eBay отказал: {err}")
@@ -326,7 +379,31 @@ def main():
                 print("      отсеяно: "
                       + "; ".join(f"{v} — {k}" for k, v in top))
         print()
-    print(f"ИТОГО подходящих под {a.target}x к цене на eBay: {total_found}")
+    # ГЛАВНАЯ СВОДКА — ПО ДЕНЬГАМ, А НЕ ПО КРАТНОСТИ К ЦЕНЕ eBay.
+    # Кратность к цене на eBay льстит: она не знает про карго. В деньги
+    # превращается только отношение московской цены к ПОЛНОЙ
+    # себестоимости, и ниже единицы оно означает убыток.
+    allhits.sort(key=lambda h: -h["ratio_landed"])
+    plus = [h for h in allhits if h["ratio_landed"] > 1.0]
+    print(f"\n{'='*70}")
+    print(f"ОПОЗНАНО ЛОТОВ: {len(allhits)}")
+    print(f"прибыльных вообще (кратность к себестоимости > 1.0): "
+          f"{len(plus)} ({100*len(plus)/max(len(allhits),1):.1f}%)")
+    for thr in (1.2, 1.5, 2.0, 3.0):
+        n = sum(1 for h in allhits if h["ratio_landed"] >= thr)
+        print(f"  кратность >= {thr}x: {n}")
+    if allhits:
+        print("\nЛУЧШИЕ 15 ПО РЕАЛЬНОЙ МАРЖЕ:")
+        for h in allhits[:15]:
+            prof = h["ratio_landed"] * h["landed"] - h["landed"]
+            print(f"  {h['ratio_landed']:.2f}x  прибыль ${prof:6.2f}  "
+                  f"вход ${h['entry']:6.2f} + карго = ${h['landed']:6.2f}  "
+                  f"[{h['mode']}] {h['album']}"
+                  + ("  ОЦЕНКА" if h["src"].startswith("ozon") else ""))
+            print(f"        {h['title'][:74]}")
+    if a.push:
+        push_best(allhits, plus, rate, a.target)
+    print(f"\nИТОГО подходящих под {a.target}x к цене на eBay: {total_found}")
     print("НЕ СВЕРЕНО ГЛАЗАМИ. Ставки и покупка — руками.")
     return 0
 
