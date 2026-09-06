@@ -58,17 +58,27 @@ ASSUMED_SHIP = 5.0           # когда продавец доставку не
 # объявлениям Авито, data/avito_price_palette.csv, снято владельцем
 # 07.09.2026. В скобках — сколько карточек дало эту медиану и как
 # цифра вела себя при росте выборки.
-TARGETS = [
-    {"query": "Nirvana Nevermind vinyl LP", "artist": "Nirvana",
-     "album": "Nevermind", "discs": 1, "ru_rub": 3900, "n": 21,
-     "note": "0.73 при n=10 -> 0.72 при n=19 -> 0.72 при n=21, устояла"},
-    {"query": "Queen Greatest Hits vinyl 2LP", "artist": "Queen",
-     "album": "Greatest Hits", "discs": 2, "ru_rub": 5990, "n": 13,
-     "note": "0.74 при n=7 -> 0.88 при n=13, ещё не устоялась"},
-    {"query": "Queen Greatest Hits II vinyl 2LP", "artist": "Queen",
-     "album": "Greatest Hits II", "discs": 2, "ru_rub": 5950, "n": 7,
-     "note": "один замер, n=7 — мало"},
-]
+# ЦЕЛИ ЧИТАЮТСЯ ИЗ КАРТОТЕКИ, А НЕ ЖИВУТ В КОДЕ. data/album_cards.csv
+# собирается tools/album_cards.py из замеров Авито: цена продажи —
+# медиана обычных LP, число пластинок — из тех же карточек, которые
+# владелец смотрел глазами. Добавить альбом значит собрать по нему
+# объявления, а не править этот файл.
+def load_targets():
+    import csv as _csv
+    path = os.path.join(ROOT, "data", "album_cards.csv")
+    out = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for r in _csv.DictReader(f):
+            out.append({
+                "query": f"{r['artist']} {r['album']} vinyl",
+                "artist": r["artist"], "album": r["album"],
+                "discs": int(r["discs"]), "ru_rub": int(r["ru_price_rub"]),
+                "n": int(r["ru_n"]),
+            })
+    return out
+
+
+TARGETS = load_targets()
 
 MODES = [("FIXED_PRICE", "купить сейчас"),
          ("BEST_OFFER", "предложить цену"),
@@ -86,6 +96,41 @@ _LIVE_BOOTLEG = re.compile(
     r"\b(live|broadcast|in\s+concert|bootleg|madrid|amsterdam|"
     r"paradiso|reading|unplugged)\b", re.I)
 _BOX = re.compile(r"\bbox\s*set|\bcollection\b|\bcomplete\b|\banthology\b", re.I)
+
+# СБОРНЫЙ ЛОТ. «Lot of 2 Johnny Cash ... King and Queen» и «LOT 4 VINYL
+# LP ALBUM FRANKIE LAINE ... QUEEN ENGLAND ... GREATEST HIT» прошли как
+# Queen Greatest Hits с кратностью 5.8x и 5.3x. Это чужие пластинки,
+# проданные пачкой, и слово queen попало туда случайно.
+_LOT = re.compile(r"\blot\s+(of\s+)?\d|\blp\s+lot\b|\blot\s+\d+\b"
+                  r"|\bbundle\b|\bjob\s*lot\b", re.I)
+# НЕПОЛНЫЙ ИЛИ БИТЫЙ ЭКЗЕМПЛЯР. «Queen, Greatest Hits I *SIDE 3 AND 4
+# ONLY*» — половина двойника. «Please Read!» продавцы пишут, когда с
+# вещью что-то не так.
+_PARTIAL = re.compile(r"\bside[s]?\s+\d[\s\w]*only\b|\bdisc\s+\d\s+only"
+                      r"|\bplease\s+read\b|\brecord\s+only\b"
+                      r"|\bno\s+(cover|sleeve|jacket)\b", re.I)
+
+
+# НЕ НОСИТЕЛЬ, А ПЕЧАТНАЯ ПРОДУКЦИЯ. «Queen's Greatest Hits II - Off The
+# Record - Full Band Tablature Book» за $12.99 прошёл как пластинка с
+# кратностью 5.29x. Слово vinyl в таких заголовках не встречается, но
+# фильтр по нему пропустил бы и настоящие лоты, где его тоже нет.
+_PRINTED = re.compile(
+    r"\btablature\b|\btab\s+book\b|\bsheet\s+music\b|\bsongbook\b"
+    r"|\bpiano\s*/?\s*vocal\b|\bguitar\s+tab\b|\bbook\b|\bmagazine\b"
+    r"|\bposter\b|\bprogramme?\b", re.I)
+
+
+def discs_in_title(title):
+    """Сколько пластинок обещает заголовок, или None если не сказано."""
+    m = re.search(r"\b(\d+)\s*x?\s*lp\b|\b(\d+)\s*-?\s*lp\s+set", title, re.I)
+    if m:
+        return int(m.group(1) or m.group(2))
+    if re.search(r"\b(double|two)\s+(lp|album)\b|\b2\s*lp\b", title, re.I):
+        return 2
+    if re.search(r"\blp\b|\bvinyl\b", title, re.I):
+        return 1
+    return None
 
 
 def cargo_usd(discs):
@@ -134,8 +179,35 @@ def title_is_the_album(title, t):
         return "семидюймовка, а не альбом"
     if _NOT_THE_THING.search(low) or _STICKER_AS_ITEM.search(low):
         return "не пластинка"
+    if _PRINTED.search(low):
+        return "печатная продукция, а не пластинка"
+    if _LOT.search(low):
+        return "сборный лот из нескольких пластинок"
+    if _PARTIAL.search(low):
+        return "неполный или битый экземпляр"
     if wl.wrong_format(title):
         return "формат не тот"
+    # ИМЯ ИСПОЛНИТЕЛЯ ДОЛЖНО СТОЯТЬ РЯДОМ С НАЗВАНИЕМ АЛЬБОМА.
+    # «Dave & Sugar Greatest Hits LP ... Queen Of The Silver Dollar» и
+    # «ABBA Greatest Hits Vol. 2 ... Dancing Queen» содержат и то, и
+    # другое, но относятся к разным местам заголовка. Требуем, чтобы
+    # между именем и названием было не больше трёх слов.
+    if key:
+        near = re.search(
+            rf"\b{re.escape(t['artist'].lower())}\b(?:\W+\w+){{0,3}}\W+{phrase}",
+            low)
+        if not near:
+            return "имя исполнителя и название альбома в разных местах"
+    # ЧИСЛО ПЛАСТИНОК ДОЛЖНО СОВПАСТЬ С ТЕМ, ЧТО МЫ МЕРИЛИ. Цена
+    # 5990 ₽ измерена по НОВОМУ ДВОЙНОМУ переизданию Queen Greatest
+    # Hits. Одинарник Balkanton 1981 — тот же альбом, но в Москве он
+    # стоит 1900 ₽, и подставлять к нему цену двойника значит считать
+    # прибыль по чужому предмету.
+    want = t.get("discs")
+    got = discs_in_title(title)
+    if want and got and got != want:
+        return (f"пластинок {got}, а цена измерена по {want} — "
+                f"это другое издание")
     return None
 
 
