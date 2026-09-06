@@ -141,18 +141,41 @@ def disc_count(title):
     return max(1, n)
 
 
-def cargo_usd(title, cfg):
+def cargo_usd(title, cfg, mode=None):
     """Карго до Москвы в долларах, по числу пластинок.
 
     Тара считается один раз на посылку, диски — по числу. Одинарник даёт
     0.30 + 0.45 = 0.75 кг, то есть в точности замеренную по приходам
     форвардера медиану: формула не спорит с измерением, а обобщает его.
+
+    МИНИМУМ В 1 КГ. Форвардер берёт $22/кг с минимумом в килограмм — это
+    записано в покемоновской ветке (config/pokemon.yaml, cargo_min_kg)
+    про ТОГО ЖЕ форвардера и тот же тариф, а в виниловой ветке минимума
+    не было вовсе. Четыре замеренных прихода весят 0.4, 0.7, 0.8 и 0.8
+    кг — то есть каждый из них тарифицировался по килограмму, а код
+    считал по факту: $16.50 вместо $22.00. Занижение $5.50 на каждом
+    одиночном лоте, и оно било ровно в ту сторону, в которую ошибаться
+    нельзя, — делало сделку привлекательнее, чем она есть.
+
+    Вердикт по Led Zeppelin SD 8216 (06.09.2026) сформулировал то же
+    самое с другой стороны: «одиночная пластинка через посредника
+    нерентабельна в принципе — везти надо партиями от 10 штук». Отсюда
+    два режима, как в покемонах:
+      solo  — пластинка едет одна, минимум применяется (по умолчанию:
+              все четыре реальных прихода были отдельными посылками);
+      rider — едет в сборной посылке, минимум съеден соседями.
+    Режим по умолчанию НЕ выбирается кодом молча: он берётся из конфига
+    и печатается в пуше, чтобы владелец видел, при каком допущении
+    посчитана маржа.
     """
     ru = cfg["ru_market"]
     rate = float((ru.get("rate_usd_per_kg_by_country") or {}).get("US") or 22.0)
     per_disc = float(ru.get("west_per_disc_kg", 0.45))
     packaging = float(ru.get("west_packaging_kg", 0.30))
-    return rate * (packaging + per_disc * disc_count(title))
+    kg = packaging + per_disc * disc_count(title)
+    if (mode or ru.get("west_cargo_mode", "solo")) == "solo":
+        kg = max(kg, float(ru.get("west_cargo_min_kg", 1.0)))
+    return rate * kg
 
 
 # ─────────── СОСТОЯНИЕ ЭКЗЕМПЛЯРА ───────────
@@ -201,7 +224,69 @@ _DEFECTS = [
      "повреждён конверт"),
     (re.compile(r"\bwrite|writing|name\s+on|sticker|stain\b", re.I),
      "надписи или наклейки"),
+    # CUT-OUT: дилерская отметка на списанном со склада экземпляре —
+    # пропил, просверленное отверстие, срезанный угол, маркер по
+    # штрихкоду. Вердикт по Marvin Gaye / Donald Byrd RSD 2014: «torn
+    # shrink + чёрный маркер на штрихкоде... формально sealed,
+    # фактически минус 10-20% к NM-цене».
+    (re.compile(r"\bcut[\s-]?out\b|\bcutout\b|\bdrill\s*hole|\bsaw\s*(mark|cut)"
+                r"|\bcut\s+corner|\bclipped\s+corner"
+                r"|\bmarker\s+(on|through|across)\s+(the\s+)?(barcode|bar\s*code|upc|spine)"
+                r"|\bpunch\s*hole", re.I),
+     "cut-out: дилерская отметка списания, минус к коллекционной цене"),
+    (re.compile(r"\btorn\s+shrink|\bshrink\s+(is\s+)?torn|\bopen\s+shrink"
+                r"|\bsplit\s+shrink", re.I),
+     "плёнка порвана: премии за запечатанность нет, а проверить нельзя"),
 ]
+
+# ГРЕЙД, ВЫСТАВЛЕННЫЙ НА ГЛАЗ. Sugar Pie DeSanto SC-106: продавец писал
+# «visually graded NM», а на фото центральное отверстие в заусенцах и
+# сколах — spindle wear от джукбокса, то есть по факту VG+/EX. Заявление
+# «NM» и заявление «NM, но я не слушал» — разные заявления, и для
+# northern soul, где платят за играбельность, разница решает сделку.
+#
+# Скидку за это НЕ НАЧИСЛЯЕМ. Насколько визуальный грейд оптимистичнее
+# фактического — величина неизмеренная, а придумывать коэффициент
+# запрещено уставом. Пока это предупреждение в пуш и вопрос продавцу.
+_VISUAL_ONLY = re.compile(
+    r"visual(ly)?\s+(graded|inspect|check)"
+    r"|graded\s+visual"
+    r"|grade[ds]?\s+by\s+(eye|sight|look)"
+    r"|(not|never|n't)\s+(been\s+)?(played|tested|listened)"
+    r"|no\s+play\s*[- ]?\s*grade"
+    r"|untested",
+    re.I)
+
+
+# Запечатанность проверяется отдельно от _NEW_SEALED: та ищет НОВЫЙ
+# ЛИМИТ узнаваемого имени (IVC, VMP, numbered) и на простое «still
+# sealed» не срабатывает — из-за чего «Still sealed, never played»
+# сначала попало в отговорки.
+_SHRINK_BROKEN = re.compile(
+    r"\btorn\s+shrink|\bshrink\s+(is\s+)?torn|\bopen\s+shrink"
+    r"|\bsplit\s+shrink|\bcut[\s-]?out\b|\bcutout\b", re.I)
+
+_SEALED = re.compile(
+    r"\b(still\s+|factory\s+|shop\s+)?sealed\b"
+    r"|\bshrink\s*-?\s*wrap(ped)?\b"
+    r"|\bunopened\b", re.I)
+
+
+def visual_grade_only(text):
+    """Грейд назван, но пластинка не прослушана.
+
+    Запечатанный лот из этого исключается: «sealed, never played» — это
+    достоинство, а не отговорка. Именно поэтому проверка не живёт в
+    _DEFECTS: там таблица без исключений.
+    """
+    if not text:
+        return False
+    # Порванная плёнка запечатанностью не считается: «sealed, но плёнка
+    # порвана и по штрихкоду маркер» — худший из вариантов нового, и
+    # отговорка «не слушал» в нём снова становится отговоркой.
+    if _SEALED.search(text) and not _SHRINK_BROKEN.search(text):
+        return False
+    return bool(_VISUAL_ONLY.search(text))
 
 
 def grade_from_text(text):
@@ -250,7 +335,11 @@ def condition_report(item_id, token):
     parts.append(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)))
     text = " ".join(x for x in parts if x)[:4000]
     defects = [why for pat, why in _DEFECTS if pat.search(text)]
-    return grade_from_text(text), defects, text
+    grade = grade_from_text(text)
+    if grade and visual_grade_only(text):
+        defects.append(f"грейд {grade} выставлен на глаз, пластинку не "
+                       f"слушали — спросить продавца про play-grade")
+    return grade, defects, text
 
 
 def promise(lot):

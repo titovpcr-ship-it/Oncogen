@@ -12,6 +12,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent / "tools"))
 
+REPO = Path(__file__).resolve().parent
+
 import build_mv_targets as bmt
 import live_hunt as lh
 
@@ -217,9 +219,16 @@ def test_kargo_po_chislu_plastinok():
     cfg = yaml.safe_load(
         (Path(__file__).resolve().parent / "ebay_vinyl_sniper_config.yaml")
         .read_text("utf-8"))
-    check("одинарник считается как раньше",
-          abs(lh.cargo_usd("John Coltrane Black Pearls LP Prestige", cfg) - 16.50) < 0.01,
+    # Ожидание изменилось 06.09.2026: у форвардера минимум в 1 кг, и
+    # одиночная пластинка тарифицируется по $22.00, а не по 0.75 кг.
+    # Прежние $16.50 остаются верны для сборной посылки (rider).
+    check("одинарник в одиночной посылке идёт по минимуму 1 кг",
+          abs(lh.cargo_usd("John Coltrane Black Pearls LP Prestige", cfg)
+              - 22.00) < 0.01,
           str(lh.cargo_usd("John Coltrane Black Pearls LP", cfg)))
+    check("одинарник в сборной посылке идёт по своему весу",
+          abs(lh.cargo_usd("John Coltrane Black Pearls LP Prestige", cfg,
+                           "rider") - 16.50) < 0.01)
     check("бокс дороже одинарника",
           lh.cargo_usd("CCR Absolute Originals Vinyl Box", cfg) > 50)
     check("7xLP распознаётся", lh.disc_count("Elvis His Greatest Hits (7xLP, Box)") == 7)
@@ -746,6 +755,94 @@ def test_new_sealed_exempt_from_ru_gate():
           str(lh.artist_candidates("NEW SEALED Traffic Canteen Live")))
 
 
+def test_greyd_na_glaz_ne_est_greyd():
+    """Sugar Pie DeSanto SC-106, вердикт 06.09.2026.
+
+    Продавец писал «visually graded NM», а отверстие на фото в заусенцах
+    от джукбокса — по факту VG+/EX. Заявление «NM» и заявление «NM, но я
+    не слушал» — разные заявления. Скидку не начисляем: насколько
+    визуальный грейд оптимистичнее, не измерено, а придумывать
+    коэффициент нельзя. Пуш обязан назвать это вслух.
+    """
+    for text in ("Visually graded NM, not played",
+                 "Vinyl Condition: NM. I have not played this record.",
+                 "Graded visually only, untested",
+                 "Graded by eye, EX"):
+        check(f"на глаз распознано: {text[:28]}",
+              lh.visual_grade_only(text), f"вышло False")
+    # Запечатанный лот не обязан быть прослушанным.
+    for text in ("Still sealed, never played, mint",
+                 "Factory sealed, unopened",
+                 "Original shrinkwrap intact, never played"):
+        check(f"запечатанный не отговорка: {text[:28]}",
+              not lh.visual_grade_only(text), "вышло True")
+    # Прослушанный лот не должен попадать под подозрение.
+    for text in ("Play graded NM throughout, plays perfectly",
+                 "VG+ vinyl, plays great with no skips"):
+        check(f"прослушанный чист: {text[:28]}",
+              not lh.visual_grade_only(text), "вышло True")
+    check("пустой текст не роняет", not lh.visual_grade_only(""))
+    check("None не роняет", not lh.visual_grade_only(None))
+
+
+def test_kargo_ne_zabyvaet_minimum_forvardera():
+    """Форвардер берёт $22/кг с минимумом в 1 кг.
+
+    Минимум был записан в покемоновской ветке про ТОГО ЖЕ форвардера, а
+    в виниловой его не было: одиночная пластинка считалась по 0.75 кг =
+    $16.50 вместо $22.00. Занижение $5.50 на лот, всегда в сторону
+    «сделка лучше, чем есть». Четыре замеренных прихода — 0.4, 0.7,
+    0.8, 0.8 кг — все отдельными посылками, все по минимуму.
+    """
+    import yaml
+    cfg = yaml.safe_load(open(REPO / "ebay_vinyl_sniper_config.yaml",
+                              encoding="utf-8"))
+    solo = lh.cargo_usd("Miles Davis Kind Of Blue LP", cfg, "solo")
+    check("одиночная пластинка тарифицируется по килограмму",
+          abs(solo - 22.0) < 0.01, f"вышло ${solo:.2f}")
+    rider = lh.cargo_usd("Miles Davis Kind Of Blue LP", cfg, "rider")
+    check("в сборной посылке минимум не применяется",
+          abs(rider - 16.5) < 0.01, f"вышло ${rider:.2f}")
+    check("solo всегда дороже rider на одинарнике", solo > rider)
+    # Двойник и так весит больше килограмма — минимум ничего не меняет.
+    d2s = lh.cargo_usd("Pink Floyd The Wall 2LP", cfg, "solo")
+    d2r = lh.cargo_usd("Pink Floyd The Wall 2LP", cfg, "rider")
+    check("на двойнике минимум не срабатывает", abs(d2s - d2r) < 0.01,
+          f"{d2s:.2f} vs {d2r:.2f}")
+    check("двойник дороже одинарника", d2s > solo)
+    check("режим по умолчанию — solo",
+          abs(lh.cargo_usd("Miles Davis Kind Of Blue LP", cfg) - 22.0) < 0.01)
+
+
+def test_cutout_i_porvannaya_plyonka():
+    """Marvin Gaye / Donald Byrd RSD 2014, вердикт 06.09.2026.
+
+    «torn shrink + чёрный маркер на штрихкоде» — дилерская отметка
+    списания. Формально sealed, фактически минус 10-20% к NM. И главное:
+    порванная плёнка не даёт права на исключение из проверки «грейд
+    выставлен на глаз» — премии за запечатанность уже нет, а проверить
+    по-прежнему нельзя.
+    """
+    def defects(t):
+        return [w for pat, w in lh._DEFECTS if pat.search(t)]
+
+    for t in ("Sealed but torn shrink, black marker on barcode",
+              "Cut-out with saw mark on spine",
+              "Drill hole in corner, VG+",
+              "cutout, clipped corner"):
+        check(f"cut-out распознан: {t[:30]}", defects(t), "дефектов нет")
+    for t in ("Beautiful copy, no marks, plays perfectly",
+              "Still sealed, never played, mint"):
+        check(f"чистый лот не оговорён: {t[:30]}", not defects(t),
+              f"нашлось: {defects(t)}")
+    check("порванная плёнка снимает исключение для запечатанных",
+          lh.visual_grade_only("Sealed, shrink is torn, visually graded NM"),
+          "вышло False")
+    check("целая плёнка исключение сохраняет",
+          not lh.visual_grade_only("Sealed, visually graded NM"),
+          "вышло True")
+
+
 def main():
     for fn in [test_max_bid_replaces_current_price,
                test_grade_discounts_the_reference,
@@ -771,7 +868,10 @@ test_promise_marka_vesit_bolshe_summy,
                test_ladder_ne_teryaet_slova,
                test_journal_ne_horonit_nahodku,
                test_ochered_srochnye_pervymi,
-               test_hours_left_bez_chasovogo_poyasa]:
+               test_hours_left_bez_chasovogo_poyasa,
+               test_greyd_na_glaz_ne_est_greyd,
+               test_kargo_ne_zabyvaet_minimum_forvardera,
+               test_cutout_i_porvannaya_plyonka]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
