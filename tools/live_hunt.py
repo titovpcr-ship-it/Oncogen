@@ -844,6 +844,23 @@ def country_mismatch(title, ref_country):
 _RU_STOP = {"lp", "vinyl", "record", "records", "album", "the", "original",
             "og", "new", "sealed", "rare", "vintage"}
 
+# ЛИЧНОЕ ИМЯ БЕЗ ФАМИЛИИ ИСПОЛНИТЕЛЕМ НЕ СЧИТАЕТСЯ. Найдено на живом
+# пуше 06.09.2026: «EDDIE CORNELIUS For You» дошёл до кандидата «EDDIE»
+# и подтвердил рынок 112 продажами Эдди Мани и Эдди Рэббитта — то есть
+# совсем других людей. Группа может называться одним словом (Chic,
+# Traffic, Queen, Kiss, Cream), личное имя — нет.
+#
+# Список конечный и потому честный: это не словарь «чужих игр», который
+# бездонен, а перечень частых английских имён.
+_GIVEN_NAMES = {
+    "eddie", "harry", "bobby", "johnny", "billy", "jimmy", "tommy", "joe",
+    "john", "mike", "dave", "david", "paul", "peter", "george", "ringo",
+    "frank", "tony", "nick", "steve", "mark", "chris", "james", "robert",
+    "richard", "willie", "little", "big", "sonny", "buddy", "ray", "roy",
+    "sam", "bill", "jack", "jim", "ken", "don", "ron", "rick", "gary",
+    "larry", "jerry", "terry", "barry", "danny", "kenny", "lenny", "benny",
+}
+
 # Новый запечатанный лимит узнаваемого имени. Вердикт владельца
 # 06.09.2026: «ваша схема работает не на редкости, а на новом
 # запечатанном лимите узнаваемых имён; клубные издания (IVC, VMP, Third
@@ -912,31 +929,62 @@ def artist_candidates(title):
     for n in (4, 3, 2, 1):
         if len(words) >= n:
             cand = " ".join(words[:n])
-            if len(cand) >= 4:
-                out.append(cand)
+            if len(cand) < 4:
+                continue
+            if n == 1 and cand.lower() in _GIVEN_NAMES:
+                continue
+            out.append(cand)
     return out
 
 
-def ru_demand(title, conn):
+def ru_demand(title, conn, sample_cap=None):
     """(число продаж в РФ, по какому имени нашлось). Ноль — значит ноль.
 
     Считается по собственной базе: 146 575 проданных лотов Мешка.
     Отсутствие следа — не догадка, а измерение на своих данных.
+
+    СОВПАДЕНИЕ ПРОВЕРЯЕТСЯ ПО ГРАНИЦАМ СЛОВА, А НЕ ПОДСТРОКОЙ.
+    Найдено 06.09.2026 на живом пуше: «EDDIE CORNELIUS For You» дошёл
+    до кандидата «EDDIE», и LIKE '%eddie%' нашёл 270 продаж — среди них
+    «Freddie Mercury», где «eddie» стоит ВНУТРИ слова. Гейт спроса
+    подтвердил рынок, которого нет, по чужому имени внутри другого
+    имени.
+
+    LIKE остаётся дешёвым предфильтром (по нему работает индекс), а
+    решение принимает регулярка с \b на обеих сторонах.
     """
     for cand in artist_candidates(title):
-        # ПУНКТУАЦИЯ МЕЖДУ СЛОВАМИ НЕ ДОЛЖНА МЕШАТЬ. В базе Мешка
-        # «Dr. John» встречается девять раз, а «Dr John» — ноль:
-        # разбор заголовка eBay точку снимает, и совпадения не было.
-        # Пробел заменяется на подстановочный знак, и обе формы сходятся.
-        #
-        # Ищем и по title, и по artist: заголовки Мешка не
-        # структурированы, а колонка artist заполнена не всегда.
-        pat = "%" + "%".join(cand.split()) + "%"
-        row = conn.execute(
-            "SELECT COUNT(*) FROM meshok_sold "
-            "WHERE title LIKE ? OR artist LIKE ?", (pat, pat)).fetchone()
-        if row and row[0]:
-            return row[0], cand
+        # Пунктуация между словами не должна мешать: в базе Мешка
+        # «Dr. John» встречается девять раз, а «Dr John» — ноль.
+        words = cand.split()
+        # ЯКОРЕМ ПРЕДФИЛЬТРА СЛУЖИТ САМОЕ ДЛИННОЕ СЛОВО, А НЕ ВСЯ ФРАЗА.
+        # Найдено сразу после первой правки: LIKE '%NEW%EDITION%'
+        # набирает четыреста строк, где «new» и «edition» стоят порознь,
+        # LIMIT обрезает выборку раньше настоящих совпадений, и «NEW
+        # EDITION» получал ноль при четырнадцати реальных продажах.
+        # Самое длинное слово имени — самое редкое, и по нему предфильтр
+        # приносит то, что нужно проверять.
+        anchor = max(words, key=len)
+        pat = f"%{anchor}%"
+        rx = re.compile(r"\b" + r"[^A-Za-z0-9]{0,3}".join(
+            re.escape(w) for w in words) + r"\b", re.I)
+        # ПРЕДФИЛЬТР НЕ ОБРЕЗАЕТСЯ. Первая версия ставила LIMIT 400, и
+        # «NEW EDITION» получал ноль при четырнадцати реальных продажах:
+        # по якорю «EDITION» первыми идут сотни «Limited Edition» и
+        # «Deluxe Edition», а настоящие совпадения оказывались за
+        # границей выборки. Обрезать выборку до проверки — значит
+        # проверять не то, что нашлось, а то, что попалось первым.
+        sql = ("SELECT title, artist FROM meshok_sold "
+               "WHERE title LIKE ? OR artist LIKE ?")
+        args = [pat, pat]
+        if sample_cap:
+            sql += " LIMIT ?"
+            args.append(sample_cap)
+        rows = conn.execute(sql, args).fetchall()
+        n = sum(1 for t, a in rows
+                if rx.search(t or "") or rx.search(a or ""))
+        if n:
+            return n, cand
     return 0, None
 
 

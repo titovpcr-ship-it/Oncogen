@@ -588,6 +588,52 @@ def test_ru_demand_gate():
 
 
 
+def test_ru_demand_matches_whole_words():
+    """Совпадение по рынку РФ проверяется по границам слова.
+
+    ЖИВОЙ ПУШ 06.09.2026. «EDDIE CORNELIUS For You AUDIOGRAPH AG-7794
+    LP SEALED» дошёл до кандидата «EDDIE», и LIKE '%eddie%' нашёл 270
+    продаж — среди них «Freddie Mercury», где «eddie» стоит ВНУТРИ
+    слова. Гейт подтвердил рынок, которого нет, по чужому имени внутри
+    другого имени.
+
+    Плюс: личное имя без фамилии исполнителем не считается. Даже после
+    границ слова «EDDIE» находил 112 продаж Эдди Мани и Эдди Рэббитта —
+    совсем других людей. Группа может называться одним словом (Chic,
+    Traffic, Queen), личное имя — нет.
+    """
+    import sqlite3
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE meshok_sold (title TEXT, artist TEXT)")
+    conn.executemany("INSERT INTO meshok_sold VALUES (?,?)", [
+        ("Freddie Mercury - Barcelona LP", None),
+        ("Eddie Money 1983 - where's the party?", None),
+        ("CHIC - Risque ATLANTIC LP", None),
+    ])
+    n, by = lh.ru_demand("EDDIE CORNELIUS For You AUDIOGRAPH", conn)
+    check("Freddie не считается за Eddie", n == 0, f"{n} по «{by}»")
+
+    n2, by2 = lh.ru_demand("CHIC Risque ATLANTIC LP 1978", conn)
+    check("однословная группа находится", n2 > 0, f"{n2} по «{by2}»")
+
+    check("личное имя одним словом не кандидат",
+          "eddie" not in [c.lower() for c in
+                          lh.artist_candidates("EDDIE CORNELIUS For You LP")],
+          str(lh.artist_candidates("EDDIE CORNELIUS For You LP")))
+    check("название группы одним словом — кандидат",
+          "CHIC" in lh.artist_candidates("CHIC Risque ATLANTIC LP 1978"),
+          str(lh.artist_candidates("CHIC Risque ATLANTIC LP 1978")))
+
+    # Предфильтр не обрезается: обрезка проверяла не то, что нашлось, а
+    # то, что попалось первым.
+    conn.executemany("INSERT INTO meshok_sold VALUES (?,?)",
+                     [(f"Limited Edition sampler {i}", None) for i in range(50)])
+    conn.execute("INSERT INTO meshok_sold VALUES (?,?)",
+                 ("Kraftwerk - Autobahn Edition", None))
+    n3, _ = lh.ru_demand("Kraftwerk Autobahn Edition LP", conn)
+    check("настоящее совпадение не теряется за шумом", n3 > 0, str(n3))
+
+
 def test_bids_mean_price_already_found():
     """Аукцион с активными торгами — это уже найденная рынком цена.
 
@@ -646,6 +692,7 @@ def main():
     for fn in [test_max_bid_replaces_current_price,
                test_grade_discounts_the_reference,
                test_country_mismatch, test_ru_demand_gate,
+               test_ru_demand_matches_whole_words,
                test_bids_mean_price_already_found,
                test_new_sealed_exempt_from_ru_gate,
 test_promise_marka_vesit_bolshe_summy,
