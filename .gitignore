@@ -17,3 +17,12 @@ vinyl.db-shm
 # Логи прогонов: файл растёт во время работы и делает дерево грязным
 # на каждой проверке. Результат прогона живёт в vinyl.db, не в логе.
 logs/
+
+# Ветка pokemon_tcg. Каталог TCGplayer — суточная выгрузка с TCGCSV
+# (16 МБ, 32 675 товаров): воспроизводится одной командой
+# --refresh-catalog, в истории ему делать нечего.
+data/tcg_catalog.db
+data/tcg_catalog.db-wal
+data/tcg_catalog.db-shm
+cache/
+out/

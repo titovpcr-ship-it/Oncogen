@@ -151,21 +151,10 @@ def same_release(artist, album, title):
     return sum(1 for w in al if w in t) >= need
 
 
-def ebay_token():
-    env = notify.load_env()
-    cid = env.get("EBAY_CLIENT_ID")
-    sec = env.get("EBAY_CLIENT_SECRET")
-    if not cid or not sec:
-        raise SystemExit("в .env нет EBAY_CLIENT_ID / EBAY_CLIENT_SECRET")
-    b64 = base64.b64encode(f"{cid}:{sec}".encode()).decode()
-    r = requests.post(
-        "https://api.ebay.com/identity/v1/oauth2/token",
-        headers={"Content-Type": "application/x-www-form-urlencoded",
-                 "Authorization": f"Basic {b64}"},
-        data={"grant_type": "client_credentials",
-              "scope": "https://api.ebay.com/oauth/api_scope"}, timeout=30)
-    r.raise_for_status()
-    return r.json()["access_token"]
+# ТОКЕН ЖИВЁТ В ОБЩЕМ МОДУЛЕ. Ветка Pokemon ходит в тот же Browse API
+# тем же способом; две копии одной функции — это два места, где может
+# разойтись область действия или обработка отказа.
+from src.common.ebay import ebay_token          # noqa: E402,F401
 
 
 def measured_discount(conn, min_n=3):
