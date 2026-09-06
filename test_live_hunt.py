@@ -466,8 +466,189 @@ def test_hours_left_bez_chasovogo_poyasa():
           (lh.hours_left("2099-01-01T00:00:00Z") or 0) > 0)
 
 
+
+# --- Сверка глазами 06.09.2026: три вердикта владельца ----------------
+
+def test_max_bid_replaces_current_price():
+    """На живом аукционе смысл имеет потолок ставки, а не текущая цена.
+
+    ЖИВОЙ СЛУЧАЙ. «Abner Jay — Live From Stephen Foster Center» ушёл в
+    Телеграм в 15:44 с прибылью $72.00 при ставке $15.50, пяти ставках
+    и шестнадцати минутах до конца. Через десять минут ставка была
+    $32.00 при десяти ставках, а владелец оценил финал в $55-85 — то
+    есть прибыли не остаётся вовсе. «Harry Case — In A Mood»: то же,
+    $102.50 при тринадцати ставках, ожидаемый добой $130-170.
+    """
+    cap = lh.max_bid_usd(100.0, 6.0, 16.5, 40.0)
+    check("потолок = справка минус расходы минус порог",
+          abs(cap - 37.5) < 1e-9, str(cap))
+    check("без справки потолка нет", lh.max_bid_usd(None, 6, 16, 40) is None)
+    check("порог 0 отдаёт всю справку за вычетом расходов",
+          abs(lh.max_bid_usd(100.0, 6.0, 16.5, 0) - 77.5) < 1e-9)
+
+    # Предупреждение о торгах: раньше молчало там, где риск выше.
+    hot = lh.bid_pressure({"bids": 5, "_h": 0.27})
+    check("ставки за минуты до конца — снайперское окно",
+          hot and "снайперск" in hot, str(hot))
+    warm = lh.bid_pressure({"bids": 3, "_h": 20.0})
+    check("ставки без спешки — тоже предупреждение",
+          warm and "не финальная" in warm, str(warm))
+    cold = lh.bid_pressure({"bids": 0, "_h": 5.0})
+    check("нулевые ставки — прежнее предупреждение",
+          cold and "не найдена торгами" in cold, str(cold))
+
+
+def test_grade_discounts_the_reference():
+    """Справка о лучшем экземпляре, чем наш, — это другая вещь.
+
+    «Harry Case — In A Mood», винил VG/VG-. Медиана $187.50 набрана на
+    VG+/NM; копия в VG/VG- стоит 40-50% от неё, то есть $75-95, а
+    ставка уже была $102.50 — лот перепродан относительно состояния.
+    Тот же класс, что подмена пресса: справка о другом предмете.
+    """
+    check("VG- срезает справку до 40%", lh.grade_discount("VG-") == 0.40)
+    check("VG — до 50%", lh.grade_discount("VG") == 0.50)
+    check("VG+ — до 75%", lh.grade_discount("VG+") == 0.75)
+    check("NM скидки не даёт", lh.grade_discount("NM") == 1.00)
+    check("неизвестное состояние скидки не получает",
+          lh.grade_discount(None) == 1.00 and lh.grade_discount("???") == 1.00)
+
+    # Со скидкой лот, проходивший порог, его больше не проходит.
+    ref, landed = 187.5, 120.0
+    check("без скидки прибыль выше $40", ref - landed > 40)
+    check("с VG- скидкой прибыль отрицательная",
+          ref * lh.grade_discount("VG-") - landed < 0,
+          f"{ref * 0.4 - landed:.2f}")
+
+
+def test_country_mismatch():
+    """Страна пресса, названная в заголовке, обязана сойтись со справкой.
+
+    «Producto Hecho en México» на обороте, и продавец вынес mexico в
+    заголовок. В Discogs такого варианта нет — все каталогизированные
+    прессы американские. Покупатель платит за US original.
+    """
+    check("мексиканский пресс распознан",
+          lh.country_in_title("Harry Case In A Mood Ichiban mexico") == "Mexico")
+    check("японский тоже",
+          lh.country_in_title("Miles Davis Kind Of Blue japan obi") == "Japan")
+    check("молчание о стране — не признак",
+          lh.country_in_title("Harry Case In A Mood Ichiban ICH-1037") is None)
+
+    cm = lh.country_mismatch("Harry Case In A Mood mexico press", "US")
+    check("Mexico против US — конфликт", cm and "Mexico" in cm, str(cm))
+    check("совпадение конфликтом не считается",
+          lh.country_mismatch("... japan obi ...", "Japan") is None)
+    check("без справки о стране молчим",
+          lh.country_mismatch("... mexico ...", None) is None)
+
+
+def test_ru_demand_gate():
+    """Маржа считается против мировых цен, а продаём в Москве.
+
+    «Abner Jay»: Have 76 / Want 282 на Discogs — дефицит настоящий, и
+    НОЛЬ продаж в 146 575 российских сделок нашей же базы. Культ строго
+    западный. Данные лежали всё это время и не использовались.
+    """
+    import sqlite3
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE meshok_sold (title TEXT, artist TEXT)")
+    conn.executemany("INSERT INTO meshok_sold VALUES (?,?)",
+                     [("John Coltrane Blue Train", None),
+                      ("Coltrane Giant Steps", "John Coltrane")])
+    n, by = lh.ru_demand("John Coltrane - Blue Train LP Blue Note", conn)
+    check("исполнитель со следом на рынке РФ найден", n > 0, f"{n} по «{by}»")
+    n2, _ = lh.ru_demand("Abner Jay - Live From Stephen Foster Center LP", conn)
+    check("исполнителя без следа не находим", n2 == 0, str(n2))
+
+    check("кандидат — отрезок до разделителя",
+          lh.artist_candidates("Abner Jay - Live From Stephen Foster") ==
+          ["Abner Jay"],
+          str(lh.artist_candidates("Abner Jay - Live From Stephen Foster")))
+    check("кавычка тоже разделитель",
+          "CRYSTAL METHOD" in
+          " ".join(lh.artist_candidates('THE CRYSTAL METHOD "TWEEKEND"')),
+          str(lh.artist_candidates('THE CRYSTAL METHOD "TWEEKEND"')))
+    # Пунктуация между словами не должна мешать: в базе «Dr. John».
+    conn.execute("INSERT INTO meshok_sold VALUES (?,?)", ("Dr. John Gumbo", None))
+    n3, _ = lh.ru_demand("Dr John - Gumbo LP", conn)
+    check("точка внутри имени не ломает поиск", n3 > 0, str(n3))
+
+    # ГЛУБИНА УКОРАЧИВАНИЯ ЗАВИСИТ ОТ ТОГО, ЕСТЬ ЛИ РАЗДЕЛИТЕЛЬ.
+    # С разделителем граница имени известна — режем только до отрезка,
+    # иначе «Harry Case» превращается в «Harry» и находит 118 продаж
+    # Гарри Белафонте. Без разделителя заголовок сыпучий, и без спуска
+    # до одного слова отсеивались CHIC и Elvis Presley.
+    check("с разделителем имя не режется",
+          lh.artist_candidates("Harry Case - In A Mood") == ["Harry Case"],
+          str(lh.artist_candidates("Harry Case - In A Mood")))
+    check("без разделителя лестница доходит до слова",
+          "CHIC" in lh.artist_candidates("CHIC Risque ATLANTIC LP 1978"),
+          str(lh.artist_candidates("CHIC Risque ATLANTIC LP 1978")))
+
+
+
+def test_bids_mean_price_already_found():
+    """Аукцион с активными торгами — это уже найденная рынком цена.
+
+    Вердикт владельца 06.09.2026 по четырём отправленным лотам: три из
+    четырёх пришли от Carolina Soul и подобных специализированных
+    аукционных домов, чья аудитория И ЕСТЬ конечный рынок. «Arrogance —
+    Give Us A Break» стоял на $89 при 12 ставках — выше медианы Discogs
+    ($75) и почти у исторического потолка ($145). Там платят retail, а
+    не wholesale.
+    """
+    hot = lh.bid_pressure({"bids": 12, "_h": 0.4})
+    check("двенадцать ставок за 25 минут — снайперское окно",
+          hot and "снайперск" in hot, str(hot))
+    # Потолок ставки ниже текущей цены означает, что торги съели маржу.
+    # Справка $75, доставка $6, карго $16.50, порог прибыли $40:
+    # ставить можно максимум $12.50, а торги уже подняли лот до $89.
+    cap = lh.max_bid_usd(75.0, 6.0, 16.5, 40.0)
+    check("потолок ставки $12.50", abs(cap - 12.5) < 1e-9, f"{cap:.2f}")
+    check("лот за $89 выше потолка в семь раз", 89.0 > cap * 7, f"{cap:.2f}")
+
+
+def test_new_sealed_exempt_from_ru_gate():
+    """Гейт спроса измеряет ИСТОРИЮ продаж — у нового товара её нет.
+
+    Вердикт владельца по «The Crystal Method — Tweekend IVC Edition»:
+    брать до $45, московская цена 9-13 тыс. ₽. А продаж Crystal Method
+    в базе Мешка ноль — издание вышло в 2026 году, вторичного рынка в
+    России ещё не существует.
+
+    Гейт верен для старых редкостей и неверен для нового лимита.
+    Различать их надо, а не выбирать одно: три «пас» владельца —
+    Abner Jay, Arrogance, Harry Case — все старые, единственное
+    «брать» — новое запечатанное.
+    """
+    yes = 'THE CRYSTAL METHOD "TWEEKEND" IVC EDITION Brand New Sealed Numbered'
+    check("новый клубный лимит распознан",
+          bool(lh._NEW_SEALED.search(yes)))
+    for t in ["Abner Jay - Live From Stephen Foster Center LP VG+",
+              "Arrogance - Give Us A Break Sugarbush SBS-103 1973",
+              "Harry Case - In A Mood Ichiban VG/VG- mexico"]:
+        check(f"«{t[:22]}» новым лимитом не считается",
+              not lh._NEW_SEALED.search(t))
+
+    # Имя из двух слов не режется стоп-словом с краю.
+    check("«NEW EDITION» остаётся именем",
+          lh.artist_candidates("NEW EDITION - Candy Girl LP") == ["NEW EDITION"],
+          str(lh.artist_candidates("NEW EDITION - Candy Girl LP")))
+    # А из длинного заголовка мусор с краю снимается.
+    check("«NEW SEALED Traffic Canteen LP» даёт имя без мусора",
+          lh.artist_candidates("NEW SEALED Traffic Canteen Live")[0]
+          .startswith("Traffic"),
+          str(lh.artist_candidates("NEW SEALED Traffic Canteen Live")))
+
+
 def main():
-    for fn in [test_promise_marka_vesit_bolshe_summy,
+    for fn in [test_max_bid_replaces_current_price,
+               test_grade_discounts_the_reference,
+               test_country_mismatch, test_ru_demand_gate,
+               test_bids_mean_price_already_found,
+               test_new_sealed_exempt_from_ru_gate,
+test_promise_marka_vesit_bolshe_summy,
                test_baza_ne_padaet_ot_chitatelya,
                test_press_a_ne_tolko_albom,
                test_demand_ratio_izmerenie_a_ne_verdikt,
