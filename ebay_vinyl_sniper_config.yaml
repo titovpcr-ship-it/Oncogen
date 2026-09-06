@@ -1535,6 +1535,12 @@ new_pop:
   # Потолок ДО ФОРВАРДЕРА: цена лота плюс доставка по США. Карго до
   # Москвы сюда НЕ входит — владелец задал порог именно так.
   max_landed_to_forwarder_usd: 25.0
+  # «КУПИТЬ СЕЙЧАС» — ПОТОЛОК НИЖЕ, И ЭТО НЕ ПРИДИРКА. В «предложить
+  # цену» названная цена не та, что заплатишь: торг её опускает. В
+  # «купить сейчас» цена окончательная, и потолок обязан быть ниже
+  # ровно на ту величину, которую торг дал бы. Решение владельца
+  # 07.09.2026: $21 вместе с доставкой по США.
+  max_landed_fixed_price_usd: 21.0
   # Доставка, когда продавец её не назвал. Ноль подставлять нельзя —
   # это уже стоило нам 52% занижённых landed на аукционах.
   assumed_shipping_usd: 5.0
@@ -1580,105 +1586,553 @@ new_pop:
   # album опущен там, где берём любой альбом артиста (позиция 20
   # исследования — актуальные новинки, окно 2-6 месяцев).
   titles:
-    - query: "Michael Jackson Thriller vinyl"
-      artist: "Michael Jackson"
-      album: "Thriller"
-      ru_price_rub: [3500, 4500]
-    - query: "Pink Floyd Dark Side of the Moon 180g vinyl"
-      artist: "Pink Floyd"
-      album: "The Dark Side Of The Moon"
-      ru_price_rub: [4500, 7600]
+    # СПИСОК СОБРАН ИЗ ИЗМЕРЕННОЙ ПАЛИТРЫ, А НЕ ИЗ ОЦЕНОК.
+    # Генератор: tools/palette_targets.py, источник:
+    # data/ozon_price_palette.csv (181 позиция, снята глазами с витрины
+    # Ozon 06.09.2026, сортировка по числу отзывов по убыванию).
+    #
+    # Прежние 24 цели несли ru_price_rub, названные владельцем на глаз.
+    # Для Michael Jackson Thriller там стояло 3500-4500 ₽, замер даёт
+    # 5761 ₽ — оценка была занижена почти на треть.
+    #
+    # Цель — АЛЬБОМ, а не артист: Depeche Mode Violator 5451-5673 ₽ и
+    # Depeche Mode Ultra 4385 ₽ это разные предметы, и медиана по
+    # артисту не принадлежит ни одному из них (правило 1 устава).
+    #
+    # ru_observations — сколько карточек витрины дали эту цену. При
+    # единице границы диапазона совпадают: раздвигать их на глаз
+    # значило бы выдумать разброс, которого не наблюдали.
+    - query: "Tame Impala Currents vinyl"
+      artist: "Tame Impala"
+      album: "Currents"
+      ru_price_rub: [7915, 7915]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Harry Potter The Complete Film Collection vinyl"
+      artist: "Harry Potter"
+      album: "The Complete Film Collection"
+      ru_price_rub: [7736, 7736]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Queen Greatest Hits II vinyl"
+      artist: "Queen"
+      album: "Greatest Hits II"
+      ru_price_rub: [6549, 7882]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Rammstein Sehnsucht vinyl"
+      artist: "Rammstein"
+      album: "Sehnsucht"
+      ru_price_rub: [7023, 7023]
+      ru_observations: 1
+      ru_source: ozon_palette
     - query: "Queen Greatest Hits vinyl"
       artist: "Queen"
       album: "Greatest Hits"
-      ru_price_rub: [4000, 7000]
-    - query: "Nirvana Nevermind 180g vinyl"
-      artist: "Nirvana"
-      album: "Nevermind"
-      ru_price_rub: [4100, 5500]
-    - query: "Metallica Master of Puppets vinyl"
-      artist: "Metallica"
-      album: "Master Of Puppets"
-      ru_price_rub: [5000, 6500]
-    - query: "Rammstein Mutter vinyl"
+      ru_price_rub: [6827, 6827]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Modern Talking Golden Hits vinyl"
+      artist: "Modern Talking"
+      album: "Golden Hits"
+      ru_price_rub: [6562, 6562]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Rammstein Zeit vinyl"
       artist: "Rammstein"
-      album: "Mutter"
-      ru_price_rub: [5500, 9000]
-    - query: "Lana Del Rey Born To Die vinyl"
+      album: "Zeit"
+      ru_price_rub: [5687, 6950]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Lana Del Rey Ultraviolence Deluxe Vinyl Edition vinyl"
       artist: "Lana Del Rey"
-      album: "Born To Die"
-      ru_price_rub: [4500, 8000]
-    - query: "AC/DC Back in Black 180g vinyl"
-      artist: "AC/DC"
-      album: "Back In Black"
-      ru_price_rub: [4000, 5500]
-    - query: "Led Zeppelin IV remaster vinyl"
-      artist: "Led Zeppelin"
-      album: "IV"
-      ru_price_rub: [5000, 7000]
-    - query: "The Beatles Abbey Road 2019 vinyl"
+      album: "Ultraviolence Deluxe Vinyl Edition"
+      ru_price_rub: [6300, 6300]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "The Prodigy The Fat Of The Land vinyl"
+      artist: "The Prodigy"
+      album: "The Fat Of The Land"
+      ru_price_rub: [6192, 6192]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Sandra The Very Best Of Sandra vinyl"
+      artist: "Sandra"
+      album: "The Very Best Of Sandra"
+      ru_price_rub: [6177, 6188]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Harry Potter The Greatest Film Collection vinyl"
+      artist: "Harry Potter"
+      album: "The Greatest Film Collection"
+      ru_price_rub: [6165, 6165]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Rockets Greatest Hits vinyl"
+      artist: "Rockets"
+      album: "Greatest Hits"
+      ru_price_rub: [6124, 6124]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Adele 21 vinyl"
+      artist: "Adele"
+      album: "21"
+      ru_price_rub: [6086, 6086]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Hans Zimmer The Classics vinyl"
+      artist: "Hans Zimmer"
+      album: "The Classics"
+      ru_price_rub: [6049, 6049]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Pink Floyd Wish You Were Here vinyl"
+      artist: "Pink Floyd"
+      album: "Wish You Were Here"
+      ru_price_rub: [5765, 6086]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Scorpions Pure Instinct vinyl"
+      artist: "Scorpions"
+      album: "Pure Instinct"
+      ru_price_rub: [5806, 5806]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Daft Punk Random Access Memories vinyl"
+      artist: "Daft Punk"
+      album: "Random Access Memories"
+      ru_price_rub: [5800, 5800]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "The Beatles Abbey Road vinyl"
       artist: "The Beatles"
       album: "Abbey Road"
-      ru_price_rub: [5500, 8000]
-    - query: "Depeche Mode Violator vinyl"
-      artist: "Depeche Mode"
-      album: "Violator"
-      ru_price_rub: [4000, 6000]
-    - query: "Eagles Hotel California 180g vinyl"
-      artist: "Eagles"
-      album: "Hotel California"
-      ru_price_rub: [4500, 5500]
-    - query: "Fleetwood Mac Rumours vinyl"
-      artist: "Fleetwood Mac"
-      album: "Rumours"
-      ru_price_rub: [4000, 5500]
-    # Позиция 14 исследования — «самый недооценённый сегмент: мало
-    # продавцов, у покупателя нет ценового якоря».
-    - query: "Interstellar soundtrack vinyl"
-      artist: "Hans Zimmer"
-      album: "Interstellar"
-      ru_price_rub: [5000, 17600]
-    - query: "Arcane soundtrack vinyl"
-      artist: "Various"
-      album: "Arcane"
-      ru_price_rub: [5000, 17600]
-    - query: "Cyberpunk 2077 soundtrack vinyl"
-      artist: "Various"
-      album: "Cyberpunk 2077"
-      ru_price_rub: [5000, 17600]
-    - query: "Sade Diamond Life vinyl"
-      artist: "Sade"
-      album: "Diamond Life"
-      ru_price_rub: [4000, 6000]
-    - query: "Frank Sinatra Platinum Collection vinyl"
+      ru_price_rub: [5724, 5724]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Frank Sinatra The Platinum Collection vinyl"
       artist: "Frank Sinatra"
       album: "The Platinum Collection"
-      ru_price_rub: [3700, 7000]
+      ru_price_rub: [5696, 5696]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Metallica Ride The Lightning vinyl"
+      artist: "Metallica"
+      album: "Ride The Lightning"
+      ru_price_rub: [5451, 5832]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Red Hot Chili Peppers Californication vinyl"
+      artist: "Red Hot Chili Peppers"
+      album: "Californication"
+      ru_price_rub: [5620, 5620]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Ozzy Osbourne No More Tears vinyl"
+      artist: "Ozzy Osbourne"
+      album: "No More Tears"
+      ru_price_rub: [5542, 5542]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Arctic Monkeys AM vinyl"
+      artist: "Arctic Monkeys"
+      album: "AM"
+      ru_price_rub: [5514, 5514]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Michael Jackson Bad vinyl"
+      artist: "Michael Jackson"
+      album: "Bad"
+      ru_price_rub: [5455, 5501]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "AC/DC Highway to Hell vinyl"
+      artist: "AC/DC"
+      album: "Highway to Hell"
+      ru_price_rub: [5462, 5462]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Joe Cocker The Life Of A Man - The Ultimate Hits vinyl"
+      artist: "Joe Cocker"
+      album: "The Life Of A Man - The Ultimate Hits"
+      ru_price_rub: [5451, 5451]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Nirvana Nevermind vinyl"
+      artist: "Nirvana"
+      album: "Nevermind"
+      ru_price_rub: [5444, 5444]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Chris Rea The Very Best Of vinyl"
+      artist: "Chris Rea"
+      album: "The Very Best Of"
+      ru_price_rub: [5444, 5444]
+      ru_observations: 1
+      ru_source: ozon_palette
     - query: "ABBA Gold Greatest Hits vinyl"
       artist: "ABBA"
       album: "Gold Greatest Hits"
-      ru_price_rub: [4000, 6500]
-    - query: "Bob Marley Legend vinyl"
-      artist: "Bob Marley"
-      album: "Legend"
-      ru_price_rub: [3500, 5000]
-    - query: "Amy Winehouse Back to Black vinyl"
-      artist: "Amy Winehouse"
-      album: "Back To Black"
-      ru_price_rub: [4500, 9000]
-    # Позиция 20: окно продажи 2-6 месяцев, и берут ТОЛЬКО цветное.
-    - query: "Sabrina Carpenter vinyl colored"
-      artist: "Sabrina Carpenter"
-      ru_price_rub: [5000, 9000]
-      require_any: ["color", "coloured", "colored", "limited", "picture disc",
-                    "splatter", "clear", "translucent", "marbled", "glow"]
-    - query: "Olivia Rodrigo vinyl colored"
-      artist: "Olivia Rodrigo"
-      ru_price_rub: [5000, 9000]
-      require_any: ["color", "coloured", "colored", "limited", "picture disc",
-                    "splatter", "clear", "translucent", "marbled", "glow"]
-    - query: "Taylor Swift vinyl colored"
-      artist: "Taylor Swift"
-      ru_price_rub: [5000, 9000]
-      require_any: ["color", "coloured", "colored", "limited", "picture disc",
-                    "splatter", "clear", "translucent", "marbled", "glow"]
+      ru_price_rub: [5396, 5396]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Cigarettes After Sex Cigarettes After Sex vinyl"
+      artist: "Cigarettes After Sex"
+      album: "Cigarettes After Sex"
+      ru_price_rub: [5176, 5615]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Michael Jackson Thriller vinyl"
+      artist: "Michael Jackson"
+      album: "Thriller"
+      ru_price_rub: [4878, 5761]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Louis Armstrong The Platinum Collection vinyl"
+      artist: "Louis Armstrong"
+      album: "The Platinum Collection"
+      ru_price_rub: [5281, 5281]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Arctic Monkeys The Car vinyl"
+      artist: "Arctic Monkeys"
+      album: "The Car"
+      ru_price_rub: [5265, 5265]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "AC/DC Back In Black vinyl"
+      artist: "AC/DC"
+      album: "Back In Black"
+      ru_price_rub: [5259, 5259]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Army Of Lovers Glory Glamor And Gold vinyl"
+      artist: "Army Of Lovers"
+      album: "Glory Glamor And Gold"
+      ru_price_rub: [5250, 5250]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "King Crimson In The Court Of The Crimson King vinyl"
+      artist: "King Crimson"
+      album: "In The Court Of The Crimson King"
+      ru_price_rub: [5002, 5444]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Frank Sinatra A Jolly Christmas vinyl"
+      artist: "Frank Sinatra"
+      album: "A Jolly Christmas"
+      ru_price_rub: [5196, 5196]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Pink Floyd The Dark Side Of The Moon vinyl"
+      artist: "Pink Floyd"
+      album: "The Dark Side Of The Moon"
+      ru_price_rub: [4556, 5743]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Depeche Mode Violator vinyl"
+      artist: "Depeche Mode"
+      album: "Violator"
+      ru_price_rub: [4616, 5673]
+      ru_observations: 7
+      ru_source: ozon_palette
+    - query: "Sade The Best Of Sade vinyl"
+      artist: "Sade"
+      album: "The Best Of Sade"
+      ru_price_rub: [5121, 5121]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Scorpions Acoustica vinyl"
+      artist: "Scorpions"
+      album: "Acoustica"
+      ru_price_rub: [5121, 5121]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Sade Lovers Rock vinyl"
+      artist: "Sade"
+      album: "Lovers Rock"
+      ru_price_rub: [5096, 5096]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Smokie Living Next Door To Alice Greatest Hits vinyl"
+      artist: "Smokie"
+      album: "Living Next Door To Alice Greatest Hits"
+      ru_price_rub: [4964, 4964]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Deep Purple In Rock vinyl"
+      artist: "Deep Purple"
+      album: "In Rock"
+      ru_price_rub: [4921, 4921]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Alphaville Forever Young vinyl"
+      artist: "Alphaville"
+      album: "Forever Young"
+      ru_price_rub: [4859, 4859]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Silicon Dream Time Machine vinyl"
+      artist: "Silicon Dream"
+      album: "Time Machine"
+      ru_price_rub: [4855, 4855]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Dee D. Jackson Cosmic Curves vinyl"
+      artist: "Dee D. Jackson"
+      album: "Cosmic Curves"
+      ru_price_rub: [4838, 4838]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Savage Tonight vinyl"
+      artist: "Savage"
+      album: "Tonight"
+      ru_price_rub: [4837, 4837]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Linkin Park Meteora vinyl"
+      artist: "Linkin Park"
+      album: "Meteora"
+      ru_price_rub: [4753, 4753]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Joy Division Unknown Pleasures vinyl"
+      artist: "Joy Division"
+      album: "Unknown Pleasures"
+      ru_price_rub: [4621, 4621]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Judas Priest Painkiller vinyl"
+      artist: "Judas Priest"
+      album: "Painkiller"
+      ru_price_rub: [4621, 4621]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Deftones Private Music vinyl"
+      artist: "Deftones"
+      album: "Private Music"
+      ru_price_rub: [4617, 4617]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Radiorama Super Hits vinyl"
+      artist: "Radiorama"
+      album: "Super Hits"
+      ru_price_rub: [4573, 4573]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Nazareth Move Me vinyl"
+      artist: "Nazareth"
+      album: "Move Me"
+      ru_price_rub: [4561, 4561]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "AC/DC Highway To Hell vinyl"
+      artist: "AC/DC"
+      album: "Highway To Hell"
+      ru_price_rub: [4385, 4729]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Antonio Vivaldi The Four Seasons vinyl"
+      artist: "Antonio Vivaldi"
+      album: "The Four Seasons"
+      ru_price_rub: [4555, 4555]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Sandra Close To Seven vinyl"
+      artist: "Sandra"
+      album: "Close To Seven"
+      ru_price_rub: [4546, 4546]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "System Of A Down Toxicity vinyl"
+      artist: "System Of A Down"
+      album: "Toxicity"
+      ru_price_rub: [3998, 5016]
+      ru_observations: 4
+      ru_source: ozon_palette
+    - query: "Twenty One Pilots Scaled And Icy vinyl"
+      artist: "Twenty One Pilots"
+      album: "Scaled And Icy"
+      ru_price_rub: [4388, 4388]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Depeche Mode Ultra vinyl"
+      artist: "Depeche Mode"
+      album: "Ultra"
+      ru_price_rub: [4385, 4385]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Linkin Park Hybrid Theory vinyl"
+      artist: "Linkin Park"
+      album: "Hybrid Theory"
+      ru_price_rub: [3535, 5229]
+      ru_observations: 3
+      ru_source: ozon_palette
+    - query: "Led Zeppelin Led Zeppelin II vinyl"
+      artist: "Led Zeppelin"
+      album: "Led Zeppelin II"
+      ru_price_rub: [4381, 4381]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Depeche Mode Some Great Reward vinyl"
+      artist: "Depeche Mode"
+      album: "Some Great Reward"
+      ru_price_rub: [4255, 4255]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "a-ha Headlines And Deadlines The Hits Of vinyl"
+      artist: "a-ha"
+      album: "Headlines And Deadlines The Hits Of"
+      ru_price_rub: [4218, 4218]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Kovacs Shades Of Black vinyl"
+      artist: "Kovacs"
+      album: "Shades Of Black"
+      ru_price_rub: [4201, 4201]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Nazareth Rampant vinyl"
+      artist: "Nazareth"
+      album: "Rampant"
+      ru_price_rub: [4195, 4195]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Jeff Buckley Grace vinyl"
+      artist: "Jeff Buckley"
+      album: "Grace"
+      ru_price_rub: [4165, 4165]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Dirty Dancing Original Soundtrack vinyl"
+      artist: "Dirty Dancing"
+      album: "Original Soundtrack"
+      ru_price_rub: [3535, 4507]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Ricchi E Poveri Made In Italy vinyl"
+      artist: "Ricchi E Poveri"
+      album: "Made In Italy"
+      ru_price_rub: [4021, 4021]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Electric Light Orchestra All Over The World The Very Best Of vinyl"
+      artist: "Electric Light Orchestra"
+      album: "All Over The World The Very Best Of"
+      ru_price_rub: [4015, 4015]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Last Christmas Original Soundtrack vinyl"
+      artist: "Last Christmas"
+      album: "Original Soundtrack"
+      ru_price_rub: [3985, 3985]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Nazareth Expect No Mercy vinyl"
+      artist: "Nazareth"
+      album: "Expect No Mercy"
+      ru_price_rub: [3955, 3955]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Emerson Lake & Palmer Tarkus vinyl"
+      artist: "Emerson Lake & Palmer"
+      album: "Tarkus"
+      ru_price_rub: [3835, 3835]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Bad Boys Blue Hot Girls Bad Boys vinyl"
+      artist: "Bad Boys Blue"
+      album: "Hot Girls Bad Boys"
+      ru_price_rub: [3702, 3702]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Adriano Celentano Golden vinyl"
+      artist: "Adriano Celentano"
+      album: "Golden"
+      ru_price_rub: [3661, 3661]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Ozzy Osbourne Bark At The Moon vinyl"
+      artist: "Ozzy Osbourne"
+      album: "Bark At The Moon"
+      ru_price_rub: [3571, 3571]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Tyler The Creator Igor vinyl"
+      artist: "Tyler The Creator"
+      album: "Igor"
+      ru_price_rub: [3529, 3529]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Led Zeppelin Led Zeppelin vinyl"
+      artist: "Led Zeppelin"
+      album: "Led Zeppelin"
+      ru_price_rub: [3481, 3481]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Muse Simulation Theory vinyl"
+      artist: "Muse"
+      album: "Simulation Theory"
+      ru_price_rub: [3481, 3481]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Kill Bill Vol. 2 Original Soundtrack vinyl"
+      artist: "Kill Bill Vol. 2"
+      album: "Original Soundtrack"
+      ru_price_rub: [3295, 3295]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Fancy Super Hits vinyl"
+      artist: "Fancy"
+      album: "Super Hits"
+      ru_price_rub: [3264, 3264]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Ozzy Osbourne Night Terrors vinyl"
+      artist: "Ozzy Osbourne"
+      album: "Night Terrors"
+      ru_price_rub: [2864, 2864]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Depeche Mode Live At Hammersmith Odeon vinyl"
+      artist: "Depeche Mode"
+      album: "Live At Hammersmith Odeon"
+      ru_price_rub: [2622, 2622]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Black Sabbath Paranoia vinyl"
+      artist: "Black Sabbath"
+      album: "Paranoia"
+      ru_price_rub: [2622, 2622]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Vocal Jazz Jazz For Lovers vinyl"
+      artist: "Vocal Jazz"
+      album: "Jazz For Lovers"
+      ru_price_rub: [2611, 2611]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Holly Jolly Days Новогодняя Color vinyl"
+      artist: "Holly Jolly Days"
+      album: "Новогодняя Color"
+      ru_price_rub: [2557, 2557]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "The Beatles The Decca Tapes vinyl"
+      artist: "The Beatles"
+      album: "The Decca Tapes"
+      ru_price_rub: [2312, 2428]
+      ru_observations: 2
+      ru_source: ozon_palette
+    - query: "Deep Purple Дом голубого света vinyl"
+      artist: "Deep Purple"
+      album: "Дом голубого света"
+      ru_price_rub: [2265, 2265]
+      ru_observations: 1
+      ru_source: ozon_palette
+    - query: "Frank Sinatra Ultimate vinyl"
+      artist: "Frank Sinatra"
+      album: "Ultimate"
+      ru_price_rub: [2026, 2026]
+      ru_observations: 1
+      ru_source: ozon_palette

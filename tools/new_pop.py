@@ -234,10 +234,22 @@ def shipping_usd(item):
     return None
 
 
-def search(token, query, limit=100):
+# ДВА СПОСОБА КУПИТЬ — ДВА РАЗНЫХ ПОТОЛКА, И ЭТО НЕ ПРИДИРКА.
+# В «предложить цену» названная продавцом цена — не та, что заплатишь:
+# торг её опускает. В «купить сейчас» цена окончательная, торга нет,
+# и потолок обязан быть ниже ровно на ту величину, которую торг дал бы.
+# Решение владельца 07.09.2026: best_offer $25, fixed_price $21.
+BUYING_MODES = {
+    "best_offer": ("BEST_OFFER", "предложить цену"),
+    "fixed_price": ("FIXED_PRICE", "купить сейчас"),
+}
+
+
+def search(token, query, limit=100, mode="best_offer"):
     hdr = {"Authorization": f"Bearer {token}",
            "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
-    flt = ("buyingOptions:{BEST_OFFER},itemLocationCountry:US,"
+    option = BUYING_MODES[mode][0]
+    flt = (f"buyingOptions:{{{option}}},itemLocationCountry:US,"
            "conditions:{NEW}")
     out, offset = [], 0
     while offset < limit:
@@ -263,6 +275,12 @@ def main(argv=None):
     p.add_argument("--dry", action="store_true")
     p.add_argument("--max-landed", type=float, default=None,
                    help="переопределить потолок до форвардера")
+    p.add_argument("--mode", choices=("best_offer", "fixed_price", "both"),
+                   default="best_offer",
+                   help="best_offer — «предложить цену» (потолок из "
+                        "max_landed_to_forwarder_usd); fixed_price — "
+                        "«купить сейчас» (потолок из "
+                        "max_landed_fixed_price_usd); both — оба подряд")
     p.add_argument("--batch", type=int, default=0,
                    help="слать группами по N позиций вместо отдельных "
                         "сообщений; 0 — по одному")
@@ -272,7 +290,15 @@ def main(argv=None):
     np_cfg = cfg.get("new_pop") or {}
     if not np_cfg.get("enabled"):
         raise SystemExit("режим new_pop выключен в конфиге")
-    cap = a.max_landed or float(np_cfg["max_landed_to_forwarder_usd"])
+    caps = {
+        "best_offer": float(np_cfg["max_landed_to_forwarder_usd"]),
+        # В «купить сейчас» торга нет, значит и скидки нет: потолок
+        # ниже. Решение владельца 07.09.2026.
+        "fixed_price": float(np_cfg.get("max_landed_fixed_price_usd", 21.0)),
+    }
+    if a.max_landed:                       # ручное переопределение — на оба
+        caps = {k: a.max_landed for k in caps}
+    modes = (["best_offer", "fixed_price"] if a.mode == "both" else [a.mode])
     assumed = float(np_cfg.get("assumed_shipping_usd", 5.0))
     need_sealed = bool(np_cfg.get("require_sealed", True))
     # Записи списка — либо строка (старый формат), либо словарь с
@@ -317,7 +343,8 @@ def main(argv=None):
 
     token = ebay_token()
     print(f"НОВАЯ ПОПСА: {len(entries)} позиций, потолок до форвардера "
-          f"${cap:.2f}, только «предложить цену», состояние New"
+          f"{', '.join(f'{BUYING_MODES[m][1]} до ${caps[m]:.2f}' for m in modes)}"
+          f", состояние New"
           + (", слюда обязательна" if need_sealed else "") + "\n")
 
     found, reasons, notifier = 0, {}, None
@@ -355,12 +382,15 @@ def main(argv=None):
                     row["rec"])
             conn.commit()
             del pending[:len(part)]
-    for i, e in enumerate(entries, 1):
+    for mode in modes:
+      cap = caps[mode]
+      print(f"\n=== режим: {BUYING_MODES[mode][1]}, потолок ${cap:.2f} ===")
+      for i, e in enumerate(entries, 1):
         q = e["query"]
         need_any = [w.lower() for w in (e.get("require_any") or [])]
         artist, album = e.get("artist"), e.get("album")
         ru_lo, ru_hi = (e.get("ru_price_rub") or [None, None])[:2] or (None, None)
-        items, ok = search(token, q, limit=100)
+        items, ok = search(token, q, limit=100, mode=mode)
         if not ok:
             reasons["eBay отказал"] = reasons.get("eBay отказал", 0) + 1
         hit = 0
