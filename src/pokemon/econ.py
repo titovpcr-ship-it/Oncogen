@@ -33,7 +33,7 @@ PREORDER = "PREORDER"
 
 
 def landed(price_usd, us_ship_usd, weight_kg, *, cargo_usd_per_kg=22.0,
-           cargo_min_kg=1.0, cargo_round_step_kg=1.0):
+           cargo_min_kg=1.0, cargo_round_step_kg=1.0, cargo_mode="rider"):
     """(landed_solo, landed_batch, ship_solo, ship_batch).
 
     ship_batch — доля лота в карго сборной посылки: вес умножается на
@@ -48,6 +48,9 @@ def landed(price_usd, us_ship_usd, weight_kg, *, cargo_usd_per_kg=22.0,
     step = cargo_round_step_kg or 0
     billed = math.ceil(weight_kg / step) * step if step > 0 else weight_kg
     billed = max(float(cargo_min_kg), billed)
+    # ship_solo ВСЕГДА считается по минимуму: это ответ на вопрос «что
+    # будет, если повезём отдельно», и он нужен для breakeven_solo при
+    # любом режиме. Режим влияет на то, что идёт в гейт.
     ship_solo = cargo_usd_per_kg * billed
     ship_batch = cargo_usd_per_kg * weight_kg
     base = float(price_usd) + float(us_ship_usd)
@@ -101,11 +104,13 @@ def economics(*, price_usd, us_ship_usd, weight_kg, qty, ru_price_rub,
         price_usd, us_ship_usd, weight_kg,
         cargo_usd_per_kg=cfg.get("cargo_usd_per_kg", 22.0),
         cargo_min_kg=cfg.get("cargo_min_kg", 1.0),
-        cargo_round_step_kg=cfg.get("cargo_round_step_kg", 1.0))
+        cargo_round_step_kg=cfg.get("cargo_round_step_kg", 1.0),
+        cargo_mode=cfg.get("cargo_mode", "rider"))
     disc, usable = discount_for(ru_comp_basis, cfg)
     rs = resale_usd(ru_price_rub, qty, usdrub, disc)
     out = {"landed_solo_usd": solo, "landed_batch_usd": batch,
            "cargo_solo_usd": ship_solo, "cargo_batch_usd": ship_batch,
+           "cargo_mode": cfg.get("cargo_mode", "rider"),
            "ru_discount_applied": disc, "ru_comp_usable": usable,
            "resale_usd": rs, "multiple": None, "profit_usd": None,
            "profit_per_kg": None, "profit_per_kg_pessimistic": None,
@@ -193,7 +198,8 @@ def in_scope(kind, cfg):
 
 def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
             fake_reasons=(), set_resolved=True, unit_price_usd=None,
-            packs=None, days_since_rel=None, pokemon_token=True,
+            packs=None, days_since_rel=None, price_vs_market_pct=None,
+            pokemon_token=True,
             japanese=False, presale_text=False, code_confirmed=False):
     """(вердикт, причина) — одна цепь, вынесенная на уровень модуля.
 
@@ -213,6 +219,12 @@ def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
     # Will, Zatchbell, Akora — и так без конца. Теперь наоборот: набор
     # обязан найтись в каталоге TCGCSV (2 927 sealed-товаров), иначе
     # товар не наш. Правило ограниченное, а не бесконечное.
+    # ТЕКСТ СИЛЬНЕЕ ДАТЫ. Слово «presale» продавец пишет про свой товар
+    # и ошибиться набором не может, а гейт по дате надёжен ровно
+    # настолько, насколько надёжен резолв.
+    if presale_text:
+        return PREORDER, "продавец назвал лот предзаказом в заголовке"
+
     if not set_resolved:
         return OUT_OF_SCOPE, "набор не найден в каталоге Pokemon TCGplayer"
 
@@ -233,12 +245,6 @@ def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
     ok, why = in_scope(kind, cfg)
     if not ok:
         return OUT_OF_SCOPE, why
-
-    # ТЕКСТ СИЛЬНЕЕ ДАТЫ. Слово «presale» продавец пишет про свой товар
-    # и ошибиться набором не может, а гейт по дате надёжен ровно
-    # настолько, насколько надёжен резолв.
-    if presale_text:
-        return PREORDER, "продавец назвал лот предзаказом в заголовке"
 
     # ВОЗРАСТ НАБОРА КАК СИГНАЛ ОШИБКИ РЕЗОЛВА, А НЕ КАК ШТРАФ. Обе
     # строки списка «что померить», где набор оказался старше пяти лет,
@@ -274,6 +280,18 @@ def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
         if lo is not None and unit_price_usd < float(lo):
             return PASS, (f"${unit_price_usd:.2f} за пак ниже полосы "
                           f"${float(lo):.2f} — зона подделок")
+
+    # ПОТОЛОК ПО РЫНКУ. Правило 60% — пол, защита от подделок. Потолка
+    # не было, и лот за 200% рынка прошёл бы всё, если бы московская
+    # цена вытянула мультипликатор. Замер по проверенному списку: два
+    # лота из трёх куплены ДОРОЖЕ рынка (105% и 107%), при том что
+    # стратегия ветки объявлена как «полоса ниже рынка».
+    cap_pct = cfg.get("max_price_vs_market_pct")
+    if cap_pct is not None and price_vs_market_pct is not None \
+            and price_vs_market_pct > float(cap_pct):
+        return REJECT, (f"{price_vs_market_pct:.0f}% от рынка TCGplayer при "
+                        f"потолке {float(cap_pct):.0f}% — переплата, а не "
+                        f"находка")
 
     if weight_unknown or kind is None:
         return WATCH, "вид товара не опознан — вес неизвестен, карго не посчитать"

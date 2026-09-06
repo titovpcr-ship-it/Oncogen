@@ -32,8 +32,8 @@ from .econ import (BUY, OUT_OF_SCOPE, PASS, PREORDER, REJECT, WATCH,
                    days_since_release, economics, packs_in_lot, unit_price,
                    verdict)
 from .report import (append_decisions, batch_plan_md,
-                     seller_concentration, write_candidates,
-                     write_need_comps)
+                     explain_rejects, seller_concentration,
+                     write_candidates, write_need_comps)
 from .weights import billable_kg, weigh
 
 ROOT = repo_root()
@@ -132,6 +132,7 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
                      unit_price_usd=lot["unit_price_usd"],
                      packs=lot["packs"],
                      days_since_rel=lot["days_since_release"],
+                     price_vs_market_pct=lot.get("price_vs_market_pct"),
                      pokemon_token=lot["pokemon_token"],
                      japanese=lot["japanese"],
                      presale_text=lot["presale_text"],
@@ -192,6 +193,10 @@ def main(argv=None):
                         "вердиктов не выдаёт, кормит need_comps; sweep — "
                         "обход категорий; both — targeted + sweep")
     p.add_argument("--min-price", type=float, default=None)
+    p.add_argument("--explain-rejects", type=int, default=0, metavar="N",
+                   help="выписать по N случайных лотов на каждую причину "
+                        "отказа — корзина отказов читается наравне со "
+                        "списком принятых")
     p.add_argument("--sort", choices=["price", "-price"], default=None,
                    help="переопределить сортировку: нужно, чтобы решение о "
                         "ней проверялось прогоном, а не спором")
@@ -342,7 +347,8 @@ def main(argv=None):
                    cargo_usd_per_kg=cfg.get("cargo_usd_per_kg", 22.0),
                    cargo_min_kg=cfg.get("cargo_min_kg", 1.0),
                    cargo_round_step_kg=cfg.get("cargo_round_step_kg", 1.0),
-                   max_sellers=cfg.get("max_sellers_per_batch"))
+                   max_sellers=cfg.get("max_sellers_per_batch"),
+                   cargo_mode=cfg.get("cargo_mode", "rider"))
     note = (f"Режим: {mode}. Покрытие частичное: обойдено {len(uniq)} лотов "
             f"из 46 807 + 14 070 в категориях 183456/183457. Фильтр eBay по "
             f"цене лота ${floor_price:g}-${cap_price:g}, полоса за пак "
@@ -361,6 +367,13 @@ def main(argv=None):
     print(f"кандидаты: {csv_path}")
     print(f"журнал: новых {fresh}, уже виденных {dup}")
     print(f"план посылки: {md_path} ({len(baskets)} корзин)")
+
+    if a.explain_rejects:
+        rej_path = out_dir / f"pokemon_rejects_{run_tag}.md"
+        rej_path.parent.mkdir(parents=True, exist_ok=True)
+        rej_path.write_text(explain_rejects(uniq, n=a.explain_rejects),
+                            encoding="utf-8")
+        print(f"корзина отказов: {rej_path}")
 
     need_path, n_need = write_need_comps(
         uniq, out_dir / f"pokemon_need_comps_{run_tag}.csv", cfg=cfg, usdrub=fx)

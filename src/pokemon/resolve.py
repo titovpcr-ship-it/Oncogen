@@ -46,8 +46,26 @@ def looks_japanese(title):
     return bool(_JAPANESE.search(title or ""))
 
 
+# СОЮЗ «И» ПИШУТ ДВУМЯ СПОСОБАМИ. Каталог зовёт набор «SV: Scarlet &
+# Violet», продавцы пишут «Scarlet and Violet» — и фраза не совпадала.
+# Найдено 06.09.2026 чтением корзины отказов: лот «SEALED Pokemon TCG
+# Scarlet and Violet Quaquaval 005 Build & Battle Promo Deck» лежал
+# среди 302 «набор не найден». Затрагивает две крупнейшие современные
+# семьи наборов сразу — SV (Scarlet & Violet) и SWSH (Sword & Shield).
+_CONNECTOR = re.compile(r"\b(and|the|of)\b")
+
+
+_SPACES = re.compile(r"\s+")
+
+
 def norm(s):
-    return _NORM.sub(" ", (s or "").lower()).strip()
+    # Схлопывание пробелов ОБЯЗАНО быть регуляркой, а не .replace("  ", " ").
+    # Удаление союза оставляет три пробела подряд («scarlet and violet» →
+    # «scarlet   violet»), и один проход .replace превращает их в два, а
+    # не в один. Фраза каталога переставала совпадать ровно так же, как
+    # до правки, — то есть правка тихо не работала.
+    t = _NORM.sub(" ", (s or "").lower())
+    return _SPACES.sub(" ", _CONNECTOR.sub(" ", t)).strip()
 
 
 def set_phrases(prod):
@@ -59,6 +77,24 @@ def set_phrases(prod):
         if ":" in name:
             out.add(norm(name.split(":", 1)[1]))
     return {p for p in out if len(p) >= 4}
+
+
+def is_weak_phrase(phrase):
+    """Однословное название набора — слабое доказательство.
+
+    ЖИВОЙ СЛУЧАЙ 06.09.2026, И ЭТО РЕГРЕССИЯ ОТ ПРЕДЫДУЩЕЙ ПРАВКИ.
+    После подключения японского каталога для распознавания лот «Pokemon
+    Sword and Shield Booster Pack» стал резолвиться в японский набор
+    «S1H: Shield» — по одному слову «shield». В каталоге шестнадцать
+    однословных названий, и среди них «sword», «shield», «charizard»,
+    «celebrations», «platinum», «jungle», «fossil»: обычные слова,
+    которые стоят в половине заголовков как часть имени серии или
+    описания.
+
+    Такое совпадение принимается ТОЛЬКО с подтверждением кодом набора —
+    правило 11 на нужной мелкости.
+    """
+    return " " not in (phrase or "")
 
 
 def build_index(sealed_products):
@@ -158,6 +194,12 @@ def match_set(title, ix):
                 break
         if chosen:
             break
+
+    # Без кода однословные названия не годятся: см. is_weak_phrase.
+    if chosen is None:
+        hits = [h for h in hits if not is_weak_phrase(h)]
+        if not hits:
+            return None
 
     if chosen is None:
         # НАЗВАНИЕ СЕРИИ И НАЗВАНИЕ НАБОРА СОВПАДАЮТ У ПЕРВОГО НАБОРА

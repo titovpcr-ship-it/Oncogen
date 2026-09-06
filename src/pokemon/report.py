@@ -92,6 +92,37 @@ def batch_plan_md(baskets, *, usdrub, rate_stale=False, coverage_note="",
                    "кандидатов.")
         return "\n".join(out)
     for i, b in enumerate(baskets, 1):
+        if b.get("mode") == "rider":
+            out.append(f"## Довесок к винильной посылке — "
+                       f"{b['weight_kg'] * 1000:.0f} г")
+            out.append("")
+            out.append("Минимальный килограмм карго оплачен пластинками; "
+                       "паки идут по маржинальной цене без минимума. "
+                       "Отдельной посылкой эти же граммы стоили бы "
+                       f"{_money(22.0)} — см. колонку `breakeven_solo` в CSV.")
+            out.append("")
+            for r in b["items"]:
+                rub = r.get("ru_price_rub")
+                out.append(
+                    f"- {r.get('qty')} × {r.get('title', '')[:70]} — "
+                    f"{_money(r.get('price_usd'))}"
+                    + (f" → {rub:.0f} ₽" if rub else "")
+                    + f" [{r.get('kind')}, "
+                      f"{(r.get('weight_g_net') or 0):.0f} г нетто]")
+                out.append(f"  {r.get('item_url')}")
+            out.append("")
+            out.append(f"  Закупка {_money(b['buy_usd'])} + доставка по США "
+                       f"{_money(b['us_ship_usd'])} + карго-довесок "
+                       f"{_money(b['cargo_usd'])} = **{_money(b['total_usd'])}**")
+            if b["multiple"]:
+                out.append(f"  Выручка ~{b['resale_usd'] * usdrub:,.0f} ₽ · "
+                           f"Прибыль {_money(b['profit_usd'])} · "
+                           f"Мультипликатор {b['multiple']:.2f}×")
+            if b.get("sellers"):
+                out.append(f"  Продавцов: {len(b['sellers'])} — "
+                           f"{', '.join('`%s`' % x for x in b['sellers'][:10])}")
+            out.append("")
+            continue
         cap = ""
         if b.get("stopped_by_sellers"):
             cap = (f" · НЕ ДОБРАНА: упёрлась в лимит "
@@ -262,3 +293,57 @@ def seller_concentration(rows, min_lots=3):
         by.setdefault(sid, []).append(r)
     return sorted(((k, v) for k, v in by.items() if len(v) >= min_lots),
                   key=lambda kv: -len(kv[1]))
+
+
+def explain_rejects(rows, n=10, seed=0, verdicts=("REJECT", "OUT_OF_SCOPE",
+                                                 "PASS", "PREORDER")):
+    """Выборка отказов по каждой причине — текстом, для чтения глазами.
+
+    ЗАЧЕМ. Список принятых показывает, что мы купим лишнего. Список
+    отказов показывает, чего мы не увидим никогда, и это дороже: оба
+    бага, найденных владельцем глазами раньше (B-1, где сингл получил
+    цену бустер-бокса, и B-3, где синглы оседали в WATCH), жили именно
+    в корзине отказов.
+
+    На прогоне 06.09.2026 одна причина — «набор не найден в каталоге» —
+    покрыла 302 строки из 800, то есть 38% выдачи. Одна формулировка на
+    трети выдачи это не фильтр, а непрочитанная корзина.
+    """
+    import random
+    import re as _re
+    rnd = random.Random(seed)
+
+    # ЧИСЛА ИЗ ПРИЧИНЫ УБИРАЮТСЯ ИЗ КЛЮЧА. Первая версия группировала по
+    # тексту как есть, и «отзывов у продавца 7 меньше 100» с «отзывов у
+    # продавца 43 меньше 100» становились разными причинами: отчёт
+    # распался на 130 групп по одному лоту вместо десятка осмысленных.
+    # Тот же приём уже понадобился в винильной ветке — и не был перенесён
+    # сюда, пока корзину отказов никто не открывал.
+    def norm_reason(why):
+        return _re.sub(r"[-+]?\$?\d+[\d.,]*%?", "N", why or "")[:70]
+
+    groups = {}
+    for r in rows:
+        if r.get("verdict") not in verdicts:
+            continue
+        key = (r["verdict"], norm_reason(r.get("reason")))
+        groups.setdefault(key, []).append(r)
+
+    out = ["# Корзина отказов, выборка для чтения глазами", ""]
+    out.append(f"Всего отказов: {sum(len(v) for v in groups.values())} "
+               f"в {len(groups)} причинах. Ниже до {n} случайных строк на "
+               f"причину.")
+    out.append("")
+    for (verdict, reason), lots in sorted(groups.items(),
+                                          key=lambda kv: -len(kv[1])):
+        out.append(f"## {verdict} — {reason}  ({len(lots)} лотов)")
+        out.append("")
+        sample = lots if len(lots) <= n else rnd.sample(lots, n)
+        for r in sample:
+            price = r.get("price_usd")
+            out.append(f"- ${price if price is not None else '—'} · "
+                       f"{r.get('kind') or 'вид не опознан'} · "
+                       f"набор: {r.get('set_name') or '—'}")
+            out.append(f"  «{(r.get('title') or '')[:110]}»")
+        out.append("")
+    return "\n".join(out)

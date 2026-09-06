@@ -229,6 +229,11 @@ def test_musor_v_kategorii_sealed():
                "Pack") == "HIGH")
     check("настоящий пак остаётся LOW",
           risk("Pokemon Surging Sparks Booster Pack Factory Sealed") == "LOW")
+    # Из корзины отказов: не карточный товар вообще.
+    for t in ["Pokemon 2022 Pokedex Vol 1 Sticker Pack New Sealed",
+              "Nintendo Pokemon Psychic Energy Plastic Coin",
+              "Pokemon Match Battle Box Coin Spinner Instruction Sheet"]:
+        check(f"«{t[8:38]}» — не товар", risk(t) == "HIGH", risk(t))
     # НАЙДЕНО 06.09.2026 НА ПРОГОНЕ С ПОЛОСОЙ ЗА ПАК. Разбор количества
     # прочитал «x50» в заголовке чехлов как пятьдесят паков, и лот попал
     # в скудную выдачу многопаковых позиций. Слово «sleeves» безопасно
@@ -892,6 +897,15 @@ def test_presale_text_beats_catalog_date():
     check("обычный лот не задет",
           not fakes.looks_presale("Pokemon Chaos Rising Booster Pack sealed"))
 
+    # ПОРЯДОК ПРОВЕРОК. Найдено чтением корзины отказов: «Presale New
+    # Pokémon 30th Anniversary Celebrations Booster Bundle» лежал в
+    # куче «набор не найден» вместо PREORDER — проверка резолва стояла
+    # раньше текстового маркера. Ярлык был неверный: товар настоящий и
+    # предзаказный, а не неопознанный.
+    v0, why0 = _v(presale_text=True, set_resolved=False)
+    check("предзаказ распознаётся даже без резолва набора",
+          v0 == PREORDER, f"{v0}: {why0}")
+
     # Набор старый по каталогу (дата прошла давно), но текст говорит
     # «предзаказ» — и он побеждает.
     v, why = _v(presale_text=True, days_since_rel=1800, code_confirmed=True)
@@ -926,6 +940,133 @@ def test_ancient_set_needs_confirmation():
     check("словесный псевдоним за код не считается",
           not resolve.code_in_title("Pokemon Undaunted Booster Pack",
                                     {"UNDAUNTED"}))
+
+
+def test_connector_and_weak_phrases():
+    """Две находки из корзины отказов 06.09.2026.
+
+    Обе нашлись чтением 302 строк «набор не найден в каталоге» — той
+    самой трети выдачи, которую до этого раунда никто не открывал.
+
+    1. Каталог зовёт набор «Scarlet & Violet 151», продавцы пишут
+       «Scarlet and Violet 151», и фраза не совпадала. Затрагивало две
+       крупнейшие современные семьи сразу — SV и SWSH.
+    2. РЕГРЕССИЯ ОТ ПРАВКИ ПРОШЛОГО РАУНДА: после подключения японского
+       каталога «Pokemon Sword and Shield Booster Pack» стал
+       резолвиться в японский набор «S1H: Shield» по одному слову
+       «shield». В каталоге шестнадцать однословных названий, среди них
+       sword, shield, charizard, celebrations, platinum, jungle, fossil.
+    """
+    from src.pokemon.resolve import is_weak_phrase, norm
+    check("союз выбрасывается из нормализации",
+          norm("Scarlet & Violet 151") == norm("Scarlet and Violet 151"),
+          f"{norm('Scarlet & Violet 151')} против "
+          f"{norm('Scarlet and Violet 151')}")
+    check("пробелы схлопываются полностью",
+          "  " not in norm("Pokemon Scarlet and Violet 151 Booster Pack"),
+          repr(norm("Pokemon Scarlet and Violet 151 Booster Pack")))
+    check("однословная фраза считается слабой", is_weak_phrase("shield"))
+    check("двухсловная — нет", not is_weak_phrase("brilliant stars"))
+
+    sv151 = {"product_id": 20, "name": "Scarlet & Violet 151 Booster Pack",
+             "set_name": "SV: Scarlet & Violet 151", "set_abbr": "MEW",
+             "market_price": 6.0, "set_aliases": {"MEW"},
+             "set_category": 3, "published_on": "2023-09-22T00:00:00"}
+    jp_shield = {"product_id": 21, "name": "Shield Booster Pack",
+                 "set_name": "S1H: Shield", "set_abbr": "S1H",
+                 "market_price": 3.0, "set_aliases": {"S1H"},
+                 "set_category": 85, "published_on": "2019-12-06T00:00:00"}
+    ix = resolve.build_index([sv151, jp_shield])
+
+    m = resolve.match_set("Pokemon Scarlet and Violet 151 Booster Pack", ix)
+    check("«and» больше не ломает резолв",
+          m and m["set_name"] == "SV: Scarlet & Violet 151",
+          str(m and m["set_name"]))
+
+    m2 = resolve.match_set("Pokemon Sword and Shield Booster Pack", ix)
+    check("одно слово «shield» набором не считается", m2 is None,
+          str(m2 and m2["set_name"]))
+
+    m3 = resolve.match_set("Pokemon S1H Shield Japanese Booster Pack", ix)
+    check("с кодом набора однословное название проходит",
+          m3 and m3["set_name"] == "S1H: Shield", str(m3 and m3["set_name"]))
+    check("и помечено подтверждённым", m3["code_confirmed"])
+
+
+def test_market_ceiling_rejects_overpay():
+    """Потолок по рынку. Правило 60% было полом, потолка не было вовсе.
+
+    Замер 06.09.2026 по проверенному списку из трёх строк: ME03 Perfect
+    Order — 105% рынка TCGplayer, ME04 Chaos Rising — 107%, ME05 Pitch
+    Black — 100%. Ветка объявляет стратегией «полоса ниже рынка», и
+    первая половина не выполнялась: ни один лот не куплен ниже рынка,
+    два из трёх дороже.
+    """
+    cfg = dict(CFG, max_price_vs_market_pct=105)
+    v, why = _v(cfg=cfg, price_vs_market_pct=107.0)
+    check("107% рынка → REJECT", v == REJECT, f"{v}: {why}")
+    check("причина называет обе цифры",
+          "107" in why and "105" in why, why)
+
+    v2, _ = _v(cfg=cfg, price_vs_market_pct=105.0)
+    check("ровно потолок проходит", v2 == BUY, v2)
+    v3, _ = _v(cfg=cfg, price_vs_market_pct=100.0)
+    check("100% рынка проходит", v3 == BUY, v3)
+
+    # Пол и потолок — разные механизмы и не мешают друг другу.
+    cheap = fakes.assess(
+        {"title": "Pokemon Prismatic Evolutions Booster Box",
+         "price_usd": 20.0, "seller_fb_pct": 100.0, "seller_fb_score": 900,
+         "additional_images": 3}, market_price=50.0, market_gap_min_usd=3.0)
+    check("пол по-прежнему ловит аномально дешёвое", cheap[0] == "HIGH")
+
+    # Без цены каталога потолок молчит: отсутствие данных не повод
+    # отказывать.
+    v4, _ = _v(cfg=cfg, price_vs_market_pct=None)
+    check("нет рыночной цены — потолок не срабатывает", v4 == BUY, v4)
+
+
+def test_cargo_rider_mode():
+    """Карго довеском к винилу, а не отдельной посылкой.
+
+    Весь проверенный список — шесть лотов по одному паку, 150 г.
+    Отдельной посылкой карго на пак $3.67, landed 1 201 ₽, и порог
+    1.75× требует 2 102 ₽ за бустер в Москве. Довеском карго $0.63,
+    landed 894 ₽, порог 1 565 ₽.
+    """
+    from src.pokemon.batching import plan
+    lots = [{"title": f"pack {i}", "price_usd": 5.5, "us_ship_usd": 4.5,
+             "weight_kg": 0.0253, "qty": 1, "resale_usd": 18.0,
+             "profit_per_kg": 300.0, "kind": "booster_pack",
+             "weight_g_net": 22.0, "ru_price_rub": 1600,
+             "seller": f"s{i}"} for i in range(6)]
+
+    rider = plan(lots, cargo_mode="rider")[0]
+    solo = plan(lots, cargo_mode="standalone")[0]
+    check("довесок и отдельная посылка весят одинаково",
+          abs(rider["weight_kg"] - solo["weight_kg"]) < 1e-9)
+    check("карго довеском маржинальное",
+          abs(rider["cargo_usd"] - 22.0 * rider["weight_kg"]) < 1e-9,
+          f"{rider['cargo_usd']:.2f}")
+    check("карго отдельной посылкой — минимум в килограмм",
+          abs(solo["cargo_usd"] - 22.0) < 1e-9, f"{solo['cargo_usd']:.2f}")
+    check("разница шестикратная",
+          solo["cargo_usd"] / rider["cargo_usd"] > 6,
+          f"{solo['cargo_usd'] / rider['cargo_usd']:.1f}")
+    check("довесок не жалуется, что не добран",
+          rider["stopped_by_sellers"] is False and rider["shortfall_g"] == 0)
+    check("режим помечен в корзине", rider["mode"] == "rider")
+
+    # breakeven_solo остаётся при любом режиме: он отвечает на вопрос
+    # «а если корзину собрать не удастся».
+    e = economics(price_usd=5.5, us_ship_usd=4.5, weight_kg=0.0253, qty=1,
+                  ru_price_rub=1600, usdrub=FX, cfg=dict(CFG,
+                                                         cargo_mode="rider"),
+                  ru_comp_basis="avito_sold")
+    check("breakeven_solo считается и в режиме довеска",
+          e["breakeven_solo"] is not None)
+    check("одиночная посылка по-прежнему не окупается",
+          e["breakeven_solo"] is False)
 
 
 def test_series_name_does_not_beat_set_name():
@@ -999,17 +1140,22 @@ def test_seller_cap_in_batching():
              "profit_per_kg": 400.0, "kind": "booster_pack",
              "weight_g_net": 22.0, "ru_price_rub": 2698,
              "seller": f"seller{i}"} for i in range(50)]
-    b = plan(lots, max_sellers=8)[0]
+    b = plan(lots, max_sellers=8, cargo_mode="standalone")[0]
     check("корзина не берёт больше восьми продавцов",
           len(b["sellers"]) <= 8, str(len(b["sellers"])))
     check("корзина честно говорит, что не добрана",
           b["stopped_by_sellers"] is True)
 
     same = [dict(x, seller="one_seller") for x in lots]
-    b2 = plan(same, max_sellers=8)[0]
+    b2 = plan(same, max_sellers=8, cargo_mode="standalone")[0]
     check("у одного продавца берём сколько нужно",
           b2["weight_kg"] >= 1.0 and not b2["stopped_by_sellers"],
           f"{b2['weight_kg']:.3f}")
+
+    # Лимит продавцов действует и в режиме довеска.
+    r = plan(lots, max_sellers=8, cargo_mode="rider")[0]
+    check("довесок тоже не берёт больше восьми продавцов",
+          len(r["sellers"]) <= 8, str(len(r["sellers"])))
 
     # Порог по числу паков снят: одиночный лот снова может стать BUY.
     v, why = _v(packs=1, unit_price_usd=6.0)
@@ -1041,6 +1187,9 @@ def main():
                test_prerelease_is_not_booster,
                test_presale_text_beats_catalog_date,
                test_ancient_set_needs_confirmation,
+               test_connector_and_weak_phrases,
+               test_market_ceiling_rejects_overpay,
+               test_cargo_rider_mode,
                test_series_name_does_not_beat_set_name,
                test_seller_cap_in_batching]:
         print(f"\n{fn.__name__}")

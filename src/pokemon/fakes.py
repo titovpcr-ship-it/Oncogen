@@ -45,7 +45,12 @@ ACCESSORY = re.compile(
     # настоящий товар, и он пишется через «sleeved».
     r"binder|portfolio|deck\s+box|"
     r"playmat|play\s+mat|sleeves?\s+for|storage\s+box|magnetic\s+holder|"
-    r"screw\s?down|graded\s+slab|psa|bgs|cgc)\b", re.I)
+    r"screw\s?down|graded\s+slab|psa|bgs|cgc|"
+    # Найдено чтением корзины отказов 06.09.2026: наклейки, монеты,
+    # спиннеры, буклеты и правила лежали в куче «набор не найден»,
+    # хотя это не карточный товар вовсе.
+    r"sticker\s+pack|sticker\s+album|plastic\s+coin|coin\s+spinner|"
+    r"booklets?|rulebook|instruction\s+sheet|dice\b|tokens?\b)\b", re.I)
 
 # Чужие игры. Категория 183456 их пропускает — проверено живьём.
 OTHER_TCG = re.compile(

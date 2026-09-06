@@ -25,8 +25,54 @@ def _profit_density(row):
     return ppk if ppk is not None else float("-inf")
 
 
+def plan_rider(buys, *, cargo_usd_per_kg=22.0, max_sellers=None):
+    """Довесок к винильной посылке. Килограмм НЕ набирается.
+
+    ЗАЧЕМ ОТДЕЛЬНЫЙ РЕЖИМ. Весь проверенный список 06.09.2026 — шесть
+    лотов по одному паку, то есть 150 граммов. Отдельной посылкой карго
+    на пак выходит $3.67 (минимум в 1 кг), landed 1 201 ₽, и порог
+    1.75× требует 2 102 ₽ за один бустер в Москве. Это не цена.
+    Довеском к винилу, где минимальный килограмм уже оплачен
+    пластинками, карго на пак $0.63 и landed 894 ₽.
+
+    Поэтому в этом режиме планировщик не пытается добрать вес и не
+    пишет «не добрана»: он говорит, сколько граммов добавляется к
+    винильной отправке и во что это обходится.
+    """
+    items = [r for r in buys if r.get("weight_kg")]
+    if not items:
+        return []
+    if max_sellers:
+        seen, kept = set(), []
+        for r in sorted(items, key=_profit_density, reverse=True):
+            sid = r.get("seller")
+            if sid and sid not in seen and len(seen) >= int(max_sellers):
+                continue
+            if sid:
+                seen.add(sid)
+            kept.append(r)
+        items = kept
+    kg = sum(r["weight_kg"] for r in items)
+    cargo = cargo_usd_per_kg * kg          # маржинальная цена, минимума нет
+    buy_usd = sum(r["price_usd"] or 0 for r in items)
+    us_ship = sum(r.get("us_ship_usd") or 0 for r in items)
+    resale = sum(r.get("resale_usd") or 0 for r in items)
+    total = buy_usd + us_ship + cargo
+    sellers = sorted({r.get("seller") for r in items if r.get("seller")})
+    return [{
+        "mode": "rider", "items": items, "weight_kg": kg,
+        "billable_kg": kg, "cargo_usd": cargo, "buy_usd": buy_usd,
+        "us_ship_usd": us_ship, "total_usd": total, "resale_usd": resale,
+        "profit_usd": resale - total,
+        "multiple": (resale / total) if total else None,
+        "shortfall_g": 0.0, "top_ups": [], "sellers": sellers,
+        "stopped_by_sellers": False,
+    }]
+
+
 def plan(buys, watches=(), *, cargo_usd_per_kg=22.0, cargo_min_kg=1.0,
-         cargo_round_step_kg=1.0, max_baskets=10, max_sellers=None):
+         cargo_round_step_kg=1.0, max_baskets=10, max_sellers=None,
+         cargo_mode="rider"):
     """Корзины по cargo_min_kg, набранные по убыванию прибыли на кг.
 
     ОГРАНИЧЕНИЕ НА ЧИСЛО ПРОДАВЦОВ — ЛОГИСТИЧЕСКОЕ, А НЕ ТОВАРНОЕ.
@@ -41,6 +87,10 @@ def plan(buys, watches=(), *, cargo_usd_per_kg=22.0, cargo_min_kg=1.0,
     Корзина закрывается, когда набран вес ИЛИ когда продавцов стало
     max_sellers. Во втором случае она честно говорит, что не добрана.
     """
+    if cargo_mode == "rider":
+        return plan_rider(buys, cargo_usd_per_kg=cargo_usd_per_kg,
+                          max_sellers=max_sellers)
+
     import math
     pool = sorted([r for r in buys if r.get("weight_kg")],
                   key=_profit_density, reverse=True)
