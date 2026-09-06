@@ -174,8 +174,17 @@ def cargo_usd(title, cfg):
 _GRADE_LABELLED = re.compile(
     r"\b(?:vinyl|media|record|disc|vinyl\s+condition|grade|wax)\s*"
     r"(?:condition)?\s*[:\-]\s*([A-Za-z][A-Za-z+\-\s]{0,18})", re.I)
+# ДЛИННЫЕ ФОРМЫ ПЕРВЫМИ. Регулярка выбирает первую подошедшую ветку, и
+# при порядке «VG|VG-» строка «VG-» читалась как «VG»: скидка выходила
+# 50% вместо 40%. А «G-» не распознавался вовсе — его в наборе не было,
+# и лот «Gospel 45 SENSATIONAL SIX ... G-» с описанием «heavy crackle
+# throughout» шёл без скидки и без отказа.
 _GRADE_BARE = re.compile(
-    r"(?<![\w.])(NM|M-|VG\+{1,2}|VG|EX\+?|G\+|VG-|F|P|"
+    # ГОЛОЕ «G» В НАБОР НЕ ВХОДИТ. Оно уже вычёркивалось однажды: «180 g
+    # pressing» превращалось в грейд G, и лот отклонялся за состояние,
+    # которого продавец не называл. Добавив «G-», я вернул и «G» — и тут
+    # же воспроизвёл ту же ошибку. «G-» безопасно: «180 g-» не пишут.
+    r"(?<![\w.])(NM|M-|VG\+{1,2}|VG-|VG|EX\+?|G\+|G-|F|P|"
     r"near\s+mint|very\s+good\s+plus|very\s+good|good\s+plus|"
     r"fair|poor|mint)(?![\w])", re.I)
 
@@ -733,6 +742,44 @@ def eye_check_flags(lot, ref_n, ratio, rel=None):
 # цена, выше которой прибыль перестаёт удовлетворять порогу.
 
 
+# --- ФОРМАТ: РОССИЙСКИЙ РЫНОК ЭТО LP ------------------------------------
+# Вердикт владельца 06.09.2026 по «Gospel 45 SENSATIONAL SIX»: «7-дюймовый
+# сингл. Российский рынок винила — это LP. Синглы уходят за 300-800 ₽ и
+# только знаковые вещи. Логистика на один сингл экономически абсурдна:
+# пересылка стоит дороже товара».
+#
+# Арифметика подтверждает: карго считается по весу с минимумом, и на
+# одиночную семидюймовку приходится столько же фиксированных расходов,
+# сколько на альбом, при потолке продажи впятеро ниже.
+#
+# ГРАНИЦА СЛОВА ПОСЛЕ КАВЫЧКИ НЕ СТАВИТСЯ — тот же урок, что в
+# «новой попсе»: \b после « ” » не срабатывает никогда, потому что
+# кавычка не словесный символ.
+_SEVEN_INCH = re.compile(
+    r"(?:\b7\s*(?:\"|\'\'|”|inch\b|in\b)|\b45\s*rpm\b|"
+    r"\b45s?\b(?=\s|$)|\bsingle\b|\bep\b|\bb/w\b)", re.I)
+
+# Слова, при которых «45» и «single» перестают означать формат: это
+# часть названия или года, а не семидюймовка.
+_NOT_FORMAT = re.compile(r"\b(19\d\d|20\d\d)\b\s*$|\blp\b|\balbum\b", re.I)
+
+
+def is_seven_inch(title):
+    """Семидюймовка или сингл. Формат вне сегмента.
+
+    «LP» в заголовке перевешивает: продавцы пишут «45 RPM» и на
+    альбомах-максисинглах, а «LP» они пишут осознанно.
+    """
+    t = title or ""
+    # «2LP» и «3xLP» пишутся слитно, и \blp\b их не видит: граница слова
+    # перед «lp» в «2lp» не срабатывает. Замерено на «Pink Floyd The Wall
+    # 2LP 45 RPM audiophile» — аудиофильское переиздание альбома на
+    # скорости 45 оборотов уезжало в семидюймовки.
+    if re.search(r"(?:\b|\d)x?lp\b|\balbum\b", t, re.I):
+        return False
+    return bool(_SEVEN_INCH.search(t))
+
+
 def max_bid_usd(reference_usd, ship_usd, cargo_usd_, min_profit):
     """До какой суммы можно поднимать ставку. None, если считать не из чего.
 
@@ -774,7 +821,8 @@ def bid_pressure(lot):
 # предмету. Только там предмет отличался прессом, а здесь — состоянием.
 GRADE_DISCOUNT = {
     "M": 1.00, "NM": 1.00, "EX": 0.85, "VG+": 0.75,
-    "VG": 0.50, "VG-": 0.40, "G+": 0.30, "G": 0.25, "F": 0.15, "P": 0.10,
+    "VG": 0.50, "VG-": 0.40, "G+": 0.30, "G": 0.25, "G-": 0.20,
+    "F": 0.15, "P": 0.10,
 }
 
 
@@ -852,6 +900,20 @@ _RU_STOP = {"lp", "vinyl", "record", "records", "album", "the", "original",
 #
 # Список конечный и потому честный: это не словарь «чужих игр», который
 # бездонен, а перечень частых английских имён.
+# ЖАНР И ЛЕЙБЛ — НЕ ИСПОЛНИТЕЛЬ. Найдено на живом пуше 06.09.2026:
+# заголовок «Gospel 45 SENSATIONAL SIX Beyond The River GOSPEL G-»
+# дошёл до кандидата «Gospel», и гейт подтвердил рынок восемью
+# продажами, где это слово стоит в названии жанра. Третий механизм
+# ложного срабатывания в одном и том же гейте за один вечер.
+_GENRE_LABEL = {
+    "gospel", "jazz", "soul", "funk", "rock", "blues", "disco", "reggae",
+    "punk", "metal", "folk", "country", "classical", "pop", "rap", "hip",
+    "electronic", "ambient", "techno", "house", "promo", "label", "series",
+    "collection", "compilation", "various", "artists", "soundtrack", "ost",
+    "columbia", "atlantic", "capitol", "decca", "polydor", "verve",
+    "prestige", "savoy", "motown", "stax", "chess", "riverside",
+}
+
 _GIVEN_NAMES = {
     "eddie", "harry", "bobby", "johnny", "billy", "jimmy", "tommy", "joe",
     "john", "mike", "dave", "david", "paul", "peter", "george", "ringo",
@@ -922,16 +984,27 @@ def artist_candidates(title):
     # приходится угадывать — тогда лестница идёт до одного слова.
     # Замерено 06.09.2026: без этого CHIC и Elvis Presley отсеивались
     # как «нет рынка в РФ».
-    split_found = len(head) < len(title or "")
+    # РАЗДЕЛИТЕЛЬ ГОВОРИТ О ГРАНИЦЕ ИМЕНИ, ТОЛЬКО ЕСЛИ ОТРЕЗОК КОРОТКИЙ.
+    # Найдено 06.09.2026: «The Beatles LP Lot of 13 Records - White Album
+    # - Abbey Road» имеет тире, но оно стоит внутри перечня альбомов, а
+    # не между исполнителем и названием. Отрезок до него — шесть слов,
+    # и «исполнителем» становилась фраза «Beatles LP Lot of», которая не
+    # находит ничего. Битлы с 2 487 продажами отсеивались как «нет рынка
+    # в РФ».
+    #
+    # Имя из шести слов именем не бывает: если отрезок длинный,
+    # разделитель ничего не разделил, и работает обычная лестница.
+    split_found = len(head) < len(title or "") and len(words) <= 4
     if split_found:
-        return [" ".join(words[:4])] if len(words) >= 4 else [" ".join(words)]
+        return [" ".join(words)]
     out = []
     for n in (4, 3, 2, 1):
         if len(words) >= n:
             cand = " ".join(words[:n])
             if len(cand) < 4:
                 continue
-            if n == 1 and cand.lower() in _GIVEN_NAMES:
+            if n == 1 and (cand.lower() in _GIVEN_NAMES
+                           or cand.lower() in _GENRE_LABEL):
                 continue
             out.append(cand)
     return out
@@ -1068,6 +1141,8 @@ def main(argv=None):
     ru_min = 1 if ru_min is None else int(ru_min)
     max_bids = ru.get("west_max_bids")
     max_bids = 8 if max_bids is None else int(max_bids)
+    skip_singles = ru.get("west_skip_singles")
+    skip_singles = True if skip_singles is None else bool(skip_singles)
     min_ratio = None if min_ratio is None else float(min_ratio)
     # Карго больше НЕ константа: считается по числу пластинок в лоте.
     # Прежние 0.75 кг остаются одинарным случаем той же формулы.
@@ -1260,7 +1335,12 @@ def main(argv=None):
                 # не выбирать одно.
                 is_new_sealed = bool(_NEW_SEALED.search(lot["title"] or ""))
                 bids = lot.get("bids") or 0
-                if max_bids and bids >= max_bids:
+                if skip_singles and is_seven_inch(lot["title"]):
+                    why = ("семидюймовка: российский рынок это LP, синглы "
+                           "уходят за 300-800 ₽, а расходы на них те же")
+                if why:
+                    ru_n, ru_by = None, None
+                elif max_bids and bids >= max_bids:
                     why = (f"ставок {bids} — цену уже нашли торги, это "
                            f"розница конечного рынка, а не вход")
                     ru_n, ru_by = None, None

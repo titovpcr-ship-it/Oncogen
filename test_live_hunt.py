@@ -588,6 +588,64 @@ def test_ru_demand_gate():
 
 
 
+def test_gospel_single_verdict():
+    """Шестой вердикт владельца: четыре дефекта в одном лоте.
+
+    «Gospel 45 SENSATIONAL SIX Beyond The River GOSPEL G-» за $12.99
+    ушёл в пуш с прибылью $173.65. Вердикт: «7-дюймовый сингл,
+    российский рынок это LP; G- — нижняя граница играбельности;
+    госпел в РФ коллекционной базы не имеет».
+    """
+    # 1. Формат. Расходы на сингл те же, потолок продажи впятеро ниже.
+    check("семидюймовка распознана",
+          lh.is_seven_inch("Gospel 45 SENSATIONAL SIX Beyond The River"))
+    check("«7\" single» тоже", lh.is_seven_inch('Miles Davis 7" single'))
+    check("альбом семидюймовкой не считается",
+          not lh.is_seven_inch("John Coltrane Blue Train LP Blue Note"))
+    # «2LP» пишется слитно, и \blp\b его не видит.
+    check("«2LP 45 RPM» — это альбом, а не сингл",
+          not lh.is_seven_inch("Pink Floyd The Wall 2LP 45 RPM audiophile"))
+    check("«3xLP» тоже",
+          not lh.is_seven_inch("Jimi Hendrix 3xLP BBC Sessions"))
+
+    # 2. Грейд G- не распознавался ВООБЩЕ: его не было ни в регулярке,
+    # ни в словаре канонизации, и лот шёл без скидки и без отказа.
+    check("G- читается", lh.grade_from_text("vinyl G- heavy crackle") == "G-")
+    check("G- получает скидку 20%", lh.grade_discount("G-") == 0.20)
+    # Длинные формы первыми: при порядке «VG|VG-» строка «VG-» читалась
+    # как «VG», и скидка выходила 50% вместо 40%.
+    check("VG- не читается как VG",
+          lh.grade_from_text("Vinyl Condition: VG-") == "VG-")
+    # И старая защита не сломана: «180 g» грейдом не становится.
+    check("«180 g» по-прежнему не грейд",
+          lh.grade_from_text("180 g pressing") is None)
+
+    # 3. Жанр и лейбл не могут быть исполнителем. Кандидат «Gospel»
+    # подтверждал рынок восемью продажами с этим словом в жанре.
+    check("«Gospel» не кандидат в исполнители",
+          "gospel" not in [c.lower() for c in lh.artist_candidates(
+              "Gospel 45 SENSATIONAL SIX Beyond The River GOSPEL G-")],
+          str(lh.artist_candidates(
+              "Gospel 45 SENSATIONAL SIX Beyond The River GOSPEL G-")))
+    check("название лейбла тоже не кандидат",
+          "savoy" not in [c.lower() for c in
+                          lh.artist_candidates("Savoy 12345 Some Group Title")])
+
+    # 4. Разделитель говорит о границе имени, только если отрезок до
+    # него короткий. «The Beatles LP Lot of 13 Records - White Album -
+    # Abbey Road»: тире стоит внутри перечня альбомов, отрезок до него
+    # шесть слов, и «исполнителем» становилась фраза «Beatles LP Lot
+    # of». Битлы с 2 487 продажами отсеивались как «нет рынка в РФ».
+    long_head = "The Beatles LP Lot of 13 Records - White Album - Abbey Road"
+    check("длинный отрезок до тире разделителем не считается",
+          any(c.lower().startswith("beatles")
+              and len(c.split()) <= 2 for c in lh.artist_candidates(long_head)),
+          str(lh.artist_candidates(long_head)))
+    check("короткий отрезок до тире остаётся именем целиком",
+          lh.artist_candidates("Harry Case - In A Mood") == ["Harry Case"],
+          str(lh.artist_candidates("Harry Case - In A Mood")))
+
+
 def test_ru_demand_matches_whole_words():
     """Совпадение по рынку РФ проверяется по границам слова.
 
@@ -692,6 +750,7 @@ def main():
     for fn in [test_max_bid_replaces_current_price,
                test_grade_discounts_the_reference,
                test_country_mismatch, test_ru_demand_gate,
+               test_gospel_single_verdict,
                test_ru_demand_matches_whole_words,
                test_bids_mean_price_already_found,
                test_new_sealed_exempt_from_ru_gate,

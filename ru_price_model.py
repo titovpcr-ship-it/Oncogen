@@ -45,6 +45,14 @@ GRADE_CANON = {
     "very good plus": "VG+", "very good +": "VG+", "vg+": "VG+",
     "very good": "VG", "vg": "VG",
     "good plus": "G+", "good +": "G+", "g+": "G+", "good": "G", "g": "G",
+    # МИНУСОВЫЕ ФОРМЫ. Продавцы пишут их постоянно, а словарь их не
+    # знал: canon_grade("VG-") и canon_grade("G-") возвращали None,
+    # то есть «состояние не определено», и лот шёл без скидки к справке
+    # и без отказа. Найдено 06.09.2026 на лоте «Gospel 45 SENSATIONAL
+    # SIX ... G-» с описанием «heavy crackle throughout» — это нижняя
+    # граница играбельности, а посчитан он был как безымянное состояние.
+    "very good -": "VG-", "very good minus": "VG-", "vg-": "VG-",
+    "good -": "G-", "good minus": "G-", "g-": "G-",
     "fair": "F", "poor": "P",
 }
 BASE_GRADE = "VG++"
