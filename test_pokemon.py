@@ -35,16 +35,20 @@ CFG = {"cargo_usd_per_kg": 22.0, "cargo_min_kg": 1.0, "cargo_round_step_kg": 1.0
        "kind_allowlist": ["booster_pack", "sleeved_booster",
                           "blister_checklane", "blister_3pack",
                           "booster_bundle_6"],
-       "kind_denylist": ["mini_tin", "tin", "build_and_battle", "etb"],
+       "kind_denylist": ["mini_tin", "tin", "build_and_battle", "etb",
+                         "fun_pack", "prerelease_pack", "code_card"],
        "ru_discount_by_basis": {"avito_sold": 0.95, "avito_ask": 0.72,
                                 "pokemarket": 0.80, "shelf": 0.55,
                                 "derived": None},
        "min_unit_price_usd": 5.0, "max_unit_price_usd": 13.0,
-       "max_lot_price_usd": 120.0, "min_units_per_lot": 5,
+       "max_lot_price_usd": 120.0, "min_units_per_lot": 1,
        "min_days_since_release": 14, "release_age_penalty_months": 18,
        "packs_per_unit": {"booster_pack": 1, "sleeved_booster": 1,
                           "blister_checklane": 1, "blister_3pack": 3,
-                          "booster_bundle_6": 6}}
+                          "booster_bundle_6": 6},
+       "ancient_set_months": 60, "max_sellers_per_batch": 8,
+       "catalog_categories_for_pricing": [3],
+       "catalog_categories_for_matching": [3, 85]}
 
 FX = 86.5857
 
@@ -651,18 +655,31 @@ def test_price_band_is_per_unit():
 
 
 def test_single_unit_lot_never_buys():
-    """Одиночный лот — максимум WATCH, каким бы ни был мультипликатор."""
+    """Порог по числу паков РАБОТАЕТ, когда он задан, — но он снят.
+
+    ИСТОРИЯ ЭТОГО ТЕСТА. В раунде 2 порог был поставлен в 5 паков по
+    верному расчёту: доставка по США берётся за отправление, и на одном
+    паке даёт +82% к цене. В раунде 3 замер настоящего предложения
+    отменил расчёт: лотов от пяти паков в полосе нет вовсе, а тройки
+    продаются по $8.40 за пак против $5.45 у одиночных — рынок уже
+    переоценил их ровно на стоимость доставки, landed 906 ₽ против
+    914 ₽. Порог снят, ограничение переехало в сборку корзины.
+
+    Механизм оставлен и проверяется: если владелец вернёт порог, он
+    обязан работать.
+    """
     great = {"multiple": 9.0, "profit_per_kg": 9000.0,
              "profit_per_kg_pessimistic": 7000.0, "ru_comp_usable": True}
-    v, why = _v(econ=great, unit_price_usd=6.0, packs=1)
-    check("один пак не даёт BUY даже при девятикратной прибыли",
-          v == WATCH, f"{v}: {why}")
+    strict = dict(CFG, min_units_per_lot=5)
+    v, why = _v(econ=great, unit_price_usd=6.0, packs=1, cfg=strict)
+    check("при пороге 5 один пак не даёт BUY", v == WATCH, f"{v}: {why}")
     check("причина называет доставку по США", "доставка по США" in why, why)
+    v2, _ = _v(econ=great, unit_price_usd=6.0, packs=5, cfg=strict)
+    check("пять паков порог проходят", v2 == BUY, v2)
 
-    v2, _ = _v(econ=great, unit_price_usd=6.0, packs=4)
-    check("четыре пака — всё ещё мало", v2 == WATCH, v2)
-    v3, _ = _v(econ=great, unit_price_usd=6.0, packs=5)
-    check("пять паков — порог пройден", v3 == BUY, v3)
+    # А при текущем конфиге порога нет.
+    v3, _ = _v(econ=great, unit_price_usd=6.0, packs=1)
+    check("порог снят — одиночный лот проходит", v3 == BUY, v3)
 
 
 def test_unreleased_set_is_preorder():
@@ -751,6 +768,254 @@ def test_old_set_penalised_in_need_comps():
           str([r["set_name"] for r in got2]))
 
 
+# --- Решения, раунд 3: резолв ----------------------------------------
+# Все шесть проверок выросли из построчного чтения списка «что
+# померить» 06.09.2026: из восьми строк достоверными оказались две, и
+# ни одну ошибку не поймал ни один из 127 тестов — потому что каждая
+# строка была технически валидна.
+
+EN = {"product_id": 1, "name": "Mega Evolution Booster Pack",
+      "set_name": "ME01: Mega Evolution", "set_abbr": "MEG",
+      "market_price": 7.90, "set_aliases": {"MEG", "ME01", "MEGA EVOLUTION"},
+      "set_category": 3, "published_on": "2025-09-26T00:00:00"}
+JP = {"product_id": 2, "name": "Mega Symphonia Booster Pack",
+      "set_name": "M1S: Mega Symphonia", "set_abbr": "M1S",
+      "market_price": 2.82, "set_aliases": {"M1S", "MEGA SYMPHONIA"},
+      "set_category": 85, "published_on": "2025-09-26T00:00:00"}
+OLD = {"product_id": 3, "name": "Undaunted Booster Pack",
+       "set_name": "Undaunted", "set_abbr": "UD", "market_price": 40.0,
+       "set_aliases": {"UD", "UNDAUNTED"}, "set_category": 3,
+       "published_on": "2010-08-18T00:00:00"}
+
+
+def test_requires_pokemon_token():
+    """Совпадение по названию — не идентификация.
+
+    Живой случай: «Undaunted Raid Booster Pack My Hero Academia MHA» за
+    $5.99 встал в список «что померить» как покемоновский набор
+    Undaunted 2010 года. Названия наборов — обычные английские слова.
+    """
+    check("чужая игра без слова Pokemon не подтверждена",
+          not resolve.has_pokemon_token(
+              "Undaunted Raid Booster Pack My Hero Academia MHA"))
+    check("настоящий лот подтверждён",
+          resolve.has_pokemon_token("Pokémon TCG Perfect Order Booster Pack"))
+    check("латинское написание тоже",
+          resolve.has_pokemon_token("Pokemon Chaos Rising Booster Pack"))
+
+    v, why = _v(pokemon_token=False)
+    check("без токена — OUT_OF_SCOPE", v == OUT_OF_SCOPE, f"{v}: {why}")
+    check("причина названа", "нет слова Pokemon" in why, why)
+    check("это не WATCH и не BUY", v not in (WATCH, BUY))
+
+
+def test_japanese_never_priced_as_english():
+    """Японскому паку нельзя подставлять английскую цену. Никогда.
+
+    Живой случай: «1 PACK Mega Symphonia M1S Mega Evolution JPN» за
+    $5.00 резолвился в английский ME01, получал его рынок $7.90 и
+    проходил правило 60% как «63% рынка». По своему настоящему рынку
+    ($2.82) это переплата в 1.8 раза. Тот же класс, что B-1: одна
+    проверка отвечала за два вопроса.
+    """
+    ix = resolve.build_index([EN, JP])
+    title = "1 PACK Mega Symphonia M1S Mega Evolution JPN Japanese Pokemon"
+    m = resolve.match_set(title, ix)
+    check("набор опознан как японский", m and m["set_category"] == 85,
+          str(m and m["set_category"]))
+    check("опознание подтверждено кодом набора", m and m["code_confirmed"])
+
+    # Каталог для цены уже каталога для узнавания.
+    priced = resolve.match(title, ix, "booster_pack", pricing_categories=[3])
+    check("японский набор цену из английского каталога не получает",
+          priced is None or priced["set_category"] == 3,
+          str(priced and priced["set_name"]))
+
+    check("маркер в заголовке ловится отдельно",
+          resolve.looks_japanese("Pokemon Snow Hazard SV2P Japanese"))
+    v, why = _v(japanese=True)
+    check("японский товар → OUT_OF_SCOPE", v == OUT_OF_SCOPE, f"{v}: {why}")
+    check("причина названа", "японский" in why, why)
+
+    # Английский лот, упоминающий Japan, но резолвнутый в английский
+    # набор, остаётся английским — признака два, и они независимы.
+    check("английский набор из каталога 3 японским не считается",
+          resolve.match_set("Pokemon Mega Evolution ME01 Booster Pack",
+                            ix)["set_category"] == 3)
+
+
+def test_fun_pack_is_not_booster():
+    """Fun Pack — три карты, а не одиннадцать. Это другой товар.
+
+    Живой случай: «Pokemon 1 * Pack (3 Cards) — Destined Rivals — Fun
+    Pack — RARE Sample» стоял в списке как одиночный бустер.
+    """
+    check("вид опознаётся",
+          detect_kind("Pokemon TCG Destined Rivals Fun Pack - 3 Cards") ==
+          "fun_pack")
+    check("слово Pack не перебивает Fun Pack",
+          detect_kind("Pokemon Fun Pack Booster") == "fun_pack")
+    v, why = _v(kind="fun_pack")
+    check("fun_pack вне сегмента", v == OUT_OF_SCOPE, f"{v}: {why}")
+
+
+def test_prerelease_is_not_booster():
+    """Пререлизный набор — не одиночный пак.
+
+    Живые случаи: «Chilling Reign Inteleon Pre-Release Pack» и «Iron
+    Bundle Paradox Rift Pre Release Pack» — оба стояли как бустеры.
+    """
+    for t in ["Pokemon Chilling Reign Inteleon Pre-Release Pack",
+              "Pokemon Iron Bundle Paradox Rift Pre Release Pack",
+              "Pokemon Prerelease Kit Surging Sparks"]:
+        check(f"«{t[8:40]}» — пререлиз",
+              detect_kind(t) == "prerelease_pack", str(detect_kind(t)))
+    v, why = _v(kind="prerelease_pack")
+    check("пререлиз вне сегмента", v == OUT_OF_SCOPE, f"{v}: {why}")
+    check("настоящий бустер не задет",
+          detect_kind("Pokemon Perfect Order Booster Pack") == "booster_pack")
+
+
+def test_presale_text_beats_catalog_date():
+    """Слово продавца сильнее даты каталога.
+
+    Живой случай: «Presale New Pokémon 30th Anniversary Celebrations
+    Booster Bundle» за $89.99 резолвнулся в Celebrations 2021 года,
+    получил его дату и прошёл гейт по дате честно — просто посмотрел на
+    дату НЕ ТОГО набора. Гейт по дате надёжен ровно настолько,
+    насколько надёжен резолв.
+    """
+    check("presale ловится",
+          fakes.looks_presale("Presale New Pokémon 30th Anniversary Bundle"))
+    check("pre-order ловится",
+          fakes.looks_presale("Pokemon TCG 30th Celebration (Pre-order)"))
+    check("обычный лот не задет",
+          not fakes.looks_presale("Pokemon Chaos Rising Booster Pack sealed"))
+
+    # Набор старый по каталогу (дата прошла давно), но текст говорит
+    # «предзаказ» — и он побеждает.
+    v, why = _v(presale_text=True, days_since_rel=1800, code_confirmed=True)
+    check("текст перебивает дату", v == PREORDER, f"{v}: {why}")
+    check("причина ссылается на заголовок", "заголовк" in why, why)
+
+
+def test_ancient_set_needs_confirmation():
+    """Набор старше пяти лет без кода в заголовке — ошибка резолва.
+
+    Обе строки списка, где набор оказался старше пяти лет, были
+    ошибками: My Hero Academia (192 мес) и предзаказ, ушедший в
+    Celebrations 2021 (58.9 мес). Штраф 0.5 оставлял бы их в списке, а
+    список идёт человеку.
+    """
+    old_days = 2000                       # ~66 месяцев
+    v, why = _v(days_since_rel=old_days, code_confirmed=False)
+    check("старый набор без кода → OUT_OF_SCOPE", v == OUT_OF_SCOPE,
+          f"{v}: {why}")
+    check("причина называет возраст и код", "мес" in why and "код" in why, why)
+
+    v2, why2 = _v(days_since_rel=old_days, code_confirmed=True)
+    check("с кодом набора проходит дальше", v2 == BUY, f"{v2}: {why2}")
+
+    v3, _ = _v(days_since_rel=400, code_confirmed=False)
+    check("свежий набор подтверждения не требует", v3 == BUY, v3)
+
+    # Код набора должен стоять отдельным словом, а не быть подстрокой.
+    check("код SV08 в заголовке подтверждает",
+          resolve.code_in_title("Pokemon SV08 Surging Sparks Pack",
+                                {"SSP", "SV08"}))
+    check("словесный псевдоним за код не считается",
+          not resolve.code_in_title("Pokemon Undaunted Booster Pack",
+                                    {"UNDAUNTED"}))
+
+
+def test_series_name_does_not_beat_set_name():
+    """Название серии не должно перебивать название набора.
+
+    НАЙДЕНО ПОСТРОЧНЫМ ЧТЕНИЕМ СПИСКА 06.09.2026, а не тестом. Лот
+    «Pokémon TCG Mega Evolution—Pitch Black Booster Pack English 2026»
+    — это ME05: Pitch Black (июль 2026). Но в заголовке стоят оба
+    названия, и по длине фразы побеждало «Mega Evolution» — имя ME01
+    (сентябрь 2025) и одновременно имя всей серии. Резолв уводил и дату
+    выхода, и рыночную цену на четыре набора назад.
+
+    Первый набор серии всегда носит её имя, поэтому случай не редкий, а
+    системный: ME01 Mega Evolution, SV Scarlet & Violet, SWSH Sword &
+    Shield.
+    """
+    me01 = {"product_id": 10, "name": "Mega Evolution Booster Pack",
+            "set_name": "ME01: Mega Evolution", "set_abbr": "MEG",
+            "market_price": 7.9, "set_aliases": {"MEG", "ME01"},
+            "set_category": 3, "published_on": "2025-09-26T00:00:00"}
+    me05 = {"product_id": 11, "name": "Pitch Black Booster Pack",
+            "set_name": "ME05: Pitch Black", "set_abbr": "PBL",
+            "market_price": 6.5, "set_aliases": {"PBL", "ME05"},
+            "set_category": 3, "published_on": "2026-07-17T00:00:00"}
+    ix = resolve.build_index([me01, me05])
+
+    m = resolve.match_set(
+        "Pokémon TCG Mega Evolution—Pitch Black Booster Pack English 2026", ix)
+    check("побеждает набор, а не серия", m["set_name"] == "ME05: Pitch Black",
+          m["set_name"])
+
+    # Когда в заголовке только имя серии — это и есть первый набор.
+    m2 = resolve.match_set("Pokemon Mega Evolution Booster Pack", ix)
+    check("одно только имя серии даёт ME01",
+          m2["set_name"] == "ME01: Mega Evolution", m2["set_name"])
+
+    # Код набора сильнее любой эвристики по датам.
+    me03 = {"product_id": 12, "name": "Perfect Order Booster Pack",
+            "set_name": "ME03: Perfect Order", "set_abbr": "POR",
+            "market_price": 6.0, "set_aliases": {"POR", "ME03"},
+            "set_category": 3, "published_on": "2026-03-27T00:00:00"}
+    ix2 = resolve.build_index([me01, me05, me03])
+    m3 = resolve.match_set(
+        "x1 Pokemon TCG: Mega Evolution ME03 Perfect Order Booster Pack", ix2)
+    check("код набора бьёт дату", m3["set_name"] == "ME03: Perfect Order",
+          m3["set_name"])
+    check("и помечает опознание подтверждённым", m3["code_confirmed"])
+
+    # ОТВЕТ НА ВОПРОС «КАКОЙ НАБОР» ОБЯЗАН БЫТЬ ОДИН. Раньше match_set()
+    # и match() выбирали набор каждая сама, и на этом лоте расходились:
+    # в отчёт шло имя от одной, дата от другой, а рыночная цена — от
+    # чужого набора.
+    title = "Pokémon TCG Mega Evolution—Pitch Black Booster Pack English 2026"
+    scope = resolve.match_set(title, ix)
+    priced = resolve.match(title, ix, "booster_pack",
+                           pricing_categories=[3], scope=scope)
+    check("цена берётся из того же набора, что и дата",
+          priced is not None and priced["set_name"] == scope["set_name"],
+          f"{priced and priced['set_name']} против {scope['set_name']}")
+    check("и это ME05, а не ME01",
+          priced["set_name"] == "ME05: Pitch Black", priced["set_name"])
+    check("рыночная цена тоже от ME05",
+          abs(priced["market_price"] - 6.5) < 1e-9, str(priced["market_price"]))
+
+
+def test_seller_cap_in_batching():
+    """Ограничение на число продавцов — в сборке корзины, не в отборе."""
+    from src.pokemon.batching import plan
+    lots = [{"title": f"p{i}", "price_usd": 6.0, "us_ship_usd": 4.5,
+             "weight_kg": 0.0253, "qty": 1, "resale_usd": 20.2,
+             "profit_per_kg": 400.0, "kind": "booster_pack",
+             "weight_g_net": 22.0, "ru_price_rub": 2698,
+             "seller": f"seller{i}"} for i in range(50)]
+    b = plan(lots, max_sellers=8)[0]
+    check("корзина не берёт больше восьми продавцов",
+          len(b["sellers"]) <= 8, str(len(b["sellers"])))
+    check("корзина честно говорит, что не добрана",
+          b["stopped_by_sellers"] is True)
+
+    same = [dict(x, seller="one_seller") for x in lots]
+    b2 = plan(same, max_sellers=8)[0]
+    check("у одного продавца берём сколько нужно",
+          b2["weight_kg"] >= 1.0 and not b2["stopped_by_sellers"],
+          f"{b2['weight_kg']:.3f}")
+
+    # Порог по числу паков снят: одиночный лот снова может стать BUY.
+    v, why = _v(packs=1, unit_price_usd=6.0)
+    check("одиночный лот больше не запрещён порогом", v == BUY, f"{v}: {why}")
+
+
 def main():
     for fn in [test_sealed_classifier, test_set_aliases, test_weight_parsing,
                test_cargo_rounding, test_fake_filter,
@@ -769,7 +1034,15 @@ def main():
                test_price_band_is_per_unit,
                test_single_unit_lot_never_buys,
                test_unreleased_set_is_preorder,
-               test_old_set_penalised_in_need_comps]:
+               test_old_set_penalised_in_need_comps,
+               test_requires_pokemon_token,
+               test_japanese_never_priced_as_english,
+               test_fun_pack_is_not_booster,
+               test_prerelease_is_not_booster,
+               test_presale_text_beats_catalog_date,
+               test_ancient_set_needs_confirmation,
+               test_series_name_does_not_beat_set_name,
+               test_seller_cap_in_batching]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

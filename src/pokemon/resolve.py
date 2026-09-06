@@ -18,6 +18,33 @@ import re
 
 _NORM = re.compile(r"[^a-z0-9]+")
 
+# ПОДТВЕРЖДАЮЩИЙ ТОКЕН. Названия покемоновских наборов — обычные
+# английские слова: Undaunted, Celebrations, Perfect Order, Mega
+# Evolution. Они совпадают с чужими играми, с японскими наборами и сами
+# с собой через пятнадцать лет. Положительная проверка по каталогу это
+# не ловит — слово-то в каталоге есть.
+#
+# Живой случай 06.09.2026: «Undaunted Raid Booster Pack My Hero Academia
+# MHA» встал в список «что померить» как покемоновский набор Undaunted
+# 2010 года. Одно слово в заголовке закрывает весь этот класс, и словарь
+# чужих игр по-прежнему не нужен.
+_POKEMON = re.compile(r"pok[eé]mon|\bpokemon\b", re.I)
+
+# Японский товар. Каталог categoryId 3 английский, и подставлять его
+# цену японскому паку нельзя ни при каких обстоятельствах.
+_JAPANESE = re.compile(
+    r"\bjpn\b|\bjapanese\b|\bjapan\b|\bjp\b|\bnihongo\b", re.I)
+
+
+def has_pokemon_token(title):
+    """Слово Pokemon в заголовке. Без него набор НЕ опознан."""
+    return bool(_POKEMON.search(title or ""))
+
+
+def looks_japanese(title):
+    """Явный японский маркер в заголовке лота."""
+    return bool(_JAPANESE.search(title or ""))
+
 
 def norm(s):
     return _NORM.sub(" ", (s or "").lower()).strip()
@@ -43,36 +70,63 @@ def build_index(sealed_products):
     return ix
 
 
-def match(title, ix, kind=None):
-    """Товар каталога или None.
+def match(title, ix, kind=None, pricing_categories=None, scope=None):
+    """Товар каталога для ЦЕНЫ или None.
 
-    Возвращает именно тот товар набора, чей вид совпал с видом лота;
-    если совпадения по виду нет — None, а не «первый попавшийся».
-    Ошибиться видом значит взять чужую рыночную цену, а на ней стоит
-    проверка аномальной дешевизны.
+    ОТВЕТ НА ВОПРОС «КАКОЙ ЭТО НАБОР» ДОЛЖЕН БЫТЬ ОДИН. Найдено
+    06.09.2026: match_set() уже умел выбирать между набором и именем
+    серии, а match() продолжал брать самую длинную фразу — и на лоте
+    «Mega Evolution—Pitch Black» они расходились. В отчёт шло имя от
+    match(), дата от match_set(), а рыночная цена — от чужого набора.
+    Две функции отвечали на разные вопросы, но набор выбирали каждая
+    сама, и это ровно тот класс ошибки, который они были призваны
+    развести.
+
+    Теперь набор выбирает только match_set(); match() ищет товар
+    нужного ВИДА внутри уже выбранного набора.
+
+    Возвращает None, если вид не опознан: ошибиться видом значит взять
+    чужую рыночную цену, а на ней стоит проверка аномальной дешевизны.
     """
-    t = norm(title)
-    if not t:
-        return None
-    hits = [(len(p), p) for p in ix if p in t]
-    if not hits:
-        return None
-    hits.sort(key=lambda x: -x[0])
     if kind is None:
-        # НАЙДЕНО НА ПЕРВОМ ЖЕ ЖИВОМ ПРОГОНЕ 06.09.2026. Первая версия
-        # при неопознанном виде возвращала первый товар набора — и
-        # сингл «Zigzagoon 081/094 - Phantasmal Flames» получил
-        # рыночную цену $285.69 от бустер-бокса того же набора. На этой
-        # цене стоит проверка аномальной дешевизны, то есть лот
-        # отказывался как подделка по чужой цифре. Не знаем вид — не
-        # подставляем цену.
+        # Не знаем вид — не подставляем цену. Сингл «Zigzagoon 081/094»
+        # получал так $285.69 от бустер-бокса того же набора.
         return None
+    sel = scope if scope is not None else match_set(title, ix)
+    if sel is None:
+        return None
+    allowed = ({int(c) for c in pricing_categories}
+               if pricing_categories is not None else None)
+
     from .weights import detect_kind
-    for _, phrase in hits:
-        for prod in ix[phrase]:
+    for phrase, prods in ix.items():
+        for prod in prods:
+            if prod.get("set_name") != sel.get("set_name"):
+                continue
+            if allowed is not None and prod.get("set_category") is not None \
+                    and int(prod["set_category"]) not in allowed:
+                continue
             if detect_kind(prod["name"]) == kind:
                 return prod
     return None
+
+
+def code_in_title(title, aliases):
+    """Код набора (SSP, SV08, M1S) стоит в заголовке отдельным словом.
+
+    Это подтверждение опознания, а не украшение: название набора состоит
+    из обычных слов и делится с чужими играми, а код — нет.
+    """
+    t = " " + _NORM.sub(" ", (title or "").lower()).strip() + " "
+    for a in (aliases or ()):
+        a = _NORM.sub(" ", str(a).lower()).strip()
+        # Слишком короткие и слишком «словесные» псевдонимы за код не
+        # считаются: «PR» и «Undaunted» подтверждают что угодно.
+        if len(a) < 2 or " " in a or a.isalpha() and len(a) > 4:
+            continue
+        if f" {a} " in t:
+            return True
+    return False
 
 
 def match_set(title, ix):
@@ -81,21 +135,55 @@ def match_set(title, ix):
     Отдельная функция от match() нарочно. match() обязан совпасть и по
     виду товара, потому что от него зависит рыночная цена, а ошибка в
     ней уже стоила ложных отказов (сингл Zigzagoon получал $285.69 от
-    бустер-бокса). Здесь вопрос другой и дешевле: покемоновский ли это
-    вообще набор. Ответ используется только для вердикта OUT_OF_SCOPE и
-    никогда для денег.
+    бустер-бокса). Здесь вопрос другой и дешевле: какой это набор.
+
+    ВЫБОР МЕЖДУ НЕСКОЛЬКИМИ СОВПАВШИМИ. Длина фразы — слабый признак:
+    «Mega Symphonia» (японский M1S) обгоняет «Mega Evolution»
+    (английский ME01) на один символ, и порядок решала бы случайность.
+    Поэтому сначала ищется набор, чей КОД стоит в заголовке, и только
+    при отсутствии такого берётся самая длинная фраза.
     """
     t = norm(title)
     if not t:
         return None
-    best = None
-    for phrase in ix:
-        if phrase in t and (best is None or len(phrase) > len(best)):
-            best = phrase
-    if best is None:
+    hits = sorted((p for p in ix if p in t), key=len, reverse=True)
+    if not hits:
         return None
-    prod = ix[best][0]
-    return {"set_name": prod.get("set_name"), "set_abbr": prod.get("set_abbr"),
-            "set_aliases": prod.get("set_aliases") or set(),
-            "published_on": prod.get("published_on"),
-            "set_category": prod.get("set_category"), "phrase": best}
+
+    chosen, confirmed = None, False
+    for phrase in hits:
+        for prod in ix[phrase]:
+            if code_in_title(title, prod.get("set_aliases")):
+                chosen, confirmed = prod, True
+                break
+        if chosen:
+            break
+
+    if chosen is None:
+        # НАЗВАНИЕ СЕРИИ И НАЗВАНИЕ НАБОРА СОВПАДАЮТ У ПЕРВОГО НАБОРА
+        # СЕРИИ. Найдено 06.09.2026 построчным чтением списка: лот
+        # «Pokémon TCG Mega Evolution—Pitch Black Booster Pack» — это
+        # ME05: Pitch Black, но в заголовке стоят оба названия, и по
+        # длине фразы побеждало «Mega Evolution» (ME01, сентябрь 2025).
+        # Резолв уводил и дату выхода, и рыночную цену на четыре набора
+        # назад.
+        #
+        # При равных правах берём набор, вышедший ПОЗЖЕ: название серии
+        # живёт годами и тянется в заголовки новых наборов, а название
+        # набора — нет. При совпадении дат решает длина фразы, как и
+        # раньше.
+        cands = []
+        for phrase in hits:
+            for prod in ix[phrase]:
+                cands.append((prod.get("published_on") or "",
+                              len(phrase), prod))
+        cands.sort(key=lambda x: (x[0], x[1]), reverse=True)
+        chosen = cands[0][2]
+
+    return {"set_name": chosen.get("set_name"),
+            "set_abbr": chosen.get("set_abbr"),
+            "set_aliases": chosen.get("set_aliases") or set(),
+            "published_on": chosen.get("published_on"),
+            "set_category": chosen.get("set_category"),
+            "code_confirmed": confirmed,
+            "phrase": hits[0]}

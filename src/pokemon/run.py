@@ -64,7 +64,26 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     lot["set_resolved"] = scope is not None
     lot["set_published_on"] = (scope or {}).get("published_on")
     lot["days_since_release"] = days_since_release(lot["set_published_on"])
-    prod = resolve.match(lot["title"], rx_index, kind)
+    lot["code_confirmed"] = bool((scope or {}).get("code_confirmed"))
+    lot["pokemon_token"] = resolve.has_pokemon_token(lot["title"])
+    lot["presale_text"] = fakes.looks_presale(lot["title"])
+    # Японским товар считается по ДВУМ независимым признакам: набор
+    # пришёл из японского каталога, либо продавец сам написал JPN.
+    # Одного мало: японский пак может не назвать язык, а английский лот
+    # может упомянуть Japan в описании происхождения.
+    pricing_cats = cfg.get("catalog_categories_for_pricing") or [3]
+    set_cat = (scope or {}).get("set_category")
+    lot["set_category"] = set_cat
+    lot["japanese"] = bool(
+        (set_cat is not None and int(set_cat) not in
+         {int(c) for c in pricing_cats})
+        or resolve.looks_japanese(lot["title"]))
+    # Каталог для цены уже каталога для узнавания: японский набор
+    # обязан находиться, но цену давать не имеет права.
+    # Набор уже выбран scope — match ищет товар нужного вида ВНУТРИ него.
+    prod = (None if lot["japanese"]
+            else resolve.match(lot["title"], rx_index, kind,
+                               pricing_categories=pricing_cats, scope=scope))
     lot["tcg_product_id"] = prod["product_id"] if prod else None
     lot["tcg_market_price_usd"] = prod["market_price"] if prod else None
     lot["set_name"] = (prod or scope or {}).get("set_name")
@@ -112,7 +131,11 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
                      set_resolved=lot["set_resolved"],
                      unit_price_usd=lot["unit_price_usd"],
                      packs=lot["packs"],
-                     days_since_rel=lot["days_since_release"])
+                     days_since_rel=lot["days_since_release"],
+                     pokemon_token=lot["pokemon_token"],
+                     japanese=lot["japanese"],
+                     presale_text=lot["presale_text"],
+                     code_confirmed=lot["code_confirmed"])
     lot["verdict"], lot["reason"] = v, why
     return lot
 
@@ -186,7 +209,9 @@ def main(argv=None):
     run_tag = f"{stamp}_{mode}_{time.strftime('%H%M%S')}"
 
     if a.refresh_catalog:
-        cats = cfg.get("catalog_categories") or [catalog.CATEGORY_POKEMON]
+        cats = (cfg.get("catalog_categories")
+                or cfg.get("catalog_categories_for_matching")
+                or [catalog.CATEGORY_POKEMON])
         catalog.refresh_all([int(c) for c in cats])
 
     if a.refresh_ru_comps:
@@ -199,10 +224,16 @@ def main(argv=None):
     fx, stale = get_usdrub()
     print(f"курс ЦБ: {fx:.4f} ₽/$" + (" (несвежий)" if stale else ""))
 
-    sealed = catalog.load_sealed()
+    match_cats = cfg.get("catalog_categories_for_matching") or [3]
+    price_cats = cfg.get("catalog_categories_for_pricing") or [3]
+    sealed = catalog.load_sealed(categories=match_cats)
     rx_index = resolve.build_index(sealed)
-    print(f"каталог TCGCSV: {len(sealed)} запечатанных товаров, "
-          f"выгружен {catalog.refreshed_at()}")
+    n_price = sum(1 for p in sealed if p.get("set_category") is not None
+                  and int(p["set_category"]) in {int(c) for c in price_cats})
+    print(f"каталог TCGCSV: {len(sealed)} запечатанных товаров для "
+          f"узнавания (категории {match_cats}), из них {n_price} годны "
+          f"для оценки (категории {price_cats}); выгружен "
+          f"{catalog.refreshed_at()}")
 
     comps = ru_comps.load()
     comp_ix = ru_comps.index(comps)
@@ -310,7 +341,8 @@ def main(argv=None):
     baskets = plan(buys, watches,
                    cargo_usd_per_kg=cfg.get("cargo_usd_per_kg", 22.0),
                    cargo_min_kg=cfg.get("cargo_min_kg", 1.0),
-                   cargo_round_step_kg=cfg.get("cargo_round_step_kg", 1.0))
+                   cargo_round_step_kg=cfg.get("cargo_round_step_kg", 1.0),
+                   max_sellers=cfg.get("max_sellers_per_batch"))
     note = (f"Режим: {mode}. Покрытие частичное: обойдено {len(uniq)} лотов "
             f"из 46 807 + 14 070 в категориях 183456/183457. Фильтр eBay по "
             f"цене лота ${floor_price:g}-${cap_price:g}, полоса за пак "

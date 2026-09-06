@@ -22,7 +22,9 @@ COLUMNS = [
     "kind", "qty", "weight_g_net", "weight_kg", "weight_kg_billable",
     "weight_unknown",
     "tcg_product_id", "tcg_market_price_usd", "price_vs_market_pct",
-    "set_name", "set_resolved", "set_published_on", "days_since_release",
+    "set_name", "set_resolved", "set_category", "code_confirmed",
+    "pokemon_token", "japanese", "presale_text",
+    "set_published_on", "days_since_release",
     "ru_price_rub", "ru_comp_basis",
     "ru_comp_source", "ru_discount_applied", "ru_comp_usable", "need_ru_comp",
     "landed_solo_usd", "landed_batch_usd", "cargo_batch_usd", "resale_usd",
@@ -90,9 +92,17 @@ def batch_plan_md(baskets, *, usdrub, rate_stale=False, coverage_note="",
                    "кандидатов.")
         return "\n".join(out)
     for i, b in enumerate(baskets, 1):
+        cap = ""
+        if b.get("stopped_by_sellers"):
+            cap = (f" · НЕ ДОБРАНА: упёрлась в лимит "
+                   f"{len(b.get('sellers') or [])} продавцов")
         out.append(f"## Корзина #{i} — {b['weight_kg']:.3f} кг "
                    f"(тарифицируется {b['billable_kg']:.2f} кг) / "
-                   f"карго {_money(b['cargo_usd'])}")
+                   f"карго {_money(b['cargo_usd'])}" + cap)
+        if b.get("sellers"):
+            out.append("")
+            out.append(f"Продавцов в корзине: {len(b['sellers'])} — "
+                       f"{', '.join('`%s`' % x for x in b['sellers'][:10])}")
         out.append("")
         for r in b["items"]:
             rub = r.get("ru_price_rub")

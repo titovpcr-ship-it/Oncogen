@@ -20,6 +20,17 @@ import re
 # 3 Pack Blisters» обязано попасть в blister_3pack, а не в
 # booster_pack по слову «Pack».
 KIND_PATTERNS = [
+    # ПРЕРЕЛИЗНЫЙ НАБОР И FUN PACK — ОТДЕЛЬНЫЕ ВИДЫ, НЕ БУСТЕР-ПАКИ.
+    # Найдены 06.09.2026 при построчном чтении списка «что померить»:
+    # «Chilling Reign Inteleon Pre-Release Pack» и «Destined Rivals Fun
+    # Pack - 3 Cards - Sealed» стояли там как одиночные бустеры. В
+    # первом четыре пака и промо, во втором три карты вместо
+    # одиннадцати — ни вес, ни цена в Москве к бустеру отношения не
+    # имеют. Стоят первыми, потому что оба содержат слово «pack».
+    ("prerelease_pack", r"\bpre-?\s?release\s+(pack|kit|build)\b|"
+                        r"\bprerelease\b"),
+    ("fun_pack", r"\bfun\s+pack\b"),
+    ("code_card", r"\bcode\s+card\b|\bonline\s+code\b"),
     ("etb", r"\belite\s+trainer\s+box\b|\betb\b"),
     ("build_and_battle", r"\bbuild\s*&?\s*and?\s*battle\b|\bbuild\s*&\s*battle\b"),
     ("blister_3pack", r"\b3\s*[- ]?\s*pack\s+blister|\bthree\s+pack\s+blister"),

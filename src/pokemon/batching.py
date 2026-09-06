@@ -26,11 +26,20 @@ def _profit_density(row):
 
 
 def plan(buys, watches=(), *, cargo_usd_per_kg=22.0, cargo_min_kg=1.0,
-         cargo_round_step_kg=1.0, max_baskets=10):
+         cargo_round_step_kg=1.0, max_baskets=10, max_sellers=None):
     """Корзины по cargo_min_kg, набранные по убыванию прибыли на кг.
 
-    Возвращает список словарей-корзин. Каждая знает, чего ей не хватает
-    до целого килограмма и какие WATCH-лоты дешевле всего добрать.
+    ОГРАНИЧЕНИЕ НА ЧИСЛО ПРОДАВЦОВ — ЛОГИСТИЧЕСКОЕ, А НЕ ТОВАРНОЕ.
+    Порог по числу паков в лоте (min_units_per_lot) был подпоркой под
+    настоящую задачу: не собирать килограмм из сорока отправлений.
+    Замер 06.09.2026 показал, что рынок уже переоценил многопаковые
+    лоты ровно на стоимость доставки ($8.40 за пак в тройке против
+    $5.45 в одиночном, landed 906 ₽ против 914 ₽), — значит отбирать
+    товар по форме упаковки незачем, а вот ограничить сборку корзины
+    нужно. Место этому здесь, а не в econ.py.
+
+    Корзина закрывается, когда набран вес ИЛИ когда продавцов стало
+    max_sellers. Во втором случае она честно говорит, что не добрана.
     """
     import math
     pool = sorted([r for r in buys if r.get("weight_kg")],
@@ -41,10 +50,21 @@ def plan(buys, watches=(), *, cargo_usd_per_kg=22.0, cargo_min_kg=1.0,
     baskets = []
     i = 0
     while i < len(pool) and len(baskets) < max_baskets:
-        items, kg = [], 0.0
+        items, kg, sellers = [], 0.0, set()
+        stopped_by_sellers = False
         while i < len(pool) and kg < cargo_min_kg:
-            items.append(pool[i])
-            kg += pool[i]["weight_kg"]
+            cand = pool[i]
+            sid = cand.get("seller")
+            if (max_sellers and sid and sid not in sellers
+                    and len(sellers) >= int(max_sellers)):
+                # Следующий лот увёл бы корзину за лимит продавцов.
+                # Останавливаемся здесь, а не тащим сорок отправлений.
+                stopped_by_sellers = True
+                break
+            items.append(cand)
+            kg += cand["weight_kg"]
+            if sid:
+                sellers.add(sid)
             i += 1
         if not items:
             break
@@ -65,6 +85,8 @@ def plan(buys, watches=(), *, cargo_usd_per_kg=22.0, cargo_min_kg=1.0,
                 if len(top_ups) >= 3:
                     break
         baskets.append({
+            "sellers": sorted(sellers),
+            "stopped_by_sellers": stopped_by_sellers,
             "items": items,
             "weight_kg": kg,
             "billable_kg": billed,

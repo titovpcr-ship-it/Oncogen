@@ -130,6 +130,23 @@ CHEAP_FRACTION = 0.60
 MARKET_GAP_MIN_USD = 3.00
 
 
+# ТЕКСТОВЫЙ МАРКЕР ПРЕДЗАКАЗА СИЛЬНЕЕ ДАТЫ КАТАЛОГА. Гейт по дате
+# надёжен ровно настолько, насколько надёжен резолв набора, а он
+# ошибается: «Presale New Pokémon 30th Anniversary Celebrations Booster
+# Bundle» за $89.99 резолвнулся в набор Celebrations 2021 года, получил
+# его дату и прошёл гейт. Слово в заголовке продавец пишет про СВОЙ
+# товар, и ошибиться набором оно не может.
+PRESALE = re.compile(
+    r"\bpre-?\s?sale\b|\bpre-?\s?order(ed|s)?\b|\bpreorder\b|"
+    r"\breleases?\s+\w*\s*\d{1,2}\b|\bships?\s+\w+\s+\d{1,2}\b|"
+    r"\bship(s|ping)\s+(on|after)\b", re.I)
+
+
+def looks_presale(title):
+    """Продавец сам написал, что это предзаказ."""
+    return bool(PRESALE.search(title or ""))
+
+
 def _text(lot):
     return " ".join(str(x) for x in (
         lot.get("title") or "", lot.get("subtitle") or "",

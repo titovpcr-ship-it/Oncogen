@@ -213,7 +213,7 @@ def refresh(db_path=None, category=CATEGORY_POKEMON, pause=0.3,
             "prices": n_price}
 
 
-def load_sealed(db_path=None):
+def load_sealed(db_path=None, categories=None):
     """Sealed-товары с рыночной ценой и псевдонимами набора.
 
     Возвращает список словарей — это рабочий справочник ветки, он
@@ -225,6 +225,10 @@ def load_sealed(db_path=None):
     conn = sqlite3.connect(path, timeout=60.0)
     conn.row_factory = sqlite3.Row
     groups = {r["group_id"]: dict(r) for r in conn.execute("SELECT * FROM groups")}
+    # Каталогов для УЗНАВАНИЯ может быть больше, чем для оценки: японский
+    # набор обязан находиться, иначе его пак резолвится в английский по
+    # общему слову и получает чужую цену. Фильтр здесь — про узнавание.
+    keep = {int(c) for c in categories} if categories else None
     out = []
     for r in conn.execute(
             "SELECT p.*, "
@@ -232,6 +236,9 @@ def load_sealed(db_path=None):
             "    ORDER BY q.sub_type LIMIT 1) AS market_price "
             "FROM products p WHERE p.is_sealed=1"):
         g = groups.get(r["group_id"], {})
+        if keep is not None and g.get("category_id") is not None \
+                and int(g["category_id"]) not in keep:
+            continue
         out.append({
             "product_id": r["product_id"],
             "name": r["name"],

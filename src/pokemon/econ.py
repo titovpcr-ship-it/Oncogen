@@ -193,7 +193,8 @@ def in_scope(kind, cfg):
 
 def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
             fake_reasons=(), set_resolved=True, unit_price_usd=None,
-            packs=None, days_since_rel=None):
+            packs=None, days_since_rel=None, pokemon_token=True,
+            japanese=False, presale_text=False, code_confirmed=False):
     """(вердикт, причина) — одна цепь, вынесенная на уровень модуля.
 
     ВЫНЕСЕНА НАРОЧНО. В винильной ветке та же логика жила внутри main,
@@ -215,9 +216,40 @@ def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
     if not set_resolved:
         return OUT_OF_SCOPE, "набор не найден в каталоге Pokemon TCGplayer"
 
+    # ПОДТВЕРЖДАЮЩИЙ ТОКЕН. Совпадение по названию — не идентификация:
+    # названия наборов состоят из обычных слов и делятся с чужими
+    # играми. «Undaunted Raid Booster Pack My Hero Academia» совпал с
+    # покемоновским набором Undaunted 2010 года по одному слову.
+    if not pokemon_token:
+        return OUT_OF_SCOPE, ("в заголовке нет слова Pokemon — совпадение "
+                              "по названию набора не подтверждено")
+
+    # ЯПОНСКИЙ ТОВАР. Английскую цену на него не подставлять никогда:
+    # рынок японского пака $2.82-3.38 против $7.90 у английского, и лот
+    # с переплатой в полтора раза проходил правило 60% как «63% рынка».
+    if japanese:
+        return OUT_OF_SCOPE, "японский товар, сегмент выключен"
+
     ok, why = in_scope(kind, cfg)
     if not ok:
         return OUT_OF_SCOPE, why
+
+    # ТЕКСТ СИЛЬНЕЕ ДАТЫ. Слово «presale» продавец пишет про свой товар
+    # и ошибиться набором не может, а гейт по дате надёжен ровно
+    # настолько, насколько надёжен резолв.
+    if presale_text:
+        return PREORDER, "продавец назвал лот предзаказом в заголовке"
+
+    # ВОЗРАСТ НАБОРА КАК СИГНАЛ ОШИБКИ РЕЗОЛВА, А НЕ КАК ШТРАФ. Обе
+    # строки списка «что померить», где набор оказался старше пяти лет,
+    # были ошибками опознания. Одиночный пак из такого набора требует
+    # подтверждения кодом набора в заголовке.
+    ancient = float(cfg.get("ancient_set_months", 60)) * 30.44
+    if days_since_rel is not None and days_since_rel > ancient \
+            and not code_confirmed:
+        return OUT_OF_SCOPE, (
+            f"набору {days_since_rel / 30.44:.0f} мес., а кода набора в "
+            f"заголовке нет — опознание не подтверждено")
 
     # ГЕЙТ ПО ДАТЕ ВЫХОДА. Пак набора, который выйдет через два месяца,
     # — это предзаказ: деньги заморожены, срок неизвестен, карго ждать

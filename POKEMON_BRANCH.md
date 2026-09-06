@@ -12,7 +12,7 @@ python3 -m src.pokemon.run --mode discover          # разведка, верд
 python3 -m src.pokemon.run --mode both --limit 600  # + обход категорий
 python3 -m src.pokemon.run --sort=-price            # проверить решение о сортировке
 python3 -m src.pokemon.run --dry-run --no-detail    # без отправки и без добора карточек
-python3 test_pokemon.py                             # 127 проверок
+python3 test_pokemon.py                             # 170 проверок
 ```
 
 Полоса цен и сортировка живут в `config/pokemon.yaml`, а не в коде:
