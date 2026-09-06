@@ -17,9 +17,24 @@ from __future__ import annotations
 
 from ..common.ebay import (ApiRefused, price_usd, search_all, shipping_usd)
 
+# ЭТИ КАТЕГОРИИ НЕ ПОКЕМОНОВСКИЕ. Проверено 06.09.2026 запросом карточки
+# товара: настоящий categoryPath у обеих —
+#   183456 → Toys & Hobbies | Collectible Card Games | CCG Sealed Packs
+#   183457 → Toys & Hobbies | Collectible Card Games | CCG Sealed Decks & Kits
+# То есть общие для ВСЕХ карточных игр. Названия «Pokemon Sealed Booster
+# Packs» и «Pokemon Sealed Decks & Kits» четыре раунда стояли в коде
+# непроверенными — они взяты из slug'а витринного URL eBay, а не из API.
+#
+# Отсюда и «треть выдачи из чужих игр»: Union Arena, One Piece, Gundam,
+# Dragon Ball, Lorcana лежат в 183456 законно. Это не ошибка фильтра и не
+# miscategorization, это состав категории.
+#
+# Замер доли покемонов при цене лота $5-120 и состоянии NEW:
+#   183456: 89 050 лотов всего, 45 089 по запросу «pokemon» (51%)
+#   183457: 36 756 лотов всего,  8 722 по запросу «pokemon» (24%)
 CATEGORIES = {
-    "183456": "Pokemon Sealed Booster Packs",
-    "183457": "Pokemon Sealed Decks & Kits",
+    "183456": "CCG Sealed Packs (все игры)",
+    "183457": "CCG Sealed Decks & Kits (все игры)",
 }
 
 BASE_FILTER = ("buyingOptions:{FIXED_PRICE|BEST_OFFER},"
@@ -151,7 +166,7 @@ def collect_targeted(token, queries, *, max_price_usd=13.0, min_price_usd=5.0,
 
 
 def collect(token, *, max_price_usd=13.0, min_price_usd=5.0, per_category=1000,
-            categories=None, sort="price", verbose=True):
+            categories=None, sort="price", query=None, verbose=True):
     """Лоты по каждой категории ОТДЕЛЬНО.
 
     category_ids принимает ровно одну категорию: запрос с двумя отдаёт
@@ -175,7 +190,8 @@ def collect(token, *, max_price_usd=13.0, min_price_usd=5.0, per_category=1000,
     for cid in cats:
         try:
             items = search_all(token, category_id=cid, flt=flt,
-                               max_items=per_category, page=200, sort=sort)
+                               max_items=per_category, page=200, sort=sort,
+                               q=query)
         except ApiRefused as e:
             # Отказ API — это «не смотрел», а не «ничего нет».
             refused.append((cid, str(e)))

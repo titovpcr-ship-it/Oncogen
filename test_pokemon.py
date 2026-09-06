@@ -942,6 +942,91 @@ def test_ancient_set_needs_confirmation():
                                     {"UNDAUNTED"}))
 
 
+def test_all_languages_closed_not_just_japanese():
+    """Закрывать надо ВСЕ языки, а не один.
+
+    В третьем раунде закрыли японский. В корзине отказов тут же нашлись
+    корейские и китайские лоты с английской ценой: «1X Korean Inferno X
+    Pokemon Booster Pack» получил цену ME02 Phantasmal Flames,
+    «Pokemon White Flare Pack Sealed Korean» — цену SV: White Flare,
+    «2025 Pokemon TCG S-CHN Scarlet & Violet 151C» — цену SV: 151.
+    Тот же баг, закрытый для одного языка вместо всех.
+    """
+    fl = resolve.foreign_language
+    check("корейский ловится",
+          fl("1X Korean Inferno X Pokemon Booster Pack") == "korean")
+    check("упрощённый китайский ловится",
+          fl("2025 Pokemon TCG S-CHN Scarlet & Violet 151C") == "s-chn")
+    check("simplified ловится",
+          fl("Pokemon TCG - Simplified Chinese Gem Volume 3") == "simplified")
+    check("японский по-прежнему ловится",
+          fl("Pokemon Snow Hazard SV2P Japanese") == "японский")
+    check("английский лот языком не помечен",
+          fl("Pokemon Perfect Order Booster Pack English") is None)
+    check("молчание о языке — не маркер",
+          fl("Pokemon Chaos Rising Booster Pack") is None)
+    check("english подтверждается положительно",
+          resolve.says_english("Pokemon Perfect Order Booster Pack English"))
+
+    v, why = _v(foreign_language="korean")
+    check("корейский товар → OUT_OF_SCOPE", v == OUT_OF_SCOPE, f"{v}: {why}")
+    check("причина называет язык", "korean" in why, why)
+
+
+def test_year_mismatch_catches_wrong_set():
+    """Год в заголовке сильно раньше выхода набора — резолв не тот.
+
+    ПРЯМОЙ ПЕРЕНОС СТОРОЖА ИЗ ВИНИЛЬНОЙ ВЕТКИ, где несовпадение года
+    было одним из трёх признаков чужого пресса. Живой случай: «X1
+    POKEMON MEGA EVOLUTION PERU 2020 TCG 1-Sealed Pack» резолвился в
+    ME01 Mega Evolution (сентябрь 2025) по имени серии и получал его
+    рыночную цену. Набора 2020 года с таким именем не существует.
+    """
+    from src.pokemon.econ import year_mismatch as ym
+    check("2020 против набора 2025 — несовпадение",
+          ym("X1 POKEMON MEGA EVOLUTION PERU 2020 TCG 1-Sealed Pack",
+             "2025-09-26T00:00:00"))
+    # Год ПОЗЖЕ выхода — норма: лот выставлен через год после релиза.
+    check("год позже выхода — не ошибка",
+          not ym("Pokemon Pitch Black Booster Pack English 2026",
+                 "2026-07-17T00:00:00"))
+    check("год в год — не ошибка",
+          not ym("Pokemon 2026 Chaos Rising Booster Pack",
+                 "2026-05-22T00:00:00"))
+    check("нет года в заголовке — не ошибка",
+          not ym("Pokemon Chaos Rising Booster Pack", "2026-05-22T00:00:00"))
+    check("нет даты набора — не ошибка",
+          not ym("Pokemon 1999 Base Set Pack", None))
+
+    v, why = _v(year_mismatch=True)
+    check("несовпадение года → OUT_OF_SCOPE", v == OUT_OF_SCOPE, f"{v}: {why}")
+    check("причина названа", "год" in why, why)
+
+
+def test_energy_pack_and_redemption():
+    """Пачка энергокарт — не ETB, цифровое погашение — не товар.
+
+    Найдено чтением корзины: «Sealed Pokemon Energy Pack — Chaos Rising
+    ETB» за $5.50 и «Sealed Deck Of Pokemon Energy Cards Perfect Order
+    ETB» за $9.00 опознавались как etb по слову в заголовке и получали
+    цену полного бокса (~$50). Отказ был правильный, но по неправильному
+    числу — тот же механизм, что в B-1.
+    """
+    check("энергопачка не ETB",
+          detect_kind("Sealed Pokemon Energy Pack - Chaos Rising ETB")
+          == "energy_pack")
+    check("колода энергокарт тоже",
+          detect_kind("Sealed Deck Of Pokemon Energy Cards Perfect Order ETB")
+          == "energy_pack")
+    check("настоящий ETB не задет",
+          detect_kind("Pokemon Chaos Rising Elite Trainer Box") == "etb")
+    check("цифровое погашение — код, а не коробка",
+          detect_kind("2 Pokemon Pitch Black Elite Trainer Box Digital "
+                      "Redemption") == "code_card")
+    v, why = _v(kind="energy_pack")
+    check("энергопачка вне сегмента", v == OUT_OF_SCOPE, f"{v}: {why}")
+
+
 def test_connector_and_weak_phrases():
     """Две находки из корзины отказов 06.09.2026.
 
@@ -1187,6 +1272,9 @@ def main():
                test_prerelease_is_not_booster,
                test_presale_text_beats_catalog_date,
                test_ancient_set_needs_confirmation,
+               test_all_languages_closed_not_just_japanese,
+               test_year_mismatch_catches_wrong_set,
+               test_energy_pack_and_redemption,
                test_connector_and_weak_phrases,
                test_market_ceiling_rejects_overpay,
                test_cargo_rider_mode,

@@ -30,7 +30,7 @@ from . import catalog, ebay as pk_ebay, fakes, resolve, ru_comps
 from .batching import plan
 from .econ import (BUY, OUT_OF_SCOPE, PASS, PREORDER, REJECT, WATCH,
                    days_since_release, economics, packs_in_lot, unit_price,
-                   verdict)
+                   verdict, year_mismatch)
 from .report import (append_decisions, batch_plan_md,
                      explain_rejects, seller_concentration,
                      write_candidates, write_need_comps)
@@ -65,6 +65,7 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     lot["set_published_on"] = (scope or {}).get("published_on")
     lot["days_since_release"] = days_since_release(lot["set_published_on"])
     lot["code_confirmed"] = bool((scope or {}).get("code_confirmed"))
+    lot["year_mismatch"] = year_mismatch(lot["title"], lot["set_published_on"])
     lot["pokemon_token"] = resolve.has_pokemon_token(lot["title"])
     lot["presale_text"] = fakes.looks_presale(lot["title"])
     # Японским товар считается по ДВУМ независимым признакам: набор
@@ -74,10 +75,28 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     pricing_cats = cfg.get("catalog_categories_for_pricing") or [3]
     set_cat = (scope or {}).get("set_category")
     lot["set_category"] = set_cat
+    lot["language"] = resolve.foreign_language(lot["title"])
+    lot["says_english"] = resolve.says_english(lot["title"])
     lot["japanese"] = bool(
         (set_cat is not None and int(set_cat) not in
          {int(c) for c in pricing_cats})
         or resolve.looks_japanese(lot["title"]))
+    # В режиме разведки неанглийский товар пропускается ДАЛЬШЕ по цепи и
+    # оценивается по СВОЕМУ каталогу: смысл в том, чтобы потолок по рынку
+    # сам показал, переплата это или нет. Решение владельца: вопрос,
+    # который предлагалось везти на Авито, отвечается одним прогоном.
+    lot["language_blocks"] = lot["language"]
+    # ПОСЛАБЛЕНИЕ РАЗВЕДКИ ДЕЙСТВУЕТ ТОЛЬКО ТАМ, ГДЕ ЕСТЬ СВОЙ КАТАЛОГ.
+    # Первая версия снимала языковой запрет со ВСЕХ языков, и в список
+    # тут же попали «1x ~ESP~ SPANISH Journey Together» с английской
+    # ценой, «Mega Evolution Pitch Black 1 pack Sealed Japanese» с
+    # английской ценой и «Pokemon GO Promo Booster Pack [JAPANESE]» —
+    # то есть ровно та ошибка, которую послабление должно было помочь
+    # измерить. Оценивать по своему каталогу можно только тот товар,
+    # чей набор из этого каталога и пришёл.
+    if cfg.get("_price_foreign") and set_cat is not None and int(set_cat) != 3:
+        lot["language_blocks"] = None
+        lot["japanese"] = False
     # Каталог для цены уже каталога для узнавания: японский набор
     # обязан находиться, но цену давать не имеет права.
     # Набор уже выбран scope — match ищет товар нужного вида ВНУТРИ него.
@@ -135,8 +154,10 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
                      price_vs_market_pct=lot.get("price_vs_market_pct"),
                      pokemon_token=lot["pokemon_token"],
                      japanese=lot["japanese"],
+                     foreign_language=lot.get("language_blocks"),
                      presale_text=lot["presale_text"],
-                     code_confirmed=lot["code_confirmed"])
+                     code_confirmed=lot["code_confirmed"],
+                     year_mismatch=lot["year_mismatch"])
     lot["verdict"], lot["reason"] = v, why
     return lot
 
@@ -231,6 +252,22 @@ def main(argv=None):
 
     match_cats = cfg.get("catalog_categories_for_matching") or [3]
     price_cats = cfg.get("catalog_categories_for_pricing") or [3]
+    # ШАГ 4 РЕШЕНИЙ: в разведке японский оценивается по СВОЕМУ каталогу,
+    # чтобы потолок по рынку сам вынес приговор. Замер владельца: вся
+    # японская выдача eBay идёт по 163-195% своего рынка, то есть по
+    # рыночной цене там никто не продаёт.
+    if mode == "discover" and cfg.get("discover_prices_foreign", True):
+        price_cats = sorted({int(c) for c in match_cats})
+        # ПИШЕМ В САМ КОНФИГ, А НЕ В ЛОКАЛЬНУЮ ПЕРЕМЕННУЮ. enrich()
+        # перечитывает catalog_categories_for_pricing из cfg на каждом
+        # лоте, и первая версия правки меняла переменную, которую
+        # enrich никогда не видел: японские лоты проходили дальше по
+        # цепи, но рыночной цены не получали, и потолок по ним молчал.
+        # Выглядело это как «потолок их не отвергает», то есть как
+        # содержательный ответ на пустом месте.
+        cfg["catalog_categories_for_pricing"] = price_cats
+        cfg["_price_foreign"] = True
+        print("разведка: неанглийский товар оценивается по своему каталогу")
     sealed = catalog.load_sealed(categories=match_cats)
     rx_index = resolve.build_index(sealed)
     n_price = sum(1 for p in sealed if p.get("set_category") is not None
@@ -288,7 +325,8 @@ def main(argv=None):
                                                      500)) // 4)
         got, ref = pk_ebay.collect(
             token, max_price_usd=cap_price, min_price_usd=floor_price,
-            per_category=per_cat, sort=sort)
+            per_category=per_cat, sort=sort,
+            query=cfg.get("sweep_query"))
         lots += got
         refused += ref
 

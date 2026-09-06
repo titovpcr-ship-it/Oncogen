@@ -30,10 +30,24 @@ _NORM = re.compile(r"[^a-z0-9]+")
 # чужих игр по-прежнему не нужен.
 _POKEMON = re.compile(r"pok[eé]mon|\bpokemon\b", re.I)
 
-# Японский товар. Каталог categoryId 3 английский, и подставлять его
-# цену японскому паку нельзя ни при каких обстоятельствах.
+# ЯЗЫК ТОВАРА. Каталог categoryId 3 английский, и подставлять его цену
+# неанглийскому паку нельзя ни при каких обстоятельствах.
+#
+# ЗАКРЫВАТЬ НАДО ВСЕ ЯЗЫКИ, А НЕ ОДИН. В третьем раунде был закрыт
+# японский, и в корзине тут же нашлись корейские и китайские лоты с
+# английской ценой: «1X Korean Inferno X Pokemon Booster Pack» получил
+# цену ME02 Phantasmal Flames, «Pokemon White Flare Pack Sealed Korean»
+# — цену SV: White Flare, «2025 Pokemon TCG S-CHN Scarlet & Violet 151C»
+# — цену SV: Scarlet & Violet 151. Тот же баг, закрытый для одного языка
+# вместо всех.
 _JAPANESE = re.compile(
     r"\bjpn\b|\bjapanese\b|\bjapan\b|\bjp\b|\bnihongo\b", re.I)
+_FOREIGN = re.compile(
+    r"\bkorean?\b|\bkor\b|\bchinese\b|\bs-?chn\b|\bt-?chn\b|"
+    r"\bsimplified\b|\btraditional\b|\bindonesian?\b|\bthai\b|"
+    r"\bgerman\b|\bfrench\b|\bitalian\b|\bspanish\b|\bportuguese\b|"
+    r"\bdeutsch\b|\bespa[nñ]ol\b", re.I)
+_ENGLISH = re.compile(r"\benglish\b|\ben\b(?=\s|$)", re.I)
 
 
 def has_pokemon_token(title):
@@ -44,6 +58,27 @@ def has_pokemon_token(title):
 def looks_japanese(title):
     """Явный японский маркер в заголовке лота."""
     return bool(_JAPANESE.search(title or ""))
+
+
+def foreign_language(title):
+    """Язык товара, если он назван в заголовке, иначе None.
+
+    Английский подтверждается ПОЛОЖИТЕЛЬНО — словом english — либо
+    отсутствием любого языкового маркера при наборе из английского
+    каталога. Молчание о языке на английском товаре обычное дело,
+    молчание на корейском — тоже, и различает их каталог набора.
+    """
+    t = title or ""
+    if _JAPANESE.search(t):
+        return "японский"
+    m = _FOREIGN.search(t)
+    if m:
+        return m.group(0).lower()
+    return None
+
+
+def says_english(title):
+    return bool(_ENGLISH.search(title or ""))
 
 
 # СОЮЗ «И» ПИШУТ ДВУМЯ СПОСОБАМИ. Каталог зовёт набор «SV: Scarlet &

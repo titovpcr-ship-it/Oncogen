@@ -30,9 +30,22 @@ KIND_PATTERNS = [
     ("prerelease_pack", r"\bpre-?\s?release\s+(pack|kit|build)\b|"
                         r"\bprerelease\b"),
     ("fun_pack", r"\bfun\s+pack\b"),
-    ("code_card", r"\bcode\s+card\b|\bonline\s+code\b"),
+    # ПАЧКА ЭНЕРГОКАРТ, А НЕ ETB. Найдено чтением корзины 06.09.2026:
+    # «Sealed Pokemon Energy Pack — Chaos Rising ETB» за $5.50 и «Sealed
+    # Deck Of Pokemon Energy Cards Perfect Order ETB» за $9.00 оба
+    # опознавались как etb по слову в заголовке и получали цену полного
+    # бокса (~$50). Отказ был правильный, но по неправильному числу.
+    # Оговорка про box нужна, чтобы не съесть настоящий ETB, где слово
+    # energy стоит в описании комплектации.
+    ("energy_pack", r"\benerg(y|ies)\b(?!.{0,40}\b(box|etb)\s+\w*\s*$)"),
+    ("code_card", r"\bcode\s+card\b|\bonline\s+code\b|"
+                  r"\bdigital\s+redemption\b|\bredemption\s+code\b|"
+                  r"\bredemption\b"),
     ("etb", r"\belite\s+trainer\s+box\b|\betb\b"),
-    ("build_and_battle", r"\bbuild\s*&?\s*and?\s*battle\b|\bbuild\s*&\s*battle\b"),
+    # «Build n Battle» пишут и так: найдено 06.09.2026 на лоте «Pokemon
+    # Cleffa SVPEN 037 Obsidian Flames Build n Battle» — он опознавался
+    # как бустер-пак.
+    ("build_and_battle", r"\bbuild\s*(&|and|n|'n')\s*battle\b"),
     ("blister_3pack", r"\b3\s*[- ]?\s*pack\s+blister|\bthree\s+pack\s+blister"),
     ("blister_checklane", r"\bchecklane\b|\bsingle\s+pack\s+blister\b|\bblister\b"),
     ("booster_bundle_6", r"\bbooster\s+bundle\b|\b6\s*[- ]?\s*pack\s+bundle\b"),

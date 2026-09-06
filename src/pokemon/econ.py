@@ -159,6 +159,36 @@ def days_since_release(published_on, today=None):
     return (now - d).days
 
 
+def year_mismatch(title, published_on):
+    """Год в заголовке не сходится с годом выхода набора.
+
+    ПРЯМОЙ ПЕРЕНОС СТОРОЖА ИЗ ВИНИЛЬНОЙ ВЕТКИ, где несовпадение года
+    было одним из трёх признаков чужого пресса. Живой случай
+    06.09.2026: «X1 POKEMON MEGA EVOLUTION PERU 2020 TCG 1-Sealed Pack»
+    резолвился в ME01 Mega Evolution (сентябрь 2025) по имени серии и
+    получал его рыночную цену. Набора 2020 года с таким именем не
+    существует — это латиноамериканское промо.
+
+    Год в заголовке чаще всего год товара или год объявления, поэтому
+    несовпадением считается только год СИЛЬНО РАНЬШЕ выхода набора:
+    позже — нормально (лот выставлен через год), раньше на два и более
+    — набор не тот.
+    """
+    import datetime as _dt
+    import re as _re
+    if not published_on:
+        return False
+    try:
+        rel = int(str(published_on)[:4])
+    except (TypeError, ValueError):
+        return False
+    years = [int(y) for y in _re.findall(r"\b(19[5-9]\d|20[0-4]\d)\b",
+                                        title or "")]
+    if not years:
+        return False
+    return max(years) <= rel - 2
+
+
 def unit_price(price_usd, packs):
     """Цена за пак. Именно она сравнивается с полосой, а не цена лота."""
     if price_usd is None or not packs:
@@ -199,8 +229,9 @@ def in_scope(kind, cfg):
 def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
             fake_reasons=(), set_resolved=True, unit_price_usd=None,
             packs=None, days_since_rel=None, price_vs_market_pct=None,
-            pokemon_token=True,
-            japanese=False, presale_text=False, code_confirmed=False):
+            pokemon_token=True, japanese=False, presale_text=False,
+            code_confirmed=False, foreign_language=None,
+            year_mismatch=False):
     """(вердикт, причина) — одна цепь, вынесенная на уровень модуля.
 
     ВЫНЕСЕНА НАРОЧНО. В винильной ветке та же логика жила внутри main,
@@ -236,15 +267,28 @@ def verdict(*, fake_risk, kind, weight_unknown, ru_price_rub, econ, cfg,
         return OUT_OF_SCOPE, ("в заголовке нет слова Pokemon — совпадение "
                               "по названию набора не подтверждено")
 
-    # ЯПОНСКИЙ ТОВАР. Английскую цену на него не подставлять никогда:
-    # рынок японского пака $2.82-3.38 против $7.90 у английского, и лот
-    # с переплатой в полтора раза проходил правило 60% как «63% рынка».
+    # НЕАНГЛИЙСКИЙ ТОВАР. Английскую цену на него не подставлять
+    # никогда: рынок японского пака $2.82-3.38 против $7.90 у
+    # английского, и лот с переплатой в полтора раза проходил правило
+    # 60% как «63% рынка».
+    #
+    # ЗАКРЫТЫ ВСЕ ЯЗЫКИ, А НЕ ОДИН. В третьем раунде закрыли японский, и
+    # в корзине тут же нашлись корейские и китайские лоты с английской
+    # ценой — тот же баг, закрытый для одного языка вместо всех.
+    if foreign_language:
+        return OUT_OF_SCOPE, (f"не английский товар ({foreign_language}), "
+                              f"сегмент выключен")
     if japanese:
         return OUT_OF_SCOPE, "японский товар, сегмент выключен"
 
     ok, why = in_scope(kind, cfg)
     if not ok:
         return OUT_OF_SCOPE, why
+
+    # Год в заголовке сильно раньше выхода набора — резолв не тот.
+    if year_mismatch:
+        return OUT_OF_SCOPE, ("год в заголовке не сходится с годом выхода "
+                              "набора — опознание не подтверждено")
 
     # ВОЗРАСТ НАБОРА КАК СИГНАЛ ОШИБКИ РЕЗОЛВА, А НЕ КАК ШТРАФ. Обе
     # строки списка «что померить», где набор оказался старше пяти лет,
