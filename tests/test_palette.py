@@ -41,6 +41,29 @@ def test_format_s_dovеskom_schitaetsya_polnostyu():
     check("LP = одна", p.discs("LP") == 1)
 
 
+def test_minimum_forvardera_v_palitre_tot_zhe_chto_v_ohotnike():
+    """Минимум в 1 кг обязан быть и здесь.
+
+    Пока его не было, палитра завышала допустимый вход на $5.50 по
+    каждой одиночной позиции — то есть звала заходить дороже, чем
+    можно, при том что охотник уже считал правильно.
+    """
+    check("одинарник solo идёт по килограмму",
+          abs(p.cargo_usd("LP", "solo") - 22.0) < 0.01,
+          f"вышло ${p.cargo_usd('LP', 'solo'):.2f}")
+    check("одинарник rider идёт по своему весу",
+          abs(p.cargo_usd("LP", "rider") - 16.5) < 0.01)
+    check("на двойнике минимум не срабатывает",
+          abs(p.cargo_usd("2LP", "solo") - p.cargo_usd("2LP", "rider")) < 0.01)
+    check("режим по умолчанию — solo",
+          abs(p.cargo_usd("LP") - 22.0) < 0.01)
+    row = {"price_rub": "6000", "format": "LP"}
+    solo = p.entry_usd(row, 86.5857, 1.75, "solo")
+    rider = p.entry_usd(row, 86.5857, 1.75, "rider")
+    check("вход в сборной посылке выше ровно на $5.50",
+          abs((rider - solo) - 5.5) < 0.01, f"разница {rider - solo:.2f}")
+
+
 def test_karo_rastet_s_chislom_plastinok():
     one, two, three = p.cargo_usd("LP"), p.cargo_usd("2LP"), p.cargo_usd("3LP")
     check("карго за 2LP больше, чем за LP", two > one, f"{two} vs {one}")
@@ -88,6 +111,7 @@ def test_kvantil_na_krayah():
 
 def main():
     for fn in [test_format_s_dovеskom_schitaetsya_polnostyu,
+               test_minimum_forvardera_v_palitre_tot_zhe_chto_v_ohotnike,
                test_karo_rastet_s_chislom_plastinok,
                test_vhod_padaet_kogda_plastinok_bolshe,
                test_kurs_ne_zashit_v_kod,

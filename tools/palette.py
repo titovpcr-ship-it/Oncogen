@@ -24,6 +24,7 @@ DEFAULT_CSV = os.path.join(ROOT, "data", "ozon_price_palette.csv")
 
 # Замеры 03–06.09.2026, зафиксированы в ARSENAL.md.
 CARGO_PER_KG = 22.0        # $/кг, карго США → Москва
+CARGO_MIN_KG = 1.0         # минимум форвардера: одиночная посылка идёт по кг
 PACK_KG = 0.30             # упаковка
 DISC_KG = 0.45             # одна пластинка
 US_SHIP_USD = 5.14         # медианная надбавка за доставку внутри США
@@ -45,8 +46,18 @@ def discs(fmt):
     return 1 if re.search(r"\bLP\b", fmt, re.I) else 1
 
 
-def cargo_usd(fmt):
-    return (PACK_KG + DISC_KG * discs(fmt)) * CARGO_PER_KG
+def cargo_usd(fmt, mode="solo"):
+    """Карго до Москвы. Модель обязана совпадать с охотником.
+
+    Минимум в 1 кг — тот же, что в tools/live_hunt.py и в
+    config/pokemon.yaml: форвардер один и тариф один. Пока минимума
+    здесь не было, палитра завышала допустимый вход на $5.50 по каждой
+    одиночной позиции, то есть звала заходить дороже, чем можно.
+    """
+    kg = PACK_KG + DISC_KG * discs(fmt)
+    if mode == "solo":
+        kg = max(kg, CARGO_MIN_KG)
+    return kg * CARGO_PER_KG
 
 
 def usdrub():
@@ -74,9 +85,9 @@ def load(path):
         return list(csv.DictReader(f))
 
 
-def entry_usd(row, rate, multiple):
+def entry_usd(row, rate, multiple, mode="solo"):
     return (int(row["price_rub"]) / rate / multiple
-            - cargo_usd(row["format"]) - US_SHIP_USD)
+            - cargo_usd(row["format"], mode) - US_SHIP_USD)
 
 
 def main():
@@ -84,6 +95,8 @@ def main():
     ap.add_argument("--csv", default=DEFAULT_CSV)
     ap.add_argument("--multiple", type=float, default=1.75,
                     help="целевая кратность к цене входа")
+    ap.add_argument("--mode", choices=("solo", "rider"), default="solo",
+                    help="solo — пластинка едет одна (минимум 1 кг); rider — в сборной посылке")
     ap.add_argument("--min-depth", type=int, default=3,
                     help="сколько позиций у артиста считать глубиной рынка")
     a = ap.parse_args()
@@ -101,7 +114,7 @@ def main():
           f"p25 {quantile(prices, .25):.0f}   p75 {quantile(prices, .75):.0f}   "
           f"мин {prices[0]}   макс {prices[-1]}")
 
-    ents = sorted(entry_usd(r, rate, a.multiple) for r in rows)
+    ents = sorted(entry_usd(r, rate, a.multiple, a.mode) for r in rows)
     neg = sum(1 for e in ents if e <= 0)
     print(f"\nдопустимый вход на eBay при {a.multiple}x: "
           f"медиана ${st.median(ents):.2f}   p25 ${quantile(ents, .25):.2f}   "
@@ -119,13 +132,13 @@ def main():
               f"это разные продавцы, а не одна витрина):")
         for name, v in deep:
             pr = sorted(int(x["price_rub"]) for x in v)
-            en = sorted(entry_usd(x, rate, a.multiple) for x in v)
+            en = sorted(entry_usd(x, rate, a.multiple, a.mode) for x in v)
             print(f"  {len(v):2}  {name:24} витрина {pr[0]:5}–{pr[-1]:5} ₽ "
                   f"(медиана {st.median(pr):5.0f})   вход ${st.median(en):6.2f}")
 
     print("\nтоп-10 по допустимому входу:")
-    for r in sorted(rows, key=lambda r: -entry_usd(r, rate, a.multiple))[:10]:
-        e = entry_usd(r, rate, a.multiple)
+    for r in sorted(rows, key=lambda r: -entry_usd(r, rate, a.multiple, a.mode))[:10]:
+        e = entry_usd(r, rate, a.multiple, a.mode)
         print(f"  ${e:6.2f}  {int(r['price_rub']):>5} ₽  {r['format']:<18} "
               f"{r['artist']} — {r['album'][:40]}")
 
