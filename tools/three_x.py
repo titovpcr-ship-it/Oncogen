@@ -391,7 +391,26 @@ def main():
     # себестоимости, и ниже единицы оно означает убыток.
     allhits.sort(key=lambda h: -h["ratio_landed"])
     plus = [h for h in allhits if h["ratio_landed"] > 1.0]
+    # СВОДКА ПИШЕТСЯ В ФАЙЛ, А НЕ ТОЛЬКО В КОНСОЛЬ. Прогон 07.09.2026
+    # запускался с «| tail -40», и шапка сводки — число опознанных
+    # лотов и сколько из них прибыльны — оказалась срезана. Итог
+    # прогона не должен зависеть от того, как его позвали.
+    outdir = os.path.join(ROOT, "out")
+    os.makedirs(outdir, exist_ok=True)
+    stamp = time.strftime("%Y-%m-%d_%H%M%S")
+    report = os.path.join(outdir, f"three_x_{stamp}.txt")
+    with open(report, "w", encoding="utf-8") as f:
+        f.write(f"опознано лотов: {len(allhits)}\n")
+        f.write(f"прибыльных (>1.0x к себестоимости): {len(plus)}\n")
+        for thr in (1.2, 1.5, 2.0, 3.0):
+            f.write(f"  >= {thr}x: "
+                    f"{sum(1 for h in allhits if h['ratio_landed'] >= thr)}\n")
+        for h in allhits:
+            f.write(f"{h['ratio_landed']:.3f}\t${h['entry']:.2f}\t"
+                    f"${h['landed']:.2f}\t{h['src']}\t{h['mode']}\t"
+                    f"{h['album']}\t{h['title']}\t{h['url']}\n")
     print(f"\n{'='*70}")
+    print(f"полный отчёт: {report}")
     print(f"ОПОЗНАНО ЛОТОВ: {len(allhits)}")
     print(f"прибыльных вообще (кратность к себестоимости > 1.0): "
           f"{len(plus)} ({100*len(plus)/max(len(allhits),1):.1f}%)")
