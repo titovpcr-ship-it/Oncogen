@@ -973,6 +973,70 @@ def test_all_languages_closed_not_just_japanese():
     check("причина называет язык", "korean" in why, why)
 
 
+def test_japanese_pack_weighs_less():
+    """В японском бустере 5 карт, в английском 11.
+
+    Считать японский пак по 22 г значит завысить вес вдвое и во
+    столько же занизить прибыль на килограмм — главный показатель
+    ветки. На списке 06.09.2026 из шестнадцати строк девять были
+    японскими: неверен был порядок всего списка, а не отдельная цифра.
+
+    Вид определяется по КАТАЛОГУ набора, а не по слову в заголовке:
+    слово может отсутствовать, каталог — нет.
+    """
+    en = dict(WEIGHTS)
+    jp = dict(WEIGHTS, booster_pack=12)
+    _, _, net_en, kg_en, _ = weigh("Pokemon Time Gazer Booster Pack", en)
+    _, _, net_jp, kg_jp, _ = weigh("Pokemon Time Gazer Booster Pack", jp)
+    check("японский пак легче английского", net_jp < net_en,
+          f"{net_jp} против {net_en}")
+    check("разница примерно вдвое", 1.6 < net_en / net_jp < 2.0,
+          f"{net_en / net_jp:.2f}")
+
+    # Прибыль на килограмм растёт во столько же раз.
+    e_en = economics(price_usd=5.0, us_ship_usd=4.5, weight_kg=kg_en, qty=1,
+                     ru_price_rub=1600, usdrub=FX, cfg=CFG,
+                     ru_comp_basis="avito_sold")
+    e_jp = economics(price_usd=5.0, us_ship_usd=4.5, weight_kg=kg_jp, qty=1,
+                     ru_price_rub=1600, usdrub=FX, cfg=CFG,
+                     ru_comp_basis="avito_sold")
+    check("прибыль на кг у японского выше",
+          e_jp["profit_per_kg"] > e_en["profit_per_kg"] * 1.6,
+          f"{e_jp['profit_per_kg']:.0f} против {e_en['profit_per_kg']:.0f}")
+
+
+def test_stated_language_beats_catalog():
+    """Язык, названный в заголовке, блокирует всегда и раньше резолва.
+
+    ТРЕТИЙ СЛУЧАЙ УТЕЧКИ ЯЗЫКА ПОДРЯД, и у последнего причина своя:
+    послабление разведки снимало запрет по признаку «набор не из
+    английского каталога», а корейские паки печатаются по японским
+    наборам и приходят именно оттуда. Тридцать восемь корейских лотов
+    получили японскую цену — среди них «Pokemon Super Electric Breaker
+    Booster Pack Korean» и «Korean Pokemon Sword V-s1W-Booster Pack».
+
+    Слово в заголовке — утверждение продавца о своём товаре, и оно
+    сильнее любого вывода из каталога.
+    """
+    fl = resolve.foreign_language
+    check("корейский в конце заголовка ловится",
+          fl("Pokemon Super Electric Breaker Booster Pack Korean, 1x Pack")
+          == "korean")
+    check("корейский в начале ловится",
+          fl("Korean Pokemon Sword V-s1W-Booster Pack-US/ Seller-")
+          == "korean")
+
+    v, why = _v(foreign_language="korean")
+    check("корейский товар не проходит", v == OUT_OF_SCOPE, f"{v}: {why}")
+    check("причина называет язык", "korean" in why, why)
+
+    # Японский из японского каталога — единственный случай, когда
+    # послабление разведки уместно, и он не открывает дверь корейскому.
+    v2, _ = _v(foreign_language=None, japanese=False)
+    check("японский набор без языкового маркера оценивается",
+          v2 == BUY, v2)
+
+
 def test_year_mismatch_catches_wrong_set():
     """Год в заголовке сильно раньше выхода набора — резолв не тот.
 
@@ -1273,6 +1337,8 @@ def main():
                test_presale_text_beats_catalog_date,
                test_ancient_set_needs_confirmation,
                test_all_languages_closed_not_just_japanese,
+               test_japanese_pack_weighs_less,
+               test_stated_language_beats_catalog,
                test_year_mismatch_catches_wrong_set,
                test_energy_pack_and_redemption,
                test_connector_and_weak_phrases,

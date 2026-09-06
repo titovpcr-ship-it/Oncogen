@@ -43,13 +43,34 @@ def load_cfg(path):
     cfg = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     wpath = ROOT / "config" / "weights_g.yaml"
     weights = yaml.safe_load(wpath.read_text(encoding="utf-8"))
+    # Ключи с суффиксом _jp — веса японского товара. Складываем их в
+    # отдельный подсловарь, чтобы вызывающий код выбирал профиль, а не
+    # угадывал по имени ключа.
+    jp = {k[:-3]: v for k, v in weights.items() if k.endswith("_jp")}
+    weights = {k: v for k, v in weights.items() if not k.endswith("_jp")}
+    weights["_jp"] = jp
     return cfg, weights
 
 
 def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     """Один лот: вес, каталог, риск, экономика, вердикт."""
+    # ВЕС ЯПОНСКОГО ПАКА ДРУГОЙ: 5 карт против 11 у английского. Считать
+    # его по 22 г значит завысить вес вдвое и во столько же занизить
+    # прибыль на килограмм — главный показатель ветки. На списке из
+    # шестнадцати строк девять были японскими, то есть неверен был
+    # порядок всего списка.
+    #
+    # Вид определяется по КАТАЛОГУ, из которого пришёл набор, а не по
+    # слову в заголовке: слово может отсутствовать, каталог — нет.
+    scope0 = resolve.match_set(lot["title"], rx_index)
+    jp_set = (scope0 or {}).get("set_category") == 85
+    eff_weights = dict(weights)
+    if jp_set:
+        for k, v in (weights.get("_jp") or {}).items():
+            eff_weights[k] = v
     kind, qty, net_g, kg, unknown = weigh(
-        lot["title"], weights, cfg.get("pack_overhead", 1.15))
+        lot["title"], eff_weights, cfg.get("pack_overhead", 1.15))
+    lot["weights_profile"] = "jp" if jp_set else "en"
     lot.update({"kind": kind, "qty": qty, "weight_g_net": net_g,
                 "weight_kg": kg, "weight_unknown": unknown,
                 "weight_kg_billable": billable_kg(
@@ -60,7 +81,7 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     # разные функции. match_set отвечает «покемоновский ли это набор
     # вообще» и в деньги не попадает никогда; match обязан совпасть и по
     # виду, потому что от него зависит рыночная цена.
-    scope = resolve.match_set(lot["title"], rx_index)
+    scope = scope0
     lot["set_resolved"] = scope is not None
     lot["set_published_on"] = (scope or {}).get("published_on")
     lot["days_since_release"] = days_since_release(lot["set_published_on"])
@@ -85,16 +106,22 @@ def enrich(lot, *, cfg, weights, rx_index, comp_ix, fx):
     # оценивается по СВОЕМУ каталогу: смысл в том, чтобы потолок по рынку
     # сам показал, переплата это или нет. Решение владельца: вопрос,
     # который предлагалось везти на Авито, отвечается одним прогоном.
+    # ЯЗЫК, НАЗВАННЫЙ В ЗАГОЛОВКЕ, БЛОКИРУЕТ ВСЕГДА И РАНЬШЕ РЕЗОЛВА.
+    # Третий случай утечки языка подряд: сначала JPN, потом
+    # Korean/Chinese, потом Korean снова. Причина у последнего своя и
+    # хуже прочих — послабление разведки снимало запрет по признаку
+    # «набор не из английского каталога», а корейские паки печатаются
+    # по японским наборам и приходят именно оттуда. Тридцать восемь
+    # корейских лотов получили японскую цену.
+    #
+    # Теперь послабление действует ТОЛЬКО когда язык либо не назван,
+    # либо назван японским, и набор при этом из японского каталога.
+    # Слово в заголовке — утверждение продавца о своём товаре, и оно
+    # сильнее любого вывода из каталога.
     lot["language_blocks"] = lot["language"]
-    # ПОСЛАБЛЕНИЕ РАЗВЕДКИ ДЕЙСТВУЕТ ТОЛЬКО ТАМ, ГДЕ ЕСТЬ СВОЙ КАТАЛОГ.
-    # Первая версия снимала языковой запрет со ВСЕХ языков, и в список
-    # тут же попали «1x ~ESP~ SPANISH Journey Together» с английской
-    # ценой, «Mega Evolution Pitch Black 1 pack Sealed Japanese» с
-    # английской ценой и «Pokemon GO Promo Booster Pack [JAPANESE]» —
-    # то есть ровно та ошибка, которую послабление должно было помочь
-    # измерить. Оценивать по своему каталогу можно только тот товар,
-    # чей набор из этого каталога и пришёл.
-    if cfg.get("_price_foreign") and set_cat is not None and int(set_cat) != 3:
+    if (cfg.get("_price_foreign") and set_cat is not None
+            and int(set_cat) == 85
+            and lot["language"] in (None, "японский")):
         lot["language_blocks"] = None
         lot["japanese"] = False
     # Каталог для цены уже каталога для узнавания: японский набор
@@ -358,10 +385,16 @@ def main(argv=None):
         # РАЗВЕДКА ВЕРДИКТОВ НЕ ВЫДАЁТ. Она ходит по наборам, цены на
         # которые мы заведомо не знаем, и любой её «вердикт» был бы
         # утверждением о том, чего мы не мерили.
+        # ПРЕВРАЩАЛОСЬ В WATCH И PASS ТОЖЕ — и это скрывало работу
+        # сторожей. Лот «Build n Battle Pack» за $15 при потолке $13
+        # получил честный PASS «выше полосы», а в отчёте выглядел как
+        # WATCH «режим разведки», то есть как будто гейт не сработал.
+        # Разведка не выдаёт ПОКУПОК; отказы она показывает как есть.
         for l in uniq:
-            if l["verdict"] in (BUY, PASS):
+            if l["verdict"] == BUY:
                 l["verdict"] = WATCH
-                l["reason"] = "режим разведки: вердикты не выдаются"
+                l["reason"] = ("режим разведки: покупки не назначаются — "
+                               + l["reason"])
 
     counts = {}
     for l in uniq:

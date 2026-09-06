@@ -12,7 +12,7 @@ python3 -m src.pokemon.run --mode discover          # разведка, верд
 python3 -m src.pokemon.run --mode both --limit 600  # + обход категорий
 python3 -m src.pokemon.run --sort=-price            # проверить решение о сортировке
 python3 -m src.pokemon.run --dry-run --no-detail    # без отправки и без добора карточек
-python3 test_pokemon.py                             # 218 проверок
+python3 test_pokemon.py                             # 226 проверок
 ```
 
 Полоса цен и сортировка живут в `config/pokemon.yaml`, а не в коде:
@@ -180,6 +180,17 @@ profit_per_kg_пессим.   = (resale_usd − landed_batch) / (weight_kg × 1.
 | 11 | ME02: Phantasmal Flames | blister_checklane | $18.99–20.00 |
 | 10 | ME01: Mega Evolution | booster_pack | $15.95–19.99 |
 | 5 | ME01: Mega Evolution | mini_tin | $19.99 |
+
+## Заморозка
+
+**Код по покемонам заморожен 06.09.2026 решением владельца.** Ни новых
+фильтров, ни новых прогонов, ни новых списков — пока нет измеренной
+цены бустер-пака на Авито в Москве. Открытые дефекты записаны в
+`ISSUES.md` и ждут разморозки.
+
+Причина заморозки честная: шесть раундов доработок нашли двадцать с
+лишним настоящих багов и ни один из них не мешал купить. Мешает одно
+число, которого нет ни в одном API.
 
 ## Что осознанно не сделано
 

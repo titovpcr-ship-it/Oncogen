@@ -19,7 +19,7 @@ COLUMNS = [
     "seller_fb_score", "additional_images", "buying_options",
     "condition", "condition_id",
     "price_usd", "unit_price_usd", "packs", "us_ship_usd", "ship_estimated",
-    "kind", "qty", "weight_g_net", "weight_kg", "weight_kg_billable",
+    "kind", "weights_profile", "qty", "weight_g_net", "weight_kg", "weight_kg_billable",
     "weight_unknown",
     "tcg_product_id", "tcg_market_price_usd", "price_vs_market_pct",
     "set_name", "set_resolved", "set_category", "code_confirmed",
