@@ -65,14 +65,59 @@ CARDS = os.path.join(ROOT, "data", "album_cards.csv")
 CARGO_PER_KG = 22.0
 CARGO_MIN_KG = 1.0        # минимум форвардера на одиночную посылку
 PACK_KG = 0.30            # тара, замерена
-DISC_KG = 0.45            # прирост посылки на один диск, замерен
+
+# ВЕС ПРЕДМЕТА И ВЕС ПРИХОДА — РАЗНЫЕ ВЕЛИЧИНЫ, И ПУТАТЬ ИХ ДОРОГО.
+#
+# Коэффициент 0.45 кг на диск был подогнан под ЧЕТЫРЕ ПРИХОДА форвардера
+# (0.4, 0.7, 0.8, 0.8 кг). Но приход — это пластинка ПЛЮС упаковка
+# продавца, а она у всех разная: картонный мейлер, пузырьковая плёнка,
+# двойной конверт. Отсюда и разброс вдвое.
+#
+# 07.09.2026 владелец взвесил сам предмет: Nirvana Nevermind, пластинка
+# с конвертом — 400 граммов. Это совпало с приходом INC-001270 (0.4 кг),
+# который до сих пор выглядел выбросом среди четырёх, а на деле был
+# единственным без лишней упаковки продавца.
+#
+# ГДЕ ЭТО МЕНЯЕТ СЧЁТ. В одиночной посылке — нигде: минимум в 1 кг
+# съедает и 0.4, и 0.75. В СБОРНОЙ посылке веса складываются, минимум
+# перестаёт действовать, и разница становится решающей:
+#   10 пластинок по 0.40 кг -> 4.30 кг = $94.60  ->  $9.46 на пластинку
+#   10 пластинок по 0.75 кг -> 7.80 кг = $171.60 ->  $17.16 на пластинку
+# Почти вдвое, и это больше всей маржи на половине альбомов палитры.
+#
+# n=1. Один взвешенный экземпляр — не медиана по всем прессам: 180g
+# аудиофильский двойник в gatefold весит заметно больше. Поэтому
+# ITEM_KG применяется ТОЛЬКО к альбомам, где вес действительно измерен,
+# а для остальных остаётся прежний коэффициент с пометкой.
+# ЗНАЧЕНИЕ ПО УМОЛЧАНИЮ ИЗМЕНЕНО 07.09.2026 с 0.45 на 0.40, и это не
+# подгонка под удобный ответ. Прежние 0.45 подгонялись под ПРИХОДЫ
+# форвардера, то есть под пластинку вместе с упаковкой продавца —
+# картонным мейлером, плёнкой, вторым конвертом. Владелец взвесил сам
+# предмет на двух разных альбомах (Nevermind и Thriller, разные лейблы
+# и годы), и оба дали ровно 400 г. В сборной посылке форвардер
+# перепаковывает всё в одну коробку, значит складывать надо веса
+# ПРЕДМЕТОВ, а не приходов. Старое число завышало карго сборной посылки
+# почти вдвое.
+DISC_KG = 0.40            # пластинка с конвертом, взвешено (n=2)
+#
+# ДВА НЕЗАВИСИМЫХ ЗАМЕРА СОШЛИСЬ РОВНО. Nevermind и Thriller — разные
+# лейблы, разные годы, разные прессы — оба дали 400 г с конвертом. Это
+# уже не единичное наблюдение, и оно говорит, что 0.45 кг «на диск»
+# было не весом пластинки, а весом пластинки ПЛЮС упаковки продавца,
+# то есть величиной из другой популяции.
+ITEM_KG_MEASURED = {      # пластинка с конвертом, взвешено владельцем
+    ("Nirvana", "Nevermind"): 0.40,
+    ("Michael Jackson", "Thriller"): 0.40,
+}
+BATCH_SIZE = 10           # сколько пластинок в сборной посылке
 US_SHIP = 5.14            # медианная надбавка за доставку внутри США
 
 FIELDS = ["artist", "album", "price_source", "ru_price_rub", "ru_n",
-          "ru_p25", "ru_p75",
+          "ru_p25", "ru_p75", "item_kg", "item_kg_source",
           "discs", "discs_source", "vinyl_gram", "parcel_kg_solo",
           "cargo_usd_solo", "cargo_usd_rider", "ru_price_usd",
-          "cap_3x_ebay_usd", "cap_3x_landed_usd", "breakeven_entry_usd",
+          "cap_3x_ebay_usd", "cap_3x_landed_usd", "cap_3x_rider_usd",
+          "breakeven_entry_usd",
           "discogs_release", "updated"]
 
 
@@ -166,11 +211,21 @@ def discogs_format(artist, album, token):
     return discs, gram, results[0].get("id"), None
 
 
-def cargo_usd(discs, solo=True):
-    kg = PACK_KG + DISC_KG * discs
+def cargo_usd(discs, solo=True, item_kg=None, batch=BATCH_SIZE):
+    """Карго на ОДИН лот в долларах.
+
+    solo  — лот едет отдельной посылкой, применяется минимум в 1 кг.
+    rider — лот едет в сборной посылке из `batch` штук: тара считается
+            один раз на всю посылку, а минимум делится на всех и потому
+            почти никогда не срабатывает.
+    item_kg — измеренный вес предмета, если он есть; иначе прежний
+            коэффициент по числу дисков.
+    """
+    per_item = item_kg if item_kg else DISC_KG * discs
     if solo:
-        kg = max(kg, CARGO_MIN_KG)
-    return kg * CARGO_PER_KG
+        return max(PACK_KG + per_item, CARGO_MIN_KG) * CARGO_PER_KG
+    total = PACK_KG + per_item * batch
+    return max(total, CARGO_MIN_KG) * CARGO_PER_KG / batch
 
 
 def ozon_estimates(rate, known, k=OZON_TO_AVITO):
@@ -235,8 +290,9 @@ def build(target=3.0, use_net=True, with_ozon=True):
             # мы возим одно конкретное. Разница сама по себе сведение.
             src += f"; Discogs говорит {d_disc} — усредняет по изданиям"
         ru_usd = m["med"] / rate
-        c_solo = cargo_usd(discs, True)
-        c_rider = cargo_usd(discs, False)
+        item_kg = ITEM_KG_MEASURED.get((artist, album))
+        c_solo = cargo_usd(discs, True, item_kg)
+        c_rider = cargo_usd(discs, False, item_kg)
         rows.append({
             "artist": artist, "album": album,
             "price_source": m["src"],
@@ -244,6 +300,8 @@ def build(target=3.0, use_net=True, with_ozon=True):
             "ru_p25": m["p25"], "ru_p75": m["p75"],
             "discs": discs, "discs_source": src,
             "vinyl_gram": gram or "",
+            "item_kg": item_kg or "",
+            "item_kg_source": "взвешено" if item_kg else "модель",
             "parcel_kg_solo": round(max(PACK_KG + DISC_KG * discs,
                                         CARGO_MIN_KG), 2),
             "cargo_usd_solo": round(c_solo, 2),
@@ -256,6 +314,9 @@ def build(target=3.0, use_net=True, with_ozon=True):
             # Отрицательное значение означает, что цель недостижима при
             # любой цене на eBay, включая нулевую.
             "cap_3x_landed_usd": round(ru_usd / target - c_solo, 2),
+            # То же для сборной посылки: минимум делится на всех, и
+            # цель, недостижимая в одиночку, может стать достижимой.
+            "cap_3x_rider_usd": round(ru_usd / target - c_rider, 2),
             # При какой цене входа сделка выходит хотя бы в ноль.
             "breakeven_entry_usd": round(ru_usd - c_solo, 2),
             "discogs_release": rel or "",
@@ -290,6 +351,16 @@ def main():
     est = [r for r in rows if r["price_source"] != "avito"]
     print(f"\nизмерено по Авито: {len(meas)}   оценка из Ozon x"
           f"{OZON_TO_AVITO}: {len(est)}")
+    good_rider = [r for r in rows if r["cap_3x_rider_usd"] > 0]
+    if good_rider:
+        good_rider.sort(key=lambda r: -r["cap_3x_rider_usd"])
+        print(f"\nВ СБОРНОЙ ПОСЫЛКЕ ИЗ {BATCH_SIZE} ШТУК {a.target}x "
+              f"становится достижима на {len(good_rider)} альбомах:")
+        for r in good_rider[:10]:
+            print(f"  вход до ${r['cap_3x_rider_usd']:6.2f}  "
+                  f"{r['artist']} — {r['album']} ({r['ru_price_rub']} ₽, "
+                  f"карго ${r['cargo_usd_rider']}/шт, "
+                  f"{r['item_kg_source']})")
     bad = [r for r in rows if r["cap_3x_landed_usd"] <= 0]
     print(f"{a.target}x к полной себестоимости недостижима при ЛЮБОЙ цене "
           f"на eBay: {len(bad)} из {len(rows)} "
