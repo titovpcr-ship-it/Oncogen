@@ -1,0 +1,16 @@
+set_code,set_name,product_kind,product_name_ru,ru_price_rub,price_basis,source,source_url,checked_date,note
+30C,30th Celebration,tin,Тин-Бокс Pokemon ex Tin,9990,shelf,pokebarn,https://pokebarn.ru/kartochki/pokemon-tcg,2026-09-06,витрина; часть позиций «нет в наличии»
+30C,30th Celebration,mini_tin,Мини-Тин Day & Night,5290,shelf,pokebarn,https://pokebarn.ru/kartochki/pokemon-tcg,2026-09-06,витрина
+30C,30th Celebration,booster_bundle_6,Бустер-Бандл 6 бустеров,16190,shelf,pokebarn,https://pokebarn.ru/kartochki/pokemon-tcg,2026-09-06,витрина
+30C,30th Celebration,booster_pack,Одиночный бустер (расчёт из бандла),2698,derived,pokebarn,https://pokebarn.ru/kartochki/pokemon-tcg,2026-09-06,ПРОИЗВОДНАЯ 16190/6 — обязательно перепроверить прямым листингом
+30C,30th Celebration,battle_deck,Колода Umbreon ex Battle Deck,11590,shelf,pokebarn,https://pokebarn.ru/kartochki/pokemon-tcg,2026-09-06,витрина
+30C,30th Celebration,battle_deck,Колода Espeon ex Battle Deck,11390,shelf,pokebarn,https://pokebarn.ru/kartochki/pokemon-tcg,2026-09-06,витрина
+30C,30th Celebration,collection,Tech Sticker Collection,7490,shelf,pokebarn,https://pokebarn.ru/kartochki/pokemon-tcg,2026-09-06,витрина
+,,,,,,,,,
+# --- ниже заполнять самому: цены Авито/PokeMarket по фактически проданным лотам ---
+# price_basis: shelf = витрина магазина | avito_ask = запрошенная на Авито | avito_sold = реально ушло | derived = расчётная
+# Строки с price_basis=avito_sold имеют приоритет; скрипт берёт минимальную из доступных для набора+типа.
+SV08,Surging Sparks,booster_pack,,,avito_sold,,,,
+SV08,Surging Sparks,blister_3pack,,,avito_sold,,,,
+PRE,Prismatic Evolutions,booster_pack,,,avito_sold,,,,
+PRE,Prismatic Evolutions,mini_tin,,,avito_sold,,,,

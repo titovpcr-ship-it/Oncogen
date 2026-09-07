@@ -1,0 +1,25 @@
+{
+  "_комментарий": [
+    "Инвентарь под продажу. Правьте руками: query — то, по чему ищем в архиве,",
+    "sealed — запечатана ли (это МЕНЯЕТ выборку сравнения, см. value_my_stock.py),",
+    "note — что уточнить. Позиции с 'уточнить' названы по описанию из документа,",
+    "точный альбом/издание не подтверждены."
+  ],
+  "positions": [
+    {"artist": "Nirvana", "album": "Nevermind", "query": "Nirvana Nevermind", "sealed": true},
+    {"artist": "Nirvana", "album": "In Utero", "query": "Nirvana In Utero", "sealed": true},
+    {"artist": "Nirvana", "album": "Bleach", "query": "Nirvana Bleach", "sealed": true,
+     "note": "уточнить: обычный Bleach или Deluxe — это разные цены"},
+    {"artist": "Nirvana", "album": "Bleach Deluxe", "query": "Bleach Deluxe", "sealed": true},
+    {"artist": "Metallica", "album": "Master Of Puppets", "query": "Metallica Master Of Puppets",
+     "sealed": true, "note": "уточнить альбом: в документе только «Metallica»"},
+    {"artist": "Amy Winehouse", "album": "Back To Black", "query": "Winehouse Back To Black", "sealed": true},
+    {"artist": "Amy Winehouse", "album": "Frank", "query": "Winehouse Frank", "sealed": true},
+    {"artist": "Amy Winehouse", "album": "Lioness: Hidden Treasures", "query": "Winehouse Lioness", "sealed": true,
+     "note": "уточнить: в документе «3 варианта» без названий"},
+    {"artist": "System Of A Down", "album": "Toxicity", "query": "System Of A Down Toxicity", "sealed": true,
+     "note": "уточнить альбом: в документе только «SOAD»"},
+    {"artist": "AC/DC", "album": "Back In Black", "query": "AC/DC Back In Black", "sealed": true,
+     "note": "уточнить альбом: в документе только «AC/DC»"}
+  ]
+}
