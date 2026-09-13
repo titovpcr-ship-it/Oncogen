@@ -61,24 +61,35 @@ def cargo_per_item(discs):
 
 
 def ru_albums(min_sales=MIN_SALES):
-    """Альбомы латиницей с завершёнными российскими продажами."""
+    """Альбомы латиницей с завершёнными российскими продажами.
+
+    ССЫЛКИ НА САМИ СДЕЛКИ СОБИРАЮТСЯ ВМЕСТЕ С ЦЕНАМИ. Требование
+    владельца от 13.09.2026: к каждой находке давать и российский адрес.
+    Здесь он лучше, чем ссылка на магазин: это не витрина, а лот,
+    который УЖЕ УШЁЛ за названную цену, и её можно проверить глазами.
+    Берутся два лота, ближайших к медиане.
+    """
     conn = sqlite3.connect(DB, timeout=60)
     by = collections.defaultdict(list)
-    for art, alb, p in conn.execute(
-            "SELECT artist, album, price_rub FROM meshok_sold "
+    for art, alb, p, url in conn.execute(
+            "SELECT artist, album, price_rub, url FROM meshok_sold "
             "WHERE artist IS NOT NULL AND album IS NOT NULL AND price_rub > 0"):
         a, b = (art or "").strip(), (alb or "").strip()
         if a and b and all(ord(c) < 128 for c in a + b):
-            by[(a, b)].append(p)
+            by[(a, b)].append((p, url))
     conn.close()
     out = []
     for (a, b), v in by.items():
         if len(v) < min_sales:
             continue
-        v.sort()
-        out.append({"artist": a, "album": b, "ru_rub": statistics.median(v),
-                    "n": len(v), "p25": v[len(v) // 4],
-                    "p75": v[3 * len(v) // 4]})
+        v.sort(key=lambda x: x[0])
+        prices = [x[0] for x in v]
+        med = statistics.median(prices)
+        near = sorted(v, key=lambda x: abs(x[0] - med))[:2]
+        out.append({"artist": a, "album": b, "ru_rub": med,
+                    "n": len(v), "p25": prices[len(v) // 4],
+                    "p75": prices[3 * len(v) // 4],
+                    "ru_links": [u for _, u in near if u]})
     out.sort(key=lambda r: -r["ru_rub"])
     return out
 
@@ -158,6 +169,7 @@ def main():
             lot.update({
                 "artist": t["artist"], "album": t["album"],
                 "ru_rub": int(t["ru_rub"]), "ru_n": t["n"],
+                "ru_links": t.get("ru_links") or [],
                 "ru_p25": t["p25"], "ru_p75": t["p75"],
                 "profit_rub": int(t["ru_rub"] - lot["landed"] * rate),
                 # Осторожная оценка: продаём не по медиане, а по нижней
@@ -198,7 +210,8 @@ def main():
         for x in finds:
             w.writerow([x["profit_rub"], x["profit_p25_rub"], x["ratio"],
                         x["entry"], x["cargo"], x["landed"], x["ru_rub"],
-                        x["ru_p25"], x["ru_p75"], x["ru_n"], x["artist"],
+                        x["ru_p25"], x["ru_p75"], x["ru_n"],
+                        " ".join(x.get("ru_links") or []), x["artist"],
                         x["album"], x["discs"], x["title"], x["seller"],
                         x["feedback"], x["image"], x["url"]])
 
@@ -229,7 +242,9 @@ def main():
         print(f"   {x['title'][:80]}")
         print(f"   продавец {x['seller']} ({x['feedback']})")
         print(f"   фото: {x['image']}")
-        print(f"   лот:  {x['url'][:100]}")
+        print(f"   КУПИТЬ:  {x['url'][:100]}")
+        for u in x.get("ru_links", [])[:2]:
+            print(f"   продано в России за эти деньги: {u}")
     print("\nНЕ СВЕРЕНО ГЛАЗАМИ. Издание и состояние проверить руками.")
     if a.push:
         import notify
@@ -248,7 +263,10 @@ def main():
                     f"{x['ru_rub']} ₽ по {x['ru_n']} продажам",
                     f"осторожно (нижняя четверть): "
                     f"{x['profit_p25_rub']:+d} ₽",
-                    x["url"], ""]
+                    f"купить: {x['url']}"]
+                for u in x.get("ru_links", [])[:2]:
+                    lines.append(f"продано в РФ: {u}")
+                lines.append("")
             lines.append("НЕ СВЕРЕНО ГЛАЗАМИ: издание и состояние руками.")
             n.send("\n".join(lines), click_url=top[0]["url"])
         print(f"в Телеграм: отправлено ({n.name})")
