@@ -46,6 +46,10 @@ from src.common.ebay import (ApiRefused, ebay_token, price_usd,   # noqa: E402
 
 OUT = os.path.join(ROOT, "out")
 DB = os.path.join(ROOT, "vinyl.db")
+
+
+def log(msg):
+    print(msg, file=sys.stderr)
 SHOP2 = os.path.join(ROOT, "data", "ru_shop2_appmistore.csv")
 FWD_PER_DISC = 11.0
 ASSUMED_SHIP = 6.0
@@ -99,6 +103,9 @@ def main():
     ap.add_argument("--src", default="")
     ap.add_argument("--top", type=int, default=10)
     ap.add_argument("--min-lots", type=int, default=3)
+    ap.add_argument("--ebay-cache", default="",
+                    help="прошлый rank_*.csv — переиспользовать глубину "
+                         "и низ eBay, чтобы не повторять сотни запросов")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
 
@@ -110,8 +117,17 @@ def main():
     print(f"исполнителей в продажах: {len(mesh)}, "
           f"витрина по штрихкоду: {len(shops)}", file=sys.stderr)
 
-    token = ebay_token()
-    out = []
+    cache = {}
+    if a.ebay_cache and os.path.exists(a.ebay_cache):
+        for z in csv.DictReader(open(a.ebay_cache, encoding="utf-8")):
+            if z.get("gtin"):
+                cache[z["gtin"]] = (int(z["lots"] or 0),
+                                    float(z["ebay_low"]) if z["ebay_low"]
+                                    else None)
+        print(f"из кэша eBay: {len(cache)} кодов", file=sys.stderr)
+
+    token = ebay_token() if len(cache) < 1 else None
+    out, refused, asked = [], 0, 0
     for i, r in enumerate(rows, 1):
         buy = float(r["price"])
         title = r["title"]
@@ -121,7 +137,12 @@ def main():
 
         gt = (r.get("gtin") or "").lstrip("0")
         lots, ebay_low = 0, None
-        if gt:
+        if r.get("gtin") in cache:
+            lots, ebay_low = cache[r["gtin"]]
+        elif gt:
+            if token is None:
+                token = ebay_token()
+            asked += 1
             try:
                 d = search_page(
                     token, gtin=r["gtin"], limit=50,
@@ -135,13 +156,33 @@ def main():
                     es.append(p + (ASSUMED_SHIP if sh is None else sh))
                 lots = len(es)
                 ebay_low = min(es) if es else None
-            except ApiRefused:
-                pass
+            except ApiRefused as e:
+                # Отказ API НЕЛЬЗЯ глотать молча. 13.09.2026 этот
+                # except с одним pass записал ноль лотов всем 925
+                # позициям и подал это как факт: на деле кончилась
+                # дневная квота eBay, и ни один запрос не прошёл.
+                # Тот же класс ошибки чинился утром в ebay.py, и я
+                # воспроизвёл его здесь заново.
+                refused += 1
+                if refused <= 3:
+                    log(f"  {r['gtin']}: {str(e)[:90]}")
+                if refused == 40:
+                    log("  сорок отказов подряд — похоже, кончилась "
+                        "дневная квота; глубина по eBay в этом прогоне "
+                        "недостоверна")
             time.sleep(0.2)
 
+        # Исполнитель берётся из НАЗВАНИЯ, а не из поля vendor. В первом
+        # прогоне было наоборот, и это испортило больше половины выборки:
+        # у 479 позиций из 925 vendor — «Alliance Entertainment», то есть
+        # дистрибьютор. Ранжировщик искал в русских продажах артиста,
+        # которого не существует, и нашёл совпадения всего у двух позиций
+        # вместо ожидаемых по плотности сотни.
         parts = re.split(r"\s+[-–—]\s+", title, maxsplit=1)
-        art = norm(r.get("vendor") or parts[0])
+        art = norm(parts[0])
         alb = norm(parts[1] if len(parts) > 1 else title)
+        if not art and r.get("vendor"):
+            art = norm(r["vendor"])
         sales = []
         for al, p in mesh.get(art, []):
             if al and alb and (al == alb or al in alb or alb in al):
@@ -193,6 +234,10 @@ def main():
 
     graded = [z for z in out if z["score"] > 0]
     withreal = [z for z in out if z["ru_real"]]
+    if refused:
+        print(f"\nОТКАЗОВ eBay: {refused} из {asked} запросов. "
+              f"Глубина и низ eBay в этом прогоне НЕДОСТОВЕРНЫ.",
+              file=sys.stderr)
     print(f"\nвсего позиций: {len(out)}")
     print(f"с русской ценой хоть какой-то: {len(graded)}")
     print(f"из них с ценой ПО СДЕЛКАМ: {len(withreal)}")
