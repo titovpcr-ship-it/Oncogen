@@ -77,6 +77,57 @@ _LIMITED = re.compile(r"цветн|лимит|limited|numbered|эксклюзи�
 # считать вещь запечатанной.
 _GRADED = re.compile(r"\b(mint|nm|near\s*mint|vg\+{0,2}|ex\b|"
                      r"excellent)\b", re.I)
+
+# ОРИГИНАЛ И РЕПРЕСС — РАЗНЫЕ ВЕЩИ, И РАЗНИЦА БЫВАЕТ ПЯТИКРАТНОЙ.
+# Вердикт владельца по dvsn «Morning After» (13.09.2026): магазин
+# продаёт ОРИГИНАЛ 2018 (в описании прямо написано «Оригинал») за
+# 14 990 ₽, медиана Discogs $158.41, have/want 283/652, ratio 2.30.
+# А на eBay нашёлся РЕПРЕСС июля 2025 — розовый с синим винил, медиана
+# $29.02, ratio 0.18. Каталожный номер у них один, название одно,
+# и матчер их не различил.
+#
+# Это четвёртый случай подряд одной болезни: Queen Balkanton,
+# Bob Marley Tri-Color, Muse Absolution, теперь dvsn. Тот же альбом,
+# другое издание, другая цена.
+#
+# Ловим по СЛОВАМ ИЗДАНИЯ с обеих сторон и требуем их согласия.
+_RU_ORIGINAL = re.compile(r"\bоригинал\b|\bпервопресс\b|\b1st\s*press",
+                          re.I)
+_RU_REPRESS = re.compile(r"переизд|репресс|reissue|repress", re.I)
+_EB_REPRESS = re.compile(r"\breissue\b|\brepress\b|\bre-?issue\b|"
+                         r"\b20[12]\d\s*(re)?press\b|\banniversary\b",
+                         re.I)
+_EB_ORIGINAL = re.compile(r"\boriginal\s*(press|pressing|issue)\b|"
+                          r"\b1st\s*press\b|\bfirst\s*press", re.I)
+
+
+def edition_mismatch(ebay_title, ru_album, ru_descr):
+    """Магазин и лот говорят о разных изданиях. Причина или None."""
+    ru = f"{ru_album} {ru_descr}"
+    ru_orig = bool(_RU_ORIGINAL.search(ru))
+    ru_re = bool(_RU_REPRESS.search(ru))
+    eb_re = bool(_EB_REPRESS.search(ebay_title))
+    eb_orig = bool(_EB_ORIGINAL.search(ebay_title))
+    if ru_orig and eb_re:
+        return ("магазин продаёт ОРИГИНАЛ, а лот — переиздание: "
+                "цены у них расходятся кратно")
+    if ru_re and eb_orig:
+        return "магазин продаёт переиздание, а лот — оригинал"
+    # Год издания, названный обеими сторонами, обязан совпасть.
+    ry = re.findall(r"'(\d{2})\b|\b(19[5-9]\d|20[0-2]\d)\b", ru)
+    ey = re.findall(r"\b(19[5-9]\d|20[0-2]\d)\b", ebay_title)
+    def norm(t):
+        v = t[0] or t[1] if isinstance(t, tuple) else t
+        v = int(v)
+        return v + 1900 if 50 <= v <= 99 else (v + 2000 if v < 50 else v)
+    if ry and ey:
+        rset = {norm(t) for t in ry}
+        eset = {int(y) for y in ey}
+        if rset and eset and min(abs(a - b) for a in rset for b in eset) > 3:
+            return (f"год не сходится: в магазине "
+                    f"{'/'.join(map(str, sorted(rset)))}, "
+                    f"в лоте {'/'.join(map(str, sorted(eset)))}")
+    return None
 _SHRINK = re.compile(r"\bsealed\b|\bshrink\b|\bstill\s+sealed\b|\bss\b",
                      re.I)
 OUT = os.path.join(ROOT, "out")
@@ -146,7 +197,7 @@ def load_shop(min_rub, limited_only=False):
     return out, len(rows)
 
 
-def ebay_new(token, artist, album, discs):
+def ebay_new(token, artist, album, discs, ru_album="", ru_descr=""):
     """Только «купить сейчас» и только новое — оба условия владельца."""
     flt = ("buyingOptions:{FIXED_PRICE},itemLocationCountry:US,"
            "conditions:{NEW}")
@@ -162,6 +213,9 @@ def ebay_new(token, artist, album, discs):
         if tx.title_is_the_album(title, t):
             continue
         if sequel_mismatch(title, album):
+            continue
+        why = edition_mismatch(title, ru_album, ru_descr)
+        if why:
             continue
         p = price_usd(it)
         if p is None:
@@ -210,7 +264,8 @@ def main():
     token = ebay_token()
     finds, checked, nothing = [], 0, 0
     for s in shop[:a.check]:
-        lots, err = ebay_new(token, s["artist"], s["album_clean"], s["discs"])
+        lots, err = ebay_new(token, s["artist"], s["album_clean"],
+                             s["discs"], s["album"], s["country_label"])
         checked += 1
         if err:
             print(f"  {s['artist'][:20]}: {err}", file=sys.stderr)
