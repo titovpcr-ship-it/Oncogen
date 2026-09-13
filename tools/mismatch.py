@@ -326,23 +326,42 @@ def signals(title, names, idx):
     return out, (fixed or known)
 
 
-def scan(token, query, max_usd, limit=200, sort="price"):
+def scan(token, query, max_usd, limit=200, sort="price", pages=1):
+    """Выдача по запросу, несколько страниц.
+
+    БЕЗ ПОТОЛКА ЦЕНЫ ОДНОЙ СТРАНИЦЫ МАЛО. Сортировка по цене по
+    возрастанию отдаёт самые дешёвые лоты, и пока стоял потолок $23
+    одной страницы хватало с запасом. Сняли потолок — и первые двести
+    лотов по-прежнему остаются двумястами самыми дешёвыми, то есть
+    выдача не изменилась бы вовсе. Поэтому листаем вглубь.
+    """
     flt = ("buyingOptions:{FIXED_PRICE|BEST_OFFER},itemLocationCountry:US,"
            "conditions:{NEW|USED}")
-    try:
-        d = search_page(token, category_id=CATEGORY, flt=flt, limit=limit,
-                        offset=0, sort=sort, q=query)
-    except ApiRefused as e:
-        return [], str(e)
+    items = []
+    for page in range(pages):
+        try:
+            d = search_page(token, category_id=CATEGORY, flt=flt, limit=limit,
+                            offset=page * limit, sort=sort, q=query)
+        except ApiRefused as e:
+            return items and _pack(items, max_usd) or [], str(e)
+        got = d.get("itemSummaries") or []
+        items.extend(got)
+        if len(got) < limit:
+            break
+        time.sleep(0.2)
+    return _pack(items, max_usd), None
+
+
+def _pack(items, max_usd):
     out = []
-    for it in (d.get("itemSummaries") or []):
+    for it in items:
         p = price_usd(it)
         if p is None:
             continue
         sh = shipping_usd(it)
         assumed = sh is None
         sh = ASSUMED_SHIP if assumed else sh
-        if p + sh > max_usd:
+        if max_usd and p + sh > max_usd:
             continue
         img = (it.get("image") or {}).get("imageUrl") or ""
         out.append({
@@ -355,7 +374,7 @@ def scan(token, query, max_usd, limit=200, sort="price"):
             "seller": (it.get("seller") or {}).get("username") or "",
             "feedback": (it.get("seller") or {}).get("feedbackScore") or 0,
         })
-    return out, None
+    return out
 
 
 # ЗАПРОСЫ ЦЕЛЯТСЯ В НЕЗНАНИЕ ПРОДАВЦА, А НЕ В СОСТОЯНИЕ ПЛАСТИНКИ.
@@ -377,7 +396,9 @@ def push(cands, paid, seen_n, rate, cap):
     """Итог в Телеграм. Пустой прогон — тоже результат (правило 2)."""
     import notify
     n = notify.Notifier()
-    head = (f"ОШИБКИ ПРОДАВЦОВ, потолок ${cap:.0f} с доставкой по США\n"
+    capw = (f"потолок ${cap:.0f} с доставкой по США" if cap
+            else "без потолка цены")
+    head = (f"ОШИБКИ ПРОДАВЦОВ, {capw}\n"
             f"просмотрено {seen_n} лотов, с признаком ошибки {len(cands)}, "
             f"с выгодой {len(paid)}")
     if not paid:
@@ -405,7 +426,9 @@ def push(cands, paid, seen_n, rate, cap):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-usd", type=float, default=23.0,
-                    help="потолок цены с доставкой по США")
+                    help="потолок цены с доставкой по США; 0 — без потолка")
+    ap.add_argument("--pages", type=int, default=1,
+                    help="сколько страниц по 200 лотов брать на запрос")
     ap.add_argument("--min-signals", type=int, default=1)
     ap.add_argument("--top", type=int, default=40)
     ap.add_argument("--push", action="store_true",
@@ -430,7 +453,7 @@ def main():
     token = ebay_token()
     seen, cands = set(), []
     for q in QUERIES:
-        lots, err = scan(token, q, a.max_usd)
+        lots, err = scan(token, q, a.max_usd, pages=a.pages)
         if err:
             print(f"  «{q}»: {err}", file=sys.stderr)
             continue
@@ -463,8 +486,8 @@ def main():
                 lot["profit_rub"] = None
                 lot["ratio"] = None
             cands.append(lot)
-        print(f"  «{q}»: {len(lots)} до ${a.max_usd:.0f}, новых {fresh}",
-              file=sys.stderr)
+        cap = f"до ${a.max_usd:.0f}" if a.max_usd else "без потолка"
+        print(f"  «{q}»: {len(lots)} {cap}, новых {fresh}", file=sys.stderr)
         time.sleep(0.3)
 
     # ПОРЯДОК ПО ДЕНЬГАМ, А НЕ ПО ЧИСЛУ ПРИЗНАКОВ. Признаки говорят
@@ -487,7 +510,8 @@ def main():
                         c["artist"], c["discs"], " | ".join(c["signals"]),
                         c["title"], c["seller"], c["feedback"], c["image"],
                         c["url"]])
-    print(f"\nпросмотрено лотов до ${a.max_usd:.0f}: {len(seen)}")
+    capw = f"до ${a.max_usd:.0f}" if a.max_usd else "без потолка цены"
+    print(f"\nпросмотрено лотов {capw}: {len(seen)}")
     print(f"кандидатов с признаком ошибки: {len(cands)}")
     print(f"из них с положительной выгодой: {len(paid)}")
     print(f"курс {rate:.4f} ₽/$" + ("  (КЭШ УСТАРЕЛ)" if stale else ""))
