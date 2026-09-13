@@ -62,8 +62,8 @@ def _headers(token: str) -> dict:
             "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
 
 
-def search_page(token, *, category_id, flt, limit=200, offset=0,
-                sort=None, q=None, fieldgroups=None, timeout=30):
+def search_page(token, *, category_id=None, flt=None, limit=200, offset=0,
+                sort=None, q=None, fieldgroups=None, gtin=None, timeout=30):
     """Одна страница выдачи. Возвращает разобранный JSON.
 
     offset обязан быть кратен limit — иначе eBay отдаёт 400. Это не
@@ -71,8 +71,18 @@ def search_page(token, *, category_id, flt, limit=200, offset=0,
     """
     if offset % limit:
         raise ValueError(f"offset {offset} не кратен limit {limit}")
-    params = {"category_ids": str(category_id), "limit": str(limit),
-              "offset": str(offset), "filter": flt}
+    params = {"limit": str(limit), "offset": str(offset)}
+    if category_id is not None:
+        params["category_ids"] = str(category_id)
+    if flt:
+        params["filter"] = flt
+    # Поиск по штрихкоду. Владелец разобрал пять пар глазами 13.09.2026
+    # и нашёл, что три ошибки из пяти — одного рода: совпало название
+    # альбома, а издание разное. У Muse «Absolution» — это и репресс за
+    # $41, и бокс за $125; у Arcade Fire «Pink Elephant» — и 5 800 ₽, и
+    # 13 592 ₽. Название такие вещи не различает, штрихкод различает.
+    if gtin:
+        params["gtin"] = str(gtin)
     if sort:
         params["sort"] = sort
     if q:

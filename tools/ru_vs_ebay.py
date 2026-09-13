@@ -44,6 +44,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 sys.path.insert(0, HERE)
 
+import ru_shop_details as rd                                      # noqa: E402
 from src.common.ebay import (ApiRefused, ebay_token, price_usd,   # noqa: E402
                              search_page, shipping_usd)
 from src.common.fx import usdrub                                   # noqa: E402
@@ -128,6 +129,93 @@ def edition_mismatch(ebay_title, ru_album, ru_descr):
                     f"{'/'.join(map(str, sorted(rset)))}, "
                     f"в лоте {'/'.join(map(str, sorted(eset)))}")
     return None
+# ---------------------------------------------------------------- O-50
+# Комплектация. Muse Absolution прошёл гард «оригинал против репресса»
+# насквозь: обе стороны — переиздания, годы разошлись ровно на 3 при
+# пороге «больше 3». Различает их не год, а то, ЧТО лежит в коробке.
+# В магазине юбилейный бокс с книгой за 19 992 ₽, на eBay рядовой
+# двойник за $34.99. Это разные товары, и русская цена относится не к
+# тому, что мы собираемся купить.
+#
+# Два уровня. Бокс, юбилейное издание и книга — отдельные дорогие
+# позиции: если они названы с одной стороны и не названы с другой,
+# сравнение недействительно. Цвет, постер, буклет, оби — дешёвые
+# вложения, и продавцы на eBay их регулярно не перечисляют, поэтому
+# они только поднимают флаг, но лот не снимают.
+_PKG_HARD = {
+    "бокс-сет": (re.compile(r"\bбокс\b|\bbox\s*-?\s*set\b|\bбокс-сет\b|"
+                           r"\(\s*\d+\s*x?\s*LP\s*-?\s*(бокс|box)", re.I),
+                 re.compile(r"\bbox\s*-?\s*set\b|\bboxset\b|\bbox\b", re.I)),
+    "юбилейное издание": (
+        re.compile(r"юбилей|anniversary|\b[XVI]{1,5}\s*Anniversary\b", re.I),
+        re.compile(r"\banniversary\b|\b\d+th\s*ann\b|\bdeluxe\s*ed", re.I)),
+    "CD в комплекте": (
+        re.compile(r"\+\s*CD\b|\bCD\b", re.I),
+        re.compile(r"\bcd\b|\b\dcd\b", re.I)),
+    "книга в комплекте": (
+        re.compile(r"\+\s*книга|\bкнига\b|hardcover", re.I),
+        re.compile(r"\bbook\b|\bhardcover\b|\bbooklet\s*book\b", re.I)),
+}
+_PKG_SOFT = {
+    "постер": (re.compile(r"\+\s*постер|\bпостер\b", re.I),
+               re.compile(r"\bposter\b", re.I)),
+    "буклет": (re.compile(r"\+\s*буклет|\bбуклет\b", re.I),
+               re.compile(r"\bbooklet\b", re.I)),
+    "obi-полоса": (re.compile(r"\+\s*obi|\bobi\b", re.I),
+                   re.compile(r"\bobi\b", re.I)),
+    # Цвет на eBay пишут как попало: «COKE BOTTLE GREEN LP», «Opaque
+    # Red», «Splatter». Требовать слово vinyl рядом с цветом нельзя —
+    # Elton John получил флаг зря. Ловим название цвета само по себе.
+    "цветной винил": (re.compile(r"цветн\w*\s+винил", re.I),
+                      re.compile(r"\bcolou?red?\b|\bsplatter\b|\bmarbl\w*|"
+                                 r"\bswirl\b|\bopaque\b|\btranslucent\b|"
+                                 r"\bpicture\s*disc\b|\bclear\b|"
+                                 r"\b(red|blue|green|gold|silver|white|pink|"
+                                 r"purple|orange|yellow|amber|cream|bone|"
+                                 r"turquoise|magenta|violet|smoke|sea\s*glass|"
+                                 r"coke\s*bottle)\b", re.I)),
+}
+
+
+def _strip_album_words(ebay_title, ru_album):
+    """Убрать из заголовка лота слова названия альбома.
+
+    Иначе «Pink Elephant» читается как розовый винил, «Blue Train» —
+    как синий, и флаг цвета гаснет ровно там, где он нужен.
+    """
+    words = {w for w in re.findall(r"[A-Za-z]{3,}", ru_album)}
+    if not words:
+        return ebay_title
+    rx = re.compile(r"\b(" + "|".join(map(re.escape, sorted(words))) + r")\b",
+                    re.I)
+    return rx.sub(" ", ebay_title)
+
+
+def package_mismatch(ebay_title, ru_album, ru_descr):
+    """Комплект магазина против комплекта лота.
+
+    Возвращает (причина_снять, [флаги]). Причина непуста — сравнение
+    недействительно. Флаги лот не снимают, их читает владелец.
+    """
+    ru = f"{ru_album} {ru_descr}"
+    title_nc = _strip_album_words(ebay_title, ru_album)
+    for name, (rx_ru, rx_eb) in _PKG_HARD.items():
+        in_ru, in_eb = bool(rx_ru.search(ru)), bool(rx_eb.search(ebay_title))
+        if in_ru and not in_eb:
+            return (f"в магазине {name}, в лоте — нет: русская цена "
+                    f"относится к другому товару"), []
+        if in_eb and not in_ru:
+            return (f"в лоте {name}, а магазин продаёт обычное издание: "
+                    f"сравнивать их нельзя"), []
+    flags = []
+    for name, (rx_ru, rx_eb) in _PKG_SOFT.items():
+        probe = title_nc if name == "цветной винил" else ebay_title
+        if rx_ru.search(ru) and not rx_eb.search(probe):
+            flags.append(f"в магазине заявлен {name}, в лоте не назван — "
+                         f"уточнить у продавца")
+    return None, flags
+
+
 _SHRINK = re.compile(r"\bsealed\b|\bshrink\b|\bstill\s+sealed\b|\bss\b",
                      re.I)
 OUT = os.path.join(ROOT, "out")
@@ -135,6 +223,12 @@ CATEGORY = "176985"
 ASSUMED_SHIP = 5.0
 CARGO_PER_KG, CARGO_MIN_KG, PACK_KG, BATCH = 22.0, 1.0, 0.30, 10
 ITEM_KG = {1: 0.400, 2: 0.914}
+# Вилка форвардинга, названная владельцем 13.09.2026. Она выше нашего
+# измеренного карго ($9.46 за одиночник в партии десять), и правильно:
+# платит он, а не расчёт. Множитель теперь диапазон, а не одно число, и
+# в отчёт идёт его НИЖНЯЯ граница — по худшей стоимости доставки.
+FWD_USD = {"single": (12.0, 18.0), "box": (35.0, 50.0)}
+BOX_FROM_DISCS = 3
 
 
 def cargo_per_item(discs):
@@ -197,6 +291,59 @@ def load_shop(min_rub, limited_only=False):
     return out, len(rows)
 
 
+# ---------------------------------------------------------------- O-51
+# Опорная цена по штрихкоду.
+#
+# Владелец разобрал пять пар глазами и нашёл, что три ошибки из пяти —
+# одного рода: совпало название альбома, а издание другое. Его правило
+# было «матчить только по UPC, нет штрихкода в лоте — позиция мимо».
+# Проверка на четырёх штрихкодах показала, что в буквальном виде оно
+# слишком строгое: Eramus Hall — единственный лот, одобренный им из
+# двенадцати, — по своему штрихкоду 711574948611 на eBay НЕ находится,
+# продавец поле GTIN не заполнил. Жёсткое правило выбросило бы ровно
+# ту сделку, ради которой всё затевалось.
+#
+# Поэтому штрихкод работает не фильтром, а опорой. Ищем по нему лоты
+# того же издания; самый дешёвый из них — цена, ниже которой этот
+# товар не стоит. Лот, найденный по названию и стоящий заметно дешевле
+# опоры, — другое издание, и он снимается. Опоры нет — позиция живёт,
+# но помечается как неподтверждённая.
+#
+# На данных владельца опора даёт: Arcade Fire $34.00 против опоры
+# $55.58, Elton John $11.47 против $42.44, Charli XCX $15.00 против
+# $19.00 — все три его отбраковки ловятся сами.
+GTIN_FLOOR = 0.75
+
+
+def ebay_by_gtin(token, gtin):
+    """Лоты с тем же штрихкодом. Возвращает (лоты, опорный вход)."""
+    if not gtin:
+        return [], None
+    flt = "buyingOptions:{FIXED_PRICE},conditions:{NEW}"
+    try:
+        d = search_page(token, gtin=gtin, flt=flt, limit=50)
+    except ApiRefused:
+        return [], None
+    out = []
+    for it in (d.get("itemSummaries") or []):
+        p = price_usd(it)
+        if p is None:
+            continue
+        sh = shipping_usd(it)
+        out.append({"title": it.get("title") or "", "price": p,
+                    "ship": ASSUMED_SHIP if sh is None else sh,
+                    "ship_assumed": sh is None,
+                    "entry": round(p + (ASSUMED_SHIP if sh is None else sh), 2),
+                    "url": it.get("itemWebUrl") or "",
+                    "seller": ((it.get("seller") or {}).get("username") or ""),
+                    "feedback": ((it.get("seller") or {})
+                                 .get("feedbackPercentage") or ""),
+                    "image": (it.get("image") or {}).get("imageUrl") or "",
+                    "gtin_confirmed": True, "flags": []})
+    ref = min((o["entry"] for o in out), default=None)
+    return out, ref
+
+
 def ebay_new(token, artist, album, discs, ru_album="", ru_descr=""):
     """Только «купить сейчас» и только новое — оба условия владельца."""
     flt = ("buyingOptions:{FIXED_PRICE},itemLocationCountry:US,"
@@ -217,13 +364,16 @@ def ebay_new(token, artist, album, discs, ru_album="", ru_descr=""):
         why = edition_mismatch(title, ru_album, ru_descr)
         if why:
             continue
+        why, pkg_flags = package_mismatch(title, ru_album, ru_descr)
+        if why:
+            continue
         p = price_usd(it)
         if p is None:
             continue
         sh = shipping_usd(it)
         assumed = sh is None
         sh = ASSUMED_SHIP if assumed else sh
-        flags = []
+        flags = list(pkg_flags)
         if _RSD.search(title):
             flags.append("RSD-эксклюзив: в РФ официально не завозится")
         if _GRADED.search(title) and _SHRINK.search(title):
@@ -241,7 +391,12 @@ def ebay_new(token, artist, album, discs, ru_album="", ru_descr=""):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--target", type=float, default=3.0)
+    # Порог 4.0, а не 3.0. Цена plastinka — это скидочная витрина
+    # (19 992 от 24 990, 13 592 от 16 990), а частник на Авито
+    # закладывает ещё минус 25-40%. Чтобы после обоих дисконтов
+    # осталось 2.5x, к витрине надо требовать 4x. Решение владельца
+    # 13.09.2026 по итогам ручной сверки пяти пар.
+    ap.add_argument("--target", type=float, default=4.0)
     ap.add_argument("--check", type=int, default=400,
                     help="сколько самых дорогих позиций проверить")
     ap.add_argument("--top", type=int, default=10)
@@ -254,7 +409,7 @@ def main():
     rate, stale = usdrub()
     # Порог считается, а не назначается: ниже него 3x недостижима даже
     # при нулевой цене лота, потому что одно карго съедает треть.
-    floor_rub = cargo_per_item(1) * a.target * rate
+    floor_rub = FWD_USD["single"][1] * a.target * rate
     shop, total = load_shop(floor_rub, a.limited)
     print(f"каталог: {total} карточек, запечатанных и дороже "
           f"{floor_rub:.0f} ₽: {len(shop)}", file=sys.stderr)
@@ -262,28 +417,61 @@ def main():
           f"недостижима при нулевой цене лота)", file=sys.stderr)
 
     token = ebay_token()
-    finds, checked, nothing = [], 0, 0
+    det = rd.Details()
+    finds, checked, nothing, no_gtin = [], 0, 0, 0
     for s in shop[:a.check]:
+        card = det.get(s["product_id"], s["url"]) or {}
+        gtin, descr = card.get("gtin", ""), card.get("descr", "")
+        # Описание со страницы товара богаче каталожной строки: именно в
+        # нём стоит «лимитированное пронумерованное», «+ CD», «+ книга».
+        ru_text = f"{s['country_label']} {descr}".strip()
+
+        same, ref = ebay_by_gtin(token, gtin)
+        if not gtin:
+            no_gtin += 1
         lots, err = ebay_new(token, s["artist"], s["album_clean"],
-                             s["discs"], s["album"], s["country_label"])
+                             s["discs"], s["album"], ru_text)
         checked += 1
-        if err:
+        if err and not same:
             print(f"  {s['artist'][:20]}: {err}", file=sys.stderr)
             continue
+        by_url = {x["url"] for x in same}
+        named = []
+        for lot in lots or []:
+            if lot["url"] in by_url:
+                continue
+            # Лот заметно дешевле опоры по штрихкоду — другое издание.
+            if ref is not None and lot["entry"] < ref * GTIN_FLOOR:
+                continue
+            lot["gtin_confirmed"] = False
+            lot["flags"] = list(lot.get("flags") or [])
+            lot["flags"].append(
+                "издание НЕ подтверждено штрихкодом: сверить вручную"
+                if not gtin else
+                "штрихкод в лоте не указан — сверить с опорой по цене")
+            named.append(lot)
+        lots = same + named
         if not lots:
             nothing += 1
             continue
-        cargo = cargo_per_item(s["discs"])
         ru_usd = s["price_rub"] / rate
+        box = s["discs"] >= BOX_FROM_DISCS
+        fwd_lo, fwd_hi = FWD_USD["box" if box else "single"]
         for lot in lots:
-            landed = lot["entry"] + cargo
+            # Множитель по ХУДШЕЙ доставке, вилка — рядом, чтобы владелец
+            # видел обе границы, а не одно приукрашенное число.
+            landed_hi = lot["entry"] + fwd_hi
+            landed_lo = lot["entry"] + fwd_lo
             lot.update({
                 "artist": s["artist"], "album": s["album"],
                 "ru_rub": s["price_rub"], "ru_url": s["url"],
-                "discs": s["discs"], "cargo": round(cargo, 2),
-                "landed": round(landed, 2),
-                "ratio": round(ru_usd / landed, 2),
-                "profit_rub": int(s["price_rub"] - landed * rate),
+                "discs": s["discs"], "gtin": gtin, "ru_descr": descr,
+                "fwd_lo": fwd_lo, "fwd_hi": fwd_hi,
+                "cargo": fwd_hi,
+                "landed": round(landed_hi, 2),
+                "ratio": round(ru_usd / landed_hi, 2),
+                "ratio_hi": round(ru_usd / landed_lo, 2),
+                "profit_rub": int(s["price_rub"] - landed_hi * rate),
             })
         finds.extend(lots)
         if checked % 25 == 0:
@@ -291,6 +479,9 @@ def main():
                   file=sys.stderr)
         time.sleep(0.25)
 
+    det.save()
+    print(f"без штрихкода в каталоге: {no_gtin} из {checked}",
+          file=sys.stderr)
     finds.sort(key=lambda f: -f["ratio"])
     hit = [f for f in finds if f["ratio"] >= a.target]
     best_by_album, top = set(), []
