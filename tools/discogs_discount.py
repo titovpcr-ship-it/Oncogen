@@ -146,14 +146,50 @@ def main():
     conn = sqlite3.connect(DB, timeout=60)
     conn.execute("PRAGMA journal_mode=WAL")
     lots.sort(key=lambda x: x["entry"])
-    finds, refused, unresolved = [], 0, 0
+    finds, refused, unresolved, broke = [], 0, 0, 0
+
+    def resolve(title):
+        """Опознание с одной повторной попыткой.
+
+        ОДИН ОТКАЗ DISCOGS НЕ ДОЛЖЕН СТОИТЬ ПРОГОНА. Первый запуск умер
+        на HTTP 502 у сто шестидесятого лота и потерял 98 уже собранных
+        справок: resolve_by_catno поднимает ApiRefused, а вызывающий
+        код его не ловил. Ровно та же ошибка, что была в клиенте eBay
+        неделю назад, и там она уже исправлена — здесь применить забыл.
+        502 у Discogs разовый; повторившийся — состояние сервиса.
+        """
+        for attempt in range(2):
+            try:
+                return lh.resolve_by_catno(title, ""), None
+            except Exception as e:                          # noqa: BLE001
+                if attempt == 0:
+                    time.sleep(5.0)
+                    continue
+                return None, f"{type(e).__name__}: {e}"
+        return None, "не дошло"
+
     for i, lot in enumerate(lots[:a.resolve], 1):
-        got = lh.resolve_by_catno(lot["title"], "")
+        got, err = resolve(lot["title"])
+        if err:
+            broke += 1
+            if broke >= 10:
+                print(f"  Discogs отказывает подряд, останавливаюсь: {err}",
+                      file=sys.stderr)
+                break
+            time.sleep(PAUSE)
+            continue
+        broke = 0
         if not got:
             unresolved += 1
             continue
         rid, label, card = got
-        ref = us.fetch_discogs_stats(rid, "", conn=conn)
+        try:
+            ref = us.fetch_discogs_stats(rid, "", conn=conn)
+        except Exception as e:                              # noqa: BLE001
+            refused += 1
+            print(f"  справка по {rid}: {type(e).__name__}", file=sys.stderr)
+            time.sleep(PAUSE)
+            continue
         if ref.lowest_price_usd is None:
             refused += 1
             time.sleep(PAUSE)
