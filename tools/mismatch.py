@@ -44,6 +44,7 @@ import csv
 import os
 import re
 import sqlite3
+import statistics
 import sys
 import time
 
@@ -59,6 +60,24 @@ CATEGORY = "176985"
 DB = os.path.join(ROOT, "vinyl.db")
 OUT = os.path.join(ROOT, "out")
 ASSUMED_SHIP = 5.0
+
+# ВЫГОДА СЧИТАЕТСЯ ПРОТИВ ЗАВЕРШЁННЫХ РОССИЙСКИХ СДЕЛОК, А НЕ ВИТРИН.
+# meshok_sold — 146 575 проданных лотов с ценой, по которой вещь
+# ДЕЙСТВИТЕЛЬНО ушла. Это лучше и палитры Ozon (ценник магазина), и
+# Авито (объявление, а не продажа). Мешок — аукцион, поэтому цифра
+# скорее нижняя граница, чем верхняя, и ошибаться она будет в
+# безопасную сторону.
+#
+# Логистика — по измеренному: 0.400 кг пластинка с конвертом (взвешено
+# на Nevermind и Thriller), тара 0.30 кг на посылку, $22 за кг,
+# минимум 1 кг на одиночную посылку. В сборной из десяти минимум
+# делится на всех и одна пластинка обходится в $9.46.
+CARGO_PER_KG = 22.0
+CARGO_MIN_KG = 1.0
+PACK_KG = 0.30
+ITEM_KG = {1: 0.400, 2: 0.914}     # взвешено владельцем
+BATCH = 10
+MIN_RU_SALES = 3                   # меньше трёх сделок — не медиана
 
 # Сколько раз имя должно встретиться в российских сделках, чтобы считать
 # его ходовым. При пороге 1 в словарь попадают опечатки самих продавцов
@@ -98,6 +117,16 @@ _COMMON = {
 # чтобы поймать BLP-1595, SD 8216, PCS 3075, MGV-4004.
 _CATNO = re.compile(r"\b([A-Z]{2,4})[\s-]?(\d{3,5})\b")
 
+# КОНВЕРТ БЕЗ ПЛАСТИНКИ — НЕ ПЛАСТИНКА. Первый прогон с выгодой вынес
+# наверх лот «THE ROAD - LP "COVER ONLY" (NO VINYL, COVER ART)» с
+# выгодой +710 ₽, посчитанной против цен на настоящие пластинки.
+# Продавец честно написал, что винила внутри нет.
+_NOT_A_RECORD = re.compile(
+    r"\bcover\s+only\b|\bno\s+vinyl\b|\bsleeve\s+only\b|"
+    r"\bjacket\s+only\b|\bempty\s+(sleeve|cover|jacket)\b|"
+    r"\bcover\s+art\s+only\b|\bno\s+record\b|\bposter\b|"
+    r"\bcd\b|\bcassette\b|\b45\s*rpm\b|\b7\"", re.I)
+
 # Служебные слова заголовка. Если после их вычистки не осталось ничего,
 # исполнитель в заголовке не назван.
 _NOISE = {
@@ -110,6 +139,70 @@ _NOISE = {
     "rock", "jazz", "soul", "funk", "pop", "blues", "country", "classical",
     "disco", "metal", "punk", "folk", "reggae", "soundtrack", "ost",
 }
+
+
+def cargo_per_item(discs, batch=BATCH):
+    kg = ITEM_KG.get(discs, ITEM_KG[2] + 0.514 * (discs - 2))
+    total = PACK_KG + kg * batch
+    return max(total, CARGO_MIN_KG) * CARGO_PER_KG / batch
+
+
+def discs_in_title(title):
+    m = re.search(r"\b(\d+)\s*x?\s*lp\b|\b(\d+)\s*-?\s*lp\s+set", title, re.I)
+    if m:
+        return int(m.group(1) or m.group(2))
+    if re.search(r"\b(double|two)\s+lp\b|\b2\s*lp\b|2\s+record\s+set", title, re.I):
+        return 2
+    return 1
+
+
+def ru_price_index():
+    """Медиана завершённых российских продаж по исполнителю и по альбому.
+
+    Два уровня: по паре «исполнитель + альбом», если альбом узнан, и по
+    одному исполнителю, если нет. Второй грубее, но у большинства лотов
+    название альбома в заголовке искажено — ради этого режим и затеян.
+    """
+    conn = sqlite3.connect(DB, timeout=60)
+    by_art = collections.defaultdict(list)
+    by_alb = collections.defaultdict(list)
+    for art, alb, price in conn.execute(
+            "SELECT artist, album, price_rub FROM meshok_sold "
+            "WHERE artist IS NOT NULL AND price_rub > 0"):
+        a = (art or "").strip().lower()
+        if not a:
+            continue
+        by_art[a].append(price)
+        if alb:
+            by_alb[(a, (alb or "").strip().lower())].append(price)
+    conn.close()
+    art = {a: sorted(v) for a, v in by_art.items() if len(v) >= MIN_RU_SALES}
+    alb = {k: sorted(v) for k, v in by_alb.items() if len(v) >= MIN_RU_SALES}
+    return art, alb
+
+
+def ru_lookup(artist, title, art_idx, alb_idx):
+    """(медиана ₽, число сделок, по чему найдено) или None."""
+    if not artist:
+        return None
+    a = artist.lower()
+    words = set(meaningful_words(title))
+    best = None
+    for (aa, alb), prices in alb_idx.items():
+        if aa != a:
+            continue
+        alb_words = set(w for w in re.split(r"[^a-z0-9]+", alb) if len(w) > 2)
+        if alb_words and alb_words <= words:
+            if best is None or len(prices) > best[1]:
+                best = (statistics.median(prices), len(prices),
+                        f"«{artist} — {alb}»")
+    if best:
+        return best
+    prices = art_idx.get(a)
+    if prices:
+        return (statistics.median(prices), len(prices),
+                f"по исполнителю «{artist}» (альбом не опознан)")
+    return None
 
 
 def artist_vocabulary(min_sales=MIN_ARTIST_SALES):
@@ -141,11 +234,24 @@ def deletion_index(names):
     return idx
 
 
+def depunct(s):
+    """Только буквы и цифры. Запятые, дефисы и апострофы выбрасываются."""
+    return re.sub(r"[^a-z0-9]", "", s.lower())
+
+
 def looks_misspelled(phrase, names, idx):
-    """Фраза похожа на ходовое имя, но им не является. Вернуть имя."""
+    """Фраза похожа на ходовое имя, но им не является. Вернуть имя.
+
+    ПУНКТУАЦИЯ ОПЕЧАТКОЙ НЕ СЧИТАЕТСЯ. Первый прогон с расчётом выгоды
+    вынес наверх «Blood Sweat & Tears» как опечатку в «blood, sweat &
+    tears» — разница в одной запятой. Поиск eBay знаки препинания и так
+    игнорирует, значит такой лот НЕ спрятан от покупателей и дешевле от
+    этого не станет. Ошибкой продавца считается только другая БУКВА.
+    """
     p = phrase.lower()
     if p in names:
         return None                      # написано правильно
+    flat = depunct(p)
     words = p.split()
     # Фраза из одних расхожих слов опечаткой быть не может: продавец
     # написал обычный английский, а не промахнулся по имени.
@@ -160,8 +266,11 @@ def looks_misspelled(phrase, names, idx):
     for i in range(len(p)):
         cands |= idx.get(p[:i] + p[i + 1:], set())
     for c in cands:
-        if abs(len(c) - len(p)) <= 1 and c != p and len(c) >= 8:
-            return c
+        if abs(len(c) - len(p)) > 1 or c == p or len(c) < 8:
+            continue
+        if depunct(c) == flat:
+            continue                     # различие только в пунктуации
+        return c
     return None
 
 
@@ -188,6 +297,8 @@ def known_artist_in(title, names):
 
 def signals(title, names, idx):
     """Список причин считать лот ошибкой продавца."""
+    if _NOT_A_RECORD.search(title):
+        return [], None          # не пластинка — считать выгоду не по чему
     out = []
     known = known_artist_in(title, names)
     # «UNTITLED» — НЕ ВСЕГДА НЕЗНАНИЕ. У The Byrds альбом так и
@@ -205,12 +316,14 @@ def signals(title, names, idx):
     if catno and len(words) <= 3 and not known:
         out.append(f"есть номер {catno.group(0)}, но имени нет — "
                    f"переписал наклейку, не узнал пластинку")
+    fixed = None
     for ph in phrases(title):
         hit = looks_misspelled(ph, names, idx)
         if hit:
             out.append(f"«{ph}» — похоже на «{hit}» с опечаткой")
+            fixed = hit
             break
-    return out
+    return out, (fixed or known)
 
 
 def scan(token, query, max_usd, limit=200, sort="price"):
@@ -260,12 +373,43 @@ QUERIES = [
 ]
 
 
+def push(cands, paid, seen_n, rate, cap):
+    """Итог в Телеграм. Пустой прогон — тоже результат (правило 2)."""
+    import notify
+    n = notify.Notifier()
+    head = (f"ОШИБКИ ПРОДАВЦОВ, потолок ${cap:.0f} с доставкой по США\n"
+            f"просмотрено {seen_n} лотов, с признаком ошибки {len(cands)}, "
+            f"с выгодой {len(paid)}")
+    if not paid:
+        body = (f"{head}\n\nВЫГОДНЫХ НЕТ.\n"
+                f"Все найденные ошибки либо на вещах, которые в Москве "
+                f"стоят дешевле доставки, либо на вещах, которых в "
+                f"российских продажах нет вовсе.")
+    else:
+        lines = [head, ""]
+        for c in paid[:5]:
+            lines.append(f"+{c['profit_rub']} ₽ ({c['ratio']}x)")
+            lines.append(f"${c['entry']:.2f} + карго ${c['cargo']:.2f} "
+                         f"= {c['landed'] * rate:.0f} ₽, "
+                         f"Москва {c['ru_rub']} ₽ по {c['ru_n']} продажам")
+            lines.append(c["title"][:110])
+            lines.append(c["signals"][0])
+            lines.append(c["url"])
+            lines.append("")
+        body = "\n".join(lines)
+    body += "\nНЕ СВЕРЕНО ГЛАЗАМИ: картинку с названием надо сличить руками."
+    ok = n.send(body, click_url=(paid[0]["url"] if paid else None))
+    print(f"в Телеграм: {'отправлено' if ok else 'НЕ ОТПРАВЛЕНО'} ({n.name})")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-usd", type=float, default=23.0,
                     help="потолок цены с доставкой по США")
     ap.add_argument("--min-signals", type=int, default=1)
     ap.add_argument("--top", type=int, default=40)
+    ap.add_argument("--push", action="store_true",
+                    help="отправить итог в Телеграм")
     a = ap.parse_args()
 
     print("строю словарь ходовых имён из российских сделок...",
@@ -274,6 +418,14 @@ def main():
     idx = deletion_index(names)
     print(f"  имён в словаре: {len(names)}, вариантов в индексе: {len(idx)}",
           file=sys.stderr)
+
+    print("строю индекс цен по завершённым российским сделкам...",
+          file=sys.stderr)
+    art_idx, alb_idx = ru_price_index()
+    print(f"  исполнителей с 3+ продажами: {len(art_idx)}, "
+          f"альбомов: {len(alb_idx)}", file=sys.stderr)
+    from src.common.fx import usdrub
+    rate, stale = usdrub()
 
     token = ebay_token()
     seen, cands = set(), []
@@ -288,37 +440,81 @@ def main():
                 continue
             seen.add(lot["item_id"])
             fresh += 1
-            sg = signals(lot["title"], names, idx)
-            if len(sg) >= a.min_signals:
-                lot["signals"] = sg
-                cands.append(lot)
+            sg, who = signals(lot["title"], names, idx)
+            if len(sg) < a.min_signals:
+                continue
+            lot["signals"] = sg
+            lot["artist"] = who or ""
+            d = discs_in_title(lot["title"])
+            lot["discs"] = d
+            lot["cargo"] = round(cargo_per_item(d), 2)
+            lot["landed"] = round(lot["entry"] + lot["cargo"], 2)
+            ru = ru_lookup(who, lot["title"], art_idx, alb_idx)
+            if ru:
+                rub, n, how = ru
+                lot["ru_rub"] = int(rub)
+                lot["ru_n"] = n
+                lot["ru_how"] = how
+                lot["profit_rub"] = int(rub - lot["landed"] * rate)
+                lot["ratio"] = round(rub / rate / lot["landed"], 2)
+            else:
+                lot["ru_rub"] = lot["ru_n"] = 0
+                lot["ru_how"] = "цены в российских сделках нет"
+                lot["profit_rub"] = None
+                lot["ratio"] = None
+            cands.append(lot)
         print(f"  «{q}»: {len(lots)} до ${a.max_usd:.0f}, новых {fresh}",
               file=sys.stderr)
         time.sleep(0.3)
 
-    cands.sort(key=lambda c: (-len(c["signals"]), c["entry"]))
+    # ПОРЯДОК ПО ДЕНЬГАМ, А НЕ ПО ЧИСЛУ ПРИЗНАКОВ. Признаки говорят
+    # только о том, что продавец ошибся; заработать можно, лишь когда
+    # вещь в Москве дороже приземлённой себестоимости.
+    cands.sort(key=lambda c: (-(c["profit_rub"] if c["profit_rub"]
+                                is not None else -10 ** 9), c["entry"]))
+    paid = [c for c in cands if c["profit_rub"] and c["profit_rub"] > 0]
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"mismatch_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["entry_usd", "price", "ship", "ship_assumed", "signals",
-                    "title", "seller", "feedback", "image", "url"])
+        w.writerow(["profit_rub", "ratio", "entry_usd", "cargo_usd",
+                    "landed_usd", "ru_rub", "ru_sales", "ru_how", "artist",
+                    "discs", "signals", "title", "seller", "feedback",
+                    "image", "url"])
         for c in cands:
-            w.writerow([c["entry"], c["price"], c["ship"], c["ship_assumed"],
-                        " | ".join(c["signals"]), c["title"], c["seller"],
-                        c["feedback"], c["image"], c["url"]])
+            w.writerow([c["profit_rub"], c["ratio"], c["entry"], c["cargo"],
+                        c["landed"], c["ru_rub"], c["ru_n"], c["ru_how"],
+                        c["artist"], c["discs"], " | ".join(c["signals"]),
+                        c["title"], c["seller"], c["feedback"], c["image"],
+                        c["url"]])
     print(f"\nпросмотрено лотов до ${a.max_usd:.0f}: {len(seen)}")
     print(f"кандидатов с признаком ошибки: {len(cands)}")
+    print(f"из них с положительной выгодой: {len(paid)}")
+    print(f"курс {rate:.4f} ₽/$" + ("  (КЭШ УСТАРЕЛ)" if stale else ""))
     print(f"полный список: {path}\n")
-    print("ЭТАП 2 — СМОТРЕТЬ КАРТИНКУ. Признаки ниже текстовые, и они")
-    print("НЕ доказывают, что на фото вещь дороже. Это только отбор.\n")
+    print("ЭТАП 2 — СМОТРЕТЬ КАРТИНКУ. Признаки текстовые и НЕ доказывают,")
+    print("что на фото вещь дороже. Выгода считается против завершённых")
+    print("российских продаж, но по ИСПОЛНИТЕЛЮ, если альбом не опознан.\n")
     for c in cands[:a.top]:
         asm = " (доставка допущена)" if c["ship_assumed"] else ""
-        print(f"${c['entry']:6.2f}{asm}  {c['title'][:74]}")
-        for s in c["signals"]:
-            print(f"         • {s}")
-        print(f"         фото: {c['image']}")
-        print(f"         лот:  {c['url'][:96]}")
+        if c["profit_rub"] is None:
+            money = "выгода неизвестна: в российских сделках такого нет"
+        else:
+            money = (f"ВЫГОДА {c['profit_rub']:+d} ₽ за штуку, "
+                     f"кратность {c['ratio']}x")
+        print(f"{money}")
+        print(f"    ${c['entry']:.2f} лот{asm} + ${c['cargo']:.2f} карго "
+              f"= ${c['landed']:.2f} = {c['landed'] * rate:.0f} ₽")
+        if c["ru_rub"]:
+            print(f"    Москва {c['ru_rub']} ₽ — {c['ru_how']}, "
+                  f"{c['ru_n']} завершённых продаж")
+        print(f"    {c['title'][:78]}")
+        for sg in c["signals"]:
+            print(f"      • {sg}")
+        print(f"    фото: {c['image']}")
+        print(f"    лот:  {c['url'][:100]}\n")
+    if a.push:
+        push(cands, paid, len(seen), rate, a.max_usd)
     return 0
 
 
