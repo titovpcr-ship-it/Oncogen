@@ -29,11 +29,39 @@ import requests
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "out")
 
-SHOPS = {
-    "vinyl.com": "https://vinyl.com/products.json",
-    "thesoundofvinyl.us": "https://thesoundofvinyl.us/products.json",
-    "tower.com": "https://tower.com/products.json",
-}
+# Обход идёт ПО РАЗДЕЛАМ, а не по общему products.json. Причина
+# измерена: Shopify обрывает products.json на сотой странице, то есть
+# на 25 000 карточек, а каталоги больше — у vinyl.com около 53 000, у
+# tower.com около 507 000. Первый прогон взял по 15 000 с каждого и
+# дал 84 позиции с трёх процентов крупнейшего каталога; как ответ на
+# вопрос владельца это число не значило ничего.
+#
+# У каждого раздела свой products.json с тем же лимитом, но разделы
+# меньше потолка, и вместе они покрывают каталог.
+SHOPS = ["vinyl.com", "thesoundofvinyl.us", "tower.com"]
+
+
+def collections(shop, pause=0.5):
+    """Список разделов магазина из карты сайта."""
+    try:
+        r = requests.get(f"https://{shop}/sitemap.xml", timeout=60)
+    except requests.RequestException:
+        return []
+    maps = [m.replace("&amp;", "&")
+            for m in re.findall(r"<loc>([^<]+)</loc>", r.text)
+            if "collections" in m]
+    out = []
+    for m in maps:
+        try:
+            rr = requests.get(m, timeout=60)
+        except requests.RequestException:
+            continue
+        for u in re.findall(r"<loc>([^<]+)</loc>", rr.text):
+            h = re.search(r"/collections/([^/?#]+)", u)
+            if h:
+                out.append(h.group(1))
+        time.sleep(pause)
+    return sorted(set(out))
 
 _SEVEN = re.compile(r'\b7["”]|\b7\s*-?\s*inch\b|\b45\s*rpm\s*single\b', re.I)
 _NOT_RECORD = re.compile(
@@ -78,8 +106,21 @@ def main():
     a = ap.parse_args()
 
     rows, stats = [], {}
-    for shop, base in SHOPS.items():
-        ps = catalogue(base, a.pages)
+    for shop in SHOPS:
+        cols = collections(shop)
+        print(f"{shop}: разделов {len(cols)}", file=sys.stderr)
+        ps, seen_ids = [], set()
+        for ci, c in enumerate(cols, 1):
+            got = catalogue(f"https://{shop}/collections/{c}/products.json",
+                            a.pages, pause=0.4)
+            for g in got:
+                if g.get("id") in seen_ids:
+                    continue
+                seen_ids.add(g.get("id"))
+                ps.append(g)
+            if ci % 25 == 0:
+                print(f"   {ci}/{len(cols)} разделов, карточек {len(ps)}",
+                      file=sys.stderr)
         kept = 0
         for p in ps:
             title = p.get("title", "")
