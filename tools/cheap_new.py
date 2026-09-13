@@ -114,6 +114,35 @@ def catalogue(base, pages, pause=0.8):
     return out
 
 
+def _pick(ps, a, shop):
+    """Отобрать из скачанных карточек то, что попадает в полосу."""
+    out = []
+    for p in ps:
+        title = p.get("title", "")
+        blob = f"{title} {p.get('product_type','') or ''} " \
+               f"{' '.join(p.get('tags') or [])}"
+        v = (p.get("variants") or [{}])[0]
+        if not v.get("available"):
+            continue
+        try:
+            price = float(v["price"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if not (a.lo <= price <= a.hi):
+            continue
+        if _SEVEN.search(blob) or _NOT_RECORD.search(blob):
+            continue
+        if _USED.search(blob):
+            continue
+        out.append({
+            "shop": shop, "price": price, "title": title,
+            "vendor": p.get("vendor", ""), "gtin": gtin(v.get("sku")),
+            "grams": v.get("grams") or "",
+            "was": v.get("compare_at_price") or "",
+            "url": f"https://{shop}/products/{p.get('handle','')}"})
+    return out
+
+
 def _dump(rows, path):
     """Сбросить, что уже найдено. Обрыв не должен стоить всего прогона."""
     if not rows:
@@ -149,39 +178,19 @@ def main():
                 seen_ids.add(g.get("id"))
                 ps.append(g)
             if ci % 25 == 0:
+                # Отбор по полосе для уже скачанного, чтобы промежуточный
+                # файл был не пустым обещанием, а настоящим результатом.
+                part = rows + _pick(ps, a, shop)
                 log(f"   {ci}/{len(cols)} разделов, карточек {len(ps)},"
-                    f" в полосе пока {len(rows)}")
-        kept = 0
-        for p in ps:
-            title = p.get("title", "")
-            ptype = p.get("product_type", "") or ""
-            tags = " ".join(p.get("tags") or [])
-            blob = f"{title} {ptype} {tags}"
-            v = (p.get("variants") or [{}])[0]
-            if not v.get("available"):
-                continue
-            try:
-                price = float(v["price"])
-            except (KeyError, TypeError, ValueError):
-                continue
-            if not (a.lo <= price <= a.hi):
-                continue
-            if _SEVEN.search(blob) or _NOT_RECORD.search(blob):
-                continue
-            if _USED.search(blob):
-                continue
-            rows.append({
-                "shop": shop, "price": price, "title": title,
-                "vendor": p.get("vendor", ""), "gtin": gtin(v.get("sku")),
-                "grams": v.get("grams") or "",
-                "was": v.get("compare_at_price") or "",
-                "url": f"https://{shop}/products/{p.get('handle','')}"})
-            kept += 1
+                    f" в полосе пока {len(part)}")
+                _dump(part, os.path.join(OUT, "cheap_new_partial.csv"))
+        got_rows = _pick(ps, a, shop)
+        rows += got_rows
+        kept = len(got_rows)
         stats[shop] = (len(ps), kept)
         log(f"{shop}: каталог {len(ps)}, в полосе ${a.lo:.0f}-{a.hi:.0f} "
             f"после отсева: {kept}")
         _dump(rows, os.path.join(OUT, "cheap_new_partial.csv"))
-
     seen, uniq = set(), []
     for r in sorted(rows, key=lambda z: z["price"]):
         k = r["gtin"] or r["title"].lower()
