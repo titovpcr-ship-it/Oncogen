@@ -47,6 +47,7 @@ sys.path.insert(0, HERE)
 from src.common.ebay import (ApiRefused, ebay_token, price_usd,   # noqa: E402
                              search_page, shipping_usd)
 from src.common.fx import usdrub                                   # noqa: E402
+import ru_shop as rs                                               # noqa: E402
 import three_x as tx                                               # noqa: E402
 
 SHOP = os.path.join(ROOT, "data", "ru_shop_plastinka.csv")
@@ -84,8 +85,11 @@ def load_shop(min_rub):
         album = clean_album(r["album"])
         if not album or not r["artist"]:
             continue
+        # ЧИСЛО ПЛАСТИНОК ПЕРЕСЧИТЫВАЕТСЯ, А НЕ БЕРЁТСЯ ИЗ ФАЙЛА: в
+        # колонке discs остались значения прежней версии разбора,
+        # которая роняла «(4LP-Box)» в единицу.
         out.append({**r, "price_rub": p, "album_clean": album,
-                    "discs": int(r["discs"] or 1)})
+                    "discs": rs.discs_from(r["album"])})
     out.sort(key=lambda r: -r["price_rub"])
     return out, len(rows)
 
