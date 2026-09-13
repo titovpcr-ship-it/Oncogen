@@ -63,6 +63,27 @@ def cargo_per_item(discs):
     return max(PACK_KG + kg * BATCH, CARGO_MIN_KG) * CARGO_PER_KG / BATCH
 
 
+# ЛИШНИЙ НОМЕР ПОСЛЕ НАЗВАНИЯ — ЭТО ДРУГОЙ АЛЬБОМ.
+# Прогон 13.09.2026 выдал «Paul McCartney — McCartney '70» за 6552 ₽
+# совпавшим с лотом «Paul McCartney - Mccartney III Imagined [2-lp]».
+# Слово McCartney там есть, фраза целая, матчер доволен — а это альбом
+# 2021 года, другая вещь и другая цена. Так же «Greatest Hits» ловит
+# «Greatest Hits II», и это уже ловится отдельной проверкой в three_x.
+_SEQUEL = re.compile(r"\b(i{1,3}|iv|v|vi{0,3}|ix|x|[2-9])\b\s*"
+                     r"(imagined|remixed|revisited|part|vol)?", re.I)
+
+
+def sequel_mismatch(ebay_title, ru_album):
+    """Номер продолжения есть у одного и нет у другого."""
+    def seq(s):
+        m = re.search(r"\b(?:i{1,3}|iv|vi{0,3}|ix|x|[2-9])\b", s, re.I)
+        return m.group(0).lower() if m else None
+    a, b = seq(ebay_title), seq(ru_album)
+    if a and not b:
+        return f"в лоте есть «{a}», а в магазине этого нет — другой альбом"
+    return None
+
+
 def clean_album(album):
     """Название без пометок издания: «(2LP) '97», «(Coloured)»."""
     a = re.sub(r"\(\s*\d*\s*LP[^)]*\)", " ", album, flags=re.I)
@@ -108,6 +129,8 @@ def ebay_new(token, artist, album, discs):
     for it in (d.get("itemSummaries") or []):
         title = it.get("title") or ""
         if tx.title_is_the_album(title, t):
+            continue
+        if sequel_mismatch(title, album):
             continue
         p = price_usd(it)
         if p is None:
