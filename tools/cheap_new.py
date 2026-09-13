@@ -28,6 +28,22 @@ import requests
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "out")
+# Прогресс и промежуточный результат пишутся НА ДИСК по ходу, а не
+# копятся до конца. Прогон 13.09.2026 шёл под час, вывод был направлен
+# через буферизующий tail, а CSV писался только в самом конце: полчаса
+# работы висели на волоске от обрыва по таймауту, и посмотреть, где
+# процесс, было нельзя.
+PROGRESS = os.path.join(OUT, "cheap_new_progress.log")
+
+
+def log(msg):
+    print(msg, file=sys.stderr)
+    try:
+        os.makedirs(OUT, exist_ok=True)
+        with open(PROGRESS, "a", encoding="utf-8") as f:
+            f.write(f"{time.strftime('%H:%M:%S')} {msg}\n")
+    except OSError:
+        pass
 
 # Обход идёт ПО РАЗДЕЛАМ, а не по общему products.json. Причина
 # измерена: Shopify обрывает products.json на сотой странице, то есть
@@ -85,10 +101,10 @@ def catalogue(base, pages, pause=0.8):
         try:
             r = requests.get(f"{base}?limit=250&page={page}", timeout=60)
         except requests.RequestException as e:                # noqa: BLE001
-            print(f"  стр.{page}: {type(e).__name__}", file=sys.stderr)
+            log(f"  стр.{page}: {type(e).__name__}")
             break
         if r.status_code != 200:
-            print(f"  стр.{page}: HTTP {r.status_code}", file=sys.stderr)
+            log(f"  стр.{page}: HTTP {r.status_code}")
             break
         ps = r.json().get("products", [])
         if not ps:
@@ -96,6 +112,20 @@ def catalogue(base, pages, pause=0.8):
         out += ps
         time.sleep(pause)
     return out
+
+
+def _dump(rows, path):
+    """Сбросить, что уже найдено. Обрыв не должен стоить всего прогона."""
+    if not rows:
+        return
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            w.writeheader()
+            w.writerows(rows)
+    except OSError as e:                                      # noqa: BLE001
+        log(f"не удалось сбросить промежуточный файл: {e}")
 
 
 def main():
@@ -108,7 +138,7 @@ def main():
     rows, stats = [], {}
     for shop in SHOPS:
         cols = collections(shop)
-        print(f"{shop}: разделов {len(cols)}", file=sys.stderr)
+        log(f"{shop}: разделов {len(cols)}")
         ps, seen_ids = [], set()
         for ci, c in enumerate(cols, 1):
             got = catalogue(f"https://{shop}/collections/{c}/products.json",
@@ -119,8 +149,8 @@ def main():
                 seen_ids.add(g.get("id"))
                 ps.append(g)
             if ci % 25 == 0:
-                print(f"   {ci}/{len(cols)} разделов, карточек {len(ps)}",
-                      file=sys.stderr)
+                log(f"   {ci}/{len(cols)} разделов, карточек {len(ps)},"
+                    f" в полосе пока {len(rows)}")
         kept = 0
         for p in ps:
             title = p.get("title", "")
@@ -148,8 +178,9 @@ def main():
                 "url": f"https://{shop}/products/{p.get('handle','')}"})
             kept += 1
         stats[shop] = (len(ps), kept)
-        print(f"{shop}: каталог {len(ps)}, в полосе ${a.lo:.0f}-{a.hi:.0f} "
-              f"после отсева: {kept}", file=sys.stderr)
+        log(f"{shop}: каталог {len(ps)}, в полосе ${a.lo:.0f}-{a.hi:.0f} "
+            f"после отсева: {kept}")
+        _dump(rows, os.path.join(OUT, "cheap_new_partial.csv"))
 
     seen, uniq = set(), []
     for r in sorted(rows, key=lambda z: z["price"]):
