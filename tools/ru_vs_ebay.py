@@ -496,14 +496,20 @@ def main():
     path = os.path.join(OUT, f"ru_vs_ebay_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["ratio", "profit_rub", "entry_usd", "cargo_usd",
-                    "landed_usd", "ru_rub", "artist", "album", "discs",
-                    "ebay_title", "seller", "feedback", "ebay_url", "ru_url"])
+        w.writerow(["ratio", "ratio_hi", "profit_rub", "entry_usd",
+                    "fwd_lo", "fwd_hi", "landed_usd", "ru_rub", "artist",
+                    "album", "discs", "gtin", "gtin_confirmed", "flags",
+                    "ru_descr", "ebay_title", "seller", "feedback",
+                    "ebay_url", "ru_url"])
         for x in finds:
-            w.writerow([x["ratio"], x["profit_rub"], x["entry"], x["cargo"],
+            w.writerow([x["ratio"], x.get("ratio_hi", ""), x["profit_rub"],
+                        x["entry"], x.get("fwd_lo", ""), x.get("fwd_hi", ""),
                         x["landed"], x["ru_rub"], x["artist"], x["album"],
-                        x["discs"], x["title"], x["seller"], x["feedback"],
-                        x["url"], x["ru_url"]])
+                        x["discs"], x.get("gtin", ""),
+                        "да" if x.get("gtin_confirmed") else "нет",
+                        " | ".join(x.get("flags") or []),
+                        x.get("ru_descr", ""), x["title"], x["seller"],
+                        x["feedback"], x["url"], x["ru_url"]])
 
     print(f"\nпозиций проверено: {checked}, из них не нашлось на eBay: "
           f"{nothing}")
