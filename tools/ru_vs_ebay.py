@@ -51,6 +51,34 @@ import ru_shop as rs                                               # noqa: E402
 import three_x as tx                                               # noqa: E402
 
 SHOP = os.path.join(ROOT, "data", "ru_shop_plastinka.csv")
+
+# RSD — СТРУКТУРНАЯ НАЦЕНКА, А НЕ СЛУЧАЙНОСТЬ. Вердикт владельца по
+# Eramus Hall (13.09.2026, первый одобренный лот из двенадцати):
+# «RSD-эксклюзив в РФ официально не завозится. Тираж ограниченный,
+# распределяется по независимым магазинам США, российские продавцы
+# достают их поштучно через тех же форвардеров и ставят 4x к
+# американской рознице». ORG Music продаёт за $24.00 (~2020 ₽), в
+# Москве 8232 ₽. Вход был $12.79 — 47% от розницы США.
+#
+# ПРИЗНАК ЖИВЁТ НА СТОРОНЕ eBay, А НЕ МАГАЗИНА. Проверено: во всём
+# русском каталоге (2004 запечатанных позиции) слово RSD не встречается
+# НИ РАЗУ — тот же Eramus Hall продаётся как «(цветной винил) '24».
+# Поэтому на русской стороне отбираем по «цветной / лимит / эксклюзив»
+# (552 позиции), а RSD ищем в заголовке лота eBay и помечаем отдельно.
+_RSD = re.compile(r"\bRSD\b|record\s*store\s*day|black\s*friday", re.I)
+_LIMITED = re.compile(r"цветн|лимит|limited|numbered|эксклюзив|"
+                      r"coloured|colored", re.I)
+
+# ГРЕЙД ПРОТИВОРЕЧИТ ЗАПЕЧАТАННОСТИ. Тот же вердикт: «В описании
+# противоречие: LP: Mint подразумевает, что пластинку доставали и
+# смотрели, но на фото заводская shrink. Российская цена 8232 ₽ —
+# именно за SS. Вскрытая потеряет 25-30%». Значит выставленный грейд
+# диска при заявленной плёнке — повод спросить продавца, а не молча
+# считать вещь запечатанной.
+_GRADED = re.compile(r"\b(mint|nm|near\s*mint|vg\+{0,2}|ex\b|"
+                     r"excellent)\b", re.I)
+_SHRINK = re.compile(r"\bsealed\b|\bshrink\b|\bstill\s+sealed\b|\bss\b",
+                     re.I)
 OUT = os.path.join(ROOT, "out")
 CATEGORY = "176985"
 ASSUMED_SHIP = 5.0
@@ -92,7 +120,7 @@ def clean_album(album):
     return re.sub(r"\s+", " ", a).strip()
 
 
-def load_shop(min_rub):
+def load_shop(min_rub, limited_only=False):
     with open(SHOP, newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     out = []
@@ -105,6 +133,9 @@ def load_shop(min_rub):
             continue
         album = clean_album(r["album"])
         if not album or not r["artist"]:
+            continue
+        if limited_only and not _LIMITED.search(r["album"] + " "
+                                                + r["country_label"]):
             continue
         # ЧИСЛО ПЛАСТИНОК ПЕРЕСЧИТЫВАЕТСЯ, А НЕ БЕРЁТСЯ ИЗ ФАЙЛА: в
         # колонке discs остались значения прежней версии разбора,
@@ -138,7 +169,13 @@ def ebay_new(token, artist, album, discs):
         sh = shipping_usd(it)
         assumed = sh is None
         sh = ASSUMED_SHIP if assumed else sh
-        out.append({"title": title, "price": p, "ship": sh,
+        flags = []
+        if _RSD.search(title):
+            flags.append("RSD-эксклюзив: в РФ официально не завозится")
+        if _GRADED.search(title) and _SHRINK.search(title):
+            flags.append("грейд назван при заявленной плёнке — спросить "
+                         "продавца, вскрыта ли она: русская цена за SS")
+        out.append({"title": title, "price": p, "ship": sh, "flags": flags,
                     "ship_assumed": assumed, "entry": round(p + sh, 2),
                     "url": it.get("itemWebUrl") or "",
                     "image": (it.get("image") or {}).get("imageUrl") or "",
@@ -154,6 +191,9 @@ def main():
     ap.add_argument("--check", type=int, default=400,
                     help="сколько самых дорогих позиций проверить")
     ap.add_argument("--top", type=int, default=10)
+    ap.add_argument("--limited", action="store_true",
+                    help="только цветные и лимитированные издания — там "
+                         "структурная наценка РФ")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
 
@@ -161,7 +201,7 @@ def main():
     # Порог считается, а не назначается: ниже него 3x недостижима даже
     # при нулевой цене лота, потому что одно карго съедает треть.
     floor_rub = cargo_per_item(1) * a.target * rate
-    shop, total = load_shop(floor_rub)
+    shop, total = load_shop(floor_rub, a.limited)
     print(f"каталог: {total} карточек, запечатанных и дороже "
           f"{floor_rub:.0f} ₽: {len(shop)}", file=sys.stderr)
     print(f"({floor_rub:.0f} ₽ — цена, ниже которой {a.target}x "
@@ -236,6 +276,8 @@ def main():
               f"= {x['landed'] * rate:.0f} ₽")
         print(f"   в России {x['ru_rub']} ₽ — {x['ru_url']}")
         print(f"   {x['title'][:78]}")
+        for fl in x.get("flags", []):
+            print(f"   ! {fl}")
         print(f"   продавец {x['seller']} ({x['feedback']})")
         print(f"   {x['url'][:100]}\n")
     if not top:
@@ -269,7 +311,10 @@ def main():
                       f"${x['landed']:.2f} себестоимость против "
                       f"{x['ru_rub']} ₽ в России",
                       f"купить: {x['url']}",
-                      f"продать: {x['ru_url']}", ""]
+                      f"продать: {x['ru_url']}"]
+                for fl in x.get("flags", []):
+                    L.append(f"! {fl}")
+                L.append("")
             L.append("НЕ СВЕРЕНО ГЛАЗАМИ.")
             msg = "\n".join(L)
         n.send(msg, click_url=(top[0]["url"] if top else None))
