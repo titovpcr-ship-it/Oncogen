@@ -152,7 +152,12 @@ def vintage_signals(title):
         num = m.group(1)
         for pnum, lo, hi, label in cat.PATENTS:
             if pnum == num:
-                sig.append(f"клеймо {label}: {lo}-{hi}")
+                # Диапазон, а не середина. В первом прогоне середина
+                # печаталась как «~1943 г.», будто год известен:
+                # владелец справедливо назвал это выдумкой — продавец
+                # года нигде не заявлял.
+                sig.append(f"клеймо {label} ставили {lo}-{hi}, "
+                           f"НО ГОД НЕ ПОДТВЕРЖДЁН")
                 era = (lo + hi) // 2
     if _PAT_PEND.search(title):
         sig.append("Patent Pending — до 1937 либо 1958")
@@ -167,8 +172,30 @@ def vintage_signals(title):
     return sig, era
 
 
-def traps(title):
+
+# Серийные реплики Zippo, на которых старый номер патента воспроизводится
+# намеренно. Владелец опознал по фото донца модель 270 «Vintage Series
+# 1937» — High Polish Brass with Slashes, MSRP около $27.
+_VINTAGE_SERIES = re.compile(
+    r"vintage\s*series|\b1937\s*vintage\b|\bmodel\s*270\b|"
+    r"high\s*polish\s*brass", re.I)
+
+# Физическая невозможность: в войну латунь была под ограничением, Zippo
+# 1942-1945 — стальные с чёрным крэкл-покрытием. Золотистой полированной
+# зажигалки сороковых не существует.
+_BRASS = re.compile(r"\bbrass\b|\bgold\s*tone\b|\bgolden\b|"
+                    r"\bgold\s*plated?\b|\bpolished\s*gold\b", re.I)
+
+
+def traps(title, era=None):
     out = []
+    if _VINTAGE_SERIES.search(title):
+        out.append("серия Vintage 1937 / модель 270: Zippo воспроизводит "
+                   "старый номер патента намеренно, это не винтаж")
+    if era is not None and 1941 <= era <= 1946 and _BRASS.search(title):
+        out.append("латунь с датировкой военных лет невозможна: латунь "
+                   "была ограничена, Zippo тех лет — стальные с чёрным "
+                   "крэклом")
     if _REPLICA.search(title):
         out.append("РЕПЛИКА или юбилейное издание: клеймо воспроизведено, "
                    "это не винтаж")
@@ -249,6 +276,58 @@ def build_reference(rows):
     return ref
 
 
+def fetch_photos(finds, token, limit=12):
+    """Скачать фотографии короткого списка для сверки донца глазами.
+
+    Единственный надёжный способ отличить винтаж от серийной реплики —
+    посмотреть донце. Владелец 14.09.2026 снял лот, который инструмент
+    поставил первым: на фото донца стояло «A ZIPPO 20», то есть январь
+    2020, при клейме PAT.2032695 в заголовке. Zippo воспроизводит старый
+    номер патента на серии Vintage 1937 намеренно, поэтому по заголовку
+    это не различается в принципе.
+
+    Машина сужает, глаза подтверждают. Иначе никак.
+    """
+    import requests                                          # noqa: PLC0415
+    base = os.path.join(OUT, "zippo_photos")
+    H = {"Authorization": f"Bearer {token}",
+         "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
+    saved = []
+    for z in finds[:limit]:
+        iid = z["id"]
+        try:
+            r = requests.get(
+                f"https://api.ebay.com/buy/browse/v1/item/{iid}",
+                headers=H, timeout=45)
+        except requests.RequestException as e:                # noqa: BLE001
+            print(f"  {iid}: {type(e).__name__}", file=sys.stderr)
+            continue
+        if r.status_code != 200:
+            print(f"  {iid}: HTTP {r.status_code}", file=sys.stderr)
+            continue
+        j = r.json()
+        urls = [(j.get("image") or {}).get("imageUrl")]
+        urls += [x.get("imageUrl") for x in (j.get("additionalImages") or [])]
+        d = os.path.join(base, re.sub(r"[^0-9]", "", iid)[:16] or "x")
+        os.makedirs(d, exist_ok=True)
+        n = 0
+        for i, u in enumerate(urls):
+            if not u:
+                continue
+            big = u.replace("s-l225", "s-l1600").replace("s-l500", "s-l1600")
+            try:
+                rr = requests.get(big, timeout=45)
+            except requests.RequestException:
+                continue
+            if rr.status_code == 200 and rr.content:
+                with open(os.path.join(d, f"{i}.jpg"), "wb") as f:
+                    f.write(rr.content)
+                n += 1
+        saved.append((z, d, n))
+        time.sleep(0.3)
+    return saved
+
+
 def push(finds, seen_n, ref, a):
     """Итог в Телеграм. Пустой прогон — тоже результат."""
     sys.path.insert(0, os.path.join(ROOT, "tools"))
@@ -297,6 +376,9 @@ def main():
                          "покрывает риск по состоянию")
     ap.add_argument("--min-feedback", type=int, default=100,
                     help="продавцы с меньшим числом отзывов отсекаются")
+    ap.add_argument("--photos", type=int, default=0,
+                    help="скачать фото стольких верхних лотов для сверки "
+                         "донца глазами; 0 — не скачивать")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
 
@@ -333,13 +415,12 @@ def main():
     finds = []
     for r in uniq:
         t = r["title"]
-        tr = traps(t)
-        if tr:
-            continue
         if stated_year(t) is not None:
             continue                      # год назван — асимметрии нет
         sig, era = vintage_signals(t)
         if not sig or era is None:
+            continue
+        if traps(t, era):
             continue
         dec, seg = decade_of(era), segment(t)
         band = ref.get((dec, seg))
@@ -406,6 +487,12 @@ def main():
         print(f"    {z['url']}")
     if not finds:
         print("НИ ОДНОГО ЛОТА НЕ НАЙДЕНО.")
+    if a.photos and finds:
+        print(f"\nскачиваю фото {min(a.photos, len(finds))} верхних лотов "
+              f"для сверки донца...", file=sys.stderr)
+        for z, d, n in fetch_photos(finds, token, a.photos):
+            print(f"   {n} фото -> {d}")
+            print(f"      ${z['entry']:.2f}  {z['title'][:60]}")
     if a.push:
         push(finds[:a.top], len(uniq), ref, a)
     return 0
