@@ -1,0 +1,206 @@
+"""Сбор и нормализация лотов Pokemon с eBay Browse API.
+
+ЗАМЕР 06.09.2026, из-за которого фильтр устроен именно так:
+  категория 183456 «Pokemon Sealed Booster Packs» при цене до $20 и
+  состоянии NEW содержит 46 807 лотов, категория 183457 — 14 070.
+  Обойти их целиком нельзя: суточный лимит Browse API порядка 5 000
+  запросов, страница максимум 200 позиций. Поэтому берётся верхняя
+  часть выдачи по цене, а не вся категория, и это ЧЕСТНО названо в
+  отчёте: покрытие частичное.
+
+Состояние NEW у карточных категорий приходит как conditionId 1000
+(«New/Factory Sealed») — взято из самих лотов, а не из справочника:
+запрос с fieldgroups=CONDITION_REFINEMENTS вернул один пункт с
+conditionId=None и matchCount=0, то есть уточнение здесь пустое.
+"""
+from __future__ import annotations
+
+from ..common.ebay import (ApiRefused, price_usd, search_all, shipping_usd)
+
+# ЭТИ КАТЕГОРИИ НЕ ПОКЕМОНОВСКИЕ. Проверено 06.09.2026 запросом карточки
+# товара: настоящий categoryPath у обеих —
+#   183456 → Toys & Hobbies | Collectible Card Games | CCG Sealed Packs
+#   183457 → Toys & Hobbies | Collectible Card Games | CCG Sealed Decks & Kits
+# То есть общие для ВСЕХ карточных игр. Названия «Pokemon Sealed Booster
+# Packs» и «Pokemon Sealed Decks & Kits» четыре раунда стояли в коде
+# непроверенными — они взяты из slug'а витринного URL eBay, а не из API.
+#
+# Отсюда и «треть выдачи из чужих игр»: Union Arena, One Piece, Gundam,
+# Dragon Ball, Lorcana лежат в 183456 законно. Это не ошибка фильтра и не
+# miscategorization, это состав категории.
+#
+# Замер доли покемонов при цене лота $5-120 и состоянии NEW:
+#   183456: 89 050 лотов всего, 45 089 по запросу «pokemon» (51%)
+#   183457: 36 756 лотов всего,  8 722 по запросу «pokemon» (24%)
+CATEGORIES = {
+    "183456": "CCG Sealed Packs (все игры)",
+    "183457": "CCG Sealed Decks & Kits (все игры)",
+}
+
+BASE_FILTER = ("buyingOptions:{FIXED_PRICE|BEST_OFFER},"
+               "itemLocationCountry:US,"
+               "price:[1..{max_price}],priceCurrency:USD,"
+               "conditions:{NEW}")
+
+
+def build_filter(max_price_usd, min_price_usd=1.0):
+    """Ценовая полоса, а не только потолок.
+
+    Пол появился 06.09.2026 вместе с разворотом сортировки: ниже $5
+    лежит зона подделок и цифровых кодов, туда же смотрит правило 60%.
+    Полоса дешевле, чем фильтровать это потом на своей стороне.
+    """
+    return ("buyingOptions:{FIXED_PRICE|BEST_OFFER},"
+            "itemLocationCountry:US,"
+            f"price:[{min_price_usd:g}..{max_price_usd:g}],priceCurrency:USD,"
+            "conditions:{NEW}")
+
+
+def normalize(item, category_id):
+    """Лот в плоский словарь. Цена None остаётся None.
+
+    Ноль вместо неизвестной цены или доставки запрещён: ровно эта
+    подстановка занизила landed у 46 591 аукционного лота в винильной
+    ветке, и нашлось это только ручным разбором.
+    """
+    seller = item.get("seller") or {}
+    fb = seller.get("feedbackPercentage")
+    sc = seller.get("feedbackScore")
+    return {
+        "item_id": item.get("itemId"),
+        "title": item.get("title") or "",
+        "subtitle": item.get("subtitle") or "",
+        "item_url": item.get("itemWebUrl"),
+        "category_id": str(category_id),
+        "price_usd": price_usd(item),
+        "us_ship_usd": shipping_usd(item),
+        "ship_estimated": shipping_usd(item) is None,
+        "condition_id": item.get("conditionId"),
+        "condition": item.get("condition"),
+        "seller": seller.get("username"),
+        "seller_fb_pct": float(fb) if fb is not None else None,
+        "seller_fb_score": int(sc) if sc is not None else None,
+        "additional_images": len(item.get("additionalImages") or []),
+        "buying_options": ",".join(item.get("buyingOptions") or []),
+        "listed_at": item.get("itemCreationDate"),
+    }
+
+
+# Слова, которыми вид товара ищется на eBay. Нужны для точечного
+# режима: категорию в 46 807 лотов обойти нельзя, а набор, на который у
+# нас есть цена в Москве, — можно.
+KIND_QUERY = {
+    "booster_pack": "booster pack",
+    "sleeved_booster": "sleeved booster",
+    "blister_3pack": "3 pack blister",
+    "blister_checklane": "checklane blister",
+    "booster_bundle_6": "booster bundle",
+    "mini_tin": "mini tin",
+    "tin": "tin",
+    "build_and_battle": "build battle box",
+    "etb": "elite trainer box",
+}
+
+
+def queries_from_comps(comps, sealed_products):
+    """Запросы по тем наборам, на которые у нас ЕСТЬ цена в Москве.
+
+    ПОЧЕМУ ЭТО ГЛАВНЫЙ РЕЖИМ, А ОБХОД КАТЕГОРИИ — ВСПОМОГАТЕЛЬНЫЙ.
+    Правило ветки: без строки в ru_comps.csv вердикт BUY невозможен.
+    Значит обход 46 807 лотов категории тратит квоту на позиции,
+    которые заведомо не могут стать покупкой. Точечный режим ищет
+    ровно то, что мы умеем оценить.
+    """
+    by_alias = {}
+    for p in sealed_products:
+        for a in (p.get("set_aliases") or ()):
+            by_alias.setdefault(a, p)
+    out, seen = [], set()
+    for row in comps:
+        if row.get("ru_price_rub") is None:
+            continue
+        prod = by_alias.get(row["set_code"])
+        kind = row.get("product_kind")
+        words = KIND_QUERY.get(kind)
+        if not prod or not words:
+            continue
+        name = prod.get("set_name") or ""
+        if ":" in name:
+            name = name.split(":", 1)[1]
+        q = f"Pokemon {name.strip()} {words}".strip()
+        if q.lower() in seen:
+            continue
+        seen.add(q.lower())
+        out.append({"q": q, "set_code": row["set_code"], "kind": kind})
+    return out
+
+
+def collect_targeted(token, queries, *, max_price_usd=13.0, min_price_usd=5.0,
+                     per_query=200, categories=None, sort="price",
+                     budget_calls=None, verbose=True):
+    """Точечный поиск по наборам с известной ценой в Москве."""
+    cats = categories or list(CATEGORIES)
+    flt = build_filter(max_price_usd, min_price_usd)
+    spent = 0
+    out, refused = [], []
+    for spec in queries:
+        for cid in cats:
+            if budget_calls is not None and spent >= budget_calls:
+                if verbose:
+                    print(f"  бюджет запросов исчерпан на {spent} — "
+                          f"остальные наборы не смотрели")
+                return out, refused
+            try:
+                items = search_all(token, category_id=cid, flt=flt,
+                                   max_items=per_query, page=200,
+                                   sort=sort, q=spec["q"])
+                spent += max(1, -(-per_query // 200))
+            except ApiRefused as e:
+                refused.append((f"{cid}/{spec['q']}", str(e)))
+                continue
+            rows = [normalize(it, cid) for it in items]
+            out.extend(rows)
+            if verbose and rows:
+                print(f"  «{spec['q']}» в {cid}: {len(rows)}")
+    return out, refused
+
+
+def collect(token, *, max_price_usd=13.0, min_price_usd=5.0, per_category=1000,
+            categories=None, sort="price", query=None, verbose=True):
+    """Лоты по каждой категории ОТДЕЛЬНО.
+
+    category_ids принимает ровно одну категорию: запрос с двумя отдаёт
+    HTTP 400, errorId 12030, allowedMaxCategories=1. Проверено живьём
+    06.09.2026 — в задании было записано обратное.
+
+    СОРТИРОВКА ВЕРНУЛАСЬ К ВОЗРАСТАНИЮ 06.09.2026. Разворот на -price
+    делался, когда снизу выдачи лез мусор — цифровые коды за $1, синглы,
+    энергокарты. Но мусор создавали баги B-2 и B-3, а они закрыты
+    сторожами: причина разворота исчезла. Последствие же осталось и
+    стоило всей маржи ветки — у потолка в $20 стоят лоты вдвое дороже
+    рынка (современный бустер-пак: $7.90 PriceCharting, $7.97
+    TCGplayer), и никакая цена в Москве их не окупает.
+
+    Сортировка берётся из конфига, чтобы решение можно было проверить
+    прогоном в обе стороны, а не спорить о нём.
+    """
+    cats = categories or list(CATEGORIES)
+    flt = build_filter(max_price_usd, min_price_usd)
+    out, refused = [], []
+    for cid in cats:
+        try:
+            items = search_all(token, category_id=cid, flt=flt,
+                               max_items=per_category, page=200, sort=sort,
+                               q=query)
+        except ApiRefused as e:
+            # Отказ API — это «не смотрел», а не «ничего нет».
+            refused.append((cid, str(e)))
+            if verbose:
+                print(f"  категория {cid}: {e}")
+            continue
+        rows = [normalize(it, cid) for it in items]
+        if verbose:
+            print(f"  категория {cid} ({CATEGORIES.get(cid, '?')}): "
+                  f"{len(rows)} лотов")
+        out.extend(rows)
+    return out, refused

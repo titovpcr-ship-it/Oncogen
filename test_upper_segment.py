@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""Оффлайновые тесты верхнего сегмента (вводные владельца 31.08.2026).
+
+Главное, что проверяется, — НЕ арифметика, а разделение уровней:
+цена МаркетВинила (ask верхнего сегмента) и цена Мешка (sold нижнего)
+обязаны приходить с разными метками и никогда не смешиваться. Именно
+подмена уровня стоила этому проекту четырёх неверных вердиктов.
+
+Запуск: python3 test_upper_segment.py
+"""
+import sqlite3
+
+import yaml
+
+import upper_segment as us
+
+CFG = yaml.safe_load(open("ebay_vinyl_sniper_config.yaml", encoding="utf-8"))
+
+
+class FakeResp:
+    def __init__(self, code, payload=None, headers=None):
+        self.status_code, self._p = code, payload or {}
+        self.headers = headers or {}
+
+    def json(self):
+        return self._p
+
+
+class FakeSession:
+    """Считает обращения: кэш обязан их экономить, лимит Discogs 60/мин."""
+
+    def __init__(self, resp):
+        self.resp, self.calls = resp, 0
+
+    def get(self, url, headers=None, timeout=None, **kw):
+        self.calls += 1
+        return self.resp
+
+
+def check(cond, msg, st):
+    print(("OK   " if cond else "FAIL ") + msg)
+    if not cond:
+        st["failed"] += 1
+
+
+def main():
+    st = {"failed": 0}
+    conn = sqlite3.connect(":memory:")
+    us.init(conn)
+
+    # ── справка Discogs: это ПРЕДЛОЖЕНИЯ, а не сделки ──
+    ok_payload = {"num_for_sale": 3, "lowest_price": {"value": 400.0, "currency": "USD"}}
+    sess = FakeSession(FakeResp(200, ok_payload))
+    ref = us.fetch_discogs_stats(555, "tok", session=sess, conn=conn)
+    check(ref.num_for_sale == 3 and ref.lowest_price_usd == 400.0 and ref.fresh,
+          "справка разобрана: 3 копии, мировой пол $400", st)
+    check(sess.calls == 1, "один сетевой вызов", st)
+
+    ref2 = us.fetch_discogs_stats(555, "tok", session=sess, conn=conn)
+    check(sess.calls == 1 and "из кэша" in ref2.notes,
+          "повторный запрос идёт из кэша — лимит 60/мин не тратится", st)
+
+    # Отказ Discogs — это «не посмотрели», а не «данных нет».
+    bad = FakeSession(FakeResp(429))
+    r429 = us.fetch_discogs_stats(777, "tok", session=bad, conn=conn)
+    check(r429.num_for_sale is None and any("отказал" in n for n in r429.notes),
+          "HTTP 429 -> справки нет и это СКАЗАНО (ПРАВИЛО 2)", st)
+    check(conn.execute("SELECT COUNT(*) FROM discogs_stats WHERE release_id=777")
+          .fetchone()[0] == 0, "отказ не пишется в кэш как «ноль копий»", st)
+
+    # Валюта, которую не умеем пересчитывать, НЕ пересчитывается наугад.
+    jp = FakeSession(FakeResp(200, {"num_for_sale": 2,
+                                    "lowest_price": {"value": 50000, "currency": "JPY"}}))
+    rjp = us.fetch_discogs_stats(888, "tok", session=jp, conn=conn)
+    check(rjp.lowest_price_usd is None,
+          "незнакомая валюта -> None, а не выдуманный курс", st)
+
+    # ── вердикт по справке ──
+    many = us.DiscogsRef(num_for_sale=55, lowest_price_usd=900.0)
+    why = us.discogs_verdict(CFG, many, 200)
+    check(why and "не редкость" in why, "55 копий в продаже -> отказ по дефициту", st)
+
+    cheap = us.DiscogsRef(num_for_sale=2, lowest_price_usd=120.0)
+    why = us.discogs_verdict(CFG, cheap, 200)
+    check(why and "переплата" in why,
+          "мировой пол $120 при закупке $200 -> отказ по переплате", st)
+
+    good = us.DiscogsRef(num_for_sale=2, lowest_price_usd=600.0)
+    check(us.discogs_verdict(CFG, good, 200) is None,
+          "редкий и дешевле мира -> справка не возражает", st)
+
+    # ── МЕТКА ИСТОЧНИКА: главное в модуле ──
+    # ОБНОВЛЕНО 01.09.2026: Мешок отключён как источник цены. Раньше он
+    # был фолбэком; теперь позиция без цены МаркетВинила остаётся БЕЗ
+    # ЦЕНЫ, и вердикт по ней — «не посмотрели», а не «невыгодно».
+    #
+    # Причина отключения замерена: мешковская медиана — цена ОБЫЧНОЙ
+    # копии, а верхний сегмент состоит из редких прессов. Разброс внутри
+    # одного названия стократный (Dark Side: 4 450 ₽ за переиздание
+    # против 450 000 ₽ за UK first press). Мешок не занижал — он отвечал
+    # на другой вопрос.
+    p = us.ru_price_for(conn, CFG, release_id=42, meshok_median_rub=4200, meshok_n=6)
+    check(p.source == "none" and p.price_rub is None,
+          "Мешок отключён: без цены МаркетВинила цены НЕТ, а не 4 200 ₽", st)
+
+    # ОБНОВЛЕНО 01.09.2026: команда владельца — ориентир только на
+    # Discogs, русские площадки отключены. МаркетВинила выключена как
+    # источник, её механика ниже проверяется НАПРЯМУЮ, минуя приоритеты
+    # конфига: код остаётся рабочим на случай возврата.
+    for rub in (30000, 34000, 38000):
+        us.record_mv_price(conn, price_rub=rub, release_id=42,
+                           media="Vinyl", grade="NM")
+    p = us.ru_price_for(conn, CFG, release_id=42, meshok_median_rub=4200, meshok_n=6)
+    check(p.source != "marketvinila",
+          "МаркетВинила отключена в конфиге и в приоритетах НЕ участвует", st)
+    direct = us.mv_price(conn, release_id=42)
+    check(direct.source == "marketvinila" and direct.price_rub == 34000,
+          "сама механика МаркетВинила жива: медиана 34 000 ₽", st)
+    check(direct.kind == "ask" and "не сделка" in (direct.note or ""),
+          "цена МаркетВинила помечена как ask, а не как сделка", st)
+
+    us.record_mv_price(conn, price_rub=51000, master_id=99,
+                       media="Vinyl", grade="NM")
+    pm = us.mv_price(conn, release_id=1234, master_id=99)
+    check(pm.price_rub == 51000, "нет цены по прессу -> берётся мастер-релиз", st)
+    pboth = us.mv_price(conn, release_id=42, master_id=99)
+    check(pboth.price_rub == 34000,
+          "есть цена по прессу -> мастер НЕ подменяет её (уровень точнее)", st)
+
+    # ── Discogs как единственный источник: это ASK МИРА, не выручка ──
+    conn.execute("INSERT OR REPLACE INTO discogs_stats "
+                 "(release_id,num_for_sale,lowest_price,currency,fetched_at) "
+                 "VALUES (?,?,?,?,datetime('now'))", (777, 3, 400.0, "USD"))
+    conn.commit()
+    pd = us.ru_price_for(conn, CFG, release_id=777)
+    check(pd.source == "discogs" and pd.kind == "ask_world",
+          "Discogs — источник цены с меткой ask_world", st)
+    # Курс берётся из конфига, а не зашит в тест: 02.09.2026 он изменён
+    # с круглой сотни на курс ЦБ 86.75, и тест обязан следовать за
+    # конфигом, а не требовать от него старого значения.
+    fx = float(CFG["ru_market"]["fx_rate_rub_per_usd"])
+    check(pd.price_rub == int(400.0 * fx),
+          f"400 USD x {fx} = {int(400 * fx)} ₽ (получено {pd.price_rub})", st)
+    check(pd.note and "нельзя" in pd.note,
+          "метка прямо говорит: продавать на Discogs из РФ нельзя", st)
+    check(us.ru_price_for(conn, CFG, release_id=999999).source == "none",
+          "нет справки -> цены нет, а не ноль", st)
+
+    # Ни одного источника — это отдельный исход, не ноль.
+    pn = us.ru_price_for(conn, CFG, release_id=999999)
+    check(pn.source == "none" and pn.price_rub is None,
+          "нет ни одного источника -> source='none', а не цена 0", st)
+
+    print("\nВСЁ ПРОШЛО" if not st["failed"] else f"\n{st['failed']} ПРОВАЛОВ")
+    if st["failed"]:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()
