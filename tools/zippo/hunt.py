@@ -234,9 +234,14 @@ def build_reference(rows):
             continue
         by.setdefault((decade_of(y), segment(r["title"])), []).append(
             r["entry"])
+    # Порог глубины 100, а не 30. При тридцати сегмент «тонкая» дал
+    # медиану $104.58 по 35 лотам, тогда как прямой замер по 588 тонким
+    # лотам даёт $38.90: опора строится только по лотам с НАЗВАННЫМ
+    # годом, а у тонких таких мало и они смещены в дорогие. Тонкая
+    # опора завышает медиану и рождает несуществующие 3.7x.
     ref = {}
     for key, v in by.items():
-        if len(v) < 30:
+        if len(v) < 100:
             continue
         v.sort()
         ref[key] = {"n": len(v), "median": st.median(v),
@@ -244,11 +249,54 @@ def build_reference(rows):
     return ref
 
 
+def push(finds, seen_n, ref, a):
+    """Итог в Телеграм. Пустой прогон — тоже результат."""
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    import notify                                             # noqa: PLC0415
+    n = notify.Notifier()
+    head = (f"ВИНТАЖНЫЕ ZIPPO, ЭТАЛОН США\n"
+            f"просмотрено {seen_n} лотов, "
+            f"от {a.min_ratio}x и выше: {len(finds)}")
+    if not finds:
+        body = (f"{head}\n\nНИ ОДНОГО ЛОТА.\n"
+                f"Либо продавцы называют год сами, либо цена не ниже "
+                f"нижнего квартиля своего сегмента.")
+    else:
+        L = [head, "",
+             "Эталон — цены ЗАПРОСА живых лотов eBay в том же сегменте",
+             "(десятилетие + форма + металл + реклама), не цены сделок.",
+             "Доступа к проданным лотам у нас нет.",
+             "",
+             "СОСТОЯНИЕ НЕ ПРОВЕРЕНО. Вмятины, замена вставки, перепайка",
+             "петли и следы полировки меняют цену в разы и видны только",
+             "на фотографиях. Разрыв в выдаче может быть именно им.",
+             ""]
+        for i, z in enumerate(finds, 1):
+            L.append(f"{i}. {z['ratio']:.2f}x  выгода +${z['gain']:.2f}")
+            L.append(f"   купить ${z['entry']:.2f}, ~{z['era']} г., "
+                     f"{SEGMENT_RU[z['seg']]}")
+            L.append(f"   {z['title'][:90]}")
+            L.append(f"   опора: медиана ${z['ref_median']} по "
+                     f"{z['ref_n']} лотам того же сегмента")
+            L.append(f"   продавец {z['seller']} ({z['fb']} отзывов), "
+                     f"{z['cond']}")
+            L.append(f"   {z['url']}")
+            L.append("")
+        body = "\n".join(L)
+    ok = n.send(body, click_url=(finds[0]["url"] if finds else None))
+    print(f"в Телеграм: {'отправлено' if ok else 'НЕ ОТПРАВЛЕНО'} ({n.name})")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pages", type=int, default=2,
                     help="страниц по 200 лотов на каждый запрос")
     ap.add_argument("--top", type=int, default=15)
+    ap.add_argument("--min-ratio", type=float, default=2.0,
+                    help="ниже этого в выдачу не идёт: слабый плюс не "
+                         "покрывает риск по состоянию")
+    ap.add_argument("--min-feedback", type=int, default=100,
+                    help="продавцы с меньшим числом отзывов отсекаются")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
 
@@ -299,6 +347,10 @@ def main():
             continue
         if r["entry"] >= band["p25"]:
             continue                      # не дешевле нижнего квартиля
+        if r["fb"] < a.min_feedback:
+            continue
+        if band["median"] / r["entry"] < a.min_ratio:
+            continue
         finds.append({**r, "era": era, "decade": dec, "seg": seg,
                       "signals": sig,
                       "ref_median": round(band["median"], 2),
@@ -354,6 +406,8 @@ def main():
         print(f"    {z['url']}")
     if not finds:
         print("НИ ОДНОГО ЛОТА НЕ НАЙДЕНО.")
+    if a.push:
+        push(finds[:a.top], len(uniq), ref, a)
     return 0
 
 
