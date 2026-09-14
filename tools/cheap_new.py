@@ -57,20 +57,45 @@ def log(msg):
 SHOPS = ["vinyl.com", "thesoundofvinyl.us", "tower.com"]
 
 
+def _fetch(url, tries=6, base=4.0):
+    """Запрос с повторами. Магазины отвечают 429 после долгого обхода.
+
+    Без повторов карта сайта возвращалась пустой, collections отдавал
+    пустой список, и весь прогон 14.09.2026 отработал за две секунды,
+    отрапортовав «ноль разделов, ноль позиций» как результат. Третий
+    молчаливый провал за сутки — после ранжировщика, глотавшего отказы
+    eBay, и отбора, писавшего результат только в конце.
+    """
+    for i in range(tries):
+        try:
+            r = requests.get(url, timeout=60)
+        except requests.RequestException as e:              # noqa: PERF203
+            log(f"  {url[:60]}: {type(e).__name__}")
+        else:
+            if r.status_code == 200:
+                return r
+            log(f"  {url[:60]}: HTTP {r.status_code}"
+                f"{' (жду)' if r.status_code == 429 else ''}")
+            if r.status_code not in (429, 503):
+                return None
+        time.sleep(base * (i + 1))
+    log(f"  {url[:60]}: сдаюсь после {tries} попыток")
+    return None
+
+
 def collections(shop, pause=0.5):
     """Список разделов магазина из карты сайта."""
-    try:
-        r = requests.get(f"https://{shop}/sitemap.xml", timeout=60)
-    except requests.RequestException:
+    r = _fetch(f"https://{shop}/sitemap.xml")
+    if r is None:
+        log(f"{shop}: карта сайта недоступна — разделы не получены")
         return []
     maps = [m.replace("&amp;", "&")
             for m in re.findall(r"<loc>([^<]+)</loc>", r.text)
             if "collections" in m]
     out = []
     for m in maps:
-        try:
-            rr = requests.get(m, timeout=60)
-        except requests.RequestException:
+        rr = _fetch(m)
+        if rr is None:
             continue
         for u in re.findall(r"<loc>([^<]+)</loc>", rr.text):
             h = re.search(r"/collections/([^/?#]+)", u)
@@ -98,13 +123,8 @@ def gtin(sku):
 def catalogue(base, pages, pause=0.8):
     out = []
     for page in range(1, pages + 1):
-        try:
-            r = requests.get(f"{base}?limit=250&page={page}", timeout=60)
-        except requests.RequestException as e:                # noqa: BLE001
-            log(f"  стр.{page}: {type(e).__name__}")
-            break
-        if r.status_code != 200:
-            log(f"  стр.{page}: HTTP {r.status_code}")
+        r = _fetch(f"{base}?limit=250&page={page}", tries=4, base=3.0)
+        if r is None:
             break
         ps = r.json().get("products", [])
         if not ps:
@@ -199,6 +219,9 @@ def main():
         log(f"{shop}: каталог {len(ps)}, в полосе ${a.lo:.0f}-{a.hi:.0f} "
             f"после отсева: {kept}")
         _dump(rows, os.path.join(OUT, "cheap_new_partial.csv"))
+    if not rows:
+        log("НИЧЕГО НЕ СОБРАНО — это отказ сети, а не пустой каталог")
+        return 1
     seen, uniq = set(), []
     for r in sorted(rows, key=lambda z: z["price"]):
         k = r["gtin"] or r["title"].lower()
