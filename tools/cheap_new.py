@@ -128,7 +128,7 @@ def _pick(ps, a, shop):
             price = float(v["price"])
         except (KeyError, TypeError, ValueError):
             continue
-        if not (a.lo <= price <= a.hi):
+        if not getattr(a, "all", False) and not (a.lo <= price <= a.hi):
             continue
         if _SEVEN.search(blob) or _NOT_RECORD.search(blob):
             continue
@@ -162,6 +162,14 @@ def main():
     ap.add_argument("--lo", type=float, default=5.0)
     ap.add_argument("--hi", type=float, default=15.0)
     ap.add_argument("--pages", type=int, default=60)
+    # Полный каталог со штрихкодами, а не только дешёвая полоса.
+    # 14.09.2026 выяснилось, что Discogs как цена покупки не годится:
+    # lowest_price включает подержанное, а русская витрина продаёт
+    # запечатанное, и сравнение получается новое-против-потёртого.
+    # Единственный чистый способ — сводить НОВОЕ с НОВЫМ по штрихкоду,
+    # а для этого нужны каталоги целиком, а не их дешёвый конец.
+    ap.add_argument("--all", action="store_true",
+                    help="сохранять весь каталог, игнорируя полосу цен")
     a = ap.parse_args()
 
     rows, stats = [], {}
@@ -200,7 +208,8 @@ def main():
         uniq.append(r)
 
     os.makedirs(OUT, exist_ok=True)
-    path = os.path.join(OUT, f"cheap_new_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
+    stem = "us_catalog" if getattr(a, "all", False) else "cheap_new"
+    path = os.path.join(OUT, f"{stem}_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(uniq[0].keys()) if uniq else [])
         if uniq:
