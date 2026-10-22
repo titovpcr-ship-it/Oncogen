@@ -207,8 +207,8 @@ _FORTY_FIVE = re.compile(r"(?:^|\W)45(?:\W|$)(?!\s*rpm\s*lp)", re.I)
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--max-buy", type=float, default=20.0,
-                    help="потолок цены покупки вместе с доставкой")
+    ap.add_argument("--max-buy", type=float, default=25.0,
+                    help="потолок ЦЕНЫ ЛОТА, без доставки")
     ap.add_argument("--min-copies", type=int, default=5,
                     help="меньше этого числа копий на Discogs — опоры нет")
     ap.add_argument("--min-gap", type=float, default=2.0,
@@ -324,9 +324,11 @@ def main():
                 if hl is None or hl > a.ending_within:
                     continue
             sh = shipping_usd(it)
-            if sh is None:
-                continue              # потолок с доставкой не проверить
-            entry = p + sh
+            # Доставка к цене пластинки НЕ прибавляется — владелец
+            # 22.10.2026: «доставку даже не калькулируем к цене». Она
+            # остаётся справочной цифрой рядом; лот без объявленной
+            # доставки больше не снимается, прежде снимался и терялся.
+            entry = p
             # Потолок — к ТЕКУЩЕЙ цене. Владелец 22.10.2026: аукционы
             # дальше суток от конца не проблема, он сам решит, ставить
             # ли. Прежде потолок применялся к ожидаемому закрытию, и
@@ -345,15 +347,16 @@ def main():
             # по ожидаемому закрытию: на ранних аукционах это разные
             # числа, и видеть надо оба.
             gap = floor / entry
-            gap_expect = floor / (expect + sh)
+            gap_expect = floor / expect if expect else gap
             if gap < a.min_gap:
                 continue
             seen.add(iid)
             finds.append({
                 "gap": round(gap, 2), "entry": round(entry, 2),
-                "expect": round(expect + sh, 2), "kind": kind, "note": note,
+                "expect": round(expect, 2), "kind": kind, "note": note,
+                "ship": (round(sh, 2) if sh is not None else ""),
                 "gap_expect": round(gap_expect, 2),
-                "over_cap": (kind == "аукцион" and expect + sh > a.max_buy),
+                "over_cap": (kind == "аукцион" and expect > a.max_buy),
                 "press": press_note,
                 "floor": floor, "copies": t["for_sale"],
                 "ratio": t["ratio"], "have": t["have"], "want": t["want"],
@@ -387,7 +390,8 @@ def main():
             w.writerows(finds)
 
     print(f"\nцелей проверено: {len(tg)}")
-    print(f"лотов дешевле ${a.max_buy:.0f} с разрывом от {a.min_gap}x: "
+    print(f"лотов дешевле ${a.max_buy:.0f} без доставки "
+          f"с разрывом от {a.min_gap}x: "
           f"{len(finds)}")
     if refused:
         print(f"ОТКАЗОВ eBay: {refused} — выдача неполна")
@@ -395,7 +399,8 @@ def main():
         print("\nНИ ОДНОГО ЛОТА.")
         return 0
     print(f"файл: {path}")
-    print(f"\n=== ТОП-{a.top}, ПОТОЛОК ПОКУПКИ ${a.max_buy:.0f} ===")
+    print(f"\n=== ТОП-{a.top}, ПОТОЛОК ЦЕНЫ ЛОТА ${a.max_buy:.0f} "
+          f"БЕЗ ДОСТАВКИ ===")
     print("Пол Discogs — цена ЗАПРОСА в любом состоянии, не выручка.")
     print("Состояние лота по заголовку не проверено.\n")
     for z in finds[:a.top]:
@@ -416,6 +421,9 @@ def main():
         print(f"    {z['label']} {z['catno']} {z['year']}  "
               f"хотят {z['want']}/{z['have']} (ratio {z['ratio']})")
         print(f"    лот: {z['ebay_title'][:62]}")
+        ship = (f"доставка ${z['ship']}" if z.get("ship") != ""
+                else "доставка не объявлена")
+        print(f"    {ship} (в потолок не входит)")
         print(f"    продавец {z['seller']} ({z['fb']}), {z['cond']}")
         print(f"    {z['url']}")
         print(f"    {z['discogs']}")
