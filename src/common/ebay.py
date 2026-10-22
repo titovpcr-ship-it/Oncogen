@@ -24,7 +24,7 @@ import time
 
 import requests
 
-from .env import load_env
+from .env import env_all
 
 SEARCH = "https://api.ebay.com/buy/browse/v1/item_summary/search"
 ITEM = "https://api.ebay.com/buy/browse/v1/item/{item_id}"
@@ -42,10 +42,16 @@ class ApiRefused(RuntimeError):
 
 
 def ebay_token() -> str:
-    env = load_env()
+    # Переменные окружения, а НЕ только .env. Прежняя версия читала
+    # один .env, и штатный способ хранения секретов — переменные
+    # окружения — с ней не работал вовсе: после пересборки контейнера
+    # 22.10.2026 .env пропал вместе с ключами, и положить их обратно
+    # нормальным путём было нельзя.
+    env = env_all()
     cid, sec = env.get("EBAY_CLIENT_ID"), env.get("EBAY_CLIENT_SECRET")
     if not cid or not sec:
-        raise SystemExit("в .env нет EBAY_CLIENT_ID / EBAY_CLIENT_SECRET")
+        raise SystemExit("нет EBAY_CLIENT_ID / EBAY_CLIENT_SECRET — "
+                         "ни в переменных окружения, ни в .env")
     b64 = base64.b64encode(f"{cid}:{sec}".encode()).decode()
     r = requests.post(
         TOKEN_URL,

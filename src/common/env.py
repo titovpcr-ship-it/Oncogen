@@ -24,3 +24,15 @@ def load_env() -> dict:
     _ensure_root_on_path()
     import notify                                   # noqa: E402
     return notify.load_env()
+
+
+def env_all() -> dict:
+    """Ключи из переменных окружения и из .env, окружение главнее.
+
+    Нужно потому, что .env живёт только внутри контейнера и пропадает
+    вместе с ним, а переменные окружения задаются в настройках
+    окружения и переживают пересборку.
+    """
+    _ensure_root_on_path()
+    import notify                                   # noqa: E402
+    return notify.env_all()
