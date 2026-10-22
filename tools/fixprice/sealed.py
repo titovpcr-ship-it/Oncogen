@@ -144,6 +144,27 @@ def priority(z):
     return (s, -z["price"])
 
 
+# ВИНИЛ ДОЛЖЕН БЫТЬ ДОКАЗАН. Владелец 22.10.2026: «BOB DYLAN CD а не
+# винил». Лот «Bob Dylan - Time Out Of Mind» стоял в разделе Vinyl
+# Records, в карточке «Format: Record» и штрихкод ВИНИЛОВОГО издания 2026
+# года — eBay подставил его из каталога, а продавец продавал компакт-
+# диск. Данные врали все разом; выдавало другое: в заголовке ни «LP», ни
+# «vinyl», в карточке ни размера, ни скорости. У настоящей находки,
+# Green Day, есть и то, и другое.
+_VINYL_WORD = re.compile(r"\blp\b|\b\d?\s*x?\s*lp\b|\bvinyl\b|"
+                         r"\b12\s*(?:\"|''|inch|in\b)|\b180\s*-?\s*g|"
+                         r"\bgatefold\b|\b33\s*(?:rpm|1/3)\b|\brecord\b",
+                         re.I)
+
+
+def vinyl_proven(item, title):
+    if _VINYL_WORD.search(title):
+        return True
+    asp = {a.get("name"): str(a.get("value") or "")
+           for a in item.get("localizedAspects") or []}
+    return bool(asp.get("Record Size") or asp.get("Speed"))
+
+
 def barcode_of(item):
     g = (item.get("gtin") or "").strip()
     asp = {a.get("name"): str(a.get("value") or "")
@@ -191,6 +212,99 @@ def discogs_value(d, code, artist):
             "format": ", ".join(r.get("format") or []),
             "want": c.get("want"), "have": c.get("have"),
             "editions": len(res)}, None
+
+
+# КАТАЛОЖНЫЙ НОМЕР — ДЛЯ СТАРЫХ БЕЗ ШТРИХКОДА. Владелец 22.10.2026:
+# «Добавь поиск по каталожному номеру для старых без штрихкода». У
+# пластинок до начала 1980-х штрихкода не было, а «лежала в комоде» —
+# как раз они; в первом прогоне без кода было 66% карточек.
+#
+# Номер издание НЕ определяет: переиздание наследует номер оригинала
+# (O-80). Поэтому опора здесь — пол САМОГО ДЕШЁВОГО издания с этим
+# номером: находка выгодна при любом прессе. Пол раннего года
+# печатается рядом как потенциал, если пресс подтвердится по фото.
+_CAT_TITLE = re.compile(
+    r"\b((?:[A-Z]{1,5}\d?)\s*-?\s*\d{3,6}(?:\s*-\s*[A-Z0-9]{1,3})?)\b")
+_CAT_NOT = re.compile(r"^(?:LP|EP|CD|NM|VG|EX|RPM|NO|VOL|DISC|PART|OZ|IN)\b",
+                      re.I)
+
+
+def _cat_norm(x):
+    return re.sub(r"[^A-Z0-9]", "", (x or "").upper())
+
+
+def catno_of(item, title):
+    """Каталожный номер из карточки, иначе из заголовка, или None."""
+    asp = {a.get("name"): str(a.get("value") or "")
+           for a in item.get("localizedAspects") or []}
+    for v in (asp.get("Catalog Number"), asp.get("Catalogue Number")):
+        v = (v or "").strip()
+        n = _cat_norm(v)
+        if 4 <= len(n) <= 14 and re.search(r"\d{2}", n) \
+                and v.lower() not in ("n/a", "none", "unknown", "na"):
+            return v
+    for m in _CAT_TITLE.finditer(title):
+        c = m.group(1)
+        if _CAT_NOT.search(c):
+            continue
+        digits = re.sub(r"\D", "", c)
+        if re.fullmatch(r"(19[5-9]\d|20[0-2]\d)", digits) \
+                and not re.match(r"[A-Z]", c):
+            continue           # голый год, а не номер
+        if not re.match(r"[A-Z]", c, re.I):
+            continue           # номер без буквенного префикса — шум
+        return c
+    return None
+
+
+def discogs_by_catno(d, cat, artist, lot_title):
+    """Оценка по номеру: пол худшего издания и пол раннего года."""
+    from catno_sweep import album_matches
+    s = d.get("https://api.discogs.com/database/search?type=release"
+              f"&catno={quote(cat)}&artist={quote(artist)}"
+              "&format=Vinyl&per_page=50")
+    if s is None:
+        return None, "Discogs не ответил"
+    want = _cat_norm(cat)
+    res = []
+    for r in s.get("results") or []:
+        fmt = r.get("format") or []
+        if "Vinyl" not in fmt or "Unofficial Release" in fmt:
+            continue
+        if want not in _cat_norm(r.get("catno")):
+            continue
+        if not artist_in(r.get("title") or "", artist):
+            continue
+        if not album_matches(lot_title, r.get("title") or ""):
+            continue           # номер сошёлся, альбом нет — чужой номер
+        y = str(r.get("year") or "")
+        res.append((int(y) if y.isdigit() else 9999, r))
+    if not res:
+        return None, "по номеру на Discogs не нашлось"
+    res.sort(key=lambda x: x[0])
+    pick = res[:3] + [x for x in res[-3:] if x not in res[:3]]
+    floors, copies = [], 0
+    for y, r in pick:
+        st = d.get(tg.stats_url(r["id"]))
+        lp = tg.usd_floor(st)
+        n = (st or {}).get("num_for_sale") or 0
+        copies += n
+        if lp is not None and n:
+            floors.append((lp, n, y, r))
+    if not floors:
+        return None, "копий в продаже нет"
+    lp, n, y, r = min(floors, key=lambda f: f[0])
+    early_y = res[0][0]
+    early = [f for f in floors if f[2] == early_y]
+    c = r.get("community") or {}
+    return {"floor": lp, "copies": copies, "release": r["id"],
+            "dg_title": r.get("title") or "", "year": r.get("year") or "",
+            "country": r.get("country") or "",
+            "format": ", ".join(r.get("format") or []),
+            "want": c.get("want"), "have": c.get("have"),
+            "editions": len(res),
+            "early_year": early_y if early_y != 9999 else "",
+            "early_floor": min(f[0] for f in early) if early else ""}, None
 
 
 def main():
@@ -272,7 +386,7 @@ def main():
     d = D(tg._env_file_token())
     H = {"Authorization": f"Bearer {token}",
          "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
-    no_code = card_fail = 0
+    no_code = card_fail = by_cat = fmt_unproven = 0
     why_not = {}
     finds = []
     t0 = time.time()
@@ -293,11 +407,21 @@ def main():
                 break
             continue
         item = r.json()
-        code = barcode_of(item)
-        if not code:
-            no_code += 1
+        if not vinyl_proven(item, z["title"]):
+            fmt_unproven += 1
             continue
-        v, why = discogs_value(d, code, z["artist"])
+        code = barcode_of(item)
+        if code:
+            v, why = discogs_value(d, code, z["artist"])
+            z["match"] = f"штрихкод {code}"
+        else:
+            cat = catno_of(item, z["title"])
+            if not cat:
+                no_code += 1
+                continue
+            by_cat += 1
+            v, why = discogs_by_catno(d, cat, z["artist"], z["title"])
+            z["match"] = f"каталожный номер {cat}"
         if v is None:
             why_not[why] = why_not.get(why, 0) + 1
             continue
@@ -307,8 +431,10 @@ def main():
         ship = z["ship"] if z["ship"] is not None else SHIP_GUESS
         gap = v["floor"] / z["price"] if z["price"] else 0
         net = v["floor"] * (1 - FEES) - z["price"] - ship
+        v.setdefault("early_year", "")
+        v.setdefault("early_floor", "")
         z.update(v)
-        z.update({"barcode": code, "gap": round(gap, 2),
+        z.update({"barcode": code or "", "gap": round(gap, 2),
                   "net": round(net, 2),
                   "ship_note": "" if z["ship"] is not None
                   else f"доставка не объявлена, взято ${SHIP_GUESS:.0f}"})
@@ -339,7 +465,10 @@ def main():
             w.writerows(finds)
     print(f"исполнителей {len(a.artists)}, лотов {n_lots}, запечатанных до "
           f"${a.max_buy:.0f}: {len(cands)}, карточек открыто {len(look)}")
-    print(f"без штрихкода {no_code}, карточка не открылась {card_fail}; "
+    print(f"винил не доказан (ни LP/vinyl в заголовке, ни размера и "
+          f"скорости в карточке): {fmt_unproven}")
+    print(f"без штрихкода оценено по каталожному номеру {by_cat}, "
+          f"ни кода, ни номера {no_code}, карточка не открылась {card_fail}; "
           + ", ".join(f"{k}: {v}" for k, v in why_not.items()))
     print(f"НАХОДОК (от {a.min_gap}x и прибыль от ${a.min_net:.0f}): "
           f"{len(finds)}")
@@ -356,8 +485,11 @@ def main():
         print(f"   {z['title'][:80]}")
         print(f"   Discogs: {z['dg_title'][:55]} | {z['year']} "
               f"{z['country']} | {z['format'][:40]}")
-        print(f"   штрихкод {z['barcode']}, изданий с кодом {z['editions']}, "
+        print(f"   {z['match']}, изданий {z['editions']}, "
               f"хотят {z['want']}/есть {z['have']}; {z['how']}")
+        if z.get("early_floor") not in ("", None):
+            print(f"   если пресс {z['early_year']} года — Discogs от "
+                  f"${z['early_floor']}: СВЕРИТЬ ЭТИКЕТКУ ПО ФОТО")
         if z["ship_note"]:
             print(f"   {z['ship_note']}")
         print(f"   продавец {z['seller']} ({z['fb']})  {z['url']}")
