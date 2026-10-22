@@ -327,20 +327,33 @@ def main():
             if sh is None:
                 continue              # потолок с доставкой не проверить
             entry = p + sh
-            # Потолок — к ОЖИДАЕМОЙ цене: у аукциона ставка ещё вырастет.
-            if expect + sh > a.max_buy:
+            # Потолок — к ТЕКУЩЕЙ цене. Владелец 22.10.2026: аукционы
+            # дальше суток от конца не проблема, он сам решит, ставить
+            # ли. Прежде потолок применялся к ожидаемому закрытию, и
+            # ранние аукционы выбрасывались целиком — именно поэтому
+            # три прогона подряд дали ноль, хотя лоты были.
+            #
+            # Ожидаемое закрытие не скрывается: оно считается и выводится
+            # рядом, и когда выходит за потолок — говорится прямо.
+            if entry > a.max_buy:
                 continue
             se = it.get("seller") or {}
             fb = se.get("feedbackScore") or 0
             if fb < a.min_feedback:
                 continue
-            gap = floor / (expect + sh)
+            # Разрыв считается по ТЕКУЩЕЙ цене, но рядом даётся разрыв
+            # по ожидаемому закрытию: на ранних аукционах это разные
+            # числа, и видеть надо оба.
+            gap = floor / entry
+            gap_expect = floor / (expect + sh)
             if gap < a.min_gap:
                 continue
             seen.add(iid)
             finds.append({
                 "gap": round(gap, 2), "entry": round(entry, 2),
                 "expect": round(expect + sh, 2), "kind": kind, "note": note,
+                "gap_expect": round(gap_expect, 2),
+                "over_cap": (kind == "аукцион" and expect + sh > a.max_buy),
                 "press": press_note,
                 "floor": floor, "copies": t["for_sale"],
                 "ratio": t["ratio"], "have": t["have"], "want": t["want"],
@@ -390,6 +403,11 @@ def main():
                else f"ставка ${z['entry']:.2f} -> ждём ${z['expect']:.2f}")
         print(f"{z['gap']:.2f}x разрыв  [{z['kind']}] {now}  "
               f"пол Discogs ${z['floor']} при {z['copies']} копиях")
+        if z["kind"] == "аукцион":
+            over = ("  ВЫЙДЕТ ЗА ПОТОЛОК, если ставка дорастёт"
+                    if z["over_cap"] else "")
+            print(f"    по ожидаемому закрытию разрыв "
+                  f"{z['gap_expect']:.2f}x{over}")
         if z["note"]:
             print(f"    {z['note']}")
         if z.get("press"):
