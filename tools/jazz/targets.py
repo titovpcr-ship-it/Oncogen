@@ -130,6 +130,11 @@ def main():
                     help="условие владельца: Have меньше этого")
     ap.add_argument("--min-ratio", type=float, default=1.0,
                     help="условие владельца: want/have больше этого")
+    ap.add_argument("--skip-repress", action="store_true",
+                    help="не проверять третье условие правила O-49. "
+                         "Для винтажа оно бесполезно: переиздание есть "
+                         "у всех, на первой выборке ноль из 65 прошли. "
+                         "Стоит по запросу на кандидата.")
     ap.add_argument("--token", default=os.environ.get("DISCOGS_TOKEN"))
     a = ap.parse_args()
 
@@ -190,12 +195,19 @@ def main():
           file=sys.stderr)
 
     # Третье условие: переиздания не объявлено
-    print("проверяю третье условие — есть ли переиздание...",
-          file=sys.stderr)
-    for r in cand:
-        r["repress"] = repress_exists(d, r["master_id"], r["id"])
+    if a.skip_repress:
+        print("третье условие пропущено (для винтажа бесполезно, O-72)",
+              file=sys.stderr)
+        for r in cand:
+            r["repress"] = ""
+    else:
+        print("проверяю третье условие — есть ли переиздание...",
+              file=sys.stderr)
+        for r in cand:
+            r["repress"] = repress_exists(d, r["master_id"], r["id"])
     d.save()
-    clean = [r for r in cand if r["repress"] is False]
+    clean = (cand if a.skip_repress
+             else [r for r in cand if r["repress"] is False])
     unknown = [r for r in cand if r["repress"] is None]
     print(f"без объявленного переиздания: {len(clean)}", file=sys.stderr)
     print(f"судить нельзя (нет мастера или отказ сети): {len(unknown)}",
