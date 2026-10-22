@@ -139,7 +139,13 @@ def main():
         q = (f"https://api.discogs.com/database/search?"
              f"label={requests.utils.quote(lab)}&format=Vinyl&genre=Jazz"
              f"&year=1950-{a.year_to}&type=release"
-             f"&per_page={a.per_label}&sort=have&sort_order=desc")
+             # Сортировка по ЖЕЛАЮЩИМ, а не по владельцам. Первый
+             # прогон просил sort=have:desc, то есть самые
+             # распространённые пластинки, и ни одна не могла пройти
+             # условие have < 500: выборка была отдана заведомо
+             # непроходная. Правило ищет обратное — высокий спрос при
+             # малом числе владельцев.
+             f"&per_page={a.per_label}&sort=want&sort_order=desc")
         res = d.get(q)
         if res is None:
             continue

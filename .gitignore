@@ -26,3 +26,4 @@ data/tcg_catalog.db-wal
 data/tcg_catalog.db-shm
 cache/
 out/
+cache/discogs_jazz.json
