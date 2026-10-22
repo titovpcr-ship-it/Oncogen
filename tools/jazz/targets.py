@@ -141,20 +141,33 @@ def main():
     d = Discogs(a.token)
     rows, seen = [], set()
     for lab in a.labels:
-        q = (f"https://api.discogs.com/database/search?"
-             f"label={requests.utils.quote(lab)}&format=Vinyl&genre=Jazz"
-             f"&year=1950-{a.year_to}&type=release"
-             # Сортировка по ЖЕЛАЮЩИМ, а не по владельцам. Первый
-             # прогон просил sort=have:desc, то есть самые
-             # распространённые пластинки, и ни одна не могла пройти
-             # условие have < 500: выборка была отдана заведомо
-             # непроходная. Правило ищет обратное — высокий спрос при
-             # малом числе владельцев.
-             f"&per_page={a.per_label}&sort=want&sort_order=desc")
-        res = d.get(q)
-        if res is None:
-            continue
-        items = res.get("results") or []
+        # Discogs отдаёт максимум 100 результатов на запрос, поэтому
+        # больше сотни на лейбл берётся постраничным обходом. Без него
+        # per_page=200 молча усекался до сотни, и «200 на лейбл» было
+        # бы неправдой в отчёте.
+        #
+        # Сортировка по ЖЕЛАЮЩИМ, а не по владельцам: первый прогон
+        # просил sort=have:desc, то есть самые распространённые
+        # пластинки, и ни одна не могла пройти условие have < 500.
+        items, page, per = [], 1, min(100, a.per_label)
+        while len(items) < a.per_label:
+            q = (f"https://api.discogs.com/database/search?"
+                 f"label={requests.utils.quote(lab)}&format=Vinyl&genre=Jazz"
+                 f"&year=1950-{a.year_to}&type=release"
+                 f"&per_page={per}&page={page}"
+                 f"&sort=want&sort_order=desc")
+            res = d.get(q)
+            if res is None:
+                break
+            got = res.get("results") or []
+            if not got:
+                break
+            items += got
+            pag = res.get("pagination") or {}
+            if page >= (pag.get("pages") or 1):
+                break
+            page += 1
+        items = items[:a.per_label]
         print(f"{lab}: {len(items)} релизов", file=sys.stderr)
         for x in items:
             rid = x.get("id")
