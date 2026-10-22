@@ -41,7 +41,10 @@ OUT = os.path.join(ROOT, "out")
 DATA = os.path.join(ROOT, "data")
 CACHE = os.path.join(ROOT, "cache", "discogs_jazz.json")
 UA = "OncogenResearch/1.0"
-PAUSE = 2.5          # без токена Discogs даёт 25 запросов в минуту
+# Без токена Discogs даёт 25 запросов в минуту, с токеном 60.
+PAUSE_NO_TOKEN = 2.5
+PAUSE_TOKEN = 1.05
+PAUSE = PAUSE_NO_TOKEN
 
 # Лейблы, у которых оригинальный пресс сам по себе предмет собирания.
 # Список не «любимые», а те, где каталожный номер что-то значит для
@@ -53,9 +56,22 @@ LABELS = [
 ]
 
 
+def _env_file_token():
+    """Токен из .env. Переменные окружения имеют приоритет."""
+    try:
+        with open(os.path.join(ROOT, ".env"), encoding="utf-8") as f:
+            for line in f:
+                if line.strip().startswith("DISCOGS_TOKEN="):
+                    return line.split("=", 1)[1].strip().strip('"').strip("'")
+    except OSError:
+        pass
+    return None
+
+
 class Discogs:
     def __init__(self, token=None):
         self.token = token
+        self.pause = PAUSE_TOKEN if token else PAUSE_NO_TOKEN
         self.last = 0.0
         self.refused = 0
         try:
@@ -67,7 +83,7 @@ class Discogs:
     def get(self, url):
         if url in self.db:
             return self.db[url]
-        gap = PAUSE - (time.time() - self.last)
+        gap = self.pause - (time.time() - self.last)
         if gap > 0:
             time.sleep(gap)
         self.last = time.time()
@@ -135,7 +151,8 @@ def main():
                          "Для винтажа оно бесполезно: переиздание есть "
                          "у всех, на первой выборке ноль из 65 прошли. "
                          "Стоит по запросу на кандидата.")
-    ap.add_argument("--token", default=os.environ.get("DISCOGS_TOKEN"))
+    ap.add_argument("--token", default=(os.environ.get("DISCOGS_TOKEN")
+                                       or _env_file_token()))
     a = ap.parse_args()
 
     d = Discogs(a.token)
