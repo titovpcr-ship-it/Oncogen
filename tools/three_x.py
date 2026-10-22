@@ -160,7 +160,12 @@ def title_is_the_album(title, t):
     key = [w for w in re.split(r"\W+", t["album"].lower())
            if w and w not in {"ii", "2", "the"}]
     if key:
-        phrase = r"\b" + r"\W+".join(re.escape(w) for w in key) + r"\b"
+        # «the» из ключа выброшен, но в заголовке лота он стоит, и
+        # «Ptah, The El Daoud» не совпадал с «Ptah The El Daoud»:
+        # между ptah и el стояло слово, а склейка ждала одну пунктуацию.
+        # Найдено 22.10.2026 на серии Verve By Request.
+        phrase = (r"\b" + r"\W+(?:the\W+)?".join(re.escape(w) for w in key)
+                  + r"\b")
         if not re.search(phrase, low):
             return "в заголовке нет названия альбома сплошной фразой"
     # Название альбома не должно быть частью чужого: «Soul's Greatest
