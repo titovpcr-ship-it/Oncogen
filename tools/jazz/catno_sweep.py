@@ -67,6 +67,80 @@ def discogs_query(num, kind):
     return f"BLP {num}" if kind == "mono" else num
 
 
+# Остальные лейблы. Для каждого: запрос к eBay, имя на Discogs, разбор
+# номера из заголовка и регулярка, которой номер должен совпасть с
+# каталожным номером издания на Discogs (поиск Discogs по номеру
+# нечёткий: catno=77 у Impulse вернёт и 177, и 7700).
+def _num(x):
+    return re.sub(r"\s+", "", x)
+
+
+LABELS = {
+    "Blue Note": {"q": "blue note", "discogs": "Blue Note"},
+    "Prestige": {
+        "q": "prestige jazz lp", "discogs": "Prestige",
+        "rx": [r"\b(?:PR(?:LP|ST)?|LP|prestige)\s*-?\s*(7\d{3})\b"],
+        "verify": r"(?<!\d){n}(?!\d)"},
+    "Riverside": {
+        "q": "riverside jazz lp", "discogs": "Riverside",
+        "rx": [r"\bRLP\s*-?\s*(12\s*-\s*\d{3}|\d{3,4})\b",
+               r"\bRS\s*-?\s*(\d{4})\b",
+               r"\briverside\s*(?:records\s*)?#?\s*(12\s*-\s*\d{3})\b"],
+        "verify": r"(?<![\d-]){n}(?!\d)"},
+    "Impulse": {
+        "q": "impulse jazz lp", "discogs": "Impulse!",
+        "rx": [r"\bASD?\s*-?\s*(\d{2,4})\b",
+               r"\bimpulse!?\s*(?:records\s*)?A\s*-?\s*(\d{2,4})\b"],
+        "verify": r"\bA(?:S|SD)?\s*-?\s*{n}(?!\d)"},
+    "Atlantic": {
+        "q": "atlantic jazz lp", "discogs": "Atlantic",
+        "rx": [r"\bSD\s*-?\s*(1[2-6]\d\d)\b",
+               r"\batlantic\s*(?:records\s*)?#?\s*(1[2-6]\d\d)\b"],
+        "verify": r"(?<!\d){n}(?!\d)"},
+    "Verve": {
+        "q": "verve jazz lp", "discogs": "Verve",
+        "rx": [r"\b(?:MG\s*)?V6?\s*-?\s*(8\d{3})\b",
+               r"\bMGV\s*-?\s*(8\d{3})\b"],
+        "verify": r"(?<!\d){n}(?!\d)"},
+    "Contemporary": {
+        "q": "contemporary jazz lp", "discogs": "Contemporary",
+        "rx": [r"\b[CSM]\s*-?\s*([37]\d{3})\b"],
+        "verify": r"(?<!\d){n}(?!\d)"},
+    "Columbia": {
+        "q": "columbia jazz lp", "discogs": "Columbia",
+        "rx": [r"\bC[LS]\s*-?\s*(\d{3,4})\b"],
+        "verify": r"\bC[LS]\s*-?\s*{n}(?!\d)"},
+    "Savoy": {
+        "q": "savoy jazz lp", "discogs": "Savoy",
+        "rx": [r"\bMG\s*-?\s*(1\d{4})\b"],
+        "verify": r"(?<!\d){n}(?!\d)"},
+    "Strata-East": {
+        "q": "strata east", "discogs": "Strata-East",
+        "rx": [r"\bSES\s*-?\s*(\d{4,5})\b"],
+        "verify": r"(?<!\d){n}(?!\d)"},
+    "Black Jazz": {
+        "q": "black jazz records", "discogs": "Black Jazz",
+        "rx": [r"\bBJ(?:QD)?\s*-?\s*/?\s*(\d{1,2})\b"],
+        "verify": r"\bBJ(?:QD)?\s*-?\s*/?\s*{n}(?!\d)"},
+}
+
+
+def label_catno(label, title):
+    """(ключ, запрос к Discogs, регулярка сверки) или None."""
+    if label == "Blue Note":
+        c = bn_catno(title)
+        if not c:
+            return None
+        return c, discogs_query(*c), re.escape(c[0])
+    cfg = LABELS[label]
+    for rx in cfg["rx"]:
+        m = re.search(rx, title, re.I)
+        if m:
+            n = _num(m.group(1))
+            return (n, "?"), n, cfg["verify"].replace("{n}", re.escape(n))
+    return None
+
+
 class D(series.Discogs):
     def __init__(self, token):
         super().__init__(token)
@@ -84,9 +158,8 @@ class D(series.Discogs):
         os.replace(tmp, CACHE)
 
 
-def value(d, num, kind, label):
+def value(d, q, verify, label):
     """Оценка номера: издания США, пол худший и пол раннего года."""
-    q = discogs_query(num, kind)
     s = d.get("https://api.discogs.com/database/search?type=release"
               f"&label={requests_quote(label)}&catno={requests_quote(q)}"
               "&format=Vinyl&country=US&per_page=50")
@@ -97,8 +170,8 @@ def value(d, num, kind, label):
         y = str(r.get("year") or "")
         if not y.isdigit():
             continue
-        cats = (r.get("catno") or "").upper().replace("-", " ")
-        if num not in cats:
+        cats = (r.get("catno") or "").upper()
+        if not re.search(verify, cats, re.I):
             continue
         res.append((int(y), r["id"], r.get("title") or "",
                     ", ".join(r.get("format") or [])))
@@ -152,21 +225,14 @@ def requests_quote(x):
     return quote(x)
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--label", default="Blue Note")
-    ap.add_argument("--max-buy", type=float, default=25.0)
-    ap.add_argument("--min-gap", type=float, default=2.0)
-    ap.add_argument("--min-feedback", type=int, default=10)
-    ap.add_argument("--max-pages", type=int, default=50)
-    a = ap.parse_args()
-
-    token = ebay_token()
-    lots, seen, refused = [], set(), 0
+def collect(token, label, a):
+    """Лоты лейбла из США дешевле потолка."""
+    lots, seen, refused, total = [], set(), 0, None
     for page in range(a.max_pages):
         try:
-            j = search_page(token, q=a.label.lower(), category_id=hunt.CATEGORY,
-                            limit=200, offset=page * 200, sort="price",
+            j = search_page(token, q=LABELS[label]["q"],
+                            category_id=hunt.CATEGORY, limit=200,
+                            offset=page * 200, sort="price",
                             flt="buyingOptions:{FIXED_PRICE|AUCTION|"
                                 "BEST_OFFER},itemLocationCountry:US,"
                                 f"price:[..{a.max_buy:.0f}],priceCurrency:USD")
@@ -175,26 +241,28 @@ def main():
             print(f"  отказ eBay: {e}", file=sys.stderr)
             break
         items = j.get("itemSummaries") or []
+        if page == 0:
+            total = j.get("total")
         for it in items:
             if it["itemId"] in seen:
                 continue
             seen.add(it["itemId"])
             lots.append(it)
-        if page == 0:
-            print(f"eBay: всего по запросу {j.get('total')}", file=sys.stderr)
         if len(items) < 200:
             break
         time.sleep(0.2)
-    print(f"лотов Blue Note из США до ${a.max_buy:.0f}: {len(lots)}",
-          file=sys.stderr)
+    return lots, refused, total
 
+
+def run_label(token, d, label, a):
+    lots, refused, total = collect(token, label, a)
     with_cat = []
     for it in lots:
         t = it.get("title") or ""
         if (hunt._NOT_RECORD.search(t) or hunt._BAD.search(t)
                 or hunt._FORTY_FIVE.search(t) or hunt._REISSUE.search(t)):
             continue
-        c = bn_catno(t)
+        c = label_catno(label, t)
         if not c:
             continue
         p, expect, kind, note = hunt.lot_price(it, 2.0)
@@ -203,35 +271,36 @@ def main():
         if ((it.get("seller") or {}).get("feedbackScore") or 0) < a.min_feedback:
             continue
         with_cat.append((it, c, p, expect, kind, note))
-    nums = sorted({c for _, c, *_ in with_cat})
-    print(f"с номером в заголовке: {len(with_cat)}, разных номеров: "
-          f"{len(nums)}", file=sys.stderr)
-
-    d = D(tg._env_file_token())
+    keys = {}
+    for _, c, *_ in with_cat:
+        keys[c[0]] = c
+    print(f"{label}: лотов {len(lots)} (eBay всего {total}), с номером "
+          f"{len(with_cat)}, номеров {len(keys)}", file=sys.stderr)
     vals = {}
-    for i, c in enumerate(nums, 1):
-        vals[c] = value(d, c[0], c[1], a.label)
+    for i, (k, c) in enumerate(sorted(keys.items()), 1):
+        vals[k] = value(d, c[1], c[2], LABELS[label]["discogs"])
         if i % 25 == 0:
-            print(f"  Discogs {i}/{len(nums)}", file=sys.stderr)
+            print(f"  {label} Discogs {i}/{len(keys)}", file=sys.stderr)
             d.save()
     d.save()
 
     solid, check = [], []
     for it, c, p, expect, kind, note in with_cat:
-        v = vals.get(c)
+        v = vals.get(c[0])
         if not v:
             continue
         t = it.get("title") or ""
         if not album_matches(t, v["title"]):
             continue
-        tgt = {"catno": f"{c[0]}", "year": str(v["early_year"]),
+        tgt = {"catno": c[0][0], "year": str(v["early_year"]),
                "country": "US"}
         why = hunt.reissue_by_context(t, tgt)
         worst_gap = v["worst"][1] / p if p else 0
         best_gap = (v["best"][1] / p) if (p and v["best"]) else 0
-        z = {"title": t, "price": p, "kind": kind, "expect": round(expect, 2),
-             "note": note, "ship": shipping_usd(it), "num": c[0],
-             "stereo_mono": c[1], "early_year": v["early_year"],
+        z = {"label": label, "title": t, "price": p, "kind": kind,
+             "expect": round(expect, 2), "note": note,
+             "ship": shipping_usd(it), "num": c[0][0],
+             "stereo_mono": c[0][1], "early_year": v["early_year"],
              "versions": v["versions"],
              "worst_floor": v["worst"][1], "worst_year": v["worst"][0],
              "worst_copies": v["worst"][2],
@@ -247,23 +316,54 @@ def main():
         elif best_gap >= a.min_gap and not why and v["best"] \
                 and v["best"][2] >= 2:
             check.append(z)
+    stat = {"label": label, "lots": len(lots), "with_cat": len(with_cat),
+            "nums": len(keys), "valued": sum(1 for v in vals.values() if v),
+            "solid": len(solid), "check": len(check), "refused": refused}
+    return solid, check, stat
 
-    # Карточка и описание — только у тех, что прошли по цене.
-    def carded(zs):
-        out = []
-        for z in sorted(zs, key=lambda z: -max(z["worst_gap"], z["best_gap"])):
-            why, info = hunt.card_check(token, z)
-            if why:
-                print(f"  снят по карточке: {z['title'][:50]} — {why}",
-                      file=sys.stderr)
-                continue
-            z.update({"seller_country": "", "photos": "", "grade": "",
-                      "card": ""})
-            z.update(info)
-            out.append(z)
-            time.sleep(0.2)
-        return out
-    solid, check = carded(solid), carded(check)
+
+def carded(token, zs):
+    """Карточка и описание — только у тех, что прошли по цене."""
+    out = []
+    for z in sorted(zs, key=lambda z: -max(z["worst_gap"], z["best_gap"])):
+        why, info = hunt.card_check(token, z)
+        if why:
+            print(f"  снят по карточке: {z['title'][:50]} — {why}",
+                  file=sys.stderr)
+            continue
+        z.update({"seller_country": "", "photos": "", "grade": "", "card": ""})
+        z.update(info)
+        out.append(z)
+        time.sleep(0.2)
+    return out
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--labels", nargs="*", default=list(LABELS))
+    ap.add_argument("--max-buy", type=float, default=25.0)
+    ap.add_argument("--min-gap", type=float, default=2.0)
+    ap.add_argument("--min-feedback", type=int, default=10)
+    ap.add_argument("--max-pages", type=int, default=50)
+    a = ap.parse_args()
+
+    token = ebay_token()
+    d = D(tg._env_file_token())
+    solid, check, stats = [], [], []
+    for label in a.labels:
+        s1, c1, st = run_label(token, d, label, a)
+        solid += s1
+        check += c1
+        stats.append(st)
+    # Токен eBay живёт два часа; длинный прогон по Discogs его переживает.
+    token = ebay_token()
+    solid, check = carded(token, solid), carded(token, check)
+    # Один лот мог попасть дважды (два лейбла в заголовке) — оставить один.
+    uniq = {}
+    for z in solid + check:
+        uniq.setdefault(z["id"], z)
+    solid = [z for z in solid if uniq.get(z["id"]) is z]
+    check = [z for z in check if uniq.get(z["id"]) is z]
 
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"catno_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
@@ -274,13 +374,15 @@ def main():
             w = csv.DictWriter(f, fieldnames=list(allz[0].keys()))
             w.writeheader()
             w.writerows(allz)
-    print(f"лотов до ${a.max_buy:.0f}: {len(lots)}; с номером: "
-          f"{len(with_cat)}; номеров: {len(nums)}; "
-          f"оценено Discogs: {sum(1 for v in vals.values() if v)}")
-    print(f"НАДЁЖНЫХ (вдвое дешевле любого издания): {len(solid)}")
-    print(f"СВЕРИТЬ ЭТИКЕТКУ (вдвое дешевле только раннего): {len(check)}")
-    if refused or d.refused:
-        print(f"ОТКАЗОВ: eBay {refused}, Discogs {d.refused}")
+    print("ЛЕЙБЛ          лотов  с номером  номеров  оценено  надёжн  сверить")
+    for st in stats:
+        print(f"{st['label']:<14} {st['lots']:>5}  {st['with_cat']:>9}  "
+              f"{st['nums']:>7}  {st['valued']:>7}  {st['solid']:>6}  "
+              f"{st['check']:>7}" + ("  ОТКАЗЫ eBay" if st["refused"] else ""))
+    print(f"после карточки и описания: надёжных {len(solid)}, "
+          f"сверить этикетку {len(check)}")
+    if d.refused:
+        print(f"ОТКАЗОВ Discogs: {d.refused}")
     if allz:
         print(f"файл: {path}")
     for grp, zs in (("НАДЁЖНЫЕ", solid), ("СВЕРИТЬ ЭТИКЕТКУ", check)):
@@ -288,10 +390,11 @@ def main():
             print(f"\n=== {grp} ===")
         for z in zs:
             sh = f"+${z['ship']:.2f}" if z["ship"] is not None else "+?"
-            print(f"\n${z['price']:.2f} {sh} [{z['kind']}] {z['note']}")
+            print(f"\n[{z['label']}] ${z['price']:.2f} {sh} [{z['kind']}] "
+                  f"{z['note']}")
             print(f"   {z['title'][:80]}")
-            print(f"   {z['album'][:50]} | №{z['num']} {z['stereo_mono']}, "
-                  f"изданий в США {z['versions']}")
+            print(f"   {z['album'][:50]} | №{z['num']}, изданий в США "
+                  f"{z['versions']}")
             print(f"   любое издание от ${z['worst_floor']} ({z['worst_year']}, "
                   f"{z['worst_copies']} коп.) -> {z['worst_gap']}x; "
                   f"{z['early_year']} от ${z['best_floor']} "
