@@ -32,6 +32,9 @@ import time
 
 import requests
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import targets as tg                                           # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA = os.path.join(ROOT, "data")
 CACHE = os.path.join(ROOT, "cache", "discogs_jazz.json")
@@ -100,7 +103,7 @@ def first_press(d, master_id):
     fmt = (r.get("formats") or [{}])[0]
     desc = fmt.get("descriptions") or []
     labs = r.get("labels") or []
-    st = d.get(f"https://api.discogs.com/marketplace/stats/{main}") or {}
+    st = d.get(tg.stats_url(main)) or {}
     c = r.get("community") or {}
     have, want = c.get("have") or 0, c.get("want") or 0
     return {
@@ -113,7 +116,7 @@ def first_press(d, master_id):
         "fp_have": have, "fp_want": want,
         "fp_ratio": round(want / have, 2) if have else "",
         "fp_for_sale": st.get("num_for_sale"),
-        "fp_floor": ((st.get("lowest_price") or {}).get("value")),
+        "fp_floor": tg.usd_floor(st),
         "fp_url": f"https://www.discogs.com/release/{main}",
     }
 

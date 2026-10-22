@@ -241,8 +241,10 @@ def main():
         print(f"{rel.get('artists_sort')} — {rel.get('title')}")
         print(f"год {rel.get('year')}, {rel.get('country')}, "
               f"{', '.join(l.get('catno','') for l in rel.get('labels') or [])}")
-        st = rel.get("num_for_sale")
-        lp = rel.get("lowest_price")
+        # lowest_price релиза с токеном — в евро аккаунта (O-79).
+        stt = d.get(tg.stats_url(a.release))
+        st = (stt or {}).get("num_for_sale")
+        lp = tg.usd_floor(stt)
         print(f"копий в продаже: {st}, минимальный ЗАПРОС: "
               f"${lp if lp is not None else '?'}")
         print("  (запрос в ЛЮБОМ состоянии, не выручка — O-66)")

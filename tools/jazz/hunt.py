@@ -158,7 +158,57 @@ def catno_variants(catno):
     return [x for x in out if len(x) >= 4]
 
 
-def press_match(title, fp_catno, strict=False):
+# ПЕРЕИЗДАНИЕ С НОМЕРОМ ОРИГИНАЛА. Прогон 22.10.2026 по 653 целям дал
+# 35 находок, и больше половины — переиздания, прошедшие только потому,
+# что номер оригинала стоит в заголовке: OJC-337 с S7530 на этикетке,
+# «0JC=131 -P-7188», «Japan 2016 DeAgostini BST81577», «2014 OIS Blue
+# Note 1577», цветной винил 2021 года под целью 1969-го. Номер оригинала
+# переиздание НАСЛЕДУЕТ, поэтому он не доказывает первопресс.
+_REISSUE_CTX = re.compile(
+    r"\b[o0]jc\b|\b[o0]jc\s*[-=]?\s*\d|\bdmm\b|\bdeagostini\b|"
+    r"\(re\)|\blimited\s*ed|\blmt\.?\s*ed|\bnumbered\b|"
+    r"\b(?:colou?r(?:ed)?|orange|blue|red|green|yellow|clear|purple|"
+    r"splatter|marble[d]?|translucent|double\s*colou?r)\s*(?:vinyl|wax)\b|"
+    r"\bwalmart\b|\bexclusive\b|\bois\b|\bcojy\b|\bsh\s*30\d\d\b",
+    re.I)
+_JAPAN = re.compile(r"\bjapan(?:ese)?\b|\bobi\b", re.I)
+_SEALED = re.compile(r"\bsealed\b|\bunopened\b|\bshrink\s*wrap", re.I)
+_YEAR = re.compile(r"(?<!\d)(19[5-9]\d|20[0-2]\d)(?!\d)")
+
+
+def reissue_by_context(title, target):
+    """Переиздание по признакам, которые видны только рядом с целью.
+
+    Возвращает причину или None. Год в заголовке позже года цели больше
+    чем на два — переиздание («VINYL RECORD 1977» под целью 1962).
+    Номер оригинала из заголовка перед поиском года вырезается, иначе
+    Columbia CL 2015 читалась бы как 2015 год. «Sealed» под целью до
+    1985 года — почти всегда новое переиздание. Япония под
+    НЕяпонской целью — японское переиздание с тем же номером.
+    """
+    m = _REISSUE_CTX.search(title)
+    if m:
+        return f"переиздание: «{m.group(0).strip()}» в заголовке"
+    low = title
+    for v in catno_variants(target.get("fp_catno") or target.get("catno")):
+        low = re.sub(re.escape(v), " ", low, flags=re.I)
+    try:
+        ty = int(target.get("fp_year") or target.get("year") or 0)
+    except (TypeError, ValueError):
+        ty = 0
+    if ty:
+        later = [int(y) for y in _YEAR.findall(low) if int(y) > ty + 2]
+        if later:
+            return f"в заголовке {later[0]} год, а оригинал {ty}-го"
+        if ty < 1985 and _SEALED.search(title):
+            return f"запечатан, а оригинал {ty}-го — новое переиздание"
+    country = (target.get("fp_country") or target.get("country") or "")
+    if "japan" not in country.lower() and _JAPAN.search(title):
+        return "японское издание под неяпонской целью"
+    return None
+
+
+def press_match(title, fp_catno, strict=False, target=None):
     """Годен ли пресс. Возвращает (годен, пояснение).
 
     По умолчанию требуется лишь НЕ ПЕРЕИЗДАНИЕ, а не строгий первопресс.
@@ -173,6 +223,10 @@ def press_match(title, fp_catno, strict=False):
     """
     if _REISSUE.search(title):
         return False, "в заголовке назван репресс или ремастер"
+    if target is not None:
+        why = reissue_by_context(title, target)
+        if why:
+            return False, why
     vs = catno_variants(fp_catno)
     hit = any(re.search(re.escape(v), title, re.I) for v in vs)
     if hit and _EARLY.search(title):
@@ -313,7 +367,7 @@ def main():
                 continue
             ok, press_note = press_match(title,
                                          t.get("fp_catno") or t.get("catno"),
-                                         strict=a.strict_press)
+                                         strict=a.strict_press, target=t)
             if not ok:
                 continue
             p, expect, kind, note = lot_price(it, a.auction_factor)

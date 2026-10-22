@@ -119,6 +119,27 @@ class Discogs:
         os.replace(tmp, CACHE)
 
 
+# ВАЛЮТА. С токеном Discogs отдаёт цену в валюте АККАУНТА, а не в
+# долларах: у владельца это евро. Замер 22.10.2026: Сандерс ASD-9280 —
+# 110.0 с токеном, $123.60 без него; поле currency честно пишет EUR.
+# Картотека в 2 099 строк вышла смесью: 1 305 полов в евро под
+# заголовком floor_usd, 525 в долларах из запросов до токена. Параметр
+# curr_abbr=USD эндпоинт /releases молча игнорирует, а /marketplace/stats
+# — слушается. Поэтому цена берётся только отсюда и только в долларах.
+def stats_url(rid):
+    return f"https://api.discogs.com/marketplace/stats/{rid}?curr_abbr=USD"
+
+
+def usd_floor(st):
+    """Пол в долларах или None. Не доллары — не цена, а ошибка."""
+    lp = (st or {}).get("lowest_price") or {}
+    if lp.get("value") is None:
+        return None
+    if lp.get("currency") not in (None, "USD"):
+        raise ValueError(f"Discogs вернул {lp.get('currency')} вместо USD")
+    return lp["value"]
+
+
 def repress_exists(d, master_id, this_id):
     """Объявлено ли переиздание — третье условие правила O-49.
 
@@ -199,8 +220,8 @@ def main():
             if have <= 0:
                 continue
             ratio = want / have
-            st = d.get(f"https://api.discogs.com/marketplace/stats/{rid}")
-            low = ((st or {}).get("lowest_price") or {}).get("value")
+            st = d.get(stats_url(rid))
+            low = usd_floor(st)
             nsale = (st or {}).get("num_for_sale")
             rows.append({
                 "ratio": round(ratio, 2), "have": have, "want": want,

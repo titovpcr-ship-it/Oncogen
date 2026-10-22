@@ -227,8 +227,10 @@ def main():
             artist = clean_artist(rel.get("artists_sort") or x.get("artist"))
             title = rel.get("title") or x.get("title") or ""
             c = rel.get("community") or {}
-            lp = rel.get("lowest_price")
-            n = rel.get("num_for_sale") or 0
+            # lowest_price релиза с токеном — в евро аккаунта (O-79).
+            st = d.get(tg.stats_url(x["id"]))
+            lp = tg.usd_floor(st)
+            n = (st or {}).get("num_for_sale") or 0
             lots, err = ebay_new(et, artist, title, marker)
             if err:
                 refused_ebay += 1
