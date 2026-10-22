@@ -208,6 +208,50 @@ def reissue_by_context(title, target):
     return None
 
 
+ITEM = "https://api.ebay.com/buy/browse/v1/item/{}"
+
+
+def card_check(token, z):
+    """Карточка лота: (причина снять или None, справочные поля)."""
+    try:
+        r = requests.get(ITEM.format(z["id"]), timeout=30, headers={
+            "Authorization": f"Bearer {token}",
+            "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"})
+    except requests.RequestException as e:                  # noqa: BLE001
+        return None, {"card": f"карточка не открылась: {type(e).__name__}"}
+    if r.status_code != 200:
+        return None, {"card": f"карточка не открылась: HTTP {r.status_code}"}
+    j = r.json()
+    asp = {a.get("name"): str(a.get("value") or "")
+           for a in j.get("localizedAspects") or []}
+    photos = 1 + len(j.get("additionalImages") or []) if j.get("image") else 0
+    loc = (j.get("itemLocation") or {}).get("country") or ""
+    info = {"seller_country": loc, "photos": photos,
+            "grade": " / ".join(x for x in (asp.get("Record Grading"),
+                                            asp.get("Sleeve Grading")) if x)}
+    cat = asp.get("Catalog Number") or ""
+    m = _REISSUE_CTX.search(cat)
+    if m:
+        return f"в карточке номер {cat[:40]}", info
+    try:
+        ty = int(z.get("year") or 0)
+    except (TypeError, ValueError):
+        ty = 0
+    ry = asp.get("Release Year") or ""
+    # «1900» и «1950-1999» — заглушки продавцов, по ним не судим.
+    if ty and re.fullmatch(r"(19[5-9]\d|20[0-2]\d)", ry.strip()) \
+            and int(ry) > ty + 2:
+        return f"в карточке год выпуска {ry}, а оригинал {ty}-го", info
+    flags = []
+    if loc == "JP" and "japan" not in (z.get("country") or "").lower():
+        flags.append("продавец в Японии, цель не японская — "
+                     "проверить, не японское ли переиздание")
+    if photos <= 1:
+        flags.append("одна фотография — этикетку не видно")
+    info["card"] = "; ".join(flags)
+    return None, info
+
+
 def press_match(title, fp_catno, strict=False, target=None):
     """Годен ли пресс. Возвращает (годен, пояснение).
 
@@ -415,6 +459,7 @@ def main():
                 "floor": floor, "copies": t["for_sale"],
                 "ratio": t["ratio"], "have": t["have"], "want": t["want"],
                 "label": t["label"], "catno": t["catno"], "year": t["year"],
+                "country": t.get("country") or "",
                 "target": f"{t['artist']} — {t['title']}",
                 "ebay_title": title, "cond": it.get("condition") or "",
                 "seller": se.get("username") or "", "fb": fb,
@@ -434,6 +479,29 @@ def main():
         per[z["seller"]] = per.get(z["seller"], 0) + 1
         capped.append(z)
     finds = capped
+
+    # КАРТОЧКА ЛОТА. Прогон 22.10.2026: из 19 находок четыре сняла карточка,
+    # а не заголовок — «Release Year 2005» у Giant Steps, «Catalog Number
+    # OJC-026» у Monk, «Release Year 1966» у Ornette под целью 1959-го.
+    # Страна продавца не снимает, а помечает: японский магазин продаёт и
+    # американские оригиналы, но шесть из шести японских лотов того
+    # прогона оказались японскими переизданиями или не проверялись.
+    kept, dropped = [], 0
+    for z in finds:
+        why, info = card_check(token, z)
+        if why:
+            dropped += 1
+            print(f"  снят по карточке: {z['ebay_title'][:50]} — {why}",
+                  file=sys.stderr)
+            continue
+        z.update({"seller_country": "", "photos": "", "grade": "",
+                  "card": ""})
+        z.update(info)
+        kept.append(z)
+        time.sleep(0.2)
+    if dropped:
+        print(f"снято по карточке лота: {dropped}", file=sys.stderr)
+    finds = kept
 
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"jazz_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
@@ -478,7 +546,11 @@ def main():
         ship = (f"доставка ${z['ship']}" if z.get("ship") != ""
                 else "доставка не объявлена")
         print(f"    {ship} (в потолок не входит)")
-        print(f"    продавец {z['seller']} ({z['fb']}), {z['cond']}")
+        print(f"    продавец {z['seller']} ({z['fb']}), {z['cond']}, "
+              f"{z.get('seller_country') or '?'}, фото {z.get('photos', '?')}"
+              + (f", грейд {z['grade']}" if z.get("grade") else ""))
+        if z.get("card"):
+            print(f"    ВНИМАНИЕ: {z['card']}")
         print(f"    {z['url']}")
         print(f"    {z['discogs']}")
     return 0
