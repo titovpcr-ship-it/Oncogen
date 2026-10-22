@@ -327,10 +327,11 @@ def run_label(token, d, label, a):
         # Prestige 7033 OJC-123» прошёл надёжным с 7.99x (22.10.2026).
         if why:
             continue
-        if worst_gap >= a.min_gap and v["worst"][2] >= 3:
+        if worst_gap >= a.min_gap and v["worst"][2] >= 3 \
+                and v["worst"][1] >= a.min_floor:
             solid.append(z)
         elif best_gap >= a.min_gap and not why and v["best"] \
-                and v["best"][2] >= 2:
+                and v["best"][2] >= 2 and v["best"][1] >= a.min_floor:
             check.append(z)
     stat = {"label": label, "lots": len(lots), "with_cat": len(with_cat),
             "nums": len(keys), "valued": sum(1 for v in vals.values() if v),
@@ -359,6 +360,10 @@ def main():
     ap.add_argument("--labels", nargs="*", default=list(LABELS))
     ap.add_argument("--max-buy", type=float, default=25.0)
     ap.add_argument("--min-gap", type=float, default=2.0)
+    # Кратность без денег: Verve дал «Walter Wanderley за $0.99 при полу
+    # $5» и «Oscar Peterson $1.99 при $5» — 5x и 2.5x на пятёрке.
+    ap.add_argument("--min-floor", type=float, default=25.0,
+                    help="пол Discogs ниже — находка не стоит возни")
     ap.add_argument("--min-feedback", type=int, default=10)
     ap.add_argument("--max-pages", type=int, default=50)
     a = ap.parse_args()
