@@ -53,6 +53,11 @@ REISSUES = [
     ("JOHN COLTRANE A LOVE SUPREME IMPULSE SH3063 1LP", t("A-77", 1965)),
     ("John Coltrane SEALED JAZZ LP “My Favorite Things” 2014 (Re) Atlantic SD1361",
      t("SD 1361", 1962)),
+    # Прогон по опечаткам 22.10.2026.
+    ("CANNONBALL ADDERLY - SOMETHIN' ELSE - WAXTIME 771706 VINYL LP 12\"",
+     t("BLP 1595", 1958)),
+    ("THELONIUS MONK and JOHN COLTRANE Thelonius Monk with John Coltrane New Vinyl LP",
+     t("LP 7053", 1956)),
 ]
 ORIGINALS = [
     ("Pharoah Sanders Love In Us All 1974 Impulse ASD-9280 ",
@@ -74,6 +79,17 @@ for title, tg in REISSUES:
 for title, tg in ORIGINALS:
     ok, why = hunt.press_match(title, tg["catno"], target=tg)
     check(ok, f"оригинал оставлен: {title[:50]} — {why}")
+
+# Одноимённый альбом: без номера оригинала не опознан, с номером — да.
+monk = {"artist": "Thelonious Monk", "title": "Thelonious Monk",
+        "catno": "LP 7053", "year": "1956", "country": "US"}
+for title, want in (
+        ("Thelonious Monk- Thelonious Monk Memorial album vinyl EX 2 LP", True),
+        ("Thelonious Monk Trio Prestige LP 7053 NYC label", False)):
+    ok, note = hunt.press_match(title, monk["catno"], target=monk)
+    got = (not ok) or hunt.self_titled_unproven(monk, note)
+    check(got == want, f"одноимённый альбом {'снят' if want else 'оставлен'}: "
+          f"{title[:45]}")
 
 print(f"\n{'ВСЁ ЗЕЛЁНОЕ' if not FAILS else f'ПРОВАЛОВ: {len(FAILS)}'}")
 sys.exit(1 if FAILS else 0)

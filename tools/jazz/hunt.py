@@ -169,10 +169,22 @@ _REISSUE_CTX = re.compile(
     r"\(re\)|\blimited\s*ed|\blmt\.?\s*ed|\bnumbered\b|"
     r"\b(?:colou?r(?:ed)?|orange|blue|red|green|yellow|clear|purple|"
     r"splatter|marble[d]?|translucent|double\s*colou?r)\s*(?:vinyl|wax)\b|"
-    r"\bwalmart\b|\bexclusive\b|\bois\b|\bcojy\b|\bsh\s*30\d\d\b",
+    r"\bwalmart\b|\bexclusive\b|\bois\b|\bcojy\b|\bsh\s*30\d\d\b|"
+    # Европейские бюджетные переиздания с истёкшими правами: «Somethin'
+    # Else — WAXTIME 771706» прошёл как Blue Note 1958 года (22.10.2026).
+    r"\bwaxtime\b|\bdol\b|\bjazz\s*wax\b|\bdoxy\b|\bnot\s*now\b|"
+    r"\bessential\s*jazz\s*classics\b|\bvinyl\s*passion\b|"
+    r"\bjazz\s*images\b|\bermitage\b|\bwax\s*love\b|"
+    r"\bvinyl\s*lovers\b|\bsupper\s*club\b|\bpoll\s*winners\b|"
+    r"\b20th\s*century\s*masterworks\b|\bstate\s*of\s*art\b|"
+    r"\bmatchball\b|\bpure\s*pleasure\b|\bspeakers\s*corner\b",
     re.I)
 _JAPAN = re.compile(r"\bjapan(?:ese)?\b|\bobi\b", re.I)
-_SEALED = re.compile(r"\bsealed\b|\bunopened\b|\bshrink\s*wrap", re.I)
+# «New Vinyl» под целью 1956 года — новое переиздание, как и «sealed»
+# (Monk with Coltrane, прогон по опечаткам 22.10.2026).
+_SEALED = re.compile(r"\bsealed\b|\bunopened\b|\bshrink\s*wrap|"
+                     r"\bnew\s+(?:vinyl|lp|record)\b|\bbrand\s*new\b",
+                     re.I)
 _YEAR = re.compile(r"(?<!\d)(19[5-9]\d|20[0-2]\d)(?!\d)")
 
 
@@ -209,6 +221,9 @@ def reissue_by_context(title, target):
 
 
 ITEM = "https://api.ebay.com/buy/browse/v1/item/{}"
+_DESC_REISSUE = re.compile(
+    r"\b(?:re-?issue[ds]?|re-?press(?:ed|ing)?|re-?mastered|"
+    r"unofficial|bootleg)\b", re.I)
 
 
 def card_check(token, z):
@@ -229,6 +244,18 @@ def card_check(token, z):
     info = {"seller_country": loc, "photos": photos,
             "grade": " / ".join(x for x in (asp.get("Record Grading"),
                                             asp.get("Sleeve Grading")) if x)}
+    # ОПИСАНИЕ ПРОДАВЦА. «Pharaoh Sanders Quintet Pharaohs First ESP 1003
+    # … Excellent» — заголовок и карточка чистые, а в описании «2009
+    # repress of Pharoah Sanders' first record» (22.10.2026). Отрицание
+    # перед словом («not a reissue», «no repress») не считается.
+    desc = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ",
+                                      j.get("description") or ""))
+    for m in _DESC_REISSUE.finditer(desc):
+        before = desc[max(0, m.start() - 16):m.start()].lower()
+        if re.search(r"\b(?:not|no|non|never|isn'?t)\b[\s\w-]*$", before):
+            continue
+        ctx = desc[max(0, m.start() - 20):m.end() + 20].strip()
+        return f"в описании продавца: «{ctx}»", info
     cat = asp.get("Catalog Number") or ""
     m = _REISSUE_CTX.search(cat)
     if m:
@@ -250,6 +277,24 @@ def card_check(token, z):
         flags.append("одна фотография — этикетку не видно")
     info["card"] = "; ".join(flags)
     return None, info
+
+
+def _norm(x):
+    return re.sub(r"[^a-z0-9]+", " ", (x or "").lower()).strip()
+
+
+def self_titled_unproven(target, note):
+    """Одноимённый альбом без номера оригинала в заголовке — не опознан.
+
+    У цели «Thelonious Monk — Thelonious Monk» название альбома равно
+    имени, и матчер принимал любой лот с этим именем: «Thelonius Monk
+    with John Coltrane», двойной сборник «Memorial album» (22.10.2026).
+    У такой цели отличить альбом от прочих можно только по номеру.
+    """
+    a = _norm(re.sub(r"\s*\(\d+\)", "", target.get("artist") or ""))
+    t = _norm(target.get("title"))
+    return bool(a) and a == t and not (note or "").startswith(
+        "номер оригинала")
 
 
 def press_match(title, fp_catno, strict=False, target=None):
@@ -420,7 +465,7 @@ def main():
             ok, press_note = press_match(title,
                                          t.get("fp_catno") or t.get("catno"),
                                          strict=a.strict_press, target=t)
-            if not ok:
+            if not ok or self_titled_unproven(t, press_note):
                 continue
             p, expect, kind, note = lot_price(it, a.auction_factor)
             if p is None:
