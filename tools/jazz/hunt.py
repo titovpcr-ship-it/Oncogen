@@ -40,6 +40,8 @@ import requests
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, ROOT)
 
+from datetime import datetime, timezone                        # noqa: E402
+
 from src.common.ebay import (ApiRefused, ebay_token, price_usd,   # noqa: E402
                              search_page, shipping_usd)
 
@@ -47,6 +49,76 @@ OUT = os.path.join(ROOT, "out")
 DATA = os.path.join(ROOT, "data")
 CATEGORY = "176985"           # виниловые пластинки
 PHOTOS = os.path.join(OUT, "jazz_photos")
+
+# --- аукционы -------------------------------------------------------
+# Правило владельца от 22.10.2026: искать во всех вариантах покупки —
+# аукцион, купить сейчас, предложить цену.
+#
+# У аукциона поле price пустое, цена лежит в currentBidPrice. Прежний
+# код молча их пропускал: не ошибался, но и не искал.
+#
+# Текущая ставка НЕ ЕСТЬ цена покупки. Замер владельца (O-39): медианный
+# рост от одной ставки к двадцати с лишним — двукратный, с $8.00 до
+# $93.50 на 89 282 лотах. Поэтому потолок применяется к ОЖИДАЕМОЙ цене
+# закрытия, а не к сегодняшней ставке, иначе под $20 пролезет лот,
+# который закроется на сорока.
+#
+# Коэффициент зависит от остатка времени: чем ближе конец, тем меньше
+# ставке куда расти. За сутки до конца берём полный множитель, за час —
+# почти единицу. Это модель, а не измерение: исходные данные (база
+# Мешка) пропали при пересборке контейнера и переобсчитать их сейчас
+# нельзя. Множитель вынесен в параметр, чтобы его можно было менять.
+
+
+def auction_factor(hours_left, base):
+    if hours_left is None:
+        return base
+    if hours_left <= 1:
+        return 1.05
+    if hours_left >= 24:
+        return base
+    # линейно между часом и сутками
+    return 1.05 + (base - 1.05) * (hours_left - 1) / 23.0
+
+
+def hours_left(item):
+    end = item.get("itemEndDate")
+    if not end:
+        return None
+    try:
+        t = datetime.fromisoformat(end.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return max(0.0, (t - datetime.now(timezone.utc)).total_seconds() / 3600)
+
+
+def lot_price(item, base_factor):
+    """Цена, цена ожидаемая, вид покупки, пояснение.
+
+    Для «купить сейчас» ожидаемая равна фактической. Для аукциона
+    ожидаемая — ставка, умноженная на поправку. Для «предложить цену»
+    фактическая это запрос продавца, и торг её только опускает.
+    """
+    opts = item.get("buyingOptions") or []
+    if "AUCTION" in opts:
+        v = (item.get("currentBidPrice") or {}).get("value")
+        if v is None:
+            return None, None, "аукцион", ""
+        bid = float(v)
+        h = hours_left(item)
+        f = auction_factor(h, base_factor)
+        n = item.get("bidCount")
+        when = (f"{h:.0f} ч до конца" if h is not None and h < 48
+                else f"{(h or 0) / 24:.0f} дн до конца")
+        return bid, bid * f, "аукцион", \
+            f"ставок {n}, {when}, поправка x{f:.2f}"
+    p = price_usd(item)
+    if p is None:
+        return None, None, "?", ""
+    if "BEST_OFFER" in opts:
+        return p, p, "предложить цену", "продавец принимает торг"
+    return p, p, "купить сейчас", ""
+
 
 # Не пластинка либо не тот товар.
 _NOT_RECORD = re.compile(
@@ -72,6 +144,11 @@ def main():
                     help="во сколько раз пол Discogs должен превышать "
                          "цену покупки")
     ap.add_argument("--min-feedback", type=int, default=50)
+    ap.add_argument("--auction-factor", type=float, default=2.0,
+                    help="во сколько раз ставка вырастает к закрытию "
+                         "при сутках и более до конца; замер O-39")
+    ap.add_argument("--no-auctions", action="store_true",
+                    help="только купить сейчас и предложить цену")
     ap.add_argument("--targets", default=os.path.join(DATA,
                                                       "jazz_targets.csv"))
     ap.add_argument("--check", type=int, default=0)
@@ -101,9 +178,11 @@ def main():
         if t.get("catno"):
             q = f"{q} {t['catno']}"
         try:
+            flt = ("buyingOptions:{FIXED_PRICE|BEST_OFFER}"
+                   if a.no_auctions
+                   else "buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER}")
             d = search_page(token, category_id=CATEGORY, q=q[:80], limit=100,
-                            offset=0, sort="price",
-                            flt="buyingOptions:{FIXED_PRICE}")
+                            offset=0, sort="price", flt=flt)
         except ApiRefused as e:
             refused += 1
             if refused <= 3:
@@ -116,25 +195,27 @@ def main():
             title = it.get("title") or ""
             if _NOT_RECORD.search(title) or _BAD.search(title):
                 continue
-            p = price_usd(it)
+            p, expect, kind, note = lot_price(it, a.auction_factor)
             if p is None:
                 continue
             sh = shipping_usd(it)
             if sh is None:
                 continue              # потолок с доставкой не проверить
             entry = p + sh
-            if entry > a.max_buy:
+            # Потолок — к ОЖИДАЕМОЙ цене: у аукциона ставка ещё вырастет.
+            if expect + sh > a.max_buy:
                 continue
             se = it.get("seller") or {}
             fb = se.get("feedbackScore") or 0
             if fb < a.min_feedback:
                 continue
-            gap = floor / entry
+            gap = floor / (expect + sh)
             if gap < a.min_gap:
                 continue
             seen.add(iid)
             finds.append({
                 "gap": round(gap, 2), "entry": round(entry, 2),
+                "expect": round(expect + sh, 2), "kind": kind, "note": note,
                 "floor": floor, "copies": t["for_sale"],
                 "ratio": t["ratio"], "have": t["have"], "want": t["want"],
                 "label": t["label"], "catno": t["catno"], "year": t["year"],
@@ -179,8 +260,12 @@ def main():
     print("Пол Discogs — цена ЗАПРОСА в любом состоянии, не выручка.")
     print("Состояние лота по заголовку не проверено.\n")
     for z in finds[:a.top]:
-        print(f"{z['gap']:.2f}x разрыв  купить ${z['entry']:.2f}  "
+        now = (f"${z['entry']:.2f}" if z["kind"] != "аукцион"
+               else f"ставка ${z['entry']:.2f} -> ждём ${z['expect']:.2f}")
+        print(f"{z['gap']:.2f}x разрыв  [{z['kind']}] {now}  "
               f"пол Discogs ${z['floor']} при {z['copies']} копиях")
+        if z["note"]:
+            print(f"    {z['note']}")
         print(f"    цель: {z['target'][:58]}")
         print(f"    {z['label']} {z['catno']} {z['year']}  "
               f"хотят {z['want']}/{z['have']} (ratio {z['ratio']})")
