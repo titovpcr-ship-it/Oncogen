@@ -155,8 +155,19 @@ def catno_variants(catno):
     return [x for x in out if len(x) >= 4]
 
 
-def press_match(title, fp_catno):
-    """Похож ли лот на первопресс. Возвращает (годен, пояснение)."""
+def press_match(title, fp_catno, strict=False):
+    """Годен ли пресс. Возвращает (годен, пояснение).
+
+    По умолчанию требуется лишь НЕ ПЕРЕИЗДАНИЕ, а не строгий первопресс.
+    Смягчено владельцем 22.10.2026 после проверки его собственной
+    находки: Arvo Pärt «Tabula Rasa», купленная за $18.50 при поле
+    Discogs $50 и двенадцати копиях, — американский пресс 1984 года
+    25011-1 F, тогда как первопресс по Discogs немецкий 817 764-1.
+    Строгое условие выбросило бы единственный подтверждённый выигрыш.
+
+    Флаг strict возвращает прежнее поведение: номер оригинала или
+    признаки раннего пресса обязательны.
+    """
     if _REISSUE.search(title):
         return False, "в заголовке назван репресс или ремастер"
     vs = catno_variants(fp_catno)
@@ -168,7 +179,9 @@ def press_match(title, fp_catno):
     if _EARLY.search(title):
         return True, ("признак раннего пресса назван, номера нет — "
                       "СВЕРИТЬ ЭТИКЕТКУ И ВЫБЕГ ПО ФОТО")
-    return False, "ни номера оригинала, ни признаков раннего пресса"
+    if strict:
+        return False, "ни номера оригинала, ни признаков раннего пресса"
+    return True, "репресс не заявлен; издание СВЕРИТЬ ПО ФОТО ЭТИКЕТКИ"
 
 
 # Не пластинка либо не тот товар.
@@ -200,15 +213,22 @@ def main():
                          "при сутках и более до конца; замер O-39")
     ap.add_argument("--no-auctions", action="store_true",
                     help="только купить сейчас и предложить цену")
+    ap.add_argument("--ending-within", type=float, default=0,
+                    help="часов до конца аукциона; 0 — не ограничивать. "
+                         "Находка владельца взята на аукционе без "
+                         "резерва: в последние часы ставка уже почти "
+                         "финальная, и потолок применяется к ней честно.")
     ap.add_argument("--targets", default=os.path.join(DATA,
                                                       "jazz_targets.csv"))
-    ap.add_argument("--max-have", type=int, default=500,
-                    help="условие владельца O-49: Have меньше этого")
+    ap.add_argument("--max-have", type=int, default=0,
+                    help="0 — не ограничивать. Условие Have < 500 снято "
+                         "владельцем 22.10.2026: оно отсекло его "
+                         "собственную находку, у которой have 579.")
     ap.add_argument("--min-ratio", type=float, default=1.0,
                     help="условие владельца O-49: want/have больше этого")
-    ap.add_argument("--first-press", action="store_true",
-                    help="только первопрессы: правило владельца "
-                         "от 22.10.2026")
+    ap.add_argument("--strict-press", action="store_true",
+                    help="строгий первопресс: номер оригинала или "
+                         "признаки раннего пресса обязательны")
     ap.add_argument("--check", type=int, default=0)
     ap.add_argument("--photos", type=int, default=0)
     ap.add_argument("--top", type=int, default=15)
@@ -236,7 +256,7 @@ def main():
           if r.get("floor_usd") and r.get("for_sale")
           and int(r["for_sale"] or 0) >= a.min_copies
           and float(r.get("ratio") or 0) >= a.min_ratio
-          and int(r.get("have") or 0) < a.max_have]
+          and (not a.max_have or int(r.get("have") or 0) < a.max_have)]
     tg.sort(key=lambda r: -float(r["ratio"] or 0))
     if a.check:
         tg = tg[:a.check]
@@ -267,15 +287,18 @@ def main():
             title = it.get("title") or ""
             if _NOT_RECORD.search(title) or _BAD.search(title):
                 continue
-            press_note = ""
-            if a.first_press:
-                ok, press_note = press_match(title, t.get("fp_catno")
-                                             or t.get("catno"))
-                if not ok:
-                    continue
+            ok, press_note = press_match(title,
+                                         t.get("fp_catno") or t.get("catno"),
+                                         strict=a.strict_press)
+            if not ok:
+                continue
             p, expect, kind, note = lot_price(it, a.auction_factor)
             if p is None:
                 continue
+            if a.ending_within and kind == "аукцион":
+                hl = hours_left(it)
+                if hl is None or hl > a.ending_within:
+                    continue
             sh = shipping_usd(it)
             if sh is None:
                 continue              # потолок с доставкой не проверить
