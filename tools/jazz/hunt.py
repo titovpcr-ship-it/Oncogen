@@ -221,6 +221,13 @@ def reissue_by_context(title, target):
 
 
 ITEM = "https://api.ebay.com/buy/browse/v1/item/{}"
+_COND_BAD = re.compile(
+    r"\bbadly\s*scratch\w*|\bheavy\s*scratch\w*|\bdeep\s*scratch\w*|"
+    r"\buntested\b|\bmold\w*|\bmildew\b|\bwater\s*damag\w*|"
+    r"\bwarp\w*|\bskips?\b|\bnot\s*(?:the\s*)?original\s*(?:jacket|cover|sleeve)|"
+    r"\bwrong\s*(?:jacket|cover|sleeve)|\bjunk\b|\bcracked\b|"
+    r"\bsecond\s*press\w*|\b2nd\s*press\w*|\brepress\w*|\breissue\w*",
+    re.I)
 _DESC_REISSUE = re.compile(
     r"\b(?:re-?issue[ds]?|re-?press(?:ed|ing)?|re-?mastered|"
     r"unofficial|bootleg)\b", re.I)
@@ -256,6 +263,21 @@ def card_check(token, z):
             continue
         ctx = desc[max(0, m.start() - 20):m.end() + 20].strip()
         return f"в описании продавца: «{ctx}»", info
+    # ОПИСАНИЕ СОСТОЯНИЯ — отдельное поле карточки. Прогон по номерам
+    # 22.10.2026: Ayler «untested, scratches… possible mold», Black Unity
+    # «BADLY SCRATCHED… Not original jacket», Jimmy Heath «Jacket is
+    # completely junk. Bad water damage», Tenor Madness «Bergenfield
+    # second pressing». Те же признаки брака, что снимают лот по заголовку
+    # (_BAD), плюс подменённый конверт и «не проверено»; отрицание перед
+    # словом («no scratches») не считается.
+    cond = re.sub(r"\s+", " ", (j.get("conditionDescription") or "")
+                  + " | " + desc)
+    for m in _COND_BAD.finditer(cond):
+        before = cond[max(0, m.start() - 14):m.start()].lower()
+        if re.search(r"\b(?:no|not|without|never|free\s*of)\b[\s\w-]*$",
+                     before):
+            continue
+        return f"в описании состояния: «{m.group(0)}»", info
     cat = asp.get("Catalog Number") or ""
     m = _REISSUE_CTX.search(cat)
     if m:

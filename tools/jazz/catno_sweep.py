@@ -198,6 +198,13 @@ def value(d, q, verify, label):
             "worst": worst, "best": best, "title": res[0][2]}
 
 
+# Пластинка без конверта или конверт без пластинки: пол Discogs — за
+# полную копию. «Hub Cap … LP ONLY … no cover» дважды прошёл надёжным.
+_INCOMPLETE = re.compile(
+    r"\bno\s*(?:cover|jacket|sleeve|album\s*cover)\b|"
+    r"\b(?:lp|record|vinyl|disc)\s*only\b|\bwithout\s*(?:cover|jacket)\b|"
+    r"\b(?:cover|jacket)\s*only\b|\bno\s*(?:record|vinyl|lp)\b", re.I)
+
 _STOP = {"the", "and", "of", "in", "at", "a", "vol", "volume", "with", "one",
          "two", "lp", "blue", "note"}
 
@@ -260,7 +267,8 @@ def run_label(token, d, label, a):
     for it in lots:
         t = it.get("title") or ""
         if (hunt._NOT_RECORD.search(t) or hunt._BAD.search(t)
-                or hunt._FORTY_FIVE.search(t) or hunt._REISSUE.search(t)):
+                or hunt._FORTY_FIVE.search(t) or hunt._REISSUE.search(t)
+                or _INCOMPLETE.search(t)):
             continue
         c = label_catno(label, t)
         if not c:
@@ -311,6 +319,12 @@ def run_label(token, d, label, a):
              "url": (it.get("itemWebUrl") or "").split("?")[0],
              "seller": (it.get("seller") or {}).get("username") or "",
              "year": v["early_year"], "country": "US"}
+        # Переиздание по контексту снимает И надёжные: «самое дешёвое
+        # издание» ищется под лейблом Prestige, а OJC выходит под Original
+        # Jazz Classics и в эту выборку не попадает. «Jon Eardley 7
+        # Prestige 7033 OJC-123» прошёл надёжным с 7.99x (22.10.2026).
+        if why:
+            continue
         if worst_gap >= a.min_gap and v["worst"][2] >= 3:
             solid.append(z)
         elif best_gap >= a.min_gap and not why and v["best"] \
