@@ -125,6 +125,28 @@ def value(d, num, kind, label):
             "worst": worst, "best": best, "title": res[0][2]}
 
 
+_STOP = {"the", "and", "of", "in", "at", "a", "vol", "volume", "with", "one",
+         "two", "lp", "blue", "note"}
+
+
+def album_matches(lot_title, discogs_title):
+    """Альбом с Discogs должен быть в заголовке лота.
+
+    «Jimmy Smith I'm Movin' On Blue Note BLP-4055» — продавец ошибся
+    номером (альбом — BLP 4255), а 4055 у Discogs — Art Blakey «Meet You
+    At The Jazz Corner». Номер сошёлся, альбом нет (22.10.2026).
+    Сверяем слова названия альбома: нужна хотя бы половина значимых.
+    """
+    album = discogs_title.split(" - ", 1)[-1]
+    words = [w for w in re.findall(r"[a-z0-9']{3,}", album.lower())
+             if w not in _STOP]
+    if not words:
+        return True
+    low = lot_title.lower()
+    hit = sum(1 for w in words if re.search(rf"\b{re.escape(w)}\b", low))
+    return hit * 2 >= len(words)
+
+
 def requests_quote(x):
     from urllib.parse import quote
     return quote(x)
@@ -200,6 +222,8 @@ def main():
         if not v:
             continue
         t = it.get("title") or ""
+        if not album_matches(t, v["title"]):
+            continue
         tgt = {"catno": f"{c[0]}", "year": str(v["early_year"]),
                "country": "US"}
         why = hunt.reissue_by_context(t, tgt)
