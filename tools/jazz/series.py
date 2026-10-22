@@ -165,7 +165,7 @@ def ebay_new(token, artist, title, marker):
     q = f"{artist} {title}"
     try:
         j = search_page(token, q=q, category_id=CATEGORY, limit=100,
-                        flt="conditions:{NEW}")
+                        flt="conditions:{NEW},itemLocationCountry:US")
     except ApiRefused as e:
         return None, str(e)
     lots = []

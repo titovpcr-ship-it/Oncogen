@@ -316,6 +316,8 @@ def main():
     ap.add_argument("--auction-factor", type=float, default=2.0,
                     help="во сколько раз ставка вырастает к закрытию "
                          "при сутках и более до конца; замер O-39")
+    ap.add_argument("--any-country", dest="us_only", action="store_false",
+                    help="снять правило «только лоты из США»")
     ap.add_argument("--no-auctions", action="store_true",
                     help="только купить сейчас и предложить цену")
     ap.add_argument("--ending-within", type=float, default=0,
@@ -378,6 +380,12 @@ def main():
             flt = ("buyingOptions:{FIXED_PRICE|BEST_OFFER}"
                    if a.no_auctions
                    else "buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER}")
+            # Только лоты из США — владелец 22.10.2026, после находки №1
+            # (Andrew Hill с доставкой $29.47 из Англии). Фильтр стоит в
+            # запросе, а не после него: иначе иностранные лоты занимали
+            # бы сотню мест выдачи, отведённую на одну цель.
+            if a.us_only:
+                flt += ",itemLocationCountry:US"
             d = search_page(token, category_id=CATEGORY, q=q[:80], limit=100,
                             offset=0, sort="price", flt=flt)
         except ApiRefused as e:

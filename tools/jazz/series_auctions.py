@@ -93,7 +93,8 @@ def main():
                     j = search_page(token, q=q, category_id="176985",
                                     limit=200, offset=off,
                                     flt="buyingOptions:{AUCTION},"
-                                        "conditions:{NEW}")
+                                        "conditions:{NEW},"
+                                        "itemLocationCountry:US")
                 except ApiRefused as e:
                     refused += 1
                     print(f"  отказ eBay: {e}", file=sys.stderr)
