@@ -120,6 +120,57 @@ def lot_price(item, base_factor):
     return p, p, "купить сейчас", ""
 
 
+# --- первопресс -----------------------------------------------------
+# Правило владельца от 22.10.2026: товар должен быть первопрессом.
+#
+# Опознаётся по КАТАЛОЖНОМУ НОМЕРУ ОРИГИНАЛА, который берётся из
+# главного релиза мастера на Discogs (tools/jazz/firstpress.py). У
+# Hank Mobley «Soul Station» это BLP 4031: номер BST 84031 означает
+# стерео и позднее, 0746554 — современное переиздание. Различается
+# механически, без фотографий.
+#
+# Чего это НЕ даёт, и это надо помнить: вариант этикетки и метки в
+# выбеге — Lexington, 47 West 63rd, deep groove, ухо Plastylite,
+# клеймо RVG — отличают ранний пресс от позднего ВНУТРИ одного
+# каталожного номера. Видно только на фотографиях этикетки и выбега,
+# и смотреть их должен человек, как с донцами зажигалок (O-70, O-71).
+_REISSUE = re.compile(
+    r"\breissue\b|\bre-?issue\b|\brepress\b|\bremaster|\b180\s*g|"
+    r"\btone\s*poet\b|\bclassic\s*records\b|\bmusic\s*matters\b|"
+    r"\banalogue\s*productions\b|\bby\s*request\b|\bacoustic\s*sounds\b|"
+    r"\b20[0-2]\d\s*(?:press|reissue|edition)\b", re.I)
+# Признаки раннего пресса, которые пишет знающий продавец.
+_EARLY = re.compile(
+    r"\brvg\b|van\s*gelder|deep\s*groove|\bdg\b|plastylite|\bear\b|"
+    r"lexington|47\s*w(?:est)?\s*63|\bny\s*usa\b|1st\s*press|"
+    r"first\s*press|original\s*press|\bmono\b", re.I)
+
+
+def catno_variants(catno):
+    """Каталожный номер в тех видах, как его пишут в объявлениях."""
+    c = (catno or "").strip()
+    if not c:
+        return []
+    out = {c, c.replace(" ", ""), c.replace("-", " "), c.replace(" ", "-")}
+    return [x for x in out if len(x) >= 4]
+
+
+def press_match(title, fp_catno):
+    """Похож ли лот на первопресс. Возвращает (годен, пояснение)."""
+    if _REISSUE.search(title):
+        return False, "в заголовке назван репресс или ремастер"
+    vs = catno_variants(fp_catno)
+    hit = any(re.search(re.escape(v), title, re.I) for v in vs)
+    if hit and _EARLY.search(title):
+        return True, f"номер оригинала {fp_catno} и признак раннего пресса"
+    if hit:
+        return True, f"номер оригинала {fp_catno} в заголовке"
+    if _EARLY.search(title):
+        return True, ("признак раннего пресса назван, номера нет — "
+                      "СВЕРИТЬ ЭТИКЕТКУ И ВЫБЕГ ПО ФОТО")
+    return False, "ни номера оригинала, ни признаков раннего пресса"
+
+
 # Не пластинка либо не тот товар.
 _NOT_RECORD = re.compile(
     r"\bcd\b|\bcassette\b|\bsacd\b|\bbox\s*only\b|\bsleeve\s*only\b|"
@@ -155,6 +206,9 @@ def main():
                     help="условие владельца O-49: Have меньше этого")
     ap.add_argument("--min-ratio", type=float, default=1.0,
                     help="условие владельца O-49: want/have больше этого")
+    ap.add_argument("--first-press", action="store_true",
+                    help="только первопрессы: правило владельца "
+                         "от 22.10.2026")
     ap.add_argument("--check", type=int, default=0)
     ap.add_argument("--photos", type=int, default=0)
     ap.add_argument("--top", type=int, default=15)
@@ -213,6 +267,12 @@ def main():
             title = it.get("title") or ""
             if _NOT_RECORD.search(title) or _BAD.search(title):
                 continue
+            press_note = ""
+            if a.first_press:
+                ok, press_note = press_match(title, t.get("fp_catno")
+                                             or t.get("catno"))
+                if not ok:
+                    continue
             p, expect, kind, note = lot_price(it, a.auction_factor)
             if p is None:
                 continue
@@ -234,6 +294,7 @@ def main():
             finds.append({
                 "gap": round(gap, 2), "entry": round(entry, 2),
                 "expect": round(expect + sh, 2), "kind": kind, "note": note,
+                "press": press_note,
                 "floor": floor, "copies": t["for_sale"],
                 "ratio": t["ratio"], "have": t["have"], "want": t["want"],
                 "label": t["label"], "catno": t["catno"], "year": t["year"],
@@ -284,6 +345,8 @@ def main():
               f"пол Discogs ${z['floor']} при {z['copies']} копиях")
         if z["note"]:
             print(f"    {z['note']}")
+        if z.get("press"):
+            print(f"    пресс: {z['press']}")
         print(f"    цель: {z['target'][:58]}")
         print(f"    {z['label']} {z['catno']} {z['year']}  "
               f"хотят {z['want']}/{z['have']} (ratio {z['ratio']})")
