@@ -151,6 +151,10 @@ def main():
                     help="только купить сейчас и предложить цену")
     ap.add_argument("--targets", default=os.path.join(DATA,
                                                       "jazz_targets.csv"))
+    ap.add_argument("--max-have", type=int, default=500,
+                    help="условие владельца O-49: Have меньше этого")
+    ap.add_argument("--min-ratio", type=float, default=1.0,
+                    help="условие владельца O-49: want/have больше этого")
     ap.add_argument("--check", type=int, default=0)
     ap.add_argument("--photos", type=int, default=0)
     ap.add_argument("--top", type=int, default=15)
@@ -162,9 +166,23 @@ def main():
         return 1
     tg = [r for r in csv.DictReader(open(a.targets, encoding="utf-8"))]
     # Опора нужна с обеих сторон: без пола и без глубины судить не о чем.
+    # Два первых условия правила O-49. ТРЕТЬЕ — «переиздания нет» —
+    # здесь не применяется, и это не упущение. Владелец формулировал
+    # правило для нового релиза: поймать первый тираж, пока репресс не
+    # объявлен. Любую джазовую классику переиздавали десятки раз: у
+    # мастера «A Love Supreme» сто виниловых версий, у остальных из
+    # выборки 17-23. Условие не выполняется никогда и вырезало все 65
+    # кандидатов из 65.
+    #
+    # Для винтажа редкость меряется иначе: не отсутствием репресса, а
+    # редкостью САМОГО ЭТОГО прессинга — что have и want по отдельному
+    # релизу и показывают. У того же «A Love Supreme» конкретный пресс
+    # имеет 1595 желающих против 81 владельца.
     tg = [r for r in tg
           if r.get("floor_usd") and r.get("for_sale")
-          and int(r["for_sale"] or 0) >= a.min_copies]
+          and int(r["for_sale"] or 0) >= a.min_copies
+          and float(r.get("ratio") or 0) >= a.min_ratio
+          and int(r.get("have") or 0) < a.max_have]
     tg.sort(key=lambda r: -float(r["ratio"] or 0))
     if a.check:
         tg = tg[:a.check]
