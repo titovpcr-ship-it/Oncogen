@@ -78,7 +78,13 @@ _JUNK = re.compile(
     r"\bsleeves?\s*only\b|\bjacket\s*only\b|\bempty\b|\bbowl\b|"
     r"\bplaying\s*by\b|\bperforms\b|\bsings\s*the\s*songs\b|"
     r"\bin\s*the\s*style\s*of\b|\bcover\s*band\b|\bvarious\b|"
-    r"\b12\s*(?:\"|''|inch|in\.?)?\s*single\b|\bmaxi\b", re.I)
+    r"\b12\s*(?:\"|''|inch|in\.?)?\s*single\b|\bmaxi\b|"
+    # Первый полный прогон 22.10.2026: игрушка-миниатюра Mini Brands со
+    # штрихкодом настоящего альбома Sting и «Download Code Slips» Linkin
+    # Park — бумажки с кодом скачивания — прошли как находки 3.3x и 2.9x.
+    r"\bmini\s*brands?\b|\bminiature\b|\bdownload\s*codes?\b|"
+    r"\bcode\s*slips?\b|\bdigital\s*download\s*card\b|\btoy\b|"
+    r"\bfunko\b|\bkeychain\b|\breplica\b", re.I)
 # Признаки того, что тираж мог разойтись: за такими запечатанными копиями
 # и прячутся кратные разрывы.
 _OOP = re.compile(r"\blimited\b|\bnumbered\b|\brsd\b|record\s*store\s*day|"
