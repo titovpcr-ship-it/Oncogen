@@ -42,7 +42,10 @@ sys.path.insert(0, ROOT)
 
 from datetime import datetime, timezone                        # noqa: E402
 
-from src.common.ebay import (ApiRefused, ebay_token, price_usd,   # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+
+import three_x as tx                                           # noqa: E402
+from src.common.ebay import (ApiRefused, ebay_token, price_usd,  # noqa: E402
                              search_page, shipping_usd)
 
 OUT = os.path.join(ROOT, "out")
@@ -196,6 +199,10 @@ _BAD = re.compile(
     r"\bfor\s*parts\b|\bas\s*is\b|\bdamag|\bbroken\b|\bcracked\b|"
     r"\bwarp(ed)?\b|\bskips?\b|\bscratch\w*\b|\bmold\b|\bmildew\b|"
     r"\bwater\s*damag|\bpoor\b|\bbeat\b|\btrashed\b", re.I)
+# Семидюймовка, названная просто «45». Первая версия ловила только
+# «45 rpm single», и под целью «Chet Baker — Chet» прошли «Jazz 45
+# Gerry Mulligan» и «45 Chet Baker & The Mariachi Brass».
+_FORTY_FIVE = re.compile(r"(?:^|\W)45(?:\W|$)(?!\s*rpm\s*lp)", re.I)
 
 
 def main():
@@ -286,6 +293,23 @@ def main():
                 continue
             title = it.get("title") or ""
             if _NOT_RECORD.search(title) or _BAD.search(title):
+                continue
+            if _FORTY_FIVE.search(title):
+                continue
+            # ТОТ ЛИ ЭТО АЛЬБОМ. Сопоставление по ключевым словам eBay
+            # недостаточно: под целью «Funk Factory» проходил Wilson
+            # Pickett, под «Chet Baker — Chet» — синглы с Джерри
+            # Маллиганом. Берём матчер из сентябрьской работы: имя
+            # исполнителя целым словом, название непрерывной фразой,
+            # отсев сборных лотов и печатной продукции.
+            # Число пластинок НЕ передаём: у джаза в заголовках стоят
+            # каталожные номера, и «Riverside RLP 1135» читалось как
+            # «1135 пластинок», снимая верный лот. В картотеке числа
+            # дисков по цели всё равно нет.
+            why = tx.title_is_the_album(title, {"artist": t["artist"],
+                                                "album": t["title"],
+                                                "discs": None})
+            if why:
                 continue
             ok, press_note = press_match(title,
                                          t.get("fp_catno") or t.get("catno"),
