@@ -237,7 +237,7 @@ def discogs_value(d, code, artist):
             continue
         if "Unofficial Release" in fmt:
             continue
-        if not artist_in(r.get("title") or "", artist):
+        if artist and not artist_in(r.get("title") or "", artist):
             continue           # код от чужого издания — ошибка продавца
         res.append(r)
     if not res:
@@ -367,6 +367,15 @@ def main():
                     help="сколько карточек eBay открыть (дневной лимит)")
     ap.add_argument("--min-feedback", type=int, default=10)
     ap.add_argument("--artists", nargs="*", default=ARTISTS)
+    ap.add_argument("--queries", nargs="*", default=None,
+                    help="искать по словам, а не по исполнителям")
+    ap.add_argument("--pages", type=int, default=2,
+                    help="страниц выдачи по 200 на запрос")
+    ap.add_argument("--min-buy", type=float, default=0.0)
+    ap.add_argument("--offer-only", action="store_true",
+                    help="только лоты с «предложить цену»")
+    ap.add_argument("--offer", type=float, default=None,
+                    help="сумма предложения: прибыль считается от неё")
     ap.add_argument("--auctions", action="store_true",
                     help="искать и аукционы (владелец 23.10.2026)")
     ap.add_argument("--auction-factor", type=float, default=2.0)
@@ -376,21 +385,32 @@ def main():
     token = ebay_token()
     cands, seen, refused = [], set(), 0
     n_lots = 0
-    for i, artist in enumerate(a.artists, 1):
-        for off in (0, 200):
+    # По словам, а не по исполнителям: «limited», «numbered», «RSD» —
+    # полоса, где нашёлся Green Day (владелец 23.10.2026: прогнать торг
+    # $15-20 в тот же день, а запросов осталось ~800 из 5 000).
+    plan = ([(None, q) for q in a.queries] if a.queries
+            else [(x, f"{x} vinyl") for x in a.artists])
+    offs = [k * 200 for k in range(a.pages)]
+    if a.offer_only:
+        opts_f = "BEST_OFFER"
+    elif a.auctions:
+        opts_f = "FIXED_PRICE|BEST_OFFER|AUCTION"
+    else:
+        opts_f = "FIXED_PRICE|BEST_OFFER"
+    lo = f"{a.min_buy:.0f}" if a.min_buy else ""
+    for i, (artist, query) in enumerate(plan, 1):
+        for off in offs:
             try:
-                opts_f = ("FIXED_PRICE|BEST_OFFER|AUCTION" if a.auctions
-                          else "FIXED_PRICE|BEST_OFFER")
-                j = search_page(token, q=f"{artist} vinyl",
+                j = search_page(token, q=query,
                                 category_id=hunt.CATEGORY, limit=200,
                                 offset=off,
                                 flt=f"buyingOptions:{{{opts_f}}},"
                                     "itemLocationCountry:US,"
-                                    f"price:[..{a.max_buy:.0f}],"
+                                    f"price:[{lo}..{a.max_buy:.0f}],"
                                     "priceCurrency:USD")
             except ApiRefused as e:
                 refused += 1
-                print(f"  отказ eBay «{artist}»: {e}", file=sys.stderr)
+                print(f"  отказ eBay «{query}»: {e}", file=sys.stderr)
                 break
             items = j.get("itemSummaries") or []
             for it in items:
@@ -400,7 +420,7 @@ def main():
                 seen.add(iid)
                 n_lots += 1
                 t = it.get("title") or ""
-                if not artist_in(t, artist):
+                if artist and not artist_in(t, artist):
                     continue
                 if (hunt._NOT_RECORD.search(t) or hunt._FORTY_FIVE.search(t)
                         or hunt._BAD.search(t) or _JUNK.search(t)):
@@ -416,8 +436,11 @@ def main():
                 se = it.get("seller") or {}
                 if (se.get("feedbackScore") or 0) < a.min_feedback:
                     continue
+                ask = p
+                if a.offer and kind == "предложить цену":
+                    p = min(p, a.offer)
                 cands.append({
-                    "artist": artist, "title": t, "price": p,
+                    "artist": artist, "title": t, "price": p, "ask": ask,
                     "expect": round(expect, 2), "note": note,
                     "ship": shipping_usd(it), "how": how,
                     "kind": kind,
@@ -428,8 +451,8 @@ def main():
             if len(items) < 200:
                 break
             time.sleep(0.15)
-        if i % 25 == 0:
-            print(f"  исполнителей {i}/{len(a.artists)}, лотов {n_lots}, "
+        if i % 25 == 0 or a.queries:
+            print(f"  запросов {i}/{len(plan)}, лотов {n_lots}, "
                   f"запечатанных до ${a.max_buy:.0f}: {len(cands)}",
                   file=sys.stderr)
     print(f"лотов {n_lots}, запечатанных до ${a.max_buy:.0f}: {len(cands)}",
@@ -483,7 +506,9 @@ def main():
             v, why = discogs_value(d, code, z["artist"])
             z["match"] = f"штрихкод {code}"
         else:
-            cat = catno_of(item, z["title"])
+            # Без исполнителя номер не ищется: поиск Discogs по одному
+            # номеру нечёткий, и у разных лейблов номера совпадают.
+            cat = catno_of(item, z["title"]) if z["artist"] else None
             if not cat:
                 no_code += 1
                 continue
@@ -568,8 +593,12 @@ def main():
         print("Пол Discogs — ЗАПРОС в любом состоянии, не сделка.")
     for z in finds[:40]:
         sh = (f"+${z['ship']:.2f}" if z["ship"] is not None else "+?")
-        now = (f"ставка ${z['price']:.2f}, ПРЕДЕЛ ${z['max_bid']:.2f}"
-               if z["kind"] == "аукцион" else f"${z['price']:.2f}")
+        if z["kind"] == "аукцион":
+            now = f"ставка ${z['price']:.2f}, ПРЕДЕЛ ${z['max_bid']:.2f}"
+        elif z.get("ask") and z["ask"] != z["price"]:
+            now = f"ПРЕДЛОЖИТЬ ${z['price']:.2f} (просят ${z['ask']:.2f})"
+        else:
+            now = f"${z['price']:.2f}"
         print(f"\n{z['gap']:.2f}x  {now} {sh} [{z['kind']}]  "
               f"пол ${z['floor']} при {z['copies']} коп. -> на руки "
               f"~${z['net']:.2f}"
