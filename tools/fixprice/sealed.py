@@ -210,8 +210,30 @@ def colours(x):
     return {c for c in _COLOURS if re.search(rf"\b{c}\b", low)} - _TEXTURE
 
 
+# Оттенки, которые продавцы пишут вместо цвета.
+_SHADE = {"cobalt": "blue", "navy": "blue", "sky": "blue", "royal": "blue",
+          "crimson": "red", "ruby": "red", "scarlet": "red", "cherry": "red",
+          "emerald": "green", "jade": "green", "lime": "green", "mint": "green",
+          "lavender": "purple", "lilac": "purple", "grape": "purple",
+          "amber": "orange", "tangerine": "orange", "coral": "orange",
+          "lemon": "yellow", "mustard": "yellow", "canary": "yellow",
+          "rose": "pink", "fuchsia": "pink", "bubblegum": "pink",
+          "ivory": "white", "milky": "white", "opaque white": "white"}
+
+
 def colour_mismatch(lot_title, release):
-    want = colours(lot_title) - {"black"}
+    # Имя исполнителя и название альбома — не цвет: «Red Hot Chili
+    # Peppers … Cobalt Vinyl» снимался как «в лоте red, на Discogs blue»
+    # (прогон 23.10.2026). Слова названия издания с Discogs вырезаются.
+    low = (lot_title or "").lower()
+    for w in re.findall(r"[a-z]+", (release.get("title") or "").lower()
+                        + " " + " ".join(a.get("name", "") for a in
+                                         release.get("artists") or []).lower()):
+        if len(w) > 2:
+            low = re.sub(rf"\b{re.escape(w)}\b", " ", low)
+    for k, v in _SHADE.items():
+        low = re.sub(rf"\b{k}\b", v, low)
+    want = colours(low) - {"black"}
     if not want:
         return None
     have = colours(" ".join(f"{f.get('text') or ''}"
@@ -576,7 +598,7 @@ def main():
             w.writeheader()
             w.writerows(finds)
     n_auc = sum(1 for z in cands if z["kind"] == "аукцион")
-    print(f"исполнителей {len(a.artists)}, лотов {n_lots}, запечатанных до "
+    print(f"запросов {len(plan)}, лотов {n_lots}, запечатанных до "
           f"${a.max_buy:.0f}: {len(cands)} (из них аукционов {n_auc}), "
           f"карточек просмотрено {len(look)}, новых из eBay {opened}")
     print(f"винил не доказан (ни LP/vinyl в заголовке, ни размера и "
