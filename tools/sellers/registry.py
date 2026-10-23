@@ -5,8 +5,8 @@
 $10-20 (Royal Flush, Lawrence Brown и ещё пять кандидатов), wild.records —
 запечатанное со старта $3 (Iron Maiden, Notorious B.I.G., Amy Winehouse).
 
-Каждый прогон, увидевший аукцион со ставкой до $5 на пластинку с полом
-Discogs от $25, оставляет здесь сигнал. Два сигнала по разным лотам —
+Каждый прогон, увидевший аукцион со ставкой не выше трети пола Discogs
+на пластинку от $25, оставляет здесь сигнал. Два сигнала по разным лотам —
 и продавец попадает в список, который режим «продавец» читает целиком.
 """
 import csv
@@ -16,7 +16,9 @@ import time
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SELLERS = os.path.join(ROOT, "data", "sellers.csv")
 SIGNALS = os.path.join(ROOT, "data", "seller_signals.csv")
-MAX_START = 5.0
+# Порог относительный: у jazzlover1960 старт $10 при полу $30, и
+# абсолютное «до $5» его не видело (проба 23.10.2026).
+START_SHARE = 1 / 3            # ставка не выше трети пола Discogs
 MIN_FLOOR = 25.0
 PROMOTE_AT = 2
 
@@ -64,7 +66,7 @@ def note(seller, item, title, price, floor, source, kind):
         price, floor = float(price), float(floor)
     except (TypeError, ValueError):
         return False
-    if price > MAX_START or floor < MIN_FLOOR:
+    if floor < MIN_FLOOR or price > floor * START_SHARE:
         return False
     rows = _read(SIGNALS, _G_FIELDS)
     if any(r["item"] == str(item) for r in rows):
@@ -85,7 +87,7 @@ def promote():
     added = []
     for s, items in by.items():
         if len(items) >= PROMOTE_AT and add_seller(
-                s, f"авто: {len(items)} аукциона со старта до ${MAX_START:.0f} "
-                   f"на пластинки от ${MIN_FLOOR:.0f}"):
+                s, f"авто: {len(items)} аукциона со ставкой до трети пола "
+                   f"Discogs на пластинки от ${MIN_FLOOR:.0f}"):
             added.append(s)
     return added

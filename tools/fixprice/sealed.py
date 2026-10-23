@@ -48,6 +48,8 @@ import hunt                                                    # noqa: E402
 import series                                                  # noqa: E402
 import targets as tg                                           # noqa: E402
 from artists import ARTISTS                                    # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "tools", "sellers"))
+import registry                                                # noqa: E402
 from src.common.ebay import (ApiRefused, ebay_token,           # noqa: E402
                              price_usd, search_page, shipping_usd)
 
@@ -546,6 +548,10 @@ def main():
             why_not["цвет не совпал"] = why_not.get("цвет не совпал", 0) + 1
             print(f"  цвет: {z['title'][:50]} — {cm}", file=sys.stderr)
             continue
+        # Сигнал реестру продавцов: аукцион с низкой ставкой на ценную
+        # пластинку — повод прочитать продавца целиком (tools/sellers).
+        registry.note(z["seller"], z["id"], z["title"], z["price"],
+                      v["floor"], "фикс прайс", z["kind"])
         if v["copies"] < a.min_copies:
             why_not["меньше 5 копий"] = why_not.get("меньше 5 копий", 0) + 1
             continue

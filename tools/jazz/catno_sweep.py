@@ -34,6 +34,8 @@ sys.path.insert(0, os.path.join(ROOT, "tools", "jazz"))
 
 import hunt                                                    # noqa: E402
 import series                                                  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "tools", "sellers"))
+import registry                                                # noqa: E402
 import targets as tg                                           # noqa: E402
 from src.common.ebay import (ApiRefused, ebay_token,           # noqa: E402
                              search_page, shipping_usd)
@@ -307,6 +309,11 @@ def run_label(token, d, label, a):
         why = hunt.reissue_by_context(t, tgt)
         worst_gap = v["worst"][1] / p if p else 0
         best_gap = (v["best"][1] / p) if (p and v["best"]) else 0
+        # Сигнал реестру продавцов: ранний пол, если переиздание по
+        # контексту не опознано, иначе самый дешёвый.
+        ref = v["best"][1] if (v["best"] and not why) else v["worst"][1]
+        registry.note((it.get("seller") or {}).get("username") or "",
+                      it["itemId"], t, p, ref, f"номер {label}", kind)
         z = {"label": label, "title": t, "price": p, "kind": kind,
              "expect": round(expect, 2), "note": note,
              "ship": shipping_usd(it), "num": c[0][0],
