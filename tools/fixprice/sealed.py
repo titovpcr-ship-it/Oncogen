@@ -187,6 +187,43 @@ def barcode_of(item):
     return None
 
 
+# ЦВЕТ ДОЛЖЕН СОВПАСТЬ. Прогон 23.10.2026: Taylor Swift «Portofino
+# Orange Glitter» по штрихкоду лёг на издание «Translucent Magenta With
+# Gold Glitter» — цветные варианты делят один код, и пол брался от
+# чужого варианта. Если заголовок называет цвет, хотя бы один из его
+# цветов должен быть в описании издания на Discogs.
+_COLOURS = ("black", "white", "red", "blue", "green", "yellow", "orange",
+            "pink", "purple", "violet", "magenta", "silver", "gold", "clear",
+            "transparent", "translucent", "grey", "gray", "brown", "teal",
+            "aqua", "turquoise", "cream", "bone", "smoke", "marble", "splatter",
+            "glitter", "picture")
+
+
+# Фактура — не цвет: «glitter» есть и у оранжевого, и у пурпурного
+# варианта Taylor Swift, и по нему они сходились.
+_TEXTURE = {"marble", "splatter", "glitter", "picture", "clear",
+            "transparent", "translucent", "smoke"}
+
+
+def colours(x):
+    low = (x or "").lower()
+    return {c for c in _COLOURS if re.search(rf"\b{c}\b", low)} - _TEXTURE
+
+
+def colour_mismatch(lot_title, release):
+    want = colours(lot_title) - {"black"}
+    if not want:
+        return None
+    have = colours(" ".join(f"{f.get('text') or ''}"
+                            for f in release.get("formats") or []))
+    if not have:
+        return None            # Discogs цвет не указал — судить не о чем
+    if want & have:
+        return None
+    return (f"цвет в лоте {', '.join(sorted(want))}, на Discogs "
+            f"{', '.join(sorted(have))}")
+
+
 def discogs_value(d, code, artist):
     """Издание по штрихкоду: пол в долларах, копии, спрос — или причина."""
     s = d.get("https://api.discogs.com/database/search?type=release"
@@ -455,6 +492,12 @@ def main():
             z["match"] = f"каталожный номер {cat}"
         if v is None:
             why_not[why] = why_not.get(why, 0) + 1
+            continue
+        rel = d.get(f"https://api.discogs.com/releases/{v['release']}")
+        cm = colour_mismatch(z["title"], rel or {})
+        if cm:
+            why_not["цвет не совпал"] = why_not.get("цвет не совпал", 0) + 1
+            print(f"  цвет: {z['title'][:50]} — {cm}", file=sys.stderr)
             continue
         if v["copies"] < a.min_copies:
             why_not["меньше 5 копий"] = why_not.get("меньше 5 копий", 0) + 1
