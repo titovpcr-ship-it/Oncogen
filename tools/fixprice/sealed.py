@@ -54,6 +54,15 @@ from src.common.ebay import (ApiRefused, ebay_token,           # noqa: E402
 OUT = os.path.join(ROOT, "out")
 CACHE = os.path.join(ROOT, "cache", "discogs_barcode.json")
 ITEM = "https://api.ebay.com/buy/browse/v1/item/{}"
+CARDS = os.path.join(ROOT, "cache", "ebay_cards.json")
+
+
+def save_cards(cards):
+    os.makedirs(os.path.dirname(CARDS), exist_ok=True)
+    tmp = CARDS + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(cards, f, ensure_ascii=False)
+    os.replace(tmp, CARDS)
 FEES = 0.12                    # Discogs ~9% + оплата ~3%
 SHIP_GUESS = 5.0
 
@@ -135,6 +144,8 @@ def priority(z):
     """Кого смотреть первым, пока хватает лимита карточек."""
     t = z["title"]
     s = 0
+    if z["kind"] == "аукцион":
+        s += 3                 # новое в этом режиме; «купить сейчас» уже смотрели
     if z["how"].startswith("«sealed»"):
         s += 2                 # «б/у», а внутри плёнка — идея владельца
     if _OOP.search(t):
@@ -319,6 +330,9 @@ def main():
                     help="сколько карточек eBay открыть (дневной лимит)")
     ap.add_argument("--min-feedback", type=int, default=10)
     ap.add_argument("--artists", nargs="*", default=ARTISTS)
+    ap.add_argument("--auctions", action="store_true",
+                    help="искать и аукционы (владелец 23.10.2026)")
+    ap.add_argument("--auction-factor", type=float, default=2.0)
     ap.add_argument("--tg", action="store_true")
     a = ap.parse_args()
 
@@ -328,10 +342,12 @@ def main():
     for i, artist in enumerate(a.artists, 1):
         for off in (0, 200):
             try:
+                opts_f = ("FIXED_PRICE|BEST_OFFER|AUCTION" if a.auctions
+                          else "FIXED_PRICE|BEST_OFFER")
                 j = search_page(token, q=f"{artist} vinyl",
                                 category_id=hunt.CATEGORY, limit=200,
                                 offset=off,
-                                flt="buyingOptions:{FIXED_PRICE|BEST_OFFER},"
+                                flt=f"buyingOptions:{{{opts_f}}},"
                                     "itemLocationCountry:US,"
                                     f"price:[..{a.max_buy:.0f}],"
                                     "priceCurrency:USD")
@@ -355,18 +371,19 @@ def main():
                 ok, how = is_sealed(it)
                 if not ok:
                     continue
-                p = price_usd(it)
+                # Аукцион: цена — ТЕКУЩАЯ ставка (потолок к ней, правило
+                # владельца), рядом — ожидаемое закрытие по поправке O-39.
+                p, expect, kind, note = hunt.lot_price(it, a.auction_factor)
                 if p is None or p > a.max_buy:
                     continue
                 se = it.get("seller") or {}
                 if (se.get("feedbackScore") or 0) < a.min_feedback:
                     continue
-                opts = it.get("buyingOptions") or []
                 cands.append({
                     "artist": artist, "title": t, "price": p,
+                    "expect": round(expect, 2), "note": note,
                     "ship": shipping_usd(it), "how": how,
-                    "kind": ("предложить цену" if "BEST_OFFER" in opts
-                             else "купить сейчас"),
+                    "kind": kind,
                     "cond": it.get("condition") or "",
                     "seller": se.get("username") or "",
                     "fb": se.get("feedbackScore") or 0, "id": iid,
@@ -386,7 +403,12 @@ def main():
     d = D(tg._env_file_token())
     H = {"Authorization": f"Bearer {token}",
          "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
-    no_code = card_fail = by_cat = fmt_unproven = 0
+    no_code = card_fail = by_cat = fmt_unproven = opened = 0
+    try:
+        with open(CARDS, encoding="utf-8") as f:
+            cards = json.load(f)
+    except (OSError, ValueError):
+        cards = {}
     why_not = {}
     finds = []
     t0 = time.time()
@@ -395,18 +417,27 @@ def main():
             token = ebay_token()          # токен eBay живёт два часа
             H["Authorization"] = f"Bearer {token}"
             t0 = time.time()
-        try:
-            r = requests.get(ITEM.format(z["id"]), headers=H, timeout=30)
-        except requests.RequestException:
-            card_fail += 1
-            continue
-        if r.status_code != 200:
-            card_fail += 1
-            if r.status_code == 429:
-                print("  лимит карточек eBay исчерпан — стоп", file=sys.stderr)
-                break
-            continue
-        item = r.json()
+        item = cards.get(z["id"])
+        if item is None:
+            try:
+                r = requests.get(ITEM.format(z["id"]), headers=H, timeout=30)
+            except requests.RequestException:
+                card_fail += 1
+                continue
+            if r.status_code != 200:
+                card_fail += 1
+                if r.status_code == 429:
+                    print("  лимит карточек eBay исчерпан — стоп",
+                          file=sys.stderr)
+                    break
+                continue
+            j = r.json()
+            # В кэш — только то, что нужно для оценки: цена берётся из
+            # выдачи, а штрихкод, номер и формат у лота не меняются.
+            item = {"gtin": j.get("gtin"),
+                    "localizedAspects": j.get("localizedAspects") or []}
+            cards[z["id"]] = item
+            opened += 1
         if not vinyl_proven(item, z["title"]):
             fmt_unproven += 1
             continue
@@ -430,7 +461,18 @@ def main():
             continue
         ship = z["ship"] if z["ship"] is not None else SHIP_GUESS
         gap = v["floor"] / z["price"] if z["price"] else 0
-        net = v["floor"] * (1 - FEES) - z["price"] - ship
+        # АУКЦИОН — НЕ ЦЕНА, А ПРЕДЕЛ. Первая проверка 23.10.2026: Metallica
+        # S&M2 4LP за ставку $1 и «ждём $2» по поправке x2 — неправда,
+        # аукцион с доллара закроется у рынка. Поэтому для аукциона
+        # печатается ПРЕДЕЛ СТАВКИ — пол Discogs, делённый на требуемую
+        # кратность, — и прибыль при выигрыше ровно на пределе.
+        if z["kind"] == "аукцион":
+            buy = round(v["floor"] / a.min_gap, 2)
+            z["max_bid"] = buy
+        else:
+            buy = z["price"]
+            z["max_bid"] = ""
+        net = v["floor"] * (1 - FEES) - buy - ship
         v.setdefault("early_year", "")
         v.setdefault("early_floor", "")
         z.update(v)
@@ -444,8 +486,10 @@ def main():
             print(f"  карточек {k}/{len(look)}, без кода {no_code}, "
                   f"находок {len(finds)}", file=sys.stderr)
             d.save()
+            save_cards(cards)
         time.sleep(0.1)
     d.save()
+    save_cards(cards)
 
     finds.sort(key=lambda z: -z["gap"])
     per, capped = {}, []
@@ -463,8 +507,10 @@ def main():
             w = csv.DictWriter(f, fieldnames=list(finds[0].keys()))
             w.writeheader()
             w.writerows(finds)
+    n_auc = sum(1 for z in cands if z["kind"] == "аукцион")
     print(f"исполнителей {len(a.artists)}, лотов {n_lots}, запечатанных до "
-          f"${a.max_buy:.0f}: {len(cands)}, карточек открыто {len(look)}")
+          f"${a.max_buy:.0f}: {len(cands)} (из них аукционов {n_auc}), "
+          f"карточек просмотрено {len(look)}, новых из eBay {opened}")
     print(f"винил не доказан (ни LP/vinyl в заголовке, ни размера и "
           f"скорости в карточке): {fmt_unproven}")
     print(f"без штрихкода оценено по каталожному номеру {by_cat}, "
@@ -479,9 +525,14 @@ def main():
         print("Пол Discogs — ЗАПРОС в любом состоянии, не сделка.")
     for z in finds[:40]:
         sh = (f"+${z['ship']:.2f}" if z["ship"] is not None else "+?")
-        print(f"\n{z['gap']:.2f}x  ${z['price']:.2f} {sh} [{z['kind']}]  "
+        now = (f"ставка ${z['price']:.2f}, ПРЕДЕЛ ${z['max_bid']:.2f}"
+               if z["kind"] == "аукцион" else f"${z['price']:.2f}")
+        print(f"\n{z['gap']:.2f}x  {now} {sh} [{z['kind']}]  "
               f"пол ${z['floor']} при {z['copies']} коп. -> на руки "
-              f"~${z['net']:.2f}")
+              f"~${z['net']:.2f}"
+              + (" при выигрыше на пределе" if z["kind"] == "аукцион" else ""))
+        if z.get("note"):
+            print(f"   {z['note']}")
         print(f"   {z['title'][:80]}")
         print(f"   Discogs: {z['dg_title'][:55]} | {z['year']} "
               f"{z['country']} | {z['format'][:40]}")
@@ -502,8 +553,10 @@ def main():
                  "НЕ СВЕРЕНО ГЛАЗАМИ. Пол Discogs — запрос, не сделка.", ""]
         for z in finds[:10]:
             sh = f"+${z['ship']:.2f}" if z["ship"] is not None else "+?"
+            pr = (f"ставка ${z['price']:.2f}, предел ${z['max_bid']:.2f}"
+                  if z["kind"] == "аукцион" else f"${z['price']:.2f}")
             lines.append(f"<b>{z['gap']:.1f}x</b> {z['dg_title'][:60]}\n"
-                         f"${z['price']:.2f} {sh} · Discogs от ${z['floor']} "
+                         f"{pr} {sh} · Discogs от ${z['floor']} "
                          f"({z['copies']} коп.) · на руки ~${z['net']:.0f}\n"
                          f"{z['url']}")
         ok = TelegramNotifier().send("\n".join(lines))
