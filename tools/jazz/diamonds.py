@@ -237,6 +237,23 @@ def is_store(title, seller, fb):
                 or _STORE.search(title or ""))
 
 
+_COLOR = re.compile(
+    r"\b(?:colou?red\s+(?:vinyl|wax|lp)|splatter|marbled?|swirl|"
+    r"translucent|transparent|opaque|"
+    r"(?:red|blue|green|yellow|orange|purple|pink|white|gold|silver|clear|"
+    r"smoke|grey|gray)\s+(?:vinyl|wax))\b", re.I)
+
+
+def color_vinyl(title, artist="", album=""):
+    """Цветной винил в заголовке — без слов названия и имени: у «Kind of
+    Blue Vinyl LP» и «Red Garland» цвет — часть имени, а не пресса."""
+    t = title or ""
+    for w in (album, artist):
+        if w and len(w) > 2:
+            t = re.sub(re.escape(w), " ", t, flags=re.I)
+    return bool(_COLOR.search(t))
+
+
 def evidence(title, text, asp, catno, store=False):
     """Что лот говорит о прессе. Моно/стерео — только из заголовка и
     характеристик: в описаниях «plays on any stereo» — не про пресс."""
@@ -454,6 +471,15 @@ def plausible(vers, ev):
             notes.append(f"номер {ev['core']}")
         else:
             notes.append(f"номер {ev['core']} у Discogs не найден — без него")
+    if ev.get("color") and not ev["first"]:
+        # Цветной винил у джаза — современные переиздания: «Miles Davis –
+        # Kind of Blue (Limited, Opaque Blue Vinyl LP)» с оригиналом 1959
+        # года в раскладе раздувал бы ожидание. Цвета в изданиях мастера
+        # Discogs не пишет — отсекаем по году.
+        modern = [v for v in out if v["year"] >= 1995]
+        if modern:
+            out = modern
+            notes.append("цветной винил — прессы с 1995")
     if ev.get("store") and not ev["first"]:
         modern = [v for v in out if v["year"] >= 1990]
         if modern:
@@ -732,6 +758,7 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     ev = evidence(title, text, asp, catno, store=is_store(title, seller, fb))
     ev["family"] = fam
     ev["era"] = era or era_of(" ".join((title or "", text or "")), fam)
+    ev["color"] = color_vinyl(title, artist, album)
     country = ev["country"]
     if master:
         vers = vc.get(master, country)

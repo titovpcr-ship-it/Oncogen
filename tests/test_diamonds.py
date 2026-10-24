@@ -223,10 +223,30 @@ def test_epokhi_etiketok():
           dm.era_range((), "1966-1970") == (1966, 1970, ["1966-1970"]))
 
 
+def test_tsvetnoy_vinil():
+    check("«Opaque Blue Vinyl» — цветной",
+          dm.color_vinyl("Miles Davis - Kind of Blue (Limited, Opaque Blue "
+                         "Vinyl LP)", "Miles Davis", "Kind of Blue"))
+    check("«Kind of Blue Vinyl LP» — цвет в названии, не в прессе",
+          not dm.color_vinyl("Miles Davis Kind of Blue Vinyl LP", "Miles Davis",
+                             "Kind of Blue"))
+    check("«Red Garland … Vinyl LP» — имя, не цвет",
+          not dm.color_vinyl("Red Garland Groovy Prestige Vinyl LP",
+                             "Red Garland", "Groovy"))
+    check("«Blue Mitchell Blue Soul Vinyl» — имя и название, не цвет",
+          not dm.color_vinyl("Blue Mitchell Blue Soul Vinyl LP Riverside",
+                             "Blue Mitchell", "Blue Soul"))
+    ev = ev_of("Lush Life Prestige", "7188")
+    ev["color"] = True
+    eds, notes = dm.plausible(LUSH, ev)
+    check("цветной винил — только прессы с 1995",
+          all(v["year"] >= 1995 for v in eds) and "цветной" in notes[-1])
+
+
 def main():
     for fn in [test_lush_life, test_uliki, test_nadezhnaya_i_ozhidanie,
                test_kartoteka, test_odnoimennyy_bez_nomera,
-               test_epokhi_etiketok]:
+               test_epokhi_etiketok, test_tsvetnoy_vinil]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
