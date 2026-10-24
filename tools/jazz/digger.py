@@ -602,6 +602,20 @@ def main():
     ap.add_argument("--seen-days", type=int, default=7,
                     help="лот, оценённый за эти дни по той же цене, не "
                          "открывать снова (0 — открывать всё)")
+    ap.add_argument("--stream", action="store_true",
+                    help="поток новых объявлений до отметки прошлого прогона: "
+                         "весь раздел Jazz и весь б/у винил с джазовым "
+                         "именем или лейблом в заголовке")
+    ap.add_argument("--no-stream", action="store_true")
+    ap.add_argument("--stream-only", action="store_true",
+                    help="только поток и список продавцов, без запросов")
+    ap.add_argument("--stream-hours", type=float, default=26.0,
+                    help="без отметки прошлого прогона — столько часов назад")
+    ap.add_argument("--stream-min-score", type=int, default=3,
+                    help="порог приоритета по заголовку для лотов потока "
+                         "(по карточке — общий --min-score)")
+    ap.add_argument("--watch", type=int, default=0,
+                    help="сколько продавцов-коллекций из списка проверять")
     ap.add_argument("--tg", action="store_true")
     # Владелец 24.10.2026: «поиск винила на ебей до 40$ чтобы находить
     # алмазы в б/у джазовых пластинках. Никаких аукционов — либо купить
@@ -612,8 +626,12 @@ def main():
         ap.set_defaults(buy_now=True, used=True, max_price=40.0, min_gap=2.5,
                         min_floor=50.0, offer_share=0.8, max_cards=600,
                         min_score=5, ev=True, target_queries=150,
-                        sheets=True, dig_sellers=5)
+                        sheets=True, dig_sellers=5, stream=True, watch=30)
     a = ap.parse_args()
+    if a.no_stream:
+        a.stream = False
+    if a.stream_only:
+        a.stream = True
 
     token = ebay_token()
     H = {"Authorization": f"Bearer {token}",
@@ -630,70 +648,132 @@ def main():
         plan += [f"{x} lp" for x in ARTISTS_A.split("|")]
     if a.only:
         plan = [q for q in plan if any(o.lower() in q for o in a.only)]
-    if a.targets_only:
+    if a.targets_only or a.stream_only:
         plan = []
-    if a.target_queries or a.targets_only:
+    if (a.target_queries and not a.stream_only) or a.targets_only:
         plan += target_queries(a.target_queries or 300)
     vc = dm.Versions(d)
     seen_db = load_seen()
+    state = load_state()
+    watch = load_watch()
     today = time.strftime("%Y-%m-%d")
-    flt = (("buyingOptions:{BEST_OFFER}," if a.offer else
-            "buyingOptions:{FIXED_PRICE}," if a.buy_now else
-            "buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},") +
-           f"itemLocationCountry:US,price:[..{a.max_price:.0f}],"
-           "priceCurrency:USD" + (",conditions:{USED}" if a.used else ""))
+    quota0 = ebay_quota(token)
+    if quota0 is not None:
+        print(f"лимит eBay: осталось {quota0} запросов до сброса",
+              file=sys.stderr)
+
+    def make_flt(lo=0.0, hi=None):
+        hi = a.max_price if hi is None else hi
+        rng = f"[{lo:g}..{hi:g}]" if lo else f"[..{hi:g}]"
+        return (("buyingOptions:{BEST_OFFER}," if a.offer else
+                 "buyingOptions:{FIXED_PRICE}," if a.buy_now else
+                 "buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},") +
+                f"itemLocationCountry:US,price:{rng},priceCurrency:USD"
+                + (",conditions:{USED}" if a.used else ""))
+
+    flt = make_flt()
     seen, cands, why_not, refused = set(), [], {}, 0
     by_seller = {}
+    calls = {"n": 0}
 
     def drop(w):
         why_not[w] = why_not.get(w, 0) + 1
 
+    def take(it, src, min_score, bonus=0):
+        """Лот выдачи → кандидат (общая часть запросов, потока и списка
+        продавцов)."""
+        iid = it["itemId"]
+        if iid in seen:
+            return
+        seen.add(iid)
+        t = it.get("title") or ""
+        w = junk_reason(t)
+        if w:
+            drop(w)
+            return
+        p, _, kind, note = hunt.lot_price(it, 2.0)
+        if p is None or p > a.max_price or kind == "?" or \
+                (a.buy_now and kind == "аукцион"):
+            drop("дороже потолка")
+            return
+        se = it.get("seller") or {}
+        s = score(t, se.get("feedbackScore"), ev=a.ev) + bonus
+        lab, _, who = tiers(t)
+        if lab == "A" or (src != "запрос" and (lab or who)):
+            by_seller.setdefault(
+                (se.get("username") or "", se.get("feedbackScore")),
+                []).append(kind)
+        if s < min_score:
+            drop("мало признаков ценного")
+            return
+        cands.append({"it": it, "score": s, "price": p, "kind": kind,
+                      "note": note, "lab": lab, "who": who, "src": src,
+                      "bonus": bonus})
+
+    def page_of(**kw):
+        calls["n"] += 1
+        return search_page(token, category_id=hunt.CATEGORY, limit=200,
+                           sort="newlyListed", **kw)
+
     t0 = time.time()
+    stream_got = {}
+    if a.stream:
+        # Поток (O-98): всё новое с прошлого прогона. Раздел Jazz — по
+        # характеристике лота; весь б/у винил — ради лотов без жанра (у 20%
+        # лотов он не указан, и это чаще «наивный» продавец), с джазовым
+        # именем или лейблом в заголовке.
+        since = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime(
+            time.time() - a.stream_hours * 3600))
+        got, rf = scan_stream(
+            lambda off, f, asp: page_of(offset=off, flt=f, aspect_filter=asp),
+            state, make_flt, a.max_price, since, take, drop,
+            a.stream_min_score)
+        refused += rf
+        stream_got = got
+        for key, n in got.items():
+            print(f"  поток {key}: {n} новых лотов", file=sys.stderr)
+        print(f"поток: лотов {len(seen)}, кандидатов {len(cands)} за "
+              f"{time.time() - t0:.0f} с", file=sys.stderr)
+    if a.watch and watch:
+        # Продавцы-коллекции из прошлых прогонов: все их новые джазовые
+        # лоты — коллекцию продают не за один день.
+        ws = sorted(watch.items(), key=lambda kv: kv[1].get("last") or "",
+                    reverse=True)[:a.watch]
+        n0 = len(cands)
+        for se, rec in ws:
+            try:
+                j = page_of(flt=flt + f",sellers:{{{se}}}")
+            except ApiRefused as e:
+                refused += 1
+                print(f"  отказ eBay, продавец {se}: {e}", file=sys.stderr)
+                continue
+            got = 0
+            for it in j.get("itemSummaries") or []:
+                if jazzy(it.get("title") or ""):
+                    got += 1
+                    take(it, "продавец", a.stream_min_score, bonus=2)
+            if got:
+                rec["last"] = today
+        print(f"продавцы-коллекции: {len(ws)}, кандидатов +{len(cands) - n0}",
+              file=sys.stderr)
     for i, q in enumerate(plan, 1):
         for page in range(a.pages):
             try:
-                j = search_page(token, q=q, category_id=hunt.CATEGORY,
-                                limit=200, offset=page * 200,
-                                sort="newlyListed", flt=flt)
+                j = page_of(q=q, offset=page * 200, flt=flt)
             except ApiRefused as e:
                 refused += 1
                 print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
                 break
             items = j.get("itemSummaries") or []
             for it in items:
-                iid = it["itemId"]
-                if iid in seen:
-                    continue
-                seen.add(iid)
-                t = it.get("title") or ""
-                w = junk_reason(t)
-                if w:
-                    drop(w)
-                    continue
-                p, _, kind, note = hunt.lot_price(it, 2.0)
-                if p is None or p > a.max_price or kind == "?" or \
-                        (a.buy_now and kind == "аукцион"):
-                    drop("дороже потолка")
-                    continue
-                se = it.get("seller") or {}
-                s = score(t, se.get("feedbackScore"), ev=a.ev)
-                lab, _, who = tiers(t)
-                if lab == "A":
-                    by_seller.setdefault(
-                        (se.get("username") or "", se.get("feedbackScore")),
-                        []).append(kind)
-                if s < a.min_score:
-                    drop("мало признаков ценного")
-                    continue
-                cands.append({"it": it, "score": s, "price": p, "kind": kind,
-                              "note": note, "lab": lab, "who": who})
+                take(it, "запрос", a.min_score)
             if len(items) < 200:
                 break
             time.sleep(0.15)
         if i % 20 == 0:
             print(f"  запросов {i}/{len(plan)}, лотов {len(seen)}, "
                   f"кандидатов {len(cands)}", file=sys.stderr)
-    print(f"поиск: запросов {len(plan)}, лотов {len(seen)}, кандидатов "
+    print(f"поиск: запросов eBay {calls['n']}, лотов {len(seen)}, кандидатов "
           f"{len(cands)} за {time.time() - t0:.0f} с", file=sys.stderr)
 
     cands.sort(key=lambda z: (z["score"], -z["price"]), reverse=True)
@@ -726,9 +806,7 @@ def main():
                 continue
             dug.add(se)
             try:
-                j = search_page(token, category_id=hunt.CATEGORY, limit=200,
-                                sort="newlyListed",
-                                flt=flt + f",sellers:{{{se}}}")
+                j = page_of(flt=flt + f",sellers:{{{se}}}")
             except ApiRefused as e:
                 print(f"  отказ eBay, продавец {se}: {e}", file=sys.stderr)
                 continue
@@ -762,6 +840,7 @@ def main():
         if k % 25 == 0:
             d.save()
             vc.save()
+            save_seen(seen_db)
             print(f"  оценено {k}/{len(queue)}, находок {len(finds)}",
                   file=sys.stderr)
         it = z["it"]
@@ -774,6 +853,18 @@ def main():
             drop("карточка не открылась")
             continue
         asp = tp.aspects(item)
+        if z.get("src") in ("поток", "продавец"):
+            # Второй порог — по карточке: у «наивного» лота в заголовке
+            # «Vintage Jazz LP», а исполнитель, лейбл и номер — в
+            # характеристиках.
+            rich = " ".join([t] + [asp.get(x) or "" for x in (
+                "Artist", "Release Title", "Record Label", "Catalog Number",
+                "Release Year")])
+            s2 = score(rich, (it.get("seller") or {}).get("feedbackScore"),
+                       ev=a.ev) + z.get("bonus", 0)
+            if s2 < a.min_score:
+                drop("мало признаков ценного по карточке")
+                continue
         text = " ".join((t, item.get("conditionDescription") or "",
                          item.get("desc") or ""))
         grade = " / ".join(x for x in (asp.get("Record Grading"),
@@ -909,9 +1000,24 @@ def main():
             else:
                 drop("после свежих цен Discogs — мимо")
         finds = keep
+    # Список продавцов-коллекций: «наивный» продавец находки и продавец с
+    # пачкой джазовых лотов за один прогон — их новые лоты смотрятся в
+    # следующих прогонах (--watch).
+    for z in finds:
+        se = z.get("seller") or ""
+        if se and (z.get("fb") or 0) < a.naive_fb:
+            rec = watch.setdefault(se, {"since": today, "fb": z.get("fb")})
+            rec.update({"last": today, "why": "находка"})
+    for (se, fb), kinds in by_seller.items():
+        if se and len(kinds) >= 6 and (fb or 0) < 3 * a.naive_fb:
+            rec = watch.setdefault(se, {"since": today, "fb": fb})
+            rec["last"] = today
+            rec.setdefault("why", f"{len(kinds)} джазовых лотов за прогон")
     d.save()
     vc.save()
     save_seen(seen_db)
+    save_state(state)
+    watch = save_watch(watch, today)
     tp.fx.save_cards(cards)
     for z in finds:
         z.pop("_z", None)
@@ -946,9 +1052,24 @@ def main():
                       for (s, fb), v in by_seller.items()
                       if len(v) >= 8 and (fb or 0) < 20000),
                      key=lambda x: -x[2])
+    quota1 = ebay_quota(token)
+    # Сводка прогона — для отчёта в Telegram (diamonds_report.py): правило
+    # владельца — после каждого прогона цены в телегу, даже если находок нет.
+    summary = {"time": time.strftime("%Y-%m-%d %H:%M"), "argv": sys.argv[1:],
+               "search_calls": calls["n"], "lots": len(seen),
+               "cands": len(cands), "opened": opened,
+               "assessed": len(appraised) + len(finds), "finds": len(finds),
+               "quota_left": quota1, "drops": why_not,
+               "csv": path if finds else "", "watch": len(watch),
+               "stream": stream_got}
+    with open(path.replace("digger_", "digger_summary_").replace(".csv",
+                                                                 ".json"),
+              "w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=1)
     print(f"\nлотов {len(seen)}, кандидатов {len(cands)}, карточек открыто "
           f"{opened}, находок {len(finds)}"
-          + (f"; ОТКАЗОВ eBay {refused}" if refused else ""))
+          + (f"; ОТКАЗОВ eBay {refused}" if refused else "")
+          + (f"; лимит eBay: осталось {quota1}" if quota1 is not None else ""))
     for k_, v_ in sorted(why_not.items(), key=lambda x: -x[1]):
         print(f"  снято: {k_} — {v_}")
     if dealers:
@@ -1033,6 +1154,181 @@ def _age_days(d1, d2):
         return 9999
 
 
+# --- поток новых объявлений (O-98) -------------------------------------------
+# Замер 24.10.2026, б/у «купить сейчас» до $40 из США в категории винила:
+# раздел Jazz (характеристика Genre) — 406 тыс. лотов, ~120 новых в час;
+# весь б/у винил — 4,8 млн, ~900 новых в час, у 983 тыс. жанр не указан.
+# eBay отдаёт до 10 тыс. лотов на запрос, поэтому весь винил читается
+# ценовыми полосами; переполненная полоса в следующий раз делится надвое.
+STATE = os.path.join(ROOT, "cache", "diamonds_state.json")
+STREAMS = [("jazz", f"categoryId:{hunt.CATEGORY},Genre:{{Jazz}}", False),
+           ("all", None, True)]
+DEFAULT_BANDS = {"jazz": [0], "all": [0, 3, 5, 8, 12, 20]}
+
+
+def load_state():
+    try:
+        with open(STATE, encoding="utf-8") as f:
+            st = json.load(f)
+    except (OSError, ValueError):
+        st = {}
+    st.setdefault("marks", {})
+    st.setdefault("bands", {})
+    return st
+
+
+def save_state(st):
+    os.makedirs(os.path.dirname(STATE), exist_ok=True)
+    tmp = STATE + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(st, f, ensure_ascii=False, indent=1)
+    os.replace(tmp, STATE)
+
+
+def _iso_shift(iso, seconds):
+    """«2026-10-24T20:25:47.000Z» ± секунды, в том же виде."""
+    import calendar
+    try:
+        t = calendar.timegm(time.strptime(iso[:19], "%Y-%m-%dT%H:%M:%S"))
+    except (TypeError, ValueError):
+        return iso
+    return time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime(t + seconds))
+
+
+def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
+                min_score, pause=0.15, log=None):
+    """Поток новых объявлений: по каждой ценовой полосе страницы «свежие
+    первыми» до отметки прошлого прогона (с запасом 15 минут).
+
+    fetch(offset, filter, aspect_filter) — страница выдачи eBay или
+    ApiRefused. Отказ не двигает отметку полосы — недочитанное дочитается.
+    Полоса, где 10 тыс. лотов не хватило до отметки, делится надвое, и
+    половины наследуют старую отметку. Возвращает ({полоса: новых лотов},
+    число отказов)."""
+    log = log or (lambda m: print(m, file=sys.stderr))
+    out, refused = {}, 0
+    for name, aspect, need in STREAMS:
+        lows = [e for e in state["bands"].get(name, DEFAULT_BANDS[name])
+                if e < max_price]
+        edges = lows + [max_price]
+        new_lows = list(lows)
+        for lo, hi in zip(edges, edges[1:]):
+            hi_ = hi if hi == max_price else round(hi - 0.01, 2)
+            key = f"{name}:{lo:g}-{hi:g}"
+            mark = state["marks"].get(key) or since
+            stop = _iso_shift(mark, -15 * 60)
+            newest, n, full, failed = None, 0, False, False
+            for page in range(50):              # eBay: до 10 тыс. на запрос
+                try:
+                    j = fetch(page * 200, make_flt(lo, hi_), aspect)
+                except ApiRefused as e:
+                    refused += 1
+                    failed = True
+                    log(f"  отказ eBay, поток {key}: {e}")
+                    break
+                items = j.get("itemSummaries") or []
+                for it in items:
+                    c = it.get("itemCreationDate") or ""
+                    if c and (newest is None or c > newest):
+                        newest = c
+                    if c and c < stop:
+                        continue
+                    n += 1
+                    if need and not jazzy(it.get("title") or ""):
+                        drop("поток: не джаз по заголовку")
+                        continue
+                    take(it, "поток", min_score)
+                last = (items[-1].get("itemCreationDate") or "") if items else ""
+                if len(items) < 200 or (last and last < stop):
+                    full = True
+                    break
+                if pause:
+                    time.sleep(pause)
+            out[key] = n
+            if failed:
+                continue
+            if not full:
+                mid = round((lo + hi) / 2, 2)
+                new_lows.append(mid)
+                for k2 in (f"{name}:{lo:g}-{mid:g}", f"{name}:{mid:g}-{hi:g}"):
+                    state["marks"][k2] = mark
+                state["marks"].pop(key, None)
+                log(f"  поток {key}: 10 тыс. лотов не хватило до отметки "
+                    f"{mark[:16]} — полоса делится по ${mid:g}")
+                continue
+            if newest:
+                state["marks"][key] = max(newest, mark)
+        state["bands"][name] = sorted(set(new_lows))
+    return out, refused
+
+
+_JAZZ_WORD = re.compile(r"\bjazz\b|\bbop\b|\bbebop\b|\bhard\s*bop\b", re.I)
+# Имена картотеки, которые в заголовке чаще означают не джаз.
+_NOT_JAZZ_NAMES = {"santana", "jeff beck", "tom waits", "laura nyro",
+                   "placebo", "dr john", "el chicano", "bob james"}
+_JAZZ_NAMES = None
+
+
+def jazzy(title):
+    """Заголовок похож на джаз: коллекционный лейбл или имя, имя из
+    картотеки первопрессов (от двух слов) или слово «jazz»."""
+    global _JAZZ_NAMES
+    lab, _, who = tiers(title)
+    if lab or who or _JAZZ_WORD.search(title):
+        return True
+    if _JAZZ_NAMES is None:
+        by, _ = dm.load_targets()
+        names = sorted((n for n in by if len(n.split()) >= 2
+                        and n not in _NOT_JAZZ_NAMES), key=len, reverse=True)
+        _JAZZ_NAMES = re.compile(r"\b(?:" + "|".join(
+            r"\s+".join(map(re.escape, n.split())) for n in names) + r")\b",
+            re.I) if names else re.compile(r"(?!)")
+    return bool(_JAZZ_NAMES.search(dm._norm(title)))
+
+
+def ebay_quota(token):
+    """Остаток дневного лимита Browse API (Developer Analytics, сам лимит
+    не тратит) или None."""
+    import requests
+    try:
+        r = requests.get("https://api.ebay.com/developer/analytics/v1_beta/"
+                         "rate_limit/", params={"api_context": "buy",
+                                                "api_name": "browse"},
+                         headers={"Authorization": f"Bearer {token}"},
+                         timeout=20)
+        for api in r.json().get("rateLimits") or []:
+            for res in api.get("resources") or []:
+                if res.get("name") == "buy.browse":
+                    return (res.get("rates") or [{}])[0].get("remaining")
+    except Exception:                                       # noqa: BLE001
+        return None
+    return None
+
+
+# --- продавцы-коллекции ------------------------------------------------------
+WATCH = os.path.join(ROOT, "cache", "diamonds_sellers.json")
+
+
+def load_watch():
+    try:
+        with open(WATCH, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+def save_watch(db, today, keep_days=30):
+    """Продавец без новых джазовых лотов дольше keep_days — из списка."""
+    db = {k: v for k, v in db.items()
+          if _age_days(v.get("last") or v.get("since"), today) <= keep_days}
+    os.makedirs(os.path.dirname(WATCH), exist_ok=True)
+    tmp = WATCH + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(db, f, ensure_ascii=False, indent=1)
+    os.replace(tmp, WATCH)
+    return db
+
+
 def target_queries(n):
     """Запросы по альбомам картотеки первопрессов с дорогим оригиналом
     (пол от $60, хотя бы две копии): «Hank Mobley Soul Station». Свежие
@@ -1092,6 +1388,8 @@ def ev_find(d, vc, z, a, fresh=False):
          "offer_hint": (round(ask * a.offer_share, 2)
                         if a.offer_share and p == ask
                         and z["kind"] == "предложить цену" else ""),
+         "limit": dm.price_limit(x, a.min_floor, a.min_gap, a.up_mult,
+                                 a.p_min) or "",
          "seller": se.get("username") or "", "fb": se.get("feedbackScore"),
          "id": it["itemId"],
          "url": (it.get("itemWebUrl") or "").split("?")[0], "_z": z}
@@ -1158,6 +1456,8 @@ def render_ev(z):
     if z.get("offer_hint"):
         lines.append(f"   продавец принимает торг — можно предложить "
                      f"~${z['offer_hint']:.2f}")
+    if z.get("limit"):
+        lines.append(f"   предел цены: ставка проходит до ${z['limit']:.2f}")
     lines.append(f"   {z['grade'] or 'оценки нет'}; продавец {z['seller']} "
                  f"({z['fb']}); {z['url']}")
     return "\n".join(lines)

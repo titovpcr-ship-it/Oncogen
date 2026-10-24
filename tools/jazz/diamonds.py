@@ -314,6 +314,112 @@ def _said(rx, text):
     return False
 
 
+# --- эпохи этикеток ---------------------------------------------------------
+# Годы пресса по этикетке (cvinyl.com/labelguides, сверено 24.10.2026):
+# по словам продавца и по фото — при проверке глазами (--era). Ключ:
+# (семья лейбла, (с, по), регулярка, нужно ли рядом слово «label», как
+# выглядит). Адрес без слова «label» не улика: тот же адрес печатался на
+# конвертах, а Liberty вкладывала свои прессы в старые конверты.
+ERAS = {
+    "bn-lexington": ("blue note", (1951, 1957), r"\blexington\b", True,
+                     "адрес «767 Lexington Ave., NYC»"),
+    "bn-63rd": ("blue note", (1957, 1962),
+                r"\b(?:47\s*)?w(?:est)?\.?\s*63(?:rd)?\b", True,
+                "«47 West 63rd» (New York 23 / NYC / Inc)"),
+    "bn-nyusa": ("blue note", (1962, 1966),
+                 r"\bn(?:ew)?\s*\.?\s*y(?:ork)?\s*\.?,?\s*usa\b", True,
+                 "«Blue Note Records Inc, New York USA»"),
+    "bn-liberty": ("blue note", (1966, 1970),
+                   r"\bdivision\s*of\s*liberty\b|"
+                   r"\bliberty\s*(?:label|press\w*|era|issue)\b", False,
+                   "«a division of Liberty Records, Inc.»"),
+    "bn-ua": ("blue note", (1970, 1976),
+              r"\bdivision\s*of\s*united\s*artists\b|"
+              r"\bua\s*(?:label|press\w*|era|issue)\b|\bliberty\s*/?\s*ua\b",
+              False, "«a division of United Artists» / «Liberty UA»"),
+    "bn-whitenote": ("blue note", (1977, 1985), r"\bwhite\s*note\b", False,
+                     "синяя с белой нотой"),
+    "pr-50th": ("prestige", (1955, 1958), r"\b(?:446\s*)?w(?:est)?\.?\s*50th\b",
+                True, "жёлто-чёрная «фейерверк», «446 W. 50th St., N.Y.C.»"),
+    "pr-nj": ("prestige", (1958, 1964),
+              r"\bbergenfield\b|\b203\s*s(?:outh)?\.?\s*washington\b|"
+              r"\bn\.?\s*j\.?\s*labels?\b", False,
+              "жёлто-чёрная (стерео — серебристо-чёрная), «Bergenfield, N.J.»"),
+    "pr-trident": ("prestige", (1964, 1971), r"\btrident\b", False,
+                   "синяя с трезубцем"),
+    "pr-fantasy": ("prestige", (1971, 1990),
+                   r"\bdistributed\s*by\s*fantasy\b|\bfantasy\s*labels?\b",
+                   False, "«distributed by Fantasy Records, Berkeley»"),
+    "nj-purple": ("new jazz", (1958, 1965), r"\bpurple\s*labels?\b", False,
+                  "фиолетовая New Jazz, Bergenfield"),
+    "im-orange": ("impulse", (1961, 1967),
+                  r"\borange\s*(?:and|&|/|-)?\s*black\b|\borange\s*labels?\b|"
+                  r"\bam-?par\b|\babc[\s-]*paramount\b", False,
+                  "оранжево-чёрная: «Am-Par», «ABC-Paramount», «ABC Records»"),
+    "im-blackred": ("impulse", (1967, 1974),
+                    r"\b(?:black|red)\s*(?:and|&|/|-)\s*(?:red|black)\b|"
+                    r"\bblack\s*labels?\s*with\s*(?:an?\s*)?(?:orange|red)\b",
+                    False, "чёрная с широким оранжево-красным ободом, ABC"),
+    "im-green": ("impulse", (1974, 1979),
+                 r"\bgreen\s*(?:bulls?\s*-?\s*eye|target|labels?)\b", False,
+                 "зелёная «мишень»"),
+    "im-mca": ("impulse", (1978, 1995), r"\bmca\b", False, "MCA"),
+    "at-black": ("atlantic", (1955, 1958), r"\bblack\s*labels?\b", False,
+                 "чёрная (моно) / зелёная (стерео)"),
+    "at-bullseye": ("atlantic", (1958, 1959), r"\bbulls?\s*-?\s*eye\b", False,
+                    "«мишень»: красно-фиолетовая (моно), зелёно-синяя (стерео)"),
+    "at-whitefan": ("atlantic", (1960, 1962), r"\bwhite\s*fan\b", False,
+                    "белый веер на чёрном"),
+    "at-blackfan": ("atlantic", (1962, 1966), r"\bblack\s*fan\b", False,
+                    "чёрный веер на белом"),
+    "at-1841": ("atlantic", (1968, 1973), r"\b1841\s*broadway\b", True,
+                "зелёно-красная, «1841 Broadway» на ободе"),
+    "co-6eye": ("columbia", (1955, 1962), r"\b(?:6|six)[\s-]*eyes?\b", False,
+                "шесть «глаз»; стерео — «Stereo Fidelity»"),
+    "co-2eye": ("columbia", (1962, 1970),
+                r"\b(?:2|two)[\s-]*eyes?\b|\b360\s*sound\b|"
+                r"\bguaranteed\s*high\s*fidelity\b", False,
+                "два «глаза», «360 Sound» / «Guaranteed High Fidelity»"),
+    "co-1eye": ("columbia", (1970, 1995), r"\b(?:1|one)[\s-]*eye\b", False,
+                "один «глаз»"),
+    "ve-inc": ("verve", (1956, 1961),
+               r"\bverve\s*records,?\s*inc\b|\btrumpet(?:er)?\s*(?:player\s*)?"
+               r"labels?\b", False, "«Verve Records, Inc.» / «трубач»"),
+    "ve-mgm": ("verve", (1961, 1972), r"\bmgm\b", False,
+               "чёрная с «T», «MGM Records — a division of Metro-Goldwyn-Mayer»"),
+    "ve-polydor": ("verve", (1973, 1995), r"\bpolydor\b", False, "Polydor"),
+    "ri-grauer": ("riverside", (1955, 1964), r"\bbill\s*grauer\b", False,
+                  "«Bill Grauer Productions» — оригиналы"),
+    "ri-abc": ("riverside", (1965, 1969), r"\babc\b", False,
+               "ABC — переиздания"),
+}
+# New Jazz и подлейблы Prestige печатались по тем же адресам.
+_ERA_FAMILY = {"new jazz": ("new jazz", "prestige")}
+
+
+def era_of(text, fam):
+    """Эпоха этикетки со слов продавца: (с, по, ключи) или None. Если
+    сказано про две эпохи — их объединение (осторожнее)."""
+    if not fam or not text:
+        return None
+    fams = _ERA_FAMILY.get(fam, (fam,))
+    hit = []
+    for key, (f, years, rx, near, _) in ERAS.items():
+        if f not in fams:
+            continue
+        for m in re.finditer(rx, text, re.I):
+            if near and not re.search(
+                    r"\blabels?\b", text[max(0, m.start() - 30):m.end() + 30],
+                    re.I):
+                continue
+            hit.append((key, years))
+            break
+    if not hit:
+        return None
+    return (min(y[0] for _, y in hit), max(y[1] for _, y in hit),
+            [k for k, _ in hit])
+
+
 def plausible(vers, ev):
     """Издания мастера, совместимые с уликами лота, и что сработало."""
     notes = []
@@ -367,6 +473,17 @@ def plausible(vers, ev):
                 notes.append(f"год пресса {ev['year']}")
                 break
         years = sorted({v["year"] for v in out if v["year"]})
+    era = ev.get("era")
+    if era:
+        # Эпоха этикетки (слова продавца или фото): издания этих лет ±1.
+        lo, hi, keys = era
+        near = [v for v in out if v["year"] and lo - 1 <= v["year"] <= hi + 1]
+        if near:
+            out = near
+            notes.append(f"этикетка {'/'.join(keys)}: {lo}-{hi}")
+            return out, notes
+        notes.append(f"этикетка {'/'.join(keys)} ({lo}-{hi}): таких изданий "
+                     "у Discogs нет — без неё")
     if years:
         first = years[0]
         if ev["reissue"] and len(years) > 1:
@@ -455,6 +572,19 @@ def classify(x, price, min_floor=50.0, min_gap=2.5, up_mult=4.0, p_min=0.05):
     if x["ev"] >= max(min_floor, min_gap * price) and x["low"] >= 0.75 * price:
         return "ожидание"
     return None
+
+
+def price_limit(x, min_floor=50.0, min_gap=2.5, up_mult=4.0, p_min=0.05,
+                step=0.25, top=400.0):
+    """Предел цены: самая высокая цена (шаг 25 центов), при которой лот
+    ещё ставка какой-то группы, — сколько можно предложить продавцу.
+    None, если не ставка и при $1."""
+    best, p = None, 1.0
+    while p <= top:
+        if classify(x, p, min_floor, min_gap, up_mult, p_min):
+            best = p
+        p += step
+    return best
 
 
 # --- лейбл лота и его «семья» ----------------------------------------------
@@ -584,8 +714,10 @@ def find_master(d, artist, album, catno=None, target=None, fam=None):
 
 
 def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
-           seller="", fb=None):
-    """Полная оценка лота как ставки; None, если альбома нет на Discogs."""
+           seller="", fb=None, era=None):
+    """Полная оценка лота как ставки; None, если альбома нет на Discogs.
+    era — (с, по, [ключи]) эпохи этикетки по фото (проверка глазами);
+    без неё эпоха берётся из слов продавца, если они есть."""
     target = match_target(title, album)
     # Одноимённый лот без номера обложки не опознаётся: «John Coltrane John
     # Coltrane Impulse!» по лейблу сел на «Coltrane» (A-21, 1962), а на фото
@@ -599,6 +731,7 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     master, rel = find_master(d, artist, album, catno, target, fam)
     ev = evidence(title, text, asp, catno, store=is_store(title, seller, fb))
     ev["family"] = fam
+    ev["era"] = era or era_of(" ".join((title or "", text or "")), fam)
     country = ev["country"]
     if master:
         vers = vc.get(master, country)
@@ -628,3 +761,115 @@ def describe(x, k=4):
         rows.append(f"{v['year'] or '—'} {v['label'][:22]} {v['catno'][:18]} — "
                     f"{v['p'] * 100:.0f}%, от ${v['floor']:.0f}")
     return rows
+
+
+# --- пересчёт по фото этикетки ------------------------------------------------
+CARDS = os.path.join(ROOT, "cache", "ebay_cards.json")
+OUT = os.path.join(ROOT, "out")
+
+
+def find_row(item, out=OUT):
+    """Лот из последних файлов digger.py (находки и все оценённые)."""
+    import glob
+    num = str(item).split("|")[1] if "|" in str(item) else str(item)
+    files = sorted(glob.glob(os.path.join(out, "digger_*.csv")),
+                   key=os.path.getmtime, reverse=True)
+    for path in files:
+        if "summary" in path:
+            continue
+        with open(path, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                rid = r.get("id") or ""
+                if rid.split("|")[1:2] == [num] or rid == num or \
+                        (r.get("url") or "").rstrip("/").endswith("/" + num):
+                    r["id"] = rid or f"v1|{num}|0"
+                    return r
+    return None
+
+
+def era_range(keys=(), years=None):
+    """(с, по, [ключи]) из ключей ERAS и/или «1966-1970»."""
+    spans = [ERAS[k][1] for k in keys]
+    if years:
+        lo, _, hi = years.partition("-")
+        spans.append((int(lo), int(hi or lo)))
+    if not spans:
+        return None
+    return (min(s[0] for s in spans), max(s[1] for s in spans),
+            list(keys) or [years])
+
+
+def main():
+    import argparse
+    ap = argparse.ArgumentParser(
+        description="Пересчёт ставки по фото этикетки: после проверки "
+                    "глазами указать эпоху этикетки (--era) или годы.")
+    ap.add_argument("item", nargs="?", help="номер лота eBay")
+    ap.add_argument("--era", nargs="*", default=[],
+                    help="ключ эпохи этикетки (--eras — список)")
+    ap.add_argument("--years", help="годы пресса, «1966-1970»")
+    ap.add_argument("--price", type=float, help="цена (по умолчанию из файла)")
+    ap.add_argument("--eras", action="store_true", help="список эпох")
+    a = ap.parse_args()
+    if a.eras or not a.item:
+        for k, (fam, (lo, hi), _, _, look) in ERAS.items():
+            print(f"{k:14} {fam:10} {lo}-{hi}  {look}")
+        return 0
+    bad = [k for k in a.era if k not in ERAS]
+    if bad:
+        print(f"нет таких эпох: {', '.join(bad)} (список — --eras)",
+              file=sys.stderr)
+        return 2
+    num = a.item.split("|")[1] if "|" in a.item else a.item
+    row = find_row(num) or {"id": f"v1|{num}|0"}
+    try:
+        with open(CARDS, encoding="utf-8") as f:
+            card = json.load(f).get(row["id"]) or {}
+    except (OSError, ValueError):
+        card = {}
+    asp = {x.get("name"): str(x.get("value") or "")
+           for x in card.get("localizedAspects") or []}
+    # Старые файлы прогонов — без исполнителя и альбома: берём из карточки.
+    row.setdefault("artist", "")
+    row.setdefault("album", "")
+    row["artist"] = row["artist"] or asp.get("Artist", "").split(",")[0]
+    row["album"] = row["album"] or asp.get("Release Title", "")
+    row["catno"] = row.get("catno") or asp.get("Catalog Number", "")
+    if not row["artist"] or not row["album"] or not (row.get("title") or card):
+        print("лота нет ни в out/digger_*.csv, ни в кэше карточек — сначала "
+              "прогон digger.py", file=sys.stderr)
+        return 1
+    title = row.get("title") or (card.get("desc") or "")[:120]
+    text = " ".join((title, card.get("conditionDescription") or "",
+                     card.get("desc") or ""))
+    d = cs.D(tg._env_file_token())
+    vc = Versions(d)
+    era = era_range(a.era, a.years)
+    fb = row.get("fb")
+    x = assess(d, vc, row["artist"], row["album"], row.get("catno") or "",
+               title, text, asp, fresh=True, seller=row.get("seller") or "",
+               fb=int(float(fb)) if fb not in (None, "", "None") else None,
+               era=era)
+    d.save()
+    vc.save()
+    if not x:
+        print("Discogs: изданий под эти улики нет")
+        return 1
+    price = a.price or float(row.get("price") or 0)
+    g = classify(x, price)
+    p_big, thr = chance(x, price)
+    print(f"{row['artist']} — {row['album']}, ${price:.2f}: "
+          f"[{g or 'не ставка'}]")
+    lim = price_limit(x)
+    print(f"   ожидание ${x['ev']:.0f} ({x['ev'] / price:.1f}x) · худший "
+          f"случай ${x['low']:.0f} · шанс {p_big * 100:.0f}% на издание от "
+          f"${thr:.0f}" + (f" · предел цены ${lim:.2f}" if lim else ""))
+    for line in describe(x, 6):
+        print("   · " + line)
+    if x["notes"]:
+        print("   улики: " + "; ".join(x["notes"]))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

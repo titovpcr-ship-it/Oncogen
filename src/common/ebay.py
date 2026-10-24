@@ -69,7 +69,8 @@ def _headers(token: str) -> dict:
 
 
 def search_page(token, *, category_id=None, flt=None, limit=200, offset=0,
-                sort=None, q=None, fieldgroups=None, gtin=None, timeout=30):
+                sort=None, q=None, fieldgroups=None, gtin=None, timeout=30,
+                aspect_filter=None):
     """Одна страница выдачи. Возвращает разобранный JSON.
 
     offset обязан быть кратен limit — иначе eBay отдаёт 400. Это не
@@ -95,6 +96,11 @@ def search_page(token, *, category_id=None, flt=None, limit=200, offset=0,
         params["q"] = q
     if fieldgroups:
         params["fieldgroups"] = fieldgroups
+    # Характеристики лота: «categoryId:176985,Genre:{Jazz}» — весь раздел
+    # джаза без ключевых слов. Значение «Not Specified» eBay молча
+    # игнорирует (24.10.2026: total тот же, что без фильтра).
+    if aspect_filter:
+        params["aspect_filter"] = aspect_filter
     # СЕТЕВОЙ СБОЙ — ТОЖЕ ОТКАЗ API, И ЗАВОРАЧИВАТЬ ЕГО ОБЯЗАТЕЛЬНО.
     # 07.09.2026 прогон по 89 альбомам дошёл до 87-го и упал целиком на
     # разрыве TLS (SSLEOFError), потеряв весь результат: ApiRefused

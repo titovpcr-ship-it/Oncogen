@@ -81,6 +81,8 @@ def test_lush_life():
     p_big, thr = dm.chance(x, 10.50)
     check("шанс на издание от $50 — это доля оригинала", abs(p_big - p1) < 0.001
           and thr == 50.0)
+    check("предел цены — $19.75: дальше худший случай $17.99 < 90% цены",
+          dm.price_limit(x) == 19.75)
 
 
 def test_uliki():
@@ -177,9 +179,54 @@ def test_odnoimennyy_bez_nomera():
     check("одноимённый лот без номера не оценивается", x is None)
 
 
+def test_epokhi_etiketok():
+    e = dm.era_of("Hank Mobley Soul Station Blue Note 47 West 63rd labels",
+                  "blue note")
+    check("«47 West 63rd labels» — Blue Note 1957-1962",
+          e and e[:2] == (1957, 1962))
+    check("адрес на конверте без слова «label» — не улика",
+          dm.era_of("Blue Note back cover 47 West 63rd address", "blue note")
+          is None)
+    check("«NJ label» — Prestige 1958-1964",
+          (dm.era_of("Prestige NJ label mono", "prestige") or (0, 0))[:2]
+          == (1958, 1964))
+    check("«blue trident» — Prestige 1964-1971",
+          (dm.era_of("blue trident label", "prestige") or (0, 0))[:2]
+          == (1964, 1971))
+    check("«Liberty label» — Blue Note 1966-1970",
+          (dm.era_of("Liberty label pressing", "blue note") or (0, 0))[:2]
+          == (1966, 1970))
+    check("«orange/black» — Impulse! 1961-1967",
+          (dm.era_of("Impulse orange/black label", "impulse") or (0, 0))[:2]
+          == (1961, 1967))
+    check("«6 eye» — Columbia 1955-1962",
+          (dm.era_of("Miles Davis Columbia 6 eye mono", "columbia")
+           or (0, 0))[:2] == (1955, 1962))
+    check("New Jazz: фиолетовая и Bergenfield — объединение 1958-1965",
+          (dm.era_of("New Jazz purple label Bergenfield", "new jazz")
+           or (0, 0))[:2] == (1958, 1965))
+    check("эпоха чужого лейбла не применяется",
+          dm.era_of("Columbia 6 eye", "blue note") is None)
+    ev = ev_of("John Coltrane Lush Life Prestige LP", "7188")
+    ev["era"] = (1958, 1964, ["pr-nj"])
+    eds, notes = dm.plausible(LUSH, ev)
+    check("фото: жёлтая Bergenfield — оригинал 1961 и пресс 1964",
+          {v["id"] for v in eds} == {1, 2} and "pr-nj" in notes[-1])
+    x = dm.expectation(FakeD(FLOORS), eds)
+    check("…ожидание от $85, худший случай — $40 пресса 1964",
+          x["ev"] > 85 and abs(x["low"] - 39.99) < 0.01)
+    ev["era"] = (1971, 1990, ["pr-fantasy"])
+    eds, _ = dm.plausible(LUSH, ev)
+    check("фото: «distributed by Fantasy» — только OJC 1984",
+          [v["id"] for v in eds] == [4])
+    check("годы из командной строки: «1966-1970»",
+          dm.era_range((), "1966-1970") == (1966, 1970, ["1966-1970"]))
+
+
 def main():
     for fn in [test_lush_life, test_uliki, test_nadezhnaya_i_ozhidanie,
-               test_kartoteka, test_odnoimennyy_bez_nomera]:
+               test_kartoteka, test_odnoimennyy_bez_nomera,
+               test_epokhi_etiketok]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

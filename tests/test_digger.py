@@ -237,11 +237,96 @@ def test_almazy_do_40():
                                            "JAPAN Riverside JAZZ LP")))
 
 
+def _lot(i, created, title="John Coltrane Lush Life Prestige LP"):
+    return {"itemId": f"v1|{i}|0", "title": title, "itemCreationDate": created}
+
+
+def _when(minutes_ago, now="2026-10-25T07:10:00.000Z"):
+    return D._iso_shift(now, -60 * minutes_ago)
+
+
+def _flt(lo=0.0, hi=None):
+    return f"{lo:g}-{hi if hi is not None else 40:g}"
+
+
+def test_potok():
+    # Поток новых объявлений (O-98): страницы «свежие первыми» до отметки
+    # прошлого прогона.
+    check("сдвиг отметки на 15 минут",
+          D._iso_shift("2026-10-24T20:25:47.000Z", -900)
+          == "2026-10-24T20:10:47.000Z")
+    mark = _when(120)
+    pages = {}
+
+    def fetch(off, flt, aspect):
+        return {"itemSummaries": pages.get((aspect is not None, flt, off), [])}
+
+    # Раздел Jazz: 150 лотов за последний час и 50 старше отметки.
+    jazz = [_lot(k, _when(k * 0.4)) for k in range(150)] + \
+        [_lot(1000 + k, _when(200 + k)) for k in range(50)]
+    pages[(True, _flt(), 0)] = jazz
+    st = {"marks": {"jazz:0-40": mark}, "bands": {"all": [0]}}
+    took, dropped = [], {}
+    got, rf = D.scan_stream(fetch, st, _flt, 40.0, _when(26 * 60),
+                            lambda it, src, ms: took.append(it["itemId"]),
+                            lambda w: dropped.__setitem__(w, dropped.get(w, 0) + 1),
+                            3, pause=0, log=lambda m: None)
+    check("раздел Jazz: взяты только лоты новее отметки",
+          got["jazz:0-40"] == 150 and len(took) == 150)
+    check("отметка раздела сдвинулась на самый свежий лот",
+          st["marks"]["jazz:0-40"] == jazz[0]["itemCreationDate"])
+    # Весь винил: 10 тыс. лотов новее отметки — полоса делится надвое,
+    # половины наследуют старую отметку.
+    st = {"marks": {"jazz:0-40": _when(1), "all:0-40": mark},
+          "bands": {"all": [0]}}
+    for p in range(50):
+        pages[(False, _flt(), p * 200)] = [
+            _lot(5000 + p * 200 + k, _when((p * 200 + k) * 0.005),
+                 "Led Zeppelin IV LP" if k % 2 else "Sonny Clark Cool Struttin")
+            for k in range(200)]
+    took.clear()
+    dropped.clear()
+    got, rf = D.scan_stream(fetch, st, _flt, 40.0, _when(26 * 60),
+                            lambda it, src, ms: took.append(it["itemId"]),
+                            lambda w: dropped.__setitem__(w, dropped.get(w, 0) + 1),
+                            3, pause=0, log=lambda m: None)
+    took_all = [x for x in took if int(x.split("|")[1]) >= 5000]
+    check("весь винил: не джаз по заголовку не берётся",
+          dropped.get("поток: не джаз по заголовку") == 5000
+          and len(took_all) == 5000)
+    check("переполненная полоса делится по $20",
+          st["bands"]["all"] == [0, 20.0])
+    check("половины наследуют старую отметку",
+          st["marks"].get("all:0-20") == mark and st["marks"].get("all:20-40")
+          == mark and "all:0-40" not in st["marks"])
+    # Отказ eBay — отметка не двигается.
+    st = {"marks": {"jazz:0-40": mark}, "bands": {"all": [0]}}
+
+    def refuse(off, flt, aspect):
+        raise D.ApiRefused("HTTP 500")
+
+    got, rf = D.scan_stream(refuse, st, _flt, 40.0, _when(26 * 60),
+                            lambda *x: None, lambda w: None, 3, pause=0,
+                            log=lambda m: None)
+    check("отказ eBay: отметка на месте, отказы посчитаны",
+          st["marks"]["jazz:0-40"] == mark and rf == 2)
+    check("джаз по заголовку: имя, лейбл, картотека, слово «jazz»",
+          D.jazzy("John Coltrane Lush Life LP")
+          and D.jazzy("Ahmad Jamal Trio At The Pershing But Not For Me")
+          and D.jazzy("Vintage Jazz Record 1959 LP")
+          and D.jazzy("Kenny Burrell Midnight Blue LP"))
+    check("не джаз: рок и имена-омонимы картотеки",
+          not D.jazzy("Led Zeppelin IV LP Atlantic")
+          and not D.jazzy("Santana Abraxas Columbia LP")
+          and not D.jazzy("Air Moon Safari LP"))
+
+
 def main():
     for fn in [test_hlam_ne_otkryvaetsya, test_gde_kopat, test_zagolovok_v_albom,
                test_otsenka_prodavtsa, test_press_po_nomeru,
                test_nomer_ne_dokazyvaet_press, test_god_i_pereizdanie,
-               test_izdanie_po_nomeru_pod_drugim_nazvaniem, test_almazy_do_40]:
+               test_izdanie_po_nomeru_pod_drugim_nazvaniem, test_almazy_do_40,
+               test_potok]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
