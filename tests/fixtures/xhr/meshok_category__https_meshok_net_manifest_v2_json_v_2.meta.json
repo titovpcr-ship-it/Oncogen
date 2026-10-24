@@ -1,0 +1,16 @@
+{
+  "url": "https://meshok.net/manifest.v2.json?v=2",
+  "method": "GET",
+  "status": 200,
+  "post_data": null,
+  "request_headers": {
+    "sec-ch-ua-platform": "\"Linux\"",
+    "referer": "https://meshok.net/good/2211",
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+    "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+    "accept-language": "ru-RU,ru;q=0.9,en;q=0.8",
+    "sec-ch-ua-mobile": "?0"
+  },
+  "size": 1326,
+  "captured_for": "meshok_good_probe"
+}

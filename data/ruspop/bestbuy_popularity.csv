@@ -1,0 +1,392 @@
+order,artist,album,bb_title,price_usd,comp_value_usd,rating,reviews,batch,seen
+1,Jimi Hendrix,Experience Hendrix,Jimi Hendrix - Experience Hendrix: The Best Of Jimi Hendrix - VINYL LP,26.88,,5.0,171,1,2026-10-24
+2,Bob Marley,Legend,Bob Marley & the Wailers - Legend - VINYL LP,29.90,32.21,4.9,328,1,2026-10-24
+3,Prince,Purple Rain,Prince - Purple Rain - VINYL LP,29.25,,4.9,297,1,2026-10-24
+4,Creedence Clearwater Revival,Chronicle,Creedence Clearwater Revival - Chronicle - VINYL LP,32.04,,4.9,263,1,2026-10-24
+5,Led Zeppelin,Led Zeppelin I,Led Zeppelin - Led Zeppelin 1 - VINYL LP,31.42,,4.9,168,1,2026-10-24
+6,Beastie Boys,Licensed To Ill,Beastie Boys - Licensed To Ill (30th Anniversary Edition) - VINYL LP,32.32,,4.9,142,1,2026-10-24
+7,Chris Stapleton,Traveller,Chris Stapleton - Traveller - VINYL LP,37.20,,4.9,137,1,2026-10-24
+8,Foo Fighters,Greatest Hits,Foo Fighters - Greatest Hits - VINYL LP,36.89,,4.9,134,1,2026-10-24
+9,David Bowie,Changesonebowie,David Bowie - Changesonebowie - VINYL LP,28.26,,4.9,131,1,2026-10-24
+10,Elvis Presley,The Essential Elvis Presley,Elvis Presley - The Essential Elvis Presley - VINYL LP,30.33,,4.9,130,1,2026-10-24
+11,Led Zeppelin,Physical Graffiti,Led Zeppelin - Physical Graffiti - VINYL LP,34.20,40.72,5.0,44,1,2026-10-24
+12,Def Leppard,Hysteria,Def Leppard - Hysteria - VINYL LP,38.71,,5.0,42,1,2026-10-24
+13,The Beatles,Abbey Road,The Beatles - Abbey Road Anniversary (1LP) - VINYL LP,31.64,,4.9,109,1,2026-10-24
+14,Nirvana,Nevermind,Nirvana - Nevermind - VINYL LP,31.16,,4.9,108,1,2026-10-24
+15,Guns N' Roses,Appetite For Destruction,Guns N Roses - Appetite For Destruction - VINYL LP,37.77,39.76,4.9,103,1,2026-10-24
+16,Nirvana,Unplugged In New York,Nirvana - Unplugged In N.Y. - VINYL LP,29.88,31.37,4.9,96,1,2026-10-24
+17,Johnny Cash,The Essential Johnny Cash,Johnny Cash - The Essential Johnny Cash - VINYL LP,30.33,,4.9,94,1,2026-10-24
+18,Eagles,Their Greatest Hits 1971-1975,The Eagles - Their Greatest Hits 1971-1975 - VINYL LP,27.32,31.42,4.9,94,1,2026-10-24
+19,Wu-Tang Clan,Enter The Wu-Tang,Wu-Tang Clan - Enter Wu-Tang - VINYL LP,23.98,,4.9,93,1,2026-10-24
+20,The Beatles,Let It Be,The Beatles - Let It Be - VINYL LP,31.77,,5.0,36,1,2026-10-24
+21,Pink Floyd,The Dark Side of the Moon,Pink Floyd - The Dark Side of the Moon (50th Anniversary) - VINYL LP,33.59,,5.0,33,1,2026-10-24
+22,Soundgarden,Superunknown,Soundgarden - Superunknown - VINYL LP,36.81,39.78,4.9,66,1,2026-10-24
+23,Tool,Opiate,Tool - Opiate (ep) - VINYL LP,23.31,,5.0,31,1,2026-10-24
+24,Queen,Greatest Hits II,Queen - Queen Greatest Hits II (LP) - VINYL LP,36.61,,4.9,80,1,2026-10-24
+25,Michael Jackson,Bad,Michael Jackson - Bad - VINYL LP,29.50,,4.9,80,1,2026-10-24
+26,AC/DC,Highway to Hell,AC/DC - Highway to Hell - VINYL LP,28.25,,4.9,77,1,2026-10-24
+27,Pink Floyd,A Foot In The Door,Pink Floyd - The Best Of Pink Floyd: A Foot In The Door - VINYL LP,41.58,44.99,4.9,61,1,2026-10-24
+28,Earth Wind & Fire,The Best Of Earth Wind & Fire,"Earth Wind & Fire - The BEST of EARTH, WIND & FIRE Vol. 1 (1978) - VINYL LP",23.98,,4.9,61,1,2026-10-24
+29,Rush,2112,Rush - 2112 - VINYL LP,30.21,,4.9,70,1,2026-10-24
+30,Jimi Hendrix,Are You Experienced,Jimi Hendrix - Are You Experienced - VINYL LP,22.59,,4.8,285,1,2026-10-24
+31,Tyler The Creator,Call Me If You Get Lost,"Tyler, The Creator - Call Me If You Get Lost - VINYL LP",31.42,,5.0,29,1,2026-10-24
+32,Rush,Moving Pictures,Moving Pictures [LP] [VINYL] (исполнитель на скриншоте не указан — Rush по названию),30.86,,4.9,55,1,2026-10-24
+33,Jimi Hendrix,Axis: Bold As Love,Jimi Hendrix Experience - Axis: Bold As Love - VINYL LP,27.79,,4.9,62,1,2026-10-24
+34,Michael Jackson,Thriller,Michael Jackson - Thriller (Picture Disc) - VINYL LP,29.50,,4.8,264,2,2026-10-24
+35,The Beach Boys,Pet Sounds,The Beach Boys - Pet Sounds - VINYL LP,31.91,,4.9,54,2,2026-10-24
+36,Bruce Springsteen,Born To Run,Bruce Springsteen - Born To Run - VINYL LP,28.25,,4.9,54,2,2026-10-24
+37,Fleetwood Mac,Greatest Hits,Fleetwood Mac - Greatest Hits - VINYL LP,27.32,,4.8,245,2,2026-10-24
+38,The Beatles,Magical Mystery Tour,The Beatles - Magical Mystery Tour - VINYL LP,39.85,,5.0,28,2,2026-10-24
+39,Led Zeppelin,IV,Led Zeppelin - Led Zeppelin IV - VINYL LP,29.25,32.34,4.8,211,2,2026-10-24
+40,Kendrick Lamar,Damn,Kendrick Lamar - Damn. - VINYL LP,40.82,,4.9,51,2,2026-10-24
+41,Miles Davis,Kind of Blue,Miles Davis - Kind of Blue - VINYL LP,27.42,,4.8,194,2,2026-10-24
+42,NWA,Straight Outta Compton,N.W.A. - Straight Outta Compton - VINYL LP,31.64,,5.0,27,2,2026-10-24
+43,Kiss,Destroyer,Kiss - Destroyer - VINYL LP,29.18,,4.9,49,2,2026-10-24
+44,Metallica,Metallica,Metallica - Metallica (Remastered) - VINYL LP,30.62,34.03,4.9,49,2,2026-10-24
+45,Kendrick Lamar,Good Kid MAAD City,"Kendrick Lamar - Good Kid, M.A.A.D City - VINYL LP",42.94,,4.8,179,2,2026-10-24
+46,Bob Dylan,The Essential Bob Dylan,Bob Dylan - The Essential Bob Dylan - VINYL LP,30.32,,4.9,48,2,2026-10-24
+47,The Rolling Stones,Honk,The Rolling Stones - HONK - VINYL LP,41.32,,4.9,48,2,2026-10-24
+48,Eagles,Hotel California,The Eagles - Hotel California - VINYL LP,28.12,,4.8,177,2,2026-10-24
+49,The Beatles,Rubber Soul,The Beatles - Rubber Soul - VINYL LP,32.52,,4.8,159,2,2026-10-24
+50,Linkin Park,Hybrid Theory,Linkin Park - Hybrid Theory - VINYL LP,28.12,32.34,4.9,46,2,2026-10-24
+51,U2,The Joshua Tree,U2 - The Joshua Tree - VINYL LP,39.58,,4.9,46,2,2026-10-24
+52,Elton John,Goodbye Yellow Brick Road,Elton John - Goodbye Yellow Brick Road - VINYL LP,39.89,,4.9,45,2,2026-10-24
+53,Van Halen,1984,Van Halen - 1984 - VINYL LP,27.32,,4.9,44,2,2026-10-24
+54,Tom Petty,Wildflowers & All The Rest,Tom Petty - Wildflowers & All The Rest - VINYL LP,36.23,41.60,5.0,25,3,2026-10-24
+55,Lana Del Rey,Born to Die,Lana Del Rey - Born to Die - VINYL LP,34.61,,4.8,137,3,2026-10-24
+56,Various,Guardians of the Galaxy Vol 2,Various Artists - Guardians of the Galaxy Vol. 2 (Songs From the Motion Picture) (Deluxe Edition) - VINYL LP,31.82,,4.8,137,3,2026-10-24
+57,Jeff Buckley,Grace,Jeff Buckley - Grace - VINYL LP,27.42,,5.0,24,3,2026-10-24
+58,Pearl Jam,Ten,Pearl Jam - Ten - VINYL LP (обложка без надписи),33.77,,4.8,62,3,2026-10-24
+59,Pearl Jam,Ten,Pearl Jam - Ten - VINYL LP (розовая обложка),23.98,25.46,5.0,24,3,2026-10-24
+60,Led Zeppelin,Mothership,Led Zeppelin - Mothership - VINYL LP,80.47,89.25,4.9,41,3,2026-10-24
+61,King Crimson,In the Court of the Crimson King,King Crimson - In the Court of the Crimson King - VINYL LP,31.15,,4.9,39,3,2026-10-24
+62,Various,Guardians Of The Galaxy Vol 3,Various Artists - Guardians Of The Galaxy 3: Awesome Mix Vol 3 - VINYL LP,32.55,,5.0,23,3,2026-10-24
+63,Nirvana,Nirvana,Nirvana - Nirvana - VINYL LP,30.57,,5.0,23,3,2026-10-24
+64,Guns N' Roses,Appetite For Destruction,Guns N' Roses - Appetite for Destruction - VINYL LP (второе издание),30.08,32.33,4.8,97,3,2026-10-24
+65,The Beatles,Help,The Beatles - Help - VINYL LP,31.76,,5.0,22,3,2026-10-24
+66,Radiohead,OK Computer,Radiohead - Ok Computer - VINYL LP,42.88,,5.0,22,3,2026-10-24
+67,C418,Minecraft Volume Alpha,C418 - Minecraft Volume Alpha (Transparent Green Vinyl) - VINYL LP,28.32,,5.0,22,3,2026-10-24
+68,Bruce Springsteen,Born In The USA,Bruce Springsteen - Born In The Usa - VINYL LP,28.25,,4.9,36,3,2026-10-24
+69,Rage Against the Machine,Rage Against The Machine,Rage Against the Machine - Rage Against The Machine - VINYL LP,29.50,31.88,4.9,35,3,2026-10-24
+70,Panic! At the Disco,Death Of A Bachelor,Panic! At the Disco - Death Of A Bachelor - VINYL LP,30.07,,4.8,76,3,2026-10-24
+71,Van Morrison,Moondance,Van Morrison - Moondance - VINYL LP,29.25,,4.9,33,3,2026-10-24
+72,David Bowie,Ziggy Stardust,David Bowie - The Rise and Fall of Ziggy Stardust and the Spiders from Mars - VINYL LP,29.18,,4.8,73,3,2026-10-24
+73,Black Sabbath,Paranoid,Black Sabbath - Paranoid - VINYL LP,28.12,,4.8,72,3,2026-10-24
+74,2Pac,Me Against The World,2Pac - Me Against The World - VINYL LP,39.76,,4.9,32,3,2026-10-24
+75,Smashing Pumpkins,Mellon Collie and The Infinite Sadness,Smashing Pumpkins - Mellon Collie and The Infinite Sadness - VINYL LP,88.08,,5.0,21,3,2026-10-24
+76,Gorillaz,Gorillaz,Gorillaz - Gorillaz - VINYL LP,34.04,,4.8,71,3,2026-10-24
+77,Van Halen,Van Halen,Van Halen - Van Halen - VINYL LP,27.32,,5.0,20,3,2026-10-24
+78,Al Green,Greatest Hits,Al Green - Greatest Hits - VINYL LP,29.31,,4.8,68,3,2026-10-24
+79,Santana,Greatest Hits,Santana - SANTANA Greatest Hits (1974) - VINYL LP,23.98,,4.9,31,3,2026-10-24
+80,John Coltrane,A Love Supreme,John Coltrane - A Love Supreme - VINYL LP,29.18,32.33,4.8,61,3,2026-10-24
+81,Smashing Pumpkins,Gish,Smashing Pumpkins - Gish - VINYL LP,33.25,,5.0,19,3,2026-10-24
+82,Journey,Greatest Hits,Journey - Greatest Hits - VINYL LP,39.19,,4.9,29,3,2026-10-24
+83,Lizzo,Cuz I Love You,Lizzo - Cuz I Love You - VINYL LP (доставка $4.99),9.99,26.99,4.9,30,3,2026-10-24
+84,The Allman Brothers Band,Live at Fillmore East,The Allman Brothers Band - Live at Fillmore East - VINYL LP,36.69,39.76,4.8,63,3,2026-10-24
+85,Bruce Springsteen,Greatest Hits,Bruce Springsteen - Greatest Hits - VINYL LP,35.05,,4.9,29,3,2026-10-24
+86,Sly & the Family Stone,Greatest Hits,Sly & the Family Stone - SLY & THE FAMILY STONE Greatest Hits (1970) - VINYL LP,23.98,,4.8,54,3,2026-10-24
+87,Kiss,Rock and Roll Over,Rock and Roll Over [180-Gram Vinyl] [LP] (исполнитель не указан — Kiss по названию),31.28,,4.9,27,3,2026-10-24
+88,Tyler The Creator,Igor,"Tyler, The Creator - Igor - VINYL LP",29.24,,4.8,51,4,2026-10-24
+89,Amy Winehouse,Back to Black,Amy Winehouse - Back to Black - VINYL LP,28.10,29.84,4.7,239,4,2026-10-24
+90,The Notorious B.I.G.,Greatest Hits,The Notorious B.I.G. - Greatest Hits - VINYL LP (цена на скриншоте не видна),,,4.8,44,4,2026-10-24
+91,Metallica,Hardwired To Self-Destruct,Metallica - Hardwired... To Self-Destruct - VINYL LP,29.81,,4.8,44,4,2026-10-24
+92,Lauryn Hill,The Miseducation of Lauryn Hill,Lauryn Hill - Miseducation of Lauryn Hill - VINYL LP,30.33,,4.8,44,4,2026-10-24
+93,The Black Keys,Thickfreakness,The Black Keys - Thickfreakness - VINYL LP,29.31,,4.9,24,4,2026-10-24
+94,Eagles,Hell Freezes Over,The Eagles - Hell Freezes Over - VINYL LP,36.82,39.76,4.8,43,4,2026-10-24
+95,Megadeth,Peace Sells But Who's Buying,Megadeth - Peace Sells But Who's Buying - VINYL LP,32.63,,5.0,16,4,2026-10-24
+96,Elvis Presley,Elvis 30 #1 Hits,Elvis Presley - Elvis 30 #1 Hits - VINYL LP,30.32,,5.0,16,4,2026-10-24
+97,Kanye West,Late Registration,Kanye West - Late Registration - VINYL LP,46.56,48.41,5.0,16,4,2026-10-24
+98,Khalid,American Teen,Khalid - American Teen - VINYL LP,26.88,,4.8,41,4,2026-10-24
+99,Kids See Ghosts,Kids See Ghosts,Kids See Ghosts - Kids See Ghosts - VINYL LP,28.19,30.36,4.9,23,4,2026-10-24
+100,Rage Against the Machine,Rage Against The Machine XX,Rage Against the Machine - Rage Against The Machine XX - VINYL LP,28.86,,4.9,23,4,2026-10-24
+101,Paul Simon,Graceland,Paul Simon - Graceland: 25th Anniversary Edition - VINYL LP,28.25,30.40,4.9,23,4,2026-10-24
+102,Various,Stranger Things,Various Artists - Stranger Things: Seasons One and Two (Music From the Netflix Original Series) - VINYL LP,30.31,,4.7,127,4,2026-10-24
+103,Various,Dirty Dancing,Dirty Dancing [Original Motion Picture Soundtrack] [LP] [VINYL],23.98,,4.8,39,4,2026-10-24
+104,Billie Eilish,Happier Than Ever,UMG - Billie Eilish - Happier Than Ever - VINYL LP,35.16,37.13,4.8,39,4,2026-10-24
+105,Taylor Swift,Speak Now,Taylor Swift - Speak Now (Taylor's Version) - VINYL LP,47.79,,4.8,38,4,2026-10-24
+106,Green Day,Greatest Hits God's Favorite Band,Green Day - Greatest Hits: God's Favorite Band - VINYL LP,36.52,38.25,4.7,109,4,2026-10-24
+107,2Pac,Greatest Hits,2Pac - Greatest Hits - VINYL LP,70.15,71.16,5.0,15,4,2026-10-24
+108,Nas,Illmatic,Nas - Illmatic XX - VINYL LP,27.42,,5.0,15,4,2026-10-24
+109,Gorillaz,The Now Now,Gorillaz - The Now Now - VINYL LP,28.53,,4.9,21,4,2026-10-24
+110,Pearl Jam,Vs,Pearl Jam - PEARL JAM / VS - VINYL LP,29.33,,4.8,35,4,2026-10-24
+111,Def Leppard,The Story So Far,Def Leppard - The Story So Far: The Best Of Def Leppard - VINYL LP,39.33,,4.8,35,4,2026-10-24
+112,Aretha Franklin,Atlantic Singles Collection 1967-1970,Aretha Franklin - Atlantic Singles Collection 1967-1970 - VINYL LP,37.45,,5.0,15,4,2026-10-24
+113,The Beatles,Beatles for Sale,The Beatles - Beatles for Sale - VINYL LP,32.34,,5.0,15,4,2026-10-24
+114,Led Zeppelin,Led Zeppelin II,Led Zeppelin - Led Zeppelin 2 - VINYL LP,29.25,,4.7,94,4,2026-10-24
+115,Travis Scott,Astroworld,Travis Scott - Astroworld - VINYL LP,31.42,,4.7,94,5,2026-10-24
+116,Sublime,Sublime,Sublime - Sublime - VINYL LP,34.06,37.15,4.7,94,5,2026-10-24
+117,Jimi Hendrix,Smash Hits,Jimi Hendrix - Smash Hits - VINYL LP,23.31,,4.9,20,5,2026-10-24
+118,Metallica,Kill Em All,Metallica - Kill Em All - VINYL LP,26.32,,4.8,32,5,2026-10-24
+119,AC/DC,Dirty Deeds Done Dirt Cheap,AC/DC - Dirty Deeds Done Dirt Cheap - VINYL LP,27.57,,5.0,14,5,2026-10-24
+120,John Mellencamp,The Best That I Could Do 1978-1988,John Mellencamp - The Best That I Could Do 1978-1988 - VINYL LP,39.76,,5.0,14,5,2026-10-24
+121,Weezer,Weezer,Weezer - Weezer (Blue Album) - VINYL LP,28.61,,4.7,73,5,2026-10-24
+122,Various,Stranger Things 3,"Various Artists - Stranger Things: Soundtrack from the Netflix Original Series, Season 3 - VINYL LP",33.77,,4.9,19,5,2026-10-24
+123,Harry Styles,Harry's House,Harry Styles - Harry's House - VINYL LP,37.94,,4.8,29,5,2026-10-24
+124,Harry Styles,Fine Line,Harry Styles - Fine Line - VINYL LP,36.49,38.41,4.7,63,5,2026-10-24
+125,Bon Jovi,New Jersey,Bon Jovi - New Jersey - VINYL LP,39.76,,4.9,18,5,2026-10-24
+126,Sublime,Greatest Hits,Sublime - Greatest Hits - VINYL LP,29.92,,4.9,18,5,2026-10-24
+127,Juice Wrld,Legends Never Die,Juice Wrld - Legends Never Die - VINYL LP,41.53,,4.9,18,5,2026-10-24
+128,Prince,Sign O The Times,Sign 'O' the Times [LP] [VINYL] (исполнитель не указан — Prince по названию),49.16,,4.9,18,5,2026-10-24
+129,Bruce Springsteen,Letter To You,Bruce Springsteen - Letter To You - VINYL LP,14.99,32.99,4.9,18,5,2026-10-24
+130,Imagine Dragons,Evolve,Imagine Dragons - Evolve - VINYL LP,35.49,,4.8,28,5,2026-10-24
+131,Beastie Boys,To The 5 Boroughs,Beastie Boys - To The 5 Boroughs - VINYL LP,39.76,,5.0,13,5,2026-10-24
+132,Pearl Jam,Rearviewmirror,Pearl Jam - Rearview-Mirror Vol. 1 (Up Side) - VINYL LP,34.15,35.99,5.0,13,5,2026-10-24
+133,Billie Eilish,Hit Me Hard And Soft,UMG - Billie Eilish - Hit Me Hard And Soft - VINYL LP,36.87,,5.0,13,5,2026-10-24
+134,The Black Crowes,Shake Your Money Maker,The Black Crowes - Shake Your Money Maker (2020 Remaster) - VINYL LP,30.36,,5.0,13,5,2026-10-24
+135,Nas,Illmatic,Nas - Illmatic - VINYL LP (Best Selling),25.84,,5.0,13,5,2026-10-24
+136,Michael Jackson,Off The Wall,Michael Jackson - Off The Wall - VINYL LP,29.50,,4.8,27,5,2026-10-24
+137,Bruno Mars,24k Magic,Bruno Mars - 24k Magic - VINYL LP,28.12,,4.7,55,5,2026-10-24
+138,Childish Gambino,Because The Internet,Childish Gambino - Because The Internet - VINYL LP,40.73,,4.9,17,5,2026-10-24
+139,SZA,SOS,SZA - SOS - VINYL LP,36.89,,4.9,17,5,2026-10-24
+140,Sublime,40oz To Freedom,Sublime - 40oz. To Freedom - VINYL LP,37.15,,4.9,17,5,2026-10-24
+141,James Taylor,Greatest Hits,James Taylor - James Taylor's Greatest Hits (2019 Remaster) - VINYL LP,29.18,,4.9,17,5,2026-10-24
+142,Grateful Dead,The Best Of The Grateful Dead 2,The Grateful Dead - Best Of The Grateful Dead 2: 1977-1989 - VINYL LP,36.84,39.99,4.9,17,5,2026-10-24
+143,Drake,Take Care,Drake - Take Care - VINYL LP,35.79,,4.7,51,5,2026-10-24
+144,Led Zeppelin,Led Zeppelin III,Led Zeppelin - Led Zeppelin 3 - VINYL LP,29.25,,4.8,25,5,2026-10-24
+145,Cypress Hill,Black Sunday,Cypress Hill - Black Sunday - VINYL LP,33.77,36.82,5.0,12,5,2026-10-24
+146,Taylor Swift,Folklore,Taylor Swift - Folklore - VINYL LP,37.20,,5.0,12,5,2026-10-24
+147,Michael Jackson,Thriller,Michael Jackson - Thriller: 25th Anniversary Edition - VINYL LP,33.77,,5.0,12,5,2026-10-24
+148,Ace Frehley,Ace Frehley,Kiss - Ace Frehley - VINYL LP,31.00,,5.0,12,5,2026-10-24
+149,Ghost,Prequelle,The Ghost - Prequelle - VINYL LP,30.45,,5.0,12,5,2026-10-24
+150,Ed Sheeran,Divide,Ed Sheeran - Divide (Deluxe) - VINYL LP,37.45,,4.7,47,5,2026-10-24
+151,The Beatles,A Hard Day's Night,The Beatles - A Hard Day's Night - VINYL LP,31.37,,4.9,16,5,2026-10-24
+152,Beastie Boys,Beastie Boys Music,Beastie Boys - Beastie Boys Music - VINYL LP,39.76,,4.9,16,5,2026-10-24
+153,Kiss,Alive,Kiss - Alive - VINYL LP,40.33,,4.9,16,6,2026-10-24
+154,David Bowie,Hunky Dory,David Bowie - Hunky Dory - VINYL LP,29.18,,4.9,16,6,2026-10-24
+155,My Chemical Romance,Three Cheers for Sweet Revenge,My Chemical Romance - Three Cheers for Sweet Revenge - VINYL LP,27.32,28.89,4.9,16,6,2026-10-24
+156,Fleetwood Mac,Rumours,Fleetwood Mac - Rumours - VINYL LP (2LP),51.11,58.34,4.9,16,6,2026-10-24
+157,Alice in Chains,Facelift,Alice in Chains - Facelift - VINYL LP,33.77,,4.8,24,6,2026-10-24
+158,Led Zeppelin,Houses of the Holy,Led Zeppelin - Houses of the Holy - VINYL LP,29.25,32.34,4.8,24,6,2026-10-24
+159,Pantera,History Of Hostility,Pantera - History Of Hostility - VINYL LP,27.65,,4.8,23,6,2026-10-24
+160,Green Day,Insomniac,Green Day - Insomniac (25th Anniversary) - VINYL LP,37.45,,4.9,15,6,2026-10-24
+161,Eminem,Revival,Eminem - Revival - VINYL LP,40.73,,4.9,15,6,2026-10-24
+162,Various,Singles,Various - Singles (Original Motion Picture Soundtrack) - VINYL LP,33.77,,4.9,15,6,2026-10-24
+163,Green Day,Dookie,Green Day - Dookie (30th Anniversary) (baby blue LP) - VINYL LP,27.32,28.89,4.9,15,6,2026-10-24
+164,Boston,Boston,Boston - Boston - VINYL LP,23.98,25.24,4.9,15,6,2026-10-24
+165,Rob Zombie,The Sinister Urge,Rob Zombie - The Sinister Urge - VINYL LP,32.38,,5.0,11,6,2026-10-24
+166,Judas Priest,Firepower,Judas Priest - Firepower - VINYL LP,43.49,,5.0,11,6,2026-10-24
+167,Foo Fighters,The Essential Foo Fighters,Foo Fighters - The Essential Foo Fighters - VINYL LP,40.72,41.99,5.0,11,6,2026-10-24
+168,The Notorious B.I.G.,Ready To Die,The Notorious B.I.G. - Ready To Die - VINYL LP,37.45,,5.0,11,6,2026-10-24
+169,Stevie Wonder,Original Musiquarium,Stevie Wonder - Original Musiquarium - VINYL LP,33.19,35.76,5.0,11,6,2026-10-24
+170,Foo Fighters,Wasting Light,Foo Fighters - Wasting Light - VINYL LP,36.89,,5.0,11,6,2026-10-24
+171,The Beatles,With the Beatles,The Beatles - With the Beatles - VINYL LP,31.38,,5.0,11,6,2026-10-24
+172,Queen,The Game,Queen - The Game - VINYL LP,26.83,,5.0,11,6,2026-10-24
+173,Deftones,White Pony,Deftones - White Pony - VINYL LP,34.66,38.24,5.0,11,6,2026-10-24
+174,Foo Fighters,Concrete And Gold,Foo Fighters - Concrete And Gold - VINYL LP,31.42,,4.7,36,6,2026-10-24
+175,Pink Floyd,Meddle,Pink Floyd - Meddle - VINYL LP,29.18,,4.9,14,6,2026-10-24
+176,Halsey,Manic,Halsey - Manic - VINYL LP,29.01,33.25,4.9,13,6,2026-10-24
+177,R.E.M.,Automatic For The People,R.E.M. - Automatic For The People (25th Anniversary) - VINYL LP,30.40,,4.9,13,6,2026-10-24
+178,Kanye West,808s & Heartbreak,Kanye West - 808S & Heartbreak - VINYL LP,70.42,73.58,4.9,13,6,2026-10-24
+179,Pink Floyd,Animals,Pink Floyd - Animals (2018 Remix) - VINYL LP,30.33,,5.0,11,6,2026-10-24
+180,Various,Black Panther,Various Artists - Black Panther The Album Music From And Inspired - VINYL LP,41.32,,4.8,21,6,2026-10-24
+181,John Lennon,Imagine,John Lennon - Imagine - VINYL LP,30.73,,4.7,37,6,2026-10-24
+182,The Jackson 5,The Ultimate Collection,The Jackson 5 - The Ultimate Collection - VINYL LP,33.46,,4.9,14,6,2026-10-24
+183,Kings of Leon,Walls,Kings of Leon - Walls - VINYL LP,30.47,,4.9,14,6,2026-10-24
+184,Playboi Carti,Whole Lotta Red,Playboi Carti - Whole Lotta Red - VINYL LP,41.32,,4.8,20,6,2026-10-24
+185,Adele,19,Adele - 19 - VINYL LP,30.01,,4.7,30,6,2026-10-24
+186,Judas Priest,Screaming For Vengeance,Judas Priest - Screaming For Vengeance - VINYL LP,27.51,,5.0,10,6,2026-10-24
+187,The Beatles,Please Please Me,The Beatles - Please Please Me - VINYL LP,31.57,,5.0,10,6,2026-10-24
+188,Fleetwood Mac,The Dance,Fleetwood Mac - The Dance - VINYL LP,37.45,,5.0,10,6,2026-10-24
+189,Sex Pistols,Never Mind the Bollocks,The Sex Pistols - Never Mind the Bollocks - VINYL LP,29.25,,5.0,10,6,2026-10-24
+190,Tom Petty,Damn The Torpedoes,Tom Petty & The Heartbreakers - Damn The Torpedoes - VINYL LP (название по обложке),30.01,,5.0,10,7,2026-10-24
+191,Mastodon,Crack the Skye,Mastodon - Crack the Skye - VINYL LP,27.32,28.89,5.0,10,7,2026-10-24
+192,Nas,I Am,Nas - I Am.... - VINYL LP,33.48,,5.0,10,7,2026-10-24
+193,The Beatles,Past Masters,The Beatles - Past Masters - VINYL LP,41.46,,5.0,10,7,2026-10-24
+194,Snoop Dogg,Doggystyle,Snoop Doggy Dogg - Doggystyle - Clear Vinyl - VINYL LP,34.32,,5.0,10,7,2026-10-24
+195,The Who,Who's Next,The Who - Who's Next - VINYL LP,32.02,,5.0,10,7,2026-10-24
+196,Zach Bryan,American Heartbreak,Zach Bryan - American Heartbreak - VINYL LP,40.88,46.28,5.0,10,7,2026-10-24
+197,A Tribe Called Quest,We Got It From Here,Tribe Called Quest - We Got It From Here: Thank You 4 Your Service - VINYL LP,30.38,,4.8,18,7,2026-10-24
+198,Beastie Boys,The In Sound From Way Out,Beastie Boys - The In Sound From Way Out - VINYL LP,31.82,,4.8,18,7,2026-10-24
+199,SZA,Ctrl,UMG - SZA - CTRL - VINYL LP,27.03,,4.7,27,7,2026-10-24
+200,Kendrick Lamar,Mr. Morale & The Big Steppers,Kendrick Lamar - Mr. Morale & The Big Steppers - VINYL LP,47.31,,4.7,27,7,2026-10-24
+201,Chris Stapleton,From A Room Volume 2,Chris Stapleton - From A Room: Volume 2 - VINYL LP,29.19,,4.9,12,7,2026-10-24
+202,The Doobie Brothers,Best of the Doobie Brothers,The Doobie Brothers - Best of the Doobie Brothers - VINYL LP,27.32,,4.9,12,7,2026-10-24
+203,Pink Floyd,The Division Bell,Pink Floyd - Division Bell - VINYL LP,46.02,,4.9,12,7,2026-10-24
+204,Panic! At the Disco,A Fever You Can't Sweat Out,Panic! At the Disco - Fever You Can't Sweat Out - VINYL LP,35.37,37.55,4.8,16,7,2026-10-24
+205,Bob Dylan,Greatest Hits,Bob Dylan - Greatest Hits - VINYL LP,24.81,,4.7,25,7,2026-10-24
+206,Meat Loaf,Bat Out Of Hell,Meat Loaf - Bat Out Of Hell - VINYL LP,25.91,,5.0,9,7,2026-10-24
+207,The Weeknd,Beauty Behind The Madness,The Weeknd - Beauty Behind The Madness - VINYL LP,41.45,,5.0,9,7,2026-10-24
+208,Van Halen,Fair Warning,Van Halen - Fair Warning - VINYL LP,27.32,,5.0,9,7,2026-10-24
+209,Jason Isbell,The Nashville Sound,Jason Isbell - The Nashville Sound - VINYL LP,24.50,,5.0,9,7,2026-10-24
+210,David Bowie,Heroes,David Bowie - Heroes (2017 Remastered Version) - VINYL LP,29.18,,5.0,9,7,2026-10-24
+211,Too Short,Life Is Too Short,Too Short - Life Is...Too $hort - VINYL LP,26.04,,5.0,9,7,2026-10-24
+212,Amy Winehouse,Lioness Hidden Treasures,Amy Winehouse - Lioness: Hidden Treasures - VINYL LP,37.03,39.78,5.0,9,7,2026-10-24
+213,Foo Fighters,The Colour and The Shape,Foo Fighters - Colour and The Shape - VINYL LP,36.89,,5.0,9,7,2026-10-24
+214,Prince,Parade,Prince - Parade - VINYL LP,27.20,,5.0,9,7,2026-10-24
+215,The Rolling Stones,Hackney Diamonds,The Rolling Stones - Hackney Diamonds - VINYL LP,37.15,,5.0,9,7,2026-10-24
+216,System of a Down,Mezmerize,System of a Down - Mezmerize - VINYL LP,23.98,,5.0,9,7,2026-10-24
+217,The Weeknd,Dawn FM,The Weeknd - Dawn FM - VINYL LP,39.25,,5.0,9,7,2026-10-24
+218,Future,I Never Liked You,Future - I Never Liked You - VINYL LP,37.75,,5.0,9,7,2026-10-24
+219,Post Malone,Stoney,Post Malone - Stoney - VINYL LP,43.32,,5.0,9,7,2026-10-24
+220,Jack White,Blunderbuss,Jack White - Blunderbuss - VINYL LP,27.96,,5.0,9,7,2026-10-24
+221,Nicki Minaj,Pink Friday 2,Nicki Minaj - Pink Friday 2 - VINYL LP (доставка $4.99),14.99,35.99,5.0,9,7,2026-10-24
+222,Bruce Springsteen,Darkness On The Edge Of Town,Bruce Springsteen - Darkness On The Edge Of Town - VINYL LP,28.25,,5.0,9,7,2026-10-24
+223,Nirvana,Live At The Paramount,Nirvana - Live At The Paramount - VINYL LP,37.08,39.81,5.0,9,7,2026-10-24
+224,Nine Inch Nails,The Downward Spiral,Nine Inch Nails - The Downward Spiral - VINYL LP,45.33,,5.0,9,7,2026-10-24
+225,Kenny Rogers,21 Number Ones,Kenny Rogers - 21 Number Ones - VINYL LP,35.76,,5.0,9,7,2026-10-24
+226,Tom Petty,Full Moon Fever,Tom Petty - Full Moon Fever - VINYL LP,29.88,32.33,5.0,9,7,2026-10-24
+227,Tremonti,Marching In Time,Tremonti - Marching In Time (BBY) - VINYL LP (доставка $4.99),14.99,28.99,5.0,9,7,2026-10-24
+228,A Tribe Called Quest,Midnight Marauders,Tribe Called Quest - Midnight Marauders - VINYL LP,26.04,,4.6,48,7,2026-10-24
+229,The Beatles,Yellow Submarine,The Beatles - Yellow Submarine - VINYL LP,32.31,,4.8,15,8,2026-10-24
+230,Rage Against the Machine,Evil Empire,Rage Against the Machine - Evil Empire - VINYL LP,26.73,,4.9,11,8,2026-10-24
+231,Taylor Swift,Red,Taylor Swift - Red (Taylor's Version) - VINYL LP,49.32,,4.9,11,8,2026-10-24
+232,Steely Dan,Aja,Steely Dan - Aja - VINYL LP,31.38,32.96,4.9,11,8,2026-10-24
+233,Madvillain,Madvillainy,Madvillain - Madvillainy - VINYL LP,35.91,,4.9,11,8,2026-10-24
+234,Jimmy Eat World,Bleed American,Jimmy Eat World - Bleed American - VINYL LP,30.62,,4.9,11,8,2026-10-24
+235,Greta Van Fleet,Anthem Of The Peaceful Army,Greta Van Fleet - Anthem Of The Peaceful Army - VINYL LP,30.36,,4.6,45,8,2026-10-24
+236,Chris Stapleton,Starting Over,Chris Stapleton - Starting Over - VINYL LP,43.08,,4.7,21,8,2026-10-24
+237,Kiss,Kiss,Kiss - Kiss - VINYL LP,30.13,,4.8,14,8,2026-10-24
+238,U2,Achtung Baby,U2 - Achtung Baby - VINYL LP,40.76,,4.8,14,8,2026-10-24
+239,Pink Floyd,The Dark Side Of The Moon Live At Wembley,"Pink Floyd - The Dark Side Of The Moon - Live At Wembley Empire Pool, London, 1974 - VINYL LP",34.47,37.99,4.7,20,8,2026-10-24
+240,The Beatles,Revolver,The Beatles - Revolver Special Edition - VINYL LP,30.95,,4.7,20,8,2026-10-24
+241,Various,Wicked,Wicked / O.C.R. - Wicked (Original Cast Recording) - VINYL LP,35.76,,4.9,10,8,2026-10-24
+242,Black Sabbath,Black Sabbath,Black Sabbath - Black Sabbath - VINYL LP,34.66,,4.9,10,8,2026-10-24
+243,Ed Sheeran,Equals,Ed Sheeran - = - VINYL LP,28.66,,4.9,10,8,2026-10-24
+244,Eminem,Music To Be Murdered By,Eminem - Music To Be Murdered By - VINYL LP,41.44,,4.9,10,8,2026-10-24
+245,The Strokes,The New Abnormal,The Strokes - The New Abnormal - VINYL LP,26.88,28.29,4.9,10,8,2026-10-24
+246,Linkin Park,Meteora,Linkin Park - Meteora - VINYL LP (splatter),28.12,29.81,4.9,10,8,2026-10-24
+247,The Smiths,Louder Than Bombs,The Smiths - Louder Than Bombs - VINYL LP,37.45,,4.9,10,8,2026-10-24
+248,Britney Spears,Glory,Britney Spears - Glory - VINYL LP,33.76,,5.0,8,8,2026-10-24
+249,Dave Matthews Band,Come Tomorrow,Dave Matthews - Come Tomorrow - VINYL LP,32.43,,5.0,8,8,2026-10-24
+250,Kyle Dixon & Michael Stein,Stranger Things Volume One,"Dixon,Kyle / Stein,Michael - Stranger Things (Original Music: Volume One) - VINYL LP",32.16,,5.0,8,8,2026-10-24
+251,Mac Miller,Go:od Am,Mac Miller - Go:od Am - VINYL LP,37.45,,5.0,8,8,2026-10-24
+252,Robert Plant & Alison Krauss,Raising Sand,Robert Plant & Alison Krauss - Raising Sand - VINYL LP,35.49,,5.0,8,8,2026-10-24
+253,Pantera,Far Beyond Driven,Pantera - Far Beyond Driven - VINYL LP,37.63,,5.0,8,8,2026-10-24
+254,Misfits,Die Die My Darling,Misfits - Die Die My Darling - VINYL LP,27.60,29.59,5.0,8,8,2026-10-24
+255,Kiss,Creatures of the Night,Kiss - Creatures of the Night - VINYL LP,34.51,,5.0,8,8,2026-10-24
+256,OutKast,Stankonia,OutKast - Stankonia - VINYL LP,30.33,,5.0,8,8,2026-10-24
+257,Gene Simmons,Gene Simmons,Kiss - Gene Simmons - VINYL LP,31.82,32.99,5.0,8,8,2026-10-24
+258,Stevie Nicks,Bella Donna,Stevie Nicks - Bella Donna (2016 Remastered) - VINYL LP,28.12,,5.0,8,8,2026-10-24
+259,Paul McCartney,McCartney III,Paul McCartney - Mccartney III - VINYL LP,31.82,,5.0,8,8,2026-10-24
+260,Various,Encanto,Lin-Manuel Miranda - Encanto (Original Soundtrack) - VINYL LP,27.87,,5.0,8,8,2026-10-24
+261,Jimi Hendrix,Band Of Gypsys,Jimi Hendrix - Band Of Gypsys 50th Anniversary Edition - VINYL LP,33.06,,5.0,8,9,2026-10-24
+262,Steve Miller Band,Fly Like An Eagle,Steve Miller - Fly Like An Eagle - VINYL LP,32.33,,5.0,8,9,2026-10-24
+263,Smashing Pumpkins,Rotten Apples,Smashing Pumpkins - Rotten Apples: Greatest Hits - VINYL LP,41.32,,5.0,8,9,2026-10-24
+264,Frank Sinatra,Ultimate Christmas,Frank Sinatra - Ultimate Christmas - VINYL LP,38.82,,5.0,8,9,2026-10-24
+265,Tool,Fear Inoculum,Tool - Fear Inoculum - VINYL LP,57.68,60.72,5.0,8,9,2026-10-24
+266,Incubus,Make Yourself,Incubus - Make Yourself - VINYL LP,33.77,,5.0,8,9,2026-10-24
+267,Billy Joel,Greatest Hits Volume I & II,Billy Joel - Greatest Hits Volume I & II - VINYL LP,32.41,,5.0,8,9,2026-10-24
+268,Alicia Keys,Songs in A Minor,Alicia Keys - Songs in a Minor: 10th Anniversary Deluxe - VINYL LP,33.77,,5.0,8,9,2026-10-24
+269,Pink Floyd,A Momentary Lapse Of Reason,Pink Floyd - A Momentary Lapse Of Reason - VINYL LP,40.07,,5.0,8,9,2026-10-24
+270,U2,Songs Of Experience,U2 - Songs Of Experience - VINYL LP (доставка $4.99),19.99,39.99,5.0,8,9,2026-10-24
+271,Red Hot Chili Peppers,Blood Sugar Sex Magik,Red Hot Chili Peppers - Blood Sugar Sex Magik - VINYL LP,37.45,42.27,4.7,19,9,2026-10-24
+272,Foo Fighters,Sonic Highways,Foo Fighters - Sonic Highways - VINYL LP,27.02,,4.8,13,9,2026-10-24
+273,Ozzy Osbourne,Memoirs of a Madman,Ozzy Osbourne - Memoirs of a Madman - VINYL LP,33.77,,4.8,13,9,2026-10-24
+274,The Black Keys,Let's Rock,The Black Keys - Let's Rock - VINYL LP,27.32,,4.8,13,9,2026-10-24
+275,The Clash,London Calling,London Calling [LP] [VINYL] (исполнитель не указан — The Clash по названию),35.05,36.89,4.8,12,9,2026-10-24
+276,Journey,Greatest Hits Vol 2,"Journey - Greatest Hits, Vol. 2 - VINYL LP",37.00,,4.7,17,9,2026-10-24
+277,Various,Stranger Things 4,Various Artists - Stranger Things 4: (Soundtrack From The Netflix Series) - VINYL LP (цена не видна),,,4.7,17,9,2026-10-24
+278,Foo Fighters,Medicine At Midnight,Foo Fighters - Medicine At Midnight - VINYL LP,24.04,,4.9,9,9,2026-10-24
+279,Various,Barbie The Album,Barbie The Album (Original Soundtrack) - VINYL LP,37.44,,4.9,9,9,2026-10-24
+280,Blink 182,Enema Of The State,Blink 182 - Enema Of The State - VINYL LP,30.95,32.46,4.9,9,9,2026-10-24
+281,Wings,Wings Greatest,Wings - WINGS GREATEST - VINYL LP,31.28,,4.7,16,9,2026-10-24
+282,Oasis,(What's the Story) Morning Glory,Oasis - (Whats the Story) Morning Glory - VINYL LP,40.07,,4.7,16,9,2026-10-24
+283,ABBA,Gold: Greatest Hits,ABBA - Gold: Greatest Hits - VINYL LP,38.26,39.79,4.7,16,9,2026-10-24
+284,U2,Pop,U2 - Pop - VINYL LP,39.96,,4.8,11,9,2026-10-24
+285,Adele,25,Adele - 25 - VINYL LP,31.31,,4.8,11,9,2026-10-24
+286,Eminem,The Slim Shady LP,Eminem - Slim Shady LP - VINYL LP,39.58,,4.8,11,9,2026-10-24
+287,Metallica,Death Magnetic,Metallica - Death Magnetic - VINYL LP,37.45,,4.8,11,9,2026-10-24
+288,Metallica,S&M2,Metallica - S&M2 - VINYL LP (4LP),56.11,69.99,4.8,11,9,2026-10-24
+289,Beastie Boys,Check Your Head,Beastie Boys - Check Your Head - VINYL LP,39.82,,5.0,7,9,2026-10-24
+290,Neil Young,Decade,Neil Young - Decade - VINYL LP,51.37,,5.0,7,9,2026-10-24
+291,Frank Sinatra,A Jolly Christmas from Frank Sinatra,Frank Sinatra - Jolly Christmas from Frank Sinatra - VINYL LP,29.01,30.36,5.0,7,9,2026-10-24
+292,Jimi Hendrix,Blues,Jimi Hendrix - Blues - VINYL LP,31.59,,5.0,7,9,2026-10-24
+293,Beck,Odelay,Beck - Odelay - VINYL LP,30.73,,4.8,11,9,2026-10-24
+294,The Weeknd,Hurry Up Tomorrow,UMG - The Weeknd - Hurry Up Tomorrow - VINYL LP,21.99,,5.0,7,9,2026-10-24
+295,Giveon,When It's All Said And Done Take Time,Giveon - When It's All Said And Done...Take Time - VINYL LP,25.15,,5.0,7,9,2026-10-24
+296,The Avett Brothers,Magpie and the Dandelion,The Avett Brothers - Magpie & the Dandelion - VINYL LP,36.65,,5.0,7,9,2026-10-24
+297,Chevelle,Wonder What's Next,Chevelle - Wonder What's Next - VINYL LP,23.98,,5.0,7,9,2026-10-24
+298,Red Hot Chili Peppers,Unlimited Love,Red Hot Chili Peppers - Unlimited Love - VINYL LP,36.84,,5.0,7,9,2026-10-24
+299,David Bowie,Aladdin Sane,David Bowie - Aladdin Sane - VINYL LP,29.18,,5.0,7,10,2026-10-24
+300,System of a Down,System Of A Down,System of a Down - System Of A Down - VINYL LP,23.98,,5.0,7,10,2026-10-24
+301,BTS,Love Yourself: Tear,BTS - Love Yourself: Tear - VINYL LP,48.44,,5.0,7,10,2026-10-24
+302,Nirvana,In Utero,Nirvana - In Utero - VINYL LP,30.28,32.33,5.0,7,10,2026-10-24
+303,INXS,Kick,INXS - Kick - VINYL LP,29.18,,5.0,7,10,2026-10-24
+304,Logic,The Incredible True Story,Logic - The Incredible True Story - VINYL LP,39.76,,5.0,7,10,2026-10-24
+305,Janet Jackson,Rhythm Nation 1814,Janet Jackson - Janet Jackson's Rhythm Nation 1814 - VINYL LP,36.42,,5.0,7,10,2026-10-24
+306,Adele,21,Adele - 21 - VINYL LP,31.31,,5.0,7,10,2026-10-24
+307,Marvin Gaye,What's Going On,Marvin Gaye - What's Going On (50th Anniversary) - VINYL LP,41.44,,5.0,7,10,2026-10-24
+308,AC/DC,For Those About to Rock We Salute You,AC/DC - For Those About to Rock We Salute You - VINYL LP,27.57,,5.0,7,10,2026-10-24
+309,The Allman Brothers Band,Eat A Peach,The Allman Brothers Band - Eat A Peach - VINYL LP,40.82,,5.0,7,10,2026-10-24
+310,Deftones,Diamond Eyes,Deftones - Diamond Eyes - VINYL LP,27.32,31.42,5.0,7,10,2026-10-24
+311,Seether,Surface Seems So Far,Seether - Surface Seems So Far [Translucent Sea Blue Vinyl] [Best Buy Exclusive] [LP] (доставка $4.99),14.99,28.99,5.0,7,10,2026-10-24
+312,Beyoncé,Renaissance,Beyoncé - Renaissance - VINYL LP,45.42,46.99,5.0,7,10,2026-10-24
+313,Taylor Swift,Midnights,Taylor Swift - Midnights - VINYL LP,31.82,,4.7,15,10,2026-10-24
+314,Jack White,Boarding House Reach,Jack White - Boarding House Reach - VINYL LP,28.51,,4.7,15,10,2026-10-24
+315,No Doubt,Tragic Kingdom,No Doubt - Tragic Kingdom - VINYL LP,35.49,,4.7,15,11,2026-10-24
+316,Green Day,Dookie,Green Day - Dookie - VINYL LP (стандартное издание),27.32,,4.5,51,11,2026-10-24
+317,Chris Stapleton,From A Room Volume 1,Chris Stapleton - From A Room: Volume 1 - VINYL LP,31.15,,4.6,22,11,2026-10-24
+318,Florence and the Machine,Lungs,Florence + the Machine - Lungs - VINYL LP,30.47,,4.6,22,11,2026-10-24
+319,Justin Timberlake,Man Of The Woods,Justin Timberlake - Man Of The Woods - VINYL LP,30.33,,4.6,22,11,2026-10-24
+320,Beastie Boys,Hot Sauce Committee Part Two,Beastie Boys - Hot Sauce Committee Part Two - VINYL LP,39.91,,4.7,14,11,2026-10-24
+321,Kacey Musgraves,Golden Hour,Kacey Musgraves - Golden Hour - VINYL LP,34.24,,4.7,14,11,2026-10-24
+322,David Bowie,Low,David Bowie - Low (2017 Remastered Version) - VINYL LP,29.18,,4.9,8,11,2026-10-24
+323,Judas Priest,Unleashed In The East,Judas Priest - Unleashed In The East: Live In Japan - VINYL LP,28.40,,4.9,8,11,2026-10-24
+324,Luke Combs,What You See Is What You Get,Luke Combs - What You See Is What You Get - VINYL LP,28.95,,4.9,8,11,2026-10-24
+325,Foster the People,Torches,Foster the People - Torches - VINYL LP,24.81,,4.9,8,11,2026-10-24
+326,Cage the Elephant,Melophobia,Cage the Elephant - Melophobia - VINYL LP,24.81,,4.9,8,11,2026-10-24
+327,Ella Mai,Ella Mai,Ella Mai - Ella Mai - VINYL LP,29.59,,4.9,8,11,2026-10-24
+328,Paramore,Riot!,Paramore - Riot! (FBR 25th Anniversary Edition) - VINYL LP,27.32,28.89,4.9,8,11,2026-10-24
+329,Radiohead,Kid A,Radiohead - Kid A - VINYL LP,42.88,,4.9,8,11,2026-10-24
+330,The Cure,Disintegration,The Cure - Disintegration: Remastered (UK Pressing) - VINYL LP,53.72,,4.9,8,11,2026-10-24
+331,Pink Floyd,A Collection Of Great Dance Songs,Pink Floyd - A Collection Of Great Dance Songs - VINYL LP,29.19,,4.9,8,11,2026-10-24
+332,Beyoncé,B'day,Beyoncé - B'day - VINYL LP,32.85,,4.9,8,11,2026-10-24
+333,Brandi Carlile,In These Silent Days,Brandi Carlile - In These Silent Days - VINYL LP (доставка $4.99),14.99,23.99,4.9,8,11,2026-10-24
+334,Morgan Wallen,One Thing At A Time,Morgan Wallen - One Thing At A Time - VINYL LP,48.44,50.99,4.8,10,11,2026-10-24
+335,Dave Matthews Band,Crash,Dave Matthews Band - Crash Anniversary Edition - VINYL LP,33.85,,4.8,10,11,2026-10-24
+336,Soundgarden,Badmotorfinger,Soundgarden - Badmotorfinger - VINYL LP,28.19,,4.8,10,11,2026-10-24
+337,Prince,The Hits 2,Prince - The Hits 2 - VINYL LP,34.97,35.99,4.6,20,11,2026-10-24
+338,Taylor Swift,The Tortured Poets Department,Taylor Swift - The Tortured Poets Department - VINYL LP,47.71,,4.7,13,11,2026-10-24
+339,Michael Jackson,Invincible,Michael Jackson - Invincible - VINYL LP (picture disc),41.36,,4.7,13,11,2026-10-24
+340,Judas Priest,British Steel,Judas Priest - British Steel - VINYL LP (название по обложке),27.49,,4.7,13,11,2026-10-24
+341,Green Day,American Idiot,Green Day - American Idiot - VINYL LP,37.45,39.32,4.5,39,11,2026-10-24
+342,Arctic Monkeys,AM,Arctic Monkeys - Am - VINYL LP,30.47,,4.5,39,11,2026-10-24
+343,Rob Zombie,Hellbilly Deluxe,Rob Zombie - Hellbilly Deluxe - VINYL LP (название по обложке),28.46,31.28,,12,11,2026-10-24
+344,Weezer,Pinkerton,Weezer - Pinkerton - VINYL LP,30.18,,4.7,12,11,2026-10-24
+345,Jethro Tull,Aqualung,Jethro Tull - Aqualung (Steven Wilson Mix) - VINYL LP,29.18,,4.8,9,11,2026-10-24
+346,Kiss,Revenge,Kiss - Revenge - VINYL LP,31.47,,4.8,9,11,2026-10-24
+347,Black Veil Brides,The Phantom Tomorrow,Black Veil Brides - The Phantom Tomorrow - VINYL LP,28.40,,4.8,9,11,2026-10-24
+348,Rob Zombie,Astro-Creep 2000 Live,"Rob Zombie - Astro-Creep: 2000 Live Songs Of Love, Destruction And Other Synthetic - VINYL LP",32.58,,4.8,9,11,2026-10-24
+349,Amy Winehouse,Live At Glastonbury 2007,Amy Winehouse - Live At Glastonbury 2007 - VINYL LP,39.76,,4.8,9,11,2026-10-24
+350,XXXTentacion,?,Xxxtentacion - ? - VINYL LP,26.61,,5.0,6,11,2026-10-24
+351,Coheed and Cambria,Good Apollo I'm Burning Star IV Volume One,Coheed & Cambria - Good Apollo I'm Burning Star IV Volume One: From Fear Through The Eyes Of Madness - VINYL LP,30.33,,5.0,6,12,2026-10-24
+352,Third Eye Blind,Third Eye Blind,Third Eye Blind - Third Eye Blind - VINYL LP,34.04,,5.0,6,12,2026-10-24
+353,Papa Roach,Infest,Papa Roach - Infest - VINYL LP,30.12,,5.0,6,12,2026-10-24
+354,Eric Clapton,Slowhand,Eric Clapton - Slowhand 35th Anniversary - VINYL LP,28.69,,5.0,6,12,2026-10-24
+355,U2,The Unforgettable Fire,U2 - The Unforgettable Fire - VINYL LP,33.25,,5.0,6,12,2026-10-24
+356,Taking Back Sunday,Where You Want to Be,Taking Back Sunday - Where You Want to Be - VINYL LP,27.46,,5.0,6,12,2026-10-24
+357,Kid Rock,Greatest Hits You Never Saw Coming,Kid Rock - Greatest Hits: You Never Saw Coming - VINYL LP,40.52,,5.0,6,12,2026-10-24
+358,21 Savage,Savage Mode II,21 Savage & Metro Boomin - Savage Mode II - VINYL LP,26.04,,5.0,6,12,2026-10-24
+359,Ghost,Popestar,Ghost - Popestar - VINYL LP,26.94,,5.0,6,12,2026-10-24
+360,Carrie Underwood,My Savior,Carrie Underwood - My Savior - VINYL LP,37.15,,5.0,6,12,2026-10-24
+361,Muse,Black Holes and Revelations,Muse - Black Holes and Revelations - VINYL LP,28.26,,5.0,6,12,2026-10-24
+362,The Go-Go's,Greatest,The Go-Go's - Greatest - VINYL LP,30.36,,5.0,6,12,2026-10-24
+363,The Beatles,1967-1970,The Beatles - The Beatles 1967-1970 (The Blue Album) - VINYL LP,67.49,69.99,5.0,6,12,2026-10-24
+364,Eminem,Music To Be Murdered By Side B,Eminem - Music To Be Murdered By - Side B - VINYL LP,58.33,,5.0,6,12,2026-10-24
+365,Mariah Carey,Mariah Carey,Mariah Carey - Mariah Carey - VINYL LP,26.04,,5.0,6,12,2026-10-24
+366,Imagine Dragons,Mercury Act 1,Imagine Dragons - Mercury – Act 1 - VINYL LP,34.89,,5.0,6,12,2026-10-24
+367,Tyler Childers,Purgatory,Tyler Childers - Purgatory - VINYL LP,23.19,,5.0,6,12,2026-10-24
+368,Pearl Jam,Gigaton,Pearl Jam - Gigaton - VINYL LP,42.74,,5.0,6,12,2026-10-24
+369,Cinderella,Night Songs,Cinderella - Night Songs - VINYL LP,35.11,,5.0,6,12,2026-10-24
+370,Madonna,The Immaculate Collection,Madonna - Immaculate Collection - VINYL LP,37.45,,5.0,6,12,2026-10-24
+371,John Mayer,Continuum,John Mayer - Continuum - VINYL LP,39.41,,5.0,6,12,2026-10-24
+372,GZA,Liquid Swords,GZA - Liquid Swords - VINYL LP,33.36,,5.0,6,12,2026-10-24
+373,Iron Maiden,Nights Of The Dead Legacy Of The Beast,"Iron Maiden - Nights Of The Dead, Legacy Of The Beast: Live In Mexico City - VINYL LP",43.14,,5.0,6,12,2026-10-24
+374,Audioslave,Audioslave,Audioslave - Audioslave - VINYL LP,30.33,,5.0,6,12,2026-10-24
+375,Ozzy Osbourne,Bark At The Moon,Ozzy Osbourne - Bark At The Moon - VINYL LP,26.88,27.99,5.0,6,12,2026-10-24
+376,OutKast,Aquemini,OutKast - Aquemini - VINYL LP,42.82,,5.0,6,12,2026-10-24
+377,Led Zeppelin,In Through The Out Door,Led Zeppelin - In Through The Out Door - VINYL LP,27.32,,5.0,6,12,2026-10-24
+378,Sting,Ten Summoner's Tales,Sting - Ten Summoner's Tales - VINYL LP,28.12,29.53,5.0,6,12,2026-10-24
+379,Nat King Cole,The Christmas Song,Nat King Cole - Christmas Song - VINYL LP,29.01,,5.0,6,12,2026-10-24
+380,Velvet Revolver,Contraband,Velvet Revolver - Contraband - VINYL LP,38.34,,5.0,6,12,2026-10-24
+381,Lorde,Melodrama,Lorde - Melodrama - VINYL LP,32.51,,5.0,6,12,2026-10-24
+382,Silk Sonic,An Evening With Silk Sonic,Silk Sonic - VINYL LP,28.78,31.66,5.0,6,12,2026-10-24
+383,Travis Scott,Utopia,Travis Scott - UTOPIA - VINYL LP,40.65,,5.0,6,12,2026-10-24
+384,Rush,Fly By Night,Rush - Fly By Night - VINYL LP,29.31,,5.0,6,12,2026-10-24
+385,Raekwon,Only Built 4 Cuban Linx,Raekwon - Only Built 4 Cuban Linx - VINYL LP,37.23,,5.0,6,12,2026-10-24
+386,Various,Saturday Night Fever,Various Artists - Saturday Night Fever (Original Motion Picture Soundtrack) - VINYL LP,35.76,,5.0,6,12,2026-10-24
+387,Alter Bridge,One Day Remains,Alter Bridge - One Day Remains [20th Anniversary Deluxe Edition] [Blue Smoke 2 LP] [Only @ Best Buy],19.99,39.99,5.0,6,12,2026-10-24
+388,Skillet,Revolution,Skillet - Revolution [Baby Blue/Black/Clear Vinyl] [Only @ Best Buy] (доставка $4.99),14.99,28.99,5.0,6,12,2026-10-24
+389,Ed Sheeran,Plus,Ed Sheeran - Plus Sign (+) - VINYL LP,28.36,,4.6,17,12,2026-10-24
+390,U2,War,U2 - War - VINYL LP,32.83,,4.6,17,12,2026-10-24
+391,U2,The Best Of 1990-2000,U2 - The Best Of 1990-2000 - VINYL LP,39.76,,4.9,7,12,2026-10-24
