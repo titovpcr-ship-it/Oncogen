@@ -1162,7 +1162,9 @@ def _age_days(d1, d2):
 # весь б/у винил — 4,8 млн, ~900 новых в час, у 983 тыс. жанр не указан.
 # eBay отдаёт до 10 тыс. лотов на запрос, поэтому весь винил читается
 # ценовыми полосами; переполненная полоса в следующий раз делится надвое.
-STATE = os.path.join(ROOT, "cache", "diamonds_state.json")
+# Отметки потока и список продавцов — в data/, под git: переживают смену
+# контейнера (cache/ пропадает вместе с ним), прогон их коммитит.
+STATE = os.path.join(ROOT, "data", "diamonds_stream.json")
 STREAMS = [("jazz", f"categoryId:{hunt.CATEGORY},Genre:{{Jazz}}", False),
            ("all", None, True)]
 DEFAULT_BANDS = {"jazz": [0], "all": [0, 3, 5, 8, 12, 20]}
@@ -1308,7 +1310,7 @@ def ebay_quota(token):
 
 
 # --- продавцы-коллекции ------------------------------------------------------
-WATCH = os.path.join(ROOT, "cache", "diamonds_sellers.json")
+WATCH = os.path.join(ROOT, "data", "diamonds_sellers.json")
 
 
 def load_watch():
