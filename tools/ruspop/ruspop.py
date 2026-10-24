@@ -132,7 +132,8 @@ def load_albums(path, bestbuy=BESTBUY):
     for r in bb_rows:
         add(r["artist"], r["album"], "", f"Best Buy {r['reviews']} отз.",
             {"wb": None, "ozon": None, "avito": None},
-            {"bb_price": num(r["price_usd"]), "bb_reviews": int(r["reviews"]),
+            {"bb_price": num(r["price_usd"]) if r["price_usd"] else None,
+             "bb_reviews": int(r["reviews"]),
              "bb_rating": num(r["rating"])})
     return out
 
@@ -364,7 +365,8 @@ def render(r):
                    for n, v in (("WB", r["wb"]), ("Ozon", r["ozon"]),
                                 ("Авито", r["avito"])) if v)
     bb = (f"  Best Buy ${r['bb_price']:.2f}, {r['bb_reviews']} отз."
-          if r.get("bb_price") else "")
+          if r.get("bb_price") else
+          f"  Best Buy {r['bb_reviews']} отз." if r.get("bb_reviews") else "")
     lines = [f"{r['artist']} — {r['album']}" + (f"  (Россия: {ru})" if ru else "")
              + bb]
     for kind in MODES:
