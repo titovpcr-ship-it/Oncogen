@@ -46,6 +46,9 @@ OUT = os.path.join(ROOT, "out")
 FWD_PER_DISC = 11.0
 SHIP_GUESS = 5.0
 RATE_FALLBACK = 80.54          # ЦБ на 24.10.2026, если сайт ЦБ не ответил
+MODES = ("купить сейчас", "предложить цену", "аукцион")
+LABEL = {"купить сейчас": "Купить", "предложить цену": "Торг",
+         "аукцион": "Аукцион"}
 
 
 def rub_rate():
@@ -117,8 +120,9 @@ def is_the_album(title, artist, album):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--xlsx", default=XLSX)
-    ap.add_argument("--per-album", type=int, default=5,
-                    help="сколько самых дешёвых лотов открывать по карточке")
+    ap.add_argument("--per-album", type=int, default=3,
+                    help="сколько самых дешёвых лотов каждого способа покупки "
+                         "открывать по карточке")
     ap.add_argument("--only", nargs="*", default=None,
                     help="только эти альбомы (подстрока названия)")
     ap.add_argument("--tg", action="store_true")
@@ -153,7 +157,10 @@ def main():
         except ApiRefused as e:
             print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
             continue
-        lots = []
+        # Владелец 24.10.2026: «на каждый альбом лучший вариант: купить
+        # сейчас, предложить цену и аукцион» — по самому дешёвому
+        # подтверждённому лоту в каждом способе покупки.
+        by_kind = {k: [] for k in MODES}
         for it in j.get("itemSummaries") or []:
             t = it.get("title") or ""
             clean = re.sub(r"\bvarious\b", " ", t, flags=re.I)
@@ -164,102 +171,124 @@ def main():
                                                           al["album"]):
                 continue
             p, expect, kind, note = hunt.lot_price(it, 2.0)
-            if p is None:
+            if p is None or kind not in by_kind:
                 continue
             sh = shipping_usd(it)
-            lots.append((p + (sh if sh is not None else SHIP_GUESS), p, sh,
-                         kind, note, it))
-        lots.sort(key=lambda x: x[0])
-        best = None
-        for total, p, sh, kind, note, it in lots[:a.per_album]:
-            iid = it["itemId"]
-            item = cards.get(iid)
-            if item is None:
-                r = requests.get(fx.ITEM.format(iid), headers=H, timeout=30)
-                if r.status_code != 200:
-                    continue
-                jj = r.json()
-                item = {"gtin": jj.get("gtin"),
-                        "localizedAspects": jj.get("localizedAspects") or []}
-                cards[iid] = item
-            t = it.get("title") or ""
-            if not fx.vinyl_proven(item, t):
-                continue        # ловушка «CD в разделе винила»
-            code = fx.barcode_of(item)
-            v = None
-            if code:
-                v, _ = fx.discogs_value(d, code, None if al["artist"].lower()
-                                        == "various" else al["artist"])
-            discs = tx.discs_in_title(t) or 1
-            if v and v.get("format"):
-                m = re.match(r"(\d+)\s*x", v["format"])
-                if m:
-                    discs = int(m.group(1))
-            landed = total + FWD_PER_DISC * discs
-            best = {"artist": al["artist"], "album": al["album"],
-                    "source": al["source"], "price": p, "ship": sh,
-                    "kind": kind, "note": note, "discs": discs,
-                    "landed_usd": round(landed, 2),
-                    "landed_rub": round(landed * rate),
-                    "title": t, "url": (it.get("itemWebUrl") or "").split("?")[0],
+            by_kind[kind].append((p + (sh if sh is not None else SHIP_GUESS),
+                                  p, sh, kind, note, it))
+        ru = [x for x in (al["wb"], al["ozon"], al["avito"]) if x]
+        row = {"artist": al["artist"], "album": al["album"],
+               "source": al["source"], "wb": al["wb"], "ozon": al["ozon"],
+               "avito": al["avito"], "ru_min": min(ru) if ru else None,
+               "modes": {}}
+        for kind, lots in by_kind.items():
+            lots.sort(key=lambda x: x[0])
+            for total, p, sh, _, note, it in lots[:a.per_album]:
+                iid = it["itemId"]
+                item = cards.get(iid)
+                if item is None:
+                    r = requests.get(fx.ITEM.format(iid), headers=H, timeout=30)
+                    if r.status_code != 200:
+                        continue
+                    jj = r.json()
+                    item = {"gtin": jj.get("gtin"),
+                            "localizedAspects": jj.get("localizedAspects") or []}
+                    cards[iid] = item
+                t = it.get("title") or ""
+                if not fx.vinyl_proven(item, t):
+                    continue    # ловушка «CD в разделе винила»
+                code = fx.barcode_of(item)
+                v = None
+                if code:
+                    v, _ = fx.discogs_value(d, code, None if al["artist"].lower()
+                                            == "various" else al["artist"])
+                discs = tx.discs_in_title(t) or 1
+                if v and v.get("format"):
+                    m = re.match(r"(\d+)\s*x", v["format"])
+                    if m:
+                        discs = int(m.group(1))
+                landed = total + FWD_PER_DISC * discs
+                rub = round(landed * rate)
+                row["modes"][kind] = {
+                    "price": p, "ship": sh, "note": note, "discs": discs,
+                    "landed_usd": round(landed, 2), "landed_rub": rub,
+                    "ratio": (round(row["ru_min"] / rub, 2)
+                              if row["ru_min"] else None),
+                    "title": t,
+                    "url": (it.get("itemWebUrl") or "").split("?")[0],
                     "barcode": code or "",
                     "dg_title": (v or {}).get("dg_title", ""),
                     "dg_floor": (v or {}).get("floor", ""),
-                    "dg_copies": (v or {}).get("copies", ""),
-                    "wb": al["wb"], "ozon": al["ozon"], "avito": al["avito"]}
-            break               # первый подтверждённый — самый дешёвый
-        if best is None:
-            rows.append({"artist": al["artist"], "album": al["album"],
-                         "source": al["source"], "landed_rub": None,
-                         "title": f"запечатанных лотов не найдено ({len(lots)} "
-                                  f"кандидатов)"})
-            continue
-        ru = [x for x in (best["wb"], best["ozon"], best["avito"]) if x]
-        best["ru_min"] = min(ru) if ru else None
-        best["ratio"] = (round(best["ru_min"] / best["landed_rub"], 2)
-                         if best["ru_min"] else None)
-        rows.append(best)
+                    "dg_copies": (v or {}).get("copies", "")}
+                break           # первый подтверждённый — самый дешёвый
+        rows.append(row)
         time.sleep(0.2)
     d.save()
     fx.save_cards(cards)
 
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"ruspop_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
-    keys = sorted({k for r in rows for k in r})
+    flat = []
+    for r in rows:
+        for kind in MODES:
+            m = r["modes"].get(kind)
+            flat.append({"artist": r["artist"], "album": r["album"],
+                         "source": r["source"], "mode": kind,
+                         "wb": r["wb"], "ozon": r["ozon"], "avito": r["avito"],
+                         **(m or {"title": "не найдено"})})
+    keys = sorted({k for z in flat for k in z})
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=keys)
         w.writeheader()
-        w.writerows(rows)
+        w.writerows(flat)
 
-    print(f"курс ЦБ: {rate:.2f} ₽/$ ({rate_date}); пересылка ${FWD_PER_DISC:.0f} "
-          f"за пластинку; доставка не объявлена — ${SHIP_GUESS:.0f}")
-    ok = [r for r in rows if r.get("landed_rub")]
-    ok.sort(key=lambda r: (-(r.get("ratio") or 0), r["landed_rub"]))
-    for r in ok:
-        sh = f"+${r['ship']:.2f}" if r.get("ship") is not None else "+?"
-        ru = ", ".join(f"{n} {v:,.0f} ₽".replace(",", " ")
-                       for n, v in (("WB", r["wb"]), ("Ozon", r["ozon"]),
-                                    ("Авито", r["avito"])) if v)
-        print(f"\n{r['artist']} — {r['album']}  [{r['source']}]")
-        print(f"   eBay ${r['price']:.2f} {sh} [{r['kind']}] -> Москва "
-              f"${r['landed_usd']:.2f} = {r['landed_rub']:,} ₽".replace(",", " ")
-              + (f" ({r['discs']} LP)" if r["discs"] > 1 else ""))
-        if r["note"]:
-            print(f"   {r['note']}")
-        print(f"   {r['title'][:80]}")
-        if r.get("dg_title"):
-            print(f"   Discogs: {r['dg_title'][:50]} от ${r['dg_floor']} "
-                  f"({r['dg_copies']} коп.)")
-        print(f"   Россия: {ru or 'цена в таблице не заполнена'}"
-              + (f" -> {r['ratio']}x к себестоимости" if r.get("ratio") else ""))
-        print(f"   {r['url']}")
-    for r in rows:
-        if not r.get("landed_rub"):
-            print(f"\n{r['artist']} — {r['album']}: {r['title']}")
+    head = (f"курс ЦБ {rate:.2f} ₽/$ ({rate_date}); себестоимость в Москве = "
+            f"лот + доставка по США + ${FWD_PER_DISC:.0f} за пластинку")
+    blocks = [render(r) for r in rows]
+    print(head)
+    for b in blocks:
+        print("\n" + b)
     print(f"\nфайл: {path}")
-    print("Цена WB/Ozon — витрина, не сделка (витрина/Авито = 0.37 на одном "
-          "замере).")
+    print(NOTE)
+    if a.tg:
+        from telegram_notify import TelegramNotifier
+        tn = TelegramNotifier()
+        msgs, cur = [], f"<b>ruspop — {len(rows)} альбомов</b>\n{head}\n"
+        for b in blocks:
+            html = b.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            if len(cur) + len(html) > 3800:
+                msgs.append(cur)
+                cur = ""
+            cur += "\n" + html + "\n"
+        msgs.append(cur + "\n" + NOTE)
+        sent = sum(1 for m in msgs if tn.send(m))
+        print(f"Telegram: отправлено {sent} из {len(msgs)} сообщений")
     return 0
+
+
+NOTE = ("Цена WB/Ozon — витрина, не сделка (витрина/Авито = 0.37 на одном "
+        "замере). У аукциона — ТЕКУЩАЯ ставка, к закрытию вырастет.")
+
+
+def render(r):
+    ru = ", ".join(f"{n} {v:,.0f} ₽".replace(",", " ")
+                   for n, v in (("WB", r["wb"]), ("Ozon", r["ozon"]),
+                                ("Авито", r["avito"])) if v)
+    lines = [f"{r['artist']} — {r['album']}" + (f"  (Россия: {ru})" if ru else "")]
+    for kind in MODES:
+        m = r["modes"].get(kind)
+        if not m:
+            lines.append(f"  {LABEL[kind]}: нет запечатанных")
+            continue
+        sh = f"+${m['ship']:.2f}" if m["ship"] is not None else "+$5?"
+        lp = f", {m['discs']} LP" if m["discs"] > 1 else ""
+        ratio = f" → {m['ratio']}x" if m.get("ratio") else ""
+        lines.append(f"  {LABEL[kind]}: ${m['price']:.2f} {sh}{lp} → Москва "
+                     f"{m['landed_rub']:,} ₽".replace(",", " ") + ratio)
+        if kind == "аукцион" and m.get("note"):
+            lines.append(f"     {m['note'].split(', поправка')[0]}")
+        lines.append(f"     {m['url']}")
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":
