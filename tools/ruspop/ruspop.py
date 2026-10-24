@@ -95,6 +95,8 @@ def load_albums(path, bestbuy=BESTBUY):
         album = re.sub(r"\s*\([^)]*\)", "", (album or "").strip()).strip()
         if not album or "Сборник" in album or "какой" in album:
             return             # Celentano: альбом в таблице не назван
+        if not re.search(r"[A-Za-zА-Яа-я0-9]", album):
+            return             # XXXTentacion «?»: названия не сопоставить
         k = _key(artist, album)
         if k in seen:
             z = seen[k]
