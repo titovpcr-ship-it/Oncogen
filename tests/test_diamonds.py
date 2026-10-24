@@ -291,11 +291,33 @@ def test_tsvetnoy_vinil():
           all(v["year"] >= 1995 for v in eds) and "цветной" in notes[-1])
 
 
+def test_svodka_dnya():
+    import json
+    import tempfile
+    import diamonds_report as R
+    with tempfile.TemporaryDirectory() as tmp:
+        for k, (t, lots, finds, q) in enumerate([
+                ("2026-10-25 07:40", 2900, 1, 4700),
+                ("2026-10-25 09:10", 1200, 0, 4100),
+                ("2026-10-24 20:38", 202, 0, 17)]):
+            path = os.path.join(tmp, f"digger_summary_{k}.json")
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump({"time": t, "lots": lots, "cands": 10, "opened": 5,
+                           "assessed": 3, "finds": finds, "quota_left": q}, f)
+            os.utime(path, (1000 + k, 1000 + k))
+        runs = R.day_runs("2026-10-25", out=tmp)
+        line = R.stats_line(runs)
+    check("сводка дня: два прогона 25.10, лоты сложены",
+          len(runs) == 2 and "джазовых лотов 4 100" in line)
+    check("сводка дня: остаток лимита — из последнего прогона дня",
+          "осталось 4100" in line)
+
+
 def main():
     for fn in [test_lush_life, test_uliki, test_nadezhnaya_i_ozhidanie,
                test_kartoteka, test_odnoimennyy_bez_nomera,
                test_epokhi_etiketok, test_tsvetnoy_vinil,
-               test_nomer_drugoy_strany]:
+               test_nomer_drugoy_strany, test_svodka_dnya]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
