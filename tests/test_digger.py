@@ -249,6 +249,22 @@ def _flt(lo=0.0, hi=None):
     return f"{lo:g}-{hi if hi is not None else 40:g}"
 
 
+def test_otsenka_v_opisanii():
+    rx = D._DESC_LOW
+    check("«Record is (G+) with a fair amount of scratches» — хуже VG",
+          rx.search("Record is (G+) with a fair amount of scratches"))
+    check("«Vinyl: G» и «LP: Good Plus» — хуже VG",
+          rx.search("Vinyl: G light wear") and rx.search("LP: Good Plus"))
+    check("«Vinyl: VG+» и «vinyl is in good condition» — не G",
+          not rx.search("Vinyl: VG+ clean") and
+          not rx.search("The vinyl is in good condition, plays well"))
+    check("«Record: EX» и «Vinyl NM» — не G",
+          not rx.search("Record: EX") and not rx.search("Vinyl NM-"))
+    check("«Record Grading: G+» в описании — хуже VG, «…: VG+» — нет",
+          rx.search("Record Grading: G+ Some faint surface scuffs")
+          and not rx.search("Record Grading: VG+ clean"))
+
+
 def test_potok():
     # Поток новых объявлений (O-98): страницы «свежие первыми» до отметки
     # прошлого прогона.
@@ -333,7 +349,7 @@ def main():
                test_otsenka_prodavtsa, test_press_po_nomeru,
                test_nomer_ne_dokazyvaet_press, test_god_i_pereizdanie,
                test_izdanie_po_nomeru_pod_drugim_nazvaniem, test_almazy_do_40,
-               test_potok]:
+               test_potok, test_otsenka_v_opisanii]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

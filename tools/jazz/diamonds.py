@@ -210,6 +210,8 @@ def _phrase_in(album, text):
 def core_number(catno):
     """Номер на обложке без префикса: «PRLP 7188» → «7188», «BST 84031» →
     «84031», «RLP 12-226» → «226». Самая длинная группа цифр от трёх."""
+    if re.fullmatch(r"\s*(?:19[5-9]\d|20[0-2]\d)\s*", catno or ""):
+        return None        # «BLUE NOTE 1966 RE» — год, а не номер
     runs = re.findall(r"\d{3,6}", catno or "")
     return max(runs, key=len) if runs else None
 
@@ -254,15 +256,25 @@ def color_vinyl(title, artist="", album=""):
     return bool(_COLOR.search(t))
 
 
-def asp_color(asp):
-    """Цветной винил по характеристикам лота: «Color: Blue», «Features:
-    … Colored Vinyl» («A Love Supreme» 2021 года, синий винил)."""
-    col = str((asp or {}).get("Color") or "").strip().lower()
+_VINYL_COLORS = {"blue", "red", "green", "yellow", "orange", "purple", "pink",
+                 "white", "clear", "transparent", "translucent", "marble",
+                 "marbled", "splatter", "multicolor", "multi-color",
+                 "multi color", "smoke", "grey", "gray", "violet", "teal"}
+
+
+def asp_color(asp, artist="", album=""):
+    """Цветной винил по характеристикам лота: «Color: Blue» вместе с
+    «Features: … Colored Vinyl» или один из них, если цвет явный («A Love
+    Supreme» 2021 года, синий винил). Слово из имени или названия — не
+    цвет: «Color: Silver» у Horace Silver (перепроверка 24.10.2026);
+    серебро и золото не считаются вовсе."""
+    col = _norm(str((asp or {}).get("Color") or ""))
     feats = str((asp or {}).get("Features") or "").lower()
-    return bool((col and col not in ("black", "not specified", "n/a", "none",
-                                     "unknown")
-                 and "black" not in col) or "colored vinyl" in feats
-                or "coloured vinyl" in feats)
+    names = set(_norm(f"{artist} {album}").split())
+    if "colored vinyl" in feats or "coloured vinyl" in feats:
+        return True
+    return bool(col) and col in _VINYL_COLORS and not (set(col.split())
+                                                         & names)
 
 
 def evidence(title, text, asp, catno, store=False):
@@ -492,22 +504,6 @@ def plausible(vers, ev):
             notes.append(f"номер {ev['core']}")
         else:
             notes.append(f"номер {ev['core']} у Discogs не найден — без него")
-    # Эпоха этикетки (фото или слова продавца) точнее правил «цветной
-    # винил» и «крупный магазин» — они только для лотов без неё.
-    if ev.get("color") and not ev["first"] and not ev.get("era"):
-        # Цветной винил у джаза — современные переиздания: «Miles Davis –
-        # Kind of Blue (Limited, Opaque Blue Vinyl LP)» с оригиналом 1959
-        # года в раскладе раздувал бы ожидание. Цвета в изданиях мастера
-        # Discogs не пишет — отсекаем по году.
-        modern = [v for v in out if v["year"] >= 1995]
-        if modern:
-            out = modern
-            notes.append("цветной винил — прессы с 1995")
-    if ev.get("store") and not ev["first"] and not ev.get("era"):
-        modern = [v for v in out if v["year"] >= 1990]
-        if modern:
-            out = modern
-            notes.append("крупный магазин — прессы с 1990")
     years = sorted({v["year"] for v in out if v["year"]})
     if years and ev.get("year") and ev["year"] > years[0] + 2:
         # Год пресса позже оригинала — продавец назвал год переиздания:
@@ -527,6 +523,27 @@ def plausible(vers, ev):
             ev["_year_miss"] = True
             notes.append(f"год пресса {ev['year']} у Discogs не найден")
         years = sorted({v["year"] for v in out if v["year"]})
+    # Эпоха этикетки (фото или слова продавца) точнее правил «цветной
+    # винил» и «крупный магазин» — они только для лотов без неё.
+    # Цвет из заголовка — улика сильная; из характеристик — слабая, и
+    # старый год пресса её перевешивает («1966 RE» и «Color: Silver»).
+    if ev.get("color") and not ev["first"] and not ev.get("era") and \
+            not (ev["color"] == "card" and ev.get("year")
+                 and ev["year"] < 1995):
+        # Цветной винил у джаза — современные переиздания: «Miles Davis –
+        # Kind of Blue (Limited, Opaque Blue Vinyl LP)» с оригиналом 1959
+        # года в раскладе раздувал бы ожидание. Цвета в изданиях мастера
+        # Discogs не пишет — отсекаем по году.
+        modern = [v for v in out if v["year"] >= 1995]
+        if modern:
+            out = modern
+            notes.append("цветной винил — прессы с 1995")
+    if ev.get("store") and not ev["first"] and not ev.get("era"):
+        modern = [v for v in out if v["year"] >= 1990]
+        if modern:
+            out = modern
+            notes.append("крупный магазин — прессы с 1990")
+    years = sorted({v["year"] for v in out if v["year"]})
     era = ev.get("era")
     if era:
         # Эпоха этикетки (слова продавца или фото): издания этих лет ±1.
@@ -847,7 +864,8 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     ev = evidence(title, text, asp, catno, store=is_store(title, seller, fb))
     ev["family"] = fam
     ev["era"] = era or era_of(" ".join((title or "", text or "")), fam)
-    ev["color"] = color_vinyl(title, artist, album) or asp_color(asp)
+    ev["color"] = ("title" if color_vinyl(title, artist, album) else
+                   "card" if asp_color(asp, artist, album) else "")
     country = ev["country"]
     if master:
         vers = vc.get(master, country)

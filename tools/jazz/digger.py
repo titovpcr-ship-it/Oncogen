@@ -465,6 +465,14 @@ _TITLE_YEAR = re.compile(r"(?<!\d)(19[5-9]\d|20[0-2]\d)(?!\d)")
 _TITLE_LOW = re.compile(r"\bVG\s*-(?![\s-]*\d)|\bG\s*\+|\bG\s*/|/\s*G\b|"
                         r"\bfair\s*(?:condition|copy|shape)\b|\bpoor\b",
                         re.I)
+# Оценка пластинки хуже VG в описании: «Record is (G+) with a fair amount
+# of scratches» у лота без характеристики Record Grading (перепроверка
+# 24.10.2026). Только сокращения и «Good Plus»: «in good condition» у
+# «наивного» продавца — не оценка G.
+_DESC_LOW = re.compile(
+    r"\b(?:[Rr]ecord|RECORD|[Vv]inyl|VINYL|[Dd]isc|LP|[Ww]ax|[Mm]edia)\s*"
+    r"(?i:is|was|grade[sd]?|grading|condition)?\s*[:\-–]?\s*\(?\s*"
+    r"(?:G\s*\+|G\s*-|G|F|P|[Gg]ood\s*(?:\+|[Pp]lus))(?![\w+])")
 
 
 def lot_year(asp, title, catno):
@@ -896,6 +904,11 @@ def main():
             (tp.fx.catno_of(item, t) or "")
         if _TITLE_LOW.search(t):
             drop("оценка хуже VG в заголовке")
+            continue
+        if not asp.get("Record Grading") and _DESC_LOW.search(
+                " ".join((item.get("conditionDescription") or "",
+                          (item.get("desc") or "")[:1500]))):
+            drop("оценка хуже VG в описании")
             continue
         year = lot_year(asp, t, catno)
         if a.ev:

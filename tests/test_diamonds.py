@@ -355,6 +355,39 @@ def test_god_ne_nayden():
     check("год пресса не найден — не ставка", dm.classify(x, 10.0) is None)
 
 
+def test_tsvet_v_kartochke():
+    # Перепроверка 24.10.2026: «Horace Silver … BLUE NOTE 1966 RE» с
+    # «Color: Silver» в карточке ушёл в «цветной винил» и издание 2006 года
+    # за $80.
+    check("«Color: Silver» у Horace Silver — фамилия, не цвет",
+          not dm.asp_color({"Color": "Silver"}, "Horace Silver Quintet",
+                           "The Stylings of Silver"))
+    check("«Color: Blue» у Coltrane — цвет",
+          dm.asp_color({"Color": "Blue"}, "John Coltrane", "A Love Supreme"))
+    check("«Color: Blue» у «Kind of Blue» — слово названия, не цвет",
+          not dm.asp_color({"Color": "Blue"}, "Miles Davis", "Kind of Blue"))
+    check("голый год «1966» — не номер обложки",
+          dm.core_number("1966") is None and dm.core_number("CL 1966")
+          == "1966")
+    vers = [V(1, 1958, "Blue Note", "BLP 1562", "LP, Album, Mono", 300, 600),
+            V(2, 1966, "Blue Note", "BLP 1562", "LP, Album, Reissue, Mono", 80),
+            V(3, 2006, "Blue Note", "BST 1562", "LP, Album, Reissue", 40)]
+    ev = dm.evidence("Horace Silver The Stylings Of Silver BLUE NOTE 1966 RE",
+                     "", {}, "")
+    ev["color"] = "card"
+    eds, notes = dm.plausible(vers, ev)
+    check("цвет из карточки и год пресса 1966 — издание 1966, не 2006",
+          [v["id"] for v in eds] == [2])
+    ev = dm.evidence("Miles Davis Kind of Blue 1959 Opaque Blue Vinyl", "",
+                     {}, "")
+    ev["color"] = "title"
+    kob = [V(1, 1959, "Columbia", "CL 1355", "LP, Album, Mono", 900, 3000),
+           V(2, 2015, "Columbia", "CL 1355", "LP, Album, Reissue", 2000)]
+    eds, _ = dm.plausible(kob, ev)
+    check("цвет из заголовка главнее года оригинала в заголовке",
+          [v["id"] for v in eds] == [2])
+
+
 def test_svodka_dnya():
     import json
     import tempfile
@@ -382,7 +415,8 @@ def main():
                test_kartoteka, test_odnoimennyy_bez_nomera,
                test_epokhi_etiketok, test_tsvetnoy_vinil,
                test_nomer_drugoy_strany, test_svodka_dnya,
-               test_vybrosy_pola, test_god_ne_nayden]:
+               test_vybrosy_pola, test_god_ne_nayden,
+               test_tsvet_v_kartochke]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
