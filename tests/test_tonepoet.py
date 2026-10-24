@@ -31,7 +31,14 @@ ROWS = [
                  ("'Baby Face' Willette", "Face To Face"),
                  ("Duke Ellington • Charles Mingus • Max Roach", "Money Jungle"),
                  ("Walter Davis Jr.", "Davis Cup"),
-                 ("Wayne Shorter", "Etcetera"))]
+                 ("Wayne Shorter", "Etcetera"),
+                 ("Joe Henderson", "The State Of The Tenor (Live At The "
+                                   "Village Vanguard Volume 1)"),
+                 ("Joe Henderson", "The State Of The Tenor - Live At The "
+                                   "Village Vanguard - Volume Two"),
+                 ("Duke Pearson", "The Right Touch"),
+                 ("Herbie Nichols Trio", "Herbie Nichols Trio"),
+                 ("Ike Quebec", "The Complete Blue Note 45 Sessions"))]
 
 
 def test_imena_kak_pishut_prodavtsy():
@@ -56,6 +63,24 @@ def test_albom_po_zagolovku():
           m and m["title"] == "Further Explorations")
     m = T.match_album("Horace Silver Song For My Father Tone Poet", ROWS)
     check("альбома нет в каталоге — не опознан", m is None)
+    # Прогон 24.10.2026: эти четыре лота с пометкой серии не опознавались.
+    m = T.match_album("State of the Tenor Vol. 1. (Blue Note Tone Poet "
+                      "Series) by Joe Henderson", ROWS)
+    check("«Vol. 1» и имя после названия → том 1, не том 2",
+          m and "Volume 1" in m["title"])
+    m = T.match_album("Joe Henderson State Of The Tenor Volume Two Tone Poet", ROWS)
+    check("«Volume Two» → том 2", m and "Volume Two" in m["title"])
+    m = T.match_album("Duke Pearson The Right Touch 2023 Tone Poet Reissue LP!", ROWS)
+    check("год после названия — не номер продолжения",
+          m and m["title"] == "The Right Touch")
+    m = T.match_album("Herbie Nichols Trio self-titled Vinyl LP 2023 Blue Note "
+                      "Records Tone Poet Series", ROWS)
+    check("одноимённый «Herbie Nichols Trio»",
+          m and m["title"] == "Herbie Nichols Trio")
+    m = T.match_album("Ike Quebec The Complete Blue Note 45 Sessions Tone Poet", ROWS)
+    check("«Complete» в названии — не бокс-сет", m is not None)
+    check("«45 Sessions» — не сорокапятка",
+          not T.bad_lot("Ike Quebec The Complete Blue Note 45 Sessions Tone Poet 2LP"))
 
 
 def test_ne_ta_seriya():
@@ -78,6 +103,12 @@ def test_bu_dopuskaetsya_brak_net():
           not T.bad_lot("Wayne Shorter Etcetera Tone Poet LP no scratches"))
     check("CD снимается", T.bad_lot("Hank Mobley Soul Station Tone Poet CD"))
     check("«skips» в описании — брак", bool(T._DEFECT.search("plays fine, skips on side B")))
+    check("«will not skip» — не брак", T.defect("The record will not skip") is None)
+    check("«no warps or skips» — не брак", T.defect("no warps or skips") is None)
+    check("шкала Goldmine после оценки — не брак",
+          T.defect("VINYL: Strong VG+. Records are graded using the Goldmine "
+                   "system: P: skips, warped") is None)
+    check("«skips on side B» — брак", T.defect("plays fine, skips on side B") == "skips")
     check("«reissue» в описании — не брак (серия и есть переиздание)",
           not T._DEFECT.search("2021 Tone Poet reissue, repress by RTI"))
 

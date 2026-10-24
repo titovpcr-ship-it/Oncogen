@@ -48,6 +48,7 @@ import ruspop as rp                                            # noqa: E402
 import sealed as fx                                            # noqa: E402
 import series                                                  # noqa: E402
 import targets as tg                                           # noqa: E402
+import three_x as tx                                           # noqa: E402
 from src.common.ebay import (ApiRefused, ebay_token,           # noqa: E402
                              search_page, shipping_usd)
 
@@ -78,6 +79,26 @@ _DEFECT = re.compile(
     r"\bwarp\w*|\bskips?\b|\bnot\s*(?:the\s*)?original\s*(?:jacket|cover|sleeve)|"
     r"\bwrong\s*(?:jacket|cover|sleeve)|\bjunk\b|\bcracked\b|\bfor\s*parts\b",
     re.I)
+_NEG = re.compile(r"(?:\bno|\bnot|\bnever|\bwithout|n't|\bfree\s+of|\bzero)"
+                  r"\W+(?:\w+\W+){0,2}$", re.I)
+# Шкала Goldmine, которую продавцы вставляют в описание целиком: «VG: The
+# record will not skip… P: skips, warped» — легенда, а не этот экземпляр.
+_LEGEND = re.compile(r"\bgoldmine\b|\bgrading\s+(?:scale|guide|system)\b|"
+                     r"\bgraded\s+using\b", re.I)
+
+
+def defect(text):
+    """Брак в описании продавца, кроме отрицаний («will not skip», «no
+    warps») и шкалы оценок после слова Goldmine (Gerald Wilson «Moment Of
+    Truth», 24.10.2026: две копии VG+ снимались по легенде шкалы)."""
+    m = _LEGEND.search(text or "")
+    text = (text or "")[:m.start()] if m else (text or "")
+    for d in _DEFECT.finditer(text):
+        if not _NEG.search(text[max(0, d.start() - 30):d.start()]):
+            return d.group(0).lower()
+    return None
+
+
 _GOOD_GRADE = re.compile(r"\bmint\b|\bnm\b|\bnear\s*mint\b|\bm-|\bvg\+|"
                          r"\bexcellent\b|\bex\b", re.I)
 FWD_PER_DISC = rp.FWD_PER_DISC
@@ -108,17 +129,73 @@ def load_catalog(path=CATALOG):
     return rows
 
 
+_NUM = {"one": "1", "two": "2", "three": "3", "four": "4"}
+_VOL = re.compile(r"\bvol(?:ume)?\.?\s*(one|two|three|four|\d+)\b\.?", re.I)
+_YEAR = re.compile(r"\b(?:19[5-9]\d|20[0-3]\d)\b")
+
+
+def norm_vol(x):
+    """«Vol. 1.», «Volume One» → «volume 1»: продавцы и Discogs пишут
+    том по-разному, а матчер требует фразу целиком."""
+    return _VOL.sub(lambda m: " volume " + _NUM.get(m.group(1).lower(),
+                                                    m.group(1)), x or "")
+
+
+def core_album(x):
+    """Название из каталога без хвоста, которого в заголовках не пишут:
+    «The State Of The Tenor (Live At The Village Vanguard Volume 1)» →
+    «The State Of The Tenor volume 1», «Trio Fascination - Edition One» →
+    «Trio Fascination»."""
+    x = norm_vol(x)
+    vol = re.search(r"volume \d+", x)
+    core = re.split(r"\s+-\s+|\s*\(", x)[0]
+    if vol and vol.group(0) not in core:
+        core += " " + vol.group(0)
+    return re.sub(r"\s+", " ", core).strip()
+
+
+def album_ok(t, who, album):
+    """Матчер ruspop с двумя послаблениями для серии.
+
+    Имя после названия: «State of the Tenor Vol. 1 (Blue Note Tone Poet
+    Series) by Joe Henderson», «Herbie Nichols Trio self-titled» — общий
+    матчер требует имя ПЕРЕД названием (его ловушка — «ABBA Greatest Hits
+    … Dancing Queen»), а у Tone Poet издание доказывают пометка серии или
+    штрихкод. «Complete» в самом названии («The Complete Blue Note 45
+    Sessions») — не бокс-сет."""
+    # Том — только свой: общий матчер выкидывает «2» из ключа фразы, и
+    # «State of the Tenor Vol. 1» садился на «Volume Two».
+    if set(re.findall(r"volume (\d+)", norm_vol(t).lower())) != \
+            set(re.findall(r"volume (\d+)", norm_vol(album).lower())):
+        return False
+    if rp.is_the_album(t, who, album):
+        return True
+    why = tx.title_is_the_album(
+        rp._plain(t), {"artist": rp._plain(re.sub(r"^the\s+", "", who,
+                                                  flags=re.I)),
+                       "album": rp._plain(album), "discs": None})
+    return (why == "имя исполнителя и название альбома в разных местах"
+            or (why == "бокс-сет, а не одиночный альбом"
+                and bool(tx._BOX.search(album))))
+
+
 def match_album(title, rows):
     """Альбом каталога по заголовку; самое длинное название побеждает
-    («Dimensions & Extensions» не садится на «Extensions»)."""
-    t = rp.clean_title(title)
+    («Dimensions & Extensions» не садится на «Extensions»), при равных —
+    релиз с большим числом копий (у «The Right Touch» два релиза, у
+    второго одна копия)."""
+    t = norm_vol(rp.clean_title(title))
+    # Год после названия («The Right Touch 2023 Tone Poet») матчер
+    # ruspop читает как номер продолжения — в каталоге серии годов нет.
+    t = _YEAR.sub(" ", t)
     best = None
     for r in rows:
         if not fx.artist_in(t, r["who"]):
             continue
-        if not rp.is_the_album(t, r["who"], r["title"]):
+        if not album_ok(t, r["who"], core_album(r["title"])):
             continue
-        if best is None or len(r["title"]) > len(best["title"]):
+        key = (len(r["title"]), int(r.get("copies") or 0))
+        if best is None or key > (len(best["title"]), int(best.get("copies") or 0)):
             best = r
     return best
 
@@ -204,7 +281,7 @@ def lot_row(it, item, alb, how, discs_hint=None):
     return {"price": p, "ship": sh, "kind": kind, "note": note,
             "discs": discs, "landed_usd": round(landed, 2),
             "sealed": sealed, "state": state, "how": how,
-            "album": f"{alb['artist']} — {alb['title']}" if alb else "",
+            "album": f"{alb['who']} — {alb['title']}" if alb else "",
             "key": alb["title"] if alb else t, "alb": alb,
             "title": t, "id": it["itemId"],
             "seller": (it.get("seller") or {}).get("username") or "",
@@ -227,6 +304,8 @@ def bad_lot(t):
     поэтому «used» и оценки «VG+/VG+» из заголовка вырезаются до проверок
     ruspop, которые их снимают."""
     t = _GRADES.sub(" ", t)
+    # Ike Quebec «The Complete Blue Note 45 Sessions» — альбом, не сорокапятка.
+    t = re.sub(r"\b45\s+sessions\b", "sessions", t, flags=re.I)
     clean = re.sub(r"\bvarious\b", " ", rp.clean_title(t), flags=re.I)
     return bool(hunt._NOT_RECORD.search(t) or hunt._FORTY_FIVE.search(t)
                 or fx._JUNK.search(clean) or hunt._BAD.search(t)
@@ -351,7 +430,7 @@ def main():
                 if bad_lot(t) or _OTHER_ED.search(t):
                     drop("другое издание / не пластинка")
                     continue
-                if not rp.is_the_album(rp.clean_title(t), r["who"], r["title"]):
+                if match_album(t, [r]) is None:
                     drop("другой альбом")
                     continue
                 p, _, kind, _ = hunt.lot_price(it, 2.0)
@@ -406,9 +485,9 @@ def main():
         if not z["sealed"]:
             if a.no_used:
                 continue
-            m = _DEFECT.search(text)
+            m = defect(text)
             if m:
-                drop(f"брак в описании: {m.group(0).lower()}")
+                drop(f"брак в описании: {m}")
                 continue
         keep.append(z)
     lots = keep
@@ -491,7 +570,9 @@ def main():
 
 NOTE = ("Пол Discogs — самый дешёвый ЗАПРОС на площадке, а не сделка. У "
         "аукциона — текущая ставка, к закрытию вырастет; «предел» = пол / 2. "
-        "Б/у — с оценкой продавца, брак в описании отсеян.")
+        "Б/у — с оценкой продавца, брак в описании отсеян. Московский "
+        "ориентир — один замер владельца: McCoy Tyner «Extensions» Tone Poet "
+        "6 700–7 000 ₽.")
 
 
 def esc(s):
@@ -514,8 +595,9 @@ def render(g):
             lp = f", {m['discs']} LP" if m["discs"] > 1 else ""
             gap = f" · {m['gap']}x к полу" if m.get("gap") else ""
             st = "" if side == "sealed" else f" [{m['state']}]"
+            rub = f"{m['landed_rub']:,}".replace(",", " ")
             lines.append(f"  {LABEL[kind]}{st}: ${m['price']:.2f} {sh}{lp} → "
-                         f"Москва {m['landed_rub']:,} ₽".replace(",", " ") + gap)
+                         f"Москва {rub} ₽{gap}")
             if kind == "аукцион":
                 n = m["note"].split(", поправка")[0]
                 lim = (f"; предел ставки ${m['max_bid']:.0f}"
