@@ -10,7 +10,7 @@
 |---|---|---|
 | весь код и история git (334+ коммита) | `Oncogen/` | можно залить в любой GitHub-репозиторий |
 | память проекта | `CLAUDE.md` | правила владельца и режимы — Claude читает его сам при старте |
-| журнал решений и ошибок | `ISSUES.md` (O-1 … O-96) | почему каждое правило такое, какие ловушки уже пойманы |
+| журнал решений и ошибок | `ISSUES.md` (O-1 … O-97) | почему каждое правило такое, какие ловушки уже пойманы |
 | описание фикс-прайса | `tools/fixprice/README.md` | правила, проверки, результаты |
 | данные | `data/` | картотека джаза (2 099), таблица ruspop, витрина Best Buy (391), продавцы |
 | кэши Discogs и eBay | `cache/` (~117 МБ) | первый прогон не начинается с нуля; не обязательны |
@@ -125,8 +125,11 @@ python tools/jazz/digger.py --no-artists --max-cards 300   # только лей
 python tools/jazz/digger.py --max-cards 500                # лейблы + имена
 python tools/jazz/digger.py --buy-now --max-price 25 --min-gap 2 --min-floor 40   # BIN до $25
 python tools/jazz/digger.py --offer 0.7 --max-price 25 --min-gap 2 --min-floor 40 # торг
-python tools/jazz/digger.py --diamonds --no-artists        # «алмазы»: б/у до $40, лейблы
-python tools/jazz/digger.py --diamonds --only " lp"        # «алмазы»: имена
+python tools/jazz/digger.py --diamonds --no-artists --pages 2   # «алмазы»: лейблы
+python tools/jazz/digger.py --diamonds --only " lp" --pages 2   # «алмазы»: имена
+python tools/jazz/digger.py --diamonds --targets-only --target-queries 300  # картотека
+python tools/jazz/diamonds_report.py --ids <номера> --send      # проверенные — в Telegram
+# подробно — tools/jazz/DIAMONDS.md
 ```
 
 ### Джаз

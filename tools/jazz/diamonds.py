@@ -1,0 +1,630 @@
+#!/usr/bin/env python3
+"""«Алмазы»: б/у лот как ставка, когда пресс по объявлению не определить.
+
+Владелец 24.10.2026 купил John Coltrane «Lush Life» Prestige 7188 за $10.50
+у продавца без отзывов: на фото только конверт с «PRESTIGE 7188», а такой
+номер на обложке у оригинала 1961 года (Discogs от $100) и у всех
+переизданий с той же обложкой — OJC-131 (от $16-20), Analogue Productions
+(от $34). Пресс неизвестен, но ставку можно посчитать: Discogs знает все
+издания альбома и сколько копий каждого у людей в коллекциях. Отсюда:
+
+- ВЕРОЯТНОСТЬ издания = его копии в коллекциях / копии всех изданий,
+  совместимых с лотом (номер на обложке, mono/stereo, страна, формат);
+- ОЖИДАНИЕ = Σ вероятность × пол Discogs издания;
+- ХУДШИЙ СЛУЧАЙ = самый дешёвый пол среди частых изданий (доля от 5%);
+- ШАНС = доля изданий, чей пол от порога (по умолчанию $50 и от 4x цены).
+
+«Lush Life» за $10.50: худший случай $18 (OJC), шанс на издание от $50 —
+около 23% (оригинал 1961 — 15%), ожидание ~$39 — 3.7x. Такая ставка не
+теряет даже в худшем случае и выигрывает кратно в лучшем — это и есть
+«алмаз». Владелец: «Купил. Этот режим мне и нужен».
+
+Пол Discogs — самый дешёвый запрос за любое состояние, не сделка; цены
+только из stats?curr_abbr=USD (O-79). Копии в коллекциях — мера того,
+сколько экземпляров ходит по рукам, а не точная вероятность.
+"""
+import csv
+import json
+import os
+import re
+import sys
+import time
+from urllib.parse import urlencode
+
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+for sub in ("tools", "tools/jazz"):
+    p = os.path.join(ROOT, sub)
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
+import catno_sweep as cs                                       # noqa: E402
+import targets as tg                                           # noqa: E402
+
+SEARCH = "https://api.discogs.com/database/search?"
+TARGETS = os.path.join(ROOT, "data", "jazz_targets.csv")
+VCACHE = os.path.join(ROOT, "cache", "discogs_versions.json")
+# Аудиофильские и лицензионные переиздания: продавец, который продаёт
+# такое, пишет об этом; «наивному» лоту они не приписываются.
+_AUDIOPHILE = re.compile(
+    r"analogue\s*productions|music\s*matters|classic\s*records|"
+    r"mobile\s*fidelity|\bdcc\b|acoustic\s*sounds|speakers\s*corner|"
+    r"pure\s*pleasure|original\s*recordings\s*group|\borg\s*music|"
+    r"4\s*men\s*with\s*beards|vinyl\s*passion|waxtime|wax\s*time|\bdoxy\b|"
+    r"\bdol\b|jazz\s*images|essential\s*jazz\s*classics|not\s*now|"
+    r"deagostini|be\s*with\s*records|tone\s*poet|blue\s*note\s*80|"
+    r"classic\s*vinyl\s*series|record\s*store\s*day", re.I)
+
+
+# --- кэш изданий --------------------------------------------------------
+class Versions:
+    """Издания мастера на Discogs в сжатом виде (одна запись — ~100 байт
+    вместо килобайта сырого ответа с превью)."""
+
+    def __init__(self, d):
+        self.d = d
+        try:
+            with open(VCACHE, encoding="utf-8") as f:
+                self.db = json.load(f)
+        except (OSError, ValueError):
+            self.db = {}
+
+    def save(self):
+        os.makedirs(os.path.dirname(VCACHE), exist_ok=True)
+        tmp = VCACHE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(self.db, f, ensure_ascii=False)
+        os.replace(tmp, VCACHE)
+
+    def get(self, master_id, country="US", max_pages=3):
+        key = f"{master_id}|{country or ''}"
+        if key in self.db:
+            return self.db[key]["v"]
+        out = []
+        for page in range(1, max_pages + 1):
+            qs = {"format": "Vinyl", "per_page": 100, "page": page,
+                  "sort": "released"}
+            if country:
+                qs["country"] = country
+            url = (f"https://api.discogs.com/masters/{master_id}/versions?"
+                   + urlencode(qs))
+            j = self.d.get(url)
+            self.d.db.pop(url, None)      # сырой ответ в общий кэш не кладём
+            if not j:
+                break
+            for v in j.get("versions") or []:
+                out.append(slim_version(v))
+            if page >= ((j.get("pagination") or {}).get("pages") or 1):
+                break
+        self.db[key] = {"v": out, "t": time.strftime("%Y-%m-%d")}
+        return out
+
+
+def slim_version(v):
+    com = (v.get("stats") or {}).get("community") or {}
+    y = str(v.get("released") or "")[:4]
+    return {"id": v["id"], "label": v.get("label") or "",
+            "country": v.get("country") or "", "format": v.get("format") or "",
+            "catno": v.get("catno") or "",
+            "year": int(y) if y.isdigit() else 0,
+            "have": com.get("in_collection") or 0,
+            "want": com.get("in_wantlist") or 0}
+
+
+def slim_search(r):
+    """Релиз из поиска Discogs — в том же виде, что издание мастера."""
+    com = r.get("community") or {}
+    y = str(r.get("year") or "")[:4]
+    return {"id": r["id"], "label": ", ".join(r.get("label") or []),
+            "country": r.get("country") or "",
+            "format": ", ".join(x for x in (r.get("format") or [])
+                                if x != "Vinyl"),
+            "catno": r.get("catno") or "",
+            "year": int(y) if y.isdigit() else 0,
+            "have": com.get("have") or 0, "want": com.get("want") or 0}
+
+
+# --- картотека первопрессов -----------------------------------------------
+_TARGETS = None
+
+
+def _norm(x):
+    x = re.sub(r"\s*\(\d+\)", "", x or "").replace("*", "")
+    return re.sub(r"[^a-z0-9]+", " ", x.lower()).strip()
+
+
+def load_targets(path=TARGETS):
+    """Картотека джазовых первопрессов: исполнитель → [(альбом, мастер,
+    пол первопресса, копий)]. Совпадение с ней — приоритет «алмаза»: у
+    альбома есть дорогой оригинал."""
+    global _TARGETS
+    if _TARGETS is not None:
+        return _TARGETS
+    by = {}
+    try:
+        with open(path, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                a = _norm(r.get("artist"))
+                if not a or not r.get("master_id"):
+                    continue
+                fl = float(r["floor_usd"]) if r.get("floor_usd") else 0.0
+                by.setdefault(a, []).append(
+                    {"album": r.get("title") or "", "master": int(r["master_id"]),
+                     "floor": fl, "copies": int(r.get("for_sale") or 0),
+                     "artist": r.get("artist") or "",
+                     "label": r.get("label") or ""})
+    except OSError:
+        by = {}
+    names = sorted(by, key=len, reverse=True)
+    rx = re.compile(r"\b(?:" + "|".join(re.escape(n).replace(r"\ ", r"\s+")
+                                        .replace(" ", r"\s+") for n in names)
+                    + r")\b", re.I) if names else None
+    _TARGETS = (by, rx)
+    return _TARGETS
+
+
+def match_target(title, album=None):
+    """Цель картотеки — тот же альбом, что у лота, или None.
+
+    Имя исполнителя из заголовка вырезается до сверки: альбом «Coltrane»
+    (Prestige 7105, от $360) иначе садился на любой лот с «John Coltrane»,
+    и «Lush Life» оценивался изданиями другого альбома. С названием из
+    карточки сверка идёт в обе стороны."""
+    by, rx = load_targets()
+    if not rx:
+        return None
+    best = None
+    low = _norm(title)
+    for m in rx.finditer(low):
+        rest = (low[:m.start()] + " " + low[m.end():]).strip()
+        for t in by.get(_norm(m.group(0)), []):
+            if not t["album"]:
+                continue
+            ok = _same_album(album, t["album"]) if album else \
+                _phrase_in(t["album"], rest)
+            if ok and (best is None or t["floor"] > best["floor"]):
+                best = t
+    return best
+
+
+def _same_album(a, b):
+    """Тот же альбом: равны или одно содержит другое целой фразой от двух
+    слов. Половины слов мало: «John Coltrane» и «Duke Ellington & John
+    Coltrane» делят два слова из четырёх, а это разные пластинки."""
+    na, nb = _norm(a), _norm(b)
+    if not na or not nb:
+        return False
+    if na == nb:
+        return True
+    short, long_ = sorted((na, nb), key=len)
+    return len(short.split()) >= 2 and re.search(
+        r"\b" + re.escape(short) + r"\b", long_) is not None
+
+
+def _phrase_in(album, text):
+    na = _norm(album)
+    return bool(na) and re.search(r"\b" + re.escape(na).replace(r"\ ", r"\s+")
+                                  .replace(" ", r"\s+") + r"\b", text) is not None
+
+
+# --- улики лота -----------------------------------------------------------
+def core_number(catno):
+    """Номер на обложке без префикса: «PRLP 7188» → «7188», «BST 84031» →
+    «84031», «RLP 12-226» → «226». Самая длинная группа цифр от трёх."""
+    runs = re.findall(r"\d{3,6}", catno or "")
+    return max(runs, key=len) if runs else None
+
+
+def catno_match(vcat, core):
+    toks = re.findall(r"\d{3,6}", vcat or "")
+    return any(t == core or t == "8" + core for t in toks)
+
+
+# Крупные магазины продают складские современные переиздания: «Hank
+# Mobley - Soul Station [Used Very Good Vinyl LP]» у deepdiscount (448 тыс.
+# отзывов) получал ожидание $178 за счёт оригинала 1960 года (прогон
+# 24.10.2026). У такого продавца оригинала нет — в расклад только прессы
+# с 1990 года, если продавец сам не пишет о раннем прессе.
+STORE_FB = 20000
+_STORE = re.compile(r"deepdiscount|rarewaves|moviemars|collectorschoice|"
+                    r"innersleeve|speedyhen|bookoff|secondspin|second\s*spin|"
+                    r"\bmmt\b|alliance|entertainmentus|grooves[-_]inc|"
+                    r"\[used\s+(?:very\s+)?(?:good|like\s+new|acceptable)",
+                    re.I)
+
+
+def is_store(title, seller, fb):
+    return bool((fb or 0) >= STORE_FB or _STORE.search(seller or "")
+                or _STORE.search(title or ""))
+
+
+def evidence(title, text, asp, catno, store=False):
+    """Что лот говорит о прессе. Моно/стерео — только из заголовка и
+    характеристик: в описаниях «plays on any stereo» — не про пресс."""
+    head = " ".join([title] + [str(v) for v in asp.values()]).lower()
+    low = (text or "").lower()
+    return {
+        "mono": bool(re.search(r"\bmono\b", head)),
+        "stereo": bool(re.search(r"\bstereo\b", head)),
+        "japan": bool(re.search(r"\bjapan\w*\b|\bobi\b", head)),
+        "country": lot_country(head),
+        "rpm45": bool(re.search(r"\b45\s*rpm\b", head)),
+        "promo": bool(re.search(r"\bpromo\b|\bwhite\s*label\b|\bwlp\b|"
+                                r"\btest\s*press", head)),
+        "audiophile": bool(_AUDIOPHILE.search(head)),
+        # Переиздание: слова продавца или лейбл-преемник; «not a reissue»
+        # — не переиздание.
+        "reissue": _said(_REISSUE_WORDS, head + " | " + low),
+        # «Первый пресс» — со слов продавца (знающий пишет и цену знает).
+        "first": bool(re.search(r"\b(?:1st|first|orig\w*)\s*press\w*|\bog\b|"
+                                r"\bfirst\s*issue\b|\bdeep\s*groove\b|\bdg\b",
+                                head)),
+        "core": core_number(catno),
+        "year": press_year(title, asp, catno),
+        "store": store,
+    }
+
+
+# Страна пресса со слов продавца; без неё — США (продавцы eBay из США
+# продают в основном американские прессы).
+_COUNTRY = [("Japan", r"\bjapan\w*\b|\bobi\b"),
+            ("UK", r"\buk\b|\bengland\b|\bbritish\b|\bu\.k\.?"),
+            ("Germany", r"\bgerman\w*\b|\bw\.?\s*germany\b"),
+            ("France", r"\bfrance\b|\bfrench\b"),
+            ("Canada", r"\bcanad\w*\b"),
+            ("Netherlands", r"\bholland\b|\bdutch\b|\bnetherlands\b"),
+            ("Italy", r"\bital\w*\b"),
+            ("Brazil", r"\bbrazil\w*\b")]
+
+
+def lot_country(head):
+    for name, rx in _COUNTRY:
+        if re.search(rx, head or "", re.I):
+            return name
+    return "US"
+
+
+_YEAR = re.compile(r"(?<![\d-])(19[5-9]\d|20[0-2]\d)(?![\d-])")
+
+
+def press_year(title, asp, catno):
+    """Год пресса со слов продавца: из заголовка, иначе из карточки.
+    Номер обложки годом не считается («BLP 1588» — не 1588 год, а «CS
+    1958» — не 1958)."""
+    core = core_number(catno)
+    for src in (title or "", str((asp or {}).get("Release Year") or "")):
+        for m in _YEAR.finditer(src):
+            if m.group(1) != core:
+                return int(m.group(1))
+    return None
+
+
+_REISSUE_WORDS = re.compile(
+    r"\breissue|\bre-issue|\brepress|\bojc\b|\bliberty\b|"
+    r"\bunited\s*artists\b|\bua\b|\bmanhattan\b|\bfantasy\b|\bremaster",
+    re.I)
+
+
+def _said(rx, text):
+    """Слово сказано утвердительно: «not a reissue», «no repress» — нет."""
+    for m in rx.finditer(text or ""):
+        before = text[max(0, m.start() - 18):m.start()].lower()
+        if re.search(r"\b(?:not|no|non|never|isn'?t)\b[\s\w-]*$", before):
+            continue
+        return True
+    return False
+
+
+def plausible(vers, ev):
+    """Издания мастера, совместимые с уликами лота, и что сработало."""
+    notes = []
+    out = []
+    for v in vers:
+        fmt = v["format"].lower()
+        if "box set" in fmt or "club edition" in fmt:
+            continue
+        if "45 rpm" in fmt and not ev["rpm45"]:
+            continue
+        if ("test pressing" in fmt or "promo" in fmt) and not ev["promo"]:
+            continue
+        if _AUDIOPHILE.search(v["label"]) and not ev["audiophile"]:
+            # Аудиофильские переиздания (Analogue Productions, DCC…) у
+            # «наивного» продавца не исключены совсем, но ему их не
+            # приписываем: ожидание считается без них — осторожнее.
+            continue
+        if ev["mono"] and "stereo" in fmt and "mono" not in fmt:
+            continue
+        if ev["stereo"] and "mono" in fmt and "stereo" not in fmt:
+            continue
+        out.append(v)
+    if ev.get("family"):
+        fam_ok = [v for v in out if label_ok(v["label"], ev["family"])]
+        if fam_ok and len(fam_ok) < len(out):
+            out = fam_ok
+            notes.append(f"лейбл {ev['family']}")
+    if ev["core"]:
+        hit = [v for v in out if catno_match(v["catno"], ev["core"])]
+        if hit:
+            out = hit
+            notes.append(f"номер {ev['core']}")
+        else:
+            notes.append(f"номер {ev['core']} у Discogs не найден — без него")
+    if ev.get("store") and not ev["first"]:
+        modern = [v for v in out if v["year"] >= 1990]
+        if modern:
+            out = modern
+            notes.append("крупный магазин — прессы с 1990")
+    years = sorted({v["year"] for v in out if v["year"]})
+    if years and ev.get("year") and ev["year"] > years[0] + 2:
+        # Год пресса позже оригинала — продавец назвал год переиздания:
+        # «2014 Sonny Clark – Cool Struttin … BLP 1588» — это издание 2014
+        # года ($20), а не оригинал 1958 ($1 348), который раздувал
+        # ожидание до $141 (прогон 24.10.2026).
+        for tol in (1, 3):
+            near = [v for v in out if v["year"]
+                    and abs(v["year"] - ev["year"]) <= tol]
+            if near:
+                out = near
+                notes.append(f"год пресса {ev['year']}")
+                break
+        years = sorted({v["year"] for v in out if v["year"]})
+    if years:
+        first = years[0]
+        if ev["reissue"] and len(years) > 1:
+            out = [v for v in out if v["year"] != first]
+            notes.append("переиздание — без оригинала")
+        elif ev["first"]:
+            early = [v for v in out if v["year"] and v["year"] <= first + 3]
+            if early:
+                out = early
+                notes.append("ранний пресс со слов продавца")
+    return out, notes
+
+
+# --- ожидание ---------------------------------------------------------------
+def floor(d, rid, fresh=False):
+    url = tg.stats_url(rid)
+    if fresh:
+        d.db.pop(url, None)
+    st = d.get(url)
+    try:
+        return tg.usd_floor(st), (st or {}).get("num_for_sale") or 0
+    except ValueError:
+        return None, 0
+
+
+def expectation(d, eds, max_priced=8, fresh=False):
+    """Расклад изданий лота с полами Discogs: ожидание и худший случай."""
+    if not eds:
+        return None
+    total = sum(max(v["have"], 1) for v in eds)
+    order = sorted(eds, key=lambda v: -max(v["have"], 1))
+    pick, mass = [], 0
+    for v in order:
+        if len(pick) >= max_priced or (mass / total >= 0.9 and len(pick) >= 3):
+            break
+        pick.append(v)
+        mass += max(v["have"], 1)
+    # Самое желанное издание — почти всегда оригинал: оцениваем всегда.
+    star = max(eds, key=lambda v: v["want"])
+    if star not in pick:
+        pick.append(star)
+    priced = []
+    for v in pick:
+        fl, n = floor(d, v["id"], fresh=fresh)
+        if fl is not None and n:
+            priced.append(dict(v, floor=fl, copies=n))
+    if not priced:
+        return None
+    w = sum(max(v["have"], 1) for v in priced)
+    for v in priced:
+        v["p"] = max(v["have"], 1) / w
+    ev = sum(v["p"] * v["floor"] for v in priced)
+    common = [v for v in priced if v["p"] >= 0.05] or priced
+    up = max((v for v in priced if v["copies"] >= 2 and v["p"] >= 0.02),
+             key=lambda v: v["floor"], default=None)
+    return {"ev": round(ev, 2), "low": min(v["floor"] for v in common),
+            "up": up, "parts": sorted(priced, key=lambda v: -v["p"]),
+            "coverage": round(sum(max(v["have"], 1) for v in priced) / total, 2),
+            "n": len(eds)}
+
+
+def chance(x, price, min_floor=50.0, up_mult=4.0):
+    """Шанс на дорогой пресс: доля изданий с полом от порога и от up_mult
+    цены (у изданий с одной копией в продаже опоры нет)."""
+    thr = max(min_floor, up_mult * price)
+    return round(sum(v["p"] for v in x["parts"]
+                     if v["floor"] >= thr and v["copies"] >= 2), 3), thr
+
+
+def classify(x, price, min_floor=50.0, min_gap=2.5, up_mult=4.0, p_min=0.05):
+    """Группа ставки или None.
+
+    «надёжная» — даже частое дешёвое издание стоит от порога и от
+    min_gap цены; «алмаз» — в худшем случае почти не теряем (частое
+    издание от 90% цены), а шанс на дорогой пресс — от p_min; «ожидание» —
+    средняя цена изданий от порога при умеренном худшем случае."""
+    if not x:
+        return None
+    if x["low"] >= max(min_floor, min_gap * price) and x["coverage"] >= 0.6:
+        return "надёжная"
+    p_big, _ = chance(x, price, min_floor, up_mult)
+    if x["low"] >= 0.9 * price and p_big >= p_min:
+        return "алмаз"
+    # «Ожидание» держится на редком дорогом издании: без запаса снизу
+    # (частое издание от 75% цены) это лотерея, а не ставка.
+    if x["ev"] >= max(min_floor, min_gap * price) and x["low"] >= 0.75 * price:
+        return "ожидание"
+    return None
+
+
+# --- лейбл лота и его «семья» ----------------------------------------------
+# Переиздания выходят под лейблом-преемником: Prestige → OJC и Fantasy,
+# Impulse! → ABC и MCA. Лейбл лота сверяется с семьёй, а не буквально.
+FAMILY = {
+    "prestige": ("prestige", "original jazz classics", "fantasy", "new jazz",
+                 "status", "moodsville", "swingville", "craft"),
+    "new jazz": ("new jazz", "prestige", "original jazz classics", "fantasy",
+                 "status", "craft"),
+    "riverside": ("riverside", "original jazz classics", "fantasy",
+                  "jazzland", "milestone", "craft"),
+    "jazzland": ("jazzland", "riverside", "original jazz classics", "fantasy"),
+    "contemporary": ("contemporary", "original jazz classics", "fantasy",
+                     "craft"),
+    "blue note": ("blue note", "liberty", "united artists", "manhattan",
+                  "capitol", "emi", "toshiba", "king"),
+    "impulse": ("impulse", "abc", "mca", "grp", "verve"),
+    "atlantic": ("atlantic", "rhino", "warner"),
+    "verve": ("verve", "mgm", "polydor", "clef", "norgran", "polygram"),
+    "columbia": ("columbia", "cbs", "legacy", "sony"),
+    "savoy": ("savoy", "arista", "denon", "musidisc"),
+    "pacific jazz": ("pacific jazz", "world pacific", "liberty", "blue note"),
+    "argo": ("argo", "cadet", "chess"),
+    "cadet": ("cadet", "argo", "chess"),
+    "bethlehem": ("bethlehem", "affinity", "charly"),
+    "cti": ("cti", "kudu", "cbs", "columbia"),
+    "milestone": ("milestone", "original jazz classics", "fantasy"),
+    "mainstream": ("mainstream",),
+    "candid": ("candid", "barnaby"),
+    "strata-east": ("strata-east", "strata east"),
+    "black jazz": ("black jazz",),
+    "flying dutchman": ("flying dutchman", "rca", "bluebird"),
+    "esp": ("esp",), "ecm": ("ecm",), "mps": ("mps", "saba"),
+    "delmark": ("delmark",), "muse": ("muse",), "enja": ("enja",),
+}
+_LABEL_RX = re.compile(r"\b(" + "|".join(re.escape(k).replace(r"\ ", r"\s*")
+                                         .replace(" ", r"\s*")
+                                         for k in sorted(FAMILY, key=len,
+                                                         reverse=True))
+                       + r")", re.I)
+
+
+def lot_label(title, asp):
+    """Лейбл лота: из карточки, иначе из заголовка — ключ семьи или None."""
+    for src in (str((asp or {}).get("Record Label") or ""), title or ""):
+        m = _LABEL_RX.search(src)
+        if m:
+            k = re.sub(r"\s+", " ", m.group(1).lower())
+            k = {"strata east": "strata-east", "bluenote": "blue note",
+                 "newjazz": "new jazz"}.get(k, k)
+            if k in FAMILY:
+                return k
+    return None
+
+
+def label_ok(vlabel, fam):
+    low = (vlabel or "").lower()
+    return any(f in low for f in FAMILY.get(fam, (fam,)))
+
+
+# --- мастер альбома ---------------------------------------------------------
+def _search_rel(d, artist, album, label=None, exact=False):
+    qs = {"type": "release", "format": "Vinyl", "per_page": 50,
+          "artist": artist, "release_title": album}
+    if label:
+        qs["label"] = label
+    s = d.get(SEARCH + urlencode(qs)) or {}
+    rows = s.get("results") or []
+    if exact:
+        # Одноимённый альбом ищется по фамилии, и «Coltrane» иначе садился
+        # на «Duke Ellington & John Coltrane» (половина слов сошлась).
+        return [r for r in rows
+                if _norm((r.get("title") or "").split(" - ", 1)[-1])
+                == _norm(album)]
+    return [r for r in rows
+            if cs.album_matches(f"{artist} {album}", r.get("title") or "")
+            and cs.album_matches(r.get("title") or "", f"x - {album}")]
+
+
+def find_master(d, artist, album, catno=None, target=None, fam=None):
+    """Мастер Discogs альбома лота: из картотеки, поиска по названию или
+    по номеру. Без мастера (у редкого джаза один релиз) — сами релизы.
+
+    Лейбл лота должен быть в семье лейблов найденных релизов: «John
+    Coltrane John Coltrane Impulse!» по названию «John Coltrane» садился
+    на двойной сборник Prestige 1972 года, а это альбом «Coltrane» на
+    Impulse! 1962-го (24.10.2026). При несовпадении — поиск с лейблом,
+    у одноимённого альбома ещё и по фамилии («Coltrane»)."""
+    if target:
+        return target["master"], []
+    def fam_rel(rows):
+        return [r for r in rows
+                if label_ok(", ".join(r.get("label") or []), fam)]
+
+    self_titled = _norm(album) == _norm(artist)
+    rel = _search_rel(d, artist, album, exact=self_titled)
+    if fam:
+        # Считаются только релизы семьи лейбла лота; нет среди них мастера —
+        # поиск с лейблом, у одноимённого альбома ещё и по фамилии.
+        own = fam_rel(rel)
+        if not any(r.get("master_id") for r in own):
+            names = [(album, self_titled)]
+            if self_titled or not album:
+                names.append((artist.split()[-1], True))
+            for name, exact in names:
+                alt = fam_rel(_search_rel(d, artist, name, label=fam,
+                                          exact=exact))
+                if any(r.get("master_id") for r in alt):
+                    own = alt
+                    break
+        rel = own
+    core = core_number(catno)
+    if not rel and core:
+        qs = {"type": "release", "format": "Vinyl", "per_page": 50,
+              "artist": artist, "catno": core}
+        s = d.get(SEARCH + urlencode(qs)) or {}
+        rel = [r for r in s.get("results") or []
+               if catno_match(r.get("catno"), core)]
+    votes = {}
+    for r in rel:
+        if r.get("master_id"):
+            votes[r["master_id"]] = votes.get(r["master_id"], 0) + 1
+    if votes:
+        return max(votes, key=votes.get), rel
+    return None, rel
+
+
+def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
+           seller="", fb=None):
+    """Полная оценка лота как ставки; None, если альбома нет на Discogs."""
+    target = match_target(title, album)
+    # Одноимённый лот без номера обложки не опознаётся: «John Coltrane John
+    # Coltrane Impulse!» по лейблу сел на «Coltrane» (A-21, 1962), а на фото
+    # — поздний сборник с «деревянной» обложкой (24.10.2026). Название
+    # «John Coltrane» носят десятки разных пластинок.
+    if _norm(album) == _norm(artist) and not core_number(catno) and not target:
+        return None
+    fam = lot_label(title, asp)
+    if target and fam and not label_ok(target.get("label", ""), fam):
+        target = None
+    master, rel = find_master(d, artist, album, catno, target, fam)
+    ev = evidence(title, text, asp, catno, store=is_store(title, seller, fb))
+    ev["family"] = fam
+    country = ev["country"]
+    if master:
+        vers = vc.get(master, country)
+        if not vers:
+            vers = vc.get(master, None)
+    else:
+        vers = [slim_search(r) for r in rel]
+    eds, notes = plausible(vers, ev)
+    x = expectation(d, eds, fresh=fresh)
+    if not x:
+        return None
+    x.update({"master": master, "notes": notes, "evidence": ev,
+              "target": target})
+    return x
+
+
+# --- текст для продавца -------------------------------------------------
+ASK = ("Hi! Could you please add photos of both record labels and of the "
+       "back cover (top right corner and the bottom line)? Also, what is "
+       "etched or stamped in the run-out groove? Thanks!")
+
+
+def describe(x, k=4):
+    """Расклад изданий по-русски: «1961 Prestige 7188 — 15%, от $100»."""
+    rows = []
+    for v in x["parts"][:k]:
+        rows.append(f"{v['year'] or '—'} {v['label'][:22]} {v['catno'][:18]} — "
+                    f"{v['p'] * 100:.0f}%, от ${v['floor']:.0f}")
+    return rows

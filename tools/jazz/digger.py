@@ -50,6 +50,7 @@ for sub in ("tools", "tools/jazz", "tools/fixprice", "tools/ruspop",
     sys.path.insert(0, os.path.join(ROOT, sub))
 
 import catno_sweep as cs                                       # noqa: E402
+import diamonds as dm                                          # noqa: E402
 import hunt                                                    # noqa: E402
 import registry                                                # noqa: E402
 import targets as tg                                           # noqa: E402
@@ -236,7 +237,7 @@ def junk_reason(title):
     return None
 
 
-def score(title, seller_fb):
+def score(title, seller_fb, ev=False):
     lab, _, who = tiers(title)
     s = {"A": 3, "B": 1, "": 0}[lab] + (3 if who else 0)
     if _EARLY.search(title):
@@ -249,6 +250,16 @@ def score(title, seller_fb):
     # коллекции, чем магазин, который сверяется с Discogs.
     if seller_fb is not None and seller_fb < 300:
         s += 1
+    # Продавец без отзывов — новичок, цен Discogs не смотрит: «Lush Life»
+    # за $10.50 продавал аккаунт с нулём отзывов (24.10.2026).
+    if seller_fb is not None and seller_fb < 10:
+        s += 1
+    # Альбом из картотеки первопрессов с дорогим оригиналом — у ставки
+    # есть верх; это главный признак «алмаза».
+    if ev:
+        t = dm.match_target(title)
+        if t and t["floor"] >= 60:
+            s += 3
     # Слова непрофессионала: магазин пишет номер и оценку, а «vintage»,
     # «old», «estate», «grandpa's collection» — тот, кто цен не знает.
     # Пилот «алмазов» 24.10.2026: подробные заголовки знающих продавцов
@@ -568,14 +579,40 @@ def main():
                     help="«алмазы»: б/у, купить сейчас или торг, до $40, "
                          "пол от $50 и от 2.5x, предложение 80%% — владелец "
                          "24.10.2026")
+    ap.add_argument("--ev", action="store_true",
+                    help="оценка лота как ставки (tools/jazz/diamonds.py): "
+                         "расклад изданий по копиям в коллекциях, ожидание, "
+                         "худший случай, шанс на дорогой пресс")
+    ap.add_argument("--up-mult", type=float, default=4.0,
+                    help="«дорогой пресс» — пол от этой кратности цены")
+    ap.add_argument("--p-min", type=float, default=0.05,
+                    help="минимальный шанс на дорогой пресс для «алмаза»")
+    ap.add_argument("--target-queries", type=int, default=0,
+                    help="ещё столько запросов по альбомам картотеки "
+                         "первопрессов с дорогим оригиналом")
+    ap.add_argument("--targets-only", action="store_true",
+                    help="только запросы по картотеке")
+    ap.add_argument("--dig-sellers", type=int, default=0,
+                    help="у скольких «наивных» продавцов находок смотреть "
+                         "все их лоты")
+    ap.add_argument("--naive-fb", type=int, default=100,
+                    help="продавец с меньшим числом отзывов — «наивный»")
+    ap.add_argument("--sheets", action="store_true",
+                    help="контактные листы фото находок в out/diamonds_photos")
+    ap.add_argument("--seen-days", type=int, default=7,
+                    help="лот, оценённый за эти дни по той же цене, не "
+                         "открывать снова (0 — открывать всё)")
     ap.add_argument("--tg", action="store_true")
     # Владелец 24.10.2026: «поиск винила на ебей до 40$ чтобы находить
     # алмазы в б/у джазовых пластинках. Никаких аукционов — либо купить
     # сейчас, либо предложить цену». Пресет; любой ключ можно переопределить.
+    # После «Lush Life» («Купил. Этот режим мне и нужен») пресет оценивает
+    # лот как ставку (--ev) и ищет ещё по картотеке первопрессов.
     if "--diamonds" in sys.argv:
         ap.set_defaults(buy_now=True, used=True, max_price=40.0, min_gap=2.5,
                         min_floor=50.0, offer_share=0.8, max_cards=600,
-                        min_score=5)
+                        min_score=5, ev=True, target_queries=150,
+                        sheets=True, dig_sellers=5)
     a = ap.parse_args()
 
     token = ebay_token()
@@ -593,6 +630,13 @@ def main():
         plan += [f"{x} lp" for x in ARTISTS_A.split("|")]
     if a.only:
         plan = [q for q in plan if any(o.lower() in q for o in a.only)]
+    if a.targets_only:
+        plan = []
+    if a.target_queries or a.targets_only:
+        plan += target_queries(a.target_queries or 300)
+    vc = dm.Versions(d)
+    seen_db = load_seen()
+    today = time.strftime("%Y-%m-%d")
     flt = (("buyingOptions:{BEST_OFFER}," if a.offer else
             "buyingOptions:{FIXED_PRICE}," if a.buy_now else
             "buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},") +
@@ -632,7 +676,7 @@ def main():
                     drop("дороже потолка")
                     continue
                 se = it.get("seller") or {}
-                s = score(t, se.get("feedbackScore"))
+                s = score(t, se.get("feedbackScore"), ev=a.ev)
                 lab, _, who = tiers(t)
                 if lab == "A":
                     by_seller.setdefault(
@@ -653,8 +697,73 @@ def main():
           f"{len(cands)} за {time.time() - t0:.0f} с", file=sys.stderr)
 
     cands.sort(key=lambda z: (z["score"], -z["price"]), reverse=True)
+    if a.seen_days:
+        # Ежедневный прогон: лот, оценённый на днях по той же цене и не
+        # ставший находкой, второй раз не открываем — лимит eBay и
+        # Discogs уходит на новые объявления.
+        keep = []
+        for z in cands:
+            rec = seen_db.get(z["it"]["itemId"])
+            if rec and rec.get("p") == z["price"] and not rec.get("g") and \
+                    _age_days(rec.get("d"), today) < a.seen_days:
+                drop("уже смотрели на днях")
+                continue
+            keep.append(z)
+        cands = keep
     finds, opened, appraised = [], 0, []
-    for k, z in enumerate(cands[:a.max_cards], 1):
+    queue, dug, k = list(cands[:a.max_cards]), set(), 0
+
+    def dig():
+        """Раскопка продавца: у «наивного» продавца находки (меньше
+        --naive-fb отзывов) смотрятся все его лоты — коллекция редко
+        продаётся по одной пластинке. Продавец «Lush Life» выставил ещё
+        четыре джазовые пластинки в тот же день (24.10.2026)."""
+        extra = []
+        for f in finds:
+            se = (f.get("seller") or "").strip()
+            if not se or se in dug or len(dug) >= a.dig_sellers or \
+                    (f.get("fb") or 0) >= a.naive_fb:
+                continue
+            dug.add(se)
+            try:
+                j = search_page(token, category_id=hunt.CATEGORY, limit=200,
+                                sort="newlyListed",
+                                flt=flt + f",sellers:{{{se}}}")
+            except ApiRefused as e:
+                print(f"  отказ eBay, продавец {se}: {e}", file=sys.stderr)
+                continue
+            n = 0
+            for it in j.get("itemSummaries") or []:
+                if it["itemId"] in seen or n >= 60:
+                    continue
+                seen.add(it["itemId"])
+                t = it.get("title") or ""
+                if junk_reason(t):
+                    continue
+                p, _, kind, note = hunt.lot_price(it, 2.0)
+                if p is None or p > a.max_price or kind in ("?", "аукцион"):
+                    continue
+                lab, _, who = tiers(t)
+                extra.append({"it": it, "score": 99, "price": p, "kind": kind,
+                              "note": note, "lab": lab, "who": who,
+                              "dug": se})
+                n += 1
+            print(f"  раскопка продавца {se}: ещё {n} лотов", file=sys.stderr)
+        return extra
+
+    while True:
+        if k >= len(queue):
+            more = dig() if a.ev and a.dig_sellers else []
+            if not more:
+                break
+            queue += more
+        z = queue[k]
+        k += 1
+        if k % 25 == 0:
+            d.save()
+            vc.save()
+            print(f"  оценено {k}/{len(queue)}, находок {len(finds)}",
+                  file=sys.stderr)
         it = z["it"]
         iid = it["itemId"]
         t = it.get("title") or ""
@@ -696,13 +805,28 @@ def main():
             drop("оценка хуже VG в заголовке")
             continue
         year = lot_year(asp, t, catno)
+        if a.ev:
+            z.update({"artist": artist, "album": album, "catno": catno,
+                      "text": text, "asp": asp, "grade": grade})
+            f = ev_find(d, vc, z, a)
+            prior = seen_db.get(iid) or {}
+            if f is not None and prior.get("g"):
+                f["seen_before"] = prior.get("d", "")   # уже была находкой
+            seen_db[iid] = {"p": z["price"], "d": prior.get("d", today)
+                            if prior.get("g") else today,
+                            "g": f.get("group", "") if f else ""}
+            if f is None:
+                drop("нет на Discogs")
+                continue
+            if f.get("why"):
+                drop(f["why"])
+                appraised.append(f)
+                continue
+            finds.append(f)
+            continue
         v = appraise(d, artist, album, catno, asp.get("Record Label") or "",
                      year, verify=(c[2] if c and not asp.get("Catalog Number")
                                    else None))
-        if k % 25 == 0:
-            d.save()
-            print(f"  оценено {k}/{min(len(cands), a.max_cards)}, "
-                  f"находок {len(finds)}", file=sys.stderr)
         if not v:
             drop("нет на Discogs")
             continue
@@ -773,22 +897,47 @@ def main():
             "seller": se.get("username") or "", "fb": se.get("feedbackScore"),
             "photos": 0, "id": iid,
             "url": (it.get("itemWebUrl") or "").split("?")[0]})
+    if a.ev and finds:
+        # Перед отчётом — свежие полы Discogs по изданиям каждой находки:
+        # в кэше они могут быть недельной давности.
+        keep = []
+        for z in finds:
+            f = ev_find(d, vc, z["_z"], a, fresh=True)
+            if f and not f.get("why"):
+                f["seen_before"] = z.get("seen_before", "")
+                keep.append(f)
+            else:
+                drop("после свежих цен Discogs — мимо")
+        finds = keep
     d.save()
+    vc.save()
+    save_seen(seen_db)
     tp.fx.save_cards(cards)
+    for z in finds:
+        z.pop("_z", None)
+        if a.sheets:
+            z["sheet"] = photo_sheet(H, z["id"]) or ""
 
-    order = {"надёжная": 0, "по прессу": 1, "сверить этикетку": 2}
+    order = {"надёжная": 0, "по прессу": 1, "алмаз": 2, "ожидание": 3,
+             "сверить этикетку": 4}
     finds.sort(key=lambda z: (order[z["group"]], -z["gap"]))
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"digger_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
+    def fields(rows):
+        out = []
+        for r in rows:
+            out += [k for k in r if k not in out]
+        return out
+
     if appraised:
         with open(path.replace("digger_", "digger_all_"), "w", newline="",
                   encoding="utf-8") as f:
-            wr = csv.DictWriter(f, fieldnames=list(appraised[0].keys()))
+            wr = csv.DictWriter(f, fieldnames=fields(appraised))
             wr.writeheader()
             wr.writerows(appraised)
     if finds:
         with open(path, "w", newline="", encoding="utf-8") as f:
-            wr = csv.DictWriter(f, fieldnames=list(finds[0].keys()))
+            wr = csv.DictWriter(f, fieldnames=fields(finds))
             wr.writeheader()
             wr.writerows(finds)
     # Магазин на десятки тысяч отзывов — не распродажа коллекции: у
@@ -808,10 +957,12 @@ def main():
         for s, fb, n, na in dealers[:15]:
             print(f"  {s} ({fb} отз.): {n}, из них аукционов {na}")
     for z in finds:
-        print("\n" + render(z))
+        print("\n" + (render_ev(z) if a.ev else render(z)))
     if finds:
         print(f"\nфайл: {path}")
-    print(NOTE)
+    if a.ev and any(z["group"] in ("алмаз", "ожидание") for z in finds):
+        print("\nспросить продавца (английский):\n  " + dm.ASK)
+    print(NOTE_EV if a.ev else NOTE)
     return 0
 
 
@@ -844,6 +995,171 @@ def render(z):
     if z.get("offer_hint"):
         lines.insert(1, f"   продавец принимает торг — можно предложить "
                         f"~${z['offer_hint']:.2f}")
+    return "\n".join(lines)
+
+
+# --- «алмазы»: лот как ставка (diamonds.py) ----------------------------------
+NOTE_EV = ("Пол Discogs — самый дешёвый ЗАПРОС за любое состояние, не сделка. "
+           "Доли изданий — по копиям в коллекциях Discogs среди изданий, "
+           "совместимых с лотом (номер, mono/stereo, страна); аудиофильские "
+           "переиздания лоту без слов продавца не приписываются. «алмаз» — "
+           "в худшем случае почти без потерь, шанс на дорогой пресс от 5%; "
+           "«ожидание» — средняя цена изданий от 2.5x; «надёжная» — даже "
+           "частое издание от 2.5x.")
+SEEN = os.path.join(ROOT, "cache", "diamonds_seen.json")
+
+
+def load_seen():
+    try:
+        with open(SEEN, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+def save_seen(db):
+    os.makedirs(os.path.dirname(SEEN), exist_ok=True)
+    tmp = SEEN + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(db, f, ensure_ascii=False)
+    os.replace(tmp, SEEN)
+
+
+def _age_days(d1, d2):
+    try:
+        return (time.mktime(time.strptime(d2, "%Y-%m-%d"))
+                - time.mktime(time.strptime(d1, "%Y-%m-%d"))) / 86400
+    except (TypeError, ValueError):
+        return 9999
+
+
+def target_queries(n):
+    """Запросы по альбомам картотеки первопрессов с дорогим оригиналом
+    (пол от $60, хотя бы две копии): «Hank Mobley Soul Station». Свежие
+    объявления по ним — главная охота на «наивного» продавца."""
+    by, _ = dm.load_targets()
+    ts = sorted((t for v in by.values() for t in v
+                 if t["floor"] >= 60 and t["copies"] >= 2 and t["album"]),
+                key=lambda t: -t["floor"])
+    out, seen_q = [], set()
+    for t in ts:
+        artist = re.sub(r"\s*\(\d+\)|\*", "", t["artist"]).strip()
+        q = re.sub(r"\s+", " ", f"{artist} {t['album']}").strip()[:80]
+        k = q.lower()
+        if k in seen_q:
+            continue
+        seen_q.add(k)
+        out.append(q)
+        if len(out) >= n:
+            break
+    return out
+
+
+def ev_find(d, vc, z, a, fresh=False):
+    """Лот как ставка: находка, отказ с причиной («why») или None, если
+    альбома на Discogs нет."""
+    it = z["it"]
+    se = it.get("seller") or {}
+    x = dm.assess(d, vc, z["artist"], z["album"], z["catno"],
+                  it.get("title") or "", z["text"], z["asp"], fresh=fresh,
+                  seller=se.get("username") or "", fb=se.get("feedbackScore"))
+    if not x:
+        return None
+    ask = z["price"]
+    p = ask
+    g = dm.classify(x, p, a.min_floor, a.min_gap, a.up_mult, a.p_min)
+    if g is None and a.offer_share and z["kind"] == "предложить цену":
+        po = round(ask * a.offer_share, 2)
+        g = dm.classify(x, po, a.min_floor, a.min_gap, a.up_mult, a.p_min)
+        if g:
+            p = po
+    p_big, thr = dm.chance(x, p, a.min_floor, a.up_mult)
+    se = it.get("seller") or {}
+    up = x["up"]
+    f = {"group": g or "", "title": it.get("title") or "", "price": p,
+         "ask": ask, "kind": z["kind"], "ship": shipping_usd(it),
+         "artist": z["artist"], "album": z["album"], "catno": z["catno"],
+         "grade": z.get("grade") or "", "ev": x["ev"], "low": x["low"],
+         "gap": round(x["ev"] / p, 1) if p else 0, "p_big": p_big,
+         "big_thr": thr,
+         "up": (f"{up['year'] or '—'} {up['label']} {up['catno']} "
+                f"от ${up['floor']:.0f}" if up else ""),
+         "parts": " | ".join(dm.describe(x, 5)),
+         "notes": "; ".join(x["notes"]), "coverage": x["coverage"],
+         "editions": x["n"], "master": x["master"] or "",
+         "target": (f"{x['target']['album']} (оригинал от "
+                    f"${x['target']['floor']:.0f})" if x["target"] else ""),
+         "offer_hint": (round(ask * a.offer_share, 2)
+                        if a.offer_share and p == ask
+                        and z["kind"] == "предложить цену" else ""),
+         "seller": se.get("username") or "", "fb": se.get("feedbackScore"),
+         "id": it["itemId"],
+         "url": (it.get("itemWebUrl") or "").split("?")[0], "_z": z}
+    if not g:
+        f["why"] = "ставка не сходится"
+        f.pop("_z")
+    return f
+
+
+PHOTOS = os.path.join(OUT, "diamonds_photos")
+
+
+def photo_sheet(H, iid, out_dir=PHOTOS, cols=3, size=520):
+    """Контактный лист фото лота — для проверки этикетки глазами (один
+    запрос к карточке eBay; сами картинки лимит API не тратят)."""
+    import requests
+    from io import BytesIO
+    try:
+        from PIL import Image
+    except ImportError:
+        return None
+    try:
+        j = requests.get(tp.fx.ITEM.format(iid), headers=H, timeout=30).json()
+    except (requests.RequestException, ValueError):
+        return None
+    urls = [((j.get("image") or {}).get("imageUrl"))] + \
+        [x.get("imageUrl") for x in j.get("additionalImages") or []]
+    ims = []
+    for u in [u for u in urls if u][:9]:
+        u = re.sub(r"s-l\d+", "s-l1600", u)
+        try:
+            im = Image.open(BytesIO(requests.get(u, timeout=60).content))
+        except Exception:                                   # noqa: BLE001
+            continue
+        im = im.convert("RGB")
+        im.thumbnail((size, size))
+        ims.append(im)
+    if not ims:
+        return None
+    rows = (len(ims) + cols - 1) // cols
+    sheet = Image.new("RGB", (cols * size, rows * size), "white")
+    for k, im in enumerate(ims):
+        sheet.paste(im, ((k % cols) * size, (k // cols) * size))
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, f"{iid.split('|')[1] if '|' in iid else iid}.jpg")
+    sheet.save(path, quality=88)
+    return path
+
+
+def render_ev(z):
+    sh = f"+${z['ship']:.2f}" if z["ship"] is not None else "+$?"
+    ask = (f" (предложить; запрос ${z['ask']:.2f})"
+           if z["ask"] != z["price"] else "")
+    again = f"  (уже было {z['seen_before']})" if z.get("seen_before") else ""
+    lines = [f"[{z['group']}] ${z['price']:.2f}{ask} {sh} [{z['kind']}]  "
+             f"{z['artist']} — {z['album']}{again}",
+             f"   {z['title'][:95]}",
+             f"   ожидание ${z['ev']:.0f} ({z['gap']}x) · худший случай "
+             f"${z['low']:.0f} · шанс {z['p_big'] * 100:.0f}% на издание от "
+             f"${z['big_thr']:.0f}" + (f": {z['up']}" if z["up"] else ""),
+             f"   расклад: {z['parts']}"]
+    if z["notes"]:
+        lines.append(f"   улики: {z['notes']}")
+    if z.get("offer_hint"):
+        lines.append(f"   продавец принимает торг — можно предложить "
+                     f"~${z['offer_hint']:.2f}")
+    lines.append(f"   {z['grade'] or 'оценки нет'}; продавец {z['seller']} "
+                 f"({z['fb']}); {z['url']}")
     return "\n".join(lines)
 
 
