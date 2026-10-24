@@ -231,6 +231,41 @@ def test_epokhi_etiketok():
           dm.era_range((), "1966-1970") == (1966, 1970, ["1966-1970"]))
 
 
+class FakeVC:
+    """Издания мастера по странам (None — все страны)."""
+
+    def __init__(self, by_country):
+        self.by = by_country
+
+    def get(self, master, country="US", max_pages=3):
+        return self.by.get(country, [])
+
+
+def test_nomer_drugoy_strany():
+    us = [V(1, 1960, "Blue Note", "BLP 4031", "LP, Album, Mono", 500, 900),
+          V(2, 1960, "Blue Note", "BST 84031", "LP, Album, Stereo", 300),
+          V(3, 2014, "Blue Note", "B0020423-01, BST 84031", "LP, Album, "
+            "Reissue", 900)]
+    jp = dict(V(9, 1977, "Blue Note", "GXK 8160", "LP, Album, Reissue", 120),
+              country="Japan")
+    vc = FakeVC({"US": us, None: us + [jp]})
+    d = FakeD({1: (1250.0, 6), 2: (300.0, 5), 3: (15.0, 40), 9: (30.0, 12)})
+    title = "Hank Mobley Soul Station Blue Note LP GXK-8160"
+    x = dm.assess(d, vc, "Hank Mobley", "Soul Station", "GXK-8160", title,
+                  title, {})
+    check("номер GXK 8160 нашёлся в японских изданиях",
+          x and [v["id"] for v in x["parts"]] == [9]
+          and "Japan" in x["notes"][-1] and not x["catno_miss"])
+    check("…и оригинал 1960 года в расклад не попал",
+          x and dm.classify(x, 10.0) is None)
+    title = "Hank Mobley Soul Station Blue Note LP ZZZ-99999"
+    x = dm.assess(d, vc, "Hank Mobley", "Soul Station", "ZZZ-99999", title,
+                  title, {})
+    check("номер не нашёлся нигде — не ставка, даже при ожидании $300+",
+          x and x["catno_miss"] and x["ev"] > 100
+          and dm.classify(x, 10.0) is None)
+
+
 def test_tsvetnoy_vinil():
     check("«Opaque Blue Vinyl» — цветной",
           dm.color_vinyl("Miles Davis - Kind of Blue (Limited, Opaque Blue "
@@ -254,7 +289,8 @@ def test_tsvetnoy_vinil():
 def main():
     for fn in [test_lush_life, test_uliki, test_nadezhnaya_i_ozhidanie,
                test_kartoteka, test_odnoimennyy_bez_nomera,
-               test_epokhi_etiketok, test_tsvetnoy_vinil]:
+               test_epokhi_etiketok, test_tsvetnoy_vinil,
+               test_nomer_drugoy_strany]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

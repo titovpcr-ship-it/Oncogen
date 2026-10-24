@@ -600,6 +600,10 @@ def classify(x, price, min_floor=50.0, min_gap=2.5, up_mult=4.0, p_min=0.05):
         return None
     if x["low"] >= max(min_floor, min_gap * price) and x["coverage"] >= 0.6:
         return "надёжная"
+    # Номер с конверта не нашёлся ни у одного издания: что это за пластинка
+    # — неясно, ставку на редкий пресс не считаем.
+    if x.get("catno_miss"):
+        return None
     p_big, _ = chance(x, price, min_floor, up_mult)
     if x["low"] >= 0.9 * price and p_big >= p_min:
         return "алмаз"
@@ -777,11 +781,24 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     else:
         vers = [slim_search(r) for r in rel]
     eds, notes = plausible(vers, ev)
+    miss = bool(ev["core"]) and not any(catno_match(v["catno"], ev["core"])
+                                        for v in eds)
+    if miss and master:
+        # Номера нет среди изданий страны лота — ищем во всех странах:
+        # японский пресс без слова «Japan» в объявлении иначе оценивался
+        # американскими оригиналами.
+        alt, alt_notes = plausible(vc.get(master, None), ev)
+        hit = [v for v in alt if catno_match(v["catno"], ev["core"])]
+        if hit:
+            eds = hit
+            notes = alt_notes + [f"номер {ev['core']} — издание "
+                                 f"{'/'.join(sorted({v['country'] for v in hit}))}"]
+            miss = False
     x = expectation(d, eds, fresh=fresh)
     if not x:
         return None
     x.update({"master": master, "notes": notes, "evidence": ev,
-              "target": target})
+              "target": target, "catno_miss": miss})
     return x
 
 
