@@ -209,6 +209,8 @@ def main():
                          "открывать по карточке")
     ap.add_argument("--only", nargs="*", default=None,
                     help="только эти альбомы (подстрока названия)")
+    ap.add_argument("--max-price", type=float, default=25.0,
+                    help="лоты дороже (без доставки) не показываются")
     ap.add_argument("--slice", default=None,
                     help="часть списка «начало:конец» — прогон кусками, "
                          "фоновая задача живёт 2 часа")
@@ -244,7 +246,9 @@ def main():
             j = search_page(token, q=q[:90], category_id=hunt.CATEGORY,
                             limit=200, sort="price",
                             flt="buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},"
-                                "itemLocationCountry:US")
+                                "itemLocationCountry:US"
+                                + (f",price:[..{a.max_price:.0f}],"
+                                   "priceCurrency:USD" if a.max_price else ""))
         except ApiRefused as e:
             print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
             continue
@@ -267,6 +271,10 @@ def main():
             if _PREORDER.search(raw):
                 note = (note + "; " if note else "") + "ПРЕДЗАКАЗ — отправят после выхода"
             if p is None or kind not in by_kind:
+                continue
+            # Владелец 24.10.2026: «Дороже 25$ не скидывай» — к цене лота
+            # без доставки, у аукциона к текущей ставке.
+            if a.max_price and p > a.max_price:
                 continue
             sh = shipping_usd(it)
             by_kind[kind].append((p + (sh if sh is not None else SHIP_GUESS),
