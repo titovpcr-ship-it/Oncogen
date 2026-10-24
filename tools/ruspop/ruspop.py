@@ -107,6 +107,27 @@ def load_albums(path):
     return out
 
 
+# Владелец 24.10.2026: «не игнорь цветные версии и иные окей, главное
+# новая запечатанная». Цвет здесь и не фильтровался, но общие фильтры
+# охотника снимали законные новые издания по допам в заголовке: «+ Poster»
+# читался как «постер вместо пластинки», «+ Digital Download» — как
+# «цифра». Допы вырезаются из заголовка до всех проверок.
+_EXTRAS = re.compile(
+    r"(?:\+|&|w/|with|incl\.?|includes?|including|plus|and)\s*(?:a\s+|an\s+)?"
+    r"(?:bonus\s+|exclusive\s+|signed\s+)?(?:poster|digital\s*download|"
+    r"download\s*(?:card|code)?|lithograph|art\s*print|print|booklet|insert|"
+    r"obi|slipmat|sticker)s?\b|\b(?:poster|download)\s+included\b", re.I)
+# Сингл, а не альбом: «Thriller … Epic Special 12" Dance Single».
+_SINGLE = re.compile(r"\b12\s*(?:\"|”|''|inch|in\.?)?\s*(?:\w+\s+){0,2}single\b"
+                     r"|\bdance\s+single\b|\bpromo\s+single\b", re.I)
+_PREORDER = re.compile(r"\bpre-?\s*orders?\b|\bpre-?\s*sale\b|\(\s*po\s*\)|"
+                       r"\s-\s*po\s*$", re.I)
+
+
+def clean_title(t):
+    return re.sub(r"\s+", " ", _EXTRAS.sub(" ", t or "")).strip()
+
+
 def is_the_album(title, artist, album):
     if artist.lower() in ("various", ""):
         # Саундтрек: исполнителя в заголовке нет — нужна фраза альбома.
@@ -162,15 +183,19 @@ def main():
         # подтверждённому лоту в каждом способе покупки.
         by_kind = {k: [] for k in MODES}
         for it in j.get("itemSummaries") or []:
-            t = it.get("title") or ""
+            raw = it.get("title") or ""
+            t = clean_title(raw)
             clean = re.sub(r"\bvarious\b", " ", t, flags=re.I)
             if (hunt._NOT_RECORD.search(t) or hunt._FORTY_FIVE.search(t)
-                    or fx._JUNK.search(clean) or hunt._BAD.search(t)):
+                    or fx._JUNK.search(clean) or hunt._BAD.search(t)
+                    or _SINGLE.search(raw)):
                 continue
             if not fx.is_sealed(it)[0] or not is_the_album(t, al["artist"],
                                                           al["album"]):
                 continue
             p, expect, kind, note = hunt.lot_price(it, 2.0)
+            if _PREORDER.search(raw):
+                note = (note + "; " if note else "") + "ПРЕДЗАКАЗ — отправят после выхода"
             if p is None or kind not in by_kind:
                 continue
             sh = shipping_usd(it)
@@ -285,8 +310,10 @@ def render(r):
         ratio = f" → {m['ratio']}x" if m.get("ratio") else ""
         lines.append(f"  {LABEL[kind]}: ${m['price']:.2f} {sh}{lp} → Москва "
                      f"{m['landed_rub']:,} ₽".replace(",", " ") + ratio)
-        if kind == "аукцион" and m.get("note"):
-            lines.append(f"     {m['note'].split(', поправка')[0]}")
+        if m.get("note"):
+            n = m["note"].split(", поправка")[0]
+            if kind == "аукцион" or "ПРЕДЗАКАЗ" in n:
+                lines.append(f"     {n}")
         lines.append(f"     {m['url']}")
     return "\n".join(lines)
 
