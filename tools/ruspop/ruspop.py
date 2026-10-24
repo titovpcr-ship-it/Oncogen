@@ -153,6 +153,19 @@ _EXTRAS = re.compile(
 # Сингл, а не альбом: «Thriller … Epic Special 12" Dance Single».
 _SINGLE = re.compile(r"\b12\s*(?:\"|”|''|inch|in\.?)?\s*(?:\w+\s+){0,2}single\b"
                      r"|\bdance\s+single\b|\bpromo\s+single\b", re.I)
+# Не альбом: мини-пластинки, инструменталки, половинки (ruspop 24.10.2026).
+_NOT_ALBUM = re.compile(
+    r"\b(?:tiny|mini)\s*vinyl\b|\b[34]\s*(?:\"|”|''|-?inch)|\binstrumentals?\b|"
+    r"\b\d?[ab]\s*/\s*[ab]\s*only\b|\bsides?\s+[a-d](?:\s*[&/-]\s*[a-d])?\s+only\b|"
+    r"\bblacklist\b", re.I)
+
+
+def discs_of(title):
+    """Число пластинок; год в заголовке («2023 LP») — не число дисков."""
+    n = tx.discs_in_title(title) or 1
+    return n if 1 <= n <= 6 else 1
+
+
 _PREORDER = re.compile(r"\bpre-?\s*orders?\b|\bpre-?\s*sale\b|\(\s*po\s*\)|"
                        r"\s-\s*po\s*$", re.I)
 
@@ -183,9 +196,18 @@ def is_the_album(title, artist, album):
     # матчер принял бы любой лот с этим именем — Nevermind под «Nirvana».
     # Нужно имя дважды или «self-titled» / «s/t» / «debut» / «black album».
     if artist and artist.lower() == album.lower():
-        low = title.lower()
-        n = len(re.findall(rf"\b{re.escape(artist.lower())}\b", low))
-        return n >= 2 or bool(_SELF.search(title))
+        # Имя дважды ПОДРЯД («Sublime - Sublime»), а не где угодно:
+        # «Sublime - Roots Of Sublime», «Nevermen … Gorillaz Alias Gorillaz».
+        a = re.escape(artist.lower())
+        return bool(re.search(rf"\b{a}\W+{a}\b", title.lower())
+                    or _SELF.search(title))
+    key = [w for w in re.split(r"\W+", album.lower()) if w and w != "the"]
+    # Продолжение — другой альбом: «Stranger Things 5» под «Stranger Things».
+    if key and not re.search(r"\d", album):
+        ph = r"\b" + r"\W+(?:the\W+)?".join(map(re.escape, key))
+        if re.search(ph + r"\W+(?:vol(?:ume)?\.?\s*|season\s*|part\s*)?\d",
+                     title.lower()):
+            return False
     if artist.lower() in ("various", ""):
         # Саундтрек: исполнителя в заголовке нет — нужна фраза альбома.
         key = [w for w in re.split(r"\W+", album.lower()) if w]
@@ -262,7 +284,7 @@ def main():
             clean = re.sub(r"\bvarious\b", " ", t, flags=re.I)
             if (hunt._NOT_RECORD.search(t) or hunt._FORTY_FIVE.search(t)
                     or fx._JUNK.search(clean) or hunt._BAD.search(t)
-                    or _SINGLE.search(raw)):
+                    or _SINGLE.search(raw) or _NOT_ALBUM.search(raw)):
                 continue
             if not fx.is_sealed(it)[0] or not is_the_album(t, al["artist"],
                                                           al["album"]):
@@ -306,7 +328,7 @@ def main():
                 if code:
                     v, _ = fx.discogs_value(d, code, None if al["artist"].lower()
                                             == "various" else al["artist"])
-                discs = tx.discs_in_title(t) or 1
+                discs = discs_of(t)
                 if v and v.get("format"):
                     m = re.match(r"(\d+)\s*x", v["format"])
                     if m:

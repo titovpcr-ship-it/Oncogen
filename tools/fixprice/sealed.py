@@ -68,9 +68,11 @@ def save_cards(cards):
 FEES = 0.12                    # Discogs ~9% + оплата ~3%
 SHIP_GUESS = 5.0
 
+# «In shrink» без «still»/«sealed» — вскрытая в сохранённой плёнке:
+# «AC/DC Highway To Hell LP VG+ Vinyl G+ Sleeve In Shrink» (ruspop 24.10.2026).
 _SEALED = re.compile(r"\bsealed\b|\bfactory\s*seal|\bstill\s*in\s*(?:the\s*)?"
                      r"shrink|\bunopened\b|\bnever\s*opened\b|\bmint\s*sealed\b|"
-                     r"\bin\s*shrink\b|\bss\b", re.I)
+                     r"\bss\b", re.I)
 _NOT_SEALED = re.compile(r"\bre-?sealed\b|\bopened\b|\bunsealed\b|"
                          r"\bshrink\s*(?:torn|split|cut|removed)\b|"
                          r"\bno\s*shrink\b|\bopen\s*shrink\b|\bplayed\b|"
