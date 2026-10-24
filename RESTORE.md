@@ -119,6 +119,12 @@ python tools/jazz/tonepoet.py --tg             # только «Tone Poet» в �
 Каталог серии — `data/series_catalog.csv` (Tone Poet 175, Verve By Request
 124, выгрузка series.py от 22.10.2026).
 
+### Эксперт-барахольщик — джаз до $10
+```bash
+python tools/jazz/digger.py --no-artists --max-cards 300   # только лейблы
+python tools/jazz/digger.py --max-cards 500                # лейблы + имена
+```
+
 ### Джаз
 ```bash
 python tools/jazz/series.py                            # Tone Poet / VBR новые против Discogs
