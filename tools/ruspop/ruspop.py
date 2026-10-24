@@ -167,15 +167,35 @@ def _plain(x):
     return re.sub(r"\s+", " ", x).strip()
 
 
+_SELF = re.compile(r"\bself[\s-]*titled\b|\bs/?t\b|\bdebut\b|\bblack\s+album\b",
+                   re.I)
+
+
 def is_the_album(title, artist, album):
     title, artist, album = _plain(title), _plain(artist), _plain(album)
+    # «The Allman Brothers Band» — продавцы часто пишут без «The», а матчер
+    # требует каждое слово имени.
+    artist = re.sub(r"^the\s+", "", artist, flags=re.I)
+    # ОДНОИМЁННЫЙ АЛЬБОМ («Nirvana — Nirvana», «Gorillaz», «Van Halen»):
+    # матчер принял бы любой лот с этим именем — Nevermind под «Nirvana».
+    # Нужно имя дважды или «self-titled» / «s/t» / «debut» / «black album».
+    if artist and artist.lower() == album.lower():
+        low = title.lower()
+        n = len(re.findall(rf"\b{re.escape(artist.lower())}\b", low))
+        return n >= 2 or bool(_SELF.search(title))
     if artist.lower() in ("various", ""):
         # Саундтрек: исполнителя в заголовке нет — нужна фраза альбома.
         key = [w for w in re.split(r"\W+", album.lower()) if w]
         phrase = r"\b" + r"\W+".join(map(re.escape, key)) + r"\b"
         return bool(re.search(phrase, title.lower()))
-    return tx.title_is_the_album(title, {"artist": artist, "album": album,
-                                         "discs": None}) is None
+    why = tx.title_is_the_album(title, {"artist": artist, "album": album,
+                                        "discs": None})
+    # «Live at Fillmore East», «Unplugged In New York»: концертным альбом
+    # делает само название, и общий фильтр концертов снимал бы все лоты.
+    if why == "концертная запись, а не студийный альбом" and \
+            tx._LIVE_BOOTLEG.search(album):
+        return True
+    return why is None
 
 
 def main():
