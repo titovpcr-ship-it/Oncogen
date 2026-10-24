@@ -57,7 +57,14 @@ LABELS = [
 
 
 def _env_file_token():
-    """Токен из .env. Переменные окружения имеют приоритет."""
+    """Токен: переменная окружения, иначе .env.
+
+    Прежде функция читала только .env, а её зовут series, sealed,
+    catno_sweep, ruspop напрямую — в облаке, где ключи лежат в секретах
+    окружения, токен Discogs не подхватывался бы (бэкап 24.10.2026).
+    """
+    if os.environ.get("DISCOGS_TOKEN"):
+        return os.environ["DISCOGS_TOKEN"]
     try:
         with open(os.path.join(ROOT, ".env"), encoding="utf-8") as f:
             for line in f:
