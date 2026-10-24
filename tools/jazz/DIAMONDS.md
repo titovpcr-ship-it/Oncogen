@@ -107,7 +107,7 @@ $40 (пресс 1964); с «distributed by Fantasy» — только OJC 1984, 
 
 | лейбл | эпоха → годы |
 |---|---|
-| Blue Note | «767 Lexington» 1951-57 · «47 West 63rd» 1957-62 · «New York USA» 1962-66 · «a division of Liberty» 1966-70 · «United Artists» / «Liberty UA» 1970-76 · белая нота 1977-80-е |
+| Blue Note | «767 Lexington» 1951-57 · «47 West 63rd» 1957-62 · «New York USA» 1962-66 · «a division of Liberty» 1966-70 · «United Artists» / «Liberty UA» 1970-76 · белая нота 1977-80-е · «ухо» и «P» Plastylite в мёртвой зоне — до 1967 |
 | Prestige | жёлто-чёрная «446 W. 50th St.» 1955-58 · жёлто-чёрная (стерео серебристая) «Bergenfield, N.J.» 1958-64 · синяя с трезубцем 1964-71 · «distributed by Fantasy» с 1971 |
 | New Jazz | фиолетовая, Bergenfield 1958-65 |
 | Impulse! | оранжево-чёрная («Am-Par» 1961-63, «ABC-Paramount» 1963-66, «ABC Records» 1966-67) · чёрная с широким оранжево-красным ободом 1967-74 · зелёная «мишень» с 1974 · MCA |
@@ -115,6 +115,9 @@ $40 (пресс 1964); с «distributed by Fantasy» — только OJC 1984, 
 | Columbia | шесть «глаз» 1955-62 · два «глаза», «360 Sound», «Guaranteed High Fidelity» 1962-70 · один «глаз» с 1970 |
 | Verve | «Verve Records, Inc.», «трубач» 1956-61 · чёрная с «T», «MGM Records» 1961-72 · Polydor с 1973 |
 | Riverside | «Bill Grauer Productions» 1955-64 · ABC 1965-69 |
+
+Две приметы одной пластинки сужают годы («Liberty label» и «ухо» — ранний
+Liberty 1966-67), противоречащие — объединяются.
 
 Источник — справочники этикеток cvinyl.com (сверено 24.10.2026). Адрес со
 слов продавца считается уликой только рядом со словом «label»: тот же

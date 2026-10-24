@@ -202,9 +202,17 @@ def test_epokhi_etiketok():
     check("«6 eye» — Columbia 1955-1962",
           (dm.era_of("Miles Davis Columbia 6 eye mono", "columbia")
            or (0, 0))[:2] == (1955, 1962))
-    check("New Jazz: фиолетовая и Bergenfield — объединение 1958-1965",
+    check("New Jazz: фиолетовая и Bergenfield — пересечение 1958-1964",
           (dm.era_of("New Jazz purple label Bergenfield", "new jazz")
-           or (0, 0))[:2] == (1958, 1965))
+           or (0, 0))[:2] == (1958, 1964))
+    check("«Liberty label» и «ухо» в мёртвой зоне — 1966-1967",
+          (dm.era_of("Blue Note Liberty label, ear in the dead wax",
+                     "blue note") or (0, 0))[:2] == (1966, 1967))
+    check("противоречие («Lexington» и «Liberty label») — объединение",
+          (dm.era_of("Lexington labels? Liberty label", "blue note")
+           or (0, 0))[:2] == (1951, 1970))
+    check("«ear» без мёртвой зоны — не улика",
+          dm.era_of("easy on the ear, Blue Note classic", "blue note") is None)
     check("эпоха чужого лейбла не применяется",
           dm.era_of("Columbia 6 eye", "blue note") is None)
     ev = ev_of("John Coltrane Lush Life Prestige LP", "7188")

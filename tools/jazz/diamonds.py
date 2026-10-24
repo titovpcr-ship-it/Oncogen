@@ -356,6 +356,13 @@ ERAS = {
               False, "«a division of United Artists» / «Liberty UA»"),
     "bn-whitenote": ("blue note", (1977, 1985), r"\bwhite\s*note\b", False,
                      "синяя с белой нотой"),
+    # «Ухо» и «P» Plastylite в мёртвой зоне: Plastylite прессовал Blue
+    # Note до 1966-67 — и ранние прессы Liberty тоже.
+    "bn-ear": ("blue note", (1951, 1967),
+               r"\bplastylite\b|\bear\s*(?:stamp|mark|logo|present|"
+               r"in\s*(?:the\s*)?(?:dead|run|matrix))|"
+               r"\b(?:ear\s*(?:and|&|/)\s*p|p\s*(?:and|&|/)\s*ear)\b", False,
+               "«ухо» и «P» Plastylite в мёртвой зоне"),
     "pr-50th": ("prestige", (1955, 1958), r"\b(?:446\s*)?w(?:est)?\.?\s*50th\b",
                 True, "жёлто-чёрная «фейерверк», «446 W. 50th St., N.Y.C.»"),
     "pr-nj": ("prestige", (1958, 1964),
@@ -415,8 +422,9 @@ _ERA_FAMILY = {"new jazz": ("new jazz", "prestige")}
 
 
 def era_of(text, fam):
-    """Эпоха этикетки со слов продавца: (с, по, ключи) или None. Если
-    сказано про две эпохи — их объединение (осторожнее)."""
+    """Эпоха этикетки со слов продавца: (с, по, ключи) или None. Две
+    приметы одной пластинки сужают годы («Liberty label» и «ухо» —
+    1966-1967); если они противоречат друг другу — их объединение."""
     if not fam or not text:
         return None
     fams = _ERA_FAMILY.get(fam, (fam,))
@@ -433,8 +441,10 @@ def era_of(text, fam):
             break
     if not hit:
         return None
-    return (min(y[0] for _, y in hit), max(y[1] for _, y in hit),
-            [k for k, _ in hit])
+    lo, hi = max(y[0] for _, y in hit), min(y[1] for _, y in hit)
+    if lo > hi:
+        lo, hi = min(y[0] for _, y in hit), max(y[1] for _, y in hit)
+    return (lo, hi, [k for k, _ in hit])
 
 
 def plausible(vers, ev):

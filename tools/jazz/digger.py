@@ -259,7 +259,7 @@ def score(title, seller_fb, ev=False):
     if ev:
         t = dm.match_target(title)
         if t and t["floor"] >= 60:
-            s += 3
+            s += 4 if t["floor"] >= 150 else 3
     # Слова непрофессионала: магазин пишет номер и оценку, а «vintage»,
     # «old», «estate», «grandpa's collection» — тот, кто цен не знает.
     # Пилот «алмазов» 24.10.2026: подробные заголовки знающих продавцов
@@ -860,8 +860,10 @@ def main():
             rich = " ".join([t] + [asp.get(x) or "" for x in (
                 "Artist", "Release Title", "Record Label", "Catalog Number",
                 "Release Year")])
+            # Дешёвый лот — ставка проходит легче: худший случай должен
+            # быть лишь от 90% цены («Kind of Blue» за $8 у новичка).
             s2 = score(rich, (it.get("seller") or {}).get("feedbackScore"),
-                       ev=a.ev) + z.get("bonus", 0)
+                       ev=a.ev) + z.get("bonus", 0) + (z["price"] <= 12)
             if s2 < a.min_score:
                 drop("мало признаков ценного по карточке")
                 continue
