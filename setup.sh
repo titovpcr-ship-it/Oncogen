@@ -39,7 +39,7 @@ for t in tests/test_*.py; do
   fi
 done
 
-missing=$(grep -E '^(EBAY_CLIENT_ID|EBAY_CLIENT_SECRET|TG_BOT_TOKEN|TG_CHAT_ID)=$' .env | cut -d= -f1 || true)
+missing=$(grep -E '^(EBAY_CLIENT_ID|EBAY_CLIENT_SECRET|TG_BOT_TOKEN|TG_CHAT_ID)=$' .env | cut -d= -f1 | tr '\n' ' ' || true)
 if [ -n "$missing" ]; then
   echo "Не заполнены ключи: $missing — без них поиск не пойдёт."
 else
