@@ -284,11 +284,75 @@ def test_tsvetnoy_vinil():
     check("«Blue Mitchell Blue Soul Vinyl» — имя и название, не цвет",
           not dm.color_vinyl("Blue Mitchell Blue Soul Vinyl LP Riverside",
                              "Blue Mitchell", "Blue Soul"))
+    check("«Color: Blue» и «Features: Colored Vinyl» в карточке — цветной",
+          dm.asp_color({"Color": "Blue"})
+          and dm.asp_color({"Features": "Import, Colored Vinyl"})
+          and not dm.asp_color({"Color": "Black"})
+          and not dm.asp_color({}))
     ev = ev_of("Lush Life Prestige", "7188")
     ev["color"] = True
     eds, notes = dm.plausible(LUSH, ev)
     check("цветной винил — только прессы с 1995",
           all(v["year"] >= 1995 for v in eds) and "цветной" in notes[-1])
+
+
+def test_vybrosy_pola():
+    # Перепроверка 24.10.2026: у одного из трёх неотличимых изданий «Blue
+    # Train» 1975 года пол $999.99, у репресса Shirley Scott 1972 года —
+    # $1 268 при оригинале 1967-го за $15.
+    blue = [V(1, 1957, "Blue Note", "BLP 1577", "LP, Album, Mono", 100, 900),
+            V(2, 1975, "Blue Note", "BST 81577, BLP 1577", "LP, Album, "
+              "Reissue, Stereo", 60, 343),
+            V(3, 1975, "Blue Note", "BST 81577, BLP 1577", "LP, Album, "
+              "Reissue, Stereo", 31, 272),
+            V(4, 1975, "Blue Note", "BST 81577, BLP 1577", "LP, Album, "
+              "Reissue, Stereo", 24, 182)]
+    d = FakeD({1: (1500.0, 5), 2: (39.83, 2), 3: (999.99, 5), 4: (24.79, 10)})
+    ev = ev_of("John Coltrane Blue Train 1975 Blue Note BST 81577", "81577")
+    eds, _ = dm.plausible(blue, ev)
+    x = dm.cap_outliers(d, dm.expectation(d, eds), blue)
+    v3 = next(v for v in x["parts"] if v["id"] == 3)
+    check("неотличимое издание 1975 за $1000 урезано до 4 медиан ($159)",
+          abs(v3["floor"] - 159.32) < 0.01 and v3["raw_floor"] == 999.99)
+    check("…и за $27.99 лот уже не ставка", dm.classify(x, 27.99) is None)
+    scott = [V(1, 1967, "Prestige", "PR 7392", "LP, Album, Mono", 129),
+             V(2, 1967, "Prestige", "PRST 7392, PR 7392", "LP, Album, "
+               "Stereo", 87),
+             V(3, 1972, "Prestige", "PRST 7392, PR 7392", "LP, Album, "
+               "Repress, Stereo", 5)]
+    d = FakeD({1: (15.0, 4), 2: (2.0, 9), 3: (1268.44, 4)})
+    ev = dm.evidence("Shirley Scott Soul Sister Prestige PRST 7392",
+                     "this is a reissue", {}, "PRST 7392")
+    eds, _ = dm.plausible(scott, ev)
+    x = dm.cap_outliers(d, dm.expectation(d, eds), scott)
+    check("репресс дороже оригинала урезан до пола оригинала ($15)",
+          [v["floor"] for v in x["parts"]] == [15.0] and x["ev"] == 15.0)
+    check("…и «надёжной» он больше не считается",
+          dm.classify(x, 32.75) is None)
+    x = dm.cap_outliers(FakeD(FLOORS), dm.expectation(
+        FakeD(FLOORS), dm.plausible(LUSH, ev_of("Lush Life Prestige",
+                                                "7188"))[0]), LUSH)
+    check("оригинал 1961 года «Lush Life» не урезается",
+          next(v["floor"] for v in x["parts"] if v["id"] == 1) == 100.0
+          and not x.get("capped"))
+
+
+def test_god_ne_nayden():
+    jp = [dict(V(1, 1983, "Blue Note", "BLP 1539", "LP, Album, Reissue, "
+                 "Mono", 168), country="Japan"),
+          dict(V(2, 1990, "Blue Note", "BN 1539, BLP 1539", "LP, Album, "
+                 "Reissue, Mono", 128), country="Japan"),
+          dict(V(3, 2014, "Blue Note", "DBLP-059, BLP 1539", "LP, Album, "
+                 "Reissue, Mono", 59), country="Japan")]
+    ev = ev_of("Horace Silver 6 Pieces Of Silver 2005 Blue Note Japan",
+               "BLP1539")
+    eds, notes = dm.plausible(jp, ev)
+    check("года 2005 у японских изданий нет — пометка",
+          ev.get("_year_miss") and "2005" in notes[-1])
+    x = dm.expectation(FakeD({1: (25.0, 33), 2: (24.0, 16), 3: (131.0, 10)}),
+                       eds)
+    x["year_miss"] = True
+    check("год пресса не найден — не ставка", dm.classify(x, 10.0) is None)
 
 
 def test_svodka_dnya():
@@ -317,7 +381,8 @@ def main():
     for fn in [test_lush_life, test_uliki, test_nadezhnaya_i_ozhidanie,
                test_kartoteka, test_odnoimennyy_bez_nomera,
                test_epokhi_etiketok, test_tsvetnoy_vinil,
-               test_nomer_drugoy_strany, test_svodka_dnya]:
+               test_nomer_drugoy_strany, test_svodka_dnya,
+               test_vybrosy_pola, test_god_ne_nayden]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

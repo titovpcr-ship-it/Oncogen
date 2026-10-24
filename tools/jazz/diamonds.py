@@ -254,6 +254,17 @@ def color_vinyl(title, artist="", album=""):
     return bool(_COLOR.search(t))
 
 
+def asp_color(asp):
+    """Цветной винил по характеристикам лота: «Color: Blue», «Features:
+    … Colored Vinyl» («A Love Supreme» 2021 года, синий винил)."""
+    col = str((asp or {}).get("Color") or "").strip().lower()
+    feats = str((asp or {}).get("Features") or "").lower()
+    return bool((col and col not in ("black", "not specified", "n/a", "none",
+                                     "unknown")
+                 and "black" not in col) or "colored vinyl" in feats
+                or "coloured vinyl" in feats)
+
+
 def evidence(title, text, asp, catno, store=False):
     """Что лот говорит о прессе. Моно/стерео — только из заголовка и
     характеристик: в описаниях «plays on any stereo» — не про пресс."""
@@ -510,6 +521,11 @@ def plausible(vers, ev):
                 out = near
                 notes.append(f"год пресса {ev['year']}")
                 break
+        else:
+            # Такого года у Discogs нет: «1978 Blue Note Japan» при японских
+            # изданиях 1983, 1990 и 2014 годов — что за пресс, неясно.
+            ev["_year_miss"] = True
+            notes.append(f"год пресса {ev['year']} у Discogs не найден")
         years = sorted({v["year"] for v in out if v["year"]})
     era = ev.get("era")
     if era:
@@ -573,14 +589,71 @@ def expectation(d, eds, max_priced=8, fresh=False):
     w = sum(max(v["have"], 1) for v in priced)
     for v in priced:
         v["p"] = max(v["have"], 1) / w
-    ev = sum(v["p"] * v["floor"] for v in priced)
-    common = [v for v in priced if v["p"] >= 0.05] or priced
-    up = max((v for v in priced if v["copies"] >= 2 and v["p"] >= 0.02),
-             key=lambda v: v["floor"], default=None)
-    return {"ev": round(ev, 2), "low": min(v["floor"] for v in common),
-            "up": up, "parts": sorted(priced, key=lambda v: -v["p"]),
-            "coverage": round(sum(max(v["have"], 1) for v in priced) / total, 2),
-            "n": len(eds)}
+    x = {"parts": sorted(priced, key=lambda v: -v["p"]),
+         "coverage": round(sum(max(v["have"], 1) for v in priced) / total, 2),
+         "n": len(eds)}
+    return _summarize(x)
+
+
+def _summarize(x):
+    """Ожидание, худший случай и верх по раскладу x["parts"]."""
+    parts = x["parts"]
+    common = [v for v in parts if v["p"] >= 0.05] or parts
+    x["ev"] = round(sum(v["p"] * v["floor"] for v in parts), 2)
+    x["low"] = min(v["floor"] for v in common)
+    x["up"] = max((v for v in parts if v["copies"] >= 2 and v["p"] >= 0.02),
+                  key=lambda v: v["floor"], default=None)
+    return x
+
+
+def _basic(v):
+    """Издание, которое вообще может оказаться у «наивного» продавца."""
+    fmt = v["format"].lower()
+    return not ("box set" in fmt or "club edition" in fmt or "45 rpm" in fmt
+                or "test pressing" in fmt or "promo" in fmt
+                or _AUDIOPHILE.search(v["label"]))
+
+
+def cap_outliers(d, x, vers, fresh=False, mult=4.0):
+    """Выбросы пола Discogs у переизданий. Прогон 24.10.2026: у одного из
+    трёх неотличимых изданий «Blue Train» 1975 года (BST 81577) пол
+    $999.99 при пяти копиях, у репресса Shirley Scott 1972 года — $1 268
+    при оригинале 1967-го за $15; такие полы делали из лота «надёжную» и
+    «ожидание». Пол переиздания (не самого раннего года мастера) — не выше
+    mult медиан расклада и не выше пола самого раннего издания."""
+    base = [v for v in vers if v["year"] and _basic(v)]
+    first = min((v["year"] for v in base), default=0)
+    parts = x["parts"]
+    floors = sorted(v["floor"] for v in parts)
+    med = floors[(len(floors) - 1) // 2]
+    ref, capped = None, []
+    for v in parts:
+        if first and v["year"] == first:
+            continue
+        cap = mult * med if len(parts) >= 3 else None
+        if v["floor"] >= 100:
+            if ref is None:
+                ref = _first_floor(d, base, first, fresh) or 0.0
+            if ref:
+                cap = min(cap, ref) if cap else ref
+        if cap and v["floor"] > cap:
+            capped.append(f"{v['year'] or '—'} {v['catno'][:14]} ${v['floor']:.0f}")
+            v["raw_floor"] = v["floor"]
+            v["floor"] = round(cap, 2)
+    if capped:
+        x["capped"] = capped
+        _summarize(x)
+    return x
+
+
+def _first_floor(d, base, first, fresh=False):
+    """Пол самого раннего издания мастера (два самых частых издания года
+    оригинала, большее из полов) или None."""
+    eds = sorted((v for v in base if v["year"] == first),
+                 key=lambda v: -v["have"])[:2]
+    fl = [floor(d, v["id"], fresh=fresh)[0] for v in eds]
+    fl = [f for f in fl if f is not None]
+    return max(fl) if fl else None
 
 
 def chance(x, price, min_floor=50.0, up_mult=4.0):
@@ -602,9 +675,9 @@ def classify(x, price, min_floor=50.0, min_gap=2.5, up_mult=4.0, p_min=0.05):
         return None
     if x["low"] >= max(min_floor, min_gap * price) and x["coverage"] >= 0.6:
         return "надёжная"
-    # Номер с конверта не нашёлся ни у одного издания: что это за пластинка
-    # — неясно, ставку на редкий пресс не считаем.
-    if x.get("catno_miss"):
+    # Номер с конверта или год пресса не нашлись ни у одного издания: что
+    # это за пластинка — неясно, ставку на редкий пресс не считаем.
+    if x.get("catno_miss") or x.get("year_miss"):
         return None
     p_big, _ = chance(x, price, min_floor, up_mult)
     if x["low"] >= 0.9 * price and p_big >= p_min:
@@ -774,7 +847,7 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     ev = evidence(title, text, asp, catno, store=is_store(title, seller, fb))
     ev["family"] = fam
     ev["era"] = era or era_of(" ".join((title or "", text or "")), fam)
-    ev["color"] = color_vinyl(title, artist, album)
+    ev["color"] = color_vinyl(title, artist, album) or asp_color(asp)
     country = ev["country"]
     if master:
         vers = vc.get(master, country)
@@ -782,9 +855,19 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
             vers = vc.get(master, None)
     else:
         vers = [slim_search(r) for r in rel]
+    ev["_year_miss"] = False
     eds, notes = plausible(vers, ev)
     miss = bool(ev["core"]) and not any(catno_match(v["catno"], ev["core"])
                                         for v in eds)
+    year_miss = ev["_year_miss"]
+    if year_miss and master and not miss:
+        # Года нет среди изданий страны лота — ищем во всех странах.
+        ev["_year_miss"] = False
+        alt, alt_notes = plausible(vc.get(master, None), ev)
+        if not ev["_year_miss"]:
+            eds, notes = alt, alt_notes + ["год найден у изданий других стран"]
+            year_miss = False
+            vers = vc.get(master, None)
     if miss and master:
         # Номера нет среди изданий страны лота — ищем во всех странах:
         # японский пресс без слова «Japan» в объявлении иначе оценивался
@@ -799,8 +882,11 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     x = expectation(d, eds, fresh=fresh)
     if not x:
         return None
+    x = cap_outliers(d, x, vers, fresh=fresh)
+    if x.get("capped"):
+        notes = notes + ["выброс пола урезан: " + "; ".join(x["capped"])]
     x.update({"master": master, "notes": notes, "evidence": ev,
-              "target": target, "catno_miss": miss})
+              "target": target, "catno_miss": miss, "year_miss": year_miss})
     return x
 
 
@@ -816,8 +902,10 @@ def describe(x, k=4):
     for v in x["parts"][:k]:
         c = f" ({v['country']})" if v.get("country") not in ("US", "", None) \
             else ""
+        raw = (f" (выброс ${v['raw_floor']:.0f})" if v.get("raw_floor")
+               else "")
         rows.append(f"{v['year'] or '—'} {v['label'][:22]} {v['catno'][:18]}"
-                    f"{c} — {v['p'] * 100:.0f}%, от ${v['floor']:.0f}")
+                    f"{c} — {v['p'] * 100:.0f}%, от ${v['floor']:.0f}{raw}")
     return rows
 
 
