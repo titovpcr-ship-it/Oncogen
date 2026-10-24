@@ -157,12 +157,21 @@ _SINGLE = re.compile(r"\b12\s*(?:\"|”|''|inch|in\.?)?\s*(?:\w+\s+){0,2}single\
 _NOT_ALBUM = re.compile(
     r"\b(?:tiny|mini)\s*vinyl\b|\b[34]\s*(?:\"|”|''|-?inch)|\binstrumentals?\b|"
     r"\b\d?[ab]\s*/\s*[ab]\s*only\b|\bsides?\s+[a-d](?:\s*[&/-]\s*[a-d])?\s+only\b|"
-    r"\bblacklist\b", re.I)
+    r"\bblacklist\b|"
+    # Разбор заголовков полного прогона 24.10.2026: не пластинка, б/у,
+    # ремикс или промо-сингл вместо альбома.
+    r"\bnot\s+included\b|\bslip\s*mats?\b|\bremix(?:es)?\b|\bused\b|"
+    r"\bpartially\s+sealed\b|\bclub\s+christmas\b|\bpromo\b|"
+    r"\b(?:vg\+?|g\+?)\s*/\s*(?:vg\+?|g\+?)\b|\b10\s*(?:\"|”|''|-?inch)",
+    re.I)
 
 
 def discs_of(title):
     """Число пластинок; год в заголовке («2023 LP») — не число дисков."""
     n = tx.discs_in_title(title) or 1
+    if n == 1 and re.search(r"\bdouble\s+(?:vinyl|record|album)\b|\b2\s*vinyl\b",
+                            title, re.I):
+        n = 2                 # «double vinyl», «2 Vinyl LP»
     return n if 1 <= n <= 6 else 1
 
 
