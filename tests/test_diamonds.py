@@ -227,6 +227,11 @@ def test_epokhi_etiketok():
     eds, _ = dm.plausible(LUSH, ev)
     check("фото: «distributed by Fantasy» — только OJC 1984",
           [v["id"] for v in eds] == [4])
+    ev = dm.evidence("Lush Life Prestige", "", {}, "7188", store=True)
+    ev["era"] = (1958, 1964, ["pr-nj"])
+    eds, _ = dm.plausible(LUSH, ev)
+    check("фото этикетки главнее правила «крупный магазин»",
+          {v["id"] for v in eds} == {1, 2})
     check("годы из командной строки: «1966-1970»",
           dm.era_range((), "1966-1970") == (1966, 1970, ["1966-1970"]))
 

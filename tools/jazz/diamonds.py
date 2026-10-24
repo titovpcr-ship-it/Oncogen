@@ -481,7 +481,9 @@ def plausible(vers, ev):
             notes.append(f"номер {ev['core']}")
         else:
             notes.append(f"номер {ev['core']} у Discogs не найден — без него")
-    if ev.get("color") and not ev["first"]:
+    # Эпоха этикетки (фото или слова продавца) точнее правил «цветной
+    # винил» и «крупный магазин» — они только для лотов без неё.
+    if ev.get("color") and not ev["first"] and not ev.get("era"):
         # Цветной винил у джаза — современные переиздания: «Miles Davis –
         # Kind of Blue (Limited, Opaque Blue Vinyl LP)» с оригиналом 1959
         # года в раскладе раздувал бы ожидание. Цвета в изданиях мастера
@@ -490,7 +492,7 @@ def plausible(vers, ev):
         if modern:
             out = modern
             notes.append("цветной винил — прессы с 1995")
-    if ev.get("store") and not ev["first"]:
+    if ev.get("store") and not ev["first"] and not ev.get("era"):
         modern = [v for v in out if v["year"] >= 1990]
         if modern:
             out = modern
