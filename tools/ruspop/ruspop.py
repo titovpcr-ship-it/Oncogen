@@ -209,11 +209,17 @@ def main():
                          "открывать по карточке")
     ap.add_argument("--only", nargs="*", default=None,
                     help="только эти альбомы (подстрока названия)")
+    ap.add_argument("--slice", default=None,
+                    help="часть списка «начало:конец» — прогон кусками, "
+                         "фоновая задача живёт 2 часа")
     ap.add_argument("--tg", action="store_true")
     a = ap.parse_args()
 
     rate, rate_date = rub_rate()
     albums = load_albums(a.xlsx)
+    if a.slice:
+        lo, hi = (int(x) if x else None for x in a.slice.split(":"))
+        albums = albums[lo:hi]
     if a.only:
         albums = [z for z in albums
                   if any(o.lower() in z["album"].lower() for o in a.only)]
