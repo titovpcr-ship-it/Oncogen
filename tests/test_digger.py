@@ -310,6 +310,13 @@ def test_potok():
                             log=lambda m: None)
     check("отказ eBay: отметка на месте, отказы посчитаны",
           st["marks"]["jazz:0-40"] == mark and rf == 2)
+    st = {"marks": {}, "bands": {"all": [0, 3, 5, 8, 12, 20]}}
+    D.scan_stream(lambda off, flt, aspect: {"itemSummaries": []}, st,
+                  lambda lo=0.0, hi=None: "", 10.0, _when(60),
+                  lambda *x: None, lambda w: None, 3, pause=0,
+                  log=lambda m: None)
+    check("прогон до $10 не теряет полосы выше $10",
+          st["bands"]["all"] == [0, 3, 5, 8, 12, 20])
     check("джаз по заголовку: имя, лейбл, картотека, слово «jazz»",
           D.jazzy("John Coltrane Lush Life LP")
           and D.jazzy("Ahmad Jamal Trio At The Pershing But Not For Me")

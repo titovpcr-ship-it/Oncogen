@@ -1212,8 +1212,8 @@ def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
     log = log or (lambda m: print(m, file=sys.stderr))
     out, refused = {}, 0
     for name, aspect, need in STREAMS:
-        lows = [e for e in state["bands"].get(name, DEFAULT_BANDS[name])
-                if e < max_price]
+        stored = state["bands"].get(name, DEFAULT_BANDS[name])
+        lows = [e for e in stored if e < max_price]
         edges = lows + [max_price]
         new_lows = list(lows)
         for lo, hi in zip(edges, edges[1:]):
@@ -1262,7 +1262,9 @@ def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
                 continue
             if newest:
                 state["marks"][key] = max(newest, mark)
-        state["bands"][name] = sorted(set(new_lows))
+        # Полосы выше потолка этого прогона («--max-price 10») не теряются.
+        state["bands"][name] = sorted(set(new_lows)
+                                      | {e for e in stored if e >= max_price})
     return out, refused
 
 
