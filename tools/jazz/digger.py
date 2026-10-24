@@ -179,7 +179,9 @@ _NOT_LP = re.compile(r"\b78\s*rpm\b|\b78s?\b|\b45\s*rpm\b|\b7\s*(?:\"|inch|in\b)
                      r"\bcassette\b|\bcd\b|\b8[\s-]*track\b|\breel\b", re.I)
 # Что пишет знающий продавец о раннем прессе — плюс к приоритету.
 _EARLY = re.compile(
-    r"\bmono\b|\bdeep\s*groove\b|\bdg\b|\brvg\b|van\s*gelder|\bear\b|"
+    # «Van Gelder» без «RVG» — кредит звукоинженера на обложке, он есть
+    # и на переизданиях: «Mingus Jazz Workshop … Van Gelder» — Savoy 1977.
+    r"\bmono\b|\bdeep\s*groove\b|\bdg\b|\brvg\b|\bear\b|"
     r"\bny\s*usa\b|\b(?:1st|first|orig\w*)\s*press\w*|\bpromo\b|"
     r"\bwhite\s*label\b|\bwlp\b|\bdj\s*copy\b|\bobi\b|\bjapan\w*\b|"
     r"\btest\s*press\w*|\bmaroon\s*label\b|\bblue\s*label\b|"
@@ -243,9 +245,15 @@ def _cat(x):
     return re.sub(r"[^A-Z0-9]", "", (x or "").upper())
 
 
-def discogs_editions(d, artist, album):
-    """Виниловые издания альбома на Discogs: (год, id, название, номер,
-    лейблы, страна, формат)."""
+def _edition(r):
+    return {"year": int(r["year"]), "id": r["id"], "title": r.get("title") or "",
+            "catno": r.get("catno") or "",
+            "labels": [x.lower() for x in r.get("label") or []],
+            "country": r.get("country") or "",
+            "format": ", ".join(r.get("format") or [])}
+
+
+def _by_title(d, artist, album):
     qs = {"type": "release", "format": "Vinyl", "per_page": 100,
           "artist": artist, "release_title": album}
     s = d.get(SEARCH + urlencode(qs))
@@ -261,11 +269,41 @@ def discogs_editions(d, artist, album):
         if not cs.album_matches(f"{artist} {album}", t) or \
                 not cs.album_matches(t, f"x - {album}"):
             continue
-        out.append({"year": int(y), "id": r["id"], "title": t,
-                    "catno": r.get("catno") or "",
-                    "labels": [x.lower() for x in r.get("label") or []],
-                    "country": r.get("country") or "", "format": fmt})
+        out.append(_edition(r))
     out.sort(key=lambda e: e["year"])
+    return out
+
+
+def discogs_editions(d, artist, album, catno=None):
+    """Виниловые издания альбома на Discogs: (год, id, название, номер,
+    лейблы, страна, формат).
+
+    Поиск по названию из заголовка промахивается, когда Discogs зовёт
+    альбом иначе: «Listen To The Ahmad Jamal Quintet» у Discogs —
+    «Listen», и по названию нашлось одно канадское издание за $40 при
+    двух копиях, а американское Argo LPS-673 стоит от $6.50 при 16
+    (прогон до $25, 24.10.2026). Поэтому при номере в карточке издание
+    лота ищется ещё и по номеру; нашлось под другим названием — берутся
+    издания этого названия."""
+    out = _by_title(d, artist, album)
+    for c in [x.strip() for x in re.split(r"[,;/]", catno or "")][:2]:
+        if len(_cat(c)) < 4:
+            continue
+        qs = {"type": "release", "format": "Vinyl", "per_page": 50,
+              "artist": artist, "catno": c}
+        s = d.get(SEARCH + urlencode(qs))
+        hits = [r for r in (s or {}).get("results") or []
+                if str(r.get("year") or "").isdigit()
+                and _cat(c) in _cat(r.get("catno"))]
+        if not hits:
+            continue
+        known = {e["id"] for e in out}
+        if any(r["id"] in known for r in hits):
+            break
+        dg_album = (hits[0].get("title") or "").split(" - ", 1)[-1]
+        out = _by_title(d, artist, dg_album) or sorted(
+            (_edition(r) for r in hits), key=lambda e: e["year"])
+        break
     return out
 
 
@@ -309,10 +347,17 @@ def match_edition(eds, catno, label, year, verify=None):
 
 def appraise(d, artist, album, catno, label, year, max_stats=8, verify=None):
     """Оценка лота: этот пресс, любое издание (худший случай), ранний."""
-    eds = discogs_editions(d, artist, album)
+    eds = discogs_editions(d, artist, album, catno)
     if not eds:
         return None
     mine, how = match_edition(eds, catno, label, year, verify)
+    # Год лота известен — сначала все издания с номером в пределах двух
+    # лет, и только потом выборка: «Blowin' the Blues Away 1985 … BST-84017»
+    # из выборки по годам получил французское издание 1985 года за $46.67,
+    # а американское того же года — $10 при 8 копиях (прогон до $25).
+    near_all = [e for e in mine if year and abs(e["year"] - year) <= 2]
+    if near_all:
+        mine = near_all
     # С одним номером у Blue Train — два десятка изданий за 60 лет; цены
     # берутся вразбивку по годам, а не у шести самых ранних (иначе без
     # года лота «самое дешёвое с номером» выходило $134 — у стерео 1960-х).
@@ -361,7 +406,15 @@ def appraise(d, artist, album, catno, label, year, max_stats=8, verify=None):
             "this": this, "this_how": how, "early_year": early_y,
             "this_cands": cand,
             "early_in_mine": any(e["year"] == early_y for e in mine),
-            "has_mine": bool(mine)}
+            "has_mine": bool(mine),
+            # Опора тонкая: меньше трёх копий у самого дешёвого или одно
+            # издание с ценой — «любое издание» не доказано.
+            "thin": worst["copies"] < 3 or len(pl) < 2,
+            # Лейбл лота не встречается ни у одного найденного издания —
+            # поиск нашёл чужие издания (Ahmad Jamal: Argo против Quality).
+            "label_miss": bool(label) and not any(
+                label.lower().split()[0] in x for e in eds
+                for x in e["labels"])}
 
 
 # Признаки переиздания у джаза по лейблу-преемнику: Blue Note Liberty
@@ -435,6 +488,13 @@ def main():
                     help="пол Discogs ниже — находка не стоит возни")
     ap.add_argument("--min-gap", type=float, default=3.0,
                     help="во сколько раз пол выше цены лота")
+    ap.add_argument("--buy-now", action="store_true",
+                    help="только «купить сейчас» (с торгом или без), без "
+                         "аукционов — владелец 24.10.2026: «Расширь до 25 "
+                         "долларов купить сейчас»")
+    ap.add_argument("--offer", type=float, default=None,
+                    help="только лоты с торгом; оценка от предложения в "
+                         "эту долю запроса (0.7 — предложить 70%%)")
     ap.add_argument("--tg", action="store_true")
     a = ap.parse_args()
 
@@ -453,7 +513,9 @@ def main():
         plan += [f"{x} lp" for x in ARTISTS_A.split("|")]
     if a.only:
         plan = [q for q in plan if any(o.lower() in q for o in a.only)]
-    flt = ("buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},"
+    flt = (("buyingOptions:{BEST_OFFER}," if a.offer else
+            "buyingOptions:{FIXED_PRICE}," if a.buy_now else
+            "buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},") +
            f"itemLocationCountry:US,price:[..{a.max_price:.0f}],"
            "priceCurrency:USD")
     seen, cands, why_not, refused = set(), [], {}, 0
@@ -485,7 +547,8 @@ def main():
                     drop(w)
                     continue
                 p, _, kind, note = hunt.lot_price(it, 2.0)
-                if p is None or p > a.max_price or kind == "?":
+                if p is None or p > a.max_price or kind == "?" or \
+                        (a.buy_now and kind == "аукцион"):
                     drop("дороже потолка")
                     continue
                 se = it.get("seller") or {}
@@ -510,7 +573,7 @@ def main():
           f"{len(cands)} за {time.time() - t0:.0f} с", file=sys.stderr)
 
     cands.sort(key=lambda z: (z["score"], -z["price"]), reverse=True)
-    finds, opened = [], 0
+    finds, opened, appraised = [], 0, []
     for k, z in enumerate(cands[:a.max_cards], 1):
         it = z["it"]
         iid = it["itemId"]
@@ -564,6 +627,14 @@ def main():
             drop("нет на Discogs")
             continue
         p = z["price"]
+        # Торг: продавец с «предложить цену» обычно соглашается на 20-30%
+        # ниже запроса; разрыв считается от предложения, как «торг от $15»
+        # в фикс-прайсе. Предлагает владелец сам.
+        if a.offer and z["kind"] == "предложить цену":
+            p = round(z["price"] * a.offer, 2)
+        elif a.offer:
+            drop("без торга")
+            continue
         w, e, this = v["worst"], v["early"], v["this"]
         early_word = bool(_EARLY.search(text))
         # Переиздание: слова в заголовке/описании, лейбл-преемник или год
@@ -574,7 +645,8 @@ def main():
                        or _SUCCESSOR.search(t)
                        or (year and year > v["early_year"] + 2))
         ref = None
-        if w["floor"] >= a.min_floor and w["floor"] >= a.min_gap * p:
+        if w["floor"] >= a.min_floor and w["floor"] >= a.min_gap * p and \
+                not v["thin"] and not (v["label_miss"] and not v["has_mine"]):
             group, ref = "надёжная", w
         elif this and this["copies"] >= 2 and this["floor"] >= a.min_floor \
                 and this["floor"] >= a.min_gap * p and \
@@ -591,12 +663,24 @@ def main():
             group, ref = "сверить этикетку", e
         else:
             drop("пол Discogs ниже порога")
+            # Все оценённые — в отдельный файл: «почти» видно только так.
+            appraised.append({
+                "title": t, "ask": z["price"], "price": p, "kind": z["kind"],
+                "worst": w["floor"], "worst_copies": w["copies"],
+                "this": this["floor"] if this else "",
+                "this_copies": this["copies"] if this else "",
+                "this_how": v["this_how"], "early": e["floor"] if e else "",
+                "early_year": v["early_year"], "reissue": reissue,
+                "early_word": early_word, "thin": v["thin"],
+                "label_miss": v["label_miss"],
+                "url": (it.get("itemWebUrl") or "").split("?")[0]})
             continue
         se = it.get("seller") or {}
         registry.note(se.get("username") or "", iid, t, p, ref["floor"],
                       "барахольщик", z["kind"])
         finds.append({
-            "group": group, "title": t, "price": p, "kind": z["kind"],
+            "group": group, "title": t, "price": p, "ask": z["price"],
+            "kind": z["kind"],
             "note": z["note"], "ship": shipping_usd(it), "score": z["score"],
             "artist": artist, "album": album, "grade": grade,
             "catno": catno, "year": year or "", "reissue": reissue,
@@ -616,6 +700,12 @@ def main():
     finds.sort(key=lambda z: (order[z["group"]], -z["gap"]))
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"digger_{time.strftime('%Y-%m-%d_%H%M%S')}.csv")
+    if appraised:
+        with open(path.replace("digger_", "digger_all_"), "w", newline="",
+                  encoding="utf-8") as f:
+            wr = csv.DictWriter(f, fieldnames=list(appraised[0].keys()))
+            wr.writeheader()
+            wr.writerows(appraised)
     if finds:
         with open(path, "w", newline="", encoding="utf-8") as f:
             wr = csv.DictWriter(f, fieldnames=list(finds[0].keys()))
@@ -653,7 +743,9 @@ NOTE = ("Пол Discogs — самый дешёвый ЗАПРОС за любо
 
 def render(z):
     sh = f"+${z['ship']:.2f}" if z["ship"] is not None else "+$?"
-    lines = [f"[{z['group']}] ${z['price']:.2f} {sh} [{z['kind']}] "
+    ask = (f" (предложить; запрос ${z['ask']:.2f})"
+           if z.get("ask") and z["ask"] != z["price"] else "")
+    lines = [f"[{z['group']}] ${z['price']:.2f}{ask} {sh} [{z['kind']}] "
              f"{z['gap']}x  {z['artist']} — {z['album']}",
              f"   {z['title'][:90]}",
              f"   любое издание от ${z['worst_floor']} ({z['worst_year']}, "

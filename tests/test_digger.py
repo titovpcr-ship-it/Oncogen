@@ -128,6 +128,52 @@ def test_nomer_ne_dokazyvaet_press():
     check("худший случай — самое дешёвое издание", v["worst"]["floor"] == 11.31)
 
 
+class FakeD2(FakeD):
+    """Поиск по названию и по номеру отдают разное."""
+
+    def __init__(self, by_q, floors):
+        super().__init__([], floors)
+        self.by_q = by_q
+
+    def get(self, url):
+        if "database/search" in url:
+            for k, v in self.by_q.items():
+                if k in url:
+                    return {"results": v}
+            return {"results": []}
+        return super().get(url)
+
+
+def test_izdanie_po_nomeru_pod_drugim_nazvaniem():
+    # Прогон до $25, 24.10.2026: «Listen To The Ahmad Jamal Quintet» по
+    # названию нашёл одно канадское издание за $40 при двух копиях; у
+    # Discogs альбом называется «Listen», Argo LPS-673 — от $6.50 при 16.
+    canada = {"year": 1961, "id": 1, "title": "Ahmad Jamal - Listen To The "
+              "Ahmad Jamal Quintet", "catno": "V-1664", "label": ["Quality"],
+              "format": ["Vinyl", "LP"], "country": "Canada"}
+    us = {"year": 1961, "id": 2, "title": "The Ahmad Jamal Quintet - Listen",
+          "catno": "LPS-673", "label": ["Argo"], "format": ["Vinyl", "LP"],
+          "country": "US"}
+    us_mono = dict(us, id=3, catno="LP-673")
+    d = FakeD2({"release_title=Listen+To": [canada],
+                "catno=LPS-673": [us],
+                "release_title=Listen&": [us, us_mono]},
+               {1: (40.0, 2), 2: (6.5, 16), 3: (9.0, 7)})
+    v = D.appraise(d, "Ahmad Jamal", "Listen To The Ahmad Jamal Quintet",
+                   "Argo LP 673, LPS-673", "Argo", None)
+    check("по номеру найдено издание «Listen», пол $6.50",
+          v and v["worst"]["floor"] == 6.5)
+    v = D.appraise(FakeD2({"release_title=Listen+To": [canada]},
+                          {1: (40.0, 2)}),
+                   "Ahmad Jamal", "Listen To The Ahmad Jamal Quintet", "",
+                   "Argo", None)
+    check("одно издание при двух копиях — опора тонкая", v and v["thin"])
+    check("лейбл лота не нашёлся у изданий — чужие издания",
+          v and v["label_miss"])
+    check("«Van Gelder» на обложке — не признак раннего пресса",
+          not D._EARLY.search("Charles Mingus Jazz Workshop LP Savoy Van Gelder"))
+
+
 def test_god_i_pereizdanie():
     check("год из карточки",
           D.lot_year({"Release Year": "1972"}, "Sonny Rollins Tenor Madness", "") == 1972)
@@ -150,7 +196,8 @@ def test_god_i_pereizdanie():
 def main():
     for fn in [test_hlam_ne_otkryvaetsya, test_gde_kopat, test_zagolovok_v_albom,
                test_otsenka_prodavtsa, test_press_po_nomeru,
-               test_nomer_ne_dokazyvaet_press, test_god_i_pereizdanie]:
+               test_nomer_ne_dokazyvaet_press, test_god_i_pereizdanie,
+               test_izdanie_po_nomeru_pod_drugim_nazvaniem]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
