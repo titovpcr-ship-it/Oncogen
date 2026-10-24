@@ -168,7 +168,7 @@ def _plain(x):
     return re.sub(r"\s+", " ", x).strip()
 
 
-_SELF = re.compile(r"\bself[\s-]*titled\b|\bs/?t\b|\bdebut\b|\bblack\s+album\b",
+_SELF = re.compile(r"\bself[\s-]*titled\b|\bs/?t\b|\bdebut\b|\b(?:black|blue|white|red|green)\s+album\b",
                    re.I)
 
 
