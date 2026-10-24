@@ -1,0 +1,34 @@
+order,artist,album,bb_title,price_usd,comp_value_usd,rating,reviews,batch,seen
+1,Jimi Hendrix,Experience Hendrix,Jimi Hendrix - Experience Hendrix: The Best Of Jimi Hendrix - VINYL LP,26.88,,5.0,171,1,2026-10-24
+2,Bob Marley,Legend,Bob Marley & the Wailers - Legend - VINYL LP,29.90,32.21,4.9,328,1,2026-10-24
+3,Prince,Purple Rain,Prince - Purple Rain - VINYL LP,29.25,,4.9,297,1,2026-10-24
+4,Creedence Clearwater Revival,Chronicle,Creedence Clearwater Revival - Chronicle - VINYL LP,32.04,,4.9,263,1,2026-10-24
+5,Led Zeppelin,Led Zeppelin I,Led Zeppelin - Led Zeppelin 1 - VINYL LP,31.42,,4.9,168,1,2026-10-24
+6,Beastie Boys,Licensed To Ill,Beastie Boys - Licensed To Ill (30th Anniversary Edition) - VINYL LP,32.32,,4.9,142,1,2026-10-24
+7,Chris Stapleton,Traveller,Chris Stapleton - Traveller - VINYL LP,37.20,,4.9,137,1,2026-10-24
+8,Foo Fighters,Greatest Hits,Foo Fighters - Greatest Hits - VINYL LP,36.89,,4.9,134,1,2026-10-24
+9,David Bowie,Changesonebowie,David Bowie - Changesonebowie - VINYL LP,28.26,,4.9,131,1,2026-10-24
+10,Elvis Presley,The Essential Elvis Presley,Elvis Presley - The Essential Elvis Presley - VINYL LP,30.33,,4.9,130,1,2026-10-24
+11,Led Zeppelin,Physical Graffiti,Led Zeppelin - Physical Graffiti - VINYL LP,34.20,40.72,5.0,44,1,2026-10-24
+12,Def Leppard,Hysteria,Def Leppard - Hysteria - VINYL LP,38.71,,5.0,42,1,2026-10-24
+13,The Beatles,Abbey Road,The Beatles - Abbey Road Anniversary (1LP) - VINYL LP,31.64,,4.9,109,1,2026-10-24
+14,Nirvana,Nevermind,Nirvana - Nevermind - VINYL LP,31.16,,4.9,108,1,2026-10-24
+15,Guns N' Roses,Appetite For Destruction,Guns N Roses - Appetite For Destruction - VINYL LP,37.77,39.76,4.9,103,1,2026-10-24
+16,Nirvana,Unplugged In New York,Nirvana - Unplugged In N.Y. - VINYL LP,29.88,31.37,4.9,96,1,2026-10-24
+17,Johnny Cash,The Essential Johnny Cash,Johnny Cash - The Essential Johnny Cash - VINYL LP,30.33,,4.9,94,1,2026-10-24
+18,Eagles,Their Greatest Hits 1971-1975,The Eagles - Their Greatest Hits 1971-1975 - VINYL LP,27.32,31.42,4.9,94,1,2026-10-24
+19,Wu-Tang Clan,Enter The Wu-Tang,Wu-Tang Clan - Enter Wu-Tang - VINYL LP,23.98,,4.9,93,1,2026-10-24
+20,The Beatles,Let It Be,The Beatles - Let It Be - VINYL LP,31.77,,5.0,36,1,2026-10-24
+21,Pink Floyd,The Dark Side of the Moon,Pink Floyd - The Dark Side of the Moon (50th Anniversary) - VINYL LP,33.59,,5.0,33,1,2026-10-24
+22,Soundgarden,Superunknown,Soundgarden - Superunknown - VINYL LP,36.81,39.78,4.9,66,1,2026-10-24
+23,Tool,Opiate,Tool - Opiate (ep) - VINYL LP,23.31,,5.0,31,1,2026-10-24
+24,Queen,Greatest Hits II,Queen - Queen Greatest Hits II (LP) - VINYL LP,36.61,,4.9,80,1,2026-10-24
+25,Michael Jackson,Bad,Michael Jackson - Bad - VINYL LP,29.50,,4.9,80,1,2026-10-24
+26,AC/DC,Highway to Hell,AC/DC - Highway to Hell - VINYL LP,28.25,,4.9,77,1,2026-10-24
+27,Pink Floyd,A Foot In The Door,Pink Floyd - The Best Of Pink Floyd: A Foot In The Door - VINYL LP,41.58,44.99,4.9,61,1,2026-10-24
+28,Earth Wind & Fire,The Best Of Earth Wind & Fire,"Earth Wind & Fire - The BEST of EARTH, WIND & FIRE Vol. 1 (1978) - VINYL LP",23.98,,4.9,61,1,2026-10-24
+29,Rush,2112,Rush - 2112 - VINYL LP,30.21,,4.9,70,1,2026-10-24
+30,Jimi Hendrix,Are You Experienced,Jimi Hendrix - Are You Experienced - VINYL LP,22.59,,4.8,285,1,2026-10-24
+31,Tyler The Creator,Call Me If You Get Lost,"Tyler, The Creator - Call Me If You Get Lost - VINYL LP",31.42,,5.0,29,1,2026-10-24
+32,Rush,Moving Pictures,Moving Pictures [LP] [VINYL] (исполнитель на скриншоте не указан — Rush по названию),30.86,,4.9,55,1,2026-10-24
+33,Jimi Hendrix,Axis: Bold As Love,Jimi Hendrix Experience - Axis: Bold As Love - VINYL LP,27.79,,4.9,62,1,2026-10-24

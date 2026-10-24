@@ -42,6 +42,9 @@ from src.common.ebay import (ApiRefused, ebay_token,           # noqa: E402
                              search_page, shipping_usd)
 
 XLSX = os.path.join(ROOT, "data", "ruspop", "vinyl_top20_russia_world.xlsx")
+# Витрина Best Buy, снятая владельцем скриншотами 24.10.2026: число отзывов
+# покупателей — маркер популярности (его слова), цена — американская розница.
+BESTBUY = os.path.join(ROOT, "data", "ruspop", "bestbuy_popularity.csv")
 OUT = os.path.join(ROOT, "out")
 FWD_PER_DISC = 11.0
 SHIP_GUESS = 5.0
@@ -67,12 +70,22 @@ def num(x):
         return None
 
 
-def load_albums(path):
-    """Альбомы обоих листов, без повторов; российские цены — из листа «Россия»."""
-    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
-    out, seen = [], set()
+def _key(artist, album):
+    """Ключ для слияния повторов: «The Eagles» и «Eagles», «Dark Side of the
+    Moon (50th Anniversary)» и «Dark Side of the Moon» — одна позиция."""
+    def n(x):
+        x = re.sub(r"\([^)]*\)", " ", (x or "").lower())
+        x = re.sub(r"^the\s+", "", x.strip())
+        return re.sub(r"[^a-z0-9а-я]+", "", x)
+    return n(artist), n(album)
 
-    def add(artist, album, year, source, ru):
+
+def load_albums(path, bestbuy=BESTBUY):
+    """Альбомы обоих листов и витрины Best Buy, без повторов."""
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    out, seen = [], {}
+
+    def add(artist, album, year, source, ru, bb=None):
         artist = (artist or "").strip()
         # Саундтрек: «Bee Gees / Various» — исполнителя в заголовке лота нет.
         if "various" in artist.lower():
@@ -82,15 +95,22 @@ def load_albums(path):
         album = re.sub(r"\s*\([^)]*\)", "", (album or "").strip()).strip()
         if not album or "Сборник" in album or "какой" in album:
             return             # Celentano: альбом в таблице не назван
-        k = (artist.lower(), album.lower())
+        k = _key(artist, album)
         if k in seen:
-            for z in out:
-                if (z["artist"].lower(), z["album"].lower()) == k:
-                    z["source"] += f" + {source}"
+            z = seen[k]
+            z["source"] += f" + {source}"
+            for f, v in ru.items():
+                z[f] = z.get(f) or v
+            if bb and not z.get("bb_price"):
+                z.update(bb)
             return
-        seen.add(k)
-        out.append({"artist": artist, "album": album, "year": year or "",
-                    "source": source, **ru})
+        z = {"artist": artist, "album": album, "year": year or "",
+             "source": source, **ru, "bb_price": None, "bb_reviews": None,
+             "bb_rating": None}
+        if bb:
+            z.update(bb)
+        seen[k] = z
+        out.append(z)
 
     ws = wb["Россия"]
     for row in ws.iter_rows(min_row=5, values_only=True):
@@ -104,6 +124,16 @@ def load_albums(path):
             continue
         add(str(row[1] or ""), row[2], row[3], f"мир №{int(row[0])}",
             {"wb": None, "ozon": None, "avito": None})
+    try:
+        with open(bestbuy, encoding="utf-8") as f:
+            bb_rows = list(csv.DictReader(f))
+    except OSError:
+        bb_rows = []
+    for r in bb_rows:
+        add(r["artist"], r["album"], "", f"Best Buy {r['reviews']} отз.",
+            {"wb": None, "ozon": None, "avito": None},
+            {"bb_price": num(r["price_usd"]), "bb_reviews": int(r["reviews"]),
+             "bb_rating": num(r["rating"])})
     return out
 
 
@@ -128,7 +158,17 @@ def clean_title(t):
     return re.sub(r"\s+", " ", _EXTRAS.sub(" ", t or "")).strip()
 
 
+def _plain(x):
+    """«Earth, Wind & Fire», «Guns N' Roses», «Tyler, The Creator»: матчер
+    требует каждое слово имени целиком, а «&» и «tyler,» словами не
+    являются — такие альбомы не находились бы вовсе."""
+    x = (x or "").replace("&", " and ").replace("’", "'")
+    x = re.sub(r"[,'.:!?]", "", x)
+    return re.sub(r"\s+", " ", x).strip()
+
+
 def is_the_album(title, artist, album):
+    title, artist, album = _plain(title), _plain(artist), _plain(album)
     if artist.lower() in ("various", ""):
         # Саундтрек: исполнителя в заголовке нет — нужна фраза альбома.
         key = [w for w in re.split(r"\W+", album.lower()) if w]
@@ -170,6 +210,7 @@ def main():
     for al in albums:
         q = (f"{al['album']} soundtrack vinyl" if al["artist"].lower() == "various"
              else f"{al['artist']} {al['album']} vinyl")
+        q = _plain(q).replace(" and ", " ")
         try:
             j = search_page(token, q=q[:90], category_id=hunt.CATEGORY,
                             limit=200, sort="price",
@@ -205,6 +246,7 @@ def main():
         row = {"artist": al["artist"], "album": al["album"],
                "source": al["source"], "wb": al["wb"], "ozon": al["ozon"],
                "avito": al["avito"], "ru_min": min(ru) if ru else None,
+               "bb_price": al.get("bb_price"), "bb_reviews": al.get("bb_reviews"),
                "modes": {}}
         for kind, lots in by_kind.items():
             lots.sort(key=lambda x: x[0])
@@ -259,6 +301,8 @@ def main():
             m = r["modes"].get(kind)
             flat.append({"artist": r["artist"], "album": r["album"],
                          "source": r["source"], "mode": kind,
+                         "bb_price": r.get("bb_price"),
+                         "bb_reviews": r.get("bb_reviews"),
                          "wb": r["wb"], "ozon": r["ozon"], "avito": r["avito"],
                          **(m or {"title": "не найдено"})})
     keys = sorted({k for z in flat for k in z})
@@ -299,7 +343,10 @@ def render(r):
     ru = ", ".join(f"{n} {v:,.0f} ₽".replace(",", " ")
                    for n, v in (("WB", r["wb"]), ("Ozon", r["ozon"]),
                                 ("Авито", r["avito"])) if v)
-    lines = [f"{r['artist']} — {r['album']}" + (f"  (Россия: {ru})" if ru else "")]
+    bb = (f"  Best Buy ${r['bb_price']:.2f}, {r['bb_reviews']} отз."
+          if r.get("bb_price") else "")
+    lines = [f"{r['artist']} — {r['album']}" + (f"  (Россия: {ru})" if ru else "")
+             + bb]
     for kind in MODES:
         m = r["modes"].get(kind)
         if not m:
