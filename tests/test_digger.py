@@ -193,11 +193,55 @@ def test_god_i_pereizdanie():
           not D._TITLE_LOW.search("VG+ Mal Waldron Trio LP Impressions"))
 
 
+def _v(worst, this=None, early=None, how="", thin=False):
+    ed = lambda fl, n, y: {"floor": fl, "copies": n, "year": y}  # noqa: E731
+    return {"worst": ed(*worst), "this": ed(*this) if this else None,
+            "early": ed(*early) if early else None, "this_how": how,
+            "early_year": early[2] if early else worst[2], "thin": thin,
+            "label_miss": False, "has_mine": bool(this),
+            "early_in_mine": bool(this and early and this[2] == early[2])}
+
+
+def test_almazy_do_40():
+    # Режим «алмазы» 24.10.2026: б/у до $40, пол от $50 и от 2.5x.
+    v = _v((18.0, 20, 1977), this=(120.0, 5, 1958), early=(120.0, 5, 1958),
+           how="номер")
+    g, ref = D.classify(v, 35.0, True, False, 50.0, 2.5)
+    check("оригинал по номеру за $35 при полу пресса $120 → «по прессу»",
+          g == "по прессу" and ref["floor"] == 120.0)
+    g, _ = D.classify(v, 55.0, True, False, 50.0, 2.5)
+    check("тот же лот за $55 — меньше 2.5x, мимо", g is None)
+    v = _v((18.0, 20, 1977), this=(80.0, 4, 1960), early=(80.0, 4, 1960),
+           how="номер")
+    check("$40 при полу $80 — 2x, не проходит по запросу",
+          D.classify(v, 40.0, True, False, 50.0, 2.5)[0] is None)
+    check("…но проходит при предложении 80% ($32)",
+          D.classify(v, 32.0, True, False, 50.0, 2.5)[0] == "по прессу")
+    v = _v((15.0, 30, 1975), early=(300.0, 3, 1957))
+    check("дорог только оригинал, признаков раннего пресса нет — мимо",
+          D.classify(v, 30.0, False, False, 50.0, 2.5)[0] is None)
+    check("дорог только оригинал, продавец пишет «DG mono» → «сверить»",
+          D.classify(v, 30.0, True, False, 50.0, 2.5)[0] == "сверить этикетку")
+    check("…но не при переиздании",
+          D.classify(v, 30.0, True, True, 50.0, 2.5)[0] is None)
+    check("адрес на этикетке («47 West 63rd») — признак раннего пресса",
+          bool(D._EARLY.search("Blue Note 47 West 63rd NY label")))
+    check("«Bergenfield» — признак раннего пресса Prestige",
+          bool(D._EARLY.search("Prestige Bergenfield NJ label")))
+    item = {"localizedAspects": [{"name": "Artist", "value": "Art Blakey"}]}
+    check("«ART BLAKEY & THE JAZZ MESSENGERS LP KYOTO RIVERSIDE» → «KYOTO»",
+          D.identity(item, "ART BLAKEY & THE JAZZ MESSENGERS LP KYOTO RIVERSIDE "
+                     "MONO SHORTER HUBBARD", "Art Blakey")[1].lower() == "kyoto")
+    check("«Japan» в тексте не доказывает оригинал",
+          not D._EARLY.search(D._JAPAN.sub(" ", "The Unique Thelonious Monk "
+                                           "JAPAN Riverside JAZZ LP")))
+
+
 def main():
     for fn in [test_hlam_ne_otkryvaetsya, test_gde_kopat, test_zagolovok_v_albom,
                test_otsenka_prodavtsa, test_press_po_nomeru,
                test_nomer_ne_dokazyvaet_press, test_god_i_pereizdanie,
-               test_izdanie_po_nomeru_pod_drugim_nazvaniem]:
+               test_izdanie_po_nomeru_pod_drugim_nazvaniem, test_almazy_do_40]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

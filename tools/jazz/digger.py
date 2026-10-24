@@ -185,7 +185,17 @@ _EARLY = re.compile(
     r"\bny\s*usa\b|\b(?:1st|first|orig\w*)\s*press\w*|\bpromo\b|"
     r"\bwhite\s*label\b|\bwlp\b|\bdj\s*copy\b|\bobi\b|\bjapan\w*\b|"
     r"\btest\s*press\w*|\bmaroon\s*label\b|\bblue\s*label\b|"
-    r"\borange\s*(?:and|&|/)?\s*black\b|\b(?:6|six)[\s-]*eye\b", re.I)
+    r"\borange\s*(?:and|&|/)?\s*black\b|\b(?:6|six)[\s-]*eye\b|"
+    # Адреса на ранних этикетках: Blue Note — Lexington и 47 West 63rd,
+    # Prestige — 446 West 50th и Bergenfield, плюс «плоский край» и
+    # Plastylite — так пишет продавец, который смотрел пластинку в руках.
+    r"\blexington\b|\b(?:47\s*)?w(?:est)?\.?\s*63(?:rd)?\b|\bbergenfield\b|"
+    r"\b(?:446\s*)?w(?:est)?\.?\s*50th\b|\bplastylite\b|\bflat\s*(?:edge|rim)\b|"
+    r"\byellow\s*label\b", re.I)
+_JAPAN = re.compile(r"\bjapan\w*\b|\bobi\b", re.I)
+# Год оригинальной эпохи в заголовке — слабый признак раннего пресса:
+# продавец переиздания чаще пишет год переиздания или не пишет никакого.
+_VINTAGE_YEAR = re.compile(r"(?<!\d)19[56]\d(?!\d)")
 
 
 def low_grade(g):
@@ -233,11 +243,26 @@ def score(title, seller_fb):
         s += 2
     if any(cs.label_catno(lbl, title) for lbl in cs.LABELS):
         s += 1                # номер в заголовке: продавец смотрел этикетку
+    if _VINTAGE_YEAR.search(title):
+        s += 1
     # Небольшой продавец без справки по ценам — чаще распродажа
     # коллекции, чем магазин, который сверяется с Discogs.
     if seller_fb is not None and seller_fb < 300:
         s += 1
+    # Слова непрофессионала: магазин пишет номер и оценку, а «vintage»,
+    # «old», «estate», «grandpa's collection» — тот, кто цен не знает.
+    # Пилот «алмазов» 24.10.2026: подробные заголовки знающих продавцов
+    # («OG DG RVG ear») стоят по рынку.
+    if _NAIVE.search(title):
+        s += 1
     return s
+
+
+_NAIVE = re.compile(r"\bvintage\b|\bold\s+(?:jazz|record|vinyl|lp)\b|\bestate\b|"
+                    r"\bgrand(?:pa|father|ma|mother)'?s?\b|\bdad'?s\b|"
+                    r"\bfound\s+in\b|\battic\b|\bbasement\b|\bthrift\b|"
+                    r"\bcollection\s+of\b|\bfrom\s+(?:my|a)\s+collection\b",
+                    re.I)
 
 
 # --- оценка по Discogs -------------------------------------------------
@@ -456,6 +481,16 @@ def identity(item, title, who):
         parts = re.split(r"\s+[-–—:]\s+", t, maxsplit=1)
         rest = parts[1] if len(parts) == 2 else re.sub(
             re.escape(artist), " ", t, flags=re.I) if artist else ""
+        # Состав и формат в начале остатка — не название: «ART BLAKEY & THE
+        # JAZZ MESSENGERS LP KYOTO RIVERSIDE MONO» давал альбом «& The Jazz
+        # Messengers» («алмазы», 24.10.2026).
+        rest = re.sub(r"^\s*(?:(?:&|\band\b|\bwith\b)\s*(?:the\s+|his\s+)?"
+                      r"(?:jazz\s+)?(?:messengers|orchestra|quintet|quartet|"
+                      r"trio|sextet|septet|octet|big\s*band|band|"
+                      r"all[\s-]*stars)\b|(?:the\s+)?(?:quintet|quartet|trio|"
+                      r"sextet|septet|orchestra)\b)?"
+                      r"[\s\W]*(?:(?:lp|vinyl|record|album)\b[\s\W]*)*", "",
+                      rest, flags=re.I)
         # Название кончается там, где начинаются лейбл, номер, формат
         # или оценка: «Expansions Flying Dutchman LP» → «Expansions».
         cut = [m.start() for _, rx, _ in LABELS for m in [re.search(rx, rest, re.I)]
@@ -470,6 +505,34 @@ def identity(item, title, who):
     if artist.lower() in ("various", "various artists"):
         return None, None
     return artist or None, album or None
+
+
+def classify(v, p, early_word, reissue, min_floor, min_gap):
+    """Группа находки и её опора по оценке appraise, или (None, None).
+
+    «надёжная» — даже самое дешёвое издание альбома дороже порога, при
+    глубокой опоре и лейбле лота среди изданий; «по прессу» — пресс
+    опознан по номеру (или лейблу с годом при признаках раннего пресса);
+    «сверить этикетку» — дорог только оригинал, продавец пишет о раннем
+    прессе, номер лота у оригинала тот же, переиздания нет."""
+    w, e, this = v["worst"], v["early"], v["this"]
+
+    def enough(fl):
+        return fl >= min_floor and fl >= min_gap * p
+
+    if enough(w["floor"]) and not v["thin"] and \
+            not (v["label_miss"] and not v["has_mine"]):
+        return "надёжная", w
+    if this and this["copies"] >= 2 and enough(this["floor"]) and \
+            (v["this_how"] == "номер" or early_word) and \
+            not (reissue and this["year"] == v["early_year"]):
+        return "по прессу", this
+    if e and not reissue and early_word and e["copies"] >= 2 and \
+            (not v["has_mine"] or v["early_in_mine"]) and enough(e["floor"]):
+        # Дорог только оригинал: «Blue Train BST-81577» без единого
+        # признака шёл с полом моно-оригинала $2 430 (пилот 24.10.2026).
+        return "сверить этикетку", e
+    return None, None
 
 
 def main():
@@ -495,7 +558,24 @@ def main():
     ap.add_argument("--offer", type=float, default=None,
                     help="только лоты с торгом; оценка от предложения в "
                          "эту долю запроса (0.7 — предложить 70%%)")
+    ap.add_argument("--used", action="store_true",
+                    help="только раздел Used (б/у)")
+    ap.add_argument("--offer-share", type=float, default=None,
+                    help="с --buy-now: лот с торгом, не прошедший по цене "
+                         "запроса, проверяется ещё по предложению в эту долю "
+                         "запроса (0.8 — предложить 80%%)")
+    ap.add_argument("--diamonds", action="store_true",
+                    help="«алмазы»: б/у, купить сейчас или торг, до $40, "
+                         "пол от $50 и от 2.5x, предложение 80%% — владелец "
+                         "24.10.2026")
     ap.add_argument("--tg", action="store_true")
+    # Владелец 24.10.2026: «поиск винила на ебей до 40$ чтобы находить
+    # алмазы в б/у джазовых пластинках. Никаких аукционов — либо купить
+    # сейчас, либо предложить цену». Пресет; любой ключ можно переопределить.
+    if "--diamonds" in sys.argv:
+        ap.set_defaults(buy_now=True, used=True, max_price=40.0, min_gap=2.5,
+                        min_floor=50.0, offer_share=0.8, max_cards=600,
+                        min_score=5)
     a = ap.parse_args()
 
     token = ebay_token()
@@ -517,7 +597,7 @@ def main():
             "buyingOptions:{FIXED_PRICE}," if a.buy_now else
             "buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},") +
            f"itemLocationCountry:US,price:[..{a.max_price:.0f}],"
-           "priceCurrency:USD")
+           "priceCurrency:USD" + (",conditions:{USED}" if a.used else ""))
     seen, cands, why_not, refused = set(), [], {}, 0
     by_seller = {}
 
@@ -636,7 +716,11 @@ def main():
             drop("без торга")
             continue
         w, e, this = v["worst"], v["early"], v["this"]
-        early_word = bool(_EARLY.search(text))
+        # Признак раннего пресса для «сверить этикетку»; «Japan» и «OBI»
+        # поднимают приоритет, но оригинала не доказывают: «The Unique
+        # Thelonious Monk JAPAN Riverside» шёл с полом американского
+        # оригинала $60 («алмазы», 24.10.2026).
+        early_word = bool(_EARLY.search(_JAPAN.sub(" ", text)))
         # Переиздание: слова в заголовке/описании, лейбл-преемник или год
         # пресса позже года оригинала больше чем на два («NM! JR Monterose
         # … 1972 Blue Note BLP 1536 UA» шёл «сверить этикетку» с полом
@@ -644,24 +728,17 @@ def main():
         reissue = bool(hunt._REISSUE.search(text) or hunt._REISSUE_CTX.search(t)
                        or _SUCCESSOR.search(t)
                        or (year and year > v["early_year"] + 2))
-        ref = None
-        if w["floor"] >= a.min_floor and w["floor"] >= a.min_gap * p and \
-                not v["thin"] and not (v["label_miss"] and not v["has_mine"]):
-            group, ref = "надёжная", w
-        elif this and this["copies"] >= 2 and this["floor"] >= a.min_floor \
-                and this["floor"] >= a.min_gap * p and \
-                (v["this_how"] == "номер" or early_word) and \
-                not (reissue and this["year"] == v["early_year"]):
-            group, ref = "по прессу", this
-        elif e and not reissue and early_word and e["copies"] >= 2 and \
-                (not v["has_mine"] or v["early_in_mine"]) and \
-                e["floor"] >= a.min_floor and e["floor"] >= a.min_gap * p:
-            # Дорог только оригинал — в эту группу лот попадает, лишь если
-            # продавец сам пишет о раннем прессе (mono, DG, RVG, 1st press)
-            # и номер лота у оригинала тот же: «Blue Train BST-81577» без
-            # единого признака шёл с полом моно-оригинала $2 430.
-            group, ref = "сверить этикетку", e
-        else:
+        group, ref = classify(v, p, early_word, reissue, a.min_floor,
+                              a.min_gap)
+        # Торг в режиме «купить сейчас»: лот, не прошедший по цене
+        # запроса, проверяется по предложению — предлагает владелец сам.
+        if group is None and a.offer_share and z["kind"] == "предложить цену":
+            po = round(z["price"] * a.offer_share, 2)
+            group, ref = classify(v, po, early_word, reissue, a.min_floor,
+                                  a.min_gap)
+            if group:
+                p = po
+        if group is None:
             drop("пол Discogs ниже порога")
             # Все оценённые — в отдельный файл: «почти» видно только так.
             appraised.append({
@@ -690,6 +767,9 @@ def main():
             "this_how": v["this_how"], "this_year": this["year"] if this else "",
             "early_floor": e["floor"] if e else "", "early_year": v["early_year"],
             "versions": v["versions"], "gap": round(ref["floor"] / p, 1),
+            "offer_hint": (round(z["price"] * a.offer_share, 2)
+                           if a.offer_share and p == z["price"]
+                           and z["kind"] == "предложить цену" else ""),
             "seller": se.get("username") or "", "fb": se.get("feedbackScore"),
             "photos": 0, "id": iid,
             "url": (it.get("itemWebUrl") or "").split("?")[0]})
@@ -761,6 +841,9 @@ def render(z):
                "сверить этикетку": z["early_floor"]}[z["group"]]
         lines.insert(1, f"   {z['note'].split(', поправка')[0]}; предел "
                         f"ставки ${float(ref) / 2:.0f} (опора / 2)")
+    if z.get("offer_hint"):
+        lines.insert(1, f"   продавец принимает торг — можно предложить "
+                        f"~${z['offer_hint']:.2f}")
     return "\n".join(lines)
 
 
