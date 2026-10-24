@@ -814,8 +814,10 @@ def describe(x, k=4):
     """Расклад изданий по-русски: «1961 Prestige 7188 — 15%, от $100»."""
     rows = []
     for v in x["parts"][:k]:
-        rows.append(f"{v['year'] or '—'} {v['label'][:22]} {v['catno'][:18]} — "
-                    f"{v['p'] * 100:.0f}%, от ${v['floor']:.0f}")
+        c = f" ({v['country']})" if v.get("country") not in ("US", "", None) \
+            else ""
+        rows.append(f"{v['year'] or '—'} {v['label'][:22]} {v['catno'][:18]}"
+                    f"{c} — {v['p'] * 100:.0f}%, от ${v['floor']:.0f}")
     return rows
 
 
