@@ -31,6 +31,8 @@ def main():
     ap.add_argument("--last", type=int, default=3)
     ap.add_argument("--drop", default=None, help="файл с подстроками заголовков")
     ap.add_argument("--max-price", type=float, default=25.0)
+    ap.add_argument("--top", type=int, default=0,
+                    help="только первые N по отзывам Best Buy")
     ap.add_argument("--send", action="store_true")
     a = ap.parse_args()
 
@@ -75,6 +77,8 @@ def main():
         except ValueError:
             return 0
     keep.sort(key=pop)
+    if a.top:
+        keep = keep[:a.top]
     blocks = []
     for k in keep:
         s = albums[k]["src"]
@@ -83,7 +87,11 @@ def main():
         ru = ", ".join(f"{n} {float(s[f]):,.0f} ₽".replace(",", " ")
                        for n, f in (("WB", "wb"), ("Ozon", "ozon"),
                                     ("Авито", "avito")) if s.get(f))
-        lines = [f"<b>{k[0]} — {k[1]}</b>{bb}" + (f" · Россия: {ru}" if ru else "")]
+        src = s.get("source") or ""
+        also = ", ".join(x.strip() for x in src.split("+")
+                         if "Best Buy" not in x)
+        lines = [f"<b>{k[0]} — {k[1]}</b>{bb}" + (f" · {also}" if also else "")
+                 + (f" · Россия: {ru}" if ru else "")]
         for mode in ("купить сейчас", "предложить цену", "аукцион"):
             m = albums[k]["modes"].get(mode)
             if not m:
@@ -101,7 +109,7 @@ def main():
                          f"{m['_rub']:,} ₽".replace(",", " ") + ratio + note
                          + f"\n{m['url']}")
         blocks.append("\n".join(lines))
-    head = (f"<b>ruspop — {len(keep)} альбомов, лоты до ${a.max_price:.0f} "
+    head = (f"<b>ruspop — {'топ-' + str(len(keep)) + ' по отзывам Best Buy' if a.top else str(len(keep)) + ' альбомов'}, лоты до ${a.max_price:.0f} "
             f"без доставки</b>\nМосква = лот + доставка по США + $11 за "
             f"пластинку, курс ЦБ. Сортировка — по отзывам Best Buy.\n"
             f"Цена WB/Ozon — витрина, не сделка; у аукциона — текущая ставка.")
