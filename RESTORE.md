@@ -111,8 +111,17 @@ python tools/ruspop/report.py --drop data/ruspop/drop_2026-10-24.txt --top 10 --
 колонки — цены WB/Ozon/Авито, заполняются руками). Витрина Best Buy —
 `data/ruspop/bestbuy_popularity.csv`.
 
+### Tone Poet — серия до $20, купить / торг / аукцион
+```bash
+python tools/jazz/tonepoet.py --catalog --tg   # заголовок + каждый альбом каталога
+python tools/jazz/tonepoet.py --tg             # только «Tone Poet» в заголовке
+```
+Каталог серии — `data/series_catalog.csv` (Tone Poet 175, Verve By Request
+124, выгрузка series.py от 22.10.2026).
+
 ### Джаз
 ```bash
+python tools/jazz/series.py                            # Tone Poet / VBR новые против Discogs
 python tools/jazz/hunt.py --top 25                     # первопрессы по картотеке, до $25
 python tools/jazz/catno_sweep.py --labels "Blue Note" Prestige   # оценка по номеру
 python tools/jazz/floor.py --release 1039981 --q "pharoah sanders love in us all" --catno ASD-9280
