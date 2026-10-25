@@ -382,23 +382,34 @@ def shares(rows, cp, fam):
     return out
 
 
+TOL = 0.005
+
+
 def fit(rows, raw):
     """Поправка с наименьшей ошибкой на rows: перебор сетки GRID, у
-    «наивных» продавцов (от 8 лотов) — свой показатель цены."""
+    «наивных» продавцов (от 8 лотов) — свой показатель цены. Минимум по γ
+    плоский (162 лота 25.10.2026: γ=2 — 0.809, γ=3 — 0.807, γ=4 — 0.808):
+    берётся наименьший γ в пределах TOL от лучшего — не дальше, чем
+    показывают данные."""
     import itertools
-    best = None
+    by_g = {}
     for g, c, k, y, ki in itertools.product(*GRID.values()):
         cp = dict(raw, gamma=g, c=c, k_modern=k, modern_from=y, k_import=ki,
-                  gamma_naive=g / 2)
+                  gamma_naive=g)
         lo = lot_loss(rows, cp)
-        if best is None or lo < best[0]:
-            best = (lo, cp)
-    lo_fit, cp = best
-    naive_n = sum(1 for r, _, _ in rows
-                  if r.get("fb") is not None and r["fb"] < raw["naive_fb"])
-    if naive_n >= 8:
-        gn = min(GRID["gamma"], key=lambda x: lot_loss(
-            rows, dict(cp, gamma_naive=x)))
+        if g not in by_g or lo < by_g[g][0]:
+            by_g[g] = (lo, cp)
+    top = min(v[0] for v in by_g.values())
+    lo_fit, cp = by_g[min(g for g, v in by_g.items() if v[0] <= top + TOL)]
+    naive = [x for x in rows
+             if x[0].get("fb") is not None and x[0]["fb"] < raw["naive_fb"]]
+    if len(naive) >= 8:
+        # Свой γ «наивных» — по их же лотам: в общей ошибке 27 лотов из 162
+        # тонут в допуске, и выбирался γ=0, хотя у них ошибка 0.667 при γ=0
+        # против 0.636 при γ=2.
+        ls = {x: lot_loss(naive, dict(cp, gamma_naive=x))
+              for x in GRID["gamma"]}
+        gn = min(x for x in ls if ls[x] <= min(ls.values()) + TOL)
         cp = dict(cp, gamma_naive=gn)
         lo_fit = lot_loss(rows, cp)
     return lo_fit, cp
