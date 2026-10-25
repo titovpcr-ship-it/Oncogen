@@ -69,8 +69,11 @@ LABELS = [
     ("new jazz lp", r"\bnew\s*jazz\b|\bNJLP\b", "A"),
     ("riverside jazz", r"\briverside\b|\bRLP\s*-?\s*\d", "A"),
     ("jazzland lp", r"\bjazzland\b", "A"),
-    ("blue note lp", r"\bblue\s*note\b|\bBLP\s*-?\s*\d|\bBST\s*-?\s*8?4\d{3}",
-     "A"),
+    # BLP без «Blue Note» — только номера Blue Note 15xx и 4xxx: префикс
+    # BLP есть и у Dolton/Liberty («The Ventures' Christmas Album Dolton
+    # BLP-2038» шёл ярусом A, поток 25.10.2026).
+    ("blue note lp", r"\bblue\s*note\b|\bBLP\s*-?\s*(?:15\d\d|4\d{3})\b|"
+     r"\bBST\s*-?\s*8?4\d{3}", "A"),
     ("contemporary records jazz", r"\bcontemporary\s*records?\b", "A"),
     ("pacific jazz", r"\bpacific\s*jazz\b|\bworld\s*pacific\b", "A"),
     ("bethlehem jazz", r"\bbethlehem\b", "A"),
@@ -162,7 +165,8 @@ _BUDGET = re.compile(
     r"\b(?:pickwick|crown\s*records|design\s*records|everest\s*(?:archive|records)|"
     r"mercury\s*wing|rca\s*camden|camden|harmony\s*records|"
     r"columbia\s*(?:house|special\s*products|record\s*club)|record\s*club|"
-    r"capitol\s*record\s*club|time[\s-]*life|reader'?s\s*digest|"
+    r"capitol\s*record\s*club|club\s*edition|bomc|"
+    r"book[\s-]*of[\s-]*the[\s-]*month|time[\s-]*life|reader'?s\s*digest|"
     r"franklin\s*mint|laserlight|intermedia|bainbridge|"
     r"k-?tel|ronco|realm\s*records|tops\s*records|somerset|"
     r"alshire|spin-?o-?rama|coronet|diplomat|premier\s*albums)\b", re.I)
@@ -174,7 +178,16 @@ _COMPILATION = re.compile(
 _NEW_REISSUE = re.compile(
     r"\b180\s*-?\s*g|\bremaster\w*|\b[o0]jc\b|\btone\s*poet\b|"
     r"\bmusic\s*matters\b|\bby\s*request\b|\bclassic\s*vinyl\s*series\b|"
-    r"\b20[12]\d\s*(?:press|reissue|edition|release)\b|\bsealed\b", re.I)
+    r"\b20[12]\d\s*(?:press|reissue|edition|release)\b|\bsealed\b|"
+    # Европейские переиздания и RSD (25.10.2026: Grant Green «Green
+    # Street» WaxTime за $25 — «надёжная» по Music Matters за $127;
+    # Pharoah Sanders «Izipho Zam» RSD SES-19733-25LP — по оригиналу 1973).
+    r"\bwax\s*time\b|\bwaxtime\b|\bdol\b|\bdoxy\b|\bermitage\b|"
+    r"\bvinyl\s*lovers\b|\bjazz\s*images\b|\bessential\s*jazz\s*classics\b|"
+    r"\bnot\s*now\s*music\b|\bpoll\s*winners\b|\bsupreme\s*jazz\b|"
+    r"\b20th\s*century\s*masterworks\b|\bamerican\s*jazz\s*classics\b|"
+    r"\bvinyl\s*passion\b|\bmusic\s*on\s*vinyl\b|\bdeagostini\b|"
+    r"\brsd\b|\brecord\s*store\s*day\b|\bmade\s*in\s*(?:the\s*)?eu\b", re.I)
 _NOT_LP = re.compile(r"\b78\s*rpm\b|\b78s?\b|\b45\s*rpm\b|\b7\s*(?:\"|inch|in\b)"
                      r"|\bparts?\s*(?:1|one|i)\s*(?:&|and|/)\s*(?:2|two|ii)\b"
                      r"|\b45\s+(?:dot|single|record)\b"
@@ -199,6 +212,28 @@ _JAPAN = re.compile(r"\bjapan\w*\b|\bobi\b", re.I)
 # Год оригинальной эпохи в заголовке — слабый признак раннего пресса:
 # продавец переиздания чаще пишет год переиздания или не пишет никакого.
 _VINTAGE_YEAR = re.compile(r"(?<!\d)19[56]\d(?!\d)")
+
+
+def not_lp_card(asp):
+    """Не долгоиграющая пластинка по характеристикам карточки. Калибровка
+    25.10.2026: «Getz/Gilberto … Stereo LP» за $15 — компакт-диск Verve
+    Master Edition, «Jimmy Smith “The Cat” VG+ DJ Copy» за $3.50 — сингл
+    на 45 оборотов; в заголовках ни «CD», ни «45». 10" — не повод: ранние
+    джазовые LP бывают десятидюймовыми."""
+    fmt = (asp.get("Format") or "").lower()
+    if re.search(r"\bcd\b|cassette|8[\s-]*track|reel", fmt):
+        return asp.get("Format")
+    size = (asp.get("Record Size") or "").replace(" ", "")
+    if re.match(r"^[3-7](?:\"|''|”|in|inch)", size, re.I):
+        return asp.get("Record Size")
+    kind = (asp.get("Type") or "").lower()
+    if kind in ("single", "maxi-single"):
+        return asp.get("Type")
+    speed = (asp.get("Speed") or "").replace(" ", "").lower()
+    if speed.startswith("78") or (speed.startswith("45") and
+                                  not size.startswith("12")):
+        return asp.get("Speed")
+    return None
 
 
 def low_grade(g):
@@ -863,6 +898,10 @@ def main():
             drop("карточка не открылась")
             continue
         asp = tp.aspects(item)
+        m = not_lp_card(asp)
+        if m:
+            drop(f"не LP по карточке: {m}")
+            continue
         if z.get("src") in ("поток", "продавец"):
             # Второй порог — по карточке: у «наивного» лота в заголовке
             # «Vintage Jazz LP», а исполнитель, лейбл и номер — в
@@ -1226,6 +1265,10 @@ def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
     число отказов)."""
     log = log or (lambda m: print(m, file=sys.stderr))
     out, refused = {}, 0
+    # Отметка — не позже начала прогона: у части объявлений eBay дата
+    # создания в будущем (прогон 25.10.2026: «2026-10-31T07:00:01» у полос
+    # $12-20 и $20-40 — следующий поток пропустил бы в них всё до 31-го).
+    now = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
     for name, aspect, need in STREAMS:
         stored = state["bands"].get(name, DEFAULT_BANDS[name])
         lows = [e for e in stored if e < max_price]
@@ -1248,7 +1291,7 @@ def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
                 items = j.get("itemSummaries") or []
                 for it in items:
                     c = it.get("itemCreationDate") or ""
-                    if c and (newest is None or c > newest):
+                    if c and c <= now and (newest is None or c > newest):
                         newest = c
                     if c and c < stop:
                         continue
@@ -1276,7 +1319,7 @@ def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
                     f"{mark[:16]} — полоса делится по ${mid:g}")
                 continue
             if newest:
-                state["marks"][key] = max(newest, mark)
+                state["marks"][key] = min(max(newest, mark), now)
         # Полосы выше потолка этого прогона («--max-price 10») не теряются.
         state["bands"][name] = sorted(set(new_lows)
                                       | {e for e in stored if e >= max_price})

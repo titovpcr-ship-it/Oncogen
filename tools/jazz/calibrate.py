@@ -254,7 +254,8 @@ def predict(a):
             continue
         parts = [{k: v.get(k) for k in ("id", "year", "label", "catno",
                                          "format", "have", "want", "copies",
-                                         "floor", "p_raw", "country")}
+                                         "floor", "p_raw", "country",
+                                         "imported")}
                  for v in x["parts"]]
         shares = {}
         for v in parts:
@@ -326,9 +327,9 @@ def load_labels():
 
 
 FIT = os.path.join(DATA, "fit.json")
-GRID = {"gamma": (0.0, 0.5, 0.75, 1.0, 1.5, 2.0), "c": (1.0, 1.5, 2.0, 3.0),
-        "k_modern": (0.05, 0.1, 0.2, 0.3, 0.5, 1.0),
-        "modern_from": (1980, 1985, 1990, 2000)}
+GRID = {"gamma": (0.0, 1.0, 2.0, 3.0, 4.0), "c": (1.0, 1.5, 2.0),
+        "k_modern": (0.1, 0.2, 0.3, 0.5, 1.0), "modern_from": (1985, 1990),
+        "k_import": (0.1, 0.25, 0.5, 1.0)}
 
 
 def calib_rows(photo_only=True):
@@ -381,36 +382,69 @@ def shares(rows, cp, fam):
     return out
 
 
-def report(a):
+def fit(rows, raw):
+    """Поправка с наименьшей ошибкой на rows: перебор сетки GRID, у
+    «наивных» продавцов (от 8 лотов) — свой показатель цены."""
     import itertools
-    import diamonds as dm
-    rows = calib_rows(photo_only=not a.all)
-    raw = dict(dm.CALIB_DEFAULT, gamma=0.0, gamma_naive=0.0, k_modern=1.0)
-    print(f"лотов с эпохой {'по фото и заголовку' if a.all else 'по фото'}: "
-          f"{len(rows)}; «наивных» продавцов (до {raw['naive_fb']} отзывов): "
-          f"{sum(1 for r, _, _ in rows if (r.get('fb') or 0) < raw['naive_fb'])}")
     best = None
-    naive_n = sum(1 for r, _, _ in rows
-                  if r.get("fb") is not None and r["fb"] < raw["naive_fb"])
-    for g, c, k, y in itertools.product(*GRID.values()):
-        cp = dict(raw, gamma=g, c=c, k_modern=k, modern_from=y,
+    for g, c, k, y, ki in itertools.product(*GRID.values()):
+        cp = dict(raw, gamma=g, c=c, k_modern=k, modern_from=y, k_import=ki,
                   gamma_naive=g / 2)
         lo = lot_loss(rows, cp)
         if best is None or lo < best[0]:
             best = (lo, cp)
     lo_fit, cp = best
+    naive_n = sum(1 for r, _, _ in rows
+                  if r.get("fb") is not None and r["fb"] < raw["naive_fb"])
     if naive_n >= 8:
-        # У «наивных» продавцов отбор по цене свой — подгоняется отдельно.
         gn = min(GRID["gamma"], key=lambda x: lot_loss(
             rows, dict(cp, gamma_naive=x)))
         cp = dict(cp, gamma_naive=gn)
         lo_fit = lot_loss(rows, cp)
+    return lo_fit, cp
+
+
+def cross_check(rows, raw, folds=5):
+    """Проверка на отложенных альбомах: поправка подгоняется без альбомов
+    одной части и меряется на них — честная ошибка, без подгонки под
+    те же лоты."""
+    masters = sorted({str(r["pred"].get("master") or r["album"])
+                      for r, _, _ in rows})
+    part = {m: k % folds for k, m in enumerate(masters)}
+    tot_raw = tot_fit = 0.0
+    for k in range(folds):
+        test = [x for x in rows
+                if part[str(x[0]["pred"].get("master") or x[0]["album"])]
+                == k]
+        train = [x for x in rows if x not in test]
+        if not test or not train:
+            continue
+        _, cp = fit(train, raw)
+        tot_fit += lot_loss(test, cp) * len(test)
+        tot_raw += lot_loss(test, raw) * len(test)
+    return tot_raw / len(rows), tot_fit / len(rows)
+
+
+def report(a):
+    import diamonds as dm
+    rows = calib_rows(photo_only=not a.all)
+    raw = dict(dm.CALIB_DEFAULT, gamma=0.0, gamma_naive=0.0, k_modern=1.0,
+               k_import=1.0)
+    naive_n = sum(1 for r, _, _ in rows
+                  if r.get("fb") is not None and r["fb"] < raw["naive_fb"])
+    print(f"лотов с эпохой {'по фото и заголовку' if a.all else 'по фото'}: "
+          f"{len(rows)}; «наивных» продавцов (до {raw['naive_fb']} отзывов): "
+          f"{naive_n}")
+    lo_fit, cp = fit(rows, raw)
     lo_raw = lot_loss(rows, raw)
     print(f"ошибка (меньше — лучше): по коллекциям {lo_raw:.3f}, с поправкой "
           f"{lo_fit:.3f}")
     print("поправка: " + ", ".join(f"{k}={cp[k]}" for k in
                                     ("gamma", "gamma_naive", "c", "k_modern",
-                                     "modern_from")))
+                                     "modern_from", "k_import")))
+    cv_raw, cv_fit = cross_check(rows, raw)
+    print(f"на отложенных альбомах (5 частей): по коллекциям {cv_raw:.3f}, "
+          f"с поправкой {cv_fit:.3f}")
     for fam in CLASSES:
         fr = [x for x in rows if x[0]["family"] == fam]
         if not fr:
@@ -429,6 +463,7 @@ def report(a):
                        "n": len(rows), "naive_n": naive_n,
                        "loss_raw": round(lo_raw, 4),
                        "loss_fit": round(lo_fit, 4),
+                       "loss_cv": round(cv_fit, 4),
                        "date": time.strftime("%Y-%m-%d")}, f,
                       ensure_ascii=False, indent=1)
         print(f"\nзаписано: {FIT}")

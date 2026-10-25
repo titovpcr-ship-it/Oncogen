@@ -39,6 +39,7 @@ import registry                                                # noqa: E402
 import targets as tg                                           # noqa: E402
 from src.common.ebay import (ApiRefused, ebay_token,           # noqa: E402
                              search_page, shipping_usd)
+import jcache                                                  # noqa: E402
 
 OUT = os.path.join(ROOT, "out")
 CACHE = os.path.join(ROOT, "cache", "discogs_catno.json")
@@ -153,11 +154,7 @@ class D(series.Discogs):
             self.db = {}
 
     def save(self):
-        os.makedirs(os.path.dirname(CACHE), exist_ok=True)
-        tmp = CACHE + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(self.db, f, ensure_ascii=False)
-        os.replace(tmp, CACHE)
+        jcache.save_merged(CACHE, self.db)
 
 
 def value(d, q, verify, label):

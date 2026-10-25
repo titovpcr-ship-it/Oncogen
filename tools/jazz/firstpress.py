@@ -34,6 +34,7 @@ import requests
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import targets as tg                                           # noqa: E402
+import jcache                                                  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA = os.path.join(ROOT, "data")
@@ -80,11 +81,7 @@ class D:
         return j
 
     def save(self):
-        os.makedirs(os.path.dirname(CACHE), exist_ok=True)
-        tmp = CACHE + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(self.db, f, ensure_ascii=False)
-        os.replace(tmp, CACHE)
+        jcache.save_merged(CACHE, self.db)
 
 
 def first_press(d, master_id):

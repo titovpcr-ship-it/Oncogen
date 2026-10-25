@@ -39,6 +39,7 @@ for sub in ("tools", "tools/jazz"):
 
 import catno_sweep as cs                                       # noqa: E402
 import targets as tg                                           # noqa: E402
+import jcache                                                  # noqa: E402
 
 SEARCH = "https://api.discogs.com/database/search?"
 TARGETS = os.path.join(ROOT, "data", "jazz_targets.csv")
@@ -52,7 +53,10 @@ _AUDIOPHILE = re.compile(
     r"4\s*men\s*with\s*beards|vinyl\s*passion|waxtime|wax\s*time|\bdoxy\b|"
     r"\bdol\b|jazz\s*images|essential\s*jazz\s*classics|not\s*now|"
     r"deagostini|be\s*with\s*records|tone\s*poet|blue\s*note\s*80|"
-    r"classic\s*vinyl\s*series|record\s*store\s*day", re.I)
+    r"classic\s*vinyl\s*series|record\s*store\s*day|\brsd\b|ermitage|"
+    r"vinyl\s*lovers|poll\s*winners|supreme\s*jazz|jazz\s*wax\b|"
+    r"20th\s*century\s*masterworks|american\s*jazz\s*classics|"
+    r"music\s*on\s*vinyl|wax\s*love", re.I)
 
 
 # --- кэш изданий --------------------------------------------------------
@@ -69,11 +73,7 @@ class Versions:
             self.db = {}
 
     def save(self):
-        os.makedirs(os.path.dirname(VCACHE), exist_ok=True)
-        tmp = VCACHE + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(self.db, f, ensure_ascii=False)
-        os.replace(tmp, VCACHE)
+        jcache.save_merged(VCACHE, self.db)
 
     def get(self, master_id, country="US", max_pages=3):
         key = f"{master_id}|{country or ''}"
@@ -291,6 +291,15 @@ def evidence(title, text, asp, catno, store=False):
         "promo": bool(re.search(r"\bpromo\b|\bwhite\s*label\b|\bwlp\b|"
                                 r"\btest\s*press", head)),
         "audiophile": bool(_AUDIOPHILE.search(head)),
+        # Какой именно лейбл переиздания назван: «WaxTime» — не Music
+        # Matters (Grant Green «Green Street», 25.10.2026: $25 против $127).
+        "reissue_label": (_AUDIOPHILE.search(head).group(0)
+                          if _AUDIOPHILE.search(head) else ""),
+        "country_said": lot_country(head) != "US" or bool(re.search(
+            r"\busa?\s*(?:press|pressing|orig)|\bmade\s*in\s*u\.?s\.?a?\b|"
+            r"\bu\.s\.a?\.?\s*press", head)),
+        "club": bool(re.search(r"\bclub\b|\bvmp\b|vinyl\s*me,?\s*please|"
+                               r"\bbomc\b", head)),
         # Переиздание: слова продавца или лейбл-преемник; «not a reissue»
         # — не переиздание.
         "reissue": _said(_REISSUE_WORDS, head + " | " + low),
@@ -402,9 +411,12 @@ ERAS = {
                               "синяя с трезубцем 1964-71"),
     "pr-trident": ("prestige", (1964, 1971), r"\btrident\b", False,
                    "синяя с трезубцем"),
+    # «Olive Green Label» — так продавец описал Prestige Berkeley 1970-х
+    # (калибровка 25.10.2026, «Lush Life» в конверте Bergenfield).
     "pr-fantasy": ("prestige", (1971, 1990),
-                   r"\bdistributed\s*by\s*fantasy\b|\bfantasy\s*labels?\b",
-                   False, "«distributed by Fantasy Records, Berkeley»"),
+                   r"\bdistributed\s*by\s*fantasy\b|\bfantasy\s*labels?\b|"
+                   r"\b(?:olive\s*)?green\s*labels?\b|\bberkeley\b",
+                   False, "зелёная «distributed by Fantasy Records, Berkeley»"),
     "nj-purple": ("new jazz", (1958, 1965), r"\bpurple\s*labels?\b", False,
                   "фиолетовая New Jazz, Bergenfield"),
     "im-orange": ("impulse", (1961, 1967),
@@ -484,7 +496,15 @@ def plausible(vers, ev):
     out = []
     for v in vers:
         fmt = v["format"].lower()
-        if "box set" in fmt or "club edition" in fmt:
+        if "box set" in fmt:
+            continue
+        # Клубные издания. Старые клубы (Capitol Record Club, Columbia
+        # House, BOMC) — в той же обложке с тем же номером, и на фото
+        # калибровки их три из девяти «Night Train»: лоту они возможны.
+        # Современные подписки (Vinyl Me Please и т. п.) — только со слов
+        # продавца.
+        if ("club edition" in fmt and not ev.get("club")
+                and (v["year"] or 0) >= 2000):
             continue
         if "45 rpm" in fmt and not ev["rpm45"]:
             continue
@@ -500,8 +520,31 @@ def plausible(vers, ev):
         if ev["stereo"] and "mono" in fmt and "stereo" not in fmt:
             continue
         out.append(v)
+    rl = ev.get("reissue_label")
+    if rl:
+        # Серии (Tone Poet, RSD) Discogs пишет в формате, лейблы — в лейбле.
+        rx = re.compile(r"record\s*store\s*day" if rl.lower() == "rsd" else
+                        r"\s*".join(map(re.escape, rl.split())), re.I)
+        named = [v for v in out
+                 if rx.search(f"{v['label']} | {v['format']}")]
+        if named:
+            out = named
+            notes.append(f"переиздание {rl}")
+            ev["_narrowed"] = True
+        else:
+            # Переиздание названо, а у мастера его нет: другим
+            # аудиофильским лейблам оно не приписывается, оригиналу тоже.
+            ev["_label_miss"] = True
+            notes.append(f"переиздание «{rl}» у Discogs не найдено")
     if ev.get("family"):
-        fam_ok = [v for v in out if label_ok(v["label"], ev["family"])]
+        # Лейбл в заголовке продавец пишет с обложки, а переиздание часто
+        # выходит на другом лейбле в той же обложке: JuJu «A Message from
+        # Mozambique» с «STRATA-EAST» в заголовке — на фото этикетка Black
+        # Fire (переиздание без года, 581 копия против 391 у оригиналов
+        # 1973 года), и лот шёл «надёжной» по оригиналу за $440
+        # (25.10.2026). Чужой лейбл отсекается только у старых прессов.
+        fam_ok = [v for v in out if label_ok(v["label"], ev["family"])
+                  or not v["year"] or v["year"] >= IMPORT_FROM]
         if fam_ok and len(fam_ok) < len(out):
             out = fam_ok
             notes.append(f"лейбл {ev['family']}")
@@ -604,7 +647,8 @@ def floor(d, rid, fresh=False):
 # × k_modern для изданий с modern_from года, если заголовок о прессе молчит.
 CALIB_PATH = os.path.join(ROOT, "data", "calib", "fit.json")
 CALIB_DEFAULT = {"gamma": 1.0, "c": 1.0, "gamma_naive": 0.5, "naive_fb": 100,
-                 "k_modern": 0.2, "modern_from": 1985}
+                 "k_modern": 0.2, "modern_from": 1985, "k_import": 0.5}
+IMPORT_FROM = 1990
 _CALIB = None
 
 
@@ -630,6 +674,8 @@ def lot_weight(v, price=None, silent=False, naive=False, cp=None):
         w *= min(1.0, cp["c"] * price / v["floor"]) ** g
     if silent and (not v.get("year") or v["year"] >= cp["modern_from"]):
         w *= cp["k_modern"]
+    if v.get("imported"):
+        w *= cp.get("k_import", 1.0)
     return w
 
 
@@ -782,12 +828,15 @@ def classify(x, price, min_floor=50.0, min_gap=2.5, up_mult=4.0, p_min=0.05):
     средняя цена изданий от порога при умеренном худшем случае."""
     if not x:
         return None
+    # Номер с конверта, год пресса или названный продавцом лейбл
+    # переиздания не нашлись ни у одного издания: что это за пластинка —
+    # неясно, ставки нет. Раньше «надёжная» проверялась до этого, и
+    # «Byrd's Eye View» в NM с годом 2024 (у Discogs только оригинал 1956)
+    # ушёл в «надёжные» (25.10.2026).
+    if x.get("catno_miss") or x.get("year_miss") or x.get("label_miss"):
+        return None
     if x["low"] >= max(min_floor, min_gap * price) and x["coverage"] >= 0.6:
         return "надёжная"
-    # Номер с конверта или год пресса не нашлись ни у одного издания: что
-    # это за пластинка — неясно, ставку на редкий пресс не считаем.
-    if x.get("catno_miss") or x.get("year_miss"):
-        return None
     p_big, _ = chance(x, price, min_floor, up_mult)
     if x["low"] >= 0.9 * price and p_big >= p_min:
         return "алмаз"
@@ -963,10 +1012,24 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
         vers = vc.get(master, country)
         if not vers:
             vers = vc.get(master, None)
+        elif not ev["country_said"]:
+            # Страна не названа: американские издания, а современные (с
+            # 1990) — любой страны. Переиздания джаза в основном европейские
+            # (WaxTime, DOL, Ermitage…), и в США их продают наравне: «Byrd's
+            # Eye View» у Discogs в США — только оригинал 1956 года за $450,
+            # и NM-копия за $38 шла «надёжной» (25.10.2026). Вес таких
+            # изданий — k_import (калибровка).
+            ids = {v["id"] for v in vers}
+            vers = vers + [dict(v, imported=True)
+                           for v in vc.get(master, None) or []
+                           if v["id"] not in ids and v["year"]
+                           and v["year"] >= IMPORT_FROM
+                           and v.get("country") not in ("US", "")]
     else:
         vers = [slim_search(r) for r in rel]
     ev["_year_miss"] = False
     ev["_narrowed"] = False
+    ev["_label_miss"] = False
     eds, notes = plausible(vers, ev)
     miss = bool(ev["core"]) and not any(catno_match(v["catno"], ev["core"])
                                         for v in eds)
@@ -999,7 +1062,8 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     if x.get("capped"):
         notes = notes + ["выброс пола урезан: " + "; ".join(x["capped"])]
     x.update({"master": master, "notes": notes, "evidence": ev,
-              "target": target, "catno_miss": miss, "year_miss": year_miss})
+              "target": target, "catno_miss": miss, "year_miss": year_miss,
+              "label_miss": ev["_label_miss"]})
     return x
 
 

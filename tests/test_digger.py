@@ -32,10 +32,30 @@ def test_hlam_ne_otkryvaetsya():
     check("лот из 10 пластинок",
           D.junk_reason("Jazz LP Lot of 10 records") is not None)
     check("78 rpm", D.junk_reason("Pharoah Sanders Karma Impulse 78 rpm") is not None)
+    check("«Dolton BLP-2038» — не Blue Note",
+          D.tiers("The Ventures Christmas Album Dolton BLP-2038")[0] == ""
+          and D.tiers("Hank Mobley BLP 1568")[0] == "A")
     check("сингл «Parts 1 & 2» (Blue Note 1911)", D.junk_reason(
         "The Sidewinder Parts 1 & 2 by Lee Morgan (Blue Note 1911) VG")
         is not None)
+    check("«Club Edition» — клубное издание", D.junk_reason(
+        "The Oscar Peterson Trio - Night Train - Reissue - Vinyl LP Club "
+        "Edition") is not None)
     check("OJC", D.junk_reason("Kenny Burrell Midnight Blue OJC LP") is not None)
+    check("WaxTime и RSD — свежие переиздания", D.junk_reason(
+        "Grant Green - Green Street -  LP Vinyl -  WaxTime Records")
+        is not None and D.junk_reason(
+        "Pharoah Sanders - Izipho Zam (My Gifts) LP RSD (SES-19733-25LP) VG+")
+        is not None)
+    # Калибровка 25.10.2026: в заголовке «LP», а в карточке — CD и сингл.
+    check("CD по карточке", D.not_lp_card({"Format": "CD"}) == "CD")
+    check("7\" / 45 RPM по карточке — сингл", D.not_lp_card(
+        {"Format": "Record", "Record Size": '7"', "Speed": "45 RPM"}) == '7"'
+        and D.not_lp_card({"Speed": "45 RPM"}) == "45 RPM")
+    check("12\" 33 LP и 10\" — пластинки", D.not_lp_card(
+        {"Format": "Record", "Record Size": '12"', "Speed": "33 RPM",
+         "Type": "LP"}) is None and D.not_lp_card(
+        {"Record Size": '10"', "Type": "LP"}) is None)
     check("180 г", D.junk_reason("Miles Davis Kind of Blue 180g LP") is not None)
     check("сборник", D.junk_reason("Jazz Greatest Hits Various LP") is not None)
     check("Hank Mobley Blue Note — не хлам",
@@ -294,6 +314,16 @@ def test_potok():
           got["jazz:0-40"] == 150 and len(took) == 150)
     check("отметка раздела сдвинулась на самый свежий лот",
           st["marks"]["jazz:0-40"] == jazz[0]["itemCreationDate"])
+    # Дата создания в будущем (25.10.2026: «2026-10-31T07:00:01») —
+    # отметка не уходит дальше начала прогона.
+    pages[(True, _flt(), 0)] = [_lot(7, "2099-10-31T07:00:01.000Z")] + jazz
+    st = {"marks": {"jazz:0-40": mark}, "bands": {"all": [0]}}
+    D.scan_stream(fetch, st, _flt, 40.0, _when(26 * 60),
+                  lambda it, src, ms: None, lambda w: None, 3, pause=0,
+                  log=lambda m: None)
+    check("лот «из будущего» не уводит отметку вперёд",
+          st["marks"]["jazz:0-40"] == jazz[0]["itemCreationDate"])
+    pages[(True, _flt(), 0)] = jazz
     # Весь винил: 10 тыс. лотов новее отметки — полоса делится надвое,
     # половины наследуют старую отметку.
     st = {"marks": {"jazz:0-40": _when(1), "all:0-40": mark},

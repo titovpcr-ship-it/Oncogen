@@ -35,6 +35,7 @@ import sys
 import time
 
 import requests
+import jcache                                                  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, "out")
@@ -119,11 +120,7 @@ class Discogs:
         return j
 
     def save(self):
-        os.makedirs(os.path.dirname(CACHE), exist_ok=True)
-        tmp = CACHE + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(self.db, f, ensure_ascii=False)
-        os.replace(tmp, CACHE)
+        jcache.save_merged(CACHE, self.db)
 
 
 # ВАЛЮТА. С токеном Discogs отдаёт цену в валюте АККАУНТА, а не в

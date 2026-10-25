@@ -220,6 +220,12 @@ def test_epokhi_etiketok():
     check("противоречие («Lexington» и «Liberty label») — объединение",
           (dm.era_of("Lexington labels? Liberty label", "blue note")
            or (0, 0))[:2] == (1951, 1970))
+    check("«Olive Green Label» — Prestige Berkeley 1971+",
+          (dm.era_of("John Coltrane - Lush Life - Reissue - Vinyl LP w/ "
+                     "Shrink - Olive Green Label", "prestige")
+           or (0, 0))[:2] == (1971, 1990))
+    check("«green vinyl» — не этикетка",
+          dm.era_of("Lush Life green vinyl", "prestige") is None)
     check("«ear» без мёртвой зоны — не улика",
           dm.era_of("easy on the ear, Blue Note classic", "blue note") is None)
     check("эпоха чужого лейбла не применяется",
@@ -463,6 +469,72 @@ def test_svodka_dnya():
           "осталось 4100" in line)
 
 
+def test_klubnye_izdaniya():
+    # «Night Train» (Discogs): клубные Capitol Record Club и BOMC — с тем
+    # же номером V6-8538; на фото калибровки — три лота из девяти.
+    night = [
+        V(1, 1963, "Verve Records", "V6-8538", "LP, Album, Stereo", 900),
+        V(2, 0, "Verve Records", "V6-8538, SW-90629",
+          "LP, Album, Club Edition, Stereo", 187),
+        V(3, 0, "Verve Records", "V6-8538, BOMC 70-5601",
+          "LP, Album, Club Edition, Stereo", 600),
+        V(4, 2022, "Verve Records", "V6-8538, VMP-123",
+          "LP, Album, Club Edition, Reissue", 2000),
+    ]
+    ev = ev_of("Oscar Peterson Trio Night Train LP Verve V6-8538 Stereo",
+               "V6-8538")
+    ids = {v["id"] for v in dm.plausible(night, ev)[0]}
+    check("старые клубные издания лоту возможны, подписка 2022 — нет",
+          ids == {1, 2, 3})
+    ev = ev_of("Oscar Peterson Night Train Vinyl Me Please club LP", "")
+    ids = {v["id"] for v in dm.plausible(night, ev)[0]}
+    check("«Vinyl Me Please» в заголовке — подписка возможна", 4 in ids)
+
+
+def test_pereizdaniya_drugikh_stran():
+    # Прогон 25.10.2026: пять ложных находок — европейские переиздания и
+    # переиздание на другом лейбле в той же обложке.
+    juju = [
+        V(1, 1973, "Strata-East", "SES 19735", "LP, Album, Stereo", 259),
+        V(2, 1973, "Strata-East", "SES 19735", "LP, Album, Stereo", 102),
+        V(3, 0, "Black Fire", "SES-19735", "LP, Album, Reissue", 581),
+        V(4, 1978, "Trio Records", "PA-1234", "LP, Album, Reissue", 50),
+    ]
+    ev = ev_of("JuJu A Message from Mozambique STRATA-EAST VINYL LP", "")
+    ev["family"] = "strata-east"
+    ids = {v["id"] for v in dm.plausible(juju, ev)[0]}
+    check("Black Fire без года — лоту «STRATA-EAST» возможен, чужой "
+          "старый пресс — нет", ids == {1, 2, 3})
+    green = [
+        V(1, 1961, "Blue Note", "BLP 4071", "LP, Album, Mono", 400),
+        V(2, 2015, "Music Matters Ltd.", "MMBST-84071", "LP, Album", 300),
+        V(3, 2013, "WaxTime", "771856", "LP, Album, Reissue", 200),
+    ]
+    ev = ev_of("Grant Green - Green Street - LP Vinyl - WaxTime Records", "")
+    ids = {v["id"] for v in dm.plausible(green, ev)[0]}
+    check("«WaxTime» в заголовке — только WaxTime, не Music Matters",
+          ids == {3})
+    ev = ev_of("Pharoah Sanders Izipho Zam LP RSD VG+", "")
+    vers = [V(1, 1973, "Strata-East", "SES-19733", "LP, Album", 300),
+            V(2, 2025, "Strata-East", "SES-19733-25LP",
+              "LP, Album, Record Store Day, Reissue", 400)]
+    ids = {v["id"] for v in dm.plausible(vers, ev)[0]}
+    check("«RSD» — издание Record Store Day", ids == {2})
+    ev = ev_of("Donald Byrd Byrd's Eye View LP Waxtime", "")
+    dm.plausible([V(1, 1956, "Transition", "TRLP J-4", "LP, Album", 100)],
+                 ev)
+    check("названное переиздание у Discogs не найдено — помечено",
+          ev.get("_label_miss") is True)
+    x = dm.expectation(FakeD({1: (450.0, 3)}),
+                       [V(1, 1956, "Transition", "TRLP J-4", "LP", 100)])
+    x["year_miss"] = True
+    check("год пресса не найден — не «надёжная», даже при поле $450",
+          dm.classify(x, 37.99) is None)
+    check("страна не названа и «US pressing» — разные случаи",
+          not ev_of("Byrd's Eye View LP", "")["country_said"]
+          and ev_of("Byrd's Eye View LP USA pressing", "")["country_said"])
+
+
 def main():
     for fn in [test_lush_life, test_uliki, test_nadezhnaya_i_ozhidanie,
                test_kartoteka, test_odnoimennyy_bez_nomera,
@@ -470,7 +542,8 @@ def main():
                test_nomer_drugoy_strany, test_svodka_dnya,
                test_vybrosy_pola, test_god_ne_nayden,
                test_tsvet_v_kartochke, test_popravka_po_foto,
-               test_otsenka_po_desyatiletiyam]:
+               test_otsenka_po_desyatiletiyam, test_klubnye_izdaniya,
+               test_pereizdaniya_drugikh_stran]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
