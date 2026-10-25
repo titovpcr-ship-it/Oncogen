@@ -545,6 +545,13 @@ def test_pereizdaniya_drugikh_stran():
                   V(2, 0, "Impulse!", "AS-9206", "LP, Album, Reissue", 58)], ev)
     check("год «2024» при изданиях без года — «год не найден», поиск дальше",
           ev.get("_year_miss") is True)
+    ev = ev_of("Lalo Schifrin Samba Para Dos Verve 1963 (EX)", "V-8543",
+               asp={"Country or Region of Manufacture": "Germany"})
+    check("страна только в карточке — слабая улика",
+          ev["country"] == "Germany" and ev["country_weak"])
+    ev = ev_of("Samba Para Dos Verve Germany pressing", "V-8543")
+    check("страна в заголовке — сильная",
+          ev["country"] == "Germany" and not ev["country_weak"])
     check("страна не названа и «US pressing» — разные случаи",
           not ev_of("Byrd's Eye View LP", "")["country_said"]
           and ev_of("Byrd's Eye View LP USA pressing", "")["country_said"])

@@ -160,7 +160,8 @@ _JUNK_ARTIST = re.compile(
     r"david\s*sanborn|grover\s*washington|kenny\s*rankin|"
     r"barbra\s*streisand|frank\s*sinatra|tony\s*bennett|"
     r"johnny\s*mathis|andy\s*williams|perry\s*como|dean\s*martin|"
-    r"nat\s*king\s*cole|bing\s*crosby|doris\s*day|patti\s*page)\b", re.I)
+    r"nat\s*king\s*cole|bing\s*crosby|doris\s*day|patti\s*page|"
+    r"jo\s*stafford)\b", re.I)
 _BUDGET = re.compile(
     r"\b(?:pickwick|crown\s*records|design\s*records|everest\s*(?:archive|records)|"
     r"mercury\s*wing|rca\s*camden|camden|harmony\s*records|"

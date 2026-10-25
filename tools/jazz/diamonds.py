@@ -287,7 +287,14 @@ def evidence(title, text, asp, catno, store=False):
         "mono": bool(re.search(r"\bmono\b", head)),
         "stereo": bool(re.search(r"\bstereo\b", head)),
         "japan": bool(re.search(r"\bjapan\w*\b|\bobi\b", head)),
-        "country": lot_country(head),
+        "country": (lot_country((title or "").lower()) if
+                    lot_country((title or "").lower()) != "US" else
+                    lot_country(head)),
+        # Страна только в характеристиках карточки — улика слабая:
+        # «Country or Region of Manufacture: Germany» у Lalo Schifrin
+        # V-8543, а на этикетке «Made in U.S.A.» (25.10.2026).
+        "country_weak": (lot_country((title or "").lower()) == "US"
+                         and lot_country(head) != "US"),
         "rpm45": bool(re.search(r"\b45\s*rpm\b", head)),
         "promo": bool(re.search(r"\bpromo\b|\bwhite\s*label\b|\bwlp\b|"
                                 r"\btest\s*press", head)),
@@ -1023,6 +1030,11 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
         vers = vc.get(master, country)
         if not vers:
             vers = vc.get(master, None)
+        elif ev["country_weak"]:
+            # Страна только из карточки: американские издания тоже.
+            ids = {v["id"] for v in vers}
+            vers = vers + [v for v in vc.get(master, "US") or []
+                           if v["id"] not in ids]
         elif not ev["country_said"]:
             # Страна не названа: американские издания, а современные (с
             # 1990) — любой страны. Переиздания джаза в основном европейские
@@ -1045,6 +1057,19 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     miss = bool(ev["core"]) and not any(catno_match(v["catno"], ev["core"])
                                         for v in eds)
     year_miss = ev["_year_miss"]
+    if year_miss and master and not miss and not ev["country_said"] and \
+            ev["year"] < IMPORT_FROM:
+        # Страна не названа, год старый и у американских изданий его нет:
+        # продавец назвал год записи или копирайта, а не пресса — «Jo
+        # Stafford … Columbia CL 6238 10" 1957» при американском CL 6238
+        # 1953 года уходил в канадское издание 1955-го (25.10.2026). Год
+        # не учитывается, чужие страны не ищутся.
+        y = ev["year"]
+        ev["year"], ev["_year_miss"] = None, False
+        eds, notes = plausible(vers, ev)
+        ev["year"] = y
+        notes = notes + [f"год {y} у американских изданий не найден — без него"]
+        year_miss = False
     if year_miss and master and not miss:
         # Года нет среди изданий страны лота — ищем во всех странах.
         ev["_year_miss"] = False
