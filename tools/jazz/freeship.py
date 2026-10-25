@@ -399,6 +399,11 @@ def appraise(H, d, vc, cards, z, a, drop, fresh=False):
     if m:
         drop(f"не LP по карточке: {m}")
         return None
+    if re.search(r"\bpolka\b", asp.get("Style") or "", re.I):
+        # «Maly Wladziu — Smutku Nie Ma» (Jay Jay Records) в разделе Jazz,
+        # «Style: Polka» в карточке (25.10.2026).
+        drop("не джаз по карточке: полька")
+        return None
     desc = " ".join((item.get("conditionDescription") or "",
                      item.get("desc") or ""))
     g, src = lot_grade(asp, t, desc)

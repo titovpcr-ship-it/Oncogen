@@ -42,6 +42,21 @@ def test_hlam_ne_otkryvaetsya():
         "The Oscar Peterson Trio - Night Train - Reissue - Vinyl LP Club "
         "Edition") is not None)
     check("OJC", D.junk_reason("Kenny Burrell Midnight Blue OJC LP") is not None)
+    # freeship 25.10.2026: карточка скопирована с другого объявления.
+    item = {"localizedAspects": [{"name": "Artist", "value": "Mary Lou Williams"},
+                                 {"name": "Release Title", "value": "Mary Lou"}]}
+    check("карточка о другой пластинке — лот не опознан", D.identity(
+        item, "33RPM Emarcy 36010 Billy Eckstine - I Surrender Dear, above "
+        "average V+E-", "") == (None, None))
+    check("…а у «Vintage Jazz LP Record» карточке верим", D.identity(
+        item, "Vintage Jazz LP Record", "") == ("Mary Lou Williams", "Mary Lou"))
+    item = {"localizedAspects": [{"name": "Artist", "value": "Artist"},
+                                 {"name": "Release Title", "value": "Title"}]}
+    check("заглушки «Artist»/«Title» — исполнитель из заголовка", D.identity(
+        item, "Charles Mingus - Tonight At Noon 1966 Mono Vinyl VG/VG",
+        "Charles Mingus")[0] == "Charles Mingus")
+    check("полька — лёгкий жанр",
+          D.junk_reason("Frankie Yankovic Polka Party LP") is not None)
     check("WaxTime и RSD — свежие переиздания", D.junk_reason(
         "Grant Green - Green Street -  LP Vinyl -  WaxTime Records")
         is not None and D.junk_reason(

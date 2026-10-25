@@ -161,7 +161,7 @@ _JUNK_ARTIST = re.compile(
     r"barbra\s*streisand|frank\s*sinatra|tony\s*bennett|"
     r"johnny\s*mathis|andy\s*williams|perry\s*como|dean\s*martin|"
     r"nat\s*king\s*cole|bing\s*crosby|doris\s*day|patti\s*page|"
-    r"jo\s*stafford)\b", re.I)
+    r"jo\s*stafford|polka)\b", re.I)
 _BUDGET = re.compile(
     r"\b(?:pickwick|crown\s*records|design\s*records|everest\s*(?:archive|records)|"
     r"mercury\s*wing|rca\s*camden|camden|harmony\s*records|"
@@ -525,12 +525,45 @@ def lot_year(asp, title, catno):
 
 
 # --- карточка ---------------------------------------------------------
+_GENERIC = re.compile(
+    r"^(?:\d+\s*rpm|\d+rpm|lp|lps|vinyl|record|records|album|jazz|vintage|"
+    r"original|orig|stereo|mono|press|pressing|used|vg|nm|ex|the|and|with|"
+    r"of|in|on|a|an|for|from|by|vol|volume|\d+|[a-z]{1,2}|"
+    # Заглушки вместо исполнителя и названия в карточках: «Artist: a»,
+    # «Artist», «Music», «Record», «0» (5 из 1 804 оценённых лотов).
+    r"artist|artists|title|music|sings|unknown|none|various)$", re.I)
+
+
+def _words(x):
+    return {w for w in re.findall(r"[a-z0-9']+", (x or "").lower())
+            if not _GENERIC.match(w)}
+
+
+def card_conflict(title, artist, album):
+    """Карточка о другой пластинке: ни одного слова исполнителя или
+    названия из характеристик нет в содержательном заголовке. «33RPM Emarcy
+    36010 Billy Eckstine - I Surrender Dear» с «Artist: Mary Lou Williams»,
+    «Release Title: Mary Lou» в карточке шёл по Mary Lou Williams
+    (freeship, 25.10.2026) — карточку скопировали с другого объявления.
+    Заголовок без своих слов («Vintage Jazz LP Record») — не повод."""
+    card = _words(artist) | _words(album)
+    own = _words(title) - _words(" ".join(q for q, _, _ in LABELS))
+    if len(own) < 3 or not card:
+        return False
+    return not card & _words(title)
+
+
 def identity(item, title, who):
     """Исполнитель и альбом для Discogs: из характеристик карточки, а
     без них — из заголовка («Artist - Album …»)."""
     asp = tp.aspects(item)
     artist = (asp.get("Artist") or "").split(",")[0].strip()
     album = (asp.get("Release Title") or asp.get("Album Name") or "").strip()
+    # Заглушка в карточке — как пусто: исполнитель и название из заголовка.
+    artist = artist if _words(artist) else ""
+    album = album if _words(album) else ""
+    if (artist or album) and card_conflict(title, artist, album):
+        return None, None
     if not artist and who:
         artist = who
     if not album:
