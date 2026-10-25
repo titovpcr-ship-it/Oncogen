@@ -137,13 +137,31 @@ $40 (пресс 1964); с «distributed by Fantasy» — только OJC 1984, 
 | лейбл | эпоха → годы |
 |---|---|
 | Blue Note | «767 Lexington» 1951-57 · «47 West 63rd» 1957-62 · «New York USA» 1962-66 · «a division of Liberty» 1966-70 · «United Artists» / «Liberty UA» 1970-76 · белая нота 1977-80-е · «ухо» и «P» Plastylite в мёртвой зоне — до 1967 |
-| Prestige | жёлто-чёрная «446 W. 50th St.» 1955-58 · жёлто-чёрная (стерео серебристая) «Bergenfield, N.J.» 1958-64 · синяя с трезубцем 1964-71 · «distributed by Fantasy» с 1971 |
+| Prestige | жёлто-чёрная «446 W. 50th St.» 1955-58 · жёлто-чёрная (стерео серебристая) «Bergenfield, N.J.» 1958-64 · синяя с трезубцем 1964-71 (адрес Bergenfield тоже!) · «distributed by Fantasy» с 1971 |
 | New Jazz | фиолетовая, Bergenfield 1958-65 |
 | Impulse! | оранжево-чёрная («Am-Par» 1961-63, «ABC-Paramount» 1963-66, «ABC Records» 1966-67) · чёрная с широким оранжево-красным ободом 1967-74 · зелёная «мишень» с 1974 · MCA |
 | Atlantic | чёрная 1955-58 · «мишень» 1958-59 · белый веер 1960-62 · чёрный веер 1962-66 · зелёно-красная «1841 Broadway» 1968-73 |
 | Columbia | шесть «глаз» 1955-62 · два «глаза», «360 Sound», «Guaranteed High Fidelity» 1962-70 · один «глаз» с 1970 |
 | Verve | «Verve Records, Inc.», «трубач» 1956-61 · чёрная с «T», «MGM Records» 1961-72 · Polydor с 1973 |
 | Riverside | «Bill Grauer Productions» 1955-64 · ABC 1965-69 |
+
+Приметы, по которым размечены 134 лота калибровки (как это выглядит на
+фото eBay):
+- Columbia: шесть «глаз» по бокам красной этикетки (1961-62 — ещё «CBS»
+  сверху) — оригинальная эпоха; «360 Sound» со стрелками и два «глаза» —
+  1962-70; надпись COLUMBIA по кругу обода — 1970-е (CS/PC); Columbia Jazz
+  Masterpieces CJ 4xxxx — 1987;
+- Impulse!: оранжево-чёрная «A Product of ABC-Paramount» — 1961-67;
+  чёрная с красным ободом и логотипом ABC — 1967-74; зелёная «мишень» abc
+  Impulse — с 1974; радуга MCA — 1980-е;
+- Blue Note: бело-синяя «Blue Note Records Inc • New York USA» — до
+  1966; «a division of Liberty» — 1966-70; синяя с белой «b» — UA 1970-х;
+  наклейка Classic Vinyl Series, Tone Poet — 2020-е; OBI и King GXK/GXF —
+  Япония конца 1970-х — 1980-х;
+- Prestige: синяя с серебряным трезубцем «Prestige Stereo» и адресом
+  Bergenfield, N.J. — 1964-71; салатовая с голубым трезубцем «Distributed
+  by Fantasy Records, Berkeley» — 1970-е; номер 7531 у «Soultrane» —
+  переиздание 1967 года под новым номером, не оригинал 7142.
 
 Две приметы одной пластинки сужают годы («Liberty label» и «ухо» — ранний
 Liberty 1966-67), противоречащие — объединяются.

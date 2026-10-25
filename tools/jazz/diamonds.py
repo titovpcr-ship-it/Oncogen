@@ -388,10 +388,18 @@ ERAS = {
                "«ухо» и «P» Plastylite в мёртвой зоне"),
     "pr-50th": ("prestige", (1955, 1958), r"\b(?:446\s*)?w(?:est)?\.?\s*50th\b",
                 True, "жёлто-чёрная «фейерверк», «446 W. 50th St., N.Y.C.»"),
+    # «Bergenfield, N.J.» — и на жёлто-чёрной 1958-64, и на синей с
+    # трезубцем 1964-71 (фото PRST 7326 при калибровке 25.10.2026): сам
+    # адрес — только 1958-71, «жёлтая»/«NJ label» — 1958-64.
     "pr-nj": ("prestige", (1958, 1964),
-              r"\bbergenfield\b|\b203\s*s(?:outh)?\.?\s*washington\b|"
+              r"\byellow\b.{0,30}\b(?:n\.?\s*j\b\.?|bergenfield)|"
+              r"\b(?:n\.?\s*j\b\.?|bergenfield)\b.{0,30}\byellow\b|"
               r"\bn\.?\s*j\.?\s*labels?\b", False,
               "жёлто-чёрная (стерео — серебристо-чёрная), «Bergenfield, N.J.»"),
+    "pr-bergenfield": ("prestige", (1958, 1971),
+                       r"\bbergenfield\b|\b203\s*s(?:outh)?\.?\s*washington\b",
+                       False, "адрес Bergenfield, N.J. — жёлтая 1958-64 и "
+                              "синяя с трезубцем 1964-71"),
     "pr-trident": ("prestige", (1964, 1971), r"\btrident\b", False,
                    "синяя с трезубцем"),
     "pr-fantasy": ("prestige", (1971, 1990),

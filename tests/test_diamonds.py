@@ -202,8 +202,17 @@ def test_epokhi_etiketok():
     check("«6 eye» — Columbia 1955-1962",
           (dm.era_of("Miles Davis Columbia 6 eye mono", "columbia")
            or (0, 0))[:2] == (1955, 1962))
-    check("New Jazz: фиолетовая и Bergenfield — пересечение 1958-1964",
+    check("New Jazz: фиолетовая и Bergenfield — пересечение 1958-1965",
           (dm.era_of("New Jazz purple label Bergenfield", "new jazz")
+           or (0, 0))[:2] == (1958, 1965))
+    check("«Bergenfield» без цвета — 1958-1971 (и на синей с трезубцем)",
+          (dm.era_of("Prestige PRST 7422 Bergenfield NJ address", "prestige")
+           or (0, 0))[:2] == (1958, 1971))
+    check("«Bergenfield» и «trident» — 1964-1971",
+          (dm.era_of("blue trident label, Bergenfield", "prestige")
+           or (0, 0))[:2] == (1964, 1971))
+    check("«yellow label … Bergenfield» — 1958-1964",
+          (dm.era_of("yellow label with Bergenfield address", "prestige")
            or (0, 0))[:2] == (1958, 1964))
     check("«Liberty label» и «ухо» в мёртвой зоне — 1966-1967",
           (dm.era_of("Blue Note Liberty label, ear in the dead wax",
