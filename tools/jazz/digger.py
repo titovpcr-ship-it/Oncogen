@@ -1254,7 +1254,7 @@ def _iso_shift(iso, seconds):
 
 
 def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
-                min_score, pause=0.15, log=None):
+                min_score, pause=0.15, log=None, streams=None):
     """Поток новых объявлений: по каждой ценовой полосе страницы «свежие
     первыми» до отметки прошлого прогона (с запасом 15 минут).
 
@@ -1262,15 +1262,15 @@ def scan_stream(fetch, state, make_flt, max_price, since, take, drop,
     ApiRefused. Отказ не двигает отметку полосы — недочитанное дочитается.
     Полоса, где 10 тыс. лотов не хватило до отметки, делится надвое, и
     половины наследуют старую отметку. Возвращает ({полоса: новых лотов},
-    число отказов)."""
+    число отказов). streams — свои полосы вместо STREAMS (freeship.py)."""
     log = log or (lambda m: print(m, file=sys.stderr))
     out, refused = {}, 0
     # Отметка — не позже начала прогона: у части объявлений eBay дата
     # создания в будущем (прогон 25.10.2026: «2026-10-31T07:00:01» у полос
     # $12-20 и $20-40 — следующий поток пропустил бы в них всё до 31-го).
     now = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
-    for name, aspect, need in STREAMS:
-        stored = state["bands"].get(name, DEFAULT_BANDS[name])
+    for name, aspect, need in streams or STREAMS:
+        stored = state["bands"].get(name, DEFAULT_BANDS.get(name, [0]))
         lows = [e for e in stored if e < max_price]
         edges = lows + [max_price]
         new_lows = list(lows)
