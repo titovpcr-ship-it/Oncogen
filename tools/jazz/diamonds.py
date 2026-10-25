@@ -562,7 +562,11 @@ def plausible(vers, ev):
         else:
             notes.append(f"номер {ev['core']} у Discogs не найден — без него")
     years = sorted({v["year"] for v in out if v["year"]})
-    if years and ev.get("year") and ev["year"] > years[0] + 2:
+    # Без единого года в наборе год продавца тоже проверяется: «Thembi …
+    # (2024)» с «Country of Origin: Germany» — у немецких изданий Discogs
+    # года нет, и лот шёл «надёжной» по ним ($56), а это Verve By Request
+    # 2024 года за $23 (25.10.2026).
+    if ev.get("year") and (not years or ev["year"] > years[0] + 2):
         # Год пресса позже оригинала — продавец назвал год переиздания:
         # «2014 Sonny Clark – Cool Struttin … BLP 1588» — это издание 2014
         # года ($20), а не оригинал 1958 ($1 348), который раздувал

@@ -539,6 +539,12 @@ def test_pereizdaniya_drugikh_stran():
                 asp={"Record Grading": "Very Good Plus (VG+)"})["used_grade"]
           and not ev_of("Byrd's Eye View LP (Near Mint (NM or M-))",
                         "")["used_grade"])
+    ev = ev_of("Pharoah Sanders - Thembi Vinyl Record (AS-9206) (2024) VG++",
+               "AS-9206")
+    dm.plausible([V(1, 0, "Impulse!", "AS-9206", "LP, Album, Reissue", 237),
+                  V(2, 0, "Impulse!", "AS-9206", "LP, Album, Reissue", 58)], ev)
+    check("год «2024» при изданиях без года — «год не найден», поиск дальше",
+          ev.get("_year_miss") is True)
     check("страна не названа и «US pressing» — разные случаи",
           not ev_of("Byrd's Eye View LP", "")["country_said"]
           and ev_of("Byrd's Eye View LP USA pressing", "")["country_said"])
