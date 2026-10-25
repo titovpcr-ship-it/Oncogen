@@ -325,10 +325,14 @@ def main():
                     help="сколько карточек открыть во втором заходе")
     ap.add_argument("--no-used", action="store_true",
                     help="только запечатанные")
+    ap.add_argument("--usd-rub", type=float, default=None,
+                    help="курс для Москвы вместо курса ЦБ дня (владелец "
+                         "25.10.2026: 95 ₽/$)")
     ap.add_argument("--tg", action="store_true")
     a = ap.parse_args()
 
-    rate, rate_date = rp.rub_rate()
+    rate, rate_date = ((a.usd_rub, "курс владельца") if a.usd_rub
+                       else rp.rub_rate())
     rows = load_catalog()
     token = ebay_token()
     H = {"Authorization": f"Bearer {token}",
@@ -535,7 +539,8 @@ def main():
             w.writeheader()
             w.writerows(flat)
 
-    head = (f"курс ЦБ {rate:.2f} ₽/$ ({rate_date}); Москва = лот + доставка "
+    head = (f"{'курс ЦБ' if not a.usd_rub else 'курс'} {rate:.2f} ₽/$ "
+            f"({rate_date}); Москва = лот + доставка "
             f"по США + ${FWD_PER_DISC:.0f} за пластинку; потолок "
             f"${a.max_price:.0f} без доставки, только США")
     blocks = [render(g) for g in order]
