@@ -178,7 +178,11 @@ def collect(a):
             continue
         surname = artist.split()[-1].lower()
         got, sellers = 0, set()
-        for it in j.get("itemSummaries") or []:
+        # «Наивные» продавцы (меньше 100 отзывов) — первыми: для них
+        # поправка подгоняется отдельно, а в выдаче их мало.
+        items = sorted(j.get("itemSummaries") or [], key=lambda it: (
+            ((it.get("seller") or {}).get("feedbackScore") or 0) >= 100))
+        for it in items:
             t = it.get("title") or ""
             se = (it.get("seller") or {}).get("username") or ""
             if surname not in t.lower() or not cs.album_matches(
@@ -436,7 +440,7 @@ def main():
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("collect")
     c.add_argument("--albums", default=None, help="«1-18»")
-    c.add_argument("--per-album", type=int, default=10)
+    c.add_argument("--per-album", type=int, default=12)
     c.add_argument("--max-price", type=float, default=40.0)
     p = sub.add_parser("predict")
     p.add_argument("--again", action="store_true")
