@@ -388,6 +388,50 @@ def test_tsvet_v_kartochke():
           [v["id"] for v in eds] == [2])
 
 
+def test_popravka_po_foto():
+    # Калибровка 25.10.2026 (data/calib): среди дешёвых лотов дорогие
+    # издания реже, чем по коллекциям, а у молчащего заголовка почти нет
+    # современных переизданий.
+    cp = dict(dm.CALIB_DEFAULT, gamma=1.0, gamma_naive=0.5, c=1.0,
+              k_modern=0.2, modern_from=1985)
+    v = {"have": 1000, "floor": 100.0, "year": 1961}
+    check("без цены вес — копии в коллекциях", dm.lot_weight(v, cp=cp) == 1000)
+    check("лот за $10, пол $100: вес ×0.1",
+          abs(dm.lot_weight(v, 10.0, cp=cp) - 100) < 0.01)
+    check("у «наивного» продавца отбор по цене слабее (×0.32)",
+          abs(dm.lot_weight(v, 10.0, naive=True, cp=cp) - 316.2) < 0.1)
+    m = {"have": 1000, "floor": 8.0, "year": 2011}
+    check("молчащий заголовок: издание 2011 года ×0.2",
+          dm.lot_weight(m, 10.0, silent=True, cp=cp) == 200)
+    eds = [e for e in LUSH if e["id"] in (1, 2, 4, 6)]
+    old_cal = dm._CALIB
+    dm._CALIB = cp
+    try:
+        x = dm.expectation(FakeD(FLOORS), eds, price=10.5, silent=True)
+    finally:
+        dm._CALIB = old_cal
+    o = next(v for v in x["parts"] if v["id"] == 1)
+    check("«Lush Life» за $10.50: доля оригинала с поправкой ниже сырой",
+          o["p"] < o["p_raw"] and 0.05 < o["p"] < 0.2)
+    check("…сырое ожидание сохраняется рядом", x["ev_raw"] > x["ev"])
+
+
+def test_otsenka_po_desyatiletiyam():
+    vers = [V(1, 1960, "Blue Note", "BLP 4031", "LP, Album, Mono", 900, 900),
+            V(2, 1968, "Blue Note", "BST 84031", "LP, Album, Reissue", 30),
+            V(3, 1975, "Blue Note", "BST 84031", "LP, Album, Reissue", 40),
+            V(4, 2014, "Blue Note", "BST 84031", "LP, Album, Reissue", 2000),
+            V(5, 2015, "Blue Note", "BST 84031", "LP, Album, Reissue", 1500)]
+    d = FakeD({1: (1250.0, 6), 2: (60.0, 3), 3: (25.0, 7), 4: (20.0, 30),
+               5: (22.0, 20)})
+    x = dm.expectation(d, vers, max_priced=3)
+    ids = {v["id"]: v for v in x["parts"]}
+    check("редкие переиздания 1968 и 1975 годов — в раскладе",
+          2 in ids and 3 in ids)
+    check("…и оценены, а не выпали",
+          not ids[2].get("imputed") and ids[3]["floor"] == 25.0)
+
+
 def test_svodka_dnya():
     import json
     import tempfile
@@ -416,7 +460,8 @@ def main():
                test_epokhi_etiketok, test_tsvetnoy_vinil,
                test_nomer_drugoy_strany, test_svodka_dnya,
                test_vybrosy_pola, test_god_ne_nayden,
-               test_tsvet_v_kartochke]:
+               test_tsvet_v_kartochke, test_popravka_po_foto,
+               test_otsenka_po_desyatiletiyam]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

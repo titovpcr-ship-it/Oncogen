@@ -32,6 +32,9 @@ def test_hlam_ne_otkryvaetsya():
     check("лот из 10 пластинок",
           D.junk_reason("Jazz LP Lot of 10 records") is not None)
     check("78 rpm", D.junk_reason("Pharoah Sanders Karma Impulse 78 rpm") is not None)
+    check("сингл «Parts 1 & 2» (Blue Note 1911)", D.junk_reason(
+        "The Sidewinder Parts 1 & 2 by Lee Morgan (Blue Note 1911) VG")
+        is not None)
     check("OJC", D.junk_reason("Kenny Burrell Midnight Blue OJC LP") is not None)
     check("180 г", D.junk_reason("Miles Davis Kind of Blue 180g LP") is not None)
     check("сборник", D.junk_reason("Jazz Greatest Hits Various LP") is not None)

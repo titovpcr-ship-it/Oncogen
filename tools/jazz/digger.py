@@ -176,6 +176,8 @@ _NEW_REISSUE = re.compile(
     r"\bmusic\s*matters\b|\bby\s*request\b|\bclassic\s*vinyl\s*series\b|"
     r"\b20[12]\d\s*(?:press|reissue|edition|release)\b|\bsealed\b", re.I)
 _NOT_LP = re.compile(r"\b78\s*rpm\b|\b78s?\b|\b45\s*rpm\b|\b7\s*(?:\"|inch|in\b)"
+                     r"|\bparts?\s*(?:1|one|i)\s*(?:&|and|/)\s*(?:2|two|ii)\b"
+                     r"|\b45\s+(?:dot|single|record)\b"
                      r"|\blot\s*of\b|\b\d+\s*(?:lps|records|albums)\b|"
                      r"\bcassette\b|\bcd\b|\b8[\s-]*track\b|\breel\b", re.I)
 # Что пишет знающий продавец о раннем прессе — плюс к приоритету.
@@ -1377,7 +1379,8 @@ def ev_find(d, vc, z, a, fresh=False):
     se = it.get("seller") or {}
     x = dm.assess(d, vc, z["artist"], z["album"], z["catno"],
                   it.get("title") or "", z["text"], z["asp"], fresh=fresh,
-                  seller=se.get("username") or "", fb=se.get("feedbackScore"))
+                  seller=se.get("username") or "", fb=se.get("feedbackScore"),
+                  price=z["price"])
     if not x:
         return None
     ask = z["price"]

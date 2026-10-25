@@ -516,6 +516,7 @@ def plausible(vers, ev):
             if near:
                 out = near
                 notes.append(f"год пресса {ev['year']}")
+                ev["_narrowed"] = True
                 break
         else:
             # Такого года у Discogs нет: «1978 Blue Note Japan» при японских
@@ -538,11 +539,13 @@ def plausible(vers, ev):
         if modern:
             out = modern
             notes.append("цветной винил — прессы с 1995")
+            ev["_narrowed"] = True
     if ev.get("store") and not ev["first"] and not ev.get("era"):
         modern = [v for v in out if v["year"] >= 1990]
         if modern:
             out = modern
             notes.append("крупный магазин — прессы с 1990")
+            ev["_narrowed"] = True
     years = sorted({v["year"] for v in out if v["year"]})
     era = ev.get("era")
     if era:
@@ -552,6 +555,7 @@ def plausible(vers, ev):
         if near:
             out = near
             notes.append(f"этикетка {'/'.join(keys)}: {lo}-{hi}")
+            ev["_narrowed"] = True
             return out, notes
         notes.append(f"этикетка {'/'.join(keys)} ({lo}-{hi}): таких изданий "
                      "у Discogs нет — без неё")
@@ -560,11 +564,13 @@ def plausible(vers, ev):
         if ev["reissue"] and len(years) > 1:
             out = [v for v in out if v["year"] != first]
             notes.append("переиздание — без оригинала")
+            ev["_narrowed"] = True
         elif ev["first"]:
             early = [v for v in out if v["year"] and v["year"] <= first + 3]
             if early:
                 out = early
                 notes.append("ранний пресс со слов продавца")
+                ev["_narrowed"] = True
     return out, notes
 
 
@@ -580,8 +586,50 @@ def floor(d, rid, fresh=False):
         return None, 0
 
 
-def expectation(d, eds, max_priced=8, fresh=False):
-    """Расклад изданий лота с полами Discogs: ожидание и худший случай."""
+# --- поправка долей по фото (калибровка 25.10.2026) ------------------------
+# Доли изданий по копиям в коллекциях Discogs сверены с этикетками на фото
+# дешёвых б/у лотов eBay (tools/jazz/calibrate.py, data/calib): среди лотов
+# до $40 дорогие издания встречаются реже, чем по коллекциям, — знающий
+# продавец не отдаст оригинал за $40, — а у молчащего заголовка почти нет
+# современных переизданий: их продавец пишет год. Поправка: вес издания =
+# копии в коллекциях × min(1, c·цена/пол)^γ (у «наивного» продавца — γ_naive)
+# × k_modern для изданий с modern_from года, если заголовок о прессе молчит.
+CALIB_PATH = os.path.join(ROOT, "data", "calib", "fit.json")
+CALIB_DEFAULT = {"gamma": 1.0, "c": 1.0, "gamma_naive": 0.5, "naive_fb": 100,
+                 "k_modern": 0.2, "modern_from": 1985}
+_CALIB = None
+
+
+def calib():
+    global _CALIB
+    if _CALIB is None:
+        _CALIB = dict(CALIB_DEFAULT)
+        try:
+            with open(CALIB_PATH, encoding="utf-8") as f:
+                _CALIB.update(json.load(f).get("params") or {})
+        except (OSError, ValueError):
+            pass
+    return _CALIB
+
+
+def lot_weight(v, price=None, silent=False, naive=False, cp=None):
+    """Вес издания в раскладе лота (см. выше); без цены — копии в
+    коллекциях как есть."""
+    cp = cp or calib()
+    w = float(max(v.get("have") or 0, 1))
+    if price and v.get("floor"):
+        g = cp["gamma_naive"] if naive else cp["gamma"]
+        w *= min(1.0, cp["c"] * price / v["floor"]) ** g
+    if silent and (not v.get("year") or v["year"] >= cp["modern_from"]):
+        w *= cp["k_modern"]
+    return w
+
+
+def expectation(d, eds, max_priced=8, fresh=False, price=None, silent=False,
+                naive=False):
+    """Расклад изданий лота с полами Discogs: ожидание и худший случай.
+    С ценой лота доли поправлены по калибровке (lot_weight); «p_raw» —
+    доля по копиям в коллекциях как есть."""
     if not eds:
         return None
     total = sum(max(v["have"], 1) for v in eds)
@@ -596,18 +644,52 @@ def expectation(d, eds, max_priced=8, fresh=False):
     star = max(eds, key=lambda v: v["want"])
     if star not in pick:
         pick.append(star)
-    priced = []
-    for v in pick:
-        fl, n = floor(d, v["id"], fresh=fresh)
-        if fl is not None and n:
-            priced.append(dict(v, floor=fl, copies=n))
+    # И самое частое издание каждого десятилетия: переиздания Liberty и UA
+    # редки в коллекциях Discogs, но по фото дешёвых лотов eBay это 80%
+    # «молчащих» лотов Blue Note (калибровка 25.10.2026).
+    first = min((v["year"] for v in eds if v["year"]), default=0)
+    by_dec = {}
+    for v in order:
+        # Издания года оригинала — отдельно от остальных того десятилетия:
+        # переиздание 1964 года у оригинала 1961-го — своя ступень.
+        y = v["year"]
+        by_dec.setdefault("first" if y and y <= first + 1 else
+                          (y // 10 if y else -1), v)
+    for v in by_dec.values():
+        if v not in pick and len(pick) < max_priced + 5:
+            pick.append(v)
+    priced, unpriced = [], []
+    for v in eds:
+        if v in pick:
+            fl, n = floor(d, v["id"], fresh=fresh)
+            if fl is not None and n:
+                priced.append(dict(v, floor=fl, copies=n))
+                continue
+        unpriced.append(v)
     if not priced:
         return None
+    # Неоценённым изданиям — пол ближайшего по году оценённого (копий в
+    # продаже 0: шанс на дорогой пресс на них не опирается). Переизданию
+    # пол оригинала не приписывается — берётся ближайшее переиздание.
+    base = list(priced)
+    for v in unpriced:
+        pool = [u for u in base if u["year"] != first] \
+            if v["year"] != first else []
+        near = min(pool or base, key=lambda u: (abs((u["year"] or 2100)
+                                                    - (v["year"] or 2100)),
+                                                u["floor"]))
+        priced.append(dict(v, floor=near["floor"], copies=0, imputed=True))
     w = sum(max(v["have"], 1) for v in priced)
     for v in priced:
-        v["p"] = max(v["have"], 1) / w
+        v["p_raw"] = max(v["have"], 1) / w
+    ws = [lot_weight(v, price, silent, naive) for v in priced]
+    tw = sum(ws) or 1.0
+    for v, wi in zip(priced, ws):
+        v["p"] = wi / tw
     x = {"parts": sorted(priced, key=lambda v: -v["p"]),
-         "coverage": round(sum(max(v["have"], 1) for v in priced) / total, 2),
+         "calibrated": bool(price or silent),
+         "coverage": round(sum(max(v["have"], 1) for v in priced
+                               if not v.get("imputed")) / total, 2),
          "n": len(eds)}
     return _summarize(x)
 
@@ -617,6 +699,8 @@ def _summarize(x):
     parts = x["parts"]
     common = [v for v in parts if v["p"] >= 0.05] or parts
     x["ev"] = round(sum(v["p"] * v["floor"] for v in parts), 2)
+    x["ev_raw"] = round(sum(v.get("p_raw", v["p"]) * v["floor"]
+                            for v in parts), 2)
     x["low"] = min(v["floor"] for v in common)
     x["up"] = max((v for v in parts if v["copies"] >= 2 and v["p"] >= 0.02),
                   key=lambda v: v["floor"], default=None)
@@ -846,7 +930,7 @@ def find_master(d, artist, album, catno=None, target=None, fam=None):
 
 
 def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
-           seller="", fb=None, era=None):
+           seller="", fb=None, era=None, price=None):
     """Полная оценка лота как ставки; None, если альбома нет на Discogs.
     era — (с, по, [ключи]) эпохи этикетки по фото (проверка глазами);
     без неё эпоха берётся из слов продавца, если они есть."""
@@ -874,6 +958,7 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     else:
         vers = [slim_search(r) for r in rel]
     ev["_year_miss"] = False
+    ev["_narrowed"] = False
     eds, notes = plausible(vers, ev)
     miss = bool(ev["core"]) and not any(catno_match(v["catno"], ev["core"])
                                         for v in eds)
@@ -897,7 +982,9 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
             notes = alt_notes + [f"номер {ev['core']} — издание "
                                  f"{'/'.join(sorted({v['country'] for v in hit}))}"]
             miss = False
-    x = expectation(d, eds, fresh=fresh)
+    naive = fb is not None and fb < calib()["naive_fb"]
+    x = expectation(d, eds, fresh=fresh, price=price,
+                    silent=not ev["_narrowed"], naive=naive)
     if not x:
         return None
     x = cap_outliers(d, x, vers, fresh=fresh)
@@ -1010,10 +1097,11 @@ def main():
     vc = Versions(d)
     era = era_range(a.era, a.years)
     fb = row.get("fb")
+    ask = float(row.get("ask") or row.get("price") or 0) or None
     x = assess(d, vc, row["artist"], row["album"], row.get("catno") or "",
                title, text, asp, fresh=True, seller=row.get("seller") or "",
                fb=int(float(fb)) if fb not in (None, "", "None") else None,
-               era=era)
+               era=era, price=ask)
     d.save()
     vc.save()
     if not x:

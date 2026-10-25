@@ -222,11 +222,15 @@ def album_matches(lot_title, discogs_title):
     Сверяем слова названия альбома: нужна хотя бы половина значимых.
     """
     album = discogs_title.split(" - ", 1)[-1]
-    words = [w for w in re.findall(r"[a-z0-9']{3,}", album.lower())
+    # Апостроф не часть слова: «Moanin'» и «Moanin», «Somethin’ Else» и
+    # «Somethin Else» — одно название (калибровка 25.10.2026: «Moanin'» и
+    # «Cookin'» не находили ни одного лота).
+    album = re.sub(r"['’`]", "", album.lower())
+    words = [w for w in re.findall(r"[a-z0-9]{3,}", album)
              if w not in _STOP]
     if not words:
         return True
-    low = lot_title.lower()
+    low = re.sub(r"['’`]", "", lot_title.lower())
     hit = sum(1 for w in words if re.search(rf"\b{re.escape(w)}\b", low))
     return hit * 2 >= len(words)
 
