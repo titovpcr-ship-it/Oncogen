@@ -70,6 +70,15 @@ JAZZ = f"categoryId:{hunt.CATEGORY},Genre:{{Jazz}}"
 # Полосы цены раздела Jazz: у eBay не больше 10 тыс. лотов на запрос.
 BANDS = (0.0, 5.0)
 FWD = 11.0                       # пересылка в Москву за пластинку, как в ruspop
+# Курс владельца (25.10.2026: «Курс взять 95 рублей за доллар и 110 за
+# евро»): цены Discogs по состоянию приходят в валюте продавца аккаунта, а
+# Москва считается в рублях.
+USD_RUB, EUR_RUB = 95.0, 110.0
+TO_USD = {"USD": 1.0, "EUR": EUR_RUB / USD_RUB}
+SUGGEST = "https://api.discogs.com/marketplace/price_suggestions/{}"
+SUGGEST_KEY = {"NM": "Near Mint (NM or M-)", "VG+": "Very Good Plus (VG+)",
+               "VG": "Very Good (VG)", "G+": "Good Plus (G+)",
+               "G": "Good (G)", "F": "Fair (F)", "P": "Poor (P)"}
 
 # --- оценка состояния по шкале Discogs ---------------------------------------
 # От лучшего к худшему; Mint у б/у пластинки считается NM.
@@ -161,9 +170,74 @@ def grade_filter(values):
     return JAZZ + ",Record Grading:{" + "|".join(values) + "}"
 
 
-def verdict(x, price, a):
-    """Группа лота по раскладу Discogs (diamonds.classify) или None."""
+def verdict(x, price, a, cond=None):
+    """Группа лота или None. Есть цены Discogs по состоянию лота (не меньше
+    60% расклада) — по ним: «по состоянию», если даже самое дешёвое из
+    частых изданий в этом состоянии стоит от порога. Нет — по полу
+    (diamonds.classify)."""
+    if cond and cond["cover"] >= 0.6 and cond["low"] is not None:
+        ok = cond["low"] >= max(a.min_floor, a.min_gap * price)
+        return "по состоянию" if ok else None
     return dm.classify(x, price, a.min_floor, a.min_gap, a.up_mult, a.p_min)
+
+
+def to_usd(v):
+    """{"currency": "EUR", "value": 12.0} → доллары по курсу владельца."""
+    try:
+        return round(float(v["value"]) * TO_USD[v["currency"]], 2)
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+class Suggest:
+    """Цена Discogs для состояния лота (marketplace/price_suggestions — по
+    продажам релиза, в валюте продавца аккаунта). Discogs отдаёт её только
+    аккаунту с заполненной анкетой продавца, иначе 404 «You must fill out
+    your seller settings first» (25.10.2026) — тогда сравнение по полу."""
+    PROBE = 1                     # любой релиз: проверка доступа, один запрос
+
+    def __init__(self, d):
+        self.d, self.off = d, None
+
+    def probe(self):
+        import requests
+        import series
+        try:
+            r = requests.get(SUGGEST.format(self.PROBE), timeout=30, headers={
+                "User-Agent": series.UA,
+                "Authorization": f"Discogs token={self.d.token}"})
+        except requests.RequestException as e:
+            self.off = type(e).__name__
+            return self.off
+        if r.status_code != 200:
+            try:
+                self.off = r.json().get("message") or f"HTTP {r.status_code}"
+            except ValueError:
+                self.off = f"HTTP {r.status_code}"
+        return self.off
+
+    def price(self, rid, grade, fresh=False):
+        if self.off or not rid:
+            return None
+        url = SUGGEST.format(rid)
+        if fresh:
+            self.d.db.pop(url, None)
+        return to_usd((self.d.get(url) or {}).get(SUGGEST_KEY[grade]))
+
+
+def by_condition(x, grade, sug, fresh=False, k=5):
+    """Цены Discogs для оценки лота по раскладу изданий: худший случай
+    среди частых изданий, ожидание и доля расклада, у которой цена есть;
+    None — цен нет."""
+    parts = [v for v in x["parts"] if v["p"] >= 0.05][:k] or x["parts"][:1]
+    got = [(v, sug.price(v.get("id"), grade, fresh)) for v in parts]
+    got = [(v, c) for v, c in got if c]
+    if not got:
+        return None
+    mass = sum(v["p"] for v, _ in got)
+    return {"low": min(c for _, c in got),
+            "ev": round(sum(v["p"] * c for v, c in got) / mass, 2),
+            "cover": round(mass, 2)}
 
 
 # --- просмотренные ------------------------------------------------------------
@@ -190,6 +264,12 @@ def run(a):
          "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
     d = cs.D(tg._env_file_token())
     vc = dm.Versions(d)
+    sug = Suggest(d)
+    if sug.probe():
+        print(f"цены Discogs по состоянию недоступны: {sug.off} — сравнение "
+              f"по полу (анкета продавца: discogs.com/settings/seller)",
+              file=sys.stderr)
+    a.sug = sug
     cards = load_json(tp.fx.CARDS, {})
     seen_db = load_json(SEEN, {})
     state = load_json(STATE, {"marks": {}, "bands": {}})
@@ -351,7 +431,8 @@ def run(a):
         f["sheet"] = D.photo_sheet(H, f["id"], out_dir=PHOTOS) or ""
     for f in appraised:
         f.pop("_z", None)
-    finds.sort(key=lambda f: (-f["low"] / max(f["price"], 0.01)))
+    finds.sort(key=lambda f: (-(f["cond_low"] or f["low"])
+                              / max(f["price"], 0.01)))
     stamp = time.strftime("%Y-%m-%d_%H%M%S")
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"freeship_{stamp}.csv")
@@ -444,7 +525,9 @@ def appraise(H, d, vc, cards, z, a, drop, fresh=False):
         drop("нет на Discogs")
         return None
     p = z["price"]
-    grp = verdict(x, p, a)
+    sug = getattr(a, "sug", None)
+    cond = by_condition(x, g, sug, fresh) if sug else None
+    grp = verdict(x, p, a, cond)
     common = [v for v in x["parts"] if v["p"] >= 0.05] or x["parts"]
     worst = min(common, key=lambda v: v["floor"])
     import ruspop as rp
@@ -455,6 +538,10 @@ def appraise(H, d, vc, cards, z, a, drop, fresh=False):
             "sleeve": sleeve or (asp.get("Sleeve Grading") or ""),
             "low": x["low"], "ev": x["ev"],
             "gap": round(x["low"] / p, 1) if p else 0,
+            "cond_low": cond["low"] if cond else "",
+            "cond_ev": cond["ev"] if cond else "",
+            "cond_cover": cond["cover"] if cond else "",
+            "cond_gap": round(cond["low"] / p, 1) if cond and p else "",
             "worst": f"{worst['year'] or '—'} {worst['label']} "
                      f"{worst['catno'][:20]}",
             "worst_copies": worst.get("copies", 0),
@@ -466,7 +553,10 @@ def appraise(H, d, vc, cards, z, a, drop, fresh=False):
 
 
 NOTE = ("Пол Discogs — самый дешёвый ЗАПРОС за любое состояние (обычно копия "
-        "хуже VG+), не сделка; доставку на Discogs платит покупатель. "
+        "хуже VG+), не сделка; доставку на Discogs платит покупатель. Цена "
+        "по состоянию — подсказка Discogs по продажам релиза, в долларах по "
+        "курсу 95 ₽/$ и 110 ₽/€; «по состоянию» — даже самое дешёвое из "
+        "частых изданий в состоянии лота от порога. "
         "«надёжная» — даже самое дешёвое из частых изданий от порога; "
         "«алмаз» — без потерь в худшем случае и с шансом на дорогой пресс; "
         "«ожидание» — средняя цена изданий от порога.")
@@ -479,7 +569,12 @@ def render(f):
         f"[{f['kind']}]  {f['artist']} — {f['album']}",
         f"   {f['title'][:95]}",
         f"   пластинка {f['grade']} ({f['grade_src']}){sl}",
-        f"   Discogs: худший случай ${f['low']:.0f} ({f['gap']}x) — "
+        *([f"   Discogs за {f['grade']}: от ${f['cond_low']:.0f} "
+           f"({f['cond_gap']}x), в среднем ${f['cond_ev']:.0f} (цены по "
+           f"состоянию — у {f['cond_cover'] * 100:.0f}% расклада)"]
+          if f.get("cond_low") != "" and f.get("cond_low") is not None
+          else []),
+        f"   Discogs, пол: худший случай ${f['low']:.0f} ({f['gap']}x) — "
         f"{f['worst']}, в продаже {f['worst_copies']}; ожидание "
         f"${f['ev']:.0f}",
         f"   расклад: {f['parts']}",
@@ -488,11 +583,6 @@ def render(f):
 
 
 # --- сводка в Telegram ----------------------------------------------------------
-def latest(pattern):
-    files = glob.glob(os.path.join(OUT, pattern))
-    return max(files, key=os.path.getmtime) if files else None
-
-
 def report(a):
     """Сводка прогонов дня и проверенные глазами находки (--ids)."""
     runs = []
@@ -507,13 +597,19 @@ def report(a):
              f"модели {s('finds')}" if runs else "прогонов за день нет")
     rows = []
     if a.ids:
-        path = latest("freeship_2*.csv")
+        # Находки всех прогонов, свежие первыми: лот мог быть найден не в
+        # последнем.
         want = {str(x).split("|")[1] if "|" in str(x) else str(x)
                 for x in a.ids}
-        if path:
+        got = {}
+        for path in sorted(glob.glob(os.path.join(OUT, "freeship_2*.csv")),
+                           key=os.path.getmtime, reverse=True):
             with open(path, encoding="utf-8") as fh:
-                rows = [r for r in csv.DictReader(fh)
-                        if r["id"].split("|")[1] in want]
+                for r in csv.DictReader(fh):
+                    n = r["id"].split("|")[1]
+                    if n in want and n not in got:
+                        got[n] = r
+        rows = list(got.values())
     day = time.strftime("%d.%m.%Y")
     head = (f"<b>Бесплатная доставка — б/у джаз до $10, {day}: "
             f"{len(rows) if rows else 'проверенных находок нет'}"
@@ -523,22 +619,24 @@ def report(a):
         head += "\n" + html.escape(a.note)
     blocks = []
     if rows:
-        import ruspop as rp
-        rate, rate_date = rp.rub_rate()
-        head += (f"\nкурс ЦБ {rate:.2f} ({rate_date}); Москва = лот + "
+        rate = USD_RUB
+        head += (f"\nкурс владельца {USD_RUB:.0f} ₽/$; Москва = лот + "
                  f"${FWD:.0f} пересылки за пластинку")
         for r in rows:
             price = float(r["price"])
             moscow = round((price + FWD * int(r.get("discs") or 1)) * rate)
             e = html.escape
+            ms = f"{moscow:,}".replace(",", " ")
+            sl = f" / конверт {e(r['sleeve'])}" if r.get("sleeve") else ""
+            cond = (f"\n   Discogs за {e(r['grade'])}: от "
+                    f"${float(r['cond_low']):.0f} ({e(r['cond_gap'])}x цены)"
+                    if r.get("cond_low") else "")
             blocks.append(
-                f"<b>{e(r['artist'])} — {e(r['album'])}</b> "
-                f"[{e(r['group'])}]\n"
+                f"<b>{e(r['artist'])} — {e(r['album'])}</b> [{e(r['group'])}]\n"
                 f"   ${price:.2f}, доставка бесплатно ({e(r['kind'])}); "
-                f"Москва ~{moscow:,} ₽".replace(",", " ") + "\n"
-                f"   пластинка {e(r['grade'])}"
-                f"{' / конверт ' + e(r['sleeve']) if r.get('sleeve') else ''}"
-                f"\n   Discogs: от ${float(r['low']):.0f} "
+                f"Москва ~{ms} ₽\n"
+                f"   пластинка {e(r['grade'])}{sl}{cond}\n"
+                f"   Discogs, пол: от ${float(r['low']):.0f} "
                 f"({e(r['gap'])}x цены) — {e(r['worst'])}\n"
                 f"   {e(r['url'])}")
     tail = ("Пол Discogs — запрос за любое состояние, не сделка; на Discogs "

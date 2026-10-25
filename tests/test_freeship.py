@@ -113,9 +113,46 @@ def test_tsena_po_discogs():
           F.verdict(x, 9.99, a) == "надёжная")
 
 
+class FakeSug:
+    def __init__(self, prices):
+        self.prices = prices
+
+    def price(self, rid, grade, fresh=False):
+        return self.prices.get((rid, grade))
+
+
+def test_tsena_po_sostoyaniyu():
+    # Курс владельца 25.10.2026: 95 ₽/$ и 110 ₽/€.
+    check("€10 → $11.58 (110/95), $10 → $10",
+          F.to_usd({"currency": "EUR", "value": 10}) == 11.58
+          and F.to_usd({"currency": "USD", "value": "10.0"}) == 10.0)
+    check("неизвестная валюта и пусто — нет цены",
+          F.to_usd({"currency": "GBP", "value": 10}) is None
+          and F.to_usd(None) is None)
+    a = argparse.Namespace(min_floor=15.0, min_gap=2.0, up_mult=4.0,
+                           p_min=0.05)
+    vers = [V(1, 1962, "Verve Records", "V6-8474", "LP, Album, Stereo", 600),
+            V(2, 1970, "Verve Records", "V6-8474", "LP, Album, Reissue", 200)]
+    x = dm.expectation(FakeD({1: (12.0, 30), 2: (11.0, 8)}), vers, price=9.99)
+    cond = F.by_condition(x, "VG+", FakeSug({(1, "VG+"): 26.0,
+                                             (2, "VG+"): 22.0}))
+    check("цены за VG+ у обоих изданий: худший $22, вся доля расклада",
+          cond["low"] == 22.0 and cond["cover"] == 1.0)
+    check("пол $11, но за VG+ от $22 — «по состоянию» при цене $9.99",
+          F.verdict(x, 9.99, a, cond) == "по состоянию"
+          and F.verdict(x, 9.99, a) is None)
+    cond = F.by_condition(x, "VG+", FakeSug({(1, "VG+"): 26.0}))
+    check("цена по состоянию у малой доли расклада — решает пол",
+          cond["cover"] < 0.9 and F.verdict(x, 9.99, a, dict(cond, cover=0.4))
+          is None)
+    check("цен по состоянию нет — None",
+          F.by_condition(x, "VG+", FakeSug({})) is None)
+
+
 def main():
     for fn in [test_otsenka_po_shkale_discogs, test_otsenka_v_tekste,
-               test_dostavka_i_filtr, test_tsena_po_discogs]:
+               test_dostavka_i_filtr, test_tsena_po_discogs,
+               test_tsena_po_sostoyaniyu]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
