@@ -381,6 +381,10 @@ def test_tsvet_v_kartochke():
           dm.asp_color({"Color": "Blue"}, "John Coltrane", "A Love Supreme"))
     check("«Color: Blue» у «Kind of Blue» — слово названия, не цвет",
           not dm.asp_color({"Color": "Blue"}, "Miles Davis", "Kind of Blue"))
+    check("«Color: Blue» при «Blue Note» в заголовке — обложка, не винил",
+          not dm.asp_color({"Color": "Blue"}, "Stanley Turrentine",
+                           "Easy Walker", "Stanley Turrentine - Easy Walker "
+                           "LP - Blue Note - BST 84268 RVG VG+"))
     check("голый год «1966» — не номер обложки",
           dm.core_number("1966") is None and dm.core_number("CL 1966")
           == "1966")
@@ -530,6 +534,11 @@ def test_pereizdaniya_drugikh_stran():
     x["year_miss"] = True
     check("год пресса не найден — не «надёжная», даже при поле $450",
           dm.classify(x, 37.99) is None)
+    check("оценка VG+ — б/у, не складская копия магазина",
+          ev_of("Easy Walker Blue Note BST 84268 RVG VG+", "BST 84268",
+                asp={"Record Grading": "Very Good Plus (VG+)"})["used_grade"]
+          and not ev_of("Byrd's Eye View LP (Near Mint (NM or M-))",
+                        "")["used_grade"])
     check("страна не названа и «US pressing» — разные случаи",
           not ev_of("Byrd's Eye View LP", "")["country_said"]
           and ev_of("Byrd's Eye View LP USA pressing", "")["country_said"])

@@ -262,15 +262,16 @@ _VINYL_COLORS = {"blue", "red", "green", "yellow", "orange", "purple", "pink",
                  "multi color", "smoke", "grey", "gray", "violet", "teal"}
 
 
-def asp_color(asp, artist="", album=""):
+def asp_color(asp, artist="", album="", title=""):
     """Цветной винил по характеристикам лота: «Color: Blue» вместе с
     «Features: … Colored Vinyl» или один из них, если цвет явный («A Love
-    Supreme» 2021 года, синий винил). Слово из имени или названия — не
-    цвет: «Color: Silver» у Horace Silver (перепроверка 24.10.2026);
-    серебро и золото не считаются вовсе."""
+    Supreme» 2021 года, синий винил). Слово из имени, названия или
+    заголовка — не цвет: «Color: Silver» у Horace Silver (перепроверка
+    24.10.2026), «Color: Blue» у «Easy Walker … Blue Note … RVG» — синяя
+    обложка Blue Note (25.10.2026); серебро и золото не считаются вовсе."""
     col = _norm(str((asp or {}).get("Color") or ""))
     feats = str((asp or {}).get("Features") or "").lower()
-    names = set(_norm(f"{artist} {album}").split())
+    names = set(_norm(f"{artist} {album} {title}").split())
     if "colored vinyl" in feats or "coloured vinyl" in feats:
         return True
     return bool(col) and col in _VINYL_COLORS and not (set(col.split())
@@ -310,6 +311,11 @@ def evidence(title, text, asp, catno, store=False):
         "core": core_number(catno),
         "year": press_year(title, asp, catno),
         "store": store,
+        # Оценка б/у пластинки (VG+, VG, G…) — у магазина это не складская
+        # новая копия: правило «крупный магазин» к ней не применяется.
+        "used_grade": bool(re.search(
+            r"\bvg\b|\bvg\+|\bvery\s*good\b|\bg\+|\bgood\s*plus\b|"
+            r"\bex(?:cellent)?\b|\bvg-", head)),
     }
 
 
@@ -591,7 +597,8 @@ def plausible(vers, ev):
             out = modern
             notes.append("цветной винил — прессы с 1995")
             ev["_narrowed"] = True
-    if ev.get("store") and not ev["first"] and not ev.get("era"):
+    if ev.get("store") and not ev["first"] and not ev.get("era") and \
+            not ev.get("used_grade"):
         modern = [v for v in out if v["year"] >= 1990]
         if modern:
             out = modern
@@ -1006,7 +1013,7 @@ def assess(d, vc, artist, album, catno, title, text, asp, fresh=False,
     ev["family"] = fam
     ev["era"] = era or era_of(" ".join((title or "", text or "")), fam)
     ev["color"] = ("title" if color_vinyl(title, artist, album) else
-                   "card" if asp_color(asp, artist, album) else "")
+                   "card" if asp_color(asp, artist, album, title) else "")
     country = ev["country"]
     if master:
         vers = vc.get(master, country)
