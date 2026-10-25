@@ -271,6 +271,19 @@ def grade(it, item):
                            f", {it.get('condition') or 'оценки нет'}")
 
 
+def release_discs(d, alb):
+    """Пластинок в издании — по релизу Discogs, не по заголовку лота: Andrew
+    Hill «Passing Ships» Tone Poet — 2LP (вторая односторонняя), а лот
+    называется «Tone Poet LP», и пересылка в Москву считалась за одну
+    (25.10.2026)."""
+    if not alb or not alb.get("rid"):
+        return None
+    j = d.get(f"https://api.discogs.com/releases/{alb['rid']}") or {}
+    n = sum(int(f.get("qty") or 0) for f in j.get("formats") or []
+            if f.get("name") == "Vinyl")
+    return n or None
+
+
 def lot_row(it, item, alb, how, discs_hint=None):
     p, _, kind, note = hunt.lot_price(it, 2.0)
     sh = shipping_usd(it)
@@ -400,7 +413,8 @@ def main():
                     how = ("«Tone Poet» в заголовке" if not code else
                            f"«Tone Poet» в заголовке, но штрихкод {code} "
                            "не из релизов серии — СВЕРИТЬ издание")
-                lots.append(lot_row(it, item, alb, how))
+                lots.append(lot_row(it, item, alb, how,
+                                    release_discs(d, alb)))
             if len(items) < 200:
                 break
             time.sleep(0.2)
@@ -475,7 +489,8 @@ def main():
                 drop("винил не доказан")
                 continue
             matched += 1
-            lots.append(lot_row(it, item, alb, how))
+            lots.append(lot_row(it, item, alb, how,
+                                release_discs(d, alb)))
         print(f"заход 2: кандидатов {len(cand)}, открыто карточек {opened}, "
               f"Tone Poet по штрихкоду {matched}", file=sys.stderr)
     fx.save_cards(cards)
