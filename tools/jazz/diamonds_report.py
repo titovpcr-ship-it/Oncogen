@@ -115,6 +115,9 @@ def main():
                          "только сводка прогонов")
     ap.add_argument("--day", default=None,
                     help="день сводки ГГГГ-ММ-ДД (по умолчанию последний)")
+    ap.add_argument("--note", default="",
+                    help="строка о проверке глазами: почему находки модели "
+                         "отсеяны")
     ap.add_argument("--send", action="store_true")
     a = ap.parse_args()
     rows = []
@@ -133,6 +136,8 @@ def main():
     import diamonds as dm
     runs = day_runs(a.day)
     stats = html.escape(stats_line(runs))
+    if a.note:
+        stats += "\n" + html.escape(a.note)
     if not rows:
         msgs = [f"<b>Алмазы — {time.strftime('%d.%m.%Y')}: проверенных "
                 f"находок нет</b>\n{stats}\nБ/у джаз до $40, «купить "
