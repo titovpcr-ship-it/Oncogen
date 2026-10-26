@@ -233,10 +233,43 @@ def test_lovushki_progona():
                             "want": 3}], 3)[0] == [])
 
 
+def test_tolko_zhivye():
+    import alive as al
+    mj = [{"name": "Michael Jackson", "score": 64, "type": "Person",
+           "life-span": {"ended": None}, "disambiguation": "NZ poet"},
+          {"name": "Michael Jackson", "score": 100, "type": "Person",
+           "life-span": {"begin": "1958-08-29", "end": "2009-06-25", "ended": True}}]
+    a = al.best(mj, "Michael Jackson")
+    check("берётся самый релевантный однофамилец — King of Pop, умер 2009",
+          al.verdict(a) == (False, "умер(ла) 2009-06-25"))
+    lp = [{"name": "Linkin Park", "score": 100, "type": "Group",
+           "life-span": {"begin": "1996", "ended": None}}]
+    check("LINKIN PARK — группа не распалась, живая",
+          al.verdict(al.best(lp, "LINKIN PARK")) == (True, ""))
+    nv = [{"name": "Nirvana", "score": 100, "type": "Group",
+           "life-span": {"begin": "1987", "end": "1994-04-05", "ended": True}}]
+    check("Nirvana — распались 1994", al.verdict(al.best(nv, "Nirvana"))
+          == (False, "распались 1994"))
+    bts = [{"name": "방탄소년단", "score": 100, "type": "Group",
+            "aliases": [{"name": "BTS"}], "life-span": {"ended": None}}]
+    check("BTS находится по псевдониму", al.best(bts, "BTS") is not None)
+    check("Lone Justice под «Justice» не берётся",
+          al.best([{"name": "Lone Justice", "score": 81}], "Justice") is None)
+    check("нет в MusicBrainz — не выдумываем смерть",
+          al.verdict(None)[0] is None)
+    A = {"a": {"artist": "Michael Jackson", "local": False, "surge": 0,
+               "foreign_ru": True, "hype": 40},
+         "b": {"artist": "Olivia Rodrigo", "local": False, "surge": 44,
+               "foreign_ru": False, "hype": 44}}
+    got = H.pick(A, 5, keep=lambda z: z["artist"] != "Michael Jackson")
+    check("pick с фильтром живых — Michael Jackson мимо",
+          [z["artist"] for z in got] == ["Olivia Rodrigo"])
+
+
 def main():
     for fn in [test_razbor_kworb, test_soavtory, test_vzlyot_za_kvartal,
                test_rossiya, test_albomy, test_vinil_discogs, test_tseny_rossii,
-               test_lovushki_progona]:
+               test_lovushki_progona, test_tolko_zhivye]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

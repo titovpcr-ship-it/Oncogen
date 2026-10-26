@@ -19,7 +19,9 @@ Billboard 200 после ремикса с Chappell Roan, а у владельц
 2. РОССИЯ. Иностранец в русских чартах (Apple Music RU альбомы и песни,
    Shazam RU, YouTube RU) — главный признак, что пластинку купят в России.
    Русские артисты (кириллица или «главная страна» Россия у Kworb) — мимо:
-   их винила на eBay США нет.
+   их винила на eBay США нет. Только живые исполнители (владелец
+   26.10.2026): умершие и распавшиеся группы — мимо, по MusicBrainz
+   (tools/hype/alive.py).
 3. ВИНИЛ. Discogs: издания артиста на виниле по числу копий в коллекциях
    (сортировка have), по альбомам — что реально покупают на виниле.
    Альбом, который в чарте, но винила у него нет, — так и печатается.
@@ -158,12 +160,25 @@ def score(snap, today=None):
     return A
 
 
-def pick(A, n):
-    """Кого проверять на eBay: взлёт или иностранец в русских чартах."""
+def first(rows, n, keep=None):
+    """Первые n строк, прошедших keep (проверка ленивая — MusicBrainz
+    спрашивается только о тех, до кого дошла очередь)."""
+    out = []
+    for z in rows:
+        if len(out) >= n:
+            break
+        if keep is None or keep(z):
+            out.append(z)
+    return out
+
+
+def pick(A, n, keep=None):
+    """Кого проверять на eBay: взлёт или иностранец в русских чартах;
+    keep — фильтр живых (владелец 26.10.2026: «только живые исполнители»)."""
     pool = [z for z in A.values() if not z["local"]
             and (z["surge"] > 0 or z["foreign_ru"])]
     pool.sort(key=lambda z: -z["hype"])
-    return pool[:n]
+    return first(pool, n, keep)
 
 
 # --- Discogs: что артиста покупают на виниле ---------------------------------
@@ -381,10 +396,27 @@ def run(a):
     ch.save_snapshot(snap, RAW)
     A = score(snap)
     save_summary(A, snap["date"])
-    top = pick(A, a.artists)
+    import alive as al
+    life = al.Alive()
+    dead = {}
+
+    def keep(z):
+        v = life.check(z["artist"])
+        if v["alive"] is False:
+            dead[z["artist"]] = v["note"]
+            return False
+        return True
+
+    top = pick(A, a.artists, keep)
     if a.only:
         want = {ch.key(x) for x in a.only}
-        top = [z for z in A.values() if ch.key(z["artist"]) in want]
+        top = [z for z in A.values() if ch.key(z["artist"]) in want and keep(z)]
+    surge_top = first(sorted((z for z in A.values()
+                              if not z["local"] and z["surge"] > 0),
+                             key=lambda z: -z["surge"]), 20, keep)
+    foreign_ru = first(sorted((z for z in A.values() if z["foreign_ru"]),
+                              key=lambda z: -z["ru_score"]), 15, keep)
+    life.save()
     print(f"взлетевших и иностранцев в русских чартах: {len(top)}",
           file=sys.stderr)
 
@@ -432,12 +464,9 @@ def run(a):
 
     res = {"date": snap["date"], "rate": rate, "max_price": a.max_price,
            "artists": [artist_view(z) for z in top], "albums": rows,
-           "surge_top": [artist_view(z) for z in sorted(
-               (z for z in A.values() if not z["local"] and z["surge"] > 0),
-               key=lambda z: -z["surge"])][:20],
-           "foreign_ru": [artist_view(z) for z in sorted(
-               (z for z in A.values() if z["foreign_ru"]),
-               key=lambda z: -z["ru_score"])][:15]}
+           "surge_top": [artist_view(z) for z in surge_top],
+           "foreign_ru": [artist_view(z) for z in foreign_ru],
+           "dead": [f"{k} ({v})" for k, v in dead.items()]}
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"hype_{time.strftime('%Y-%m-%d_%H%M%S')}.json")
     with open(path, "w", encoding="utf-8") as f:
@@ -553,6 +582,9 @@ def render(res, exclude=()):
     out += ["", "ИНОСТРАНЦЫ В РУССКИХ ЧАРТАХ (Apple RU, Shazam RU, YouTube RU):"]
     for i, v in enumerate(res.get("foreign_ru", [])[:12], 1):
         out.append(f"{i:2}. {v['artist']} — " + "; ".join(v["ru"]))
+    if res.get("dead"):
+        out += ["", "Мимо — не живые исполнители (MusicBrainz: умер или группа "
+                "распалась): " + ", ".join(res["dead"])]
     novin = [f"{v['artist']}: {', '.join(v['no_vinyl'][:2])}"
              for v in res["artists"] if v.get("no_vinyl")]
     if novin:

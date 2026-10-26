@@ -1,0 +1,173 @@
+{
+"adela": {
+"alive": true,
+"mb": "f40856e6-079f-4a0a-916e-9e6a5e04f646",
+"mb_name": "ADÉLA",
+"name": "ADÉLA",
+"note": "",
+"t": 1793017968,
+"type": "Person"
+},
+"amywinehouse": {
+"alive": false,
+"mb": "dfe9a7c4-8cf2-47f4-9dcb-d233c2b86ec3",
+"mb_name": "Amy Winehouse",
+"name": "Amy Winehouse",
+"note": "умер(ла) 2011-07-23",
+"t": 1793018004,
+"type": "Person"
+},
+"bts": {
+"alive": true,
+"mb": "0d79fe8e-ba27-4859-bb8c-2f255f346853",
+"mb_name": "BTS",
+"name": "BTS",
+"note": "",
+"t": 1793017996,
+"type": "Group"
+},
+"cranberries": {
+"alive": false,
+"mb": "c98d40fd-f6cf-4b26-883e-eaa515ee2851",
+"mb_name": "The Cranberries",
+"name": "The Cranberries",
+"note": "распались 2019",
+"t": 1793017961,
+"type": "Group"
+},
+"fontainesdc": {
+"alive": true,
+"mb": "fd87acc7-e0a0-4a45-bc2a-d2ab5c10be68",
+"mb_name": "Fontaines D.C.",
+"name": "Fontaines D.C.",
+"note": "",
+"t": 1793018005,
+"type": "Group"
+},
+"hugel": {
+"alive": true,
+"mb": "eead7215-59da-45f5-b719-62f349ef4133",
+"mb_name": "HUGEL",
+"name": "HUGEL",
+"note": "",
+"t": 1793017992,
+"type": "Person"
+},
+"imaelangel": {
+"alive": true,
+"mb": "a3c9387a-6e60-4f49-8405-6056998e01d7",
+"mb_name": "Imael Angel",
+"name": "Imael Angel",
+"note": "",
+"t": 1793017997,
+"type": "Person"
+},
+"justice": {
+"alive": true,
+"mb": "860b2707-6153-4e3a-aa57-74d2b42c55b5",
+"mb_name": "Justice",
+"name": "Justice",
+"note": "",
+"t": 1793017963,
+"type": "Group"
+},
+"karolg": {
+"alive": true,
+"mb": "de22adae-f8ac-414f-b653-b0162611bd60",
+"mb_name": "KAROL G",
+"name": "KAROL G",
+"note": "",
+"t": 1793017969,
+"type": "Person"
+},
+"kimosounds": {
+"alive": true,
+"mb": "5cd852a1-e63c-4bc1-b25e-f8b93c225c1a",
+"mb_name": "Kimo Sounds",
+"name": "Kimo Sounds",
+"note": "",
+"t": 1793017975,
+"type": null
+},
+"lanadelrey": {
+"alive": true,
+"mb": "b7539c32-53e7-4908-bda3-81449c367da6",
+"mb_name": "Lana Del Rey",
+"name": "Lana Del Rey",
+"note": "",
+"t": 1793018016,
+"type": "Person"
+},
+"linkinpark": {
+"alive": true,
+"mb": "f59c5520-5f46-4d2c-b2c4-822eabf53419",
+"mb_name": "Linkin Park",
+"name": "LINKIN PARK",
+"note": "",
+"t": 1793017963,
+"type": "Group"
+},
+"michaeljackson": {
+"alive": false,
+"mb": "f27ec8db-af05-4f36-916e-3d57f91ecf5e",
+"mb_name": "Michael Jackson",
+"name": "Michael Jackson",
+"note": "умер(ла) 2009-06-25",
+"t": 1793017959,
+"type": "Person"
+},
+"nirvana": {
+"alive": false,
+"mb": "5b11f4ce-a62d-471e-81fc-a69a8278c7da",
+"mb_name": "Nirvana",
+"name": "Nirvana",
+"note": "распались 1994",
+"t": 1793017960,
+"type": "Group"
+},
+"oliviarodrigo": {
+"alive": true,
+"mb": "6925db17-f35e-42f3-a4eb-84ee6bf5d4b0",
+"mb_name": "Olivia Rodrigo",
+"name": "Olivia Rodrigo",
+"note": "",
+"t": 1793017971,
+"type": "Person"
+},
+"queen": {
+"alive": false,
+"mb": "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
+"mb_name": "Queen",
+"name": "Queen",
+"note": "распались",
+"t": 1793018002,
+"type": "Group"
+},
+"tameimpala": {
+"alive": true,
+"mb": "63aa26c3-d59b-4da4-84ac-716b54f1ef4d",
+"mb_name": "Tame Impala",
+"name": "Tame Impala",
+"note": "",
+"t": 1793018007,
+"type": "Person"
+},
+"ultranate": {
+"alive": true,
+"mb": "0004537a-4b12-43eb-a023-04009e738d2e",
+"mb_name": "Ultra Naté",
+"name": "Ultra Naté",
+"note": "",
+"t": 1793018011,
+"type": "Person"
+},
+"weeknd": {
+"alive": true,
+"mb": "c8b03190-306c-4120-bb0b-6f2ebfc06ea9",
+"mb_name": "The Weeknd",
+"name": "The Weeknd",
+"note": "",
+"t": 1793017967,
+"type": "Person"
+}
+}
