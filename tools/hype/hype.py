@@ -66,6 +66,7 @@ OZON = os.path.join(ROOT, "data", "ozon_price_palette.csv")
 USD_RUB = 95.0
 RU_WEIGHT = 10.0
 FEAT_SHARE = 0.5
+MIN_HAVE = 200
 SEARCH = ("https://api.discogs.com/database/search?type=release&format=Vinyl"
           "&sort=have&sort_order=desc&per_page=50&artist={}")
 
@@ -170,7 +171,7 @@ def pick(A, n):
 _NOT_LP = re.compile(r'\b(?:7"|10"|Single|Flexi|Shape|Cassette|CD)\b')
 
 
-_ZW = re.compile(r"[​-‏⁠﻿]")
+_ZW = re.compile("[\u200b-\u200f\u2060\ufeff]")
 
 
 def _album_of(title):
@@ -178,6 +179,20 @@ def _album_of(title):
     Discogs («Ne L\\u200bé\\u200bpj A Virágra») — вон, иначе eBay не найдёт."""
     a, _, t = _ZW.sub("", title or "").partition(" - ")
     return (t or a).strip()
+
+
+_DG_SUFFIX = re.compile(r"\s*\(\d+\)|\*")
+
+
+def artist_is(title, artist):
+    """Издание того самого артиста: поиск Discogs по артисту нечёткий —
+    HUGEL (французский диджей) приносил немецкий фолк «Hugel», Justice —
+    группу Lone Justice (прогон 26.10.2026). «Artist (2)» и «Artist*» —
+    пометки Discogs, не имя."""
+    a = _ZW.sub("", title or "").partition(" - ")[0]
+    k = ch.key(artist)
+    names = [a] + re.split(r"\s*[,&/]\s*|\s+x\s+", a)
+    return any(ch.key(_DG_SUFFIX.sub("", n)) == k for n in names)
 
 
 def vinyl_albums(d, artist, cache):
@@ -197,6 +212,8 @@ def vinyl_albums(d, artist, cache):
     for x in j.get("results") or []:
         fm = " ".join(x.get("format") or [])
         if "LP" not in fm or _NOT_LP.search(fm.replace("LP", "")):
+            continue
+        if not artist_is(x.get("title"), artist):
             continue
         alb = _album_of(x.get("title"))
         mk = x.get("master_id") or ch.key(alb)
@@ -229,7 +246,8 @@ def vinyl_title(d, artist, album, cache):
         fm = " ".join(x.get("format") or [])
         if "LP" not in fm or _NOT_LP.search(fm.replace("LP", "")):
             continue
-        if not same_album(album, _album_of(x.get("title"))):
+        if not same_album(album, _album_of(x.get("title"))) or \
+                not artist_is(x.get("title"), artist):
             continue
         c = x.get("community") or {}
         if v is None:
@@ -268,7 +286,11 @@ def choose_albums(z, charting, vinyl, n, probe=None):
     out, novinyl = [], []
 
     def add(title, why, v):
-        if any(same_album(title, o["album"]) for o in out):
+        name = v["album"] if v else title
+        # «†» (Justice): в названии ни буквы, ни цифры — eBay по нему
+        # приносит что угодно (7" Lone Justice за $3.99, 26.10.2026).
+        if not re.search(r"\w", name) or any(same_album(title, o["album"])
+                                              for o in out):
             return
         out.append({"album": v["album"] if v else title, "why": why,
                     "have": v["have"] if v else None,
@@ -292,7 +314,10 @@ def choose_albums(z, charting, vinyl, n, probe=None):
     for v in vinyl:
         if len(out) >= n:
             break
-        add(v["album"], f"на виниле {v['have']} копий в коллекциях Discogs", v)
+        # Однофамилец с десятком копий — не наш артист (HUGEL и немецкий
+        # фолк «Hugel», 26.10.2026); попсу на виниле держат сотни и тысячи.
+        if v["have"] >= MIN_HAVE:
+            add(v["album"], f"на виниле {v['have']} копий в коллекциях Discogs", v)
     return out[:n], novinyl
 
 
@@ -476,11 +501,18 @@ def album_block(r, exclude=()):
             f"{x['src']} {_rub(x['price'])} ₽" + (" (тот же штрихкод)" if x["exact"] else "")
             for x in r["ru"][:3]))
     else:
-        lines.append("  Россия: в витринах не найден")
+        # Авито не парсим (правило владельца) — даём готовый поиск, открывает
+        # сам владелец.
+        from urllib.parse import quote_plus
+        q = quote_plus(f"{r['artist']} {r['album']} винил")
+        lines.append("  Россия: в витринах нет — Авито: "
+                     f"https://www.avito.ru/moskva?q={q}")
     shown = 0
     for kind in ("купить сейчас", "предложить цену", "аукцион"):
         m = r["modes"].get(kind)
-        if not m or m.get("item_id") in exclude:
+        iid = m.get("item_id") or "" if m else ""
+        if not m or iid in exclude or iid.split("|")[1:2] and \
+                iid.split("|")[1] in exclude:
             continue
         sh = f"+${m['ship']:.2f}" if m["ship"] is not None else "+$5?"
         lp = f", {m['discs']} LP" if m["discs"] > 1 else ""
@@ -544,10 +576,24 @@ def render(res, exclude=()):
 def reprice(path):
     """Пересчитать российские цены и кратность готового прогона — после
     обновления витрин (tools/ru_shop*.py), без новых запросов к eBay."""
+    import ruspop as rp
+    import sealed as fx
     with open(path, encoding="utf-8") as f:
         res = json.load(f)
+    try:
+        with open(fx.CARDS, encoding="utf-8") as f:
+            cards = json.load(f)
+    except (OSError, ValueError):
+        cards = {}
     ru = load_ru()
     for r in res["albums"]:
+        for m in r["modes"].values():
+            n = max(m["discs"], rp.discs_card(cards.get(m.get("item_id"))))
+            if n != m["discs"]:
+                m["discs"] = n
+                ship = m["ship"] if m["ship"] is not None else rp.SHIP_GUESS
+                m["landed_usd"] = round(m["price"] + ship + rp.fwd_usd(n), 2)
+                m["landed_rub"] = round(m["landed_usd"] * res["rate"])
         codes = [m["barcode"] for m in r["modes"].values() if m.get("barcode")]
         rp_ = ru_prices(ru, r["artist"], r["album"], codes)
         r["ru"], r["ru_min"] = rp_[:4], (rp_[0]["price"] if rp_ else None)

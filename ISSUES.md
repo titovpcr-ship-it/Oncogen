@@ -2979,3 +2979,32 @@ And Strings», продавцы пишут «Sings & Plays». Закрыто: «
   (хайп и Tone Poet по расписанию пишут одни файлы).
 - Механика лотов ruspop вынесена в ruspop.album_lots — её зовут ruspop и
   хайп.
+
+Первый прогон 26.10.2026 (25 артистов, 61 альбом, курс 95 ₽/$, до $25):
+- Взлетели за квартал: ADÉLA (58M прослушиваний новых песен в неделю по
+  миру), KAROL G, Tate McRae («Housewife» — №1 мира с первой недели),
+  Olivia Rodrigo (ремикс «expectations»), Zach Bryan (альбом №1 Apple),
+  Taylor Swift. Иностранцы в русских чартах: Michael Jackson (Thriller,
+  Bad, Dangerous в Apple RU — к байопику «Michael»), Linkin Park, Fontaines
+  D.C. («Dopamine Chamber» №10 Apple RU), The Weeknd, Nirvana, BTS.
+- У новых альбомов KAROL G, Zach Bryan, Drake винила на Discogs ещё нет.
+- Кратность к российской витрине низкая: лучшая — Linkin Park «From Zero»
+  $18 → 3 021 ₽ против 4 800–5 992 ₽ (1.59x) и новый альбом Olivia Rodrigo
+  $21 → 3 306 ₽ против 5 272 ₽ (1.59x); Michael Jackson «Bad» и Linkin Park
+  «Meteora» — около 1.1x, «Thriller» и «Hybrid Theory» — дешевле в России.
+  Хайповую попсу (Tate McRae, Taylor Swift, «Sour», «Guts») витрины
+  plastinka/appmistore не держат вовсе — цена только на Авито, в отчёте
+  готовая ссылка поиска.
+- Проверка глазами сняла 6 из 33 лотов: «not being sealed» (Guts), «opened
+  but never played» (Midnights), VG+ в описании (Tate McRae webstore), б/у
+  с «Sealed» в заголовке (Cranberries), мусорная карточка (From Zero за
+  $15), 7" Lone Justice под альбомом Justice «†».
+
+Ловушки прогона, закрыты: поиск Discogs по артисту нечёткий (HUGEL →
+немецкий фолк «Hugel», Justice → Lone Justice) — имя в издании должно
+совпасть, наполнитель — от 200 копий в коллекциях; название без букв
+(«†») не ищется; двойник по карточке («Type: Double LP») — Michael
+Jackson «Number Ones» считался одинарником (ruspop.discs_card, общий для
+ruspop); невидимые пробелы Discogs в названии («Ne L​é​pj») вычищаются;
+альбом в чарте вне 50 самых популярных изданий проверяется точечным
+поиском, прежде чем назваться «без винила».

@@ -255,6 +255,24 @@ def is_the_album(title, artist, album):
     return why is None
 
 
+_CARD_DOUBLE = re.compile(r"\bdouble\b|\b2\s*x?\s*lp\b|\b2\s*-?\s*lp\b|"
+                          r"\b2\s*(?:disc|record)s?\b", re.I)
+
+
+def discs_card(item):
+    """Число пластинок по характеристикам карточки: «Type: Double LP» —
+    Michael Jackson «Number Ones» 26.10.2026 считался одинарником, хотя
+    продавец указал двойник (заголовок «Sealed White Vinyl Records»)."""
+    for a in (item or {}).get("localizedAspects") or []:
+        if a.get("name") in ("Type", "Format", "Number of Discs", "Edition"):
+            val = str(a.get("value") or "")
+            if a.get("name") == "Number of Discs" and val.strip().isdigit():
+                return int(val.strip())
+            if _CARD_DOUBLE.search(val):
+                return 2
+    return 1
+
+
 def card(token, cards, iid):
     """Карточка лота (штрихкод и характеристики), кэш cache/ebay_cards.json."""
     item = cards.get(iid)
@@ -329,7 +347,7 @@ def album_lots(token, d, cards, artist, album, max_price, per_album, rate):
             if code:
                 v, _ = fx.discogs_value(d, code, None if artist.lower()
                                         == "various" else artist)
-            discs = discs_of(t)
+            discs = max(discs_of(t), discs_card(item))
             if v and v.get("format"):
                 m = re.match(r"(\d+)\s*x", v["format"])
                 if m:

@@ -210,9 +210,33 @@ def test_tseny_rossii():
           all("Meteora" not in g["album"] for g in got))
 
 
+def test_lovushki_progona():
+    import ruspop as rp
+    # 26.10.2026: «Number Ones» — двойник по карточке, а считался одинарником.
+    check("«Type: Double LP» в карточке — две пластинки",
+          rp.discs_card({"localizedAspects": [{"name": "Type",
+                                               "value": "Double LP"}]}) == 2)
+    check("«Type: LP» — одна", rp.discs_card(
+        {"localizedAspects": [{"name": "Type", "value": "LP"}]}) == 1)
+    # «†» Justice: название без букв — не альбом для поиска.
+    got, _ = H.choose_albums({"album_new": None}, [],
+                             [{"album": "†", "have": 26769, "want": 4000},
+                              {"album": "Hyperdrama", "have": 5000, "want": 900}], 3)
+    check("альбом «†» пропущен, «Hyperdrama» взят",
+          [g["album"] for g in got] == ["Hyperdrama"])
+    check("Discogs: Lone Justice — не Justice, Justice (3) — Justice",
+          not H.artist_is("Lone Justice - Lone Justice", "Justice")
+          and H.artist_is("Justice (3) - Hyperdrama", "Justice"))
+    check("однофамилец с десятком копий — не наполнитель",
+          H.choose_albums({"album_new": None}, [],
+                          [{"album": "Bairisches Adventsingen", "have": 12,
+                            "want": 3}], 3)[0] == [])
+
+
 def main():
     for fn in [test_razbor_kworb, test_soavtory, test_vzlyot_za_kvartal,
-               test_rossiya, test_albomy, test_vinil_discogs, test_tseny_rossii]:
+               test_rossiya, test_albomy, test_vinil_discogs, test_tseny_rossii,
+               test_lovushki_progona]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")
