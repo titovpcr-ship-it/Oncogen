@@ -432,6 +432,10 @@ def run(a):
         if v["alive"] is False:
             dead[z["artist"]] = v["note"]
             return False
+        # Владелец 26.10.2026: «Оставь только женских исполнителей» — пол по
+        # MusicBrainz (alive.py), не по имени.
+        if a.women and v.get("gender") != "female":
+            return False
         return True
 
     top = pick(A, a.artists, keep)
@@ -493,6 +497,7 @@ def run(a):
         json.dump(dgc, f, ensure_ascii=False)
 
     res = {"date": snap["date"], "rate": rate, "max_price": a.max_price,
+           "women": bool(a.women),
            "artists": [artist_view(z) for z in top], "albums": rows,
            "surge_top": [artist_view(z) for z in surge_top],
            "foreign_ru": [artist_view(z) for z in foreign_ru],
@@ -594,8 +599,25 @@ NOTE = ("Россия — витрина магазина или скриншо�
         "— текущая ставка, к закрытию вырастет.")
 
 
+def only_women(res):
+    """Готовый прогон — только женские исполнители (пол по MusicBrainz)."""
+    import alive as al
+    life = al.Alive()
+
+    def fem(name):
+        return life.gender(name) == "female"
+
+    out = dict(res, women=True)
+    out["albums"] = [r for r in res["albums"] if fem(r["artist"])]
+    for k in ("artists", "surge_top", "west_top", "foreign_ru"):
+        out[k] = [v for v in res.get(k) or [] if fem(v["artist"])]
+    life.save()
+    return out
+
+
 def head(res):
-    return (f"Хайпажор {res['date']}: курс {res['rate']:.0f} ₽/$, лоты до "
+    who = ", только женские исполнители" if res.get("women") else ""
+    return (f"Хайпажор{who} {res['date']}: курс {res['rate']:.0f} ₽/$, лоты до "
             f"${res['max_price']:.0f} без доставки, Москва = лот + доставка по "
             f"США + пересылка $22/кг")
 
@@ -674,10 +696,12 @@ def reprice(path):
     return 0
 
 
-def send(path, exclude, note=""):
+def send(path, exclude, note="", women=False):
     from telegram_notify import TelegramNotifier
     with open(path, encoding="utf-8") as f:
         res = json.load(f)
+    if women:
+        res = only_women(res)
     text = render(res, set(exclude))
     if note:
         text = note + "\n\n" + text
@@ -711,13 +735,16 @@ def main():
     ap.add_argument("--exclude", nargs="*", default=[],
                     help="id лотов, отсеянных при проверке глазами")
     ap.add_argument("--note", default="")
+    ap.add_argument("--women", action="store_true",
+                    help="только женские исполнители (пол по MusicBrainz); "
+                         "с --send — фильтр готового прогона")
     ap.add_argument("--reprice", metavar="FILE",
                     help="пересчитать цены России у готового прогона")
     a = ap.parse_args()
     if a.reprice:
         return reprice(a.reprice)
     if a.send:
-        return send(a.send, a.exclude, a.note)
+        return send(a.send, a.exclude, a.note, a.women)
     return run(a)
 
 

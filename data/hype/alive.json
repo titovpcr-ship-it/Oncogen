@@ -1,23 +1,25 @@
 {
 "54ultra": {
 "alive": true,
+"gender": null,
 "mb": "6f4926ae-865e-483b-86f9-9ae3b9584507",
 "mb_name": "54 Ultra",
 "name": "54 Ultra",
 "note": "",
-"t": 1793018613,
+"t": 1793022011,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "adela": {
 "alive": true,
+"gender": "female",
 "mb": "f40856e6-079f-4a0a-916e-9e6a5e04f646",
 "mb_name": "ADÉLA",
 "name": "ADÉLA",
 "note": "",
-"t": 1793018532,
+"t": 1793021870,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "amywinehouse": {
 "alive": false,
@@ -30,33 +32,36 @@
 },
 "andersonpaak": {
 "alive": true,
+"gender": "male",
 "mb": "d02dd67e-f655-4600-bc47-f789f59e7367",
 "mb_name": "Anderson .Paak",
 "name": "Anderson .Paak",
 "note": "",
-"t": 1793018604,
+"t": 1793021919,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "anuelaa": {
 "alive": true,
+"gender": "male",
 "mb": "87a75fc3-59e7-4598-925c-8e230bce5db9",
 "mb_name": "Anuel AA",
 "name": "Anuel AA",
 "note": "",
-"t": 1793019705,
+"t": 1793021954,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "arianagrande": {
 "alive": true,
+"gender": "female",
 "mb": "f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387",
 "mb_name": "Ariana Grande",
 "name": "Ariana Grande",
 "note": "",
-"t": 1793019632,
+"t": 1793021901,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "arminvanbuuren": {
 "alive": true,
@@ -70,63 +75,69 @@
 },
 "ashe": {
 "alive": true,
+"gender": "female",
 "mb": "36086094-c2a4-49b9-8572-0fbf12fc3409",
 "mb_name": "Ashe",
 "name": "Ashe",
 "note": "",
-"t": 1793018584,
+"t": 1793021896,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "badbunny": {
 "alive": true,
+"gender": "male",
 "mb": "89aa5ecb-59ad-46f5-b3eb-2d424e941f19",
 "mb_name": "Bad Bunny",
 "name": "Bad Bunny",
 "note": "",
-"t": 1793019633,
+"t": 1793021908,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "blok3": {
 "alive": true,
+"gender": null,
 "mb": "064814c9-1560-4d45-aaab-1b1f2c3b2b65",
 "mb_name": "BLOK3",
 "name": "BLOK3",
 "note": "",
-"t": 1793018593,
+"t": 1793022006,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "bts": {
 "alive": true,
+"gender": "male",
 "mb": "0d79fe8e-ba27-4859-bb8c-2f255f346853",
 "mb_name": "BTS",
 "name": "BTS",
 "note": "",
-"t": 1793018637,
+"t": 1793021843,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "chemicalbrothers": {
 "alive": true,
+"gender": "male",
 "mb": "1946a82a-f927-40c2-8235-38d64f50d043",
 "mb_name": "The Chemical Brothers",
 "name": "The Chemical Brothers",
 "note": "",
-"t": 1793018639,
+"t": 1793022021,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "cordae": {
 "alive": true,
+"gender": "male",
 "mb": "994a4bd6-584e-40c8-a8d7-5fdc3b6db8b2",
 "mb_name": "Cordae",
 "name": "Cordae",
 "note": "",
-"t": 1793018605,
+"t": 1793021924,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "cranberries": {
 "alive": false,
@@ -140,83 +151,91 @@
 },
 "djgoja": {
 "alive": true,
+"gender": null,
 "mb": "ba5d78cb-4419-40c4-8b16-5e3a41254456",
 "mb_name": "DJ Goja",
 "name": "DJ Goja",
 "note": "",
-"t": 1793018587,
+"t": 1793022016,
 "type": null,
-"v": 2
+"v": 3
 },
 "drake": {
 "alive": true,
+"gender": "male",
 "mb": "9fff2f8a-21e6-47de-a2b8-7f449929d43f",
 "mb_name": "Drake",
 "name": "Drake",
 "note": "",
-"t": 1793018585,
+"t": 1793021891,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "fontainesdc": {
 "alive": true,
+"gender": "male",
 "mb": "fd87acc7-e0a0-4a45-bc2a-d2ab5c10be68",
 "mb_name": "Fontaines D.C.",
 "name": "Fontaines D.C.",
 "note": "",
-"t": 1793018576,
+"t": 1793021818,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "fuerzaregida": {
 "alive": true,
+"gender": "male",
 "mb": "e665ce26-6ce9-4c42-8f6a-7a361a0ba328",
 "mb_name": "Fuerza Regida",
 "name": "Fuerza Regida",
 "note": "",
-"t": 1793019638,
+"t": 1793021912,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "hugel": {
 "alive": true,
+"gender": "male",
 "mb": "eead7215-59da-45f5-b719-62f349ef4133",
 "mb_name": "HUGEL",
 "name": "HUGEL",
 "note": "",
-"t": 1793018586,
+"t": 1793022000,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "imaelangel": {
 "alive": true,
+"gender": "female",
 "mb": "a3c9387a-6e60-4f49-8405-6056998e01d7",
 "mb_name": "Imael Angel",
 "name": "Imael Angel",
 "note": "",
-"t": 1793018536,
+"t": 1793021954,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "jheneaiko": {
 "alive": true,
+"gender": "female",
 "mb": "ceb3f5b7-9f1a-430f-afbe-976fdcf30482",
 "mb_name": "Jhené Aiko",
 "name": "Jhené Aiko",
 "note": "",
-"t": 1793018606,
+"t": 1793021932,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "judeline": {
 "alive": true,
+"gender": "female",
 "mb": "b828d419-2928-4286-9509-5d920d524358",
 "mb_name": "Judeline",
 "name": "Judeline",
 "note": "",
-"t": 1793018578,
+"t": 1793021907,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "justice": {
 "alive": true,
@@ -239,33 +258,36 @@
 },
 "karolg": {
 "alive": true,
+"gender": "female",
 "mb": "de22adae-f8ac-414f-b653-b0162611bd60",
 "mb_name": "KAROL G",
 "name": "KAROL G",
 "note": "",
-"t": 1793018538,
+"t": 1793021876,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "katseye": {
 "alive": true,
+"gender": "female",
 "mb": "abbf7d85-9a7f-4a6c-80bd-bf71f2c7d520",
 "mb_name": "KATSEYE",
 "name": "KATSEYE",
 "note": "",
-"t": 1793018594,
+"t": 1793021787,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "kimosounds": {
 "alive": true,
+"gender": null,
 "mb": "5cd852a1-e63c-4bc1-b25e-f8b93c225c1a",
 "mb_name": "Kimo Sounds",
 "name": "Kimo Sounds",
 "note": "",
-"t": 1793018597,
+"t": 1793022009,
 "type": null,
-"v": 2
+"v": 3
 },
 "lanadelrey": {
 "alive": true,
@@ -278,33 +300,36 @@
 },
 "linkinpark": {
 "alive": true,
+"gender": "male",
 "mb": "f59c5520-5f46-4d2c-b2c4-822eabf53419",
 "mb_name": "Linkin Park",
 "name": "LINKIN PARK",
 "note": "",
-"t": 1793018463,
+"t": 1793021999,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "lisa": {
 "alive": true,
+"gender": "female",
 "mb": "85d76093-9865-4605-97fa-8c910929d366",
 "mb_name": "LiSA",
 "name": "LISA",
 "note": "",
-"t": 1793019645,
+"t": 1793021926,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "lyfestylecorporation": {
 "alive": true,
+"gender": "not applicable",
 "mb": "a7251770-1f63-4e98-b5a3-1757852b3595",
 "mb_name": "Lyfestyle Corporation",
 "name": "Lyfestyle Corporation",
 "note": "",
-"t": 1793018596,
+"t": 1793021931,
 "type": "Other",
-"v": 2
+"v": 3
 },
 "michaeljackson": {
 "alive": false,
@@ -328,43 +353,47 @@
 },
 "nocap": {
 "alive": true,
+"gender": "male",
 "mb": "319f70f9-7ca3-4fa8-bcda-c06ba3f9ba30",
 "mb_name": "NoCap",
 "name": "NoCap",
 "note": "",
-"t": 1793018611,
+"t": 1793021937,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "oliviadean": {
 "alive": true,
+"gender": "female",
 "mb": "15e0d608-0869-429b-898d-3d8db3ecedd5",
 "mb_name": "Olivia Dean",
 "name": "Olivia Dean",
 "note": "",
-"t": 1793019696,
+"t": 1793021944,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "oliviarodrigo": {
 "alive": true,
+"gender": "female",
 "mb": "6925db17-f35e-42f3-a4eb-84ee6bf5d4b0",
 "mb_name": "Olivia Rodrigo",
 "name": "Olivia Rodrigo",
 "note": "",
-"t": 1793018545,
+"t": 1793021792,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "omarcourtz": {
 "alive": true,
+"gender": "male",
 "mb": "61ee1029-4f35-43ce-83dd-2eb8d4eef85e",
 "mb_name": "Omar Courtz",
 "name": "Omar Courtz",
 "note": "",
-"t": 1793019705,
+"t": 1793021951,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "queen": {
 "alive": false,
@@ -377,143 +406,157 @@
 },
 "rammstein": {
 "alive": true,
+"gender": "male",
 "mb": "b2d122f9-eadb-4930-a196-8f221eeb0c66",
 "mb_name": "Rammstein",
 "name": "Rammstein",
 "note": "",
-"t": 1793019695,
+"t": 1793021969,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "rodwave": {
 "alive": true,
+"gender": "male",
 "mb": "cb3d3e49-bf08-4cdb-bfa8-4dc7c458cea1",
 "mb_name": "Rod Wave",
 "name": "Rod Wave",
 "note": "",
-"t": 1793018603,
+"t": 1793021926,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "rusowsky": {
 "alive": true,
+"gender": "male",
 "mb": "d836bdef-52ef-4142-baba-573e5b529478",
 "mb_name": "rusowsky",
 "name": "rusowsky",
 "note": "",
-"t": 1793018577,
+"t": 1793021795,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "siennaspiro": {
 "alive": true,
+"gender": "female",
 "mb": "ea696191-407a-4bf2-8302-7e05f6c163c5",
 "mb_name": "Sienna Spiro",
 "name": "SIENNA SPIRO",
 "note": "",
-"t": 1793019646,
+"t": 1793021927,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "stevelacy": {
-"alive": true,
-"mb": "b29020d6-5dbf-4c99-b16f-c009f8a712ff",
+"alive": false,
+"gender": "male",
+"mb": "ca9766a0-1c30-43e6-a213-bac1334efc4a",
 "mb_name": "Steve Lacy",
 "name": "Steve Lacy",
-"note": "",
-"t": 1793018448,
+"note": "умер(ла) 2004-06-04",
+"t": 1793021928,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "stromae": {
 "alive": true,
+"gender": "male",
 "mb": "ab2528d9-719f-4261-8098-21849222a0f2",
 "mb_name": "Stromae",
 "name": "Stromae",
 "note": "",
-"t": 1793018638,
+"t": 1793022012,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "tameimpala": {
 "alive": true,
+"gender": "male",
 "mb": "63aa26c3-d59b-4da4-84ac-716b54f1ef4d",
 "mb_name": "Tame Impala",
 "name": "Tame Impala",
 "note": "",
-"t": 1793018570,
+"t": 1793021844,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "tatemcrae": {
 "alive": true,
+"gender": "female",
 "mb": "f9133869-f87c-459c-9aa7-2f176cda7e06",
 "mb_name": "Tate McRae",
 "name": "Tate McRae",
 "note": "",
-"t": 1793018543,
+"t": 1793021879,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "taylorswift": {
 "alive": true,
+"gender": "female",
 "mb": "20244d07-534f-4eff-b4d4-930878889970",
 "mb_name": "Taylor Swift",
 "name": "Taylor Swift",
 "note": "",
-"t": 1793018546,
+"t": 1793021886,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "tempercity": {
 "alive": true,
+"gender": null,
 "mb": "c74a9a82-29bf-486d-bf93-b4516ac3e338",
 "mb_name": "Temper City",
 "name": "Temper City",
 "note": "",
-"t": 1793018640,
+"t": 1793022033,
 "type": "Group",
-"v": 2
+"v": 3
 },
 "ultranate": {
 "alive": true,
+"gender": "female",
 "mb": "0004537a-4b12-43eb-a023-04009e738d2e",
 "mb_name": "Ultra Naté",
 "name": "Ultra Naté",
 "note": "",
-"t": 1793018598,
+"t": 1793022010,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "victormendivil": {
 "alive": true,
+"gender": null,
 "mb": "f06b96ed-0e3f-4182-ab26-df6748cba5f3",
 "mb_name": "Victor Mendivil",
 "name": "Victor Mendivil",
 "note": "",
-"t": 1793018590,
+"t": 1793021930,
 "type": null,
-"v": 2
+"v": 3
 },
 "weeknd": {
 "alive": true,
+"gender": "male",
 "mb": "c8b03190-306c-4120-bb0b-6f2ebfc06ea9",
 "mb_name": "The Weeknd",
 "name": "The Weeknd",
 "note": "",
-"t": 1793018613,
+"t": 1793021943,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "yeat": {
 "alive": true,
+"gender": "male",
 "mb": "9e6a6a2f-f696-4cc0-87f1-e4f712e46802",
 "mb_name": "Yeat",
 "name": "Yeat",
 "note": "",
-"t": 1793018595,
+"t": 1793021909,
 "type": "Person",
-"v": 2
+"v": 3
 },
 "yungmiami": {
 "alive": true,
@@ -526,12 +569,13 @@
 },
 "zachbryan": {
 "alive": true,
+"gender": "male",
 "mb": "51e90731-08c0-4f60-89b6-5b78e5844de8",
 "mb_name": "Zach Bryan",
 "name": "Zach Bryan",
 "note": "",
-"t": 1793018542,
+"t": 1793021883,
 "type": "Person",
-"v": 2
+"v": 3
 }
 }

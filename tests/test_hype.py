@@ -298,10 +298,35 @@ def test_tolko_zhivye():
           [z["artist"] for z in got] == ["Olivia Rodrigo"])
 
 
+def test_zhenskie():
+    import alive as al
+
+    class FakeMB(al.Alive):
+        def __init__(self, members):
+            self.db, self.dirty, self.last, self.members = {}, False, 0.0, members
+
+        def _get(self, url, what):
+            if "inc=artist-rels" in url:
+                return {"relations": [{"type": "member of band",
+                                       "artist": {"id": i}} for i in self.members]}
+            mid = url.split("/artist/")[1].split("?")[0]
+            return {"gender": self.members[mid]}
+
+    check("«US girl group» в пояснении — женская группа (KATSEYE)",
+          FakeMB({}).group_gender({"id": "k", "disambiguation":
+                                   "US girl group from Los Angeles"}) == "female")
+    check("все участницы — female",
+          FakeMB({"a": "Female", "b": "Female"}).group_gender({"id": "g"}) == "female")
+    check("смешанный состав — mixed, не женская",
+          FakeMB({"a": "Female", "b": "Male"}).group_gender({"id": "g"}) == "mixed")
+    check("пол участников неизвестен — None",
+          FakeMB({"a": None}).group_gender({"id": "g"}) is None)
+
+
 def main():
     for fn in [test_razbor_kworb, test_soavtory, test_vzlyot_za_kvartal,
                test_rossiya, test_albomy, test_vinil_discogs, test_tseny_rossii,
-               test_lovushki_progona, test_tolko_zhivye]:
+               test_lovushki_progona, test_tolko_zhivye, test_zhenskie]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

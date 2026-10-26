@@ -3082,3 +3082,23 @@ $14.99 → 2 735 ₽; Bad Bunny «Debí Tirar Más Fotos» 2LP $24–24.88 → 4
 «Wendy & Lisa» на Discogs засчитывалось за LISA — теперь в связке «A & B»
 считается только первый.
 
+
+## O-107. Хайпажор — только женские исполнители
+
+Владелец 26.10.2026: «Оставь только женских исполнителей… Девчачьи фан
+базы очень большие мне кажется». Пол — по MusicBrainz, не по имени: у
+человека поле gender, у группы — «girl group» в пояснении (KATSEYE) или
+пол всех участников (до 8 запросов). Смешанный состав — не женская. Кэш —
+тот же data/hype/alive.json (VERSION 3). `--women` — в прогоне; с `--send`
+— фильтр готового прогона.
+
+Из прогона «на Запад» — 11 из 25: ADÉLA, KAROL G, Olivia Rodrigo, Tate
+McRae, Taylor Swift, Ashe, Ariana Grande, Judeline, KATSEYE, LISA, Sienna
+Spiro; отправлено в Telegram. Тёзка: Kworb «LISA» (BLACKPINK), у
+MusicBrainz первым — японская LiSA; для пола и «жив» разницы нет.
+
+В пользу тезиса владельца (Luminate, итоги 2025 в США): №1 по винилу —
+Taylor Swift «The Life of a Showgirl», около 1.6 млн копий в восьми
+вариантах; №2 — Sabrina Carpenter «Man's Best Friend», около 292 тыс.
+Обратная сторона для нас: восемь вариантов на 1.6 млн — избыток, поэтому
+«Showgirl» на eBay от $9.99 (аукцион) и $16.98.

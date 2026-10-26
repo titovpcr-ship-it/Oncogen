@@ -15,11 +15,16 @@ MusicBrainz (musicbrainz.org/ws/2, robots не закрывает; не чаще
 «Michael Jackson» → «King of Pop», а не новозеландский поэт. Не найден —
 считается живым (не выдумываем смерть), это видно в отчёте.
 
+Пол — тоже из MusicBrainz (владелец 26.10.2026: «Оставь только женских
+исполнителей»): у человека поле gender, у группы — «girl group» в пояснении
+или пол всех участников. По имени пол не угадывается.
+
 Кэш — data/hype/alive.json (в git: факт смерти не меняется; живых
 перепроверяем раз в 90 дней). Ручная поправка — запись с "manual": true.
 """
 import json
 import os
+import re
 import sys
 import time
 from urllib.parse import quote
@@ -36,7 +41,9 @@ VOTE = ("https://musicbrainz.org/ws/2/{kind}/?query={field}:%22{t}%22%20AND%20"
 UA = "OncogenResearch/1.0 (vinyl market research)"
 PAUSE = 1.1
 RECHECK = 90 * 86400
-VERSION = 2             # 2 — тёзки различаются по записям из чартов
+VERSION = 3             # 2 — тёзки по записям из чартов; 3 — пол
+MEMBER = "https://musicbrainz.org/ws/2/artist/{}?fmt=json{}"
+_GIRLS = re.compile(r"\bgirl\s*group\b|\bfemale\b|\bwomen\b|девичья", re.I)
 
 
 def same_name(artists, name):
@@ -151,6 +158,28 @@ class Alive:
             return dict(cands[0], _ambiguous=True)
         return cands[0]
 
+    def group_gender(self, a):
+        """Пол группы: «girl group» в пояснении MusicBrainz (KATSEYE) или пол
+        всех участников (до 8 запросов). female / male / mixed / None."""
+        if _GIRLS.search(a.get("disambiguation") or ""):
+            return "female"
+        j = self._get(MEMBER.format(a["id"], "&inc=artist-rels"), a.get("name"))
+        ids = [r["artist"]["id"] for r in (j or {}).get("relations") or []
+               if r.get("type") == "member of band" and r.get("artist")][:8]
+        gs = set()
+        for i in ids:
+            m = self._get(MEMBER.format(i, ""), i)
+            gs.add(((m or {}).get("gender") or "").lower() or None)
+        gs.discard(None)
+        if not gs:
+            return None
+        return gs.pop() if len(gs) == 1 else "mixed"
+
+    def gender(self, name, hints=()):
+        """Пол исполнителя по MusicBrainz: female / male / non-binary / mixed
+        (группа) / None — не по имени, а по записи базы."""
+        return self.check(name, hints).get("gender")
+
     def check(self, name, hints=()):
         """{alive: True/False/None, note, mbid} — с кэшем.
 
@@ -170,7 +199,12 @@ class Alive:
         if a and a.get("_ambiguous"):
             # Тёзки, а записи из чартов не нашлись: смерть не выдумываем.
             alive, note = None, "тёзки в MusicBrainz, не различить"
+        g = None
+        if a and not a.get("_ambiguous"):
+            g = ((a.get("gender") or "").lower() or None
+                 if a.get("type") != "Group" else self.group_gender(a))
         z = {"v": VERSION, "name": name, "alive": alive, "note": note,
+             "gender": g,
              "mb": (a or {}).get("id"), "mb_name": (a or {}).get("name"),
              "type": (a or {}).get("type"), "t": round(time.time())}
         self.db[k] = z
