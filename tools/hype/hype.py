@@ -208,7 +208,9 @@ def pick(A, n, keep=None):
 
 # --- Discogs: что артиста покупают на виниле ---------------------------------
 
-_NOT_LP = re.compile(r'\b(?:7"|10"|Single|Flexi|Shape|Cassette|CD)\b')
+# «Single Sided» — односторонняя пластинка в составе альбома (Lady Gaga
+# «MAYHEM», 26.10.2026), а не сингл.
+_NOT_LP = re.compile(r'\b(?:7"|10"|Single(?!\s+Sided)|Flexi|Shape|Cassette|CD)\b')
 
 
 _ZW = re.compile("[\u200b-\u200f\u2060\ufeff]")

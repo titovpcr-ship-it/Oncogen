@@ -3102,3 +3102,15 @@ Taylor Swift «The Life of a Showgirl», около 1.6 млн копий в в�
 вариантах; №2 — Sabrina Carpenter «Man's Best Friend», около 292 тыс.
 Обратная сторона для нас: восемь вариантов на 1.6 млн — избыток, поэтому
 «Showgirl» на eBay от $9.99 (аукцион) и $16.98.
+
+Отдельный прогон по 25 исполнительницам (26.10.2026): новые — Chappell
+Roan («Midwest Princess» торг $17 → 2 938 ₽, аукцион $18.90), Lady Gaga
+(«Mayhem» 2LP Target $19 → 4 285 ₽ против plastinka 6 872 ₽, 1.6x — лучший
+в прогоне), Dua Lipa («Radical Optimism» Walmart $10.99 → 2 355 ₽ против
+3 400–4 952 ₽, 1.44x), SZA, Lana Del Rey, Shakira, Olivia Dean, Katy Perry.
+Ловушки: «Single Sided» в формате Discogs читалось как сингл — у
+«Mayhem» не было винила; «The Fame Monster» садился и на «The Fame»
+(короткое название — префикс длинного) — строки «The Fame» сняты руками;
+двойники SZA «SOS», «Ctrl», Gaga «Mayhem» — только в описании продавца.
+Отсеяны: SZA «SOS» за $20.98 (продавец с одним отзывом, шаблонная
+карточка), Gaga «Mayhem» за $19.99 («READ DESCR» без пояснений, конверт NM).

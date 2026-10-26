@@ -202,6 +202,12 @@ def test_vinil_discogs():
           sc["have"] == 7213 and sc["editions"] == 2)
     check("порядок — по копиям в коллекциях: Think Later 8 178 первым",
           alb[0]["album"] == "Think Later")
+    res2 = [{"title": "Lady Gaga - Mayhem", "master_id": 9,
+             "format": ["Vinyl", "LP", "Vinyl", "LP", "Single Sided", "Etched",
+                        "All Media", "Album"], "community": {"have": 9000, "want": 900}}]
+    check("«Single Sided» в формате альбома — не сингл (Lady Gaga «MAYHEM»)",
+          [a["album"] for a in H.vinyl_albums(FakeD(res2), "Lady Gaga", {})]
+          == ["Mayhem"])
     check("7\" сингл — не альбом на виниле",
           all(a["album"] != "Hung Up On You" for a in alb))
 
