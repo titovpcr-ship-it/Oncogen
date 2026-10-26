@@ -257,6 +257,22 @@ def test_tolko_zhivye():
           al.best([{"name": "Lone Justice", "score": 81}], "Justice") is None)
     check("нет в MusicBrainz — не выдумываем смерть",
           al.verdict(None)[0] is None)
+    # Steve Lacy 26.10.2026: самый релевантный тёзка — джазмен (1934–2004),
+    # а в чарте — гитарист The Internet; голосуют записи из чартов.
+    lacy = [{"id": "jazz", "name": "Steve Lacy", "score": 100, "type": "Person",
+             "life-span": {"end": "2004-06-04", "ended": True}},
+            {"id": "rnb", "name": "Steve Lacy", "score": 85, "type": "Person",
+             "life-span": {"begin": "1998-05-23", "ended": None}}]
+    c = al.pick_by_votes(lacy, {"rnb": 4, "jazz": 1})
+    check("Steve Lacy из чартов (4 записи «Bad Habit» из 5) — живой",
+          al.verdict(c) == (True, ""))
+    check("без голосов тёзку не выбираем", al.pick_by_votes(lacy, {}) is None)
+    z = {"hints": []}
+    H.hint(z, "Bad Habit (sped up)")
+    H.hint(z, "Bad Habit")
+    H.hint(z, "WILD - EP")
+    check("подсказки: без скобок и «- EP», без повторов",
+          z["hints"] == ["Bad Habit", "WILD"])
     A = {"a": {"artist": "Michael Jackson", "local": False, "surge": 0,
                "foreign_ru": True, "hype": 40},
          "b": {"artist": "Olivia Rodrigo", "local": False, "surge": 44,

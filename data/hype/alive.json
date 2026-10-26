@@ -1,4 +1,13 @@
 {
+"54ultra": {
+"alive": true,
+"mb": "6f4926ae-865e-483b-86f9-9ae3b9584507",
+"mb_name": "54 Ultra",
+"name": "54 Ultra",
+"note": "",
+"t": 1793018218,
+"type": "Person"
+},
 "adela": {
 "alive": true,
 "mb": "f40856e6-079f-4a0a-916e-9e6a5e04f646",
@@ -17,6 +26,42 @@
 "t": 1793018004,
 "type": "Person"
 },
+"andersonpaak": {
+"alive": true,
+"mb": "d02dd67e-f655-4600-bc47-f789f59e7367",
+"mb_name": "Anderson .Paak",
+"name": "Anderson .Paak",
+"note": "",
+"t": 1793018212,
+"type": "Person"
+},
+"arminvanbuuren": {
+"alive": true,
+"mb": "477b8c0c-c5fc-4ad2-b5b2-191f0bf2a9df",
+"mb_name": "Armin van Buuren",
+"name": "Armin van Buuren",
+"note": "",
+"t": 1793018223,
+"type": "Person"
+},
+"ashe": {
+"alive": true,
+"mb": "36086094-c2a4-49b9-8572-0fbf12fc3409",
+"mb_name": "Ashe",
+"name": "Ashe",
+"note": "",
+"t": 1793018185,
+"type": "Person"
+},
+"blok3": {
+"alive": true,
+"mb": "064814c9-1560-4d45-aaab-1b1f2c3b2b65",
+"mb_name": "BLOK3",
+"name": "BLOK3",
+"note": "",
+"t": 1793018196,
+"type": "Person"
+},
 "bts": {
 "alive": true,
 "mb": "0d79fe8e-ba27-4859-bb8c-2f255f346853",
@@ -26,6 +71,15 @@
 "t": 1793017996,
 "type": "Group"
 },
+"cordae": {
+"alive": true,
+"mb": "994a4bd6-584e-40c8-a8d7-5fdc3b6db8b2",
+"mb_name": "Cordae",
+"name": "Cordae",
+"note": "",
+"t": 1793018213,
+"type": "Person"
+},
 "cranberries": {
 "alive": false,
 "mb": "c98d40fd-f6cf-4b26-883e-eaa515ee2851",
@@ -34,6 +88,24 @@
 "note": "распались 2019",
 "t": 1793017961,
 "type": "Group"
+},
+"djgoja": {
+"alive": true,
+"mb": "ba5d78cb-4419-40c4-8b16-5e3a41254456",
+"mb_name": "DJ Goja",
+"name": "DJ Goja",
+"note": "",
+"t": 1793018190,
+"type": null
+},
+"drake": {
+"alive": true,
+"mb": "9fff2f8a-21e6-47de-a2b8-7f449929d43f",
+"mb_name": "Drake",
+"name": "Drake",
+"note": "",
+"t": 1793018188,
+"type": "Person"
 },
 "fontainesdc": {
 "alive": true,
@@ -62,14 +134,42 @@
 "t": 1793017997,
 "type": "Person"
 },
+"jheneaiko": {
+"alive": true,
+"mb": "ceb3f5b7-9f1a-430f-afbe-976fdcf30482",
+"mb_name": "Jhené Aiko",
+"name": "Jhené Aiko",
+"note": "",
+"t": 1793018214,
+"type": "Person"
+},
+"judeline": {
+"alive": true,
+"mb": "b828d419-2928-4286-9509-5d920d524358",
+"mb_name": "Judeline",
+"name": "Judeline",
+"note": "",
+"t": 1793018180,
+"type": "Person"
+},
 "justice": {
 "alive": true,
 "mb": "860b2707-6153-4e3a-aa57-74d2b42c55b5",
 "mb_name": "Justice",
 "name": "Justice",
 "note": "",
-"t": 1793017963,
-"type": "Group"
+"t": 1793018462,
+"type": "Group",
+"v": 2
+},
+"kanyewest": {
+"alive": null,
+"mb": null,
+"mb_name": null,
+"name": "Kanye West",
+"note": "нет в MusicBrainz",
+"t": 1793018232,
+"type": null
 },
 "karolg": {
 "alive": true,
@@ -79,6 +179,15 @@
 "note": "",
 "t": 1793017969,
 "type": "Person"
+},
+"katseye": {
+"alive": true,
+"mb": "abbf7d85-9a7f-4a6c-80bd-bf71f2c7d520",
+"mb_name": "KATSEYE",
+"name": "KATSEYE",
+"note": "",
+"t": 1793018197,
+"type": "Group"
 },
 "kimosounds": {
 "alive": true,
@@ -104,8 +213,18 @@
 "mb_name": "Linkin Park",
 "name": "LINKIN PARK",
 "note": "",
-"t": 1793017963,
-"type": "Group"
+"t": 1793018463,
+"type": "Group",
+"v": 2
+},
+"lyfestylecorporation": {
+"alive": true,
+"mb": "a7251770-1f63-4e98-b5a3-1757852b3595",
+"mb_name": "Lyfestyle Corporation",
+"name": "Lyfestyle Corporation",
+"note": "",
+"t": 1793018199,
+"type": "Other"
 },
 "michaeljackson": {
 "alive": false,
@@ -113,8 +232,9 @@
 "mb_name": "Michael Jackson",
 "name": "Michael Jackson",
 "note": "умер(ла) 2009-06-25",
-"t": 1793017959,
-"type": "Person"
+"t": 1793018456,
+"type": "Person",
+"v": 2
 },
 "nirvana": {
 "alive": false,
@@ -122,8 +242,18 @@
 "mb_name": "Nirvana",
 "name": "Nirvana",
 "note": "распались 1994",
-"t": 1793017960,
-"type": "Group"
+"t": 1793018473,
+"type": "Group",
+"v": 2
+},
+"nocap": {
+"alive": true,
+"mb": "319f70f9-7ca3-4fa8-bcda-c06ba3f9ba30",
+"mb_name": "NoCap",
+"name": "NoCap",
+"note": "",
+"t": 1793018216,
+"type": "Person"
 },
 "oliviarodrigo": {
 "alive": true,
@@ -143,6 +273,43 @@
 "t": 1793018002,
 "type": "Group"
 },
+"rodwave": {
+"alive": true,
+"mb": "cb3d3e49-bf08-4cdb-bfa8-4dc7c458cea1",
+"mb_name": "Rod Wave",
+"name": "Rod Wave",
+"note": "",
+"t": 1793018200,
+"type": "Person"
+},
+"rusowsky": {
+"alive": true,
+"mb": "d836bdef-52ef-4142-baba-573e5b529478",
+"mb_name": "rusowsky",
+"name": "rusowsky",
+"note": "",
+"t": 1793018173,
+"type": "Person"
+},
+"stevelacy": {
+"alive": true,
+"mb": "b29020d6-5dbf-4c99-b16f-c009f8a712ff",
+"mb_name": "Steve Lacy",
+"name": "Steve Lacy",
+"note": "",
+"t": 1793018448,
+"type": "Person",
+"v": 2
+},
+"stromae": {
+"alive": true,
+"mb": "ab2528d9-719f-4261-8098-21849222a0f2",
+"mb_name": "Stromae",
+"name": "Stromae",
+"note": "",
+"t": 1793018223,
+"type": "Person"
+},
 "tameimpala": {
 "alive": true,
 "mb": "63aa26c3-d59b-4da4-84ac-716b54f1ef4d",
@@ -150,6 +317,24 @@
 "name": "Tame Impala",
 "note": "",
 "t": 1793018007,
+"type": "Person"
+},
+"tatemcrae": {
+"alive": true,
+"mb": "f9133869-f87c-459c-9aa7-2f176cda7e06",
+"mb_name": "Tate McRae",
+"name": "Tate McRae",
+"note": "",
+"t": 1793018168,
+"type": "Person"
+},
+"taylorswift": {
+"alive": true,
+"mb": "20244d07-534f-4eff-b4d4-930878889970",
+"mb_name": "Taylor Swift",
+"name": "Taylor Swift",
+"note": "",
+"t": 1793018171,
 "type": "Person"
 },
 "ultranate": {
@@ -161,6 +346,15 @@
 "t": 1793018011,
 "type": "Person"
 },
+"victormendivil": {
+"alive": true,
+"mb": "f06b96ed-0e3f-4182-ab26-df6748cba5f3",
+"mb_name": "Victor Mendivil",
+"name": "Victor Mendivil",
+"note": "",
+"t": 1793018195,
+"type": null
+},
 "weeknd": {
 "alive": true,
 "mb": "c8b03190-306c-4120-bb0b-6f2ebfc06ea9",
@@ -168,6 +362,33 @@
 "name": "The Weeknd",
 "note": "",
 "t": 1793017967,
+"type": "Person"
+},
+"yeat": {
+"alive": true,
+"mb": "9e6a6a2f-f696-4cc0-87f1-e4f712e46802",
+"mb_name": "Yeat",
+"name": "Yeat",
+"note": "",
+"t": 1793018198,
+"type": "Person"
+},
+"yungmiami": {
+"alive": true,
+"mb": "7e987fc0-7606-4637-8eb1-8c9c3e57a65c",
+"mb_name": "Yung Miami",
+"name": "Yung Miami",
+"note": "",
+"t": 1793018217,
+"type": "Person"
+},
+"zachbryan": {
+"alive": true,
+"mb": "51e90731-08c0-4f60-89b6-5b78e5844de8",
+"mb_name": "Zach Bryan",
+"name": "Zach Bryan",
+"note": "",
+"t": 1793018167,
 "type": "Person"
 }
 }

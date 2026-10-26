@@ -61,6 +61,9 @@ SNAPS = os.path.join(ROOT, "data", "hype")
 RAW = os.path.join(ROOT, "cache", "hype_raw")
 DG_CACHE = os.path.join(ROOT, "cache", "hype_discogs.json")
 DG_TTL = 7 * 86400
+# 2 — имя артиста в издании сверяется (HUGEL/Hugel, Justice/Lone Justice):
+# записи первого прогона 26.10.2026 этого не знали.
+DG_VERSION = 2
 PLASTINKA = os.path.join(ROOT, "data", "ru_shop_plastinka.csv")
 APPMI = os.path.join(ROOT, "data", "ru_shop2_appmistore.csv")
 AVITO = os.path.join(ROOT, "data", "avito_price_palette.csv")
@@ -83,6 +86,14 @@ def _date_days(s, today):
     return (today - t) / 86400
 
 
+def hint(z, title):
+    """Название песни или альбома из чарта — подсказка, кто из тёзок наш."""
+    t = re.sub(r"\s*[\(\[][^\)\]]*[\)\]]", "", title or "").strip()
+    t = re.sub(r"\s+-\s+(?:EP|Single)\s*$", "", t, flags=re.I)
+    if t and t not in z["hints"]:
+        z["hints"].append(t)
+
+
 def score(snap, today=None):
     """Метрики по артистам: взлёт за квартал, Россия, слушатели.
 
@@ -98,7 +109,8 @@ def score(snap, today=None):
             A[k] = {"artist": name, "new_g": 0.0, "new_us": 0.0, "up": 0.0,
                     "songs_new": [], "album_new": None, "points": None,
                     "pos": None, "top_country": "", "listeners": None,
-                    "peak": None, "ru": [], "ru_score": 0.0, "global": False}
+                    "peak": None, "ru": [], "ru_score": 0.0, "global": False,
+                    "hints": []}
         return A[k]
 
     for r in snap.get("digital", []):
@@ -116,6 +128,7 @@ def score(snap, today=None):
                 for n in names:
                     z = get(n)
                     z["global"] = True
+                    hint(z, title)
                     z["up"] += share * max(0.0, r["streams_up"]) / 1e6
                     if r["weeks"] <= ch.QUARTER_WEEKS:
                         z[field] += share * r["streams"] / 1e6
@@ -128,6 +141,7 @@ def score(snap, today=None):
         for n in main:
             z = get(n)
             z["global"] = True
+            hint(z, r["title"])
             if days is not None and days <= ch.QUARTER_DAYS and (
                     z["album_new"] is None or r["pos"] < z["album_new"]["pos"]):
                 z["album_new"] = {"title": r["title"], "pos": r["pos"],
@@ -146,6 +160,7 @@ def score(snap, today=None):
                 if _CYR.search(n):
                     continue
                 z = get(n)
+                hint(z, title)
                 z["ru"].append(f"{label} №{r['pos']} «{title}»")
                 z["ru_score"] += (201 - min(r["pos"], 200)) / 200
     for z in A.values():
@@ -215,7 +230,7 @@ def vinyl_albums(d, artist, cache):
     [{album, have, want, master}], свежесть кэша — неделя."""
     k = ch.key(artist)
     hit = cache.get(k)
-    if hit and time.time() - hit["t"] < DG_TTL:
+    if hit and hit.get("v") == DG_VERSION and time.time() - hit["t"] < DG_TTL:
         return hit["albums"]
     from urllib.parse import quote
     url = SEARCH.format(quote(artist))
@@ -239,7 +254,7 @@ def vinyl_albums(d, artist, cache):
         z["want"] += c.get("want", 0)
         z["editions"] += 1
     albums = sorted(by.values(), key=lambda z: -z["have"])
-    cache[k] = {"t": time.time(), "albums": albums}
+    cache[k] = {"v": DG_VERSION, "t": time.time(), "albums": albums}
     return albums
 
 
@@ -247,7 +262,7 @@ def vinyl_title(d, artist, album, cache):
     """Есть ли у альбома винил на Discogs: {album, have, want} или None."""
     k = f"{ch.key(artist)}|{_norm_album(album)}"
     hit = cache.get(k)
-    if hit and time.time() - hit["t"] < DG_TTL:
+    if hit and hit.get("ver") == DG_VERSION and time.time() - hit["t"] < DG_TTL:
         return hit["v"]
     from urllib.parse import quote
     name = re.sub(r"\s*[\(\[][^\)\]]*[\)\]]", "", album)
@@ -269,7 +284,7 @@ def vinyl_title(d, artist, album, cache):
             v = {"album": _album_of(x.get("title")), "have": 0, "want": 0}
         v["have"] += c.get("have", 0)
         v["want"] += c.get("want", 0)
-    cache[k] = {"t": time.time(), "v": v}
+    cache[k] = {"ver": DG_VERSION, "t": time.time(), "v": v}
     return v
 
 
@@ -401,7 +416,7 @@ def run(a):
     dead = {}
 
     def keep(z):
-        v = life.check(z["artist"])
+        v = life.check(z["artist"], z.get("hints") or ())
         if v["alive"] is False:
             dead[z["artist"]] = v["note"]
             return False
