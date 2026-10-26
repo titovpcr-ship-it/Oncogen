@@ -38,6 +38,26 @@
 "type": "Person",
 "v": 2
 },
+"anuelaa": {
+"alive": true,
+"mb": "87a75fc3-59e7-4598-925c-8e230bce5db9",
+"mb_name": "Anuel AA",
+"name": "Anuel AA",
+"note": "",
+"t": 1793019705,
+"type": "Person",
+"v": 2
+},
+"arianagrande": {
+"alive": true,
+"mb": "f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387",
+"mb_name": "Ariana Grande",
+"name": "Ariana Grande",
+"note": "",
+"t": 1793019632,
+"type": "Person",
+"v": 2
+},
 "arminvanbuuren": {
 "alive": true,
 "mb": "477b8c0c-c5fc-4ad2-b5b2-191f0bf2a9df",
@@ -55,6 +75,16 @@
 "name": "Ashe",
 "note": "",
 "t": 1793018584,
+"type": "Person",
+"v": 2
+},
+"badbunny": {
+"alive": true,
+"mb": "89aa5ecb-59ad-46f5-b3eb-2d424e941f19",
+"mb_name": "Bad Bunny",
+"name": "Bad Bunny",
+"note": "",
+"t": 1793019633,
 "type": "Person",
 "v": 2
 },
@@ -135,6 +165,16 @@
 "name": "Fontaines D.C.",
 "note": "",
 "t": 1793018576,
+"type": "Group",
+"v": 2
+},
+"fuerzaregida": {
+"alive": true,
+"mb": "e665ce26-6ce9-4c42-8f6a-7a361a0ba328",
+"mb_name": "Fuerza Regida",
+"name": "Fuerza Regida",
+"note": "",
+"t": 1793019638,
 "type": "Group",
 "v": 2
 },
@@ -246,6 +286,16 @@
 "type": "Group",
 "v": 2
 },
+"lisa": {
+"alive": true,
+"mb": "85d76093-9865-4605-97fa-8c910929d366",
+"mb_name": "LiSA",
+"name": "LISA",
+"note": "",
+"t": 1793019645,
+"type": "Person",
+"v": 2
+},
 "lyfestylecorporation": {
 "alive": true,
 "mb": "a7251770-1f63-4e98-b5a3-1757852b3595",
@@ -286,6 +336,16 @@
 "type": "Person",
 "v": 2
 },
+"oliviadean": {
+"alive": true,
+"mb": "15e0d608-0869-429b-898d-3d8db3ecedd5",
+"mb_name": "Olivia Dean",
+"name": "Olivia Dean",
+"note": "",
+"t": 1793019696,
+"type": "Person",
+"v": 2
+},
 "oliviarodrigo": {
 "alive": true,
 "mb": "6925db17-f35e-42f3-a4eb-84ee6bf5d4b0",
@@ -293,6 +353,16 @@
 "name": "Olivia Rodrigo",
 "note": "",
 "t": 1793018545,
+"type": "Person",
+"v": 2
+},
+"omarcourtz": {
+"alive": true,
+"mb": "61ee1029-4f35-43ce-83dd-2eb8d4eef85e",
+"mb_name": "Omar Courtz",
+"name": "Omar Courtz",
+"note": "",
+"t": 1793019705,
 "type": "Person",
 "v": 2
 },
@@ -304,6 +374,16 @@
 "note": "распались",
 "t": 1793018002,
 "type": "Group"
+},
+"rammstein": {
+"alive": true,
+"mb": "b2d122f9-eadb-4930-a196-8f221eeb0c66",
+"mb_name": "Rammstein",
+"name": "Rammstein",
+"note": "",
+"t": 1793019695,
+"type": "Group",
+"v": 2
 },
 "rodwave": {
 "alive": true,
@@ -322,6 +402,16 @@
 "name": "rusowsky",
 "note": "",
 "t": 1793018577,
+"type": "Person",
+"v": 2
+},
+"siennaspiro": {
+"alive": true,
+"mb": "ea696191-407a-4bf2-8302-7e05f6c163c5",
+"mb_name": "Sienna Spiro",
+"name": "SIENNA SPIRO",
+"note": "",
+"t": 1793019646,
 "type": "Person",
 "v": 2
 },
