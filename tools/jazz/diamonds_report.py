@@ -29,7 +29,7 @@ for sub in ("tools", "tools/jazz", "tools/ruspop"):
     sys.path.insert(0, os.path.join(ROOT, sub))
 
 OUT = os.path.join(ROOT, "out")
-FWD = 11.0
+import ruspop as rp                                             # noqa: E402
 SHIP_GUESS = 5.0
 
 
@@ -82,7 +82,8 @@ def block(r, rate):
     price = fnum(r["price"], 0.0)
     ask = fnum(r.get("ask"), price)
     ship = fnum(r.get("ship"))
-    moscow = round((price + (ship if ship is not None else SHIP_GUESS) + FWD)
+    moscow = round((price + (ship if ship is not None else SHIP_GUESS)
+                    + rp.fwd_usd(rp.discs_of(r.get("title") or "")))
                    * rate)
     sh = f"+${ship:.2f}" if ship is not None else "+доставка ?"
     offer = (f" (предложить; запрос ${ask:.2f})" if ask and ask != price else "")
@@ -143,12 +144,11 @@ def main():
                 f"находок нет</b>\n{stats}\nБ/у джаз до $40, «купить "
                 f"сейчас» и торг, только США."]
     else:
-        import ruspop as rp
         rate, rate_date = rp.rub_rate()
         head = (f"<b>Алмазы — {time.strftime('%d.%m.%Y')}: {len(rows)} "
                 f"(проверены по фото)</b>\n{stats}\nкурс ЦБ {rate:.2f} "
-                f"({rate_date}); Москва = лот + доставка по США + "
-                f"${FWD:.0f}")
+                f"({rate_date}); Москва = лот + доставка по США + пересылка "
+                f"{rp.FWD_NOTE}")
         tail = ("Пол Discogs — запрос за любое состояние, не сделка. Доли — "
                 "по копиям в коллекциях Discogs.\nСпросить продавца: "
                 + html.escape(dm.ASK))

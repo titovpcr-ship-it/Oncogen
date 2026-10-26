@@ -64,7 +64,7 @@ def main():
             continue
         discs = rp.discs_of(t)
         ship = float(r["ship"]) if r.get("ship") else rp.SHIP_GUESS
-        landed = (p + ship + rp.FWD_PER_DISC * discs) * rate
+        landed = (p + ship + rp.fwd_usd(discs)) * rate
         r["_rub"] = round(landed)
         r["_discs"] = discs
         albums[k]["modes"][r["mode"]] = r
@@ -110,8 +110,8 @@ def main():
                          + f"\n{m['url']}")
         blocks.append("\n".join(lines))
     head = (f"<b>ruspop — {'топ-' + str(len(keep)) + ' по отзывам Best Buy' if a.top else str(len(keep)) + ' альбомов'}, лоты до ${a.max_price:.0f} "
-            f"без доставки</b>\nМосква = лот + доставка по США + $11 за "
-            f"пластинку, курс ЦБ. Сортировка — по отзывам Best Buy.\n"
+            f"без доставки</b>\nМосква = лот + доставка по США + пересылка "
+            f"{rp.FWD_NOTE}, курс ЦБ. Сортировка — по отзывам Best Buy.\n"
             f"Цена WB/Ozon — витрина, не сделка; у аукциона — текущая ставка.")
     msgs, cur = [], head + "\n"
     for b in blocks:

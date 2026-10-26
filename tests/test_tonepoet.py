@@ -113,8 +113,18 @@ def test_bu_dopuskaetsya_brak_net():
           not T._DEFECT.search("2021 Tone Poet reissue, repress by RTI"))
 
 
+def test_peresylka_po_vesu():
+    # Тариф владельца 26.10.2026: $22 за кг; вес взвешен владельцем.
+    import ruspop as rp
+    check("одинарник 0.40 кг — $8.80", rp.fwd_usd(1) == 8.8)
+    check("двойник в развороте 0.914 кг — $20.11", rp.fwd_usd(2) == 20.11)
+    check("Tone Poet одинарник в развороте 0.514 кг — $11.31",
+          rp.item_kg(1, True) == 0.514 and rp.fwd_usd(1, True) == 11.31)
+    check("три диска — шагом двойника", rp.item_kg(3) == 1.428)
+
+
 def main():
-    for fn in [test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
+    for fn in [test_peresylka_po_vesu, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
                test_ne_ta_seriya, test_bu_dopuskaetsya_brak_net]:
         print(f"\n{fn.__name__}")
         fn()

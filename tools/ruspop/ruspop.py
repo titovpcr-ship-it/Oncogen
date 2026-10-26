@@ -46,7 +46,30 @@ XLSX = os.path.join(ROOT, "data", "ruspop", "vinyl_top20_russia_world.xlsx")
 # покупателей — маркер популярности (его слова), цена — американская розница.
 BESTBUY = os.path.join(ROOT, "data", "ruspop", "bestbuy_popularity.csv")
 OUT = os.path.join(ROOT, "out")
-FWD_PER_DISC = 11.0
+# Пересылка в Москву — тариф владельца 26.10.2026: «За 1 кг 22$ до Москвы»
+# (прежний — $11 за пластинку, O-61). Вес предмета — взвешен владельцем
+# (tools/album_cards.py): одинарник с конвертом 0.400 кг, двойник в
+# развороте 0.914 кг; разворот у одинарника (Tone Poet) — +0.114 кг, это
+# разница двойника и двух одинарников. Три диска и больше — шагом двойника,
+# экстраполяция.
+FWD_PER_KG = 22.0
+ITEM_KG = {1: 0.400, 2: 0.914}
+GATEFOLD_KG = round(ITEM_KG[2] - 2 * ITEM_KG[1], 3)
+
+
+def item_kg(discs, gatefold=False):
+    discs = max(1, int(discs or 1))
+    if discs == 1:
+        return round(ITEM_KG[1] + (GATEFOLD_KG if gatefold else 0.0), 3)
+    return round(ITEM_KG[2] + (ITEM_KG[2] - ITEM_KG[1]) * (discs - 2), 3)
+
+
+def fwd_usd(discs, gatefold=False):
+    """Пересылка предмета в Москву, $ (без упаковки посылки)."""
+    return round(FWD_PER_KG * item_kg(discs, gatefold), 2)
+
+
+FWD_NOTE = "$22/кг (одинарник 0.40 кг, двойник 0.91 кг)"
 SHIP_GUESS = 5.0
 RATE_FALLBACK = 80.54          # ЦБ на 24.10.2026, если сайт ЦБ не ответил
 MODES = ("купить сейчас", "предложить цену", "аукцион")
@@ -342,7 +365,7 @@ def main():
                     m = re.match(r"(\d+)\s*x", v["format"])
                     if m:
                         discs = int(m.group(1))
-                landed = total + FWD_PER_DISC * discs
+                landed = total + fwd_usd(discs)
                 rub = round(landed * rate)
                 row["modes"][kind] = {
                     "price": p, "ship": sh, "note": note, "discs": discs,
@@ -380,7 +403,7 @@ def main():
         w.writerows(flat)
 
     head = (f"курс ЦБ {rate:.2f} ₽/$ ({rate_date}); себестоимость в Москве = "
-            f"лот + доставка по США + ${FWD_PER_DISC:.0f} за пластинку")
+            f"лот + доставка по США + пересылка {FWD_NOTE}")
     blocks = [render(r) for r in rows]
     print(head)
     for b in blocks:

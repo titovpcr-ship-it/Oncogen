@@ -101,7 +101,6 @@ def defect(text):
 
 _GOOD_GRADE = re.compile(r"\bmint\b|\bnm\b|\bnear\s*mint\b|\bm-|\bvg\+|"
                          r"\bexcellent\b|\bex\b", re.I)
-FWD_PER_DISC = rp.FWD_PER_DISC
 SHIP_GUESS = rp.SHIP_GUESS
 MODES = rp.MODES
 LABEL = rp.LABEL
@@ -289,7 +288,8 @@ def lot_row(it, item, alb, how, discs_hint=None):
     sh = shipping_usd(it)
     t = it.get("title") or ""
     discs = discs_hint or rp.discs_of(t)
-    landed = p + (sh if sh is not None else SHIP_GUESS) + FWD_PER_DISC * discs
+    # Tone Poet — всегда разворот (deluxe gatefold): вес одинарника 0.514 кг.
+    landed = p + (sh if sh is not None else SHIP_GUESS) + rp.fwd_usd(discs, True)
     sealed, state = grade(it, item)
     return {"price": p, "ship": sh, "kind": kind, "note": note,
             "discs": discs, "landed_usd": round(landed, 2),
@@ -556,7 +556,8 @@ def main():
 
     head = (f"{'курс ЦБ' if not a.usd_rub else 'курс'} {rate:.2f} ₽/$ "
             f"({rate_date}); Москва = лот + доставка "
-            f"по США + ${FWD_PER_DISC:.0f} за пластинку; потолок "
+            f"по США + пересылка $22/кг (Tone Poet в развороте: одинарник "
+            f"0.51 кг, двойник 0.91 кг); потолок "
             f"${a.max_price:.0f} без доставки, только США")
     blocks = [render(g) for g in order]
     print(head)

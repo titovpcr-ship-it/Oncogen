@@ -69,7 +69,6 @@ STATE = os.path.join(ROOT, "data", "freeship_stream.json")
 JAZZ = f"categoryId:{hunt.CATEGORY},Genre:{{Jazz}}"
 # Полосы цены раздела Jazz: у eBay не больше 10 тыс. лотов на запрос.
 BANDS = (0.0, 5.0)
-FWD = 11.0                       # пересылка в Москву за пластинку, как в ruspop
 # Курс владельца (25.10.2026: «Курс взять 95 рублей за доллар и 110 за
 # евро»): цены Discogs по состоянию приходят в валюте продавца аккаунта, а
 # Москва считается в рублях.
@@ -620,11 +619,13 @@ def report(a):
     blocks = []
     if rows:
         rate = USD_RUB
+        import ruspop as rp
         head += (f"\nкурс владельца {USD_RUB:.0f} ₽/$; Москва = лот + "
-                 f"${FWD:.0f} пересылки за пластинку")
+                 f"пересылка {rp.FWD_NOTE}")
         for r in rows:
             price = float(r["price"])
-            moscow = round((price + FWD * int(r.get("discs") or 1)) * rate)
+            moscow = round((price + rp.fwd_usd(int(r.get("discs") or 1)))
+                           * rate)
             e = html.escape
             ms = f"{moscow:,}".replace(",", " ")
             sl = f" / конверт {e(r['sleeve'])}" if r.get("sleeve") else ""
