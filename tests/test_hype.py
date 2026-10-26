@@ -237,6 +237,9 @@ def test_lovushki_progona():
                               {"album": "Hyperdrama", "have": 5000, "want": 900}], 3)
     check("альбом «†» пропущен, «Hyperdrama» взят",
           [g["album"] for g in got] == ["Hyperdrama"])
+    check("Discogs: «Wendy & Lisa» — не LISA, «Yeat & Lyfestyle» — Yeat",
+          not H.artist_is("Wendy & Lisa - Fruit At The Bottom", "LISA")
+          and H.artist_is("Yeat & Lyfestyle Corporation - Luh Leakyz", "Yeat"))
     check("Discogs: Lone Justice — не Justice, Justice (3) — Justice",
           not H.artist_is("Lone Justice - Lone Justice", "Justice")
           and H.artist_is("Justice (3) - Hyperdrama", "Justice"))

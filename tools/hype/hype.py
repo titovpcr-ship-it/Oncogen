@@ -231,7 +231,9 @@ def artist_is(title, artist):
     пометки Discogs, не имя."""
     a = _ZW.sub("", title or "").partition(" - ")[0]
     k = ch.key(artist)
-    names = [a] + re.split(r"\s*[,&/]\s*|\s+x\s+", a)
+    # Целиком или первым в связке: «Yeat & Lyfestyle Corporation» — Yeat;
+    # «Wendy & Lisa» — не LISA (BLACKPINK), прогон 26.10.2026.
+    names = [a, re.split(r"\s*[,&/]\s*|\s+x\s+", a)[0]]
     return any(ch.key(_DG_SUFFIX.sub("", n)) == k for n in names)
 
 

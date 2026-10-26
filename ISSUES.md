@@ -3069,3 +3069,16 @@ Bryan, Taylor Swift, Drake, Ashe, Ariana Grande, Tame Impala, Bad Bunny,
 Fuerza Regida, KATSEYE, LISA, Sienna Spiro, Steve Lacy и др.; вышли
 Imael Angel, HUGEL, BLOK3, Kimo Sounds, Ultra Naté, Linkin Park (у них
 только русские чарты).
+
+Прогон «на Запад» 26.10.2026: популярны на Западе сегодня — Olivia
+Rodrigo 3 637, Drake 3 384, Taylor Swift 3 084, Bad Bunny 2 950, ADÉLA,
+KAROL G, Tate McRae, Ariana Grande, The Weeknd, Olivia Dean. Новые лоты:
+Anderson .Paak & Cordae «Heavy Is The Crown» (№7 Apple США, вышел 23.10)
+$14.99 → 2 735 ₽; Bad Bunny «Debí Tirar Más Fotos» 2LP $24–24.88 → 4 665–
+4 934 ₽ (Discogs от $28.88); Steve Lacy «Gemini Rights» $22.23; Anderson
+.Paak «Ventura» аукцион $24.99. Отсеян Ariana Grande «Petal» за $19.99 —
+«never played, mind the defect». Ловушки: двойник только в описании
+(«Double Opaque vinyl» при «Type: LP» в карточке) — поправлен руками;
+«Wendy & Lisa» на Discogs засчитывалось за LISA — теперь в связке «A & B»
+считается только первый.
+
