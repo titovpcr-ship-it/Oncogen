@@ -142,8 +142,23 @@ def test_novye_loty():
           T.mark_new(lots, seen, "2026-10-26") == [])
 
 
+def test_sings_and_plays():
+    rows = T.load_catalog()
+    m = T.match_album("Chet Baker - Chet Baker Sings & Plays - Tone Poet LP",
+                      rows)
+    check("«Sings & Plays» — «Sings And Plays With Bud Shank…», не «Sings»",
+          m is not None and m["title"].startswith("Sings And Plays"))
+    m = T.match_album("Chet Baker Sings Blue Note Tone Poet LP Pacific Jazz",
+                      rows)
+    check("«Chet Baker Sings» — по-прежнему «Chet Baker Sings»",
+          m is not None and m["title"] == "Chet Baker Sings")
+    m = T.match_album("Lee Konitz Plays With The Gerry Mulligan Quartet "
+                      "[Blue Note Tone Poet]", rows)
+    check("Lee Konitz — опознаётся", m is not None and "Konitz" in m["artist"])
+
+
 def main():
-    for fn in [test_peresylka_po_vesu, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
+    for fn in [test_peresylka_po_vesu, test_sings_and_plays, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
                test_ne_ta_seriya, test_bu_dopuskaetsya_brak_net]:
         print(f"\n{fn.__name__}")
         fn()

@@ -192,11 +192,27 @@ def match_album(title, rows):
     # Год после названия («The Right Touch 2023 Tone Poet») матчер
     # ruspop читает как номер продолжения — в каталоге серии годов нет.
     t = _YEAR.sub(" ", t)
+    # «&» в заголовке — «and» каталога: «Chet Baker Sings & Plays» — это
+    # «Sings And Plays With Bud Shank, Russ Freeman And Strings», а не
+    # «Chet Baker Sings» (26.10.2026: пол $39 вместо $23).
+    t_and = re.sub(r"\s*&\s*", " and ", t)
     best = None
     for r in rows:
         if not fx.artist_in(t, r["who"]):
             continue
-        if not album_ok(t, r["who"], core_album(r["title"])):
+        core = core_album(r["title"])
+        # Хвост «With …» продавцы не пишут: «Sings And Plays».
+        alt = re.split(r"\s+with\s+", core, flags=re.I)[0]
+        cores = [core] + ([alt] if alt != core and len(alt.split()) >= 2
+                          else [])
+        hit = [c for c in cores for tt in (t, t_and)
+               if album_ok(tt, r["who"], c)]
+        if not hit:
+            continue
+        # Название в заголовке продолжается союзом — это другой, более
+        # длинный альбом.
+        if any(re.search(r"\b" + r"\s+".join(map(re.escape, c.lower().split()))
+                         + r"\s+and\s+\w", t_and.lower()) for c in hit):
             continue
         key = (len(r["title"]), int(r.get("copies") or 0))
         if best is None or key > (len(best["title"]), int(best.get("copies") or 0)):
