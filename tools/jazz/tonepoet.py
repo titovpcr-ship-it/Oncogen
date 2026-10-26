@@ -54,6 +54,11 @@ from src.common.ebay import (ApiRefused, ebay_token,           # noqa: E402
 
 CATALOG = os.path.join(ROOT, "data", "series_catalog.csv")
 OUT = os.path.join(ROOT, "out")
+# Уже виденные лоты (id → цена, когда впервые и последний раз) — по
+# расписанию дважды в день (владелец 26.10.2026) в Telegram идут только
+# новые лоты и подешевевшие на $1+. Купленное — data/tonepoet_bought.csv.
+SEEN_TP = os.path.join(ROOT, "data", "tonepoet_seen.json")
+BOUGHT = os.path.join(ROOT, "data", "tonepoet_bought.csv")
 QUERIES = ["tone poet", "tone-poet", "blue note tone poet"]
 MARK = re.compile(r"tone\s*-?\s*poet", re.I)
 # «not Tone Poet», «like Tone Poet quality» — продавец сравнивает, а не
@@ -342,7 +347,16 @@ def main():
                     help="курс для Москвы вместо курса ЦБ дня (владелец "
                          "25.10.2026: 95 ₽/$)")
     ap.add_argument("--tg", action="store_true")
+    ap.add_argument("--send-new", action="store_true",
+                    help="новые лоты последнего прогона — в Telegram "
+                         "(без --send — только показать)")
+    ap.add_argument("--exclude", nargs="*", default=[],
+                    help="с --send-new: лоты, отсеянные проверкой глазами")
+    ap.add_argument("--note", default="")
+    ap.add_argument("--send", action="store_true")
     a = ap.parse_args()
+    if a.send_new:
+        return send_new(a)
 
     rate, rate_date = ((a.usd_rub, "курс владельца") if a.usd_rub
                        else rp.rub_rate())
@@ -524,6 +538,18 @@ def main():
         if z["kind"] == "аукцион" and fl:
             z["max_bid"] = round(fl / 2, 2)
     d.save()
+    # Купленное владельцем — мимо; новые лоты — против прошлых прогонов.
+    bought = load_bought()
+    lots = [z for z in lots if z["id"].split("|")[1] not in bought]
+    try:
+        with open(SEEN_TP, encoding="utf-8") as f:
+            seen_tp = json.load(f)
+    except (OSError, ValueError):
+        seen_tp = {}
+    fresh = mark_new(lots, seen_tp, time.strftime("%Y-%m-%d"))
+    os.makedirs(os.path.dirname(SEEN_TP), exist_ok=True)
+    with open(SEEN_TP, "w", encoding="utf-8") as f:
+        json.dump(seen_tp, f, ensure_ascii=False, indent=1)
 
     # По альбому — лучший лот каждого способа покупки: запечатанные и
     # б/у отдельно, самый дешёвый с доставкой.
@@ -569,6 +595,20 @@ def main():
         print(f"  снято: {k} — {v}")
     if flat:
         print(f"файл: {path}")
+    # Новые лоты — отдельным файлом: по расписанию их проверяют глазами и
+    # отправляют «--send-new --send» (с --exclude отсеянных).
+    fresh.sort(key=lambda z: -(z["gap"] or 0))
+    stamp = time.strftime("%Y-%m-%d_%H%M%S")
+    with open(os.path.join(OUT, f"tonepoet_new_{stamp}.json"), "w",
+              encoding="utf-8") as f:
+        json.dump({"time": time.strftime("%d.%m.%Y %H:%M"),
+                   "max_price": a.max_price, "total": len(lots),
+                   "head": head,
+                   "new": [{"id": z["id"], "text": new_block(z)}
+                           for z in fresh]}, f, ensure_ascii=False, indent=1)
+    print(f"\nНОВЫЕ ЛОТЫ ({len(fresh)} из {len(lots)}):")
+    for z in fresh:
+        print("\n" + new_block(z))
     print(NOTE)
     if a.tg:
         from telegram_notify import TelegramNotifier
@@ -598,6 +638,85 @@ NOTE = ("Пол Discogs — самый дешёвый ЗАПРОС на площ
 
 def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def load_bought(path=BOUGHT):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return {r["item"] for r in csv.DictReader(f)}
+    except OSError:
+        return set()
+
+
+def mark_new(lots, seen, today):
+    """Новый лот — не виденный прошлыми прогонами или подешевевший на $1 и
+    больше; отметки обновляются текущей ценой."""
+    for z in lots:
+        prior = seen.get(z["id"])
+        if prior is None:
+            z["new"] = "новый"
+        elif z["price"] <= prior["p"] - 1:
+            z["new"] = f"дешевле: было ${prior['p']:.2f}"
+        else:
+            z["new"] = ""
+        seen[z["id"]] = {"p": z["price"],
+                         "first": prior["first"] if prior else today,
+                         "last": today}
+    return [z for z in lots if z["new"]]
+
+
+def new_block(z):
+    """Новый лот одной строкой-блоком для Telegram."""
+    sh = f"+${z['ship']:.2f}" if z["ship"] is not None else "+$5?"
+    lp = f", {z['discs']} LP" if z["discs"] > 1 else ""
+    fl = (f"Discogs от ${z['dg_floor']:.2f} ({z['dg_copies']} шт.)"
+          if z.get("dg_floor") else "на Discogs сейчас не продаётся")
+    rub = f"{z['landed_rub']:,}".replace(",", " ")
+    lim = (f"; предел ставки ${z['max_bid']:.0f}"
+           if z["kind"] == "аукцион" and z.get("max_bid") else "")
+    how = "" if z["how"] in ("«Tone Poet» в заголовке",
+                             "«Tone Poet» в заголовке, штрихкод совпал") \
+        else f"\n     {z['how']}"
+    return (f"{z['album'] or z['title']}  · {fl}  [{z['new']}]\n"
+            f"  {LABEL[z['kind']]}: ${z['price']:.2f} {sh}{lp} → Москва "
+            f"{rub} ₽{lim}{how}\n     {z['title'][:90]}\n     {z['url']}")
+
+
+def send_new(a):
+    """Новые лоты последнего прогона — в Telegram, после проверки глазами;
+    --exclude — лоты, отсеянные при проверке."""
+    import glob
+    files = sorted(glob.glob(os.path.join(OUT, "tonepoet_new_*.json")),
+                   key=os.path.getmtime)
+    if not files:
+        print("нет файла новых лотов", file=sys.stderr)
+        return 1
+    with open(files[-1], encoding="utf-8") as f:
+        r = json.load(f)
+    drop = {str(x).split("|")[1] if "|" in str(x) else str(x)
+            for x in a.exclude or []}
+    keep = [b for b in r["new"] if b["id"].split("|")[1] not in drop]
+    head = (f"<b>Tone Poet, запечатанные до ${r['max_price']:.0f} — "
+            f"{r['time']}: новых {len(keep)}</b>\n"
+            f"в продаже лотов {r['total']}; {esc(r['head'])}")
+    if a.note:
+        head += "\n" + esc(a.note)
+    msgs, cur = [], head + "\n"
+    for b in keep:
+        h = esc(b["text"])
+        if len(cur) + len(h) > 3800:
+            msgs.append(cur)
+            cur = ""
+        cur += "\n" + h + "\n"
+    msgs.append(cur + ("\n" + esc(NOTE) if keep else ""))
+    for m in msgs:
+        print(m + "\n")
+    if a.send:
+        from telegram_notify import TelegramNotifier
+        tn = TelegramNotifier()
+        sent = sum(1 for m in msgs if tn.send(m))
+        print(f"Telegram: отправлено {sent} из {len(msgs)} сообщений")
+    return 0
 
 
 def render(g):

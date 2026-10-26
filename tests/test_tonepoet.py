@@ -123,8 +123,27 @@ def test_peresylka_po_vesu():
     check("три диска — шагом двойника", rp.item_kg(3) == 1.428)
 
 
+def test_novye_loty():
+    # Расписание дважды в день (владелец 26.10.2026): в Telegram — только
+    # новые и подешевевшие на $1+.
+    seen = {"v1|1|0": {"p": 25.0, "first": "2026-10-25", "last": "2026-10-25"},
+            "v1|2|0": {"p": 25.0, "first": "2026-10-25", "last": "2026-10-25"}}
+    lots = [{"id": "v1|1|0", "price": 25.0}, {"id": "v1|2|0", "price": 22.0},
+            {"id": "v1|3|0", "price": 29.0}]
+    fresh = T.mark_new(lots, seen, "2026-10-26")
+    check("виденный по той же цене — не новый; подешевевший и невиденный — новые",
+          [z["id"] for z in fresh] == ["v1|2|0", "v1|3|0"]
+          and fresh[0]["new"] == "дешевле: было $25.00"
+          and fresh[1]["new"] == "новый")
+    check("отметки обновлены: цена текущая, «впервые» сохранено",
+          seen["v1|2|0"]["p"] == 22.0 and seen["v1|2|0"]["first"] == "2026-10-25"
+          and seen["v1|3|0"]["first"] == "2026-10-26")
+    check("второй прогон по тем же ценам — новых нет",
+          T.mark_new(lots, seen, "2026-10-26") == [])
+
+
 def main():
-    for fn in [test_peresylka_po_vesu, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
+    for fn in [test_peresylka_po_vesu, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
                test_ne_ta_seriya, test_bu_dopuskaetsya_brak_net]:
         print(f"\n{fn.__name__}")
         fn()
