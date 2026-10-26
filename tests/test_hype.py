@@ -121,9 +121,22 @@ def test_rossiya():
     check("«главная страна» Россия — местный (Basta)",
           A[ch.key("Basta")]["local"] and not A[ch.key("Basta")]["foreign_ru"])
     picked = [z["artist"] for z in H.pick(A, 10)]
-    check("в проверку: взлетевшие и иностранцы России, без местных",
+    check("в проверку: взлетевшие и популярные на Западе, без местных",
           "Olivia Rodrigo" in picked and "Michael Jackson" in picked
           and "Basta" not in picked)
+    # Владелец 26.10.2026: «Ориентируемся на запад» — русский чарт без
+    # западной популярности в выбор не ведёт.
+    s2 = snap()
+    s2["apple_ru_albums"].append({"pos": 1, "artist": "Kimo Sounds",
+                                  "title": "Rise Slow"})
+    s2["listeners"].append({"artist": "Kimo Sounds", "listeners": 5e6,
+                            "peak": 9e6})
+    A2 = H.score(s2, today)
+    check("иностранец только в русском чарте — справкой, не в проверку",
+          A2[ch.key("Kimo Sounds")]["foreign_ru"]
+          and "Kimo Sounds" not in [z["artist"] for z in H.pick(A2, 10)])
+    check("популярность на Западе: Olivia Rodrigo 3 564 балла → +35.64",
+          A2[ch.key("Olivia Rodrigo")]["hype"] == round(30.0 + 35.64, 2))
 
 
 def test_albomy():

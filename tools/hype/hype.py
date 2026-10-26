@@ -16,8 +16,10 @@ Billboard 200 после ремикса с Chappell Roan, а у владельц
    песни». Плюс альбом в топ-100 Apple Music США, вышедший за последние
    91 день. Слушатели Spotify у пика — пометкой. Гости в песне («w/ …») —
    половиной.
-2. РОССИЯ. Иностранец в русских чартах (Apple Music RU альбомы и песни,
-   Shazam RU, YouTube RU) — главный признак, что пластинку купят в России.
+2. ЗАПАД. Владелец 26.10.2026: «Ориентируемся на запад» — к взлёту
+   прибавляется популярность сегодня (баллы сводного рейтинга Kworb / 100).
+   Иностранцы в русских чартах (Apple Music RU, Shazam RU, YouTube RU) —
+   справкой, на выбор не влияют (RU_WEIGHT = 0).
    Русские артисты (кириллица или «главная страна» Россия у Kworb) — мимо:
    их винила на eBay США нет. Только живые исполнители (владелец
    26.10.2026): умершие и распавшиеся группы — мимо, по MusicBrainz
@@ -69,7 +71,12 @@ APPMI = os.path.join(ROOT, "data", "ru_shop2_appmistore.csv")
 AVITO = os.path.join(ROOT, "data", "avito_price_palette.csv")
 OZON = os.path.join(ROOT, "data", "ozon_price_palette.csv")
 USD_RUB = 95.0
-RU_WEIGHT = 10.0
+# Владелец 26.10.2026: «Ориентируемся на запад» — спрос задают западные
+# чарты (Olivia Rodrigo №1 в мире и ни одной строки в русских). Русские
+# чарты печатаются справкой, в выбор артистов не входят; вес западной
+# популярности — баллы сводного рейтинга Kworb / 100 (№1 сегодня ≈ 36).
+RU_WEIGHT = 0.0
+WEST_WEIGHT = 0.01
 FEAT_SHARE = 0.5
 MIN_HAVE = 200
 SEARCH = ("https://api.discogs.com/database/search?type=release&format=Vinyl"
@@ -170,8 +177,9 @@ def score(snap, today=None):
         z["surge"] = round(z["new_g"] + z["new_us"] + bonus, 2)
         z["near_peak"] = (round(z["listeners"] / z["peak"], 3)
                           if z["listeners"] and z["peak"] else None)
-        z["hype"] = round(z["surge"] + (RU_WEIGHT * z["ru_score"]
-                                        if z["foreign_ru"] else 0.0), 2)
+        z["hype"] = round(z["surge"] + WEST_WEIGHT * (z["points"] or 0)
+                          + (RU_WEIGHT * z["ru_score"] if z["foreign_ru"]
+                             else 0.0), 2)
     return A
 
 
@@ -188,10 +196,12 @@ def first(rows, n, keep=None):
 
 
 def pick(A, n, keep=None):
-    """Кого проверять на eBay: взлёт или иностранец в русских чартах;
-    keep — фильтр живых (владелец 26.10.2026: «только живые исполнители»)."""
+    """Кого проверять на eBay: взлёт за квартал и популярность на Западе
+    сегодня; keep — фильтр живых (владелец 26.10.2026: «только живые
+    исполнители»)."""
     pool = [z for z in A.values() if not z["local"]
-            and (z["surge"] > 0 or z["foreign_ru"])]
+            and (z["surge"] > 0 or z.get("points")
+                 or (RU_WEIGHT and z["foreign_ru"]))]
     pool.sort(key=lambda z: -z["hype"])
     return first(pool, n, keep)
 
@@ -431,6 +441,9 @@ def run(a):
                              key=lambda z: -z["surge"]), 20, keep)
     foreign_ru = first(sorted((z for z in A.values() if z["foreign_ru"]),
                               key=lambda z: -z["ru_score"]), 15, keep)
+    west_top = first(sorted((z for z in A.values()
+                             if not z["local"] and z["points"]),
+                            key=lambda z: -z["points"]), 15, keep)
     life.save()
     print(f"взлетевших и иностранцев в русских чартах: {len(top)}",
           file=sys.stderr)
@@ -481,6 +494,7 @@ def run(a):
            "artists": [artist_view(z) for z in top], "albums": rows,
            "surge_top": [artist_view(z) for z in surge_top],
            "foreign_ru": [artist_view(z) for z in foreign_ru],
+           "west_top": [artist_view(z) for z in west_top],
            "dead": [f"{k} ({v})" for k, v in dead.items()]}
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"hype_{time.strftime('%Y-%m-%d_%H%M%S')}.json")
@@ -594,9 +608,14 @@ def render(res, exclude=()):
            "за 13 недель, и новые альбомы):"]
     for i, v in enumerate(res.get("surge_top", [])[:15], 1):
         out.append(f"{i:2}. {artist_line(v)}")
-    out += ["", "ИНОСТРАНЦЫ В РУССКИХ ЧАРТАХ (Apple RU, Shazam RU, YouTube RU):"]
-    for i, v in enumerate(res.get("foreign_ru", [])[:12], 1):
-        out.append(f"{i:2}. {v['artist']} — " + "; ".join(v["ru"]))
+    if res.get("west_top"):
+        out += ["", "ПОПУЛЯРНЫ НА ЗАПАДЕ СЕГОДНЯ (сводный рейтинг Kworb: Apple, "
+                "Spotify, YouTube, Shazam, Deezer):"]
+        out.append("; ".join(f"{v['pos']}. {v['artist']} {v['points']:.0f}"
+                             for v in res["west_top"][:15]))
+    out += ["", "Справочно — иностранцы в русских чартах (на выбор не влияют):"]
+    out.append("; ".join(f"{v['artist']} ({v['ru'][0]})"
+                         for v in res.get("foreign_ru", [])[:10] if v["ru"]))
     if res.get("dead"):
         out += ["", "Мимо — не живые исполнители (MusicBrainz: умер или группа "
                 "распалась): " + ", ".join(res["dead"])]
