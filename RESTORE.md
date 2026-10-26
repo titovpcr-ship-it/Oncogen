@@ -111,6 +111,15 @@ python tools/ruspop/report.py --drop data/ruspop/drop_2026-10-24.txt --top 10 --
 колонки — цены WB/Ozon/Авито, заполняются руками). Витрина Best Buy —
 `data/ruspop/bestbuy_popularity.csv`.
 
+### Хайпажор — взлетевшие в чартах, их винил против России
+```bash
+python tools/ru_shop.py --pages 60          # витрина plastinka.com (SS), ~40 запросов
+python tools/ru_shop2.py                    # appmistore.ru, ~1 900 карточек, ~35 минут
+python tools/hype/hype.py                   # чарты → альбомы → лоты → out/hype_*.json
+python tools/hype/hype.py --reprice out/hype_….json   # после обновления витрин
+python tools/hype/hype.py --send out/hype_….json --exclude <id> …   # после проверки глазами
+```
+
 ### Tone Poet — серия до $20, купить / торг / аукцион
 ```bash
 python tools/jazz/tonepoet.py --catalog --tg   # заголовок + каждый альбом каталога

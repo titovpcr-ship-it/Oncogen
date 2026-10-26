@@ -38,11 +38,21 @@ PAUSE = 1.0
 _LOC = re.compile(r"<loc>([^<]+)</loc>")
 _PRICE = re.compile(r'itemprop="price"[^>]*content="([\d.]+)"')
 _AVAIL = re.compile(r'itemprop="availability"[^>]*href="[^"]*?(\w+)"')
-_TITLE = re.compile(r"<title>\s*Виниловая пластинка\s*(.*?)\s*купить", re.I)
+# Вёрстка сменилась к 26.10.2026: «Купить Виниловая пластинка EXTREME -
+# Pornograffitti в Москве по выгодной цене…» и характеристики в блоках
+# properties__title / properties__value — старый разбор не узнавал ни одной
+# карточки. Понимаются обе вёрстки.
+_TITLE = re.compile(r"<title>\s*(?:Купить\s+)?Виниловая пластинка\s*(.*?)\s*"
+                    r"(?:купить|в\s+Москве)", re.I)
 _TAG = re.compile(r"<[^>]+>")
 _PROP = re.compile(
     r'properties-group__name">([^<]{2,60})</span>.*?'
     r'properties-group__value"[^>]*>(.*?)</div>', re.S)
+_PROP2 = re.compile(
+    r'properties__title[^"]*">\s*([^<]{2,60}?)\s*</div>\s*'
+    r'<div class="properties__hr[^"]*"></div>\s*'
+    r'<div class="properties__value[^"]*">(.*?)</div>', re.S)
+_GTIN_TEXT = re.compile(r"Артикул производителя:?\s*(?:<[^>]+>\s*)*(\d{8,14})")
 
 
 def _text(s):
@@ -65,6 +75,12 @@ def parse(html, url):
     if not p:
         return None
     props = {_text(k): _text(v) for k, v in _PROP.findall(html)}
+    for k, v in _PROP2.findall(html):
+        props.setdefault(_text(k), _text(v))
+    if not props.get("Артикул производителя"):
+        g = _GTIN_TEXT.search(html)
+        if g:
+            props["Артикул производителя"] = g.group(1)
     d = props.get("Количество пластинок", "")
     try:
         discs = int(re.search(r"\d+", d).group())

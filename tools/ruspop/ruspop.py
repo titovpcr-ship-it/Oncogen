@@ -255,6 +255,100 @@ def is_the_album(title, artist, album):
     return why is None
 
 
+def card(token, cards, iid):
+    """Карточка лота (штрихкод и характеристики), кэш cache/ebay_cards.json."""
+    item = cards.get(iid)
+    if item is None:
+        r = requests.get(fx.ITEM.format(iid), timeout=30,
+                         headers={"Authorization": f"Bearer {token}",
+                                  "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"})
+        if r.status_code != 200:
+            return None
+        jj = r.json()
+        item = {"gtin": jj.get("gtin"),
+                "localizedAspects": jj.get("localizedAspects") or []}
+        cards[iid] = item
+    return item
+
+
+def album_lots(token, d, cards, artist, album, max_price, per_album, rate):
+    """Лучший запечатанный лот альбома из США в каждом способе покупки:
+    {способ: {...}} или None, если eBay отказал. Общая механика ruspop,
+    хайпа (tools/hype) и прочих «попсовых» режимов."""
+    q = (f"{album} soundtrack vinyl" if artist.lower() == "various"
+         else f"{artist} {album} vinyl")
+    q = _plain(q).replace(" and ", " ")
+    try:
+        j = search_page(token, q=q[:90], category_id=hunt.CATEGORY,
+                        limit=200, sort="price",
+                        flt="buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},"
+                            "itemLocationCountry:US"
+                            + (f",price:[..{max_price:.0f}],"
+                               "priceCurrency:USD" if max_price else ""))
+    except ApiRefused as e:
+        print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
+        return None
+    # Владелец 24.10.2026: «на каждый альбом лучший вариант: купить
+    # сейчас, предложить цену и аукцион» — по самому дешёвому
+    # подтверждённому лоту в каждом способе покупки.
+    by_kind = {k: [] for k in MODES}
+    for it in j.get("itemSummaries") or []:
+        raw = it.get("title") or ""
+        t = clean_title(raw)
+        clean = re.sub(r"\bvarious\b", " ", t, flags=re.I)
+        if (hunt._NOT_RECORD.search(t) or hunt._FORTY_FIVE.search(t)
+                or fx._JUNK.search(clean) or hunt._BAD.search(t)
+                or _SINGLE.search(raw) or _NOT_ALBUM.search(raw)):
+            continue
+        if not fx.is_sealed(it)[0] or not is_the_album(t, artist, album):
+            continue
+        p, expect, kind, note = hunt.lot_price(it, 2.0)
+        if _PREORDER.search(raw):
+            note = (note + "; " if note else "") + "ПРЕДЗАКАЗ — отправят после выхода"
+        if p is None or kind not in by_kind:
+            continue
+        # Владелец 24.10.2026: «Дороже 25$ не скидывай» — к цене лота
+        # без доставки, у аукциона к текущей ставке.
+        if max_price and p > max_price:
+            continue
+        sh = shipping_usd(it)
+        by_kind[kind].append((p + (sh if sh is not None else SHIP_GUESS),
+                              p, sh, kind, note, it))
+    modes = {}
+    for kind, lots in by_kind.items():
+        lots.sort(key=lambda x: x[0])
+        for total, p, sh, _, note, it in lots[:per_album]:
+            item = card(token, cards, it["itemId"])
+            if item is None:
+                continue
+            t = it.get("title") or ""
+            if not fx.vinyl_proven(item, t):
+                continue    # ловушка «CD в разделе винила»
+            code = fx.barcode_of(item)
+            v = None
+            if code:
+                v, _ = fx.discogs_value(d, code, None if artist.lower()
+                                        == "various" else artist)
+            discs = discs_of(t)
+            if v and v.get("format"):
+                m = re.match(r"(\d+)\s*x", v["format"])
+                if m:
+                    discs = int(m.group(1))
+            landed = total + fwd_usd(discs)
+            modes[kind] = {
+                "price": p, "ship": sh, "note": note, "discs": discs,
+                "landed_usd": round(landed, 2),
+                "landed_rub": round(landed * rate),
+                "title": t, "item_id": it["itemId"],
+                "url": (it.get("itemWebUrl") or "").split("?")[0],
+                "barcode": code or "",
+                "dg_title": (v or {}).get("dg_title", ""),
+                "dg_floor": (v or {}).get("floor", ""),
+                "dg_copies": (v or {}).get("copies", "")}
+            break           # первый подтверждённый — самый дешёвый
+    return modes
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--xlsx", default=XLSX)
@@ -289,96 +383,21 @@ def main():
             cards = json.load(f)
     except (OSError, ValueError):
         cards = {}
-    H = {"Authorization": f"Bearer {token}",
-         "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
     rows = []
     for al in albums:
-        q = (f"{al['album']} soundtrack vinyl" if al["artist"].lower() == "various"
-             else f"{al['artist']} {al['album']} vinyl")
-        q = _plain(q).replace(" and ", " ")
-        try:
-            j = search_page(token, q=q[:90], category_id=hunt.CATEGORY,
-                            limit=200, sort="price",
-                            flt="buyingOptions:{FIXED_PRICE|AUCTION|BEST_OFFER},"
-                                "itemLocationCountry:US"
-                                + (f",price:[..{a.max_price:.0f}],"
-                                   "priceCurrency:USD" if a.max_price else ""))
-        except ApiRefused as e:
-            print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
+        modes = album_lots(token, d, cards, al["artist"], al["album"],
+                           a.max_price, a.per_album, rate)
+        if modes is None:
             continue
-        # Владелец 24.10.2026: «на каждый альбом лучший вариант: купить
-        # сейчас, предложить цену и аукцион» — по самому дешёвому
-        # подтверждённому лоту в каждом способе покупки.
-        by_kind = {k: [] for k in MODES}
-        for it in j.get("itemSummaries") or []:
-            raw = it.get("title") or ""
-            t = clean_title(raw)
-            clean = re.sub(r"\bvarious\b", " ", t, flags=re.I)
-            if (hunt._NOT_RECORD.search(t) or hunt._FORTY_FIVE.search(t)
-                    or fx._JUNK.search(clean) or hunt._BAD.search(t)
-                    or _SINGLE.search(raw) or _NOT_ALBUM.search(raw)):
-                continue
-            if not fx.is_sealed(it)[0] or not is_the_album(t, al["artist"],
-                                                          al["album"]):
-                continue
-            p, expect, kind, note = hunt.lot_price(it, 2.0)
-            if _PREORDER.search(raw):
-                note = (note + "; " if note else "") + "ПРЕДЗАКАЗ — отправят после выхода"
-            if p is None or kind not in by_kind:
-                continue
-            # Владелец 24.10.2026: «Дороже 25$ не скидывай» — к цене лота
-            # без доставки, у аукциона к текущей ставке.
-            if a.max_price and p > a.max_price:
-                continue
-            sh = shipping_usd(it)
-            by_kind[kind].append((p + (sh if sh is not None else SHIP_GUESS),
-                                  p, sh, kind, note, it))
         ru = [x for x in (al["wb"], al["ozon"], al["avito"]) if x]
         row = {"artist": al["artist"], "album": al["album"],
                "source": al["source"], "wb": al["wb"], "ozon": al["ozon"],
                "avito": al["avito"], "ru_min": min(ru) if ru else None,
                "bb_price": al.get("bb_price"), "bb_reviews": al.get("bb_reviews"),
-               "modes": {}}
-        for kind, lots in by_kind.items():
-            lots.sort(key=lambda x: x[0])
-            for total, p, sh, _, note, it in lots[:a.per_album]:
-                iid = it["itemId"]
-                item = cards.get(iid)
-                if item is None:
-                    r = requests.get(fx.ITEM.format(iid), headers=H, timeout=30)
-                    if r.status_code != 200:
-                        continue
-                    jj = r.json()
-                    item = {"gtin": jj.get("gtin"),
-                            "localizedAspects": jj.get("localizedAspects") or []}
-                    cards[iid] = item
-                t = it.get("title") or ""
-                if not fx.vinyl_proven(item, t):
-                    continue    # ловушка «CD в разделе винила»
-                code = fx.barcode_of(item)
-                v = None
-                if code:
-                    v, _ = fx.discogs_value(d, code, None if al["artist"].lower()
-                                            == "various" else al["artist"])
-                discs = discs_of(t)
-                if v and v.get("format"):
-                    m = re.match(r"(\d+)\s*x", v["format"])
-                    if m:
-                        discs = int(m.group(1))
-                landed = total + fwd_usd(discs)
-                rub = round(landed * rate)
-                row["modes"][kind] = {
-                    "price": p, "ship": sh, "note": note, "discs": discs,
-                    "landed_usd": round(landed, 2), "landed_rub": rub,
-                    "ratio": (round(row["ru_min"] / rub, 2)
-                              if row["ru_min"] else None),
-                    "title": t,
-                    "url": (it.get("itemWebUrl") or "").split("?")[0],
-                    "barcode": code or "",
-                    "dg_title": (v or {}).get("dg_title", ""),
-                    "dg_floor": (v or {}).get("floor", ""),
-                    "dg_copies": (v or {}).get("copies", "")}
-                break           # первый подтверждённый — самый дешёвый
+               "modes": modes}
+        for m in modes.values():
+            m["ratio"] = (round(row["ru_min"] / m["landed_rub"], 2)
+                          if row["ru_min"] else None)
         rows.append(row)
         time.sleep(0.2)
     d.save()
