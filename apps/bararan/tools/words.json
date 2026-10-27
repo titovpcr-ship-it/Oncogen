@@ -19313,6 +19313,321 @@
 "fr": "devenir humide"
 },
 {
+"a": "հնգամյակ",
+"lv": "A2",
+"ru": "пятилетка, пять лет",
+"en": "five-year period",
+"fr": "quinquennat"
+},
+{
+"a": "տարեսկիզբ",
+"lv": "A2",
+"ru": "начало года",
+"en": "beginning of the year",
+"fr": "début d'année"
+},
+{
+"a": "տարեվերջ",
+"lv": "A2",
+"ru": "конец года",
+"en": "end of the year",
+"fr": "fin d'année"
+},
+{
+"a": "ամսասկիզբ",
+"lv": "A2",
+"ru": "начало месяца",
+"en": "beginning of the month",
+"fr": "début du mois"
+},
+{
+"a": "ամսավերջ",
+"lv": "A2",
+"ru": "конец месяца",
+"en": "end of the month",
+"fr": "fin du mois"
+},
+{
+"a": "տոնական օր",
+"lv": "A2",
+"ru": "праздничный день",
+"en": "public holiday",
+"fr": "jour férié"
+},
+{
+"a": "նախօրե",
+"lv": "A2",
+"ru": "канун",
+"en": "eve",
+"fr": "veille"
+},
+{
+"a": "հաջորդ օր",
+"lv": "A2",
+"ru": "следующий день",
+"en": "the next day",
+"fr": "le lendemain"
+},
+{
+"a": "նախորդ օր",
+"lv": "A2",
+"ru": "предыдущий день",
+"en": "the day before",
+"fr": "la veille"
+},
+{
+"a": "ամեն ամիս",
+"lv": "A2",
+"ru": "каждый месяц",
+"en": "every month",
+"fr": "chaque mois"
+},
+{
+"a": "ամեն տարի",
+"lv": "A2",
+"ru": "каждый год",
+"en": "every year",
+"fr": "chaque année"
+},
+{
+"a": "ամենամյա",
+"lv": "A2",
+"ru": "ежегодный",
+"en": "annual",
+"fr": "annuel"
+},
+{
+"a": "ամսական",
+"lv": "A2",
+"ru": "ежемесячный",
+"en": "monthly",
+"fr": "mensuel"
+},
+{
+"a": "եռամսյա",
+"lv": "A2",
+"ru": "трёхмесячный",
+"en": "three-month, quarterly",
+"fr": "trimestriel"
+},
+{
+"a": "կիսամյա",
+"lv": "A2",
+"ru": "полугодовой",
+"en": "six-month",
+"fr": "semestriel"
+},
+{
+"a": "լուսադեմ",
+"lv": "A2",
+"ru": "рассвет",
+"en": "daybreak",
+"fr": "point du jour"
+},
+{
+"a": "արշալույս",
+"lv": "A2",
+"ru": "заря",
+"en": "dawn",
+"fr": "aurore"
+},
+{
+"a": "վաղ առավոտ",
+"lv": "A2",
+"ru": "раннее утро",
+"en": "early morning",
+"fr": "tôt le matin"
+},
+{
+"a": "ուշ երեկո",
+"lv": "A2",
+"ru": "поздний вечер",
+"en": "late evening",
+"fr": "tard le soir"
+},
+{
+"a": "ժամանակահատված",
+"lv": "A2",
+"ru": "промежуток времени",
+"en": "period of time",
+"fr": "période"
+},
+{
+"a": "հետագայում",
+"lv": "A2",
+"ru": "впоследствии",
+"en": "later on",
+"fr": "par la suite"
+},
+{
+"a": "ներկայումս",
+"lv": "A2",
+"ru": "в настоящее время",
+"en": "at present",
+"fr": "actuellement"
+},
+{
+"a": "վերջին ժամանակներս",
+"lv": "A2",
+"ru": "в последнее время",
+"en": "lately",
+"fr": "ces derniers temps"
+},
+{
+"a": "մոտ ապագայում",
+"lv": "A2",
+"ru": "в ближайшем будущем",
+"en": "in the near future",
+"fr": "dans un avenir proche"
+},
+{
+"a": "անցյալ տարի",
+"lv": "A2",
+"ru": "в прошлом году",
+"en": "last year",
+"fr": "l'année dernière"
+},
+{
+"a": "հաջորդ տարի",
+"lv": "A2",
+"ru": "в следующем году",
+"en": "next year",
+"fr": "l'année prochaine"
+},
+{
+"a": "այս տարի",
+"lv": "A2",
+"ru": "в этом году",
+"en": "this year",
+"fr": "cette année"
+},
+{
+"a": "անցյալ շաբաթ",
+"lv": "A2",
+"ru": "на прошлой неделе",
+"en": "last week",
+"fr": "la semaine dernière"
+},
+{
+"a": "հաջորդ շաբաթ",
+"lv": "A2",
+"ru": "на следующей неделе",
+"en": "next week",
+"fr": "la semaine prochaine"
+},
+{
+"a": "այս շաբաթ",
+"lv": "A2",
+"ru": "на этой неделе",
+"en": "this week",
+"fr": "cette semaine"
+},
+{
+"a": "երեկ երեկոյան",
+"lv": "A2",
+"ru": "вчера вечером",
+"en": "yesterday evening",
+"fr": "hier soir"
+},
+{
+"a": "վաղը առավոտյան",
+"lv": "A2",
+"ru": "завтра утром",
+"en": "tomorrow morning",
+"fr": "demain matin"
+},
+{
+"a": "ամբողջ օրը",
+"lv": "A2",
+"ru": "весь день",
+"en": "all day",
+"fr": "toute la journée"
+},
+{
+"a": "ամբողջ գիշեր",
+"lv": "A2",
+"ru": "всю ночь",
+"en": "all night",
+"fr": "toute la nuit"
+},
+{
+"a": "օրվա ընթացքում",
+"lv": "A2",
+"ru": "в течение дня",
+"en": "during the day",
+"fr": "dans la journée"
+},
+{
+"a": "կեսօրից հետո",
+"lv": "A2",
+"ru": "после полудня",
+"en": "in the afternoon",
+"fr": "l'après-midi"
+},
+{
+"a": "կեսօրից առաջ",
+"lv": "A2",
+"ru": "до полудня",
+"en": "in the morning, before noon",
+"fr": "avant midi"
+},
+{
+"a": "ժամանակին",
+"lv": "A2",
+"ru": "вовремя",
+"en": "on time",
+"fr": "à l'heure"
+},
+{
+"a": "վաղաժամ",
+"lv": "A2",
+"ru": "досрочно, преждевременно",
+"en": "early, prematurely",
+"fr": "prématurément"
+},
+{
+"a": "ուշացումով",
+"lv": "A2",
+"ru": "с опозданием",
+"en": "late, with a delay",
+"fr": "en retard"
+},
+{
+"a": "ամսաթիվ",
+"lv": "A2",
+"ru": "дата, число",
+"en": "date",
+"fr": "date"
+},
+{
+"a": "ժամացույցի սլաք",
+"lv": "A2",
+"ru": "стрелка часов",
+"en": "clock hand",
+"fr": "aiguille"
+},
+{
+"a": "ավազի ժամացույց",
+"lv": "A2",
+"ru": "песочные часы",
+"en": "hourglass",
+"fr": "sablier"
+},
+{
+"a": "արևի ժամացույց",
+"lv": "A2",
+"ru": "солнечные часы",
+"en": "sundial",
+"fr": "cadran solaire"
+},
+{
+"a": "տարեմուտ",
+"lv": "A2",
+"ru": "наступление года",
+"en": "New Year's arrival",
+"fr": "nouvel an"
+},
+{
 "a": "հասարակություն",
 "lv": "B1",
 "ru": "общество",
@@ -37604,6 +37919,1364 @@
 "fr": "cacatoès"
 },
 {
+"a": "Ախուրյան",
+"lv": "B1",
+"ru": "Ахурян (река)",
+"en": "Akhurian (river)",
+"fr": "Akhourian (rivière)"
+},
+{
+"a": "Որոտան",
+"lv": "B1",
+"ru": "Воротан (река)",
+"en": "Vorotan (river)",
+"fr": "Vorotan (rivière)"
+},
+{
+"a": "Աղստև",
+"lv": "B1",
+"ru": "Агстев (река)",
+"en": "Aghstev (river)",
+"fr": "Aghstev (rivière)"
+},
+{
+"a": "Արփա",
+"lv": "B1",
+"ru": "Арпа (река)",
+"en": "Arpa (river)",
+"fr": "Arpa (rivière)"
+},
+{
+"a": "Քասախ",
+"lv": "B1",
+"ru": "Касах (река)",
+"en": "Kasakh (river)",
+"fr": "Kasakh (rivière)"
+},
+{
+"a": "Պարզ լիճ",
+"lv": "B1",
+"ru": "Парз лич (озеро)",
+"en": "Lake Parz",
+"fr": "lac Parz"
+},
+{
+"a": "Քարի լիճ",
+"lv": "B1",
+"ru": "Кари лич (озеро на Арагаце)",
+"en": "Lake Kari",
+"fr": "lac Kari"
+},
+{
+"a": "Արա լեռ",
+"lv": "B1",
+"ru": "гора Ара",
+"en": "Mount Ara",
+"fr": "mont Ara"
+},
+{
+"a": "Աժդահակ",
+"lv": "B1",
+"ru": "Аждаак (вулкан)",
+"en": "Azhdahak (volcano)",
+"fr": "Ajdahak (volcan)"
+},
+{
+"a": "Խուստուփ",
+"lv": "B1",
+"ru": "Хуступ (гора)",
+"en": "Khustup (mountain)",
+"fr": "Khoustoup (montagne)"
+},
+{
+"a": "Հաղարծին",
+"lv": "B1",
+"ru": "Агарцин (монастырь)",
+"en": "Haghartsin (monastery)",
+"fr": "Haghartsin (monastère)"
+},
+{
+"a": "Գոշավանք",
+"lv": "B1",
+"ru": "Гошаванк",
+"en": "Goshavank",
+"fr": "Gochavank"
+},
+{
+"a": "Կեչառիս",
+"lv": "B1",
+"ru": "Кечарис",
+"en": "Kecharis",
+"fr": "Kétcharis"
+},
+{
+"a": "Սևանավանք",
+"lv": "B1",
+"ru": "Севанаванк",
+"en": "Sevanavank",
+"fr": "Sevanavank"
+},
+{
+"a": "Օձուն",
+"lv": "B1",
+"ru": "Одзун",
+"en": "Odzun",
+"fr": "Odzoun"
+},
+{
+"a": "Ախթալա",
+"lv": "B1",
+"ru": "Ахтала",
+"en": "Akhtala",
+"fr": "Akhtala"
+},
+{
+"a": "Մակարավանք",
+"lv": "B1",
+"ru": "Макараванк",
+"en": "Makaravank",
+"fr": "Makaravank"
+},
+{
+"a": "Հառիճ",
+"lv": "B1",
+"ru": "Арич",
+"en": "Harichavank",
+"fr": "Haritch"
+},
+{
+"a": "Մարմաշեն",
+"lv": "B1",
+"ru": "Мармашен",
+"en": "Marmashen",
+"fr": "Marmachen"
+},
+{
+"a": "Կարահունջ",
+"lv": "B1",
+"ru": "Караундж (Зорац карер)",
+"en": "Karahunj (Zorats Karer)",
+"fr": "Karahunj (Zorats Karer)"
+},
+{
+"a": "Սմբատաբերդ",
+"lv": "B1",
+"ru": "Смбатаберд (крепость)",
+"en": "Smbataberd (fortress)",
+"fr": "Smbataberd (forteresse)"
+},
+{
+"a": "Աբովյան",
+"lv": "B1",
+"ru": "Абовян",
+"en": "Abovyan",
+"fr": "Abovian"
+},
+{
+"a": "Արտաշատ",
+"lv": "B1",
+"ru": "Арташат",
+"en": "Artashat",
+"fr": "Artachat"
+},
+{
+"a": "Իջևան",
+"lv": "B1",
+"ru": "Иджеван",
+"en": "Ijevan",
+"fr": "Idjevan"
+},
+{
+"a": "Աշտարակ",
+"lv": "B1",
+"ru": "Аштарак",
+"en": "Ashtarak",
+"fr": "Achtarak"
+},
+{
+"a": "Եղեգնաձոր",
+"lv": "B1",
+"ru": "Ехегнадзор",
+"en": "Yeghegnadzor",
+"fr": "Yéghégnadzor"
+},
+{
+"a": "Սիսիան",
+"lv": "B1",
+"ru": "Сисиан",
+"en": "Sisian",
+"fr": "Sissian"
+},
+{
+"a": "Մեղրի",
+"lv": "B1",
+"ru": "Мегри",
+"en": "Meghri",
+"fr": "Meghri"
+},
+{
+"a": "Ալավերդի",
+"lv": "B1",
+"ru": "Алаверди",
+"en": "Alaverdi",
+"fr": "Alaverdi"
+},
+{
+"a": "Սպիտակ",
+"lv": "B1",
+"ru": "Спитак",
+"en": "Spitak",
+"fr": "Spitak"
+},
+{
+"a": "Չարենցավան",
+"lv": "B1",
+"ru": "Чаренцаван",
+"en": "Charentsavan",
+"fr": "Tcharentsavan"
+},
+{
+"a": "Մարտունի",
+"lv": "B1",
+"ru": "Мартуни",
+"en": "Martuni",
+"fr": "Martouni"
+},
+{
+"a": "Գավառ",
+"lv": "B1",
+"ru": "Гавар",
+"en": "Gavar",
+"fr": "Gavar"
+},
+{
+"a": "Բյուրական",
+"lv": "B1",
+"ru": "Бюракан",
+"en": "Byurakan",
+"fr": "Biurakan"
+},
+{
+"a": "Ամասիա",
+"lv": "B1",
+"ru": "Амасия",
+"en": "Amasia",
+"fr": "Amasia"
+},
+{
+"a": "Նոյեմբերյան",
+"lv": "B1",
+"ru": "Ноемберян",
+"en": "Noyemberyan",
+"fr": "Noyemberian"
+},
+{
+"a": "Վայք",
+"lv": "B1",
+"ru": "Вайк",
+"en": "Vayk",
+"fr": "Vaïk"
+},
+{
+"a": "Քաջարան",
+"lv": "B1",
+"ru": "Каджаран",
+"en": "Kajaran",
+"fr": "Kadjaran"
+},
+{
+"a": "Վաղարշապատ",
+"lv": "B1",
+"ru": "Вагаршапат",
+"en": "Vagharshapat",
+"fr": "Vagharchapat"
+},
+{
+"a": "Արարատյան դաշտ",
+"lv": "B1",
+"ru": "Араратская долина",
+"en": "Ararat plain",
+"fr": "plaine de l'Ararat"
+},
+{
+"a": "Շիրակի դաշտ",
+"lv": "B1",
+"ru": "Ширакская равнина",
+"en": "Shirak plain",
+"fr": "plaine de Chirak"
+},
+{
+"a": "Զանգեզուր",
+"lv": "B1",
+"ru": "Зангезур",
+"en": "Zangezur",
+"fr": "Zanguezour"
+},
+{
+"a": "Սասուն",
+"lv": "B1",
+"ru": "Сасун",
+"en": "Sasun",
+"fr": "Sassoun"
+},
+{
+"a": "Կարին",
+"lv": "B1",
+"ru": "Карин (Эрзурум)",
+"en": "Karin (Erzurum)",
+"fr": "Karin (Erzurum)"
+},
+{
+"a": "Էրզրում",
+"lv": "B1",
+"ru": "Эрзурум",
+"en": "Erzurum",
+"fr": "Erzurum"
+},
+{
+"a": "Տրապիզոն",
+"lv": "B1",
+"ru": "Трапезунд",
+"en": "Trebizond",
+"fr": "Trébizonde"
+},
+{
+"a": "Մալաթիա",
+"lv": "B1",
+"ru": "Малатья",
+"en": "Malatya",
+"fr": "Malatya"
+},
+{
+"a": "Խարբերդ",
+"lv": "B1",
+"ru": "Харберд",
+"en": "Kharberd",
+"fr": "Kharpout"
+},
+{
+"a": "Բիթլիս",
+"lv": "B1",
+"ru": "Битлис",
+"en": "Bitlis",
+"fr": "Bitlis"
+},
+{
+"a": "Անի",
+"lv": "B1",
+"ru": "Ани",
+"en": "Ani",
+"fr": "Ani"
+},
+{
+"a": "Աղթամար",
+"lv": "B1",
+"ru": "Ахтамар",
+"en": "Aghtamar",
+"fr": "Aghtamar"
+},
+{
+"a": "Նախիջևան",
+"lv": "B1",
+"ru": "Нахичевань",
+"en": "Nakhichevan",
+"fr": "Nakhitchevan"
+},
+{
+"a": "Ջուղա",
+"lv": "B1",
+"ru": "Джуга",
+"en": "Julfa",
+"fr": "Djoulfa"
+},
+{
+"a": "Գանձակ",
+"lv": "B1",
+"ru": "Гандзак",
+"en": "Gandzak (Ganja)",
+"fr": "Gandzak (Gandja)"
+},
+{
+"a": "Շուշի",
+"lv": "B1",
+"ru": "Шуши",
+"en": "Shushi",
+"fr": "Chouchi"
+},
+{
+"a": "Գանձասար",
+"lv": "B1",
+"ru": "Гандзасар",
+"en": "Gandzasar",
+"fr": "Gandzassar"
+},
+{
+"a": "Դադիվանք",
+"lv": "B1",
+"ru": "Дадиванк",
+"en": "Dadivank",
+"fr": "Dadivank"
+},
+{
+"a": "Ամարաս",
+"lv": "B1",
+"ru": "Амарас",
+"en": "Amaras",
+"fr": "Amaras"
+},
+{
+"a": "Տիգրանակերտ",
+"lv": "B1",
+"ru": "Тигранакерт",
+"en": "Tigranakert",
+"fr": "Tigranocerte"
+},
+{
+"a": "ճամփորդություն",
+"lv": "B1",
+"ru": "путешествие, поездка",
+"en": "trip, journey",
+"fr": "voyage"
+},
+{
+"a": "հյուրանոցի համար",
+"lv": "B1",
+"ru": "номер в гостинице",
+"en": "hotel room",
+"fr": "chambre d'hôtel"
+},
+{
+"a": "մեկտեղանոց համար",
+"lv": "B1",
+"ru": "одноместный номер",
+"en": "single room",
+"fr": "chambre simple"
+},
+{
+"a": "երկտեղանոց համար",
+"lv": "B1",
+"ru": "двухместный номер",
+"en": "double room",
+"fr": "chambre double"
+},
+{
+"a": "լյուքս",
+"lv": "B1",
+"ru": "люкс",
+"en": "suite",
+"fr": "suite"
+},
+{
+"a": "սպասուհի",
+"lv": "B1",
+"ru": "горничная",
+"en": "maid",
+"fr": "femme de chambre"
+},
+{
+"a": "ճաշասենյակ",
+"lv": "B1",
+"ru": "столовая (комната)",
+"en": "dining room",
+"fr": "salle à manger"
+},
+{
+"a": "ամեն ինչ ներառված",
+"lv": "B1",
+"ru": "всё включено",
+"en": "all inclusive",
+"fr": "tout compris"
+},
+{
+"a": "դուրս գրվել",
+"lv": "B1",
+"ru": "выписаться, выехать",
+"en": "check out",
+"fr": "régler sa note"
+},
+{
+"a": "բանալի-քարտ",
+"lv": "B1",
+"ru": "ключ-карта",
+"en": "key card",
+"fr": "carte-clé"
+},
+{
+"a": "անվտանգության պահարան",
+"lv": "B1",
+"ru": "сейф",
+"en": "safe",
+"fr": "coffre-fort"
+},
+{
+"a": "սենյակի սպասարկում",
+"lv": "B1",
+"ru": "обслуживание номеров",
+"en": "room service",
+"fr": "service en chambre"
+},
+{
+"a": "սաունա",
+"lv": "B1",
+"ru": "сауна",
+"en": "sauna",
+"fr": "sauna"
+},
+{
+"a": "մերսում",
+"lv": "B1",
+"ru": "массаж",
+"en": "massage",
+"fr": "massage"
+},
+{
+"a": "տուրիստական գործակալություն",
+"lv": "B1",
+"ru": "турагентство",
+"en": "travel agency",
+"fr": "agence de voyages"
+},
+{
+"a": "տուր",
+"lv": "B1",
+"ru": "тур",
+"en": "tour",
+"fr": "circuit"
+},
+{
+"a": "տուրփաթեթ",
+"lv": "B1",
+"ru": "турпакет",
+"en": "package holiday",
+"fr": "voyage organisé"
+},
+{
+"a": "առողջարան",
+"lv": "B1",
+"ru": "санаторий",
+"en": "sanatorium, health resort",
+"fr": "station thermale"
+},
+{
+"a": "արևի հովանոց",
+"lv": "B1",
+"ru": "пляжный зонт",
+"en": "sunshade",
+"fr": "parasol"
+},
+{
+"a": "արևապաշտպան քսուք",
+"lv": "B1",
+"ru": "солнцезащитный крем",
+"en": "sunscreen",
+"fr": "crème solaire"
+},
+{
+"a": "արևայրուք",
+"lv": "B1",
+"ru": "солнечный ожог",
+"en": "sunburn",
+"fr": "coup de soleil"
+},
+{
+"a": "արևահարություն",
+"lv": "B1",
+"ru": "солнечный удар",
+"en": "sunstroke",
+"fr": "insolation"
+},
+{
+"a": "տարադրամ",
+"lv": "B1",
+"ru": "иностранная валюта",
+"en": "foreign currency",
+"fr": "devises"
+},
+{
+"a": "ճամփորդական ապահովագրություն",
+"lv": "B1",
+"ru": "туристическая страховка",
+"en": "travel insurance",
+"fr": "assurance voyage"
+},
+{
+"a": "վիզայի դիմում",
+"lv": "B1",
+"ru": "заявление на визу",
+"en": "visa application",
+"fr": "demande de visa"
+},
+{
+"a": "սահմանային հսկողություն",
+"lv": "B1",
+"ru": "пограничный контроль",
+"en": "border control",
+"fr": "contrôle frontalier"
+},
+{
+"a": "անձնագրային հսկողություն",
+"lv": "B1",
+"ru": "паспортный контроль",
+"en": "passport control",
+"fr": "contrôle des passeports"
+},
+{
+"a": "մաքսային հսկողություն",
+"lv": "B1",
+"ru": "таможенный контроль",
+"en": "customs control",
+"fr": "contrôle douanier"
+},
+{
+"a": "անմաքս առևտուր",
+"lv": "B1",
+"ru": "дьюти-фри",
+"en": "duty-free",
+"fr": "hors taxes"
+},
+{
+"a": "տրանզիտ",
+"lv": "B1",
+"ru": "транзит",
+"en": "transit",
+"fr": "transit"
+},
+{
+"a": "չվերթ",
+"lv": "B1",
+"ru": "рейс",
+"en": "flight",
+"fr": "vol"
+},
+{
+"a": "վայրէջք",
+"lv": "B1",
+"ru": "посадка (самолёта)",
+"en": "landing",
+"fr": "atterrissage"
+},
+{
+"a": "տերմինալ",
+"lv": "B1",
+"ru": "терминал",
+"en": "terminal",
+"fr": "terminal"
+},
+{
+"a": "նստեցման կտրոն",
+"lv": "B1",
+"ru": "посадочный талон",
+"en": "boarding pass",
+"fr": "carte d'embarquement"
+},
+{
+"a": "ավելցուկային ուղեբեռ",
+"lv": "B1",
+"ru": "перевес багажа",
+"en": "excess baggage",
+"fr": "excédent de bagages"
+},
+{
+"a": "պատուհանի մոտ",
+"lv": "B1",
+"ru": "у окна",
+"en": "by the window",
+"fr": "côté hublot"
+},
+{
+"a": "միջանցքի մոտ",
+"lv": "B1",
+"ru": "у прохода",
+"en": "aisle seat",
+"fr": "côté couloir"
+},
+{
+"a": "անվտանգության գոտի",
+"lv": "B1",
+"ru": "ремень безопасности",
+"en": "seat belt",
+"fr": "ceinture de sécurité"
+},
+{
+"a": "թռչելու վախ",
+"lv": "B1",
+"ru": "страх полётов",
+"en": "fear of flying",
+"fr": "peur de l'avion"
+},
+{
+"a": "օդային փոս",
+"lv": "B1",
+"ru": "воздушная яма",
+"en": "air pocket",
+"fr": "trou d'air"
+},
+{
+"a": "կուպե",
+"lv": "B1",
+"ru": "купе",
+"en": "compartment",
+"fr": "compartiment"
+},
+{
+"a": "ննջավագոն",
+"lv": "B1",
+"ru": "спальный вагон",
+"en": "sleeping car",
+"fr": "wagon-lit"
+},
+{
+"a": "ռեստորան-վագոն",
+"lv": "B1",
+"ru": "вагон-ресторан",
+"en": "dining car",
+"fr": "wagon-restaurant"
+},
+{
+"a": "նավամատույց",
+"lv": "B1",
+"ru": "причал",
+"en": "pier",
+"fr": "jetée"
+},
+{
+"a": "նավախցիկ",
+"lv": "B1",
+"ru": "каюта",
+"en": "cabin (on a ship)",
+"fr": "cabine"
+},
+{
+"a": "տախտակամած",
+"lv": "B1",
+"ru": "палуба",
+"en": "deck",
+"fr": "pont"
+},
+{
+"a": "ուղևորանավ",
+"lv": "B1",
+"ru": "пассажирский теплоход",
+"en": "passenger ship",
+"fr": "paquebot"
+},
+{
+"a": "կռուիզ",
+"lv": "B1",
+"ru": "круиз",
+"en": "cruise",
+"fr": "croisière"
+},
+{
+"a": "ծովախտ",
+"lv": "B1",
+"ru": "морская болезнь",
+"en": "seasickness",
+"fr": "mal de mer"
+},
+{
+"a": "փրկօղակ",
+"lv": "B1",
+"ru": "спасательный круг",
+"en": "lifebuoy",
+"fr": "bouée de sauvetage"
+},
+{
+"a": "փրկաբաճկոն",
+"lv": "B1",
+"ru": "спасательный жилет",
+"en": "life jacket",
+"fr": "gilet de sauvetage"
+},
+{
+"a": "կորալ",
+"lv": "B1",
+"ru": "коралл",
+"en": "coral",
+"fr": "corail"
+},
+{
+"a": "ծովային կրիա",
+"lv": "B1",
+"ru": "морская черепаха",
+"en": "sea turtle",
+"fr": "tortue de mer"
+},
+{
+"a": "ծովաձի",
+"lv": "B1",
+"ru": "морской конёк",
+"en": "seahorse",
+"fr": "hippocampe"
+},
+{
+"a": "ծովային ոզնի",
+"lv": "B1",
+"ru": "морской ёж",
+"en": "sea urchin",
+"fr": "oursin"
+},
+{
+"a": "խեցի",
+"lv": "B1",
+"ru": "ракушка",
+"en": "shell",
+"fr": "coquillage"
+},
+{
+"a": "մարգարտախեցի",
+"lv": "B1",
+"ru": "жемчужница",
+"en": "pearl oyster",
+"fr": "huître perlière"
+},
+{
+"a": "կակղամորթ",
+"lv": "B1",
+"ru": "моллюск",
+"en": "mollusc",
+"fr": "mollusque"
+},
+{
+"a": "խեցգետնակերպ",
+"lv": "B1",
+"ru": "ракообразное",
+"en": "crustacean",
+"fr": "crustacé"
+},
+{
+"a": "կարմիր խավիար",
+"lv": "B1",
+"ru": "красная икра",
+"en": "red caviar",
+"fr": "caviar rouge"
+},
+{
+"a": "սև խավիար",
+"lv": "B1",
+"ru": "чёрная икра",
+"en": "black caviar",
+"fr": "caviar noir"
+},
+{
+"a": "ծովատառեխ",
+"lv": "B1",
+"ru": "сельдь",
+"en": "herring",
+"fr": "hareng"
+},
+{
+"a": "կամբալա",
+"lv": "B1",
+"ru": "камбала",
+"en": "flounder",
+"fr": "flet"
+},
+{
+"a": "անչոուս",
+"lv": "B1",
+"ru": "анчоус",
+"en": "anchovy",
+"fr": "anchois"
+},
+{
+"a": "թրաձուկ",
+"lv": "B1",
+"ru": "рыба-меч",
+"en": "swordfish",
+"fr": "espadon"
+},
+{
+"a": "կարթ",
+"lv": "B1",
+"ru": "рыболовный крючок",
+"en": "fish hook",
+"fr": "hameçon"
+},
+{
+"a": "կարթաձող",
+"lv": "B1",
+"ru": "удочка",
+"en": "fishing rod",
+"fr": "canne à pêche"
+},
+{
+"a": "ձկնորսական ցանց",
+"lv": "B1",
+"ru": "рыболовная сеть",
+"en": "fishing net",
+"fr": "filet de pêche"
+},
+{
+"a": "խայծ",
+"lv": "B1",
+"ru": "наживка",
+"en": "bait",
+"fr": "appât"
+},
+{
+"a": "լողակ",
+"lv": "B1",
+"ru": "плавник",
+"en": "fin",
+"fr": "nageoire"
+},
+{
+"a": "խռիկ",
+"lv": "B1",
+"ru": "жабры",
+"en": "gill",
+"fr": "branchie"
+},
+{
+"a": "թեփուկ",
+"lv": "B1",
+"ru": "чешуя",
+"en": "scale (of a fish)",
+"fr": "écaille"
+},
+{
+"a": "մակընթացություն",
+"lv": "B1",
+"ru": "прилив",
+"en": "high tide",
+"fr": "marée haute"
+},
+{
+"a": "տեղատվություն",
+"lv": "B1",
+"ru": "отлив",
+"en": "low tide",
+"fr": "marée basse"
+},
+{
+"a": "ծովային հոսանք",
+"lv": "B1",
+"ru": "морское течение",
+"en": "ocean current",
+"fr": "courant marin"
+},
+{
+"a": "սուզորդ",
+"lv": "B1",
+"ru": "водолаз, ныряльщик",
+"en": "diver",
+"fr": "plongeur"
+},
+{
+"a": "թթվածնային բալոն",
+"lv": "B1",
+"ru": "кислородный баллон",
+"en": "oxygen tank",
+"fr": "bouteille d'oxygène"
+},
+{
+"a": "լողակներ",
+"lv": "B1",
+"ru": "ласты",
+"en": "flippers",
+"fr": "palmes"
+},
+{
+"a": "ջրային դահուկ",
+"lv": "B1",
+"ru": "водные лыжи",
+"en": "water skis",
+"fr": "ski nautique"
+},
+{
+"a": "առագաստ",
+"lv": "B1",
+"ru": "парус",
+"en": "sail",
+"fr": "voile"
+},
+{
+"a": "կայմ",
+"lv": "B1",
+"ru": "мачта",
+"en": "mast",
+"fr": "mât"
+},
+{
+"a": "խարիսխ",
+"lv": "B1",
+"ru": "якорь",
+"en": "anchor",
+"fr": "ancre"
+},
+{
+"a": "թի",
+"lv": "B1",
+"ru": "весло",
+"en": "oar",
+"fr": "rame"
+},
+{
+"a": "նավակայան",
+"lv": "B1",
+"ru": "лодочная станция, пристань",
+"en": "marina",
+"fr": "marina"
+},
+{
+"a": "փարոս",
+"lv": "B1",
+"ru": "маяк",
+"en": "lighthouse",
+"fr": "phare"
+},
+{
+"a": "ծովահեն",
+"lv": "B1",
+"ru": "пират",
+"en": "pirate",
+"fr": "pirate"
+},
+{
+"a": "նավաբեկություն",
+"lv": "B1",
+"ru": "кораблекрушение",
+"en": "shipwreck",
+"fr": "naufrage"
+},
+{
+"a": "կղզյակ",
+"lv": "B1",
+"ru": "островок",
+"en": "islet",
+"fr": "îlot"
+},
+{
+"a": "ծովագնաց",
+"lv": "B1",
+"ru": "мореплаватель",
+"en": "seafarer",
+"fr": "navigateur"
+},
+{
+"a": "ծովագնացություն",
+"lv": "B1",
+"ru": "мореплавание",
+"en": "navigation",
+"fr": "navigation"
+},
+{
+"a": "ծովապետ",
+"lv": "B1",
+"ru": "адмирал",
+"en": "admiral",
+"fr": "amiral"
+},
+{
+"a": "նավատորմ",
+"lv": "B1",
+"ru": "флот",
+"en": "fleet",
+"fr": "flotte"
+},
+{
+"a": "լաստ",
+"lv": "B1",
+"ru": "плот",
+"en": "raft",
+"fr": "radeau"
+},
+{
+"a": "մակույկ",
+"lv": "B1",
+"ru": "челнок, лодочка",
+"en": "skiff",
+"fr": "barque"
+},
+{
+"a": "կանոե",
+"lv": "B1",
+"ru": "каноэ",
+"en": "canoe",
+"fr": "canoë"
+},
+{
+"a": "ջրային սկուտեր",
+"lv": "B1",
+"ru": "гидроцикл",
+"en": "jet ski",
+"fr": "scooter des mers"
+},
+{
+"a": "յախտա",
+"lv": "B1",
+"ru": "яхта",
+"en": "yacht",
+"fr": "yacht"
+},
+{
+"a": "կատամարան",
+"lv": "B1",
+"ru": "катамаран",
+"en": "catamaran",
+"fr": "catamaran"
+},
+{
+"a": "արշավախումբ",
+"lv": "B1",
+"ru": "экспедиция (группа)",
+"en": "expedition team",
+"fr": "équipe d'expédition"
+},
+{
+"a": "ճամբար",
+"lv": "B1",
+"ru": "лагерь",
+"en": "camp",
+"fr": "camp"
+},
+{
+"a": "քնապարկ",
+"lv": "B1",
+"ru": "спальный мешок",
+"en": "sleeping bag",
+"fr": "sac de couchage"
+},
+{
+"a": "լուցկի",
+"lv": "B1",
+"ru": "спичка",
+"en": "match",
+"fr": "allumette"
+},
+{
+"a": "կրակայրիչ",
+"lv": "B1",
+"ru": "зажигалка",
+"en": "lighter",
+"fr": "briquet"
+},
+{
+"a": "ջրաման",
+"lv": "B1",
+"ru": "фляга",
+"en": "water bottle",
+"fr": "gourde"
+},
+{
+"a": "թերմոս",
+"lv": "B1",
+"ru": "термос",
+"en": "vacuum flask",
+"fr": "thermos"
+},
+{
+"a": "ուտելիք",
+"lv": "B1",
+"ru": "еда, съестное",
+"en": "food",
+"fr": "nourriture"
+},
+{
+"a": "ճանապարհի պաշար",
+"lv": "B1",
+"ru": "провизия в дорогу",
+"en": "provisions",
+"fr": "provisions"
+},
+{
+"a": "արահետ",
+"lv": "B1",
+"ru": "тропа",
+"en": "trail, path",
+"fr": "sentier"
+},
+{
+"a": "լեռնագնաց",
+"lv": "B1",
+"ru": "альпинист",
+"en": "mountaineer",
+"fr": "alpiniste"
+},
+{
+"a": "ճեղք",
+"lv": "B1",
+"ru": "трещина, расселина",
+"en": "crevice, crack",
+"fr": "crevasse"
+},
+{
+"a": "ոտքով տալ",
+"lv": "B1",
+"ru": "пнуть",
+"en": "kick",
+"fr": "donner un coup de pied"
+},
+{
+"a": "ծնկաչոք",
+"lv": "B1",
+"ru": "на коленях",
+"en": "on one's knees",
+"fr": "à genoux"
+},
+{
+"a": "չոքել",
+"lv": "B1",
+"ru": "встать на колени",
+"en": "kneel",
+"fr": "s'agenouiller"
+},
+{
+"a": "կքանստել",
+"lv": "B1",
+"ru": "присесть на корточки",
+"en": "squat",
+"fr": "s'accroupir"
+},
+{
+"a": "կռանալ",
+"lv": "B1",
+"ru": "нагибаться",
+"en": "stoop",
+"fr": "se baisser"
+},
+{
+"a": "ձգձգվել",
+"lv": "B1",
+"ru": "затягиваться",
+"en": "drag on",
+"fr": "traîner en longueur"
+},
+{
+"a": "մեկնվել",
+"lv": "B1",
+"ru": "растянуться (лёжа)",
+"en": "stretch out",
+"fr": "s'étendre"
+},
+{
+"a": "պառկած",
+"lv": "B1",
+"ru": "лёжа",
+"en": "lying down",
+"fr": "allongé"
+},
+{
+"a": "նստած",
+"lv": "B1",
+"ru": "сидя",
+"en": "sitting",
+"fr": "assis"
+},
+{
+"a": "կանգնած",
+"lv": "B1",
+"ru": "стоя",
+"en": "standing",
+"fr": "debout"
+},
+{
+"a": "թիկնել",
+"lv": "B1",
+"ru": "откинуться",
+"en": "lean back",
+"fr": "s'adosser"
+},
+{
+"a": "հենել",
+"lv": "B1",
+"ru": "прислонять",
+"en": "lean (something) against",
+"fr": "appuyer"
+},
+{
+"a": "ցնցվել",
+"lv": "B1",
+"ru": "вздрогнуть",
+"en": "shudder, jolt",
+"fr": "tressaillir"
+},
+{
+"a": "ցատկոտել",
+"lv": "B1",
+"ru": "подпрыгивать",
+"en": "hop about",
+"fr": "sautiller"
+},
+{
+"a": "մագլցում",
+"lv": "B1",
+"ru": "лазание",
+"en": "climbing",
+"fr": "escalade"
+},
+{
+"a": "թաթախել",
+"lv": "B1",
+"ru": "обмакивать",
+"en": "dip",
+"fr": "tremper"
+},
+{
+"a": "թրջել",
+"lv": "B1",
+"ru": "мочить",
+"en": "wet, soak",
+"fr": "mouiller"
+},
+{
+"a": "մերկանալ",
+"lv": "B1",
+"ru": "обнажаться",
+"en": "strip",
+"fr": "se dénuder"
+},
+{
+"a": "հագցնել",
+"lv": "B1",
+"ru": "одевать (кого-то)",
+"en": "dress (someone)",
+"fr": "habiller"
+},
+{
+"a": "ձեռք տալ",
+"lv": "B1",
+"ru": "трогать; подать руку",
+"en": "touch; shake hands",
+"fr": "toucher"
+},
+{
+"a": "թափ տալ",
+"lv": "B1",
+"ru": "встряхнуть",
+"en": "shake out",
+"fr": "secouer"
+},
+{
+"a": "ձեռքով անել",
+"lv": "B1",
+"ru": "помахать рукой",
+"en": "wave",
+"fr": "faire signe de la main"
+},
+{
+"a": "գլուխը շարժել",
+"lv": "B1",
+"ru": "качать головой",
+"en": "shake one's head",
+"fr": "secouer la tête"
+},
+{
+"a": "շլանալ",
+"lv": "B1",
+"ru": "ослепнуть (от блеска)",
+"en": "be dazzled",
+"fr": "être ébloui"
+},
+{
+"a": "կկոցել",
+"lv": "B1",
+"ru": "щуриться",
+"en": "squint",
+"fr": "plisser les yeux"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -49707,6 +51380,377 @@
 "fr": "j'espère"
 },
 {
+"a": "Կոմիտաս",
+"lv": "B2",
+"ru": "Комитас (композитор)",
+"en": "Komitas (composer)",
+"fr": "Komitas (compositeur)"
+},
+{
+"a": "Արամ Խաչատրյան",
+"lv": "B2",
+"ru": "Арам Хачатурян (композитор)",
+"en": "Aram Khachaturian (composer)",
+"fr": "Aram Khatchatourian (compositeur)"
+},
+{
+"a": "Հովհաննես Թումանյան",
+"lv": "B2",
+"ru": "Ованес Туманян (поэт)",
+"en": "Hovhannes Tumanyan (poet)",
+"fr": "Hovhannès Toumanian (poète)"
+},
+{
+"a": "Եղիշե Չարենց",
+"lv": "B2",
+"ru": "Егише Чаренц (поэт)",
+"en": "Yeghishe Charents (poet)",
+"fr": "Yéghiché Tcharents (poète)"
+},
+{
+"a": "Պարույր Սևակ",
+"lv": "B2",
+"ru": "Паруйр Севак (поэт)",
+"en": "Paruyr Sevak (poet)",
+"fr": "Barouyr Sévak (poète)"
+},
+{
+"a": "Ավետիք Իսահակյան",
+"lv": "B2",
+"ru": "Аветик Исаакян (поэт)",
+"en": "Avetik Isahakyan (poet)",
+"fr": "Avétik Issahakian (poète)"
+},
+{
+"a": "Վահան Տերյան",
+"lv": "B2",
+"ru": "Ваан Терьян (поэт)",
+"en": "Vahan Teryan (poet)",
+"fr": "Vahan Térian (poète)"
+},
+{
+"a": "Միքայել Նալբանդյան",
+"lv": "B2",
+"ru": "Микаэл Налбандян (писатель)",
+"en": "Mikael Nalbandian (writer)",
+"fr": "Mikaël Nalbandian (écrivain)"
+},
+{
+"a": "Խաչատուր Աբովյան",
+"lv": "B2",
+"ru": "Хачатур Абовян (писатель)",
+"en": "Khachatur Abovian (writer)",
+"fr": "Khatchatour Abovian (écrivain)"
+},
+{
+"a": "Րաֆֆի",
+"lv": "B2",
+"ru": "Раффи (писатель)",
+"en": "Raffi (novelist)",
+"fr": "Raffi (romancier)"
+},
+{
+"a": "Գրիգոր Նարեկացի",
+"lv": "B2",
+"ru": "Григор Нарекаци (поэт)",
+"en": "Gregory of Narek (poet)",
+"fr": "Grégoire de Narek (poète)"
+},
+{
+"a": "Սայաթ-Նովա",
+"lv": "B2",
+"ru": "Саят-Нова (ашуг)",
+"en": "Sayat-Nova (troubadour)",
+"fr": "Sayat-Nova (troubadour)"
+},
+{
+"a": "Մովսես Խորենացի",
+"lv": "B2",
+"ru": "Мовсес Хоренаци (историк)",
+"en": "Movses Khorenatsi (historian)",
+"fr": "Moïse de Khorène (historien)"
+},
+{
+"a": "Անանիա Շիրակացի",
+"lv": "B2",
+"ru": "Анания Ширакаци (учёный)",
+"en": "Anania Shirakatsi (scholar)",
+"fr": "Anania de Chirak (savant)"
+},
+{
+"a": "Մխիթար Գոշ",
+"lv": "B2",
+"ru": "Мхитар Гош (законовед)",
+"en": "Mkhitar Gosh (jurist)",
+"fr": "Mkhitar Goch (juriste)"
+},
+{
+"a": "Ներսես Շնորհալի",
+"lv": "B2",
+"ru": "Нерсес Шнорали (поэт, католикос)",
+"en": "Nerses Shnorhali (poet, Catholicos)",
+"fr": "Nersès Chnorhali (poète, catholicos)"
+},
+{
+"a": "Թորոս Ռոսլին",
+"lv": "B2",
+"ru": "Торос Рослин (миниатюрист)",
+"en": "Toros Roslin (illuminator)",
+"fr": "Toros Roslin (enlumineur)"
+},
+{
+"a": "Մարտիրոս Սարյան",
+"lv": "B2",
+"ru": "Мартирос Сарьян (художник)",
+"en": "Martiros Saryan (painter)",
+"fr": "Martiros Sarian (peintre)"
+},
+{
+"a": "Մինաս Ավետիսյան",
+"lv": "B2",
+"ru": "Минас Аветисян (художник)",
+"en": "Minas Avetisyan (painter)",
+"fr": "Minas Avétissian (peintre)"
+},
+{
+"a": "Հովհաննես Այվազովսկի",
+"lv": "B2",
+"ru": "Иван Айвазовский (художник)",
+"en": "Ivan Aivazovsky (painter)",
+"fr": "Ivan Aïvazovski (peintre)"
+},
+{
+"a": "Արշիլ Գորկի",
+"lv": "B2",
+"ru": "Аршил Горки (художник)",
+"en": "Arshile Gorky (painter)",
+"fr": "Arshile Gorky (peintre)"
+},
+{
+"a": "Սերգեյ Փարաջանով",
+"lv": "B2",
+"ru": "Сергей Параджанов (режиссёр)",
+"en": "Sergei Parajanov (film director)",
+"fr": "Sergueï Paradjanov (cinéaste)"
+},
+{
+"a": "Վիլյամ Սարոյան",
+"lv": "B2",
+"ru": "Уильям Сароян (писатель)",
+"en": "William Saroyan (writer)",
+"fr": "William Saroyan (écrivain)"
+},
+{
+"a": "Շառլ Ազնավուր",
+"lv": "B2",
+"ru": "Шарль Азнавур (певец)",
+"en": "Charles Aznavour (singer)",
+"fr": "Charles Aznavour (chanteur)"
+},
+{
+"a": "Վիկտոր Համբարձումյան",
+"lv": "B2",
+"ru": "Виктор Амбарцумян (астрофизик)",
+"en": "Viktor Ambartsumian (astrophysicist)",
+"fr": "Viktor Ambartsoumian (astrophysicien)"
+},
+{
+"a": "Ալեքսանդր Թամանյան",
+"lv": "B2",
+"ru": "Александр Таманян (архитектор)",
+"en": "Alexander Tamanian (architect)",
+"fr": "Alexandre Tamanian (architecte)"
+},
+{
+"a": "Հովհաննես Շիրազ",
+"lv": "B2",
+"ru": "Ованес Шираз (поэт)",
+"en": "Hovhannes Shiraz (poet)",
+"fr": "Hovhannès Chiraz (poète)"
+},
+{
+"a": "Սիլվա Կապուտիկյան",
+"lv": "B2",
+"ru": "Сильва Капутикян (поэтесса)",
+"en": "Silva Kaputikyan (poet)",
+"fr": "Silva Kapoutikian (poétesse)"
+},
+{
+"a": "Տիգրան Պետրոսյան",
+"lv": "B2",
+"ru": "Тигран Петросян (шахматист)",
+"en": "Tigran Petrosian (chess player)",
+"fr": "Tigran Petrossian (joueur d'échecs)"
+},
+{
+"a": "Ֆրունզիկ Մկրտչյան",
+"lv": "B2",
+"ru": "Фрунзик Мкртчян (актёр)",
+"en": "Frunzik Mkrtchyan (actor)",
+"fr": "Frounzik Mkrtchian (acteur)"
+},
+{
+"a": "Ջիվան Գասպարյան",
+"lv": "B2",
+"ru": "Дживан Гаспарян (дудукист)",
+"en": "Djivan Gasparyan (duduk player)",
+"fr": "Djivan Gasparyan (joueur de doudouk)"
+},
+{
+"a": "Առնո Բաբաջանյան",
+"lv": "B2",
+"ru": "Арно Бабаджанян (композитор)",
+"en": "Arno Babajanian (composer)",
+"fr": "Arno Babadjanian (compositeur)"
+},
+{
+"a": "Համո Բեկնազարյան",
+"lv": "B2",
+"ru": "Амо Бекназарян (режиссёр)",
+"en": "Hamo Beknazarian (film director)",
+"fr": "Hamo Beknazarian (cinéaste)"
+},
+{
+"a": "Ալան Հովհաննես",
+"lv": "B2",
+"ru": "Алан Ованес (композитор)",
+"en": "Alan Hovhaness (composer)",
+"fr": "Alan Hovhaness (compositeur)"
+},
+{
+"a": "մռմռալ",
+"lv": "B2",
+"ru": "бормотать",
+"en": "mutter",
+"fr": "marmonner"
+},
+{
+"a": "փնթփնթալ",
+"lv": "B2",
+"ru": "ворчать",
+"en": "grumble",
+"fr": "ronchonner"
+},
+{
+"a": "քրթմնջալ",
+"lv": "B2",
+"ru": "роптать",
+"en": "murmur, grumble",
+"fr": "murmurer"
+},
+{
+"a": "թոթովել",
+"lv": "B2",
+"ru": "лепетать",
+"en": "babble",
+"fr": "balbutier"
+},
+{
+"a": "կակազել",
+"lv": "B2",
+"ru": "заикаться",
+"en": "stutter",
+"fr": "bégayer"
+},
+{
+"a": "հեծկլտալ",
+"lv": "B2",
+"ru": "всхлипывать",
+"en": "sob",
+"fr": "sangloter"
+},
+{
+"a": "աղաղակել",
+"lv": "B2",
+"ru": "вопить",
+"en": "clamour",
+"fr": "vociférer"
+},
+{
+"a": "շաղակրատել",
+"lv": "B2",
+"ru": "болтать",
+"en": "chatter",
+"fr": "jacasser"
+},
+{
+"a": "բամբասել",
+"lv": "B2",
+"ru": "сплетничать",
+"en": "gossip",
+"fr": "commérer"
+},
+{
+"a": "ճառել",
+"lv": "B2",
+"ru": "произносить речь",
+"en": "make a speech",
+"fr": "discourir"
+},
+{
+"a": "դասախոսել",
+"lv": "B2",
+"ru": "читать лекцию",
+"en": "lecture",
+"fr": "faire un cours"
+},
+{
+"a": "քարոզել",
+"lv": "B2",
+"ru": "проповедовать",
+"en": "preach",
+"fr": "prêcher"
+},
+{
+"a": "հորդորել",
+"lv": "B2",
+"ru": "призывать",
+"en": "urge",
+"fr": "exhorter"
+},
+{
+"a": "խրատել",
+"lv": "B2",
+"ru": "наставлять",
+"en": "admonish",
+"fr": "sermonner"
+},
+{
+"a": "աղաչել",
+"lv": "B2",
+"ru": "умолять",
+"en": "beg",
+"fr": "supplier"
+},
+{
+"a": "պաղատել",
+"lv": "B2",
+"ru": "заклинать",
+"en": "implore",
+"fr": "implorer"
+},
+{
+"a": "թախանձել",
+"lv": "B2",
+"ru": "упрашивать",
+"en": "pester, plead",
+"fr": "harceler de prières"
+},
+{
+"a": "հրամայել",
+"lv": "B2",
+"ru": "приказывать",
+"en": "command",
+"fr": "ordonner"
+},
+{
+"a": "կարգադրել",
+"lv": "B2",
+"ru": "распоряжаться",
+"en": "order, instruct",
+"fr": "ordonner"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -55676,6 +57720,349 @@
 "ru": "неужели",
 "en": "really?, can it be",
 "fr": "est-il possible que"
+},
+{
+"a": "գլուխ կախել",
+"lv": "C1",
+"ru": "повесить голову",
+"en": "hang one's head",
+"fr": "baisser la tête"
+},
+{
+"a": "գլուխ-գլխի տալ",
+"lv": "C1",
+"ru": "посовещаться",
+"en": "put heads together",
+"fr": "se concerter"
+},
+{
+"a": "աչքից ընկնել",
+"lv": "C1",
+"ru": "упасть в глазах",
+"en": "fall from favour",
+"fr": "perdre l'estime"
+},
+{
+"a": "աչքի առաջ ունենալ",
+"lv": "C1",
+"ru": "иметь в виду",
+"en": "keep in mind",
+"fr": "avoir en vue"
+},
+{
+"a": "աչքը ծակել",
+"lv": "C1",
+"ru": "мозолить глаза",
+"en": "be an eyesore",
+"fr": "crever les yeux"
+},
+{
+"a": "աչքերը չռել",
+"lv": "C1",
+"ru": "вытаращить глаза",
+"en": "goggle",
+"fr": "écarquiller les yeux"
+},
+{
+"a": "ականջի հետև գցել",
+"lv": "C1",
+"ru": "пропустить мимо ушей",
+"en": "turn a deaf ear",
+"fr": "faire la sourde oreille"
+},
+{
+"a": "բերանը բացել",
+"lv": "C1",
+"ru": "открыть рот, заговорить",
+"en": "open one's mouth",
+"fr": "ouvrir la bouche"
+},
+{
+"a": "բերանը ջուր առնել",
+"lv": "C1",
+"ru": "набрать в рот воды",
+"en": "keep mum",
+"fr": "rester bouche cousue"
+},
+{
+"a": "լեզուն կուլ տալ",
+"lv": "C1",
+"ru": "проглотить язык",
+"en": "lose one's tongue",
+"fr": "avaler sa langue"
+},
+{
+"a": "լեզվի ծայրին",
+"lv": "C1",
+"ru": "на кончике языка",
+"en": "on the tip of one's tongue",
+"fr": "sur le bout de la langue"
+},
+{
+"a": "ատամը սրել",
+"lv": "C1",
+"ru": "точить зуб",
+"en": "have it in for someone",
+"fr": "garder une dent contre"
+},
+{
+"a": "քիթը կախել",
+"lv": "C1",
+"ru": "повесить нос",
+"en": "be downcast",
+"fr": "faire grise mine"
+},
+{
+"a": "քիթը վեր քաշել",
+"lv": "C1",
+"ru": "задирать нос",
+"en": "turn up one's nose",
+"fr": "prendre de grands airs"
+},
+{
+"a": "քթի տակ",
+"lv": "C1",
+"ru": "под носом",
+"en": "under one's nose",
+"fr": "sous le nez"
+},
+{
+"a": "երես թեքել",
+"lv": "C1",
+"ru": "отвернуться",
+"en": "turn one's back on",
+"fr": "se détourner de"
+},
+{
+"a": "ձեռք քաշել",
+"lv": "C1",
+"ru": "отказаться",
+"en": "give up, wash one's hands of",
+"fr": "renoncer à"
+},
+{
+"a": "ձեռքից բաց թողնել",
+"lv": "C1",
+"ru": "упустить",
+"en": "let slip",
+"fr": "laisser échapper"
+},
+{
+"a": "ձեռքի հետ",
+"lv": "C1",
+"ru": "заодно, мимоходом",
+"en": "while at it",
+"fr": "au passage"
+},
+{
+"a": "ձեռքերը ծալած նստել",
+"lv": "C1",
+"ru": "сидеть сложа руки",
+"en": "sit idly by",
+"fr": "rester les bras croisés"
+},
+{
+"a": "ոտք դնել",
+"lv": "C1",
+"ru": "ступить",
+"en": "set foot",
+"fr": "mettre les pieds"
+},
+{
+"a": "թիկունք կանգնել",
+"lv": "C1",
+"ru": "поддержать",
+"en": "stand by someone",
+"fr": "épauler"
+},
+{
+"a": "սիրտը տեղն ընկնել",
+"lv": "C1",
+"ru": "отлегло от сердца",
+"en": "be relieved",
+"fr": "être soulagé"
+},
+{
+"a": "սիրտը ճմլվել",
+"lv": "C1",
+"ru": "сердце сжимается",
+"en": "feel a pang",
+"fr": "avoir le cœur serré"
+},
+{
+"a": "սիրտը նեղանալ",
+"lv": "C1",
+"ru": "заскучать, огорчиться",
+"en": "feel low",
+"fr": "avoir le cafard"
+},
+{
+"a": "սիրտը տրաքել",
+"lv": "C1",
+"ru": "лопнуть (от злости, скуки)",
+"en": "be fed up",
+"fr": "en avoir marre"
+},
+{
+"a": "սրտին մոտ ընդունել",
+"lv": "C1",
+"ru": "принимать близко к сердцу",
+"en": "take to heart",
+"fr": "prendre à cœur"
+},
+{
+"a": "սիրտ անել",
+"lv": "C1",
+"ru": "осмелиться",
+"en": "dare",
+"fr": "oser"
+},
+{
+"a": "հոգու խորքում",
+"lv": "C1",
+"ru": "в глубине души",
+"en": "deep down",
+"fr": "au fond de soi"
+},
+{
+"a": "շունչ քաշել",
+"lv": "C1",
+"ru": "перевести дух",
+"en": "catch one's breath",
+"fr": "reprendre son souffle"
+},
+{
+"a": "շունչը կտրվել",
+"lv": "C1",
+"ru": "перехватить дыхание",
+"en": "be breathless",
+"fr": "avoir le souffle coupé"
+},
+{
+"a": "շնչակտուր",
+"lv": "C1",
+"ru": "запыхавшись",
+"en": "out of breath",
+"fr": "essoufflé"
+},
+{
+"a": "կրակի վրա յուղ լցնել",
+"lv": "C1",
+"ru": "подливать масла в огонь",
+"en": "add fuel to the fire",
+"fr": "jeter de l'huile sur le feu"
+},
+{
+"a": "ջրից չոր դուրս գալ",
+"lv": "C1",
+"ru": "выйти сухим из воды",
+"en": "get off scot-free",
+"fr": "s'en tirer à bon compte"
+},
+{
+"a": "մազից կախված",
+"lv": "C1",
+"ru": "на волоске",
+"en": "hanging by a thread",
+"fr": "ne tenir qu'à un fil"
+},
+{
+"a": "քարը փեշից թափել",
+"lv": "C1",
+"ru": "сменить гнев на милость",
+"en": "bury the hatchet",
+"fr": "enterrer la hache de guerre"
+},
+{
+"a": "թևերը կախել",
+"lv": "C1",
+"ru": "опустить крылья",
+"en": "lose heart",
+"fr": "baisser les bras"
+},
+{
+"a": "թև առնել",
+"lv": "C1",
+"ru": "окрылиться",
+"en": "be inspired",
+"fr": "prendre son envol"
+},
+{
+"a": "լույս աշխարհ գալ",
+"lv": "C1",
+"ru": "появиться на свет",
+"en": "be born",
+"fr": "venir au monde"
+},
+{
+"a": "լույս տեսնել",
+"lv": "C1",
+"ru": "выйти в свет",
+"en": "be published",
+"fr": "paraître"
+},
+{
+"a": "մութ գործ",
+"lv": "C1",
+"ru": "тёмное дело",
+"en": "shady business",
+"fr": "affaire louche"
+},
+{
+"a": "սև օր",
+"lv": "C1",
+"ru": "чёрный день",
+"en": "rainy day",
+"fr": "jour sombre"
+},
+{
+"a": "սպիտակ ագռավ",
+"lv": "C1",
+"ru": "белая ворона",
+"en": "odd one out",
+"fr": "mouton noir"
+},
+{
+"a": "կատու ու շուն",
+"lv": "C1",
+"ru": "как кошка с собакой",
+"en": "like cat and dog",
+"fr": "comme chien et chat"
+},
+{
+"a": "շան կյանք",
+"lv": "C1",
+"ru": "собачья жизнь",
+"en": "dog's life",
+"fr": "vie de chien"
+},
+{
+"a": "գայլի ախորժակ",
+"lv": "C1",
+"ru": "волчий аппетит",
+"en": "appetite like a horse",
+"fr": "appétit de loup"
+},
+{
+"a": "նապաստակի սիրտ",
+"lv": "C1",
+"ru": "заячья душа",
+"en": "chicken-hearted",
+"fr": "cœur de lièvre"
+},
+{
+"a": "ձկան պես լուռ",
+"lv": "C1",
+"ru": "нем как рыба",
+"en": "silent as the grave",
+"fr": "muet comme une carpe"
+},
+{
+"a": "գառան պես",
+"lv": "C1",
+"ru": "кроткий как ягнёнок",
+"en": "meek as a lamb",
+"fr": "doux comme un agneau"
 },
 {
 "a": "վեհ",

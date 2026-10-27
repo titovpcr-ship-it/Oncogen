@@ -20093,6 +20093,331 @@
 "fr": "La météo 2"
 },
 {
+"lv": "A2",
+"ru": "Время 3",
+"en": "Time 3",
+"hy": "Ժամանակ 3",
+"ic": "⏳",
+"w": [
+[
+"հնգամյակ",
+"пятилетка, пять лет",
+"five-year period",
+"",
+"quinquennat"
+],
+[
+"տարեսկիզբ",
+"начало года",
+"beginning of the year",
+"",
+"début d'année"
+],
+[
+"տարեվերջ",
+"конец года",
+"end of the year",
+"",
+"fin d'année"
+],
+[
+"ամսասկիզբ",
+"начало месяца",
+"beginning of the month",
+"",
+"début du mois"
+],
+[
+"ամսավերջ",
+"конец месяца",
+"end of the month",
+"",
+"fin du mois"
+],
+[
+"տոնական օր",
+"праздничный день",
+"public holiday",
+"🎉",
+"jour férié"
+],
+[
+"նախօրե",
+"канун",
+"eve",
+"",
+"veille"
+],
+[
+"հաջորդ օր",
+"следующий день",
+"the next day",
+"",
+"le lendemain"
+],
+[
+"նախորդ օր",
+"предыдущий день",
+"the day before",
+"",
+"la veille"
+],
+[
+"ամեն ամիս",
+"каждый месяц",
+"every month",
+"",
+"chaque mois"
+],
+[
+"ամեն տարի",
+"каждый год",
+"every year",
+"",
+"chaque année"
+],
+[
+"ամենամյա",
+"ежегодный",
+"annual",
+"",
+"annuel"
+],
+[
+"ամսական",
+"ежемесячный",
+"monthly",
+"",
+"mensuel"
+],
+[
+"եռամսյա",
+"трёхмесячный",
+"three-month, quarterly",
+"",
+"trimestriel"
+],
+[
+"կիսամյա",
+"полугодовой",
+"six-month",
+"",
+"semestriel"
+],
+[
+"լուսադեմ",
+"рассвет",
+"daybreak",
+"🌅",
+"point du jour"
+],
+[
+"արշալույս",
+"заря",
+"dawn",
+"",
+"aurore"
+],
+[
+"վաղ առավոտ",
+"раннее утро",
+"early morning",
+"",
+"tôt le matin"
+],
+[
+"ուշ երեկո",
+"поздний вечер",
+"late evening",
+"",
+"tard le soir"
+],
+[
+"ժամանակահատված",
+"промежуток времени",
+"period of time",
+"",
+"période"
+],
+[
+"հետագայում",
+"впоследствии",
+"later on",
+"",
+"par la suite"
+],
+[
+"ներկայումս",
+"в настоящее время",
+"at present",
+"",
+"actuellement"
+],
+[
+"վերջին ժամանակներս",
+"в последнее время",
+"lately",
+"",
+"ces derniers temps"
+],
+[
+"մոտ ապագայում",
+"в ближайшем будущем",
+"in the near future",
+"",
+"dans un avenir proche"
+],
+[
+"անցյալ տարի",
+"в прошлом году",
+"last year",
+"",
+"l'année dernière"
+],
+[
+"հաջորդ տարի",
+"в следующем году",
+"next year",
+"",
+"l'année prochaine"
+],
+[
+"այս տարի",
+"в этом году",
+"this year",
+"",
+"cette année"
+],
+[
+"անցյալ շաբաթ",
+"на прошлой неделе",
+"last week",
+"",
+"la semaine dernière"
+],
+[
+"հաջորդ շաբաթ",
+"на следующей неделе",
+"next week",
+"",
+"la semaine prochaine"
+],
+[
+"այս շաբաթ",
+"на этой неделе",
+"this week",
+"",
+"cette semaine"
+],
+[
+"երեկ երեկոյան",
+"вчера вечером",
+"yesterday evening",
+"",
+"hier soir"
+],
+[
+"վաղը առավոտյան",
+"завтра утром",
+"tomorrow morning",
+"",
+"demain matin"
+],
+[
+"ամբողջ օրը",
+"весь день",
+"all day",
+"",
+"toute la journée"
+],
+[
+"ամբողջ գիշեր",
+"всю ночь",
+"all night",
+"",
+"toute la nuit"
+],
+[
+"օրվա ընթացքում",
+"в течение дня",
+"during the day",
+"",
+"dans la journée"
+],
+[
+"կեսօրից հետո",
+"после полудня",
+"in the afternoon",
+"",
+"l'après-midi"
+],
+[
+"կեսօրից առաջ",
+"до полудня",
+"in the morning, before noon",
+"",
+"avant midi"
+],
+[
+"ժամանակին",
+"вовремя",
+"on time",
+"",
+"à l'heure"
+],
+[
+"վաղաժամ",
+"досрочно, преждевременно",
+"early, prematurely",
+"",
+"prématurément"
+],
+[
+"ուշացումով",
+"с опозданием",
+"late, with a delay",
+"",
+"en retard"
+],
+[
+"ամսաթիվ",
+"дата, число",
+"date",
+"📅",
+"date"
+],
+[
+"ժամացույցի սլաք",
+"стрелка часов",
+"clock hand",
+"🕐",
+"aiguille"
+],
+[
+"ավազի ժամացույց",
+"песочные часы",
+"hourglass",
+"⏳",
+"sablier"
+],
+[
+"արևի ժամացույց",
+"солнечные часы",
+"sundial",
+"",
+"cadran solaire"
+],
+[
+"տարեմուտ",
+"наступление года",
+"New Year's arrival",
+"",
+"nouvel an"
+]
+],
+"fr": "Le temps 3"
+},
+{
 "lv": "B1",
 "ru": "Общество и государство",
 "en": "Society and state",
@@ -38984,6 +39309,1404 @@
 "fr": "Les animaux et leurs cris"
 },
 {
+"lv": "B1",
+"ru": "Армения: реки, города, монастыри",
+"en": "Armenia: rivers, towns, monasteries",
+"hy": "Հայաստան. գետեր, քաղաքներ, վանքեր",
+"ic": "⛰️",
+"w": [
+[
+"Ախուրյան",
+"Ахурян (река)",
+"Akhurian (river)",
+"",
+"Akhourian (rivière)"
+],
+[
+"Որոտան",
+"Воротан (река)",
+"Vorotan (river)",
+"",
+"Vorotan (rivière)"
+],
+[
+"Աղստև",
+"Агстев (река)",
+"Aghstev (river)",
+"",
+"Aghstev (rivière)"
+],
+[
+"Արփա",
+"Арпа (река)",
+"Arpa (river)",
+"",
+"Arpa (rivière)"
+],
+[
+"Քասախ",
+"Касах (река)",
+"Kasakh (river)",
+"",
+"Kasakh (rivière)"
+],
+[
+"Պարզ լիճ",
+"Парз лич (озеро)",
+"Lake Parz",
+"",
+"lac Parz"
+],
+[
+"Քարի լիճ",
+"Кари лич (озеро на Арагаце)",
+"Lake Kari",
+"",
+"lac Kari"
+],
+[
+"Արա լեռ",
+"гора Ара",
+"Mount Ara",
+"",
+"mont Ara"
+],
+[
+"Աժդահակ",
+"Аждаак (вулкан)",
+"Azhdahak (volcano)",
+"",
+"Ajdahak (volcan)"
+],
+[
+"Խուստուփ",
+"Хуступ (гора)",
+"Khustup (mountain)",
+"",
+"Khoustoup (montagne)"
+],
+[
+"Հաղարծին",
+"Агарцин (монастырь)",
+"Haghartsin (monastery)",
+"",
+"Haghartsin (monastère)"
+],
+[
+"Գոշավանք",
+"Гошаванк",
+"Goshavank",
+"",
+"Gochavank"
+],
+[
+"Կեչառիս",
+"Кечарис",
+"Kecharis",
+"",
+"Kétcharis"
+],
+[
+"Սևանավանք",
+"Севанаванк",
+"Sevanavank",
+"",
+"Sevanavank"
+],
+[
+"Օձուն",
+"Одзун",
+"Odzun",
+"",
+"Odzoun"
+],
+[
+"Ախթալա",
+"Ахтала",
+"Akhtala",
+"",
+"Akhtala"
+],
+[
+"Մակարավանք",
+"Макараванк",
+"Makaravank",
+"",
+"Makaravank"
+],
+[
+"Հառիճ",
+"Арич",
+"Harichavank",
+"",
+"Haritch"
+],
+[
+"Մարմաշեն",
+"Мармашен",
+"Marmashen",
+"",
+"Marmachen"
+],
+[
+"Կարահունջ",
+"Караундж (Зорац карер)",
+"Karahunj (Zorats Karer)",
+"",
+"Karahunj (Zorats Karer)"
+],
+[
+"Սմբատաբերդ",
+"Смбатаберд (крепость)",
+"Smbataberd (fortress)",
+"",
+"Smbataberd (forteresse)"
+],
+[
+"Աբովյան",
+"Абовян",
+"Abovyan",
+"",
+"Abovian"
+],
+[
+"Արտաշատ",
+"Арташат",
+"Artashat",
+"",
+"Artachat"
+],
+[
+"Իջևան",
+"Иджеван",
+"Ijevan",
+"",
+"Idjevan"
+],
+[
+"Աշտարակ",
+"Аштарак",
+"Ashtarak",
+"",
+"Achtarak"
+],
+[
+"Եղեգնաձոր",
+"Ехегнадзор",
+"Yeghegnadzor",
+"",
+"Yéghégnadzor"
+],
+[
+"Սիսիան",
+"Сисиан",
+"Sisian",
+"",
+"Sissian"
+],
+[
+"Մեղրի",
+"Мегри",
+"Meghri",
+"",
+"Meghri"
+],
+[
+"Ալավերդի",
+"Алаверди",
+"Alaverdi",
+"",
+"Alaverdi"
+],
+[
+"Սպիտակ",
+"Спитак",
+"Spitak",
+"",
+"Spitak"
+],
+[
+"Չարենցավան",
+"Чаренцаван",
+"Charentsavan",
+"",
+"Tcharentsavan"
+],
+[
+"Մարտունի",
+"Мартуни",
+"Martuni",
+"",
+"Martouni"
+],
+[
+"Գավառ",
+"Гавар",
+"Gavar",
+"",
+"Gavar"
+],
+[
+"Բյուրական",
+"Бюракан",
+"Byurakan",
+"",
+"Biurakan"
+],
+[
+"Ամասիա",
+"Амасия",
+"Amasia",
+"",
+"Amasia"
+],
+[
+"Նոյեմբերյան",
+"Ноемберян",
+"Noyemberyan",
+"",
+"Noyemberian"
+],
+[
+"Վայք",
+"Вайк",
+"Vayk",
+"",
+"Vaïk"
+],
+[
+"Քաջարան",
+"Каджаран",
+"Kajaran",
+"",
+"Kadjaran"
+],
+[
+"Վաղարշապատ",
+"Вагаршапат",
+"Vagharshapat",
+"",
+"Vagharchapat"
+],
+[
+"Արարատյան դաշտ",
+"Араратская долина",
+"Ararat plain",
+"",
+"plaine de l'Ararat"
+],
+[
+"Շիրակի դաշտ",
+"Ширакская равнина",
+"Shirak plain",
+"",
+"plaine de Chirak"
+],
+[
+"Զանգեզուր",
+"Зангезур",
+"Zangezur",
+"",
+"Zanguezour"
+],
+[
+"Սասուն",
+"Сасун",
+"Sasun",
+"",
+"Sassoun"
+],
+[
+"Կարին",
+"Карин (Эрзурум)",
+"Karin (Erzurum)",
+"",
+"Karin (Erzurum)"
+],
+[
+"Էրզրում",
+"Эрзурум",
+"Erzurum",
+"",
+"Erzurum"
+],
+[
+"Տրապիզոն",
+"Трапезунд",
+"Trebizond",
+"",
+"Trébizonde"
+],
+[
+"Մալաթիա",
+"Малатья",
+"Malatya",
+"",
+"Malatya"
+],
+[
+"Խարբերդ",
+"Харберд",
+"Kharberd",
+"",
+"Kharpout"
+],
+[
+"Բիթլիս",
+"Битлис",
+"Bitlis",
+"",
+"Bitlis"
+],
+[
+"Անի",
+"Ани",
+"Ani",
+"",
+"Ani"
+],
+[
+"Աղթամար",
+"Ахтамар",
+"Aghtamar",
+"",
+"Aghtamar"
+],
+[
+"Նախիջևան",
+"Нахичевань",
+"Nakhichevan",
+"",
+"Nakhitchevan"
+],
+[
+"Ջուղա",
+"Джуга",
+"Julfa",
+"",
+"Djoulfa"
+],
+[
+"Գանձակ",
+"Гандзак",
+"Gandzak (Ganja)",
+"",
+"Gandzak (Gandja)"
+],
+[
+"Շուշի",
+"Шуши",
+"Shushi",
+"",
+"Chouchi"
+],
+[
+"Գանձասար",
+"Гандзасар",
+"Gandzasar",
+"",
+"Gandzassar"
+],
+[
+"Դադիվանք",
+"Дадиванк",
+"Dadivank",
+"",
+"Dadivank"
+],
+[
+"Ամարաս",
+"Амарас",
+"Amaras",
+"",
+"Amaras"
+],
+[
+"Տիգրանակերտ",
+"Тигранакерт",
+"Tigranakert",
+"",
+"Tigranocerte"
+]
+],
+"fr": "Arménie : rivières, villes, monastères"
+},
+{
+"lv": "B1",
+"ru": "Путешествие: отель, аэропорт, круиз",
+"en": "Travel: hotel, airport, cruise",
+"hy": "Ճամփորդություն. հյուրանոց, օդանավակայան, նավարկություն",
+"ic": "🛳️",
+"w": [
+[
+"ճամփորդություն",
+"путешествие, поездка",
+"trip, journey",
+"🧳",
+"voyage"
+],
+[
+"հյուրանոցի համար",
+"номер в гостинице",
+"hotel room",
+"🏨",
+"chambre d'hôtel"
+],
+[
+"մեկտեղանոց համար",
+"одноместный номер",
+"single room",
+"",
+"chambre simple"
+],
+[
+"երկտեղանոց համար",
+"двухместный номер",
+"double room",
+"",
+"chambre double"
+],
+[
+"լյուքս",
+"люкс",
+"suite",
+"",
+"suite"
+],
+[
+"սպասուհի",
+"горничная",
+"maid",
+"",
+"femme de chambre"
+],
+[
+"ճաշասենյակ",
+"столовая (комната)",
+"dining room",
+"",
+"salle à manger"
+],
+[
+"ամեն ինչ ներառված",
+"всё включено",
+"all inclusive",
+"",
+"tout compris"
+],
+[
+"դուրս գրվել",
+"выписаться, выехать",
+"check out",
+"",
+"régler sa note"
+],
+[
+"բանալի-քարտ",
+"ключ-карта",
+"key card",
+"🔑",
+"carte-clé"
+],
+[
+"անվտանգության պահարան",
+"сейф",
+"safe",
+"",
+"coffre-fort"
+],
+[
+"սենյակի սպասարկում",
+"обслуживание номеров",
+"room service",
+"",
+"service en chambre"
+],
+[
+"սաունա",
+"сауна",
+"sauna",
+"🧖",
+"sauna"
+],
+[
+"մերսում",
+"массаж",
+"massage",
+"💆",
+"massage"
+],
+[
+"տուրիստական գործակալություն",
+"турагентство",
+"travel agency",
+"",
+"agence de voyages"
+],
+[
+"տուր",
+"тур",
+"tour",
+"",
+"circuit"
+],
+[
+"տուրփաթեթ",
+"турпакет",
+"package holiday",
+"",
+"voyage organisé"
+],
+[
+"առողջարան",
+"санаторий",
+"sanatorium, health resort",
+"",
+"station thermale"
+],
+[
+"արևի հովանոց",
+"пляжный зонт",
+"sunshade",
+"⛱️",
+"parasol"
+],
+[
+"արևապաշտպան քսուք",
+"солнцезащитный крем",
+"sunscreen",
+"🧴",
+"crème solaire"
+],
+[
+"արևայրուք",
+"солнечный ожог",
+"sunburn",
+"",
+"coup de soleil"
+],
+[
+"արևահարություն",
+"солнечный удар",
+"sunstroke",
+"",
+"insolation"
+],
+[
+"տարադրամ",
+"иностранная валюта",
+"foreign currency",
+"",
+"devises"
+],
+[
+"ճամփորդական ապահովագրություն",
+"туристическая страховка",
+"travel insurance",
+"",
+"assurance voyage"
+],
+[
+"վիզայի դիմում",
+"заявление на визу",
+"visa application",
+"",
+"demande de visa"
+],
+[
+"սահմանային հսկողություն",
+"пограничный контроль",
+"border control",
+"",
+"contrôle frontalier"
+],
+[
+"անձնագրային հսկողություն",
+"паспортный контроль",
+"passport control",
+"🛂",
+"contrôle des passeports"
+],
+[
+"մաքսային հսկողություն",
+"таможенный контроль",
+"customs control",
+"🛃",
+"contrôle douanier"
+],
+[
+"անմաքս առևտուր",
+"дьюти-фри",
+"duty-free",
+"",
+"hors taxes"
+],
+[
+"տրանզիտ",
+"транзит",
+"transit",
+"",
+"transit"
+],
+[
+"չվերթ",
+"рейс",
+"flight",
+"",
+"vol"
+],
+[
+"վայրէջք",
+"посадка (самолёта)",
+"landing",
+"🛬",
+"atterrissage"
+],
+[
+"տերմինալ",
+"терминал",
+"terminal",
+"",
+"terminal"
+],
+[
+"նստեցման կտրոն",
+"посадочный талон",
+"boarding pass",
+"🎫",
+"carte d'embarquement"
+],
+[
+"ավելցուկային ուղեբեռ",
+"перевес багажа",
+"excess baggage",
+"",
+"excédent de bagages"
+],
+[
+"պատուհանի մոտ",
+"у окна",
+"by the window",
+"",
+"côté hublot"
+],
+[
+"միջանցքի մոտ",
+"у прохода",
+"aisle seat",
+"",
+"côté couloir"
+],
+[
+"անվտանգության գոտի",
+"ремень безопасности",
+"seat belt",
+"",
+"ceinture de sécurité"
+],
+[
+"թռչելու վախ",
+"страх полётов",
+"fear of flying",
+"",
+"peur de l'avion"
+],
+[
+"օդային փոս",
+"воздушная яма",
+"air pocket",
+"",
+"trou d'air"
+],
+[
+"կուպե",
+"купе",
+"compartment",
+"",
+"compartiment"
+],
+[
+"ննջավագոն",
+"спальный вагон",
+"sleeping car",
+"",
+"wagon-lit"
+],
+[
+"ռեստորան-վագոն",
+"вагон-ресторан",
+"dining car",
+"",
+"wagon-restaurant"
+],
+[
+"նավամատույց",
+"причал",
+"pier",
+"",
+"jetée"
+],
+[
+"նավախցիկ",
+"каюта",
+"cabin (on a ship)",
+"",
+"cabine"
+],
+[
+"տախտակամած",
+"палуба",
+"deck",
+"",
+"pont"
+],
+[
+"ուղևորանավ",
+"пассажирский теплоход",
+"passenger ship",
+"🛳️",
+"paquebot"
+],
+[
+"կռուիզ",
+"круиз",
+"cruise",
+"",
+"croisière"
+],
+[
+"ծովախտ",
+"морская болезнь",
+"seasickness",
+"",
+"mal de mer"
+],
+[
+"փրկօղակ",
+"спасательный круг",
+"lifebuoy",
+"🛟",
+"bouée de sauvetage"
+],
+[
+"փրկաբաճկոն",
+"спасательный жилет",
+"life jacket",
+"",
+"gilet de sauvetage"
+]
+],
+"fr": "Voyage : hôtel, aéroport, croisière"
+},
+{
+"lv": "B1",
+"ru": "Море и походы",
+"en": "The sea and the outdoors",
+"hy": "Ծով և արշավներ",
+"ic": "⛺",
+"w": [
+[
+"կորալ",
+"коралл",
+"coral",
+"🪸",
+"corail"
+],
+[
+"ծովային կրիա",
+"морская черепаха",
+"sea turtle",
+"🐢",
+"tortue de mer"
+],
+[
+"ծովաձի",
+"морской конёк",
+"seahorse",
+"",
+"hippocampe"
+],
+[
+"ծովային ոզնի",
+"морской ёж",
+"sea urchin",
+"",
+"oursin"
+],
+[
+"խեցի",
+"ракушка",
+"shell",
+"🐚",
+"coquillage"
+],
+[
+"մարգարտախեցի",
+"жемчужница",
+"pearl oyster",
+"",
+"huître perlière"
+],
+[
+"կակղամորթ",
+"моллюск",
+"mollusc",
+"",
+"mollusque"
+],
+[
+"խեցգետնակերպ",
+"ракообразное",
+"crustacean",
+"",
+"crustacé"
+],
+[
+"կարմիր խավիար",
+"красная икра",
+"red caviar",
+"",
+"caviar rouge"
+],
+[
+"սև խավիար",
+"чёрная икра",
+"black caviar",
+"",
+"caviar noir"
+],
+[
+"ծովատառեխ",
+"сельдь",
+"herring",
+"",
+"hareng"
+],
+[
+"կամբալա",
+"камбала",
+"flounder",
+"",
+"flet"
+],
+[
+"անչոուս",
+"анчоус",
+"anchovy",
+"",
+"anchois"
+],
+[
+"թրաձուկ",
+"рыба-меч",
+"swordfish",
+"",
+"espadon"
+],
+[
+"կարթ",
+"рыболовный крючок",
+"fish hook",
+"🪝",
+"hameçon"
+],
+[
+"կարթաձող",
+"удочка",
+"fishing rod",
+"🎣",
+"canne à pêche"
+],
+[
+"ձկնորսական ցանց",
+"рыболовная сеть",
+"fishing net",
+"",
+"filet de pêche"
+],
+[
+"խայծ",
+"наживка",
+"bait",
+"",
+"appât"
+],
+[
+"լողակ",
+"плавник",
+"fin",
+"",
+"nageoire"
+],
+[
+"խռիկ",
+"жабры",
+"gill",
+"",
+"branchie"
+],
+[
+"թեփուկ",
+"чешуя",
+"scale (of a fish)",
+"",
+"écaille"
+],
+[
+"մակընթացություն",
+"прилив",
+"high tide",
+"",
+"marée haute"
+],
+[
+"տեղատվություն",
+"отлив",
+"low tide",
+"",
+"marée basse"
+],
+[
+"ծովային հոսանք",
+"морское течение",
+"ocean current",
+"",
+"courant marin"
+],
+[
+"սուզորդ",
+"водолаз, ныряльщик",
+"diver",
+"🤿",
+"plongeur"
+],
+[
+"թթվածնային բալոն",
+"кислородный баллон",
+"oxygen tank",
+"",
+"bouteille d'oxygène"
+],
+[
+"լողակներ",
+"ласты",
+"flippers",
+"",
+"palmes"
+],
+[
+"ջրային դահուկ",
+"водные лыжи",
+"water skis",
+"",
+"ski nautique"
+],
+[
+"առագաստ",
+"парус",
+"sail",
+"⛵",
+"voile"
+],
+[
+"կայմ",
+"мачта",
+"mast",
+"",
+"mât"
+],
+[
+"խարիսխ",
+"якорь",
+"anchor",
+"⚓",
+"ancre"
+],
+[
+"թի",
+"весло",
+"oar",
+"",
+"rame"
+],
+[
+"նավակայան",
+"лодочная станция, пристань",
+"marina",
+"",
+"marina"
+],
+[
+"փարոս",
+"маяк",
+"lighthouse",
+"",
+"phare"
+],
+[
+"ծովահեն",
+"пират",
+"pirate",
+"🏴‍☠️",
+"pirate"
+],
+[
+"նավաբեկություն",
+"кораблекрушение",
+"shipwreck",
+"",
+"naufrage"
+],
+[
+"կղզյակ",
+"островок",
+"islet",
+"",
+"îlot"
+],
+[
+"ծովագնաց",
+"мореплаватель",
+"seafarer",
+"",
+"navigateur"
+],
+[
+"ծովագնացություն",
+"мореплавание",
+"navigation",
+"",
+"navigation"
+],
+[
+"ծովապետ",
+"адмирал",
+"admiral",
+"",
+"amiral"
+],
+[
+"նավատորմ",
+"флот",
+"fleet",
+"",
+"flotte"
+],
+[
+"լաստ",
+"плот",
+"raft",
+"",
+"radeau"
+],
+[
+"մակույկ",
+"челнок, лодочка",
+"skiff",
+"",
+"barque"
+],
+[
+"կանոե",
+"каноэ",
+"canoe",
+"🛶",
+"canoë"
+],
+[
+"ջրային սկուտեր",
+"гидроцикл",
+"jet ski",
+"",
+"scooter des mers"
+],
+[
+"յախտա",
+"яхта",
+"yacht",
+"",
+"yacht"
+],
+[
+"կատամարան",
+"катамаран",
+"catamaran",
+"",
+"catamaran"
+],
+[
+"արշավախումբ",
+"экспедиция (группа)",
+"expedition team",
+"",
+"équipe d'expédition"
+],
+[
+"ճամբար",
+"лагерь",
+"camp",
+"🏕️",
+"camp"
+],
+[
+"քնապարկ",
+"спальный мешок",
+"sleeping bag",
+"",
+"sac de couchage"
+],
+[
+"լուցկի",
+"спичка",
+"match",
+"🔥",
+"allumette"
+],
+[
+"կրակայրիչ",
+"зажигалка",
+"lighter",
+"",
+"briquet"
+],
+[
+"ջրաման",
+"фляга",
+"water bottle",
+"",
+"gourde"
+],
+[
+"թերմոս",
+"термос",
+"vacuum flask",
+"",
+"thermos"
+],
+[
+"ուտելիք",
+"еда, съестное",
+"food",
+"🥪",
+"nourriture"
+],
+[
+"ճանապարհի պաշար",
+"провизия в дорогу",
+"provisions",
+"",
+"provisions"
+],
+[
+"արահետ",
+"тропа",
+"trail, path",
+"",
+"sentier"
+],
+[
+"լեռնագնաց",
+"альпинист",
+"mountaineer",
+"🧗",
+"alpiniste"
+],
+[
+"ճեղք",
+"трещина, расселина",
+"crevice, crack",
+"",
+"crevasse"
+]
+],
+"fr": "La mer et le plein air"
+},
+{
+"lv": "B1",
+"ru": "Движения и позы",
+"en": "Movements and postures",
+"hy": "Շարժումներ և դիրքեր",
+"ic": "🧘",
+"w": [
+[
+"ոտքով տալ",
+"пнуть",
+"kick",
+"🦵",
+"donner un coup de pied"
+],
+[
+"ծնկաչոք",
+"на коленях",
+"on one's knees",
+"",
+"à genoux"
+],
+[
+"չոքել",
+"встать на колени",
+"kneel",
+"",
+"s'agenouiller"
+],
+[
+"կքանստել",
+"присесть на корточки",
+"squat",
+"",
+"s'accroupir"
+],
+[
+"կռանալ",
+"нагибаться",
+"stoop",
+"",
+"se baisser"
+],
+[
+"ձգձգվել",
+"затягиваться",
+"drag on",
+"",
+"traîner en longueur"
+],
+[
+"մեկնվել",
+"растянуться (лёжа)",
+"stretch out",
+"",
+"s'étendre"
+],
+[
+"պառկած",
+"лёжа",
+"lying down",
+"🛌",
+"allongé"
+],
+[
+"նստած",
+"сидя",
+"sitting",
+"🪑",
+"assis"
+],
+[
+"կանգնած",
+"стоя",
+"standing",
+"🧍",
+"debout"
+],
+[
+"թիկնել",
+"откинуться",
+"lean back",
+"",
+"s'adosser"
+],
+[
+"հենել",
+"прислонять",
+"lean (something) against",
+"",
+"appuyer"
+],
+[
+"ցնցվել",
+"вздрогнуть",
+"shudder, jolt",
+"",
+"tressaillir"
+],
+[
+"ցատկոտել",
+"подпрыгивать",
+"hop about",
+"",
+"sautiller"
+],
+[
+"մագլցում",
+"лазание",
+"climbing",
+"🧗",
+"escalade"
+],
+[
+"թաթախել",
+"обмакивать",
+"dip",
+"",
+"tremper"
+],
+[
+"թրջել",
+"мочить",
+"wet, soak",
+"💦",
+"mouiller"
+],
+[
+"մերկանալ",
+"обнажаться",
+"strip",
+"",
+"se dénuder"
+],
+[
+"հագցնել",
+"одевать (кого-то)",
+"dress (someone)",
+"",
+"habiller"
+],
+[
+"ձեռք տալ",
+"трогать; подать руку",
+"touch; shake hands",
+"",
+"toucher"
+],
+[
+"թափ տալ",
+"встряхнуть",
+"shake out",
+"",
+"secouer"
+],
+[
+"ձեռքով անել",
+"помахать рукой",
+"wave",
+"👋",
+"faire signe de la main"
+],
+[
+"գլուխը շարժել",
+"качать головой",
+"shake one's head",
+"",
+"secouer la tête"
+],
+[
+"շլանալ",
+"ослепнуть (от блеска)",
+"be dazzled",
+"",
+"être ébloui"
+],
+[
+"կկոցել",
+"щуриться",
+"squint",
+"😑",
+"plisser les yeux"
+]
+],
+"fr": "Mouvements et postures"
+},
+{
 "lv": "B2",
 "ru": "Личность и психология",
 "en": "Personality and psychology",
@@ -51457,6 +53180,397 @@
 "fr": "Adverbes B2 : comment au juste"
 },
 {
+"lv": "B2",
+"ru": "Знаменитые армяне",
+"en": "Famous Armenians",
+"hy": "Հայտնի հայեր",
+"ic": "🌟",
+"w": [
+[
+"Կոմիտաս",
+"Комитас (композитор)",
+"Komitas (composer)",
+"",
+"Komitas (compositeur)"
+],
+[
+"Արամ Խաչատրյան",
+"Арам Хачатурян (композитор)",
+"Aram Khachaturian (composer)",
+"",
+"Aram Khatchatourian (compositeur)"
+],
+[
+"Հովհաննես Թումանյան",
+"Ованес Туманян (поэт)",
+"Hovhannes Tumanyan (poet)",
+"",
+"Hovhannès Toumanian (poète)"
+],
+[
+"Եղիշե Չարենց",
+"Егише Чаренц (поэт)",
+"Yeghishe Charents (poet)",
+"",
+"Yéghiché Tcharents (poète)"
+],
+[
+"Պարույր Սևակ",
+"Паруйр Севак (поэт)",
+"Paruyr Sevak (poet)",
+"",
+"Barouyr Sévak (poète)"
+],
+[
+"Ավետիք Իսահակյան",
+"Аветик Исаакян (поэт)",
+"Avetik Isahakyan (poet)",
+"",
+"Avétik Issahakian (poète)"
+],
+[
+"Վահան Տերյան",
+"Ваан Терьян (поэт)",
+"Vahan Teryan (poet)",
+"",
+"Vahan Térian (poète)"
+],
+[
+"Միքայել Նալբանդյան",
+"Микаэл Налбандян (писатель)",
+"Mikael Nalbandian (writer)",
+"",
+"Mikaël Nalbandian (écrivain)"
+],
+[
+"Խաչատուր Աբովյան",
+"Хачатур Абовян (писатель)",
+"Khachatur Abovian (writer)",
+"",
+"Khatchatour Abovian (écrivain)"
+],
+[
+"Րաֆֆի",
+"Раффи (писатель)",
+"Raffi (novelist)",
+"",
+"Raffi (romancier)"
+],
+[
+"Գրիգոր Նարեկացի",
+"Григор Нарекаци (поэт)",
+"Gregory of Narek (poet)",
+"",
+"Grégoire de Narek (poète)"
+],
+[
+"Սայաթ-Նովա",
+"Саят-Нова (ашуг)",
+"Sayat-Nova (troubadour)",
+"",
+"Sayat-Nova (troubadour)"
+],
+[
+"Մովսես Խորենացի",
+"Мовсес Хоренаци (историк)",
+"Movses Khorenatsi (historian)",
+"",
+"Moïse de Khorène (historien)"
+],
+[
+"Անանիա Շիրակացի",
+"Анания Ширакаци (учёный)",
+"Anania Shirakatsi (scholar)",
+"",
+"Anania de Chirak (savant)"
+],
+[
+"Մխիթար Գոշ",
+"Мхитар Гош (законовед)",
+"Mkhitar Gosh (jurist)",
+"",
+"Mkhitar Goch (juriste)"
+],
+[
+"Ներսես Շնորհալի",
+"Нерсес Шнорали (поэт, католикос)",
+"Nerses Shnorhali (poet, Catholicos)",
+"",
+"Nersès Chnorhali (poète, catholicos)"
+],
+[
+"Թորոս Ռոսլին",
+"Торос Рослин (миниатюрист)",
+"Toros Roslin (illuminator)",
+"",
+"Toros Roslin (enlumineur)"
+],
+[
+"Մարտիրոս Սարյան",
+"Мартирос Сарьян (художник)",
+"Martiros Saryan (painter)",
+"",
+"Martiros Sarian (peintre)"
+],
+[
+"Մինաս Ավետիսյան",
+"Минас Аветисян (художник)",
+"Minas Avetisyan (painter)",
+"",
+"Minas Avétissian (peintre)"
+],
+[
+"Հովհաննես Այվազովսկի",
+"Иван Айвазовский (художник)",
+"Ivan Aivazovsky (painter)",
+"",
+"Ivan Aïvazovski (peintre)"
+],
+[
+"Արշիլ Գորկի",
+"Аршил Горки (художник)",
+"Arshile Gorky (painter)",
+"",
+"Arshile Gorky (peintre)"
+],
+[
+"Սերգեյ Փարաջանով",
+"Сергей Параджанов (режиссёр)",
+"Sergei Parajanov (film director)",
+"",
+"Sergueï Paradjanov (cinéaste)"
+],
+[
+"Վիլյամ Սարոյան",
+"Уильям Сароян (писатель)",
+"William Saroyan (writer)",
+"",
+"William Saroyan (écrivain)"
+],
+[
+"Շառլ Ազնավուր",
+"Шарль Азнавур (певец)",
+"Charles Aznavour (singer)",
+"",
+"Charles Aznavour (chanteur)"
+],
+[
+"Վիկտոր Համբարձումյան",
+"Виктор Амбарцумян (астрофизик)",
+"Viktor Ambartsumian (astrophysicist)",
+"",
+"Viktor Ambartsoumian (astrophysicien)"
+],
+[
+"Ալեքսանդր Թամանյան",
+"Александр Таманян (архитектор)",
+"Alexander Tamanian (architect)",
+"",
+"Alexandre Tamanian (architecte)"
+],
+[
+"Հովհաննես Շիրազ",
+"Ованес Шираз (поэт)",
+"Hovhannes Shiraz (poet)",
+"",
+"Hovhannès Chiraz (poète)"
+],
+[
+"Սիլվա Կապուտիկյան",
+"Сильва Капутикян (поэтесса)",
+"Silva Kaputikyan (poet)",
+"",
+"Silva Kapoutikian (poétesse)"
+],
+[
+"Տիգրան Պետրոսյան",
+"Тигран Петросян (шахматист)",
+"Tigran Petrosian (chess player)",
+"",
+"Tigran Petrossian (joueur d'échecs)"
+],
+[
+"Ֆրունզիկ Մկրտչյան",
+"Фрунзик Мкртчян (актёр)",
+"Frunzik Mkrtchyan (actor)",
+"",
+"Frounzik Mkrtchian (acteur)"
+],
+[
+"Ջիվան Գասպարյան",
+"Дживан Гаспарян (дудукист)",
+"Djivan Gasparyan (duduk player)",
+"",
+"Djivan Gasparyan (joueur de doudouk)"
+],
+[
+"Առնո Բաբաջանյան",
+"Арно Бабаджанян (композитор)",
+"Arno Babajanian (composer)",
+"",
+"Arno Babadjanian (compositeur)"
+],
+[
+"Համո Բեկնազարյան",
+"Амо Бекназарян (режиссёр)",
+"Hamo Beknazarian (film director)",
+"",
+"Hamo Beknazarian (cinéaste)"
+],
+[
+"Ալան Հովհաննես",
+"Алан Ованес (композитор)",
+"Alan Hovhaness (composer)",
+"",
+"Alan Hovhaness (compositeur)"
+]
+],
+"fr": "Arméniens célèbres"
+},
+{
+"lv": "B2",
+"ru": "Глаголы речи",
+"en": "Verbs of speaking",
+"hy": "Խոսքի բայեր",
+"ic": "🗣️",
+"w": [
+[
+"մռմռալ",
+"бормотать",
+"mutter",
+"",
+"marmonner"
+],
+[
+"փնթփնթալ",
+"ворчать",
+"grumble",
+"",
+"ronchonner"
+],
+[
+"քրթմնջալ",
+"роптать",
+"murmur, grumble",
+"",
+"murmurer"
+],
+[
+"թոթովել",
+"лепетать",
+"babble",
+"",
+"balbutier"
+],
+[
+"կակազել",
+"заикаться",
+"stutter",
+"",
+"bégayer"
+],
+[
+"հեծկլտալ",
+"всхлипывать",
+"sob",
+"😭",
+"sangloter"
+],
+[
+"աղաղակել",
+"вопить",
+"clamour",
+"",
+"vociférer"
+],
+[
+"շաղակրատել",
+"болтать",
+"chatter",
+"",
+"jacasser"
+],
+[
+"բամբասել",
+"сплетничать",
+"gossip",
+"",
+"commérer"
+],
+[
+"ճառել",
+"произносить речь",
+"make a speech",
+"🎤",
+"discourir"
+],
+[
+"դասախոսել",
+"читать лекцию",
+"lecture",
+"",
+"faire un cours"
+],
+[
+"քարոզել",
+"проповедовать",
+"preach",
+"",
+"prêcher"
+],
+[
+"հորդորել",
+"призывать",
+"urge",
+"",
+"exhorter"
+],
+[
+"խրատել",
+"наставлять",
+"admonish",
+"",
+"sermonner"
+],
+[
+"աղաչել",
+"умолять",
+"beg",
+"",
+"supplier"
+],
+[
+"պաղատել",
+"заклинать",
+"implore",
+"",
+"implorer"
+],
+[
+"թախանձել",
+"упрашивать",
+"pester, plead",
+"",
+"harceler de prières"
+],
+[
+"հրամայել",
+"приказывать",
+"command",
+"",
+"ordonner"
+],
+[
+"կարգադրել",
+"распоряжаться",
+"order, instruct",
+"",
+"ordonner"
+]
+],
+"fr": "Verbes de parole"
+},
+{
 "lv": "C1",
 "ru": "Философия и абстракции",
 "en": "Philosophy and abstractions",
@@ -57596,6 +59710,359 @@
 ]
 ],
 "fr": "Adverbes et liaisons soutenus"
+},
+{
+"lv": "C1",
+"ru": "Идиомы 2",
+"en": "Idioms 2",
+"hy": "Դարձվածքներ 2",
+"ic": "🗝️",
+"w": [
+[
+"գլուխ կախել",
+"повесить голову",
+"hang one's head",
+"",
+"baisser la tête"
+],
+[
+"գլուխ-գլխի տալ",
+"посовещаться",
+"put heads together",
+"",
+"se concerter"
+],
+[
+"աչքից ընկնել",
+"упасть в глазах",
+"fall from favour",
+"",
+"perdre l'estime"
+],
+[
+"աչքի առաջ ունենալ",
+"иметь в виду",
+"keep in mind",
+"",
+"avoir en vue"
+],
+[
+"աչքը ծակել",
+"мозолить глаза",
+"be an eyesore",
+"",
+"crever les yeux"
+],
+[
+"աչքերը չռել",
+"вытаращить глаза",
+"goggle",
+"",
+"écarquiller les yeux"
+],
+[
+"ականջի հետև գցել",
+"пропустить мимо ушей",
+"turn a deaf ear",
+"",
+"faire la sourde oreille"
+],
+[
+"բերանը բացել",
+"открыть рот, заговорить",
+"open one's mouth",
+"",
+"ouvrir la bouche"
+],
+[
+"բերանը ջուր առնել",
+"набрать в рот воды",
+"keep mum",
+"",
+"rester bouche cousue"
+],
+[
+"լեզուն կուլ տալ",
+"проглотить язык",
+"lose one's tongue",
+"",
+"avaler sa langue"
+],
+[
+"լեզվի ծայրին",
+"на кончике языка",
+"on the tip of one's tongue",
+"",
+"sur le bout de la langue"
+],
+[
+"ատամը սրել",
+"точить зуб",
+"have it in for someone",
+"",
+"garder une dent contre"
+],
+[
+"քիթը կախել",
+"повесить нос",
+"be downcast",
+"",
+"faire grise mine"
+],
+[
+"քիթը վեր քաշել",
+"задирать нос",
+"turn up one's nose",
+"",
+"prendre de grands airs"
+],
+[
+"քթի տակ",
+"под носом",
+"under one's nose",
+"",
+"sous le nez"
+],
+[
+"երես թեքել",
+"отвернуться",
+"turn one's back on",
+"",
+"se détourner de"
+],
+[
+"ձեռք քաշել",
+"отказаться",
+"give up, wash one's hands of",
+"",
+"renoncer à"
+],
+[
+"ձեռքից բաց թողնել",
+"упустить",
+"let slip",
+"",
+"laisser échapper"
+],
+[
+"ձեռքի հետ",
+"заодно, мимоходом",
+"while at it",
+"",
+"au passage"
+],
+[
+"ձեռքերը ծալած նստել",
+"сидеть сложа руки",
+"sit idly by",
+"",
+"rester les bras croisés"
+],
+[
+"ոտք դնել",
+"ступить",
+"set foot",
+"",
+"mettre les pieds"
+],
+[
+"թիկունք կանգնել",
+"поддержать",
+"stand by someone",
+"",
+"épauler"
+],
+[
+"սիրտը տեղն ընկնել",
+"отлегло от сердца",
+"be relieved",
+"",
+"être soulagé"
+],
+[
+"սիրտը ճմլվել",
+"сердце сжимается",
+"feel a pang",
+"",
+"avoir le cœur serré"
+],
+[
+"սիրտը նեղանալ",
+"заскучать, огорчиться",
+"feel low",
+"",
+"avoir le cafard"
+],
+[
+"սիրտը տրաքել",
+"лопнуть (от злости, скуки)",
+"be fed up",
+"",
+"en avoir marre"
+],
+[
+"սրտին մոտ ընդունել",
+"принимать близко к сердцу",
+"take to heart",
+"",
+"prendre à cœur"
+],
+[
+"սիրտ անել",
+"осмелиться",
+"dare",
+"",
+"oser"
+],
+[
+"հոգու խորքում",
+"в глубине души",
+"deep down",
+"",
+"au fond de soi"
+],
+[
+"շունչ քաշել",
+"перевести дух",
+"catch one's breath",
+"",
+"reprendre son souffle"
+],
+[
+"շունչը կտրվել",
+"перехватить дыхание",
+"be breathless",
+"",
+"avoir le souffle coupé"
+],
+[
+"շնչակտուր",
+"запыхавшись",
+"out of breath",
+"",
+"essoufflé"
+],
+[
+"կրակի վրա յուղ լցնել",
+"подливать масла в огонь",
+"add fuel to the fire",
+"",
+"jeter de l'huile sur le feu"
+],
+[
+"ջրից չոր դուրս գալ",
+"выйти сухим из воды",
+"get off scot-free",
+"",
+"s'en tirer à bon compte"
+],
+[
+"մազից կախված",
+"на волоске",
+"hanging by a thread",
+"",
+"ne tenir qu'à un fil"
+],
+[
+"քարը փեշից թափել",
+"сменить гнев на милость",
+"bury the hatchet",
+"",
+"enterrer la hache de guerre"
+],
+[
+"թևերը կախել",
+"опустить крылья",
+"lose heart",
+"",
+"baisser les bras"
+],
+[
+"թև առնել",
+"окрылиться",
+"be inspired",
+"",
+"prendre son envol"
+],
+[
+"լույս աշխարհ գալ",
+"появиться на свет",
+"be born",
+"",
+"venir au monde"
+],
+[
+"լույս տեսնել",
+"выйти в свет",
+"be published",
+"",
+"paraître"
+],
+[
+"մութ գործ",
+"тёмное дело",
+"shady business",
+"",
+"affaire louche"
+],
+[
+"սև օր",
+"чёрный день",
+"rainy day",
+"",
+"jour sombre"
+],
+[
+"սպիտակ ագռավ",
+"белая ворона",
+"odd one out",
+"",
+"mouton noir"
+],
+[
+"կատու ու շուն",
+"как кошка с собакой",
+"like cat and dog",
+"",
+"comme chien et chat"
+],
+[
+"շան կյանք",
+"собачья жизнь",
+"dog's life",
+"",
+"vie de chien"
+],
+[
+"գայլի ախորժակ",
+"волчий аппетит",
+"appetite like a horse",
+"",
+"appétit de loup"
+],
+[
+"նապաստակի սիրտ",
+"заячья душа",
+"chicken-hearted",
+"",
+"cœur de lièvre"
+],
+[
+"ձկան պես լուռ",
+"нем как рыба",
+"silent as the grave",
+"",
+"muet comme une carpe"
+],
+[
+"գառան պես",
+"кроткий как ягнёнок",
+"meek as a lamb",
+"",
+"doux comme un agneau"
+]
+],
+"fr": "Expressions idiomatiques 2"
 },
 {
 "lv": "C2",
