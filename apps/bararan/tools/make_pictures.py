@@ -1,0 +1,736 @@
+"""Картинки для режима «Картинки»: векторные сцены 320×200, нарисованы кодом (своя графика, без лицензий).
+
+Каждая картинка — фон (небо и трава, стол, комната, море, ночь…) и предмет вокруг точки (160, 110).
+Для упражнения на множественное число — та же сцена с тремя уменьшенными предметами и форма
+мн. числа (PLURAL, только надёжные слова; исключения вроде ձուկ → ձկներ отмечены).
+
+Пишет www/js/pictures.js: window.BARARAN_PICS = {слово: {s: svg, m: svg мн. числа, pl: форма}}.
+Запуск: python3 tools/make_pictures.py
+"""
+import json, os, re
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SH = lambda cx=160, cy=156, rx=46: f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{max(4, rx // 8)}" fill="#000" opacity=".12"/>'
+
+# ---------- фоны ----------
+def bg_sky(p, ground=True, hills="#9BD06C", hills2="#7FBF50", sky=("#BFE3F5", "#EEF8FC")):
+    g = (f'<path d="M0 148 Q80 130 160 144 T320 138 V200 H0Z" fill="{hills}"/>'
+         f'<path d="M0 166 Q100 150 200 164 T320 158 V200 H0Z" fill="{hills2}"/>') if ground else ''
+    return (f'<defs><linearGradient id="{p}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{sky[0]}"/>'
+            f'<stop offset="1" stop-color="{sky[1]}"/></linearGradient></defs><rect width="320" height="200" fill="url(#{p}s)"/>' + g)
+
+def bg_clouds():
+    return ('<g fill="#fff" opacity=".85"><circle cx="52" cy="40" r="12"/><circle cx="68" cy="34" r="15"/><circle cx="85" cy="41" r="11"/>'
+            '<rect x="44" y="38" width="48" height="12" rx="6"/><circle cx="252" cy="30" r="10"/><circle cx="266" cy="25" r="13"/>'
+            '<circle cx="281" cy="31" r="9"/><rect x="245" y="29" width="42" height="10" rx="5"/></g>')
+
+def bg_night(p):
+    st = ''.join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#fff" opacity="{o}"/>' for x, y, r, o in
+                 [(30, 30, 1.6, .9), (70, 60, 1.2, .7), (110, 22, 1.4, .8), (250, 40, 1.6, .9), (290, 80, 1.2, .7),
+                  (220, 18, 1.1, .6), (40, 120, 1.2, .6), (280, 140, 1.4, .7), (95, 150, 1, .5), (200, 160, 1.2, .6)])
+    return (f'<defs><linearGradient id="{p}n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B2550"/>'
+            f'<stop offset="1" stop-color="#3D4E86"/></linearGradient></defs><rect width="320" height="200" fill="url(#{p}n)"/>' + st)
+
+def bg_table(p, wall=("#FCEFE1", "#F6E2CC")):
+    return (f'<defs><linearGradient id="{p}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{wall[0]}"/>'
+            f'<stop offset="1" stop-color="{wall[1]}"/></linearGradient></defs><rect width="320" height="200" fill="url(#{p}w)"/>'
+            '<rect y="150" width="320" height="50" fill="#D9A06A"/><rect y="150" width="320" height="6" fill="#E8B887"/>'
+            '<rect y="186" width="320" height="14" fill="#C68C58"/>')
+
+def bg_room(p):
+    return (f'<defs><linearGradient id="{p}r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3E6F2"/>'
+            f'<stop offset="1" stop-color="#EAD8E8"/></linearGradient></defs><rect width="320" height="200" fill="url(#{p}r)"/>'
+            '<rect y="158" width="320" height="42" fill="#D8B48C"/><rect y="156" width="320" height="4" fill="#C9A27A"/>'
+            '<g stroke="#C9A27A" stroke-width="1.5" opacity=".6"><path d="M0 178 H320"/><path d="M60 160 V178 M150 178 V200 M240 160 V178"/></g>')
+
+def bg_plain(p, c=("#FFF1E3", "#FFE0C2")):
+    return (f'<defs><radialGradient id="{p}p" cx=".5" cy=".45" r=".75"><stop offset="0" stop-color="{c[0]}"/>'
+            f'<stop offset="1" stop-color="{c[1]}"/></radialGradient></defs><rect width="320" height="200" fill="url(#{p}p)"/>')
+
+def bg_sea(p):
+    return (bg_sky(p, ground=False) + '<rect y="120" width="320" height="80" fill="#4FA9DA"/>'
+            '<path d="M0 120 H320 V132 Q300 126 280 132 T240 132 T200 132 T160 132 T120 132 T80 132 T40 132 T0 132Z" fill="#6CBFE8"/>'
+            '<g fill="none" stroke="#9AD6F3" stroke-width="3" stroke-linecap="round"><path d="M30 160 q10 -6 20 0"/>'
+            '<path d="M120 176 q10 -6 20 0"/><path d="M250 166 q10 -6 20 0"/></g>')
+
+def bg_water(p):
+    return (f'<defs><linearGradient id="{p}u" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FD0F0"/>'
+            f'<stop offset="1" stop-color="#2B7FBF"/></linearGradient></defs><rect width="320" height="200" fill="url(#{p}u)"/>'
+            '<g fill="#fff" opacity=".55"><circle cx="60" cy="60" r="5"/><circle cx="70" cy="40" r="3"/><circle cx="262" cy="70" r="4"/>'
+            '<circle cx="270" cy="52" r="2.5"/></g><g fill="#3E9E5A"><path d="M30 200 C20 170 40 160 30 130 C46 160 40 175 44 200Z"/>'
+            '<path d="M280 200 C272 176 292 166 284 140 C300 168 292 182 296 200Z"/></g><path d="M0 188 Q160 176 320 188 V200 H0Z" fill="#E9D59E"/>')
+
+def bg_road(p):
+    return (bg_sky(p, ground=False) + bg_clouds() + '<path d="M0 132 Q160 122 320 132 V200 H0Z" fill="#9BD06C"/>'
+            '<rect y="146" width="320" height="40" fill="#5D6672"/><g fill="#fff"><rect x="10" y="164" width="34" height="4" rx="2"/>'
+            '<rect x="80" y="164" width="34" height="4" rx="2"/><rect x="150" y="164" width="34" height="4" rx="2"/>'
+            '<rect x="220" y="164" width="34" height="4" rx="2"/><rect x="290" y="164" width="34" height="4" rx="2"/></g>')
+
+def bg_rails(p):
+    return (bg_sky(p, ground=False) + bg_clouds() + '<path d="M0 138 Q160 128 320 138 V200 H0Z" fill="#9BD06C"/>'
+            '<rect y="164" width="320" height="10" fill="#B89A7A"/><g fill="#8A6A4A">' +
+            ''.join(f'<rect x="{x}" y="162" width="8" height="14" rx="1"/>' for x in range(4, 320, 22)) +
+            '</g><rect y="161" width="320" height="3" fill="#6F7780"/><rect y="170" width="320" height="3" fill="#6F7780"/>')
+
+def bg_winter(p):
+    flakes = ''.join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#fff"/>' for x, y, r in
+                     [(30, 30, 3), (80, 60, 2.5), (130, 20, 2), (210, 50, 3), (270, 28, 2.5), (300, 90, 2), (50, 100, 2.5),
+                      (250, 110, 3), (110, 120, 2)])
+    return (bg_sky(p, ground=False, sky=("#B9D3E6", "#E7F0F7")) + flakes +
+            '<path d="M0 140 Q80 124 160 138 T320 132 V200 H0Z" fill="#F4F8FB"/><path d="M0 164 Q100 150 200 162 T320 156 V200 H0Z" fill="#E3ECF3"/>')
+
+# ---------- предметы (центр около 160,110) ----------
+O = {}
+def obj(key, bg, plural=None):
+    def deco(f):
+        O[key] = (bg, f, plural)
+        return f
+    return deco
+
+@obj('ծառ', 'sky', 'ծառեր')
+def _(): return (SH(160, 158, 44) + '<rect x="150" y="96" width="20" height="62" rx="5" fill="#8B5A33"/>'
+    '<path d="M160 120 L142 104 M160 112 L176 98" stroke="#8B5A33" stroke-width="6" stroke-linecap="round"/>'
+    '<circle cx="132" cy="92" r="28" fill="#4E9E45"/><circle cx="188" cy="92" r="28" fill="#4E9E45"/>'
+    '<circle cx="160" cy="76" r="40" fill="#5DB14F"/><circle cx="142" cy="62" r="20" fill="#6CC05A"/>'
+    '<circle cx="176" cy="102" r="18" fill="#5DB14F"/><circle cx="150" cy="56" r="8" fill="#86D46F"/>')
+
+@obj('ծաղիկ', 'sky', 'ծաղիկներ')
+def _(): return (SH(160, 158, 26) + '<path d="M160 158 C160 132 157 112 160 92" stroke="#4E9A3E" stroke-width="5" fill="none" stroke-linecap="round"/>'
+    '<path d="M159 136 C140 122 128 128 124 138 C138 142 150 142 159 136Z" fill="#5DB14F"/>'
+    '<path d="M161 124 C178 110 192 116 196 126 C182 130 170 130 161 124Z" fill="#5DB14F"/>' +
+    ''.join(f'<ellipse cx="160" cy="60" rx="11" ry="19" fill="#F06A8B" transform="rotate({a} 160 78)"/>' for a in range(0, 360, 60)) +
+    '<circle cx="160" cy="78" r="11" fill="#FFC93C"/><circle cx="157" cy="75" r="3" fill="#FFE08A"/>')
+
+@obj('արև', 'skyclear')
+def _(): return ('<g stroke="#FFB02E" stroke-width="7" stroke-linecap="round">' +
+    ''.join(f'<path d="M160 44 V28" transform="rotate({a} 160 92)"/>' for a in range(0, 360, 30)) +
+    '</g><circle cx="160" cy="92" r="40" fill="#FFC93C"/><circle cx="160" cy="92" r="30" fill="#FFD95E"/>'
+    '<circle cx="148" cy="80" r="8" fill="#FFE89A"/>')
+
+@obj('լուսին', 'night')
+def _(p): return (f'<mask id="{p}m"><rect width="320" height="200" fill="#fff"/><circle cx="186" cy="80" r="38" fill="#000"/></mask>'
+    '<circle cx="160" cy="98" r="52" fill="#FFE9A8" opacity=".12"/>'
+    f'<circle cx="160" cy="98" r="42" fill="#FFE9A8" mask="url(#{p}m)"/>'
+    f'<g mask="url(#{p}m)" fill="#F2D684"><circle cx="138" cy="112" r="6"/><circle cx="150" cy="128" r="4"/></g>')
+
+def star(cx, cy, R, r, fill, rot=-90):
+    import math
+    pts = []
+    for i in range(10):
+        a = math.radians(rot + i * 36)
+        rr = R if i % 2 == 0 else r
+        pts.append(f'{cx + rr * math.cos(a):.1f},{cy + rr * math.sin(a):.1f}')
+    return f'<polygon points="{" ".join(pts)}" fill="{fill}" stroke="{fill}" stroke-width="4" stroke-linejoin="round"/>'
+
+@obj('աստղ', 'night', 'աստղեր')
+def _(): return ('<circle cx="160" cy="104" r="56" fill="#FFD54A" opacity=".1"/>' + star(160, 106, 48, 21, '#FFD54A') +
+    star(160, 106, 30, 13, '#FFE27A') + star(70, 50, 10, 4.5, '#FFE27A') + star(256, 150, 8, 3.6, '#FFE27A'))
+
+def cloud(cx, cy, s, fill='#fff'):
+    return (f'<g transform="translate({cx},{cy}) scale({s})" fill="{fill}"><circle cx="-34" cy="6" r="24"/><circle cx="-4" cy="-12" r="32"/>'
+            '<circle cx="32" cy="4" r="24"/><rect x="-56" y="2" width="110" height="28" rx="14"/></g>')
+
+@obj('ամպ', 'skyclear', 'ամպեր')
+def _(): return cloud(162, 112, 1.25, '#DDEFF8') + cloud(160, 104, 1.25)
+
+@obj('անձրև', 'skygrey')
+def _(): return (cloud(160, 78, 1.15, '#9FB1C2') + cloud(156, 72, 1.1, '#B8C7D4') +
+    ''.join(f'<path d="M{x} {y} q-5 9 0 12 q5 -3 0 -12Z" fill="#3F9BDB"/>' for x, y in
+            [(118, 120), (146, 132), (174, 120), (202, 132), (132, 152), (160, 160), (188, 150), (216, 158), (104, 148)]))
+
+@obj('ձյուն', 'winter')
+def _():
+    arm = '<path d="M160 60 V148 M160 74 l-10 -10 M160 74 l10 -10 M160 134 l-10 10 M160 134 l10 10" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/>'
+    return (''.join(f'<g transform="rotate({a} 160 104)">{arm}</g>' for a in (0, 60, 120)) +
+            '<circle cx="160" cy="104" r="9" fill="#fff"/>').replace('stroke="#fff"', 'stroke="#fff"')
+
+@obj('սար', 'skyclear', 'սարեր')
+def _(): return ('<path d="M0 200 V150 Q160 136 320 150 V200Z" fill="#9BD06C"/>'
+    '<path d="M40 162 L146 44 L252 162Z" fill="#8494A8"/><path d="M146 44 L120 74 L134 70 L146 82 L158 70 L172 76Z" fill="#fff"/>'
+    '<path d="M180 162 L242 92 L304 162Z" fill="#A2B0C2"/><path d="M242 92 L228 108 L238 106 L246 114 L254 106Z" fill="#fff"/>'
+    '<path d="M146 44 L252 162 H200 Z" fill="#000" opacity=".08"/><path d="M0 200 V168 Q160 150 320 168 V200Z" fill="#7FBF50"/>')
+
+@obj('ծով', 'sea')
+def _(): return ('<circle cx="160" cy="118" r="30" fill="#FFB23E"/><rect y="118" width="320" height="4" fill="#4FA9DA"/>'
+    '<g fill="#FFD27A" opacity=".8"><rect x="134" y="126" width="52" height="4" rx="2"/><rect x="144" y="136" width="32" height="4" rx="2"/></g>'
+    '<path d="M236 70 q6 -5 12 0 q6 -5 12 0" fill="none" stroke="#2F3640" stroke-width="2.5" stroke-linecap="round"/>')
+
+@obj('գետ', 'skyclear')
+def _(): return ('<path d="M0 200 V96 Q160 84 320 96 V200Z" fill="#9BD06C"/>'
+    '<path d="M150 96 C140 120 200 128 182 150 C166 170 90 168 100 200 H190 C190 172 262 170 248 146 C236 124 176 118 172 96Z" fill="#4FA9DA"/>'
+    '<path d="M160 104 C160 118 196 128 192 144" fill="none" stroke="#9AD6F3" stroke-width="3" stroke-linecap="round"/>'
+    '<g fill="#5DB14F"><circle cx="60" cy="116" r="16"/><circle cx="272" cy="118" r="14"/></g>'
+    '<path d="M0 96 Q160 84 320 96" fill="none" stroke="#86C25B" stroke-width="2"/>')
+
+@obj('կրակ', 'night')
+def _(): return ('<ellipse cx="160" cy="150" rx="70" ry="12" fill="#FF8A3D" opacity=".18"/>'
+    '<g stroke-linecap="round" stroke-width="13"><path d="M118 158 L202 138" stroke="#7A4A28"/><path d="M118 138 L202 158" stroke="#8B5A33"/></g>'
+    '<path d="M160 52 C186 84 204 104 196 128 C190 146 176 152 160 152 C144 152 128 146 124 128 C118 104 136 92 146 72 C150 92 158 96 160 52Z" fill="#F2543D"/>'
+    '<path d="M162 80 C178 102 186 116 182 132 C178 144 170 148 160 148 C150 148 140 144 138 132 C136 118 146 108 152 96 C156 110 160 108 162 80Z" fill="#FF8A3D"/>'
+    '<path d="M160 108 C170 122 172 132 168 140 C165 145 162 146 160 146 C156 146 152 144 151 138 C150 130 156 124 160 108Z" fill="#FFD54A"/>')
+
+@obj('տերև', 'plaingreen', 'տերևներ')
+def _(): return (SH(160, 162, 40) + '<g transform="rotate(-24 160 108)"><path d="M160 46 C214 66 220 132 160 166 C100 132 106 66 160 46Z" fill="#6CC05A"/>'
+    '<path d="M160 52 V178" stroke="#4E9A3E" stroke-width="4" stroke-linecap="round"/>'
+    '<path d="M160 90 L136 74 M160 110 L130 96 M160 130 L136 118 M160 90 L184 74 M160 110 L190 96 M160 130 L184 118" stroke="#4E9A3E" stroke-width="3" stroke-linecap="round"/></g>')
+
+APPLE = ('<path d="M160 78 C140 62 108 70 108 104 C108 136 132 156 150 152 C156 151 158 149 160 149 C162 149 164 151 170 152 '
+         'C188 156 212 136 212 104 C212 70 180 62 160 78Z" fill="#E8473C"/><path d="M128 92 C126 104 128 116 134 124" '
+         'stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".35" fill="none"/>'
+         '<path d="M160 80 C160 70 162 62 166 56" stroke="#7A4A28" stroke-width="5" stroke-linecap="round" fill="none"/>'
+         '<path d="M167 64 C178 50 196 52 200 58 C190 68 176 70 167 64Z" fill="#5DB14F"/>')
+
+@obj('խնձոր', 'table', 'խնձորներ')
+def _(): return SH(160, 152, 48) + APPLE
+
+@obj('տանձ', 'table', 'տանձեր')
+def _(): return (SH(160, 154, 42) + '<path d="M160 54 C174 54 178 72 182 88 C188 108 208 116 206 136 C204 156 184 160 160 160 '
+    'C136 160 116 156 114 136 C112 116 132 108 138 88 C142 72 146 54 160 54Z" fill="#C4D65A"/>'
+    '<path d="M134 118 C130 128 132 140 140 148" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".3" fill="none"/>'
+    '<path d="M160 56 C160 46 162 40 166 36" stroke="#7A4A28" stroke-width="5" stroke-linecap="round" fill="none"/>'
+    '<path d="M166 44 C176 32 192 34 196 40 C186 48 174 50 166 44Z" fill="#5DB14F"/>')
+
+@obj('խաղող', 'table')
+def _():
+    berries = [(132, 76), (154, 74), (176, 76), (198, 80), (142, 96), (164, 96), (186, 98), (152, 116), (174, 116), (163, 135)]
+    return (SH(165, 154, 40) + '<path d="M165 64 C165 52 170 44 178 40" stroke="#7A4A28" stroke-width="5" stroke-linecap="round" fill="none"/>'
+            '<path d="M170 54 C158 34 130 36 124 46 C138 58 156 60 170 54Z" fill="#5DB14F"/>' +
+            ''.join(f'<circle cx="{x}" cy="{y}" r="13" fill="#7B4BA8"/><circle cx="{x - 4}" cy="{y - 4}" r="4" fill="#B48ADB"/>' for x, y in berries))
+
+@obj('նուռ', 'table', 'նռներ')
+def _(): return (SH(160, 154, 60) + '<circle cx="138" cy="110" r="42" fill="#C8213A"/><path d="M126 70 L132 58 L138 66 L144 58 L150 70Z" fill="#A81B30"/>'
+    '<path d="M112 96 C110 108 112 120 118 128" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".3" fill="none"/>'
+    '<path d="M180 132 A34 30 0 0 1 248 132 Z" fill="#F6D8B0" transform="rotate(-8 214 132)"/>'
+    '<path d="M178 134 A36 32 0 0 1 250 134" fill="none" stroke="#C8213A" stroke-width="5" transform="rotate(-8 214 132)"/>' +
+    ''.join(f'<circle cx="{x}" cy="{y}" r="4.2" fill="#E5354F"/>' for x, y in
+            [(196, 126), (206, 118), (216, 116), (226, 118), (236, 124), (204, 128), (214, 125), (224, 126), (232, 131), (212, 132), (196, 134)]))
+
+@obj('ծիրան', 'table', 'ծիրաններ')
+def _(): return (SH(166, 154, 54) + '<circle cx="200" cy="124" r="28" fill="#F08A2C"/><circle cx="148" cy="108" r="42" fill="#F7A23B"/>'
+    '<path d="M148 68 C136 92 138 128 150 148" stroke="#E2862A" stroke-width="3" fill="none"/>'
+    '<circle cx="132" cy="94" r="9" fill="#FFC77A" opacity=".7"/><path d="M152 68 C162 52 182 52 188 60 C176 70 162 72 152 68Z" fill="#5DB14F"/>')
+
+@obj('ձմերուկ', 'table', 'ձմերուկներ')
+def _(): return (SH(160, 156, 70) + '<path d="M90 98 A70 58 0 0 0 230 98 Z" fill="#3E9E4A"/><path d="M98 98 A62 50 0 0 0 222 98 Z" fill="#EAF5D8"/>'
+    '<path d="M104 98 A56 44 0 0 0 216 98 Z" fill="#F04E5E"/>' +
+    ''.join(f'<ellipse cx="{x}" cy="{y}" rx="2.6" ry="4" fill="#2F3640" transform="rotate({r} {x} {y})"/>' for x, y, r in
+            [(130, 108, -20), (150, 118, -8), (170, 118, 8), (190, 108, 20), (140, 126, -14), (180, 126, 14), (160, 132, 0)]) +
+    '<path d="M104 98 H216" stroke="#F78A95" stroke-width="3"/>')
+
+@obj('բանան', 'table', 'բանաններ')
+def _(): return (SH(160, 152, 56) + '<path d="M100 92 C112 140 186 158 226 110 C232 104 230 98 224 100 C190 128 140 124 112 86 C108 80 98 84 100 92Z" fill="#FFD54A"/>'
+    '<path d="M112 100 C132 124 176 132 212 114" stroke="#E8B931" stroke-width="4" fill="none" stroke-linecap="round"/>'
+    '<path d="M100 92 L94 84" stroke="#7A5A2A" stroke-width="6" stroke-linecap="round"/><circle cx="226" cy="104" r="3.5" fill="#7A5A2A"/>')
+
+@obj('կիտրոն', 'table', 'կիտրոններ')
+def _(): return (SH(160, 152, 52) + '<path d="M100 112 C104 82 136 72 160 72 C184 72 216 82 220 112 C216 142 184 150 160 150 C136 150 104 142 100 112Z" fill="#FFE14D"/>'
+    '<path d="M100 112 L90 110 M220 112 L230 110" stroke="#F2C931" stroke-width="7" stroke-linecap="round"/>'
+    '<ellipse cx="136" cy="98" rx="14" ry="7" fill="#FFF3A6" opacity=".8"/>')
+
+@obj('նարինջ', 'table', 'նարինջներ')
+def _(): return (SH(160, 154, 46) + '<circle cx="160" cy="108" r="44" fill="#FF9A2E"/>' +
+    ''.join(f'<circle cx="{x}" cy="{y}" r="1.6" fill="#E8821C"/>' for x, y in [(140, 96), (176, 92), (184, 124), (150, 130), (166, 112), (132, 118), (192, 106)]) +
+    '<ellipse cx="142" cy="90" rx="12" ry="8" fill="#FFC06B" opacity=".8"/><path d="M162 66 C172 52 190 52 196 60 C184 70 172 72 162 66Z" fill="#5DB14F"/>')
+
+@obj('հաց', 'table', 'հացեր')
+def _(): return (SH(160, 156, 72) + '<path d="M90 150 C82 112 120 84 160 84 C200 84 238 112 230 150Z" fill="#D9964A"/>'
+    '<path d="M98 146 C94 116 126 94 160 94 C194 94 226 116 222 146Z" fill="#E7AC62"/>'
+    '<g stroke="#B5762F" stroke-width="5" stroke-linecap="round" fill="none"><path d="M124 108 L136 124"/><path d="M152 100 L164 118"/><path d="M180 104 L192 120"/></g>')
+
+@obj('պանիր', 'table')
+def _(): return (SH(160, 156, 60) + '<path d="M104 150 L104 112 L216 84 L216 150Z" fill="#F2B93B"/><path d="M104 112 L216 84 L230 96 L118 124Z" fill="#FFD45C"/>'
+    '<path d="M118 124 L230 96 L230 150 L118 150Z" fill="#FFCB45"/>' +
+    ''.join(f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" fill="#E9A92E"/>' for x, y, rx, ry in
+            [(146, 132, 8, 6), (186, 122, 6, 5), (204, 140, 7, 5), (166, 144, 4, 3)]))
+
+@obj('ձու', 'table', 'ձվեր')
+def _(): return (SH(160, 154, 62) + '<ellipse cx="136" cy="116" rx="30" ry="38" fill="#FBEBD4"/><ellipse cx="190" cy="124" rx="26" ry="32" fill="#fff"/>'
+    '<ellipse cx="126" cy="102" rx="8" ry="12" fill="#fff" opacity=".7"/><ellipse cx="182" cy="112" rx="6" ry="9" fill="#F4F4F4"/>')
+
+def glass(fill, level=96):
+    return (SH(160, 158, 34) + f'<path d="M130 {level} L190 {level} L184 154 C184 158 180 160 176 160 L144 160 C140 160 136 158 136 154Z" fill="{fill}"/>'
+            '<path d="M126 60 L194 60 L184 154 C184 158 180 160 176 160 L144 160 C140 160 136 158 136 154Z" fill="#fff" opacity=".35" stroke="#B8D4E3" stroke-width="3"/>'
+            '<path d="M140 70 L146 146" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/>')
+
+@obj('կաթ', 'plainblue')
+def _(): return glass('#FFFFFF', 74) + '<ellipse cx="160" cy="74" rx="31" ry="4" fill="#F1F5F8"/>'
+
+@obj('ջուր', 'plainblue')
+def _(): return (glass('#7CC6EC', 88) + '<ellipse cx="160" cy="88" rx="30" ry="4" fill="#A9DBF5"/>'
+    '<path d="M222 70 C216 84 212 90 212 96 A10 10 0 0 0 232 96 C232 90 228 84 222 70Z" fill="#4FA9DA"/>')
+
+def cup(liquid):
+    return (SH(160, 160, 64) + '<ellipse cx="160" cy="154" rx="62" ry="10" fill="#E9EEF2"/><ellipse cx="160" cy="151" rx="46" ry="6" fill="#D5DDE3"/>'
+            '<path d="M200 108 C224 104 226 136 200 136" stroke="#F4F7F9" stroke-width="9" fill="none" stroke-linecap="round"/>'
+            '<path d="M114 96 L206 96 C206 128 192 150 160 150 C128 150 114 128 114 96Z" fill="#F4F7F9"/>'
+            f'<ellipse cx="160" cy="98" rx="44" ry="7" fill="{liquid}"/><path d="M122 104 C124 126 136 140 150 144" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/>')
+
+STEAM = ('<g fill="none" stroke="#B8A9A0" stroke-width="4" stroke-linecap="round" opacity=".7"><path d="M146 82 C138 72 154 66 146 54"/>'
+         '<path d="M166 84 C158 72 174 66 166 52"/><path d="M186 82 C178 72 194 66 186 56"/></g>')
+
+@obj('սուրճ', 'table')
+def _(): return cup('#6B3E22') + STEAM
+
+@obj('թեյ', 'table')
+def _(): return (cup('#C9712E') + STEAM + '<path d="M196 96 L214 66" stroke="#D8CFC6" stroke-width="2"/><rect x="208" y="54" width="16" height="14" rx="2" fill="#E8473C" transform="rotate(12 216 61)"/>'
+    '<circle cx="104" cy="140" r="14" fill="#FFE14D"/><circle cx="104" cy="140" r="10" fill="#FFF3A6"/>'
+    '<path d="M104 130 V150 M94 140 H114 M97 133 L111 147 M111 133 L97 147" stroke="#FFE14D" stroke-width="1.5"/>')
+
+@obj('տորթ', 'table', 'տորթեր')
+def _(): return (SH(160, 156, 74) + '<ellipse cx="160" cy="152" rx="76" ry="9" fill="#E9EEF2"/>'
+    '<rect x="100" y="112" width="120" height="40" rx="8" fill="#F7C9A8"/><rect x="118" y="80" width="84" height="34" rx="8" fill="#F7C9A8"/>'
+    '<path d="M100 120 C110 132 116 120 124 130 C132 140 140 124 148 132 C156 142 164 124 172 132 C180 142 188 124 196 132 C204 140 212 124 220 120 V116 C220 112 216 110 212 110 H108 C104 110 100 112 100 116Z" fill="#F48FB1"/>'
+    '<path d="M118 88 C126 98 132 88 140 96 C148 104 154 90 162 98 C170 106 176 90 184 98 C192 104 196 92 202 88 V86 C202 82 198 80 194 80 H126 C122 80 118 82 118 86Z" fill="#F48FB1"/>'
+    '<g fill="#fff"><rect x="136" y="56" width="7" height="24" rx="2"/><rect x="157" y="52" width="7" height="28" rx="2"/><rect x="178" y="56" width="7" height="24" rx="2"/></g>'
+    '<g fill="#FFB02E"><ellipse cx="139.5" cy="50" rx="4" ry="6"/><ellipse cx="160.5" cy="46" rx="4" ry="6"/><ellipse cx="181.5" cy="50" rx="4" ry="6"/></g>'
+    '<g fill="#E8473C"><circle cx="122" cy="140" r="4"/><circle cx="160" cy="142" r="4"/><circle cx="198" cy="140" r="4"/></g>')
+
+@obj('գազար', 'table', 'գազարներ')
+def _(): return (SH(160, 154, 56) + '<g transform="rotate(-28 160 110)"><path d="M136 70 C150 66 170 66 184 70 C182 100 170 140 160 164 C150 140 138 100 136 70Z" fill="#F7882F"/>'
+    '<g stroke="#D9701E" stroke-width="3" stroke-linecap="round"><path d="M144 90 H156"/><path d="M164 106 H176"/><path d="M148 124 H158"/></g>'
+    '<path d="M160 70 C150 52 146 42 150 34 M160 70 C160 50 164 40 172 34 M160 70 C168 54 180 48 188 48" stroke="#4E9A3E" stroke-width="6" stroke-linecap="round" fill="none"/></g>')
+
+@obj('լոլիկ', 'table', 'լոլիկներ')
+def _(): return (SH(160, 154, 50) + '<path d="M160 72 C210 70 216 106 210 124 C202 148 180 154 160 154 C140 154 118 148 110 124 C104 106 110 70 160 72Z" fill="#E8392F"/>'
+    '<ellipse cx="136" cy="96" rx="12" ry="8" fill="#FF7B6E" opacity=".8"/>' + star(160, 74, 18, 7, '#4E9A3E') +
+    '<path d="M160 70 V58" stroke="#4E9A3E" stroke-width="5" stroke-linecap="round"/>')
+
+@obj('կատու', 'room', 'կատուներ')
+def _(): return (SH(160, 160, 44) + '<path d="M196 150 C232 150 236 118 218 108" stroke="#E98B3A" stroke-width="10" fill="none" stroke-linecap="round"/>'
+    '<ellipse cx="160" cy="132" rx="38" ry="30" fill="#F29A4A"/><ellipse cx="160" cy="140" rx="20" ry="18" fill="#FBD3A8"/>'
+    '<path d="M132 72 L136 46 L154 62Z M188 72 L184 46 L166 62Z" fill="#F29A4A"/><path d="M137 64 L139 54 L147 61Z M183 64 L181 54 L173 61Z" fill="#F7B6C2"/>'
+    '<circle cx="160" cy="84" r="30" fill="#F29A4A"/><path d="M150 58 L154 68 M160 56 V66 M170 58 L166 68" stroke="#D97A2A" stroke-width="3" stroke-linecap="round"/>'
+    '<ellipse cx="148" cy="84" rx="4" ry="6" fill="#2F3640"/><ellipse cx="172" cy="84" rx="4" ry="6" fill="#2F3640"/>'
+    '<path d="M156 94 H164 L160 99Z" fill="#E86A7E"/><path d="M160 99 C158 104 152 104 150 101 M160 99 C162 104 168 104 170 101" stroke="#2F3640" stroke-width="2" fill="none" stroke-linecap="round"/>'
+    '<g stroke="#2F3640" stroke-width="1.5" stroke-linecap="round" opacity=".7"><path d="M146 96 L126 92 M146 100 L126 102 M174 96 L194 92 M174 100 L194 102"/></g>'
+    '<g fill="#FBD3A8"><ellipse cx="144" cy="160" rx="10" ry="6"/><ellipse cx="176" cy="160" rx="10" ry="6"/></g>')
+
+@obj('շուն', 'sky', 'շներ')
+def _(): return (SH(160, 160, 46) + '<path d="M194 140 C212 136 216 116 210 108" stroke="#B9783F" stroke-width="9" fill="none" stroke-linecap="round"/>'
+    '<ellipse cx="160" cy="134" rx="38" ry="28" fill="#C88A52"/><ellipse cx="160" cy="142" rx="18" ry="16" fill="#F1D6B4"/>'
+    '<circle cx="160" cy="84" r="32" fill="#C88A52"/><ellipse cx="128" cy="86" rx="11" ry="24" fill="#8B5A33" transform="rotate(16 128 86)"/>'
+    '<ellipse cx="192" cy="86" rx="11" ry="24" fill="#8B5A33" transform="rotate(-16 192 86)"/>'
+    '<ellipse cx="160" cy="100" rx="18" ry="13" fill="#F1D6B4"/><ellipse cx="160" cy="94" rx="7" ry="5" fill="#2F3640"/>'
+    '<circle cx="147" cy="80" r="4.5" fill="#2F3640"/><circle cx="173" cy="80" r="4.5" fill="#2F3640"/><circle cx="148.5" cy="78.5" r="1.5" fill="#fff"/><circle cx="174.5" cy="78.5" r="1.5" fill="#fff"/>'
+    '<path d="M160 100 V106 M152 104 C156 110 164 110 168 104" stroke="#2F3640" stroke-width="2" fill="none" stroke-linecap="round"/>'
+    '<path d="M156 108 C156 118 164 118 164 108Z" fill="#F06A8B"/><g fill="#F1D6B4"><ellipse cx="142" cy="160" rx="10" ry="6"/><ellipse cx="178" cy="160" rx="10" ry="6"/></g>')
+
+@obj('թռչուն', 'sky', 'թռչուններ')
+def _(): return ('<path d="M64 140 C120 132 220 134 276 128" stroke="#8B5A33" stroke-width="8" stroke-linecap="round" fill="none"/>'
+    '<path d="M250 130 C262 118 272 120 278 112" stroke="#8B5A33" stroke-width="5" stroke-linecap="round" fill="none"/>'
+    '<ellipse cx="258" cy="116" rx="10" ry="5" fill="#5DB14F" transform="rotate(-30 258 116)"/>'
+    '<path d="M126 104 L96 92 L102 112Z" fill="#2F7FC0"/><circle cx="158" cy="100" r="36" fill="#4AA3DF"/><ellipse cx="166" cy="112" rx="22" ry="20" fill="#CDEBFA"/>'
+    '<path d="M134 96 C142 120 164 124 170 114 C160 106 148 98 134 96Z" fill="#2F7FC0"/><circle cx="172" cy="88" r="5" fill="#2F3640"/><circle cx="173.5" cy="86.5" r="1.6" fill="#fff"/>'
+    '<path d="M190 92 L206 98 L190 104Z" fill="#FFA62B"/><g stroke="#E8912A" stroke-width="3" stroke-linecap="round"><path d="M150 134 V140 M166 134 V140"/></g>')
+
+@obj('ձուկ', 'water', 'ձկներ')
+def _(): return ('<path d="M210 110 L246 82 L240 110 L246 138Z" fill="#FF7A2E"/><ellipse cx="160" cy="110" rx="60" ry="36" fill="#FF9A3D"/>'
+    '<path d="M150 76 C164 62 186 66 196 80Z" fill="#FF7A2E"/><path d="M150 144 C160 156 178 154 186 142Z" fill="#FF7A2E"/>'
+    '<g fill="#fff" opacity=".8"><path d="M150 76 C146 96 146 124 150 144 L162 144 C158 124 158 96 162 76Z"/><path d="M186 82 C182 98 182 122 186 138 L194 134 C190 120 190 100 194 86Z"/></g>'
+    '<circle cx="124" cy="102" r="8" fill="#fff"/><circle cx="122" cy="102" r="4.5" fill="#2F3640"/><path d="M104 116 C110 120 116 120 120 116" stroke="#C85A1E" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    '<g fill="#fff" opacity=".7"><circle cx="90" cy="88" r="4"/><circle cx="82" cy="74" r="3"/></g>')
+
+@obj('կով', 'sky', 'կովեր')
+def _(): return (SH(160, 160, 50) + '<path d="M118 66 C104 60 96 48 100 40 M202 66 C216 60 224 48 220 40" stroke="#E9DCC8" stroke-width="8" stroke-linecap="round" fill="none"/>'
+    '<ellipse cx="114" cy="80" rx="18" ry="9" fill="#2F3640" transform="rotate(-20 114 80)"/><ellipse cx="206" cy="80" rx="18" ry="9" fill="#2F3640" transform="rotate(20 206 80)"/>'
+    '<path d="M124 70 C124 54 196 54 196 70 L190 122 C188 136 132 136 130 122Z" fill="#fff"/>'
+    '<path d="M124 70 C124 60 140 56 150 58 C152 70 140 84 128 90Z" fill="#2F3640"/><path d="M178 100 C188 96 194 102 192 112 C186 114 180 110 178 100Z" fill="#2F3640"/>'
+    '<ellipse cx="160" cy="132" rx="38" ry="24" fill="#F7B6C2"/><ellipse cx="146" cy="132" rx="5" ry="7" fill="#C97A8A"/><ellipse cx="174" cy="132" rx="5" ry="7" fill="#C97A8A"/>'
+    '<circle cx="142" cy="90" r="5.5" fill="#2F3640"/><circle cx="178" cy="90" r="5.5" fill="#2F3640"/><circle cx="143.5" cy="88.5" r="1.8" fill="#fff"/><circle cx="179.5" cy="88.5" r="1.8" fill="#fff"/>'
+    '<path d="M150 62 C156 52 164 52 170 62 C164 66 156 66 150 62Z" fill="#2F3640"/>')
+
+@obj('ոչխար', 'sky', 'ոչխարներ')
+def _(): return (SH(160, 162, 52) + '<g fill="#3B3B3B"><rect x="128" y="138" width="9" height="22" rx="4"/><rect x="146" y="140" width="9" height="22" rx="4"/>'
+    '<rect x="170" y="140" width="9" height="22" rx="4"/><rect x="188" y="138" width="9" height="22" rx="4"/></g>' +
+    '<g fill="#F7F5EF">' + ''.join(f'<circle cx="{x}" cy="{y}" r="{r}"/>' for x, y, r in
+                                    [(124, 118, 20), (144, 102, 22), (170, 98, 24), (196, 108, 22), (204, 128, 18), (180, 136, 20), (150, 138, 20), (128, 136, 16), (162, 118, 26)]) +
+    '</g><ellipse cx="112" cy="108" rx="18" ry="22" fill="#3B3B3B"/><ellipse cx="96" cy="100" rx="10" ry="5" fill="#3B3B3B" transform="rotate(-30 96 100)"/>'
+    '<ellipse cx="128" cy="98" rx="10" ry="5" fill="#3B3B3B" transform="rotate(30 128 98)"/><circle cx="106" cy="104" r="3" fill="#fff"/><circle cx="118" cy="104" r="3" fill="#fff"/>'
+    '<g fill="#F7F5EF"><circle cx="104" cy="86" r="8"/><circle cx="116" cy="84" r="8"/><circle cx="110" cy="80" r="7"/></g>')
+
+@obj('հավ', 'sky', 'հավեր')
+def _(): return (SH(160, 160, 46) + '<g stroke="#F0A12E" stroke-width="5" stroke-linecap="round"><path d="M148 140 V158 L140 162 M148 158 L154 162 M170 140 V158 L162 162 M170 158 L176 162"/></g>'
+    '<path d="M196 112 C220 100 226 78 214 70 C214 86 204 96 192 98Z" fill="#B8642C"/><path d="M200 116 C222 112 230 96 224 88 C220 102 210 108 196 108Z" fill="#9A5222"/>'
+    '<ellipse cx="160" cy="116" rx="44" ry="34" fill="#C9733A"/><path d="M144 108 C150 132 178 134 186 120 C172 116 160 112 144 108Z" fill="#A85C2A"/>'
+    '<circle cx="128" cy="84" r="22" fill="#C9733A"/><path d="M116 64 C116 54 124 54 126 60 C128 52 136 52 136 60 C140 54 146 58 142 66Z" fill="#E8392F"/>'
+    '<path d="M106 84 L94 90 L106 94Z" fill="#FFC93C"/><path d="M108 96 C102 104 110 110 114 102Z" fill="#E8392F"/><circle cx="124" cy="80" r="4" fill="#2F3640"/>')
+
+@obj('մուկ', 'room', 'մկներ')
+def _(): return (SH(160, 160, 46) + '<path d="M200 140 C236 146 246 120 228 112" stroke="#C7A9B5" stroke-width="5" fill="none" stroke-linecap="round"/>'
+    '<path d="M96 132 C100 104 136 92 168 100 C196 106 210 124 206 144 C204 154 196 158 186 158 H110 C100 158 94 146 96 132Z" fill="#A9A9B5"/>'
+    '<circle cx="128" cy="98" r="18" fill="#A9A9B5"/><circle cx="128" cy="98" r="11" fill="#F7B6C2"/><circle cx="154" cy="94" r="16" fill="#A9A9B5"/><circle cx="154" cy="94" r="9" fill="#F7B6C2"/>'
+    '<circle cx="114" cy="122" r="4" fill="#2F3640"/><circle cx="96" cy="134" r="5" fill="#E86A7E"/>'
+    '<g stroke="#5F5F6B" stroke-width="1.5" stroke-linecap="round"><path d="M100 130 L80 124 M100 136 L80 140"/></g>')
+
+@obj('նապաստակ', 'sky', 'նապաստակներ')
+def _(): return (SH(160, 162, 46) + '<ellipse cx="146" cy="52" rx="10" ry="30" fill="#ECE7EC" transform="rotate(-10 146 52)"/><ellipse cx="146" cy="54" rx="5" ry="22" fill="#F7B6C2" transform="rotate(-10 146 54)"/>'
+    '<ellipse cx="174" cy="52" rx="10" ry="30" fill="#ECE7EC" transform="rotate(12 174 52)"/><ellipse cx="174" cy="54" rx="5" ry="22" fill="#F7B6C2" transform="rotate(12 174 54)"/>'
+    '<circle cx="204" cy="140" r="12" fill="#fff"/><ellipse cx="160" cy="132" rx="40" ry="30" fill="#ECE7EC"/><circle cx="160" cy="92" r="28" fill="#ECE7EC"/>'
+    '<circle cx="149" cy="88" r="4" fill="#2F3640"/><circle cx="171" cy="88" r="4" fill="#2F3640"/><ellipse cx="160" cy="98" rx="4" ry="3" fill="#E86A7E"/>'
+    '<path d="M160 101 V106 M154 108 C157 110 163 110 166 108" stroke="#2F3640" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+    '<g fill="#fff"><ellipse cx="144" cy="160" rx="11" ry="6"/><ellipse cx="176" cy="160" rx="11" ry="6"/></g>')
+
+@obj('արջ', 'sky', 'արջեր')
+def _(): return (SH(160, 162, 52) + '<circle cx="122" cy="60" r="16" fill="#8B5A33"/><circle cx="122" cy="60" r="8" fill="#C99A6B"/>'
+    '<circle cx="198" cy="60" r="16" fill="#8B5A33"/><circle cx="198" cy="60" r="8" fill="#C99A6B"/><ellipse cx="160" cy="146" rx="48" ry="20" fill="#7A4A28"/>'
+    '<circle cx="160" cy="96" r="48" fill="#8B5A33"/><ellipse cx="160" cy="114" rx="24" ry="18" fill="#C99A6B"/><ellipse cx="160" cy="106" rx="9" ry="6" fill="#2F3640"/>'
+    '<circle cx="142" cy="86" r="5" fill="#2F3640"/><circle cx="178" cy="86" r="5" fill="#2F3640"/>'
+    '<path d="M160 112 V118 M152 120 C156 124 164 124 168 120" stroke="#2F3640" stroke-width="2.4" fill="none" stroke-linecap="round"/>')
+
+@obj('օձ', 'sky', 'օձեր')
+def _(): return (SH(160, 160, 60) + '<path d="M96 150 C130 160 150 150 150 132 C150 112 108 116 110 96 C112 76 170 70 196 82" stroke="#5DB14F" stroke-width="20" fill="none" stroke-linecap="round"/>'
+    '<path d="M96 150 C130 160 150 150 150 132 C150 112 108 116 110 96 C112 76 170 70 196 82" stroke="#86D46F" stroke-width="5" stroke-dasharray="4 12" fill="none" stroke-linecap="round"/>'
+    '<ellipse cx="206" cy="86" rx="20" ry="14" fill="#5DB14F"/><circle cx="210" cy="80" r="4" fill="#2F3640"/><path d="M224 90 L238 90 L244 86 M238 90 L244 94" stroke="#E8392F" stroke-width="2.4" fill="none" stroke-linecap="round"/>')
+
+@obj('փիղ', 'sky', 'փղեր')
+def _(): return (SH(166, 162, 56) + '<g fill="#8E98A6"><rect x="134" y="132" width="16" height="28" rx="6"/><rect x="186" y="132" width="16" height="28" rx="6"/></g>'
+    '<ellipse cx="178" cy="118" rx="52" ry="36" fill="#9AA5B4"/><path d="M228 112 C238 112 240 124 232 128" stroke="#8E98A6" stroke-width="4" fill="none" stroke-linecap="round"/>'
+    '<circle cx="128" cy="96" r="30" fill="#9AA5B4"/><path d="M110 112 C100 132 104 150 92 156 C86 158 84 152 90 148 C96 140 92 124 104 104Z" fill="#9AA5B4"/>'
+    '<path d="M136 74 C164 64 176 92 166 116 C158 130 140 124 138 112Z" fill="#B7C0CC"/><circle cx="122" cy="90" r="4" fill="#2F3640"/>'
+    '<path d="M112 108 C116 116 124 118 128 114" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>')
+
+@obj('կրիա', 'sky', 'կրիաներ')
+def _(): return (SH(160, 158, 66) + '<g fill="#A7C66A"><ellipse cx="226" cy="132" rx="20" ry="14"/><rect x="112" y="136" width="20" height="20" rx="8"/><rect x="186" y="136" width="20" height="20" rx="8"/>'
+    '<path d="M100 140 L84 146 L100 150Z"/></g><circle cx="228" cy="128" r="3.5" fill="#2F3640"/>'
+    '<path d="M98 144 C98 98 126 80 160 80 C194 80 222 98 222 144Z" fill="#6B8E3A"/>'
+    '<g fill="none" stroke="#86A84B" stroke-width="4"><path d="M140 98 L160 90 L180 98 L180 120 L160 128 L140 120Z"/><path d="M140 120 L120 132 M180 120 L200 132 M160 128 V144 M140 98 L124 92 M180 98 L196 92"/></g>'
+    '<rect x="94" y="140" width="132" height="8" rx="4" fill="#58772E"/>')
+
+@obj('թիթեռ', 'sky', 'թիթեռներ')
+def _(): return ('<g transform="rotate(-8 160 104)"><ellipse cx="126" cy="82" rx="32" ry="26" fill="#9B6BDB" transform="rotate(-20 126 82)"/>'
+    '<ellipse cx="194" cy="82" rx="32" ry="26" fill="#9B6BDB" transform="rotate(20 194 82)"/><ellipse cx="132" cy="126" rx="22" ry="18" fill="#F06A8B" transform="rotate(20 132 126)"/>'
+    '<ellipse cx="188" cy="126" rx="22" ry="18" fill="#F06A8B" transform="rotate(-20 188 126)"/><g fill="#FFD54A"><circle cx="122" cy="80" r="8"/><circle cx="198" cy="80" r="8"/>'
+    '<circle cx="132" cy="128" r="5"/><circle cx="188" cy="128" r="5"/></g><rect x="154" y="70" width="12" height="70" rx="6" fill="#2F3640"/>'
+    '<path d="M156 72 C150 56 144 52 138 50 M164 72 C170 56 176 52 182 50" stroke="#2F3640" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>')
+
+@obj('տուն', 'sky', 'տներ')
+def _(): return (SH(160, 162, 74) + '<rect x="186" y="52" width="16" height="30" fill="#A2483F"/><rect x="104" y="96" width="112" height="64" fill="#F6D7B0"/>'
+    '<path d="M92 100 L160 52 L228 100Z" fill="#D9534F"/><path d="M92 100 L160 52 L160 60 L102 100Z" fill="#000" opacity=".08"/>'
+    '<rect x="146" y="118" width="28" height="42" rx="3" fill="#8B5A33"/><circle cx="168" cy="140" r="2.5" fill="#FFC93C"/>'
+    '<g fill="#BFE3F5" stroke="#fff" stroke-width="3"><rect x="114" y="112" width="24" height="22"/><rect x="182" y="112" width="24" height="22"/></g>'
+    '<path d="M126 112 V134 M114 123 H138 M194 112 V134 M182 123 H206" stroke="#fff" stroke-width="2"/>')
+
+@obj('մեքենա', 'road', 'մեքենաներ')
+def _(): return ('<ellipse cx="160" cy="162" rx="76" ry="6" fill="#000" opacity=".18"/>'
+    '<path d="M86 148 C84 130 92 120 108 118 L128 96 C132 92 136 90 142 90 H184 C190 90 196 92 200 98 L216 118 C232 120 238 130 236 148Z" fill="#E8473C"/>'
+    '<path d="M134 116 L146 100 H164 V116Z M172 116 V100 H186 C190 100 192 102 194 104 L204 116Z" fill="#BFE3F5"/>'
+    '<rect x="222" y="126" width="12" height="8" rx="3" fill="#FFE14D"/><rect x="88" y="128" width="10" height="7" rx="3" fill="#FF8A80"/>'
+    '<g><circle cx="122" cy="150" r="15" fill="#2F3640"/><circle cx="122" cy="150" r="6" fill="#C9D1D9"/><circle cx="202" cy="150" r="15" fill="#2F3640"/><circle cx="202" cy="150" r="6" fill="#C9D1D9"/></g>')
+
+@obj('ավտոբուս', 'road', 'ավտոբուսներ')
+def _(): return ('<ellipse cx="160" cy="162" rx="96" ry="6" fill="#000" opacity=".18"/><rect x="64" y="82" width="196" height="70" rx="12" fill="#FFB02E"/>'
+    '<rect x="64" y="128" width="196" height="8" fill="#F08A2C"/>' +
+    ''.join(f'<rect x="{x}" y="92" width="30" height="26" rx="4" fill="#BFE3F5"/>' for x in (76, 114, 152, 190)) +
+    '<rect x="228" y="92" width="24" height="46" rx="4" fill="#BFE3F5"/><rect x="250" y="140" width="10" height="7" rx="3" fill="#FFE14D"/>'
+    '<circle cx="102" cy="152" r="14" fill="#2F3640"/><circle cx="102" cy="152" r="5" fill="#C9D1D9"/><circle cx="222" cy="152" r="14" fill="#2F3640"/><circle cx="222" cy="152" r="5" fill="#C9D1D9"/>')
+
+@obj('ինքնաթիռ', 'skyclouds', 'ինքնաթիռներ')
+def _(): return ('<g transform="rotate(-8 160 104)"><path d="M150 104 L118 150 H136 L188 104Z" fill="#9FB4C8"/><path d="M152 100 L132 66 H146 L184 100Z" fill="#B8C9D9"/>'
+    '<path d="M70 96 C70 88 78 86 86 86 H232 C252 86 266 94 266 102 C266 110 252 116 232 116 H86 C78 116 70 108 70 100Z" fill="#fff"/>'
+    '<path d="M70 98 L58 62 H76 L100 88Z" fill="#E8473C"/><rect x="86" y="104" width="160" height="6" fill="#4AA3DF"/>' +
+    ''.join(f'<circle cx="{x}" cy="96" r="4" fill="#4AA3DF"/>' for x in range(110, 236, 16)) +
+    '<path d="M246 88 C256 88 262 94 264 100 H246Z" fill="#4AA3DF"/></g>')
+
+@obj('հեծանիվ', 'sky', 'հեծանիվներ')
+def _(): return (SH(160, 162, 80) + '<g fill="none" stroke="#2F3640" stroke-width="6"><circle cx="110" cy="128" r="32"/><circle cx="212" cy="128" r="32"/></g>'
+    '<g fill="none" stroke="#C9D1D9" stroke-width="2"><path d="M110 96 V160 M78 128 H142 M212 96 V160 M180 128 H244"/></g>'
+    '<g fill="none" stroke="#E8473C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M110 128 L142 88 H198 L212 128"/><path d="M110 128 H160 L198 88"/><path d="M160 128 L142 88"/></g>'
+    '<path d="M136 80 H156" stroke="#2F3640" stroke-width="8" stroke-linecap="round"/><path d="M198 88 L194 70 L210 66" stroke="#2F3640" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<circle cx="160" cy="128" r="7" fill="#2F3640"/>')
+
+@obj('նավ', 'sea', 'նավեր')
+def _(): return ('<path d="M156 40 V120" stroke="#8B5A33" stroke-width="5"/><path d="M160 44 L216 112 H160Z" fill="#fff"/><path d="M152 52 L110 112 H152Z" fill="#F4F7F9"/>'
+    '<path d="M156 40 L176 46 L156 52Z" fill="#E8473C"/><path d="M92 118 H228 L210 146 H110Z" fill="#D9534F"/><rect x="92" y="118" width="136" height="7" fill="#fff"/>'
+    '<g fill="#fff"><circle cx="130" cy="134" r="4"/><circle cx="160" cy="134" r="4"/><circle cx="190" cy="134" r="4"/></g>')
+
+@obj('գնացք', 'rails', 'գնացքներ')
+def _(): return ('<g fill="#B8C9D9" opacity=".9"><circle cx="232" cy="58" r="10"/><circle cx="246" cy="44" r="13"/><circle cx="264" cy="34" r="15"/></g>'
+    '<rect x="44" y="102" width="84" height="52" rx="8" fill="#4AA3DF"/><g fill="#BFE3F5"><rect x="54" y="112" width="26" height="20" rx="3"/><rect x="92" y="112" width="26" height="20" rx="3"/></g>'
+    '<rect x="128" y="132" width="12" height="6" fill="#2F3640"/><rect x="140" y="88" width="104" height="66" rx="8" fill="#E8473C"/><rect x="200" y="70" width="44" height="40" rx="6" fill="#D9534F"/>'
+    '<rect x="210" y="80" width="24" height="18" rx="3" fill="#BFE3F5"/><rect x="152" y="100" width="40" height="22" rx="4" fill="#D9534F"/><rect x="222" y="48" width="16" height="24" rx="3" fill="#2F3640"/>'
+    '<rect x="244" y="138" width="10" height="8" rx="2" fill="#FFE14D"/>' +
+    ''.join(f'<circle cx="{x}" cy="156" r="11" fill="#2F3640"/><circle cx="{x}" cy="156" r="4" fill="#C9D1D9"/>' for x in (64, 108, 162, 222)))
+
+@obj('գիրք', 'plain', 'գրքեր')
+def _(): return (SH(160, 158, 80) + '<path d="M84 150 V66 C110 58 140 60 160 72 C180 60 210 58 236 66 V150 C210 142 180 144 160 156 C140 144 110 142 84 150Z" fill="#C0392B"/>'
+    '<path d="M92 142 V62 C116 54 142 58 158 70 V148 C142 138 116 136 92 142Z" fill="#fff"/><path d="M228 142 V62 C204 54 178 58 162 70 V148 C178 138 204 136 228 142Z" fill="#F7F3EC"/>'
+    '<g stroke="#C9D1D9" stroke-width="3" stroke-linecap="round">' + ''.join(f'<path d="M104 {y} C118 {y - 4} 132 {y - 2} 146 {y + 4}"/><path d="M174 {y + 4} C188 {y - 2} 202 {y - 4} 216 {y}"/>' for y in (82, 96, 110, 124)) + '</g>')
+
+@obj('գրիչ', 'plain', 'գրիչներ')
+def _(): return (SH(160, 158, 70) + '<g transform="rotate(-35 160 108)"><rect x="80" y="98" width="130" height="22" rx="10" fill="#2F4858"/><rect x="80" y="98" width="40" height="22" rx="10" fill="#3D6478"/>'
+    '<rect x="96" y="92" width="48" height="6" rx="3" fill="#D4AF37"/><rect x="200" y="100" width="12" height="18" fill="#D4AF37"/>'
+    '<path d="M212 100 L246 109 L212 118Z" fill="#E6C65A"/><path d="M220 109 H246" stroke="#2F4858" stroke-width="2"/></g>')
+
+@obj('մատիտ', 'plain', 'մատիտներ')
+def _(): return (SH(160, 158, 70) + '<g transform="rotate(-30 160 108)"><rect x="86" y="96" width="122" height="26" fill="#FFC93C"/><rect x="86" y="96" width="122" height="8" fill="#FFD95E"/>'
+    '<rect x="86" y="114" width="122" height="8" fill="#F2B21E"/><rect x="74" y="96" width="14" height="26" fill="#C9D1D9"/><rect x="58" y="96" width="18" height="26" rx="6" fill="#F48FB1"/>'
+    '<path d="M208 96 L244 109 L208 122Z" fill="#F1D6B4"/><path d="M232 104.6 L244 109 L232 113.4Z" fill="#2F3640"/></g>')
+
+@obj('սեղան', 'room', 'սեղաններ')
+def _(): return (SH(160, 166, 86) + '<g fill="#A86E3D"><rect x="88" y="104" width="10" height="62" rx="3"/><rect x="222" y="104" width="10" height="62" rx="3"/>'
+    '<rect x="112" y="104" width="8" height="52" rx="3" opacity=".7"/><rect x="200" y="104" width="8" height="52" rx="3" opacity=".7"/></g>'
+    '<path d="M72 96 H248 L238 108 H82Z" fill="#C98B55"/><rect x="72" y="90" width="176" height="8" rx="3" fill="#D9A06A"/>'
+    '<path d="M152 90 C150 74 154 64 160 60 C166 64 170 74 168 90Z" fill="#4AA3DF"/><circle cx="160" cy="52" r="7" fill="#F06A8B"/><path d="M160 60 V56" stroke="#4E9A3E" stroke-width="3"/>')
+
+@obj('աթոռ', 'room', 'աթոռներ')
+def _(): return (SH(160, 166, 50) + '<g fill="#A86E3D"><rect x="124" y="40" width="10" height="126" rx="4"/><rect x="186" y="40" width="10" height="126" rx="4"/>'
+    '<rect x="132" y="118" width="8" height="44" rx="3" opacity=".7"/><rect x="180" y="118" width="8" height="44" rx="3" opacity=".7"/></g>'
+    '<g fill="#C98B55"><rect x="124" y="46" width="72" height="12" rx="4"/><rect x="124" y="70" width="72" height="10" rx="4"/></g>'
+    '<path d="M116 110 H204 L196 122 H124Z" fill="#C98B55"/><rect x="116" y="104" width="88" height="8" rx="3" fill="#D9A06A"/>')
+
+@obj('մահճակալ', 'room', 'մահճակալներ')
+def _(): return (SH(160, 166, 96) + '<rect x="58" y="70" width="14" height="96" rx="5" fill="#A86E3D"/><rect x="248" y="104" width="14" height="62" rx="5" fill="#A86E3D"/>'
+    '<rect x="58" y="70" width="40" height="70" rx="10" fill="#C98B55"/><rect x="66" y="118" width="190" height="30" rx="6" fill="#fff"/>'
+    '<path d="M110 106 H256 V146 H110Z" fill="#4AA3DF"/><path d="M110 106 H256 V116 H110Z" fill="#7CC6EC"/><rect x="74" y="98" width="44" height="22" rx="10" fill="#F4F7F9"/>'
+    '<rect x="66" y="146" width="196" height="10" rx="3" fill="#C98B55"/>')
+
+@obj('դուռ', 'wall', 'դռներ')
+def _(): return ('<rect x="104" y="30" width="112" height="140" fill="#E8D5B8"/><rect x="114" y="38" width="92" height="132" rx="3" fill="#A86E3D"/>'
+    '<g fill="#B97F4B"><rect x="126" y="50" width="30" height="46" rx="3"/><rect x="164" y="50" width="30" height="46" rx="3"/><rect x="126" y="108" width="30" height="50" rx="3"/><rect x="164" y="108" width="30" height="50" rx="3"/></g>'
+    '<circle cx="196" cy="106" r="5" fill="#FFC93C"/><rect x="60" y="170" width="200" height="30" fill="#D8B48C"/>')
+
+@obj('պատուհան', 'wall', 'պատուհաններ')
+def _(p): return (f'<defs><linearGradient id="{p}v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FD3F2"/><stop offset="1" stop-color="#E2F3FC"/></linearGradient></defs>'
+    f'<rect x="104" y="44" width="112" height="100" fill="url(#{p}v)"/><path d="M104 132 Q160 120 216 132 V144 H104Z" fill="#9BD06C"/><circle cx="190" cy="68" r="10" fill="#FFC93C"/>'
+    '<g fill="none" stroke="#fff" stroke-width="7"><rect x="104" y="44" width="112" height="100"/><path d="M160 44 V144 M104 94 H216"/></g><rect x="94" y="144" width="132" height="10" rx="3" fill="#fff"/>'
+    '<path d="M84 34 H118 C112 70 112 110 98 150 H84Z" fill="#F48FB1"/><path d="M236 34 H202 C208 70 208 110 222 150 H236Z" fill="#F48FB1"/><rect x="78" y="28" width="164" height="8" rx="4" fill="#A86E3D"/>')
+
+@obj('բանալի', 'plain', 'բանալիներ')
+def _(): return (SH(160, 158, 70) + '<g transform="rotate(-20 160 108)"><circle cx="104" cy="108" r="30" fill="#E6B422"/><circle cx="104" cy="108" r="13" fill="#FFE0C2"/>'
+    '<rect x="130" y="100" width="110" height="16" rx="5" fill="#E6B422"/><rect x="200" y="116" width="12" height="18" rx="2" fill="#E6B422"/><rect x="222" y="116" width="12" height="24" rx="2" fill="#E6B422"/>'
+    '<path d="M86 96 C90 88 98 84 104 84" stroke="#FFE38A" stroke-width="5" stroke-linecap="round" fill="none"/></g>')
+
+@obj('ժամացույց', 'wall', 'ժամացույցներ')
+def _(): return ('<circle cx="162" cy="104" r="62" fill="#000" opacity=".1"/><circle cx="160" cy="100" r="62" fill="#4AA3DF"/><circle cx="160" cy="100" r="52" fill="#fff"/>' +
+    ''.join(f'<rect x="158" y="52" width="4" height="{10 if a % 90 == 0 else 6}" rx="2" fill="#2F3640" transform="rotate({a} 160 100)"/>' for a in range(0, 360, 30)) +
+    '<path d="M160 100 V66" stroke="#2F3640" stroke-width="6" stroke-linecap="round"/><path d="M160 100 L186 112" stroke="#2F3640" stroke-width="5" stroke-linecap="round"/>'
+    '<path d="M160 100 L136 128" stroke="#E8473C" stroke-width="2.5" stroke-linecap="round"/><circle cx="160" cy="100" r="5" fill="#E8473C"/>')
+
+@obj('հեռախոս', 'plain', 'հեռախոսներ')
+def _(): return (SH(160, 166, 50) + '<rect x="120" y="30" width="80" height="140" rx="14" fill="#2F3640"/>'
+    '<defs></defs><rect x="127" y="44" width="66" height="112" rx="4" fill="#7CC6EC"/><rect x="148" y="35" width="24" height="4" rx="2" fill="#4A5360"/>'
+    '<g fill="#fff" opacity=".9"><rect x="134" y="52" width="14" height="14" rx="4"/><rect x="153" y="52" width="14" height="14" rx="4"/><rect x="172" y="52" width="14" height="14" rx="4"/>'
+    '<rect x="134" y="72" width="14" height="14" rx="4"/><rect x="153" y="72" width="14" height="14" rx="4"/><rect x="172" y="72" width="14" height="14" rx="4"/></g>'
+    '<path d="M127 128 Q160 112 193 128 V156 H127Z" fill="#9BD06C"/><circle cx="160" cy="162" r="4" fill="#4A5360"/>')
+
+@obj('գնդակ', 'sky', 'գնդակներ')
+def _(p): return (SH(160, 160, 46) + f'<clipPath id="{p}b"><circle cx="160" cy="112" r="44"/></clipPath><circle cx="160" cy="112" r="44" fill="#fff"/>'
+    f'<g clip-path="url(#{p}b)"><path d="M160 68 C130 90 130 134 160 156 L116 156 L116 68Z" fill="#E8473C"/><path d="M160 68 C190 90 190 134 160 156 L204 156 L204 68Z" fill="#4AA3DF"/>'
+    '<path d="M116 112 H204" stroke="#FFC93C" stroke-width="16"/></g><circle cx="160" cy="112" r="8" fill="#fff"/><ellipse cx="144" cy="92" rx="10" ry="6" fill="#fff" opacity=".6"/>')
+
+@obj('գլխարկ', 'plain', 'գլխարկներ')
+def _(): return (SH(160, 152, 82) + '<ellipse cx="160" cy="128" rx="82" ry="20" fill="#8B5A33"/><path d="M114 126 C112 96 120 70 160 68 C200 70 208 96 206 126Z" fill="#A86E3D"/>'
+    '<path d="M114 112 C140 120 180 120 206 112 V124 C180 132 140 132 114 124Z" fill="#E8473C"/><ellipse cx="160" cy="70" rx="18" ry="5" fill="#B97F4B"/>')
+
+@obj('կոշիկ', 'plain', 'կոշիկներ')
+def _(): return (SH(160, 152, 82) + '<path d="M84 140 C82 116 88 96 100 86 L140 86 C146 104 162 112 186 116 C214 120 236 126 238 140Z" fill="#4AA3DF"/>'
+    '<path d="M100 86 C112 96 128 98 140 86Z" fill="#2F7FC0"/><rect x="80" y="136" width="162" height="12" rx="6" fill="#fff"/>'
+    '<g stroke="#fff" stroke-width="3.5" stroke-linecap="round"><path d="M142 98 L132 108 M152 104 L142 114 M162 108 L152 118"/></g><path d="M196 118 C206 126 222 128 236 130" stroke="#fff" stroke-width="4" fill="none" opacity=".7"/>')
+
+@obj('շապիկ', 'plain', 'շապիկներ')
+def _(): return (SH(160, 160, 60) + '<path d="M128 46 C140 56 180 56 192 46 L236 66 L222 98 L202 90 V158 H118 V90 L98 98 L84 66Z" fill="#E8473C"/>'
+    '<path d="M128 46 C140 62 180 62 192 46 C184 52 136 52 128 46Z" fill="#B8322B"/>' + star(160, 104, 18, 8, '#FFC93C'))
+
+@obj('ակնոց', 'plain')
+def _(): return ('<g fill="#BFE3F5" fill-opacity=".55" stroke="#2F3640" stroke-width="7"><circle cx="118" cy="108" r="32"/><circle cx="202" cy="108" r="32"/></g>'
+    '<path d="M150 102 C156 94 164 94 170 102" stroke="#2F3640" stroke-width="7" fill="none"/><path d="M86 100 L58 86 M234 100 L262 86" stroke="#2F3640" stroke-width="6" stroke-linecap="round"/>'
+    '<g stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"><path d="M104 96 L114 88 M188 96 L198 88"/></g>')
+
+@obj('հովանոց', 'skygrey', 'հովանոցներ')
+def _(): return ('<path d="M160 100 V158 C160 170 144 170 144 158" stroke="#2F3640" stroke-width="6" fill="none" stroke-linecap="round"/>'
+    '<path d="M76 104 C80 64 116 42 160 42 C204 42 240 64 244 104 C232 94 216 94 204 104 C192 94 172 94 160 104 C148 94 128 94 116 104 C104 94 88 94 76 104Z" fill="#E8473C"/>'
+    '<path d="M160 42 C140 56 132 80 136 100 M160 42 C180 56 188 80 184 100" stroke="#B8322B" stroke-width="3" fill="none"/>' +
+    ''.join(f'<path d="M{x} {y} q-4 7 0 10 q4 -3 0 -10Z" fill="#3F9BDB"/>' for x, y in [(60, 40), (272, 60), (52, 130), (276, 140), (100, 20), (236, 22)]))
+
+@obj('պայուսակ', 'plain', 'պայուսակներ')
+def _(): return (SH(160, 162, 70) + '<path d="M130 82 C130 52 190 52 190 82" stroke="#8B5A33" stroke-width="8" fill="none" stroke-linecap="round"/>'
+    '<path d="M100 82 H220 L230 154 C230 160 226 164 220 164 H100 C94 164 90 160 90 154Z" fill="#C0392B"/><path d="M100 82 H220 L222 102 H98Z" fill="#A8312A"/>'
+    '<rect x="150" y="96" width="20" height="14" rx="3" fill="#FFC93C"/>')
+
+@obj('սիրտ', 'plainpink', 'սրտեր')
+def _(): return ('<path d="M160 156 C120 130 84 106 84 78 C84 56 102 42 122 42 C138 42 152 52 160 66 C168 52 182 42 198 42 C218 42 236 56 236 78 C236 106 200 130 160 156Z" fill="#E8392F"/>'
+    '<path d="M108 70 C108 60 116 54 124 54" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".55"/>')
+
+@obj('բաժակ', 'table', 'բաժակներ')
+def _(): return (SH(160, 156, 50) + '<path d="M196 92 C228 88 230 138 196 136" stroke="#4AA3DF" stroke-width="11" fill="none" stroke-linecap="round"/>'
+    '<path d="M118 74 H202 V140 C202 150 194 156 184 156 H136 C126 156 118 150 118 140Z" fill="#4AA3DF"/><ellipse cx="160" cy="74" rx="42" ry="8" fill="#2F7FC0"/>'
+    '<path d="M134 88 V138" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".5"/>' + star(162, 114, 14, 6, '#fff'))
+
+@obj('գդալ', 'plain', 'գդալներ')
+def _(): return (SH(160, 158, 70) + '<g transform="rotate(-30 160 108)"><ellipse cx="96" cy="108" rx="34" ry="22" fill="#C9D1D9"/><ellipse cx="96" cy="108" rx="26" ry="15" fill="#E4E9ED"/>'
+    '<path d="M128 104 H246 C252 104 252 114 246 114 H128Z" fill="#C9D1D9"/></g>')
+
+@obj('ափսե', 'table', 'ափսեներ')
+def _(): return ('<ellipse cx="160" cy="132" rx="96" ry="30" fill="#000" opacity=".08"/><ellipse cx="160" cy="128" rx="94" ry="30" fill="#fff"/><ellipse cx="160" cy="128" rx="66" ry="19" fill="#EEF2F5"/>'
+    '<ellipse cx="160" cy="128" rx="94" ry="30" fill="none" stroke="#4AA3DF" stroke-width="3"/>')
+
+@obj('դանակ', 'plain', 'դանակներ')
+def _(): return (SH(160, 158, 70) + '<g transform="rotate(-30 160 108)"><path d="M80 112 C110 92 160 96 206 100 V116 H80Z" fill="#D5DDE3"/><path d="M80 112 C110 98 160 100 206 104 V108 H86Z" fill="#fff" opacity=".6"/>'
+    '<rect x="204" y="98" width="56" height="20" rx="8" fill="#2F3640"/><g fill="#C9D1D9"><circle cx="220" cy="108" r="3"/><circle cx="242" cy="108" r="3"/></g></g>')
+
+@obj('լամպ', 'night', 'լամպեր')
+def _(): return ('<circle cx="160" cy="88" r="62" fill="#FFE27A" opacity=".18"/><circle cx="160" cy="88" r="46" fill="#FFE27A" opacity=".25"/>'
+    '<path d="M126 86 C126 66 142 52 160 52 C178 52 194 66 194 86 C194 102 182 110 178 124 H142 C138 110 126 102 126 86Z" fill="#FFE27A"/>'
+    '<path d="M148 122 L152 96 L160 106 L168 96 L172 122" stroke="#F2B21E" stroke-width="3" fill="none" stroke-linejoin="round"/>'
+    '<rect x="142" y="124" width="36" height="22" rx="4" fill="#A9B4C0"/><path d="M142 131 H178 M142 138 H178" stroke="#7F8A96" stroke-width="2"/><rect x="152" y="146" width="16" height="8" rx="3" fill="#5D6672"/>')
+
+@obj('նամակ', 'plain', 'նամակներ')
+def _(): return (SH(160, 158, 80) + '<rect x="80" y="64" width="160" height="92" rx="8" fill="#fff"/><path d="M80 72 L160 120 L240 72" stroke="#E2E8ED" stroke-width="6" fill="none" stroke-linejoin="round"/>'
+    '<path d="M80 150 L140 108 M240 150 L180 108" stroke="#E2E8ED" stroke-width="4"/><rect x="200" y="74" width="28" height="32" rx="2" fill="#E8473C"/>'
+    '<path d="M214 82 C206 76 200 86 214 98 C228 86 222 76 214 82Z" fill="#fff"/>')
+
+@obj('նվեր', 'plainpink', 'նվերներ')
+def _(): return (SH(160, 162, 64) + '<rect x="100" y="94" width="120" height="68" rx="6" fill="#4AA3DF"/><rect x="92" y="80" width="136" height="22" rx="5" fill="#7CC6EC"/>'
+    '<rect x="150" y="80" width="20" height="82" fill="#FFC93C"/><path d="M160 80 C140 52 112 58 120 72 C126 82 148 80 160 80 C172 80 194 82 200 72 C208 58 180 52 160 80Z" fill="#FFC93C"/>'
+    '<circle cx="160" cy="80" r="8" fill="#F2B21E"/>')
+
+@obj('մոմ', 'night', 'մոմեր')
+def _(): return ('<circle cx="160" cy="64" r="44" fill="#FFB02E" opacity=".16"/><path d="M160 40 C172 56 172 70 160 78 C148 70 148 56 160 40Z" fill="#FFB02E"/>'
+    '<path d="M160 54 C166 62 166 70 160 74 C154 70 154 62 160 54Z" fill="#FFE27A"/><path d="M160 78 V86" stroke="#2F3640" stroke-width="2.5"/>'
+    '<rect x="140" y="86" width="40" height="72" rx="6" fill="#F7F3EC"/><path d="M140 96 C150 104 150 92 160 100 C168 106 172 94 180 98 V92 C180 88 176 86 172 86 H148 C144 86 140 88 140 92Z" fill="#fff"/>'
+    '<ellipse cx="160" cy="160" rx="44" ry="8" fill="#D4AF37"/>')
+
+@obj('աչք', 'plain', 'աչքեր')
+def _(): return ('<path d="M76 108 C104 64 216 64 244 108 C216 152 104 152 76 108Z" fill="#fff" stroke="#2F3640" stroke-width="5"/>'
+    '<circle cx="160" cy="108" r="30" fill="#5B8C3A"/><circle cx="160" cy="108" r="14" fill="#2F3640"/><circle cx="170" cy="98" r="6" fill="#fff"/>'
+    '<g stroke="#2F3640" stroke-width="5" stroke-linecap="round"><path d="M100 82 L92 70 M124 70 L120 56 M160 66 V50 M196 70 L200 56 M220 82 L228 70"/></g>')
+
+@obj('համակարգիչ', 'room', 'համակարգիչներ')
+def _(): return ('<rect x="92" y="40" width="136" height="90" rx="8" fill="#2F3640"/><rect x="100" y="48" width="120" height="74" rx="3" fill="#7CC6EC"/>'
+    '<path d="M100 104 Q160 90 220 104 V122 H100Z" fill="#9BD06C"/><circle cx="196" cy="66" r="8" fill="#FFC93C"/><path d="M150 130 H170 L174 146 H146Z" fill="#5D6672"/>'
+    '<rect x="122" y="144" width="76" height="6" rx="3" fill="#5D6672"/><rect x="96" y="156" width="128" height="10" rx="3" fill="#C9D1D9"/><ellipse cx="240" cy="160" rx="10" ry="6" fill="#C9D1D9"/>')
+
+@obj('պաղպաղակ', 'plainblue', 'պաղպաղակներ')
+def _(): return ('<path d="M132 98 L160 168 L188 98Z" fill="#E7AC62"/><path d="M140 106 L176 132 M152 102 L182 120 M136 118 L170 146 M180 106 L146 132 M168 102 L138 120 M184 118 L150 146" stroke="#C98B55" stroke-width="2.5"/>'
+    '<circle cx="148" cy="88" r="22" fill="#F48FB1"/><circle cx="174" cy="88" r="22" fill="#FFF3D6"/><circle cx="160" cy="68" r="22" fill="#8B5A33"/>'
+    '<circle cx="160" cy="44" r="8" fill="#E8392F"/><path d="M160 36 C162 30 168 28 172 28" stroke="#4E9A3E" stroke-width="3" fill="none"/>')
+
+@obj('սունկ', 'sky', 'սնկեր')
+def _(): return (SH(160, 160, 50) + '<path d="M144 112 C140 132 140 150 136 160 H184 C180 150 180 132 176 112Z" fill="#FBEBD4"/>'
+    '<path d="M96 116 C96 76 124 56 160 56 C196 56 224 76 224 116 C200 124 120 124 96 116Z" fill="#E8392F"/>'
+    '<g fill="#fff"><circle cx="128" cy="92" r="9"/><circle cx="160" cy="76" r="8"/><circle cx="192" cy="92" r="9"/><circle cx="150" cy="104" r="5"/><circle cx="178" cy="106" r="5"/></g>'
+    '<g fill="#5DB14F"><path d="M110 160 C112 148 118 144 122 140 C120 150 120 156 122 160Z"/><path d="M200 160 C202 150 206 146 212 142 C210 152 208 156 210 160Z"/></g>')
+
+@obj('դրոշ', 'skyclouds', 'դրոշներ')
+def _(): return ('<rect x="86" y="34" width="7" height="140" rx="3" fill="#8B6B4A"/><circle cx="89.5" cy="32" r="6" fill="#D4AF37"/>'
+    '<path d="M93 42 C130 32 160 52 200 42 C220 38 236 40 244 44 V122 C236 118 220 116 200 120 C160 130 130 110 93 120Z" fill="#F2A800"/>'
+    '<path d="M93 42 C130 32 160 52 200 42 C220 38 236 40 244 44 V70 C236 66 220 64 200 68 C160 78 130 58 93 68Z" fill="#D90012"/>'
+    '<path d="M93 68 C130 58 160 78 200 68 C220 64 236 66 244 70 V96 C236 92 220 90 200 94 C160 104 130 84 93 94Z" fill="#0033A0"/>')
+
+@obj('ծիածան', 'skyclear')
+def _(): return ('<g fill="none" stroke-width="12">' + ''.join(f'<path d="M{60 + i * 12} 160 A{100 - i * 12} {100 - i * 12} 0 0 1 {260 - i * 12} 160" stroke="{c}"/>' for i, c in
+    enumerate(['#E8392F', '#FF8A3D', '#FFD54A', '#5DB14F', '#4AA3DF', '#3F51B5', '#8E5CC0'])) + '</g>' + cloud(70, 156, .6) + cloud(250, 156, .6) +
+    '<path d="M0 200 V176 Q160 164 320 176 V200Z" fill="#9BD06C"/>')
+
+@obj('բազմոց', 'room', 'բազմոցներ')
+def _(): return (SH(160, 166, 96) + '<rect x="84" y="72" width="152" height="56" rx="16" fill="#3E7CB1"/><rect x="66" y="96" width="34" height="58" rx="14" fill="#4A8DC6"/>'
+    '<rect x="220" y="96" width="34" height="58" rx="14" fill="#4A8DC6"/><rect x="96" y="112" width="128" height="36" rx="10" fill="#4A8DC6"/><path d="M160 116 V146" stroke="#3E7CB1" stroke-width="3"/>'
+    '<rect x="104" y="84" width="40" height="30" rx="10" fill="#FFC93C" transform="rotate(-8 124 99)"/><g fill="#8B5A33"><rect x="78" y="152" width="8" height="12" rx="2"/><rect x="234" y="152" width="8" height="12" rx="2"/></g>')
+
+@obj('կարտոֆիլ', 'table')
+def _(): return (SH(160, 156, 62) + '<path d="M104 116 C100 88 132 74 162 78 C196 82 222 94 218 122 C214 148 186 152 158 150 C128 148 108 140 104 116Z" fill="#C99A5B"/>' +
+    ''.join(f'<ellipse cx="{x}" cy="{y}" rx="3" ry="2" fill="#9C7240"/>' for x, y in [(134, 104), (172, 96), (196, 120), (150, 132), (122, 124)]) +
+    '<ellipse cx="140" cy="94" rx="12" ry="6" fill="#DDB57E" opacity=".8"/>')
+
+@obj('սոխ', 'table', 'սոխեր')
+def _(): return (SH(160, 156, 52) + '<path d="M160 60 C166 80 210 92 208 122 C206 146 184 154 160 154 C136 154 114 146 112 122 C110 92 154 80 160 60Z" fill="#B5522B"/>'
+    '<path d="M160 66 C164 86 190 100 188 126 C186 146 172 152 160 152 M160 66 C156 86 130 100 132 126 C134 146 148 152 160 152" stroke="#D9774A" stroke-width="3" fill="none"/>'
+    '<path d="M160 62 C158 52 160 44 166 38" stroke="#7FBF50" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M148 154 L144 162 M160 154 V164 M172 154 L176 162" stroke="#E8D5B8" stroke-width="2.5" stroke-linecap="round"/>')
+
+@obj('վարունգ', 'table', 'վարունգներ')
+def _(): return (SH(160, 156, 72) + '<g transform="rotate(-12 160 112)"><rect x="80" y="92" width="160" height="40" rx="20" fill="#4E9A3E"/><rect x="88" y="98" width="144" height="12" rx="6" fill="#6CC05A"/>' +
+    ''.join(f'<circle cx="{x}" cy="{y}" r="2" fill="#2F7A2A"/>' for x, y in [(104, 120), (130, 104), (156, 122), (182, 106), (208, 120)]) +
+    '<path d="M240 112 L250 108" stroke="#7A4A28" stroke-width="4" stroke-linecap="round"/></g>')
+
+@obj('ելակ', 'table', 'ելակներ')
+def _(): return (SH(160, 156, 46) + '<path d="M160 160 C128 138 112 110 116 90 C120 72 140 70 160 76 C180 70 200 72 204 90 C208 110 192 138 160 160Z" fill="#E8392F"/>' +
+    ''.join(f'<ellipse cx="{x}" cy="{y}" rx="2" ry="3" fill="#FFE14D"/>' for x, y in [(136, 94), (160, 92), (184, 94), (146, 112), (174, 112), (160, 128), (138, 120), (182, 120), (160, 144)]) +
+    star(160, 76, 22, 9, '#4E9A3E') + '<path d="M160 72 V56" stroke="#4E9A3E" stroke-width="4" stroke-linecap="round"/>')
+
+@obj('բալ', 'table')
+def _(): return (SH(160, 156, 62) + '<path d="M134 116 C140 80 156 56 176 44 M190 120 C188 84 182 60 176 44" stroke="#4E7A2A" stroke-width="4" fill="none" stroke-linecap="round"/>'
+    '<path d="M176 44 C190 30 212 32 216 40 C204 50 188 52 176 44Z" fill="#5DB14F"/><circle cx="132" cy="128" r="26" fill="#B51F2E"/><circle cx="192" cy="132" r="26" fill="#C8213A"/>'
+    '<circle cx="122" cy="118" r="7" fill="#fff" opacity=".4"/><circle cx="182" cy="122" r="7" fill="#fff" opacity=".4"/>')
+
+@obj('դդում', 'table', 'դդումներ')
+def _(): return (SH(160, 156, 74) + '<ellipse cx="120" cy="116" rx="34" ry="38" fill="#F08A2C"/><ellipse cx="200" cy="116" rx="34" ry="38" fill="#F08A2C"/><ellipse cx="160" cy="116" rx="40" ry="42" fill="#F7A23B"/>'
+    '<path d="M160 74 V158 M136 78 C126 100 126 132 136 154 M184 78 C194 100 194 132 184 154" stroke="#E2862A" stroke-width="3" fill="none"/>'
+    '<path d="M156 76 C154 64 158 56 166 52" stroke="#6B8E3A" stroke-width="8" fill="none" stroke-linecap="round"/>')
+
+@obj('տաքսի', 'road', 'տաքսիներ')
+def _(): return ('<ellipse cx="160" cy="162" rx="76" ry="6" fill="#000" opacity=".18"/>'
+    '<path d="M86 148 C84 130 92 120 108 118 L128 96 C132 92 136 90 142 90 H184 C190 90 196 92 200 98 L216 118 C232 120 238 130 236 148Z" fill="#FFC93C"/>'
+    '<rect x="146" y="76" width="34" height="14" rx="3" fill="#2F3640"/><text x="163" y="87" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#FFC93C">TAXI</text>'
+    '<path d="M134 116 L146 100 H164 V116Z M172 116 V100 H186 C190 100 192 102 194 104 L204 116Z" fill="#BFE3F5"/>'
+    '<g fill="#2F3640">' + ''.join(f'<rect x="{x}" y="124" width="10" height="8"/>' for x in (100, 120, 140, 160, 180, 200)) + '</g>'
+    '<rect x="222" y="126" width="12" height="8" rx="3" fill="#FFE14D"/>'
+    '<circle cx="122" cy="150" r="15" fill="#2F3640"/><circle cx="122" cy="150" r="6" fill="#C9D1D9"/><circle cx="202" cy="150" r="15" fill="#2F3640"/><circle cx="202" cy="150" r="6" fill="#C9D1D9"/>')
+
+@obj('ուղղաթիռ', 'skyclouds', 'ուղղաթիռներ')
+def _(): return ('<path d="M76 64 H244" stroke="#2F3640" stroke-width="6" stroke-linecap="round"/><rect x="156" y="64" width="8" height="16" fill="#2F3640"/>'
+    '<path d="M200 106 H262 L270 92 H278 L274 116 H200Z" fill="#E8473C"/><path d="M108 112 C108 92 126 80 156 80 H184 C202 80 214 92 214 112 C214 130 200 140 180 140 H140 C120 140 108 130 108 112Z" fill="#E8473C"/>'
+    '<path d="M118 106 C120 94 132 88 150 88 V112 H118Z" fill="#BFE3F5"/><path d="M130 148 H200 M140 140 V148 M190 140 V148" stroke="#2F3640" stroke-width="5" stroke-linecap="round"/>')
+
+# ---------- окончания мн. числа ----------
+# Односложные берут -եր (основа может сокращаться: տուն → տներ, շուն → շներ, ձու → ձվեր),
+# многосложные (и с беглым ը: գնացք, դրոշ, գնդակ) — -ներ; исключения — односложные на -ներ.
+MONO = set('ծառ աստղ ամպ սար տանձ նուռ հաց ձու տորթ շուն ձուկ կով հավ մուկ արջ օձ փիղ տուն նավ գիրք դուռ սիրտ լամպ մոմ աչք սունկ սոխ'.split())
+EXC = {'ձուկ', 'մուկ', 'նուռ', 'դուռ'}
+
+def ending(key):
+    return 'եր' if key in MONO and key not in EXC else 'ներ'
+
+# ---------- сборка ----------
+BGS = {
+    'sky': lambda p: bg_sky(p) + bg_clouds(), 'skyclear': lambda p: bg_sky(p, ground=False),
+    'skyclouds': lambda p: bg_sky(p, ground=False) + bg_clouds(),
+    'skygrey': lambda p: bg_sky(p, sky=("#C9D3DD", "#EEF2F5"), hills="#A9C98A", hills2="#93BA70"),
+    'night': bg_night, 'table': bg_table, 'room': bg_room, 'wall': bg_room, 'sea': bg_sea, 'water': bg_water,
+    'road': bg_road, 'rails': bg_rails, 'winter': bg_winter, 'plain': bg_plain,
+    'plaingreen': lambda p: bg_plain(p, ("#F1FAE8", "#D9F0C6")), 'plainblue': lambda p: bg_plain(p, ("#F0F8FD", "#D5ECF8")),
+    'plainpink': lambda p: bg_plain(p, ("#FFF0F4", "#FCD7E2")),
+}
+
+def draw(f, p):
+    try:
+        return f(p)
+    except TypeError:
+        return f()
+
+def svg(inner):
+    return f'<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">{inner}</svg>'
+
+def plural_scene(bg, f, p):
+    """Три предмета поменьше на том же фоне — для упражнения на мн. число."""
+    body = re.sub(r'<ellipse cx="[\d.]+" cy="[\d.]+" rx="[\d.]+" ry="[\d.]+" fill="#000" opacity="\.1[28]"/>', '', draw(f, p + 'x'))
+    s = .52
+    copies = ''.join(f'<g transform="translate({cx - 160 * s:.1f},{cy - 110 * s:.1f}) scale({s})">' + body.replace(f'{p}x', f'{p}{i}') + '</g>'
+                     for i, (cx, cy) in enumerate([(78, 122), (160, 112), (242, 122)]))
+    shadows = ''.join(SH(cx, 152, 26) for cx in (78, 160, 242)) if bg in ('sky', 'table', 'room', 'plain', 'plaingreen', 'plainblue', 'plainpink') else ''
+    return svg(BGS[bg](p + 'm') + shadows + copies)
+
+def main():
+    words = json.load(open(os.path.join(ROOT, 'data', 'words.json'), encoding='utf-8'))
+    have = {w[0] for t in words for w in t['w']}
+    out, missing = {}, []
+    for i, (key, (bg, f, pl)) in enumerate(O.items()):
+        if key not in have:
+            missing.append(key); continue
+        p = f'q{i}'
+        rec = {'s': svg(BGS[bg](p) + draw(f, p))}
+        if pl:
+            e = ending(key)
+            assert pl.endswith(e), (key, pl, e)
+            rec['pl'], rec['e'] = pl, e
+            if key in EXC:
+                rec['x'] = 1
+            rec['m'] = plural_scene(bg, f, f'm{i}')
+        out[key] = rec
+    js = ('/* Сгенерировано tools/make_pictures.py — не править руками. */\nwindow.BARARAN_PICS=' +
+          json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n')
+    path = os.path.join(ROOT, 'www', 'js', 'pictures.js')
+    open(path, 'w', encoding='utf-8').write(js)
+    print(f'картинок {len(out)}, с мн. числом {sum(1 for r in out.values() if "pl" in r)}, {len(js) // 1024} КБ', ('нет в словаре: ' + ', '.join(missing)) if missing else '')
+
+if __name__ == '__main__':
+    main()

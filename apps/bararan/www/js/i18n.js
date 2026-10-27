@@ -7,7 +7,7 @@ const words=n=>n===1?'word':'words';
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 
 const ru={
-  tabsAria:'Разделы', tabLearn:'Учить', tabAbc:'Алфавит', tabDict:'Словарь', tabSet:'Настройки',
+  tabsAria:'Разделы', tabLearn:'Учить', tabPics:'Картинки', tabAbc:'Алфавит', tabDict:'Словарь', tabSet:'Настройки',
   tagline:'Восточноармянский: слова с картинкой, звуком и повторением по дням',
   sumFirst:(n,t,s)=>'В словаре <b>'+fmt(n)+' '+slov(n)+'</b> в '+t+' темах, от A1 до C2. Урок — '+s+' новых слов: карточка, потом упражнения.',
   sumProgress:(l,t,g,d)=>'Выучено <b>'+fmt(l)+' '+slov(l)+'</b> из '+fmt(t)+', ещё '+g+' в работе.'+(d?' Сегодня на повторение — <b>'+d+'</b>.':' Повторять сегодня нечего.'),
@@ -25,6 +25,9 @@ const ru={
   dictTitle:'Словарь', dictPh:'Поиск: армянский, русский, английский', topicAria:'Тема',
   allWords:n=>'Все слова — '+fmt(n), levelN:(lv,n)=>'Уровень '+lv+' — '+fmt(n), topicsOf:lv=>'Темы '+lv,
   dictEmpty:'Ничего не найдено. Проверьте написание или выберите «Все слова».', showMore:n=>'Показать ещё — осталось '+fmt(n),
+  picsTitle:'Картинки', picsNote:n=>'Без перевода: картинка, слово по-армянски и транскрипция — '+n+' '+pl(n,'картинка','картинки','картинок')+'. Смотрите, слушайте, угадывайте. Бесплатно.',
+  picsQuiz:'Упражнение по картинкам', picsCards:'Листать карточки', toPics:'К картинкам', qPicWord:'Что на картинке?', qWordPic:'Найдите картинку', qPlural:'Их много. Какое окончание?',
+  plMany:'Много:', plExc:'исключение',
   abcTitle:'Алфавит', abcNote:'39 букв восточноармянского алфавита в реформированном письме — так пишут в Армении. Нажмите на букву: название, звук, пример и произношение.',
   abcTrain:'Тренировать буквы', example:'Пример', letterName:'название', reads:'читается', ipa:'звук (МФА)', ofN:n=>'буква из '+n,
   qLetterSound:'Как читается эта буква?', qSoundLetter:'Какая буква даёт этот звук?', qLetterHear:'Какую букву назвали?',
@@ -67,7 +70,7 @@ const ru={
 };
 
 const en={
-  tabsAria:'Sections', tabLearn:'Learn', tabAbc:'Alphabet', tabDict:'Dictionary', tabSet:'Settings',
+  tabsAria:'Sections', tabLearn:'Learn', tabPics:'Pictures', tabAbc:'Alphabet', tabDict:'Dictionary', tabSet:'Settings',
   tagline:'Eastern Armenian words with pictures, audio and spaced repetition',
   sumFirst:(n,t,s)=>'The dictionary has <b>'+fmt(n)+' words</b> in '+t+' topics, from A1 to C2. A lesson is '+s+' new words: a card, then exercises.',
   sumProgress:(l,t,g,d)=>'Learned <b>'+fmt(l)+' '+words(l)+'</b> of '+fmt(t)+', '+g+' more in progress.'+(d?' Due for review today: <b>'+d+'</b>.':' Nothing to review today.'),
@@ -85,6 +88,9 @@ const en={
   dictTitle:'Dictionary', dictPh:'Search: Armenian, English, Russian', topicAria:'Topic',
   allWords:n=>'All words — '+fmt(n), levelN:(lv,n)=>'Level '+lv+' — '+fmt(n), topicsOf:lv=>'Topics '+lv,
   dictEmpty:'Nothing found. Check the spelling or choose "All words".', showMore:n=>'Show more — '+fmt(n)+' left',
+  picsTitle:'Pictures', picsNote:n=>'No translation: a picture, the Armenian word and its transliteration — '+n+' pictures. Look, listen and guess. Free.',
+  picsQuiz:'Picture exercise', picsCards:'Browse cards', toPics:'Back to pictures', qPicWord:'What is in the picture?', qWordPic:'Find the picture', qPlural:'There are many. Which ending?',
+  plMany:'Many:', plExc:'exception',
   abcTitle:'Alphabet', abcNote:'The 39 letters of the Eastern Armenian alphabet in reformed spelling, as used in Armenia. Tap a letter for its name, sound, an example and pronunciation.',
   abcTrain:'Practise letters', example:'Example', letterName:'name', reads:'sounds like', ipa:'sound (IPA)', ofN:n=>'letter of '+n,
   qLetterSound:'How is this letter read?', qSoundLetter:'Which letter makes this sound?', qLetterHear:'Which letter did you hear?',

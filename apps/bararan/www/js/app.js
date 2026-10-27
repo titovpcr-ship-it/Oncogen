@@ -4,7 +4,7 @@
 (function(){
 'use strict';
 const TOPICS=window.BARARAN_DATA.topics, ABC=window.BARARAN_ABC, CFG=window.BARARAN_CONFIG||{};
-const BILL=window.BARARAN_BILLING, STR=window.BARARAN_STR;
+const BILL=window.BARARAN_BILLING, STR=window.BARARAN_STR, PICS=window.BARARAN_PICS||{};
 
 /* ================= LANGUAGE ================= */
 const UIK='bararan-ui-v1';
@@ -69,6 +69,7 @@ TOPICS.forEach((t,ti)=>{
     BY[a]=w; WORDS.push(w); t.list.push(w);
   });
 });
+const PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
 const tx=w=>L==='en'?w.e:w.r;          // перевод на языке интерфейса
 const trn=w=>L==='en'?w.lt:w.tr;        // транскрипция на языке интерфейса
 const tn=t=>L==='en'?t.en:t.ru;         // название темы
@@ -201,6 +202,7 @@ const ICON={
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>',
   abc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 16.5V9.8a2.8 2.8 0 0 1 5.6 0v6.7"/><path d="M13.6 12.5H16"/></svg>',
   dict:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 19.5V5.5"/></svg>',
+  pic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>',
   set:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>'
 };
 function firstLetter(a){const m=a.match(/[ա-ֆԱ-Ֆև]/);return m?m[0].toUpperCase():'?';}
@@ -395,18 +397,49 @@ function abcAnswer(idx){
 }
 function abcNext(){ if(!aq) return; clearTimeout(aq.timer); aq.i++; render(); window.scrollTo(0,0); onAbcShow(); }
 
+/* ================= PICTURES ================= */
+/* Режим без перевода: картинка, армянское слово, транскрипция. Бесплатный, прогресс не пишет. */
+let pq=null;
+function picSvg(w,many){const r=PICS[w.a]; return r?(many&&r.m?r.m:r.s):'';}
+function startPicQuiz(){
+  const pool=shuffle(PW).slice(0,12);
+  const items=pool.map((w,i)=>{
+    const r=PICS[w.a], kinds=['p2w','w2p'].concat(r.pl?['pl']:[]);
+    const k=i%4===3&&r.pl?'pl':kinds[Math.floor(Math.random()*kinds.length)];
+    if(k==='pl') return {k,w,opts:['եր','ներ']};
+    return {k,w,opts:shuffle([w].concat(shuffle(PW.filter(x=>x!==w)).slice(0,3)))};
+  });
+  pq={items,i:0,ok:0,timer:null}; go('pquiz'); onPicShow();
+}
+function onPicShow(){const it=pq&&pq.items[pq.i]; if(it&&it.k==='w2p'&&S.set.auto) speak(it.w,false,null,false);}
+function picAnswer(idx){
+  const it=pq&&pq.items[pq.i]; if(!it||it.done) return;
+  it.done=true; it.pick=idx;
+  it.ok=it.k==='pl'?it.opts[idx]===PICS[it.w.a].e:it.opts[idx]===it.w;
+  if(it.ok) pq.ok++; else buzz();
+  render(); if(S.set.auto&&it.k!=='w2p') speak(it.w,false,null,false);
+  if(it.ok&&it.k!=='pl') pq.timer=setTimeout(()=>{if(pq&&pq.items[pq.i]===it) picNext();},900);
+}
+function picNext(){ if(!pq) return; clearTimeout(pq.timer); pq.i++; render(); window.scrollTo(0,0); onPicShow(); }
+let swipeX=null;
+document.addEventListener('touchstart',e=>{ if(view==='pcard'&&e.touches.length===1) swipeX=e.touches[0].clientX; },{passive:true});
+document.addEventListener('touchend',e=>{
+  if(view!=='pcard'||swipeX==null) return; const dx=e.changedTouches[0].clientX-swipeX; swipeX=null;
+  if(Math.abs(dx)>60) go('pcard',(viewArg+(dx<0?1:PW.length-1))%PW.length);
+},{passive:true});
+
 /* ================= RENDER ================= */
 function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc') return 'abc'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc') return 'settings'; return ''; }
+function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc') return 'settings'; return ''; }
 function renderTabs(){
-  const tabs=[['home',ICON.home,T('tabLearn')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
+  const tabs=[['home',ICON.home,T('tabLearn')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
   nav.innerHTML=tabs.map(t=>'<button class="tab" data-act="tab" data-arg="'+t[0]+'">'+t[1]+'<span>'+esc(t[2])+'</span></button>').join('');
 }
 function render(auto){
   const el=$('#view');
-  document.body.dataset.view=(view==='session'||(view==='abcquiz'&&aq&&aq.i<aq.items.length))?'session':view;
+  document.body.dataset.view=(view==='session'||(view==='abcquiz'&&aq&&aq.i<aq.items.length)||(view==='pquiz'&&pq&&pq.i<pq.items.length))?'session':view;
   if(view==='onboard') el.innerHTML=onboardHTML();
   else if(view==='home') el.innerHTML=homeHTML();
   else if(view==='topic') el.innerHTML=topicHTML(viewArg);
@@ -414,6 +447,9 @@ function render(auto){
   else if(view==='abc') el.innerHTML=abcHTML();
   else if(view==='letter') el.innerHTML=letterHTML(viewArg);
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
+  else if(view==='pics') el.innerHTML=picsHTML();
+  else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
+  else if(view==='pquiz') el.innerHTML=pquizHTML();
   else if(view==='settings') el.innerHTML=settingsHTML();
   else if(view==='paywall') el.innerHTML=paywallHTML();
   else if(view==='doc') el.innerHTML=docHTML(viewArg);
@@ -546,6 +582,53 @@ function abcQuizHTML(){
   if(it.done){
     foot=it.ok?'<div class="fb ok">✓ '+esc(T('right'))+'</div><button class="btn primary" data-act="abcNext">'+esc(T('next'))+'</button>':
       '<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(x.up+' '+x.lo)+'</b>'+esc(rd(x))+' — '+esc(x.nm)+'</span></div><button class="btn primary" data-act="abcNext">'+esc(T('next'))+'</button>';
+  }
+  return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.ok?' ok':' bad')+'"><div class="foot-in">'+foot+'</div></div>':'');
+}
+function picsHTML(){
+  const cards=PW.map((w,i)=>'<li><button class="pcell" data-act="pcard" data-arg="'+i+'"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(trn(w))+'</span></button></li>').join('');
+  return '<header class="head"><h1 class="pg">'+esc(T('picsTitle'))+'</h1><p class="t-hy2" lang="hy">Նկարներ</p></header>'+
+    '<p class="note">'+esc(T('picsNote',PW.length))+'</p>'+
+    '<div class="actions abc-acts"><button class="btn primary" data-act="picQuiz">'+esc(T('picsQuiz'))+'</button><button class="btn secondary" data-act="pcard" data-arg="0">'+esc(T('picsCards'))+'</button></div>'+
+    '<ul class="pgrid">'+cards+'</ul>';
+}
+function pcardHTML(i){
+  const w=PW[i], r=PICS[w.a], n=PW.length;
+  const pl=r.pl?'<p class="pl-line"><span>'+esc(T('plMany'))+'</span> <b lang="hy">'+esc(r.pl)+'</b> · '+esc(L==='en'?trPhrase(r.pl,true):trPhrase(r.pl,false))+(r.x?' · <i>'+esc(T('plExc'))+'</i>':'')+'</p>':'';
+  return '<button class="back" data-act="tab" data-arg="pics">‹ '+esc(T('picsTitle'))+'</button>'+
+    '<div class="pcard"><div class="pimg big">'+picSvg(w)+'</div>'+
+    '<div class="hyw" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div>'+
+    '<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlowFree" data-arg="'+esc(w.a)+'"><span aria-hidden="true">🐢</span><span>'+esc(T('slow'))+'</span></button></div>'+pl+
+    '<p class="pcount" style="text-align:center;margin-top:10px">'+(i+1)+' / '+n+'</p></div>'+
+    '<div class="l-nav"><button class="btn secondary" data-act="pcard" data-arg="'+((i+n-1)%n)+'">‹</button><button class="btn secondary" data-act="pcard" data-arg="'+((i+1)%n)+'">›</button></div>';
+}
+function pquizHTML(){
+  const n=pq.items.length;
+  const top='<div class="sess-top"><button class="x" data-act="picQuit" aria-label="'+esc(T('quit'))+'">✕</button><div class="pbar"><i style="width:'+Math.round(100*pq.i/n)+'%"></i></div><span class="pcount">'+Math.min(pq.i+1,n)+'/'+n+'</span></div>';
+  if(pq.i>=n){
+    const good=pq.ok/n>=0.6;
+    return '<div class="result"><div class="apres" lang="hy">'+(good?'Ապրե՛ս':'Լավ է')+'</div><p class="sub">'+esc(good?T('wellDone'):T('goodTry'))+'</p><p class="score">'+T('abcScore',pq.ok,n)+'</p><div class="actions"><button class="btn primary" data-act="picQuiz">'+esc(T('again'))+'</button><button class="btn ghost" data-act="tab" data-arg="pics">'+esc(T('toPics'))+'</button></div></div>';
+  }
+  const it=pq.items[pq.i], w=it.w, r=PICS[w.a];
+  const cls=(ok,j)=>!it.done?'':(ok?'ok':(j===it.pick?'bad':'dim'));
+  const dis=it.done?' disabled':'';
+  let body='';
+  if(it.k==='p2w'){
+    body='<p class="q">'+esc(T('qPicWord'))+'</p><div class="pimg big">'+picSvg(w)+'</div><div class="opts list">'+
+      it.opts.map((o,j)=>'<button class="opt '+cls(o===w,j)+'" data-act="picOpt" data-arg="'+j+'"'+dis+'><span class="o-hy" lang="hy">'+esc(o.a)+'</span><span class="o-tr">'+esc(trn(o))+'</span></button>').join('')+'</div>';
+  }else if(it.k==='w2p'){
+    body='<p class="q">'+esc(T('qWordPic'))+'</p><div class="hyw" lang="hy">'+esc(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div>'+
+      '<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button></div>'+
+      '<div class="opts">'+it.opts.map((o,j)=>'<button class="opt popt '+cls(o===w,j)+'" data-act="picOpt" data-arg="'+j+'"'+dis+'><span class="pimg">'+picSvg(o)+'</span></button>').join('')+'</div>';
+  }else{
+    body='<p class="q">'+esc(T('qPlural'))+'</p><div class="pimg big">'+picSvg(w,true)+'</div><div class="hyw" lang="hy">'+esc(w.a)+' + …</div><div class="trn">'+esc(trn(w))+'</div>'+
+      '<div class="opts">'+it.opts.map((o,j)=>'<button class="opt '+cls(o===r.e,j)+'" data-act="picOpt" data-arg="'+j+'"'+dis+'><span class="o-big" lang="hy">-'+esc(o)+'</span></button>').join('')+'</div>';
+  }
+  let foot='';
+  if(it.done){
+    const ans=it.k==='pl'?'<b lang="hy">'+esc(w.a)+' → '+esc(r.pl)+'</b>'+esc(L==='en'?trPhrase(r.pl,true):trPhrase(r.pl,false))+(r.x?' · '+esc(T('plExc')):''):'<b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w));
+    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+(it.k==='pl'?'<span class="ans">'+ans+'</span>':'')+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans">'+ans+'</span></div>')+
+      '<button class="btn primary" data-act="picNext">'+esc(T('next'))+'</button>';
   }
   return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.ok?' ok':' bad')+'"><div class="foot-in">'+foot+'</div></div>':'');
 }
@@ -696,7 +779,7 @@ function sessionHTML(){
 /* ================= EVENTS ================= */
 let docFrom='settings';
 const H={
-  tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} go(a); },
+  tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} if(view==='pquiz'&&pq){clearTimeout(pq.timer); pq=null;} go(a); },
   pickLang:a=>{setLang(a); go('home');},
   lang:a=>{setLang(a); render();},
   topic:a=>{const t=TOPICS[+a]; if(lvOpen(t.lv)) preloadAudio(t.list); go('topic',+a);},
@@ -726,6 +809,12 @@ const H={
   practice:a=>startPractice(+a),
   say:(a,b)=>{const w=BY[a]; if(w&&!canUse(w)){openPaywall(); return;} speak(w,false,b,true);},
   sayFree:(a,b)=>speak(BY[a],false,b,true),
+  saySlowFree:(a,b)=>speak(BY[a],true,b,true),
+  pcard:a=>go('pcard',+a),
+  picQuiz:()=>startPicQuiz(),
+  picOpt:a=>picAnswer(+a),
+  picNext:()=>picNext(),
+  picQuit:()=>{if(pq) clearTimeout(pq.timer); pq=null; go('pics');},
   saySlow:(a,b)=>speak(BY[a],true,b,true),
   sayCur:(a,b)=>{const it=cur(); if(it) speak(it.w,false,b,true);},
   sayCurSlow:(a,b)=>{const it=cur(); if(it) speak(it.w,true,b,true);},
@@ -778,6 +867,8 @@ document.addEventListener('click',e=>{
   const f=H[b.dataset.act]; if(f) f(b.dataset.arg,b,e);
 });
 document.addEventListener('keydown',e=>{
+  if(view==='pquiz'&&pq){ const it=pq.items[pq.i]; if(!it) return; if(/^[1-4]$/.test(e.key)&&!it.done&&+e.key<=it.opts.length){picAnswer(+e.key-1);return;} if(e.key==='Enter'&&it.done){e.preventDefault();picNext();} return; }
+  if(view==='pcard'){ if(e.key==='ArrowRight') go('pcard',(viewArg+1)%PW.length); if(e.key==='ArrowLeft') go('pcard',(viewArg+PW.length-1)%PW.length); return; }
   if(view==='abcquiz'&&aq){ const it=aq.items[aq.i]; if(!it) return; if(/^[1-4]$/.test(e.key)&&!it.done){abcAnswer(+e.key-1);return;} if(e.key==='Enter'&&it.done){e.preventDefault();abcNext();} return; }
   if(view!=='session'||!sess) return;
   const it=cur(); if(!it) return;
@@ -798,6 +889,8 @@ function onBack(){
   if(view==='session'&&sess&&!sess.ended){finish(); return true;}
   if(view==='abcquiz'){H.abcQuit(); return true;}
   if(view==='letter'){go('abc'); return true;}
+  if(view==='pquiz'){H.picQuit(); return true;}
+  if(view==='pcard'){go('pics'); return true;}
   if(view==='doc'){H.docBack(); return true;}
   if(view==='paywall'){H.pwClose(); return true;}
   if(view==='onboard'||view==='home') return false;
@@ -809,12 +902,12 @@ loadLocal();
 document.documentElement.lang=L;
 renderTabs();
 if(SPEECH){ loadVoices(); try{ window.speechSynthesis.addEventListener('voiceschanged',loadVoices); }catch(e){} }
-BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz') render(); });
+BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz') render(); });
 BILL.onBack(onBack);
 view=UI.lang?'home':'onboard';
 render();
 BILL.hideSplash();
-Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz') render(); });
+Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

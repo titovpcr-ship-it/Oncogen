@@ -9,6 +9,7 @@
 |---|---|
 | Приложение (чистый JS, без сборщика) | `www/` — `index.html`, `css/app.css`, `js/app.js`, `js/i18n.js` (тексты ru/en), `js/alphabet.js` (39 букв), `js/billing.js` (подписка, кнопка «Назад»), `js/config.js` (ключ RevenueCat) |
 | Словарь: 5 001 слово, 119 тем, A1–C2, перевод на русский и английский | исходники `data/topics_src.json` (81 старая тема), `data/en/*.tsv` (английский), `data/new/*.tsv` (38 новых тем) → `python3 tools/build_data.py` → `data/words.json`, `www/js/data.js` |
+| Режим «Картинки» без перевода: 95 векторных картинок, нарисованных кодом, упражнения «что на картинке», «найди картинку», окончание мн. числа -եր/-ներ | `tools/make_pictures.py` → `www/js/pictures.js` |
 | Озвучка нейроголосом Azure (слова + названия букв) | `tools/gen_audio.py` → `www/audio/*.json` + `manifest.json` |
 | Android-проект (Capacitor 8, targetSdk 36) | `android/`, `capacitor.config.json`, appId `app.bararan` |
 | Иконка «Ա» на абрикосовом, заставка | `assets/` (исходники) → `npx capacitor-assets generate --android` |
@@ -28,6 +29,8 @@ npm run apk                      # отладочный APK → android/app/buil
 npm run aab                      # релизный AAB (нужен android/keystore.properties)
 node tests/test_app.js           # проверка
 node tools/store_shots.js        # скриншоты для Google Play
+python3 tools/make_pictures.py   # картинки режима «Картинки»
+python3 tools/web_demo.py out.html  # один HTML для показа в браузере (iPhone)
 ```
 
 Нужны Node 22, Java 21, Android SDK (`android/local.properties`: `sdk.dir=…`).

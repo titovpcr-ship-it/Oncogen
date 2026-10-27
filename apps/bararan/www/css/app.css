@@ -303,3 +303,20 @@ select{width:100%;max-width:100%;background:var(--surface);border:1px solid var(
 .onb p{margin:0;color:var(--ink-2)}
 .onb .actions .btn{font-size:18px}
 body[data-view="onboard"] #tabs,body[data-view="paywall"] #tabs{display:none}
+
+/* картинки */
+.pimg{display:block;width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;background:var(--surface-2)}
+.pimg svg{display:block;width:100%;height:100%}
+.pimg.big{margin:6px 0 14px;box-shadow:var(--shadow)}
+.pgrid{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.pcell{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:6px 6px 10px;display:flex;flex-direction:column;gap:6px;text-align:center}
+.pcell .pimg{border-radius:14px}
+.pw-hy{font:600 22px/1.15 var(--hy);overflow-wrap:anywhere}
+.pw-tr{font-size:13px;color:var(--ink-3);margin-top:-4px}
+.pcard{text-align:center}
+.pcard .hyw{margin-top:4px}
+.pl-line{margin:12px 0 0;color:var(--ink-2)}
+.pl-line b{font:600 20px var(--hy);color:var(--ink)}
+.pl-line i{color:var(--accent);font-style:normal}
+.opts .popt{min-height:0;padding:6px}
+.opts .popt .pimg{border-radius:12px}

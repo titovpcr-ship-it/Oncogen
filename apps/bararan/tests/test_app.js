@@ -60,6 +60,16 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('[data-act=abcQuiz]');
     for(let i=0;i<12;i++){ await pg.locator('.opt').first().click(); await pg.waitForTimeout(30); if(i===0) await shot('abcquiz'); if(await pg.locator('[data-act=abcNext]').count()) await pg.click('[data-act=abcNext]'); else await pg.waitForTimeout(950); }
     ok(await pg.locator('.result .score').count()===1,'тренировка букв закончилась итогом'); await noHScroll('abcquiz');
+    // картинки: галерея, карточка, упражнение без перевода
+    await pg.click('[data-act=tab][data-arg=pics]'); const np=await pg.locator('.pgrid .pcell').count(); ok(np>=90,'картинок в галерее: '+np); await shot('pics'); await noHScroll('pics');
+    ok(await pg.evaluate(()=>{const B=window.__bararan; return B.PW.every(w=>B.PICS[w.a]&&B.PICS[w.a].s.startsWith('<svg'));}),'у каждого слова режима есть картинка');
+    ok(await pg.evaluate(()=>Object.values(window.__bararan.PICS).filter(r=>r.pl).every(r=>r.pl.endsWith(r.e)&&r.m)),'мн. число: форма кончается на окончание, есть сцена «много»');
+    await pg.click('.pgrid .pcell >> nth=0'); ok((await pg.textContent('.pcard .trn')).length>0,'карточка: слово и транскрипция'); ok(!(await pg.textContent('.pcard')).includes('дерево'),'на карточке нет русского перевода'); await shot('pcard'); await noHScroll('pcard');
+    await pg.click('.l-nav .btn >> nth=1'); ok(await pg.evaluate(()=>window.__bararan.view)==='pcard','листание карточек');
+    await pg.click('[data-act=tab][data-arg=pics]'); await pg.click('[data-act=picQuiz]');
+    const kinds=new Set();
+    for(let i=0;i<12;i++){ const k=await pg.evaluate(()=>document.querySelector('.stage .q').textContent); kinds.add(k); await pg.locator('.opt').first().click(); await pg.waitForTimeout(30); if(i<3) await shot('pquiz-'+i); if(await pg.locator('[data-act=picNext]').count()) await pg.click('[data-act=picNext]'); else await pg.waitForTimeout(950); }
+    ok(kinds.size>=2,'упражнение: виды вопросов '+[...kinds].join(' / ')); ok(await pg.locator('.result .score').count()===1,'упражнение по картинкам закончилось итогом'); await noHScroll('pquiz');
     // словарь: поиск по-английски и латиницей
     await pg.click('[data-act=tab][data-arg=dict]'); await pg.fill('#dq','dog'); ok((await pg.textContent('#dlist')).includes('շուն'),'поиск по-английски: dog → շուն');
     await pg.fill('#dq','tʰrrchʰun'); ok((await pg.textContent('#dlist')).includes('թռչուն'),'поиск латиницей'); await pg.fill('#dq','собака'); await shot('dict'); await noHScroll('dict');
