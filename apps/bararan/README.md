@@ -9,7 +9,7 @@
 | Что | Где |
 |---|---|
 | Приложение (чистый JS, без сборщика) | `www/` — `index.html`, `css/app.css`, `js/app.js`, `js/i18n.js` (тексты ru/en), `js/alphabet.js` (39 букв), `js/billing.js` (подписка, кнопка «Назад»), `js/config.js` (ключ RevenueCat) |
-| Словарь: 5 001 слово, 119 тем, A1–C2, перевод на русский, английский и французский | исходники `data/topics_src.json` (81 старая тема), `data/en/*.tsv` (английский), `data/fr/*.tsv` (французский, `topics.tsv` — темы), `data/new/*.tsv` (38 новых тем) → `python3 tools/build_data.py` → `data/words.json`, `www/js/data.js` |
+| Словарь: 10 022 слова, 246 тем, A1–C2, перевод на русский, английский и французский | исходники `data/topics_src.json` (81 старая тема), `data/en/*.tsv` (английский), `data/fr/*.tsv` (французский, `topics.tsv` — темы), `data/new/*.tsv` (165 новых тем; с 39-й французский прямо в строке) → `python3 tools/build_data.py` → `data/words.json`, `www/js/data.js` |
 | Режим «Картинки» без перевода: 95 векторных картинок, нарисованных кодом, упражнения «что на картинке», «найди картинку», окончание мн. числа -եր/-ներ | `tools/make_pictures.py` → `www/js/pictures.js` |
 | Озвучка нейроголосом Azure (слова + названия букв) | `tools/gen_audio.py` → `www/audio/*.json` + `manifest.json` |
 | Android-проект (Capacitor 8, targetSdk 36) | `android/`, `capacitor.config.json`, appId `app.bararan` |
@@ -17,7 +17,7 @@
 | Материалы для Google Play | `store/` — описания ru/en/fr, `privacy.md`, `data_safety.md`, иконка 512, баннер 1024×500, скриншоты 1080×1920 |
 | Проверка в браузере | `node tests/test_app.js` (два языка, светлая и тёмная тема, замки, урок, алфавит, нет внешних запросов) |
 
-Бесплатно — уровень A1 (491 слово и фраза) и весь алфавит. Premium (`premium_monthly`, `premium_yearly`,
+Бесплатно — уровень A1 (538 слов и фраз) и весь алфавит. Premium (`premium_monthly`, `premium_yearly`,
 entitlement `premium`) открывает A2–C2. В браузере покупки выключены — работает бесплатный режим.
 
 ## Команды
@@ -38,7 +38,7 @@ python3 tools/web_demo.py out.html  # один HTML для показа в бр�
 
 ## Что нужно от владельца
 
-1. **Ключ Azure Speech** (бесплатный тариф F0, весь словарь — около 42 тыс. знаков из 500 тыс. в месяц):
+1. **Ключ Azure Speech** (бесплатный тариф F0, весь словарь — около 95 тыс. знаков из 500 тыс. в месяц):
    portal.azure.com → Create a resource → Speech → Region West Europe, Pricing **Free F0** →
    Keys and Endpoint → KEY 1 и Region. Вписать в `apps/bararan/.env`:
    `AZURE_SPEECH_KEY=…` и `AZURE_SPEECH_REGION=westeurope`. Дальше озвучку делает Claude.
@@ -53,7 +53,7 @@ python3 tools/web_demo.py out.html  # один HTML для показа в бр�
 
 ## Важно
 
-- **Вычитка словаря:** новые 1 247 слов (`data/new/`), английские и французские переводы составлены без носителя —
+- **Вычитка словаря:** новые 6 268 слов (`data/new/`), английские и французские переводы составлены без носителя —
   перед продажей показать носителю. Ошибки отмечаются кнопкой «Ошибка в слове?», список — в
   «Настройки → Отмеченные слова».
 - **Платежи:** профиль платежей и счёт для выплат Google — не российские (с 26.12.2024 Google не даёт

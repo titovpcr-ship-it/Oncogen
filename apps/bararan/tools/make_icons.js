@@ -15,7 +15,7 @@ const jobs=[
   ['assets/splash.png',2732,2732,'#EC8B2E',700],
   ['assets/splash-dark.png',2732,2732,'#151019',0,`<div style="width:900px;height:900px;border-radius:200px;background:#EC8B2E;display:grid;place-items:center"><div class="l" style="--s:600px">Ա</div></div>`],
   ['store/icon-512.png',512,512,'#EC8B2E',310],
-  ['store/feature-1024x500.png',1024,500,'#EC8B2E',0,`<div style="display:flex;align-items:center;gap:44px"><div style="width:250px;height:250px;border-radius:64px;background:#FDE7D2;display:grid;place-items:center;box-shadow:0 18px 40px -18px rgba(42,21,3,.6)"><div class="l" style="--s:180px">Ա</div></div><div style="color:#2A1503"><div style="font:700 92px/1 G">Bararan</div><div style="font:600 46px/1.3 A;margin-top:8px">Բառարան</div><div style="font:500 30px/1.3 G;margin-top:16px">5 001 Armenian words · Армянский</div></div></div>`]
+  ['store/feature-1024x500.png',1024,500,'#EC8B2E',0,`<div style="display:flex;align-items:center;gap:44px"><div style="width:250px;height:250px;border-radius:64px;background:#FDE7D2;display:grid;place-items:center;box-shadow:0 18px 40px -18px rgba(42,21,3,.6)"><div class="l" style="--s:180px">Ա</div></div><div style="color:#2A1503"><div style="font:700 92px/1 G">Bararan</div><div style="font:600 46px/1.3 A;margin-top:8px">Բառարան</div><div style="font:500 30px/1.3 G;margin-top:16px">10 022 Armenian words · Армянский</div></div></div>`]
 ];
 (async()=>{
   const br=await chromium.launch();
