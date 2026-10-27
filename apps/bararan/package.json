@@ -1,0 +1,25 @@
+{
+  "name": "bararan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bararan — армянские слова: Android-приложение с подпиской",
+  "scripts": {
+    "data": "python3 tools/build_data.py",
+    "vendor": "node tools/vendor.js",
+    "test": "node tests/test_app.js",
+    "sync": "npm run vendor && npx cap sync android",
+    "apk": "npm run sync && cd android && ./gradlew assembleDebug",
+    "aab": "npm run sync && cd android && ./gradlew bundleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@revenuecat/purchases-capacitor": "^13.7.6"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.3"
+  }
+}

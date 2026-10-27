@@ -180,6 +180,12 @@ python tools/sellers/scan.py            # список — data/sellers.csv
 - Недооценены не пластинки, а стартовые цены отдельных продавцов
   (jazzlover1960, wild.records).
 
+## Словарик Bararan
+
+`apps/bararan/` — отдельное Android-приложение (армянские слова), к винилу не относится. Как собрать и
+что нужно от владельца — `apps/bararan/README.md`; ключи Azure и keystore — в `apps/bararan/.env` и
+`apps/bararan/android/keystore.properties` (в gitignore, хранить отдельно).
+
 ## Как обновить этот бэкап
 
 ```bash
