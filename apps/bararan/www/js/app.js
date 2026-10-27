@@ -11,7 +11,8 @@ const UIK='bararan-ui-v1';
 let UI={lang:null};
 try{const o=JSON.parse(localStorage.getItem(UIK)||'null'); if(o&&typeof o==='object') UI=Object.assign(UI,o);}catch(e){}
 function saveUI(){try{localStorage.setItem(UIK,JSON.stringify(UI));}catch(e){}}
-let L=UI.lang||((navigator.language||'').toLowerCase().indexOf('ru')===0?'ru':'en');
+const NAV=(navigator.language||'').toLowerCase();
+let L=UI.lang||(NAV.indexOf('ru')===0?'ru':(NAV.indexOf('fr')===0?'fr':'en'));
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}
 
@@ -58,21 +59,43 @@ function trLat(s){
   }
   return o;
 }
-function trPhrase(a,lat){return a.split(' ').map(x=>x.split('-').map(y=>lat?trLat(y):trWord(y,false)).join('-')).join(' ');}
+/* французская: ու — ou, շ — ch, ժ — j, ջ — dj, ճ — tch, ը — e, ե/է — é; գ перед é/i/e — gu, ս между гласными — ss */
+const FRM={'ա':'a','բ':'b','գ':'g','դ':'d','զ':'z','է':'é','ը':'e','թ':'tʰ','ժ':'j','ի':'i','լ':'l','խ':'kh','ծ':'ts','կ':'k','հ':'h','ձ':'dz','ղ':'gh','ճ':'tch','մ':'m','յ':'y','ն':'n','շ':'ch','չ':'tchʰ','պ':'p','ջ':'dj','ռ':'rr','ս':'s','վ':'v','տ':'t','ր':'r','ց':'tsʰ','փ':'pʰ','ք':'kʰ','օ':'o','ֆ':'f'};
+const HYV_SET='աեէըիոօևւ';
+function trFr(s){
+  s=s.toLowerCase(); let o='';
+  const isV=c=>!!c&&HYV_SET.indexOf(c)>=0;
+  for(let i=0;i<s.length;i++){
+    const c=s[i], nx=s[i+1]||'', pv=s[i-1]||'';
+    if(PUNCT.indexOf(c)>=0) continue;
+    if(c==='ո'&&nx==='ւ'){o+='ou';i++;continue;}
+    if(c==='և'){o+=(i===0)?'yév':'év';continue;}
+    if(c==='ե'){o+=(i===0)?'yé':'é';continue;}
+    if(c==='ո'){o+=(i===0&&!s.startsWith('ով'))?'vo':'o';continue;}
+    if(c==='գ'&&'եէիը'.indexOf(nx)>=0){o+='gu';continue;}
+    if(c==='ս'&&isV(pv)&&isV(nx)){o+='ss';continue;}
+    const m=FRM[c]; o+=(m===undefined)?c:m;
+  }
+  return o;
+}
+const TRF={ru:y=>trWord(y,false),en:trLat,fr:trFr};
+function trPhrase(a,mode){const f=TRF[mode]||TRF.ru; return a.split(' ').map(x=>x.split('-').map(f).join('-')).join(' ');}
+const trL=a=>trPhrase(a,L);   // транскрипция на языке интерфейса
 const WORDS=[], BY={};
 TOPICS.forEach((t,ti)=>{
   t.list=[];
   (t.w||[]).forEach(row=>{
     const a=(row[0]||'').trim(), r=(row[1]||'').trim(), e=(row[2]||'').trim()||r, p=(row[3]||'').trim();
     if(!a||!r||BY[a]) return;
-    const w={a,r,e,p,t:ti,tr:trPhrase(a,false),lt:trPhrase(a,true)};
+    const f=(row[4]||'').trim()||e;
+    const w={a,r,e,f,p,t:ti,tr:trPhrase(a,'ru'),lt:trPhrase(a,'en'),ft:trPhrase(a,'fr')};
     BY[a]=w; WORDS.push(w); t.list.push(w);
   });
 });
 const PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
-const tx=w=>L==='en'?w.e:w.r;          // перевод на языке интерфейса
-const trn=w=>L==='en'?w.lt:w.tr;        // транскрипция на языке интерфейса
-const tn=t=>L==='en'?t.en:t.ru;         // название темы
+const tx=w=>L==='fr'?w.f:(L==='en'?w.e:w.r);      // перевод на языке интерфейса
+const trn=w=>L==='fr'?w.ft:(L==='en'?w.lt:w.tr);   // транскрипция на языке интерфейса
+const tn=t=>(L==='fr'&&t.fr)?t.fr:(L==='en'?t.en:t.ru);   // название темы
 
 /* ================= ACCESS ================= */
 const FREE_LV='A1';
@@ -377,7 +400,7 @@ function finish(){
 
 /* ================= ALPHABET QUIZ ================= */
 let aq=null;
-const rd=x=>L==='en'?x.en:x.ru;
+const rd=x=>L==='fr'?x.fr:(L==='en'?x.en:x.ru);
 function startAbcQuiz(){
   const kinds=hasRealKey('L')?['l2s','s2l','hear']:['l2s','s2l'];
   const items=shuffle(ABC).slice(0,12).map(x=>{
@@ -522,9 +545,9 @@ function onShow(){
 const MARK='<span class="mark" aria-hidden="true" lang="hy">Ա</span>';
 function onboardHTML(){
   return '<section class="onb">'+MARK+'<div><h1>Bararan</h1><p lang="hy" style="font-family:var(--hy);font-size:20px">Բառարան</p></div>'+
-    '<p>Выберите язык · Choose your language</p>'+
-    '<div class="actions"><button class="btn primary" data-act="pickLang" data-arg="ru">🇷🇺 Русский<span class="cap">Армянский для русскоязычных</span></button><button class="btn secondary" data-act="pickLang" data-arg="en">🇬🇧 English<span class="cap">Armenian for English speakers</span></button></div>'+
-    '<p class="note">'+(L==='en'?'You can change it later in Settings.':'Язык можно сменить в настройках.')+'</p></section>';
+    '<p>Выберите язык · Choose your language · Choisissez votre langue</p>'+
+    '<div class="actions"><button class="btn primary" data-act="pickLang" data-arg="ru">🇷🇺 Русский<span class="cap">Армянский для русскоязычных</span></button><button class="btn secondary" data-act="pickLang" data-arg="en">🇬🇧 English<span class="cap">Armenian for English speakers</span></button><button class="btn secondary" data-act="pickLang" data-arg="fr">🇫🇷 Français<span class="cap">L\'arménien pour les francophones</span></button></div>'+
+    '<p class="note">'+({en:'You can change it later in Settings.',fr:'Vous pourrez la changer dans les Réglages.'}[L]||'Язык можно сменить в настройках.')+'</p></section>';
 }
 function premCTA(){
   if(premium()) return '';
@@ -584,7 +607,7 @@ function dictRows(){
   const q=dq.trim().toLowerCase();
   const qc=q.replace(/h/g,'һ').replace(/ʰ/g,''), ql=q.replace(/ʰ/g,'');
   let list=(dt==='all')?WORDS:(dt.indexOf('lv:')===0?WORDS.filter(w=>TOPICS[w.t].lv===dt.slice(3)):TOPICS[+dt].list);
-  if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0);
+  if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0||w.f.toLowerCase().indexOf(q)>=0||w.ft.replace(/ʰ/g,'').indexOf(ql)>=0);
   if(!list.length) return '<li class="empty">'+esc(T('dictEmpty'))+'</li>';
   const more=list.length>dLimit?'<li class="more-li"><button class="btn ghost" data-act="more">'+esc(T('showMore',list.length-dLimit))+'</button></li>':'';
   return list.slice(0,dLimit).map(w=>wordRow(w)).join('')+more;
@@ -612,10 +635,10 @@ function letterHTML(i){
   const ex=w?'<div class="l-ex"><h2 class="sec">'+esc(T('example'))+'</h2><ul class="words">'+wordRow(w,true)+'</ul></div>':'';
   return '<button class="back" data-act="tab" data-arg="abc">‹ '+esc(T('abcTitle'))+'</button>'+
     '<div class="letter"><div class="big-letter" lang="hy">'+big+'</div>'+
-    '<div class="l-name" lang="hy">'+esc(x.nm)+'<small>'+esc(T('letterName'))+': '+esc(L==='en'?trLat(x.nm):trWord(x.nm,false))+'</small></div>'+
+    '<div class="l-name" lang="hy">'+esc(x.nm)+'<small>'+esc(T('letterName'))+': '+esc(trL(x.nm))+'</small></div>'+
     '<div class="audio"><button class="aud" data-act="sayLetter" data-arg="'+i+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="sayLetterSlow" data-arg="'+i+'"><span aria-hidden="true">🐢</span><span>'+esc(T('slow'))+'</span></button></div>'+
     '<div class="l-facts"><div><b>'+esc(rd(x))+'</b><span>'+esc(T('reads'))+'</span></div><div><b>['+esc(x.ipa)+']</b><span>'+esc(T('ipa'))+'</span></div><div><b>'+(i+1)+'</b><span>'+esc(T('ofN',n))+'</span></div></div>'+
-    '<p class="l-tip">'+esc(L==='en'?x.ten:x.tru)+'</p></div>'+ex+
+    '<p class="l-tip">'+esc(L==='fr'?x.tfr:(L==='en'?x.ten:x.tru))+'</p></div>'+ex+
     '<div class="l-nav"><button class="btn secondary" data-act="letter" data-arg="'+((i+n-1)%n)+'">‹ '+esc(ABC[(i+n-1)%n].up)+'</button><button class="btn secondary" data-act="letter" data-arg="'+((i+1)%n)+'">'+esc(ABC[(i+1)%n].up)+' ›</button></div>';
 }
 function abcQuizHTML(){
@@ -650,7 +673,7 @@ function picsHTML(){
 }
 function pcardHTML(i){
   const w=PW[i], r=PICS[w.a], n=PW.length;
-  const pl=r.pl?'<p class="pl-line"><span>'+esc(T('plMany'))+'</span> <b lang="hy">'+esc(r.pl)+'</b> · '+esc(L==='en'?trPhrase(r.pl,true):trPhrase(r.pl,false))+(r.x?' · <i>'+esc(T('plExc'))+'</i>':'')+'</p>':'';
+  const pl=r.pl?'<p class="pl-line"><span>'+esc(T('plMany'))+'</span> <b lang="hy">'+esc(r.pl)+'</b> · '+esc(trL(r.pl))+(r.x?' · <i>'+esc(T('plExc'))+'</i>':'')+'</p>':'';
   return '<button class="back" data-act="tab" data-arg="pics">‹ '+esc(T('picsTitle'))+'</button>'+
     '<div class="pcard"><div class="pimg big">'+picSvg(w)+'</div>'+
     '<div class="hyw" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div>'+
@@ -682,7 +705,7 @@ function pquizHTML(){
   }
   let foot='';
   if(it.done){
-    const ans=it.k==='pl'?'<b lang="hy">'+esc(w.a)+' → '+esc(r.pl)+'</b>'+esc(L==='en'?trPhrase(r.pl,true):trPhrase(r.pl,false))+(r.x?' · '+esc(T('plExc')):''):'<b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w));
+    const ans=it.k==='pl'?'<b lang="hy">'+esc(w.a)+' → '+esc(r.pl)+'</b>'+esc(trL(r.pl))+(r.x?' · '+esc(T('plExc')):''):'<b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w));
     foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+(it.k==='pl'?'<span class="ans">'+ans+'</span>':'')+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans">'+ans+'</span></div>')+
       '<button class="btn primary" data-act="picNext">'+esc(T('next'))+'</button>';
   }
@@ -720,7 +743,7 @@ function tquizHTML(){
 }
 function settingsHTML(){
   const sizes=[5,10,15,20].map(n=>'<button data-act="size" data-arg="'+n+'" aria-pressed="'+((S.set.size||10)===n)+'">'+n+'</button>').join('');
-  const langs=[['ru','Русский'],['en','English']].map(x=>'<button data-act="lang" data-arg="'+x[0]+'" aria-pressed="'+(L===x[0])+'">'+x[1]+'</button>').join('');
+  const langs=[['ru','Русский'],['en','English'],['fr','Français']].map(x=>'<button data-act="lang" data-arg="'+x[0]+'" aria-pressed="'+(L===x[0])+'">'+x[1]+'</button>').join('');
   const vtext=REAL_ANY?T('audioOn'):(HYV?T('audioSys'):T('audioOff'));
   const prem=premium();
   let sub='<p class="note">'+esc(prem?T('subOn'):T('subOff'))+'</p><div class="actions" style="margin-top:12px">';
@@ -890,7 +913,7 @@ const H={
   },
   flag:a=>{S.flag=S.flag||{}; if(S.flag[a]) delete S.flag[a]; else S.flag[a]=1; save(); render(false); toast(S.flag[a]?T('flagToast'):T('unflagToast'));},
   copyFlags:()=>{
-    const txt=Object.keys(S.flag||{}).filter(a=>BY[a]).map(a=>a+' — '+BY[a].tr+' — '+BY[a].r+' — '+BY[a].e).join('\n');
+    const txt=Object.keys(S.flag||{}).filter(a=>BY[a]).map(a=>a+' — '+BY[a].tr+' — '+BY[a].r+' — '+BY[a].e+' — '+BY[a].f).join('\n');
     const fallback=()=>{const t=$('#flagtxt'); if(t){t.hidden=false; t.value=txt; t.focus(); t.select();} toast(T('copyManual'));};
     try{ if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(()=>toast(T('copied')),fallback); else fallback(); }catch(e){fallback();}
   },
@@ -1016,5 +1039,5 @@ render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,get tq(){return tq;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,get tq(){return tq;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

@@ -3,13 +3,14 @@
 Источники:
   data/topics_src.json  — 81 тема из веб-версии (армянский, русский, эмодзи);
   data/en/*.tsv         — английский к каждому армянскому слову, topics.tsv — названия тем;
+  data/fr/*.tsv         — французский к каждому слову, topics.tsv — «русское название<TAB>французское»;
   data/new/*.tsv        — новые темы (заголовок «# lv=…; ru=…; en=…; hy=…; ic=…»,
                           строки «армянский<TAB>русский<TAB>английский<TAB>эмодзи»).
 
 Пишет:
-  data/words.json  — словарь целиком (темы по уровням, новые — после старых своего уровня);
+  data/words.json  — словарь целиком: строка слова [армянский, русский, английский, эмодзи, французский];
   www/js/data.js   — тот же словарь для приложения (window.BARARAN_DATA);
-  tools/words.json — список для озвучки gen_audio.py: {a, lv, ru, en}.
+  tools/words.json — список для озвучки gen_audio.py: {a, lv, ru, en, fr}.
 
 Запуск: python3 tools/build_data.py
 """
@@ -37,6 +38,18 @@ def load_en():
             else:
                 en[a.strip()] = b.strip()
     return en, titles
+
+
+def load_fr():
+    fr, titles = {}, {}
+    for f in sorted(glob.glob(p("data", "fr", "*.tsv"))):
+        for line in open(f, encoding="utf-8"):
+            line = line.rstrip("\n")
+            if not line.strip() or line.startswith("#"):
+                continue
+            a, _, b = line.partition("\t")
+            (titles if os.path.basename(f) == "topics.tsv" else fr)[a.strip()] = b.strip()
+    return fr, titles
 
 
 def head_fields(line):
@@ -92,9 +105,17 @@ def build():
 
     # уровни по порядку; внутри уровня — старые темы, затем новые
     topics.sort(key=lambda t: LEVELS.index(t["lv"]))
+    fr, fr_titles = load_fr()
     for t in topics:
         if not t["en"]:
             problems.append("нет английского названия темы: " + t["ru"])
+        t["fr"] = fr_titles.get(t["ru"], "")
+        if not t["fr"]:
+            problems.append("нет французского названия темы: " + t["ru"])
+        for w in t["w"]:
+            if w[0] not in fr:
+                problems.append("нет французского: " + w[0])
+            w.append(fr.get(w[0], ""))
     return topics, problems
 
 
@@ -112,7 +133,7 @@ def main():
         f.write("window.BARARAN_DATA=")
         json.dump({"topics": out}, f, ensure_ascii=False, separators=(",", ":"))
         f.write(";\n")
-    audio = [{"a": w[0], "lv": t["lv"], "ru": w[1], "en": w[2]} for t in topics for w in t["w"]]
+    audio = [{"a": w[0], "lv": t["lv"], "ru": w[1], "en": w[2], "fr": w[4]} for t in topics for w in t["w"]]
     with open(p("tools", "words.json"), "w", encoding="utf-8") as f:
         json.dump(audio, f, ensure_ascii=False, indent=0)
     by = {lv: sum(len(t["w"]) for t in topics if t["lv"] == lv) for lv in LEVELS}

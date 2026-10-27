@@ -8,7 +8,7 @@ const srv=http.createServer((q,r)=>{let f=path.join(ROOT,decodeURIComponent(q.ur
 (async()=>{
   await new Promise(r=>srv.listen(0,r)); const base='http://127.0.0.1:'+srv.address().port+'/';
   const br=await chromium.launch();
-  for(const lang of ['ru','en']){
+  for(const lang of ['ru','en','fr']){
     const out=path.join(R,'store','screenshots',lang); fs.mkdirSync(out,{recursive:true});
     const ctx=await br.newContext({viewport:{width:360,height:640},deviceScaleFactor:3,colorScheme:'light'});
     // немного прогресса, чтобы главная выглядела как у ученика через неделю
@@ -25,6 +25,7 @@ const srv=http.createServer((q,r)=>{let f=path.join(ROOT,decodeURIComponent(q.ur
     await pg.click('[data-act=learnNew]'); await pg.waitForTimeout(900); await shot('new-word');
     // первое упражнение «что значит» — отвечаем верно
     for(let g=0;g<12;g++){ if(await pg.locator('[data-act=know]').count()){await pg.click('.foot [data-act=next]'); await pg.waitForTimeout(200); continue;} break; }
+    for(let g=0;g<10&&!(await pg.locator('.opts').count());g++){ if(await pg.locator('[data-act=giveup]').count()){ await pg.click('[data-act=giveup]'); await pg.click('.foot [data-act=next]'); } else if(await pg.locator('.foot [data-act=next]').count()) await pg.click('.foot [data-act=next]'); await pg.waitForTimeout(150); }
     const it=await pg.evaluate(()=>{const v=document.querySelector('.opts'); return !!v;});
     if(it){ const idx=await pg.evaluate(()=>{const B=window.__bararan, en=document.documentElement.lang==='en', tx=w=>en?w.e:w.r;
         const btns=[...document.querySelectorAll('.opt')], hy=document.querySelector('.stage .hyw'), ru=document.querySelector('.stage .ruw');
@@ -36,7 +37,7 @@ const srv=http.createServer((q,r)=>{let f=path.join(ROOT,decodeURIComponent(q.ur
     await pg.click('[data-act=quit]').catch(()=>{});
     await pg.click('[data-act=tab][data-arg=abc]'); await pg.waitForTimeout(200); await shot('alphabet');
     await pg.click('.abc button >> nth=17'); await pg.waitForTimeout(200); await shot('letter');
-    await pg.click('[data-act=tab][data-arg=dict]'); await pg.fill('#dq',lang==='en'?'apricot':'абрикос'); await pg.waitForTimeout(200); await shot('dictionary');
+    await pg.click('[data-act=tab][data-arg=dict]'); await pg.fill('#dq',({en:'apricot',fr:'abricot'}[lang]||'абрикос')); await pg.waitForTimeout(200); await shot('dictionary');
     await pg.click('[data-act=tab][data-arg=home]'); await pg.click('[data-act=lvtog][data-arg=B1]'); await pg.click('[data-act=lvtog][data-arg=A1]');
     await pg.evaluate(()=>{const el=[...document.querySelectorAll('.lvh')].find(b=>b.dataset.arg==='B1'); el.scrollIntoView();}); await pg.waitForTimeout(200); await shot('topics');
     await ctx.close(); console.log(lang,n,'скриншотов');

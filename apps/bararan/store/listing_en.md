@@ -11,6 +11,8 @@ Bararan (Բառարան, "dictionary") teaches Armenian vocabulary to English an
 • Every word voiced by a neural voice with Eastern Armenian pronunciation — built in, no internet needed
 • Latin or Cyrillic transliteration with reading tips
 • A beautiful alphabet: 39 letters with names, sounds, examples and practice
+• Pictures mode with no translation: a picture, the Armenian word and its transliteration, plus a plural ending drill (-եր / -ներ)
+• Type it yourself with your phone's Armenian keyboard or the built-in one
 • Spaced repetition: words come back after 1, 2, 4, 7, 15, 30 days so they stick
 • Exercises: meaning, choose the Armenian word, listening, build the word from letters
 • "Test what I know" quickly marks familiar words so you don't waste time on them
