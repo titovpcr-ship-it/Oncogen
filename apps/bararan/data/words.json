@@ -16140,6 +16140,20 @@
 "bark",
 "🐕",
 "aboyer"
+],
+[
+"գանձ",
+"сокровище, клад",
+"treasure",
+"💎",
+"trésor"
+],
+[
+"կրկնություն",
+"повторение",
+"repetition",
+"🔁",
+"répétition"
 ]
 ],
 "fr": "Mots utiles"
@@ -51139,6 +51153,310 @@
 "fr": "Verbes : juger et débattre"
 },
 {
+"lv": "B2",
+"ru": "Наречия B2: как именно",
+"en": "B2 adverbs: how exactly",
+"hy": "Մակբայներ B2. ինչպես ճիշտ",
+"ic": "🎯",
+"w": [
+[
+"ամբողջապես",
+"целиком",
+"entirely",
+"",
+"entièrement"
+],
+[
+"անվերջ",
+"бесконечно",
+"endlessly",
+"",
+"sans fin"
+],
+[
+"անընդմեջ",
+"подряд",
+"in a row",
+"",
+"d'affilée"
+],
+[
+"աննպատակ",
+"бесцельно",
+"aimlessly",
+"",
+"sans but"
+],
+[
+"արագորեն",
+"быстро",
+"rapidly",
+"",
+"rapidement"
+],
+[
+"արդարացիորեն",
+"справедливо",
+"fairly, justly",
+"",
+"équitablement"
+],
+[
+"արտակարգ",
+"чрезвычайный",
+"extraordinary, emergency",
+"",
+"extraordinaire"
+],
+[
+"բնականորեն",
+"естественно (образом)",
+"naturally",
+"",
+"naturellement"
+],
+[
+"գաղտնաբար",
+"тайно",
+"secretly",
+"🤫",
+"secrètement"
+],
+[
+"դանդաղորեն",
+"медленно",
+"slowly",
+"",
+"lentement"
+],
+[
+"ենթադրաբար",
+"предположительно",
+"presumably",
+"",
+"vraisemblablement"
+],
+[
+"զգուշորեն",
+"осторожно",
+"carefully",
+"",
+"prudemment"
+],
+[
+"ընդամենը",
+"всего лишь, итого",
+"only, in total",
+"",
+"en tout"
+],
+[
+"ընդմիշտ",
+"навсегда",
+"forever",
+"♾️",
+"pour toujours"
+],
+[
+"լրջորեն",
+"серьёзно",
+"seriously",
+"",
+"sérieusement"
+],
+[
+"խորապես",
+"глубоко",
+"deeply",
+"",
+"profondément"
+],
+[
+"կանոնավոր",
+"регулярный, регулярно",
+"regular, regularly",
+"",
+"régulier"
+],
+[
+"կտրականապես",
+"категорически",
+"categorically",
+"",
+"catégoriquement"
+],
+[
+"համառորեն",
+"упорно",
+"stubbornly",
+"",
+"obstinément"
+],
+[
+"համարձակորեն",
+"смело",
+"boldly",
+"",
+"hardiment"
+],
+[
+"համատեղ",
+"совместно",
+"jointly",
+"",
+"conjointement"
+],
+[
+"հավասարապես",
+"поровну",
+"equally",
+"",
+"également"
+],
+[
+"հետևողականորեն",
+"последовательно",
+"consistently",
+"",
+"systématiquement"
+],
+[
+"հիմնականում",
+"в основном",
+"mainly",
+"",
+"principalement"
+],
+[
+"հնարավորինս",
+"по возможности",
+"as far as possible",
+"",
+"autant que possible"
+],
+[
+"ճշգրտորեն",
+"точно",
+"precisely",
+"",
+"précisément"
+],
+[
+"մասնակիորեն",
+"частично",
+"partly",
+"",
+"partiellement"
+],
+[
+"մեծապես",
+"в значительной мере",
+"greatly",
+"",
+"grandement"
+],
+[
+"մշտապես",
+"постоянно",
+"permanently",
+"",
+"en permanence"
+],
+[
+"նախևառաջ",
+"прежде всего",
+"first and foremost",
+"",
+"avant tout"
+],
+[
+"պարբերաբար",
+"периодически",
+"periodically",
+"",
+"périodiquement"
+],
+[
+"պաշտոնապես",
+"официально",
+"officially",
+"",
+"officiellement"
+],
+[
+"վերջնականապես",
+"окончательно",
+"finally, for good",
+"",
+"définitivement"
+],
+[
+"վճռականորեն",
+"решительно",
+"resolutely",
+"",
+"résolument"
+],
+[
+"ժամ առ ժամ",
+"час за часом",
+"hour by hour",
+"",
+"d'heure en heure"
+],
+[
+"քայլ առ քայլ",
+"шаг за шагом",
+"step by step",
+"👣",
+"pas à pas"
+],
+[
+"ակամա",
+"невольно",
+"involuntarily",
+"",
+"malgré soi"
+],
+[
+"ի պատասխան",
+"в ответ",
+"in response",
+"",
+"en réponse"
+],
+[
+"առհասարակ",
+"вообще",
+"in general",
+"",
+"en général"
+],
+[
+"այնպես որ",
+"так что",
+"so that, therefore",
+"",
+"si bien que"
+],
+[
+"արդյոք",
+"ли",
+"whether",
+"",
+"est-ce que"
+],
+[
+"հուսով եմ",
+"надеюсь",
+"I hope",
+"",
+"j'espère"
+]
+],
+"fr": "Adverbes B2 : comment au juste"
+},
+{
 "lv": "C1",
 "ru": "Философия и абстракции",
 "en": "Philosophy and abstractions",
@@ -56071,6 +56389,1215 @@
 "fr": "Verbes littéraires 2"
 },
 {
+"lv": "C1",
+"ru": "Философия 2",
+"en": "Philosophy 2",
+"hy": "Փիլիսոփայություն 2",
+"ic": "🦉",
+"w": [
+[
+"գոյաբանություն",
+"онтология",
+"ontology",
+"",
+"ontologie"
+],
+[
+"իմացաբանություն",
+"гносеология",
+"epistemology",
+"",
+"épistémologie"
+],
+[
+"մետաֆիզիկա",
+"метафизика",
+"metaphysics",
+"",
+"métaphysique"
+],
+[
+"դիալեկտիկա",
+"диалектика",
+"dialectics",
+"",
+"dialectique"
+],
+[
+"ռացիոնալիզմ",
+"рационализм",
+"rationalism",
+"",
+"rationalisme"
+],
+[
+"էմպիրիզմ",
+"эмпиризм",
+"empiricism",
+"",
+"empirisme"
+],
+[
+"իդեալիզմ",
+"идеализм",
+"idealism",
+"",
+"idéalisme"
+],
+[
+"մատերիալիզմ",
+"материализм",
+"materialism",
+"",
+"matérialisme"
+],
+[
+"էքզիստենցիալիզմ",
+"экзистенциализм",
+"existentialism",
+"",
+"existentialisme"
+],
+[
+"նիհիլիզմ",
+"нигилизм",
+"nihilism",
+"",
+"nihilisme"
+],
+[
+"սկեպտիցիզմ",
+"скептицизм",
+"scepticism",
+"",
+"scepticisme"
+],
+[
+"ստոիցիզմ",
+"стоицизм",
+"stoicism",
+"",
+"stoïcisme"
+],
+[
+"հեդոնիզմ",
+"гедонизм",
+"hedonism",
+"",
+"hédonisme"
+],
+[
+"ուտիլիտարիզմ",
+"утилитаризм",
+"utilitarianism",
+"",
+"utilitarisme"
+],
+[
+"պրագմատիզմ",
+"прагматизм",
+"pragmatism",
+"",
+"pragmatisme"
+],
+[
+"պոզիտիվիզմ",
+"позитивизм",
+"positivism",
+"",
+"positivisme"
+],
+[
+"ֆենոմենոլոգիա",
+"феноменология",
+"phenomenology",
+"",
+"phénoménologie"
+],
+[
+"հերմենևտիկա",
+"герменевтика",
+"hermeneutics",
+"",
+"herméneutique"
+],
+[
+"ստրուկտուրալիզմ",
+"структурализм",
+"structuralism",
+"",
+"structuralisme"
+],
+[
+"պոստմոդեռնիզմ",
+"постмодернизм",
+"postmodernism",
+"",
+"postmodernisme"
+],
+[
+"դետերմինիզմ",
+"детерминизм",
+"determinism",
+"",
+"déterminisme"
+],
+[
+"ֆատալիզմ",
+"фатализм",
+"fatalism",
+"",
+"fatalisme"
+],
+[
+"ագնոստիցիզմ",
+"агностицизм",
+"agnosticism",
+"",
+"agnosticisme"
+],
+[
+"պանթեիզմ",
+"пантеизм",
+"pantheism",
+"",
+"panthéisme"
+],
+[
+"դեիզմ",
+"деизм",
+"deism",
+"",
+"déisme"
+],
+[
+"միաստվածություն",
+"монотеизм",
+"monotheism",
+"",
+"monothéisme"
+],
+[
+"բազմաստվածություն",
+"политеизм",
+"polytheism",
+"",
+"polythéisme"
+],
+[
+"աստվածաբանություն",
+"богословие",
+"theology",
+"",
+"théologie"
+],
+[
+"էսխատոլոգիա",
+"эсхатология",
+"eschatology",
+"",
+"eschatologie"
+],
+[
+"տիեզերաբանություն",
+"космология",
+"cosmology",
+"",
+"cosmologie"
+],
+[
+"կատեգորիա",
+"категория",
+"category",
+"",
+"catégorie"
+],
+[
+"պարադիգմ",
+"парадигма",
+"paradigm",
+"",
+"paradigme"
+],
+[
+"դիլեմա",
+"дилемма",
+"dilemma",
+"",
+"dilemme"
+],
+[
+"ապորիա",
+"апория",
+"aporia",
+"",
+"aporie"
+],
+[
+"պոստուլատ",
+"постулат",
+"postulate",
+"",
+"postulat"
+],
+[
+"հիպոթեզ",
+"гипотеза",
+"hypothesis",
+"",
+"hypothèse"
+],
+[
+"սինթեզ",
+"синтез",
+"synthesis",
+"",
+"synthèse"
+],
+[
+"ինդուկցիա",
+"индукция",
+"induction",
+"",
+"induction"
+],
+[
+"դեդուկցիա",
+"дедукция",
+"deduction",
+"",
+"déduction"
+],
+[
+"աբստրակցիա",
+"абстракция",
+"abstraction",
+"",
+"abstraction"
+],
+[
+"սուբյեկտ",
+"субъект",
+"subject",
+"",
+"sujet"
+],
+[
+"օբյեկտ",
+"объект",
+"object",
+"",
+"objet"
+],
+[
+"պատահականություն",
+"случайность",
+"chance, randomness",
+"",
+"hasard"
+],
+[
+"անգիտակցական",
+"бессознательное",
+"the unconscious",
+"",
+"inconscient"
+],
+[
+"ինտելեկտ",
+"интеллект",
+"intellect",
+"",
+"intellect"
+],
+[
+"ճանաչողություն",
+"познание",
+"cognition",
+"",
+"cognition"
+],
+[
+"դոգմա",
+"догма",
+"dogma",
+"",
+"dogme"
+],
+[
+"հերետիկոսություն",
+"ересь",
+"heresy",
+"",
+"hérésie"
+],
+[
+"ուտոպիա",
+"утопия",
+"utopia",
+"",
+"utopie"
+],
+[
+"դիստոպիա",
+"антиутопия",
+"dystopia",
+"",
+"dystopie"
+]
+],
+"fr": "Philosophie 2"
+},
+{
+"lv": "C1",
+"ru": "Лечение и анализы",
+"en": "Treatment and tests",
+"hy": "Բուժում և հետազոտություններ",
+"ic": "🏥",
+"w": [
+[
+"հիվանդագրություն",
+"история болезни",
+"case history",
+"",
+"dossier médical"
+],
+[
+"թերապիա",
+"терапия",
+"therapy",
+"",
+"thérapie"
+],
+[
+"ռեաբիլիտացիա",
+"реабилитация",
+"rehabilitation",
+"",
+"rééducation"
+],
+[
+"ինկուբացիոն շրջան",
+"инкубационный период",
+"incubation period",
+"",
+"période d'incubation"
+],
+[
+"անտիգեն",
+"антиген",
+"antigen",
+"",
+"antigène"
+],
+[
+"քնաբեր",
+"снотворное",
+"sleeping pill",
+"",
+"somnifère"
+],
+[
+"հանգստացնող",
+"успокоительное",
+"sedative",
+"",
+"calmant"
+],
+[
+"հակադեպրեսանտ",
+"антидепрессант",
+"antidepressant",
+"",
+"antidépresseur"
+],
+[
+"ընդհանուր անզգայացում",
+"общий наркоз",
+"general anaesthesia",
+"",
+"anesthésie générale"
+],
+[
+"տեղային անզգայացում",
+"местная анестезия",
+"local anaesthesia",
+"",
+"anesthésie locale"
+],
+[
+"անզգայացնող",
+"обезболивающее, анестетик",
+"anaesthetic",
+"",
+"anesthésique"
+],
+[
+"վիրաբուժություն",
+"хирургия",
+"surgery",
+"",
+"chirurgie"
+],
+[
+"կարում",
+"наложение швов",
+"suturing",
+"",
+"suture"
+],
+[
+"փոխպատվաստում",
+"пересадка",
+"transplant",
+"",
+"greffe"
+],
+[
+"դոնոր",
+"донор",
+"donor",
+"",
+"donneur"
+],
+[
+"արյան փոխներարկում",
+"переливание крови",
+"blood transfusion",
+"🩸",
+"transfusion sanguine"
+],
+[
+"ռեզուս գործոն",
+"резус-фактор",
+"Rh factor",
+"",
+"facteur rhésus"
+],
+[
+"պլազմա",
+"плазма",
+"plasma",
+"",
+"plasma"
+],
+[
+"գլյուկոզա",
+"глюкоза",
+"glucose",
+"",
+"glucose"
+],
+[
+"ինսուլին",
+"инсулин",
+"insulin",
+"",
+"insuline"
+],
+[
+"ադրենալին",
+"адреналин",
+"adrenaline",
+"",
+"adrénaline"
+],
+[
+"սերոտոնին",
+"серотонин",
+"serotonin",
+"",
+"sérotonine"
+],
+[
+"դոֆամին",
+"дофамин",
+"dopamine",
+"",
+"dopamine"
+],
+[
+"մետաբոլիզմ",
+"метаболизм",
+"metabolism",
+"",
+"métabolisme"
+],
+[
+"արյան ճնշում",
+"кровяное давление",
+"blood pressure",
+"",
+"tension artérielle"
+],
+[
+"անոթազարկ",
+"пульс",
+"pulse",
+"",
+"pouls"
+],
+[
+"էլեկտրասրտագրություն",
+"электрокардиография",
+"electrocardiography",
+"",
+"électrocardiographie"
+],
+[
+"համակարգչային շերտագրություն",
+"компьютерная томография",
+"CT scan",
+"",
+"scanner"
+],
+[
+"մագնիսառեզոնանսային շերտագրություն",
+"МРТ",
+"MRI scan",
+"",
+"IRM"
+],
+[
+"խրոնիկ",
+"хронический",
+"chronic",
+"",
+"chronique"
+],
+[
+"ձեռքբերովի",
+"приобретённый",
+"acquired",
+"",
+"acquis"
+],
+[
+"ախտահարում",
+"поражение",
+"lesion",
+"",
+"lésion"
+],
+[
+"բորբոքային",
+"воспалительный",
+"inflammatory",
+"",
+"inflammatoire"
+],
+[
+"սեպսիս",
+"сепсис",
+"sepsis",
+"",
+"septicémie"
+],
+[
+"շոկ",
+"шок",
+"shock",
+"",
+"choc"
+],
+[
+"կոմա",
+"кома",
+"coma",
+"",
+"coma"
+],
+[
+"կլինիկական մահ",
+"клиническая смерть",
+"clinical death",
+"",
+"mort clinique"
+],
+[
+"ինտենսիվ թերապիա",
+"реанимация, интенсивная терапия",
+"intensive care",
+"",
+"soins intensifs"
+],
+[
+"ստացիոնար",
+"стационар",
+"inpatient ward",
+"",
+"hôpital (hospitalisation)"
+],
+[
+"հիվանդության արձակուրդ",
+"больничный",
+"sick leave",
+"",
+"congé maladie"
+],
+[
+"հաշմանդամ",
+"инвалид",
+"disabled person",
+"",
+"personne handicapée"
+],
+[
+"անաշխատունակություն",
+"нетрудоспособность",
+"incapacity for work",
+"",
+"incapacité de travail"
+],
+[
+"դեղագործություն",
+"фармацевтика",
+"pharmaceutics",
+"",
+"pharmacie"
+],
+[
+"էպիդեմիոլոգիա",
+"эпидемиология",
+"epidemiology",
+"",
+"épidémiologie"
+],
+[
+"համաճարակաբան",
+"эпидемиолог",
+"epidemiologist",
+"",
+"épidémiologiste"
+],
+[
+"հոգեբուժություն",
+"психиатрия",
+"psychiatry",
+"",
+"psychiatrie"
+],
+[
+"հոգեթերապիա",
+"психотерапия",
+"psychotherapy",
+"",
+"psychothérapie"
+]
+],
+"fr": "Traitements et examens"
+},
+{
+"lv": "C1",
+"ru": "Глаголы академической речи",
+"en": "Academic verbs",
+"hy": "Գիտական խոսքի բայեր",
+"ic": "🎓",
+"w": [
+[
+"ակնածել",
+"благоговеть",
+"revere",
+"",
+"révérer"
+],
+[
+"ամբաստանել",
+"обвинять",
+"accuse, indict",
+"",
+"inculper"
+],
+[
+"անդամակցել",
+"вступить в члены",
+"become a member",
+"",
+"adhérer"
+],
+[
+"անկում ապրել",
+"переживать упадок",
+"decline",
+"",
+"décliner"
+],
+[
+"արտաբերել",
+"произносить",
+"utter, pronounce",
+"",
+"prononcer"
+],
+[
+"արտահայտվել",
+"высказываться",
+"express oneself",
+"",
+"s'exprimer"
+],
+[
+"բնակեցնել",
+"заселять",
+"populate, settle",
+"",
+"peupler"
+],
+[
+"գերադասել",
+"предпочитать",
+"prefer",
+"",
+"préférer"
+],
+[
+"գործադրել",
+"применять, прилагать",
+"apply, exert",
+"",
+"employer"
+],
+[
+"ընթացք տալ",
+"дать ход",
+"set in motion",
+"",
+"donner suite à"
+],
+[
+"խորանալ",
+"углубляться",
+"deepen",
+"",
+"s'approfondir"
+],
+[
+"ծագել",
+"возникать, происходить",
+"arise, originate",
+"",
+"naître"
+],
+[
+"կազմավորվել",
+"формироваться",
+"take shape",
+"",
+"se former"
+],
+[
+"կապակցել",
+"связывать",
+"link, connect",
+"",
+"relier"
+],
+[
+"կենսագործել",
+"воплощать в жизнь",
+"put into practice",
+"",
+"mettre en œuvre"
+],
+[
+"կողմնակցել",
+"поддерживать (сторону)",
+"side with",
+"",
+"prendre parti pour"
+],
+[
+"հանգեցնել",
+"приводить (к чему-то)",
+"lead to, result in",
+"",
+"aboutir à"
+],
+[
+"հանդես գալ",
+"выступать",
+"speak, appear (publicly)",
+"",
+"intervenir"
+],
+[
+"հղացնել",
+"задумать, замыслить",
+"conceive",
+"",
+"concevoir"
+],
+[
+"ձեռնամուխ լինել",
+"приступить",
+"set about",
+"",
+"entreprendre"
+],
+[
+"ձերբազատվել",
+"освобождаться",
+"get rid of",
+"",
+"se débarrasser de"
+],
+[
+"միավորվել",
+"объединяться",
+"unite",
+"",
+"s'unir"
+],
+[
+"մտադրվել",
+"намереваться",
+"intend",
+"",
+"avoir l'intention de"
+],
+[
+"նախորդել",
+"предшествовать",
+"precede",
+"",
+"précéder"
+],
+[
+"շարադրել",
+"излагать",
+"set out, expound",
+"",
+"exposer"
+],
+[
+"ուղղորդել",
+"направлять",
+"guide, direct",
+"",
+"orienter"
+],
+[
+"չքմեղանալ",
+"оправдываться",
+"make excuses",
+"",
+"se justifier"
+],
+[
+"սերտաճել",
+"срастаться",
+"fuse, merge",
+"",
+"fusionner"
+],
+[
+"սևեռել",
+"устремлять, фиксировать",
+"fix, focus",
+"",
+"fixer"
+],
+[
+"վերահաստատել",
+"подтверждать вновь",
+"reaffirm",
+"",
+"réaffirmer"
+],
+[
+"վերացնել",
+"устранять, отменять",
+"eliminate, abolish",
+"",
+"supprimer"
+],
+[
+"վերընթերցել",
+"перечитывать",
+"reread",
+"",
+"relire"
+],
+[
+"տեղայնացնել",
+"локализовать",
+"localize",
+"",
+"localiser"
+],
+[
+"տրամադրել",
+"предоставлять",
+"provide, allocate",
+"",
+"fournir"
+],
+[
+"փոխակերպել",
+"преобразовывать",
+"transform",
+"",
+"transformer"
+],
+[
+"քաղել",
+"собирать, черпать",
+"gather, glean",
+"",
+"puiser"
+],
+[
+"օժտել",
+"наделять",
+"endow",
+"",
+"doter"
+],
+[
+"օտարել",
+"отчуждать",
+"alienate",
+"",
+"aliéner"
+],
+[
+"հոգեհարազատ",
+"родственный по духу",
+"kindred (in spirit)",
+"",
+"proche par l'esprit"
+]
+],
+"fr": "Verbes du discours savant"
+},
+{
+"lv": "C1",
+"ru": "Книжные наречия и связки",
+"en": "Literary adverbs and connectors",
+"hy": "Գրքային մակբայներ և կապեր",
+"ic": "📜",
+"w": [
+[
+"անխտիր",
+"без разбора",
+"indiscriminately",
+"",
+"sans distinction"
+],
+[
+"անմնացորդ",
+"без остатка",
+"completely, wholeheartedly",
+"",
+"sans réserve"
+],
+[
+"անտարակույս",
+"несомненно",
+"undoubtedly",
+"",
+"indubitablement"
+],
+[
+"աներկբա",
+"несомненно",
+"unquestionably",
+"",
+"incontestablement"
+],
+[
+"անտրտունջ",
+"безропотно",
+"uncomplainingly",
+"",
+"sans se plaindre"
+],
+[
+"ապարդյուն",
+"безрезультатно",
+"in vain",
+"",
+"en vain"
+],
+[
+"առավելապես",
+"преимущественно",
+"predominantly",
+"",
+"principalement"
+],
+[
+"արժանավայել",
+"достойный",
+"worthy, befitting",
+"",
+"digne"
+],
+[
+"գերազանցապես",
+"превосходно, преимущественно",
+"pre-eminently",
+"",
+"éminemment"
+],
+[
+"դյուրությամբ",
+"с лёгкостью",
+"with ease",
+"",
+"aisément"
+],
+[
+"ընդհուպ",
+"вплоть до",
+"right up to",
+"",
+"jusqu'à"
+],
+[
+"իսպառ",
+"совершенно, начисто",
+"utterly",
+"",
+"entièrement"
+],
+[
+"կամովին",
+"добровольно",
+"voluntarily",
+"",
+"volontairement"
+],
+[
+"հարաբերականորեն",
+"относительно",
+"relatively",
+"",
+"relativement"
+],
+[
+"հիմնովին",
+"коренным образом",
+"thoroughly, radically",
+"",
+"radicalement"
+],
+[
+"միակողմանիորեն",
+"односторонне",
+"unilaterally",
+"",
+"unilatéralement"
+],
+[
+"նպատակաուղղված",
+"целенаправленный",
+"purposeful",
+"",
+"ciblé"
+],
+[
+"շարունակաբար",
+"непрерывно",
+"continuously",
+"",
+"continuellement"
+],
+[
+"որոշակիորեն",
+"определённо",
+"definitely",
+"",
+"certainement"
+],
+[
+"սոսկ",
+"лишь, просто",
+"merely",
+"",
+"simplement"
+],
+[
+"կամա-ակամա",
+"волей-неволей",
+"willy-nilly",
+"",
+"bon gré mal gré"
+],
+[
+"ի սկզբանե",
+"изначально",
+"from the outset",
+"",
+"dès le départ"
+],
+[
+"ի հեճուկս",
+"назло, вопреки",
+"in spite of",
+"",
+"en dépit de"
+],
+[
+"ի նշան",
+"в знак",
+"as a token of",
+"",
+"en signe de"
+],
+[
+"ի պաշտոնե",
+"по должности",
+"ex officio",
+"",
+"d'office"
+],
+[
+"ըստ ամենայնի",
+"по всей видимости",
+"by all accounts",
+"",
+"selon toute vraisemblance"
+],
+[
+"առավել ևս",
+"тем более",
+"all the more",
+"",
+"à plus forte raison"
+],
+[
+"թեպետ",
+"хотя",
+"although",
+"",
+"quoique"
+],
+[
+"թեկուզև",
+"хотя бы, пусть даже",
+"even if",
+"",
+"même si"
+],
+[
+"մինչև իսկ",
+"даже",
+"even",
+"",
+"voire"
+],
+[
+"միթե",
+"неужели",
+"really?, can it be",
+"",
+"est-il possible que"
+]
+],
+"fr": "Adverbes et liaisons soutenus"
+},
+{
 "lv": "C2",
 "ru": "Книжная и литературная лексика",
 "en": "Bookish and literary words",
@@ -57775,5 +59302,588 @@
 ]
 ],
 "fr": "Verbes littéraires"
+},
+{
+"lv": "C2",
+"ru": "Теория литературы",
+"en": "Literary theory",
+"hy": "Գրականության տեսություն",
+"ic": "🎭",
+"w": [
+[
+"էթոս",
+"этос",
+"ethos",
+"",
+"éthos"
+],
+[
+"պաթոս",
+"пафос",
+"pathos",
+"",
+"pathos"
+],
+[
+"լոգոս",
+"логос",
+"logos",
+"",
+"logos"
+],
+[
+"կատարսիս",
+"катарсис",
+"catharsis",
+"",
+"catharsis"
+],
+[
+"միմեսիս",
+"мимесис",
+"mimesis",
+"",
+"mimésis"
+],
+[
+"կոմիկական",
+"комический",
+"comic",
+"",
+"comique"
+],
+[
+"գրոտեսկ",
+"гротеск",
+"grotesque",
+"",
+"grotesque"
+],
+[
+"երգիծանք",
+"сатира",
+"satire",
+"",
+"satire"
+],
+[
+"պարոդիա",
+"пародия",
+"parody",
+"",
+"parodie"
+],
+[
+"ալյուզիա",
+"аллюзия",
+"allusion",
+"",
+"allusion"
+],
+[
+"անձնավորում",
+"олицетворение",
+"personification",
+"",
+"personnification"
+],
+[
+"չափազանցություն",
+"гипербола, преувеличение",
+"hyperbole, exaggeration",
+"",
+"hyperbole"
+],
+[
+"հռետորական հարց",
+"риторический вопрос",
+"rhetorical question",
+"",
+"question rhétorique"
+],
+[
+"մակդիր",
+"эпитет",
+"epithet",
+"",
+"épithète"
+],
+[
+"տաղաչափություն",
+"стихосложение",
+"versification",
+"",
+"versification"
+],
+[
+"յամբ",
+"ямб",
+"iamb",
+"",
+"iambe"
+],
+[
+"խորեյ",
+"хорей",
+"trochee",
+"",
+"trochée"
+],
+[
+"ազատ ոտանավոր",
+"верлибр",
+"free verse",
+"",
+"vers libre"
+],
+[
+"արձակ",
+"проза",
+"prose",
+"",
+"prose"
+],
+[
+"չափածո",
+"стихотворный",
+"verse (form)",
+"",
+"en vers"
+],
+[
+"էպոս",
+"эпос",
+"epic",
+"",
+"épopée"
+],
+[
+"դյուցազներգություն",
+"героический эпос",
+"heroic epic",
+"",
+"épopée héroïque"
+],
+[
+"հայրեն",
+"айрен (армянская строфа)",
+"hayren (Armenian verse form)",
+"",
+"hayren (strophe arménienne)"
+],
+[
+"ռուբայի",
+"рубаи",
+"rubai",
+"",
+"rubaï"
+],
+[
+"սոնետ",
+"сонет",
+"sonnet",
+"",
+"sonnet"
+],
+[
+"բալլադ",
+"баллада",
+"ballad",
+"",
+"ballade"
+],
+[
+"էլեգիա",
+"элегия",
+"elegy",
+"",
+"élégie"
+],
+[
+"էպիգրամ",
+"эпиграмма",
+"epigram",
+"",
+"épigramme"
+],
+[
+"աֆորիզմ",
+"афоризм",
+"aphorism",
+"",
+"aphorisme"
+],
+[
+"մաքսիմ",
+"максима",
+"maxim",
+"",
+"maxime"
+],
+[
+"պատում",
+"повествование, сказание",
+"narrative",
+"",
+"récit"
+],
+[
+"ասք",
+"сказание",
+"tale, saga",
+"",
+"conte"
+],
+[
+"վիպասանք",
+"эпическое сказание",
+"epic tale",
+"",
+"chant épique"
+]
+],
+"fr": "Théorie littéraire"
+},
+{
+"lv": "C2",
+"ru": "Гуманитарные науки",
+"en": "The humanities",
+"hy": "Հումանիտար գիտություններ",
+"ic": "🏺",
+"w": [
+[
+"տիեզերագիտություն",
+"космология, космонавтика",
+"space science",
+"",
+"science de l'espace"
+],
+[
+"ժամանակագրություն",
+"хронология, хроника",
+"chronology",
+"",
+"chronologie"
+],
+[
+"տարեգրություն",
+"летопись",
+"annals",
+"",
+"annales"
+],
+[
+"մատենագրություն",
+"библиография, письменность",
+"bibliography, literature",
+"",
+"bibliographie"
+],
+[
+"պատմագրություն",
+"историография",
+"historiography",
+"",
+"historiographie"
+],
+[
+"աղբյուրագիտություն",
+"источниковедение",
+"source studies",
+"",
+"étude des sources"
+],
+[
+"ազգագրություն",
+"этнография",
+"ethnography",
+"",
+"ethnographie"
+],
+[
+"բանահյուսություն",
+"фольклор",
+"folklore",
+"",
+"folklore"
+],
+[
+"դիցաբանություն",
+"мифология",
+"mythology",
+"",
+"mythologie"
+],
+[
+"մարդաբանություն",
+"антропология",
+"anthropology",
+"",
+"anthropologie"
+],
+[
+"հնէաբանություն",
+"палеонтология",
+"palaeontology",
+"",
+"paléontologie"
+],
+[
+"ձեռագրագիտություն",
+"кодикология",
+"manuscript studies",
+"",
+"codicologie"
+],
+[
+"վիմագրություն",
+"эпиграфика",
+"epigraphy",
+"",
+"épigraphie"
+],
+[
+"դրամագիտություն",
+"нумизматика",
+"numismatics",
+"",
+"numismatique"
+],
+[
+"զինանշանագիտություն",
+"геральдика",
+"heraldry",
+"",
+"héraldique"
+]
+],
+"fr": "Sciences humaines"
+},
+{
+"lv": "C2",
+"ru": "Диагнозы",
+"en": "Diagnoses",
+"hy": "Ախտորոշումներ",
+"ic": "🩻",
+"w": [
+[
+"նևրոզ",
+"невроз",
+"neurosis",
+"",
+"névrose"
+],
+[
+"փսիխոզ",
+"психоз",
+"psychosis",
+"",
+"psychose"
+],
+[
+"շիզոֆրենիա",
+"шизофрения",
+"schizophrenia",
+"",
+"schizophrénie"
+],
+[
+"երկբևեռ խանգարում",
+"биполярное расстройство",
+"bipolar disorder",
+"",
+"trouble bipolaire"
+],
+[
+"տագնապային խանգարում",
+"тревожное расстройство",
+"anxiety disorder",
+"",
+"trouble anxieux"
+],
+[
+"աուտիզմ",
+"аутизм",
+"autism",
+"",
+"autisme"
+],
+[
+"դեմենցիա",
+"деменция",
+"dementia",
+"",
+"démence"
+],
+[
+"Ալցհեյմերի հիվանդություն",
+"болезнь Альцгеймера",
+"Alzheimer's disease",
+"",
+"maladie d'Alzheimer"
+],
+[
+"Պարկինսոնի հիվանդություն",
+"болезнь Паркинсона",
+"Parkinson's disease",
+"",
+"maladie de Parkinson"
+],
+[
+"էպիլեպսիա",
+"эпилепсия",
+"epilepsy",
+"",
+"épilepsie"
+],
+[
+"կաթված",
+"паралич",
+"paralysis",
+"",
+"paralysie"
+],
+[
+"սրտի անբավարարություն",
+"сердечная недостаточность",
+"heart failure",
+"",
+"insuffisance cardiaque"
+],
+[
+"առիթմիա",
+"аритмия",
+"arrhythmia",
+"",
+"arythmie"
+],
+[
+"աթերոսկլերոզ",
+"атеросклероз",
+"atherosclerosis",
+"",
+"athérosclérose"
+],
+[
+"թրոմբ",
+"тромб",
+"blood clot",
+"",
+"caillot"
+],
+[
+"անեմիա",
+"анемия",
+"anaemia",
+"",
+"anémie"
+],
+[
+"լեյկեմիա",
+"лейкемия",
+"leukaemia",
+"",
+"leucémie"
+],
+[
+"ցիռոզ",
+"цирроз",
+"cirrhosis",
+"",
+"cirrhose"
+],
+[
+"գաստրիտ",
+"гастрит",
+"gastritis",
+"",
+"gastrite"
+],
+[
+"պանկրեատիտ",
+"панкреатит",
+"pancreatitis",
+"",
+"pancréatite"
+],
+[
+"ապենդիցիտ",
+"аппендицит",
+"appendicitis",
+"",
+"appendicite"
+],
+[
+"օստեոպորոզ",
+"остеопороз",
+"osteoporosis",
+"",
+"ostéoporose"
+],
+[
+"արթրիտ",
+"артрит",
+"arthritis",
+"",
+"arthrite"
+],
+[
+"ռևմատիզմ",
+"ревматизм",
+"rheumatism",
+"",
+"rhumatisme"
+],
+[
+"սկոլիոզ",
+"сколиоз",
+"scoliosis",
+"",
+"scoliose"
+],
+[
+"գլաուկոմա",
+"глаукома",
+"glaucoma",
+"",
+"glaucome"
+],
+[
+"օտիտ",
+"отит",
+"otitis",
+"",
+"otite"
+],
+[
+"սինուսիտ",
+"синусит",
+"sinusitis",
+"",
+"sinusite"
+],
+[
+"դերմատիտ",
+"дерматит",
+"dermatitis",
+"",
+"dermatite"
+],
+[
+"էկզեմա",
+"экзема",
+"eczema",
+"",
+"eczéma"
+],
+[
+"պսորիազ",
+"псориаз",
+"psoriasis",
+"",
+"psoriasis"
+]
+],
+"fr": "Diagnostics"
 }
 ]

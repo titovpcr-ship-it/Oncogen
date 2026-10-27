@@ -15505,6 +15505,20 @@
 "fr": "aboyer"
 },
 {
+"a": "գանձ",
+"lv": "A2",
+"ru": "сокровище, клад",
+"en": "treasure",
+"fr": "trésor"
+},
+{
+"a": "կրկնություն",
+"lv": "A2",
+"ru": "повторение",
+"en": "repetition",
+"fr": "répétition"
+},
+{
 "a": "Պորտուգալիա",
 "lv": "A2",
 "ru": "Португалия",
@@ -49399,6 +49413,300 @@
 "fr": "flatter"
 },
 {
+"a": "ամբողջապես",
+"lv": "B2",
+"ru": "целиком",
+"en": "entirely",
+"fr": "entièrement"
+},
+{
+"a": "անվերջ",
+"lv": "B2",
+"ru": "бесконечно",
+"en": "endlessly",
+"fr": "sans fin"
+},
+{
+"a": "անընդմեջ",
+"lv": "B2",
+"ru": "подряд",
+"en": "in a row",
+"fr": "d'affilée"
+},
+{
+"a": "աննպատակ",
+"lv": "B2",
+"ru": "бесцельно",
+"en": "aimlessly",
+"fr": "sans but"
+},
+{
+"a": "արագորեն",
+"lv": "B2",
+"ru": "быстро",
+"en": "rapidly",
+"fr": "rapidement"
+},
+{
+"a": "արդարացիորեն",
+"lv": "B2",
+"ru": "справедливо",
+"en": "fairly, justly",
+"fr": "équitablement"
+},
+{
+"a": "արտակարգ",
+"lv": "B2",
+"ru": "чрезвычайный",
+"en": "extraordinary, emergency",
+"fr": "extraordinaire"
+},
+{
+"a": "բնականորեն",
+"lv": "B2",
+"ru": "естественно (образом)",
+"en": "naturally",
+"fr": "naturellement"
+},
+{
+"a": "գաղտնաբար",
+"lv": "B2",
+"ru": "тайно",
+"en": "secretly",
+"fr": "secrètement"
+},
+{
+"a": "դանդաղորեն",
+"lv": "B2",
+"ru": "медленно",
+"en": "slowly",
+"fr": "lentement"
+},
+{
+"a": "ենթադրաբար",
+"lv": "B2",
+"ru": "предположительно",
+"en": "presumably",
+"fr": "vraisemblablement"
+},
+{
+"a": "զգուշորեն",
+"lv": "B2",
+"ru": "осторожно",
+"en": "carefully",
+"fr": "prudemment"
+},
+{
+"a": "ընդամենը",
+"lv": "B2",
+"ru": "всего лишь, итого",
+"en": "only, in total",
+"fr": "en tout"
+},
+{
+"a": "ընդմիշտ",
+"lv": "B2",
+"ru": "навсегда",
+"en": "forever",
+"fr": "pour toujours"
+},
+{
+"a": "լրջորեն",
+"lv": "B2",
+"ru": "серьёзно",
+"en": "seriously",
+"fr": "sérieusement"
+},
+{
+"a": "խորապես",
+"lv": "B2",
+"ru": "глубоко",
+"en": "deeply",
+"fr": "profondément"
+},
+{
+"a": "կանոնավոր",
+"lv": "B2",
+"ru": "регулярный, регулярно",
+"en": "regular, regularly",
+"fr": "régulier"
+},
+{
+"a": "կտրականապես",
+"lv": "B2",
+"ru": "категорически",
+"en": "categorically",
+"fr": "catégoriquement"
+},
+{
+"a": "համառորեն",
+"lv": "B2",
+"ru": "упорно",
+"en": "stubbornly",
+"fr": "obstinément"
+},
+{
+"a": "համարձակորեն",
+"lv": "B2",
+"ru": "смело",
+"en": "boldly",
+"fr": "hardiment"
+},
+{
+"a": "համատեղ",
+"lv": "B2",
+"ru": "совместно",
+"en": "jointly",
+"fr": "conjointement"
+},
+{
+"a": "հավասարապես",
+"lv": "B2",
+"ru": "поровну",
+"en": "equally",
+"fr": "également"
+},
+{
+"a": "հետևողականորեն",
+"lv": "B2",
+"ru": "последовательно",
+"en": "consistently",
+"fr": "systématiquement"
+},
+{
+"a": "հիմնականում",
+"lv": "B2",
+"ru": "в основном",
+"en": "mainly",
+"fr": "principalement"
+},
+{
+"a": "հնարավորինս",
+"lv": "B2",
+"ru": "по возможности",
+"en": "as far as possible",
+"fr": "autant que possible"
+},
+{
+"a": "ճշգրտորեն",
+"lv": "B2",
+"ru": "точно",
+"en": "precisely",
+"fr": "précisément"
+},
+{
+"a": "մասնակիորեն",
+"lv": "B2",
+"ru": "частично",
+"en": "partly",
+"fr": "partiellement"
+},
+{
+"a": "մեծապես",
+"lv": "B2",
+"ru": "в значительной мере",
+"en": "greatly",
+"fr": "grandement"
+},
+{
+"a": "մշտապես",
+"lv": "B2",
+"ru": "постоянно",
+"en": "permanently",
+"fr": "en permanence"
+},
+{
+"a": "նախևառաջ",
+"lv": "B2",
+"ru": "прежде всего",
+"en": "first and foremost",
+"fr": "avant tout"
+},
+{
+"a": "պարբերաբար",
+"lv": "B2",
+"ru": "периодически",
+"en": "periodically",
+"fr": "périodiquement"
+},
+{
+"a": "պաշտոնապես",
+"lv": "B2",
+"ru": "официально",
+"en": "officially",
+"fr": "officiellement"
+},
+{
+"a": "վերջնականապես",
+"lv": "B2",
+"ru": "окончательно",
+"en": "finally, for good",
+"fr": "définitivement"
+},
+{
+"a": "վճռականորեն",
+"lv": "B2",
+"ru": "решительно",
+"en": "resolutely",
+"fr": "résolument"
+},
+{
+"a": "ժամ առ ժամ",
+"lv": "B2",
+"ru": "час за часом",
+"en": "hour by hour",
+"fr": "d'heure en heure"
+},
+{
+"a": "քայլ առ քայլ",
+"lv": "B2",
+"ru": "шаг за шагом",
+"en": "step by step",
+"fr": "pas à pas"
+},
+{
+"a": "ակամա",
+"lv": "B2",
+"ru": "невольно",
+"en": "involuntarily",
+"fr": "malgré soi"
+},
+{
+"a": "ի պատասխան",
+"lv": "B2",
+"ru": "в ответ",
+"en": "in response",
+"fr": "en réponse"
+},
+{
+"a": "առհասարակ",
+"lv": "B2",
+"ru": "вообще",
+"en": "in general",
+"fr": "en général"
+},
+{
+"a": "այնպես որ",
+"lv": "B2",
+"ru": "так что",
+"en": "so that, therefore",
+"fr": "si bien que"
+},
+{
+"a": "արդյոք",
+"lv": "B2",
+"ru": "ли",
+"en": "whether",
+"fr": "est-ce que"
+},
+{
+"a": "հուսով եմ",
+"lv": "B2",
+"ru": "надеюсь",
+"en": "I hope",
+"fr": "j'espère"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -54201,6 +54509,1175 @@
 "fr": "flagorner"
 },
 {
+"a": "գոյաբանություն",
+"lv": "C1",
+"ru": "онтология",
+"en": "ontology",
+"fr": "ontologie"
+},
+{
+"a": "իմացաբանություն",
+"lv": "C1",
+"ru": "гносеология",
+"en": "epistemology",
+"fr": "épistémologie"
+},
+{
+"a": "մետաֆիզիկա",
+"lv": "C1",
+"ru": "метафизика",
+"en": "metaphysics",
+"fr": "métaphysique"
+},
+{
+"a": "դիալեկտիկա",
+"lv": "C1",
+"ru": "диалектика",
+"en": "dialectics",
+"fr": "dialectique"
+},
+{
+"a": "ռացիոնալիզմ",
+"lv": "C1",
+"ru": "рационализм",
+"en": "rationalism",
+"fr": "rationalisme"
+},
+{
+"a": "էմպիրիզմ",
+"lv": "C1",
+"ru": "эмпиризм",
+"en": "empiricism",
+"fr": "empirisme"
+},
+{
+"a": "իդեալիզմ",
+"lv": "C1",
+"ru": "идеализм",
+"en": "idealism",
+"fr": "idéalisme"
+},
+{
+"a": "մատերիալիզմ",
+"lv": "C1",
+"ru": "материализм",
+"en": "materialism",
+"fr": "matérialisme"
+},
+{
+"a": "էքզիստենցիալիզմ",
+"lv": "C1",
+"ru": "экзистенциализм",
+"en": "existentialism",
+"fr": "existentialisme"
+},
+{
+"a": "նիհիլիզմ",
+"lv": "C1",
+"ru": "нигилизм",
+"en": "nihilism",
+"fr": "nihilisme"
+},
+{
+"a": "սկեպտիցիզմ",
+"lv": "C1",
+"ru": "скептицизм",
+"en": "scepticism",
+"fr": "scepticisme"
+},
+{
+"a": "ստոիցիզմ",
+"lv": "C1",
+"ru": "стоицизм",
+"en": "stoicism",
+"fr": "stoïcisme"
+},
+{
+"a": "հեդոնիզմ",
+"lv": "C1",
+"ru": "гедонизм",
+"en": "hedonism",
+"fr": "hédonisme"
+},
+{
+"a": "ուտիլիտարիզմ",
+"lv": "C1",
+"ru": "утилитаризм",
+"en": "utilitarianism",
+"fr": "utilitarisme"
+},
+{
+"a": "պրագմատիզմ",
+"lv": "C1",
+"ru": "прагматизм",
+"en": "pragmatism",
+"fr": "pragmatisme"
+},
+{
+"a": "պոզիտիվիզմ",
+"lv": "C1",
+"ru": "позитивизм",
+"en": "positivism",
+"fr": "positivisme"
+},
+{
+"a": "ֆենոմենոլոգիա",
+"lv": "C1",
+"ru": "феноменология",
+"en": "phenomenology",
+"fr": "phénoménologie"
+},
+{
+"a": "հերմենևտիկա",
+"lv": "C1",
+"ru": "герменевтика",
+"en": "hermeneutics",
+"fr": "herméneutique"
+},
+{
+"a": "ստրուկտուրալիզմ",
+"lv": "C1",
+"ru": "структурализм",
+"en": "structuralism",
+"fr": "structuralisme"
+},
+{
+"a": "պոստմոդեռնիզմ",
+"lv": "C1",
+"ru": "постмодернизм",
+"en": "postmodernism",
+"fr": "postmodernisme"
+},
+{
+"a": "դետերմինիզմ",
+"lv": "C1",
+"ru": "детерминизм",
+"en": "determinism",
+"fr": "déterminisme"
+},
+{
+"a": "ֆատալիզմ",
+"lv": "C1",
+"ru": "фатализм",
+"en": "fatalism",
+"fr": "fatalisme"
+},
+{
+"a": "ագնոստիցիզմ",
+"lv": "C1",
+"ru": "агностицизм",
+"en": "agnosticism",
+"fr": "agnosticisme"
+},
+{
+"a": "պանթեիզմ",
+"lv": "C1",
+"ru": "пантеизм",
+"en": "pantheism",
+"fr": "panthéisme"
+},
+{
+"a": "դեիզմ",
+"lv": "C1",
+"ru": "деизм",
+"en": "deism",
+"fr": "déisme"
+},
+{
+"a": "միաստվածություն",
+"lv": "C1",
+"ru": "монотеизм",
+"en": "monotheism",
+"fr": "monothéisme"
+},
+{
+"a": "բազմաստվածություն",
+"lv": "C1",
+"ru": "политеизм",
+"en": "polytheism",
+"fr": "polythéisme"
+},
+{
+"a": "աստվածաբանություն",
+"lv": "C1",
+"ru": "богословие",
+"en": "theology",
+"fr": "théologie"
+},
+{
+"a": "էսխատոլոգիա",
+"lv": "C1",
+"ru": "эсхатология",
+"en": "eschatology",
+"fr": "eschatologie"
+},
+{
+"a": "տիեզերաբանություն",
+"lv": "C1",
+"ru": "космология",
+"en": "cosmology",
+"fr": "cosmologie"
+},
+{
+"a": "կատեգորիա",
+"lv": "C1",
+"ru": "категория",
+"en": "category",
+"fr": "catégorie"
+},
+{
+"a": "պարադիգմ",
+"lv": "C1",
+"ru": "парадигма",
+"en": "paradigm",
+"fr": "paradigme"
+},
+{
+"a": "դիլեմա",
+"lv": "C1",
+"ru": "дилемма",
+"en": "dilemma",
+"fr": "dilemme"
+},
+{
+"a": "ապորիա",
+"lv": "C1",
+"ru": "апория",
+"en": "aporia",
+"fr": "aporie"
+},
+{
+"a": "պոստուլատ",
+"lv": "C1",
+"ru": "постулат",
+"en": "postulate",
+"fr": "postulat"
+},
+{
+"a": "հիպոթեզ",
+"lv": "C1",
+"ru": "гипотеза",
+"en": "hypothesis",
+"fr": "hypothèse"
+},
+{
+"a": "սինթեզ",
+"lv": "C1",
+"ru": "синтез",
+"en": "synthesis",
+"fr": "synthèse"
+},
+{
+"a": "ինդուկցիա",
+"lv": "C1",
+"ru": "индукция",
+"en": "induction",
+"fr": "induction"
+},
+{
+"a": "դեդուկցիա",
+"lv": "C1",
+"ru": "дедукция",
+"en": "deduction",
+"fr": "déduction"
+},
+{
+"a": "աբստրակցիա",
+"lv": "C1",
+"ru": "абстракция",
+"en": "abstraction",
+"fr": "abstraction"
+},
+{
+"a": "սուբյեկտ",
+"lv": "C1",
+"ru": "субъект",
+"en": "subject",
+"fr": "sujet"
+},
+{
+"a": "օբյեկտ",
+"lv": "C1",
+"ru": "объект",
+"en": "object",
+"fr": "objet"
+},
+{
+"a": "պատահականություն",
+"lv": "C1",
+"ru": "случайность",
+"en": "chance, randomness",
+"fr": "hasard"
+},
+{
+"a": "անգիտակցական",
+"lv": "C1",
+"ru": "бессознательное",
+"en": "the unconscious",
+"fr": "inconscient"
+},
+{
+"a": "ինտելեկտ",
+"lv": "C1",
+"ru": "интеллект",
+"en": "intellect",
+"fr": "intellect"
+},
+{
+"a": "ճանաչողություն",
+"lv": "C1",
+"ru": "познание",
+"en": "cognition",
+"fr": "cognition"
+},
+{
+"a": "դոգմա",
+"lv": "C1",
+"ru": "догма",
+"en": "dogma",
+"fr": "dogme"
+},
+{
+"a": "հերետիկոսություն",
+"lv": "C1",
+"ru": "ересь",
+"en": "heresy",
+"fr": "hérésie"
+},
+{
+"a": "ուտոպիա",
+"lv": "C1",
+"ru": "утопия",
+"en": "utopia",
+"fr": "utopie"
+},
+{
+"a": "դիստոպիա",
+"lv": "C1",
+"ru": "антиутопия",
+"en": "dystopia",
+"fr": "dystopie"
+},
+{
+"a": "հիվանդագրություն",
+"lv": "C1",
+"ru": "история болезни",
+"en": "case history",
+"fr": "dossier médical"
+},
+{
+"a": "թերապիա",
+"lv": "C1",
+"ru": "терапия",
+"en": "therapy",
+"fr": "thérapie"
+},
+{
+"a": "ռեաբիլիտացիա",
+"lv": "C1",
+"ru": "реабилитация",
+"en": "rehabilitation",
+"fr": "rééducation"
+},
+{
+"a": "ինկուբացիոն շրջան",
+"lv": "C1",
+"ru": "инкубационный период",
+"en": "incubation period",
+"fr": "période d'incubation"
+},
+{
+"a": "անտիգեն",
+"lv": "C1",
+"ru": "антиген",
+"en": "antigen",
+"fr": "antigène"
+},
+{
+"a": "քնաբեր",
+"lv": "C1",
+"ru": "снотворное",
+"en": "sleeping pill",
+"fr": "somnifère"
+},
+{
+"a": "հանգստացնող",
+"lv": "C1",
+"ru": "успокоительное",
+"en": "sedative",
+"fr": "calmant"
+},
+{
+"a": "հակադեպրեսանտ",
+"lv": "C1",
+"ru": "антидепрессант",
+"en": "antidepressant",
+"fr": "antidépresseur"
+},
+{
+"a": "ընդհանուր անզգայացում",
+"lv": "C1",
+"ru": "общий наркоз",
+"en": "general anaesthesia",
+"fr": "anesthésie générale"
+},
+{
+"a": "տեղային անզգայացում",
+"lv": "C1",
+"ru": "местная анестезия",
+"en": "local anaesthesia",
+"fr": "anesthésie locale"
+},
+{
+"a": "անզգայացնող",
+"lv": "C1",
+"ru": "обезболивающее, анестетик",
+"en": "anaesthetic",
+"fr": "anesthésique"
+},
+{
+"a": "վիրաբուժություն",
+"lv": "C1",
+"ru": "хирургия",
+"en": "surgery",
+"fr": "chirurgie"
+},
+{
+"a": "կարում",
+"lv": "C1",
+"ru": "наложение швов",
+"en": "suturing",
+"fr": "suture"
+},
+{
+"a": "փոխպատվաստում",
+"lv": "C1",
+"ru": "пересадка",
+"en": "transplant",
+"fr": "greffe"
+},
+{
+"a": "դոնոր",
+"lv": "C1",
+"ru": "донор",
+"en": "donor",
+"fr": "donneur"
+},
+{
+"a": "արյան փոխներարկում",
+"lv": "C1",
+"ru": "переливание крови",
+"en": "blood transfusion",
+"fr": "transfusion sanguine"
+},
+{
+"a": "ռեզուս գործոն",
+"lv": "C1",
+"ru": "резус-фактор",
+"en": "Rh factor",
+"fr": "facteur rhésus"
+},
+{
+"a": "պլազմա",
+"lv": "C1",
+"ru": "плазма",
+"en": "plasma",
+"fr": "plasma"
+},
+{
+"a": "գլյուկոզա",
+"lv": "C1",
+"ru": "глюкоза",
+"en": "glucose",
+"fr": "glucose"
+},
+{
+"a": "ինսուլին",
+"lv": "C1",
+"ru": "инсулин",
+"en": "insulin",
+"fr": "insuline"
+},
+{
+"a": "ադրենալին",
+"lv": "C1",
+"ru": "адреналин",
+"en": "adrenaline",
+"fr": "adrénaline"
+},
+{
+"a": "սերոտոնին",
+"lv": "C1",
+"ru": "серотонин",
+"en": "serotonin",
+"fr": "sérotonine"
+},
+{
+"a": "դոֆամին",
+"lv": "C1",
+"ru": "дофамин",
+"en": "dopamine",
+"fr": "dopamine"
+},
+{
+"a": "մետաբոլիզմ",
+"lv": "C1",
+"ru": "метаболизм",
+"en": "metabolism",
+"fr": "métabolisme"
+},
+{
+"a": "արյան ճնշում",
+"lv": "C1",
+"ru": "кровяное давление",
+"en": "blood pressure",
+"fr": "tension artérielle"
+},
+{
+"a": "անոթազարկ",
+"lv": "C1",
+"ru": "пульс",
+"en": "pulse",
+"fr": "pouls"
+},
+{
+"a": "էլեկտրասրտագրություն",
+"lv": "C1",
+"ru": "электрокардиография",
+"en": "electrocardiography",
+"fr": "électrocardiographie"
+},
+{
+"a": "համակարգչային շերտագրություն",
+"lv": "C1",
+"ru": "компьютерная томография",
+"en": "CT scan",
+"fr": "scanner"
+},
+{
+"a": "մագնիսառեզոնանսային շերտագրություն",
+"lv": "C1",
+"ru": "МРТ",
+"en": "MRI scan",
+"fr": "IRM"
+},
+{
+"a": "խրոնիկ",
+"lv": "C1",
+"ru": "хронический",
+"en": "chronic",
+"fr": "chronique"
+},
+{
+"a": "ձեռքբերովի",
+"lv": "C1",
+"ru": "приобретённый",
+"en": "acquired",
+"fr": "acquis"
+},
+{
+"a": "ախտահարում",
+"lv": "C1",
+"ru": "поражение",
+"en": "lesion",
+"fr": "lésion"
+},
+{
+"a": "բորբոքային",
+"lv": "C1",
+"ru": "воспалительный",
+"en": "inflammatory",
+"fr": "inflammatoire"
+},
+{
+"a": "սեպսիս",
+"lv": "C1",
+"ru": "сепсис",
+"en": "sepsis",
+"fr": "septicémie"
+},
+{
+"a": "շոկ",
+"lv": "C1",
+"ru": "шок",
+"en": "shock",
+"fr": "choc"
+},
+{
+"a": "կոմա",
+"lv": "C1",
+"ru": "кома",
+"en": "coma",
+"fr": "coma"
+},
+{
+"a": "կլինիկական մահ",
+"lv": "C1",
+"ru": "клиническая смерть",
+"en": "clinical death",
+"fr": "mort clinique"
+},
+{
+"a": "ինտենսիվ թերապիա",
+"lv": "C1",
+"ru": "реанимация, интенсивная терапия",
+"en": "intensive care",
+"fr": "soins intensifs"
+},
+{
+"a": "ստացիոնար",
+"lv": "C1",
+"ru": "стационар",
+"en": "inpatient ward",
+"fr": "hôpital (hospitalisation)"
+},
+{
+"a": "հիվանդության արձակուրդ",
+"lv": "C1",
+"ru": "больничный",
+"en": "sick leave",
+"fr": "congé maladie"
+},
+{
+"a": "հաշմանդամ",
+"lv": "C1",
+"ru": "инвалид",
+"en": "disabled person",
+"fr": "personne handicapée"
+},
+{
+"a": "անաշխատունակություն",
+"lv": "C1",
+"ru": "нетрудоспособность",
+"en": "incapacity for work",
+"fr": "incapacité de travail"
+},
+{
+"a": "դեղագործություն",
+"lv": "C1",
+"ru": "фармацевтика",
+"en": "pharmaceutics",
+"fr": "pharmacie"
+},
+{
+"a": "էպիդեմիոլոգիա",
+"lv": "C1",
+"ru": "эпидемиология",
+"en": "epidemiology",
+"fr": "épidémiologie"
+},
+{
+"a": "համաճարակաբան",
+"lv": "C1",
+"ru": "эпидемиолог",
+"en": "epidemiologist",
+"fr": "épidémiologiste"
+},
+{
+"a": "հոգեբուժություն",
+"lv": "C1",
+"ru": "психиатрия",
+"en": "psychiatry",
+"fr": "psychiatrie"
+},
+{
+"a": "հոգեթերապիա",
+"lv": "C1",
+"ru": "психотерапия",
+"en": "psychotherapy",
+"fr": "psychothérapie"
+},
+{
+"a": "ակնածել",
+"lv": "C1",
+"ru": "благоговеть",
+"en": "revere",
+"fr": "révérer"
+},
+{
+"a": "ամբաստանել",
+"lv": "C1",
+"ru": "обвинять",
+"en": "accuse, indict",
+"fr": "inculper"
+},
+{
+"a": "անդամակցել",
+"lv": "C1",
+"ru": "вступить в члены",
+"en": "become a member",
+"fr": "adhérer"
+},
+{
+"a": "անկում ապրել",
+"lv": "C1",
+"ru": "переживать упадок",
+"en": "decline",
+"fr": "décliner"
+},
+{
+"a": "արտաբերել",
+"lv": "C1",
+"ru": "произносить",
+"en": "utter, pronounce",
+"fr": "prononcer"
+},
+{
+"a": "արտահայտվել",
+"lv": "C1",
+"ru": "высказываться",
+"en": "express oneself",
+"fr": "s'exprimer"
+},
+{
+"a": "բնակեցնել",
+"lv": "C1",
+"ru": "заселять",
+"en": "populate, settle",
+"fr": "peupler"
+},
+{
+"a": "գերադասել",
+"lv": "C1",
+"ru": "предпочитать",
+"en": "prefer",
+"fr": "préférer"
+},
+{
+"a": "գործադրել",
+"lv": "C1",
+"ru": "применять, прилагать",
+"en": "apply, exert",
+"fr": "employer"
+},
+{
+"a": "ընթացք տալ",
+"lv": "C1",
+"ru": "дать ход",
+"en": "set in motion",
+"fr": "donner suite à"
+},
+{
+"a": "խորանալ",
+"lv": "C1",
+"ru": "углубляться",
+"en": "deepen",
+"fr": "s'approfondir"
+},
+{
+"a": "ծագել",
+"lv": "C1",
+"ru": "возникать, происходить",
+"en": "arise, originate",
+"fr": "naître"
+},
+{
+"a": "կազմավորվել",
+"lv": "C1",
+"ru": "формироваться",
+"en": "take shape",
+"fr": "se former"
+},
+{
+"a": "կապակցել",
+"lv": "C1",
+"ru": "связывать",
+"en": "link, connect",
+"fr": "relier"
+},
+{
+"a": "կենսագործել",
+"lv": "C1",
+"ru": "воплощать в жизнь",
+"en": "put into practice",
+"fr": "mettre en œuvre"
+},
+{
+"a": "կողմնակցել",
+"lv": "C1",
+"ru": "поддерживать (сторону)",
+"en": "side with",
+"fr": "prendre parti pour"
+},
+{
+"a": "հանգեցնել",
+"lv": "C1",
+"ru": "приводить (к чему-то)",
+"en": "lead to, result in",
+"fr": "aboutir à"
+},
+{
+"a": "հանդես գալ",
+"lv": "C1",
+"ru": "выступать",
+"en": "speak, appear (publicly)",
+"fr": "intervenir"
+},
+{
+"a": "հղացնել",
+"lv": "C1",
+"ru": "задумать, замыслить",
+"en": "conceive",
+"fr": "concevoir"
+},
+{
+"a": "ձեռնամուխ լինել",
+"lv": "C1",
+"ru": "приступить",
+"en": "set about",
+"fr": "entreprendre"
+},
+{
+"a": "ձերբազատվել",
+"lv": "C1",
+"ru": "освобождаться",
+"en": "get rid of",
+"fr": "se débarrasser de"
+},
+{
+"a": "միավորվել",
+"lv": "C1",
+"ru": "объединяться",
+"en": "unite",
+"fr": "s'unir"
+},
+{
+"a": "մտադրվել",
+"lv": "C1",
+"ru": "намереваться",
+"en": "intend",
+"fr": "avoir l'intention de"
+},
+{
+"a": "նախորդել",
+"lv": "C1",
+"ru": "предшествовать",
+"en": "precede",
+"fr": "précéder"
+},
+{
+"a": "շարադրել",
+"lv": "C1",
+"ru": "излагать",
+"en": "set out, expound",
+"fr": "exposer"
+},
+{
+"a": "ուղղորդել",
+"lv": "C1",
+"ru": "направлять",
+"en": "guide, direct",
+"fr": "orienter"
+},
+{
+"a": "չքմեղանալ",
+"lv": "C1",
+"ru": "оправдываться",
+"en": "make excuses",
+"fr": "se justifier"
+},
+{
+"a": "սերտաճել",
+"lv": "C1",
+"ru": "срастаться",
+"en": "fuse, merge",
+"fr": "fusionner"
+},
+{
+"a": "սևեռել",
+"lv": "C1",
+"ru": "устремлять, фиксировать",
+"en": "fix, focus",
+"fr": "fixer"
+},
+{
+"a": "վերահաստատել",
+"lv": "C1",
+"ru": "подтверждать вновь",
+"en": "reaffirm",
+"fr": "réaffirmer"
+},
+{
+"a": "վերացնել",
+"lv": "C1",
+"ru": "устранять, отменять",
+"en": "eliminate, abolish",
+"fr": "supprimer"
+},
+{
+"a": "վերընթերցել",
+"lv": "C1",
+"ru": "перечитывать",
+"en": "reread",
+"fr": "relire"
+},
+{
+"a": "տեղայնացնել",
+"lv": "C1",
+"ru": "локализовать",
+"en": "localize",
+"fr": "localiser"
+},
+{
+"a": "տրամադրել",
+"lv": "C1",
+"ru": "предоставлять",
+"en": "provide, allocate",
+"fr": "fournir"
+},
+{
+"a": "փոխակերպել",
+"lv": "C1",
+"ru": "преобразовывать",
+"en": "transform",
+"fr": "transformer"
+},
+{
+"a": "քաղել",
+"lv": "C1",
+"ru": "собирать, черпать",
+"en": "gather, glean",
+"fr": "puiser"
+},
+{
+"a": "օժտել",
+"lv": "C1",
+"ru": "наделять",
+"en": "endow",
+"fr": "doter"
+},
+{
+"a": "օտարել",
+"lv": "C1",
+"ru": "отчуждать",
+"en": "alienate",
+"fr": "aliéner"
+},
+{
+"a": "հոգեհարազատ",
+"lv": "C1",
+"ru": "родственный по духу",
+"en": "kindred (in spirit)",
+"fr": "proche par l'esprit"
+},
+{
+"a": "անխտիր",
+"lv": "C1",
+"ru": "без разбора",
+"en": "indiscriminately",
+"fr": "sans distinction"
+},
+{
+"a": "անմնացորդ",
+"lv": "C1",
+"ru": "без остатка",
+"en": "completely, wholeheartedly",
+"fr": "sans réserve"
+},
+{
+"a": "անտարակույս",
+"lv": "C1",
+"ru": "несомненно",
+"en": "undoubtedly",
+"fr": "indubitablement"
+},
+{
+"a": "աներկբա",
+"lv": "C1",
+"ru": "несомненно",
+"en": "unquestionably",
+"fr": "incontestablement"
+},
+{
+"a": "անտրտունջ",
+"lv": "C1",
+"ru": "безропотно",
+"en": "uncomplainingly",
+"fr": "sans se plaindre"
+},
+{
+"a": "ապարդյուն",
+"lv": "C1",
+"ru": "безрезультатно",
+"en": "in vain",
+"fr": "en vain"
+},
+{
+"a": "առավելապես",
+"lv": "C1",
+"ru": "преимущественно",
+"en": "predominantly",
+"fr": "principalement"
+},
+{
+"a": "արժանավայել",
+"lv": "C1",
+"ru": "достойный",
+"en": "worthy, befitting",
+"fr": "digne"
+},
+{
+"a": "գերազանցապես",
+"lv": "C1",
+"ru": "превосходно, преимущественно",
+"en": "pre-eminently",
+"fr": "éminemment"
+},
+{
+"a": "դյուրությամբ",
+"lv": "C1",
+"ru": "с лёгкостью",
+"en": "with ease",
+"fr": "aisément"
+},
+{
+"a": "ընդհուպ",
+"lv": "C1",
+"ru": "вплоть до",
+"en": "right up to",
+"fr": "jusqu'à"
+},
+{
+"a": "իսպառ",
+"lv": "C1",
+"ru": "совершенно, начисто",
+"en": "utterly",
+"fr": "entièrement"
+},
+{
+"a": "կամովին",
+"lv": "C1",
+"ru": "добровольно",
+"en": "voluntarily",
+"fr": "volontairement"
+},
+{
+"a": "հարաբերականորեն",
+"lv": "C1",
+"ru": "относительно",
+"en": "relatively",
+"fr": "relativement"
+},
+{
+"a": "հիմնովին",
+"lv": "C1",
+"ru": "коренным образом",
+"en": "thoroughly, radically",
+"fr": "radicalement"
+},
+{
+"a": "միակողմանիորեն",
+"lv": "C1",
+"ru": "односторонне",
+"en": "unilaterally",
+"fr": "unilatéralement"
+},
+{
+"a": "նպատակաուղղված",
+"lv": "C1",
+"ru": "целенаправленный",
+"en": "purposeful",
+"fr": "ciblé"
+},
+{
+"a": "շարունակաբար",
+"lv": "C1",
+"ru": "непрерывно",
+"en": "continuously",
+"fr": "continuellement"
+},
+{
+"a": "որոշակիորեն",
+"lv": "C1",
+"ru": "определённо",
+"en": "definitely",
+"fr": "certainement"
+},
+{
+"a": "սոսկ",
+"lv": "C1",
+"ru": "лишь, просто",
+"en": "merely",
+"fr": "simplement"
+},
+{
+"a": "կամա-ակամա",
+"lv": "C1",
+"ru": "волей-неволей",
+"en": "willy-nilly",
+"fr": "bon gré mal gré"
+},
+{
+"a": "ի սկզբանե",
+"lv": "C1",
+"ru": "изначально",
+"en": "from the outset",
+"fr": "dès le départ"
+},
+{
+"a": "ի հեճուկս",
+"lv": "C1",
+"ru": "назло, вопреки",
+"en": "in spite of",
+"fr": "en dépit de"
+},
+{
+"a": "ի նշան",
+"lv": "C1",
+"ru": "в знак",
+"en": "as a token of",
+"fr": "en signe de"
+},
+{
+"a": "ի պաշտոնե",
+"lv": "C1",
+"ru": "по должности",
+"en": "ex officio",
+"fr": "d'office"
+},
+{
+"a": "ըստ ամենայնի",
+"lv": "C1",
+"ru": "по всей видимости",
+"en": "by all accounts",
+"fr": "selon toute vraisemblance"
+},
+{
+"a": "առավել ևս",
+"lv": "C1",
+"ru": "тем более",
+"en": "all the more",
+"fr": "à plus forte raison"
+},
+{
+"a": "թեպետ",
+"lv": "C1",
+"ru": "хотя",
+"en": "although",
+"fr": "quoique"
+},
+{
+"a": "թեկուզև",
+"lv": "C1",
+"ru": "хотя бы, пусть даже",
+"en": "even if",
+"fr": "même si"
+},
+{
+"a": "մինչև իսկ",
+"lv": "C1",
+"ru": "даже",
+"en": "even",
+"fr": "voire"
+},
+{
+"a": "միթե",
+"lv": "C1",
+"ru": "неужели",
+"en": "really?, can it be",
+"fr": "est-il possible que"
+},
+{
 "a": "վեհ",
 "lv": "C2",
 "ru": "величественный, возвышенный",
@@ -55865,5 +57342,558 @@
 "ru": "визжать",
 "en": "to shriek",
 "fr": "pousser des cris aigus"
+},
+{
+"a": "էթոս",
+"lv": "C2",
+"ru": "этос",
+"en": "ethos",
+"fr": "éthos"
+},
+{
+"a": "պաթոս",
+"lv": "C2",
+"ru": "пафос",
+"en": "pathos",
+"fr": "pathos"
+},
+{
+"a": "լոգոս",
+"lv": "C2",
+"ru": "логос",
+"en": "logos",
+"fr": "logos"
+},
+{
+"a": "կատարսիս",
+"lv": "C2",
+"ru": "катарсис",
+"en": "catharsis",
+"fr": "catharsis"
+},
+{
+"a": "միմեսիս",
+"lv": "C2",
+"ru": "мимесис",
+"en": "mimesis",
+"fr": "mimésis"
+},
+{
+"a": "կոմիկական",
+"lv": "C2",
+"ru": "комический",
+"en": "comic",
+"fr": "comique"
+},
+{
+"a": "գրոտեսկ",
+"lv": "C2",
+"ru": "гротеск",
+"en": "grotesque",
+"fr": "grotesque"
+},
+{
+"a": "երգիծանք",
+"lv": "C2",
+"ru": "сатира",
+"en": "satire",
+"fr": "satire"
+},
+{
+"a": "պարոդիա",
+"lv": "C2",
+"ru": "пародия",
+"en": "parody",
+"fr": "parodie"
+},
+{
+"a": "ալյուզիա",
+"lv": "C2",
+"ru": "аллюзия",
+"en": "allusion",
+"fr": "allusion"
+},
+{
+"a": "անձնավորում",
+"lv": "C2",
+"ru": "олицетворение",
+"en": "personification",
+"fr": "personnification"
+},
+{
+"a": "չափազանցություն",
+"lv": "C2",
+"ru": "гипербола, преувеличение",
+"en": "hyperbole, exaggeration",
+"fr": "hyperbole"
+},
+{
+"a": "հռետորական հարց",
+"lv": "C2",
+"ru": "риторический вопрос",
+"en": "rhetorical question",
+"fr": "question rhétorique"
+},
+{
+"a": "մակդիր",
+"lv": "C2",
+"ru": "эпитет",
+"en": "epithet",
+"fr": "épithète"
+},
+{
+"a": "տաղաչափություն",
+"lv": "C2",
+"ru": "стихосложение",
+"en": "versification",
+"fr": "versification"
+},
+{
+"a": "յամբ",
+"lv": "C2",
+"ru": "ямб",
+"en": "iamb",
+"fr": "iambe"
+},
+{
+"a": "խորեյ",
+"lv": "C2",
+"ru": "хорей",
+"en": "trochee",
+"fr": "trochée"
+},
+{
+"a": "ազատ ոտանավոր",
+"lv": "C2",
+"ru": "верлибр",
+"en": "free verse",
+"fr": "vers libre"
+},
+{
+"a": "արձակ",
+"lv": "C2",
+"ru": "проза",
+"en": "prose",
+"fr": "prose"
+},
+{
+"a": "չափածո",
+"lv": "C2",
+"ru": "стихотворный",
+"en": "verse (form)",
+"fr": "en vers"
+},
+{
+"a": "էպոս",
+"lv": "C2",
+"ru": "эпос",
+"en": "epic",
+"fr": "épopée"
+},
+{
+"a": "դյուցազներգություն",
+"lv": "C2",
+"ru": "героический эпос",
+"en": "heroic epic",
+"fr": "épopée héroïque"
+},
+{
+"a": "հայրեն",
+"lv": "C2",
+"ru": "айрен (армянская строфа)",
+"en": "hayren (Armenian verse form)",
+"fr": "hayren (strophe arménienne)"
+},
+{
+"a": "ռուբայի",
+"lv": "C2",
+"ru": "рубаи",
+"en": "rubai",
+"fr": "rubaï"
+},
+{
+"a": "սոնետ",
+"lv": "C2",
+"ru": "сонет",
+"en": "sonnet",
+"fr": "sonnet"
+},
+{
+"a": "բալլադ",
+"lv": "C2",
+"ru": "баллада",
+"en": "ballad",
+"fr": "ballade"
+},
+{
+"a": "էլեգիա",
+"lv": "C2",
+"ru": "элегия",
+"en": "elegy",
+"fr": "élégie"
+},
+{
+"a": "էպիգրամ",
+"lv": "C2",
+"ru": "эпиграмма",
+"en": "epigram",
+"fr": "épigramme"
+},
+{
+"a": "աֆորիզմ",
+"lv": "C2",
+"ru": "афоризм",
+"en": "aphorism",
+"fr": "aphorisme"
+},
+{
+"a": "մաքսիմ",
+"lv": "C2",
+"ru": "максима",
+"en": "maxim",
+"fr": "maxime"
+},
+{
+"a": "պատում",
+"lv": "C2",
+"ru": "повествование, сказание",
+"en": "narrative",
+"fr": "récit"
+},
+{
+"a": "ասք",
+"lv": "C2",
+"ru": "сказание",
+"en": "tale, saga",
+"fr": "conte"
+},
+{
+"a": "վիպասանք",
+"lv": "C2",
+"ru": "эпическое сказание",
+"en": "epic tale",
+"fr": "chant épique"
+},
+{
+"a": "տիեզերագիտություն",
+"lv": "C2",
+"ru": "космология, космонавтика",
+"en": "space science",
+"fr": "science de l'espace"
+},
+{
+"a": "ժամանակագրություն",
+"lv": "C2",
+"ru": "хронология, хроника",
+"en": "chronology",
+"fr": "chronologie"
+},
+{
+"a": "տարեգրություն",
+"lv": "C2",
+"ru": "летопись",
+"en": "annals",
+"fr": "annales"
+},
+{
+"a": "մատենագրություն",
+"lv": "C2",
+"ru": "библиография, письменность",
+"en": "bibliography, literature",
+"fr": "bibliographie"
+},
+{
+"a": "պատմագրություն",
+"lv": "C2",
+"ru": "историография",
+"en": "historiography",
+"fr": "historiographie"
+},
+{
+"a": "աղբյուրագիտություն",
+"lv": "C2",
+"ru": "источниковедение",
+"en": "source studies",
+"fr": "étude des sources"
+},
+{
+"a": "ազգագրություն",
+"lv": "C2",
+"ru": "этнография",
+"en": "ethnography",
+"fr": "ethnographie"
+},
+{
+"a": "բանահյուսություն",
+"lv": "C2",
+"ru": "фольклор",
+"en": "folklore",
+"fr": "folklore"
+},
+{
+"a": "դիցաբանություն",
+"lv": "C2",
+"ru": "мифология",
+"en": "mythology",
+"fr": "mythologie"
+},
+{
+"a": "մարդաբանություն",
+"lv": "C2",
+"ru": "антропология",
+"en": "anthropology",
+"fr": "anthropologie"
+},
+{
+"a": "հնէաբանություն",
+"lv": "C2",
+"ru": "палеонтология",
+"en": "palaeontology",
+"fr": "paléontologie"
+},
+{
+"a": "ձեռագրագիտություն",
+"lv": "C2",
+"ru": "кодикология",
+"en": "manuscript studies",
+"fr": "codicologie"
+},
+{
+"a": "վիմագրություն",
+"lv": "C2",
+"ru": "эпиграфика",
+"en": "epigraphy",
+"fr": "épigraphie"
+},
+{
+"a": "դրամագիտություն",
+"lv": "C2",
+"ru": "нумизматика",
+"en": "numismatics",
+"fr": "numismatique"
+},
+{
+"a": "զինանշանագիտություն",
+"lv": "C2",
+"ru": "геральдика",
+"en": "heraldry",
+"fr": "héraldique"
+},
+{
+"a": "նևրոզ",
+"lv": "C2",
+"ru": "невроз",
+"en": "neurosis",
+"fr": "névrose"
+},
+{
+"a": "փսիխոզ",
+"lv": "C2",
+"ru": "психоз",
+"en": "psychosis",
+"fr": "psychose"
+},
+{
+"a": "շիզոֆրենիա",
+"lv": "C2",
+"ru": "шизофрения",
+"en": "schizophrenia",
+"fr": "schizophrénie"
+},
+{
+"a": "երկբևեռ խանգարում",
+"lv": "C2",
+"ru": "биполярное расстройство",
+"en": "bipolar disorder",
+"fr": "trouble bipolaire"
+},
+{
+"a": "տագնապային խանգարում",
+"lv": "C2",
+"ru": "тревожное расстройство",
+"en": "anxiety disorder",
+"fr": "trouble anxieux"
+},
+{
+"a": "աուտիզմ",
+"lv": "C2",
+"ru": "аутизм",
+"en": "autism",
+"fr": "autisme"
+},
+{
+"a": "դեմենցիա",
+"lv": "C2",
+"ru": "деменция",
+"en": "dementia",
+"fr": "démence"
+},
+{
+"a": "Ալցհեյմերի հիվանդություն",
+"lv": "C2",
+"ru": "болезнь Альцгеймера",
+"en": "Alzheimer's disease",
+"fr": "maladie d'Alzheimer"
+},
+{
+"a": "Պարկինսոնի հիվանդություն",
+"lv": "C2",
+"ru": "болезнь Паркинсона",
+"en": "Parkinson's disease",
+"fr": "maladie de Parkinson"
+},
+{
+"a": "էպիլեպսիա",
+"lv": "C2",
+"ru": "эпилепсия",
+"en": "epilepsy",
+"fr": "épilepsie"
+},
+{
+"a": "կաթված",
+"lv": "C2",
+"ru": "паралич",
+"en": "paralysis",
+"fr": "paralysie"
+},
+{
+"a": "սրտի անբավարարություն",
+"lv": "C2",
+"ru": "сердечная недостаточность",
+"en": "heart failure",
+"fr": "insuffisance cardiaque"
+},
+{
+"a": "առիթմիա",
+"lv": "C2",
+"ru": "аритмия",
+"en": "arrhythmia",
+"fr": "arythmie"
+},
+{
+"a": "աթերոսկլերոզ",
+"lv": "C2",
+"ru": "атеросклероз",
+"en": "atherosclerosis",
+"fr": "athérosclérose"
+},
+{
+"a": "թրոմբ",
+"lv": "C2",
+"ru": "тромб",
+"en": "blood clot",
+"fr": "caillot"
+},
+{
+"a": "անեմիա",
+"lv": "C2",
+"ru": "анемия",
+"en": "anaemia",
+"fr": "anémie"
+},
+{
+"a": "լեյկեմիա",
+"lv": "C2",
+"ru": "лейкемия",
+"en": "leukaemia",
+"fr": "leucémie"
+},
+{
+"a": "ցիռոզ",
+"lv": "C2",
+"ru": "цирроз",
+"en": "cirrhosis",
+"fr": "cirrhose"
+},
+{
+"a": "գաստրիտ",
+"lv": "C2",
+"ru": "гастрит",
+"en": "gastritis",
+"fr": "gastrite"
+},
+{
+"a": "պանկրեատիտ",
+"lv": "C2",
+"ru": "панкреатит",
+"en": "pancreatitis",
+"fr": "pancréatite"
+},
+{
+"a": "ապենդիցիտ",
+"lv": "C2",
+"ru": "аппендицит",
+"en": "appendicitis",
+"fr": "appendicite"
+},
+{
+"a": "օստեոպորոզ",
+"lv": "C2",
+"ru": "остеопороз",
+"en": "osteoporosis",
+"fr": "ostéoporose"
+},
+{
+"a": "արթրիտ",
+"lv": "C2",
+"ru": "артрит",
+"en": "arthritis",
+"fr": "arthrite"
+},
+{
+"a": "ռևմատիզմ",
+"lv": "C2",
+"ru": "ревматизм",
+"en": "rheumatism",
+"fr": "rhumatisme"
+},
+{
+"a": "սկոլիոզ",
+"lv": "C2",
+"ru": "сколиоз",
+"en": "scoliosis",
+"fr": "scoliose"
+},
+{
+"a": "գլաուկոմա",
+"lv": "C2",
+"ru": "глаукома",
+"en": "glaucoma",
+"fr": "glaucome"
+},
+{
+"a": "օտիտ",
+"lv": "C2",
+"ru": "отит",
+"en": "otitis",
+"fr": "otite"
+},
+{
+"a": "սինուսիտ",
+"lv": "C2",
+"ru": "синусит",
+"en": "sinusitis",
+"fr": "sinusite"
+},
+{
+"a": "դերմատիտ",
+"lv": "C2",
+"ru": "дерматит",
+"en": "dermatitis",
+"fr": "dermatite"
+},
+{
+"a": "էկզեմա",
+"lv": "C2",
+"ru": "экзема",
+"en": "eczema",
+"fr": "eczéma"
+},
+{
+"a": "պսորիազ",
+"lv": "C2",
+"ru": "псориаз",
+"en": "psoriasis",
+"fr": "psoriasis"
 }
 ]
