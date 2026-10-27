@@ -15519,6 +15519,13 @@
 "fr": "répétition"
 },
 {
+"a": "ցուցակ",
+"lv": "A2",
+"ru": "список",
+"en": "list",
+"fr": "liste"
+},
+{
 "a": "Պորտուգալիա",
 "lv": "A2",
 "ru": "Португалия",
@@ -40453,6 +40460,293 @@
 "fr": "être mécontent"
 },
 {
+"a": "պուլտ",
+"lv": "B1",
+"ru": "пульт",
+"en": "remote control",
+"fr": "télécommande"
+},
+{
+"a": "ռոբոտ փոշեկուլ",
+"lv": "B1",
+"ru": "робот-пылесос",
+"en": "robot vacuum",
+"fr": "aspirateur robot"
+},
+{
+"a": "սրճեփ մեքենա",
+"lv": "B1",
+"ru": "кофемашина",
+"en": "coffee machine",
+"fr": "machine à café"
+},
+{
+"a": "օդի խոնավեցուցիչ",
+"lv": "B1",
+"ru": "увлажнитель воздуха",
+"en": "humidifier",
+"fr": "humidificateur"
+},
+{
+"a": "օդի մաքրիչ",
+"lv": "B1",
+"ru": "очиститель воздуха",
+"en": "air purifier",
+"fr": "purificateur d'air"
+},
+{
+"a": "լուսատու",
+"lv": "B1",
+"ru": "светильник",
+"en": "light fitting",
+"fr": "luminaire"
+},
+{
+"a": "սեղանի լամպ",
+"lv": "B1",
+"ru": "настольная лампа",
+"en": "desk lamp",
+"fr": "lampe de bureau"
+},
+{
+"a": "գիշերային լամպ",
+"lv": "B1",
+"ru": "ночник",
+"en": "night light",
+"fr": "veilleuse"
+},
+{
+"a": "երկարացման լար",
+"lv": "B1",
+"ru": "удлинитель",
+"en": "extension cord",
+"fr": "rallonge"
+},
+{
+"a": "լարային",
+"lv": "B1",
+"ru": "проводной",
+"en": "wired",
+"fr": "filaire"
+},
+{
+"a": "փաուերբանկ",
+"lv": "B1",
+"ru": "пауэрбанк",
+"en": "power bank",
+"fr": "batterie externe"
+},
+{
+"a": "անլար ականջակալ",
+"lv": "B1",
+"ru": "беспроводные наушники",
+"en": "wireless earphones",
+"fr": "écouteurs sans fil"
+},
+{
+"a": "խելացի տուն",
+"lv": "B1",
+"ru": "умный дом",
+"en": "smart home",
+"fr": "maison connectée"
+},
+{
+"a": "խելացի բարձրախոս",
+"lv": "B1",
+"ru": "умная колонка",
+"en": "smart speaker",
+"fr": "enceinte connectée"
+},
+{
+"a": "ձայնային օգնական",
+"lv": "B1",
+"ru": "голосовой помощник",
+"en": "voice assistant",
+"fr": "assistant vocal"
+},
+{
+"a": "տեսահսկման տեսախցիկ",
+"lv": "B1",
+"ru": "камера видеонаблюдения",
+"en": "security camera",
+"fr": "caméra de surveillance"
+},
+{
+"a": "ազդանշանային համակարգ",
+"lv": "B1",
+"ru": "сигнализация",
+"en": "alarm system",
+"fr": "système d'alarme"
+},
+{
+"a": "դոմոֆոն",
+"lv": "B1",
+"ru": "домофон",
+"en": "intercom",
+"fr": "interphone"
+},
+{
+"a": "տեսադոմոֆոն",
+"lv": "B1",
+"ru": "видеодомофон",
+"en": "video intercom",
+"fr": "visiophone"
+},
+{
+"a": "լուսադիոդային լամպ",
+"lv": "B1",
+"ru": "светодиодная лампа",
+"en": "LED bulb",
+"fr": "ampoule LED"
+},
+{
+"a": "էներգախնայող լամպ",
+"lv": "B1",
+"ru": "энергосберегающая лампа",
+"en": "energy-saving bulb",
+"fr": "ampoule basse consommation"
+},
+{
+"a": "արևային մարտկոց",
+"lv": "B1",
+"ru": "солнечная батарея",
+"en": "solar cell",
+"fr": "cellule solaire"
+},
+{
+"a": "կենցաղային տեխնիկա",
+"lv": "B1",
+"ru": "бытовая техника",
+"en": "household appliances",
+"fr": "électroménager"
+},
+{
+"a": "էլեկտրոնիկա",
+"lv": "B1",
+"ru": "электроника",
+"en": "electronics",
+"fr": "électronique"
+},
+{
+"a": "կառավարման վահանակ",
+"lv": "B1",
+"ru": "панель управления",
+"en": "control panel",
+"fr": "tableau de commande"
+},
+{
+"a": "սենսորային էկրան",
+"lv": "B1",
+"ru": "сенсорный экран",
+"en": "touchscreen",
+"fr": "écran tactile"
+},
+{
+"a": "լուծաչափ",
+"lv": "B1",
+"ru": "разрешение (экрана)",
+"en": "resolution",
+"fr": "résolution"
+},
+{
+"a": "պիքսել",
+"lv": "B1",
+"ru": "пиксель",
+"en": "pixel",
+"fr": "pixel"
+},
+{
+"a": "լազերային տպիչ",
+"lv": "B1",
+"ru": "лазерный принтер",
+"en": "laser printer",
+"fr": "imprimante laser"
+},
+{
+"a": "շիթային տպիչ",
+"lv": "B1",
+"ru": "струйный принтер",
+"en": "inkjet printer",
+"fr": "imprimante à jet d'encre"
+},
+{
+"a": "քարթրիջ",
+"lv": "B1",
+"ru": "картридж",
+"en": "cartridge",
+"fr": "cartouche"
+},
+{
+"a": "ֆաքս",
+"lv": "B1",
+"ru": "факс",
+"en": "fax",
+"fr": "fax"
+},
+{
+"a": "ֆոտոխցիկ",
+"lv": "B1",
+"ru": "фотоаппарат",
+"en": "camera",
+"fr": "appareil photo"
+},
+{
+"a": "եռոտանի",
+"lv": "B1",
+"ru": "штатив",
+"en": "tripod",
+"fr": "trépied"
+},
+{
+"a": "ֆլեշ",
+"lv": "B1",
+"ru": "вспышка",
+"en": "flash",
+"fr": "flash"
+},
+{
+"a": "հիշողության քարտ",
+"lv": "B1",
+"ru": "карта памяти",
+"en": "memory card",
+"fr": "carte mémoire"
+},
+{
+"a": "ձայնագրիչ",
+"lv": "B1",
+"ru": "диктофон",
+"en": "voice recorder",
+"fr": "dictaphone"
+},
+{
+"a": "ռադիոընդունիչ",
+"lv": "B1",
+"ru": "радиоприёмник",
+"en": "radio receiver",
+"fr": "poste de radio"
+},
+{
+"a": "ֆիքսված հեռախոս",
+"lv": "B1",
+"ru": "стационарный телефон",
+"en": "landline",
+"fr": "téléphone fixe"
+},
+{
+"a": "բջջային հեռախոս",
+"lv": "B1",
+"ru": "мобильный телефон",
+"en": "mobile phone",
+"fr": "téléphone portable"
+},
+{
+"a": "ՍԻՄ քարտ",
+"lv": "B1",
+"ru": "сим-карта",
+"en": "SIM card",
+"fr": "carte SIM"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -53368,6 +53662,580 @@
 "fr": "trouver sa place"
 },
 {
+"a": "ծանր արդյունաբերություն",
+"lv": "B2",
+"ru": "тяжёлая промышленность",
+"en": "heavy industry",
+"fr": "industrie lourde"
+},
+{
+"a": "թեթև արդյունաբերություն",
+"lv": "B2",
+"ru": "лёгкая промышленность",
+"en": "light industry",
+"fr": "industrie légère"
+},
+{
+"a": "մեքենաշինություն",
+"lv": "B2",
+"ru": "машиностроение",
+"en": "mechanical engineering",
+"fr": "construction mécanique"
+},
+{
+"a": "մետաղագործություն",
+"lv": "B2",
+"ru": "металлургия",
+"en": "metallurgy",
+"fr": "métallurgie"
+},
+{
+"a": "հանքարդյունաբերություն",
+"lv": "B2",
+"ru": "горнодобывающая промышленность",
+"en": "mining industry",
+"fr": "industrie minière"
+},
+{
+"a": "հանքափոր",
+"lv": "B2",
+"ru": "шахтёр",
+"en": "miner",
+"fr": "mineur"
+},
+{
+"a": "քարհանք",
+"lv": "B2",
+"ru": "каменоломня",
+"en": "quarry",
+"fr": "carrière"
+},
+{
+"a": "պայթեցում",
+"lv": "B2",
+"ru": "взрывные работы",
+"en": "blasting",
+"fr": "dynamitage"
+},
+{
+"a": "հորատում",
+"lv": "B2",
+"ru": "бурение",
+"en": "drilling",
+"fr": "forage"
+},
+{
+"a": "արդյունահանում",
+"lv": "B2",
+"ru": "добыча",
+"en": "extraction",
+"fr": "extraction"
+},
+{
+"a": "ձուլարան",
+"lv": "B2",
+"ru": "литейный цех",
+"en": "foundry",
+"fr": "fonderie"
+},
+{
+"a": "պողպատաձուլություն",
+"lv": "B2",
+"ru": "сталеварение",
+"en": "steelmaking",
+"fr": "aciérie"
+},
+{
+"a": "գլանվածք",
+"lv": "B2",
+"ru": "прокат",
+"en": "rolled metal",
+"fr": "laminé"
+},
+{
+"a": "խառատ",
+"lv": "B2",
+"ru": "токарь",
+"en": "turner (lathe operator)",
+"fr": "tourneur"
+},
+{
+"a": "հաստոց",
+"lv": "B2",
+"ru": "станок",
+"en": "machine tool",
+"fr": "machine-outil"
+},
+{
+"a": "եռակցում",
+"lv": "B2",
+"ru": "сварка",
+"en": "welding",
+"fr": "soudage"
+},
+{
+"a": "եռակցող",
+"lv": "B2",
+"ru": "сварщик",
+"en": "welder",
+"fr": "soudeur"
+},
+{
+"a": "զոդում",
+"lv": "B2",
+"ru": "пайка",
+"en": "soldering",
+"fr": "brasage"
+},
+{
+"a": "զոդիչ",
+"lv": "B2",
+"ru": "паяльник",
+"en": "soldering iron",
+"fr": "fer à souder"
+},
+{
+"a": "դարբնոց",
+"lv": "B2",
+"ru": "кузница",
+"en": "forge, smithy",
+"fr": "forge"
+},
+{
+"a": "մամլիչ",
+"lv": "B2",
+"ru": "пресс",
+"en": "press",
+"fr": "presse"
+},
+{
+"a": "հոսքագիծ",
+"lv": "B2",
+"ru": "конвейерная линия",
+"en": "assembly line",
+"fr": "chaîne de montage"
+},
+{
+"a": "պահեստավորում",
+"lv": "B2",
+"ru": "складирование",
+"en": "warehousing",
+"fr": "entreposage"
+},
+{
+"a": "բեռնիչ",
+"lv": "B2",
+"ru": "погрузчик",
+"en": "loader",
+"fr": "chargeur"
+},
+{
+"a": "փոխակրիչ",
+"lv": "B2",
+"ru": "транспортёр, конвейер",
+"en": "conveyor",
+"fr": "convoyeur"
+},
+{
+"a": "պատրաստի արտադրանք",
+"lv": "B2",
+"ru": "готовая продукция",
+"en": "finished goods",
+"fr": "produits finis"
+},
+{
+"a": "կիսաֆաբրիկատ",
+"lv": "B2",
+"ru": "полуфабрикат",
+"en": "semi-finished product",
+"fr": "produit semi-fini"
+},
+{
+"a": "խոտան",
+"lv": "B2",
+"ru": "брак (продукции)",
+"en": "defective goods",
+"fr": "rebut"
+},
+{
+"a": "որակի հսկողություն",
+"lv": "B2",
+"ru": "контроль качества",
+"en": "quality control",
+"fr": "contrôle qualité"
+},
+{
+"a": "անվտանգության տեխնիկա",
+"lv": "B2",
+"ru": "техника безопасности",
+"en": "safety rules",
+"fr": "règles de sécurité"
+},
+{
+"a": "աշխատանքի պաշտպանություն",
+"lv": "B2",
+"ru": "охрана труда",
+"en": "occupational safety",
+"fr": "sécurité au travail"
+},
+{
+"a": "արտադրական վնասվածք",
+"lv": "B2",
+"ru": "производственная травма",
+"en": "industrial injury",
+"fr": "accident du travail"
+},
+{
+"a": "գիշերային հերթափոխ",
+"lv": "B2",
+"ru": "ночная смена",
+"en": "night shift",
+"fr": "équipe de nuit"
+},
+{
+"a": "աշխատավարձի բարձրացում",
+"lv": "B2",
+"ru": "повышение зарплаты",
+"en": "pay rise",
+"fr": "augmentation de salaire"
+},
+{
+"a": "էներգետիկա",
+"lv": "B2",
+"ru": "энергетика",
+"en": "power industry",
+"fr": "énergie"
+},
+{
+"a": "էլեկտրացանց",
+"lv": "B2",
+"ru": "электросеть",
+"en": "power grid",
+"fr": "réseau électrique"
+},
+{
+"a": "ենթակայան",
+"lv": "B2",
+"ru": "подстанция",
+"en": "substation",
+"fr": "sous-station"
+},
+{
+"a": "տրանսֆորմատոր",
+"lv": "B2",
+"ru": "трансформатор",
+"en": "transformer",
+"fr": "transformateur"
+},
+{
+"a": "էլեկտրահաղորդման գիծ",
+"lv": "B2",
+"ru": "линия электропередачи",
+"en": "power line",
+"fr": "ligne électrique"
+},
+{
+"a": "գազատար",
+"lv": "B2",
+"ru": "газопровод",
+"en": "gas pipeline",
+"fr": "gazoduc"
+},
+{
+"a": "նավթատար",
+"lv": "B2",
+"ru": "нефтепровод",
+"en": "oil pipeline",
+"fr": "oléoduc"
+},
+{
+"a": "նավթավերամշակման գործարան",
+"lv": "B2",
+"ru": "нефтеперерабатывающий завод",
+"en": "oil refinery",
+"fr": "raffinerie"
+},
+{
+"a": "նավթահոր",
+"lv": "B2",
+"ru": "нефтяная скважина",
+"en": "oil well",
+"fr": "puits de pétrole"
+},
+{
+"a": "գազի հանքավայր",
+"lv": "B2",
+"ru": "газовое месторождение",
+"en": "gas field",
+"fr": "gisement de gaz"
+},
+{
+"a": "ածխահանք",
+"lv": "B2",
+"ru": "угольная шахта",
+"en": "coal mine",
+"fr": "mine de charbon"
+},
+{
+"a": "քիմիական արդյունաբերություն",
+"lv": "B2",
+"ru": "химическая промышленность",
+"en": "chemical industry",
+"fr": "industrie chimique"
+},
+{
+"a": "դեղագործական արդյունաբերություն",
+"lv": "B2",
+"ru": "фармацевтическая промышленность",
+"en": "pharmaceutical industry",
+"fr": "industrie pharmaceutique"
+},
+{
+"a": "տեքստիլ արդյունաբերություն",
+"lv": "B2",
+"ru": "текстильная промышленность",
+"en": "textile industry",
+"fr": "industrie textile"
+},
+{
+"a": "սննդի արդյունաբերություն",
+"lv": "B2",
+"ru": "пищевая промышленность",
+"en": "food industry",
+"fr": "industrie agroalimentaire"
+},
+{
+"a": "շինանյութ",
+"lv": "B2",
+"ru": "стройматериал",
+"en": "building material",
+"fr": "matériau de construction"
+},
+{
+"a": "պետական լեզու",
+"lv": "B2",
+"ru": "государственный язык",
+"en": "state language",
+"fr": "langue d'État"
+},
+{
+"a": "պաշտոնական լեզու",
+"lv": "B2",
+"ru": "официальный язык",
+"en": "official language",
+"fr": "langue officielle"
+},
+{
+"a": "գրական լեզու",
+"lv": "B2",
+"ru": "литературный язык",
+"en": "literary language",
+"fr": "langue littéraire"
+},
+{
+"a": "խոսակցական լեզու",
+"lv": "B2",
+"ru": "разговорный язык",
+"en": "colloquial language",
+"fr": "langue parlée"
+},
+{
+"a": "ժարգոն",
+"lv": "B2",
+"ru": "жаргон",
+"en": "jargon",
+"fr": "jargon"
+},
+{
+"a": "սլենգ",
+"lv": "B2",
+"ru": "сленг",
+"en": "slang",
+"fr": "argot"
+},
+{
+"a": "արգո",
+"lv": "B2",
+"ru": "арго",
+"en": "argot",
+"fr": "argot"
+},
+{
+"a": "խոսվածք",
+"lv": "B2",
+"ru": "говор",
+"en": "local dialect",
+"fr": "parler"
+},
+{
+"a": "տերմին",
+"lv": "B2",
+"ru": "термин",
+"en": "term",
+"fr": "terme"
+},
+{
+"a": "հապավում",
+"lv": "B2",
+"ru": "аббревиатура",
+"en": "abbreviation, acronym",
+"fr": "sigle"
+},
+{
+"a": "կրճատում",
+"lv": "B2",
+"ru": "сокращение",
+"en": "shortening, cut",
+"fr": "abréviation"
+},
+{
+"a": "սեռ",
+"lv": "B2",
+"ru": "пол, род, залог",
+"en": "sex, gender, voice",
+"fr": "genre"
+},
+{
+"a": "ուղիղ իմաստ",
+"lv": "B2",
+"ru": "прямое значение",
+"en": "literal meaning",
+"fr": "sens propre"
+},
+{
+"a": "փոխաբերական իմաստ",
+"lv": "B2",
+"ru": "переносное значение",
+"en": "figurative meaning",
+"fr": "sens figuré"
+},
+{
+"a": "ենթատեքստ",
+"lv": "B2",
+"ru": "подтекст",
+"en": "subtext",
+"fr": "sous-entendu"
+},
+{
+"a": "առոգանություն",
+"lv": "B2",
+"ru": "произношение, акцент",
+"en": "pronunciation, accent",
+"fr": "accent"
+},
+{
+"a": "բանավոր թարգմանություն",
+"lv": "B2",
+"ru": "устный перевод",
+"en": "interpreting",
+"fr": "interprétation"
+},
+{
+"a": "համաժամանակյա թարգմանություն",
+"lv": "B2",
+"ru": "синхронный перевод",
+"en": "simultaneous interpreting",
+"fr": "interprétation simultanée"
+},
+{
+"a": "գրավոր թարգմանություն",
+"lv": "B2",
+"ru": "письменный перевод",
+"en": "written translation",
+"fr": "traduction écrite"
+},
+{
+"a": "բնագիր",
+"lv": "B2",
+"ru": "подлинник",
+"en": "original text",
+"fr": "texte original"
+},
+{
+"a": "տպագիր",
+"lv": "B2",
+"ru": "печатный",
+"en": "printed",
+"fr": "imprimé"
+},
+{
+"a": "կետադրական նշան",
+"lv": "B2",
+"ru": "знак препинания",
+"en": "punctuation mark",
+"fr": "signe de ponctuation"
+},
+{
+"a": "ստորակետ",
+"lv": "B2",
+"ru": "запятая",
+"en": "comma",
+"fr": "virgule"
+},
+{
+"a": "վերջակետ",
+"lv": "B2",
+"ru": "точка (армянская ։)",
+"en": "full stop",
+"fr": "point"
+},
+{
+"a": "հարցական նշան",
+"lv": "B2",
+"ru": "вопросительный знак",
+"en": "question mark",
+"fr": "point d'interrogation"
+},
+{
+"a": "բացականչական նշան",
+"lv": "B2",
+"ru": "восклицательный знак",
+"en": "exclamation mark",
+"fr": "point d'exclamation"
+},
+{
+"a": "միջակետ",
+"lv": "B2",
+"ru": "двоеточие (армянская точка .)",
+"en": "colon",
+"fr": "deux-points"
+},
+{
+"a": "չակերտներ",
+"lv": "B2",
+"ru": "кавычки",
+"en": "quotation marks",
+"fr": "guillemets"
+},
+{
+"a": "փակագծեր",
+"lv": "B2",
+"ru": "скобки",
+"en": "brackets",
+"fr": "parenthèses"
+},
+{
+"a": "գծիկ",
+"lv": "B2",
+"ru": "тире",
+"en": "dash",
+"fr": "tiret"
+},
+{
+"a": "միության գծիկ",
+"lv": "B2",
+"ru": "дефис",
+"en": "hyphen",
+"fr": "trait d'union"
+},
+{
+"a": "ապաթարց",
+"lv": "B2",
+"ru": "апостроф",
+"en": "apostrophe",
+"fr": "apostrophe"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -59997,6 +60865,783 @@
 "fr": "le Fonds monétaire international"
 },
 {
+"a": "անձնավորություն",
+"lv": "C1",
+"ru": "личность",
+"en": "personality, individual",
+"fr": "personnalité"
+},
+{
+"a": "ինքնադրսևորում",
+"lv": "C1",
+"ru": "самовыражение",
+"en": "self-expression",
+"fr": "expression de soi"
+},
+{
+"a": "ինքնաիրացում",
+"lv": "C1",
+"ru": "самореализация",
+"en": "self-fulfilment",
+"fr": "accomplissement de soi"
+},
+{
+"a": "ինքնակարգապահություն",
+"lv": "C1",
+"ru": "самодисциплина",
+"en": "self-discipline",
+"fr": "autodiscipline"
+},
+{
+"a": "ինքնահաստատում",
+"lv": "C1",
+"ru": "самоутверждение",
+"en": "self-assertion",
+"fr": "affirmation de soi"
+},
+{
+"a": "ինքնախաբեություն",
+"lv": "C1",
+"ru": "самообман",
+"en": "self-deception",
+"fr": "illusion sur soi-même"
+},
+{
+"a": "ինքնաքննադատություն",
+"lv": "C1",
+"ru": "самокритика",
+"en": "self-criticism",
+"fr": "autocritique"
+},
+{
+"a": "ինքնաոչնչացում",
+"lv": "C1",
+"ru": "самоуничтожение",
+"en": "self-destruction",
+"fr": "autodestruction"
+},
+{
+"a": "ինքնասպանություն",
+"lv": "C1",
+"ru": "самоубийство",
+"en": "suicide",
+"fr": "suicide"
+},
+{
+"a": "ինքնապաշտպանություն",
+"lv": "C1",
+"ru": "самооборона",
+"en": "self-defence",
+"fr": "légitime défense"
+},
+{
+"a": "ինքնաբավություն",
+"lv": "C1",
+"ru": "самодостаточность",
+"en": "self-sufficiency",
+"fr": "autosuffisance"
+},
+{
+"a": "ինքնուրույնություն",
+"lv": "C1",
+"ru": "самостоятельность",
+"en": "independence",
+"fr": "autonomie"
+},
+{
+"a": "ինքնակրթություն",
+"lv": "C1",
+"ru": "самообразование",
+"en": "self-education",
+"fr": "autodidaxie"
+},
+{
+"a": "ինքնասպասարկում",
+"lv": "C1",
+"ru": "самообслуживание",
+"en": "self-service",
+"fr": "libre-service"
+},
+{
+"a": "ինքնագիր",
+"lv": "C1",
+"ru": "автограф",
+"en": "autograph",
+"fr": "autographe"
+},
+{
+"a": "ինքնահավան",
+"lv": "C1",
+"ru": "самодовольный",
+"en": "smug",
+"fr": "suffisant"
+},
+{
+"a": "ինքնասեր",
+"lv": "C1",
+"ru": "самолюбивый",
+"en": "vain, proud",
+"fr": "orgueilleux"
+},
+{
+"a": "ինքնաբերաբար",
+"lv": "C1",
+"ru": "автоматически, самопроизвольно",
+"en": "automatically",
+"fr": "automatiquement"
+},
+{
+"a": "ինքնին",
+"lv": "C1",
+"ru": "само по себе",
+"en": "in itself",
+"fr": "en soi"
+},
+{
+"a": "ինքնըստինքյան",
+"lv": "C1",
+"ru": "само собой",
+"en": "by itself",
+"fr": "de soi-même"
+},
+{
+"a": "սթրեսակայունություն",
+"lv": "C1",
+"ru": "стрессоустойчивость",
+"en": "stress resistance",
+"fr": "résistance au stress"
+},
+{
+"a": "հոգեվնասվածք",
+"lv": "C1",
+"ru": "психотравма",
+"en": "trauma",
+"fr": "traumatisme"
+},
+{
+"a": "ֆոբիա",
+"lv": "C1",
+"ru": "фобия",
+"en": "phobia",
+"fr": "phobie"
+},
+{
+"a": "մոլուցք",
+"lv": "C1",
+"ru": "мания, одержимость",
+"en": "obsession, mania",
+"fr": "obsession"
+},
+{
+"a": "խաղամոլություն",
+"lv": "C1",
+"ru": "игромания",
+"en": "gambling addiction",
+"fr": "addiction au jeu"
+},
+{
+"a": "ալկոհոլիզմ",
+"lv": "C1",
+"ru": "алкоголизм",
+"en": "alcoholism",
+"fr": "alcoolisme"
+},
+{
+"a": "թմրամոլություն",
+"lv": "C1",
+"ru": "наркомания",
+"en": "drug addiction",
+"fr": "toxicomanie"
+},
+{
+"a": "ինտրովերտ",
+"lv": "C1",
+"ru": "интроверт",
+"en": "introvert",
+"fr": "introverti"
+},
+{
+"a": "էքստրավերտ",
+"lv": "C1",
+"ru": "экстраверт",
+"en": "extrovert",
+"fr": "extraverti"
+},
+{
+"a": "էմպաթիա",
+"lv": "C1",
+"ru": "эмпатия",
+"en": "empathy",
+"fr": "empathie"
+},
+{
+"a": "ինտելեկտի գործակից",
+"lv": "C1",
+"ru": "коэффициент интеллекта",
+"en": "IQ",
+"fr": "QI"
+},
+{
+"a": "հուզական բանականություն",
+"lv": "C1",
+"ru": "эмоциональный интеллект",
+"en": "emotional intelligence",
+"fr": "intelligence émotionnelle"
+},
+{
+"a": "ճանաչողական",
+"lv": "C1",
+"ru": "когнитивный",
+"en": "cognitive",
+"fr": "cognitif"
+},
+{
+"a": "վարքային",
+"lv": "C1",
+"ru": "поведенческий",
+"en": "behavioural",
+"fr": "comportemental"
+},
+{
+"a": "հոգեկան առողջություն",
+"lv": "C1",
+"ru": "психическое здоровье",
+"en": "mental health",
+"fr": "santé mentale"
+},
+{
+"a": "հոգեկան խանգարում",
+"lv": "C1",
+"ru": "психическое расстройство",
+"en": "mental disorder",
+"fr": "trouble mental"
+},
+{
+"a": "տրամադրության անկում",
+"lv": "C1",
+"ru": "упадок настроения",
+"en": "low mood",
+"fr": "baisse de moral"
+},
+{
+"a": "ապատիա",
+"lv": "C1",
+"ru": "апатия",
+"en": "apathy",
+"fr": "apathie"
+},
+{
+"a": "էյֆորիա",
+"lv": "C1",
+"ru": "эйфория",
+"en": "euphoria",
+"fr": "euphorie"
+},
+{
+"a": "խռովք",
+"lv": "C1",
+"ru": "смятение",
+"en": "agitation, turmoil",
+"fr": "trouble"
+},
+{
+"a": "հուզմունք",
+"lv": "C1",
+"ru": "волнение",
+"en": "excitement, emotion",
+"fr": "émotion"
+},
+{
+"a": "ինքնազսպում",
+"lv": "C1",
+"ru": "самообладание",
+"en": "self-restraint",
+"fr": "maîtrise de soi"
+},
+{
+"a": "բռնկում",
+"lv": "C1",
+"ru": "вспышка",
+"en": "outburst",
+"fr": "accès de colère"
+},
+{
+"a": "բռնկուն",
+"lv": "C1",
+"ru": "вспыльчивый",
+"en": "hot-tempered",
+"fr": "emporté"
+},
+{
+"a": "անհավասարակշիռ",
+"lv": "C1",
+"ru": "неуравновешенный",
+"en": "unbalanced",
+"fr": "instable"
+},
+{
+"a": "ճկունություն",
+"lv": "C1",
+"ru": "гибкость",
+"en": "flexibility",
+"fr": "souplesse"
+},
+{
+"a": "պաշտպանական մեխանիզմ",
+"lv": "C1",
+"ru": "защитный механизм",
+"en": "defence mechanism",
+"fr": "mécanisme de défense"
+},
+{
+"a": "ժխտողականություն",
+"lv": "C1",
+"ru": "негативизм",
+"en": "negativism",
+"fr": "négativisme"
+},
+{
+"a": "պրոյեկցիա",
+"lv": "C1",
+"ru": "проекция",
+"en": "projection",
+"fr": "projection"
+},
+{
+"a": "ռեգրեսիա",
+"lv": "C1",
+"ru": "регрессия",
+"en": "regression",
+"fr": "régression"
+},
+{
+"a": "սուբլիմացիա",
+"lv": "C1",
+"ru": "сублимация",
+"en": "sublimation",
+"fr": "sublimation"
+},
+{
+"a": "ռացիոնալիզացիա",
+"lv": "C1",
+"ru": "рационализация",
+"en": "rationalization",
+"fr": "rationalisation"
+},
+{
+"a": "ելակետային կոդ",
+"lv": "C1",
+"ru": "исходный код",
+"en": "source code",
+"fr": "code source"
+},
+{
+"a": "կոմպիլյատոր",
+"lv": "C1",
+"ru": "компилятор",
+"en": "compiler",
+"fr": "compilateur"
+},
+{
+"a": "ինտերպրետատոր",
+"lv": "C1",
+"ru": "интерпретатор",
+"en": "interpreter",
+"fr": "interpréteur"
+},
+{
+"a": "ֆրեյմվորք",
+"lv": "C1",
+"ru": "фреймворк",
+"en": "framework",
+"fr": "framework"
+},
+{
+"a": "հատկություն",
+"lv": "C1",
+"ru": "свойство",
+"en": "property, attribute",
+"fr": "propriété"
+},
+{
+"a": "ժառանգում",
+"lv": "C1",
+"ru": "наследование",
+"en": "inheritance",
+"fr": "héritage"
+},
+{
+"a": "ինկապսուլյացիա",
+"lv": "C1",
+"ru": "инкапсуляция",
+"en": "encapsulation",
+"fr": "encapsulation"
+},
+{
+"a": "բուլյան",
+"lv": "C1",
+"ru": "булев тип",
+"en": "Boolean",
+"fr": "booléen"
+},
+{
+"a": "ռեկուրսիա",
+"lv": "C1",
+"ru": "рекурсия",
+"en": "recursion",
+"fr": "récursivité"
+},
+{
+"a": "տվյալների կառուցվածք",
+"lv": "C1",
+"ru": "структура данных",
+"en": "data structure",
+"fr": "structure de données"
+},
+{
+"a": "գրաֆ",
+"lv": "C1",
+"ru": "граф",
+"en": "graph",
+"fr": "graphe"
+},
+{
+"a": "կույտ",
+"lv": "C1",
+"ru": "куча, груда",
+"en": "heap, pile",
+"fr": "tas"
+},
+{
+"a": "հեշ աղյուսակ",
+"lv": "C1",
+"ru": "хеш-таблица",
+"en": "hash table",
+"fr": "table de hachage"
+},
+{
+"a": "հարցում",
+"lv": "C1",
+"ru": "запрос, опрос",
+"en": "query, request, survey",
+"fr": "requête"
+},
+{
+"a": "առաջնային բանալի",
+"lv": "C1",
+"ru": "первичный ключ",
+"en": "primary key",
+"fr": "clé primaire"
+},
+{
+"a": "ինդեքս",
+"lv": "C1",
+"ru": "индекс",
+"en": "index",
+"fr": "index"
+},
+{
+"a": "միկրոծառայություն",
+"lv": "C1",
+"ru": "микросервис",
+"en": "microservice",
+"fr": "microservice"
+},
+{
+"a": "ամպային հաշվարկ",
+"lv": "C1",
+"ru": "облачные вычисления",
+"en": "cloud computing",
+"fr": "informatique en nuage"
+},
+{
+"a": "վիրտուալ մեքենա",
+"lv": "C1",
+"ru": "виртуальная машина",
+"en": "virtual machine",
+"fr": "machine virtuelle"
+},
+{
+"a": "կոնտեյներ",
+"lv": "C1",
+"ru": "контейнер",
+"en": "container",
+"fr": "conteneur"
+},
+{
+"a": "տեղակայում",
+"lv": "C1",
+"ru": "развёртывание",
+"en": "deployment",
+"fr": "déploiement"
+},
+{
+"a": "տարբերակների կառավարում",
+"lv": "C1",
+"ru": "контроль версий",
+"en": "version control",
+"fr": "gestion de versions"
+},
+{
+"a": "կոմիթ",
+"lv": "C1",
+"ru": "коммит",
+"en": "commit",
+"fr": "commit"
+},
+{
+"a": "պահոց",
+"lv": "C1",
+"ru": "хранилище, репозиторий",
+"en": "repository, storage",
+"fr": "dépôt"
+},
+{
+"a": "թեստավորում",
+"lv": "C1",
+"ru": "тестирование",
+"en": "testing",
+"fr": "test"
+},
+{
+"a": "միավորային թեստ",
+"lv": "C1",
+"ru": "модульный тест",
+"en": "unit test",
+"fr": "test unitaire"
+},
+{
+"a": "ինտեգրացիոն թեստ",
+"lv": "C1",
+"ru": "интеграционный тест",
+"en": "integration test",
+"fr": "test d'intégration"
+},
+{
+"a": "վրիպազերծում",
+"lv": "C1",
+"ru": "отладка",
+"en": "debugging",
+"fr": "débogage"
+},
+{
+"a": "վրիպազերծիչ",
+"lv": "C1",
+"ru": "отладчик",
+"en": "debugger",
+"fr": "débogueur"
+},
+{
+"a": "տեղեկամատյան",
+"lv": "C1",
+"ru": "журнал (логов)",
+"en": "log",
+"fr": "journal"
+},
+{
+"a": "կատարողականություն",
+"lv": "C1",
+"ru": "производительность",
+"en": "performance",
+"fr": "performance"
+},
+{
+"a": "օպտիմալացում",
+"lv": "C1",
+"ru": "оптимизация",
+"en": "optimization",
+"fr": "optimisation"
+},
+{
+"a": "մասշտաբավորում",
+"lv": "C1",
+"ru": "масштабирование",
+"en": "scaling",
+"fr": "mise à l'échelle"
+},
+{
+"a": "բեռնվածություն",
+"lv": "C1",
+"ru": "нагрузка",
+"en": "load",
+"fr": "charge"
+},
+{
+"a": "խափանում",
+"lv": "C1",
+"ru": "сбой",
+"en": "failure, outage",
+"fr": "panne"
+},
+{
+"a": "խոցելիություն",
+"lv": "C1",
+"ru": "уязвимость",
+"en": "vulnerability",
+"fr": "vulnérabilité"
+},
+{
+"a": "նույնականացում",
+"lv": "C1",
+"ru": "идентификация, аутентификация",
+"en": "authentication",
+"fr": "authentification"
+},
+{
+"a": "թոքեն",
+"lv": "C1",
+"ru": "токен",
+"en": "token",
+"fr": "jeton"
+},
+{
+"a": "կիբեռհարձակում",
+"lv": "C1",
+"ru": "кибератака",
+"en": "cyberattack",
+"fr": "cyberattaque"
+},
+{
+"a": "ֆիշինգ",
+"lv": "C1",
+"ru": "фишинг",
+"en": "phishing",
+"fr": "hameçonnage"
+},
+{
+"a": "չարամիտ ծրագիր",
+"lv": "C1",
+"ru": "вредоносная программа",
+"en": "malware",
+"fr": "logiciel malveillant"
+},
+{
+"a": "փրկագին պահանջող ծրագիր",
+"lv": "C1",
+"ru": "программа-вымогатель",
+"en": "ransomware",
+"fr": "rançongiciel"
+},
+{
+"a": "հրապատ",
+"lv": "C1",
+"ru": "брандмауэр",
+"en": "firewall",
+"fr": "pare-feu"
+},
+{
+"a": "վիրտուալ մասնավոր ցանց",
+"lv": "C1",
+"ru": "VPN",
+"en": "VPN",
+"fr": "VPN"
+},
+{
+"a": "տիրույթի անուն",
+"lv": "C1",
+"ru": "доменное имя",
+"en": "domain name",
+"fr": "nom de domaine"
+},
+{
+"a": "հոսթինգ",
+"lv": "C1",
+"ru": "хостинг",
+"en": "hosting",
+"fr": "hébergement"
+},
+{
+"a": "կայքի հասցե",
+"lv": "C1",
+"ru": "адрес сайта",
+"en": "web address",
+"fr": "adresse du site"
+},
+{
+"a": "սերտիֆիկատ",
+"lv": "C1",
+"ru": "сертификат",
+"en": "certificate",
+"fr": "certificat"
+},
+{
+"a": "բաց կոդ",
+"lv": "C1",
+"ru": "открытый код",
+"en": "open source",
+"fr": "code ouvert"
+},
+{
+"a": "ծրագրային ապահովման մշակում",
+"lv": "C1",
+"ru": "разработка ПО",
+"en": "software development",
+"fr": "développement logiciel"
+},
+{
+"a": "ծրագրավորման միջավայր",
+"lv": "C1",
+"ru": "среда разработки",
+"en": "development environment",
+"fr": "environnement de développement"
+},
+{
+"a": "տեքստային խմբագիր",
+"lv": "C1",
+"ru": "текстовый редактор",
+"en": "text editor",
+"fr": "éditeur de texte"
+},
+{
+"a": "հրամանի տող",
+"lv": "C1",
+"ru": "командная строка",
+"en": "command line",
+"fr": "ligne de commande"
+},
+{
+"a": "սկրիպտ",
+"lv": "C1",
+"ru": "скрипт",
+"en": "script",
+"fr": "script"
+},
+{
+"a": "մակրո",
+"lv": "C1",
+"ru": "макрос",
+"en": "macro",
+"fr": "macro"
+},
+{
+"a": "պլագին",
+"lv": "C1",
+"ru": "плагин",
+"en": "plug-in",
+"fr": "plugin"
+},
+{
+"a": "ընդլայնում",
+"lv": "C1",
+"ru": "расширение",
+"en": "extension",
+"fr": "extension"
+},
+{
+"a": "պատչ",
+"lv": "C1",
+"ru": "патч",
+"en": "patch",
+"fr": "correctif"
+},
+{
+"a": "թողարկում",
+"lv": "C1",
+"ru": "выпуск, релиз",
+"en": "release",
+"fr": "version"
+},
+{
 "a": "վեհ",
 "lv": "C2",
 "ru": "величественный, возвышенный",
@@ -62214,5 +63859,635 @@
 "ru": "псориаз",
 "en": "psoriasis",
 "fr": "psoriasis"
+},
+{
+"a": "սահմանադրական իրավունք",
+"lv": "C2",
+"ru": "конституционное право",
+"en": "constitutional law",
+"fr": "droit constitutionnel"
+},
+{
+"a": "քրեական իրավունք",
+"lv": "C2",
+"ru": "уголовное право",
+"en": "criminal law",
+"fr": "droit pénal"
+},
+{
+"a": "քաղաքացիական իրավունք",
+"lv": "C2",
+"ru": "гражданское право",
+"en": "civil law",
+"fr": "droit civil"
+},
+{
+"a": "աշխատանքային իրավունք",
+"lv": "C2",
+"ru": "трудовое право",
+"en": "labour law",
+"fr": "droit du travail"
+},
+{
+"a": "ընտանեկան իրավունք",
+"lv": "C2",
+"ru": "семейное право",
+"en": "family law",
+"fr": "droit de la famille"
+},
+{
+"a": "վարչական իրավունք",
+"lv": "C2",
+"ru": "административное право",
+"en": "administrative law",
+"fr": "droit administratif"
+},
+{
+"a": "հարկային իրավունք",
+"lv": "C2",
+"ru": "налоговое право",
+"en": "tax law",
+"fr": "droit fiscal"
+},
+{
+"a": "մարդասիրական իրավունք",
+"lv": "C2",
+"ru": "гуманитарное право",
+"en": "humanitarian law",
+"fr": "droit humanitaire"
+},
+{
+"a": "իրավական պետություն",
+"lv": "C2",
+"ru": "правовое государство",
+"en": "rule of law (state)",
+"fr": "État de droit"
+},
+{
+"a": "իրավագիտակցություն",
+"lv": "C2",
+"ru": "правосознание",
+"en": "legal awareness",
+"fr": "conscience juridique"
+},
+{
+"a": "իրավասուբյեկտ",
+"lv": "C2",
+"ru": "субъект права",
+"en": "legal entity",
+"fr": "sujet de droit"
+},
+{
+"a": "իրավունակություն",
+"lv": "C2",
+"ru": "правоспособность",
+"en": "legal capacity",
+"fr": "capacité juridique"
+},
+{
+"a": "գործունակություն",
+"lv": "C2",
+"ru": "дееспособность",
+"en": "capacity to act",
+"fr": "capacité d'exercice"
+},
+{
+"a": "ապացուցման բեռ",
+"lv": "C2",
+"ru": "бремя доказывания",
+"en": "burden of proof",
+"fr": "charge de la preuve"
+},
+{
+"a": "մրցակցային դատավարություն",
+"lv": "C2",
+"ru": "состязательный процесс",
+"en": "adversarial proceedings",
+"fr": "procédure contradictoire"
+},
+{
+"a": "դատավարություն",
+"lv": "C2",
+"ru": "судопроизводство",
+"en": "legal proceedings",
+"fr": "procédure judiciaire"
+},
+{
+"a": "դատական ակտ",
+"lv": "C2",
+"ru": "судебный акт",
+"en": "court decision",
+"fr": "acte judiciaire"
+},
+{
+"a": "դատական պրակտիկա",
+"lv": "C2",
+"ru": "судебная практика",
+"en": "case law",
+"fr": "jurisprudence"
+},
+{
+"a": "նախադեպ",
+"lv": "C2",
+"ru": "прецедент",
+"en": "precedent",
+"fr": "précédent"
+},
+{
+"a": "իրավական նորմ",
+"lv": "C2",
+"ru": "правовая норма",
+"en": "legal norm",
+"fr": "norme juridique"
+},
+{
+"a": "օրենսդրական նախաձեռնություն",
+"lv": "C2",
+"ru": "законодательная инициатива",
+"en": "legislative initiative",
+"fr": "initiative législative"
+},
+{
+"a": "դենոնսացիա",
+"lv": "C2",
+"ru": "денонсация",
+"en": "denunciation (of a treaty)",
+"fr": "dénonciation"
+},
+{
+"a": "դեկլարացիա",
+"lv": "C2",
+"ru": "декларация",
+"en": "declaration",
+"fr": "déclaration"
+},
+{
+"a": "ուլտիմատում",
+"lv": "C2",
+"ru": "ультиматум",
+"en": "ultimatum",
+"fr": "ultimatum"
+},
+{
+"a": "էքստրադիցիա",
+"lv": "C2",
+"ru": "экстрадиция",
+"en": "extradition",
+"fr": "extradition"
+},
+{
+"a": "քաղաքական ապաստան",
+"lv": "C2",
+"ru": "политическое убежище",
+"en": "political asylum",
+"fr": "asile politique"
+},
+{
+"a": "դիվանագիտական անձեռնմխելիություն",
+"lv": "C2",
+"ru": "дипломатический иммунитет",
+"en": "diplomatic immunity",
+"fr": "immunité diplomatique"
+},
+{
+"a": "անձեռնմխելիություն",
+"lv": "C2",
+"ru": "неприкосновенность, иммунитет",
+"en": "immunity, inviolability",
+"fr": "immunité"
+},
+{
+"a": "պերսոնա նոն գրատա",
+"lv": "C2",
+"ru": "персона нон грата",
+"en": "persona non grata",
+"fr": "persona non grata"
+},
+{
+"a": "միջազգային դատարան",
+"lv": "C2",
+"ru": "международный суд",
+"en": "international court",
+"fr": "cour internationale"
+},
+{
+"a": "Հաագայի դատարան",
+"lv": "C2",
+"ru": "Гаагский суд",
+"en": "The Hague court",
+"fr": "la Cour de La Haye"
+},
+{
+"a": "արբիտրաժ",
+"lv": "C2",
+"ru": "арбитраж",
+"en": "arbitration",
+"fr": "arbitrage"
+},
+{
+"a": "հաշտարար",
+"lv": "C2",
+"ru": "примиритель, медиатор",
+"en": "mediator",
+"fr": "médiateur"
+},
+{
+"a": "հաշտեցում",
+"lv": "C2",
+"ru": "примирение",
+"en": "reconciliation",
+"fr": "réconciliation"
+},
+{
+"a": "իրավահաջորդություն",
+"lv": "C2",
+"ru": "правопреемство",
+"en": "legal succession",
+"fr": "succession juridique"
+},
+{
+"a": "մտավոր սեփականություն",
+"lv": "C2",
+"ru": "интеллектуальная собственность",
+"en": "intellectual property",
+"fr": "propriété intellectuelle"
+},
+{
+"a": "ապրանքային նշան",
+"lv": "C2",
+"ru": "товарный знак",
+"en": "trademark",
+"fr": "marque déposée"
+},
+{
+"a": "անհատական ձեռնարկատեր",
+"lv": "C2",
+"ru": "индивидуальный предприниматель",
+"en": "sole trader",
+"fr": "entrepreneur individuel"
+},
+{
+"a": "սնանկության վարույթ",
+"lv": "C2",
+"ru": "процедура банкротства",
+"en": "bankruptcy proceedings",
+"fr": "procédure de faillite"
+},
+{
+"a": "կատարողական թերթ",
+"lv": "C2",
+"ru": "исполнительный лист",
+"en": "writ of execution",
+"fr": "titre exécutoire"
+},
+{
+"a": "հարկադիր կատարում",
+"lv": "C2",
+"ru": "принудительное исполнение",
+"en": "enforcement",
+"fr": "exécution forcée"
+},
+{
+"a": "բռնագանձում",
+"lv": "C2",
+"ru": "взыскание",
+"en": "recovery (of debts)",
+"fr": "recouvrement"
+},
+{
+"a": "առգրավում",
+"lv": "C2",
+"ru": "изъятие, конфискация",
+"en": "seizure",
+"fr": "saisie"
+},
+{
+"a": "քրեակատարողական հիմնարկ",
+"lv": "C2",
+"ru": "исправительное учреждение",
+"en": "penitentiary",
+"fr": "établissement pénitentiaire"
+},
+{
+"a": "պրոբացիա",
+"lv": "C2",
+"ru": "пробация",
+"en": "probation",
+"fr": "probation"
+},
+{
+"a": "վաղաժամկետ ազատում",
+"lv": "C2",
+"ru": "условно-досрочное освобождение",
+"en": "parole",
+"fr": "libération conditionnelle"
+},
+{
+"a": "ռեաբիլիտացում",
+"lv": "C2",
+"ru": "реабилитация (юр.)",
+"en": "rehabilitation (legal)",
+"fr": "réhabilitation"
+},
+{
+"a": "անձնական տվյալների պաշտպանություն",
+"lv": "C2",
+"ru": "защита персональных данных",
+"en": "data protection",
+"fr": "protection des données"
+},
+{
+"a": "գաղտնիության իրավունք",
+"lv": "C2",
+"ru": "право на неприкосновенность частной жизни",
+"en": "right to privacy",
+"fr": "droit à la vie privée"
+},
+{
+"a": "իրավախորհրդատու",
+"lv": "C2",
+"ru": "юрисконсульт",
+"en": "legal adviser",
+"fr": "conseiller juridique"
+},
+{
+"a": "հնչույթ",
+"lv": "C2",
+"ru": "фонема",
+"en": "phoneme",
+"fr": "phonème"
+},
+{
+"a": "ձևույթ",
+"lv": "C2",
+"ru": "морфема",
+"en": "morpheme",
+"fr": "morphème"
+},
+{
+"a": "բառույթ",
+"lv": "C2",
+"ru": "лексема",
+"en": "lexeme",
+"fr": "lexème"
+},
+{
+"a": "իմաստաբանություն",
+"lv": "C2",
+"ru": "семантика",
+"en": "semantics",
+"fr": "sémantique"
+},
+{
+"a": "գործաբանություն",
+"lv": "C2",
+"ru": "прагматика",
+"en": "pragmatics",
+"fr": "pragmatique"
+},
+{
+"a": "ստուգաբանություն",
+"lv": "C2",
+"ru": "этимология",
+"en": "etymology",
+"fr": "étymologie"
+},
+{
+"a": "բառարանագրություն",
+"lv": "C2",
+"ru": "лексикография",
+"en": "lexicography",
+"fr": "lexicographie"
+},
+{
+"a": "բարբառագիտություն",
+"lv": "C2",
+"ru": "диалектология",
+"en": "dialectology",
+"fr": "dialectologie"
+},
+{
+"a": "համեմատական լեզվաբանություն",
+"lv": "C2",
+"ru": "сравнительное языкознание",
+"en": "comparative linguistics",
+"fr": "linguistique comparée"
+},
+{
+"a": "հնդեվրոպական լեզուներ",
+"lv": "C2",
+"ru": "индоевропейские языки",
+"en": "Indo-European languages",
+"fr": "langues indo-européennes"
+},
+{
+"a": "լեզվաընտանիք",
+"lv": "C2",
+"ru": "языковая семья",
+"en": "language family",
+"fr": "famille de langues"
+},
+{
+"a": "լեզվախումբ",
+"lv": "C2",
+"ru": "языковая группа",
+"en": "language group",
+"fr": "groupe linguistique"
+},
+{
+"a": "օտարաբանություն",
+"lv": "C2",
+"ru": "иноязычное заимствование",
+"en": "foreign borrowing",
+"fr": "pérégrinisme"
+},
+{
+"a": "նորաբանություն",
+"lv": "C2",
+"ru": "неологизм",
+"en": "neologism",
+"fr": "néologisme"
+},
+{
+"a": "հնաբանություն",
+"lv": "C2",
+"ru": "архаизм",
+"en": "archaism",
+"fr": "archaïsme"
+},
+{
+"a": "տերմինաբանություն",
+"lv": "C2",
+"ru": "терминология",
+"en": "terminology",
+"fr": "terminologie"
+},
+{
+"a": "բառաբարդում",
+"lv": "C2",
+"ru": "словосложение",
+"en": "compounding",
+"fr": "composition"
+},
+{
+"a": "բառակազմություն",
+"lv": "C2",
+"ru": "словообразование",
+"en": "word formation",
+"fr": "formation des mots"
+},
+{
+"a": "ածանցում",
+"lv": "C2",
+"ru": "аффиксация",
+"en": "affixation",
+"fr": "dérivation"
+},
+{
+"a": "վերջավորություն",
+"lv": "C2",
+"ru": "окончание",
+"en": "ending",
+"fr": "désinence"
+},
+{
+"a": "թեքում",
+"lv": "C2",
+"ru": "словоизменение",
+"en": "inflection",
+"fr": "flexion"
+},
+{
+"a": "խոնարհում",
+"lv": "C2",
+"ru": "спряжение",
+"en": "conjugation",
+"fr": "conjugaison"
+},
+{
+"a": "հոլովում",
+"lv": "C2",
+"ru": "склонение",
+"en": "declension",
+"fr": "déclinaison"
+},
+{
+"a": "կերպ",
+"lv": "C2",
+"ru": "вид, способ",
+"en": "aspect, manner",
+"fr": "aspect"
+},
+{
+"a": "ժամանակաձև",
+"lv": "C2",
+"ru": "временная форма",
+"en": "tense form",
+"fr": "temps verbal"
+},
+{
+"a": "ներգործական սեռ",
+"lv": "C2",
+"ru": "действительный залог",
+"en": "active voice",
+"fr": "voix active"
+},
+{
+"a": "կրավորական սեռ",
+"lv": "C2",
+"ru": "страдательный залог",
+"en": "passive voice",
+"fr": "voix passive"
+},
+{
+"a": "սահմանական եղանակ",
+"lv": "C2",
+"ru": "изъявительное наклонение",
+"en": "indicative mood",
+"fr": "indicatif"
+},
+{
+"a": "ըղձական եղանակ",
+"lv": "C2",
+"ru": "желательное наклонение",
+"en": "optative mood",
+"fr": "optatif"
+},
+{
+"a": "հրամայական եղանակ",
+"lv": "C2",
+"ru": "повелительное наклонение",
+"en": "imperative mood",
+"fr": "impératif"
+},
+{
+"a": "պայմանական եղանակ",
+"lv": "C2",
+"ru": "условное наклонение",
+"en": "conditional mood",
+"fr": "conditionnel"
+},
+{
+"a": "դերբայ",
+"lv": "C2",
+"ru": "причастие, деепричастие",
+"en": "participle",
+"fr": "participe"
+},
+{
+"a": "անորոշ դերբայ",
+"lv": "C2",
+"ru": "инфинитив",
+"en": "infinitive",
+"fr": "infinitif"
+},
+{
+"a": "հարակատար դերբայ",
+"lv": "C2",
+"ru": "перфектное причастие",
+"en": "perfect participle",
+"fr": "participe parfait"
+},
+{
+"a": "ենթակայական դերբայ",
+"lv": "C2",
+"ru": "субъектное причастие",
+"en": "subject participle",
+"fr": "participe actif"
+},
+{
+"a": "հոմանիշություն",
+"lv": "C2",
+"ru": "синонимия",
+"en": "synonymy",
+"fr": "synonymie"
+},
+{
+"a": "բազմիմաստություն",
+"lv": "C2",
+"ru": "многозначность",
+"en": "polysemy",
+"fr": "polysémie"
+},
+{
+"a": "տրամաբանական շեշտ",
+"lv": "C2",
+"ru": "логическое ударение",
+"en": "logical stress",
+"fr": "accent logique"
+},
+{
+"a": "տառադարձում",
+"lv": "C2",
+"ru": "транслитерация",
+"en": "transliteration",
+"fr": "translittération"
+},
+{
+"a": "թարգմանաբանություն",
+"lv": "C2",
+"ru": "переводоведение",
+"en": "translation studies",
+"fr": "traductologie"
 }
 ]

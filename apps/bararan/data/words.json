@@ -16154,6 +16154,13 @@
 "repetition",
 "🔁",
 "répétition"
+],
+[
+"ցուցակ",
+"список",
+"list",
+"📝",
+"liste"
 ]
 ],
 "fr": "Mots utiles"
@@ -41933,6 +41940,303 @@
 "fr": "Être et avoir : expressions"
 },
 {
+"lv": "B1",
+"ru": "Техника и электроника",
+"en": "Appliances and electronics",
+"hy": "Տեխնիկա և էլեկտրոնիկա",
+"ic": "🔌",
+"w": [
+[
+"պուլտ",
+"пульт",
+"remote control",
+"🎛️",
+"télécommande"
+],
+[
+"ռոբոտ փոշեկուլ",
+"робот-пылесос",
+"robot vacuum",
+"",
+"aspirateur robot"
+],
+[
+"սրճեփ մեքենա",
+"кофемашина",
+"coffee machine",
+"☕",
+"machine à café"
+],
+[
+"օդի խոնավեցուցիչ",
+"увлажнитель воздуха",
+"humidifier",
+"",
+"humidificateur"
+],
+[
+"օդի մաքրիչ",
+"очиститель воздуха",
+"air purifier",
+"",
+"purificateur d'air"
+],
+[
+"լուսատու",
+"светильник",
+"light fitting",
+"💡",
+"luminaire"
+],
+[
+"սեղանի լամպ",
+"настольная лампа",
+"desk lamp",
+"",
+"lampe de bureau"
+],
+[
+"գիշերային լամպ",
+"ночник",
+"night light",
+"",
+"veilleuse"
+],
+[
+"երկարացման լար",
+"удлинитель",
+"extension cord",
+"",
+"rallonge"
+],
+[
+"լարային",
+"проводной",
+"wired",
+"",
+"filaire"
+],
+[
+"փաուերբանկ",
+"пауэрбанк",
+"power bank",
+"🔋",
+"batterie externe"
+],
+[
+"անլար ականջակալ",
+"беспроводные наушники",
+"wireless earphones",
+"🎧",
+"écouteurs sans fil"
+],
+[
+"խելացի տուն",
+"умный дом",
+"smart home",
+"🏠",
+"maison connectée"
+],
+[
+"խելացի բարձրախոս",
+"умная колонка",
+"smart speaker",
+"",
+"enceinte connectée"
+],
+[
+"ձայնային օգնական",
+"голосовой помощник",
+"voice assistant",
+"",
+"assistant vocal"
+],
+[
+"տեսահսկման տեսախցիկ",
+"камера видеонаблюдения",
+"security camera",
+"📹",
+"caméra de surveillance"
+],
+[
+"ազդանշանային համակարգ",
+"сигнализация",
+"alarm system",
+"🚨",
+"système d'alarme"
+],
+[
+"դոմոֆոն",
+"домофон",
+"intercom",
+"",
+"interphone"
+],
+[
+"տեսադոմոֆոն",
+"видеодомофон",
+"video intercom",
+"",
+"visiophone"
+],
+[
+"լուսադիոդային լամպ",
+"светодиодная лампа",
+"LED bulb",
+"",
+"ampoule LED"
+],
+[
+"էներգախնայող լամպ",
+"энергосберегающая лампа",
+"energy-saving bulb",
+"",
+"ampoule basse consommation"
+],
+[
+"արևային մարտկոց",
+"солнечная батарея",
+"solar cell",
+"",
+"cellule solaire"
+],
+[
+"կենցաղային տեխնիկա",
+"бытовая техника",
+"household appliances",
+"",
+"électroménager"
+],
+[
+"էլեկտրոնիկա",
+"электроника",
+"electronics",
+"",
+"électronique"
+],
+[
+"կառավարման վահանակ",
+"панель управления",
+"control panel",
+"",
+"tableau de commande"
+],
+[
+"սենսորային էկրան",
+"сенсорный экран",
+"touchscreen",
+"",
+"écran tactile"
+],
+[
+"լուծաչափ",
+"разрешение (экрана)",
+"resolution",
+"",
+"résolution"
+],
+[
+"պիքսել",
+"пиксель",
+"pixel",
+"",
+"pixel"
+],
+[
+"լազերային տպիչ",
+"лазерный принтер",
+"laser printer",
+"",
+"imprimante laser"
+],
+[
+"շիթային տպիչ",
+"струйный принтер",
+"inkjet printer",
+"",
+"imprimante à jet d'encre"
+],
+[
+"քարթրիջ",
+"картридж",
+"cartridge",
+"",
+"cartouche"
+],
+[
+"ֆաքս",
+"факс",
+"fax",
+"📠",
+"fax"
+],
+[
+"ֆոտոխցիկ",
+"фотоаппарат",
+"camera",
+"📷",
+"appareil photo"
+],
+[
+"եռոտանի",
+"штатив",
+"tripod",
+"",
+"trépied"
+],
+[
+"ֆլեշ",
+"вспышка",
+"flash",
+"",
+"flash"
+],
+[
+"հիշողության քարտ",
+"карта памяти",
+"memory card",
+"",
+"carte mémoire"
+],
+[
+"ձայնագրիչ",
+"диктофон",
+"voice recorder",
+"🎙️",
+"dictaphone"
+],
+[
+"ռադիոընդունիչ",
+"радиоприёмник",
+"radio receiver",
+"📻",
+"poste de radio"
+],
+[
+"ֆիքսված հեռախոս",
+"стационарный телефон",
+"landline",
+"☎️",
+"téléphone fixe"
+],
+[
+"բջջային հեռախոս",
+"мобильный телефон",
+"mobile phone",
+"📱",
+"téléphone portable"
+],
+[
+"ՍԻՄ քարտ",
+"сим-карта",
+"SIM card",
+"",
+"carte SIM"
+]
+],
+"fr": "Électroménager et électronique"
+},
+{
 "lv": "B2",
 "ru": "Личность и психология",
 "en": "Personality and psychology",
@@ -55258,6 +55562,600 @@
 "fr": "Verbes : à nouveau"
 },
 {
+"lv": "B2",
+"ru": "Промышленность и энергетика",
+"en": "Industry and energy",
+"hy": "Արդյունաբերություն և էներգետիկա",
+"ic": "🏭",
+"w": [
+[
+"ծանր արդյունաբերություն",
+"тяжёлая промышленность",
+"heavy industry",
+"",
+"industrie lourde"
+],
+[
+"թեթև արդյունաբերություն",
+"лёгкая промышленность",
+"light industry",
+"",
+"industrie légère"
+],
+[
+"մեքենաշինություն",
+"машиностроение",
+"mechanical engineering",
+"",
+"construction mécanique"
+],
+[
+"մետաղագործություն",
+"металлургия",
+"metallurgy",
+"",
+"métallurgie"
+],
+[
+"հանքարդյունաբերություն",
+"горнодобывающая промышленность",
+"mining industry",
+"",
+"industrie minière"
+],
+[
+"հանքափոր",
+"шахтёр",
+"miner",
+"⛏️",
+"mineur"
+],
+[
+"քարհանք",
+"каменоломня",
+"quarry",
+"",
+"carrière"
+],
+[
+"պայթեցում",
+"взрывные работы",
+"blasting",
+"",
+"dynamitage"
+],
+[
+"հորատում",
+"бурение",
+"drilling",
+"",
+"forage"
+],
+[
+"արդյունահանում",
+"добыча",
+"extraction",
+"",
+"extraction"
+],
+[
+"ձուլարան",
+"литейный цех",
+"foundry",
+"",
+"fonderie"
+],
+[
+"պողպատաձուլություն",
+"сталеварение",
+"steelmaking",
+"",
+"aciérie"
+],
+[
+"գլանվածք",
+"прокат",
+"rolled metal",
+"",
+"laminé"
+],
+[
+"խառատ",
+"токарь",
+"turner (lathe operator)",
+"",
+"tourneur"
+],
+[
+"հաստոց",
+"станок",
+"machine tool",
+"",
+"machine-outil"
+],
+[
+"եռակցում",
+"сварка",
+"welding",
+"",
+"soudage"
+],
+[
+"եռակցող",
+"сварщик",
+"welder",
+"👨‍🏭",
+"soudeur"
+],
+[
+"զոդում",
+"пайка",
+"soldering",
+"",
+"brasage"
+],
+[
+"զոդիչ",
+"паяльник",
+"soldering iron",
+"",
+"fer à souder"
+],
+[
+"դարբնոց",
+"кузница",
+"forge, smithy",
+"",
+"forge"
+],
+[
+"մամլիչ",
+"пресс",
+"press",
+"",
+"presse"
+],
+[
+"հոսքագիծ",
+"конвейерная линия",
+"assembly line",
+"",
+"chaîne de montage"
+],
+[
+"պահեստավորում",
+"складирование",
+"warehousing",
+"",
+"entreposage"
+],
+[
+"բեռնիչ",
+"погрузчик",
+"loader",
+"",
+"chargeur"
+],
+[
+"փոխակրիչ",
+"транспортёр, конвейер",
+"conveyor",
+"",
+"convoyeur"
+],
+[
+"պատրաստի արտադրանք",
+"готовая продукция",
+"finished goods",
+"",
+"produits finis"
+],
+[
+"կիսաֆաբրիկատ",
+"полуфабрикат",
+"semi-finished product",
+"",
+"produit semi-fini"
+],
+[
+"խոտան",
+"брак (продукции)",
+"defective goods",
+"",
+"rebut"
+],
+[
+"որակի հսկողություն",
+"контроль качества",
+"quality control",
+"",
+"contrôle qualité"
+],
+[
+"անվտանգության տեխնիկա",
+"техника безопасности",
+"safety rules",
+"",
+"règles de sécurité"
+],
+[
+"աշխատանքի պաշտպանություն",
+"охрана труда",
+"occupational safety",
+"",
+"sécurité au travail"
+],
+[
+"արտադրական վնասվածք",
+"производственная травма",
+"industrial injury",
+"",
+"accident du travail"
+],
+[
+"գիշերային հերթափոխ",
+"ночная смена",
+"night shift",
+"🌙",
+"équipe de nuit"
+],
+[
+"աշխատավարձի բարձրացում",
+"повышение зарплаты",
+"pay rise",
+"",
+"augmentation de salaire"
+],
+[
+"էներգետիկա",
+"энергетика",
+"power industry",
+"⚡",
+"énergie"
+],
+[
+"էլեկտրացանց",
+"электросеть",
+"power grid",
+"",
+"réseau électrique"
+],
+[
+"ենթակայան",
+"подстанция",
+"substation",
+"",
+"sous-station"
+],
+[
+"տրանսֆորմատոր",
+"трансформатор",
+"transformer",
+"",
+"transformateur"
+],
+[
+"էլեկտրահաղորդման գիծ",
+"линия электропередачи",
+"power line",
+"",
+"ligne électrique"
+],
+[
+"գազատար",
+"газопровод",
+"gas pipeline",
+"",
+"gazoduc"
+],
+[
+"նավթատար",
+"нефтепровод",
+"oil pipeline",
+"",
+"oléoduc"
+],
+[
+"նավթավերամշակման գործարան",
+"нефтеперерабатывающий завод",
+"oil refinery",
+"",
+"raffinerie"
+],
+[
+"նավթահոր",
+"нефтяная скважина",
+"oil well",
+"",
+"puits de pétrole"
+],
+[
+"գազի հանքավայր",
+"газовое месторождение",
+"gas field",
+"",
+"gisement de gaz"
+],
+[
+"ածխահանք",
+"угольная шахта",
+"coal mine",
+"",
+"mine de charbon"
+],
+[
+"քիմիական արդյունաբերություն",
+"химическая промышленность",
+"chemical industry",
+"",
+"industrie chimique"
+],
+[
+"դեղագործական արդյունաբերություն",
+"фармацевтическая промышленность",
+"pharmaceutical industry",
+"",
+"industrie pharmaceutique"
+],
+[
+"տեքստիլ արդյունաբերություն",
+"текстильная промышленность",
+"textile industry",
+"",
+"industrie textile"
+],
+[
+"սննդի արդյունաբերություն",
+"пищевая промышленность",
+"food industry",
+"",
+"industrie agroalimentaire"
+],
+[
+"շինանյութ",
+"стройматериал",
+"building material",
+"",
+"matériau de construction"
+]
+],
+"fr": "Industrie et énergie"
+},
+{
+"lv": "B2",
+"ru": "Язык, перевод, пунктуация",
+"en": "Language, translation, punctuation",
+"hy": "Լեզու, թարգմանություն, կետադրություն",
+"ic": "✍️",
+"w": [
+[
+"պետական լեզու",
+"государственный язык",
+"state language",
+"",
+"langue d'État"
+],
+[
+"պաշտոնական լեզու",
+"официальный язык",
+"official language",
+"",
+"langue officielle"
+],
+[
+"գրական լեզու",
+"литературный язык",
+"literary language",
+"",
+"langue littéraire"
+],
+[
+"խոսակցական լեզու",
+"разговорный язык",
+"colloquial language",
+"",
+"langue parlée"
+],
+[
+"ժարգոն",
+"жаргон",
+"jargon",
+"",
+"jargon"
+],
+[
+"սլենգ",
+"сленг",
+"slang",
+"",
+"argot"
+],
+[
+"արգո",
+"арго",
+"argot",
+"",
+"argot"
+],
+[
+"խոսվածք",
+"говор",
+"local dialect",
+"",
+"parler"
+],
+[
+"տերմին",
+"термин",
+"term",
+"",
+"terme"
+],
+[
+"հապավում",
+"аббревиатура",
+"abbreviation, acronym",
+"",
+"sigle"
+],
+[
+"կրճատում",
+"сокращение",
+"shortening, cut",
+"",
+"abréviation"
+],
+[
+"սեռ",
+"пол, род, залог",
+"sex, gender, voice",
+"",
+"genre"
+],
+[
+"ուղիղ իմաստ",
+"прямое значение",
+"literal meaning",
+"",
+"sens propre"
+],
+[
+"փոխաբերական իմաստ",
+"переносное значение",
+"figurative meaning",
+"",
+"sens figuré"
+],
+[
+"ենթատեքստ",
+"подтекст",
+"subtext",
+"",
+"sous-entendu"
+],
+[
+"առոգանություն",
+"произношение, акцент",
+"pronunciation, accent",
+"",
+"accent"
+],
+[
+"բանավոր թարգմանություն",
+"устный перевод",
+"interpreting",
+"",
+"interprétation"
+],
+[
+"համաժամանակյա թարգմանություն",
+"синхронный перевод",
+"simultaneous interpreting",
+"",
+"interprétation simultanée"
+],
+[
+"գրավոր թարգմանություն",
+"письменный перевод",
+"written translation",
+"",
+"traduction écrite"
+],
+[
+"բնագիր",
+"подлинник",
+"original text",
+"",
+"texte original"
+],
+[
+"տպագիր",
+"печатный",
+"printed",
+"",
+"imprimé"
+],
+[
+"կետադրական նշան",
+"знак препинания",
+"punctuation mark",
+"",
+"signe de ponctuation"
+],
+[
+"ստորակետ",
+"запятая",
+"comma",
+"",
+"virgule"
+],
+[
+"վերջակետ",
+"точка (армянская ։)",
+"full stop",
+"",
+"point"
+],
+[
+"հարցական նշան",
+"вопросительный знак",
+"question mark",
+"❓",
+"point d'interrogation"
+],
+[
+"բացականչական նշան",
+"восклицательный знак",
+"exclamation mark",
+"❗",
+"point d'exclamation"
+],
+[
+"միջակետ",
+"двоеточие (армянская точка .)",
+"colon",
+"",
+"deux-points"
+],
+[
+"չակերտներ",
+"кавычки",
+"quotation marks",
+"",
+"guillemets"
+],
+[
+"փակագծեր",
+"скобки",
+"brackets",
+"",
+"parenthèses"
+],
+[
+"գծիկ",
+"тире",
+"dash",
+"",
+"tiret"
+],
+[
+"միության գծիկ",
+"дефис",
+"hyphen",
+"",
+"trait d'union"
+],
+[
+"ապաթարց",
+"апостроф",
+"apostrophe",
+"",
+"apostrophe"
+]
+],
+"fr": "Langue, traduction, ponctuation"
+},
+{
 "lv": "C1",
 "ru": "Философия и абстракции",
 "en": "Philosophy and abstractions",
@@ -62077,6 +62975,803 @@
 "fr": "Finance C1 2"
 },
 {
+"lv": "C1",
+"ru": "Психология 2",
+"en": "Psychology 2",
+"hy": "Հոգեբանություն 2",
+"ic": "🧠",
+"w": [
+[
+"անձնավորություն",
+"личность",
+"personality, individual",
+"",
+"personnalité"
+],
+[
+"ինքնադրսևորում",
+"самовыражение",
+"self-expression",
+"",
+"expression de soi"
+],
+[
+"ինքնաիրացում",
+"самореализация",
+"self-fulfilment",
+"",
+"accomplissement de soi"
+],
+[
+"ինքնակարգապահություն",
+"самодисциплина",
+"self-discipline",
+"",
+"autodiscipline"
+],
+[
+"ինքնահաստատում",
+"самоутверждение",
+"self-assertion",
+"",
+"affirmation de soi"
+],
+[
+"ինքնախաբեություն",
+"самообман",
+"self-deception",
+"",
+"illusion sur soi-même"
+],
+[
+"ինքնաքննադատություն",
+"самокритика",
+"self-criticism",
+"",
+"autocritique"
+],
+[
+"ինքնաոչնչացում",
+"самоуничтожение",
+"self-destruction",
+"",
+"autodestruction"
+],
+[
+"ինքնասպանություն",
+"самоубийство",
+"suicide",
+"",
+"suicide"
+],
+[
+"ինքնապաշտպանություն",
+"самооборона",
+"self-defence",
+"",
+"légitime défense"
+],
+[
+"ինքնաբավություն",
+"самодостаточность",
+"self-sufficiency",
+"",
+"autosuffisance"
+],
+[
+"ինքնուրույնություն",
+"самостоятельность",
+"independence",
+"",
+"autonomie"
+],
+[
+"ինքնակրթություն",
+"самообразование",
+"self-education",
+"",
+"autodidaxie"
+],
+[
+"ինքնասպասարկում",
+"самообслуживание",
+"self-service",
+"",
+"libre-service"
+],
+[
+"ինքնագիր",
+"автограф",
+"autograph",
+"✍️",
+"autographe"
+],
+[
+"ինքնահավան",
+"самодовольный",
+"smug",
+"",
+"suffisant"
+],
+[
+"ինքնասեր",
+"самолюбивый",
+"vain, proud",
+"",
+"orgueilleux"
+],
+[
+"ինքնաբերաբար",
+"автоматически, самопроизвольно",
+"automatically",
+"",
+"automatiquement"
+],
+[
+"ինքնին",
+"само по себе",
+"in itself",
+"",
+"en soi"
+],
+[
+"ինքնըստինքյան",
+"само собой",
+"by itself",
+"",
+"de soi-même"
+],
+[
+"սթրեսակայունություն",
+"стрессоустойчивость",
+"stress resistance",
+"",
+"résistance au stress"
+],
+[
+"հոգեվնասվածք",
+"психотравма",
+"trauma",
+"",
+"traumatisme"
+],
+[
+"ֆոբիա",
+"фобия",
+"phobia",
+"",
+"phobie"
+],
+[
+"մոլուցք",
+"мания, одержимость",
+"obsession, mania",
+"",
+"obsession"
+],
+[
+"խաղամոլություն",
+"игромания",
+"gambling addiction",
+"",
+"addiction au jeu"
+],
+[
+"ալկոհոլիզմ",
+"алкоголизм",
+"alcoholism",
+"",
+"alcoolisme"
+],
+[
+"թմրամոլություն",
+"наркомания",
+"drug addiction",
+"",
+"toxicomanie"
+],
+[
+"ինտրովերտ",
+"интроверт",
+"introvert",
+"",
+"introverti"
+],
+[
+"էքստրավերտ",
+"экстраверт",
+"extrovert",
+"",
+"extraverti"
+],
+[
+"էմպաթիա",
+"эмпатия",
+"empathy",
+"",
+"empathie"
+],
+[
+"ինտելեկտի գործակից",
+"коэффициент интеллекта",
+"IQ",
+"",
+"QI"
+],
+[
+"հուզական բանականություն",
+"эмоциональный интеллект",
+"emotional intelligence",
+"",
+"intelligence émotionnelle"
+],
+[
+"ճանաչողական",
+"когнитивный",
+"cognitive",
+"",
+"cognitif"
+],
+[
+"վարքային",
+"поведенческий",
+"behavioural",
+"",
+"comportemental"
+],
+[
+"հոգեկան առողջություն",
+"психическое здоровье",
+"mental health",
+"",
+"santé mentale"
+],
+[
+"հոգեկան խանգարում",
+"психическое расстройство",
+"mental disorder",
+"",
+"trouble mental"
+],
+[
+"տրամադրության անկում",
+"упадок настроения",
+"low mood",
+"",
+"baisse de moral"
+],
+[
+"ապատիա",
+"апатия",
+"apathy",
+"",
+"apathie"
+],
+[
+"էյֆորիա",
+"эйфория",
+"euphoria",
+"",
+"euphorie"
+],
+[
+"խռովք",
+"смятение",
+"agitation, turmoil",
+"",
+"trouble"
+],
+[
+"հուզմունք",
+"волнение",
+"excitement, emotion",
+"",
+"émotion"
+],
+[
+"ինքնազսպում",
+"самообладание",
+"self-restraint",
+"",
+"maîtrise de soi"
+],
+[
+"բռնկում",
+"вспышка",
+"outburst",
+"",
+"accès de colère"
+],
+[
+"բռնկուն",
+"вспыльчивый",
+"hot-tempered",
+"",
+"emporté"
+],
+[
+"անհավասարակշիռ",
+"неуравновешенный",
+"unbalanced",
+"",
+"instable"
+],
+[
+"ճկունություն",
+"гибкость",
+"flexibility",
+"",
+"souplesse"
+],
+[
+"պաշտպանական մեխանիզմ",
+"защитный механизм",
+"defence mechanism",
+"",
+"mécanisme de défense"
+],
+[
+"ժխտողականություն",
+"негативизм",
+"negativism",
+"",
+"négativisme"
+],
+[
+"պրոյեկցիա",
+"проекция",
+"projection",
+"",
+"projection"
+],
+[
+"ռեգրեսիա",
+"регрессия",
+"regression",
+"",
+"régression"
+],
+[
+"սուբլիմացիա",
+"сублимация",
+"sublimation",
+"",
+"sublimation"
+],
+[
+"ռացիոնալիզացիա",
+"рационализация",
+"rationalization",
+"",
+"rationalisation"
+]
+],
+"fr": "Psychologie 2"
+},
+{
+"lv": "C1",
+"ru": "Программирование",
+"en": "Programming",
+"hy": "Ծրագրավորում",
+"ic": "👨‍💻",
+"w": [
+[
+"ելակետային կոդ",
+"исходный код",
+"source code",
+"",
+"code source"
+],
+[
+"կոմպիլյատոր",
+"компилятор",
+"compiler",
+"",
+"compilateur"
+],
+[
+"ինտերպրետատոր",
+"интерпретатор",
+"interpreter",
+"",
+"interpréteur"
+],
+[
+"ֆրեյմվորք",
+"фреймворк",
+"framework",
+"",
+"framework"
+],
+[
+"հատկություն",
+"свойство",
+"property, attribute",
+"",
+"propriété"
+],
+[
+"ժառանգում",
+"наследование",
+"inheritance",
+"",
+"héritage"
+],
+[
+"ինկապսուլյացիա",
+"инкапсуляция",
+"encapsulation",
+"",
+"encapsulation"
+],
+[
+"բուլյան",
+"булев тип",
+"Boolean",
+"",
+"booléen"
+],
+[
+"ռեկուրսիա",
+"рекурсия",
+"recursion",
+"",
+"récursivité"
+],
+[
+"տվյալների կառուցվածք",
+"структура данных",
+"data structure",
+"",
+"structure de données"
+],
+[
+"գրաֆ",
+"граф",
+"graph",
+"",
+"graphe"
+],
+[
+"կույտ",
+"куча, груда",
+"heap, pile",
+"",
+"tas"
+],
+[
+"հեշ աղյուսակ",
+"хеш-таблица",
+"hash table",
+"",
+"table de hachage"
+],
+[
+"հարցում",
+"запрос, опрос",
+"query, request, survey",
+"",
+"requête"
+],
+[
+"առաջնային բանալի",
+"первичный ключ",
+"primary key",
+"",
+"clé primaire"
+],
+[
+"ինդեքս",
+"индекс",
+"index",
+"",
+"index"
+],
+[
+"միկրոծառայություն",
+"микросервис",
+"microservice",
+"",
+"microservice"
+],
+[
+"ամպային հաշվարկ",
+"облачные вычисления",
+"cloud computing",
+"☁️",
+"informatique en nuage"
+],
+[
+"վիրտուալ մեքենա",
+"виртуальная машина",
+"virtual machine",
+"",
+"machine virtuelle"
+],
+[
+"կոնտեյներ",
+"контейнер",
+"container",
+"",
+"conteneur"
+],
+[
+"տեղակայում",
+"развёртывание",
+"deployment",
+"",
+"déploiement"
+],
+[
+"տարբերակների կառավարում",
+"контроль версий",
+"version control",
+"",
+"gestion de versions"
+],
+[
+"կոմիթ",
+"коммит",
+"commit",
+"",
+"commit"
+],
+[
+"պահոց",
+"хранилище, репозиторий",
+"repository, storage",
+"",
+"dépôt"
+],
+[
+"թեստավորում",
+"тестирование",
+"testing",
+"",
+"test"
+],
+[
+"միավորային թեստ",
+"модульный тест",
+"unit test",
+"",
+"test unitaire"
+],
+[
+"ինտեգրացիոն թեստ",
+"интеграционный тест",
+"integration test",
+"",
+"test d'intégration"
+],
+[
+"վրիպազերծում",
+"отладка",
+"debugging",
+"",
+"débogage"
+],
+[
+"վրիպազերծիչ",
+"отладчик",
+"debugger",
+"",
+"débogueur"
+],
+[
+"տեղեկամատյան",
+"журнал (логов)",
+"log",
+"",
+"journal"
+],
+[
+"կատարողականություն",
+"производительность",
+"performance",
+"",
+"performance"
+],
+[
+"օպտիմալացում",
+"оптимизация",
+"optimization",
+"",
+"optimisation"
+],
+[
+"մասշտաբավորում",
+"масштабирование",
+"scaling",
+"",
+"mise à l'échelle"
+],
+[
+"բեռնվածություն",
+"нагрузка",
+"load",
+"",
+"charge"
+],
+[
+"խափանում",
+"сбой",
+"failure, outage",
+"",
+"panne"
+],
+[
+"խոցելիություն",
+"уязвимость",
+"vulnerability",
+"",
+"vulnérabilité"
+],
+[
+"նույնականացում",
+"идентификация, аутентификация",
+"authentication",
+"",
+"authentification"
+],
+[
+"թոքեն",
+"токен",
+"token",
+"",
+"jeton"
+],
+[
+"կիբեռհարձակում",
+"кибератака",
+"cyberattack",
+"",
+"cyberattaque"
+],
+[
+"ֆիշինգ",
+"фишинг",
+"phishing",
+"🎣",
+"hameçonnage"
+],
+[
+"չարամիտ ծրագիր",
+"вредоносная программа",
+"malware",
+"",
+"logiciel malveillant"
+],
+[
+"փրկագին պահանջող ծրագիր",
+"программа-вымогатель",
+"ransomware",
+"",
+"rançongiciel"
+],
+[
+"հրապատ",
+"брандмауэр",
+"firewall",
+"🧱",
+"pare-feu"
+],
+[
+"վիրտուալ մասնավոր ցանց",
+"VPN",
+"VPN",
+"",
+"VPN"
+],
+[
+"տիրույթի անուն",
+"доменное имя",
+"domain name",
+"",
+"nom de domaine"
+],
+[
+"հոսթինգ",
+"хостинг",
+"hosting",
+"",
+"hébergement"
+],
+[
+"կայքի հասցե",
+"адрес сайта",
+"web address",
+"",
+"adresse du site"
+],
+[
+"սերտիֆիկատ",
+"сертификат",
+"certificate",
+"",
+"certificat"
+],
+[
+"բաց կոդ",
+"открытый код",
+"open source",
+"",
+"code ouvert"
+],
+[
+"ծրագրային ապահովման մշակում",
+"разработка ПО",
+"software development",
+"",
+"développement logiciel"
+],
+[
+"ծրագրավորման միջավայր",
+"среда разработки",
+"development environment",
+"",
+"environnement de développement"
+],
+[
+"տեքստային խմբագիր",
+"текстовый редактор",
+"text editor",
+"",
+"éditeur de texte"
+],
+[
+"հրամանի տող",
+"командная строка",
+"command line",
+"",
+"ligne de commande"
+],
+[
+"սկրիպտ",
+"скрипт",
+"script",
+"",
+"script"
+],
+[
+"մակրո",
+"макрос",
+"macro",
+"",
+"macro"
+],
+[
+"պլագին",
+"плагин",
+"plug-in",
+"",
+"plugin"
+],
+[
+"ընդլայնում",
+"расширение",
+"extension",
+"",
+"extension"
+],
+[
+"պատչ",
+"патч",
+"patch",
+"",
+"correctif"
+],
+[
+"թողարկում",
+"выпуск, релиз",
+"release",
+"",
+"version"
+]
+],
+"fr": "Programmation"
+},
+{
 "lv": "C2",
 "ru": "Книжная и литературная лексика",
 "en": "Bookish and literary words",
@@ -64364,5 +66059,655 @@
 ]
 ],
 "fr": "Diagnostics"
+},
+{
+"lv": "C2",
+"ru": "Право C2",
+"en": "Law C2",
+"hy": "Իրավունք C2",
+"ic": "📕",
+"w": [
+[
+"սահմանադրական իրավունք",
+"конституционное право",
+"constitutional law",
+"",
+"droit constitutionnel"
+],
+[
+"քրեական իրավունք",
+"уголовное право",
+"criminal law",
+"",
+"droit pénal"
+],
+[
+"քաղաքացիական իրավունք",
+"гражданское право",
+"civil law",
+"",
+"droit civil"
+],
+[
+"աշխատանքային իրավունք",
+"трудовое право",
+"labour law",
+"",
+"droit du travail"
+],
+[
+"ընտանեկան իրավունք",
+"семейное право",
+"family law",
+"",
+"droit de la famille"
+],
+[
+"վարչական իրավունք",
+"административное право",
+"administrative law",
+"",
+"droit administratif"
+],
+[
+"հարկային իրավունք",
+"налоговое право",
+"tax law",
+"",
+"droit fiscal"
+],
+[
+"մարդասիրական իրավունք",
+"гуманитарное право",
+"humanitarian law",
+"",
+"droit humanitaire"
+],
+[
+"իրավական պետություն",
+"правовое государство",
+"rule of law (state)",
+"",
+"État de droit"
+],
+[
+"իրավագիտակցություն",
+"правосознание",
+"legal awareness",
+"",
+"conscience juridique"
+],
+[
+"իրավասուբյեկտ",
+"субъект права",
+"legal entity",
+"",
+"sujet de droit"
+],
+[
+"իրավունակություն",
+"правоспособность",
+"legal capacity",
+"",
+"capacité juridique"
+],
+[
+"գործունակություն",
+"дееспособность",
+"capacity to act",
+"",
+"capacité d'exercice"
+],
+[
+"ապացուցման բեռ",
+"бремя доказывания",
+"burden of proof",
+"",
+"charge de la preuve"
+],
+[
+"մրցակցային դատավարություն",
+"состязательный процесс",
+"adversarial proceedings",
+"",
+"procédure contradictoire"
+],
+[
+"դատավարություն",
+"судопроизводство",
+"legal proceedings",
+"",
+"procédure judiciaire"
+],
+[
+"դատական ակտ",
+"судебный акт",
+"court decision",
+"",
+"acte judiciaire"
+],
+[
+"դատական պրակտիկա",
+"судебная практика",
+"case law",
+"",
+"jurisprudence"
+],
+[
+"նախադեպ",
+"прецедент",
+"precedent",
+"",
+"précédent"
+],
+[
+"իրավական նորմ",
+"правовая норма",
+"legal norm",
+"",
+"norme juridique"
+],
+[
+"օրենսդրական նախաձեռնություն",
+"законодательная инициатива",
+"legislative initiative",
+"",
+"initiative législative"
+],
+[
+"դենոնսացիա",
+"денонсация",
+"denunciation (of a treaty)",
+"",
+"dénonciation"
+],
+[
+"դեկլարացիա",
+"декларация",
+"declaration",
+"",
+"déclaration"
+],
+[
+"ուլտիմատում",
+"ультиматум",
+"ultimatum",
+"",
+"ultimatum"
+],
+[
+"էքստրադիցիա",
+"экстрадиция",
+"extradition",
+"",
+"extradition"
+],
+[
+"քաղաքական ապաստան",
+"политическое убежище",
+"political asylum",
+"",
+"asile politique"
+],
+[
+"դիվանագիտական անձեռնմխելիություն",
+"дипломатический иммунитет",
+"diplomatic immunity",
+"",
+"immunité diplomatique"
+],
+[
+"անձեռնմխելիություն",
+"неприкосновенность, иммунитет",
+"immunity, inviolability",
+"",
+"immunité"
+],
+[
+"պերսոնա նոն գրատա",
+"персона нон грата",
+"persona non grata",
+"",
+"persona non grata"
+],
+[
+"միջազգային դատարան",
+"международный суд",
+"international court",
+"",
+"cour internationale"
+],
+[
+"Հաագայի դատարան",
+"Гаагский суд",
+"The Hague court",
+"",
+"la Cour de La Haye"
+],
+[
+"արբիտրաժ",
+"арбитраж",
+"arbitration",
+"",
+"arbitrage"
+],
+[
+"հաշտարար",
+"примиритель, медиатор",
+"mediator",
+"",
+"médiateur"
+],
+[
+"հաշտեցում",
+"примирение",
+"reconciliation",
+"",
+"réconciliation"
+],
+[
+"իրավահաջորդություն",
+"правопреемство",
+"legal succession",
+"",
+"succession juridique"
+],
+[
+"մտավոր սեփականություն",
+"интеллектуальная собственность",
+"intellectual property",
+"",
+"propriété intellectuelle"
+],
+[
+"ապրանքային նշան",
+"товарный знак",
+"trademark",
+"™️",
+"marque déposée"
+],
+[
+"անհատական ձեռնարկատեր",
+"индивидуальный предприниматель",
+"sole trader",
+"",
+"entrepreneur individuel"
+],
+[
+"սնանկության վարույթ",
+"процедура банкротства",
+"bankruptcy proceedings",
+"",
+"procédure de faillite"
+],
+[
+"կատարողական թերթ",
+"исполнительный лист",
+"writ of execution",
+"",
+"titre exécutoire"
+],
+[
+"հարկադիր կատարում",
+"принудительное исполнение",
+"enforcement",
+"",
+"exécution forcée"
+],
+[
+"բռնագանձում",
+"взыскание",
+"recovery (of debts)",
+"",
+"recouvrement"
+],
+[
+"առգրավում",
+"изъятие, конфискация",
+"seizure",
+"",
+"saisie"
+],
+[
+"քրեակատարողական հիմնարկ",
+"исправительное учреждение",
+"penitentiary",
+"",
+"établissement pénitentiaire"
+],
+[
+"պրոբացիա",
+"пробация",
+"probation",
+"",
+"probation"
+],
+[
+"վաղաժամկետ ազատում",
+"условно-досрочное освобождение",
+"parole",
+"",
+"libération conditionnelle"
+],
+[
+"ռեաբիլիտացում",
+"реабилитация (юр.)",
+"rehabilitation (legal)",
+"",
+"réhabilitation"
+],
+[
+"անձնական տվյալների պաշտպանություն",
+"защита персональных данных",
+"data protection",
+"",
+"protection des données"
+],
+[
+"գաղտնիության իրավունք",
+"право на неприкосновенность частной жизни",
+"right to privacy",
+"",
+"droit à la vie privée"
+],
+[
+"իրավախորհրդատու",
+"юрисконсульт",
+"legal adviser",
+"",
+"conseiller juridique"
+]
+],
+"fr": "Droit C2"
+},
+{
+"lv": "C2",
+"ru": "Лингвистика",
+"en": "Linguistics",
+"hy": "Լեզվաբանություն",
+"ic": "🔤",
+"w": [
+[
+"հնչույթ",
+"фонема",
+"phoneme",
+"",
+"phonème"
+],
+[
+"ձևույթ",
+"морфема",
+"morpheme",
+"",
+"morphème"
+],
+[
+"բառույթ",
+"лексема",
+"lexeme",
+"",
+"lexème"
+],
+[
+"իմաստաբանություն",
+"семантика",
+"semantics",
+"",
+"sémantique"
+],
+[
+"գործաբանություն",
+"прагматика",
+"pragmatics",
+"",
+"pragmatique"
+],
+[
+"ստուգաբանություն",
+"этимология",
+"etymology",
+"",
+"étymologie"
+],
+[
+"բառարանագրություն",
+"лексикография",
+"lexicography",
+"",
+"lexicographie"
+],
+[
+"բարբառագիտություն",
+"диалектология",
+"dialectology",
+"",
+"dialectologie"
+],
+[
+"համեմատական լեզվաբանություն",
+"сравнительное языкознание",
+"comparative linguistics",
+"",
+"linguistique comparée"
+],
+[
+"հնդեվրոպական լեզուներ",
+"индоевропейские языки",
+"Indo-European languages",
+"",
+"langues indo-européennes"
+],
+[
+"լեզվաընտանիք",
+"языковая семья",
+"language family",
+"",
+"famille de langues"
+],
+[
+"լեզվախումբ",
+"языковая группа",
+"language group",
+"",
+"groupe linguistique"
+],
+[
+"օտարաբանություն",
+"иноязычное заимствование",
+"foreign borrowing",
+"",
+"pérégrinisme"
+],
+[
+"նորաբանություն",
+"неологизм",
+"neologism",
+"",
+"néologisme"
+],
+[
+"հնաբանություն",
+"архаизм",
+"archaism",
+"",
+"archaïsme"
+],
+[
+"տերմինաբանություն",
+"терминология",
+"terminology",
+"",
+"terminologie"
+],
+[
+"բառաբարդում",
+"словосложение",
+"compounding",
+"",
+"composition"
+],
+[
+"բառակազմություն",
+"словообразование",
+"word formation",
+"",
+"formation des mots"
+],
+[
+"ածանցում",
+"аффиксация",
+"affixation",
+"",
+"dérivation"
+],
+[
+"վերջավորություն",
+"окончание",
+"ending",
+"",
+"désinence"
+],
+[
+"թեքում",
+"словоизменение",
+"inflection",
+"",
+"flexion"
+],
+[
+"խոնարհում",
+"спряжение",
+"conjugation",
+"",
+"conjugaison"
+],
+[
+"հոլովում",
+"склонение",
+"declension",
+"",
+"déclinaison"
+],
+[
+"կերպ",
+"вид, способ",
+"aspect, manner",
+"",
+"aspect"
+],
+[
+"ժամանակաձև",
+"временная форма",
+"tense form",
+"",
+"temps verbal"
+],
+[
+"ներգործական սեռ",
+"действительный залог",
+"active voice",
+"",
+"voix active"
+],
+[
+"կրավորական սեռ",
+"страдательный залог",
+"passive voice",
+"",
+"voix passive"
+],
+[
+"սահմանական եղանակ",
+"изъявительное наклонение",
+"indicative mood",
+"",
+"indicatif"
+],
+[
+"ըղձական եղանակ",
+"желательное наклонение",
+"optative mood",
+"",
+"optatif"
+],
+[
+"հրամայական եղանակ",
+"повелительное наклонение",
+"imperative mood",
+"",
+"impératif"
+],
+[
+"պայմանական եղանակ",
+"условное наклонение",
+"conditional mood",
+"",
+"conditionnel"
+],
+[
+"դերբայ",
+"причастие, деепричастие",
+"participle",
+"",
+"participe"
+],
+[
+"անորոշ դերբայ",
+"инфинитив",
+"infinitive",
+"",
+"infinitif"
+],
+[
+"հարակատար դերբայ",
+"перфектное причастие",
+"perfect participle",
+"",
+"participe parfait"
+],
+[
+"ենթակայական դերբայ",
+"субъектное причастие",
+"subject participle",
+"",
+"participe actif"
+],
+[
+"հոմանիշություն",
+"синонимия",
+"synonymy",
+"",
+"synonymie"
+],
+[
+"բազմիմաստություն",
+"многозначность",
+"polysemy",
+"",
+"polysémie"
+],
+[
+"տրամաբանական շեշտ",
+"логическое ударение",
+"logical stress",
+"",
+"accent logique"
+],
+[
+"տառադարձում",
+"транслитерация",
+"transliteration",
+"",
+"translittération"
+],
+[
+"թարգմանաբանություն",
+"переводоведение",
+"translation studies",
+"",
+"traductologie"
+]
+],
+"fr": "Linguistique"
 }
 ]
