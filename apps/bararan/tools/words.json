@@ -19628,6 +19628,727 @@
 "fr": "nouvel an"
 },
 {
+"a": "մուգ",
+"lv": "A2",
+"ru": "тёмный (о цвете)",
+"en": "dark (colour)",
+"fr": "foncé"
+},
+{
+"a": "վառ",
+"lv": "A2",
+"ru": "яркий",
+"en": "bright, vivid",
+"fr": "vif"
+},
+{
+"a": "գունավորում",
+"lv": "A2",
+"ru": "окраска, раскраска",
+"en": "colouring",
+"fr": "coloration"
+},
+{
+"a": "սպիտակավուն",
+"lv": "A2",
+"ru": "беловатый",
+"en": "whitish",
+"fr": "blanchâtre"
+},
+{
+"a": "սևավուն",
+"lv": "A2",
+"ru": "черноватый",
+"en": "blackish",
+"fr": "noirâtre"
+},
+{
+"a": "մոխրավուն",
+"lv": "A2",
+"ru": "сероватый",
+"en": "greyish",
+"fr": "grisâtre"
+},
+{
+"a": "բրոնզագույն",
+"lv": "A2",
+"ru": "бронзовый (цвет)",
+"en": "bronze-coloured",
+"fr": "bronze"
+},
+{
+"a": "պղնձագույն",
+"lv": "A2",
+"ru": "медный (цвет)",
+"en": "copper-coloured",
+"fr": "cuivré"
+},
+{
+"a": "զմրուխտագույն",
+"lv": "A2",
+"ru": "изумрудный",
+"en": "emerald green",
+"fr": "émeraude"
+},
+{
+"a": "փիրուզագույն",
+"lv": "A2",
+"ru": "бирюзовый",
+"en": "turquoise",
+"fr": "turquoise"
+},
+{
+"a": "ծովագույն",
+"lv": "A2",
+"ru": "цвета морской волны",
+"en": "sea blue",
+"fr": "bleu marine"
+},
+{
+"a": "բաց կապույտ",
+"lv": "A2",
+"ru": "светло-синий",
+"en": "light blue",
+"fr": "bleu clair"
+},
+{
+"a": "մուգ կանաչ",
+"lv": "A2",
+"ru": "тёмно-зелёный",
+"en": "dark green",
+"fr": "vert foncé"
+},
+{
+"a": "ձիթապտղագույն",
+"lv": "A2",
+"ru": "оливковый (цвет)",
+"en": "olive green",
+"fr": "vert olive"
+},
+{
+"a": "գինեգույն",
+"lv": "A2",
+"ru": "винный, бордовый",
+"en": "burgundy",
+"fr": "bordeaux"
+},
+{
+"a": "կիտրոնագույն",
+"lv": "A2",
+"ru": "лимонный",
+"en": "lemon yellow",
+"fr": "jaune citron"
+},
+{
+"a": "ածխագույն",
+"lv": "A2",
+"ru": "угольно-чёрный",
+"en": "charcoal",
+"fr": "anthracite"
+},
+{
+"a": "կաթնագույն",
+"lv": "A2",
+"ru": "молочный",
+"en": "milky white",
+"fr": "laiteux"
+},
+{
+"a": "մարգարտագույն",
+"lv": "A2",
+"ru": "жемчужный",
+"en": "pearly",
+"fr": "nacré"
+},
+{
+"a": "ալ",
+"lv": "A2",
+"ru": "алый",
+"en": "scarlet",
+"fr": "écarlate"
+},
+{
+"a": "ալ կարմիր",
+"lv": "A2",
+"ru": "ярко-красный",
+"en": "bright red",
+"fr": "rouge vif"
+},
+{
+"a": "բոսոր",
+"lv": "A2",
+"ru": "багровый",
+"en": "crimson",
+"fr": "cramoisi"
+},
+{
+"a": "ծիրանի",
+"lv": "A2",
+"ru": "пурпурный",
+"en": "purple (royal)",
+"fr": "pourpre"
+},
+{
+"a": "լազուր",
+"lv": "A2",
+"ru": "лазурь",
+"en": "azure",
+"fr": "azur"
+},
+{
+"a": "լաջվարդ",
+"lv": "A2",
+"ru": "лазурит, ляпис-лазурь",
+"en": "lapis lazuli",
+"fr": "lapis-lazuli"
+},
+{
+"a": "գունագեղ",
+"lv": "A2",
+"ru": "красочный",
+"en": "colourful",
+"fr": "coloré"
+},
+{
+"a": "անգույն",
+"lv": "A2",
+"ru": "бесцветный",
+"en": "colourless",
+"fr": "incolore"
+},
+{
+"a": "խամրած",
+"lv": "A2",
+"ru": "выцветший",
+"en": "faded",
+"fr": "délavé"
+},
+{
+"a": "գլանաձև",
+"lv": "A2",
+"ru": "цилиндрический",
+"en": "cylindrical",
+"fr": "cylindrique"
+},
+{
+"a": "կոնաձև",
+"lv": "A2",
+"ru": "конический",
+"en": "conical",
+"fr": "conique"
+},
+{
+"a": "գնդաձև",
+"lv": "A2",
+"ru": "шарообразный",
+"en": "spherical",
+"fr": "sphérique"
+},
+{
+"a": "աստղաձև",
+"lv": "A2",
+"ru": "звёздчатый",
+"en": "star-shaped",
+"fr": "en étoile"
+},
+{
+"a": "սրտաձև",
+"lv": "A2",
+"ru": "в форме сердца",
+"en": "heart-shaped",
+"fr": "en forme de cœur"
+},
+{
+"a": "խաչաձև",
+"lv": "A2",
+"ru": "крестообразный",
+"en": "cross-shaped",
+"fr": "en croix"
+},
+{
+"a": "ալիքաձև",
+"lv": "A2",
+"ru": "волнистый",
+"en": "wavy",
+"fr": "ondulé"
+},
+{
+"a": "պարուրաձև",
+"lv": "A2",
+"ru": "спиральный",
+"en": "spiral",
+"fr": "en spirale"
+},
+{
+"a": "զիգզագ",
+"lv": "A2",
+"ru": "зигзаг",
+"en": "zigzag",
+"fr": "zigzag"
+},
+{
+"a": "անկյունային",
+"lv": "A2",
+"ru": "угловой",
+"en": "angular, corner",
+"fr": "angulaire"
+},
+{
+"a": "սրածայր",
+"lv": "A2",
+"ru": "остроконечный",
+"en": "pointed",
+"fr": "pointu"
+},
+{
+"a": "տափակ",
+"lv": "A2",
+"ru": "плоский",
+"en": "flat",
+"fr": "plat"
+},
+{
+"a": "ուռուցիկ",
+"lv": "A2",
+"ru": "выпуклый",
+"en": "convex",
+"fr": "convexe"
+},
+{
+"a": "գոգավոր",
+"lv": "A2",
+"ru": "вогнутый",
+"en": "concave",
+"fr": "concave"
+},
+{
+"a": "ծակ",
+"lv": "A2",
+"ru": "дырявый, дыра",
+"en": "holed, hole",
+"fr": "troué"
+},
+{
+"a": "ծռված",
+"lv": "A2",
+"ru": "изогнутый",
+"en": "bent",
+"fr": "tordu"
+},
+{
+"a": "շիտակ",
+"lv": "A2",
+"ru": "прямой, честный",
+"en": "straight, upright",
+"fr": "droit"
+},
+{
+"a": "թեք",
+"lv": "A2",
+"ru": "наклонный",
+"en": "slanting",
+"fr": "incliné"
+},
+{
+"a": "հորիզոնական",
+"lv": "A2",
+"ru": "горизонтальный",
+"en": "horizontal",
+"fr": "horizontal"
+},
+{
+"a": "ուղղաձիգ",
+"lv": "A2",
+"ru": "вертикальный",
+"en": "vertical",
+"fr": "vertical"
+},
+{
+"a": "անկյունագծային",
+"lv": "A2",
+"ru": "диагональный",
+"en": "diagonal",
+"fr": "diagonal"
+},
+{
+"a": "հարիչ",
+"lv": "A2",
+"ru": "венчик",
+"en": "whisk",
+"fr": "fouet"
+},
+{
+"a": "հացահատիկ",
+"lv": "A2",
+"ru": "зерно, злаки",
+"en": "grain, cereal",
+"fr": "céréales"
+},
+{
+"a": "չափիչ բաժակ",
+"lv": "A2",
+"ru": "мерный стакан",
+"en": "measuring jug",
+"fr": "verre doseur"
+},
+{
+"a": "ջեռոցի ձեռնոց",
+"lv": "A2",
+"ru": "прихватка",
+"en": "oven glove",
+"fr": "gant de cuisine"
+},
+{
+"a": "խոհանոցային սրբիչ",
+"lv": "A2",
+"ru": "кухонное полотенце",
+"en": "tea towel",
+"fr": "torchon"
+},
+{
+"a": "շշաբաց",
+"lv": "A2",
+"ru": "открывалка для бутылок",
+"en": "bottle opener",
+"fr": "décapsuleur"
+},
+{
+"a": "պահածոբաց",
+"lv": "A2",
+"ru": "консервный нож",
+"en": "can opener",
+"fr": "ouvre-boîte"
+},
+{
+"a": "խցանահան",
+"lv": "A2",
+"ru": "штопор",
+"en": "corkscrew",
+"fr": "tire-bouchon"
+},
+{
+"a": "թեյաման",
+"lv": "A2",
+"ru": "заварочный чайник",
+"en": "teapot",
+"fr": "théière"
+},
+{
+"a": "սրճաման",
+"lv": "A2",
+"ru": "кофейник",
+"en": "coffee pot",
+"fr": "cafetière"
+},
+{
+"a": "ջազվե",
+"lv": "A2",
+"ru": "джезва, турка",
+"en": "cezve (coffee pot)",
+"fr": "cezve"
+},
+{
+"a": "սուրճի բաժակ",
+"lv": "A2",
+"ru": "кофейная чашка",
+"en": "coffee cup",
+"fr": "tasse à café"
+},
+{
+"a": "պնակ",
+"lv": "A2",
+"ru": "миска, блюдо",
+"en": "bowl, dish",
+"fr": "plat"
+},
+{
+"a": "խորը ափսե",
+"lv": "A2",
+"ru": "глубокая тарелка",
+"en": "soup plate",
+"fr": "assiette creuse"
+},
+{
+"a": "աղցանաման",
+"lv": "A2",
+"ru": "салатница",
+"en": "salad bowl",
+"fr": "saladier"
+},
+{
+"a": "շաքարաման",
+"lv": "A2",
+"ru": "сахарница",
+"en": "sugar bowl",
+"fr": "sucrier"
+},
+{
+"a": "պղպեղաման",
+"lv": "A2",
+"ru": "перечница",
+"en": "pepper pot",
+"fr": "poivrier"
+},
+{
+"a": "կարագաման",
+"lv": "A2",
+"ru": "маслёнка",
+"en": "butter dish",
+"fr": "beurrier"
+},
+{
+"a": "հացաման",
+"lv": "A2",
+"ru": "хлебница",
+"en": "bread bin",
+"fr": "corbeille à pain"
+},
+{
+"a": "մրգաման",
+"lv": "A2",
+"ru": "ваза для фруктов",
+"en": "fruit bowl",
+"fr": "coupe à fruits"
+},
+{
+"a": "գինու բաժակ",
+"lv": "A2",
+"ru": "бокал для вина",
+"en": "wine glass",
+"fr": "verre à vin"
+},
+{
+"a": "ճաշի գդալ",
+"lv": "A2",
+"ru": "столовая ложка",
+"en": "tablespoon",
+"fr": "cuillère à soupe"
+},
+{
+"a": "փայտե գդալ",
+"lv": "A2",
+"ru": "деревянная ложка",
+"en": "wooden spoon",
+"fr": "cuillère en bois"
+},
+{
+"a": "օխլավ",
+"lv": "A2",
+"ru": "скалка",
+"en": "rolling pin",
+"fr": "rouleau à pâtisserie"
+},
+{
+"a": "սաջ",
+"lv": "A2",
+"ru": "садж (выпуклая сковорода)",
+"en": "saj (domed griddle)",
+"fr": "saj (plaque bombée)"
+},
+{
+"a": "ճնշման կաթսա",
+"lv": "A2",
+"ru": "скороварка",
+"en": "pressure cooker",
+"fr": "autocuiseur"
+},
+{
+"a": "բազմաեփ",
+"lv": "A2",
+"ru": "мультиварка",
+"en": "multicooker",
+"fr": "multicuiseur"
+},
+{
+"a": "գոլորշու կաթսա",
+"lv": "A2",
+"ru": "пароварка",
+"en": "steamer",
+"fr": "cuit-vapeur"
+},
+{
+"a": "ջրի ֆիլտր",
+"lv": "A2",
+"ru": "фильтр для воды",
+"en": "water filter",
+"fr": "filtre à eau"
+},
+{
+"a": "խոհանոցային պահարան",
+"lv": "A2",
+"ru": "кухонный шкаф",
+"en": "kitchen cupboard",
+"fr": "placard de cuisine"
+},
+{
+"a": "դարակաշար",
+"lv": "A2",
+"ru": "стеллаж",
+"en": "shelving unit",
+"fr": "étagère"
+},
+{
+"a": "ճաշի սպասք",
+"lv": "A2",
+"ru": "столовый сервиз",
+"en": "dinner set",
+"fr": "service de table"
+},
+{
+"a": "թեյի սպասք",
+"lv": "A2",
+"ru": "чайный сервиз",
+"en": "tea set",
+"fr": "service à thé"
+},
+{
+"a": "ատամնաքչիչ",
+"lv": "A2",
+"ru": "зубочистка",
+"en": "toothpick",
+"fr": "cure-dent"
+},
+{
+"a": "վերջանալ",
+"lv": "A2",
+"ru": "заканчиваться",
+"en": "end, finish",
+"fr": "se terminer"
+},
+{
+"a": "ներս գալ",
+"lv": "A2",
+"ru": "войти",
+"en": "come in",
+"fr": "entrer"
+},
+{
+"a": "ներս տանել",
+"lv": "A2",
+"ru": "занести внутрь",
+"en": "take inside",
+"fr": "rentrer"
+},
+{
+"a": "դուրս թռչել",
+"lv": "A2",
+"ru": "вылететь, выскочить",
+"en": "fly out, dash out",
+"fr": "s'envoler"
+},
+{
+"a": "դուրս նետել",
+"lv": "A2",
+"ru": "выбросить",
+"en": "throw out",
+"fr": "jeter dehors"
+},
+{
+"a": "դուրս վազել",
+"lv": "A2",
+"ru": "выбежать",
+"en": "run out",
+"fr": "sortir en courant"
+},
+{
+"a": "վեր կենալ",
+"lv": "A2",
+"ru": "встать",
+"en": "get up",
+"fr": "se lever"
+},
+{
+"a": "վեր թռչել",
+"lv": "A2",
+"ru": "взлететь, вскочить",
+"en": "take off, jump up",
+"fr": "s'envoler"
+},
+{
+"a": "ետ քաշվել",
+"lv": "A2",
+"ru": "отступить",
+"en": "back off",
+"fr": "reculer"
+},
+{
+"a": "ետ դառնալ",
+"lv": "A2",
+"ru": "повернуть назад",
+"en": "turn back",
+"fr": "faire demi-tour"
+},
+{
+"a": "հետ կանչել",
+"lv": "A2",
+"ru": "перезвонить, отозвать",
+"en": "call back, recall",
+"fr": "rappeler"
+},
+{
+"a": "հետ պահել",
+"lv": "A2",
+"ru": "удержать",
+"en": "hold back",
+"fr": "retenir"
+},
+{
+"a": "հետ մնալ",
+"lv": "A2",
+"ru": "отстать",
+"en": "fall behind",
+"fr": "prendre du retard"
+},
+{
+"a": "առաջ գնալ",
+"lv": "A2",
+"ru": "идти вперёд",
+"en": "go forward",
+"fr": "avancer"
+},
+{
+"a": "առաջ անցնել",
+"lv": "A2",
+"ru": "обогнать",
+"en": "overtake",
+"fr": "dépasser"
+},
+{
+"a": "մոտ գալ",
+"lv": "A2",
+"ru": "подойти",
+"en": "come closer",
+"fr": "s'approcher"
+},
+{
+"a": "մի կողմ դնել",
+"lv": "A2",
+"ru": "отложить",
+"en": "put aside",
+"fr": "mettre de côté"
+},
+{
+"a": "մի կողմ քաշվել",
+"lv": "A2",
+"ru": "отойти в сторону",
+"en": "step aside",
+"fr": "s'écarter"
+},
+{
+"a": "տեղ հասնել",
+"lv": "A2",
+"ru": "добраться",
+"en": "get there, arrive",
+"fr": "arriver à destination"
+},
+{
+"a": "տեղ հասցնել",
+"lv": "A2",
+"ru": "доставить",
+"en": "deliver",
+"fr": "livrer"
+},
+{
 "a": "հասարակություն",
 "lv": "B1",
 "ru": "общество",
@@ -39277,6 +39998,461 @@
 "fr": "plisser les yeux"
 },
 {
+"a": "վարդենի",
+"lv": "B1",
+"ru": "розовый куст",
+"en": "rose bush",
+"fr": "rosier"
+},
+{
+"a": "ակացիա",
+"lv": "B1",
+"ru": "акация",
+"en": "acacia",
+"fr": "acacia"
+},
+{
+"a": "սալորենի",
+"lv": "B1",
+"ru": "слива (дерево)",
+"en": "plum tree",
+"fr": "prunier"
+},
+{
+"a": "պնդուկենի",
+"lv": "B1",
+"ru": "лещина, фундук",
+"en": "hazel",
+"fr": "noisetier"
+},
+{
+"a": "նշենի",
+"lv": "B1",
+"ru": "миндальное дерево",
+"en": "almond tree",
+"fr": "amandier"
+},
+{
+"a": "կաղամախի",
+"lv": "B1",
+"ru": "осина",
+"en": "aspen",
+"fr": "tremble"
+},
+{
+"a": "սոսի",
+"lv": "B1",
+"ru": "платан, чинара",
+"en": "plane tree",
+"fr": "platane"
+},
+{
+"a": "մորենի",
+"lv": "B1",
+"ru": "ежевичник",
+"en": "bramble",
+"fr": "ronce"
+},
+{
+"a": "գիհի",
+"lv": "B1",
+"ru": "можжевельник",
+"en": "juniper",
+"fr": "genévrier"
+},
+{
+"a": "բոխի",
+"lv": "B1",
+"ru": "граб",
+"en": "hornbeam",
+"fr": "charme"
+},
+{
+"a": "կնձնի",
+"lv": "B1",
+"ru": "вяз",
+"en": "elm",
+"fr": "orme"
+},
+{
+"a": "տերևաթափ",
+"lv": "B1",
+"ru": "листопад; лиственный",
+"en": "leaf fall; deciduous",
+"fr": "chute des feuilles"
+},
+{
+"a": "մշտադալար",
+"lv": "B1",
+"ru": "вечнозелёный",
+"en": "evergreen",
+"fr": "à feuilles persistantes"
+},
+{
+"a": "փշատերև",
+"lv": "B1",
+"ru": "хвойный",
+"en": "coniferous",
+"fr": "conifère"
+},
+{
+"a": "լայնատերև",
+"lv": "B1",
+"ru": "широколиственный",
+"en": "broad-leaved",
+"fr": "feuillu"
+},
+{
+"a": "ծառատունկ",
+"lv": "B1",
+"ru": "посадка деревьев",
+"en": "tree planting",
+"fr": "plantation d'arbres"
+},
+{
+"a": "ծաղկաթումբ",
+"lv": "B1",
+"ru": "клумба",
+"en": "flower bed",
+"fr": "parterre"
+},
+{
+"a": "ծաղկանոց",
+"lv": "B1",
+"ru": "цветник",
+"en": "flower garden",
+"fr": "jardin fleuri"
+},
+{
+"a": "ծաղկավաճառ",
+"lv": "B1",
+"ru": "продавец цветов",
+"en": "florist",
+"fr": "fleuriste"
+},
+{
+"a": "հիրիկ",
+"lv": "B1",
+"ru": "ирис",
+"en": "iris (flower)",
+"fr": "iris"
+},
+{
+"a": "գեորգինա",
+"lv": "B1",
+"ru": "георгин",
+"en": "dahlia",
+"fr": "dahlia"
+},
+{
+"a": "քաջվարդ",
+"lv": "B1",
+"ru": "пион",
+"en": "peony",
+"fr": "pivoine"
+},
+{
+"a": "կալա",
+"lv": "B1",
+"ru": "калла",
+"en": "calla lily",
+"fr": "calla"
+},
+{
+"a": "լոտոս",
+"lv": "B1",
+"ru": "лотос",
+"en": "lotus",
+"fr": "lotus"
+},
+{
+"a": "ջրաշուշան",
+"lv": "B1",
+"ru": "кувшинка",
+"en": "water lily",
+"fr": "nénuphar"
+},
+{
+"a": "անմոռուկ",
+"lv": "B1",
+"ru": "незабудка",
+"en": "forget-me-not",
+"fr": "myosotis"
+},
+{
+"a": "հովտաշուշան",
+"lv": "B1",
+"ru": "ландыш",
+"en": "lily of the valley",
+"fr": "muguet"
+},
+{
+"a": "խաշխաշ",
+"lv": "B1",
+"ru": "мак снотворный",
+"en": "opium poppy",
+"fr": "pavot"
+},
+{
+"a": "ցորենածաղիկ",
+"lv": "B1",
+"ru": "василёк",
+"en": "cornflower",
+"fr": "bleuet"
+},
+{
+"a": "ալոե",
+"lv": "B1",
+"ru": "алоэ",
+"en": "aloe",
+"fr": "aloès"
+},
+{
+"a": "պալմա",
+"lv": "B1",
+"ru": "пальма",
+"en": "palm tree",
+"fr": "palmier"
+},
+{
+"a": "ֆիկուս",
+"lv": "B1",
+"ru": "фикус",
+"en": "ficus",
+"fr": "ficus"
+},
+{
+"a": "բեգոնիա",
+"lv": "B1",
+"ru": "бегония",
+"en": "begonia",
+"fr": "bégonia"
+},
+{
+"a": "խորդենի",
+"lv": "B1",
+"ru": "герань",
+"en": "geranium",
+"fr": "géranium"
+},
+{
+"a": "սենյակային բույս",
+"lv": "B1",
+"ru": "комнатное растение",
+"en": "houseplant",
+"fr": "plante d'intérieur"
+},
+{
+"a": "մացառ",
+"lv": "B1",
+"ru": "заросли, хворост",
+"en": "thicket, brushwood",
+"fr": "broussailles"
+},
+{
+"a": "թփուտ",
+"lv": "B1",
+"ru": "кустарник",
+"en": "shrubbery",
+"fr": "buissons"
+},
+{
+"a": "ծառուտ",
+"lv": "B1",
+"ru": "лесок",
+"en": "wooded area",
+"fr": "bois"
+},
+{
+"a": "որթ",
+"lv": "B1",
+"ru": "лоза",
+"en": "vine",
+"fr": "vigne"
+},
+{
+"a": "վազ",
+"lv": "B1",
+"ru": "виноградная лоза",
+"en": "grapevine",
+"fr": "cep de vigne"
+},
+{
+"a": "ոստ",
+"lv": "B1",
+"ru": "ветка, прут",
+"en": "twig",
+"fr": "rameau"
+},
+{
+"a": "շիվ",
+"lv": "B1",
+"ru": "побег",
+"en": "shoot",
+"fr": "pousse"
+},
+{
+"a": "կոճղեզ",
+"lv": "B1",
+"ru": "корневище",
+"en": "rhizome",
+"fr": "rhizome"
+},
+{
+"a": "սոխուկ",
+"lv": "B1",
+"ru": "луковица",
+"en": "bulb",
+"fr": "bulbe"
+},
+{
+"a": "պալար",
+"lv": "B1",
+"ru": "клубень",
+"en": "tuber",
+"fr": "tubercule"
+},
+{
+"a": "սպոր",
+"lv": "B1",
+"ru": "спора",
+"en": "spore",
+"fr": "spore"
+},
+{
+"a": "ծաղկափոշի",
+"lv": "B1",
+"ru": "пыльца",
+"en": "pollen",
+"fr": "pollen"
+},
+{
+"a": "փոշոտում",
+"lv": "B1",
+"ru": "опыление",
+"en": "pollination",
+"fr": "pollinisation"
+},
+{
+"a": "ծաղկում",
+"lv": "B1",
+"ru": "цветение",
+"en": "blossoming",
+"fr": "floraison"
+},
+{
+"a": "ծլարձակում",
+"lv": "B1",
+"ru": "прорастание",
+"en": "sprouting",
+"fr": "germination"
+},
+{
+"a": "հավան լինել",
+"lv": "B1",
+"ru": "одобрять",
+"en": "approve of",
+"fr": "approuver"
+},
+{
+"a": "կարիք ունենալ",
+"lv": "B1",
+"ru": "нуждаться",
+"en": "need",
+"fr": "avoir besoin"
+},
+{
+"a": "իրավունք ունենալ",
+"lv": "B1",
+"ru": "иметь право",
+"en": "have the right",
+"fr": "avoir le droit"
+},
+{
+"a": "հնարավորություն ունենալ",
+"lv": "B1",
+"ru": "иметь возможность",
+"en": "have the opportunity",
+"fr": "avoir la possibilité"
+},
+{
+"a": "պատասխանատու լինել",
+"lv": "B1",
+"ru": "отвечать (за что-то)",
+"en": "be responsible",
+"fr": "être responsable"
+},
+{
+"a": "պատրաստ լինել",
+"lv": "B1",
+"ru": "быть готовым",
+"en": "be ready",
+"fr": "être prêt"
+},
+{
+"a": "համաձայն լինել",
+"lv": "B1",
+"ru": "быть согласным",
+"en": "agree",
+"fr": "être d'accord"
+},
+{
+"a": "դեմ լինել",
+"lv": "B1",
+"ru": "быть против",
+"en": "be against",
+"fr": "être contre"
+},
+{
+"a": "կողմ լինել",
+"lv": "B1",
+"ru": "быть за",
+"en": "be in favour",
+"fr": "être pour"
+},
+{
+"a": "տեղյակ լինել",
+"lv": "B1",
+"ru": "быть в курсе",
+"en": "be aware",
+"fr": "être au courant"
+},
+{
+"a": "հետաքրքրված լինել",
+"lv": "B1",
+"ru": "интересоваться",
+"en": "be interested",
+"fr": "s'intéresser"
+},
+{
+"a": "ուշադիր լինել",
+"lv": "B1",
+"ru": "быть внимательным",
+"en": "pay attention",
+"fr": "être attentif"
+},
+{
+"a": "զգույշ լինել",
+"lv": "B1",
+"ru": "быть осторожным",
+"en": "be careful",
+"fr": "faire attention"
+},
+{
+"a": "գոհ լինել",
+"lv": "B1",
+"ru": "быть довольным",
+"en": "be satisfied",
+"fr": "être content"
+},
+{
+"a": "դժգոհ լինել",
+"lv": "B1",
+"ru": "быть недовольным",
+"en": "be dissatisfied",
+"fr": "être mécontent"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -51751,6 +52927,447 @@
 "fr": "ordonner"
 },
 {
+"a": "աստղաբույլ",
+"lv": "B2",
+"ru": "звёздное скопление",
+"en": "star cluster",
+"fr": "amas d'étoiles"
+},
+{
+"a": "արեգակնային համակարգ",
+"lv": "B2",
+"ru": "Солнечная система",
+"en": "solar system",
+"fr": "système solaire"
+},
+{
+"a": "Մերկուրի",
+"lv": "B2",
+"ru": "Меркурий",
+"en": "Mercury",
+"fr": "Mercure"
+},
+{
+"a": "Ուրան",
+"lv": "B2",
+"ru": "Уран",
+"en": "Uranus",
+"fr": "Uranus"
+},
+{
+"a": "Նեպտուն",
+"lv": "B2",
+"ru": "Нептун",
+"en": "Neptune",
+"fr": "Neptune"
+},
+{
+"a": "Պլուտոն",
+"lv": "B2",
+"ru": "Плутон",
+"en": "Pluto",
+"fr": "Pluton"
+},
+{
+"a": "ասուպ",
+"lv": "B2",
+"ru": "метеор",
+"en": "meteor",
+"fr": "météore"
+},
+{
+"a": "ասուպային անձրև",
+"lv": "B2",
+"ru": "метеорный дождь",
+"en": "meteor shower",
+"fr": "pluie d'étoiles filantes"
+},
+{
+"a": "նեյտրոնային աստղ",
+"lv": "B2",
+"ru": "нейтронная звезда",
+"en": "neutron star",
+"fr": "étoile à neutrons"
+},
+{
+"a": "գերնոր աստղ",
+"lv": "B2",
+"ru": "сверхновая",
+"en": "supernova",
+"fr": "supernova"
+},
+{
+"a": "միգամածություն",
+"lv": "B2",
+"ru": "туманность",
+"en": "nebula",
+"fr": "nébuleuse"
+},
+{
+"a": "անկշռություն",
+"lv": "B2",
+"ru": "невесомость",
+"en": "weightlessness",
+"fr": "apesanteur"
+},
+{
+"a": "տիեզերակայան",
+"lv": "B2",
+"ru": "космическая станция",
+"en": "space station",
+"fr": "station spatiale"
+},
+{
+"a": "արհեստական արբանյակ",
+"lv": "B2",
+"ru": "искусственный спутник",
+"en": "artificial satellite",
+"fr": "satellite artificiel"
+},
+{
+"a": "մեկնարկ",
+"lv": "B2",
+"ru": "старт, запуск",
+"en": "launch",
+"fr": "lancement"
+},
+{
+"a": "տիեզերագնացություն",
+"lv": "B2",
+"ru": "космонавтика",
+"en": "astronautics",
+"fr": "astronautique"
+},
+{
+"a": "աստղադիտարան",
+"lv": "B2",
+"ru": "обсерватория",
+"en": "observatory",
+"fr": "observatoire"
+},
+{
+"a": "աստղագետ",
+"lv": "B2",
+"ru": "астроном",
+"en": "astronomer",
+"fr": "astronome"
+},
+{
+"a": "աստղագուշակ",
+"lv": "B2",
+"ru": "астролог",
+"en": "astrologer",
+"fr": "astrologue"
+},
+{
+"a": "կենդանակերպ",
+"lv": "B2",
+"ru": "зодиак",
+"en": "zodiac",
+"fr": "zodiaque"
+},
+{
+"a": "Խոյ",
+"lv": "B2",
+"ru": "Овен",
+"en": "Aries",
+"fr": "Bélier"
+},
+{
+"a": "Ցուլ",
+"lv": "B2",
+"ru": "Телец",
+"en": "Taurus",
+"fr": "Taureau"
+},
+{
+"a": "Երկվորյակներ",
+"lv": "B2",
+"ru": "Близнецы",
+"en": "Gemini",
+"fr": "Gémeaux"
+},
+{
+"a": "Խեցգետին",
+"lv": "B2",
+"ru": "Рак",
+"en": "Cancer",
+"fr": "Cancer"
+},
+{
+"a": "Առյուծ",
+"lv": "B2",
+"ru": "Лев",
+"en": "Leo",
+"fr": "Lion"
+},
+{
+"a": "Կույս",
+"lv": "B2",
+"ru": "Дева",
+"en": "Virgo",
+"fr": "Vierge"
+},
+{
+"a": "Կշեռք",
+"lv": "B2",
+"ru": "Весы",
+"en": "Libra",
+"fr": "Balance"
+},
+{
+"a": "Կարիճ",
+"lv": "B2",
+"ru": "Скорпион",
+"en": "Scorpio",
+"fr": "Scorpion"
+},
+{
+"a": "Աղեղնավոր",
+"lv": "B2",
+"ru": "Стрелец",
+"en": "Sagittarius",
+"fr": "Sagittaire"
+},
+{
+"a": "Այծեղջյուր",
+"lv": "B2",
+"ru": "Козерог",
+"en": "Capricorn",
+"fr": "Capricorne"
+},
+{
+"a": "Ջրհոս",
+"lv": "B2",
+"ru": "Водолей",
+"en": "Aquarius",
+"fr": "Verseau"
+},
+{
+"a": "Ձկներ",
+"lv": "B2",
+"ru": "Рыбы",
+"en": "Pisces",
+"fr": "Poissons"
+},
+{
+"a": "Մեծ Արջ",
+"lv": "B2",
+"ru": "Большая Медведица",
+"en": "the Great Bear",
+"fr": "la Grande Ourse"
+},
+{
+"a": "Փոքր Արջ",
+"lv": "B2",
+"ru": "Малая Медведица",
+"en": "the Little Bear",
+"fr": "la Petite Ourse"
+},
+{
+"a": "Բևեռային աստղ",
+"lv": "B2",
+"ru": "Полярная звезда",
+"en": "the Pole Star",
+"fr": "l'étoile Polaire"
+},
+{
+"a": "Հայկ համաստեղություն",
+"lv": "B2",
+"ru": "созвездие Айка (Орион)",
+"en": "constellation of Hayk (Orion)",
+"fr": "constellation de Haïk (Orion)"
+},
+{
+"a": "Օրիոն",
+"lv": "B2",
+"ru": "Орион",
+"en": "Orion",
+"fr": "Orion"
+},
+{
+"a": "Սիրիուս",
+"lv": "B2",
+"ru": "Сириус",
+"en": "Sirius",
+"fr": "Sirius"
+},
+{
+"a": "տիեզերական ճառագայթում",
+"lv": "B2",
+"ru": "космические лучи",
+"en": "cosmic rays",
+"fr": "rayons cosmiques"
+},
+{
+"a": "Մեծ պայթյուն",
+"lv": "B2",
+"ru": "Большой взрыв",
+"en": "the Big Bang",
+"fr": "le Big Bang"
+},
+{
+"a": "էկզոմոլորակ",
+"lv": "B2",
+"ru": "экзопланета",
+"en": "exoplanet",
+"fr": "exoplanète"
+},
+{
+"a": "այլմոլորակային",
+"lv": "B2",
+"ru": "инопланетянин",
+"en": "alien",
+"fr": "extraterrestre"
+},
+{
+"a": "ՉԹՕ",
+"lv": "B2",
+"ru": "НЛО",
+"en": "UFO",
+"fr": "OVNI"
+},
+{
+"a": "լուսնային փուլ",
+"lv": "B2",
+"ru": "фаза луны",
+"en": "lunar phase",
+"fr": "phase lunaire"
+},
+{
+"a": "տիեզերական թռիչք",
+"lv": "B2",
+"ru": "космический полёт",
+"en": "spaceflight",
+"fr": "vol spatial"
+},
+{
+"a": "տիեզերական զբոսաշրջություն",
+"lv": "B2",
+"ru": "космический туризм",
+"en": "space tourism",
+"fr": "tourisme spatial"
+},
+{
+"a": "տիեզերական աղբ",
+"lv": "B2",
+"ru": "космический мусор",
+"en": "space debris",
+"fr": "débris spatiaux"
+},
+{
+"a": "Բյուրականի աստղադիտարան",
+"lv": "B2",
+"ru": "Бюраканская обсерватория",
+"en": "Byurakan Observatory",
+"fr": "observatoire de Biourakan"
+},
+{
+"a": "վերանալ",
+"lv": "B2",
+"ru": "исчезать",
+"en": "vanish",
+"fr": "disparaître"
+},
+{
+"a": "վերաշարադրել",
+"lv": "B2",
+"ru": "пересказать, переписать",
+"en": "rewrite, retell",
+"fr": "réécrire"
+},
+{
+"a": "վերաձևել",
+"lv": "B2",
+"ru": "перекроить, переделать",
+"en": "alter, remake",
+"fr": "retoucher"
+},
+{
+"a": "վերանորոգել",
+"lv": "B2",
+"ru": "ремонтировать",
+"en": "renovate, repair",
+"fr": "rénover"
+},
+{
+"a": "վերապատրաստվել",
+"lv": "B2",
+"ru": "переучиваться",
+"en": "retrain",
+"fr": "se reconvertir"
+},
+{
+"a": "վերասկսել",
+"lv": "B2",
+"ru": "возобновить",
+"en": "resume",
+"fr": "reprendre"
+},
+{
+"a": "վերաքննել",
+"lv": "B2",
+"ru": "пересматривать",
+"en": "review, re-examine",
+"fr": "réexaminer"
+},
+{
+"a": "վերհիշել",
+"lv": "B2",
+"ru": "вспомнить",
+"en": "recall",
+"fr": "se remémorer"
+},
+{
+"a": "առաջ քաշել",
+"lv": "B2",
+"ru": "выдвинуть",
+"en": "put forward",
+"fr": "avancer"
+},
+{
+"a": "ի հայտ գալ",
+"lv": "B2",
+"ru": "появиться, обнаружиться",
+"en": "emerge",
+"fr": "apparaître"
+},
+{
+"a": "ի կատար ածել",
+"lv": "B2",
+"ru": "исполнить",
+"en": "carry out",
+"fr": "accomplir"
+},
+{
+"a": "ի նկատի ունենալ",
+"lv": "B2",
+"ru": "иметь в виду",
+"en": "bear in mind, mean",
+"fr": "avoir en tête"
+},
+{
+"a": "ի պաշտպանություն",
+"lv": "B2",
+"ru": "в защиту",
+"en": "in defence of",
+"fr": "pour la défense de"
+},
+{
+"a": "գլուխ բերել",
+"lv": "B2",
+"ru": "справиться, осуществить",
+"en": "manage, accomplish",
+"fr": "venir à bout"
+},
+{
+"a": "տեղ գտնել",
+"lv": "B2",
+"ru": "найти место, состояться",
+"en": "find a place",
+"fr": "trouver sa place"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -58063,6 +59680,321 @@
 "ru": "кроткий как ягнёнок",
 "en": "meek as a lamb",
 "fr": "doux comme un agneau"
+},
+{
+"a": "վարկունակություն",
+"lv": "C1",
+"ru": "кредитоспособность",
+"en": "creditworthiness",
+"fr": "solvabilité"
+},
+{
+"a": "վարկատու",
+"lv": "C1",
+"ru": "кредитор",
+"en": "lender",
+"fr": "prêteur"
+},
+{
+"a": "երաշխավոր",
+"lv": "C1",
+"ru": "поручитель",
+"en": "guarantor",
+"fr": "garant"
+},
+{
+"a": "գրավադրում",
+"lv": "C1",
+"ru": "залог (имущества)",
+"en": "pledging, mortgaging",
+"fr": "nantissement"
+},
+{
+"a": "լիզինգ",
+"lv": "C1",
+"ru": "лизинг",
+"en": "leasing",
+"fr": "crédit-bail"
+},
+{
+"a": "ֆակտորինգ",
+"lv": "C1",
+"ru": "факторинг",
+"en": "factoring",
+"fr": "affacturage"
+},
+{
+"a": "դիվիդենդ",
+"lv": "C1",
+"ru": "дивиденд",
+"en": "dividend",
+"fr": "dividende"
+},
+{
+"a": "վճարունակություն",
+"lv": "C1",
+"ru": "платёжеспособность",
+"en": "solvency",
+"fr": "solvabilité"
+},
+{
+"a": "անվճարունակություն",
+"lv": "C1",
+"ru": "неплатёжеспособность",
+"en": "insolvency",
+"fr": "insolvabilité"
+},
+{
+"a": "պահանջագիր",
+"lv": "C1",
+"ru": "требование (документ)",
+"en": "demand note, claim",
+"fr": "mise en demeure"
+},
+{
+"a": "մուրհակ",
+"lv": "C1",
+"ru": "вексель",
+"en": "promissory note",
+"fr": "billet à ordre"
+},
+{
+"a": "ակրեդիտիվ",
+"lv": "C1",
+"ru": "аккредитив",
+"en": "letter of credit",
+"fr": "lettre de crédit"
+},
+{
+"a": "տոկոսավճար",
+"lv": "C1",
+"ru": "процентный платёж",
+"en": "interest payment",
+"fr": "intérêts"
+},
+{
+"a": "ամորտիզացիա",
+"lv": "C1",
+"ru": "амортизация",
+"en": "depreciation, amortization",
+"fr": "amortissement"
+},
+{
+"a": "մաշվածություն",
+"lv": "C1",
+"ru": "износ",
+"en": "wear and tear",
+"fr": "usure"
+},
+{
+"a": "վերագնահատում",
+"lv": "C1",
+"ru": "переоценка",
+"en": "revaluation",
+"fr": "réévaluation"
+},
+{
+"a": "աճուրդ",
+"lv": "C1",
+"ru": "аукцион",
+"en": "auction",
+"fr": "enchères"
+},
+{
+"a": "լոտ",
+"lv": "C1",
+"ru": "лот",
+"en": "lot",
+"fr": "lot"
+},
+{
+"a": "հարկային պարտավորություն",
+"lv": "C1",
+"ru": "налоговое обязательство",
+"en": "tax liability",
+"fr": "dette fiscale"
+},
+{
+"a": "հարկային հայտարարագիր",
+"lv": "C1",
+"ru": "налоговая декларация",
+"en": "tax return",
+"fr": "déclaration d'impôts"
+},
+{
+"a": "դրամական հոսքեր",
+"lv": "C1",
+"ru": "денежные потоки",
+"en": "cash flow",
+"fr": "flux de trésorerie"
+},
+{
+"a": "հավելագին",
+"lv": "C1",
+"ru": "наценка",
+"en": "mark-up",
+"fr": "marge"
+},
+{
+"a": "արտադրողականություն",
+"lv": "C1",
+"ru": "производительность",
+"en": "productivity",
+"fr": "productivité"
+},
+{
+"a": "ծախսարդյունավետություն",
+"lv": "C1",
+"ru": "экономическая эффективность",
+"en": "cost-effectiveness",
+"fr": "rentabilité"
+},
+{
+"a": "ներդրումային պորտֆել",
+"lv": "C1",
+"ru": "инвестиционный портфель",
+"en": "investment portfolio",
+"fr": "portefeuille d'investissement"
+},
+{
+"a": "ռիսկի կառավարում",
+"lv": "C1",
+"ru": "управление рисками",
+"en": "risk management",
+"fr": "gestion des risques"
+},
+{
+"a": "հեջավորում",
+"lv": "C1",
+"ru": "хеджирование",
+"en": "hedging",
+"fr": "couverture"
+},
+{
+"a": "ածանցյալ գործիքներ",
+"lv": "C1",
+"ru": "производные инструменты",
+"en": "derivatives",
+"fr": "produits dérivés"
+},
+{
+"a": "ֆյուչերս",
+"lv": "C1",
+"ru": "фьючерс",
+"en": "futures contract",
+"fr": "contrat à terme"
+},
+{
+"a": "օպցիոն",
+"lv": "C1",
+"ru": "опцион",
+"en": "option",
+"fr": "option"
+},
+{
+"a": "ֆինանսական բուրգ",
+"lv": "C1",
+"ru": "финансовая пирамида",
+"en": "Ponzi scheme",
+"fr": "pyramide de Ponzi"
+},
+{
+"a": "կապիտալի արտահոսք",
+"lv": "C1",
+"ru": "отток капитала",
+"en": "capital flight",
+"fr": "fuite des capitaux"
+},
+{
+"a": "դրամական փոխանցումներ",
+"lv": "C1",
+"ru": "денежные переводы",
+"en": "remittances",
+"fr": "transferts de fonds"
+},
+{
+"a": "արժութային պահուստներ",
+"lv": "C1",
+"ru": "валютные резервы",
+"en": "foreign exchange reserves",
+"fr": "réserves de change"
+},
+{
+"a": "հարկաբյուջետային քաղաքականություն",
+"lv": "C1",
+"ru": "бюджетно-налоговая политика",
+"en": "fiscal policy",
+"fr": "politique budgétaire"
+},
+{
+"a": "դեֆոլտ",
+"lv": "C1",
+"ru": "дефолт",
+"en": "default",
+"fr": "défaut de paiement"
+},
+{
+"a": "արժեթղթերի շուկա",
+"lv": "C1",
+"ru": "рынок ценных бумаг",
+"en": "securities market",
+"fr": "marché des valeurs mobilières"
+},
+{
+"a": "արտաքին պարտք",
+"lv": "C1",
+"ru": "внешний долг",
+"en": "foreign debt",
+"fr": "dette extérieure"
+},
+{
+"a": "վարկային վարկանիշ",
+"lv": "C1",
+"ru": "кредитный рейтинг",
+"en": "credit rating",
+"fr": "notation de crédit"
+},
+{
+"a": "ներդրումային միջավայր",
+"lv": "C1",
+"ru": "инвестиционный климат",
+"en": "investment climate",
+"fr": "climat d'investissement"
+},
+{
+"a": "ազատ տնտեսական գոտի",
+"lv": "C1",
+"ru": "свободная экономическая зона",
+"en": "free economic zone",
+"fr": "zone franche"
+},
+{
+"a": "մաքսային միություն",
+"lv": "C1",
+"ru": "таможенный союз",
+"en": "customs union",
+"fr": "union douanière"
+},
+{
+"a": "առևտրային պատերազմ",
+"lv": "C1",
+"ru": "торговая война",
+"en": "trade war",
+"fr": "guerre commerciale"
+},
+{
+"a": "Համաշխարհային բանկ",
+"lv": "C1",
+"ru": "Всемирный банк",
+"en": "the World Bank",
+"fr": "la Banque mondiale"
+},
+{
+"a": "Արժույթի միջազգային հիմնադրամ",
+"lv": "C1",
+"ru": "Международный валютный фонд",
+"en": "the International Monetary Fund",
+"fr": "le Fonds monétaire international"
 },
 {
 "a": "վեհ",
