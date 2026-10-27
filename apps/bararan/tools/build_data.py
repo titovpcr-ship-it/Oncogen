@@ -18,7 +18,7 @@ import glob, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"]
-_ARM = re.compile(r"^[Ա-֊\s\-]+$")
+_ARM = re.compile(r"^[Ա-֊\s\-,]+$")
 
 
 def p(*a):

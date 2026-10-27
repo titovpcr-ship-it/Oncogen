@@ -9,7 +9,7 @@
 import glob, json, re, sys
 T = json.load(open("data/topics_src.json", encoding="utf-8"))
 have = {w[0] for t in T for w in t["words"]}
-_ARM = re.compile(r"^[Ա-֊\s\-]+$")
+_ARM = re.compile(r"^[Ա-֊\s\-,]+$")
 DROP = "--drop" in sys.argv
 total, dups, bad, seen = 0, [], [], set()
 for p in sorted(glob.glob("data/new/*.tsv")):

@@ -15477,6 +15477,13 @@
 "fr": "réel"
 },
 {
+"a": "ծնունդ",
+"lv": "A2",
+"ru": "рождение",
+"en": "birth",
+"fr": "naissance"
+},
+{
 "a": "Պորտուգալիա",
 "lv": "A2",
 "ru": "Португалия",
@@ -16511,6 +16518,1567 @@
 "ru": "иммигрант",
 "en": "immigrant",
 "fr": "immigré"
+},
+{
+"a": "նախանցյալ օրը",
+"lv": "A2",
+"ru": "позавчера",
+"en": "the day before yesterday",
+"fr": "avant-hier"
+},
+{
+"a": "այս պահին",
+"lv": "A2",
+"ru": "в данный момент",
+"en": "at the moment",
+"fr": "en ce moment"
+},
+{
+"a": "քիչ անց",
+"lv": "A2",
+"ru": "чуть позже",
+"en": "a little later",
+"fr": "peu après"
+},
+{
+"a": "այնուհետև",
+"lv": "A2",
+"ru": "затем, после этого",
+"en": "then, afterwards",
+"fr": "ensuite"
+},
+{
+"a": "նախ",
+"lv": "A2",
+"ru": "сначала",
+"en": "first",
+"fr": "d'abord"
+},
+{
+"a": "նախապես",
+"lv": "A2",
+"ru": "заранее",
+"en": "in advance",
+"fr": "à l'avance"
+},
+{
+"a": "մինչ այդ",
+"lv": "A2",
+"ru": "до того",
+"en": "before that",
+"fr": "avant cela"
+},
+{
+"a": "այդ ժամանակ",
+"lv": "A2",
+"ru": "в то время, тогда",
+"en": "at that time",
+"fr": "à ce moment-là"
+},
+{
+"a": "այն ժամանակ",
+"lv": "A2",
+"ru": "тогда, в те времена",
+"en": "back then",
+"fr": "à l'époque"
+},
+{
+"a": "մի փոքր",
+"lv": "A2",
+"ru": "немного",
+"en": "a little",
+"fr": "un peu"
+},
+{
+"a": "ամբողջովին",
+"lv": "A2",
+"ru": "полностью",
+"en": "completely",
+"fr": "complètement"
+},
+{
+"a": "անգամ",
+"lv": "A2",
+"ru": "даже, раз",
+"en": "even, time (once)",
+"fr": "même"
+},
+{
+"a": "ոնց որ",
+"lv": "A2",
+"ru": "как будто, словно",
+"en": "as if, like",
+"fr": "comme si"
+},
+{
+"a": "թե",
+"lv": "A2",
+"ru": "ли, что, или",
+"en": "whether, that, or",
+"fr": "si"
+},
+{
+"a": "ևս",
+"lv": "A2",
+"ru": "ещё, тоже",
+"en": "also, more",
+"fr": "aussi"
+},
+{
+"a": "դեռևս",
+"lv": "A2",
+"ru": "пока ещё",
+"en": "still, yet",
+"fr": "encore"
+},
+{
+"a": "այլևս",
+"lv": "A2",
+"ru": "больше (не)",
+"en": "(no) longer, anymore",
+"fr": "plus"
+},
+{
+"a": "էլի",
+"lv": "A2",
+"ru": "опять, ещё",
+"en": "again, still",
+"fr": "encore"
+},
+{
+"a": "դարձյալ",
+"lv": "A2",
+"ru": "опять",
+"en": "again",
+"fr": "de nouveau"
+},
+{
+"a": "հերթով",
+"lv": "A2",
+"ru": "по очереди",
+"en": "in turn",
+"fr": "à tour de rôle"
+},
+{
+"a": "անընդհատ",
+"lv": "A2",
+"ru": "постоянно",
+"en": "constantly",
+"fr": "sans cesse"
+},
+{
+"a": "շարունակ",
+"lv": "A2",
+"ru": "всё время",
+"en": "all the time",
+"fr": "continuellement"
+},
+{
+"a": "անդադար",
+"lv": "A2",
+"ru": "без остановки",
+"en": "non-stop",
+"fr": "sans arrêt"
+},
+{
+"a": "վեր",
+"lv": "A2",
+"ru": "вверх",
+"en": "up",
+"fr": "en haut"
+},
+{
+"a": "վար",
+"lv": "A2",
+"ru": "вниз",
+"en": "down",
+"fr": "en bas"
+},
+{
+"a": "առջևում",
+"lv": "A2",
+"ru": "впереди",
+"en": "in front",
+"fr": "devant"
+},
+{
+"a": "ետևում",
+"lv": "A2",
+"ru": "сзади",
+"en": "behind",
+"fr": "derrière"
+},
+{
+"a": "կողքին",
+"lv": "A2",
+"ru": "рядом",
+"en": "beside, next to",
+"fr": "à côté"
+},
+{
+"a": "մոտակայքում",
+"lv": "A2",
+"ru": "поблизости",
+"en": "nearby",
+"fr": "à proximité"
+},
+{
+"a": "ինչ-որ տեղ",
+"lv": "A2",
+"ru": "где-то",
+"en": "somewhere",
+"fr": "quelque part"
+},
+{
+"a": "որևէ տեղ",
+"lv": "A2",
+"ru": "где-нибудь",
+"en": "anywhere",
+"fr": "n'importe où"
+},
+{
+"a": "մինչև",
+"lv": "A2",
+"ru": "до",
+"en": "until, up to",
+"fr": "jusqu'à"
+},
+{
+"a": "հենց որ",
+"lv": "A2",
+"ru": "как только",
+"en": "as soon as",
+"fr": "dès que"
+},
+{
+"a": "քանի դեռ",
+"lv": "A2",
+"ru": "пока (ещё)",
+"en": "while, as long as",
+"fr": "tant que"
+},
+{
+"a": "ինչպիսի",
+"lv": "A2",
+"ru": "какой (по качеству)",
+"en": "what kind of",
+"fr": "quel genre de"
+},
+{
+"a": "որոնք",
+"lv": "A2",
+"ru": "которые",
+"en": "which (plural)",
+"fr": "lesquels"
+},
+{
+"a": "ում",
+"lv": "A2",
+"ru": "кого, кому",
+"en": "whom",
+"fr": "qui"
+},
+{
+"a": "ինչից",
+"lv": "A2",
+"ru": "из чего, от чего",
+"en": "from what",
+"fr": "de quoi"
+},
+{
+"a": "ինչով",
+"lv": "A2",
+"ru": "чем",
+"en": "with what",
+"fr": "avec quoi"
+},
+{
+"a": "պատուհանագոգ",
+"lv": "A2",
+"ru": "подоконник",
+"en": "windowsill",
+"fr": "rebord de fenêtre"
+},
+{
+"a": "դռնակ",
+"lv": "A2",
+"ru": "калитка, дверца",
+"en": "gate, small door",
+"fr": "portillon"
+},
+{
+"a": "բռնակ",
+"lv": "A2",
+"ru": "ручка",
+"en": "handle",
+"fr": "poignée"
+},
+{
+"a": "նկուղ",
+"lv": "A2",
+"ru": "подвал",
+"en": "basement, cellar",
+"fr": "cave"
+},
+{
+"a": "ձեղնահարկ",
+"lv": "A2",
+"ru": "чердак",
+"en": "attic",
+"fr": "grenier"
+},
+{
+"a": "ծխնելույզ",
+"lv": "A2",
+"ru": "дымоход, труба",
+"en": "chimney",
+"fr": "cheminée"
+},
+{
+"a": "նախասենյակ",
+"lv": "A2",
+"ru": "прихожая",
+"en": "hallway",
+"fr": "entrée"
+},
+{
+"a": "սեղանիկ",
+"lv": "A2",
+"ru": "столик",
+"en": "small table",
+"fr": "guéridon"
+},
+{
+"a": "լոգախցիկ",
+"lv": "A2",
+"ru": "душевая кабина",
+"en": "shower cubicle",
+"fr": "cabine de douche"
+},
+{
+"a": "խոզանակ",
+"lv": "A2",
+"ru": "щётка",
+"en": "brush",
+"fr": "brosse"
+},
+{
+"a": "գոգաթիակ",
+"lv": "A2",
+"ru": "совок",
+"en": "dustpan",
+"fr": "pelle à poussière"
+},
+{
+"a": "լաթ",
+"lv": "A2",
+"ru": "тряпка",
+"en": "rag, cloth",
+"fr": "chiffon"
+},
+{
+"a": "սառցարան",
+"lv": "A2",
+"ru": "морозилка",
+"en": "freezer",
+"fr": "congélateur"
+},
+{
+"a": "հյութաքամիչ",
+"lv": "A2",
+"ru": "соковыжималка",
+"en": "juicer",
+"fr": "presse-agrumes"
+},
+{
+"a": "տապակ",
+"lv": "A2",
+"ru": "сковорода",
+"en": "frying pan",
+"fr": "poêle"
+},
+{
+"a": "թեյի գդալ",
+"lv": "A2",
+"ru": "чайная ложка",
+"en": "teaspoon",
+"fr": "petite cuillère"
+},
+{
+"a": "արկղ",
+"lv": "A2",
+"ru": "ящик",
+"en": "box, crate",
+"fr": "caisse"
+},
+{
+"a": "կապոց",
+"lv": "A2",
+"ru": "свёрток, пачка",
+"en": "bundle",
+"fr": "paquet"
+},
+{
+"a": "սեղմակ",
+"lv": "A2",
+"ru": "прищепка, зажим",
+"en": "peg, clip",
+"fr": "pince"
+},
+{
+"a": "քսակ",
+"lv": "A2",
+"ru": "кошелёк (для монет)",
+"en": "purse",
+"fr": "porte-monnaie"
+},
+{
+"a": "թաշկինակ",
+"lv": "A2",
+"ru": "носовой платок",
+"en": "handkerchief",
+"fr": "mouchoir"
+},
+{
+"a": "անձրևանոց",
+"lv": "A2",
+"ru": "дождевик",
+"en": "raincoat",
+"fr": "imperméable"
+},
+{
+"a": "կիսատաբատ",
+"lv": "A2",
+"ru": "шорты",
+"en": "shorts",
+"fr": "short"
+},
+{
+"a": "պիջակ",
+"lv": "A2",
+"ru": "пиджак",
+"en": "jacket (suit)",
+"fr": "veston"
+},
+{
+"a": "ժիլետ",
+"lv": "A2",
+"ru": "жилет",
+"en": "waistcoat",
+"fr": "gilet"
+},
+{
+"a": "գիշերանոց",
+"lv": "A2",
+"ru": "ночная рубашка",
+"en": "nightgown",
+"fr": "chemise de nuit"
+},
+{
+"a": "ցանկապատ",
+"lv": "A2",
+"ru": "забор",
+"en": "fence",
+"fr": "clôture"
+},
+{
+"a": "տեռաս",
+"lv": "A2",
+"ru": "терраса",
+"en": "terrace",
+"fr": "terrasse"
+},
+{
+"a": "շքամուտք",
+"lv": "A2",
+"ru": "подъезд",
+"en": "entrance (of a building)",
+"fr": "entrée d'immeuble"
+},
+{
+"a": "հանդերձարան",
+"lv": "A2",
+"ru": "гардероб, раздевалка",
+"en": "cloakroom, changing room",
+"fr": "vestiaire"
+},
+{
+"a": "գրադարակ",
+"lv": "A2",
+"ru": "книжная полка",
+"en": "bookshelf",
+"fr": "étagère"
+},
+{
+"a": "երկհարկանի մահճակալ",
+"lv": "A2",
+"ru": "двухъярусная кровать",
+"en": "bunk bed",
+"fr": "lits superposés"
+},
+{
+"a": "ծալովի մահճակալ",
+"lv": "A2",
+"ru": "раскладушка",
+"en": "folding bed",
+"fr": "lit pliant"
+},
+{
+"a": "անկողին",
+"lv": "A2",
+"ru": "постель",
+"en": "bed, bedding",
+"fr": "lit"
+},
+{
+"a": "անկողնային սպիտակեղեն",
+"lv": "A2",
+"ru": "постельное бельё",
+"en": "bed linen",
+"fr": "linge de lit"
+},
+{
+"a": "ծածկոցի երես",
+"lv": "A2",
+"ru": "пододеяльник",
+"en": "duvet cover",
+"fr": "housse de couette"
+},
+{
+"a": "պլեդ",
+"lv": "A2",
+"ru": "плед",
+"en": "throw, blanket",
+"fr": "plaid"
+},
+{
+"a": "ուղեգորգ",
+"lv": "A2",
+"ru": "ковровая дорожка",
+"en": "runner (rug)",
+"fr": "tapis de couloir"
+},
+{
+"a": "պաստառ",
+"lv": "A2",
+"ru": "обои",
+"en": "wallpaper",
+"fr": "papier peint"
+},
+{
+"a": "կոնդիցիոներ",
+"lv": "A2",
+"ru": "кондиционер",
+"en": "air conditioner",
+"fr": "climatiseur"
+},
+{
+"a": "գազօջախ",
+"lv": "A2",
+"ru": "газовая плита",
+"en": "gas stove",
+"fr": "cuisinière à gaz"
+},
+{
+"a": "էլեկտրական սալօջախ",
+"lv": "A2",
+"ru": "электроплита",
+"en": "electric hob",
+"fr": "plaque électrique"
+},
+{
+"a": "աման լվանալու հեղուկ",
+"lv": "A2",
+"ru": "средство для мытья посуды",
+"en": "washing-up liquid",
+"fr": "liquide vaisselle"
+},
+{
+"a": "լվացքի փոշի",
+"lv": "A2",
+"ru": "стиральный порошок",
+"en": "washing powder",
+"fr": "lessive"
+},
+{
+"a": "սպիտակեցնող",
+"lv": "A2",
+"ru": "отбеливатель",
+"en": "bleach",
+"fr": "eau de Javel"
+},
+{
+"a": "ախտահանիչ",
+"lv": "A2",
+"ru": "дезинфицирующее средство",
+"en": "disinfectant",
+"fr": "désinfectant"
+},
+{
+"a": "աղբի տոպրակ",
+"lv": "A2",
+"ru": "мешок для мусора",
+"en": "bin bag",
+"fr": "sac poubelle"
+},
+{
+"a": "հատակի լաթ",
+"lv": "A2",
+"ru": "половая тряпка",
+"en": "floor cloth",
+"fr": "serpillière"
+},
+{
+"a": "սպունգ",
+"lv": "A2",
+"ru": "губка",
+"en": "sponge",
+"fr": "éponge"
+},
+{
+"a": "թղթե սրբիչ",
+"lv": "A2",
+"ru": "бумажное полотенце",
+"en": "paper towel",
+"fr": "essuie-tout"
+},
+{
+"a": "զուգարանի թուղթ",
+"lv": "A2",
+"ru": "туалетная бумага",
+"en": "toilet paper",
+"fr": "papier toilette"
+},
+{
+"a": "ատամնաթել",
+"lv": "A2",
+"ru": "зубная нить",
+"en": "dental floss",
+"fr": "fil dentaire"
+},
+{
+"a": "օծանելիք",
+"lv": "A2",
+"ru": "духи",
+"en": "perfume",
+"fr": "parfum"
+},
+{
+"a": "դեզոդորանտ",
+"lv": "A2",
+"ru": "дезодорант",
+"en": "deodorant",
+"fr": "déodorant"
+},
+{
+"a": "դիմաքսուք",
+"lv": "A2",
+"ru": "крем для лица",
+"en": "face cream",
+"fr": "crème pour le visage"
+},
+{
+"a": "շրթներկ",
+"lv": "A2",
+"ru": "помада",
+"en": "lipstick",
+"fr": "rouge à lèvres"
+},
+{
+"a": "տուշ",
+"lv": "A2",
+"ru": "тушь",
+"en": "mascara",
+"fr": "mascara"
+},
+{
+"a": "դիմափոշի",
+"lv": "A2",
+"ru": "пудра",
+"en": "face powder",
+"fr": "poudre"
+},
+{
+"a": "եղունգի լաք",
+"lv": "A2",
+"ru": "лак для ногтей",
+"en": "nail polish",
+"fr": "vernis à ongles"
+},
+{
+"a": "ածելի",
+"lv": "A2",
+"ru": "бритва",
+"en": "razor",
+"fr": "rasoir"
+},
+{
+"a": "սափրվելու փրփուր",
+"lv": "A2",
+"ru": "пена для бритья",
+"en": "shaving foam",
+"fr": "mousse à raser"
+},
+{
+"a": "մազերի չորանոց",
+"lv": "A2",
+"ru": "фен",
+"en": "hair dryer",
+"fr": "sèche-cheveux"
+},
+{
+"a": "արդուկի տախտակ",
+"lv": "A2",
+"ru": "гладильная доска",
+"en": "ironing board",
+"fr": "planche à repasser"
+},
+{
+"a": "կարի մեքենա",
+"lv": "A2",
+"ru": "швейная машина",
+"en": "sewing machine",
+"fr": "machine à coudre"
+},
+{
+"a": "քորոց",
+"lv": "A2",
+"ru": "булавка, шпилька",
+"en": "pin",
+"fr": "épingle"
+},
+{
+"a": "անվտանգության քորոց",
+"lv": "A2",
+"ru": "английская булавка",
+"en": "safety pin",
+"fr": "épingle de sûreté"
+},
+{
+"a": "Մի սեղան երկուսի համար, խնդրեմ",
+"lv": "A2",
+"ru": "Столик на двоих, пожалуйста",
+"en": "A table for two, please",
+"fr": "Une table pour deux, s'il vous plaît"
+},
+{
+"a": "Կարո՞ղ եմ ճաշացանկը տեսնել",
+"lv": "A2",
+"ru": "Можно посмотреть меню?",
+"en": "Can I see the menu?",
+"fr": "Puis-je voir la carte ?"
+},
+{
+"a": "Ի՞նչ խորհուրդ կտաք",
+"lv": "A2",
+"ru": "Что посоветуете?",
+"en": "What do you recommend?",
+"fr": "Que me conseillez-vous ?"
+},
+{
+"a": "Ես բուսակեր եմ",
+"lv": "A2",
+"ru": "Я вегетарианец",
+"en": "I'm vegetarian",
+"fr": "Je suis végétarien"
+},
+{
+"a": "Ինձ մի սուրճ, խնդրեմ",
+"lv": "A2",
+"ru": "Мне кофе, пожалуйста",
+"en": "A coffee for me, please",
+"fr": "Un café pour moi, s'il vous plaît"
+},
+{
+"a": "Առանց շաքարի",
+"lv": "A2",
+"ru": "Без сахара",
+"en": "Without sugar",
+"fr": "Sans sucre"
+},
+{
+"a": "Շատ համեղ էր",
+"lv": "A2",
+"ru": "Было очень вкусно",
+"en": "It was delicious",
+"fr": "C'était délicieux"
+},
+{
+"a": "Կարելի՞ է քարտով վճարել",
+"lv": "A2",
+"ru": "Можно оплатить картой?",
+"en": "Can I pay by card?",
+"fr": "Puis-je payer par carte ?"
+},
+{
+"a": "Մնացածը ձեզ",
+"lv": "A2",
+"ru": "Сдачи не надо",
+"en": "Keep the change",
+"fr": "Gardez la monnaie"
+},
+{
+"a": "Ես սեղան եմ պատվիրել",
+"lv": "A2",
+"ru": "Я забронировал столик",
+"en": "I've booked a table",
+"fr": "J'ai réservé une table"
+},
+{
+"a": "Մի բաժակ գինի",
+"lv": "A2",
+"ru": "Бокал вина",
+"en": "A glass of wine",
+"fr": "Un verre de vin"
+},
+{
+"a": "Ջուր առանց գազի",
+"lv": "A2",
+"ru": "Вода без газа",
+"en": "Still water",
+"fr": "Eau plate"
+},
+{
+"a": "Մի քիչ էլ հաց բերեք",
+"lv": "A2",
+"ru": "Принесите ещё немного хлеба",
+"en": "Bring a little more bread",
+"fr": "Apportez encore un peu de pain"
+},
+{
+"a": "Սա ես չեմ պատվիրել",
+"lv": "A2",
+"ru": "Я это не заказывал",
+"en": "I didn't order this",
+"fr": "Je n'ai pas commandé ça"
+},
+{
+"a": "Որքա՞ն պետք է սպասել",
+"lv": "A2",
+"ru": "Сколько нужно ждать?",
+"en": "How long do we have to wait?",
+"fr": "Combien de temps faut-il attendre ?"
+},
+{
+"a": "Ազատ տեղ կա՞",
+"lv": "A2",
+"ru": "Есть свободные места?",
+"en": "Are there any free seats?",
+"fr": "Il y a de la place ?"
+},
+{
+"a": "Ինձ համար կծու չլինի",
+"lv": "A2",
+"ru": "Мне не острое",
+"en": "Not spicy for me",
+"fr": "Pas épicé pour moi"
+},
+{
+"a": "Ալերգիա ունեմ ընկույզից",
+"lv": "A2",
+"ru": "У меня аллергия на орехи",
+"en": "I'm allergic to nuts",
+"fr": "Je suis allergique aux noix"
+},
+{
+"a": "Կարո՞ղ եք փաթեթավորել",
+"lv": "A2",
+"ru": "Можете упаковать с собой?",
+"en": "Could you pack it to take away?",
+"fr": "Vous pouvez l'emballer ?"
+},
+{
+"a": "Տեղո՞ւմ, թե՞ տանելու",
+"lv": "A2",
+"ru": "Здесь или с собой?",
+"en": "For here or to take away?",
+"fr": "Sur place ou à emporter ?"
+},
+{
+"a": "Ես պարզապես նայում եմ",
+"lv": "A2",
+"ru": "Я просто смотрю",
+"en": "I'm just looking",
+"fr": "Je regarde seulement"
+},
+{
+"a": "Ունե՞ք ավելի մեծ չափս",
+"lv": "A2",
+"ru": "У вас есть размер побольше?",
+"en": "Do you have a bigger size?",
+"fr": "Vous avez la taille au-dessus ?"
+},
+{
+"a": "Ունե՞ք ավելի փոքր չափս",
+"lv": "A2",
+"ru": "У вас есть размер поменьше?",
+"en": "Do you have a smaller size?",
+"fr": "Vous avez la taille en dessous ?"
+},
+{
+"a": "Կարո՞ղ եմ փորձել",
+"lv": "A2",
+"ru": "Можно примерить?",
+"en": "Can I try it on?",
+"fr": "Je peux l'essayer ?"
+},
+{
+"a": "Որտե՞ղ է հանդերձարանը",
+"lv": "A2",
+"ru": "Где примерочная?",
+"en": "Where is the fitting room?",
+"fr": "Où est la cabine d'essayage ?"
+},
+{
+"a": "Սա ինձ չի սազում",
+"lv": "A2",
+"ru": "Мне это не идёт",
+"en": "It doesn't suit me",
+"fr": "Ça ne me va pas"
+},
+{
+"a": "Շատ թանկ է",
+"lv": "A2",
+"ru": "Слишком дорого",
+"en": "It's too expensive",
+"fr": "C'est trop cher"
+},
+{
+"a": "Զեղչ կա՞",
+"lv": "A2",
+"ru": "Есть скидка?",
+"en": "Is there a discount?",
+"fr": "Il y a une réduction ?"
+},
+{
+"a": "Ես սա կվերցնեմ",
+"lv": "A2",
+"ru": "Я возьму это",
+"en": "I'll take this",
+"fr": "Je prends ça"
+},
+{
+"a": "Կանխիկ կվճարեմ",
+"lv": "A2",
+"ru": "Заплачу наличными",
+"en": "I'll pay in cash",
+"fr": "Je paierai en espèces"
+},
+{
+"a": "Տոպրակ պե՞տք է",
+"lv": "A2",
+"ru": "Нужен пакет?",
+"en": "Do you need a bag?",
+"fr": "Vous voulez un sac ?"
+},
+{
+"a": "Չեկը, խնդրեմ",
+"lv": "A2",
+"ru": "Чек, пожалуйста",
+"en": "The receipt, please",
+"fr": "Le ticket, s'il vous plaît"
+},
+{
+"a": "Կարո՞ղ եմ վերադարձնել",
+"lv": "A2",
+"ru": "Можно вернуть?",
+"en": "Can I return it?",
+"fr": "Je peux le rendre ?"
+},
+{
+"a": "Ե՞րբ եք բացվում",
+"lv": "A2",
+"ru": "Когда вы открываетесь?",
+"en": "When do you open?",
+"fr": "Vous ouvrez à quelle heure ?"
+},
+{
+"a": "Ե՞րբ եք փակվում",
+"lv": "A2",
+"ru": "Когда вы закрываетесь?",
+"en": "When do you close?",
+"fr": "Vous fermez à quelle heure ?"
+},
+{
+"a": "Մեկ կիլոգրամ խնձոր, խնդրեմ",
+"lv": "A2",
+"ru": "Килограмм яблок, пожалуйста",
+"en": "A kilo of apples, please",
+"fr": "Un kilo de pommes, s'il vous plaît"
+},
+{
+"a": "Թա՞րմ է",
+"lv": "A2",
+"ru": "Свежее?",
+"en": "Is it fresh?",
+"fr": "C'est frais ?"
+},
+{
+"a": "Ուրիշ գույն ունե՞ք",
+"lv": "A2",
+"ru": "Есть другой цвет?",
+"en": "Do you have another colour?",
+"fr": "Vous l'avez dans une autre couleur ?"
+},
+{
+"a": "Ինչպե՞ս հասնել կենտրոն",
+"lv": "A2",
+"ru": "Как добраться до центра?",
+"en": "How do I get to the centre?",
+"fr": "Comment aller au centre ?"
+},
+{
+"a": "Որտե՞ղ է մոտակա կանգառը",
+"lv": "A2",
+"ru": "Где ближайшая остановка?",
+"en": "Where is the nearest stop?",
+"fr": "Où est l'arrêt le plus proche ?"
+},
+{
+"a": "Այս ավտոբուսը գնո՞ւմ է օդանավակայան",
+"lv": "A2",
+"ru": "Этот автобус идёт в аэропорт?",
+"en": "Does this bus go to the airport?",
+"fr": "Ce bus va-t-il à l'aéroport ?"
+},
+{
+"a": "Մեկ տոմս Գյումրի, խնդրեմ",
+"lv": "A2",
+"ru": "Один билет до Гюмри, пожалуйста",
+"en": "One ticket to Gyumri, please",
+"fr": "Un billet pour Gyumri, s'il vous plaît"
+},
+{
+"a": "Գնացքը ժամը քանիսի՞ն է մեկնում",
+"lv": "A2",
+"ru": "Во сколько отправляется поезд?",
+"en": "What time does the train leave?",
+"fr": "À quelle heure part le train ?"
+},
+{
+"a": "Կանգնեցրեք այստեղ",
+"lv": "A2",
+"ru": "Остановите здесь",
+"en": "Stop here, please",
+"fr": "Arrêtez-vous ici"
+},
+{
+"a": "Ձախ թեքվեք",
+"lv": "A2",
+"ru": "Поверните налево",
+"en": "Turn left",
+"fr": "Tournez à gauche"
+},
+{
+"a": "Աջ թեքվեք",
+"lv": "A2",
+"ru": "Поверните направо",
+"en": "Turn right",
+"fr": "Tournez à droite"
+},
+{
+"a": "Ուղիղ գնացեք",
+"lv": "A2",
+"ru": "Идите прямо",
+"en": "Go straight ahead",
+"fr": "Allez tout droit"
+},
+{
+"a": "Հեռո՞ւ է",
+"lv": "A2",
+"ru": "Далеко?",
+"en": "Is it far?",
+"fr": "C'est loin ?"
+},
+{
+"a": "Ոտքով կարելի՞ է գնալ",
+"lv": "A2",
+"ru": "Можно дойти пешком?",
+"en": "Can I walk there?",
+"fr": "On peut y aller à pied ?"
+},
+{
+"a": "Ես համար եմ պատվիրել",
+"lv": "A2",
+"ru": "Я забронировал номер",
+"en": "I've booked a room",
+"fr": "J'ai réservé une chambre"
+},
+{
+"a": "Նախաճաշը ներառվա՞ծ է",
+"lv": "A2",
+"ru": "Завтрак включён?",
+"en": "Is breakfast included?",
+"fr": "Le petit-déjeuner est inclus ?"
+},
+{
+"a": "Ինտերնետի գաղտնաբառն ի՞նչ է",
+"lv": "A2",
+"ru": "Какой пароль от интернета?",
+"en": "What's the internet password?",
+"fr": "Quel est le mot de passe internet ?"
+},
+{
+"a": "Ուզում եմ մեքենա վարձել",
+"lv": "A2",
+"ru": "Я хочу арендовать машину",
+"en": "I want to rent a car",
+"fr": "Je veux louer une voiture"
+},
+{
+"a": "Կարո՞ղ եք ինձ նկարել",
+"lv": "A2",
+"ru": "Можете меня сфотографировать?",
+"en": "Could you take a photo of me?",
+"fr": "Pouvez-vous me prendre en photo ?"
+},
+{
+"a": "Անձնագիրս կորցրել եմ",
+"lv": "A2",
+"ru": "Я потерял паспорт",
+"en": "I've lost my passport",
+"fr": "J'ai perdu mon passeport"
+},
+{
+"a": "Ուղեբեռս չի եկել",
+"lv": "A2",
+"ru": "Мой багаж не прибыл",
+"en": "My luggage hasn't arrived",
+"fr": "Mes bagages ne sont pas arrivés"
+},
+{
+"a": "Քանի՞ ժամ է տևում թռիչքը",
+"lv": "A2",
+"ru": "Сколько длится полёт?",
+"en": "How long is the flight?",
+"fr": "Le vol dure combien de temps ?"
+},
+{
+"a": "Որտե՞ղ կարող եմ փող փոխել",
+"lv": "A2",
+"ru": "Где можно обменять деньги?",
+"en": "Where can I change money?",
+"fr": "Où puis-je changer de l'argent ?"
+},
+{
+"a": "Տաքսի կանչեք, խնդրեմ",
+"lv": "A2",
+"ru": "Вызовите такси, пожалуйста",
+"en": "Call a taxi, please",
+"fr": "Appelez un taxi, s'il vous plaît"
+},
+{
+"a": "Ինձ տարեք այս հասցեով",
+"lv": "A2",
+"ru": "Отвезите меня по этому адресу",
+"en": "Take me to this address",
+"fr": "Conduisez-moi à cette adresse"
+},
+{
+"a": "Ինձ վատ եմ զգում",
+"lv": "A2",
+"ru": "Мне плохо",
+"en": "I feel unwell",
+"fr": "Je ne me sens pas bien"
+},
+{
+"a": "Գլուխս ցավում է",
+"lv": "A2",
+"ru": "У меня болит голова",
+"en": "I have a headache",
+"fr": "J'ai mal à la tête"
+},
+{
+"a": "Ատամս ցավում է",
+"lv": "A2",
+"ru": "У меня болит зуб",
+"en": "I have toothache",
+"fr": "J'ai mal aux dents"
+},
+{
+"a": "Փորս ցավում է",
+"lv": "A2",
+"ru": "У меня болит живот",
+"en": "I have a stomach ache",
+"fr": "J'ai mal au ventre"
+},
+{
+"a": "Կոկորդս ցավում է",
+"lv": "A2",
+"ru": "У меня болит горло",
+"en": "I have a sore throat",
+"fr": "J'ai mal à la gorge"
+},
+{
+"a": "Ջերմություն ունեմ",
+"lv": "A2",
+"ru": "У меня температура",
+"en": "I have a temperature",
+"fr": "J'ai de la fièvre"
+},
+{
+"a": "Մրսել եմ",
+"lv": "A2",
+"ru": "Я простудился",
+"en": "I've caught a cold",
+"fr": "J'ai attrapé froid"
+},
+{
+"a": "Գլուխս պտտվում է",
+"lv": "A2",
+"ru": "У меня кружится голова",
+"en": "I feel dizzy",
+"fr": "J'ai la tête qui tourne"
+},
+{
+"a": "Սիրտս խառնում է",
+"lv": "A2",
+"ru": "Меня тошнит",
+"en": "I feel sick",
+"fr": "J'ai la nausée"
+},
+{
+"a": "Ալերգիա ունեմ",
+"lv": "A2",
+"ru": "У меня аллергия",
+"en": "I have an allergy",
+"fr": "J'ai une allergie"
+},
+{
+"a": "Ես հղի եմ",
+"lv": "A2",
+"ru": "Я беременна",
+"en": "I'm pregnant",
+"fr": "Je suis enceinte"
+},
+{
+"a": "Օրական երեք անգամ",
+"lv": "A2",
+"ru": "Три раза в день",
+"en": "Three times a day",
+"fr": "Trois fois par jour"
+},
+{
+"a": "Ուտելուց առաջ",
+"lv": "A2",
+"ru": "До еды",
+"en": "Before meals",
+"fr": "Avant les repas"
+},
+{
+"a": "Ուտելուց հետո",
+"lv": "A2",
+"ru": "После еды",
+"en": "After meals",
+"fr": "Après les repas"
+},
+{
+"a": "Կանչեք շտապօգնություն",
+"lv": "A2",
+"ru": "Вызовите скорую",
+"en": "Call an ambulance",
+"fr": "Appelez une ambulance"
+},
+{
+"a": "Ինձ դեղատոմս է պետք",
+"lv": "A2",
+"ru": "Мне нужен рецепт",
+"en": "I need a prescription",
+"fr": "J'ai besoin d'une ordonnance"
+},
+{
+"a": "Որտե՞ղ է մոտակա դեղատունը",
+"lv": "A2",
+"ru": "Где ближайшая аптека?",
+"en": "Where's the nearest pharmacy?",
+"fr": "Où est la pharmacie la plus proche ?"
+},
+{
+"a": "Ուզում եմ գրանցվել բժշկի մոտ",
+"lv": "A2",
+"ru": "Я хочу записаться к врачу",
+"en": "I'd like to see a doctor",
+"fr": "Je voudrais prendre rendez-vous chez le médecin"
+},
+{
+"a": "Արդեն ավելի լավ եմ",
+"lv": "A2",
+"ru": "Мне уже лучше",
+"en": "I'm already better",
+"fr": "Je vais déjà mieux"
+},
+{
+"a": "Շուտ առողջացեք",
+"lv": "A2",
+"ru": "Скорее выздоравливайте",
+"en": "Get well soon",
+"fr": "Bon rétablissement"
+},
+{
+"a": "Ծանոթացեք",
+"lv": "A2",
+"ru": "Знакомьтесь",
+"en": "Let me introduce you",
+"fr": "Je vous présente"
+},
+{
+"a": "Ուրախ եմ ծանոթանալու համար",
+"lv": "A2",
+"ru": "Рад познакомиться",
+"en": "Nice to meet you",
+"fr": "Ravi de faire votre connaissance"
+},
+{
+"a": "Ինչո՞վ եք զբաղվում",
+"lv": "A2",
+"ru": "Чем вы занимаетесь?",
+"en": "What do you do?",
+"fr": "Que faites-vous dans la vie ?"
+},
+{
+"a": "Որտե՞ղ եք աշխատում",
+"lv": "A2",
+"ru": "Где вы работаете?",
+"en": "Where do you work?",
+"fr": "Où travaillez-vous ?"
+},
+{
+"a": "Որտե՞ղ եք ապրում",
+"lv": "A2",
+"ru": "Где вы живёте?",
+"en": "Where do you live?",
+"fr": "Où habitez-vous ?"
+},
+{
+"a": "Ամուսնացա՞ծ եք",
+"lv": "A2",
+"ru": "Вы женаты? Вы замужем?",
+"en": "Are you married?",
+"fr": "Êtes-vous marié ?"
+},
+{
+"a": "Երեխաներ ունե՞ք",
+"lv": "A2",
+"ru": "У вас есть дети?",
+"en": "Do you have children?",
+"fr": "Avez-vous des enfants ?"
+},
+{
+"a": "Ազատ ժամանակ ի՞նչ եք անում",
+"lv": "A2",
+"ru": "Что вы делаете в свободное время?",
+"en": "What do you do in your free time?",
+"fr": "Que faites-vous pendant votre temps libre ?"
+},
+{
+"a": "Առաջին անգա՞մն եք Հայաստանում",
+"lv": "A2",
+"ru": "Вы впервые в Армении?",
+"en": "Is this your first time in Armenia?",
+"fr": "C'est votre première fois en Arménie ?"
+},
+{
+"a": "Ինձ շատ է դուր գալիս Երևանը",
+"lv": "A2",
+"ru": "Мне очень нравится Ереван",
+"en": "I really like Yerevan",
+"fr": "J'aime beaucoup Erevan"
+},
+{
+"a": "Ձեր հայերենը շատ լավն է",
+"lv": "A2",
+"ru": "Ваш армянский очень хорош",
+"en": "Your Armenian is very good",
+"fr": "Votre arménien est très bon"
+},
+{
+"a": "Դեռ լավ չեմ խոսում",
+"lv": "A2",
+"ru": "Я ещё плохо говорю",
+"en": "I don't speak well yet",
+"fr": "Je ne parle pas encore bien"
+},
+{
+"a": "Ի՞նչ է նշանակում այս բառը",
+"lv": "A2",
+"ru": "Что значит это слово?",
+"en": "What does this word mean?",
+"fr": "Que veut dire ce mot ?"
+},
+{
+"a": "Ինչպե՞ս է դա հայերեն",
+"lv": "A2",
+"ru": "Как это по-армянски?",
+"en": "How do you say that in Armenian?",
+"fr": "Comment dit-on ça en arménien ?"
+},
+{
+"a": "Գրեք, խնդրեմ",
+"lv": "A2",
+"ru": "Напишите, пожалуйста",
+"en": "Please write it down",
+"fr": "Écrivez-le, s'il vous plaît"
+},
+{
+"a": "Ձեր հեռախոսահամարը կտա՞ք",
+"lv": "A2",
+"ru": "Дадите ваш номер телефона?",
+"en": "Can I have your phone number?",
+"fr": "Vous me donnez votre numéro ?"
+},
+{
+"a": "Կզանգեմ քեզ",
+"lv": "A2",
+"ru": "Я тебе позвоню",
+"en": "I'll call you",
+"fr": "Je t'appellerai"
+},
+{
+"a": "Կհանդիպենք",
+"lv": "A2",
+"ru": "Увидимся",
+"en": "See you",
+"fr": "On se voit"
+},
+{
+"a": "Ի՞նչ նորություն կա",
+"lv": "A2",
+"ru": "Что нового?",
+"en": "What's new?",
+"fr": "Quoi de neuf ?"
+},
+{
+"a": "Ոչինչ, լավ եմ",
+"lv": "A2",
+"ru": "Ничего, нормально",
+"en": "Nothing much, I'm fine",
+"fr": "Rien de spécial, ça va"
+},
+{
+"a": "Լավ հանգստացեք",
+"lv": "A2",
+"ru": "Хорошо отдохните",
+"en": "Have a good rest",
+"fr": "Reposez-vous bien"
+},
+{
+"a": "Բարով տեսանք",
+"lv": "A2",
+"ru": "Рад тебя видеть",
+"en": "Good to see you",
+"fr": "Content de te voir"
+},
+{
+"a": "Համեցեք",
+"lv": "A2",
+"ru": "Проходите, пожалуйста",
+"en": "Please come in",
+"fr": "Entrez, je vous en prie"
+},
+{
+"a": "Նստեք, խնդրեմ",
+"lv": "A2",
+"ru": "Садитесь, пожалуйста",
+"en": "Please sit down",
+"fr": "Asseyez-vous, je vous en prie"
+},
+{
+"a": "Ձեզ ի՞նչ հյուրասիրեմ",
+"lv": "A2",
+"ru": "Чем вас угостить?",
+"en": "What can I offer you?",
+"fr": "Que puis-je vous offrir ?"
+},
+{
+"a": "Սուրճ կխմե՞ք",
+"lv": "A2",
+"ru": "Будете кофе?",
+"en": "Would you like some coffee?",
+"fr": "Vous prendrez un café ?"
+},
+{
+"a": "Ինձ մի քիչ",
+"lv": "A2",
+"ru": "Мне немного",
+"en": "Just a little for me",
+"fr": "Juste un peu pour moi"
+},
+{
+"a": "Բավական է, շնորհակալություն",
+"lv": "A2",
+"ru": "Достаточно, спасибо",
+"en": "That's enough, thank you",
+"fr": "Ça suffit, merci"
+},
+{
+"a": "Ձեռքերդ դալար",
+"lv": "A2",
+"ru": "Золотые руки (спасибо за угощение)",
+"en": "Bless your hands (thanks for the food)",
+"fr": "Merci pour ce délicieux repas"
+},
+{
+"a": "Ինչքա՜ն գեղեցիկ տուն ունեք",
+"lv": "A2",
+"ru": "Какой у вас красивый дом!",
+"en": "What a lovely home you have!",
+"fr": "Comme votre maison est belle !"
+},
+{
+"a": "Զգացեք ձեզ ինչպես տանը",
+"lv": "A2",
+"ru": "Чувствуйте себя как дома",
+"en": "Make yourself at home",
+"fr": "Faites comme chez vous"
+},
+{
+"a": "Ուշ է, պետք է գնամ",
+"lv": "A2",
+"ru": "Поздно, мне пора",
+"en": "It's late, I have to go",
+"fr": "Il est tard, je dois y aller"
+},
+{
+"a": "Եկեք մեզ մոտ",
+"lv": "A2",
+"ru": "Приходите к нам",
+"en": "Come and visit us",
+"fr": "Venez chez nous"
+},
+{
+"a": "Շնորհակալություն հյուրընկալության համար",
+"lv": "A2",
+"ru": "Спасибо за гостеприимство",
+"en": "Thank you for your hospitality",
+"fr": "Merci pour votre hospitalité"
+},
+{
+"a": "Ո՞վ է",
+"lv": "A2",
+"ru": "Кто там?",
+"en": "Who is it?",
+"fr": "Qui est-ce ?"
+},
+{
+"a": "Կոշիկներս հանե՞մ",
+"lv": "A2",
+"ru": "Снять обувь?",
+"en": "Should I take my shoes off?",
+"fr": "Je dois enlever mes chaussures ?"
+},
+{
+"a": "Սեղանը պատրաստ է",
+"lv": "A2",
+"ru": "Стол накрыт",
+"en": "The table is ready",
+"fr": "Le repas est servi"
+},
+{
+"a": "Ձեր կենացը",
+"lv": "A2",
+"ru": "За ваше здоровье",
+"en": "To your health",
+"fr": "À votre santé"
 },
 {
 "a": "հասարակություն",
@@ -31248,6 +32816,1035 @@
 "fr": "célèbre"
 },
 {
+"a": "այդպիսով",
+"lv": "B1",
+"ru": "таким образом",
+"en": "thus",
+"fr": "ainsi"
+},
+{
+"a": "չնայած որ",
+"lv": "B1",
+"ru": "несмотря на то что",
+"en": "although",
+"fr": "bien que"
+},
+{
+"a": "այլապես",
+"lv": "B1",
+"ru": "иначе",
+"en": "otherwise",
+"fr": "sinon"
+},
+{
+"a": "այլև",
+"lv": "B1",
+"ru": "но и",
+"en": "but also",
+"fr": "mais aussi"
+},
+{
+"a": "ամեն դեպքում",
+"lv": "B1",
+"ru": "в любом случае",
+"en": "in any case",
+"fr": "en tout cas"
+},
+{
+"a": "ի դեպ",
+"lv": "B1",
+"ru": "кстати",
+"en": "by the way",
+"fr": "au fait"
+},
+{
+"a": "ի միջի այլոց",
+"lv": "B1",
+"ru": "между прочим",
+"en": "incidentally",
+"fr": "soit dit en passant"
+},
+{
+"a": "բնականաբար",
+"lv": "B1",
+"ru": "естественно",
+"en": "naturally",
+"fr": "naturellement"
+},
+{
+"a": "ըստ երևույթին",
+"lv": "B1",
+"ru": "по-видимому",
+"en": "apparently",
+"fr": "apparemment"
+},
+{
+"a": "ըստ էության",
+"lv": "B1",
+"ru": "по сути",
+"en": "essentially",
+"fr": "en substance"
+},
+{
+"a": "փաստորեն",
+"lv": "B1",
+"ru": "фактически",
+"en": "in fact, actually",
+"fr": "en fait"
+},
+{
+"a": "ըստ իս",
+"lv": "B1",
+"ru": "по-моему",
+"en": "in my view",
+"fr": "selon moi"
+},
+{
+"a": "իմ կարծիքով",
+"lv": "B1",
+"ru": "по моему мнению",
+"en": "in my opinion",
+"fr": "à mon avis"
+},
+{
+"a": "ասենք",
+"lv": "B1",
+"ru": "скажем",
+"en": "let's say",
+"fr": "disons"
+},
+{
+"a": "ընդհանուր առմամբ",
+"lv": "B1",
+"ru": "в общем",
+"en": "on the whole",
+"fr": "dans l'ensemble"
+},
+{
+"a": "կարճ ասած",
+"lv": "B1",
+"ru": "короче говоря",
+"en": "in short",
+"fr": "bref"
+},
+{
+"a": "մի խոսքով",
+"lv": "B1",
+"ru": "одним словом",
+"en": "in a word",
+"fr": "en un mot"
+},
+{
+"a": "վերջիվերջո",
+"lv": "B1",
+"ru": "в конце концов",
+"en": "after all, eventually",
+"fr": "finalement"
+},
+{
+"a": "ի վերջո",
+"lv": "B1",
+"ru": "в итоге",
+"en": "ultimately",
+"fr": "au bout du compte"
+},
+{
+"a": "առաջին հերթին",
+"lv": "B1",
+"ru": "в первую очередь",
+"en": "first of all",
+"fr": "en premier lieu"
+},
+{
+"a": "ավելին",
+"lv": "B1",
+"ru": "более того",
+"en": "moreover",
+"fr": "de plus"
+},
+{
+"a": "մինչև որ",
+"lv": "B1",
+"ru": "до тех пор, пока",
+"en": "until",
+"fr": "jusqu'à ce que"
+},
+{
+"a": "կսկիծ",
+"lv": "B1",
+"ru": "горечь, щемящая боль",
+"en": "anguish, heartache",
+"fr": "chagrin"
+},
+{
+"a": "բարկություն",
+"lv": "B1",
+"ru": "гнев",
+"en": "anger",
+"fr": "colère"
+},
+{
+"a": "ցասում",
+"lv": "B1",
+"ru": "ярость",
+"en": "wrath",
+"fr": "courroux"
+},
+{
+"a": "խանդ",
+"lv": "B1",
+"ru": "ревность",
+"en": "jealousy",
+"fr": "jalousie"
+},
+{
+"a": "մեղավորություն",
+"lv": "B1",
+"ru": "вина, виновность",
+"en": "guilt",
+"fr": "culpabilité"
+},
+{
+"a": "գոհունակություն",
+"lv": "B1",
+"ru": "удовлетворение",
+"en": "satisfaction",
+"fr": "satisfaction"
+},
+{
+"a": "հաճույք",
+"lv": "B1",
+"ru": "удовольствие",
+"en": "pleasure",
+"fr": "plaisir"
+},
+{
+"a": "դժբախտություն",
+"lv": "B1",
+"ru": "несчастье",
+"en": "misfortune",
+"fr": "malheur"
+},
+{
+"a": "հանգստություն",
+"lv": "B1",
+"ru": "спокойствие",
+"en": "calm, peace",
+"fr": "calme"
+},
+{
+"a": "ձանձրույթ",
+"lv": "B1",
+"ru": "скука",
+"en": "boredom",
+"fr": "ennui"
+},
+{
+"a": "խանդավառություն",
+"lv": "B1",
+"ru": "воодушевление",
+"en": "enthusiasm",
+"fr": "enthousiasme"
+},
+{
+"a": "սիրահարվածություն",
+"lv": "B1",
+"ru": "влюблённость",
+"en": "being in love",
+"fr": "état amoureux"
+},
+{
+"a": "քնքշություն",
+"lv": "B1",
+"ru": "нежность",
+"en": "tenderness",
+"fr": "tendresse"
+},
+{
+"a": "գորովանք",
+"lv": "B1",
+"ru": "ласка, нежная любовь",
+"en": "affection",
+"fr": "affection"
+},
+{
+"a": "խղճահարություն",
+"lv": "B1",
+"ru": "жалость, сострадание",
+"en": "pity",
+"fr": "pitié"
+},
+{
+"a": "ողորմություն",
+"lv": "B1",
+"ru": "милосердие, милостыня",
+"en": "mercy, alms",
+"fr": "miséricorde"
+},
+{
+"a": "համակրանք",
+"lv": "B1",
+"ru": "симпатия",
+"en": "liking, sympathy",
+"fr": "sympathie"
+},
+{
+"a": "հակակրանք",
+"lv": "B1",
+"ru": "антипатия",
+"en": "dislike",
+"fr": "antipathie"
+},
+{
+"a": "վիրավորանք",
+"lv": "B1",
+"ru": "оскорбление, обида",
+"en": "insult, offence",
+"fr": "offense"
+},
+{
+"a": "նեղացում",
+"lv": "B1",
+"ru": "обида",
+"en": "resentment, hurt feelings",
+"fr": "vexation"
+},
+{
+"a": "վրեժ",
+"lv": "B1",
+"ru": "месть",
+"en": "revenge",
+"fr": "vengeance"
+},
+{
+"a": "անհամբերություն",
+"lv": "B1",
+"ru": "нетерпение",
+"en": "impatience",
+"fr": "impatience"
+},
+{
+"a": "անվստահություն",
+"lv": "B1",
+"ru": "недоверие",
+"en": "distrust",
+"fr": "méfiance"
+},
+{
+"a": "կասկած",
+"lv": "B1",
+"ru": "сомнение, подозрение",
+"en": "doubt, suspicion",
+"fr": "doute"
+},
+{
+"a": "հպարտություն",
+"lv": "B1",
+"ru": "гордость",
+"en": "pride",
+"fr": "fierté"
+},
+{
+"a": "ամբարտավանություն",
+"lv": "B1",
+"ru": "высокомерие",
+"en": "arrogance",
+"fr": "arrogance"
+},
+{
+"a": "համեստություն",
+"lv": "B1",
+"ru": "скромность",
+"en": "modesty",
+"fr": "modestie"
+},
+{
+"a": "վախկոտություն",
+"lv": "B1",
+"ru": "трусость",
+"en": "cowardice",
+"fr": "lâcheté"
+},
+{
+"a": "խիզախություն",
+"lv": "B1",
+"ru": "отвага",
+"en": "courage, bravery",
+"fr": "bravoure"
+},
+{
+"a": "ազնվություն",
+"lv": "B1",
+"ru": "честность",
+"en": "honesty",
+"fr": "honnêteté"
+},
+{
+"a": "անկեղծություն",
+"lv": "B1",
+"ru": "искренность",
+"en": "sincerity",
+"fr": "sincérité"
+},
+{
+"a": "կեղծավորություն",
+"lv": "B1",
+"ru": "лицемерие",
+"en": "hypocrisy",
+"fr": "hypocrisie"
+},
+{
+"a": "ստախոսություն",
+"lv": "B1",
+"ru": "лживость",
+"en": "lying",
+"fr": "mensonge"
+},
+{
+"a": "բարություն",
+"lv": "B1",
+"ru": "доброта",
+"en": "kindness",
+"fr": "bonté"
+},
+{
+"a": "չարություն",
+"lv": "B1",
+"ru": "злоба",
+"en": "malice, wickedness",
+"fr": "méchanceté"
+},
+{
+"a": "դաժանություն",
+"lv": "B1",
+"ru": "жестокость",
+"en": "cruelty",
+"fr": "cruauté"
+},
+{
+"a": "ագահություն",
+"lv": "B1",
+"ru": "жадность",
+"en": "greed",
+"fr": "avidité"
+},
+{
+"a": "առատաձեռնություն",
+"lv": "B1",
+"ru": "щедрость",
+"en": "generosity",
+"fr": "générosité"
+},
+{
+"a": "ժլատություն",
+"lv": "B1",
+"ru": "скупость",
+"en": "stinginess",
+"fr": "avarice"
+},
+{
+"a": "ծուլություն",
+"lv": "B1",
+"ru": "лень",
+"en": "laziness",
+"fr": "paresse"
+},
+{
+"a": "աշխատասիրություն",
+"lv": "B1",
+"ru": "трудолюбие",
+"en": "diligence",
+"fr": "assiduité"
+},
+{
+"a": "կամքի ուժ",
+"lv": "B1",
+"ru": "сила воли",
+"en": "willpower",
+"fr": "volonté"
+},
+{
+"a": "բնավորություն",
+"lv": "B1",
+"ru": "характер",
+"en": "character, nature",
+"fr": "caractère"
+},
+{
+"a": "զգացում",
+"lv": "B1",
+"ru": "ощущение, чувство",
+"en": "sensation, feeling",
+"fr": "sensation"
+},
+{
+"a": "ապրում",
+"lv": "B1",
+"ru": "переживание",
+"en": "experience, emotion",
+"fr": "vécu"
+},
+{
+"a": "ինտուիցիա",
+"lv": "B1",
+"ru": "интуиция",
+"en": "intuition",
+"fr": "intuition"
+},
+{
+"a": "մղձավանջ",
+"lv": "B1",
+"ru": "кошмар",
+"en": "nightmare",
+"fr": "cauchemar"
+},
+{
+"a": "մտածողություն",
+"lv": "B1",
+"ru": "мышление",
+"en": "thinking",
+"fr": "pensée"
+},
+{
+"a": "համոզմունք",
+"lv": "B1",
+"ru": "убеждение",
+"en": "conviction, belief",
+"fr": "conviction"
+},
+{
+"a": "մտադրություն",
+"lv": "B1",
+"ru": "намерение",
+"en": "intention",
+"fr": "intention"
+},
+{
+"a": "պահանջմունք",
+"lv": "B1",
+"ru": "потребность",
+"en": "need",
+"fr": "besoin"
+},
+{
+"a": "իղձ",
+"lv": "B1",
+"ru": "мечта, заветное желание",
+"en": "longing, wish",
+"fr": "souhait"
+},
+{
+"a": "ակնկալիք",
+"lv": "B1",
+"ru": "ожидание",
+"en": "expectation",
+"fr": "attente"
+},
+{
+"a": "սպասում",
+"lv": "B1",
+"ru": "ожидание",
+"en": "waiting",
+"fr": "attente"
+},
+{
+"a": "կենտրոնացում",
+"lv": "B1",
+"ru": "сосредоточенность",
+"en": "concentration",
+"fr": "concentration"
+},
+{
+"a": "ցրվածություն",
+"lv": "B1",
+"ru": "рассеянность",
+"en": "absent-mindedness",
+"fr": "distraction"
+},
+{
+"a": "մոռացկոտություն",
+"lv": "B1",
+"ru": "забывчивость",
+"en": "forgetfulness",
+"fr": "oubli"
+},
+{
+"a": "խելք",
+"lv": "B1",
+"ru": "ум",
+"en": "mind, intelligence",
+"fr": "esprit"
+},
+{
+"a": "հիմարություն",
+"lv": "B1",
+"ru": "глупость",
+"en": "stupidity",
+"fr": "bêtise"
+},
+{
+"a": "միամտություն",
+"lv": "B1",
+"ru": "наивность",
+"en": "naivety",
+"fr": "naïveté"
+},
+{
+"a": "խորամանկություն",
+"lv": "B1",
+"ru": "хитрость",
+"en": "cunning",
+"fr": "ruse"
+},
+{
+"a": "տաղանդ",
+"lv": "B1",
+"ru": "талант",
+"en": "talent",
+"fr": "talent"
+},
+{
+"a": "ընդունակություն",
+"lv": "B1",
+"ru": "способность",
+"en": "ability",
+"fr": "aptitude"
+},
+{
+"a": "շնորհք",
+"lv": "B1",
+"ru": "дар, умение",
+"en": "gift, knack",
+"fr": "don"
+},
+{
+"a": "իմացություն",
+"lv": "B1",
+"ru": "знание",
+"en": "knowledge",
+"fr": "connaissance"
+},
+{
+"a": "փեղկ",
+"lv": "B1",
+"ru": "ставня, створка",
+"en": "shutter, leaf (of a door)",
+"fr": "volet"
+},
+{
+"a": "սալիկ",
+"lv": "B1",
+"ru": "плитка",
+"en": "tile",
+"fr": "carreau"
+},
+{
+"a": "մանրահատակ",
+"lv": "B1",
+"ru": "паркет",
+"en": "parquet",
+"fr": "parquet"
+},
+{
+"a": "լամինատ",
+"lv": "B1",
+"ru": "ламинат",
+"en": "laminate",
+"fr": "stratifié"
+},
+{
+"a": "լինոլեում",
+"lv": "B1",
+"ru": "линолеум",
+"en": "linoleum",
+"fr": "linoléum"
+},
+{
+"a": "սվաղ",
+"lv": "B1",
+"ru": "штукатурка",
+"en": "plaster",
+"fr": "plâtre"
+},
+{
+"a": "բետոն",
+"lv": "B1",
+"ru": "бетон",
+"en": "concrete",
+"fr": "béton"
+},
+{
+"a": "հեղույս",
+"lv": "B1",
+"ru": "болт",
+"en": "bolt",
+"fr": "boulon"
+},
+{
+"a": "մանեկ",
+"lv": "B1",
+"ru": "гайка",
+"en": "nut (for a bolt)",
+"fr": "écrou"
+},
+{
+"a": "խողովակաշար",
+"lv": "B1",
+"ru": "трубопровод",
+"en": "pipeline, pipework",
+"fr": "canalisation"
+},
+{
+"a": "կոյուղի",
+"lv": "B1",
+"ru": "канализация",
+"en": "sewer",
+"fr": "égout"
+},
+{
+"a": "ջեռուցման մարտկոց",
+"lv": "B1",
+"ru": "батарея отопления",
+"en": "radiator",
+"fr": "radiateur"
+},
+{
+"a": "ջրատաքացուցիչ",
+"lv": "B1",
+"ru": "водонагреватель",
+"en": "water heater",
+"fr": "chauffe-eau"
+},
+{
+"a": "եղան",
+"lv": "B1",
+"ru": "вилы",
+"en": "pitchfork",
+"fr": "fourche"
+},
+{
+"a": "ջրցան",
+"lv": "B1",
+"ru": "лейка",
+"en": "watering can",
+"fr": "arrosoir"
+},
+{
+"a": "թաղար",
+"lv": "B1",
+"ru": "цветочный горшок",
+"en": "flowerpot",
+"fr": "pot de fleurs"
+},
+{
+"a": "սածիլ",
+"lv": "B1",
+"ru": "рассада, саженец",
+"en": "seedling",
+"fr": "plant"
+},
+{
+"a": "մարգ",
+"lv": "B1",
+"ru": "грядка",
+"en": "garden bed",
+"fr": "plate-bande"
+},
+{
+"a": "ցանքս",
+"lv": "B1",
+"ru": "посев",
+"en": "sowing, crops",
+"fr": "semis"
+},
+{
+"a": "պարարտանյութ",
+"lv": "B1",
+"ru": "удобрение",
+"en": "fertilizer",
+"fr": "engrais"
+},
+{
+"a": "Ես համաձայն չեմ",
+"lv": "B1",
+"ru": "Я не согласен",
+"en": "I disagree",
+"fr": "Je ne suis pas d'accord"
+},
+{
+"a": "Միանգամայն ճիշտ եք",
+"lv": "B1",
+"ru": "Вы совершенно правы",
+"en": "You're absolutely right",
+"fr": "Vous avez tout à fait raison"
+},
+{
+"a": "Կախված է",
+"lv": "B1",
+"ru": "Смотря как, зависит",
+"en": "It depends",
+"fr": "Ça dépend"
+},
+{
+"a": "Ինձ թվում է",
+"lv": "B1",
+"ru": "Мне кажется",
+"en": "It seems to me",
+"fr": "Il me semble"
+},
+{
+"a": "Ես այլ կարծիքի եմ",
+"lv": "B1",
+"ru": "Я другого мнения",
+"en": "I see it differently",
+"fr": "Je suis d'un autre avis"
+},
+{
+"a": "Դա իմաստ չունի",
+"lv": "B1",
+"ru": "Это не имеет смысла",
+"en": "It makes no sense",
+"fr": "Ça n'a pas de sens"
+},
+{
+"a": "Դա իմ գործը չէ",
+"lv": "B1",
+"ru": "Это не моё дело",
+"en": "It's none of my business",
+"fr": "Ce ne sont pas mes affaires"
+},
+{
+"a": "Ի՞նչ կարող ես անել",
+"lv": "B1",
+"ru": "Что поделаешь",
+"en": "What can you do?",
+"fr": "Qu'est-ce qu'on peut y faire ?"
+},
+{
+"a": "Կարևոր չէ",
+"lv": "B1",
+"ru": "Неважно",
+"en": "It doesn't matter",
+"fr": "Peu importe"
+},
+{
+"a": "Իհարկե ոչ",
+"lv": "B1",
+"ru": "Конечно нет",
+"en": "Of course not",
+"fr": "Bien sûr que non"
+},
+{
+"a": "Չեմ կարծում",
+"lv": "B1",
+"ru": "Не думаю",
+"en": "I don't think so",
+"fr": "Je ne pense pas"
+},
+{
+"a": "Ի՞նչ նկատի ունեք",
+"lv": "B1",
+"ru": "Что вы имеете в виду?",
+"en": "What do you mean?",
+"fr": "Que voulez-vous dire ?"
+},
+{
+"a": "Կարո՞ղ եք բացատրել",
+"lv": "B1",
+"ru": "Можете объяснить?",
+"en": "Can you explain?",
+"fr": "Pouvez-vous expliquer ?"
+},
+{
+"a": "Դուք ինձ սխալ հասկացաք",
+"lv": "B1",
+"ru": "Вы меня неправильно поняли",
+"en": "You misunderstood me",
+"fr": "Vous m'avez mal compris"
+},
+{
+"a": "Համոզված եմ",
+"lv": "B1",
+"ru": "Я уверен",
+"en": "I'm sure",
+"fr": "J'en suis sûr"
+},
+{
+"a": "Համոզվա՞ծ եք",
+"lv": "B1",
+"ru": "Вы уверены?",
+"en": "Are you sure?",
+"fr": "Vous êtes sûr ?"
+},
+{
+"a": "Լավ միտք է",
+"lv": "B1",
+"ru": "Хорошая мысль",
+"en": "Good idea",
+"fr": "Bonne idée"
+},
+{
+"a": "Ոչ մի դեպքում",
+"lv": "B1",
+"ru": "Ни в коем случае",
+"en": "No way",
+"fr": "En aucun cas"
+},
+{
+"a": "Այդպես էլ կա",
+"lv": "B1",
+"ru": "Так и есть",
+"en": "That's how it is",
+"fr": "C'est comme ça"
+},
+{
+"a": "Ինչպես ասում են",
+"lv": "B1",
+"ru": "Как говорится",
+"en": "As they say",
+"fr": "Comme on dit"
+},
+{
+"a": "Խոստանում եմ",
+"lv": "B1",
+"ru": "Обещаю",
+"en": "I promise",
+"fr": "Je promets"
+},
+{
+"a": "Դու իրավացի ես",
+"lv": "B1",
+"ru": "Ты прав",
+"en": "You're right",
+"fr": "Tu as raison"
+},
+{
+"a": "Ուշանում եմ",
+"lv": "B1",
+"ru": "Я опаздываю",
+"en": "I'm running late",
+"fr": "Je suis en retard"
+},
+{
+"a": "Ժողովը հետաձգվել է",
+"lv": "B1",
+"ru": "Совещание перенесли",
+"en": "The meeting has been postponed",
+"fr": "La réunion a été reportée"
+},
+{
+"a": "Կարո՞ղ եմ վաղը ազատ լինել",
+"lv": "B1",
+"ru": "Можно мне завтра выходной?",
+"en": "Can I have tomorrow off?",
+"fr": "Puis-je prendre ma journée demain ?"
+},
+{
+"a": "Արձակուրդում եմ",
+"lv": "B1",
+"ru": "Я в отпуске",
+"en": "I'm on holiday",
+"fr": "Je suis en congé"
+},
+{
+"a": "Ուղարկեք ինձ էլեկտրոնային փոստով",
+"lv": "B1",
+"ru": "Пришлите мне по электронной почте",
+"en": "Send it to me by email",
+"fr": "Envoyez-le-moi par e-mail"
+},
+{
+"a": "Ե՞րբ է վերջնաժամկետը",
+"lv": "B1",
+"ru": "Когда крайний срок?",
+"en": "When is the deadline?",
+"fr": "Quelle est la date limite ?"
+},
+{
+"a": "Ես կզբաղվեմ դրանով",
+"lv": "B1",
+"ru": "Я этим займусь",
+"en": "I'll take care of it",
+"fr": "Je m'en occupe"
+},
+{
+"a": "Ինձ օգնություն է պետք",
+"lv": "B1",
+"ru": "Мне нужна помощь",
+"en": "I need help",
+"fr": "J'ai besoin d'aide"
+},
+{
+"a": "Ի՞նչ աշխատավարձ է",
+"lv": "B1",
+"ru": "Какая зарплата?",
+"en": "What's the salary?",
+"fr": "Quel est le salaire ?"
+},
+{
+"a": "Աշխատանք եմ փնտրում",
+"lv": "B1",
+"ru": "Я ищу работу",
+"en": "I'm looking for a job",
+"fr": "Je cherche du travail"
+},
+{
+"a": "Ինձ աշխատանքի ընդունեցին",
+"lv": "B1",
+"ru": "Меня приняли на работу",
+"en": "I got the job",
+"fr": "J'ai été embauché"
+},
+{
+"a": "Ինձ աշխատանքից ազատեցին",
+"lv": "B1",
+"ru": "Меня уволили",
+"en": "I was fired",
+"fr": "J'ai été licencié"
+},
+{
+"a": "Հեռավար եմ աշխատում",
+"lv": "B1",
+"ru": "Я работаю удалённо",
+"en": "I work remotely",
+"fr": "Je travaille à distance"
+},
+{
+"a": "Հանդիպենք ժամը երեքին",
+"lv": "B1",
+"ru": "Встретимся в три",
+"en": "Let's meet at three",
+"fr": "Retrouvons-nous à trois heures"
+},
+{
+"a": "Զբաղված եմ, հետո կզանգեմ",
+"lv": "B1",
+"ru": "Я занят, перезвоню позже",
+"en": "I'm busy, I'll call back later",
+"fr": "Je suis occupé, je rappellerai"
+},
+{
+"a": "Համաձայնեցրեք ղեկավարի հետ",
+"lv": "B1",
+"ru": "Согласуйте с руководителем",
+"en": "Check with the manager",
+"fr": "Voyez avec le responsable"
+},
+{
+"a": "Լավ աշխատանք է",
+"lv": "B1",
+"ru": "Хорошая работа",
+"en": "Good job",
+"fr": "Beau travail"
+},
+{
+"a": "Աշխատանքային օրն ավարտվեց",
+"lv": "B1",
+"ru": "Рабочий день закончился",
+"en": "The working day is over",
+"fr": "La journée de travail est finie"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -40626,6 +43223,692 @@
 "ru": "сильный, интенсивный",
 "en": "intense, violent",
 "fr": "intense"
+},
+{
+"a": "Հիսուս Քրիստոս",
+"lv": "B2",
+"ru": "Иисус Христос",
+"en": "Jesus Christ",
+"fr": "Jésus-Christ"
+},
+{
+"a": "Աստվածածին",
+"lv": "B2",
+"ru": "Богородица",
+"en": "the Mother of God",
+"fr": "la Mère de Dieu"
+},
+{
+"a": "Սուրբ Հոգի",
+"lv": "B2",
+"ru": "Святой Дух",
+"en": "the Holy Spirit",
+"fr": "le Saint-Esprit"
+},
+{
+"a": "Երրորդություն",
+"lv": "B2",
+"ru": "Троица",
+"en": "the Trinity",
+"fr": "la Trinité"
+},
+{
+"a": "առաքյալ",
+"lv": "B2",
+"ru": "апостол",
+"en": "apostle",
+"fr": "apôtre"
+},
+{
+"a": "մարգարե",
+"lv": "B2",
+"ru": "пророк",
+"en": "prophet",
+"fr": "prophète"
+},
+{
+"a": "դև",
+"lv": "B2",
+"ru": "дэв, демон",
+"en": "demon",
+"fr": "démon"
+},
+{
+"a": "քարոզ",
+"lv": "B2",
+"ru": "проповедь",
+"en": "sermon",
+"fr": "sermon"
+},
+{
+"a": "մկրտել",
+"lv": "B2",
+"ru": "крестить",
+"en": "baptize",
+"fr": "baptiser"
+},
+{
+"a": "պսակ",
+"lv": "B2",
+"ru": "венчание, венец",
+"en": "church wedding, crown",
+"fr": "mariage religieux"
+},
+{
+"a": "թաղում",
+"lv": "B2",
+"ru": "похороны",
+"en": "funeral",
+"fr": "enterrement"
+},
+{
+"a": "հոգեհանգիստ",
+"lv": "B2",
+"ru": "панихида, поминки",
+"en": "memorial service",
+"fr": "office des morts"
+},
+{
+"a": "Հին Կտակարան",
+"lv": "B2",
+"ru": "Ветхий Завет",
+"en": "the Old Testament",
+"fr": "l'Ancien Testament"
+},
+{
+"a": "Նոր Կտակարան",
+"lv": "B2",
+"ru": "Новый Завет",
+"en": "the New Testament",
+"fr": "le Nouveau Testament"
+},
+{
+"a": "սաղմոս",
+"lv": "B2",
+"ru": "псалом",
+"en": "psalm",
+"fr": "psaume"
+},
+{
+"a": "շարական",
+"lv": "B2",
+"ru": "шаракан (церковный гимн)",
+"en": "sharakan (Armenian hymn)",
+"fr": "charagan (hymne arménien)"
+},
+{
+"a": "խորան",
+"lv": "B2",
+"ru": "алтарь",
+"en": "altar",
+"fr": "autel"
+},
+{
+"a": "զանգակատուն",
+"lv": "B2",
+"ru": "колокольня",
+"en": "bell tower",
+"fr": "clocher"
+},
+{
+"a": "գմբեթ",
+"lv": "B2",
+"ru": "купол",
+"en": "dome",
+"fr": "coupole"
+},
+{
+"a": "տեր հայր",
+"lv": "B2",
+"ru": "батюшка (обращение к священнику)",
+"en": "Father (addressing a priest)",
+"fr": "mon père"
+},
+{
+"a": "արքեպիսկոպոս",
+"lv": "B2",
+"ru": "архиепископ",
+"en": "archbishop",
+"fr": "archevêque"
+},
+{
+"a": "պատրիարք",
+"lv": "B2",
+"ru": "патриарх",
+"en": "patriarch",
+"fr": "patriarche"
+},
+{
+"a": "վանահայր",
+"lv": "B2",
+"ru": "настоятель монастыря",
+"en": "abbot",
+"fr": "abbé"
+},
+{
+"a": "աբեղա",
+"lv": "B2",
+"ru": "монах-священник",
+"en": "celibate priest",
+"fr": "moine prêtre"
+},
+{
+"a": "սարկավագ",
+"lv": "B2",
+"ru": "дьякон",
+"en": "deacon",
+"fr": "diacre"
+},
+{
+"a": "դպիր",
+"lv": "B2",
+"ru": "церковный чтец",
+"en": "acolyte, clerk",
+"fr": "acolyte"
+},
+{
+"a": "հավատացյալ",
+"lv": "B2",
+"ru": "верующий",
+"en": "believer",
+"fr": "croyant"
+},
+{
+"a": "աթեիստ",
+"lv": "B2",
+"ru": "атеист",
+"en": "atheist",
+"fr": "athée"
+},
+{
+"a": "աստվածապաշտ",
+"lv": "B2",
+"ru": "богобоязненный",
+"en": "god-fearing",
+"fr": "pieux"
+},
+{
+"a": "հեթանոս",
+"lv": "B2",
+"ru": "язычник",
+"en": "pagan",
+"fr": "païen"
+},
+{
+"a": "հուդայականություն",
+"lv": "B2",
+"ru": "иудаизм",
+"en": "Judaism",
+"fr": "judaïsme"
+},
+{
+"a": "բուդդայականություն",
+"lv": "B2",
+"ru": "буддизм",
+"en": "Buddhism",
+"fr": "bouddhisme"
+},
+{
+"a": "հինդուիզմ",
+"lv": "B2",
+"ru": "индуизм",
+"en": "Hinduism",
+"fr": "hindouisme"
+},
+{
+"a": "կաթոլիկ",
+"lv": "B2",
+"ru": "католик",
+"en": "Catholic",
+"fr": "catholique"
+},
+{
+"a": "ուղղափառ",
+"lv": "B2",
+"ru": "православный",
+"en": "Orthodox",
+"fr": "orthodoxe"
+},
+{
+"a": "բողոքական",
+"lv": "B2",
+"ru": "протестант",
+"en": "Protestant",
+"fr": "protestant"
+},
+{
+"a": "առաքելական",
+"lv": "B2",
+"ru": "апостольский",
+"en": "apostolic",
+"fr": "apostolique"
+},
+{
+"a": "Հայ Առաքելական Եկեղեցի",
+"lv": "B2",
+"ru": "Армянская Апостольская Церковь",
+"en": "the Armenian Apostolic Church",
+"fr": "l'Église apostolique arménienne"
+},
+{
+"a": "Մայր Աթոռ",
+"lv": "B2",
+"ru": "Святой Престол (Эчмиадзин)",
+"en": "the Mother See",
+"fr": "le Saint-Siège d'Etchmiadzine"
+},
+{
+"a": "Սուրբ Էջմիածին",
+"lv": "B2",
+"ru": "Святой Эчмиадзин",
+"en": "Holy Etchmiadzin",
+"fr": "Sainte-Etchmiadzine"
+},
+{
+"a": "ծոմ",
+"lv": "B2",
+"ru": "пост",
+"en": "fast",
+"fr": "jeûne"
+},
+{
+"a": "պահք",
+"lv": "B2",
+"ru": "пост (церковный)",
+"en": "Lent, fast",
+"fr": "carême"
+},
+{
+"a": "Մեծ պահք",
+"lv": "B2",
+"ru": "Великий пост",
+"en": "Lent",
+"fr": "le Carême"
+},
+{
+"a": "Աստվածածնի վերափոխում",
+"lv": "B2",
+"ru": "Успение Богородицы",
+"en": "the Assumption",
+"fr": "l'Assomption"
+},
+{
+"a": "Խաչվերաց",
+"lv": "B2",
+"ru": "Воздвижение Креста",
+"en": "the Exaltation of the Cross",
+"fr": "l'Exaltation de la Croix"
+},
+{
+"a": "Տեառնընդառաջ",
+"lv": "B2",
+"ru": "Трндез, Сретение",
+"en": "Candlemas (Trndez)",
+"fr": "la Chandeleur"
+},
+{
+"a": "Բարեկենդան",
+"lv": "B2",
+"ru": "Барекендан (масленица)",
+"en": "Barekendan (Carnival)",
+"fr": "Barékendan (carnaval)"
+},
+{
+"a": "աղանդ",
+"lv": "B2",
+"ru": "секта",
+"en": "sect",
+"fr": "secte"
+},
+{
+"a": "հերձված",
+"lv": "B2",
+"ru": "раскол, ересь",
+"en": "schism",
+"fr": "schisme"
+},
+{
+"a": "ծես",
+"lv": "B2",
+"ru": "обряд",
+"en": "rite",
+"fr": "rite"
+},
+{
+"a": "արարողություն",
+"lv": "B2",
+"ru": "церемония",
+"en": "ceremony",
+"fr": "cérémonie"
+},
+{
+"a": "հաղորդություն",
+"lv": "B2",
+"ru": "причастие",
+"en": "communion",
+"fr": "communion"
+},
+{
+"a": "խոստովանություն",
+"lv": "B2",
+"ru": "исповедь, признание",
+"en": "confession",
+"fr": "confession"
+},
+{
+"a": "ապաշխարություն",
+"lv": "B2",
+"ru": "покаяние",
+"en": "repentance",
+"fr": "pénitence"
+},
+{
+"a": "հարություն",
+"lv": "B2",
+"ru": "воскресение",
+"en": "resurrection",
+"fr": "résurrection"
+},
+{
+"a": "խաչելություն",
+"lv": "B2",
+"ru": "распятие",
+"en": "crucifixion",
+"fr": "crucifixion"
+},
+{
+"a": "դատաստան",
+"lv": "B2",
+"ru": "суд (Страшный суд)",
+"en": "judgement",
+"fr": "jugement"
+},
+{
+"a": "հավիտենականություն",
+"lv": "B2",
+"ru": "вечность",
+"en": "eternity",
+"fr": "éternité"
+},
+{
+"a": "Նոյան տապան",
+"lv": "B2",
+"ru": "Ноев ковчег",
+"en": "Noah's Ark",
+"fr": "l'arche de Noé"
+},
+{
+"a": "Նոյ",
+"lv": "B2",
+"ru": "Ной",
+"en": "Noah",
+"fr": "Noé"
+},
+{
+"a": "Ադամ",
+"lv": "B2",
+"ru": "Адам",
+"en": "Adam",
+"fr": "Adam"
+},
+{
+"a": "Եվա",
+"lv": "B2",
+"ru": "Ева",
+"en": "Eve",
+"fr": "Ève"
+},
+{
+"a": "Մովսես",
+"lv": "B2",
+"ru": "Моисей",
+"en": "Moses",
+"fr": "Moïse"
+},
+{
+"a": "Աբրահամ",
+"lv": "B2",
+"ru": "Авраам",
+"en": "Abraham",
+"fr": "Abraham"
+},
+{
+"a": "Վարդան Մամիկոնյան",
+"lv": "B2",
+"ru": "Вардан Мамиконян",
+"en": "Vardan Mamikonian",
+"fr": "Vardan Mamikonian"
+},
+{
+"a": "Տրդատ",
+"lv": "B2",
+"ru": "Трдат",
+"en": "Tiridates",
+"fr": "Tiridate"
+},
+{
+"a": "Արտաշես",
+"lv": "B2",
+"ru": "Арташес",
+"en": "Artashes (Artaxias)",
+"fr": "Artaxias"
+},
+{
+"a": "Արամ",
+"lv": "B2",
+"ru": "Арам",
+"en": "Aram",
+"fr": "Aram"
+},
+{
+"a": "Հայկ",
+"lv": "B2",
+"ru": "Айк (родоначальник армян)",
+"en": "Hayk (forefather of Armenians)",
+"fr": "Haïk (ancêtre des Arméniens)"
+},
+{
+"a": "Բել",
+"lv": "B2",
+"ru": "Бел",
+"en": "Bel",
+"fr": "Bel"
+},
+{
+"a": "Վահագն",
+"lv": "B2",
+"ru": "Ваагн (бог огня и войны)",
+"en": "Vahagn (god of fire and war)",
+"fr": "Vahagn (dieu du feu et de la guerre)"
+},
+{
+"a": "Անահիտ",
+"lv": "B2",
+"ru": "Анаит (богиня-мать)",
+"en": "Anahit (mother goddess)",
+"fr": "Anahit (déesse mère)"
+},
+{
+"a": "Աստղիկ",
+"lv": "B2",
+"ru": "Астхик (богиня любви)",
+"en": "Astghik (goddess of love)",
+"fr": "Astghik (déesse de l'amour)"
+},
+{
+"a": "Արա Գեղեցիկ",
+"lv": "B2",
+"ru": "Ара Прекрасный",
+"en": "Ara the Beautiful",
+"fr": "Ara le Beau"
+},
+{
+"a": "Շամիրամ",
+"lv": "B2",
+"ru": "Шамирам (Семирамида)",
+"en": "Shamiram (Semiramis)",
+"fr": "Sémiramis"
+},
+{
+"a": "Սասունցի Դավիթ",
+"lv": "B2",
+"ru": "Давид Сасунский",
+"en": "David of Sasun",
+"fr": "David de Sassoun"
+},
+{
+"a": "Մհեր",
+"lv": "B2",
+"ru": "Мгер",
+"en": "Mher",
+"fr": "Mher"
+},
+{
+"a": "Ով ուրիշի համար փոս է փորում, ինքն է մեջն ընկնում",
+"lv": "B2",
+"ru": "Не рой другому яму — сам в неё попадёшь",
+"en": "He who digs a pit for others falls into it himself",
+"fr": "Qui creuse une fosse pour autrui y tombe lui-même"
+},
+{
+"a": "Մի ծաղկով գարուն չի գա",
+"lv": "B2",
+"ru": "Один цветок весны не делает",
+"en": "One swallow doesn't make a summer",
+"fr": "Une hirondelle ne fait pas le printemps"
+},
+{
+"a": "Կաթիլ-կաթիլ լիճ կդառնա",
+"lv": "B2",
+"ru": "Капля за каплей — и озеро",
+"en": "Many drops make a lake",
+"fr": "Les petits ruisseaux font les grandes rivières"
+},
+{
+"a": "Քանի գլուխ, այնքան միտք",
+"lv": "B2",
+"ru": "Сколько голов, столько умов",
+"en": "So many heads, so many minds",
+"fr": "Autant de têtes, autant d'avis"
+},
+{
+"a": "Աչքը վախկոտ է, ձեռքը՝ քաջ",
+"lv": "B2",
+"ru": "Глаза боятся, а руки делают",
+"en": "The eyes fear, the hands do",
+"fr": "Les yeux ont peur, les mains agissent"
+},
+{
+"a": "Ինչ ցանես, այն կհնձես",
+"lv": "B2",
+"ru": "Что посеешь, то и пожнёшь",
+"en": "You reap what you sow",
+"fr": "On récolte ce que l'on sème"
+},
+{
+"a": "Հին ընկերը նոր երկուսից լավ է",
+"lv": "B2",
+"ru": "Старый друг лучше новых двух",
+"en": "An old friend is better than two new ones",
+"fr": "Un vieil ami vaut mieux que deux nouveaux"
+},
+{
+"a": "Ուշ լինի, նուշ լինի",
+"lv": "B2",
+"ru": "Лучше поздно, чем никогда",
+"en": "Better late than never",
+"fr": "Mieux vaut tard que jamais"
+},
+{
+"a": "Խոսքը արծաթ է, լռությունը՝ ոսկի",
+"lv": "B2",
+"ru": "Слово — серебро, молчание — золото",
+"en": "Speech is silver, silence is golden",
+"fr": "La parole est d'argent, le silence est d'or"
+},
+{
+"a": "Լեզուն ոսկոր չունի",
+"lv": "B2",
+"ru": "Язык без костей",
+"en": "The tongue has no bones",
+"fr": "La langue n'a pas d'os"
+},
+{
+"a": "Ծառը պտղից կճանաչեն",
+"lv": "B2",
+"ru": "Дерево узнают по плодам",
+"en": "A tree is known by its fruit",
+"fr": "On reconnaît l'arbre à ses fruits"
+},
+{
+"a": "Գայլը մազը կփոխի, բնավորությունը՝ ոչ",
+"lv": "B2",
+"ru": "Волк меняет шерсть, но не нрав",
+"en": "The wolf changes its coat but not its nature",
+"fr": "Le loup change de poil, pas de caractère"
+},
+{
+"a": "Հազար լսելը մեկ տեսնել չարժե",
+"lv": "B2",
+"ru": "Лучше один раз увидеть, чем тысячу раз услышать",
+"en": "Seeing once beats hearing a thousand times",
+"fr": "Mieux vaut voir une fois qu'entendre mille fois"
+},
+{
+"a": "Լավ ընկերը դժվար օրին է ճանաչվում",
+"lv": "B2",
+"ru": "Друг познаётся в беде",
+"en": "A friend in need is a friend indeed",
+"fr": "C'est dans le besoin qu'on reconnaît ses amis"
+},
+{
+"a": "Աղվեսը խաղողին չհասավ, ասաց՝ խակ է",
+"lv": "B2",
+"ru": "Лиса не достала виноград и сказала: зелен",
+"en": "Sour grapes",
+"fr": "Ils sont trop verts"
+},
+{
+"a": "Ամեն ինչ իր ժամանակն ունի",
+"lv": "B2",
+"ru": "Всему своё время",
+"en": "There's a time for everything",
+"fr": "Chaque chose en son temps"
+},
+{
+"a": "Առողջ մարմնում՝ առողջ միտք",
+"lv": "B2",
+"ru": "В здоровом теле — здоровый дух",
+"en": "A sound mind in a sound body",
+"fr": "Un esprit sain dans un corps sain"
+},
+{
+"a": "Հաչող շունը չի կծում",
+"lv": "B2",
+"ru": "Собака лает — не кусает",
+"en": "A barking dog never bites",
+"fr": "Chien qui aboie ne mord pas"
+},
+{
+"a": "Ով շատ է խոսում, քիչ է անում",
+"lv": "B2",
+"ru": "Кто много говорит, тот мало делает",
+"en": "Those who talk most do least",
+"fr": "Grand parleur, petit faiseur"
+},
+{
+"a": "Ձուկը գլխից է հոտում",
+"lv": "B2",
+"ru": "Рыба гниёт с головы",
+"en": "The fish rots from the head",
+"fr": "Le poisson pourrit par la tête"
+},
+{
+"a": "Ամեն մարդ իր ճակատագրի դարբինն է",
+"lv": "B2",
+"ru": "Каждый кузнец своего счастья",
+"en": "Everyone is the architect of their own fate",
+"fr": "Chacun est l'artisan de son destin"
 },
 {
 "a": "գոյություն",
