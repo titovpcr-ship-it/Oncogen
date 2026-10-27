@@ -3150,3 +3150,26 @@ Baker «Sings» $39 (want 1 592). В продаже нет вовсе: Charles L
 Poem», Turrentine «Z.T.'s Blues». Andrew Hill «Passing Ships» — пол $22 при
 122 копиях в продаже: на мировом рынке не редкость; его 9 790–10 190 ₽ на
 Авито — двойник (пересылка $20.11 против $11.31) и всего два объявления.
+
+## O-108. Tone Poet — слежка за подпиской Society
+
+Владелец 27.10.2026: «Добавь слежку за Society на eBay». Tone Poet Society —
+подписка Blue Note только для США, четыре эксклюзива в год вне магазинов
+(анонсы bluenote.com): 2025 — Walter Davis Jr. «Davis Cup», Lou Donaldson
+«Here 'Tis», Donald Byrd «Blackjack», Elvin Jones «Coalition»; 2026 — Blue
+Mitchell «Boss Horn», Lou Donaldson «Wailing With Lou», Louis Smith «Here
+Comes Louis Smith», Stanley Turrentine «Z.T.'s Blues» (02.10.2026). У «Davis
+Cup» и «Boss Horn» — 1 000 нумерованных копий. Пол Discogs $80–200.
+
+`tonepoet.py --society` (в расписании 10:17 и 20:17): заход 3 — по каждому
+альбому и общим запросом «tone poet society», без потолка $30 (до $400),
+б/у тоже (подписка ценна и б/у; «--no-used» её не касается, брак в описании
+отсеивается). Издание подписки доказывает штрихкод релиза Society на
+Discogs или пометка «Tone Poet»/«Society»/«numbered»/«gold foil» в заголовке
+или карточке; чужой штрихкод без пометки — оригинал 1957–1970 или другое
+переиздание, не наш рынок. В новые — только дешевле 75% свежего пола
+(`--society-gap`; у «Z.T.'s Blues» предложений нет — опора $80), остальное —
+справкой в шапке Telegram: сколько лотов и почём.
+
+Первый прогон 27.10.2026: на eBay США три лота — «Coalition» $90 (пол $80),
+«Davis Cup» два, от $229.99 (пол $100); дешёвых нет.

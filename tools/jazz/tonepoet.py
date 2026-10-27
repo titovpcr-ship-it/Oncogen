@@ -329,6 +329,83 @@ def flt(max_price):
             "priceCurrency:USD")
 
 
+# Tone Poet Society — подписка Blue Note только для США, четыре эксклюзива в
+# год вне магазинов (анонсы bluenote.com 2025 и 2026; у «Davis Cup» и «Boss
+# Horn» — 1 000 нумерованных копий). На Discogs 240–460 копий в коллекциях
+# против 3–5 тыс. у обычных Tone Poet, пол $80–200 (27.10.2026). Владелец
+# 27.10.2026: «Добавь слежку за Society на eBay» — ловим, если выставят
+# дёшево.
+SOCIETY = {("walterdavis", "Davis Cup"), ("loudonaldson", "Here 'Tis"),
+           ("donaldbyrd", "Blackjack"), ("elvinjones", "Coalition"),
+           ("bluemitchell", "Boss Horn"), ("loudonaldson", "Wailing With Lou"),
+           ("louissmith", "Here Comes Louis Smith"),
+           ("stanleyturrentine", "Z.T.'s Blues")}
+# У «Z.T.'s Blues» (вышел 02.10.2026) на Discogs ни одного предложения —
+# опора тогда самый дешёвый пол подписки («Coalition»).
+SOCIETY_FLOOR = 80.0
+SOCIETY_MAX = 400.0
+_SOCIETY_MARK = re.compile(r"\bsociety\b|\bnumbered\b|\bgold\s*foil\b|"
+                           r"\blitho(?:graph)?\b|\bwolff\s+print\b", re.I)
+
+
+def _akey(x):
+    return re.sub(r"[^a-z]", "", (x or "").lower().replace("jr.", ""))
+
+
+def society_rows(rows):
+    """Альбомы подписки из каталога серии."""
+    out = []
+    for r in rows:
+        for who, title in SOCIETY:
+            if r["title"] == title and _akey(r["artist"]).startswith(who):
+                out.append(r)
+    return out
+
+
+def society_edition(t, item, code, codes, r):
+    """Как доказано, что лот — издание подписки, или None. Штрихкод релиза
+    Society на Discogs; иначе пометка серии/подписки в заголовке или
+    карточке. Без них у тех же альбомов — оригиналы 1957–1970 и прочие
+    переиздания: это другой рынок («алмазы»), не этот."""
+    alb = codes.get(code) if code else None
+    if alb is not None and alb["title"] == r["title"]:
+        return f"штрихкод {code} = Tone Poet Society на Discogs"
+    if code and alb is None and codes and not MARK.search(t):
+        return None                   # чужой штрихкод и нет пометки
+    asp = " ".join(aspects(item).values())
+    for where, text in (("заголовке", t), ("карточке", asp)):
+        if (MARK.search(text) and not _NOT_TP.search(text)) or \
+                _SOCIETY_MARK.search(text):
+            return f"пометка Tone Poet / Society в {where}"
+    return None
+
+
+def society_summary(found, gap):
+    """Справка по рынку подписки: по альбому — сколько лотов на eBay США и
+    самый дешёвый против пола Discogs. Находки отдельно — в новых лотах."""
+    by = {}
+    for r, z, fl in found:
+        g = by.setdefault(r["title"], {"who": r["who"], "fl": fl, "lots": []})
+        g["lots"].append(z)
+    if not by:
+        return ("Tone Poet Society: на eBay США сейчас ни одного лота "
+                "8 эксклюзивов подписки")
+    parts = []
+    for title, g in sorted(by.items()):
+        best = min(g["lots"], key=lambda z: z["price"])
+        fl = f"пол ${g['fl']:.0f}" if g["fl"] else "на Discogs не продаётся"
+        parts.append(f"{g['who']} «{title}» — {len(g['lots'])} шт., от "
+                     f"${best['price']:.2f} ({LABEL[best['kind']].lower()}), {fl}")
+    return (f"Tone Poet Society на eBay США (находка — дешевле {gap:.0%} пола "
+            "Discogs): " + "; ".join(parts))
+
+
+def society_cheap(price, floor, gap):
+    """Дёшево ли для подписки: цена (у аукциона — ставка) не дороже gap от
+    пола Discogs; без пола — от SOCIETY_FLOOR."""
+    return price is not None and price <= gap * (floor or SOCIETY_FLOOR)
+
+
 _GRADES = re.compile(r"\bused\b|\b(?:vg\+?|g\+?|nm|m-?|ex)\s*/\s*"
                      r"(?:vg\+?|g\+?|nm|m-?|ex)\b|\bno\s+scratch\w*", re.I)
 
@@ -362,6 +439,13 @@ def main():
     ap.add_argument("--usd-rub", type=float, default=None,
                     help="курс для Москвы вместо курса ЦБ дня (владелец "
                          "25.10.2026: 95 ₽/$)")
+    ap.add_argument("--society", action="store_true",
+                    help="третий заход: эксклюзивы подписки Tone Poet Society "
+                         "без потолка цены — в новые только дешевле "
+                         "--society-gap от пола Discogs, б/у тоже")
+    ap.add_argument("--society-gap", type=float, default=0.75,
+                    help="доля пола Discogs, дешевле которой лот Society — "
+                         "находка (по умолчанию 0.75)")
     ap.add_argument("--tg", action="store_true")
     ap.add_argument("--send-new", action="store_true",
                     help="новые лоты последнего прогона — в Telegram "
@@ -523,6 +607,58 @@ def main():
                                 release_discs(d, alb)))
         print(f"заход 2: кандидатов {len(cand)}, открыто карточек {opened}, "
               f"Tone Poet по штрихкоду {matched}", file=sys.stderr)
+
+    # --- заход 3: эксклюзивы Tone Poet Society без потолка цены ---------
+    society_seen = []
+    if a.society:
+        srows = society_rows(rows)
+        floors_s = {r["title"]: fresh_floor(d, r)[0] for r in srows}
+        # По альбому и общим запросом — продавец может назвать лот как угодно.
+        queries = [(rp._plain(f"{r['who']} {r['title']} vinyl")
+                    .replace(" and ", " "), [r]) for r in srows]
+        queries.append(("tone poet society", srows))
+        got = set()
+        for q, rset in queries:
+            try:
+                j = search_page(token, q=q[:90], category_id=hunt.CATEGORY,
+                                limit=200, sort="price", flt=flt(SOCIETY_MAX))
+            except ApiRefused as e:
+                refused += 1
+                print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
+                continue
+            for it in j.get("itemSummaries") or []:
+                iid = it.get("itemId")
+                t = it.get("title") or ""
+                if iid in got or bad_lot(t):
+                    continue
+                r = match_album(t, rset)
+                if r is None:
+                    continue
+                fl = floors_s.get(r["title"])
+                p, _, kind, _ = hunt.lot_price(it, 2.0)
+                if p is None or kind not in MODES:
+                    continue
+                item = card(H, cards, iid)
+                if item is None:
+                    continue
+                how = society_edition(t, item, fx.barcode_of(item), codes, r)
+                if how is None:
+                    continue
+                z = lot_row(it, item, r, f"Society: {how}",
+                            release_discs(d, r))
+                z["society"] = True
+                got.add(iid)
+                society_seen.append((r, z, fl))
+                if not society_cheap(p, fl, a.society_gap):
+                    continue
+                if iid in seen:
+                    lots[:] = [x for x in lots if x["id"] != iid]
+                seen.add(iid)
+                lots.append(z)
+            time.sleep(0.2)
+        # Не «лотов N»: по этой строке расписание ждёт конца прогона.
+        print(f"заход 3 (Society): найдено {len(society_seen)}, дёшево "
+              f"{sum(1 for x in lots if x.get('society'))}", file=sys.stderr)
     fx.save_cards(cards)
 
     # --- брак у б/у: описание и состояние продавца ----------------------
@@ -532,7 +668,8 @@ def main():
         text = " ".join((z["title"], item.get("conditionDescription") or "",
                          item.get("desc") or ""))
         if not z["sealed"]:
-            if a.no_used:
+            # Подписка ценна и б/у — «только запечатанные» её не касается.
+            if a.no_used and not z.get("society"):
                 continue
             m = defect(text)
             if m:
@@ -611,6 +748,9 @@ def main():
         print(f"  снято: {k} — {v}")
     if flat:
         print(f"файл: {path}")
+    society = society_summary(society_seen, a.society_gap) if a.society else ""
+    if society:
+        print("\n" + society)
     # Новые лоты — отдельным файлом: по расписанию их проверяют глазами и
     # отправляют «--send-new --send» (с --exclude отсеянных).
     fresh.sort(key=lambda z: -(z["gap"] or 0))
@@ -619,7 +759,7 @@ def main():
               encoding="utf-8") as f:
         json.dump({"time": time.strftime("%d.%m.%Y %H:%M"),
                    "max_price": a.max_price, "total": len(lots),
-                   "head": head,
+                   "head": head, "society": society,
                    "new": [{"id": z["id"], "text": new_block(z)}
                            for z in fresh]}, f, ensure_ascii=False, indent=1)
     print(f"\nНОВЫЕ ЛОТЫ ({len(fresh)} из {len(lots)}):")
@@ -715,6 +855,8 @@ def send_new(a):
     head = (f"<b>Tone Poet, запечатанные до ${r['max_price']:.0f} — "
             f"{r['time']}: новых {len(keep)}</b>\n"
             f"в продаже лотов {r['total']}; {esc(r['head'])}")
+    if r.get("society"):
+        head += "\n" + esc(r["society"])
     if a.note:
         head += "\n" + esc(a.note)
     msgs, cur = [], head + "\n"

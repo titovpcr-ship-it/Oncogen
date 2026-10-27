@@ -157,8 +157,37 @@ def test_sings_and_plays():
     check("Lee Konitz — опознаётся", m is not None and "Konitz" in m["artist"])
 
 
+def test_society():
+    rows = T.load_catalog()
+    soc = T.society_rows(rows)
+    check("в каталоге все 8 эксклюзивов подписки 2025–2026",
+          sorted(r["title"] for r in soc) == sorted(t for _, t in T.SOCIETY))
+    blackjack = next(r for r in soc if r["title"] == "Blackjack")
+    codes = {"0602465909166": blackjack}
+    card = {"localizedAspects": []}
+    check("штрихкод релиза Society — издание подписки",
+          T.society_edition("Donald Byrd Blackjack LP", card, "0602465909166",
+                            codes, blackjack).startswith("штрихкод"))
+    check("чужой штрихкод без пометки — оригинал или другое переиздание",
+          T.society_edition("Donald Byrd Blackjack Blue Note BST 84259 1967",
+                            card, "0724357869218", codes, blackjack) is None)
+    check("«Tone Poet Society» в заголовке без кода — издание подписки",
+          T.society_edition("Donald Byrd Blackjack Tone Poet Society Exclusive",
+                            card, None, codes, blackjack) is not None)
+    check("«numbered» в характеристиках карточки — тоже",
+          T.society_edition("Blue Mitchell Boss Horn LP", {"localizedAspects": [
+              {"name": "Edition", "value": "Numbered, Limited Edition"}]},
+              None, codes, blackjack) is not None)
+    check("находка — дешевле 75% пола: $99 при поле $135 — да, $110 — нет",
+          T.society_cheap(99, 135, 0.75) and not T.society_cheap(110, 135, 0.75))
+    check("без пола Discogs (Z.T.'s Blues) опора $80: $59 — да, $61 — нет",
+          T.society_cheap(59, None, 0.75) and not T.society_cheap(61, None, 0.75))
+    check("пустой рынок — строка «ни одного лота»",
+          "ни одного" in T.society_summary([], 0.75))
+
+
 def main():
-    for fn in [test_peresylka_po_vesu, test_sings_and_plays, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
+    for fn in [test_society, test_peresylka_po_vesu, test_sings_and_plays, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
                test_ne_ta_seriya, test_bu_dopuskaetsya_brak_net]:
         print(f"\n{fn.__name__}")
         fn()
