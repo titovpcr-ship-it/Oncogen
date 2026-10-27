@@ -15491,6 +15491,20 @@
 "fr": "aide"
 },
 {
+"a": "փոս",
+"lv": "A2",
+"ru": "яма",
+"en": "hole, pit",
+"fr": "trou"
+},
+{
+"a": "հաչել",
+"lv": "A2",
+"ru": "лаять",
+"en": "bark",
+"fr": "aboyer"
+},
+{
 "a": "Պորտուգալիա",
 "lv": "A2",
 "ru": "Португалия",
@@ -18380,6 +18394,909 @@
 "ru": "видеть сон",
 "en": "have a dream",
 "fr": "faire un rêve"
+},
+{
+"a": "անանաս",
+"lv": "A2",
+"ru": "ананас",
+"en": "pineapple",
+"fr": "ananas"
+},
+{
+"a": "ավոկադո",
+"lv": "A2",
+"ru": "авокадо",
+"en": "avocado",
+"fr": "avocat"
+},
+{
+"a": "պապայա",
+"lv": "A2",
+"ru": "папайя",
+"en": "papaya",
+"fr": "papaye"
+},
+{
+"a": "կոկոս",
+"lv": "A2",
+"ru": "кокос",
+"en": "coconut",
+"fr": "noix de coco"
+},
+{
+"a": "թուրինջ",
+"lv": "A2",
+"ru": "цитрон",
+"en": "citron",
+"fr": "cédrat"
+},
+{
+"a": "լայմ",
+"lv": "A2",
+"ru": "лайм",
+"en": "lime",
+"fr": "citron vert"
+},
+{
+"a": "պոմելո",
+"lv": "A2",
+"ru": "помело",
+"en": "pomelo",
+"fr": "pomélo"
+},
+{
+"a": "ալոճ",
+"lv": "A2",
+"ru": "боярышник",
+"en": "hawthorn",
+"fr": "aubépine"
+},
+{
+"a": "հոն",
+"lv": "A2",
+"ru": "кизил",
+"en": "cornelian cherry",
+"fr": "cornouille"
+},
+{
+"a": "մորի",
+"lv": "A2",
+"ru": "земляника",
+"en": "wild strawberry",
+"fr": "fraise des bois"
+},
+{
+"a": "սև հաղարջ",
+"lv": "A2",
+"ru": "чёрная смородина",
+"en": "blackcurrant",
+"fr": "cassis"
+},
+{
+"a": "կարմիր հաղարջ",
+"lv": "A2",
+"ru": "красная смородина",
+"en": "redcurrant",
+"fr": "groseille"
+},
+{
+"a": "կոկռոշ",
+"lv": "A2",
+"ru": "крыжовник",
+"en": "gooseberry",
+"fr": "groseille à maquereau"
+},
+{
+"a": "ծիրանաչիր",
+"lv": "A2",
+"ru": "курага",
+"en": "dried apricots",
+"fr": "abricots secs"
+},
+{
+"a": "սալորաչիր",
+"lv": "A2",
+"ru": "чернослив",
+"en": "prunes",
+"fr": "pruneaux"
+},
+{
+"a": "արմավ",
+"lv": "A2",
+"ru": "финик",
+"en": "date (fruit)",
+"fr": "datte"
+},
+{
+"a": "պեկինյան կաղամբ",
+"lv": "A2",
+"ru": "пекинская капуста",
+"en": "Chinese cabbage",
+"fr": "chou chinois"
+},
+{
+"a": "բրյուսելյան կաղամբ",
+"lv": "A2",
+"ru": "брюссельская капуста",
+"en": "Brussels sprouts",
+"fr": "choux de Bruxelles"
+},
+{
+"a": "ծովաբողկ",
+"lv": "A2",
+"ru": "хрен",
+"en": "horseradish",
+"fr": "raifort"
+},
+{
+"a": "թրթնջուկ",
+"lv": "A2",
+"ru": "щавель",
+"en": "sorrel",
+"fr": "oseille"
+},
+{
+"a": "սիբեխ",
+"lv": "A2",
+"ru": "сибех (горная трава)",
+"en": "sibekh (mountain herb)",
+"fr": "sibekh (herbe de montagne)"
+},
+{
+"a": "բուլղարական պղպեղ",
+"lv": "A2",
+"ru": "болгарский перец",
+"en": "bell pepper",
+"fr": "poivron"
+},
+{
+"a": "տաք պղպեղ",
+"lv": "A2",
+"ru": "острый перец",
+"en": "chilli pepper",
+"fr": "piment"
+},
+{
+"a": "կանաչ լոբի",
+"lv": "A2",
+"ru": "стручковая фасоль",
+"en": "green beans",
+"fr": "haricots verts"
+},
+{
+"a": "կանաչ ոլոռ",
+"lv": "A2",
+"ru": "зелёный горошек",
+"en": "green peas",
+"fr": "petits pois"
+},
+{
+"a": "սոյա",
+"lv": "A2",
+"ru": "соя",
+"en": "soya",
+"fr": "soja"
+},
+{
+"a": "բակլա",
+"lv": "A2",
+"ru": "бобы",
+"en": "broad beans",
+"fr": "fèves"
+},
+{
+"a": "արտիճուկ",
+"lv": "A2",
+"ru": "артишок",
+"en": "artichoke",
+"fr": "artichaut"
+},
+{
+"a": "ռուկոլա",
+"lv": "A2",
+"ru": "руккола",
+"en": "rocket (salad)",
+"fr": "roquette"
+},
+{
+"a": "կարդամոն",
+"lv": "A2",
+"ru": "кардамон",
+"en": "cardamom",
+"fr": "cardamome"
+},
+{
+"a": "մշկընկույզ",
+"lv": "A2",
+"ru": "мускатный орех",
+"en": "nutmeg",
+"fr": "noix de muscade"
+},
+{
+"a": "աստղանիսոն",
+"lv": "A2",
+"ru": "бадьян",
+"en": "star anise",
+"fr": "anis étoilé"
+},
+{
+"a": "անիսոն",
+"lv": "A2",
+"ru": "анис",
+"en": "anise",
+"fr": "anis"
+},
+{
+"a": "չաման",
+"lv": "A2",
+"ru": "пажитник",
+"en": "fenugreek",
+"fr": "fenugrec"
+},
+{
+"a": "պապրիկա",
+"lv": "A2",
+"ru": "паприка",
+"en": "paprika",
+"fr": "paprika"
+},
+{
+"a": "քունջութ",
+"lv": "A2",
+"ru": "кунжут",
+"en": "sesame",
+"fr": "sésame"
+},
+{
+"a": "կտավատ",
+"lv": "A2",
+"ru": "льняное семя",
+"en": "flaxseed",
+"fr": "graines de lin"
+},
+{
+"a": "դդմի սերմ",
+"lv": "A2",
+"ru": "тыквенные семечки",
+"en": "pumpkin seeds",
+"fr": "graines de courge"
+},
+{
+"a": "կեշյու",
+"lv": "A2",
+"ru": "кешью",
+"en": "cashew",
+"fr": "noix de cajou"
+},
+{
+"a": "կոկոսի կաթ",
+"lv": "A2",
+"ru": "кокосовое молоко",
+"en": "coconut milk",
+"fr": "lait de coco"
+},
+{
+"a": "համ",
+"lv": "A2",
+"ru": "вкус",
+"en": "taste",
+"fr": "goût"
+},
+{
+"a": "ախորժակ",
+"lv": "A2",
+"ru": "аппетит",
+"en": "appetite",
+"fr": "appétit"
+},
+{
+"a": "սնունդ",
+"lv": "A2",
+"ru": "еда, питание",
+"en": "food, nutrition",
+"fr": "nourriture"
+},
+{
+"a": "խորտիկ",
+"lv": "A2",
+"ru": "закуска, перекус",
+"en": "snack",
+"fr": "en-cas"
+},
+{
+"a": "քաղց",
+"lv": "A2",
+"ru": "голод",
+"en": "hunger",
+"fr": "faim"
+},
+{
+"a": "սովածանալ",
+"lv": "A2",
+"ru": "проголодаться",
+"en": "get hungry",
+"fr": "avoir faim"
+},
+{
+"a": "հագենալ",
+"lv": "A2",
+"ru": "наесться",
+"en": "be full",
+"fr": "être rassasié"
+},
+{
+"a": "բույր",
+"lv": "A2",
+"ru": "аромат",
+"en": "aroma",
+"fr": "arôme"
+},
+{
+"a": "խաշել",
+"lv": "A2",
+"ru": "варить (в воде)",
+"en": "boil",
+"fr": "faire bouillir"
+},
+{
+"a": "շոգեխաշել",
+"lv": "A2",
+"ru": "тушить",
+"en": "stew, braise",
+"fr": "mijoter"
+},
+{
+"a": "մարինացնել",
+"lv": "A2",
+"ru": "мариновать",
+"en": "marinate",
+"fr": "mariner"
+},
+{
+"a": "թթու դնել",
+"lv": "A2",
+"ru": "солить, квасить (на зиму)",
+"en": "pickle",
+"fr": "mettre en conserve"
+},
+{
+"a": "համեմել",
+"lv": "A2",
+"ru": "приправлять",
+"en": "season",
+"fr": "assaisonner"
+},
+{
+"a": "մանրացնել",
+"lv": "A2",
+"ru": "измельчать",
+"en": "chop finely, grind",
+"fr": "hacher"
+},
+{
+"a": "քերել",
+"lv": "A2",
+"ru": "тереть на тёрке",
+"en": "grate",
+"fr": "râper"
+},
+{
+"a": "հարել",
+"lv": "A2",
+"ru": "взбивать",
+"en": "whisk, beat",
+"fr": "fouetter"
+},
+{
+"a": "հունցել",
+"lv": "A2",
+"ru": "месить",
+"en": "knead",
+"fr": "pétrir"
+},
+{
+"a": "թթխմոր",
+"lv": "A2",
+"ru": "закваска",
+"en": "sourdough starter",
+"fr": "levain"
+},
+{
+"a": "փխրեցուցիչ",
+"lv": "A2",
+"ru": "разрыхлитель",
+"en": "baking powder",
+"fr": "levure chimique"
+},
+{
+"a": "օսլա",
+"lv": "A2",
+"ru": "крахмал",
+"en": "starch",
+"fr": "amidon"
+},
+{
+"a": "ժելատին",
+"lv": "A2",
+"ru": "желатин",
+"en": "gelatine",
+"fr": "gélatine"
+},
+{
+"a": "մանրաձավար",
+"lv": "A2",
+"ru": "манка",
+"en": "semolina",
+"fr": "semoule"
+},
+{
+"a": "մակարոնեղեն",
+"lv": "A2",
+"ru": "макаронные изделия",
+"en": "pasta",
+"fr": "pâtes"
+},
+{
+"a": "մսամթերք",
+"lv": "A2",
+"ru": "мясные продукты",
+"en": "meat products",
+"fr": "charcuterie"
+},
+{
+"a": "պահածոյացում",
+"lv": "A2",
+"ru": "консервирование",
+"en": "canning",
+"fr": "mise en conserve"
+},
+{
+"a": "թթվեցրած վարունգ",
+"lv": "A2",
+"ru": "маринованный огурец",
+"en": "pickled cucumber",
+"fr": "cornichon"
+},
+{
+"a": "մարինադ",
+"lv": "A2",
+"ru": "маринад",
+"en": "marinade",
+"fr": "marinade"
+},
+{
+"a": "խավարտ",
+"lv": "A2",
+"ru": "гарнир",
+"en": "side dish",
+"fr": "garniture"
+},
+{
+"a": "պյուրե",
+"lv": "A2",
+"ru": "пюре",
+"en": "purée, mash",
+"fr": "purée"
+},
+{
+"a": "արգանակ",
+"lv": "A2",
+"ru": "бульон",
+"en": "broth",
+"fr": "bouillon"
+},
+{
+"a": "ճաշատեսակ",
+"lv": "A2",
+"ru": "блюдо",
+"en": "dish",
+"fr": "plat"
+},
+{
+"a": "նախուտեստ",
+"lv": "A2",
+"ru": "закуска (перед едой)",
+"en": "starter, appetizer",
+"fr": "entrée"
+},
+{
+"a": "առաջին ճաշ",
+"lv": "A2",
+"ru": "первое блюдо",
+"en": "first course",
+"fr": "entrée chaude"
+},
+{
+"a": "երկրորդ ճաշ",
+"lv": "A2",
+"ru": "второе блюдо",
+"en": "main course",
+"fr": "plat principal"
+},
+{
+"a": "բաղադրիչ",
+"lv": "A2",
+"ru": "ингредиент",
+"en": "ingredient",
+"fr": "ingrédient"
+},
+{
+"a": "չափաբաժին",
+"lv": "A2",
+"ru": "порция",
+"en": "portion",
+"fr": "portion"
+},
+{
+"a": "կալորիա",
+"lv": "A2",
+"ru": "калория",
+"en": "calorie",
+"fr": "calorie"
+},
+{
+"a": "մանրաթել",
+"lv": "A2",
+"ru": "клетчатка",
+"en": "fibre",
+"fr": "fibres"
+},
+{
+"a": "խաշած",
+"lv": "A2",
+"ru": "варёный",
+"en": "boiled",
+"fr": "bouilli"
+},
+{
+"a": "հալեցրած",
+"lv": "A2",
+"ru": "топлёный, растопленный",
+"en": "melted",
+"fr": "fondu"
+},
+{
+"a": "ապխտած",
+"lv": "A2",
+"ru": "копчёный",
+"en": "smoked",
+"fr": "fumé"
+},
+{
+"a": "չորացրած",
+"lv": "A2",
+"ru": "сушёный",
+"en": "dried",
+"fr": "séché"
+},
+{
+"a": "աղած",
+"lv": "A2",
+"ru": "солёный (засоленный)",
+"en": "salted",
+"fr": "salé"
+},
+{
+"a": "թթված",
+"lv": "A2",
+"ru": "квашеный",
+"en": "fermented, soured",
+"fr": "fermenté"
+},
+{
+"a": "նրբաբլիթ",
+"lv": "A2",
+"ru": "блинчик",
+"en": "pancake",
+"fr": "crêpe"
+},
+{
+"a": "կեքս",
+"lv": "A2",
+"ru": "кекс",
+"en": "cupcake, fruit cake",
+"fr": "cake"
+},
+{
+"a": "բիսկվիտ",
+"lv": "A2",
+"ru": "бисквит",
+"en": "sponge cake",
+"fr": "génoise"
+},
+{
+"a": "դոնդող",
+"lv": "A2",
+"ru": "холодец, желе",
+"en": "jelly, aspic",
+"fr": "gelée"
+},
+{
+"a": "ժելե",
+"lv": "A2",
+"ru": "желе",
+"en": "jelly",
+"fr": "gelée"
+},
+{
+"a": "պաստեղ",
+"lv": "A2",
+"ru": "пастила",
+"en": "fruit leather",
+"fr": "pâte de fruits"
+},
+{
+"a": "շաքարլամա",
+"lv": "A2",
+"ru": "шакарлама (печенье)",
+"en": "shakarlama (shortbread)",
+"fr": "shakarlama (sablé)"
+},
+{
+"a": "ճաշակ",
+"lv": "A2",
+"ru": "вкус (эстетический)",
+"en": "taste (style)",
+"fr": "goût"
+},
+{
+"a": "թեյախմություն",
+"lv": "A2",
+"ru": "чаепитие",
+"en": "tea party",
+"fr": "thé entre amis"
+},
+{
+"a": "ցուրտ",
+"lv": "A2",
+"ru": "холод",
+"en": "cold",
+"fr": "froid"
+},
+{
+"a": "եղանակի տեսություն",
+"lv": "A2",
+"ru": "прогноз погоды",
+"en": "weather forecast",
+"fr": "météo"
+},
+{
+"a": "տաքություն",
+"lv": "A2",
+"ru": "тепло, жар",
+"en": "warmth, heat",
+"fr": "chaleur"
+},
+{
+"a": "տոթ",
+"lv": "A2",
+"ru": "духота, зной",
+"en": "sultry heat",
+"fr": "chaleur étouffante"
+},
+{
+"a": "ցող",
+"lv": "A2",
+"ru": "роса",
+"en": "dew",
+"fr": "rosée"
+},
+{
+"a": "մշուշ",
+"lv": "A2",
+"ru": "дымка",
+"en": "haze",
+"fr": "brume"
+},
+{
+"a": "ամպամածություն",
+"lv": "A2",
+"ru": "облачность",
+"en": "cloud cover",
+"fr": "nébulosité"
+},
+{
+"a": "ձյունոտ",
+"lv": "A2",
+"ru": "снежный",
+"en": "snowy",
+"fr": "neigeux"
+},
+{
+"a": "ձյուն գալ",
+"lv": "A2",
+"ru": "идти (о снеге)",
+"en": "snow",
+"fr": "neiger"
+},
+{
+"a": "անձրև գալ",
+"lv": "A2",
+"ru": "идти (о дожде)",
+"en": "rain",
+"fr": "pleuvoir"
+},
+{
+"a": "տեղատարափ",
+"lv": "A2",
+"ru": "ливень",
+"en": "downpour",
+"fr": "averse"
+},
+{
+"a": "մաղող անձրև",
+"lv": "A2",
+"ru": "моросящий дождь",
+"en": "drizzle",
+"fr": "bruine"
+},
+{
+"a": "ձնաբուք",
+"lv": "A2",
+"ru": "метель",
+"en": "blizzard",
+"fr": "tempête de neige"
+},
+{
+"a": "ձնագնդի",
+"lv": "A2",
+"ru": "снежок",
+"en": "snowball",
+"fr": "boule de neige"
+},
+{
+"a": "ձնեմարդ",
+"lv": "A2",
+"ru": "снеговик",
+"en": "snowman",
+"fr": "bonhomme de neige"
+},
+{
+"a": "ձնհալ",
+"lv": "A2",
+"ru": "оттепель",
+"en": "thaw",
+"fr": "dégel"
+},
+{
+"a": "զեփյուռ",
+"lv": "A2",
+"ru": "ветерок",
+"en": "breeze",
+"fr": "brise"
+},
+{
+"a": "պտտահողմ",
+"lv": "A2",
+"ru": "вихрь, смерч",
+"en": "whirlwind",
+"fr": "tourbillon"
+},
+{
+"a": "արևամուտ",
+"lv": "A2",
+"ru": "закат",
+"en": "sunset",
+"fr": "coucher du soleil"
+},
+{
+"a": "լուսնի խավարում",
+"lv": "A2",
+"ru": "лунное затмение",
+"en": "lunar eclipse",
+"fr": "éclipse de lune"
+},
+{
+"a": "արևի խավարում",
+"lv": "A2",
+"ru": "солнечное затмение",
+"en": "solar eclipse",
+"fr": "éclipse de soleil"
+},
+{
+"a": "մթնոլորտային ճնշում",
+"lv": "A2",
+"ru": "атмосферное давление",
+"en": "atmospheric pressure",
+"fr": "pression atmosphérique"
+},
+{
+"a": "հեղեղ",
+"lv": "A2",
+"ru": "поток, наводнение",
+"en": "torrent, flood",
+"fr": "torrent"
+},
+{
+"a": "սառցակալում",
+"lv": "A2",
+"ru": "обледенение",
+"en": "icing",
+"fr": "givrage"
+},
+{
+"a": "մերկասառույց",
+"lv": "A2",
+"ru": "гололедица",
+"en": "black ice",
+"fr": "verglas"
+},
+{
+"a": "կաթկթել",
+"lv": "A2",
+"ru": "капать",
+"en": "drip",
+"fr": "goutter"
+},
+{
+"a": "կարկաչել",
+"lv": "A2",
+"ru": "журчать",
+"en": "babble, murmur",
+"fr": "gazouiller"
+},
+{
+"a": "շողշողալ",
+"lv": "A2",
+"ru": "сверкать",
+"en": "sparkle",
+"fr": "scintiller"
+},
+{
+"a": "փայլատակել",
+"lv": "A2",
+"ru": "сверкать (о молнии)",
+"en": "flash",
+"fr": "fulgurer"
+},
+{
+"a": "որոտալ",
+"lv": "A2",
+"ru": "греметь",
+"en": "thunder",
+"fr": "tonner"
+},
+{
+"a": "մաղել",
+"lv": "A2",
+"ru": "моросить, просеивать",
+"en": "drizzle, sift",
+"fr": "bruiner"
+},
+{
+"a": "մթնել",
+"lv": "A2",
+"ru": "темнеть",
+"en": "get dark",
+"fr": "s'assombrir"
+},
+{
+"a": "լուսանալ",
+"lv": "A2",
+"ru": "светать",
+"en": "dawn, get light",
+"fr": "faire jour"
+},
+{
+"a": "պայծառանալ",
+"lv": "A2",
+"ru": "проясняться",
+"en": "brighten, clear up",
+"fr": "s'éclaircir"
+},
+{
+"a": "զովանալ",
+"lv": "A2",
+"ru": "становиться прохладнее",
+"en": "get cooler",
+"fr": "se rafraîchir"
+},
+{
+"a": "խոնավանալ",
+"lv": "A2",
+"ru": "отсыревать",
+"en": "get damp",
+"fr": "devenir humide"
 },
 {
 "a": "հասարակություն",
@@ -35434,6 +36351,1245 @@
 "fr": "fumier"
 },
 {
+"a": "նշանդրեք",
+"lv": "B1",
+"ru": "помолвка",
+"en": "engagement party",
+"fr": "fiançailles"
+},
+{
+"a": "քավոր",
+"lv": "B1",
+"ru": "посажёный отец, крёстный",
+"en": "best man, godfather",
+"fr": "parrain"
+},
+{
+"a": "քավորկին",
+"lv": "B1",
+"ru": "посажёная мать, крёстная",
+"en": "godmother (wife of the kavor)",
+"fr": "marraine"
+},
+{
+"a": "խաչեղբայր",
+"lv": "B1",
+"ru": "крёстный брат, свидетель",
+"en": "sworn brother, groomsman",
+"fr": "frère de croix"
+},
+{
+"a": "խաչքույր",
+"lv": "B1",
+"ru": "крёстная сестра",
+"en": "sworn sister",
+"fr": "sœur de croix"
+},
+{
+"a": "հարսնաքույր",
+"lv": "B1",
+"ru": "подружка невесты",
+"en": "bridesmaid",
+"fr": "demoiselle d'honneur"
+},
+{
+"a": "նշանի մատանի",
+"lv": "B1",
+"ru": "помолвочное кольцо",
+"en": "engagement ring",
+"fr": "bague de fiançailles"
+},
+{
+"a": "հարսանյաց զգեստ",
+"lv": "B1",
+"ru": "свадебное платье",
+"en": "wedding dress",
+"fr": "robe de mariée"
+},
+{
+"a": "քող",
+"lv": "B1",
+"ru": "фата, вуаль",
+"en": "veil",
+"fr": "voile"
+},
+{
+"a": "հարսանեկան տորթ",
+"lv": "B1",
+"ru": "свадебный торт",
+"en": "wedding cake",
+"fr": "gâteau de mariage"
+},
+{
+"a": "տարեդարձ",
+"lv": "B1",
+"ru": "годовщина",
+"en": "anniversary",
+"fr": "anniversaire"
+},
+{
+"a": "հոբելյան",
+"lv": "B1",
+"ru": "юбилей",
+"en": "jubilee",
+"fr": "jubilé"
+},
+{
+"a": "ճաշկերույթ",
+"lv": "B1",
+"ru": "званый обед",
+"en": "dinner party",
+"fr": "dîner"
+},
+{
+"a": "բանկետ",
+"lv": "B1",
+"ru": "банкет",
+"en": "banquet",
+"fr": "banquet"
+},
+{
+"a": "թամադա",
+"lv": "B1",
+"ru": "тамада",
+"en": "toastmaster",
+"fr": "toastmaster"
+},
+{
+"a": "սեղանապետ",
+"lv": "B1",
+"ru": "тамада, глава стола",
+"en": "head of the table",
+"fr": "maître de table"
+},
+{
+"a": "հրավիրատոմս",
+"lv": "B1",
+"ru": "пригласительный билет",
+"en": "invitation card",
+"fr": "carton d'invitation"
+},
+{
+"a": "փուչիկ",
+"lv": "B1",
+"ru": "воздушный шарик",
+"en": "balloon",
+"fr": "ballon"
+},
+{
+"a": "Ձյունանուշիկ",
+"lv": "B1",
+"ru": "Снегурочка",
+"en": "Snow Maiden",
+"fr": "Fille des neiges"
+},
+{
+"a": "տիկնիկ",
+"lv": "B1",
+"ru": "кукла",
+"en": "doll",
+"fr": "poupée"
+},
+{
+"a": "արջուկ",
+"lv": "B1",
+"ru": "плюшевый мишка",
+"en": "teddy bear",
+"fr": "ours en peluche"
+},
+{
+"a": "կոնստրուկտոր",
+"lv": "B1",
+"ru": "конструктор",
+"en": "construction set",
+"fr": "jeu de construction"
+},
+{
+"a": "փազլ",
+"lv": "B1",
+"ru": "пазл",
+"en": "jigsaw puzzle",
+"fr": "puzzle"
+},
+{
+"a": "սեղանի խաղ",
+"lv": "B1",
+"ru": "настольная игра",
+"en": "board game",
+"fr": "jeu de société"
+},
+{
+"a": "ճոճանակ",
+"lv": "B1",
+"ru": "качели, маятник",
+"en": "swing, pendulum",
+"fr": "balançoire"
+},
+{
+"a": "սահարան",
+"lv": "B1",
+"ru": "горка",
+"en": "slide",
+"fr": "toboggan"
+},
+{
+"a": "ավազարկղ",
+"lv": "B1",
+"ru": "песочница",
+"en": "sandpit",
+"fr": "bac à sable"
+},
+{
+"a": "կարուսել",
+"lv": "B1",
+"ru": "карусель",
+"en": "merry-go-round",
+"fr": "manège"
+},
+{
+"a": "խաղահրապարակ",
+"lv": "B1",
+"ru": "детская площадка",
+"en": "playground",
+"fr": "aire de jeux"
+},
+{
+"a": "շշիկ",
+"lv": "B1",
+"ru": "бутылочка",
+"en": "baby bottle",
+"fr": "biberon"
+},
+{
+"a": "մանուկ",
+"lv": "B1",
+"ru": "младенец, дитя",
+"en": "infant, child",
+"fr": "enfant"
+},
+{
+"a": "պատանի",
+"lv": "B1",
+"ru": "юноша, подросток",
+"en": "youth, teenager",
+"fr": "adolescent"
+},
+{
+"a": "դեռահաս",
+"lv": "B1",
+"ru": "подросток",
+"en": "adolescent",
+"fr": "adolescent"
+},
+{
+"a": "չափահաս",
+"lv": "B1",
+"ru": "совершеннолетний, взрослый",
+"en": "adult",
+"fr": "majeur"
+},
+{
+"a": "միջին տարիքի",
+"lv": "B1",
+"ru": "среднего возраста",
+"en": "middle-aged",
+"fr": "d'âge moyen"
+},
+{
+"a": "ծերունի",
+"lv": "B1",
+"ru": "старик",
+"en": "old man",
+"fr": "vieillard"
+},
+{
+"a": "պառավ",
+"lv": "B1",
+"ru": "старуха",
+"en": "old woman",
+"fr": "vieille femme"
+},
+{
+"a": "հասունություն",
+"lv": "B1",
+"ru": "зрелость",
+"en": "maturity",
+"fr": "maturité"
+},
+{
+"a": "կյանքի տևողություն",
+"lv": "B1",
+"ru": "продолжительность жизни",
+"en": "life expectancy",
+"fr": "espérance de vie"
+},
+{
+"a": "ցավակցություն",
+"lv": "B1",
+"ru": "соболезнование",
+"en": "condolence",
+"fr": "condoléances"
+},
+{
+"a": "դագաղ",
+"lv": "B1",
+"ru": "гроб",
+"en": "coffin",
+"fr": "cercueil"
+},
+{
+"a": "գերեզման",
+"lv": "B1",
+"ru": "могила",
+"en": "grave",
+"fr": "tombe"
+},
+{
+"a": "տապանաքար",
+"lv": "B1",
+"ru": "надгробие",
+"en": "gravestone",
+"fr": "pierre tombale"
+},
+{
+"a": "ծաղկեպսակ",
+"lv": "B1",
+"ru": "венок",
+"en": "wreath",
+"fr": "couronne"
+},
+{
+"a": "հոգեհաց",
+"lv": "B1",
+"ru": "поминальная трапеза",
+"en": "funeral meal",
+"fr": "repas funéraire"
+},
+{
+"a": "յոթնօրեք",
+"lv": "B1",
+"ru": "седьмой день (поминки)",
+"en": "seventh-day memorial",
+"fr": "commémoration du septième jour"
+},
+{
+"a": "քառասունք",
+"lv": "B1",
+"ru": "сороковины",
+"en": "fortieth-day memorial",
+"fr": "commémoration du quarantième jour"
+},
+{
+"a": "տարելից",
+"lv": "B1",
+"ru": "годовщина смерти",
+"en": "anniversary of a death",
+"fr": "anniversaire de décès"
+},
+{
+"a": "շիրիմ",
+"lv": "B1",
+"ru": "могила (книжн.)",
+"en": "tomb",
+"fr": "sépulture"
+},
+{
+"a": "վարս",
+"lv": "B1",
+"ru": "волосы (поэт.)",
+"en": "locks, hair (poetic)",
+"fr": "chevelure"
+},
+{
+"a": "սանրվածք",
+"lv": "B1",
+"ru": "причёска",
+"en": "hairstyle",
+"fr": "coiffure"
+},
+{
+"a": "ծամ",
+"lv": "B1",
+"ru": "коса, длинные волосы",
+"en": "braid, long hair",
+"fr": "tresse"
+},
+{
+"a": "հյուս",
+"lv": "B1",
+"ru": "коса (заплетённая)",
+"en": "plait",
+"fr": "natte"
+},
+{
+"a": "մազափունջ",
+"lv": "B1",
+"ru": "прядь",
+"en": "lock of hair",
+"fr": "mèche"
+},
+{
+"a": "խոպոպ",
+"lv": "B1",
+"ru": "локон",
+"en": "curl",
+"fr": "boucle"
+},
+{
+"a": "գանգուր",
+"lv": "B1",
+"ru": "кудрявый",
+"en": "curly",
+"fr": "bouclé"
+},
+{
+"a": "ալիքավոր",
+"lv": "B1",
+"ru": "волнистый",
+"en": "wavy",
+"fr": "ondulé"
+},
+{
+"a": "ճաղատություն",
+"lv": "B1",
+"ru": "лысина, облысение",
+"en": "baldness",
+"fr": "calvitie"
+},
+{
+"a": "ալեհեր",
+"lv": "B1",
+"ru": "седой",
+"en": "grey-haired",
+"fr": "aux cheveux gris"
+},
+{
+"a": "շեկ",
+"lv": "B1",
+"ru": "светловолосый, рыжеватый",
+"en": "fair-haired",
+"fr": "blond"
+},
+{
+"a": "սևահեր",
+"lv": "B1",
+"ru": "черноволосый",
+"en": "black-haired",
+"fr": "aux cheveux noirs"
+},
+{
+"a": "կարմրահեր",
+"lv": "B1",
+"ru": "рыжий",
+"en": "red-haired",
+"fr": "roux"
+},
+{
+"a": "սափրված",
+"lv": "B1",
+"ru": "бритый",
+"en": "shaven",
+"fr": "rasé"
+},
+{
+"a": "պեպեն",
+"lv": "B1",
+"ru": "веснушка",
+"en": "freckle",
+"fr": "tache de rousseur"
+},
+{
+"a": "փոսիկ",
+"lv": "B1",
+"ru": "ямочка",
+"en": "dimple",
+"fr": "fossette"
+},
+{
+"a": "կուզ",
+"lv": "B1",
+"ru": "горб",
+"en": "hump",
+"fr": "bosse"
+},
+{
+"a": "մարմնակազմություն",
+"lv": "B1",
+"ru": "телосложение",
+"en": "physique",
+"fr": "constitution"
+},
+{
+"a": "կազմվածք",
+"lv": "B1",
+"ru": "фигура, сложение",
+"en": "build, figure",
+"fr": "silhouette"
+},
+{
+"a": "ցածրահասակ",
+"lv": "B1",
+"ru": "низкорослый",
+"en": "short (person)",
+"fr": "petit"
+},
+{
+"a": "միջահասակ",
+"lv": "B1",
+"ru": "среднего роста",
+"en": "of medium height",
+"fr": "de taille moyenne"
+},
+{
+"a": "մարմնեղ",
+"lv": "B1",
+"ru": "полный, плотный",
+"en": "stout, heavy-set",
+"fr": "corpulent"
+},
+{
+"a": "սլացիկ",
+"lv": "B1",
+"ru": "стройный",
+"en": "slender",
+"fr": "svelte"
+},
+{
+"a": "բարեկազմ",
+"lv": "B1",
+"ru": "хорошо сложённый",
+"en": "well-built",
+"fr": "bien bâti"
+},
+{
+"a": "մկանուտ",
+"lv": "B1",
+"ru": "мускулистый",
+"en": "muscular",
+"fr": "musclé"
+},
+{
+"a": "թիկնեղ",
+"lv": "B1",
+"ru": "широкоплечий",
+"en": "broad-shouldered",
+"fr": "large d'épaules"
+},
+{
+"a": "նրբակազմ",
+"lv": "B1",
+"ru": "хрупкий, изящный",
+"en": "delicate, slight",
+"fr": "menu"
+},
+{
+"a": "սիրունիկ",
+"lv": "B1",
+"ru": "хорошенький",
+"en": "pretty, cute",
+"fr": "mignon"
+},
+{
+"a": "գեղեցկադեմ",
+"lv": "B1",
+"ru": "красивый лицом",
+"en": "good-looking",
+"fr": "beau"
+},
+{
+"a": "հմայիչ",
+"lv": "B1",
+"ru": "обаятельный",
+"en": "charming",
+"fr": "charmant"
+},
+{
+"a": "խնամված",
+"lv": "B1",
+"ru": "ухоженный",
+"en": "well-groomed",
+"fr": "soigné"
+},
+{
+"a": "անխնամ",
+"lv": "B1",
+"ru": "неухоженный",
+"en": "unkempt",
+"fr": "négligé"
+},
+{
+"a": "կոկիկ",
+"lv": "B1",
+"ru": "опрятный",
+"en": "neat, tidy",
+"fr": "net"
+},
+{
+"a": "թափթփված",
+"lv": "B1",
+"ru": "неряшливый",
+"en": "sloppy",
+"fr": "débraillé"
+},
+{
+"a": "էլեգանտ",
+"lv": "B1",
+"ru": "элегантный",
+"en": "elegant",
+"fr": "élégant"
+},
+{
+"a": "ճաշակով",
+"lv": "B1",
+"ru": "со вкусом",
+"en": "tasteful",
+"fr": "de bon goût"
+},
+{
+"a": "դեմքի արտահայտություն",
+"lv": "B1",
+"ru": "выражение лица",
+"en": "facial expression",
+"fr": "expression du visage"
+},
+{
+"a": "հայացք",
+"lv": "B1",
+"ru": "взгляд",
+"en": "look, gaze",
+"fr": "regard"
+},
+{
+"a": "քմծիծաղ",
+"lv": "B1",
+"ru": "ухмылка",
+"en": "smirk",
+"fr": "sourire narquois"
+},
+{
+"a": "դիմագծեր",
+"lv": "B1",
+"ru": "черты лица",
+"en": "features",
+"fr": "traits"
+},
+{
+"a": "կապուտաչյա",
+"lv": "B1",
+"ru": "голубоглазый",
+"en": "blue-eyed",
+"fr": "aux yeux bleus"
+},
+{
+"a": "սևաչյա",
+"lv": "B1",
+"ru": "черноглазый",
+"en": "dark-eyed",
+"fr": "aux yeux noirs"
+},
+{
+"a": "կանաչաչյա",
+"lv": "B1",
+"ru": "зеленоглазый",
+"en": "green-eyed",
+"fr": "aux yeux verts"
+},
+{
+"a": "թուխ",
+"lv": "B1",
+"ru": "смуглый",
+"en": "swarthy",
+"fr": "basané"
+},
+{
+"a": "սպիտակամաշկ",
+"lv": "B1",
+"ru": "светлокожий",
+"en": "fair-skinned",
+"fr": "à la peau claire"
+},
+{
+"a": "թխամորթ",
+"lv": "B1",
+"ru": "темнокожий, смуглый",
+"en": "dark-skinned",
+"fr": "à la peau foncée"
+},
+{
+"a": "կարմրած",
+"lv": "B1",
+"ru": "покрасневший",
+"en": "blushing, red",
+"fr": "rougi"
+},
+{
+"a": "դժգույն",
+"lv": "B1",
+"ru": "бледный",
+"en": "pale, wan",
+"fr": "blême"
+},
+{
+"a": "կարկատան",
+"lv": "B1",
+"ru": "заплатка",
+"en": "patch",
+"fr": "pièce"
+},
+{
+"a": "ճարմանդ",
+"lv": "B1",
+"ru": "пряжка, застёжка",
+"en": "buckle, clasp",
+"fr": "boucle"
+},
+{
+"a": "կոճակի անցք",
+"lv": "B1",
+"ru": "петля для пуговицы",
+"en": "buttonhole",
+"fr": "boutonnière"
+},
+{
+"a": "թևքի ծայր",
+"lv": "B1",
+"ru": "манжета",
+"en": "cuff",
+"fr": "manchette"
+},
+{
+"a": "աստառ",
+"lv": "B1",
+"ru": "подкладка",
+"en": "lining",
+"fr": "doublure"
+},
+{
+"a": "ծալք",
+"lv": "B1",
+"ru": "складка",
+"en": "fold, pleat",
+"fr": "pli"
+},
+{
+"a": "կար",
+"lv": "B1",
+"ru": "шов",
+"en": "seam",
+"fr": "couture"
+},
+{
+"a": "կարկատել",
+"lv": "B1",
+"ru": "латать",
+"en": "patch, mend",
+"fr": "raccommoder"
+},
+{
+"a": "ձիգ",
+"lv": "B1",
+"ru": "облегающий, тугой",
+"en": "tight",
+"fr": "moulant"
+},
+{
+"a": "բուտիկ",
+"lv": "B1",
+"ru": "бутик",
+"en": "boutique",
+"fr": "boutique"
+},
+{
+"a": "երկրորդ ձեռքի",
+"lv": "B1",
+"ru": "секонд-хенд, подержанный",
+"en": "second-hand",
+"fr": "d'occasion"
+},
+{
+"a": "կոշիկի քսուք",
+"lv": "B1",
+"ru": "крем для обуви",
+"en": "shoe polish",
+"fr": "cirage"
+},
+{
+"a": "բարձրակրունկ",
+"lv": "B1",
+"ru": "на высоком каблуке",
+"en": "high-heeled",
+"fr": "à talons hauts"
+},
+{
+"a": "մոկասին",
+"lv": "B1",
+"ru": "мокасин",
+"en": "moccasin",
+"fr": "mocassin"
+},
+{
+"a": "կեդեր",
+"lv": "B1",
+"ru": "кеды",
+"en": "plimsolls, sneakers",
+"fr": "tennis"
+},
+{
+"a": "ճտքակոշիկ",
+"lv": "B1",
+"ru": "ботинок",
+"en": "ankle boot",
+"fr": "bottine"
+},
+{
+"a": "թաթման",
+"lv": "B1",
+"ru": "варежка",
+"en": "mitten",
+"fr": "moufle"
+},
+{
+"a": "կեպի",
+"lv": "B1",
+"ru": "кепка",
+"en": "cap",
+"fr": "casquette"
+},
+{
+"a": "բերետ",
+"lv": "B1",
+"ru": "берет",
+"en": "beret",
+"fr": "béret"
+},
+{
+"a": "թասակ",
+"lv": "B1",
+"ru": "тюбетейка, шапочка",
+"en": "skullcap",
+"fr": "calotte"
+},
+{
+"a": "ձեռքի պայուսակ",
+"lv": "B1",
+"ru": "сумочка",
+"en": "handbag",
+"fr": "sac à main"
+},
+{
+"a": "թիթեռնիկ",
+"lv": "B1",
+"ru": "галстук-бабочка",
+"en": "bow tie",
+"fr": "nœud papillon"
+},
+{
+"a": "ոսկյա",
+"lv": "B1",
+"ru": "золотой",
+"en": "golden, made of gold",
+"fr": "en or"
+},
+{
+"a": "արծաթյա",
+"lv": "B1",
+"ru": "серебряный",
+"en": "made of silver",
+"fr": "en argent"
+},
+{
+"a": "մանյակ",
+"lv": "B1",
+"ru": "ожерелье",
+"en": "necklace",
+"fr": "collier"
+},
+{
+"a": "կախազարդ",
+"lv": "B1",
+"ru": "кулон",
+"en": "pendant",
+"fr": "pendentif"
+},
+{
+"a": "կրծքազարդ",
+"lv": "B1",
+"ru": "брошь",
+"en": "brooch",
+"fr": "broche"
+},
+{
+"a": "կրծող",
+"lv": "B1",
+"ru": "грызун",
+"en": "rodent",
+"fr": "rongeur"
+},
+{
+"a": "կատվաձագ",
+"lv": "B1",
+"ru": "котёнок",
+"en": "kitten",
+"fr": "chaton"
+},
+{
+"a": "կեռնեխ",
+"lv": "B1",
+"ru": "дрозд",
+"en": "thrush",
+"fr": "grive"
+},
+{
+"a": "սարեկ",
+"lv": "B1",
+"ru": "скворец",
+"en": "starling",
+"fr": "étourneau"
+},
+{
+"a": "դեղձանիկ",
+"lv": "B1",
+"ru": "канарейка",
+"en": "canary",
+"fr": "canari"
+},
+{
+"a": "մեղվակեր",
+"lv": "B1",
+"ru": "щурка",
+"en": "bee-eater",
+"fr": "guêpier"
+},
+{
+"a": "ծիտ",
+"lv": "B1",
+"ru": "пташка",
+"en": "little bird",
+"fr": "oisillon"
+},
+{
+"a": "տատրակ",
+"lv": "B1",
+"ru": "горлица",
+"en": "turtle dove",
+"fr": "tourterelle"
+},
+{
+"a": "ճանկ",
+"lv": "B1",
+"ru": "коготь",
+"en": "claw",
+"fr": "griffe"
+},
+{
+"a": "ձվադրել",
+"lv": "B1",
+"ru": "нести яйца, нереститься",
+"en": "lay eggs",
+"fr": "pondre"
+},
+{
+"a": "թխսել",
+"lv": "B1",
+"ru": "высиживать",
+"en": "brood, incubate",
+"fr": "couver"
+},
+{
+"a": "ճռվողել",
+"lv": "B1",
+"ru": "чирикать",
+"en": "chirp",
+"fr": "pépier"
+},
+{
+"a": "ծլվլալ",
+"lv": "B1",
+"ru": "щебетать",
+"en": "twitter",
+"fr": "gazouiller"
+},
+{
+"a": "կռկռալ",
+"lv": "B1",
+"ru": "квакать",
+"en": "croak",
+"fr": "coasser"
+},
+{
+"a": "կչկչալ",
+"lv": "B1",
+"ru": "кудахтать",
+"en": "cackle",
+"fr": "caqueter"
+},
+{
+"a": "ծղրտալ",
+"lv": "B1",
+"ru": "визжать",
+"en": "squeal",
+"fr": "piailler"
+},
+{
+"a": "մռնչալ",
+"lv": "B1",
+"ru": "рычать",
+"en": "roar, growl",
+"fr": "rugir"
+},
+{
+"a": "ոռնալ",
+"lv": "B1",
+"ru": "выть",
+"en": "howl",
+"fr": "hurler"
+},
+{
+"a": "մլավել",
+"lv": "B1",
+"ru": "мяукать",
+"en": "miaow",
+"fr": "miauler"
+},
+{
+"a": "մկկալ",
+"lv": "B1",
+"ru": "блеять",
+"en": "bleat",
+"fr": "bêler"
+},
+{
+"a": "բառաչել",
+"lv": "B1",
+"ru": "мычать",
+"en": "moo",
+"fr": "meugler"
+},
+{
+"a": "խրխնջալ",
+"lv": "B1",
+"ru": "ржать",
+"en": "neigh",
+"fr": "hennir"
+},
+{
+"a": "ֆշշալ",
+"lv": "B1",
+"ru": "шипеть",
+"en": "hiss",
+"fr": "siffler"
+},
+{
+"a": "բզզալ",
+"lv": "B1",
+"ru": "жужжать",
+"en": "buzz",
+"fr": "bourdonner"
+},
+{
+"a": "զռռալ",
+"lv": "B1",
+"ru": "реветь (об осле)",
+"en": "bray",
+"fr": "braire"
+},
+{
+"a": "ծլնգալ",
+"lv": "B1",
+"ru": "звенеть",
+"en": "jingle",
+"fr": "tinter"
+},
+{
+"a": "ծվծվալ",
+"lv": "B1",
+"ru": "пищать",
+"en": "peep, squeak",
+"fr": "piauler"
+},
+{
+"a": "որդան",
+"lv": "B1",
+"ru": "кошениль",
+"en": "cochineal",
+"fr": "cochenille"
+},
+{
+"a": "սարդոստայն",
+"lv": "B1",
+"ru": "паутина",
+"en": "spider web",
+"fr": "toile d'araignée"
+},
+{
+"a": "մժեղ",
+"lv": "B1",
+"ru": "мошка",
+"en": "gnat, midge",
+"fr": "moucheron"
+},
+{
+"a": "ուտիճ",
+"lv": "B1",
+"ru": "таракан",
+"en": "cockroach",
+"fr": "cafard"
+},
+{
+"a": "մրջնաբույն",
+"lv": "B1",
+"ru": "муравейник",
+"en": "anthill",
+"fr": "fourmilière"
+},
+{
+"a": "բոռ",
+"lv": "B1",
+"ru": "шмель",
+"en": "bumblebee",
+"fr": "bourdon"
+},
+{
+"a": "ջրաքիս",
+"lv": "B1",
+"ru": "норка",
+"en": "mink",
+"fr": "vison"
+},
+{
+"a": "աքիս",
+"lv": "B1",
+"ru": "ласка",
+"en": "weasel",
+"fr": "belette"
+},
+{
+"a": "սամույր",
+"lv": "B1",
+"ru": "соболь",
+"en": "sable",
+"fr": "zibeline"
+},
+{
+"a": "ջրարջ",
+"lv": "B1",
+"ru": "енот",
+"en": "raccoon",
+"fr": "raton laveur"
+},
+{
+"a": "քամելեոն",
+"lv": "B1",
+"ru": "хамелеон",
+"en": "chameleon",
+"fr": "caméléon"
+},
+{
+"a": "իգուանա",
+"lv": "B1",
+"ru": "игуана",
+"en": "iguana",
+"fr": "iguane"
+},
+{
+"a": "պիթոն",
+"lv": "B1",
+"ru": "питон",
+"en": "python",
+"fr": "python"
+},
+{
+"a": "կոբրա",
+"lv": "B1",
+"ru": "кобра",
+"en": "cobra",
+"fr": "cobra"
+},
+{
+"a": "անակոնդա",
+"lv": "B1",
+"ru": "анаконда",
+"en": "anaconda",
+"fr": "anaconda"
+},
+{
+"a": "լամա",
+"lv": "B1",
+"ru": "лама",
+"en": "llama",
+"fr": "lama"
+},
+{
+"a": "բիզոն",
+"lv": "B1",
+"ru": "бизон",
+"en": "bison",
+"fr": "bison"
+},
+{
+"a": "ջրգոմեշ",
+"lv": "B1",
+"ru": "водяной буйвол",
+"en": "water buffalo",
+"fr": "buffle d'eau"
+},
+{
+"a": "անտիլոպ",
+"lv": "B1",
+"ru": "антилопа",
+"en": "antelope",
+"fr": "antilope"
+},
+{
+"a": "գազել",
+"lv": "B1",
+"ru": "газель",
+"en": "gazelle",
+"fr": "gazelle"
+},
+{
+"a": "մանգուստ",
+"lv": "B1",
+"ru": "мангуст",
+"en": "mongoose",
+"fr": "mangouste"
+},
+{
+"a": "բորենի",
+"lv": "B1",
+"ru": "гиена",
+"en": "hyena",
+"fr": "hyène"
+},
+{
+"a": "շնագայլ",
+"lv": "B1",
+"ru": "шакал",
+"en": "jackal",
+"fr": "chacal"
+},
+{
+"a": "տուկան",
+"lv": "B1",
+"ru": "тукан",
+"en": "toucan",
+"fr": "toucan"
+},
+{
+"a": "կոլիբրի",
+"lv": "B1",
+"ru": "колибри",
+"en": "hummingbird",
+"fr": "colibri"
+},
+{
+"a": "կակադու",
+"lv": "B1",
+"ru": "какаду",
+"en": "cockatoo",
+"fr": "cacatoès"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -46746,6 +48902,503 @@
 "fr": "police de caractères"
 },
 {
+"a": "աբսուրդ",
+"lv": "B2",
+"ru": "абсурд",
+"en": "absurdity",
+"fr": "absurdité"
+},
+{
+"a": "ահազանգ",
+"lv": "B2",
+"ru": "тревога, сигнал тревоги",
+"en": "alarm",
+"fr": "alarme"
+},
+{
+"a": "աղետ",
+"lv": "B2",
+"ru": "катастрофа, бедствие",
+"en": "disaster",
+"fr": "catastrophe"
+},
+{
+"a": "ամբոխ",
+"lv": "B2",
+"ru": "толпа",
+"en": "crowd, mob",
+"fr": "foule"
+},
+{
+"a": "անդրադարձ",
+"lv": "B2",
+"ru": "отклик, обращение (к теме)",
+"en": "reference, reflection",
+"fr": "référence"
+},
+{
+"a": "առասպել",
+"lv": "B2",
+"ru": "миф",
+"en": "myth",
+"fr": "mythe"
+},
+{
+"a": "առարկություն",
+"lv": "B2",
+"ru": "возражение",
+"en": "objection",
+"fr": "objection"
+},
+{
+"a": "առաքելություն",
+"lv": "B2",
+"ru": "миссия",
+"en": "mission",
+"fr": "mission"
+},
+{
+"a": "ասպարեզ",
+"lv": "B2",
+"ru": "поприще, арена",
+"en": "arena, field",
+"fr": "arène"
+},
+{
+"a": "ավերակ",
+"lv": "B2",
+"ru": "развалина",
+"en": "ruin",
+"fr": "ruine"
+},
+{
+"a": "արժանիք",
+"lv": "B2",
+"ru": "достоинство, заслуга",
+"en": "merit",
+"fr": "mérite"
+},
+{
+"a": "բարեկեցություն",
+"lv": "B2",
+"ru": "благосостояние",
+"en": "well-being, prosperity",
+"fr": "bien-être"
+},
+{
+"a": "բովանդակություն",
+"lv": "B2",
+"ru": "содержание",
+"en": "content",
+"fr": "contenu"
+},
+{
+"a": "գործիչ",
+"lv": "B2",
+"ru": "деятель",
+"en": "figure, activist",
+"fr": "personnalité"
+},
+{
+"a": "դիպված",
+"lv": "B2",
+"ru": "случай",
+"en": "case, incident",
+"fr": "cas"
+},
+{
+"a": "դրդում",
+"lv": "B2",
+"ru": "побуждение",
+"en": "impulse, urge",
+"fr": "incitation"
+},
+{
+"a": "եզր",
+"lv": "B2",
+"ru": "край, грань",
+"en": "edge, brink",
+"fr": "bord"
+},
+{
+"a": "երդում",
+"lv": "B2",
+"ru": "клятва",
+"en": "oath",
+"fr": "serment"
+},
+{
+"a": "լեգենդ",
+"lv": "B2",
+"ru": "легенда",
+"en": "legend",
+"fr": "légende"
+},
+{
+"a": "խռովություն",
+"lv": "B2",
+"ru": "бунт, смута",
+"en": "riot, unrest",
+"fr": "émeute"
+},
+{
+"a": "ծաղր",
+"lv": "B2",
+"ru": "насмешка",
+"en": "mockery",
+"fr": "moquerie"
+},
+{
+"a": "ծանրություն",
+"lv": "B2",
+"ru": "тяжесть",
+"en": "weight, heaviness",
+"fr": "lourdeur"
+},
+{
+"a": "կարգավիճակ",
+"lv": "B2",
+"ru": "статус",
+"en": "status",
+"fr": "statut"
+},
+{
+"a": "կեցվածք",
+"lv": "B2",
+"ru": "осанка, позиция",
+"en": "posture, stance",
+"fr": "attitude"
+},
+{
+"a": "կենսափորձ",
+"lv": "B2",
+"ru": "жизненный опыт",
+"en": "life experience",
+"fr": "expérience de la vie"
+},
+{
+"a": "կործանում",
+"lv": "B2",
+"ru": "гибель, крушение",
+"en": "ruin, collapse",
+"fr": "effondrement"
+},
+{
+"a": "հաղթահարում",
+"lv": "B2",
+"ru": "преодоление",
+"en": "overcoming",
+"fr": "dépassement"
+},
+{
+"a": "համբերատարություն",
+"lv": "B2",
+"ru": "терпеливость",
+"en": "patience",
+"fr": "patience"
+},
+{
+"a": "հանցանք",
+"lv": "B2",
+"ru": "преступление, проступок",
+"en": "crime, offence",
+"fr": "délit"
+},
+{
+"a": "հեգնանք",
+"lv": "B2",
+"ru": "ирония",
+"en": "irony",
+"fr": "ironie"
+},
+{
+"a": "հիմնախնդիր",
+"lv": "B2",
+"ru": "проблема, ключевой вопрос",
+"en": "key issue",
+"fr": "problématique"
+},
+{
+"a": "հոգեվիճակ",
+"lv": "B2",
+"ru": "душевное состояние",
+"en": "state of mind",
+"fr": "état d'esprit"
+},
+{
+"a": "հոգս",
+"lv": "B2",
+"ru": "забота, хлопоты",
+"en": "worry, concern",
+"fr": "souci"
+},
+{
+"a": "հրաշալիք",
+"lv": "B2",
+"ru": "чудо",
+"en": "wonder, marvel",
+"fr": "merveille"
+},
+{
+"a": "մարտահրավեր",
+"lv": "B2",
+"ru": "вызов",
+"en": "challenge",
+"fr": "défi"
+},
+{
+"a": "միջամտություն",
+"lv": "B2",
+"ru": "вмешательство",
+"en": "intervention",
+"fr": "intervention"
+},
+{
+"a": "մտորում",
+"lv": "B2",
+"ru": "размышление",
+"en": "reflection, musing",
+"fr": "réflexion"
+},
+{
+"a": "ուղերձ",
+"lv": "B2",
+"ru": "послание, обращение",
+"en": "address, message",
+"fr": "message"
+},
+{
+"a": "ուրվական",
+"lv": "B2",
+"ru": "призрак",
+"en": "ghost",
+"fr": "fantôme"
+},
+{
+"a": "ուրվագիծ",
+"lv": "B2",
+"ru": "контур, очерк",
+"en": "outline",
+"fr": "esquisse"
+},
+{
+"a": "չարաշահում",
+"lv": "B2",
+"ru": "злоупотребление",
+"en": "abuse",
+"fr": "abus"
+},
+{
+"a": "սպառնալիք",
+"lv": "B2",
+"ru": "угроза",
+"en": "threat",
+"fr": "menace"
+},
+{
+"a": "վախճան",
+"lv": "B2",
+"ru": "конец",
+"en": "end",
+"fr": "fin"
+},
+{
+"a": "վերաբերմունք",
+"lv": "B2",
+"ru": "отношение",
+"en": "attitude",
+"fr": "attitude"
+},
+{
+"a": "վկայություն",
+"lv": "B2",
+"ru": "свидетельство",
+"en": "testimony",
+"fr": "témoignage"
+},
+{
+"a": "փորձություն",
+"lv": "B2",
+"ru": "испытание",
+"en": "trial, ordeal",
+"fr": "épreuve"
+},
+{
+"a": "փառասիրություն",
+"lv": "B2",
+"ru": "честолюбие",
+"en": "ambition",
+"fr": "ambition"
+},
+{
+"a": "դժկամություն",
+"lv": "B2",
+"ru": "нежелание",
+"en": "reluctance",
+"fr": "réticence"
+},
+{
+"a": "ձեռնպահություն",
+"lv": "B2",
+"ru": "воздержание",
+"en": "abstention",
+"fr": "abstention"
+},
+{
+"a": "շարժառիթ",
+"lv": "B2",
+"ru": "мотив, повод",
+"en": "motive",
+"fr": "mobile"
+},
+{
+"a": "ոգեշնչում",
+"lv": "B2",
+"ru": "вдохновение",
+"en": "inspiration",
+"fr": "inspiration"
+},
+{
+"a": "դատապարտել",
+"lv": "B2",
+"ru": "осуждать",
+"en": "condemn",
+"fr": "condamner"
+},
+{
+"a": "դիտարկել",
+"lv": "B2",
+"ru": "рассматривать",
+"en": "consider, examine",
+"fr": "examiner"
+},
+{
+"a": "հստակեցնել",
+"lv": "B2",
+"ru": "уточнять",
+"en": "clarify",
+"fr": "préciser"
+},
+{
+"a": "շեշտել",
+"lv": "B2",
+"ru": "подчёркивать",
+"en": "emphasize",
+"fr": "souligner"
+},
+{
+"a": "չեզոքացնել",
+"lv": "B2",
+"ru": "нейтрализовать, обезвредить",
+"en": "neutralize",
+"fr": "neutraliser"
+},
+{
+"a": "տարբերակել",
+"lv": "B2",
+"ru": "различать",
+"en": "differentiate",
+"fr": "différencier"
+},
+{
+"a": "արժևորել",
+"lv": "B2",
+"ru": "ценить",
+"en": "value, appreciate",
+"fr": "valoriser"
+},
+{
+"a": "խանդել",
+"lv": "B2",
+"ru": "ревновать",
+"en": "be jealous",
+"fr": "être jaloux"
+},
+{
+"a": "նախանձել",
+"lv": "B2",
+"ru": "завидовать",
+"en": "envy",
+"fr": "envier"
+},
+{
+"a": "կողոպտել",
+"lv": "B2",
+"ru": "грабить",
+"en": "rob",
+"fr": "dévaliser"
+},
+{
+"a": "գժտվել",
+"lv": "B2",
+"ru": "поссориться",
+"en": "fall out",
+"fr": "se brouiller"
+},
+{
+"a": "երկմտել",
+"lv": "B2",
+"ru": "колебаться",
+"en": "hesitate, waver",
+"fr": "hésiter"
+},
+{
+"a": "վրդովվել",
+"lv": "B2",
+"ru": "возмущаться",
+"en": "be indignant",
+"fr": "s'indigner"
+},
+{
+"a": "առաջադրել",
+"lv": "B2",
+"ru": "выдвигать",
+"en": "put forward, nominate",
+"fr": "proposer"
+},
+{
+"a": "ավարտին հասցնել",
+"lv": "B2",
+"ru": "довести до конца",
+"en": "bring to completion",
+"fr": "mener à bien"
+},
+{
+"a": "նվաստացնել",
+"lv": "B2",
+"ru": "унижать",
+"en": "humiliate",
+"fr": "humilier"
+},
+{
+"a": "զրպարտել",
+"lv": "B2",
+"ru": "клеветать",
+"en": "slander",
+"fr": "calomnier"
+},
+{
+"a": "մերկացնել",
+"lv": "B2",
+"ru": "разоблачать",
+"en": "expose",
+"fr": "démasquer"
+},
+{
+"a": "հալածել",
+"lv": "B2",
+"ru": "преследовать",
+"en": "persecute",
+"fr": "persécuter"
+},
+{
+"a": "շողոքորթել",
+"lv": "B2",
+"ru": "льстить",
+"en": "flatter",
+"fr": "flatter"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -50881,6 +53534,671 @@
 "ru": "капризный",
 "en": "capricious",
 "fr": "capricieux"
+},
+{
+"a": "ազդակ",
+"lv": "C1",
+"ru": "сигнал, импульс",
+"en": "signal, impulse",
+"fr": "signal"
+},
+{
+"a": "ալեկոծություն",
+"lv": "C1",
+"ru": "волнение, смятение",
+"en": "turmoil",
+"fr": "agitation"
+},
+{
+"a": "աղերս",
+"lv": "C1",
+"ru": "мольба",
+"en": "plea",
+"fr": "supplique"
+},
+{
+"a": "աղոթավայր",
+"lv": "C1",
+"ru": "место молитвы",
+"en": "place of worship",
+"fr": "lieu de culte"
+},
+{
+"a": "աճպարարություն",
+"lv": "C1",
+"ru": "фокусы, ловкачество",
+"en": "conjuring, trickery",
+"fr": "prestidigitation"
+},
+{
+"a": "ամլություն",
+"lv": "C1",
+"ru": "бесплодие",
+"en": "barrenness",
+"fr": "stérilité"
+},
+{
+"a": "այլասերում",
+"lv": "C1",
+"ru": "вырождение",
+"en": "degeneration",
+"fr": "dégénérescence"
+},
+{
+"a": "այլաբանություն",
+"lv": "C1",
+"ru": "аллегория",
+"en": "allegory",
+"fr": "allégorie"
+},
+{
+"a": "անկյունաքար",
+"lv": "C1",
+"ru": "краеугольный камень",
+"en": "cornerstone",
+"fr": "pierre angulaire"
+},
+{
+"a": "անձուկ",
+"lv": "C1",
+"ru": "тоска, стеснённость",
+"en": "anguish",
+"fr": "angoisse"
+},
+{
+"a": "անցորդ",
+"lv": "C1",
+"ru": "прохожий",
+"en": "passer-by",
+"fr": "passant"
+},
+{
+"a": "աշխարհընկալում",
+"lv": "C1",
+"ru": "мировосприятие",
+"en": "perception of the world",
+"fr": "perception du monde"
+},
+{
+"a": "ապավեն",
+"lv": "C1",
+"ru": "опора, прибежище",
+"en": "refuge, mainstay",
+"fr": "refuge"
+},
+{
+"a": "ապերախտություն",
+"lv": "C1",
+"ru": "неблагодарность",
+"en": "ingratitude",
+"fr": "ingratitude"
+},
+{
+"a": "ավար",
+"lv": "C1",
+"ru": "добыча",
+"en": "booty, loot",
+"fr": "butin"
+},
+{
+"a": "արգասիք",
+"lv": "C1",
+"ru": "плод, результат",
+"en": "fruit, outcome",
+"fr": "fruit"
+},
+{
+"a": "արհավիրք",
+"lv": "C1",
+"ru": "бедствие",
+"en": "calamity",
+"fr": "fléau"
+},
+{
+"a": "բավարարվածություն",
+"lv": "C1",
+"ru": "удовлетворённость",
+"en": "contentment",
+"fr": "contentement"
+},
+{
+"a": "բարեխղճություն",
+"lv": "C1",
+"ru": "добросовестность",
+"en": "conscientiousness",
+"fr": "conscience professionnelle"
+},
+{
+"a": "բնաջնջում",
+"lv": "C1",
+"ru": "истребление",
+"en": "extermination",
+"fr": "extermination"
+},
+{
+"a": "բնօրրան",
+"lv": "C1",
+"ru": "колыбель, родина",
+"en": "cradle, homeland",
+"fr": "berceau"
+},
+{
+"a": "բյուրեղացում",
+"lv": "C1",
+"ru": "кристаллизация",
+"en": "crystallization",
+"fr": "cristallisation"
+},
+{
+"a": "բռնադատում",
+"lv": "C1",
+"ru": "репрессия",
+"en": "repression",
+"fr": "répression"
+},
+{
+"a": "գաղութացում",
+"lv": "C1",
+"ru": "колонизация",
+"en": "colonization",
+"fr": "colonisation"
+},
+{
+"a": "գերակայություն",
+"lv": "C1",
+"ru": "приоритет, превосходство",
+"en": "priority, dominance",
+"fr": "primauté"
+},
+{
+"a": "գերիշխանություն",
+"lv": "C1",
+"ru": "господство",
+"en": "supremacy",
+"fr": "hégémonie"
+},
+{
+"a": "դիմադրողականություն",
+"lv": "C1",
+"ru": "сопротивляемость",
+"en": "resilience",
+"fr": "résistance"
+},
+{
+"a": "դրոշմ",
+"lv": "C1",
+"ru": "печать, отпечаток",
+"en": "stamp, imprint",
+"fr": "empreinte"
+},
+{
+"a": "զգոնություն",
+"lv": "C1",
+"ru": "бдительность",
+"en": "vigilance",
+"fr": "vigilance"
+},
+{
+"a": "ընդվզում",
+"lv": "C1",
+"ru": "возмущение, бунт",
+"en": "revolt",
+"fr": "révolte"
+},
+{
+"a": "ընչաքաղցություն",
+"lv": "C1",
+"ru": "алчность",
+"en": "avarice",
+"fr": "cupidité"
+},
+{
+"a": "թախանձանք",
+"lv": "C1",
+"ru": "настойчивая просьба",
+"en": "entreaty",
+"fr": "instances"
+},
+{
+"a": "թշվառություն",
+"lv": "C1",
+"ru": "нищета, жалкое положение",
+"en": "misery",
+"fr": "misère"
+},
+{
+"a": "ժխոր",
+"lv": "C1",
+"ru": "гомон",
+"en": "din, clamour",
+"fr": "vacarme"
+},
+{
+"a": "իրարանցում",
+"lv": "C1",
+"ru": "суматоха",
+"en": "commotion",
+"fr": "remue-ménage"
+},
+{
+"a": "լքվածություն",
+"lv": "C1",
+"ru": "заброшенность",
+"en": "abandonment",
+"fr": "abandon"
+},
+{
+"a": "խաբկանք",
+"lv": "C1",
+"ru": "иллюзия, обман",
+"en": "illusion",
+"fr": "illusion"
+},
+{
+"a": "խարան",
+"lv": "C1",
+"ru": "клеймо",
+"en": "stigma, brand",
+"fr": "stigmate"
+},
+{
+"a": "խեղճություն",
+"lv": "C1",
+"ru": "убожество, бедность",
+"en": "wretchedness",
+"fr": "pauvreté"
+},
+{
+"a": "խոհ",
+"lv": "C1",
+"ru": "дума",
+"en": "thought, meditation",
+"fr": "méditation"
+},
+{
+"a": "կամայականություն",
+"lv": "C1",
+"ru": "произвол",
+"en": "arbitrariness",
+"fr": "arbitraire"
+},
+{
+"a": "կռապաշտություն",
+"lv": "C1",
+"ru": "идолопоклонство",
+"en": "idolatry",
+"fr": "idolâtrie"
+},
+{
+"a": "համոզվածություն",
+"lv": "C1",
+"ru": "убеждённость",
+"en": "confidence, conviction",
+"fr": "conviction"
+},
+{
+"a": "հանդգնություն",
+"lv": "C1",
+"ru": "дерзость",
+"en": "audacity",
+"fr": "audace"
+},
+{
+"a": "հնչեղություն",
+"lv": "C1",
+"ru": "звучность",
+"en": "sonority, resonance",
+"fr": "sonorité"
+},
+{
+"a": "մոլորություն",
+"lv": "C1",
+"ru": "заблуждение",
+"en": "delusion, error",
+"fr": "égarement"
+},
+{
+"a": "մտահղացում",
+"lv": "C1",
+"ru": "замысел",
+"en": "conception, idea",
+"fr": "conception"
+},
+{
+"a": "նախանշան",
+"lv": "C1",
+"ru": "предзнаменование",
+"en": "omen",
+"fr": "présage"
+},
+{
+"a": "նախախնամություն",
+"lv": "C1",
+"ru": "провидение",
+"en": "providence",
+"fr": "providence"
+},
+{
+"a": "նշաձող",
+"lv": "C1",
+"ru": "планка",
+"en": "bar, benchmark",
+"fr": "barre"
+},
+{
+"a": "նվաստացում",
+"lv": "C1",
+"ru": "унижение",
+"en": "humiliation",
+"fr": "humiliation"
+},
+{
+"a": "շռայլություն",
+"lv": "C1",
+"ru": "расточительность",
+"en": "extravagance",
+"fr": "prodigalité"
+},
+{
+"a": "ոդիսական",
+"lv": "C1",
+"ru": "одиссея",
+"en": "odyssey",
+"fr": "odyssée"
+},
+{
+"a": "պարծանք",
+"lv": "C1",
+"ru": "гордость, похвальба",
+"en": "pride, boast",
+"fr": "fierté"
+},
+{
+"a": "պղծում",
+"lv": "C1",
+"ru": "осквернение",
+"en": "desecration",
+"fr": "profanation"
+},
+{
+"a": "սադրանք",
+"lv": "C1",
+"ru": "провокация",
+"en": "provocation",
+"fr": "provocation"
+},
+{
+"a": "սնապարծություն",
+"lv": "C1",
+"ru": "тщеславие",
+"en": "vanity, conceit",
+"fr": "vanité"
+},
+{
+"a": "վերապրում",
+"lv": "C1",
+"ru": "пережиток",
+"en": "survival, relic",
+"fr": "survivance"
+},
+{
+"a": "տարակուսանք",
+"lv": "C1",
+"ru": "недоумение",
+"en": "bewilderment",
+"fr": "perplexité"
+},
+{
+"a": "տենչ",
+"lv": "C1",
+"ru": "страстное желание",
+"en": "longing",
+"fr": "désir ardent"
+},
+{
+"a": "տրտմություն",
+"lv": "C1",
+"ru": "печаль",
+"en": "sorrow",
+"fr": "tristesse"
+},
+{
+"a": "ցնորք",
+"lv": "C1",
+"ru": "бред, химера",
+"en": "delusion, chimera",
+"fr": "chimère"
+},
+{
+"a": "քմահաճույք",
+"lv": "C1",
+"ru": "прихоть",
+"en": "whim",
+"fr": "caprice"
+},
+{
+"a": "բեկանել",
+"lv": "C1",
+"ru": "отменять (решение суда)",
+"en": "overturn, quash",
+"fr": "casser"
+},
+{
+"a": "ծավալել",
+"lv": "C1",
+"ru": "разворачивать",
+"en": "expand, unfold",
+"fr": "déployer"
+},
+{
+"a": "հնարել",
+"lv": "C1",
+"ru": "выдумать",
+"en": "devise, invent",
+"fr": "inventer"
+},
+{
+"a": "նշմարել",
+"lv": "C1",
+"ru": "различить, заметить",
+"en": "discern",
+"fr": "discerner"
+},
+{
+"a": "ուրվագծել",
+"lv": "C1",
+"ru": "наметить",
+"en": "outline",
+"fr": "esquisser"
+},
+{
+"a": "պատճառաբանել",
+"lv": "C1",
+"ru": "обосновывать",
+"en": "give reasons for",
+"fr": "motiver"
+},
+{
+"a": "ջատագովել",
+"lv": "C1",
+"ru": "отстаивать",
+"en": "advocate",
+"fr": "prôner"
+},
+{
+"a": "վերաիմաստավորել",
+"lv": "C1",
+"ru": "переосмыслить",
+"en": "rethink",
+"fr": "repenser"
+},
+{
+"a": "տնօրինել",
+"lv": "C1",
+"ru": "распоряжаться",
+"en": "dispose of, manage",
+"fr": "disposer de"
+},
+{
+"a": "արմատավորել",
+"lv": "C1",
+"ru": "укоренять",
+"en": "root, establish",
+"fr": "enraciner"
+},
+{
+"a": "ապականել",
+"lv": "C1",
+"ru": "развращать, осквернять",
+"en": "corrupt, defile",
+"fr": "corrompre"
+},
+{
+"a": "անարգել",
+"lv": "C1",
+"ru": "бесчестить",
+"en": "dishonour",
+"fr": "outrager"
+},
+{
+"a": "ամոքել",
+"lv": "C1",
+"ru": "облегчать (боль)",
+"en": "soothe",
+"fr": "apaiser"
+},
+{
+"a": "այպանել",
+"lv": "C1",
+"ru": "порицать",
+"en": "censure",
+"fr": "blâmer"
+},
+{
+"a": "աղճատել",
+"lv": "C1",
+"ru": "искажать",
+"en": "distort",
+"fr": "déformer"
+},
+{
+"a": "բորբոքել",
+"lv": "C1",
+"ru": "разжигать",
+"en": "inflame",
+"fr": "enflammer"
+},
+{
+"a": "գոռոզանալ",
+"lv": "C1",
+"ru": "зазнаваться",
+"en": "become arrogant",
+"fr": "s'enorgueillir"
+},
+{
+"a": "ընդդիմանալ",
+"lv": "C1",
+"ru": "противиться",
+"en": "oppose",
+"fr": "s'opposer"
+},
+{
+"a": "խորշել",
+"lv": "C1",
+"ru": "гнушаться",
+"en": "shun",
+"fr": "répugner à"
+},
+{
+"a": "խռովել",
+"lv": "C1",
+"ru": "дуться",
+"en": "sulk",
+"fr": "bouder"
+},
+{
+"a": "կենդանացնել",
+"lv": "C1",
+"ru": "оживлять",
+"en": "bring to life",
+"fr": "ranimer"
+},
+{
+"a": "կշտամբել",
+"lv": "C1",
+"ru": "упрекать",
+"en": "rebuke",
+"fr": "réprimander"
+},
+{
+"a": "կորզել",
+"lv": "C1",
+"ru": "вымогать",
+"en": "extort",
+"fr": "extorquer"
+},
+{
+"a": "հեգնել",
+"lv": "C1",
+"ru": "иронизировать",
+"en": "mock",
+"fr": "ironiser"
+},
+{
+"a": "նեղսրտել",
+"lv": "C1",
+"ru": "огорчаться",
+"en": "be upset",
+"fr": "se chagriner"
+},
+{
+"a": "պախարակել",
+"lv": "C1",
+"ru": "порицать",
+"en": "denounce",
+"fr": "condamner"
+},
+{
+"a": "սիրաշահել",
+"lv": "C1",
+"ru": "снискать расположение",
+"en": "win over",
+"fr": "gagner les faveurs de"
+},
+{
+"a": "սրտնեղել",
+"lv": "C1",
+"ru": "расстраиваться",
+"en": "get upset",
+"fr": "s'attrister"
+},
+{
+"a": "տրտմել",
+"lv": "C1",
+"ru": "печалиться",
+"en": "grieve",
+"fr": "s'affliger"
+},
+{
+"a": "ցասել",
+"lv": "C1",
+"ru": "гневаться",
+"en": "rage",
+"fr": "enrager"
+},
+{
+"a": "քամահրել",
+"lv": "C1",
+"ru": "пренебрегать",
+"en": "disdain",
+"fr": "dédaigner"
+},
+{
+"a": "քծնել",
+"lv": "C1",
+"ru": "подлизываться",
+"en": "fawn",
+"fr": "flagorner"
 },
 {
 "a": "վեհ",

@@ -12,7 +12,7 @@ have = {w[0] for t in T for w in t["words"]}
 _ARM = re.compile(r"^[Ա-֊\s\-,]+$")
 DROP = "--drop" in sys.argv
 total, dups, bad, seen = 0, [], [], set()
-for p in sorted(glob.glob("data/new/*.tsv")):
+for p in sorted(glob.glob("data/new/*.tsv"), key=lambda f: int(re.match(r"\d+", f.split("/")[-1]).group())):
     lines = [l.rstrip("\n") for l in open(p, encoding="utf-8") if l.strip()]
     head, rows = lines[0], lines[1:]
     if not head.startswith("#"):

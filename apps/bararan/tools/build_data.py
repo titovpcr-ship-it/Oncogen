@@ -52,6 +52,11 @@ def load_fr():
     return fr, titles
 
 
+def new_num(f):
+    """Номер новой темы из имени файла: 7_x.tsv < 39_y.tsv < 100_z.tsv."""
+    return int(re.match(r"\d+", os.path.basename(f)).group())
+
+
 def head_fields(line):
     out = {}
     for part in line.lstrip("#").split(";"):
@@ -78,7 +83,7 @@ def build():
         topics.append({"lv": t["lv"], "ru": t["ru"], "en": titles.get(i, ""),
                        "hy": t["hy"], "ic": t["ic"], "w": words})
 
-    for f in sorted(glob.glob(p("data", "new", "*.tsv"))):
+    for f in sorted(glob.glob(p("data", "new", "*.tsv")), key=new_num):
         lines = [l.rstrip("\n") for l in open(f, encoding="utf-8") if l.strip()]
         h = head_fields(lines[0])
         if h.get("lv") not in LEVELS:
