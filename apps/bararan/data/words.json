@@ -3657,6 +3657,355 @@
 "fr": "Phrases utiles 2"
 },
 {
+"lv": "A1",
+"ru": "Обращения и родные",
+"en": "Titles and relatives",
+"hy": "Դիմելաձևեր և հարազատներ",
+"ic": "🙋",
+"w": [
+[
+"տիկին",
+"госпожа, мадам",
+"Mrs, madam",
+"👩",
+"madame"
+],
+[
+"պարոն",
+"господин",
+"Mr, sir",
+"👨",
+"monsieur"
+],
+[
+"օրիորդ",
+"девушка, мадемуазель",
+"Miss",
+"👧",
+"mademoiselle"
+],
+[
+"ազգանուն",
+"фамилия",
+"surname",
+"🪪",
+"nom de famille"
+],
+[
+"ընկերուհի",
+"подруга",
+"female friend",
+"👭",
+"amie"
+],
+[
+"դասընկեր",
+"одноклассник",
+"classmate",
+"🎒",
+"camarade de classe"
+],
+[
+"երկվորյակ",
+"близнец",
+"twin",
+"👯",
+"jumeau"
+],
+[
+"փոքրիկ",
+"малыш, маленький",
+"little one, little",
+"🧒",
+"petit"
+],
+[
+"աղջնակ",
+"девочка",
+"little girl",
+"👧",
+"fillette"
+],
+[
+"մորեղբայր",
+"дядя (брат матери)",
+"uncle (mother's brother)",
+"👨",
+"oncle maternel"
+],
+[
+"մտերիմ ընկեր",
+"близкий друг",
+"close friend",
+"🤝",
+"ami proche"
+]
+],
+"fr": "Civilités et proches"
+},
+{
+"lv": "A1",
+"ru": "Разговорные словечки",
+"en": "Everyday chat words",
+"hy": "Խոսակցական բառեր",
+"ic": "💬",
+"w": [
+[
+"հա",
+"да (разг.)",
+"yeah",
+"👍",
+"ouais"
+],
+[
+"չէ",
+"нет (разг.)",
+"nah",
+"👎",
+"non"
+],
+[
+"վայ",
+"ой, ай",
+"oh!, oops",
+"😮",
+"oh là là"
+],
+[
+"ափսոս",
+"жаль",
+"what a pity",
+"😔",
+"dommage"
+],
+[
+"բրավո",
+"браво",
+"bravo",
+"👏",
+"bravo"
+],
+[
+"ուռա",
+"ура",
+"hooray",
+"🎉",
+"hourra"
+],
+[
+"հեյ",
+"эй",
+"hey",
+"👋",
+"hé"
+],
+[
+"ախ",
+"ах",
+"ah!",
+"",
+"ah"
+],
+[
+"օֆ",
+"уф",
+"phew, ugh",
+"😮‍💨",
+"ouf"
+],
+[
+"էհ",
+"эх",
+"eh",
+"",
+"eh"
+],
+[
+"դե",
+"ну",
+"well",
+"🤷",
+"bon"
+],
+[
+"դե լավ",
+"ну ладно",
+"oh well, all right",
+"",
+"bon, d'accord"
+],
+[
+"թող",
+"пусть",
+"let (it be)",
+"",
+"que"
+],
+[
+"հապա",
+"а как же, ну-ка",
+"what about, come on",
+"",
+"et alors"
+],
+[
+"եկեք",
+"давайте, приходите",
+"let's; come (plural)",
+"",
+"venez, allons"
+],
+[
+"կեցցե",
+"да здравствует",
+"long live",
+"🙌",
+"vive"
+],
+[
+"փառք Աստծո",
+"слава богу",
+"thank God",
+"🙏",
+"Dieu merci"
+],
+[
+"Աստված իմ",
+"боже мой",
+"my God",
+"😱",
+"mon Dieu"
+],
+[
+"իսկապե՞ս",
+"правда?",
+"really?",
+"🤔",
+"vraiment ?"
+],
+[
+"ինչ լավ է",
+"как хорошо",
+"how nice",
+"😊",
+"comme c'est bien"
+],
+[
+"ողջ լինեք",
+"спасибо, будьте здоровы",
+"thank you (bless you)",
+"",
+"merci, soyez bénis"
+],
+[
+"ճիշտ ես",
+"ты прав",
+"you're right",
+"✅",
+"tu as raison"
+],
+[
+"ոչ մի բան",
+"ничего",
+"nothing",
+"",
+"rien du tout"
+],
+[
+"ամեն ինչ կարգին է",
+"всё в порядке",
+"everything is fine",
+"👌",
+"tout va bien"
+],
+[
+"ամեն ինչ կլինի",
+"всё будет",
+"everything will be fine",
+"",
+"tout ira bien"
+],
+[
+"մի անհանգստացիր",
+"не волнуйся",
+"don't worry",
+"🫂",
+"ne t'inquiète pas"
+],
+[
+"մի վախեցիր",
+"не бойся",
+"don't be afraid",
+"",
+"n'aie pas peur"
+],
+[
+"սպասիր",
+"подожди",
+"wait",
+"✋",
+"attends"
+],
+[
+"շուտ արի",
+"приходи скорее",
+"come quickly",
+"🏃",
+"viens vite"
+],
+[
+"ուշ մի մնա",
+"не задерживайся",
+"don't be late",
+"⏰",
+"ne rentre pas tard"
+],
+[
+"բարի առավոտ",
+"доброе утро",
+"good morning",
+"🌅",
+"bonjour"
+],
+[
+"բարի երազներ",
+"сладких снов",
+"sweet dreams",
+"🌙",
+"fais de beaux rêves"
+],
+[
+"լավ քնես",
+"спи хорошо",
+"sleep well",
+"😴",
+"dors bien"
+],
+[
+"լավ օր անցկացրու",
+"хорошего дня",
+"have a nice day",
+"☀️",
+"bonne journée"
+],
+[
+"լավ հանգստացիր",
+"хорошо отдохни",
+"have a good rest",
+"",
+"repose-toi bien"
+],
+[
+"հաճելի ճանապարհորդություն",
+"приятного путешествия",
+"have a nice trip",
+"✈️",
+"bon voyage"
+]
+],
+"fr": "Petits mots de la conversation"
+},
+{
 "lv": "A2",
 "ru": "Местоимения 2",
 "en": "Pronouns 2",
@@ -16161,6 +16510,27 @@
 "list",
 "📝",
 "liste"
+],
+[
+"խումբ",
+"группа",
+"group",
+"👥",
+"groupe"
+],
+[
+"թեմա",
+"тема",
+"topic",
+"📌",
+"thème"
+],
+[
+"մոխիր",
+"пепел, зола",
+"ash",
+"🌋",
+"cendre"
 ]
 ],
 "fr": "Mots utiles"
@@ -21174,6 +21544,1005 @@
 ]
 ],
 "fr": "Par où ? Verbes de mouvement"
+},
+{
+"lv": "A2",
+"ru": "Вещи вокруг нас",
+"en": "Things around us",
+"hy": "Իրերը մեր շուրջ",
+"ic": "🧳",
+"w": [
+[
+"բանալիների կապ",
+"связка ключей",
+"bunch of keys",
+"🔑",
+"trousseau de clés"
+],
+[
+"լուսանկարների ալբոմ",
+"фотоальбом",
+"photo album",
+"📔",
+"album photo"
+],
+[
+"պատի ժամացույց",
+"настенные часы",
+"wall clock",
+"🕰️",
+"horloge"
+],
+[
+"ձեռքի ժամացույց",
+"наручные часы",
+"wristwatch",
+"⌚",
+"montre"
+],
+[
+"մոմակալ",
+"подсвечник",
+"candlestick",
+"🕯️",
+"bougeoir"
+],
+[
+"լուցկու տուփ",
+"спичечный коробок",
+"matchbox",
+"",
+"boîte d'allumettes"
+],
+[
+"մոխրաման",
+"пепельница",
+"ashtray",
+"",
+"cendrier"
+],
+[
+"սիգար",
+"сигара",
+"cigar",
+"",
+"cigare"
+],
+[
+"ծխամորճ",
+"трубка (курительная)",
+"pipe",
+"",
+"pipe"
+],
+[
+"կալյան",
+"кальян",
+"hookah",
+"",
+"narguilé"
+],
+[
+"հովհար",
+"веер",
+"fan (hand)",
+"🪭",
+"éventail"
+],
+[
+"ձեռնափայտ",
+"трость",
+"walking stick",
+"🦯",
+"canne"
+],
+[
+"պատյան",
+"футляр, чехол",
+"case, cover",
+"",
+"étui"
+],
+[
+"քարտապանակ",
+"визитница",
+"card holder",
+"",
+"porte-cartes"
+],
+[
+"նոթատետր",
+"блокнот",
+"notebook",
+"📓",
+"carnet"
+],
+[
+"ինքնահոս գրիչ",
+"перьевая ручка",
+"fountain pen",
+"🖋️",
+"stylo plume"
+],
+[
+"գնդիկավոր գրիչ",
+"шариковая ручка",
+"ballpoint pen",
+"🖊️",
+"stylo à bille"
+],
+[
+"ֆլոմաստեր",
+"фломастер",
+"felt-tip pen",
+"🖍️",
+"feutre"
+],
+[
+"ներկատուփ",
+"коробка красок",
+"paintbox",
+"🎨",
+"boîte de peinture"
+],
+[
+"գունավոր թուղթ",
+"цветная бумага",
+"coloured paper",
+"",
+"papier de couleur"
+],
+[
+"կպչուն ժապավեն",
+"скотч",
+"sticky tape",
+"",
+"ruban adhésif"
+],
+[
+"կոճգամ",
+"кнопка (канцелярская)",
+"drawing pin",
+"📌",
+"punaise"
+],
+[
+"ռետինե օղակ",
+"резинка",
+"rubber band",
+"",
+"élastique"
+],
+[
+"թղթադարակ",
+"лоток для бумаг",
+"paper tray",
+"",
+"bac à papier"
+],
+[
+"ծակոտիչ",
+"дырокол",
+"hole punch",
+"",
+"perforatrice"
+],
+[
+"կպչուն թերթիկ",
+"стикер для заметок",
+"sticky note",
+"🗒️",
+"pense-bête"
+],
+[
+"ծանուցման տախտակ",
+"доска объявлений",
+"notice board",
+"",
+"panneau d'affichage"
+],
+[
+"սպիտակ տախտակ",
+"белая доска",
+"whiteboard",
+"",
+"tableau blanc"
+],
+[
+"ցուցափայտ",
+"указка",
+"pointer",
+"",
+"baguette"
+],
+[
+"դրոշմանիշ",
+"марка, штемпель",
+"stamp",
+"",
+"timbre"
+],
+[
+"բացիկ",
+"открытка",
+"postcard",
+"💌",
+"carte postale"
+],
+[
+"պարկ",
+"мешок",
+"sack",
+"",
+"sac"
+],
+[
+"ցանցատոպրակ",
+"авоська",
+"string bag",
+"",
+"filet à provisions"
+],
+[
+"զամբյուղ",
+"корзина",
+"basket",
+"🧺",
+"panier"
+],
+[
+"կողով",
+"корзина (плетёная)",
+"wicker basket",
+"",
+"corbeille"
+],
+[
+"թիթեղյա տուփ",
+"жестяная банка",
+"tin can",
+"🥫",
+"boîte de conserve"
+],
+[
+"թղթե բաժակ",
+"бумажный стаканчик",
+"paper cup",
+"",
+"gobelet en carton"
+],
+[
+"միանգամյա օգտագործման սպասք",
+"одноразовая посуда",
+"disposable tableware",
+"",
+"vaisselle jetable"
+]
+],
+"fr": "Les objets autour de nous"
+},
+{
+"lv": "A2",
+"ru": "Как ты себя чувствуешь?",
+"en": "How do you feel?",
+"hy": "Ինչպե՞ս ես քեզ զգում",
+"ic": "😶",
+"w": [
+[
+"բարկացած",
+"рассерженный",
+"angry",
+"😠",
+"fâché"
+],
+[
+"նեղացած",
+"обиженный",
+"offended, hurt",
+"😤",
+"vexé"
+],
+[
+"տխրած",
+"опечаленный",
+"saddened",
+"😔",
+"attristé"
+],
+[
+"հիացած",
+"восхищённый",
+"delighted, amazed",
+"🤩",
+"émerveillé"
+],
+[
+"զարմացած",
+"удивлённый",
+"surprised",
+"😮",
+"étonné"
+],
+[
+"ապշած",
+"ошеломлённый",
+"stunned",
+"😲",
+"stupéfait"
+],
+[
+"ամաչած",
+"смущённый",
+"embarrassed",
+"😳",
+"gêné"
+],
+[
+"վախեցած",
+"испуганный",
+"frightened",
+"😨",
+"effrayé"
+],
+[
+"սարսափած",
+"в ужасе",
+"terrified",
+"😱",
+"terrifié"
+],
+[
+"անհանգստացած",
+"встревоженный",
+"anxious",
+"😟",
+"inquiet"
+],
+[
+"մտահոգված",
+"озабоченный",
+"concerned",
+"",
+"préoccupé"
+],
+[
+"լարված",
+"напряжённый",
+"tense",
+"",
+"tendu"
+],
+[
+"հանգստացած",
+"успокоившийся",
+"calmed down",
+"😌",
+"apaisé"
+],
+[
+"թեթևացած",
+"с облегчением",
+"relieved",
+"😮‍💨",
+"soulagé"
+],
+[
+"մենակ",
+"один, одинокий",
+"alone",
+"🧍",
+"seul"
+],
+[
+"լքված",
+"брошенный",
+"abandoned",
+"",
+"abandonné"
+],
+[
+"մոռացված",
+"забытый",
+"forgotten",
+"",
+"oublié"
+],
+[
+"սիրված",
+"любимый",
+"loved",
+"🥰",
+"aimé"
+],
+[
+"կարոտած",
+"соскучившийся",
+"missing someone",
+"",
+"en manque de"
+],
+[
+"խեղճ",
+"бедный, бедняга",
+"poor (pitiful)",
+"🥺",
+"pauvre"
+],
+[
+"թշվառ",
+"несчастный",
+"miserable",
+"",
+"misérable"
+],
+[
+"զզված",
+"испытывающий отвращение",
+"disgusted",
+"🤢",
+"dégoûté"
+],
+[
+"ձանձրացած",
+"заскучавший",
+"bored",
+"🥱",
+"qui s'ennuie"
+],
+[
+"ուժասպառ",
+"обессиленный",
+"exhausted",
+"",
+"épuisé"
+],
+[
+"զվարթ",
+"весёлый",
+"cheerful",
+"😄",
+"gai"
+],
+[
+"կենսուրախ",
+"жизнерадостный",
+"full of life",
+"",
+"plein de vie"
+],
+[
+"տրտում",
+"печальный",
+"sorrowful",
+"",
+"triste"
+],
+[
+"մելամաղձոտ",
+"меланхоличный",
+"melancholic",
+"",
+"mélancolique"
+],
+[
+"կատաղած",
+"взбешённый",
+"furious",
+"😡",
+"furieux"
+],
+[
+"խելագար",
+"сумасшедший",
+"mad, crazy",
+"🤪",
+"fou"
+],
+[
+"վրդովված",
+"возмущённый",
+"indignant",
+"",
+"indigné"
+],
+[
+"ցնցված",
+"потрясённый",
+"shocked",
+"",
+"bouleversé"
+],
+[
+"վստահ",
+"уверенный",
+"sure, confident",
+"😎",
+"sûr"
+],
+[
+"անվստահ",
+"неуверенный",
+"unsure",
+"",
+"pas sûr de soi"
+],
+[
+"դավաճան",
+"предатель",
+"traitor",
+"",
+"traître"
+],
+[
+"ապերախտ",
+"неблагодарный",
+"ungrateful",
+"",
+"ingrat"
+],
+[
+"պարտական",
+"обязанный, в долгу",
+"indebted",
+"",
+"redevable"
+],
+[
+"մեղավոր",
+"виноватый",
+"guilty",
+"😞",
+"coupable"
+],
+[
+"անմեղ",
+"невиновный",
+"innocent",
+"😇",
+"innocent"
+],
+[
+"ամոթխած",
+"стыдливый",
+"bashful",
+"",
+"pudique"
+],
+[
+"երկչոտ",
+"робкий",
+"timid",
+"",
+"timide"
+]
+],
+"fr": "Comment te sens-tu ?"
+},
+{
+"lv": "A2",
+"ru": "Покупки онлайн",
+"en": "Online shopping",
+"hy": "Առցանց գնումներ",
+"ic": "🛒",
+"w": [
+[
+"առցանց խանութ",
+"интернет-магазин",
+"online shop",
+"🛍️",
+"boutique en ligne"
+],
+[
+"առցանց գնումներ",
+"покупки онлайн",
+"online shopping",
+"",
+"achats en ligne"
+],
+[
+"գնումների զամբյուղ",
+"корзина (на сайте)",
+"shopping basket",
+"🛒",
+"panier"
+],
+[
+"պատվերի ձևակերպում",
+"оформление заказа",
+"checkout",
+"",
+"validation de commande"
+],
+[
+"առաքման հասցե",
+"адрес доставки",
+"delivery address",
+"🏠",
+"adresse de livraison"
+],
+[
+"առաքման ժամկետ",
+"срок доставки",
+"delivery time",
+"",
+"délai de livraison"
+],
+[
+"անվճար առաքում",
+"бесплатная доставка",
+"free delivery",
+"🚚",
+"livraison gratuite"
+],
+[
+"արագ առաքում",
+"экспресс-доставка",
+"express delivery",
+"",
+"livraison express"
+],
+[
+"առաքման ծառայություն",
+"служба доставки",
+"delivery service",
+"",
+"service de livraison"
+],
+[
+"պատվերի կարգավիճակ",
+"статус заказа",
+"order status",
+"",
+"statut de la commande"
+],
+[
+"պատվերի հետևում",
+"отслеживание заказа",
+"order tracking",
+"📍",
+"suivi de commande"
+],
+[
+"հետևման համար",
+"трек-номер",
+"tracking number",
+"",
+"numéro de suivi"
+],
+[
+"փոստային բաժանմունք",
+"почтовое отделение",
+"post office (branch)",
+"🏤",
+"bureau de poste"
+],
+[
+"փոստամատ",
+"постамат",
+"parcel locker",
+"📦",
+"consigne à colis"
+],
+[
+"ինքնադուրսբերում",
+"самовывоз",
+"click and collect",
+"",
+"retrait en magasin"
+],
+[
+"վերադարձ",
+"возврат",
+"return",
+"↩️",
+"retour"
+],
+[
+"գումարի վերադարձ",
+"возврат денег",
+"refund",
+"💸",
+"remboursement"
+],
+[
+"երաշխիքային ժամկետ",
+"гарантийный срок",
+"warranty period",
+"",
+"période de garantie"
+],
+[
+"երաշխիքային կտրոն",
+"гарантийный талон",
+"warranty card",
+"",
+"bon de garantie"
+],
+[
+"ապրանքի նկարագրություն",
+"описание товара",
+"product description",
+"",
+"description du produit"
+],
+[
+"կարծիք թողնել",
+"оставить отзыв",
+"leave a review",
+"⭐",
+"laisser un avis"
+],
+[
+"զեղչի կոդ",
+"промокод",
+"discount code",
+"",
+"code promo"
+],
+[
+"քեշբեք",
+"кешбэк",
+"cashback",
+"",
+"cashback"
+],
+[
+"բոնուսային քարտ",
+"бонусная карта",
+"loyalty card",
+"💳",
+"carte de fidélité"
+],
+[
+"լոյալության ծրագիր",
+"программа лояльности",
+"loyalty programme",
+"",
+"programme de fidélité"
+],
+[
+"սեզոնային վաճառք",
+"сезонная распродажа",
+"seasonal sale",
+"🏷️",
+"soldes"
+],
+[
+"Սև ուրբաթ",
+"Чёрная пятница",
+"Black Friday",
+"",
+"Black Friday"
+],
+[
+"գնի համեմատում",
+"сравнение цен",
+"price comparison",
+"",
+"comparaison des prix"
+],
+[
+"էժանագին",
+"недорогой",
+"inexpensive",
+"",
+"bon marché"
+],
+[
+"թանկարժեք",
+"дорогостоящий, драгоценный",
+"expensive, precious",
+"💎",
+"précieux"
+],
+[
+"որակյալ",
+"качественный",
+"high-quality",
+"",
+"de qualité"
+],
+[
+"անորակ",
+"некачественный",
+"poor-quality",
+"",
+"de mauvaise qualité"
+],
+[
+"կեղծ ապրանք",
+"подделка",
+"counterfeit goods",
+"",
+"contrefaçon"
+],
+[
+"օրիգինալ",
+"оригинальный",
+"original, genuine",
+"",
+"original"
+],
+[
+"ապրանքանիշային",
+"брендовый",
+"branded",
+"",
+"de marque"
+]
+],
+"fr": "Achats en ligne"
+},
+{
+"lv": "A2",
+"ru": "Где? Стороны и места",
+"en": "Where? Sides and places",
+"hy": "Որտե՞ղ. կողմեր և տեղեր",
+"ic": "🧭",
+"w": [
+[
+"շուրջը",
+"вокруг",
+"around",
+"🔄",
+"autour"
+],
+[
+"ծայր",
+"край, конец",
+"end, tip",
+"",
+"bout"
+],
+[
+"մեջտեղ",
+"середина",
+"middle",
+"🎯",
+"milieu"
+],
+[
+"դիմաց",
+"напротив",
+"opposite",
+"↔️",
+"en face"
+],
+[
+"վերին",
+"верхний",
+"upper",
+"⬆️",
+"supérieur"
+],
+[
+"ստորին",
+"нижний",
+"lower",
+"⬇️",
+"inférieur"
+],
+[
+"առջևի",
+"передний",
+"front",
+"",
+"avant"
+],
+[
+"հետևի",
+"задний",
+"back, rear",
+"",
+"arrière"
+],
+[
+"այսկողմ",
+"по эту сторону",
+"on this side",
+"",
+"de ce côté"
+],
+[
+"այնկողմ",
+"по ту сторону",
+"on the other side",
+"",
+"de l'autre côté"
+],
+[
+"շրջակայքում",
+"в окрестностях",
+"in the vicinity",
+"",
+"aux alentours"
+],
+[
+"ամենուրեք",
+"повсюду",
+"everywhere",
+"",
+"partout"
+],
+[
+"հեռավոր",
+"далёкий",
+"distant, remote",
+"",
+"lointain"
+],
+[
+"տարածություն",
+"пространство, расстояние",
+"space, distance",
+"",
+"espace"
+],
+[
+"տեղանք",
+"местность",
+"terrain, area",
+"🏞️",
+"terrain"
+],
+[
+"արևմտյան",
+"западный",
+"western",
+"",
+"occidental"
+],
+[
+"արևելյան",
+"восточный",
+"eastern",
+"",
+"oriental"
+],
+[
+"հյուսիսային",
+"северный",
+"northern",
+"",
+"septentrional"
+],
+[
+"հարավային",
+"южный",
+"southern",
+"",
+"méridional"
+],
+[
+"հյուսիս-արևելք",
+"северо-восток",
+"north-east",
+"↗️",
+"nord-est"
+],
+[
+"հարավ-արևմուտք",
+"юго-запад",
+"south-west",
+"↙️",
+"sud-ouest"
+],
+[
+"մաքրասեր",
+"чистоплотный",
+"clean, tidy",
+"",
+"propre"
+],
+[
+"խնամքով",
+"заботливо, бережно",
+"with care",
+"",
+"avec soin"
+]
+],
+"fr": "Où ? Côtés et lieux"
 },
 {
 "lv": "B1",
@@ -42237,6 +43606,2091 @@
 "fr": "Électroménager et électronique"
 },
 {
+"lv": "B1",
+"ru": "Родня и окружение",
+"en": "Kin and acquaintances",
+"hy": "Ազգականներ և շրջապատ",
+"ic": "👪",
+"w": [
+[
+"քենակալ",
+"свояк (муж сестры жены)",
+"wife's sister's husband",
+"",
+"beau-frère"
+],
+[
+"աներձագ",
+"шурин (брат жены)",
+"wife's brother",
+"",
+"beau-frère"
+],
+[
+"խորթ եղբայր",
+"сводный брат",
+"stepbrother",
+"",
+"demi-frère"
+],
+[
+"խորթ քույր",
+"сводная сестра",
+"stepsister",
+"",
+"demi-sœur"
+],
+[
+"մերձավոր",
+"ближний, близкий",
+"neighbour (fellow man), close",
+"",
+"prochain"
+],
+[
+"նախահայր",
+"праотец",
+"forefather",
+"",
+"ancêtre"
+],
+[
+"հայրանուն",
+"отчество",
+"patronymic",
+"",
+"patronyme"
+],
+[
+"մականուն",
+"прозвище",
+"nickname",
+"",
+"surnom"
+],
+[
+"կեղծանուն",
+"псевдоним",
+"pseudonym",
+"",
+"pseudonyme"
+],
+[
+"տիար",
+"господин (официально)",
+"Mr (formal)",
+"",
+"monsieur"
+],
+[
+"եղբորորդի",
+"племянник (сын брата)",
+"nephew (brother's son)",
+"",
+"neveu"
+],
+[
+"եղբորաղջիկ",
+"племянница (дочь брата)",
+"niece (brother's daughter)",
+"",
+"nièce"
+],
+[
+"քրոջորդի",
+"племянник (сын сестры)",
+"nephew (sister's son)",
+"",
+"neveu"
+],
+[
+"քրոջաղջիկ",
+"племянница (дочь сестры)",
+"niece (sister's daughter)",
+"",
+"nièce"
+],
+[
+"սանիկ",
+"крестник",
+"godchild",
+"",
+"filleul"
+],
+[
+"համակուրսեցի",
+"однокурсник",
+"fellow student",
+"",
+"camarade de promotion"
+],
+[
+"ընկերակից",
+"спутник, компаньон",
+"companion",
+"",
+"compagnon"
+],
+[
+"ուղեկից",
+"попутчик",
+"travelling companion",
+"",
+"compagnon de route"
+],
+[
+"ճամփորդ",
+"путник",
+"traveller",
+"",
+"voyageur"
+],
+[
+"համագյուղացի",
+"односельчанин",
+"fellow villager",
+"",
+"voisin de village"
+],
+[
+"համաքաղաքացի",
+"земляк, согражданин",
+"fellow citizen",
+"",
+"concitoyen"
+]
+],
+"fr": "Famille et entourage"
+},
+{
+"lv": "B1",
+"ru": "Чрезвычайные ситуации",
+"en": "Emergencies",
+"hy": "Արտակարգ իրավիճակներ",
+"ic": "🚒",
+"w": [
+[
+"արտակարգ իրավիճակ",
+"чрезвычайная ситуация",
+"emergency",
+"🚨",
+"situation d'urgence"
+],
+[
+"արտակարգ իրավիճակների նախարարություն",
+"МЧС",
+"Ministry of Emergency Situations",
+"",
+"ministère des Situations d'urgence"
+],
+[
+"փրկարարական ծառայություն",
+"спасательная служба",
+"rescue service",
+"🚒",
+"service de secours"
+],
+[
+"կրակմարիչ",
+"огнетушитель",
+"fire extinguisher",
+"🧯",
+"extincteur"
+],
+[
+"հրդեհային ազդանշան",
+"пожарная сигнализация",
+"fire alarm",
+"",
+"alarme incendie"
+],
+[
+"ծխի դետեկտոր",
+"датчик дыма",
+"smoke detector",
+"",
+"détecteur de fumée"
+],
+[
+"վթարային ելք",
+"аварийный выход",
+"emergency exit",
+"🚪",
+"sortie de secours"
+],
+[
+"տարհանում",
+"эвакуация",
+"evacuation",
+"",
+"évacuation"
+],
+[
+"առաջին օգնություն",
+"первая помощь",
+"first aid",
+"⛑️",
+"premiers secours"
+],
+[
+"առաջին օգնության արկղ",
+"аптечка",
+"first-aid kit",
+"",
+"trousse de secours"
+],
+[
+"լարան",
+"жгут",
+"tourniquet",
+"",
+"garrot"
+],
+[
+"արհեստական շնչառություն",
+"искусственное дыхание",
+"artificial respiration",
+"",
+"respiration artificielle"
+],
+[
+"սրտի մերսում",
+"массаж сердца",
+"heart massage",
+"",
+"massage cardiaque"
+],
+[
+"ուշագնաց",
+"без сознания",
+"unconscious",
+"",
+"inconscient"
+],
+[
+"թունավորում",
+"отравление",
+"poisoning",
+"☠️",
+"empoisonnement"
+],
+[
+"էլեկտրահարում",
+"удар током",
+"electric shock",
+"⚡",
+"électrocution"
+],
+[
+"արյունահոսել",
+"кровоточить",
+"bleed",
+"🩸",
+"saigner"
+],
+[
+"կոտրվել",
+"сломаться",
+"break",
+"💔",
+"se casser"
+],
+[
+"դժբախտ պատահար",
+"несчастный случай",
+"accident",
+"",
+"accident"
+],
+[
+"ճանապարհատրանսպորտային պատահար",
+"ДТП",
+"road accident",
+"🚗",
+"accident de la route"
+],
+[
+"վթարի ենթարկվել",
+"попасть в аварию",
+"have an accident",
+"",
+"avoir un accident"
+],
+[
+"տուժած",
+"пострадавший",
+"injured person",
+"",
+"blessé"
+],
+[
+"ողջ մնացած",
+"выживший",
+"survivor",
+"",
+"survivant"
+],
+[
+"որոնողափրկարարական աշխատանքներ",
+"поисково-спасательные работы",
+"search and rescue",
+"",
+"opérations de recherche et de sauvetage"
+],
+[
+"թեժ գիծ",
+"горячая линия",
+"hotline",
+"☎️",
+"ligne d'urgence"
+],
+[
+"զգուշացում",
+"предупреждение",
+"warning",
+"⚠️",
+"avertissement"
+],
+[
+"նախազգուշացում",
+"предостережение",
+"caution, warning",
+"",
+"mise en garde"
+],
+[
+"վտանգավոր գոտի",
+"опасная зона",
+"danger zone",
+"",
+"zone dangereuse"
+],
+[
+"մուտքն արգելված է",
+"вход воспрещён",
+"no entry",
+"⛔",
+"entrée interdite"
+],
+[
+"ծխելն արգելված է",
+"курить запрещено",
+"no smoking",
+"🚭",
+"défense de fumer"
+],
+[
+"մի մոտեցեք",
+"не подходите",
+"keep away",
+"",
+"ne pas approcher"
+],
+[
+"բարձր լարում",
+"высокое напряжение",
+"high voltage",
+"⚡",
+"haute tension"
+],
+[
+"թունավոր",
+"ядовитый",
+"poisonous",
+"☠️",
+"toxique"
+],
+[
+"դյուրավառ",
+"легковоспламеняющийся",
+"flammable",
+"🔥",
+"inflammable"
+],
+[
+"պայթյունավտանգ",
+"взрывоопасный",
+"explosive",
+"",
+"explosif"
+],
+[
+"ռադիոակտիվ",
+"радиоактивный",
+"radioactive",
+"☢️",
+"radioactif"
+],
+[
+"կենսավտանգ",
+"биологически опасный",
+"biohazard",
+"☣️",
+"danger biologique"
+],
+[
+"ապաստարան",
+"убежище",
+"shelter",
+"",
+"abri"
+],
+[
+"ռմբապաստարան",
+"бомбоубежище",
+"bomb shelter",
+"",
+"abri antiaérien"
+],
+[
+"օդային տագնապ",
+"воздушная тревога",
+"air-raid alert",
+"",
+"alerte aérienne"
+],
+[
+"ախտահանում",
+"дезинфекция",
+"disinfection",
+"",
+"désinfection"
+],
+[
+"ինքնամեկուսացում",
+"самоизоляция",
+"self-isolation",
+"",
+"auto-isolement"
+]
+],
+"fr": "Situations d'urgence"
+},
+{
+"lv": "B1",
+"ru": "Жильё: аренда и покупка",
+"en": "Housing: renting and buying",
+"hy": "Բնակարան. վարձակալություն և գնում",
+"ic": "🔑",
+"w": [
+[
+"վարձով տալ",
+"сдавать в аренду",
+"rent out",
+"",
+"louer (donner en location)"
+],
+[
+"վարձավճար",
+"арендная плата",
+"rent",
+"",
+"loyer"
+],
+[
+"բնակարանի վարձ",
+"квартплата",
+"rent (for a flat)",
+"",
+"loyer"
+],
+[
+"պայմանագրի կնքում",
+"заключение договора",
+"signing of a contract",
+"✍️",
+"signature du contrat"
+],
+[
+"վարձակալության պայմանագիր",
+"договор аренды",
+"lease",
+"",
+"bail"
+],
+[
+"գրավի գումար",
+"залог (сумма)",
+"deposit",
+"",
+"caution"
+],
+[
+"անշարժ գույքի գործակալություն",
+"агентство недвижимости",
+"estate agency",
+"🏘️",
+"agence immobilière"
+],
+[
+"ռիելթոր",
+"риелтор",
+"estate agent",
+"",
+"agent immobilier"
+],
+[
+"վարձատու",
+"арендодатель",
+"landlord",
+"",
+"bailleur"
+],
+[
+"բնակելի տարածք",
+"жилая площадь",
+"living space",
+"",
+"surface habitable"
+],
+[
+"հարկայնություն",
+"этажность",
+"number of storeys",
+"",
+"nombre d'étages"
+],
+[
+"նորակառույց շենք",
+"новостройка",
+"new building",
+"",
+"immeuble neuf"
+],
+[
+"երկրորդային շուկա",
+"вторичный рынок",
+"resale market",
+"",
+"marché de l'ancien"
+],
+[
+"կահավորված",
+"меблированный",
+"furnished",
+"🛋️",
+"meublé"
+],
+[
+"չկահավորված",
+"без мебели",
+"unfurnished",
+"",
+"non meublé"
+],
+[
+"վերանորոգված",
+"с ремонтом",
+"renovated",
+"",
+"rénové"
+],
+[
+"կենտրոնում",
+"в центре",
+"in the centre",
+"📍",
+"au centre"
+],
+[
+"տրանսպորտային հասանելիություն",
+"транспортная доступность",
+"transport links",
+"",
+"accessibilité"
+],
+[
+"բնակարանային վարկ",
+"ипотека",
+"mortgage",
+"",
+"prêt immobilier"
+],
+[
+"սեփականության վկայական",
+"свидетельство о собственности",
+"title deed",
+"",
+"titre de propriété"
+],
+[
+"կադաստր",
+"кадастр",
+"land registry",
+"",
+"cadastre"
+],
+[
+"հաշվառման հասցե",
+"адрес регистрации",
+"registered address",
+"",
+"adresse de domiciliation"
+],
+[
+"տեղափոխություն",
+"переезд",
+"move, relocation",
+"🚚",
+"déménagement"
+],
+[
+"բեռնափոխադրում",
+"грузоперевозка",
+"freight transport",
+"",
+"transport de marchandises"
+],
+[
+"տեղափոխման ընկերություն",
+"компания по переездам",
+"removal company",
+"",
+"entreprise de déménagement"
+],
+[
+"փաթեթավորում",
+"упаковка",
+"packing",
+"📦",
+"emballage"
+],
+[
+"կահույքի հավաքում",
+"сборка мебели",
+"furniture assembly",
+"",
+"montage de meubles"
+],
+[
+"բանալիների հանձնում",
+"передача ключей",
+"handover of keys",
+"",
+"remise des clés"
+]
+],
+"fr": "Logement : location et achat"
+},
+{
+"lv": "B1",
+"ru": "Хобби и игры",
+"en": "Hobbies and games",
+"hy": "Հոբբի և խաղեր",
+"ic": "🧶",
+"w": [
+[
+"զբաղմունք",
+"занятие",
+"occupation, pastime",
+"",
+"occupation"
+],
+[
+"հավաքորդ",
+"собиратель, коллекционер",
+"collector",
+"",
+"collectionneur"
+],
+[
+"հնաոճ իրեր",
+"антиквариат",
+"antiques",
+"",
+"antiquités"
+],
+[
+"անտիկվարիատ",
+"антикварный магазин",
+"antique shop",
+"",
+"magasin d'antiquités"
+],
+[
+"հնավաճառ",
+"старьёвщик, антиквар",
+"antique dealer",
+"",
+"brocanteur"
+],
+[
+"ծաղկաբուծություն",
+"цветоводство",
+"floriculture",
+"🌷",
+"floriculture"
+],
+[
+"ասեղնագործել",
+"вышивать",
+"embroider",
+"",
+"broder"
+],
+[
+"ձեռագործ",
+"рукоделие, ручная работа",
+"handicraft, handmade",
+"",
+"ouvrage fait main"
+],
+[
+"ձեռարվեստ",
+"прикладное искусство",
+"crafts",
+"",
+"artisanat d'art"
+],
+[
+"մանվածք",
+"пряжа",
+"yarn",
+"🧶",
+"fil à tricoter"
+],
+[
+"հյուսելու շյուղեր",
+"спицы",
+"knitting needles",
+"",
+"aiguilles à tricoter"
+],
+[
+"ժանյակ",
+"кружево",
+"lace",
+"",
+"dentelle"
+],
+[
+"ուլունք",
+"бусина",
+"bead",
+"📿",
+"perle"
+],
+[
+"փորագրել",
+"вырезать, гравировать",
+"carve, engrave",
+"",
+"graver"
+],
+[
+"գծանկար",
+"рисунок (линейный)",
+"drawing",
+"",
+"dessin"
+],
+[
+"գծանկարել",
+"рисовать (карандашом)",
+"draw",
+"",
+"dessiner"
+],
+[
+"գունավորել",
+"раскрашивать",
+"colour in",
+"",
+"colorier"
+],
+[
+"օրիգամի",
+"оригами",
+"origami",
+"",
+"origami"
+],
+[
+"մոդելավորում",
+"моделирование",
+"modelling",
+"",
+"modélisme"
+],
+[
+"մանրակերտ",
+"макет, миниатюра",
+"scale model",
+"",
+"maquette"
+],
+[
+"թղթախաղ",
+"игра в карты",
+"card game",
+"🃏",
+"jeu de cartes"
+],
+[
+"խաղաթուղթ",
+"игральная карта",
+"playing card",
+"",
+"carte à jouer"
+],
+[
+"վալետ",
+"валет",
+"jack (card)",
+"",
+"valet"
+],
+[
+"տուզ",
+"туз",
+"ace",
+"🂡",
+"as"
+],
+[
+"շախմատի տախտակ",
+"шахматная доска",
+"chessboard",
+"",
+"échiquier"
+],
+[
+"խաղաքար",
+"фигура, фишка",
+"game piece",
+"",
+"pièce"
+],
+[
+"շախ",
+"шах",
+"check (in chess)",
+"",
+"échec"
+],
+[
+"խաղաքայլ",
+"ход",
+"move (in a game)",
+"",
+"coup"
+],
+[
+"նարդու տախտակ",
+"доска для нард",
+"backgammon board",
+"",
+"tablier de backgammon"
+],
+[
+"սուդոկու",
+"судоку",
+"sudoku",
+"",
+"sudoku"
+],
+[
+"տեսախաղ",
+"видеоигра",
+"video game",
+"🎮",
+"jeu vidéo"
+],
+[
+"խաղային վահանակ",
+"игровая приставка",
+"games console",
+"",
+"console de jeux"
+],
+[
+"ջոյսթիք",
+"джойстик",
+"joystick",
+"🕹️",
+"manette"
+]
+],
+"fr": "Loisirs et jeux"
+},
+{
+"lv": "B1",
+"ru": "Документы и учреждения",
+"en": "Paperwork and offices",
+"hy": "Փաստաթղթեր և հիմնարկներ",
+"ic": "🗂️",
+"w": [
+[
+"հայտադիմում",
+"заявка",
+"application",
+"",
+"demande"
+],
+[
+"ձևաթուղթ",
+"бланк",
+"form",
+"📄",
+"formulaire"
+],
+[
+"լրացնել ձևաթուղթը",
+"заполнить бланк",
+"fill in the form",
+"✍️",
+"remplir le formulaire"
+],
+[
+"կնքել",
+"поставить печать, заключить",
+"stamp, seal, conclude",
+"",
+"apposer un cachet"
+],
+[
+"պատճեն",
+"копия",
+"copy",
+"",
+"copie"
+],
+[
+"պատճենահանել",
+"ксерокопировать",
+"photocopy",
+"",
+"photocopier"
+],
+[
+"տեղեկատու",
+"справочник",
+"directory, reference book",
+"",
+"annuaire"
+],
+[
+"վկայագիր",
+"свидетельство, сертификат",
+"certificate",
+"",
+"certificat"
+],
+[
+"հերթական համար",
+"номер в очереди",
+"queue number",
+"🎫",
+"numéro d'attente"
+],
+[
+"ընդունելության ժամեր",
+"часы приёма",
+"opening hours (office)",
+"🕘",
+"heures de réception"
+],
+[
+"աշխատանքային ժամեր",
+"рабочие часы",
+"working hours",
+"",
+"heures de travail"
+],
+[
+"ճաշի ընդմիջում",
+"обеденный перерыв",
+"lunch break",
+"🍱",
+"pause déjeuner"
+],
+[
+"անձնագրային սեղան",
+"паспортный стол",
+"passport office",
+"🛂",
+"service des passeports"
+],
+[
+"ժամկետանց",
+"просроченный",
+"expired",
+"",
+"périmé"
+],
+[
+"ուժի մեջ",
+"в силе, действует",
+"in force",
+"",
+"en vigueur"
+],
+[
+"անվավեր",
+"недействительный",
+"invalid",
+"",
+"non valable"
+],
+[
+"վավեր",
+"действительный",
+"valid",
+"",
+"valable"
+],
+[
+"պետական ծառայություններ",
+"госуслуги",
+"public services",
+"",
+"services publics"
+],
+[
+"էլեկտրոնային կառավարում",
+"электронное правительство",
+"e-government",
+"",
+"administration électronique"
+],
+[
+"էլեկտրոնային ստորագրություն",
+"электронная подпись",
+"e-signature",
+"",
+"signature électronique"
+],
+[
+"անձնական գործ",
+"личное дело",
+"personal file",
+"",
+"dossier personnel"
+],
+[
+"ծառայողական",
+"служебный",
+"official, for official use",
+"",
+"de service"
+],
+[
+"մուտքագրել",
+"вводить (данные)",
+"enter (data)",
+"",
+"saisir"
+],
+[
+"գրանցամատյան",
+"журнал регистрации",
+"register, logbook",
+"",
+"registre"
+],
+[
+"գրություն",
+"официальное письмо",
+"official letter",
+"",
+"courrier officiel"
+],
+[
+"բողոք ներկայացնել",
+"подать жалобу",
+"file a complaint",
+"",
+"porter plainte"
+],
+[
+"դիմորդ",
+"заявитель, абитуриент",
+"applicant",
+"",
+"candidat"
+],
+[
+"հայցել",
+"просить, искать (по суду)",
+"seek, sue",
+"",
+"solliciter"
+],
+[
+"մերժում ստանալ",
+"получить отказ",
+"be refused",
+"",
+"essuyer un refus"
+],
+[
+"թույլտվություն ստանալ",
+"получить разрешение",
+"get permission",
+"",
+"obtenir une autorisation"
+]
+],
+"fr": "Papiers et administrations"
+},
+{
+"lv": "B1",
+"ru": "Поиск работы и кадры",
+"en": "Job hunting and HR",
+"hy": "Աշխատանքի որոնում և կադրեր",
+"ic": "🧑‍💼",
+"w": [
+[
+"աշխատանքի հայտարարություն",
+"объявление о вакансии",
+"job advertisement",
+"",
+"offre d'emploi"
+],
+[
+"թափուր պաշտոն",
+"вакантная должность",
+"vacant post",
+"",
+"poste vacant"
+],
+[
+"աշխատանքի փնտրտուք",
+"поиск работы",
+"job search",
+"🔎",
+"recherche d'emploi"
+],
+[
+"ուղեկցող նամակ",
+"сопроводительное письмо",
+"cover letter",
+"✉️",
+"lettre de motivation"
+],
+[
+"փափուկ հմտություններ",
+"гибкие навыки",
+"soft skills",
+"",
+"compétences relationnelles"
+],
+[
+"աշխատանքային հարցազրույց",
+"собеседование",
+"job interview",
+"🤝",
+"entretien d'embauche"
+],
+[
+"աշխատանքի առաջարկ",
+"предложение о работе",
+"job offer",
+"",
+"offre d'emploi ferme"
+],
+[
+"աշխատավարձի ակնկալիք",
+"ожидаемая зарплата",
+"salary expectations",
+"",
+"prétentions salariales"
+],
+[
+"լրիվ դրույք",
+"полная ставка",
+"full-time",
+"",
+"temps plein"
+],
+[
+"կես դրույք",
+"полставки",
+"part-time",
+"",
+"mi-temps"
+],
+[
+"մասնակի զբաղվածություն",
+"частичная занятость",
+"part-time employment",
+"",
+"emploi à temps partiel"
+],
+[
+"ճկուն գրաֆիկ",
+"гибкий график",
+"flexible hours",
+"",
+"horaires flexibles"
+],
+[
+"հիբրիդային աշխատանք",
+"гибридная работа",
+"hybrid working",
+"",
+"travail hybride"
+],
+[
+"ֆրիլանս",
+"фриланс",
+"freelancing",
+"",
+"travail indépendant"
+],
+[
+"ֆրիլանսեր",
+"фрилансер",
+"freelancer",
+"",
+"freelance"
+],
+[
+"ինքնազբաղված",
+"самозанятый",
+"self-employed",
+"",
+"travailleur indépendant"
+],
+[
+"վճարովի արձակուրդ",
+"оплачиваемый отпуск",
+"paid leave",
+"",
+"congés payés"
+],
+[
+"չվճարվող արձակուրդ",
+"отпуск за свой счёт",
+"unpaid leave",
+"",
+"congé sans solde"
+],
+[
+"մայրության արձակուրդ",
+"декретный отпуск",
+"maternity leave",
+"🤱",
+"congé de maternité"
+],
+[
+"հայրության արձակուրդ",
+"отпуск по уходу (для отца)",
+"paternity leave",
+"",
+"congé de paternité"
+],
+[
+"հիվանդության նպաստ",
+"пособие по болезни",
+"sick pay",
+"",
+"indemnités maladie"
+],
+[
+"սոցիալական փաթեթ",
+"соцпакет",
+"benefits package",
+"",
+"avantages sociaux"
+],
+[
+"բոնուս",
+"бонус",
+"bonus",
+"",
+"prime"
+],
+[
+"պաշտոնի բարձրացում",
+"повышение в должности",
+"promotion",
+"📈",
+"promotion"
+],
+[
+"մենթոր",
+"наставник",
+"mentor",
+"",
+"mentor"
+],
+[
+"թիմային աշխատանք",
+"командная работа",
+"teamwork",
+"",
+"travail d'équipe"
+],
+[
+"թիմակից",
+"товарищ по команде",
+"teammate",
+"",
+"coéquipier"
+],
+[
+"անմիջական ղեկավար",
+"непосредственный руководитель",
+"line manager",
+"",
+"supérieur direct"
+],
+[
+"մարդկային ռեսուրսներ",
+"человеческие ресурсы",
+"human resources",
+"",
+"ressources humaines"
+],
+[
+"անձնակազմի բաժին",
+"отдел кадров",
+"personnel department",
+"",
+"service du personnel"
+],
+[
+"աշխատակազմ",
+"штат, аппарат",
+"staff",
+"",
+"personnel"
+],
+[
+"հաստիքացուցակ",
+"штатное расписание",
+"staffing table",
+"",
+"tableau des effectifs"
+],
+[
+"աշխատանքային գրքույկ",
+"трудовая книжка",
+"employment record book",
+"",
+"carnet de travail"
+],
+[
+"աշխատանքային ստաժ",
+"трудовой стаж",
+"length of service",
+"",
+"ancienneté"
+],
+[
+"ազատում",
+"освобождение, увольнение",
+"release, dismissal",
+"",
+"licenciement"
+],
+[
+"աշխատանքից հեռացում",
+"увольнение",
+"dismissal",
+"",
+"renvoi"
+],
+[
+"հրաժարականի դիմում",
+"заявление об уходе",
+"letter of resignation",
+"",
+"lettre de démission"
+],
+[
+"ելքային նպաստ",
+"выходное пособие",
+"severance pay",
+"",
+"indemnité de départ"
+]
+],
+"fr": "Recherche d'emploi et RH"
+},
+{
+"lv": "B1",
+"ru": "Характер и умения",
+"en": "Character and skills",
+"hy": "Բնավորություն և հմտություններ",
+"ic": "🧑‍🎓",
+"w": [
+[
+"արժեքավոր",
+"ценный",
+"valuable",
+"💎",
+"précieux"
+],
+[
+"անարժեք",
+"никчёмный",
+"worthless",
+"",
+"sans valeur"
+],
+[
+"մասնագիտական",
+"профессиональный",
+"professional",
+"",
+"professionnel"
+],
+[
+"պրոֆեսիոնալ",
+"профессионал",
+"professional (person)",
+"",
+"professionnel"
+],
+[
+"սկսնակ",
+"новичок, начинающий",
+"beginner",
+"🔰",
+"débutant"
+],
+[
+"վարպետ",
+"мастер",
+"master, craftsman",
+"🛠️",
+"maître"
+],
+[
+"սիրողական",
+"любительский",
+"amateur",
+"",
+"amateur"
+],
+[
+"ինքնուս",
+"самоучка",
+"self-taught",
+"",
+"autodidacte"
+],
+[
+"շնորհալի",
+"одарённый",
+"gifted",
+"",
+"doué"
+],
+[
+"անտաղանդ",
+"бездарный",
+"untalented",
+"",
+"sans talent"
+],
+[
+"անընդունակ",
+"неспособный",
+"incapable",
+"",
+"incapable"
+],
+[
+"բթամիտ",
+"тупой, недалёкий",
+"dull-witted",
+"",
+"obtus"
+],
+[
+"դանդաղամիտ",
+"тугодум",
+"slow-witted",
+"",
+"lent d'esprit"
+],
+[
+"արագամիտ",
+"сообразительный",
+"quick-witted",
+"",
+"vif d'esprit"
+],
+[
+"խոսկան",
+"разговорчивый",
+"talkative",
+"🗣️",
+"bavard"
+],
+[
+"քչախոս",
+"немногословный",
+"taciturn",
+"",
+"taciturne"
+],
+[
+"մարդամոտ",
+"общительный",
+"sociable",
+"",
+"sociable"
+],
+[
+"անմարդամոտ",
+"необщительный",
+"unsociable",
+"",
+"peu sociable"
+],
+[
+"անուշադիր",
+"невнимательный",
+"inattentive",
+"",
+"inattentif"
+],
+[
+"կենտրոնացած",
+"сосредоточенный",
+"focused",
+"",
+"concentré"
+],
+[
+"անկարգապահ",
+"недисциплинированный",
+"undisciplined",
+"",
+"indiscipliné"
+],
+[
+"պարզասիրտ",
+"простодушный",
+"simple-hearted",
+"",
+"candide"
+],
+[
+"դանդաղաշարժ",
+"медлительный",
+"sluggish",
+"🐢",
+"lent"
+],
+[
+"արագաշարժ",
+"проворный",
+"nimble",
+"🐇",
+"leste"
+],
+[
+"հեզ",
+"кроткий",
+"meek",
+"",
+"doux"
+],
+[
+"պարծենկոտ",
+"хвастливый",
+"boastful",
+"",
+"vantard"
+],
+[
+"խանդոտ",
+"ревнивый",
+"jealous",
+"",
+"jaloux"
+],
+[
+"չարախոս",
+"злоязычный",
+"slanderous",
+"",
+"médisant"
+],
+[
+"բամբասկոտ",
+"любящий сплетни",
+"gossipy",
+"",
+"cancanier"
+],
+[
+"չարասիրտ",
+"злой, недобрый",
+"malicious",
+"",
+"méchant"
+],
+[
+"երես առած",
+"избалованный",
+"spoilt",
+"",
+"gâté"
+],
+[
+"թուլակամ",
+"безвольный",
+"weak-willed",
+"",
+"velléitaire"
+]
+],
+"fr": "Caractère et compétences"
+},
+{
+"lv": "B1",
+"ru": "Глаголы: время и деньги",
+"en": "Verbs: time and money",
+"hy": "Բայեր. ժամանակ և փող",
+"ic": "⏱️",
+"w": [
+[
+"կանգնեցնել",
+"останавливать",
+"stop (something)",
+"✋",
+"arrêter"
+],
+[
+"վերսկսել",
+"возобновлять",
+"resume",
+"",
+"reprendre"
+],
+[
+"ընդմիջել",
+"прерывать, делать перерыв",
+"interrupt, take a break",
+"",
+"interrompre"
+],
+[
+"շրջագայել",
+"гастролировать, объезжать",
+"tour",
+"",
+"faire une tournée"
+],
+[
+"հյուր գնալ",
+"идти в гости",
+"visit (go as a guest)",
+"🏡",
+"aller en visite"
+],
+[
+"հյուր գալ",
+"приходить в гости",
+"come to visit",
+"",
+"venir en visite"
+],
+[
+"հյուրընկալել",
+"принимать гостей",
+"host",
+"",
+"recevoir"
+],
+[
+"հապաղել",
+"медлить",
+"delay, linger",
+"",
+"tarder"
+],
+[
+"ժամանակ խնայել",
+"экономить время",
+"save time",
+"⏳",
+"gagner du temps"
+],
+[
+"ժամանակ կորցնել",
+"терять время",
+"lose time",
+"",
+"perdre du temps"
+],
+[
+"ժամանակ վատնել",
+"тратить время впустую",
+"waste time",
+"",
+"gaspiller son temps"
+],
+[
+"վատնել",
+"растрачивать",
+"waste",
+"",
+"gaspiller"
+],
+[
+"շռայլել",
+"расточать",
+"squander",
+"",
+"prodiguer"
+],
+[
+"տնտեսել",
+"экономить",
+"economize",
+"",
+"économiser"
+],
+[
+"կուտակել",
+"накапливать",
+"accumulate",
+"",
+"accumuler"
+],
+[
+"հայտնաբերել",
+"обнаружить",
+"discover",
+"",
+"découvrir"
+],
+[
+"ծրագրել",
+"планировать",
+"plan",
+"",
+"projeter"
+],
+[
+"ուսանել",
+"учиться (в вузе)",
+"study",
+"",
+"étudier"
+],
+[
+"կրթվել",
+"получать образование",
+"be educated",
+"",
+"s'instruire"
+],
+[
+"մտորել",
+"размышлять",
+"ponder",
+"",
+"méditer"
+],
+[
+"դատել",
+"судить",
+"judge",
+"",
+"juger"
+],
+[
+"դատողություն անել",
+"рассуждать",
+"reason",
+"",
+"raisonner"
+]
+],
+"fr": "Verbes : temps et argent"
+},
+{
+"lv": "B1",
+"ru": "Театр и цирк",
+"en": "Theatre and circus",
+"hy": "Թատրոն և կրկես",
+"ic": "🎪",
+"w": [
+[
+"բեմադրիչ",
+"режиссёр-постановщик",
+"stage director",
+"",
+"metteur en scène"
+],
+[
+"բեմանկարիչ",
+"театральный художник",
+"set designer",
+"",
+"décorateur"
+],
+[
+"դեկորացիա",
+"декорация",
+"scenery, set",
+"",
+"décor"
+],
+[
+"զգեստավորում",
+"костюмы (к спектаклю)",
+"costume design",
+"",
+"costumes"
+],
+[
+"դիմահարդարում",
+"грим, макияж",
+"make-up",
+"💄",
+"maquillage"
+],
+[
+"լուսավորություն",
+"освещение",
+"lighting",
+"💡",
+"éclairage"
+],
+[
+"ձայնային ձևավորում",
+"звуковое оформление",
+"sound design",
+"",
+"conception sonore"
+],
+[
+"սուֆլյոր",
+"суфлёр",
+"prompter",
+"",
+"souffleur"
+],
+[
+"դերասանական կազմ",
+"актёрский состав",
+"cast",
+"",
+"distribution"
+],
+[
+"կրկնափորձ",
+"репетиция",
+"rehearsal",
+"",
+"répétition"
+],
+[
+"գլխավոր փորձ",
+"генеральная репетиция",
+"dress rehearsal",
+"",
+"répétition générale"
+],
+[
+"ռեպլիկ",
+"реплика",
+"line, cue",
+"",
+"réplique"
+],
+[
+"պաուզա",
+"пауза",
+"pause",
+"",
+"pause"
+],
+[
+"պարտեր",
+"партер",
+"stalls",
+"",
+"parterre"
+],
+[
+"օթյակ",
+"ложа",
+"box (in a theatre)",
+"",
+"loge"
+],
+[
+"վերնասրահ",
+"галёрка, балкон",
+"gallery",
+"",
+"galerie"
+],
+[
+"թատերախումբ",
+"театральная труппа",
+"theatre company",
+"",
+"troupe de théâtre"
+],
+[
+"թատերական փառատոն",
+"театральный фестиваль",
+"theatre festival",
+"",
+"festival de théâtre"
+],
+[
+"տիկնիկավար",
+"кукольник",
+"puppeteer",
+"",
+"marionnettiste"
+],
+[
+"պանտոմիմ",
+"пантомима",
+"pantomime",
+"",
+"pantomime"
+],
+[
+"մնջախաղ",
+"пантомима",
+"mime",
+"",
+"mime"
+],
+[
+"իմպրովիզացիա",
+"импровизация",
+"improvisation",
+"",
+"improvisation"
+],
+[
+"կատակերգու",
+"комик",
+"comedian",
+"",
+"comique"
+],
+[
+"ողբերգակ",
+"трагик",
+"tragedian",
+"",
+"tragédien"
+],
+[
+"դրամատուրգ",
+"драматург",
+"playwright",
+"",
+"dramaturge"
+],
+[
+"թատերագետ",
+"театровед",
+"theatre critic",
+"",
+"critique de théâtre"
+],
+[
+"թատերասեր",
+"театрал",
+"theatregoer",
+"🎭",
+"amateur de théâtre"
+],
+[
+"հանդիսական",
+"зритель",
+"spectator",
+"",
+"spectateur"
+],
+[
+"օպերային թատրոն",
+"оперный театр",
+"opera house",
+"",
+"opéra"
+],
+[
+"դրամատիկական թատրոն",
+"драматический театр",
+"drama theatre",
+"",
+"théâtre dramatique"
+],
+[
+"փողոցային թատրոն",
+"уличный театр",
+"street theatre",
+"",
+"théâtre de rue"
+],
+[
+"ակրոբատ",
+"акробат",
+"acrobat",
+"🤸",
+"acrobate"
+],
+[
+"լարախաղաց",
+"канатоходец",
+"tightrope walker",
+"",
+"funambule"
+],
+[
+"ձեռնածու",
+"жонглёр",
+"juggler",
+"🤹",
+"jongleur"
+],
+[
+"կենդանիների վարժեցնող",
+"дрессировщик",
+"animal trainer",
+"",
+"dompteur"
+],
+[
+"ձիավարժարան",
+"манеж (для лошадей)",
+"riding school",
+"",
+"manège"
+],
+[
+"մանեժ",
+"манеж (цирковой)",
+"circus ring",
+"",
+"piste"
+],
+[
+"մոգ",
+"маг",
+"magician, mage",
+"🧙",
+"mage"
+],
+[
+"հրաշագործ",
+"чудотворец, кудесник",
+"miracle worker",
+"",
+"thaumaturge"
+]
+],
+"fr": "Théâtre et cirque"
+},
+{
 "lv": "B2",
 "ru": "Личность и психология",
 "en": "Personality and psychology",
@@ -56156,6 +59610,1253 @@
 "fr": "Langue, traduction, ponctuation"
 },
 {
+"lv": "B2",
+"ru": "История Армении",
+"en": "Armenian history",
+"hy": "Հայոց պատմություն",
+"ic": "🏛️",
+"w": [
+[
+"Վանի թագավորություն",
+"Ванское царство (Урарту)",
+"Kingdom of Van (Urartu)",
+"",
+"royaume de Van (Urartu)"
+],
+[
+"Արշակունիներ",
+"Аршакиды",
+"the Arsacids",
+"",
+"les Arsacides"
+],
+[
+"Արտաշեսյաններ",
+"Арташесиды",
+"the Artaxiads",
+"",
+"les Artaxiades"
+],
+[
+"Բագրատունիներ",
+"Багратиды",
+"the Bagratids",
+"",
+"les Bagratides"
+],
+[
+"Ռուբինյաններ",
+"Рубениды",
+"the Rubenids",
+"",
+"les Roupénides"
+],
+[
+"Կիլիկյան Հայաստան",
+"Киликийская Армения",
+"Cilician Armenia",
+"",
+"Arménie cilicienne"
+],
+[
+"Մեծ Հայք",
+"Великая Армения",
+"Greater Armenia",
+"",
+"Grande Arménie"
+],
+[
+"Փոքր Հայք",
+"Малая Армения",
+"Lesser Armenia",
+"",
+"Petite Arménie"
+],
+[
+"Սարդարապատի ճակատամարտ",
+"Сардарапатская битва",
+"Battle of Sardarapat",
+"",
+"bataille de Sardarapat"
+],
+[
+"Հայոց ցեղասպանություն",
+"Геноцид армян",
+"the Armenian Genocide",
+"",
+"le génocide arménien"
+],
+[
+"Առաջին հանրապետություն",
+"Первая республика",
+"the First Republic",
+"",
+"la Première République"
+],
+[
+"Խորհրդային Հայաստան",
+"Советская Армения",
+"Soviet Armenia",
+"",
+"Arménie soviétique"
+],
+[
+"Անկախության հռչակագիր",
+"Декларация о независимости",
+"Declaration of Independence",
+"",
+"déclaration d'indépendance"
+],
+[
+"Ղարաբաղյան շարժում",
+"Карабахское движение",
+"the Karabakh movement",
+"",
+"le mouvement du Karabagh"
+],
+[
+"Սպիտակի երկրաշարժ",
+"Спитакское землетрясение",
+"the Spitak earthquake",
+"",
+"le séisme de Spitak"
+],
+[
+"թագավորական",
+"царский, королевский",
+"royal",
+"👑",
+"royal"
+],
+[
+"նախարարական տուն",
+"нахарарский род",
+"noble house (nakharar)",
+"",
+"maison princière (nakharar)"
+],
+[
+"սպարապետ",
+"спарапет, главнокомандующий",
+"sparapet (commander-in-chief)",
+"",
+"sparapet (commandant en chef)"
+],
+[
+"մարզպան",
+"марзпан (наместник)",
+"marzpan (governor)",
+"",
+"marzpan (gouverneur)"
+],
+[
+"թագաժառանգ",
+"наследник престола",
+"crown prince",
+"",
+"prince héritier"
+],
+[
+"վերածնունդ",
+"возрождение",
+"revival, rebirth",
+"",
+"renaissance"
+],
+[
+"Վերածննդի դարաշրջան",
+"эпоха Возрождения",
+"the Renaissance",
+"",
+"la Renaissance"
+],
+[
+"լուսավորչական",
+"григорианский (о церкви)",
+"Gregorian (Armenian Church)",
+"",
+"grégorien"
+],
+[
+"պեղում",
+"раскопки",
+"excavation",
+"⛏️",
+"fouille"
+],
+[
+"արտեֆակտ",
+"артефакт",
+"artefact",
+"",
+"artefact"
+],
+[
+"մատենագիր",
+"средневековый автор",
+"medieval writer",
+"",
+"auteur médiéval"
+],
+[
+"պատմիչ",
+"летописец, историк",
+"chronicler",
+"",
+"chroniqueur"
+],
+[
+"ժամանակագիր",
+"хронист",
+"annalist",
+"",
+"annaliste"
+],
+[
+"ձեռագրատուն",
+"хранилище рукописей",
+"manuscript library",
+"",
+"bibliothèque de manuscrits"
+],
+[
+"գրչօջախ",
+"скрипторий",
+"scriptorium",
+"",
+"scriptorium"
+],
+[
+"մանրանկար",
+"миниатюра",
+"miniature",
+"",
+"miniature"
+],
+[
+"մանրանկարիչ",
+"миниатюрист",
+"miniaturist",
+"",
+"miniaturiste"
+],
+[
+"մագաղաթ",
+"пергамент",
+"parchment",
+"📜",
+"parchemin"
+],
+[
+"փղոսկր",
+"слоновая кость",
+"ivory",
+"",
+"ivoire"
+],
+[
+"հեթանոսական տաճար",
+"языческий храм",
+"pagan temple",
+"",
+"temple païen"
+],
+[
+"Գառնիի տաճար",
+"храм Гарни",
+"Garni Temple",
+"",
+"temple de Garni"
+],
+[
+"Զվարթնոցի տաճար",
+"храм Звартноц",
+"Zvartnots Cathedral",
+"",
+"cathédrale de Zvartnots"
+],
+[
+"Անիի մայր տաճար",
+"кафедральный собор Ани",
+"Cathedral of Ani",
+"",
+"cathédrale d'Ani"
+],
+[
+"Աղթամարի եկեղեցի",
+"церковь на Ахтамаре",
+"Church of Aghtamar",
+"",
+"église d'Aghtamar"
+]
+],
+"fr": "Histoire de l'Arménie"
+},
+{
+"lv": "B2",
+"ru": "Регионы и масштабы",
+"en": "Regions and scale",
+"hy": "Տարածաշրջաններ և մասշտաբներ",
+"ic": "🌐",
+"w": [
+[
+"հանդիպակաց",
+"встречный, противоположный",
+"oncoming, opposite",
+"",
+"venant en sens inverse"
+],
+[
+"կից",
+"смежный, прилагаемый",
+"adjacent, attached",
+"",
+"attenant"
+],
+[
+"հարակից",
+"прилегающий",
+"adjoining",
+"",
+"contigu"
+],
+[
+"սահմանամերձ",
+"приграничный",
+"border (area)",
+"",
+"frontalier"
+],
+[
+"հեռակա",
+"заочный, дистанционный",
+"distance (learning)",
+"",
+"à distance"
+],
+[
+"մերձակա",
+"близлежащий",
+"nearby",
+"",
+"voisin"
+],
+[
+"տարածաշրջանային",
+"региональный",
+"regional",
+"",
+"régional"
+],
+[
+"համազգային",
+"общенациональный",
+"nationwide",
+"",
+"national"
+],
+[
+"համապետական",
+"общегосударственный",
+"state-wide",
+"",
+"étatique"
+],
+[
+"միջպետական",
+"межгосударственный",
+"interstate",
+"",
+"interétatique"
+],
+[
+"միջքաղաքային",
+"междугородний",
+"intercity",
+"",
+"interurbain"
+],
+[
+"միջմայրցամաքային",
+"межконтинентальный",
+"intercontinental",
+"",
+"intercontinental"
+],
+[
+"անդրկովկասյան",
+"закавказский",
+"Transcaucasian",
+"",
+"transcaucasien"
+],
+[
+"Հարավային Կովկաս",
+"Южный Кавказ",
+"the South Caucasus",
+"",
+"le Caucase du Sud"
+],
+[
+"Մերձավոր Արևելք",
+"Ближний Восток",
+"the Near East",
+"",
+"le Proche-Orient"
+],
+[
+"Հեռավոր Արևելք",
+"Дальний Восток",
+"the Far East",
+"",
+"l'Extrême-Orient"
+],
+[
+"Արևմուտք",
+"Запад (страны Запада)",
+"the West",
+"",
+"l'Occident"
+],
+[
+"Արևելք",
+"Восток (страны Востока)",
+"the East",
+"",
+"l'Orient"
+],
+[
+"կողմնորոշում",
+"ориентация, ориентир",
+"orientation",
+"",
+"orientation"
+],
+[
+"քարտեզագրել",
+"картографировать",
+"map",
+"",
+"cartographier"
+],
+[
+"քարտեզագրություն",
+"картография",
+"cartography",
+"",
+"cartographie"
+],
+[
+"բարձրություն ծովի մակերևույթից",
+"высота над уровнем моря",
+"altitude above sea level",
+"",
+"altitude"
+]
+],
+"fr": "Régions et échelles"
+},
+{
+"lv": "B2",
+"ru": "Армянская культура: костюм, танцы, ремёсла",
+"en": "Armenian culture: dress, dance, crafts",
+"hy": "Հայկական մշակույթ. տարազ, պար, արհեստներ",
+"ic": "🪗",
+"w": [
+[
+"ազգային տարազ",
+"национальный костюм",
+"national costume",
+"",
+"costume national"
+],
+[
+"արխալուղ",
+"архалук",
+"arkhalukh (long coat)",
+"",
+"arkhalouk (redingote)"
+],
+[
+"չուխա",
+"чоха",
+"chokha (coat)",
+"",
+"tchokha (manteau)"
+],
+[
+"փափախ",
+"папаха",
+"papakha (fur hat)",
+"",
+"papakha (bonnet de fourrure)"
+],
+[
+"տրեխ",
+"трехи (кожаные лапти)",
+"trekh (peasant leather shoes)",
+"",
+"trekh (chaussures de cuir)"
+],
+[
+"մուճակ",
+"шлёпанцы, туфли без задника",
+"mules, slippers",
+"",
+"mules"
+],
+[
+"բերդ պար",
+"танец «Берд»",
+"Berd dance",
+"",
+"danse Berd"
+],
+[
+"յարխուշտա",
+"ярхушта (мужской танец)",
+"yarkhushta (men's dance)",
+"",
+"yarkhouchta (danse d'hommes)"
+],
+[
+"շորոր",
+"шорор (танец)",
+"shoror (dance)",
+"",
+"chouror (danse)"
+],
+[
+"պարային համույթ",
+"танцевальный ансамбль",
+"dance ensemble",
+"",
+"ensemble de danse"
+],
+[
+"ազգագրական համույթ",
+"этнографический ансамбль",
+"folk ensemble",
+"",
+"ensemble folklorique"
+],
+[
+"աշուղ",
+"ашуг",
+"ashugh (bard)",
+"",
+"achough (barde)"
+],
+[
+"գուսան",
+"гусан",
+"gusan (minstrel)",
+"",
+"goussan (ménestrel)"
+],
+[
+"քեֆ",
+"пирушка, кутёж",
+"feast, revelry",
+"🥂",
+"fête"
+],
+[
+"տաղասաց",
+"певец тагов",
+"singer of verses",
+"",
+"chantre"
+],
+[
+"խաչքարագործություն",
+"искусство хачкаров",
+"khachkar carving",
+"",
+"art des khatchkars"
+],
+[
+"արծաթագործություն",
+"серебряное дело",
+"silversmithing",
+"",
+"orfèvrerie d'argent"
+],
+[
+"պղնձագործություն",
+"медницкое дело",
+"coppersmithing",
+"",
+"dinanderie"
+],
+[
+"խալի",
+"ворсовый ковёр",
+"pile carpet",
+"",
+"tapis à poils"
+],
+[
+"ջեջիմ",
+"джеджим (безворсовый ковёр)",
+"jejim (flat-woven rug)",
+"",
+"djedjim (tapis tissé)"
+],
+[
+"Վանի ասեղնագործություն",
+"ванская вышивка",
+"Van embroidery",
+"",
+"broderie de Van"
+],
+[
+"Մարաշի ասեղնագործություն",
+"марашская вышивка",
+"Marash embroidery",
+"",
+"broderie de Marache"
+],
+[
+"ժանյակագործություն",
+"кружевоплетение",
+"lacemaking",
+"",
+"dentellerie"
+],
+[
+"հավերժության նշան",
+"знак вечности",
+"eternity sign",
+"",
+"signe de l'éternité"
+],
+[
+"հայկական այբուբեն",
+"армянский алфавит",
+"the Armenian alphabet",
+"Ա",
+"l'alphabet arménien"
+],
+[
+"հայկական ճարտարապետություն",
+"армянская архитектура",
+"Armenian architecture",
+"⛪",
+"architecture arménienne"
+],
+[
+"տուֆակերտ",
+"построенный из туфа",
+"built of tuff",
+"",
+"bâti en tuf"
+],
+[
+"վարդագույն տուֆ",
+"розовый туф",
+"pink tuff",
+"",
+"tuf rose"
+],
+[
+"Արարատ լեռ",
+"гора Арарат",
+"Mount Ararat",
+"🏔️",
+"le mont Ararat"
+],
+[
+"Սիս",
+"Сис (Малый Арарат)",
+"Sis (Little Ararat)",
+"",
+"Sis (Petit Ararat)"
+],
+[
+"դուդուկահար",
+"дудукист",
+"duduk player",
+"",
+"joueur de doudouk"
+],
+[
+"Սասնա ծռեր",
+"Сасна црер (эпос)",
+"Daredevils of Sassoun (epic)",
+"",
+"les Enragés de Sassoun (épopée)"
+]
+],
+"fr": "Culture arménienne : costume, danse, artisanat"
+},
+{
+"lv": "B2",
+"ru": "Свойства и признаки",
+"en": "Properties and features",
+"hy": "Հատկություններ և հատկանիշներ",
+"ic": "🔬",
+"w": [
+[
+"կառուցվածք",
+"структура, строение",
+"structure",
+"",
+"structure"
+],
+[
+"մասնիկ",
+"частица",
+"particle",
+"",
+"particule"
+],
+[
+"շարք",
+"ряд, серия",
+"row, series",
+"",
+"série"
+],
+[
+"կազմ",
+"состав",
+"composition, staff",
+"",
+"composition"
+],
+[
+"շահ",
+"интерес, выгода",
+"interest, benefit",
+"",
+"intérêt"
+],
+[
+"օգտակարություն",
+"полезность",
+"usefulness",
+"",
+"utilité"
+],
+[
+"համապատասխանություն",
+"соответствие",
+"conformity, correspondence",
+"",
+"conformité"
+],
+[
+"անհամապատասխանություն",
+"несоответствие",
+"mismatch",
+"",
+"non-conformité"
+],
+[
+"համասեռ",
+"однородный",
+"homogeneous",
+"",
+"homogène"
+],
+[
+"տարասեռ",
+"разнородный",
+"heterogeneous",
+"",
+"hétérogène"
+],
+[
+"միատարր",
+"однородный (по составу)",
+"uniform",
+"",
+"uniforme"
+],
+[
+"բազմատարր",
+"многокомпонентный",
+"multi-component",
+"",
+"multicomposant"
+],
+[
+"ընդհանրական",
+"всеобщий, универсальный",
+"universal",
+"",
+"universel"
+],
+[
+"լիակատար",
+"полнейший",
+"total, utter",
+"",
+"total"
+],
+[
+"ավարտուն",
+"законченный",
+"complete, finished",
+"",
+"achevé"
+],
+[
+"անավարտ",
+"незаконченный",
+"unfinished",
+"",
+"inachevé"
+],
+[
+"միջանկյալ",
+"промежуточный",
+"intermediate",
+"",
+"intermédiaire"
+],
+[
+"անկանոն",
+"беспорядочный, неправильный",
+"irregular",
+"",
+"irrégulier"
+],
+[
+"ոչ նյութական",
+"нематериальный",
+"intangible",
+"",
+"immatériel"
+],
+[
+"կիրառական",
+"прикладной",
+"applied",
+"",
+"appliqué"
+],
+[
+"փորձարարական",
+"экспериментальный",
+"experimental",
+"",
+"expérimental"
+],
+[
+"գիտահետազոտական",
+"научно-исследовательский",
+"research",
+"",
+"de recherche"
+],
+[
+"գիտահանրամատչելի",
+"научно-популярный",
+"popular science",
+"",
+"de vulgarisation scientifique"
+],
+[
+"հանրամատչելի",
+"общедоступный",
+"accessible to all",
+"",
+"grand public"
+],
+[
+"մատչելի",
+"доступный",
+"affordable, accessible",
+"",
+"abordable"
+],
+[
+"անմատչելի",
+"недоступный",
+"inaccessible, unaffordable",
+"",
+"inabordable"
+],
+[
+"հասանելի",
+"доступный",
+"available, reachable",
+"",
+"disponible"
+],
+[
+"անհասանելի",
+"недосягаемый",
+"unreachable",
+"",
+"inaccessible"
+],
+[
+"տեսանելի",
+"видимый",
+"visible",
+"",
+"visible"
+],
+[
+"լսելի",
+"слышный",
+"audible",
+"",
+"audible"
+],
+[
+"անլսելի",
+"неслышный",
+"inaudible",
+"",
+"inaudible"
+],
+[
+"շոշափելի",
+"ощутимый",
+"tangible",
+"",
+"tangible"
+],
+[
+"նշանակալի",
+"значительный",
+"significant",
+"",
+"significatif"
+],
+[
+"օժանդակ",
+"вспомогательный",
+"auxiliary",
+"",
+"auxiliaire"
+],
+[
+"կամընտրական",
+"факультативный",
+"optional",
+"",
+"facultatif"
+],
+[
+"ցանկալի",
+"желательный",
+"desirable",
+"",
+"souhaitable"
+],
+[
+"անցանկալի",
+"нежелательный",
+"undesirable",
+"",
+"indésirable"
+],
+[
+"նպատակահարմար",
+"целесообразный",
+"expedient",
+"",
+"opportun"
+],
+[
+"աննպատակահարմար",
+"нецелесообразный",
+"inexpedient",
+"",
+"inopportun"
+]
+],
+"fr": "Propriétés et caractéristiques"
+},
+{
+"lv": "B2",
+"ru": "Геология и землетрясения",
+"en": "Geology and earthquakes",
+"hy": "Երկրաբանություն և երկրաշարժեր",
+"ic": "🪨",
+"w": [
+[
+"ապար",
+"горная порода",
+"rock (type)",
+"",
+"roche"
+],
+[
+"նստվածքային ապար",
+"осадочная порода",
+"sedimentary rock",
+"",
+"roche sédimentaire"
+],
+[
+"հրաբխային ապար",
+"вулканическая порода",
+"volcanic rock",
+"",
+"roche volcanique"
+],
+[
+"մետամորֆիկ ապար",
+"метаморфическая порода",
+"metamorphic rock",
+"",
+"roche métamorphique"
+],
+[
+"միներալ",
+"минерал",
+"mineral",
+"",
+"minéral"
+],
+[
+"քվարց",
+"кварц",
+"quartz",
+"",
+"quartz"
+],
+[
+"դաշտային սպաթ",
+"полевой шпат",
+"feldspar",
+"",
+"feldspath"
+],
+[
+"կալցիտ",
+"кальцит",
+"calcite",
+"",
+"calcite"
+],
+[
+"դոլոմիտ",
+"доломит",
+"dolomite",
+"",
+"dolomite"
+],
+[
+"ավազաքար",
+"песчаник",
+"sandstone",
+"",
+"grès"
+],
+[
+"թերթաքար",
+"сланец",
+"shale, slate",
+"",
+"schiste"
+],
+[
+"կոնգլոմերատ",
+"конгломерат",
+"conglomerate",
+"",
+"conglomérat"
+],
+[
+"պեմզա",
+"пемза",
+"pumice",
+"",
+"pierre ponce"
+],
+[
+"անդեզիտ",
+"андезит",
+"andesite",
+"",
+"andésite"
+],
+[
+"տրավերտին",
+"травертин",
+"travertine",
+"",
+"travertin"
+],
+[
+"աղաքար",
+"каменная соль",
+"rock salt",
+"",
+"sel gemme"
+],
+[
+"տորֆ",
+"торф",
+"peat",
+"",
+"tourbe"
+],
+[
+"գրաֆիտ",
+"графит",
+"graphite",
+"",
+"graphite"
+],
+[
+"ստորգետնյա ջուր",
+"грунтовые воды",
+"groundwater",
+"",
+"nappe phréatique"
+],
+[
+"երկրաբանություն",
+"геология",
+"geology",
+"",
+"géologie"
+],
+[
+"երկրաբան",
+"геолог",
+"geologist",
+"",
+"géologue"
+],
+[
+"հանքաբանություն",
+"минералогия",
+"mineralogy",
+"",
+"minéralogie"
+],
+[
+"հրաբխագիտություն",
+"вулканология",
+"volcanology",
+"",
+"volcanologie"
+],
+[
+"սեյսմոլոգիա",
+"сейсмология",
+"seismology",
+"",
+"sismologie"
+],
+[
+"սեյսմիկ",
+"сейсмический",
+"seismic",
+"",
+"sismique"
+],
+[
+"սեյսմակայուն",
+"сейсмостойкий",
+"earthquake-resistant",
+"",
+"parasismique"
+],
+[
+"էպիկենտրոն",
+"эпицентр",
+"epicentre",
+"",
+"épicentre"
+],
+[
+"հիպոկենտրոն",
+"гипоцентр",
+"hypocentre",
+"",
+"hypocentre"
+],
+[
+"Ռիխտերի սանդղակ",
+"шкала Рихтера",
+"Richter scale",
+"",
+"échelle de Richter"
+],
+[
+"հետցնցում",
+"афтершок",
+"aftershock",
+"",
+"réplique"
+],
+[
+"խզվածք",
+"разлом",
+"fault (geological)",
+"",
+"faille"
+],
+[
+"ճեղքվածք",
+"трещина, расщелина",
+"fissure, rift",
+"",
+"fissure"
+],
+[
+"քարաթափ",
+"камнепад",
+"rockfall",
+"",
+"chute de pierres"
+],
+[
+"քարայր",
+"пещера",
+"cave",
+"",
+"grotte"
+],
+[
+"ստալակտիտ",
+"сталактит",
+"stalactite",
+"",
+"stalactite"
+],
+[
+"ստալագմիտ",
+"сталагмит",
+"stalagmite",
+"",
+"stalagmite"
+],
+[
+"կարստ",
+"карст",
+"karst",
+"",
+"karst"
+],
+[
+"լավային հոսք",
+"лавовый поток",
+"lava flow",
+"",
+"coulée de lave"
+],
+[
+"ժայթքում",
+"извержение",
+"eruption",
+"🌋",
+"éruption"
+]
+],
+"fr": "Géologie et séismes"
+},
+{
 "lv": "C1",
 "ru": "Философия и абстракции",
 "en": "Philosophy and abstractions",
@@ -63772,6 +68473,883 @@
 "fr": "Programmation"
 },
 {
+"lv": "C1",
+"ru": "Физика C1",
+"en": "Physics C1",
+"hy": "Ֆիզիկա C1",
+"ic": "🌌",
+"w": [
+[
+"քվանտ",
+"квант",
+"quantum",
+"",
+"quantum"
+],
+[
+"քվանտային մեխանիկա",
+"квантовая механика",
+"quantum mechanics",
+"",
+"mécanique quantique"
+],
+[
+"հարաբերականության տեսություն",
+"теория относительности",
+"theory of relativity",
+"",
+"théorie de la relativité"
+],
+[
+"ֆոտոն",
+"фотон",
+"photon",
+"",
+"photon"
+],
+[
+"քվարկ",
+"кварк",
+"quark",
+"",
+"quark"
+],
+[
+"բոզոն",
+"бозон",
+"boson",
+"",
+"boson"
+],
+[
+"լեպտոն",
+"лептон",
+"lepton",
+"",
+"lepton"
+],
+[
+"նեյտրինո",
+"нейтрино",
+"neutrino",
+"",
+"neutrino"
+],
+[
+"հակամասնիկ",
+"античастица",
+"antiparticle",
+"",
+"antiparticule"
+],
+[
+"հականյութ",
+"антивещество",
+"antimatter",
+"",
+"antimatière"
+],
+[
+"մութ նյութ",
+"тёмная материя",
+"dark matter",
+"",
+"matière noire"
+],
+[
+"մութ էներգիա",
+"тёмная энергия",
+"dark energy",
+"",
+"énergie noire"
+],
+[
+"տիեզերական փոշի",
+"космическая пыль",
+"cosmic dust",
+"",
+"poussière cosmique"
+],
+[
+"էնտրոպիա",
+"энтропия",
+"entropy",
+"",
+"entropie"
+],
+[
+"թերմոդինամիկա",
+"термодинамика",
+"thermodynamics",
+"",
+"thermodynamique"
+],
+[
+"էլեկտրադինամիկա",
+"электродинамика",
+"electrodynamics",
+"",
+"électrodynamique"
+],
+[
+"մեխանիկա",
+"механика",
+"mechanics",
+"",
+"mécanique"
+],
+[
+"օպտիկա",
+"оптика",
+"optics",
+"",
+"optique"
+],
+[
+"ակուստիկա",
+"акустика",
+"acoustics",
+"",
+"acoustique"
+],
+[
+"ատոմային ֆիզիկա",
+"атомная физика",
+"atomic physics",
+"",
+"physique atomique"
+],
+[
+"միջուկային ֆիզիկա",
+"ядерная физика",
+"nuclear physics",
+"",
+"physique nucléaire"
+],
+[
+"գերհաղորդականություն",
+"сверхпроводимость",
+"superconductivity",
+"",
+"supraconductivité"
+],
+[
+"գերհոսունություն",
+"сверхтекучесть",
+"superfluidity",
+"",
+"superfluidité"
+],
+[
+"դիֆրակցիա",
+"дифракция",
+"diffraction",
+"",
+"diffraction"
+],
+[
+"ինտերֆերենցիա",
+"интерференция",
+"interference",
+"",
+"interférence"
+],
+[
+"բևեռացում",
+"поляризация",
+"polarization",
+"",
+"polarisation"
+],
+[
+"ռեզոնանս",
+"резонанс",
+"resonance",
+"",
+"résonance"
+],
+[
+"տատանում",
+"колебание",
+"oscillation, vibration",
+"",
+"oscillation"
+],
+[
+"անորոշության սկզբունք",
+"принцип неопределённости",
+"uncertainty principle",
+"",
+"principe d'incertitude"
+],
+[
+"պահպանման օրենք",
+"закон сохранения",
+"conservation law",
+"",
+"loi de conservation"
+],
+[
+"իմպուլս",
+"импульс",
+"momentum, impulse",
+"",
+"quantité de mouvement"
+],
+[
+"պտտող մոմենտ",
+"крутящий момент",
+"torque",
+"",
+"couple"
+],
+[
+"կենտրոնաձիգ ուժ",
+"центростремительная сила",
+"centripetal force",
+"",
+"force centripète"
+],
+[
+"կենտրոնախույս ուժ",
+"центробежная сила",
+"centrifugal force",
+"",
+"force centrifuge"
+],
+[
+"ազատ անկում",
+"свободное падение",
+"free fall",
+"",
+"chute libre"
+],
+[
+"լույսի արագություն",
+"скорость света",
+"speed of light",
+"",
+"vitesse de la lumière"
+],
+[
+"գերձայնային",
+"сверхзвуковой",
+"supersonic",
+"",
+"supersonique"
+],
+[
+"բացարձակ զրո",
+"абсолютный ноль",
+"absolute zero",
+"",
+"zéro absolu"
+],
+[
+"Կելվին",
+"кельвин",
+"kelvin",
+"",
+"kelvin"
+],
+[
+"ջոուլ",
+"джоуль",
+"joule",
+"",
+"joule"
+],
+[
+"վատտ",
+"ватт",
+"watt",
+"",
+"watt"
+],
+[
+"վոլտ",
+"вольт",
+"volt",
+"",
+"volt"
+],
+[
+"ամպեր",
+"ампер",
+"ampere",
+"",
+"ampère"
+],
+[
+"օհմ",
+"ом",
+"ohm",
+"",
+"ohm"
+],
+[
+"հերց",
+"герц",
+"hertz",
+"",
+"hertz"
+],
+[
+"նյուտոն",
+"ньютон",
+"newton",
+"",
+"newton"
+],
+[
+"պասկալ",
+"паскаль",
+"pascal",
+"",
+"pascal"
+],
+[
+"դեցիբել",
+"децибел",
+"decibel",
+"",
+"décibel"
+]
+],
+"fr": "Physique C1"
+},
+{
+"lv": "C1",
+"ru": "Химия C1",
+"en": "Chemistry C1",
+"hy": "Քիմիա C1",
+"ic": "🧪",
+"w": [
+[
+"մոլ",
+"моль",
+"mole (unit)",
+"",
+"mole"
+],
+[
+"ատոմային զանգված",
+"атомная масса",
+"atomic mass",
+"",
+"masse atomique"
+],
+[
+"մոլեկուլային զանգված",
+"молекулярная масса",
+"molecular mass",
+"",
+"masse moléculaire"
+],
+[
+"վալենտականություն",
+"валентность",
+"valency",
+"",
+"valence"
+],
+[
+"քիմիական կապ",
+"химическая связь",
+"chemical bond",
+"",
+"liaison chimique"
+],
+[
+"իոնային կապ",
+"ионная связь",
+"ionic bond",
+"",
+"liaison ionique"
+],
+[
+"կովալենտ կապ",
+"ковалентная связь",
+"covalent bond",
+"",
+"liaison covalente"
+],
+[
+"ջրածնային կապ",
+"водородная связь",
+"hydrogen bond",
+"",
+"liaison hydrogène"
+],
+[
+"պարբերական աղյուսակ",
+"периодическая таблица",
+"periodic table",
+"",
+"tableau périodique"
+],
+[
+"քիմիական բանաձև",
+"химическая формула",
+"chemical formula",
+"",
+"formule chimique"
+],
+[
+"քիմիական հավասարում",
+"химическое уравнение",
+"chemical equation",
+"",
+"équation chimique"
+],
+[
+"լուծելիություն",
+"растворимость",
+"solubility",
+"",
+"solubilité"
+],
+[
+"թթվայնություն",
+"кислотность",
+"acidity",
+"",
+"acidité"
+],
+[
+"հիմնայնություն",
+"щёлочность",
+"alkalinity",
+"",
+"alcalinité"
+],
+[
+"չեզոքացում",
+"нейтрализация",
+"neutralization",
+"",
+"neutralisation"
+],
+[
+"էլեկտրոլիզ",
+"электролиз",
+"electrolysis",
+"",
+"électrolyse"
+],
+[
+"էլեկտրոլիտ",
+"электролит",
+"electrolyte",
+"",
+"électrolyte"
+],
+[
+"կատիոն",
+"катион",
+"cation",
+"",
+"cation"
+],
+[
+"անիոն",
+"анион",
+"anion",
+"",
+"anion"
+],
+[
+"պոլիմեր",
+"полимер",
+"polymer",
+"",
+"polymère"
+],
+[
+"մոնոմեր",
+"мономер",
+"monomer",
+"",
+"monomère"
+],
+[
+"ֆերմենտացիա",
+"ферментация, брожение",
+"fermentation",
+"",
+"fermentation"
+],
+[
+"թորում",
+"перегонка",
+"distillation",
+"",
+"distillation"
+],
+[
+"ֆիլտրում",
+"фильтрация",
+"filtration",
+"",
+"filtration"
+],
+[
+"կոլբա",
+"колба",
+"flask",
+"",
+"fiole"
+],
+[
+"բյուրետ",
+"бюретка",
+"burette",
+"",
+"burette"
+],
+[
+"պիպետ",
+"пипетка",
+"pipette",
+"",
+"pipette"
+],
+[
+"թորիչ",
+"перегонный аппарат",
+"still",
+"",
+"alambic"
+],
+[
+"այրիչ",
+"горелка",
+"burner",
+"",
+"bec Bunsen"
+],
+[
+"ռեագենտ",
+"реагент",
+"reagent",
+"",
+"réactif"
+]
+],
+"fr": "Chimie C1"
+},
+{
+"lv": "C1",
+"ru": "Математика C1",
+"en": "Mathematics C1",
+"hy": "Մաթեմատիկա C1",
+"ic": "∑",
+"w": [
+[
+"մաթեմատիկական անալիզ",
+"математический анализ",
+"calculus",
+"",
+"analyse mathématique"
+],
+[
+"դիֆերենցիալ հավասարում",
+"дифференциальное уравнение",
+"differential equation",
+"",
+"équation différentielle"
+],
+[
+"գծային հանրահաշիվ",
+"линейная алгебра",
+"linear algebra",
+"",
+"algèbre linéaire"
+],
+[
+"թվերի տեսություն",
+"теория чисел",
+"number theory",
+"",
+"théorie des nombres"
+],
+[
+"խմբերի տեսություն",
+"теория групп",
+"group theory",
+"",
+"théorie des groupes"
+],
+[
+"բազմությունների տեսություն",
+"теория множеств",
+"set theory",
+"",
+"théorie des ensembles"
+],
+[
+"կոմբինատորիկա",
+"комбинаторика",
+"combinatorics",
+"",
+"combinatoire"
+],
+[
+"հավանականությունների տեսություն",
+"теория вероятностей",
+"probability theory",
+"",
+"théorie des probabilités"
+],
+[
+"մաթեմատիկական վիճակագրություն",
+"математическая статистика",
+"mathematical statistics",
+"",
+"statistique mathématique"
+],
+[
+"դիսկրետ մաթեմատիկա",
+"дискретная математика",
+"discrete mathematics",
+"",
+"mathématiques discrètes"
+],
+[
+"տոպոլոգիա",
+"топология",
+"topology",
+"",
+"topologie"
+],
+[
+"ֆրակտալ",
+"фрактал",
+"fractal",
+"",
+"fractale"
+],
+[
+"անվերջություն",
+"бесконечность",
+"infinity",
+"♾️",
+"infini"
+],
+[
+"սահմանային արժեք",
+"предельное значение",
+"limit value",
+"",
+"valeur limite"
+],
+[
+"շարունակականություն",
+"непрерывность",
+"continuity",
+"",
+"continuité"
+],
+[
+"թվաբանական պրոգրեսիա",
+"арифметическая прогрессия",
+"arithmetic progression",
+"",
+"suite arithmétique"
+],
+[
+"երկրաչափական պրոգրեսիա",
+"геометрическая прогрессия",
+"geometric progression",
+"",
+"suite géométrique"
+],
+[
+"ֆակտորիալ",
+"факториал",
+"factorial",
+"",
+"factorielle"
+],
+[
+"դետերմինանտ",
+"определитель",
+"determinant",
+"",
+"déterminant"
+],
+[
+"իրական թիվ",
+"действительное число",
+"real number",
+"",
+"nombre réel"
+],
+[
+"կոմպլեքս թիվ",
+"комплексное число",
+"complex number",
+"",
+"nombre complexe"
+],
+[
+"իռացիոնալ թիվ",
+"иррациональное число",
+"irrational number",
+"",
+"nombre irrationnel"
+],
+[
+"ռացիոնալ թիվ",
+"рациональное число",
+"rational number",
+"",
+"nombre rationnel"
+],
+[
+"բնական թիվ",
+"натуральное число",
+"natural number",
+"",
+"entier naturel"
+],
+[
+"բացասական թիվ",
+"отрицательное число",
+"negative number",
+"➖",
+"nombre négatif"
+],
+[
+"դրական թիվ",
+"положительное число",
+"positive number",
+"➕",
+"nombre positif"
+],
+[
+"պի թիվ",
+"число пи",
+"pi",
+"π",
+"nombre pi"
+],
+[
+"էքսպոնենտ",
+"экспонента",
+"exponential",
+"",
+"exponentielle"
+],
+[
+"աստիճանացույց",
+"показатель степени",
+"exponent",
+"",
+"exposant"
+],
+[
+"արմատահանում",
+"извлечение корня",
+"root extraction",
+"",
+"extraction de racine"
+],
+[
+"բազմանդամ",
+"многочлен",
+"polynomial",
+"",
+"polynôme"
+],
+[
+"միանդամ",
+"одночлен",
+"monomial",
+"",
+"monôme"
+],
+[
+"հաստատուն",
+"константа, постоянный",
+"constant",
+"",
+"constante"
+],
+[
+"պարաբոլ",
+"парабола",
+"parabola",
+"",
+"parabole"
+],
+[
+"հիպերբոլ",
+"гипербола",
+"hyperbola",
+"",
+"hyperbole"
+],
+[
+"սինուս",
+"синус",
+"sine",
+"",
+"sinus"
+],
+[
+"կոսինուս",
+"косинус",
+"cosine",
+"",
+"cosinus"
+],
+[
+"տանգենս",
+"тангенс",
+"tangent",
+"",
+"tangente"
+],
+[
+"ռադիան",
+"радиан",
+"radian",
+"",
+"radian"
+],
+[
+"վեկտորական արտադրյալ",
+"векторное произведение",
+"cross product",
+"",
+"produit vectoriel"
+],
+[
+"սկալյար արտադրյալ",
+"скалярное произведение",
+"dot product",
+"",
+"produit scalaire"
+],
+[
+"մաթեմատիկական ինդուկցիա",
+"математическая индукция",
+"mathematical induction",
+"",
+"récurrence"
+],
+[
+"հաշվողական",
+"вычислительный",
+"computational",
+"",
+"informatique, de calcul"
+]
+],
+"fr": "Mathématiques C1"
+},
+{
 "lv": "C2",
 "ru": "Книжная и литературная лексика",
 "en": "Bookish and literary words",
@@ -66709,5 +72287,365 @@
 ]
 ],
 "fr": "Linguistique"
+},
+{
+"lv": "C2",
+"ru": "Экономическая теория",
+"en": "Economic theory",
+"hy": "Տնտեսագիտական տեսություն",
+"ic": "📊",
+"w": [
+[
+"մակրոտնտեսություն",
+"макроэкономика",
+"macroeconomics",
+"",
+"macroéconomie"
+],
+[
+"միկրոտնտեսություն",
+"микроэкономика",
+"microeconomics",
+"",
+"microéconomie"
+],
+[
+"տնտեսագիտական տեսություն",
+"экономическая теория",
+"economic theory",
+"",
+"théorie économique"
+],
+[
+"շուկայական հավասարակշռություն",
+"рыночное равновесие",
+"market equilibrium",
+"",
+"équilibre du marché"
+],
+[
+"ինֆլյացիա",
+"инфляция",
+"inflation",
+"",
+"inflation"
+],
+[
+"դեֆլյացիա",
+"дефляция",
+"deflation",
+"",
+"déflation"
+],
+[
+"ստագֆլյացիա",
+"стагфляция",
+"stagflation",
+"",
+"stagflation"
+],
+[
+"իրական եկամուտ",
+"реальный доход",
+"real income",
+"",
+"revenu réel"
+],
+[
+"անվանական եկամուտ",
+"номинальный доход",
+"nominal income",
+"",
+"revenu nominal"
+],
+[
+"համախառն ազգային արդյունք",
+"валовой национальный продукт",
+"gross national product",
+"",
+"produit national brut"
+],
+[
+"մեկ շնչին ընկնող",
+"на душу населения",
+"per capita",
+"",
+"par habitant"
+],
+[
+"սպառողական զամբյուղ",
+"потребительская корзина",
+"consumer basket",
+"",
+"panier de la ménagère"
+],
+[
+"Ջինիի գործակից",
+"коэффициент Джини",
+"Gini coefficient",
+"",
+"coefficient de Gini"
+],
+[
+"եկամտային անհավասարություն",
+"неравенство доходов",
+"income inequality",
+"",
+"inégalité des revenus"
+],
+[
+"տնտեսական ցիկլ",
+"экономический цикл",
+"business cycle",
+"",
+"cycle économique"
+],
+[
+"տնտեսական անկում",
+"экономический спад",
+"economic downturn",
+"",
+"récession"
+],
+[
+"տնտեսական վերելք",
+"экономический подъём",
+"economic boom",
+"",
+"essor économique"
+],
+[
+"լճացում",
+"застой",
+"stagnation",
+"",
+"stagnation"
+],
+[
+"գերարտադրություն",
+"перепроизводство",
+"overproduction",
+"",
+"surproduction"
+],
+[
+"աշխատաշուկա",
+"рынок труда",
+"labour market",
+"",
+"marché du travail"
+],
+[
+"աշխատուժ",
+"рабочая сила",
+"workforce",
+"",
+"main-d'œuvre"
+],
+[
+"գործազրկության մակարդակ",
+"уровень безработицы",
+"unemployment rate",
+"",
+"taux de chômage"
+],
+[
+"զբաղվածություն",
+"занятость",
+"employment",
+"",
+"emploi"
+],
+[
+"արտագնա աշխատանք",
+"отходничество, работа за границей",
+"seasonal work abroad",
+"",
+"travail à l'étranger"
+],
+[
+"միգրանտ աշխատող",
+"трудовой мигрант",
+"migrant worker",
+"",
+"travailleur migrant"
+],
+[
+"մրցակցային շուկա",
+"конкурентный рынок",
+"competitive market",
+"",
+"marché concurrentiel"
+],
+[
+"օլիգոպոլիա",
+"олигополия",
+"oligopoly",
+"",
+"oligopole"
+],
+[
+"կարտել",
+"картель",
+"cartel",
+"",
+"cartel"
+],
+[
+"հակամենաշնորհային",
+"антимонопольный",
+"antitrust",
+"",
+"antitrust"
+],
+[
+"պետական կարգավորում",
+"госрегулирование",
+"state regulation",
+"",
+"régulation publique"
+],
+[
+"ազատ շուկա",
+"свободный рынок",
+"free market",
+"",
+"marché libre"
+],
+[
+"պլանային տնտեսություն",
+"плановая экономика",
+"planned economy",
+"",
+"économie planifiée"
+],
+[
+"խառը տնտեսություն",
+"смешанная экономика",
+"mixed economy",
+"",
+"économie mixte"
+],
+[
+"մասնավորեցում",
+"приватизация",
+"privatization",
+"",
+"privatisation"
+],
+[
+"պետականացում",
+"огосударствление",
+"nationalization",
+"",
+"étatisation"
+],
+[
+"համաշխարհայնացում",
+"глобализация",
+"globalization",
+"",
+"mondialisation"
+],
+[
+"գլոբալացում",
+"глобализация",
+"globalization",
+"",
+"globalisation"
+],
+[
+"ապագլոբալացում",
+"деглобализация",
+"deglobalization",
+"",
+"démondialisation"
+],
+[
+"տնտեսական ինտեգրացիա",
+"экономическая интеграция",
+"economic integration",
+"",
+"intégration économique"
+],
+[
+"առևտրի ազատականացում",
+"либерализация торговли",
+"trade liberalization",
+"",
+"libéralisation du commerce"
+],
+[
+"պրոտեկցիոնիզմ",
+"протекционизм",
+"protectionism",
+"",
+"protectionnisme"
+],
+[
+"արտաքին առևտուր",
+"внешняя торговля",
+"foreign trade",
+"",
+"commerce extérieur"
+],
+[
+"ապրանքաշրջանառություն",
+"товарооборот",
+"trade turnover",
+"",
+"volume des échanges"
+],
+[
+"ներդրումների ներհոսք",
+"приток инвестиций",
+"investment inflow",
+"",
+"afflux d'investissements"
+],
+[
+"օտարերկրյա ուղղակի ներդրումներ",
+"прямые иностранные инвестиции",
+"foreign direct investment",
+"",
+"investissements directs étrangers"
+],
+[
+"դրամական զանգված",
+"денежная масса",
+"money supply",
+"",
+"masse monétaire"
+],
+[
+"արժևորում",
+"ревальвация, повышение стоимости",
+"appreciation",
+"",
+"appréciation"
+],
+[
+"լողացող փոխարժեք",
+"плавающий курс",
+"floating exchange rate",
+"",
+"taux de change flottant"
+],
+[
+"ֆիքսված փոխարժեք",
+"фиксированный курс",
+"fixed exchange rate",
+"",
+"taux de change fixe"
+],
+[
+"փոխարժեքի տատանում",
+"колебание курса",
+"exchange rate fluctuation",
+"",
+"fluctuation du change"
+]
+],
+"fr": "Théorie économique"
 }
 ]

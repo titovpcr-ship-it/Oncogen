@@ -3437,6 +3437,335 @@
 "fr": "libre"
 },
 {
+"a": "տիկին",
+"lv": "A1",
+"ru": "госпожа, мадам",
+"en": "Mrs, madam",
+"fr": "madame"
+},
+{
+"a": "պարոն",
+"lv": "A1",
+"ru": "господин",
+"en": "Mr, sir",
+"fr": "monsieur"
+},
+{
+"a": "օրիորդ",
+"lv": "A1",
+"ru": "девушка, мадемуазель",
+"en": "Miss",
+"fr": "mademoiselle"
+},
+{
+"a": "ազգանուն",
+"lv": "A1",
+"ru": "фамилия",
+"en": "surname",
+"fr": "nom de famille"
+},
+{
+"a": "ընկերուհի",
+"lv": "A1",
+"ru": "подруга",
+"en": "female friend",
+"fr": "amie"
+},
+{
+"a": "դասընկեր",
+"lv": "A1",
+"ru": "одноклассник",
+"en": "classmate",
+"fr": "camarade de classe"
+},
+{
+"a": "երկվորյակ",
+"lv": "A1",
+"ru": "близнец",
+"en": "twin",
+"fr": "jumeau"
+},
+{
+"a": "փոքրիկ",
+"lv": "A1",
+"ru": "малыш, маленький",
+"en": "little one, little",
+"fr": "petit"
+},
+{
+"a": "աղջնակ",
+"lv": "A1",
+"ru": "девочка",
+"en": "little girl",
+"fr": "fillette"
+},
+{
+"a": "մորեղբայր",
+"lv": "A1",
+"ru": "дядя (брат матери)",
+"en": "uncle (mother's brother)",
+"fr": "oncle maternel"
+},
+{
+"a": "մտերիմ ընկեր",
+"lv": "A1",
+"ru": "близкий друг",
+"en": "close friend",
+"fr": "ami proche"
+},
+{
+"a": "հա",
+"lv": "A1",
+"ru": "да (разг.)",
+"en": "yeah",
+"fr": "ouais"
+},
+{
+"a": "չէ",
+"lv": "A1",
+"ru": "нет (разг.)",
+"en": "nah",
+"fr": "non"
+},
+{
+"a": "վայ",
+"lv": "A1",
+"ru": "ой, ай",
+"en": "oh!, oops",
+"fr": "oh là là"
+},
+{
+"a": "ափսոս",
+"lv": "A1",
+"ru": "жаль",
+"en": "what a pity",
+"fr": "dommage"
+},
+{
+"a": "բրավո",
+"lv": "A1",
+"ru": "браво",
+"en": "bravo",
+"fr": "bravo"
+},
+{
+"a": "ուռա",
+"lv": "A1",
+"ru": "ура",
+"en": "hooray",
+"fr": "hourra"
+},
+{
+"a": "հեյ",
+"lv": "A1",
+"ru": "эй",
+"en": "hey",
+"fr": "hé"
+},
+{
+"a": "ախ",
+"lv": "A1",
+"ru": "ах",
+"en": "ah!",
+"fr": "ah"
+},
+{
+"a": "օֆ",
+"lv": "A1",
+"ru": "уф",
+"en": "phew, ugh",
+"fr": "ouf"
+},
+{
+"a": "էհ",
+"lv": "A1",
+"ru": "эх",
+"en": "eh",
+"fr": "eh"
+},
+{
+"a": "դե",
+"lv": "A1",
+"ru": "ну",
+"en": "well",
+"fr": "bon"
+},
+{
+"a": "դե լավ",
+"lv": "A1",
+"ru": "ну ладно",
+"en": "oh well, all right",
+"fr": "bon, d'accord"
+},
+{
+"a": "թող",
+"lv": "A1",
+"ru": "пусть",
+"en": "let (it be)",
+"fr": "que"
+},
+{
+"a": "հապա",
+"lv": "A1",
+"ru": "а как же, ну-ка",
+"en": "what about, come on",
+"fr": "et alors"
+},
+{
+"a": "եկեք",
+"lv": "A1",
+"ru": "давайте, приходите",
+"en": "let's; come (plural)",
+"fr": "venez, allons"
+},
+{
+"a": "կեցցե",
+"lv": "A1",
+"ru": "да здравствует",
+"en": "long live",
+"fr": "vive"
+},
+{
+"a": "փառք Աստծո",
+"lv": "A1",
+"ru": "слава богу",
+"en": "thank God",
+"fr": "Dieu merci"
+},
+{
+"a": "Աստված իմ",
+"lv": "A1",
+"ru": "боже мой",
+"en": "my God",
+"fr": "mon Dieu"
+},
+{
+"a": "իսկապե՞ս",
+"lv": "A1",
+"ru": "правда?",
+"en": "really?",
+"fr": "vraiment ?"
+},
+{
+"a": "ինչ լավ է",
+"lv": "A1",
+"ru": "как хорошо",
+"en": "how nice",
+"fr": "comme c'est bien"
+},
+{
+"a": "ողջ լինեք",
+"lv": "A1",
+"ru": "спасибо, будьте здоровы",
+"en": "thank you (bless you)",
+"fr": "merci, soyez bénis"
+},
+{
+"a": "ճիշտ ես",
+"lv": "A1",
+"ru": "ты прав",
+"en": "you're right",
+"fr": "tu as raison"
+},
+{
+"a": "ոչ մի բան",
+"lv": "A1",
+"ru": "ничего",
+"en": "nothing",
+"fr": "rien du tout"
+},
+{
+"a": "ամեն ինչ կարգին է",
+"lv": "A1",
+"ru": "всё в порядке",
+"en": "everything is fine",
+"fr": "tout va bien"
+},
+{
+"a": "ամեն ինչ կլինի",
+"lv": "A1",
+"ru": "всё будет",
+"en": "everything will be fine",
+"fr": "tout ira bien"
+},
+{
+"a": "մի անհանգստացիր",
+"lv": "A1",
+"ru": "не волнуйся",
+"en": "don't worry",
+"fr": "ne t'inquiète pas"
+},
+{
+"a": "մի վախեցիր",
+"lv": "A1",
+"ru": "не бойся",
+"en": "don't be afraid",
+"fr": "n'aie pas peur"
+},
+{
+"a": "սպասիր",
+"lv": "A1",
+"ru": "подожди",
+"en": "wait",
+"fr": "attends"
+},
+{
+"a": "շուտ արի",
+"lv": "A1",
+"ru": "приходи скорее",
+"en": "come quickly",
+"fr": "viens vite"
+},
+{
+"a": "ուշ մի մնա",
+"lv": "A1",
+"ru": "не задерживайся",
+"en": "don't be late",
+"fr": "ne rentre pas tard"
+},
+{
+"a": "բարի առավոտ",
+"lv": "A1",
+"ru": "доброе утро",
+"en": "good morning",
+"fr": "bonjour"
+},
+{
+"a": "բարի երազներ",
+"lv": "A1",
+"ru": "сладких снов",
+"en": "sweet dreams",
+"fr": "fais de beaux rêves"
+},
+{
+"a": "լավ քնես",
+"lv": "A1",
+"ru": "спи хорошо",
+"en": "sleep well",
+"fr": "dors bien"
+},
+{
+"a": "լավ օր անցկացրու",
+"lv": "A1",
+"ru": "хорошего дня",
+"en": "have a nice day",
+"fr": "bonne journée"
+},
+{
+"a": "լավ հանգստացիր",
+"lv": "A1",
+"ru": "хорошо отдохни",
+"en": "have a good rest",
+"fr": "repose-toi bien"
+},
+{
+"a": "հաճելի ճանապարհորդություն",
+"lv": "A1",
+"ru": "приятного путешествия",
+"en": "have a nice trip",
+"fr": "bon voyage"
+},
+{
 "a": "իմ",
 "lv": "A2",
 "ru": "мой",
@@ -15526,6 +15855,27 @@
 "fr": "liste"
 },
 {
+"a": "խումբ",
+"lv": "A2",
+"ru": "группа",
+"en": "group",
+"fr": "groupe"
+},
+{
+"a": "թեմա",
+"lv": "A2",
+"ru": "тема",
+"en": "topic",
+"fr": "thème"
+},
+{
+"a": "մոխիր",
+"lv": "A2",
+"ru": "пепел, зола",
+"en": "ash",
+"fr": "cendre"
+},
+{
 "a": "Պորտուգալիա",
 "lv": "A2",
 "ru": "Португалия",
@@ -20354,6 +20704,965 @@
 "ru": "доставить",
 "en": "deliver",
 "fr": "livrer"
+},
+{
+"a": "բանալիների կապ",
+"lv": "A2",
+"ru": "связка ключей",
+"en": "bunch of keys",
+"fr": "trousseau de clés"
+},
+{
+"a": "լուսանկարների ալբոմ",
+"lv": "A2",
+"ru": "фотоальбом",
+"en": "photo album",
+"fr": "album photo"
+},
+{
+"a": "պատի ժամացույց",
+"lv": "A2",
+"ru": "настенные часы",
+"en": "wall clock",
+"fr": "horloge"
+},
+{
+"a": "ձեռքի ժամացույց",
+"lv": "A2",
+"ru": "наручные часы",
+"en": "wristwatch",
+"fr": "montre"
+},
+{
+"a": "մոմակալ",
+"lv": "A2",
+"ru": "подсвечник",
+"en": "candlestick",
+"fr": "bougeoir"
+},
+{
+"a": "լուցկու տուփ",
+"lv": "A2",
+"ru": "спичечный коробок",
+"en": "matchbox",
+"fr": "boîte d'allumettes"
+},
+{
+"a": "մոխրաման",
+"lv": "A2",
+"ru": "пепельница",
+"en": "ashtray",
+"fr": "cendrier"
+},
+{
+"a": "սիգար",
+"lv": "A2",
+"ru": "сигара",
+"en": "cigar",
+"fr": "cigare"
+},
+{
+"a": "ծխամորճ",
+"lv": "A2",
+"ru": "трубка (курительная)",
+"en": "pipe",
+"fr": "pipe"
+},
+{
+"a": "կալյան",
+"lv": "A2",
+"ru": "кальян",
+"en": "hookah",
+"fr": "narguilé"
+},
+{
+"a": "հովհար",
+"lv": "A2",
+"ru": "веер",
+"en": "fan (hand)",
+"fr": "éventail"
+},
+{
+"a": "ձեռնափայտ",
+"lv": "A2",
+"ru": "трость",
+"en": "walking stick",
+"fr": "canne"
+},
+{
+"a": "պատյան",
+"lv": "A2",
+"ru": "футляр, чехол",
+"en": "case, cover",
+"fr": "étui"
+},
+{
+"a": "քարտապանակ",
+"lv": "A2",
+"ru": "визитница",
+"en": "card holder",
+"fr": "porte-cartes"
+},
+{
+"a": "նոթատետր",
+"lv": "A2",
+"ru": "блокнот",
+"en": "notebook",
+"fr": "carnet"
+},
+{
+"a": "ինքնահոս գրիչ",
+"lv": "A2",
+"ru": "перьевая ручка",
+"en": "fountain pen",
+"fr": "stylo plume"
+},
+{
+"a": "գնդիկավոր գրիչ",
+"lv": "A2",
+"ru": "шариковая ручка",
+"en": "ballpoint pen",
+"fr": "stylo à bille"
+},
+{
+"a": "ֆլոմաստեր",
+"lv": "A2",
+"ru": "фломастер",
+"en": "felt-tip pen",
+"fr": "feutre"
+},
+{
+"a": "ներկատուփ",
+"lv": "A2",
+"ru": "коробка красок",
+"en": "paintbox",
+"fr": "boîte de peinture"
+},
+{
+"a": "գունավոր թուղթ",
+"lv": "A2",
+"ru": "цветная бумага",
+"en": "coloured paper",
+"fr": "papier de couleur"
+},
+{
+"a": "կպչուն ժապավեն",
+"lv": "A2",
+"ru": "скотч",
+"en": "sticky tape",
+"fr": "ruban adhésif"
+},
+{
+"a": "կոճգամ",
+"lv": "A2",
+"ru": "кнопка (канцелярская)",
+"en": "drawing pin",
+"fr": "punaise"
+},
+{
+"a": "ռետինե օղակ",
+"lv": "A2",
+"ru": "резинка",
+"en": "rubber band",
+"fr": "élastique"
+},
+{
+"a": "թղթադարակ",
+"lv": "A2",
+"ru": "лоток для бумаг",
+"en": "paper tray",
+"fr": "bac à papier"
+},
+{
+"a": "ծակոտիչ",
+"lv": "A2",
+"ru": "дырокол",
+"en": "hole punch",
+"fr": "perforatrice"
+},
+{
+"a": "կպչուն թերթիկ",
+"lv": "A2",
+"ru": "стикер для заметок",
+"en": "sticky note",
+"fr": "pense-bête"
+},
+{
+"a": "ծանուցման տախտակ",
+"lv": "A2",
+"ru": "доска объявлений",
+"en": "notice board",
+"fr": "panneau d'affichage"
+},
+{
+"a": "սպիտակ տախտակ",
+"lv": "A2",
+"ru": "белая доска",
+"en": "whiteboard",
+"fr": "tableau blanc"
+},
+{
+"a": "ցուցափայտ",
+"lv": "A2",
+"ru": "указка",
+"en": "pointer",
+"fr": "baguette"
+},
+{
+"a": "դրոշմանիշ",
+"lv": "A2",
+"ru": "марка, штемпель",
+"en": "stamp",
+"fr": "timbre"
+},
+{
+"a": "բացիկ",
+"lv": "A2",
+"ru": "открытка",
+"en": "postcard",
+"fr": "carte postale"
+},
+{
+"a": "պարկ",
+"lv": "A2",
+"ru": "мешок",
+"en": "sack",
+"fr": "sac"
+},
+{
+"a": "ցանցատոպրակ",
+"lv": "A2",
+"ru": "авоська",
+"en": "string bag",
+"fr": "filet à provisions"
+},
+{
+"a": "զամբյուղ",
+"lv": "A2",
+"ru": "корзина",
+"en": "basket",
+"fr": "panier"
+},
+{
+"a": "կողով",
+"lv": "A2",
+"ru": "корзина (плетёная)",
+"en": "wicker basket",
+"fr": "corbeille"
+},
+{
+"a": "թիթեղյա տուփ",
+"lv": "A2",
+"ru": "жестяная банка",
+"en": "tin can",
+"fr": "boîte de conserve"
+},
+{
+"a": "թղթե բաժակ",
+"lv": "A2",
+"ru": "бумажный стаканчик",
+"en": "paper cup",
+"fr": "gobelet en carton"
+},
+{
+"a": "միանգամյա օգտագործման սպասք",
+"lv": "A2",
+"ru": "одноразовая посуда",
+"en": "disposable tableware",
+"fr": "vaisselle jetable"
+},
+{
+"a": "բարկացած",
+"lv": "A2",
+"ru": "рассерженный",
+"en": "angry",
+"fr": "fâché"
+},
+{
+"a": "նեղացած",
+"lv": "A2",
+"ru": "обиженный",
+"en": "offended, hurt",
+"fr": "vexé"
+},
+{
+"a": "տխրած",
+"lv": "A2",
+"ru": "опечаленный",
+"en": "saddened",
+"fr": "attristé"
+},
+{
+"a": "հիացած",
+"lv": "A2",
+"ru": "восхищённый",
+"en": "delighted, amazed",
+"fr": "émerveillé"
+},
+{
+"a": "զարմացած",
+"lv": "A2",
+"ru": "удивлённый",
+"en": "surprised",
+"fr": "étonné"
+},
+{
+"a": "ապշած",
+"lv": "A2",
+"ru": "ошеломлённый",
+"en": "stunned",
+"fr": "stupéfait"
+},
+{
+"a": "ամաչած",
+"lv": "A2",
+"ru": "смущённый",
+"en": "embarrassed",
+"fr": "gêné"
+},
+{
+"a": "վախեցած",
+"lv": "A2",
+"ru": "испуганный",
+"en": "frightened",
+"fr": "effrayé"
+},
+{
+"a": "սարսափած",
+"lv": "A2",
+"ru": "в ужасе",
+"en": "terrified",
+"fr": "terrifié"
+},
+{
+"a": "անհանգստացած",
+"lv": "A2",
+"ru": "встревоженный",
+"en": "anxious",
+"fr": "inquiet"
+},
+{
+"a": "մտահոգված",
+"lv": "A2",
+"ru": "озабоченный",
+"en": "concerned",
+"fr": "préoccupé"
+},
+{
+"a": "լարված",
+"lv": "A2",
+"ru": "напряжённый",
+"en": "tense",
+"fr": "tendu"
+},
+{
+"a": "հանգստացած",
+"lv": "A2",
+"ru": "успокоившийся",
+"en": "calmed down",
+"fr": "apaisé"
+},
+{
+"a": "թեթևացած",
+"lv": "A2",
+"ru": "с облегчением",
+"en": "relieved",
+"fr": "soulagé"
+},
+{
+"a": "մենակ",
+"lv": "A2",
+"ru": "один, одинокий",
+"en": "alone",
+"fr": "seul"
+},
+{
+"a": "լքված",
+"lv": "A2",
+"ru": "брошенный",
+"en": "abandoned",
+"fr": "abandonné"
+},
+{
+"a": "մոռացված",
+"lv": "A2",
+"ru": "забытый",
+"en": "forgotten",
+"fr": "oublié"
+},
+{
+"a": "սիրված",
+"lv": "A2",
+"ru": "любимый",
+"en": "loved",
+"fr": "aimé"
+},
+{
+"a": "կարոտած",
+"lv": "A2",
+"ru": "соскучившийся",
+"en": "missing someone",
+"fr": "en manque de"
+},
+{
+"a": "խեղճ",
+"lv": "A2",
+"ru": "бедный, бедняга",
+"en": "poor (pitiful)",
+"fr": "pauvre"
+},
+{
+"a": "թշվառ",
+"lv": "A2",
+"ru": "несчастный",
+"en": "miserable",
+"fr": "misérable"
+},
+{
+"a": "զզված",
+"lv": "A2",
+"ru": "испытывающий отвращение",
+"en": "disgusted",
+"fr": "dégoûté"
+},
+{
+"a": "ձանձրացած",
+"lv": "A2",
+"ru": "заскучавший",
+"en": "bored",
+"fr": "qui s'ennuie"
+},
+{
+"a": "ուժասպառ",
+"lv": "A2",
+"ru": "обессиленный",
+"en": "exhausted",
+"fr": "épuisé"
+},
+{
+"a": "զվարթ",
+"lv": "A2",
+"ru": "весёлый",
+"en": "cheerful",
+"fr": "gai"
+},
+{
+"a": "կենսուրախ",
+"lv": "A2",
+"ru": "жизнерадостный",
+"en": "full of life",
+"fr": "plein de vie"
+},
+{
+"a": "տրտում",
+"lv": "A2",
+"ru": "печальный",
+"en": "sorrowful",
+"fr": "triste"
+},
+{
+"a": "մելամաղձոտ",
+"lv": "A2",
+"ru": "меланхоличный",
+"en": "melancholic",
+"fr": "mélancolique"
+},
+{
+"a": "կատաղած",
+"lv": "A2",
+"ru": "взбешённый",
+"en": "furious",
+"fr": "furieux"
+},
+{
+"a": "խելագար",
+"lv": "A2",
+"ru": "сумасшедший",
+"en": "mad, crazy",
+"fr": "fou"
+},
+{
+"a": "վրդովված",
+"lv": "A2",
+"ru": "возмущённый",
+"en": "indignant",
+"fr": "indigné"
+},
+{
+"a": "ցնցված",
+"lv": "A2",
+"ru": "потрясённый",
+"en": "shocked",
+"fr": "bouleversé"
+},
+{
+"a": "վստահ",
+"lv": "A2",
+"ru": "уверенный",
+"en": "sure, confident",
+"fr": "sûr"
+},
+{
+"a": "անվստահ",
+"lv": "A2",
+"ru": "неуверенный",
+"en": "unsure",
+"fr": "pas sûr de soi"
+},
+{
+"a": "դավաճան",
+"lv": "A2",
+"ru": "предатель",
+"en": "traitor",
+"fr": "traître"
+},
+{
+"a": "ապերախտ",
+"lv": "A2",
+"ru": "неблагодарный",
+"en": "ungrateful",
+"fr": "ingrat"
+},
+{
+"a": "պարտական",
+"lv": "A2",
+"ru": "обязанный, в долгу",
+"en": "indebted",
+"fr": "redevable"
+},
+{
+"a": "մեղավոր",
+"lv": "A2",
+"ru": "виноватый",
+"en": "guilty",
+"fr": "coupable"
+},
+{
+"a": "անմեղ",
+"lv": "A2",
+"ru": "невиновный",
+"en": "innocent",
+"fr": "innocent"
+},
+{
+"a": "ամոթխած",
+"lv": "A2",
+"ru": "стыдливый",
+"en": "bashful",
+"fr": "pudique"
+},
+{
+"a": "երկչոտ",
+"lv": "A2",
+"ru": "робкий",
+"en": "timid",
+"fr": "timide"
+},
+{
+"a": "առցանց խանութ",
+"lv": "A2",
+"ru": "интернет-магазин",
+"en": "online shop",
+"fr": "boutique en ligne"
+},
+{
+"a": "առցանց գնումներ",
+"lv": "A2",
+"ru": "покупки онлайн",
+"en": "online shopping",
+"fr": "achats en ligne"
+},
+{
+"a": "գնումների զամբյուղ",
+"lv": "A2",
+"ru": "корзина (на сайте)",
+"en": "shopping basket",
+"fr": "panier"
+},
+{
+"a": "պատվերի ձևակերպում",
+"lv": "A2",
+"ru": "оформление заказа",
+"en": "checkout",
+"fr": "validation de commande"
+},
+{
+"a": "առաքման հասցե",
+"lv": "A2",
+"ru": "адрес доставки",
+"en": "delivery address",
+"fr": "adresse de livraison"
+},
+{
+"a": "առաքման ժամկետ",
+"lv": "A2",
+"ru": "срок доставки",
+"en": "delivery time",
+"fr": "délai de livraison"
+},
+{
+"a": "անվճար առաքում",
+"lv": "A2",
+"ru": "бесплатная доставка",
+"en": "free delivery",
+"fr": "livraison gratuite"
+},
+{
+"a": "արագ առաքում",
+"lv": "A2",
+"ru": "экспресс-доставка",
+"en": "express delivery",
+"fr": "livraison express"
+},
+{
+"a": "առաքման ծառայություն",
+"lv": "A2",
+"ru": "служба доставки",
+"en": "delivery service",
+"fr": "service de livraison"
+},
+{
+"a": "պատվերի կարգավիճակ",
+"lv": "A2",
+"ru": "статус заказа",
+"en": "order status",
+"fr": "statut de la commande"
+},
+{
+"a": "պատվերի հետևում",
+"lv": "A2",
+"ru": "отслеживание заказа",
+"en": "order tracking",
+"fr": "suivi de commande"
+},
+{
+"a": "հետևման համար",
+"lv": "A2",
+"ru": "трек-номер",
+"en": "tracking number",
+"fr": "numéro de suivi"
+},
+{
+"a": "փոստային բաժանմունք",
+"lv": "A2",
+"ru": "почтовое отделение",
+"en": "post office (branch)",
+"fr": "bureau de poste"
+},
+{
+"a": "փոստամատ",
+"lv": "A2",
+"ru": "постамат",
+"en": "parcel locker",
+"fr": "consigne à colis"
+},
+{
+"a": "ինքնադուրսբերում",
+"lv": "A2",
+"ru": "самовывоз",
+"en": "click and collect",
+"fr": "retrait en magasin"
+},
+{
+"a": "վերադարձ",
+"lv": "A2",
+"ru": "возврат",
+"en": "return",
+"fr": "retour"
+},
+{
+"a": "գումարի վերադարձ",
+"lv": "A2",
+"ru": "возврат денег",
+"en": "refund",
+"fr": "remboursement"
+},
+{
+"a": "երաշխիքային ժամկետ",
+"lv": "A2",
+"ru": "гарантийный срок",
+"en": "warranty period",
+"fr": "période de garantie"
+},
+{
+"a": "երաշխիքային կտրոն",
+"lv": "A2",
+"ru": "гарантийный талон",
+"en": "warranty card",
+"fr": "bon de garantie"
+},
+{
+"a": "ապրանքի նկարագրություն",
+"lv": "A2",
+"ru": "описание товара",
+"en": "product description",
+"fr": "description du produit"
+},
+{
+"a": "կարծիք թողնել",
+"lv": "A2",
+"ru": "оставить отзыв",
+"en": "leave a review",
+"fr": "laisser un avis"
+},
+{
+"a": "զեղչի կոդ",
+"lv": "A2",
+"ru": "промокод",
+"en": "discount code",
+"fr": "code promo"
+},
+{
+"a": "քեշբեք",
+"lv": "A2",
+"ru": "кешбэк",
+"en": "cashback",
+"fr": "cashback"
+},
+{
+"a": "բոնուսային քարտ",
+"lv": "A2",
+"ru": "бонусная карта",
+"en": "loyalty card",
+"fr": "carte de fidélité"
+},
+{
+"a": "լոյալության ծրագիր",
+"lv": "A2",
+"ru": "программа лояльности",
+"en": "loyalty programme",
+"fr": "programme de fidélité"
+},
+{
+"a": "սեզոնային վաճառք",
+"lv": "A2",
+"ru": "сезонная распродажа",
+"en": "seasonal sale",
+"fr": "soldes"
+},
+{
+"a": "Սև ուրբաթ",
+"lv": "A2",
+"ru": "Чёрная пятница",
+"en": "Black Friday",
+"fr": "Black Friday"
+},
+{
+"a": "գնի համեմատում",
+"lv": "A2",
+"ru": "сравнение цен",
+"en": "price comparison",
+"fr": "comparaison des prix"
+},
+{
+"a": "էժանագին",
+"lv": "A2",
+"ru": "недорогой",
+"en": "inexpensive",
+"fr": "bon marché"
+},
+{
+"a": "թանկարժեք",
+"lv": "A2",
+"ru": "дорогостоящий, драгоценный",
+"en": "expensive, precious",
+"fr": "précieux"
+},
+{
+"a": "որակյալ",
+"lv": "A2",
+"ru": "качественный",
+"en": "high-quality",
+"fr": "de qualité"
+},
+{
+"a": "անորակ",
+"lv": "A2",
+"ru": "некачественный",
+"en": "poor-quality",
+"fr": "de mauvaise qualité"
+},
+{
+"a": "կեղծ ապրանք",
+"lv": "A2",
+"ru": "подделка",
+"en": "counterfeit goods",
+"fr": "contrefaçon"
+},
+{
+"a": "օրիգինալ",
+"lv": "A2",
+"ru": "оригинальный",
+"en": "original, genuine",
+"fr": "original"
+},
+{
+"a": "ապրանքանիշային",
+"lv": "A2",
+"ru": "брендовый",
+"en": "branded",
+"fr": "de marque"
+},
+{
+"a": "շուրջը",
+"lv": "A2",
+"ru": "вокруг",
+"en": "around",
+"fr": "autour"
+},
+{
+"a": "ծայր",
+"lv": "A2",
+"ru": "край, конец",
+"en": "end, tip",
+"fr": "bout"
+},
+{
+"a": "մեջտեղ",
+"lv": "A2",
+"ru": "середина",
+"en": "middle",
+"fr": "milieu"
+},
+{
+"a": "դիմաց",
+"lv": "A2",
+"ru": "напротив",
+"en": "opposite",
+"fr": "en face"
+},
+{
+"a": "վերին",
+"lv": "A2",
+"ru": "верхний",
+"en": "upper",
+"fr": "supérieur"
+},
+{
+"a": "ստորին",
+"lv": "A2",
+"ru": "нижний",
+"en": "lower",
+"fr": "inférieur"
+},
+{
+"a": "առջևի",
+"lv": "A2",
+"ru": "передний",
+"en": "front",
+"fr": "avant"
+},
+{
+"a": "հետևի",
+"lv": "A2",
+"ru": "задний",
+"en": "back, rear",
+"fr": "arrière"
+},
+{
+"a": "այսկողմ",
+"lv": "A2",
+"ru": "по эту сторону",
+"en": "on this side",
+"fr": "de ce côté"
+},
+{
+"a": "այնկողմ",
+"lv": "A2",
+"ru": "по ту сторону",
+"en": "on the other side",
+"fr": "de l'autre côté"
+},
+{
+"a": "շրջակայքում",
+"lv": "A2",
+"ru": "в окрестностях",
+"en": "in the vicinity",
+"fr": "aux alentours"
+},
+{
+"a": "ամենուրեք",
+"lv": "A2",
+"ru": "повсюду",
+"en": "everywhere",
+"fr": "partout"
+},
+{
+"a": "հեռավոր",
+"lv": "A2",
+"ru": "далёкий",
+"en": "distant, remote",
+"fr": "lointain"
+},
+{
+"a": "տարածություն",
+"lv": "A2",
+"ru": "пространство, расстояние",
+"en": "space, distance",
+"fr": "espace"
+},
+{
+"a": "տեղանք",
+"lv": "A2",
+"ru": "местность",
+"en": "terrain, area",
+"fr": "terrain"
+},
+{
+"a": "արևմտյան",
+"lv": "A2",
+"ru": "западный",
+"en": "western",
+"fr": "occidental"
+},
+{
+"a": "արևելյան",
+"lv": "A2",
+"ru": "восточный",
+"en": "eastern",
+"fr": "oriental"
+},
+{
+"a": "հյուսիսային",
+"lv": "A2",
+"ru": "северный",
+"en": "northern",
+"fr": "septentrional"
+},
+{
+"a": "հարավային",
+"lv": "A2",
+"ru": "южный",
+"en": "southern",
+"fr": "méridional"
+},
+{
+"a": "հյուսիս-արևելք",
+"lv": "A2",
+"ru": "северо-восток",
+"en": "north-east",
+"fr": "nord-est"
+},
+{
+"a": "հարավ-արևմուտք",
+"lv": "A2",
+"ru": "юго-запад",
+"en": "south-west",
+"fr": "sud-ouest"
+},
+{
+"a": "մաքրասեր",
+"lv": "A2",
+"ru": "чистоплотный",
+"en": "clean, tidy",
+"fr": "propre"
+},
+{
+"a": "խնամքով",
+"lv": "A2",
+"ru": "заботливо, бережно",
+"en": "with care",
+"fr": "avec soin"
 },
 {
 "a": "հասարակություն",
@@ -40747,6 +42056,2001 @@
 "fr": "carte SIM"
 },
 {
+"a": "քենակալ",
+"lv": "B1",
+"ru": "свояк (муж сестры жены)",
+"en": "wife's sister's husband",
+"fr": "beau-frère"
+},
+{
+"a": "աներձագ",
+"lv": "B1",
+"ru": "шурин (брат жены)",
+"en": "wife's brother",
+"fr": "beau-frère"
+},
+{
+"a": "խորթ եղբայր",
+"lv": "B1",
+"ru": "сводный брат",
+"en": "stepbrother",
+"fr": "demi-frère"
+},
+{
+"a": "խորթ քույր",
+"lv": "B1",
+"ru": "сводная сестра",
+"en": "stepsister",
+"fr": "demi-sœur"
+},
+{
+"a": "մերձավոր",
+"lv": "B1",
+"ru": "ближний, близкий",
+"en": "neighbour (fellow man), close",
+"fr": "prochain"
+},
+{
+"a": "նախահայր",
+"lv": "B1",
+"ru": "праотец",
+"en": "forefather",
+"fr": "ancêtre"
+},
+{
+"a": "հայրանուն",
+"lv": "B1",
+"ru": "отчество",
+"en": "patronymic",
+"fr": "patronyme"
+},
+{
+"a": "մականուն",
+"lv": "B1",
+"ru": "прозвище",
+"en": "nickname",
+"fr": "surnom"
+},
+{
+"a": "կեղծանուն",
+"lv": "B1",
+"ru": "псевдоним",
+"en": "pseudonym",
+"fr": "pseudonyme"
+},
+{
+"a": "տիար",
+"lv": "B1",
+"ru": "господин (официально)",
+"en": "Mr (formal)",
+"fr": "monsieur"
+},
+{
+"a": "եղբորորդի",
+"lv": "B1",
+"ru": "племянник (сын брата)",
+"en": "nephew (brother's son)",
+"fr": "neveu"
+},
+{
+"a": "եղբորաղջիկ",
+"lv": "B1",
+"ru": "племянница (дочь брата)",
+"en": "niece (brother's daughter)",
+"fr": "nièce"
+},
+{
+"a": "քրոջորդի",
+"lv": "B1",
+"ru": "племянник (сын сестры)",
+"en": "nephew (sister's son)",
+"fr": "neveu"
+},
+{
+"a": "քրոջաղջիկ",
+"lv": "B1",
+"ru": "племянница (дочь сестры)",
+"en": "niece (sister's daughter)",
+"fr": "nièce"
+},
+{
+"a": "սանիկ",
+"lv": "B1",
+"ru": "крестник",
+"en": "godchild",
+"fr": "filleul"
+},
+{
+"a": "համակուրսեցի",
+"lv": "B1",
+"ru": "однокурсник",
+"en": "fellow student",
+"fr": "camarade de promotion"
+},
+{
+"a": "ընկերակից",
+"lv": "B1",
+"ru": "спутник, компаньон",
+"en": "companion",
+"fr": "compagnon"
+},
+{
+"a": "ուղեկից",
+"lv": "B1",
+"ru": "попутчик",
+"en": "travelling companion",
+"fr": "compagnon de route"
+},
+{
+"a": "ճամփորդ",
+"lv": "B1",
+"ru": "путник",
+"en": "traveller",
+"fr": "voyageur"
+},
+{
+"a": "համագյուղացի",
+"lv": "B1",
+"ru": "односельчанин",
+"en": "fellow villager",
+"fr": "voisin de village"
+},
+{
+"a": "համաքաղաքացի",
+"lv": "B1",
+"ru": "земляк, согражданин",
+"en": "fellow citizen",
+"fr": "concitoyen"
+},
+{
+"a": "արտակարգ իրավիճակ",
+"lv": "B1",
+"ru": "чрезвычайная ситуация",
+"en": "emergency",
+"fr": "situation d'urgence"
+},
+{
+"a": "արտակարգ իրավիճակների նախարարություն",
+"lv": "B1",
+"ru": "МЧС",
+"en": "Ministry of Emergency Situations",
+"fr": "ministère des Situations d'urgence"
+},
+{
+"a": "փրկարարական ծառայություն",
+"lv": "B1",
+"ru": "спасательная служба",
+"en": "rescue service",
+"fr": "service de secours"
+},
+{
+"a": "կրակմարիչ",
+"lv": "B1",
+"ru": "огнетушитель",
+"en": "fire extinguisher",
+"fr": "extincteur"
+},
+{
+"a": "հրդեհային ազդանշան",
+"lv": "B1",
+"ru": "пожарная сигнализация",
+"en": "fire alarm",
+"fr": "alarme incendie"
+},
+{
+"a": "ծխի դետեկտոր",
+"lv": "B1",
+"ru": "датчик дыма",
+"en": "smoke detector",
+"fr": "détecteur de fumée"
+},
+{
+"a": "վթարային ելք",
+"lv": "B1",
+"ru": "аварийный выход",
+"en": "emergency exit",
+"fr": "sortie de secours"
+},
+{
+"a": "տարհանում",
+"lv": "B1",
+"ru": "эвакуация",
+"en": "evacuation",
+"fr": "évacuation"
+},
+{
+"a": "առաջին օգնություն",
+"lv": "B1",
+"ru": "первая помощь",
+"en": "first aid",
+"fr": "premiers secours"
+},
+{
+"a": "առաջին օգնության արկղ",
+"lv": "B1",
+"ru": "аптечка",
+"en": "first-aid kit",
+"fr": "trousse de secours"
+},
+{
+"a": "լարան",
+"lv": "B1",
+"ru": "жгут",
+"en": "tourniquet",
+"fr": "garrot"
+},
+{
+"a": "արհեստական շնչառություն",
+"lv": "B1",
+"ru": "искусственное дыхание",
+"en": "artificial respiration",
+"fr": "respiration artificielle"
+},
+{
+"a": "սրտի մերսում",
+"lv": "B1",
+"ru": "массаж сердца",
+"en": "heart massage",
+"fr": "massage cardiaque"
+},
+{
+"a": "ուշագնաց",
+"lv": "B1",
+"ru": "без сознания",
+"en": "unconscious",
+"fr": "inconscient"
+},
+{
+"a": "թունավորում",
+"lv": "B1",
+"ru": "отравление",
+"en": "poisoning",
+"fr": "empoisonnement"
+},
+{
+"a": "էլեկտրահարում",
+"lv": "B1",
+"ru": "удар током",
+"en": "electric shock",
+"fr": "électrocution"
+},
+{
+"a": "արյունահոսել",
+"lv": "B1",
+"ru": "кровоточить",
+"en": "bleed",
+"fr": "saigner"
+},
+{
+"a": "կոտրվել",
+"lv": "B1",
+"ru": "сломаться",
+"en": "break",
+"fr": "se casser"
+},
+{
+"a": "դժբախտ պատահար",
+"lv": "B1",
+"ru": "несчастный случай",
+"en": "accident",
+"fr": "accident"
+},
+{
+"a": "ճանապարհատրանսպորտային պատահար",
+"lv": "B1",
+"ru": "ДТП",
+"en": "road accident",
+"fr": "accident de la route"
+},
+{
+"a": "վթարի ենթարկվել",
+"lv": "B1",
+"ru": "попасть в аварию",
+"en": "have an accident",
+"fr": "avoir un accident"
+},
+{
+"a": "տուժած",
+"lv": "B1",
+"ru": "пострадавший",
+"en": "injured person",
+"fr": "blessé"
+},
+{
+"a": "ողջ մնացած",
+"lv": "B1",
+"ru": "выживший",
+"en": "survivor",
+"fr": "survivant"
+},
+{
+"a": "որոնողափրկարարական աշխատանքներ",
+"lv": "B1",
+"ru": "поисково-спасательные работы",
+"en": "search and rescue",
+"fr": "opérations de recherche et de sauvetage"
+},
+{
+"a": "թեժ գիծ",
+"lv": "B1",
+"ru": "горячая линия",
+"en": "hotline",
+"fr": "ligne d'urgence"
+},
+{
+"a": "զգուշացում",
+"lv": "B1",
+"ru": "предупреждение",
+"en": "warning",
+"fr": "avertissement"
+},
+{
+"a": "նախազգուշացում",
+"lv": "B1",
+"ru": "предостережение",
+"en": "caution, warning",
+"fr": "mise en garde"
+},
+{
+"a": "վտանգավոր գոտի",
+"lv": "B1",
+"ru": "опасная зона",
+"en": "danger zone",
+"fr": "zone dangereuse"
+},
+{
+"a": "մուտքն արգելված է",
+"lv": "B1",
+"ru": "вход воспрещён",
+"en": "no entry",
+"fr": "entrée interdite"
+},
+{
+"a": "ծխելն արգելված է",
+"lv": "B1",
+"ru": "курить запрещено",
+"en": "no smoking",
+"fr": "défense de fumer"
+},
+{
+"a": "մի մոտեցեք",
+"lv": "B1",
+"ru": "не подходите",
+"en": "keep away",
+"fr": "ne pas approcher"
+},
+{
+"a": "բարձր լարում",
+"lv": "B1",
+"ru": "высокое напряжение",
+"en": "high voltage",
+"fr": "haute tension"
+},
+{
+"a": "թունավոր",
+"lv": "B1",
+"ru": "ядовитый",
+"en": "poisonous",
+"fr": "toxique"
+},
+{
+"a": "դյուրավառ",
+"lv": "B1",
+"ru": "легковоспламеняющийся",
+"en": "flammable",
+"fr": "inflammable"
+},
+{
+"a": "պայթյունավտանգ",
+"lv": "B1",
+"ru": "взрывоопасный",
+"en": "explosive",
+"fr": "explosif"
+},
+{
+"a": "ռադիոակտիվ",
+"lv": "B1",
+"ru": "радиоактивный",
+"en": "radioactive",
+"fr": "radioactif"
+},
+{
+"a": "կենսավտանգ",
+"lv": "B1",
+"ru": "биологически опасный",
+"en": "biohazard",
+"fr": "danger biologique"
+},
+{
+"a": "ապաստարան",
+"lv": "B1",
+"ru": "убежище",
+"en": "shelter",
+"fr": "abri"
+},
+{
+"a": "ռմբապաստարան",
+"lv": "B1",
+"ru": "бомбоубежище",
+"en": "bomb shelter",
+"fr": "abri antiaérien"
+},
+{
+"a": "օդային տագնապ",
+"lv": "B1",
+"ru": "воздушная тревога",
+"en": "air-raid alert",
+"fr": "alerte aérienne"
+},
+{
+"a": "ախտահանում",
+"lv": "B1",
+"ru": "дезинфекция",
+"en": "disinfection",
+"fr": "désinfection"
+},
+{
+"a": "ինքնամեկուսացում",
+"lv": "B1",
+"ru": "самоизоляция",
+"en": "self-isolation",
+"fr": "auto-isolement"
+},
+{
+"a": "վարձով տալ",
+"lv": "B1",
+"ru": "сдавать в аренду",
+"en": "rent out",
+"fr": "louer (donner en location)"
+},
+{
+"a": "վարձավճար",
+"lv": "B1",
+"ru": "арендная плата",
+"en": "rent",
+"fr": "loyer"
+},
+{
+"a": "բնակարանի վարձ",
+"lv": "B1",
+"ru": "квартплата",
+"en": "rent (for a flat)",
+"fr": "loyer"
+},
+{
+"a": "պայմանագրի կնքում",
+"lv": "B1",
+"ru": "заключение договора",
+"en": "signing of a contract",
+"fr": "signature du contrat"
+},
+{
+"a": "վարձակալության պայմանագիր",
+"lv": "B1",
+"ru": "договор аренды",
+"en": "lease",
+"fr": "bail"
+},
+{
+"a": "գրավի գումար",
+"lv": "B1",
+"ru": "залог (сумма)",
+"en": "deposit",
+"fr": "caution"
+},
+{
+"a": "անշարժ գույքի գործակալություն",
+"lv": "B1",
+"ru": "агентство недвижимости",
+"en": "estate agency",
+"fr": "agence immobilière"
+},
+{
+"a": "ռիելթոր",
+"lv": "B1",
+"ru": "риелтор",
+"en": "estate agent",
+"fr": "agent immobilier"
+},
+{
+"a": "վարձատու",
+"lv": "B1",
+"ru": "арендодатель",
+"en": "landlord",
+"fr": "bailleur"
+},
+{
+"a": "բնակելի տարածք",
+"lv": "B1",
+"ru": "жилая площадь",
+"en": "living space",
+"fr": "surface habitable"
+},
+{
+"a": "հարկայնություն",
+"lv": "B1",
+"ru": "этажность",
+"en": "number of storeys",
+"fr": "nombre d'étages"
+},
+{
+"a": "նորակառույց շենք",
+"lv": "B1",
+"ru": "новостройка",
+"en": "new building",
+"fr": "immeuble neuf"
+},
+{
+"a": "երկրորդային շուկա",
+"lv": "B1",
+"ru": "вторичный рынок",
+"en": "resale market",
+"fr": "marché de l'ancien"
+},
+{
+"a": "կահավորված",
+"lv": "B1",
+"ru": "меблированный",
+"en": "furnished",
+"fr": "meublé"
+},
+{
+"a": "չկահավորված",
+"lv": "B1",
+"ru": "без мебели",
+"en": "unfurnished",
+"fr": "non meublé"
+},
+{
+"a": "վերանորոգված",
+"lv": "B1",
+"ru": "с ремонтом",
+"en": "renovated",
+"fr": "rénové"
+},
+{
+"a": "կենտրոնում",
+"lv": "B1",
+"ru": "в центре",
+"en": "in the centre",
+"fr": "au centre"
+},
+{
+"a": "տրանսպորտային հասանելիություն",
+"lv": "B1",
+"ru": "транспортная доступность",
+"en": "transport links",
+"fr": "accessibilité"
+},
+{
+"a": "բնակարանային վարկ",
+"lv": "B1",
+"ru": "ипотека",
+"en": "mortgage",
+"fr": "prêt immobilier"
+},
+{
+"a": "սեփականության վկայական",
+"lv": "B1",
+"ru": "свидетельство о собственности",
+"en": "title deed",
+"fr": "titre de propriété"
+},
+{
+"a": "կադաստր",
+"lv": "B1",
+"ru": "кадастр",
+"en": "land registry",
+"fr": "cadastre"
+},
+{
+"a": "հաշվառման հասցե",
+"lv": "B1",
+"ru": "адрес регистрации",
+"en": "registered address",
+"fr": "adresse de domiciliation"
+},
+{
+"a": "տեղափոխություն",
+"lv": "B1",
+"ru": "переезд",
+"en": "move, relocation",
+"fr": "déménagement"
+},
+{
+"a": "բեռնափոխադրում",
+"lv": "B1",
+"ru": "грузоперевозка",
+"en": "freight transport",
+"fr": "transport de marchandises"
+},
+{
+"a": "տեղափոխման ընկերություն",
+"lv": "B1",
+"ru": "компания по переездам",
+"en": "removal company",
+"fr": "entreprise de déménagement"
+},
+{
+"a": "փաթեթավորում",
+"lv": "B1",
+"ru": "упаковка",
+"en": "packing",
+"fr": "emballage"
+},
+{
+"a": "կահույքի հավաքում",
+"lv": "B1",
+"ru": "сборка мебели",
+"en": "furniture assembly",
+"fr": "montage de meubles"
+},
+{
+"a": "բանալիների հանձնում",
+"lv": "B1",
+"ru": "передача ключей",
+"en": "handover of keys",
+"fr": "remise des clés"
+},
+{
+"a": "զբաղմունք",
+"lv": "B1",
+"ru": "занятие",
+"en": "occupation, pastime",
+"fr": "occupation"
+},
+{
+"a": "հավաքորդ",
+"lv": "B1",
+"ru": "собиратель, коллекционер",
+"en": "collector",
+"fr": "collectionneur"
+},
+{
+"a": "հնաոճ իրեր",
+"lv": "B1",
+"ru": "антиквариат",
+"en": "antiques",
+"fr": "antiquités"
+},
+{
+"a": "անտիկվարիատ",
+"lv": "B1",
+"ru": "антикварный магазин",
+"en": "antique shop",
+"fr": "magasin d'antiquités"
+},
+{
+"a": "հնավաճառ",
+"lv": "B1",
+"ru": "старьёвщик, антиквар",
+"en": "antique dealer",
+"fr": "brocanteur"
+},
+{
+"a": "ծաղկաբուծություն",
+"lv": "B1",
+"ru": "цветоводство",
+"en": "floriculture",
+"fr": "floriculture"
+},
+{
+"a": "ասեղնագործել",
+"lv": "B1",
+"ru": "вышивать",
+"en": "embroider",
+"fr": "broder"
+},
+{
+"a": "ձեռագործ",
+"lv": "B1",
+"ru": "рукоделие, ручная работа",
+"en": "handicraft, handmade",
+"fr": "ouvrage fait main"
+},
+{
+"a": "ձեռարվեստ",
+"lv": "B1",
+"ru": "прикладное искусство",
+"en": "crafts",
+"fr": "artisanat d'art"
+},
+{
+"a": "մանվածք",
+"lv": "B1",
+"ru": "пряжа",
+"en": "yarn",
+"fr": "fil à tricoter"
+},
+{
+"a": "հյուսելու շյուղեր",
+"lv": "B1",
+"ru": "спицы",
+"en": "knitting needles",
+"fr": "aiguilles à tricoter"
+},
+{
+"a": "ժանյակ",
+"lv": "B1",
+"ru": "кружево",
+"en": "lace",
+"fr": "dentelle"
+},
+{
+"a": "ուլունք",
+"lv": "B1",
+"ru": "бусина",
+"en": "bead",
+"fr": "perle"
+},
+{
+"a": "փորագրել",
+"lv": "B1",
+"ru": "вырезать, гравировать",
+"en": "carve, engrave",
+"fr": "graver"
+},
+{
+"a": "գծանկար",
+"lv": "B1",
+"ru": "рисунок (линейный)",
+"en": "drawing",
+"fr": "dessin"
+},
+{
+"a": "գծանկարել",
+"lv": "B1",
+"ru": "рисовать (карандашом)",
+"en": "draw",
+"fr": "dessiner"
+},
+{
+"a": "գունավորել",
+"lv": "B1",
+"ru": "раскрашивать",
+"en": "colour in",
+"fr": "colorier"
+},
+{
+"a": "օրիգամի",
+"lv": "B1",
+"ru": "оригами",
+"en": "origami",
+"fr": "origami"
+},
+{
+"a": "մոդելավորում",
+"lv": "B1",
+"ru": "моделирование",
+"en": "modelling",
+"fr": "modélisme"
+},
+{
+"a": "մանրակերտ",
+"lv": "B1",
+"ru": "макет, миниатюра",
+"en": "scale model",
+"fr": "maquette"
+},
+{
+"a": "թղթախաղ",
+"lv": "B1",
+"ru": "игра в карты",
+"en": "card game",
+"fr": "jeu de cartes"
+},
+{
+"a": "խաղաթուղթ",
+"lv": "B1",
+"ru": "игральная карта",
+"en": "playing card",
+"fr": "carte à jouer"
+},
+{
+"a": "վալետ",
+"lv": "B1",
+"ru": "валет",
+"en": "jack (card)",
+"fr": "valet"
+},
+{
+"a": "տուզ",
+"lv": "B1",
+"ru": "туз",
+"en": "ace",
+"fr": "as"
+},
+{
+"a": "շախմատի տախտակ",
+"lv": "B1",
+"ru": "шахматная доска",
+"en": "chessboard",
+"fr": "échiquier"
+},
+{
+"a": "խաղաքար",
+"lv": "B1",
+"ru": "фигура, фишка",
+"en": "game piece",
+"fr": "pièce"
+},
+{
+"a": "շախ",
+"lv": "B1",
+"ru": "шах",
+"en": "check (in chess)",
+"fr": "échec"
+},
+{
+"a": "խաղաքայլ",
+"lv": "B1",
+"ru": "ход",
+"en": "move (in a game)",
+"fr": "coup"
+},
+{
+"a": "նարդու տախտակ",
+"lv": "B1",
+"ru": "доска для нард",
+"en": "backgammon board",
+"fr": "tablier de backgammon"
+},
+{
+"a": "սուդոկու",
+"lv": "B1",
+"ru": "судоку",
+"en": "sudoku",
+"fr": "sudoku"
+},
+{
+"a": "տեսախաղ",
+"lv": "B1",
+"ru": "видеоигра",
+"en": "video game",
+"fr": "jeu vidéo"
+},
+{
+"a": "խաղային վահանակ",
+"lv": "B1",
+"ru": "игровая приставка",
+"en": "games console",
+"fr": "console de jeux"
+},
+{
+"a": "ջոյսթիք",
+"lv": "B1",
+"ru": "джойстик",
+"en": "joystick",
+"fr": "manette"
+},
+{
+"a": "հայտադիմում",
+"lv": "B1",
+"ru": "заявка",
+"en": "application",
+"fr": "demande"
+},
+{
+"a": "ձևաթուղթ",
+"lv": "B1",
+"ru": "бланк",
+"en": "form",
+"fr": "formulaire"
+},
+{
+"a": "լրացնել ձևաթուղթը",
+"lv": "B1",
+"ru": "заполнить бланк",
+"en": "fill in the form",
+"fr": "remplir le formulaire"
+},
+{
+"a": "կնքել",
+"lv": "B1",
+"ru": "поставить печать, заключить",
+"en": "stamp, seal, conclude",
+"fr": "apposer un cachet"
+},
+{
+"a": "պատճեն",
+"lv": "B1",
+"ru": "копия",
+"en": "copy",
+"fr": "copie"
+},
+{
+"a": "պատճենահանել",
+"lv": "B1",
+"ru": "ксерокопировать",
+"en": "photocopy",
+"fr": "photocopier"
+},
+{
+"a": "տեղեկատու",
+"lv": "B1",
+"ru": "справочник",
+"en": "directory, reference book",
+"fr": "annuaire"
+},
+{
+"a": "վկայագիր",
+"lv": "B1",
+"ru": "свидетельство, сертификат",
+"en": "certificate",
+"fr": "certificat"
+},
+{
+"a": "հերթական համար",
+"lv": "B1",
+"ru": "номер в очереди",
+"en": "queue number",
+"fr": "numéro d'attente"
+},
+{
+"a": "ընդունելության ժամեր",
+"lv": "B1",
+"ru": "часы приёма",
+"en": "opening hours (office)",
+"fr": "heures de réception"
+},
+{
+"a": "աշխատանքային ժամեր",
+"lv": "B1",
+"ru": "рабочие часы",
+"en": "working hours",
+"fr": "heures de travail"
+},
+{
+"a": "ճաշի ընդմիջում",
+"lv": "B1",
+"ru": "обеденный перерыв",
+"en": "lunch break",
+"fr": "pause déjeuner"
+},
+{
+"a": "անձնագրային սեղան",
+"lv": "B1",
+"ru": "паспортный стол",
+"en": "passport office",
+"fr": "service des passeports"
+},
+{
+"a": "ժամկետանց",
+"lv": "B1",
+"ru": "просроченный",
+"en": "expired",
+"fr": "périmé"
+},
+{
+"a": "ուժի մեջ",
+"lv": "B1",
+"ru": "в силе, действует",
+"en": "in force",
+"fr": "en vigueur"
+},
+{
+"a": "անվավեր",
+"lv": "B1",
+"ru": "недействительный",
+"en": "invalid",
+"fr": "non valable"
+},
+{
+"a": "վավեր",
+"lv": "B1",
+"ru": "действительный",
+"en": "valid",
+"fr": "valable"
+},
+{
+"a": "պետական ծառայություններ",
+"lv": "B1",
+"ru": "госуслуги",
+"en": "public services",
+"fr": "services publics"
+},
+{
+"a": "էլեկտրոնային կառավարում",
+"lv": "B1",
+"ru": "электронное правительство",
+"en": "e-government",
+"fr": "administration électronique"
+},
+{
+"a": "էլեկտրոնային ստորագրություն",
+"lv": "B1",
+"ru": "электронная подпись",
+"en": "e-signature",
+"fr": "signature électronique"
+},
+{
+"a": "անձնական գործ",
+"lv": "B1",
+"ru": "личное дело",
+"en": "personal file",
+"fr": "dossier personnel"
+},
+{
+"a": "ծառայողական",
+"lv": "B1",
+"ru": "служебный",
+"en": "official, for official use",
+"fr": "de service"
+},
+{
+"a": "մուտքագրել",
+"lv": "B1",
+"ru": "вводить (данные)",
+"en": "enter (data)",
+"fr": "saisir"
+},
+{
+"a": "գրանցամատյան",
+"lv": "B1",
+"ru": "журнал регистрации",
+"en": "register, logbook",
+"fr": "registre"
+},
+{
+"a": "գրություն",
+"lv": "B1",
+"ru": "официальное письмо",
+"en": "official letter",
+"fr": "courrier officiel"
+},
+{
+"a": "բողոք ներկայացնել",
+"lv": "B1",
+"ru": "подать жалобу",
+"en": "file a complaint",
+"fr": "porter plainte"
+},
+{
+"a": "դիմորդ",
+"lv": "B1",
+"ru": "заявитель, абитуриент",
+"en": "applicant",
+"fr": "candidat"
+},
+{
+"a": "հայցել",
+"lv": "B1",
+"ru": "просить, искать (по суду)",
+"en": "seek, sue",
+"fr": "solliciter"
+},
+{
+"a": "մերժում ստանալ",
+"lv": "B1",
+"ru": "получить отказ",
+"en": "be refused",
+"fr": "essuyer un refus"
+},
+{
+"a": "թույլտվություն ստանալ",
+"lv": "B1",
+"ru": "получить разрешение",
+"en": "get permission",
+"fr": "obtenir une autorisation"
+},
+{
+"a": "աշխատանքի հայտարարություն",
+"lv": "B1",
+"ru": "объявление о вакансии",
+"en": "job advertisement",
+"fr": "offre d'emploi"
+},
+{
+"a": "թափուր պաշտոն",
+"lv": "B1",
+"ru": "вакантная должность",
+"en": "vacant post",
+"fr": "poste vacant"
+},
+{
+"a": "աշխատանքի փնտրտուք",
+"lv": "B1",
+"ru": "поиск работы",
+"en": "job search",
+"fr": "recherche d'emploi"
+},
+{
+"a": "ուղեկցող նամակ",
+"lv": "B1",
+"ru": "сопроводительное письмо",
+"en": "cover letter",
+"fr": "lettre de motivation"
+},
+{
+"a": "փափուկ հմտություններ",
+"lv": "B1",
+"ru": "гибкие навыки",
+"en": "soft skills",
+"fr": "compétences relationnelles"
+},
+{
+"a": "աշխատանքային հարցազրույց",
+"lv": "B1",
+"ru": "собеседование",
+"en": "job interview",
+"fr": "entretien d'embauche"
+},
+{
+"a": "աշխատանքի առաջարկ",
+"lv": "B1",
+"ru": "предложение о работе",
+"en": "job offer",
+"fr": "offre d'emploi ferme"
+},
+{
+"a": "աշխատավարձի ակնկալիք",
+"lv": "B1",
+"ru": "ожидаемая зарплата",
+"en": "salary expectations",
+"fr": "prétentions salariales"
+},
+{
+"a": "լրիվ դրույք",
+"lv": "B1",
+"ru": "полная ставка",
+"en": "full-time",
+"fr": "temps plein"
+},
+{
+"a": "կես դրույք",
+"lv": "B1",
+"ru": "полставки",
+"en": "part-time",
+"fr": "mi-temps"
+},
+{
+"a": "մասնակի զբաղվածություն",
+"lv": "B1",
+"ru": "частичная занятость",
+"en": "part-time employment",
+"fr": "emploi à temps partiel"
+},
+{
+"a": "ճկուն գրաֆիկ",
+"lv": "B1",
+"ru": "гибкий график",
+"en": "flexible hours",
+"fr": "horaires flexibles"
+},
+{
+"a": "հիբրիդային աշխատանք",
+"lv": "B1",
+"ru": "гибридная работа",
+"en": "hybrid working",
+"fr": "travail hybride"
+},
+{
+"a": "ֆրիլանս",
+"lv": "B1",
+"ru": "фриланс",
+"en": "freelancing",
+"fr": "travail indépendant"
+},
+{
+"a": "ֆրիլանսեր",
+"lv": "B1",
+"ru": "фрилансер",
+"en": "freelancer",
+"fr": "freelance"
+},
+{
+"a": "ինքնազբաղված",
+"lv": "B1",
+"ru": "самозанятый",
+"en": "self-employed",
+"fr": "travailleur indépendant"
+},
+{
+"a": "վճարովի արձակուրդ",
+"lv": "B1",
+"ru": "оплачиваемый отпуск",
+"en": "paid leave",
+"fr": "congés payés"
+},
+{
+"a": "չվճարվող արձակուրդ",
+"lv": "B1",
+"ru": "отпуск за свой счёт",
+"en": "unpaid leave",
+"fr": "congé sans solde"
+},
+{
+"a": "մայրության արձակուրդ",
+"lv": "B1",
+"ru": "декретный отпуск",
+"en": "maternity leave",
+"fr": "congé de maternité"
+},
+{
+"a": "հայրության արձակուրդ",
+"lv": "B1",
+"ru": "отпуск по уходу (для отца)",
+"en": "paternity leave",
+"fr": "congé de paternité"
+},
+{
+"a": "հիվանդության նպաստ",
+"lv": "B1",
+"ru": "пособие по болезни",
+"en": "sick pay",
+"fr": "indemnités maladie"
+},
+{
+"a": "սոցիալական փաթեթ",
+"lv": "B1",
+"ru": "соцпакет",
+"en": "benefits package",
+"fr": "avantages sociaux"
+},
+{
+"a": "բոնուս",
+"lv": "B1",
+"ru": "бонус",
+"en": "bonus",
+"fr": "prime"
+},
+{
+"a": "պաշտոնի բարձրացում",
+"lv": "B1",
+"ru": "повышение в должности",
+"en": "promotion",
+"fr": "promotion"
+},
+{
+"a": "մենթոր",
+"lv": "B1",
+"ru": "наставник",
+"en": "mentor",
+"fr": "mentor"
+},
+{
+"a": "թիմային աշխատանք",
+"lv": "B1",
+"ru": "командная работа",
+"en": "teamwork",
+"fr": "travail d'équipe"
+},
+{
+"a": "թիմակից",
+"lv": "B1",
+"ru": "товарищ по команде",
+"en": "teammate",
+"fr": "coéquipier"
+},
+{
+"a": "անմիջական ղեկավար",
+"lv": "B1",
+"ru": "непосредственный руководитель",
+"en": "line manager",
+"fr": "supérieur direct"
+},
+{
+"a": "մարդկային ռեսուրսներ",
+"lv": "B1",
+"ru": "человеческие ресурсы",
+"en": "human resources",
+"fr": "ressources humaines"
+},
+{
+"a": "անձնակազմի բաժին",
+"lv": "B1",
+"ru": "отдел кадров",
+"en": "personnel department",
+"fr": "service du personnel"
+},
+{
+"a": "աշխատակազմ",
+"lv": "B1",
+"ru": "штат, аппарат",
+"en": "staff",
+"fr": "personnel"
+},
+{
+"a": "հաստիքացուցակ",
+"lv": "B1",
+"ru": "штатное расписание",
+"en": "staffing table",
+"fr": "tableau des effectifs"
+},
+{
+"a": "աշխատանքային գրքույկ",
+"lv": "B1",
+"ru": "трудовая книжка",
+"en": "employment record book",
+"fr": "carnet de travail"
+},
+{
+"a": "աշխատանքային ստաժ",
+"lv": "B1",
+"ru": "трудовой стаж",
+"en": "length of service",
+"fr": "ancienneté"
+},
+{
+"a": "ազատում",
+"lv": "B1",
+"ru": "освобождение, увольнение",
+"en": "release, dismissal",
+"fr": "licenciement"
+},
+{
+"a": "աշխատանքից հեռացում",
+"lv": "B1",
+"ru": "увольнение",
+"en": "dismissal",
+"fr": "renvoi"
+},
+{
+"a": "հրաժարականի դիմում",
+"lv": "B1",
+"ru": "заявление об уходе",
+"en": "letter of resignation",
+"fr": "lettre de démission"
+},
+{
+"a": "ելքային նպաստ",
+"lv": "B1",
+"ru": "выходное пособие",
+"en": "severance pay",
+"fr": "indemnité de départ"
+},
+{
+"a": "արժեքավոր",
+"lv": "B1",
+"ru": "ценный",
+"en": "valuable",
+"fr": "précieux"
+},
+{
+"a": "անարժեք",
+"lv": "B1",
+"ru": "никчёмный",
+"en": "worthless",
+"fr": "sans valeur"
+},
+{
+"a": "մասնագիտական",
+"lv": "B1",
+"ru": "профессиональный",
+"en": "professional",
+"fr": "professionnel"
+},
+{
+"a": "պրոֆեսիոնալ",
+"lv": "B1",
+"ru": "профессионал",
+"en": "professional (person)",
+"fr": "professionnel"
+},
+{
+"a": "սկսնակ",
+"lv": "B1",
+"ru": "новичок, начинающий",
+"en": "beginner",
+"fr": "débutant"
+},
+{
+"a": "վարպետ",
+"lv": "B1",
+"ru": "мастер",
+"en": "master, craftsman",
+"fr": "maître"
+},
+{
+"a": "սիրողական",
+"lv": "B1",
+"ru": "любительский",
+"en": "amateur",
+"fr": "amateur"
+},
+{
+"a": "ինքնուս",
+"lv": "B1",
+"ru": "самоучка",
+"en": "self-taught",
+"fr": "autodidacte"
+},
+{
+"a": "շնորհալի",
+"lv": "B1",
+"ru": "одарённый",
+"en": "gifted",
+"fr": "doué"
+},
+{
+"a": "անտաղանդ",
+"lv": "B1",
+"ru": "бездарный",
+"en": "untalented",
+"fr": "sans talent"
+},
+{
+"a": "անընդունակ",
+"lv": "B1",
+"ru": "неспособный",
+"en": "incapable",
+"fr": "incapable"
+},
+{
+"a": "բթամիտ",
+"lv": "B1",
+"ru": "тупой, недалёкий",
+"en": "dull-witted",
+"fr": "obtus"
+},
+{
+"a": "դանդաղամիտ",
+"lv": "B1",
+"ru": "тугодум",
+"en": "slow-witted",
+"fr": "lent d'esprit"
+},
+{
+"a": "արագամիտ",
+"lv": "B1",
+"ru": "сообразительный",
+"en": "quick-witted",
+"fr": "vif d'esprit"
+},
+{
+"a": "խոսկան",
+"lv": "B1",
+"ru": "разговорчивый",
+"en": "talkative",
+"fr": "bavard"
+},
+{
+"a": "քչախոս",
+"lv": "B1",
+"ru": "немногословный",
+"en": "taciturn",
+"fr": "taciturne"
+},
+{
+"a": "մարդամոտ",
+"lv": "B1",
+"ru": "общительный",
+"en": "sociable",
+"fr": "sociable"
+},
+{
+"a": "անմարդամոտ",
+"lv": "B1",
+"ru": "необщительный",
+"en": "unsociable",
+"fr": "peu sociable"
+},
+{
+"a": "անուշադիր",
+"lv": "B1",
+"ru": "невнимательный",
+"en": "inattentive",
+"fr": "inattentif"
+},
+{
+"a": "կենտրոնացած",
+"lv": "B1",
+"ru": "сосредоточенный",
+"en": "focused",
+"fr": "concentré"
+},
+{
+"a": "անկարգապահ",
+"lv": "B1",
+"ru": "недисциплинированный",
+"en": "undisciplined",
+"fr": "indiscipliné"
+},
+{
+"a": "պարզասիրտ",
+"lv": "B1",
+"ru": "простодушный",
+"en": "simple-hearted",
+"fr": "candide"
+},
+{
+"a": "դանդաղաշարժ",
+"lv": "B1",
+"ru": "медлительный",
+"en": "sluggish",
+"fr": "lent"
+},
+{
+"a": "արագաշարժ",
+"lv": "B1",
+"ru": "проворный",
+"en": "nimble",
+"fr": "leste"
+},
+{
+"a": "հեզ",
+"lv": "B1",
+"ru": "кроткий",
+"en": "meek",
+"fr": "doux"
+},
+{
+"a": "պարծենկոտ",
+"lv": "B1",
+"ru": "хвастливый",
+"en": "boastful",
+"fr": "vantard"
+},
+{
+"a": "խանդոտ",
+"lv": "B1",
+"ru": "ревнивый",
+"en": "jealous",
+"fr": "jaloux"
+},
+{
+"a": "չարախոս",
+"lv": "B1",
+"ru": "злоязычный",
+"en": "slanderous",
+"fr": "médisant"
+},
+{
+"a": "բամբասկոտ",
+"lv": "B1",
+"ru": "любящий сплетни",
+"en": "gossipy",
+"fr": "cancanier"
+},
+{
+"a": "չարասիրտ",
+"lv": "B1",
+"ru": "злой, недобрый",
+"en": "malicious",
+"fr": "méchant"
+},
+{
+"a": "երես առած",
+"lv": "B1",
+"ru": "избалованный",
+"en": "spoilt",
+"fr": "gâté"
+},
+{
+"a": "թուլակամ",
+"lv": "B1",
+"ru": "безвольный",
+"en": "weak-willed",
+"fr": "velléitaire"
+},
+{
+"a": "կանգնեցնել",
+"lv": "B1",
+"ru": "останавливать",
+"en": "stop (something)",
+"fr": "arrêter"
+},
+{
+"a": "վերսկսել",
+"lv": "B1",
+"ru": "возобновлять",
+"en": "resume",
+"fr": "reprendre"
+},
+{
+"a": "ընդմիջել",
+"lv": "B1",
+"ru": "прерывать, делать перерыв",
+"en": "interrupt, take a break",
+"fr": "interrompre"
+},
+{
+"a": "շրջագայել",
+"lv": "B1",
+"ru": "гастролировать, объезжать",
+"en": "tour",
+"fr": "faire une tournée"
+},
+{
+"a": "հյուր գնալ",
+"lv": "B1",
+"ru": "идти в гости",
+"en": "visit (go as a guest)",
+"fr": "aller en visite"
+},
+{
+"a": "հյուր գալ",
+"lv": "B1",
+"ru": "приходить в гости",
+"en": "come to visit",
+"fr": "venir en visite"
+},
+{
+"a": "հյուրընկալել",
+"lv": "B1",
+"ru": "принимать гостей",
+"en": "host",
+"fr": "recevoir"
+},
+{
+"a": "հապաղել",
+"lv": "B1",
+"ru": "медлить",
+"en": "delay, linger",
+"fr": "tarder"
+},
+{
+"a": "ժամանակ խնայել",
+"lv": "B1",
+"ru": "экономить время",
+"en": "save time",
+"fr": "gagner du temps"
+},
+{
+"a": "ժամանակ կորցնել",
+"lv": "B1",
+"ru": "терять время",
+"en": "lose time",
+"fr": "perdre du temps"
+},
+{
+"a": "ժամանակ վատնել",
+"lv": "B1",
+"ru": "тратить время впустую",
+"en": "waste time",
+"fr": "gaspiller son temps"
+},
+{
+"a": "վատնել",
+"lv": "B1",
+"ru": "растрачивать",
+"en": "waste",
+"fr": "gaspiller"
+},
+{
+"a": "շռայլել",
+"lv": "B1",
+"ru": "расточать",
+"en": "squander",
+"fr": "prodiguer"
+},
+{
+"a": "տնտեսել",
+"lv": "B1",
+"ru": "экономить",
+"en": "economize",
+"fr": "économiser"
+},
+{
+"a": "կուտակել",
+"lv": "B1",
+"ru": "накапливать",
+"en": "accumulate",
+"fr": "accumuler"
+},
+{
+"a": "հայտնաբերել",
+"lv": "B1",
+"ru": "обнаружить",
+"en": "discover",
+"fr": "découvrir"
+},
+{
+"a": "ծրագրել",
+"lv": "B1",
+"ru": "планировать",
+"en": "plan",
+"fr": "projeter"
+},
+{
+"a": "ուսանել",
+"lv": "B1",
+"ru": "учиться (в вузе)",
+"en": "study",
+"fr": "étudier"
+},
+{
+"a": "կրթվել",
+"lv": "B1",
+"ru": "получать образование",
+"en": "be educated",
+"fr": "s'instruire"
+},
+{
+"a": "մտորել",
+"lv": "B1",
+"ru": "размышлять",
+"en": "ponder",
+"fr": "méditer"
+},
+{
+"a": "դատել",
+"lv": "B1",
+"ru": "судить",
+"en": "judge",
+"fr": "juger"
+},
+{
+"a": "դատողություն անել",
+"lv": "B1",
+"ru": "рассуждать",
+"en": "reason",
+"fr": "raisonner"
+},
+{
+"a": "բեմադրիչ",
+"lv": "B1",
+"ru": "режиссёр-постановщик",
+"en": "stage director",
+"fr": "metteur en scène"
+},
+{
+"a": "բեմանկարիչ",
+"lv": "B1",
+"ru": "театральный художник",
+"en": "set designer",
+"fr": "décorateur"
+},
+{
+"a": "դեկորացիա",
+"lv": "B1",
+"ru": "декорация",
+"en": "scenery, set",
+"fr": "décor"
+},
+{
+"a": "զգեստավորում",
+"lv": "B1",
+"ru": "костюмы (к спектаклю)",
+"en": "costume design",
+"fr": "costumes"
+},
+{
+"a": "դիմահարդարում",
+"lv": "B1",
+"ru": "грим, макияж",
+"en": "make-up",
+"fr": "maquillage"
+},
+{
+"a": "լուսավորություն",
+"lv": "B1",
+"ru": "освещение",
+"en": "lighting",
+"fr": "éclairage"
+},
+{
+"a": "ձայնային ձևավորում",
+"lv": "B1",
+"ru": "звуковое оформление",
+"en": "sound design",
+"fr": "conception sonore"
+},
+{
+"a": "սուֆլյոր",
+"lv": "B1",
+"ru": "суфлёр",
+"en": "prompter",
+"fr": "souffleur"
+},
+{
+"a": "դերասանական կազմ",
+"lv": "B1",
+"ru": "актёрский состав",
+"en": "cast",
+"fr": "distribution"
+},
+{
+"a": "կրկնափորձ",
+"lv": "B1",
+"ru": "репетиция",
+"en": "rehearsal",
+"fr": "répétition"
+},
+{
+"a": "գլխավոր փորձ",
+"lv": "B1",
+"ru": "генеральная репетиция",
+"en": "dress rehearsal",
+"fr": "répétition générale"
+},
+{
+"a": "ռեպլիկ",
+"lv": "B1",
+"ru": "реплика",
+"en": "line, cue",
+"fr": "réplique"
+},
+{
+"a": "պաուզա",
+"lv": "B1",
+"ru": "пауза",
+"en": "pause",
+"fr": "pause"
+},
+{
+"a": "պարտեր",
+"lv": "B1",
+"ru": "партер",
+"en": "stalls",
+"fr": "parterre"
+},
+{
+"a": "օթյակ",
+"lv": "B1",
+"ru": "ложа",
+"en": "box (in a theatre)",
+"fr": "loge"
+},
+{
+"a": "վերնասրահ",
+"lv": "B1",
+"ru": "галёрка, балкон",
+"en": "gallery",
+"fr": "galerie"
+},
+{
+"a": "թատերախումբ",
+"lv": "B1",
+"ru": "театральная труппа",
+"en": "theatre company",
+"fr": "troupe de théâtre"
+},
+{
+"a": "թատերական փառատոն",
+"lv": "B1",
+"ru": "театральный фестиваль",
+"en": "theatre festival",
+"fr": "festival de théâtre"
+},
+{
+"a": "տիկնիկավար",
+"lv": "B1",
+"ru": "кукольник",
+"en": "puppeteer",
+"fr": "marionnettiste"
+},
+{
+"a": "պանտոմիմ",
+"lv": "B1",
+"ru": "пантомима",
+"en": "pantomime",
+"fr": "pantomime"
+},
+{
+"a": "մնջախաղ",
+"lv": "B1",
+"ru": "пантомима",
+"en": "mime",
+"fr": "mime"
+},
+{
+"a": "իմպրովիզացիա",
+"lv": "B1",
+"ru": "импровизация",
+"en": "improvisation",
+"fr": "improvisation"
+},
+{
+"a": "կատակերգու",
+"lv": "B1",
+"ru": "комик",
+"en": "comedian",
+"fr": "comique"
+},
+{
+"a": "ողբերգակ",
+"lv": "B1",
+"ru": "трагик",
+"en": "tragedian",
+"fr": "tragédien"
+},
+{
+"a": "դրամատուրգ",
+"lv": "B1",
+"ru": "драматург",
+"en": "playwright",
+"fr": "dramaturge"
+},
+{
+"a": "թատերագետ",
+"lv": "B1",
+"ru": "театровед",
+"en": "theatre critic",
+"fr": "critique de théâtre"
+},
+{
+"a": "թատերասեր",
+"lv": "B1",
+"ru": "театрал",
+"en": "theatregoer",
+"fr": "amateur de théâtre"
+},
+{
+"a": "հանդիսական",
+"lv": "B1",
+"ru": "зритель",
+"en": "spectator",
+"fr": "spectateur"
+},
+{
+"a": "օպերային թատրոն",
+"lv": "B1",
+"ru": "оперный театр",
+"en": "opera house",
+"fr": "opéra"
+},
+{
+"a": "դրամատիկական թատրոն",
+"lv": "B1",
+"ru": "драматический театр",
+"en": "drama theatre",
+"fr": "théâtre dramatique"
+},
+{
+"a": "փողոցային թատրոն",
+"lv": "B1",
+"ru": "уличный театр",
+"en": "street theatre",
+"fr": "théâtre de rue"
+},
+{
+"a": "ակրոբատ",
+"lv": "B1",
+"ru": "акробат",
+"en": "acrobat",
+"fr": "acrobate"
+},
+{
+"a": "լարախաղաց",
+"lv": "B1",
+"ru": "канатоходец",
+"en": "tightrope walker",
+"fr": "funambule"
+},
+{
+"a": "ձեռնածու",
+"lv": "B1",
+"ru": "жонглёр",
+"en": "juggler",
+"fr": "jongleur"
+},
+{
+"a": "կենդանիների վարժեցնող",
+"lv": "B1",
+"ru": "дрессировщик",
+"en": "animal trainer",
+"fr": "dompteur"
+},
+{
+"a": "ձիավարժարան",
+"lv": "B1",
+"ru": "манеж (для лошадей)",
+"en": "riding school",
+"fr": "manège"
+},
+{
+"a": "մանեժ",
+"lv": "B1",
+"ru": "манеж (цирковой)",
+"en": "circus ring",
+"fr": "piste"
+},
+{
+"a": "մոգ",
+"lv": "B1",
+"ru": "маг",
+"en": "magician, mage",
+"fr": "mage"
+},
+{
+"a": "հրաշագործ",
+"lv": "B1",
+"ru": "чудотворец, кудесник",
+"en": "miracle worker",
+"fr": "thaumaturge"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -54236,6 +57540,1203 @@
 "fr": "apostrophe"
 },
 {
+"a": "Վանի թագավորություն",
+"lv": "B2",
+"ru": "Ванское царство (Урарту)",
+"en": "Kingdom of Van (Urartu)",
+"fr": "royaume de Van (Urartu)"
+},
+{
+"a": "Արշակունիներ",
+"lv": "B2",
+"ru": "Аршакиды",
+"en": "the Arsacids",
+"fr": "les Arsacides"
+},
+{
+"a": "Արտաշեսյաններ",
+"lv": "B2",
+"ru": "Арташесиды",
+"en": "the Artaxiads",
+"fr": "les Artaxiades"
+},
+{
+"a": "Բագրատունիներ",
+"lv": "B2",
+"ru": "Багратиды",
+"en": "the Bagratids",
+"fr": "les Bagratides"
+},
+{
+"a": "Ռուբինյաններ",
+"lv": "B2",
+"ru": "Рубениды",
+"en": "the Rubenids",
+"fr": "les Roupénides"
+},
+{
+"a": "Կիլիկյան Հայաստան",
+"lv": "B2",
+"ru": "Киликийская Армения",
+"en": "Cilician Armenia",
+"fr": "Arménie cilicienne"
+},
+{
+"a": "Մեծ Հայք",
+"lv": "B2",
+"ru": "Великая Армения",
+"en": "Greater Armenia",
+"fr": "Grande Arménie"
+},
+{
+"a": "Փոքր Հայք",
+"lv": "B2",
+"ru": "Малая Армения",
+"en": "Lesser Armenia",
+"fr": "Petite Arménie"
+},
+{
+"a": "Սարդարապատի ճակատամարտ",
+"lv": "B2",
+"ru": "Сардарапатская битва",
+"en": "Battle of Sardarapat",
+"fr": "bataille de Sardarapat"
+},
+{
+"a": "Հայոց ցեղասպանություն",
+"lv": "B2",
+"ru": "Геноцид армян",
+"en": "the Armenian Genocide",
+"fr": "le génocide arménien"
+},
+{
+"a": "Առաջին հանրապետություն",
+"lv": "B2",
+"ru": "Первая республика",
+"en": "the First Republic",
+"fr": "la Première République"
+},
+{
+"a": "Խորհրդային Հայաստան",
+"lv": "B2",
+"ru": "Советская Армения",
+"en": "Soviet Armenia",
+"fr": "Arménie soviétique"
+},
+{
+"a": "Անկախության հռչակագիր",
+"lv": "B2",
+"ru": "Декларация о независимости",
+"en": "Declaration of Independence",
+"fr": "déclaration d'indépendance"
+},
+{
+"a": "Ղարաբաղյան շարժում",
+"lv": "B2",
+"ru": "Карабахское движение",
+"en": "the Karabakh movement",
+"fr": "le mouvement du Karabagh"
+},
+{
+"a": "Սպիտակի երկրաշարժ",
+"lv": "B2",
+"ru": "Спитакское землетрясение",
+"en": "the Spitak earthquake",
+"fr": "le séisme de Spitak"
+},
+{
+"a": "թագավորական",
+"lv": "B2",
+"ru": "царский, королевский",
+"en": "royal",
+"fr": "royal"
+},
+{
+"a": "նախարարական տուն",
+"lv": "B2",
+"ru": "нахарарский род",
+"en": "noble house (nakharar)",
+"fr": "maison princière (nakharar)"
+},
+{
+"a": "սպարապետ",
+"lv": "B2",
+"ru": "спарапет, главнокомандующий",
+"en": "sparapet (commander-in-chief)",
+"fr": "sparapet (commandant en chef)"
+},
+{
+"a": "մարզպան",
+"lv": "B2",
+"ru": "марзпан (наместник)",
+"en": "marzpan (governor)",
+"fr": "marzpan (gouverneur)"
+},
+{
+"a": "թագաժառանգ",
+"lv": "B2",
+"ru": "наследник престола",
+"en": "crown prince",
+"fr": "prince héritier"
+},
+{
+"a": "վերածնունդ",
+"lv": "B2",
+"ru": "возрождение",
+"en": "revival, rebirth",
+"fr": "renaissance"
+},
+{
+"a": "Վերածննդի դարաշրջան",
+"lv": "B2",
+"ru": "эпоха Возрождения",
+"en": "the Renaissance",
+"fr": "la Renaissance"
+},
+{
+"a": "լուսավորչական",
+"lv": "B2",
+"ru": "григорианский (о церкви)",
+"en": "Gregorian (Armenian Church)",
+"fr": "grégorien"
+},
+{
+"a": "պեղում",
+"lv": "B2",
+"ru": "раскопки",
+"en": "excavation",
+"fr": "fouille"
+},
+{
+"a": "արտեֆակտ",
+"lv": "B2",
+"ru": "артефакт",
+"en": "artefact",
+"fr": "artefact"
+},
+{
+"a": "մատենագիր",
+"lv": "B2",
+"ru": "средневековый автор",
+"en": "medieval writer",
+"fr": "auteur médiéval"
+},
+{
+"a": "պատմիչ",
+"lv": "B2",
+"ru": "летописец, историк",
+"en": "chronicler",
+"fr": "chroniqueur"
+},
+{
+"a": "ժամանակագիր",
+"lv": "B2",
+"ru": "хронист",
+"en": "annalist",
+"fr": "annaliste"
+},
+{
+"a": "ձեռագրատուն",
+"lv": "B2",
+"ru": "хранилище рукописей",
+"en": "manuscript library",
+"fr": "bibliothèque de manuscrits"
+},
+{
+"a": "գրչօջախ",
+"lv": "B2",
+"ru": "скрипторий",
+"en": "scriptorium",
+"fr": "scriptorium"
+},
+{
+"a": "մանրանկար",
+"lv": "B2",
+"ru": "миниатюра",
+"en": "miniature",
+"fr": "miniature"
+},
+{
+"a": "մանրանկարիչ",
+"lv": "B2",
+"ru": "миниатюрист",
+"en": "miniaturist",
+"fr": "miniaturiste"
+},
+{
+"a": "մագաղաթ",
+"lv": "B2",
+"ru": "пергамент",
+"en": "parchment",
+"fr": "parchemin"
+},
+{
+"a": "փղոսկր",
+"lv": "B2",
+"ru": "слоновая кость",
+"en": "ivory",
+"fr": "ivoire"
+},
+{
+"a": "հեթանոսական տաճար",
+"lv": "B2",
+"ru": "языческий храм",
+"en": "pagan temple",
+"fr": "temple païen"
+},
+{
+"a": "Գառնիի տաճար",
+"lv": "B2",
+"ru": "храм Гарни",
+"en": "Garni Temple",
+"fr": "temple de Garni"
+},
+{
+"a": "Զվարթնոցի տաճար",
+"lv": "B2",
+"ru": "храм Звартноц",
+"en": "Zvartnots Cathedral",
+"fr": "cathédrale de Zvartnots"
+},
+{
+"a": "Անիի մայր տաճար",
+"lv": "B2",
+"ru": "кафедральный собор Ани",
+"en": "Cathedral of Ani",
+"fr": "cathédrale d'Ani"
+},
+{
+"a": "Աղթամարի եկեղեցի",
+"lv": "B2",
+"ru": "церковь на Ахтамаре",
+"en": "Church of Aghtamar",
+"fr": "église d'Aghtamar"
+},
+{
+"a": "հանդիպակաց",
+"lv": "B2",
+"ru": "встречный, противоположный",
+"en": "oncoming, opposite",
+"fr": "venant en sens inverse"
+},
+{
+"a": "կից",
+"lv": "B2",
+"ru": "смежный, прилагаемый",
+"en": "adjacent, attached",
+"fr": "attenant"
+},
+{
+"a": "հարակից",
+"lv": "B2",
+"ru": "прилегающий",
+"en": "adjoining",
+"fr": "contigu"
+},
+{
+"a": "սահմանամերձ",
+"lv": "B2",
+"ru": "приграничный",
+"en": "border (area)",
+"fr": "frontalier"
+},
+{
+"a": "հեռակա",
+"lv": "B2",
+"ru": "заочный, дистанционный",
+"en": "distance (learning)",
+"fr": "à distance"
+},
+{
+"a": "մերձակա",
+"lv": "B2",
+"ru": "близлежащий",
+"en": "nearby",
+"fr": "voisin"
+},
+{
+"a": "տարածաշրջանային",
+"lv": "B2",
+"ru": "региональный",
+"en": "regional",
+"fr": "régional"
+},
+{
+"a": "համազգային",
+"lv": "B2",
+"ru": "общенациональный",
+"en": "nationwide",
+"fr": "national"
+},
+{
+"a": "համապետական",
+"lv": "B2",
+"ru": "общегосударственный",
+"en": "state-wide",
+"fr": "étatique"
+},
+{
+"a": "միջպետական",
+"lv": "B2",
+"ru": "межгосударственный",
+"en": "interstate",
+"fr": "interétatique"
+},
+{
+"a": "միջքաղաքային",
+"lv": "B2",
+"ru": "междугородний",
+"en": "intercity",
+"fr": "interurbain"
+},
+{
+"a": "միջմայրցամաքային",
+"lv": "B2",
+"ru": "межконтинентальный",
+"en": "intercontinental",
+"fr": "intercontinental"
+},
+{
+"a": "անդրկովկասյան",
+"lv": "B2",
+"ru": "закавказский",
+"en": "Transcaucasian",
+"fr": "transcaucasien"
+},
+{
+"a": "Հարավային Կովկաս",
+"lv": "B2",
+"ru": "Южный Кавказ",
+"en": "the South Caucasus",
+"fr": "le Caucase du Sud"
+},
+{
+"a": "Մերձավոր Արևելք",
+"lv": "B2",
+"ru": "Ближний Восток",
+"en": "the Near East",
+"fr": "le Proche-Orient"
+},
+{
+"a": "Հեռավոր Արևելք",
+"lv": "B2",
+"ru": "Дальний Восток",
+"en": "the Far East",
+"fr": "l'Extrême-Orient"
+},
+{
+"a": "Արևմուտք",
+"lv": "B2",
+"ru": "Запад (страны Запада)",
+"en": "the West",
+"fr": "l'Occident"
+},
+{
+"a": "Արևելք",
+"lv": "B2",
+"ru": "Восток (страны Востока)",
+"en": "the East",
+"fr": "l'Orient"
+},
+{
+"a": "կողմնորոշում",
+"lv": "B2",
+"ru": "ориентация, ориентир",
+"en": "orientation",
+"fr": "orientation"
+},
+{
+"a": "քարտեզագրել",
+"lv": "B2",
+"ru": "картографировать",
+"en": "map",
+"fr": "cartographier"
+},
+{
+"a": "քարտեզագրություն",
+"lv": "B2",
+"ru": "картография",
+"en": "cartography",
+"fr": "cartographie"
+},
+{
+"a": "բարձրություն ծովի մակերևույթից",
+"lv": "B2",
+"ru": "высота над уровнем моря",
+"en": "altitude above sea level",
+"fr": "altitude"
+},
+{
+"a": "ազգային տարազ",
+"lv": "B2",
+"ru": "национальный костюм",
+"en": "national costume",
+"fr": "costume national"
+},
+{
+"a": "արխալուղ",
+"lv": "B2",
+"ru": "архалук",
+"en": "arkhalukh (long coat)",
+"fr": "arkhalouk (redingote)"
+},
+{
+"a": "չուխա",
+"lv": "B2",
+"ru": "чоха",
+"en": "chokha (coat)",
+"fr": "tchokha (manteau)"
+},
+{
+"a": "փափախ",
+"lv": "B2",
+"ru": "папаха",
+"en": "papakha (fur hat)",
+"fr": "papakha (bonnet de fourrure)"
+},
+{
+"a": "տրեխ",
+"lv": "B2",
+"ru": "трехи (кожаные лапти)",
+"en": "trekh (peasant leather shoes)",
+"fr": "trekh (chaussures de cuir)"
+},
+{
+"a": "մուճակ",
+"lv": "B2",
+"ru": "шлёпанцы, туфли без задника",
+"en": "mules, slippers",
+"fr": "mules"
+},
+{
+"a": "բերդ պար",
+"lv": "B2",
+"ru": "танец «Берд»",
+"en": "Berd dance",
+"fr": "danse Berd"
+},
+{
+"a": "յարխուշտա",
+"lv": "B2",
+"ru": "ярхушта (мужской танец)",
+"en": "yarkhushta (men's dance)",
+"fr": "yarkhouchta (danse d'hommes)"
+},
+{
+"a": "շորոր",
+"lv": "B2",
+"ru": "шорор (танец)",
+"en": "shoror (dance)",
+"fr": "chouror (danse)"
+},
+{
+"a": "պարային համույթ",
+"lv": "B2",
+"ru": "танцевальный ансамбль",
+"en": "dance ensemble",
+"fr": "ensemble de danse"
+},
+{
+"a": "ազգագրական համույթ",
+"lv": "B2",
+"ru": "этнографический ансамбль",
+"en": "folk ensemble",
+"fr": "ensemble folklorique"
+},
+{
+"a": "աշուղ",
+"lv": "B2",
+"ru": "ашуг",
+"en": "ashugh (bard)",
+"fr": "achough (barde)"
+},
+{
+"a": "գուսան",
+"lv": "B2",
+"ru": "гусан",
+"en": "gusan (minstrel)",
+"fr": "goussan (ménestrel)"
+},
+{
+"a": "քեֆ",
+"lv": "B2",
+"ru": "пирушка, кутёж",
+"en": "feast, revelry",
+"fr": "fête"
+},
+{
+"a": "տաղասաց",
+"lv": "B2",
+"ru": "певец тагов",
+"en": "singer of verses",
+"fr": "chantre"
+},
+{
+"a": "խաչքարագործություն",
+"lv": "B2",
+"ru": "искусство хачкаров",
+"en": "khachkar carving",
+"fr": "art des khatchkars"
+},
+{
+"a": "արծաթագործություն",
+"lv": "B2",
+"ru": "серебряное дело",
+"en": "silversmithing",
+"fr": "orfèvrerie d'argent"
+},
+{
+"a": "պղնձագործություն",
+"lv": "B2",
+"ru": "медницкое дело",
+"en": "coppersmithing",
+"fr": "dinanderie"
+},
+{
+"a": "խալի",
+"lv": "B2",
+"ru": "ворсовый ковёр",
+"en": "pile carpet",
+"fr": "tapis à poils"
+},
+{
+"a": "ջեջիմ",
+"lv": "B2",
+"ru": "джеджим (безворсовый ковёр)",
+"en": "jejim (flat-woven rug)",
+"fr": "djedjim (tapis tissé)"
+},
+{
+"a": "Վանի ասեղնագործություն",
+"lv": "B2",
+"ru": "ванская вышивка",
+"en": "Van embroidery",
+"fr": "broderie de Van"
+},
+{
+"a": "Մարաշի ասեղնագործություն",
+"lv": "B2",
+"ru": "марашская вышивка",
+"en": "Marash embroidery",
+"fr": "broderie de Marache"
+},
+{
+"a": "ժանյակագործություն",
+"lv": "B2",
+"ru": "кружевоплетение",
+"en": "lacemaking",
+"fr": "dentellerie"
+},
+{
+"a": "հավերժության նշան",
+"lv": "B2",
+"ru": "знак вечности",
+"en": "eternity sign",
+"fr": "signe de l'éternité"
+},
+{
+"a": "հայկական այբուբեն",
+"lv": "B2",
+"ru": "армянский алфавит",
+"en": "the Armenian alphabet",
+"fr": "l'alphabet arménien"
+},
+{
+"a": "հայկական ճարտարապետություն",
+"lv": "B2",
+"ru": "армянская архитектура",
+"en": "Armenian architecture",
+"fr": "architecture arménienne"
+},
+{
+"a": "տուֆակերտ",
+"lv": "B2",
+"ru": "построенный из туфа",
+"en": "built of tuff",
+"fr": "bâti en tuf"
+},
+{
+"a": "վարդագույն տուֆ",
+"lv": "B2",
+"ru": "розовый туф",
+"en": "pink tuff",
+"fr": "tuf rose"
+},
+{
+"a": "Արարատ լեռ",
+"lv": "B2",
+"ru": "гора Арарат",
+"en": "Mount Ararat",
+"fr": "le mont Ararat"
+},
+{
+"a": "Սիս",
+"lv": "B2",
+"ru": "Сис (Малый Арарат)",
+"en": "Sis (Little Ararat)",
+"fr": "Sis (Petit Ararat)"
+},
+{
+"a": "դուդուկահար",
+"lv": "B2",
+"ru": "дудукист",
+"en": "duduk player",
+"fr": "joueur de doudouk"
+},
+{
+"a": "Սասնա ծռեր",
+"lv": "B2",
+"ru": "Сасна црер (эпос)",
+"en": "Daredevils of Sassoun (epic)",
+"fr": "les Enragés de Sassoun (épopée)"
+},
+{
+"a": "կառուցվածք",
+"lv": "B2",
+"ru": "структура, строение",
+"en": "structure",
+"fr": "structure"
+},
+{
+"a": "մասնիկ",
+"lv": "B2",
+"ru": "частица",
+"en": "particle",
+"fr": "particule"
+},
+{
+"a": "շարք",
+"lv": "B2",
+"ru": "ряд, серия",
+"en": "row, series",
+"fr": "série"
+},
+{
+"a": "կազմ",
+"lv": "B2",
+"ru": "состав",
+"en": "composition, staff",
+"fr": "composition"
+},
+{
+"a": "շահ",
+"lv": "B2",
+"ru": "интерес, выгода",
+"en": "interest, benefit",
+"fr": "intérêt"
+},
+{
+"a": "օգտակարություն",
+"lv": "B2",
+"ru": "полезность",
+"en": "usefulness",
+"fr": "utilité"
+},
+{
+"a": "համապատասխանություն",
+"lv": "B2",
+"ru": "соответствие",
+"en": "conformity, correspondence",
+"fr": "conformité"
+},
+{
+"a": "անհամապատասխանություն",
+"lv": "B2",
+"ru": "несоответствие",
+"en": "mismatch",
+"fr": "non-conformité"
+},
+{
+"a": "համասեռ",
+"lv": "B2",
+"ru": "однородный",
+"en": "homogeneous",
+"fr": "homogène"
+},
+{
+"a": "տարասեռ",
+"lv": "B2",
+"ru": "разнородный",
+"en": "heterogeneous",
+"fr": "hétérogène"
+},
+{
+"a": "միատարր",
+"lv": "B2",
+"ru": "однородный (по составу)",
+"en": "uniform",
+"fr": "uniforme"
+},
+{
+"a": "բազմատարր",
+"lv": "B2",
+"ru": "многокомпонентный",
+"en": "multi-component",
+"fr": "multicomposant"
+},
+{
+"a": "ընդհանրական",
+"lv": "B2",
+"ru": "всеобщий, универсальный",
+"en": "universal",
+"fr": "universel"
+},
+{
+"a": "լիակատար",
+"lv": "B2",
+"ru": "полнейший",
+"en": "total, utter",
+"fr": "total"
+},
+{
+"a": "ավարտուն",
+"lv": "B2",
+"ru": "законченный",
+"en": "complete, finished",
+"fr": "achevé"
+},
+{
+"a": "անավարտ",
+"lv": "B2",
+"ru": "незаконченный",
+"en": "unfinished",
+"fr": "inachevé"
+},
+{
+"a": "միջանկյալ",
+"lv": "B2",
+"ru": "промежуточный",
+"en": "intermediate",
+"fr": "intermédiaire"
+},
+{
+"a": "անկանոն",
+"lv": "B2",
+"ru": "беспорядочный, неправильный",
+"en": "irregular",
+"fr": "irrégulier"
+},
+{
+"a": "ոչ նյութական",
+"lv": "B2",
+"ru": "нематериальный",
+"en": "intangible",
+"fr": "immatériel"
+},
+{
+"a": "կիրառական",
+"lv": "B2",
+"ru": "прикладной",
+"en": "applied",
+"fr": "appliqué"
+},
+{
+"a": "փորձարարական",
+"lv": "B2",
+"ru": "экспериментальный",
+"en": "experimental",
+"fr": "expérimental"
+},
+{
+"a": "գիտահետազոտական",
+"lv": "B2",
+"ru": "научно-исследовательский",
+"en": "research",
+"fr": "de recherche"
+},
+{
+"a": "գիտահանրամատչելի",
+"lv": "B2",
+"ru": "научно-популярный",
+"en": "popular science",
+"fr": "de vulgarisation scientifique"
+},
+{
+"a": "հանրամատչելի",
+"lv": "B2",
+"ru": "общедоступный",
+"en": "accessible to all",
+"fr": "grand public"
+},
+{
+"a": "մատչելի",
+"lv": "B2",
+"ru": "доступный",
+"en": "affordable, accessible",
+"fr": "abordable"
+},
+{
+"a": "անմատչելի",
+"lv": "B2",
+"ru": "недоступный",
+"en": "inaccessible, unaffordable",
+"fr": "inabordable"
+},
+{
+"a": "հասանելի",
+"lv": "B2",
+"ru": "доступный",
+"en": "available, reachable",
+"fr": "disponible"
+},
+{
+"a": "անհասանելի",
+"lv": "B2",
+"ru": "недосягаемый",
+"en": "unreachable",
+"fr": "inaccessible"
+},
+{
+"a": "տեսանելի",
+"lv": "B2",
+"ru": "видимый",
+"en": "visible",
+"fr": "visible"
+},
+{
+"a": "լսելի",
+"lv": "B2",
+"ru": "слышный",
+"en": "audible",
+"fr": "audible"
+},
+{
+"a": "անլսելի",
+"lv": "B2",
+"ru": "неслышный",
+"en": "inaudible",
+"fr": "inaudible"
+},
+{
+"a": "շոշափելի",
+"lv": "B2",
+"ru": "ощутимый",
+"en": "tangible",
+"fr": "tangible"
+},
+{
+"a": "նշանակալի",
+"lv": "B2",
+"ru": "значительный",
+"en": "significant",
+"fr": "significatif"
+},
+{
+"a": "օժանդակ",
+"lv": "B2",
+"ru": "вспомогательный",
+"en": "auxiliary",
+"fr": "auxiliaire"
+},
+{
+"a": "կամընտրական",
+"lv": "B2",
+"ru": "факультативный",
+"en": "optional",
+"fr": "facultatif"
+},
+{
+"a": "ցանկալի",
+"lv": "B2",
+"ru": "желательный",
+"en": "desirable",
+"fr": "souhaitable"
+},
+{
+"a": "անցանկալի",
+"lv": "B2",
+"ru": "нежелательный",
+"en": "undesirable",
+"fr": "indésirable"
+},
+{
+"a": "նպատակահարմար",
+"lv": "B2",
+"ru": "целесообразный",
+"en": "expedient",
+"fr": "opportun"
+},
+{
+"a": "աննպատակահարմար",
+"lv": "B2",
+"ru": "нецелесообразный",
+"en": "inexpedient",
+"fr": "inopportun"
+},
+{
+"a": "ապար",
+"lv": "B2",
+"ru": "горная порода",
+"en": "rock (type)",
+"fr": "roche"
+},
+{
+"a": "նստվածքային ապար",
+"lv": "B2",
+"ru": "осадочная порода",
+"en": "sedimentary rock",
+"fr": "roche sédimentaire"
+},
+{
+"a": "հրաբխային ապար",
+"lv": "B2",
+"ru": "вулканическая порода",
+"en": "volcanic rock",
+"fr": "roche volcanique"
+},
+{
+"a": "մետամորֆիկ ապար",
+"lv": "B2",
+"ru": "метаморфическая порода",
+"en": "metamorphic rock",
+"fr": "roche métamorphique"
+},
+{
+"a": "միներալ",
+"lv": "B2",
+"ru": "минерал",
+"en": "mineral",
+"fr": "minéral"
+},
+{
+"a": "քվարց",
+"lv": "B2",
+"ru": "кварц",
+"en": "quartz",
+"fr": "quartz"
+},
+{
+"a": "դաշտային սպաթ",
+"lv": "B2",
+"ru": "полевой шпат",
+"en": "feldspar",
+"fr": "feldspath"
+},
+{
+"a": "կալցիտ",
+"lv": "B2",
+"ru": "кальцит",
+"en": "calcite",
+"fr": "calcite"
+},
+{
+"a": "դոլոմիտ",
+"lv": "B2",
+"ru": "доломит",
+"en": "dolomite",
+"fr": "dolomite"
+},
+{
+"a": "ավազաքար",
+"lv": "B2",
+"ru": "песчаник",
+"en": "sandstone",
+"fr": "grès"
+},
+{
+"a": "թերթաքար",
+"lv": "B2",
+"ru": "сланец",
+"en": "shale, slate",
+"fr": "schiste"
+},
+{
+"a": "կոնգլոմերատ",
+"lv": "B2",
+"ru": "конгломерат",
+"en": "conglomerate",
+"fr": "conglomérat"
+},
+{
+"a": "պեմզա",
+"lv": "B2",
+"ru": "пемза",
+"en": "pumice",
+"fr": "pierre ponce"
+},
+{
+"a": "անդեզիտ",
+"lv": "B2",
+"ru": "андезит",
+"en": "andesite",
+"fr": "andésite"
+},
+{
+"a": "տրավերտին",
+"lv": "B2",
+"ru": "травертин",
+"en": "travertine",
+"fr": "travertin"
+},
+{
+"a": "աղաքար",
+"lv": "B2",
+"ru": "каменная соль",
+"en": "rock salt",
+"fr": "sel gemme"
+},
+{
+"a": "տորֆ",
+"lv": "B2",
+"ru": "торф",
+"en": "peat",
+"fr": "tourbe"
+},
+{
+"a": "գրաֆիտ",
+"lv": "B2",
+"ru": "графит",
+"en": "graphite",
+"fr": "graphite"
+},
+{
+"a": "ստորգետնյա ջուր",
+"lv": "B2",
+"ru": "грунтовые воды",
+"en": "groundwater",
+"fr": "nappe phréatique"
+},
+{
+"a": "երկրաբանություն",
+"lv": "B2",
+"ru": "геология",
+"en": "geology",
+"fr": "géologie"
+},
+{
+"a": "երկրաբան",
+"lv": "B2",
+"ru": "геолог",
+"en": "geologist",
+"fr": "géologue"
+},
+{
+"a": "հանքաբանություն",
+"lv": "B2",
+"ru": "минералогия",
+"en": "mineralogy",
+"fr": "minéralogie"
+},
+{
+"a": "հրաբխագիտություն",
+"lv": "B2",
+"ru": "вулканология",
+"en": "volcanology",
+"fr": "volcanologie"
+},
+{
+"a": "սեյսմոլոգիա",
+"lv": "B2",
+"ru": "сейсмология",
+"en": "seismology",
+"fr": "sismologie"
+},
+{
+"a": "սեյսմիկ",
+"lv": "B2",
+"ru": "сейсмический",
+"en": "seismic",
+"fr": "sismique"
+},
+{
+"a": "սեյսմակայուն",
+"lv": "B2",
+"ru": "сейсмостойкий",
+"en": "earthquake-resistant",
+"fr": "parasismique"
+},
+{
+"a": "էպիկենտրոն",
+"lv": "B2",
+"ru": "эпицентр",
+"en": "epicentre",
+"fr": "épicentre"
+},
+{
+"a": "հիպոկենտրոն",
+"lv": "B2",
+"ru": "гипоцентр",
+"en": "hypocentre",
+"fr": "hypocentre"
+},
+{
+"a": "Ռիխտերի սանդղակ",
+"lv": "B2",
+"ru": "шкала Рихтера",
+"en": "Richter scale",
+"fr": "échelle de Richter"
+},
+{
+"a": "հետցնցում",
+"lv": "B2",
+"ru": "афтершок",
+"en": "aftershock",
+"fr": "réplique"
+},
+{
+"a": "խզվածք",
+"lv": "B2",
+"ru": "разлом",
+"en": "fault (geological)",
+"fr": "faille"
+},
+{
+"a": "ճեղքվածք",
+"lv": "B2",
+"ru": "трещина, расщелина",
+"en": "fissure, rift",
+"fr": "fissure"
+},
+{
+"a": "քարաթափ",
+"lv": "B2",
+"ru": "камнепад",
+"en": "rockfall",
+"fr": "chute de pierres"
+},
+{
+"a": "քարայր",
+"lv": "B2",
+"ru": "пещера",
+"en": "cave",
+"fr": "grotte"
+},
+{
+"a": "ստալակտիտ",
+"lv": "B2",
+"ru": "сталактит",
+"en": "stalactite",
+"fr": "stalactite"
+},
+{
+"a": "ստալագմիտ",
+"lv": "B2",
+"ru": "сталагмит",
+"en": "stalagmite",
+"fr": "stalagmite"
+},
+{
+"a": "կարստ",
+"lv": "B2",
+"ru": "карст",
+"en": "karst",
+"fr": "karst"
+},
+{
+"a": "լավային հոսք",
+"lv": "B2",
+"ru": "лавовый поток",
+"en": "lava flow",
+"fr": "coulée de lave"
+},
+{
+"a": "ժայթքում",
+"lv": "B2",
+"ru": "извержение",
+"en": "eruption",
+"fr": "éruption"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -61642,6 +66143,853 @@
 "fr": "version"
 },
 {
+"a": "քվանտ",
+"lv": "C1",
+"ru": "квант",
+"en": "quantum",
+"fr": "quantum"
+},
+{
+"a": "քվանտային մեխանիկա",
+"lv": "C1",
+"ru": "квантовая механика",
+"en": "quantum mechanics",
+"fr": "mécanique quantique"
+},
+{
+"a": "հարաբերականության տեսություն",
+"lv": "C1",
+"ru": "теория относительности",
+"en": "theory of relativity",
+"fr": "théorie de la relativité"
+},
+{
+"a": "ֆոտոն",
+"lv": "C1",
+"ru": "фотон",
+"en": "photon",
+"fr": "photon"
+},
+{
+"a": "քվարկ",
+"lv": "C1",
+"ru": "кварк",
+"en": "quark",
+"fr": "quark"
+},
+{
+"a": "բոզոն",
+"lv": "C1",
+"ru": "бозон",
+"en": "boson",
+"fr": "boson"
+},
+{
+"a": "լեպտոն",
+"lv": "C1",
+"ru": "лептон",
+"en": "lepton",
+"fr": "lepton"
+},
+{
+"a": "նեյտրինո",
+"lv": "C1",
+"ru": "нейтрино",
+"en": "neutrino",
+"fr": "neutrino"
+},
+{
+"a": "հակամասնիկ",
+"lv": "C1",
+"ru": "античастица",
+"en": "antiparticle",
+"fr": "antiparticule"
+},
+{
+"a": "հականյութ",
+"lv": "C1",
+"ru": "антивещество",
+"en": "antimatter",
+"fr": "antimatière"
+},
+{
+"a": "մութ նյութ",
+"lv": "C1",
+"ru": "тёмная материя",
+"en": "dark matter",
+"fr": "matière noire"
+},
+{
+"a": "մութ էներգիա",
+"lv": "C1",
+"ru": "тёмная энергия",
+"en": "dark energy",
+"fr": "énergie noire"
+},
+{
+"a": "տիեզերական փոշի",
+"lv": "C1",
+"ru": "космическая пыль",
+"en": "cosmic dust",
+"fr": "poussière cosmique"
+},
+{
+"a": "էնտրոպիա",
+"lv": "C1",
+"ru": "энтропия",
+"en": "entropy",
+"fr": "entropie"
+},
+{
+"a": "թերմոդինամիկա",
+"lv": "C1",
+"ru": "термодинамика",
+"en": "thermodynamics",
+"fr": "thermodynamique"
+},
+{
+"a": "էլեկտրադինամիկա",
+"lv": "C1",
+"ru": "электродинамика",
+"en": "electrodynamics",
+"fr": "électrodynamique"
+},
+{
+"a": "մեխանիկա",
+"lv": "C1",
+"ru": "механика",
+"en": "mechanics",
+"fr": "mécanique"
+},
+{
+"a": "օպտիկա",
+"lv": "C1",
+"ru": "оптика",
+"en": "optics",
+"fr": "optique"
+},
+{
+"a": "ակուստիկա",
+"lv": "C1",
+"ru": "акустика",
+"en": "acoustics",
+"fr": "acoustique"
+},
+{
+"a": "ատոմային ֆիզիկա",
+"lv": "C1",
+"ru": "атомная физика",
+"en": "atomic physics",
+"fr": "physique atomique"
+},
+{
+"a": "միջուկային ֆիզիկա",
+"lv": "C1",
+"ru": "ядерная физика",
+"en": "nuclear physics",
+"fr": "physique nucléaire"
+},
+{
+"a": "գերհաղորդականություն",
+"lv": "C1",
+"ru": "сверхпроводимость",
+"en": "superconductivity",
+"fr": "supraconductivité"
+},
+{
+"a": "գերհոսունություն",
+"lv": "C1",
+"ru": "сверхтекучесть",
+"en": "superfluidity",
+"fr": "superfluidité"
+},
+{
+"a": "դիֆրակցիա",
+"lv": "C1",
+"ru": "дифракция",
+"en": "diffraction",
+"fr": "diffraction"
+},
+{
+"a": "ինտերֆերենցիա",
+"lv": "C1",
+"ru": "интерференция",
+"en": "interference",
+"fr": "interférence"
+},
+{
+"a": "բևեռացում",
+"lv": "C1",
+"ru": "поляризация",
+"en": "polarization",
+"fr": "polarisation"
+},
+{
+"a": "ռեզոնանս",
+"lv": "C1",
+"ru": "резонанс",
+"en": "resonance",
+"fr": "résonance"
+},
+{
+"a": "տատանում",
+"lv": "C1",
+"ru": "колебание",
+"en": "oscillation, vibration",
+"fr": "oscillation"
+},
+{
+"a": "անորոշության սկզբունք",
+"lv": "C1",
+"ru": "принцип неопределённости",
+"en": "uncertainty principle",
+"fr": "principe d'incertitude"
+},
+{
+"a": "պահպանման օրենք",
+"lv": "C1",
+"ru": "закон сохранения",
+"en": "conservation law",
+"fr": "loi de conservation"
+},
+{
+"a": "իմպուլս",
+"lv": "C1",
+"ru": "импульс",
+"en": "momentum, impulse",
+"fr": "quantité de mouvement"
+},
+{
+"a": "պտտող մոմենտ",
+"lv": "C1",
+"ru": "крутящий момент",
+"en": "torque",
+"fr": "couple"
+},
+{
+"a": "կենտրոնաձիգ ուժ",
+"lv": "C1",
+"ru": "центростремительная сила",
+"en": "centripetal force",
+"fr": "force centripète"
+},
+{
+"a": "կենտրոնախույս ուժ",
+"lv": "C1",
+"ru": "центробежная сила",
+"en": "centrifugal force",
+"fr": "force centrifuge"
+},
+{
+"a": "ազատ անկում",
+"lv": "C1",
+"ru": "свободное падение",
+"en": "free fall",
+"fr": "chute libre"
+},
+{
+"a": "լույսի արագություն",
+"lv": "C1",
+"ru": "скорость света",
+"en": "speed of light",
+"fr": "vitesse de la lumière"
+},
+{
+"a": "գերձայնային",
+"lv": "C1",
+"ru": "сверхзвуковой",
+"en": "supersonic",
+"fr": "supersonique"
+},
+{
+"a": "բացարձակ զրո",
+"lv": "C1",
+"ru": "абсолютный ноль",
+"en": "absolute zero",
+"fr": "zéro absolu"
+},
+{
+"a": "Կելվին",
+"lv": "C1",
+"ru": "кельвин",
+"en": "kelvin",
+"fr": "kelvin"
+},
+{
+"a": "ջոուլ",
+"lv": "C1",
+"ru": "джоуль",
+"en": "joule",
+"fr": "joule"
+},
+{
+"a": "վատտ",
+"lv": "C1",
+"ru": "ватт",
+"en": "watt",
+"fr": "watt"
+},
+{
+"a": "վոլտ",
+"lv": "C1",
+"ru": "вольт",
+"en": "volt",
+"fr": "volt"
+},
+{
+"a": "ամպեր",
+"lv": "C1",
+"ru": "ампер",
+"en": "ampere",
+"fr": "ampère"
+},
+{
+"a": "օհմ",
+"lv": "C1",
+"ru": "ом",
+"en": "ohm",
+"fr": "ohm"
+},
+{
+"a": "հերց",
+"lv": "C1",
+"ru": "герц",
+"en": "hertz",
+"fr": "hertz"
+},
+{
+"a": "նյուտոն",
+"lv": "C1",
+"ru": "ньютон",
+"en": "newton",
+"fr": "newton"
+},
+{
+"a": "պասկալ",
+"lv": "C1",
+"ru": "паскаль",
+"en": "pascal",
+"fr": "pascal"
+},
+{
+"a": "դեցիբել",
+"lv": "C1",
+"ru": "децибел",
+"en": "decibel",
+"fr": "décibel"
+},
+{
+"a": "մոլ",
+"lv": "C1",
+"ru": "моль",
+"en": "mole (unit)",
+"fr": "mole"
+},
+{
+"a": "ատոմային զանգված",
+"lv": "C1",
+"ru": "атомная масса",
+"en": "atomic mass",
+"fr": "masse atomique"
+},
+{
+"a": "մոլեկուլային զանգված",
+"lv": "C1",
+"ru": "молекулярная масса",
+"en": "molecular mass",
+"fr": "masse moléculaire"
+},
+{
+"a": "վալենտականություն",
+"lv": "C1",
+"ru": "валентность",
+"en": "valency",
+"fr": "valence"
+},
+{
+"a": "քիմիական կապ",
+"lv": "C1",
+"ru": "химическая связь",
+"en": "chemical bond",
+"fr": "liaison chimique"
+},
+{
+"a": "իոնային կապ",
+"lv": "C1",
+"ru": "ионная связь",
+"en": "ionic bond",
+"fr": "liaison ionique"
+},
+{
+"a": "կովալենտ կապ",
+"lv": "C1",
+"ru": "ковалентная связь",
+"en": "covalent bond",
+"fr": "liaison covalente"
+},
+{
+"a": "ջրածնային կապ",
+"lv": "C1",
+"ru": "водородная связь",
+"en": "hydrogen bond",
+"fr": "liaison hydrogène"
+},
+{
+"a": "պարբերական աղյուսակ",
+"lv": "C1",
+"ru": "периодическая таблица",
+"en": "periodic table",
+"fr": "tableau périodique"
+},
+{
+"a": "քիմիական բանաձև",
+"lv": "C1",
+"ru": "химическая формула",
+"en": "chemical formula",
+"fr": "formule chimique"
+},
+{
+"a": "քիմիական հավասարում",
+"lv": "C1",
+"ru": "химическое уравнение",
+"en": "chemical equation",
+"fr": "équation chimique"
+},
+{
+"a": "լուծելիություն",
+"lv": "C1",
+"ru": "растворимость",
+"en": "solubility",
+"fr": "solubilité"
+},
+{
+"a": "թթվայնություն",
+"lv": "C1",
+"ru": "кислотность",
+"en": "acidity",
+"fr": "acidité"
+},
+{
+"a": "հիմնայնություն",
+"lv": "C1",
+"ru": "щёлочность",
+"en": "alkalinity",
+"fr": "alcalinité"
+},
+{
+"a": "չեզոքացում",
+"lv": "C1",
+"ru": "нейтрализация",
+"en": "neutralization",
+"fr": "neutralisation"
+},
+{
+"a": "էլեկտրոլիզ",
+"lv": "C1",
+"ru": "электролиз",
+"en": "electrolysis",
+"fr": "électrolyse"
+},
+{
+"a": "էլեկտրոլիտ",
+"lv": "C1",
+"ru": "электролит",
+"en": "electrolyte",
+"fr": "électrolyte"
+},
+{
+"a": "կատիոն",
+"lv": "C1",
+"ru": "катион",
+"en": "cation",
+"fr": "cation"
+},
+{
+"a": "անիոն",
+"lv": "C1",
+"ru": "анион",
+"en": "anion",
+"fr": "anion"
+},
+{
+"a": "պոլիմեր",
+"lv": "C1",
+"ru": "полимер",
+"en": "polymer",
+"fr": "polymère"
+},
+{
+"a": "մոնոմեր",
+"lv": "C1",
+"ru": "мономер",
+"en": "monomer",
+"fr": "monomère"
+},
+{
+"a": "ֆերմենտացիա",
+"lv": "C1",
+"ru": "ферментация, брожение",
+"en": "fermentation",
+"fr": "fermentation"
+},
+{
+"a": "թորում",
+"lv": "C1",
+"ru": "перегонка",
+"en": "distillation",
+"fr": "distillation"
+},
+{
+"a": "ֆիլտրում",
+"lv": "C1",
+"ru": "фильтрация",
+"en": "filtration",
+"fr": "filtration"
+},
+{
+"a": "կոլբա",
+"lv": "C1",
+"ru": "колба",
+"en": "flask",
+"fr": "fiole"
+},
+{
+"a": "բյուրետ",
+"lv": "C1",
+"ru": "бюретка",
+"en": "burette",
+"fr": "burette"
+},
+{
+"a": "պիպետ",
+"lv": "C1",
+"ru": "пипетка",
+"en": "pipette",
+"fr": "pipette"
+},
+{
+"a": "թորիչ",
+"lv": "C1",
+"ru": "перегонный аппарат",
+"en": "still",
+"fr": "alambic"
+},
+{
+"a": "այրիչ",
+"lv": "C1",
+"ru": "горелка",
+"en": "burner",
+"fr": "bec Bunsen"
+},
+{
+"a": "ռեագենտ",
+"lv": "C1",
+"ru": "реагент",
+"en": "reagent",
+"fr": "réactif"
+},
+{
+"a": "մաթեմատիկական անալիզ",
+"lv": "C1",
+"ru": "математический анализ",
+"en": "calculus",
+"fr": "analyse mathématique"
+},
+{
+"a": "դիֆերենցիալ հավասարում",
+"lv": "C1",
+"ru": "дифференциальное уравнение",
+"en": "differential equation",
+"fr": "équation différentielle"
+},
+{
+"a": "գծային հանրահաշիվ",
+"lv": "C1",
+"ru": "линейная алгебра",
+"en": "linear algebra",
+"fr": "algèbre linéaire"
+},
+{
+"a": "թվերի տեսություն",
+"lv": "C1",
+"ru": "теория чисел",
+"en": "number theory",
+"fr": "théorie des nombres"
+},
+{
+"a": "խմբերի տեսություն",
+"lv": "C1",
+"ru": "теория групп",
+"en": "group theory",
+"fr": "théorie des groupes"
+},
+{
+"a": "բազմությունների տեսություն",
+"lv": "C1",
+"ru": "теория множеств",
+"en": "set theory",
+"fr": "théorie des ensembles"
+},
+{
+"a": "կոմբինատորիկա",
+"lv": "C1",
+"ru": "комбинаторика",
+"en": "combinatorics",
+"fr": "combinatoire"
+},
+{
+"a": "հավանականությունների տեսություն",
+"lv": "C1",
+"ru": "теория вероятностей",
+"en": "probability theory",
+"fr": "théorie des probabilités"
+},
+{
+"a": "մաթեմատիկական վիճակագրություն",
+"lv": "C1",
+"ru": "математическая статистика",
+"en": "mathematical statistics",
+"fr": "statistique mathématique"
+},
+{
+"a": "դիսկրետ մաթեմատիկա",
+"lv": "C1",
+"ru": "дискретная математика",
+"en": "discrete mathematics",
+"fr": "mathématiques discrètes"
+},
+{
+"a": "տոպոլոգիա",
+"lv": "C1",
+"ru": "топология",
+"en": "topology",
+"fr": "topologie"
+},
+{
+"a": "ֆրակտալ",
+"lv": "C1",
+"ru": "фрактал",
+"en": "fractal",
+"fr": "fractale"
+},
+{
+"a": "անվերջություն",
+"lv": "C1",
+"ru": "бесконечность",
+"en": "infinity",
+"fr": "infini"
+},
+{
+"a": "սահմանային արժեք",
+"lv": "C1",
+"ru": "предельное значение",
+"en": "limit value",
+"fr": "valeur limite"
+},
+{
+"a": "շարունակականություն",
+"lv": "C1",
+"ru": "непрерывность",
+"en": "continuity",
+"fr": "continuité"
+},
+{
+"a": "թվաբանական պրոգրեսիա",
+"lv": "C1",
+"ru": "арифметическая прогрессия",
+"en": "arithmetic progression",
+"fr": "suite arithmétique"
+},
+{
+"a": "երկրաչափական պրոգրեսիա",
+"lv": "C1",
+"ru": "геометрическая прогрессия",
+"en": "geometric progression",
+"fr": "suite géométrique"
+},
+{
+"a": "ֆակտորիալ",
+"lv": "C1",
+"ru": "факториал",
+"en": "factorial",
+"fr": "factorielle"
+},
+{
+"a": "դետերմինանտ",
+"lv": "C1",
+"ru": "определитель",
+"en": "determinant",
+"fr": "déterminant"
+},
+{
+"a": "իրական թիվ",
+"lv": "C1",
+"ru": "действительное число",
+"en": "real number",
+"fr": "nombre réel"
+},
+{
+"a": "կոմպլեքս թիվ",
+"lv": "C1",
+"ru": "комплексное число",
+"en": "complex number",
+"fr": "nombre complexe"
+},
+{
+"a": "իռացիոնալ թիվ",
+"lv": "C1",
+"ru": "иррациональное число",
+"en": "irrational number",
+"fr": "nombre irrationnel"
+},
+{
+"a": "ռացիոնալ թիվ",
+"lv": "C1",
+"ru": "рациональное число",
+"en": "rational number",
+"fr": "nombre rationnel"
+},
+{
+"a": "բնական թիվ",
+"lv": "C1",
+"ru": "натуральное число",
+"en": "natural number",
+"fr": "entier naturel"
+},
+{
+"a": "բացասական թիվ",
+"lv": "C1",
+"ru": "отрицательное число",
+"en": "negative number",
+"fr": "nombre négatif"
+},
+{
+"a": "դրական թիվ",
+"lv": "C1",
+"ru": "положительное число",
+"en": "positive number",
+"fr": "nombre positif"
+},
+{
+"a": "պի թիվ",
+"lv": "C1",
+"ru": "число пи",
+"en": "pi",
+"fr": "nombre pi"
+},
+{
+"a": "էքսպոնենտ",
+"lv": "C1",
+"ru": "экспонента",
+"en": "exponential",
+"fr": "exponentielle"
+},
+{
+"a": "աստիճանացույց",
+"lv": "C1",
+"ru": "показатель степени",
+"en": "exponent",
+"fr": "exposant"
+},
+{
+"a": "արմատահանում",
+"lv": "C1",
+"ru": "извлечение корня",
+"en": "root extraction",
+"fr": "extraction de racine"
+},
+{
+"a": "բազմանդամ",
+"lv": "C1",
+"ru": "многочлен",
+"en": "polynomial",
+"fr": "polynôme"
+},
+{
+"a": "միանդամ",
+"lv": "C1",
+"ru": "одночлен",
+"en": "monomial",
+"fr": "monôme"
+},
+{
+"a": "հաստատուն",
+"lv": "C1",
+"ru": "константа, постоянный",
+"en": "constant",
+"fr": "constante"
+},
+{
+"a": "պարաբոլ",
+"lv": "C1",
+"ru": "парабола",
+"en": "parabola",
+"fr": "parabole"
+},
+{
+"a": "հիպերբոլ",
+"lv": "C1",
+"ru": "гипербола",
+"en": "hyperbola",
+"fr": "hyperbole"
+},
+{
+"a": "սինուս",
+"lv": "C1",
+"ru": "синус",
+"en": "sine",
+"fr": "sinus"
+},
+{
+"a": "կոսինուս",
+"lv": "C1",
+"ru": "косинус",
+"en": "cosine",
+"fr": "cosinus"
+},
+{
+"a": "տանգենս",
+"lv": "C1",
+"ru": "тангенс",
+"en": "tangent",
+"fr": "tangente"
+},
+{
+"a": "ռադիան",
+"lv": "C1",
+"ru": "радиан",
+"en": "radian",
+"fr": "radian"
+},
+{
+"a": "վեկտորական արտադրյալ",
+"lv": "C1",
+"ru": "векторное произведение",
+"en": "cross product",
+"fr": "produit vectoriel"
+},
+{
+"a": "սկալյար արտադրյալ",
+"lv": "C1",
+"ru": "скалярное произведение",
+"en": "dot product",
+"fr": "produit scalaire"
+},
+{
+"a": "մաթեմատիկական ինդուկցիա",
+"lv": "C1",
+"ru": "математическая индукция",
+"en": "mathematical induction",
+"fr": "récurrence"
+},
+{
+"a": "հաշվողական",
+"lv": "C1",
+"ru": "вычислительный",
+"en": "computational",
+"fr": "informatique, de calcul"
+},
+{
 "a": "վեհ",
 "lv": "C2",
 "ru": "величественный, возвышенный",
@@ -64489,5 +69837,355 @@
 "ru": "переводоведение",
 "en": "translation studies",
 "fr": "traductologie"
+},
+{
+"a": "մակրոտնտեսություն",
+"lv": "C2",
+"ru": "макроэкономика",
+"en": "macroeconomics",
+"fr": "macroéconomie"
+},
+{
+"a": "միկրոտնտեսություն",
+"lv": "C2",
+"ru": "микроэкономика",
+"en": "microeconomics",
+"fr": "microéconomie"
+},
+{
+"a": "տնտեսագիտական տեսություն",
+"lv": "C2",
+"ru": "экономическая теория",
+"en": "economic theory",
+"fr": "théorie économique"
+},
+{
+"a": "շուկայական հավասարակշռություն",
+"lv": "C2",
+"ru": "рыночное равновесие",
+"en": "market equilibrium",
+"fr": "équilibre du marché"
+},
+{
+"a": "ինֆլյացիա",
+"lv": "C2",
+"ru": "инфляция",
+"en": "inflation",
+"fr": "inflation"
+},
+{
+"a": "դեֆլյացիա",
+"lv": "C2",
+"ru": "дефляция",
+"en": "deflation",
+"fr": "déflation"
+},
+{
+"a": "ստագֆլյացիա",
+"lv": "C2",
+"ru": "стагфляция",
+"en": "stagflation",
+"fr": "stagflation"
+},
+{
+"a": "իրական եկամուտ",
+"lv": "C2",
+"ru": "реальный доход",
+"en": "real income",
+"fr": "revenu réel"
+},
+{
+"a": "անվանական եկամուտ",
+"lv": "C2",
+"ru": "номинальный доход",
+"en": "nominal income",
+"fr": "revenu nominal"
+},
+{
+"a": "համախառն ազգային արդյունք",
+"lv": "C2",
+"ru": "валовой национальный продукт",
+"en": "gross national product",
+"fr": "produit national brut"
+},
+{
+"a": "մեկ շնչին ընկնող",
+"lv": "C2",
+"ru": "на душу населения",
+"en": "per capita",
+"fr": "par habitant"
+},
+{
+"a": "սպառողական զամբյուղ",
+"lv": "C2",
+"ru": "потребительская корзина",
+"en": "consumer basket",
+"fr": "panier de la ménagère"
+},
+{
+"a": "Ջինիի գործակից",
+"lv": "C2",
+"ru": "коэффициент Джини",
+"en": "Gini coefficient",
+"fr": "coefficient de Gini"
+},
+{
+"a": "եկամտային անհավասարություն",
+"lv": "C2",
+"ru": "неравенство доходов",
+"en": "income inequality",
+"fr": "inégalité des revenus"
+},
+{
+"a": "տնտեսական ցիկլ",
+"lv": "C2",
+"ru": "экономический цикл",
+"en": "business cycle",
+"fr": "cycle économique"
+},
+{
+"a": "տնտեսական անկում",
+"lv": "C2",
+"ru": "экономический спад",
+"en": "economic downturn",
+"fr": "récession"
+},
+{
+"a": "տնտեսական վերելք",
+"lv": "C2",
+"ru": "экономический подъём",
+"en": "economic boom",
+"fr": "essor économique"
+},
+{
+"a": "լճացում",
+"lv": "C2",
+"ru": "застой",
+"en": "stagnation",
+"fr": "stagnation"
+},
+{
+"a": "գերարտադրություն",
+"lv": "C2",
+"ru": "перепроизводство",
+"en": "overproduction",
+"fr": "surproduction"
+},
+{
+"a": "աշխատաշուկա",
+"lv": "C2",
+"ru": "рынок труда",
+"en": "labour market",
+"fr": "marché du travail"
+},
+{
+"a": "աշխատուժ",
+"lv": "C2",
+"ru": "рабочая сила",
+"en": "workforce",
+"fr": "main-d'œuvre"
+},
+{
+"a": "գործազրկության մակարդակ",
+"lv": "C2",
+"ru": "уровень безработицы",
+"en": "unemployment rate",
+"fr": "taux de chômage"
+},
+{
+"a": "զբաղվածություն",
+"lv": "C2",
+"ru": "занятость",
+"en": "employment",
+"fr": "emploi"
+},
+{
+"a": "արտագնա աշխատանք",
+"lv": "C2",
+"ru": "отходничество, работа за границей",
+"en": "seasonal work abroad",
+"fr": "travail à l'étranger"
+},
+{
+"a": "միգրանտ աշխատող",
+"lv": "C2",
+"ru": "трудовой мигрант",
+"en": "migrant worker",
+"fr": "travailleur migrant"
+},
+{
+"a": "մրցակցային շուկա",
+"lv": "C2",
+"ru": "конкурентный рынок",
+"en": "competitive market",
+"fr": "marché concurrentiel"
+},
+{
+"a": "օլիգոպոլիա",
+"lv": "C2",
+"ru": "олигополия",
+"en": "oligopoly",
+"fr": "oligopole"
+},
+{
+"a": "կարտել",
+"lv": "C2",
+"ru": "картель",
+"en": "cartel",
+"fr": "cartel"
+},
+{
+"a": "հակամենաշնորհային",
+"lv": "C2",
+"ru": "антимонопольный",
+"en": "antitrust",
+"fr": "antitrust"
+},
+{
+"a": "պետական կարգավորում",
+"lv": "C2",
+"ru": "госрегулирование",
+"en": "state regulation",
+"fr": "régulation publique"
+},
+{
+"a": "ազատ շուկա",
+"lv": "C2",
+"ru": "свободный рынок",
+"en": "free market",
+"fr": "marché libre"
+},
+{
+"a": "պլանային տնտեսություն",
+"lv": "C2",
+"ru": "плановая экономика",
+"en": "planned economy",
+"fr": "économie planifiée"
+},
+{
+"a": "խառը տնտեսություն",
+"lv": "C2",
+"ru": "смешанная экономика",
+"en": "mixed economy",
+"fr": "économie mixte"
+},
+{
+"a": "մասնավորեցում",
+"lv": "C2",
+"ru": "приватизация",
+"en": "privatization",
+"fr": "privatisation"
+},
+{
+"a": "պետականացում",
+"lv": "C2",
+"ru": "огосударствление",
+"en": "nationalization",
+"fr": "étatisation"
+},
+{
+"a": "համաշխարհայնացում",
+"lv": "C2",
+"ru": "глобализация",
+"en": "globalization",
+"fr": "mondialisation"
+},
+{
+"a": "գլոբալացում",
+"lv": "C2",
+"ru": "глобализация",
+"en": "globalization",
+"fr": "globalisation"
+},
+{
+"a": "ապագլոբալացում",
+"lv": "C2",
+"ru": "деглобализация",
+"en": "deglobalization",
+"fr": "démondialisation"
+},
+{
+"a": "տնտեսական ինտեգրացիա",
+"lv": "C2",
+"ru": "экономическая интеграция",
+"en": "economic integration",
+"fr": "intégration économique"
+},
+{
+"a": "առևտրի ազատականացում",
+"lv": "C2",
+"ru": "либерализация торговли",
+"en": "trade liberalization",
+"fr": "libéralisation du commerce"
+},
+{
+"a": "պրոտեկցիոնիզմ",
+"lv": "C2",
+"ru": "протекционизм",
+"en": "protectionism",
+"fr": "protectionnisme"
+},
+{
+"a": "արտաքին առևտուր",
+"lv": "C2",
+"ru": "внешняя торговля",
+"en": "foreign trade",
+"fr": "commerce extérieur"
+},
+{
+"a": "ապրանքաշրջանառություն",
+"lv": "C2",
+"ru": "товарооборот",
+"en": "trade turnover",
+"fr": "volume des échanges"
+},
+{
+"a": "ներդրումների ներհոսք",
+"lv": "C2",
+"ru": "приток инвестиций",
+"en": "investment inflow",
+"fr": "afflux d'investissements"
+},
+{
+"a": "օտարերկրյա ուղղակի ներդրումներ",
+"lv": "C2",
+"ru": "прямые иностранные инвестиции",
+"en": "foreign direct investment",
+"fr": "investissements directs étrangers"
+},
+{
+"a": "դրամական զանգված",
+"lv": "C2",
+"ru": "денежная масса",
+"en": "money supply",
+"fr": "masse monétaire"
+},
+{
+"a": "արժևորում",
+"lv": "C2",
+"ru": "ревальвация, повышение стоимости",
+"en": "appreciation",
+"fr": "appréciation"
+},
+{
+"a": "լողացող փոխարժեք",
+"lv": "C2",
+"ru": "плавающий курс",
+"en": "floating exchange rate",
+"fr": "taux de change flottant"
+},
+{
+"a": "ֆիքսված փոխարժեք",
+"lv": "C2",
+"ru": "фиксированный курс",
+"en": "fixed exchange rate",
+"fr": "taux de change fixe"
+},
+{
+"a": "փոխարժեքի տատանում",
+"lv": "C2",
+"ru": "колебание курса",
+"en": "exchange rate fluctuation",
+"fr": "fluctuation du change"
 }
 ]
