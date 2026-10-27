@@ -16119,6 +16119,13 @@
 "birth",
 "👶",
 "naissance"
+],
+[
+"օգնություն",
+"помощь",
+"help",
+"🆘",
+"aide"
 ]
 ],
 "fr": "Mots utiles"
@@ -18819,6 +18826,310 @@
 ]
 ],
 "fr": "Phrases : chez des amis"
+},
+{
+"lv": "A2",
+"ru": "Повседневные дела",
+"en": "Everyday activities",
+"hy": "Առօրյա գործեր",
+"ic": "📆",
+"w": [
+[
+"քուն մտնել",
+"заснуть",
+"fall asleep",
+"😴",
+"s'endormir"
+],
+[
+"լոգանք ընդունել",
+"принять ванну",
+"take a bath",
+"🛁",
+"prendre un bain"
+],
+[
+"մազերը սանրել",
+"причесаться",
+"comb one's hair",
+"🪮",
+"se peigner"
+],
+[
+"սեղանը հավաքել",
+"убрать со стола",
+"clear the table",
+"",
+"débarrasser la table"
+],
+[
+"արդուկ անել",
+"гладить",
+"do the ironing",
+"",
+"repasser"
+],
+[
+"մաքրություն անել",
+"делать уборку",
+"clean up",
+"🧹",
+"faire le ménage"
+],
+[
+"ճաշ պատրաստել",
+"готовить обед",
+"cook a meal",
+"🍲",
+"préparer le repas"
+],
+[
+"հաց թխել",
+"печь хлеб",
+"bake bread",
+"🍞",
+"faire du pain"
+],
+[
+"զբոսանքի գնալ",
+"пойти на прогулку",
+"go for a walk",
+"🚶",
+"aller se promener"
+],
+[
+"ճամփորդել",
+"путешествовать",
+"travel",
+"🧳",
+"voyager"
+],
+[
+"արձակուրդ գնալ",
+"уйти в отпуск",
+"go on holiday",
+"🏖️",
+"partir en vacances"
+],
+[
+"սպորտով զբաղվել",
+"заниматься спортом",
+"do sport",
+"🏃",
+"faire du sport"
+],
+[
+"վազք անել",
+"бегать (на пробежке)",
+"go running",
+"",
+"faire du jogging"
+],
+[
+"հեռուստացույց դիտել",
+"смотреть телевизор",
+"watch TV",
+"📺",
+"regarder la télé"
+],
+[
+"երաժշտություն լսել",
+"слушать музыку",
+"listen to music",
+"🎧",
+"écouter de la musique"
+],
+[
+"զանգ անել",
+"позвонить",
+"make a call",
+"📞",
+"passer un coup de fil"
+],
+[
+"հաղորդագրություն ուղարկել",
+"отправить сообщение",
+"send a message",
+"✉️",
+"envoyer un message"
+],
+[
+"տեսանկարահանել",
+"снимать на видео",
+"film, record video",
+"🎥",
+"filmer"
+],
+[
+"համացանցում որոնել",
+"искать в интернете",
+"search online",
+"🔎",
+"chercher sur internet"
+],
+[
+"աշխատանքի գնալ",
+"идти на работу",
+"go to work",
+"💼",
+"aller au travail"
+],
+[
+"դաս պատրաստել",
+"делать уроки",
+"do homework",
+"📚",
+"faire ses devoirs"
+],
+[
+"քննություն հանձնել",
+"сдать экзамен",
+"pass an exam",
+"📝",
+"réussir un examen"
+],
+[
+"քննությունից կտրվել",
+"провалить экзамен",
+"fail an exam",
+"",
+"échouer à un examen"
+],
+[
+"վարկ վերցնել",
+"взять кредит",
+"take out a loan",
+"",
+"contracter un prêt"
+],
+[
+"պարտքը մարել",
+"погасить долг",
+"pay off a debt",
+"",
+"rembourser une dette"
+],
+[
+"հաշիվ բացել",
+"открыть счёт",
+"open an account",
+"🏦",
+"ouvrir un compte"
+],
+[
+"գումար հանել",
+"снять деньги",
+"withdraw money",
+"🏧",
+"retirer de l'argent"
+],
+[
+"գումար փոխանցել",
+"перевести деньги",
+"transfer money",
+"",
+"virer de l'argent"
+],
+[
+"մեքենա վարել",
+"водить машину",
+"drive a car",
+"🚗",
+"conduire une voiture"
+],
+[
+"վառելիք լցնել",
+"заправиться",
+"refuel",
+"⛽",
+"faire le plein"
+],
+[
+"ճանապարհը հատել",
+"перейти дорогу",
+"cross the road",
+"🚸",
+"traverser la rue"
+],
+[
+"ավտոբուս նստել",
+"сесть на автобус",
+"take the bus",
+"🚌",
+"prendre le bus"
+],
+[
+"ուշանալ գնացքից",
+"опоздать на поезд",
+"miss the train",
+"",
+"rater le train"
+],
+[
+"ուղեբեռ հանձնել",
+"сдать багаж",
+"check in luggage",
+"",
+"enregistrer ses bagages"
+],
+[
+"բժշկի գնալ",
+"пойти к врачу",
+"go to the doctor",
+"🩺",
+"aller chez le médecin"
+],
+[
+"դեղ ընդունել",
+"принимать лекарство",
+"take medicine",
+"💊",
+"prendre un médicament"
+],
+[
+"ներարկում անել",
+"сделать укол",
+"give an injection",
+"💉",
+"faire une piqûre"
+],
+[
+"քաշ կորցնել",
+"похудеть",
+"lose weight",
+"",
+"perdre du poids"
+],
+[
+"քաշ հավաքել",
+"набрать вес",
+"put on weight",
+"",
+"prendre du poids"
+],
+[
+"դիետա պահել",
+"сидеть на диете",
+"be on a diet",
+"🥗",
+"faire un régime"
+],
+[
+"ծխելը թողնել",
+"бросить курить",
+"quit smoking",
+"🚭",
+"arrêter de fumer"
+],
+[
+"երազ տեսնել",
+"видеть сон",
+"have a dream",
+"💭",
+"faire un rêve"
+]
+],
+"fr": "Activités quotidiennes"
 },
 {
 "lv": "B1",
@@ -35095,6 +35406,1344 @@
 "fr": "Phrases : au travail"
 },
 {
+"lv": "B1",
+"ru": "Понятия: общество и дела",
+"en": "Concepts: society and affairs",
+"hy": "Հասկացություններ. հասարակություն և գործեր",
+"ic": "🧩",
+"w": [
+[
+"ապահովություն",
+"обеспеченность, безопасность",
+"security, provision",
+"",
+"sécurité"
+],
+[
+"կախվածություն",
+"зависимость",
+"dependence, addiction",
+"",
+"dépendance"
+],
+[
+"անարդարություն",
+"несправедливость",
+"injustice",
+"",
+"injustice"
+],
+[
+"ժողովրդականություն",
+"популярность",
+"popularity",
+"",
+"popularité"
+],
+[
+"փառք",
+"слава",
+"glory, fame",
+"🏆",
+"gloire"
+],
+[
+"եսասիրություն",
+"эгоизм",
+"selfishness",
+"",
+"égoïsme"
+],
+[
+"հավատարմություն",
+"верность",
+"loyalty, faithfulness",
+"",
+"fidélité"
+],
+[
+"թշնամություն",
+"вражда",
+"enmity",
+"",
+"hostilité"
+],
+[
+"բարեկամություն",
+"дружба, родство",
+"friendship, kinship",
+"",
+"amitié"
+],
+[
+"միավորում",
+"объединение",
+"union, unification",
+"",
+"union"
+],
+[
+"փոխըմբռնում",
+"взаимопонимание",
+"mutual understanding",
+"🤝",
+"compréhension mutuelle"
+],
+[
+"կարծրատիպ",
+"стереотип",
+"stereotype",
+"",
+"stéréotype"
+],
+[
+"կարգապահություն",
+"дисциплина",
+"discipline",
+"",
+"discipline"
+],
+[
+"կարգ ու կանոն",
+"порядок",
+"order, tidiness",
+"",
+"ordre"
+],
+[
+"քաոս",
+"хаос",
+"chaos",
+"",
+"chaos"
+],
+[
+"զիջում",
+"уступка",
+"concession",
+"",
+"concession"
+],
+[
+"ոլորտ",
+"сфера",
+"field, sphere",
+"",
+"domaine"
+],
+[
+"միջավայր",
+"среда",
+"environment",
+"",
+"environnement"
+],
+[
+"անհրաժեշտություն",
+"необходимость",
+"necessity",
+"",
+"nécessité"
+],
+[
+"խոչընդոտ",
+"препятствие",
+"obstacle",
+"🚧",
+"obstacle"
+],
+[
+"արգելք",
+"запрет, преграда",
+"ban, barrier",
+"🚫",
+"interdiction"
+],
+[
+"մերժում",
+"отказ",
+"refusal, rejection",
+"",
+"refus"
+],
+[
+"ընդունում",
+"приём, принятие",
+"acceptance, reception",
+"",
+"acceptation"
+],
+[
+"հաստատում",
+"подтверждение",
+"confirmation",
+"✅",
+"confirmation"
+],
+[
+"պնդում",
+"утверждение",
+"claim, assertion",
+"",
+"affirmation"
+],
+[
+"պրակտիկա",
+"практика",
+"practice",
+"",
+"pratique"
+],
+[
+"ընթացք",
+"ход, течение",
+"course, progress",
+"",
+"cours"
+],
+[
+"նվազում",
+"уменьшение",
+"decrease",
+"",
+"diminution"
+],
+[
+"ավելացում",
+"увеличение",
+"increase",
+"",
+"augmentation"
+],
+[
+"պահպանում",
+"сохранение",
+"preservation",
+"",
+"conservation"
+],
+[
+"ոչնչացում",
+"уничтожение",
+"destruction",
+"",
+"destruction"
+],
+[
+"ստեղծում",
+"создание",
+"creation",
+"",
+"création"
+],
+[
+"անհաջողություն",
+"неудача",
+"failure",
+"",
+"échec"
+],
+[
+"կարողություն",
+"возможность, способность",
+"capability, ability",
+"",
+"capacité"
+],
+[
+"հսկողություն",
+"надзор",
+"supervision",
+"",
+"surveillance"
+],
+[
+"վերահսկողություն",
+"контроль",
+"control, oversight",
+"",
+"contrôle"
+],
+[
+"կառավարում",
+"управление",
+"management, governance",
+"",
+"gestion"
+],
+[
+"ղեկավարում",
+"руководство",
+"leadership",
+"",
+"direction"
+],
+[
+"կազմակերպում",
+"организация (действие)",
+"organizing",
+"",
+"organisation"
+],
+[
+"պլանավորում",
+"планирование",
+"planning",
+"🗓️",
+"planification"
+],
+[
+"իրականացում",
+"осуществление",
+"implementation",
+"",
+"réalisation"
+],
+[
+"կատարում",
+"выполнение",
+"performance, fulfilment",
+"",
+"exécution"
+],
+[
+"մասնակցություն",
+"участие",
+"participation",
+"",
+"participation"
+]
+],
+"fr": "Notions : société et affaires"
+},
+{
+"lv": "B1",
+"ru": "Материалы",
+"en": "Materials",
+"hy": "Նյութեր",
+"ic": "🧱",
+"w": [
+[
+"նյութ",
+"материал, вещество",
+"material, substance",
+"",
+"matière"
+],
+[
+"հումք",
+"сырьё",
+"raw material",
+"",
+"matière première"
+],
+[
+"վուշ",
+"лён",
+"linen, flax",
+"",
+"lin"
+],
+[
+"թավիշ",
+"бархат",
+"velvet",
+"",
+"velours"
+],
+[
+"գործվածք",
+"ткань",
+"fabric",
+"",
+"tissu"
+],
+[
+"սինթետիկա",
+"синтетика",
+"synthetic fabric",
+"",
+"synthétique"
+],
+[
+"ստվարաթուղթ",
+"картон",
+"cardboard",
+"📦",
+"carton"
+],
+[
+"ֆոլգա",
+"фольга",
+"foil",
+"",
+"papier d'aluminium"
+],
+[
+"ցելոֆան",
+"целлофан",
+"cellophane",
+"",
+"cellophane"
+],
+[
+"պոլիէթիլեն",
+"полиэтилен",
+"polythene",
+"",
+"polyéthylène"
+],
+[
+"թիթեղ",
+"жесть, лист металла",
+"tin plate, sheet metal",
+"",
+"tôle"
+],
+[
+"չուգուն",
+"чугун",
+"cast iron",
+"",
+"fonte"
+],
+[
+"արույր",
+"латунь",
+"brass",
+"",
+"laiton"
+],
+[
+"ագաթ",
+"агат",
+"agate",
+"",
+"agate"
+],
+[
+"գիպս",
+"гипс",
+"gypsum, plaster cast",
+"",
+"plâtre"
+],
+[
+"մազութ",
+"мазут",
+"fuel oil",
+"",
+"fioul"
+],
+[
+"կերոսին",
+"керосин",
+"kerosene",
+"",
+"kérosène"
+],
+[
+"պարաֆին",
+"парафин",
+"paraffin",
+"",
+"paraffine"
+],
+[
+"խեժ",
+"смола",
+"resin",
+"",
+"résine"
+],
+[
+"լաք",
+"лак",
+"varnish",
+"",
+"vernis"
+],
+[
+"կիր",
+"известь",
+"lime",
+"",
+"chaux"
+],
+[
+"կղմինդր",
+"черепица",
+"roof tile",
+"",
+"tuile"
+],
+[
+"շիֆեր",
+"шифер",
+"slate (roofing)",
+"",
+"ardoise"
+],
+[
+"մետաղալար",
+"проволока",
+"wire",
+"",
+"fil de fer"
+]
+],
+"fr": "Matériaux"
+},
+{
+"lv": "B1",
+"ru": "Инструменты и приборы",
+"en": "Tools and devices",
+"hy": "Գործիքներ և սարքեր",
+"ic": "🧰",
+"w": [
+[
+"օղակ",
+"кольцо, звено",
+"ring, link",
+"",
+"anneau"
+],
+[
+"կափույր",
+"клапан",
+"valve",
+"",
+"soupape"
+],
+[
+"զսպանակ",
+"пружина",
+"spring (coil)",
+"",
+"ressort"
+],
+[
+"լծակ",
+"рычаг",
+"lever",
+"",
+"levier"
+],
+[
+"ճախարակ",
+"блок, прялка",
+"pulley, spinning wheel",
+"",
+"poulie"
+],
+[
+"ատամնանիվ",
+"шестерёнка",
+"gear wheel",
+"⚙️",
+"engrenage"
+],
+[
+"մխոց",
+"поршень",
+"piston",
+"",
+"piston"
+],
+[
+"խրոց",
+"вилка (штепсель)",
+"plug",
+"🔌",
+"fiche"
+],
+[
+"լուսադիոդ",
+"светодиод",
+"LED",
+"",
+"LED"
+],
+[
+"կուտակիչ",
+"аккумулятор",
+"accumulator, battery",
+"🔋",
+"accumulateur"
+],
+[
+"հողանցում",
+"заземление",
+"earthing",
+"",
+"mise à la terre"
+],
+[
+"ապահովիչ",
+"предохранитель",
+"fuse",
+"",
+"fusible"
+],
+[
+"ջրաչափ",
+"водомер",
+"water meter",
+"",
+"compteur d'eau"
+],
+[
+"գազաչափ",
+"газовый счётчик",
+"gas meter",
+"",
+"compteur de gaz"
+],
+[
+"էլեկտրաչափ",
+"электросчётчик",
+"electricity meter",
+"",
+"compteur électrique"
+],
+[
+"կողմնացույց",
+"компас",
+"compass",
+"🧭",
+"boussole"
+],
+[
+"հեռադիտակ",
+"бинокль, подзорная труба",
+"binoculars",
+"🔭",
+"jumelles"
+],
+[
+"խոշորացույց",
+"лупа",
+"magnifying glass",
+"🔍",
+"loupe"
+],
+[
+"չափագոտի",
+"рулетка",
+"tape measure",
+"",
+"mètre ruban"
+],
+[
+"հարթաչափ",
+"уровень (строительный)",
+"spirit level",
+"",
+"niveau à bulle"
+],
+[
+"ուղղալար",
+"отвес",
+"plumb line",
+"",
+"fil à plomb"
+],
+[
+"հորատիչ",
+"дрель",
+"drill",
+"",
+"perceuse"
+],
+[
+"շաղափ",
+"сверло, бур",
+"drill bit",
+"",
+"foret"
+],
+[
+"խարտոց",
+"напильник",
+"file, rasp",
+"",
+"lime"
+],
+[
+"հղկաթուղթ",
+"наждачная бумага",
+"sandpaper",
+"",
+"papier de verre"
+],
+[
+"սրիչ",
+"точилка",
+"sharpener",
+"",
+"taille-crayon"
+],
+[
+"մանգաղ",
+"серп",
+"sickle",
+"",
+"faucille"
+],
+[
+"գերանդի",
+"коса",
+"scythe",
+"",
+"faux"
+],
+[
+"սայլակ",
+"тележка",
+"cart, trolley",
+"🛒",
+"chariot"
+],
+[
+"տակառ",
+"бочка",
+"barrel",
+"🛢️",
+"tonneau"
+],
+[
+"կժ",
+"кувшин",
+"jug",
+"🏺",
+"cruche"
+],
+[
+"պուտուկ",
+"глиняный горшок",
+"clay pot",
+"",
+"pot en terre"
+],
+[
+"սկահակ",
+"чаша",
+"bowl",
+"",
+"coupe"
+],
+[
+"կճուճ",
+"глиняный горшок для варки",
+"earthenware cooking pot",
+"",
+"marmite en terre"
+],
+[
+"տաշտ",
+"корыто, таз",
+"trough, tub",
+"",
+"baquet"
+],
+[
+"սնդուկ",
+"сундук",
+"chest, trunk",
+"",
+"coffre"
+]
+],
+"fr": "Outils et appareils"
+},
+{
+"lv": "B1",
+"ru": "Глагольные сочетания",
+"en": "Verb phrases",
+"hy": "Բայական կապակցություններ",
+"ic": "🔗",
+"w": [
+[
+"որոշում կայացնել",
+"принять решение",
+"make a decision",
+"",
+"prendre une décision"
+],
+[
+"քայլ անել",
+"сделать шаг",
+"take a step",
+"👣",
+"faire un pas"
+],
+[
+"օգնություն ցույց տալ",
+"оказать помощь",
+"provide help",
+"",
+"porter assistance"
+],
+[
+"ազդեցություն ունենալ",
+"иметь влияние",
+"have an influence",
+"",
+"avoir de l'influence"
+],
+[
+"դեր խաղալ",
+"играть роль",
+"play a role",
+"🎭",
+"jouer un rôle"
+],
+[
+"նշանակություն ունենալ",
+"иметь значение",
+"matter, be significant",
+"",
+"avoir de l'importance"
+],
+[
+"իմաստ ունենալ",
+"иметь смысл",
+"make sense",
+"",
+"avoir du sens"
+],
+[
+"հնարավորություն տալ",
+"дать возможность",
+"give an opportunity",
+"",
+"donner la possibilité"
+],
+[
+"պատասխան տալ",
+"дать ответ",
+"give an answer",
+"",
+"répondre"
+],
+[
+"հարց տալ",
+"задать вопрос",
+"ask a question",
+"❓",
+"poser une question"
+],
+[
+"ձայն տալ",
+"окликнуть, проголосовать",
+"call out, vote",
+"",
+"appeler, voter"
+],
+[
+"ծափ տալ",
+"хлопать в ладоши",
+"clap",
+"👏",
+"frapper dans ses mains"
+],
+[
+"հերթ կանգնել",
+"встать в очередь",
+"queue up",
+"",
+"faire la queue"
+],
+[
+"աշխատանքի ընդունվել",
+"устроиться на работу",
+"get a job",
+"",
+"être embauché"
+],
+[
+"աշխատանքից դուրս գալ",
+"уволиться",
+"quit a job",
+"",
+"démissionner"
+],
+[
+"թոշակի անցնել",
+"выйти на пенсию",
+"retire",
+"",
+"prendre sa retraite"
+],
+[
+"երեխա ունենալ",
+"завести ребёнка",
+"have a baby",
+"👶",
+"avoir un enfant"
+],
+[
+"շրջադարձ կատարել",
+"развернуться, повернуть",
+"make a turn",
+"",
+"faire demi-tour"
+],
+[
+"վիրահատվել",
+"перенести операцию",
+"have surgery",
+"",
+"se faire opérer"
+],
+[
+"զզվել",
+"испытывать отвращение",
+"be disgusted",
+"🤢",
+"être dégoûté"
+],
+[
+"մխիթարել",
+"утешать",
+"comfort",
+"",
+"réconforter"
+],
+[
+"հանդիմանել",
+"отчитывать",
+"reprimand",
+"",
+"réprimander"
+],
+[
+"պարգևատրել",
+"награждать",
+"award, reward",
+"🏅",
+"récompenser"
+],
+[
+"շնորհակալություն հայտնել",
+"выразить благодарность",
+"express gratitude",
+"",
+"exprimer sa gratitude"
+],
+[
+"բարեմաղթել",
+"желать добра",
+"wish well",
+"",
+"souhaiter"
+],
+[
+"համակրել",
+"симпатизировать",
+"sympathize with",
+"",
+"sympathiser"
+],
+[
+"կարեկցել",
+"сочувствовать",
+"feel compassion",
+"",
+"compatir"
+]
+],
+"fr": "Locutions verbales"
+},
+{
+"lv": "B1",
+"ru": "Сельское хозяйство",
+"en": "Farming",
+"hy": "Գյուղատնտեսություն",
+"ic": "🚜",
+"w": [
+[
+"երկրագործություն",
+"земледелие",
+"arable farming",
+"",
+"agriculture"
+],
+[
+"անասնապահություն",
+"животноводство",
+"livestock farming",
+"",
+"élevage"
+],
+[
+"խաղողագործություն",
+"виноградарство",
+"viticulture",
+"🍇",
+"viticulture"
+],
+[
+"գինեգործություն",
+"виноделие",
+"winemaking",
+"🍷",
+"vinification"
+],
+[
+"մեղվաբուծություն",
+"пчеловодство",
+"beekeeping",
+"🐝",
+"apiculture"
+],
+[
+"ձկնաբուծություն",
+"рыбоводство",
+"fish farming",
+"",
+"pisciculture"
+],
+[
+"թռչնաբուծություն",
+"птицеводство",
+"poultry farming",
+"🐔",
+"aviculture"
+],
+[
+"բանջարաբուծություն",
+"овощеводство",
+"vegetable growing",
+"",
+"maraîchage"
+],
+[
+"ագարակ",
+"хутор, ферма",
+"farmstead",
+"",
+"ferme"
+],
+[
+"արտ",
+"нива, поле",
+"cornfield",
+"",
+"champ"
+],
+[
+"վարելահող",
+"пашня",
+"arable land",
+"",
+"terre arable"
+],
+[
+"խոտհարք",
+"сенокос",
+"hayfield",
+"",
+"pré de fauche"
+],
+[
+"խաղողի այգի",
+"виноградник",
+"vineyard",
+"",
+"vignoble"
+],
+[
+"պտղատու այգի",
+"фруктовый сад",
+"orchard",
+"🍎",
+"verger"
+],
+[
+"բանջարանոց",
+"огород",
+"vegetable garden",
+"🥕",
+"potager"
+],
+[
+"ոռոգում",
+"орошение",
+"irrigation",
+"",
+"irrigation"
+],
+[
+"հորատանցք",
+"скважина",
+"borehole, well",
+"",
+"forage"
+],
+[
+"հնձել",
+"жать, косить",
+"reap, mow",
+"",
+"faucher"
+],
+[
+"հունձ",
+"жатва",
+"harvest (reaping)",
+"",
+"moisson"
+],
+[
+"բերքահավաք",
+"сбор урожая",
+"harvest",
+"🧺",
+"récolte"
+],
+[
+"ծխախոտ",
+"табак",
+"tobacco",
+"",
+"tabac"
+],
+[
+"շաքարի ճակնդեղ",
+"сахарная свёкла",
+"sugar beet",
+"",
+"betterave sucrière"
+],
+[
+"ծղոտ",
+"солома",
+"straw",
+"",
+"paille"
+],
+[
+"դեզ",
+"стог",
+"haystack",
+"",
+"meule de foin"
+],
+[
+"կեր",
+"корм",
+"feed, fodder",
+"",
+"fourrage"
+],
+[
+"մարագ",
+"сеновал",
+"hayloft",
+"",
+"grange"
+],
+[
+"հավաբուն",
+"курятник",
+"henhouse",
+"",
+"poulailler"
+],
+[
+"խոզանոց",
+"свинарник",
+"pigsty",
+"",
+"porcherie"
+],
+[
+"փարախ",
+"овчарня",
+"sheepfold",
+"",
+"bergerie"
+],
+[
+"մեղվանոց",
+"пасека",
+"apiary",
+"",
+"rucher"
+],
+[
+"մեղրամոմ",
+"пчелиный воск",
+"beeswax",
+"",
+"cire d'abeille"
+],
+[
+"եզ",
+"вол",
+"ox",
+"🐂",
+"bœuf"
+],
+[
+"խոճկոր",
+"поросёнок",
+"piglet",
+"🐖",
+"porcelet"
+],
+[
+"մտրուկ",
+"жеребёнок",
+"foal",
+"",
+"poulain"
+],
+[
+"զամբիկ",
+"кобыла",
+"mare",
+"",
+"jument"
+],
+[
+"ավանակ",
+"ослёнок, осёл",
+"young donkey",
+"",
+"ânon"
+],
+[
+"արածեցնել",
+"пасти",
+"graze",
+"",
+"faire paître"
+],
+[
+"խուզել",
+"стричь (овец)",
+"shear",
+"",
+"tondre"
+],
+[
+"պարարտացնել",
+"удобрять",
+"fertilize",
+"",
+"fertiliser"
+],
+[
+"սրսկել",
+"опрыскивать",
+"spray",
+"",
+"pulvériser"
+],
+[
+"պատվաստել",
+"прививать",
+"vaccinate, graft",
+"💉",
+"vacciner, greffer"
+],
+[
+"էտել",
+"обрезать (ветки)",
+"prune",
+"✂️",
+"tailler"
+],
+[
+"քաղհանել",
+"полоть",
+"weed",
+"",
+"désherber"
+],
+[
+"ակոս",
+"борозда",
+"furrow",
+"",
+"sillon"
+],
+[
+"գութան",
+"плуг",
+"plough",
+"",
+"charrue"
+],
+[
+"արոր",
+"соха",
+"wooden plough",
+"",
+"araire"
+],
+[
+"կալ",
+"ток (гумно)",
+"threshing floor",
+"",
+"aire de battage"
+],
+[
+"կալսել",
+"молотить",
+"thresh",
+"",
+"battre le blé"
+],
+[
+"ջրաղաց",
+"водяная мельница",
+"watermill",
+"",
+"moulin à eau"
+],
+[
+"հողմաղաց",
+"ветряная мельница",
+"windmill",
+"",
+"moulin à vent"
+],
+[
+"նախիր",
+"стадо",
+"herd (of cattle)",
+"🐄",
+"troupeau"
+],
+[
+"հոտ",
+"запах; отара",
+"smell; flock",
+"",
+"odeur ; troupeau"
+],
+[
+"երամ",
+"стая",
+"flock (of birds)",
+"🐦",
+"volée"
+],
+[
+"գոմաղբ",
+"навоз",
+"manure",
+"",
+"fumier"
+]
+],
+"fr": "Agriculture"
+},
+{
 "lv": "B2",
 "ru": "Личность и психология",
 "en": "Personality and psychology",
@@ -45449,6 +47098,1302 @@
 ]
 ],
 "fr": "Proverbes"
+},
+{
+"lv": "B2",
+"ru": "Понятия: ценности и процессы",
+"en": "Concepts: values and processes",
+"hy": "Հասկացություններ. արժեքներ և գործընթացներ",
+"ic": "⚖️",
+"w": [
+[
+"ստրկություն",
+"рабство",
+"slavery",
+"",
+"esclavage"
+],
+[
+"բռնակալություն",
+"тирания",
+"tyranny",
+"",
+"tyrannie"
+],
+[
+"հանրաճանաչություն",
+"общеизвестность",
+"renown",
+"",
+"notoriété"
+],
+[
+"անպատվություն",
+"бесчестье",
+"dishonour",
+"",
+"déshonneur"
+],
+[
+"ինքնասիրություն",
+"самолюбие",
+"self-esteem, vanity",
+"",
+"amour-propre"
+],
+[
+"անձնազոհություն",
+"самопожертвование",
+"self-sacrifice",
+"",
+"abnégation"
+],
+[
+"նվիրվածություն",
+"преданность",
+"devotion",
+"",
+"dévouement"
+],
+[
+"մատնություն",
+"предательство, донос",
+"betrayal",
+"",
+"trahison"
+],
+[
+"համերաշխություն",
+"солидарность, согласие",
+"solidarity, harmony",
+"",
+"solidarité"
+],
+[
+"պառակտում",
+"раскол",
+"split, division",
+"",
+"scission"
+],
+[
+"համախմբում",
+"сплочение",
+"rallying, consolidation",
+"",
+"rassemblement"
+],
+[
+"անհանդուրժողականություն",
+"нетерпимость",
+"intolerance",
+"",
+"intolérance"
+],
+[
+"ռասիզմ",
+"расизм",
+"racism",
+"",
+"racisme"
+],
+[
+"կանխակալություն",
+"предвзятость",
+"bias",
+"",
+"parti pris"
+],
+[
+"նախապաշարմունք",
+"предрассудок",
+"prejudice",
+"",
+"préjugé"
+],
+[
+"բարք",
+"нрав, обычай",
+"custom, manners",
+"",
+"mœurs"
+],
+[
+"անբարոյականություն",
+"безнравственность",
+"immorality",
+"",
+"immoralité"
+],
+[
+"անպատասխանատվություն",
+"безответственность",
+"irresponsibility",
+"",
+"irresponsabilité"
+],
+[
+"անկարգություն",
+"беспорядок",
+"disorder, unrest",
+"",
+"désordre"
+],
+[
+"փոխզիջում",
+"компромисс",
+"compromise",
+"",
+"compromis"
+],
+[
+"ներգործություն",
+"воздействие",
+"impact, effect",
+"",
+"action"
+],
+[
+"փոխհարաբերություն",
+"взаимоотношение",
+"relationship",
+"",
+"relation"
+],
+[
+"համընկնում",
+"совпадение",
+"coincidence, overlap",
+"",
+"coïncidence"
+],
+[
+"հակադրություն",
+"противопоставление, контраст",
+"contrast, opposition",
+"",
+"opposition"
+],
+[
+"բնագավառ",
+"область, отрасль",
+"domain, field",
+"",
+"domaine"
+],
+[
+"տիրույթ",
+"владение, область",
+"domain, range",
+"",
+"domaine"
+],
+[
+"անհնարինություն",
+"невозможность",
+"impossibility",
+"",
+"impossibilité"
+],
+[
+"պարտադրանք",
+"принуждение",
+"coercion",
+"",
+"contrainte"
+],
+[
+"ժխտում",
+"отрицание",
+"denial",
+"",
+"négation"
+],
+[
+"հերքում",
+"опровержение",
+"refutation, denial",
+"",
+"démenti"
+],
+[
+"հետընթաց",
+"регресс",
+"regression",
+"",
+"régression"
+],
+[
+"վերափոխում",
+"преобразование",
+"transformation",
+"",
+"transformation"
+],
+[
+"նորացում",
+"обновление",
+"renewal",
+"",
+"renouvellement"
+],
+[
+"արդիականացում",
+"модернизация",
+"modernization",
+"",
+"modernisation"
+],
+[
+"վրիպում",
+"промах",
+"slip, blunder",
+"",
+"bévue"
+],
+[
+"ներգրավվածություն",
+"вовлечённость",
+"engagement, involvement",
+"",
+"implication"
+],
+[
+"հոգածություն",
+"забота",
+"care, concern",
+"",
+"sollicitude"
+]
+],
+"fr": "Notions : valeurs et processus"
+},
+{
+"lv": "B2",
+"ru": "СМИ и журналистика",
+"en": "Media and journalism",
+"hy": "Լրատվամիջոցներ և լրագրություն",
+"ic": "📰",
+"w": [
+[
+"լրատվամիջոց",
+"СМИ, средство информации",
+"news outlet, media outlet",
+"",
+"média"
+],
+[
+"զանգվածային լրատվամիջոցներ",
+"средства массовой информации",
+"mass media",
+"",
+"médias de masse"
+],
+[
+"մամուլ",
+"пресса",
+"the press",
+"🗞️",
+"presse"
+],
+[
+"նորություն",
+"новость",
+"news",
+"📰",
+"nouvelle"
+],
+[
+"հրապարակում",
+"публикация",
+"publication",
+"",
+"publication"
+],
+[
+"հրատարակություն",
+"издание",
+"edition, publishing",
+"",
+"édition"
+],
+[
+"խմբագրություն",
+"редакция",
+"editorial office",
+"",
+"rédaction"
+],
+[
+"գլխավոր խմբագիր",
+"главный редактор",
+"editor-in-chief",
+"",
+"rédacteur en chef"
+],
+[
+"թղթակից",
+"корреспондент",
+"correspondent",
+"",
+"correspondant"
+],
+[
+"լրագրություն",
+"журналистика",
+"journalism",
+"",
+"journalisme"
+],
+[
+"հետաքննական լրագրություն",
+"журналистское расследование",
+"investigative journalism",
+"",
+"journalisme d'investigation"
+],
+[
+"ռեպորտաժ",
+"репортаж",
+"report, coverage",
+"",
+"reportage"
+],
+[
+"խմբագրական",
+"редакционная статья",
+"editorial",
+"",
+"éditorial"
+],
+[
+"սյունակ",
+"колонка, столбец",
+"column",
+"",
+"colonne"
+],
+[
+"ենթավերնագիր",
+"подзаголовок",
+"subheading",
+"",
+"sous-titre"
+],
+[
+"առաջին էջ",
+"первая полоса",
+"front page",
+"",
+"une"
+],
+[
+"լրահոս",
+"новостная лента",
+"news feed",
+"",
+"fil d'actualité"
+],
+[
+"սենսացիա",
+"сенсация",
+"sensation",
+"",
+"sensation"
+],
+[
+"սկանդալ",
+"скандал",
+"scandal",
+"",
+"scandale"
+],
+[
+"ապատեղեկատվություն",
+"дезинформация",
+"disinformation",
+"",
+"désinformation"
+],
+[
+"կեղծ լուր",
+"фейк, ложная новость",
+"fake news",
+"",
+"fausse nouvelle"
+],
+[
+"անանուն աղբյուր",
+"анонимный источник",
+"anonymous source",
+"",
+"source anonyme"
+],
+[
+"մամուլի հաղորդագրություն",
+"пресс-релиз",
+"press release",
+"",
+"communiqué de presse"
+],
+[
+"մամուլի ասուլիս",
+"пресс-конференция",
+"press conference",
+"🎤",
+"conférence de presse"
+],
+[
+"ասուլիս",
+"брифинг, пресс-конференция",
+"briefing",
+"",
+"point presse"
+],
+[
+"խոսնակ",
+"пресс-секретарь, спикер",
+"spokesperson",
+"",
+"porte-parole"
+],
+[
+"մամուլի քարտուղար",
+"пресс-секретарь",
+"press secretary",
+"",
+"attaché de presse"
+],
+[
+"հանրային կապեր",
+"связи с общественностью",
+"public relations",
+"",
+"relations publiques"
+],
+[
+"գովազդատու",
+"рекламодатель",
+"advertiser",
+"",
+"annonceur"
+],
+[
+"գովազդային հոլովակ",
+"рекламный ролик",
+"commercial",
+"",
+"spot publicitaire"
+],
+[
+"վահանակ",
+"щит, панель",
+"panel, billboard",
+"",
+"panneau"
+],
+[
+"ռադիոկայան",
+"радиостанция",
+"radio station",
+"📻",
+"station de radio"
+],
+[
+"ուղիղ հեռարձակում",
+"прямая трансляция",
+"live broadcast",
+"",
+"retransmission en direct"
+],
+[
+"հեռարձակում",
+"трансляция, вещание",
+"broadcasting",
+"",
+"diffusion"
+],
+[
+"դիտողականություն",
+"просматриваемость",
+"viewership",
+"",
+"audience"
+],
+[
+"բաժանորդագրություն",
+"подписка",
+"subscription",
+"",
+"abonnement"
+],
+[
+"առցանց հրատարակություն",
+"интернет-издание",
+"online publication",
+"",
+"publication en ligne"
+],
+[
+"լրատվական գործակալություն",
+"информационное агентство",
+"news agency",
+"",
+"agence de presse"
+],
+[
+"մեդիա",
+"медиа",
+"media",
+"",
+"médias"
+],
+[
+"բլոգ",
+"блог",
+"blog",
+"",
+"blog"
+],
+[
+"պոդքաստ",
+"подкаст",
+"podcast",
+"🎙️",
+"podcast"
+],
+[
+"ինֆլյուենսեր",
+"инфлюенсер",
+"influencer",
+"",
+"influenceur"
+],
+[
+"վիրուսային",
+"вирусный",
+"viral",
+"",
+"viral"
+],
+[
+"տրենդ",
+"тренд",
+"trend",
+"",
+"tendance"
+],
+[
+"հեղինակային իրավունք",
+"авторское право",
+"copyright",
+"©️",
+"droit d'auteur"
+],
+[
+"գրագողություն",
+"плагиат",
+"plagiarism",
+"",
+"plagiat"
+]
+],
+"fr": "Médias et journalisme"
+},
+{
+"lv": "B2",
+"ru": "Экология 2",
+"en": "Ecology 2",
+"hy": "Էկոլոգիա 2",
+"ic": "♻️",
+"w": [
+[
+"օդի աղտոտվածություն",
+"загрязнение воздуха",
+"air pollution",
+"🏭",
+"pollution de l'air"
+],
+[
+"ջրի աղտոտում",
+"загрязнение воды",
+"water pollution",
+"",
+"pollution de l'eau"
+],
+[
+"աղբավայր",
+"свалка",
+"landfill",
+"",
+"décharge"
+],
+[
+"տեսակավորում",
+"сортировка",
+"sorting (of waste)",
+"♻️",
+"tri"
+],
+[
+"գլոբալ տաքացում",
+"глобальное потепление",
+"global warming",
+"🌡️",
+"réchauffement climatique"
+],
+[
+"ջերմոցային էֆեկտ",
+"парниковый эффект",
+"greenhouse effect",
+"",
+"effet de serre"
+],
+[
+"ջերմոցային գազեր",
+"парниковые газы",
+"greenhouse gases",
+"",
+"gaz à effet de serre"
+],
+[
+"արտանետումներ",
+"выбросы",
+"emissions",
+"",
+"émissions"
+],
+[
+"ածխածնի հետք",
+"углеродный след",
+"carbon footprint",
+"👣",
+"empreinte carbone"
+],
+[
+"անապատացում",
+"опустынивание",
+"desertification",
+"",
+"désertification"
+],
+[
+"էրոզիա",
+"эрозия",
+"erosion",
+"",
+"érosion"
+],
+[
+"անհետացող տեսակ",
+"исчезающий вид",
+"endangered species",
+"",
+"espèce menacée"
+],
+[
+"Կարմիր գիրք",
+"Красная книга",
+"the Red Book (of endangered species)",
+"",
+"le Livre rouge"
+],
+[
+"արգելավայր",
+"заказник",
+"wildlife sanctuary",
+"",
+"réserve naturelle"
+],
+[
+"բնության հուշարձան",
+"памятник природы",
+"natural monument",
+"",
+"monument naturel"
+],
+[
+"վերականգնվող էներգիա",
+"возобновляемая энергия",
+"renewable energy",
+"",
+"énergie renouvelable"
+],
+[
+"այլընտրանքային էներգիա",
+"альтернативная энергия",
+"alternative energy",
+"",
+"énergie alternative"
+],
+[
+"արևային վահանակ",
+"солнечная панель",
+"solar panel",
+"☀️",
+"panneau solaire"
+],
+[
+"հողմակայան",
+"ветряная электростанция",
+"wind farm",
+"",
+"parc éolien"
+],
+[
+"էկոլոգիապես մաքուր",
+"экологически чистый",
+"eco-friendly",
+"",
+"écologique"
+],
+[
+"օրգանական",
+"органический",
+"organic",
+"",
+"biologique"
+],
+[
+"կենսաքայքայվող",
+"биоразлагаемый",
+"biodegradable",
+"",
+"biodégradable"
+],
+[
+"պլաստիկ աղբ",
+"пластиковый мусор",
+"plastic waste",
+"",
+"déchets plastiques"
+],
+[
+"ջրային ռեսուրսներ",
+"водные ресурсы",
+"water resources",
+"",
+"ressources en eau"
+],
+[
+"խմելու ջուր",
+"питьевая вода",
+"drinking water",
+"🚰",
+"eau potable"
+],
+[
+"կոյուղաջրեր",
+"сточные воды",
+"sewage",
+"",
+"eaux usées"
+],
+[
+"մաքրման կայան",
+"очистные сооружения",
+"treatment plant",
+"",
+"station d'épuration"
+],
+[
+"թթվային անձրև",
+"кислотный дождь",
+"acid rain",
+"",
+"pluie acide"
+],
+[
+"սմոգ",
+"смог",
+"smog",
+"",
+"smog"
+],
+[
+"ճառագայթային աղտոտում",
+"радиационное загрязнение",
+"radioactive contamination",
+"",
+"contamination radioactive"
+],
+[
+"բնական աղետ",
+"стихийное бедствие",
+"natural disaster",
+"",
+"catastrophe naturelle"
+],
+[
+"բնապահպան",
+"эколог, защитник природы",
+"environmentalist",
+"",
+"écologiste"
+]
+],
+"fr": "Écologie 2"
+},
+{
+"lv": "B2",
+"ru": "Архитектура и стройка",
+"en": "Architecture and building",
+"hy": "Ճարտարապետություն և շինարարություն",
+"ic": "🏗️",
+"w": [
+[
+"գծագիր",
+"чертёж",
+"drawing, blueprint",
+"📐",
+"plan"
+],
+[
+"էսքիզ",
+"эскиз",
+"sketch",
+"",
+"esquisse"
+],
+[
+"մակետ",
+"макет",
+"scale model",
+"",
+"maquette"
+],
+[
+"շինություն",
+"постройка",
+"building, structure",
+"",
+"bâtiment"
+],
+[
+"կառույց",
+"сооружение",
+"construction, structure",
+"",
+"ouvrage"
+],
+[
+"բազմահարկ շենք",
+"многоэтажный дом",
+"high-rise building",
+"🏢",
+"immeuble"
+],
+[
+"առանձնատուն",
+"особняк, частный дом",
+"detached house",
+"🏡",
+"maison individuelle"
+],
+[
+"ամառանոց",
+"дача",
+"summer house",
+"",
+"maison de campagne"
+],
+[
+"քոթեջ",
+"коттедж",
+"cottage",
+"",
+"cottage"
+],
+[
+"վիլլա",
+"вилла",
+"villa",
+"",
+"villa"
+],
+[
+"դղյակ",
+"замок, дворец",
+"castle, manor",
+"",
+"château"
+],
+[
+"կամար",
+"арка",
+"arch",
+"",
+"arc"
+],
+[
+"սյուն",
+"колонна",
+"column, pillar",
+"🏛️",
+"colonne"
+],
+[
+"սյունաշար",
+"колоннада",
+"colonnade",
+"",
+"colonnade"
+],
+[
+"քիվ",
+"карниз",
+"cornice",
+"",
+"corniche"
+],
+[
+"հիմնաքար",
+"краеугольный камень",
+"foundation stone",
+"",
+"première pierre"
+],
+[
+"միջնորմ",
+"перегородка",
+"partition wall",
+"",
+"cloison"
+],
+[
+"աստիճանավանդակ",
+"лестничная клетка",
+"stairwell",
+"",
+"cage d'escalier"
+],
+[
+"վերնահարկ",
+"мансарда, верхний этаж",
+"upper floor, attic floor",
+"",
+"étage supérieur"
+],
+[
+"ներքնահարկ",
+"цокольный этаж",
+"basement floor",
+"",
+"sous-sol"
+],
+[
+"միասենյականոց",
+"однокомнатная квартира",
+"one-room flat",
+"",
+"studio"
+],
+[
+"երկսենյականոց",
+"двухкомнатная квартира",
+"two-room flat",
+"",
+"deux-pièces"
+],
+[
+"ստուդիա",
+"студия",
+"studio",
+"",
+"studio"
+],
+[
+"եվրովերանորոգում",
+"евроремонт",
+"high-end renovation",
+"",
+"rénovation haut de gamme"
+],
+[
+"կապիտալ վերանորոգում",
+"капитальный ремонт",
+"major renovation",
+"",
+"rénovation complète"
+],
+[
+"շինհրապարակ",
+"стройплощадка",
+"building site",
+"🚧",
+"chantier"
+],
+[
+"կապալառու",
+"подрядчик",
+"contractor",
+"",
+"entrepreneur"
+],
+[
+"ճարտարագետ",
+"инженер",
+"engineer",
+"",
+"ingénieur"
+],
+[
+"քաղաքաշինություն",
+"градостроительство",
+"urban planning",
+"",
+"urbanisme"
+],
+[
+"գլխավոր հատակագիծ",
+"генеральный план",
+"master plan",
+"",
+"plan directeur"
+],
+[
+"միկրոշրջան",
+"микрорайон",
+"housing estate",
+"",
+"quartier résidentiel"
+],
+[
+"պատնեշ",
+"барьер, заграждение",
+"barrier, embankment",
+"",
+"barrière"
+],
+[
+"կոթող",
+"стела, монумент",
+"stele, monument",
+"",
+"stèle"
+]
+],
+"fr": "Architecture et construction"
+},
+{
+"lv": "B2",
+"ru": "Изобразительное искусство",
+"en": "Fine arts",
+"hy": "Կերպարվեստ",
+"ic": "🖼️",
+"w": [
+[
+"խճանկար",
+"мозаика",
+"mosaic",
+"",
+"mosaïque"
+],
+[
+"որմնաքանդակ",
+"рельеф на стене",
+"wall relief",
+"",
+"bas-relief mural"
+],
+[
+"բարձրաքանդակ",
+"горельеф",
+"high relief",
+"",
+"haut-relief"
+],
+[
+"զարդանախշ",
+"орнамент",
+"ornament, pattern",
+"",
+"ornement"
+],
+[
+"նախշ",
+"узор",
+"pattern",
+"",
+"motif"
+],
+[
+"գոթական",
+"готический",
+"Gothic",
+"",
+"gothique"
+],
+[
+"բարոկկո",
+"барокко",
+"Baroque",
+"",
+"baroque"
+],
+[
+"կլասիցիզմ",
+"классицизм",
+"classicism",
+"",
+"classicisme"
+],
+[
+"մոդեռն",
+"модерн",
+"Art Nouveau",
+"",
+"Art nouveau"
+],
+[
+"ավանգարդ",
+"авангард",
+"avant-garde",
+"",
+"avant-garde"
+],
+[
+"իմպրեսիոնիզմ",
+"импрессионизм",
+"Impressionism",
+"",
+"impressionnisme"
+],
+[
+"կուբիզմ",
+"кубизм",
+"Cubism",
+"",
+"cubisme"
+],
+[
+"սյուրռեալիզմ",
+"сюрреализм",
+"Surrealism",
+"",
+"surréalisme"
+],
+[
+"ռեալիզմ",
+"реализм",
+"realism",
+"",
+"réalisme"
+],
+[
+"ռոմանտիզմ",
+"романтизм",
+"Romanticism",
+"",
+"romantisme"
+],
+[
+"աբստրակցիոնիզմ",
+"абстракционизм",
+"abstract art",
+"",
+"art abstrait"
+],
+[
+"ինքնադիմանկար",
+"автопортрет",
+"self-portrait",
+"",
+"autoportrait"
+],
+[
+"յուղաներկ",
+"масляная краска",
+"oil paint",
+"🎨",
+"peinture à l'huile"
+],
+[
+"գուաշ",
+"гуашь",
+"gouache",
+"",
+"gouache"
+],
+[
+"պաստել",
+"пастель",
+"pastel",
+"",
+"pastel"
+],
+[
+"գունապնակ",
+"палитра",
+"palette",
+"🎨",
+"palette"
+],
+[
+"ցուցանմուշ",
+"экспонат",
+"exhibit",
+"",
+"pièce exposée"
+],
+[
+"վերականգնող",
+"реставратор",
+"restorer",
+"",
+"restaurateur"
+],
+[
+"արվեստաբան",
+"искусствовед",
+"art historian",
+"",
+"historien de l'art"
+],
+[
+"բնօրինակ",
+"оригинал",
+"original",
+"",
+"original"
+],
+[
+"գրաֆիկա",
+"графика",
+"graphic art",
+"",
+"arts graphiques"
+],
+[
+"փորագրություն",
+"гравюра, резьба",
+"engraving, carving",
+"",
+"gravure"
+],
+[
+"գրչություն",
+"искусство рукописи",
+"manuscript writing",
+"",
+"art du manuscrit"
+],
+[
+"գեղագրություն",
+"каллиграфия",
+"calligraphy",
+"✒️",
+"calligraphie"
+],
+[
+"տառատեսակ",
+"шрифт",
+"typeface, font",
+"",
+"police de caractères"
+]
+],
+"fr": "Beaux-arts"
 },
 {
 "lv": "C1",
