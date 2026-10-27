@@ -320,3 +320,37 @@ body[data-view="onboard"] #tabs,body[data-view="paywall"] #tabs{display:none}
 .pl-line i{color:var(--accent);font-style:normal}
 .opts .popt{min-height:0;padding:6px}
 .opts .popt .pimg{border-radius:12px}
+
+/* печать самому */
+.trow{display:flex;gap:10px;width:100%;margin-top:14px;align-items:center}
+.trow .tin{flex:1;min-width:0}
+.tin{width:100%;min-height:58px;margin-top:14px;border:2px solid var(--line);border-radius:16px;background:var(--surface);padding:10px 14px;font:600 28px/1.25 var(--hy);color:var(--ink);text-align:center}
+.trow .tin{margin-top:0}
+input.tin:focus{border-color:var(--accent);outline:none}
+input.tin::placeholder{font:400 16px var(--ui);color:var(--ink-3)}
+.tin.own{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;overflow-wrap:anywhere;border-color:var(--accent)}
+.tin.done.ok{border-color:var(--ok);background:var(--ok-soft)}
+.tin.done.bad{border-color:var(--bad);background:var(--bad-soft)}
+.caret{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.tcheck{width:58px;height:58px;border-radius:50%;border:0;background:var(--accent);color:var(--on-accent);font-size:26px;font-weight:700;flex:none}
+.tacts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-top:10px}
+.kbwarn{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:var(--bad-soft);color:var(--ink);font-size:14px;text-align:left}
+.d-bad{color:var(--bad);text-decoration:underline;text-decoration-style:wavy;text-underline-offset:4px}
+.kb{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}
+.kb button{height:42px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font:600 20px/1 var(--hy);color:var(--ink);padding:0;box-shadow:0 1.5px 0 var(--line)}
+.kb button:active{background:var(--accent-soft)}
+.kb .ctl{font:500 15px var(--ui);background:var(--surface-2)}
+.kb .sp{grid-column:1/-1}
+.kbfoot .row2 .btn{min-height:46px;font-size:15px;padding:6px 8px}
+body.kbon #view{padding-bottom:calc(360px + var(--sab))}
+body.kbon .stage .q{margin:0 0 4px}
+body.kbon .pimg.big{width:min(62%,300px);margin:2px auto 6px}
+body.kbon .pic-xl{font-size:64px;min-height:70px}
+body.kbon .audio{margin:4px 0 0}
+body.kbon .aud{height:38px}
+body.kbon .tin{margin-top:8px;min-height:50px}
+body.kbon .tacts{margin-top:4px}
+.kbfoot{padding-top:8px}
+.kbfoot .foot-in{gap:8px}
+.kb button{height:40px}
