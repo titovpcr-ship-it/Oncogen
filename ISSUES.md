@@ -3136,3 +3136,17 @@ Meetin'», Cassandra Wilson «Glamoured». В метках товаров — и
 30% одинарник $27.29; бесплатная доставка — от $85 (по Slickdeals), то есть
 от четырёх пластинок; Москва ≈ $27.29 + $11.31 пересылки ≈ 3 670 ₽ против
 Авито 6 977–7 000 ₽ — на уровне лучших лотов eBay, но любой альбом серии.
+
+Дорогие Tone Poet — свежие полы Discogs по всем 175 изданиям каталога,
+27.10.2026 (stats?curr_abbr=USD): медиана $22.99, четверть дороже $28.56.
+Сверху — тиражи подписки Tone Poet Society (только для США, 240–460 копий в
+коллекциях против 3–5 тыс. у обычных): Blue Mitchell «Boss Horn» $200 (1 в
+продаже), Louis Smith «Here Comes Louis Smith» $149, Donald Byrd «Blackjack»
+$135, Walter Davis Jr. «Davis Cup» $100, Lou Donaldson «Wailing With Lou» $100
+и «Here 'Tis» $95, Elvin Jones «Coalition» $80. Дальше — тройники Complete
+Masters $45–60 (Ike Quebec, Rollins Village Vanguard, Burrell Five Spot,
+Dorham Cafe Bohemia), распроданный Cassandra Wilson «Glamoured» $55, Chet
+Baker «Sings» $39 (want 1 592). В продаже нет вовсе: Charles Lloyd «Tone
+Poem», Turrentine «Z.T.'s Blues». Andrew Hill «Passing Ships» — пол $22 при
+122 копиях в продаже: на мировом рынке не редкость; его 9 790–10 190 ₽ на
+Авито — двойник (пересылка $20.11 против $11.31) и всего два объявления.
