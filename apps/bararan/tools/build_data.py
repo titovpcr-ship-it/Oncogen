@@ -4,8 +4,8 @@
   data/topics_src.json  — 81 тема из веб-версии (армянский, русский, эмодзи);
   data/en/*.tsv         — английский к каждому армянскому слову, topics.tsv — названия тем;
   data/fr/*.tsv         — французский к каждому слову, topics.tsv — «русское название<TAB>французское»;
-  data/new/*.tsv        — новые темы (заголовок «# lv=…; ru=…; en=…; hy=…; ic=…»,
-                          строки «армянский<TAB>русский<TAB>английский<TAB>эмодзи»).
+  data/new/*.tsv        — новые темы (заголовок «# lv=…; ru=…; en=…; fr=…; hy=…; ic=…»,
+                          строки «армянский<TAB>русский<TAB>английский<TAB>эмодзи[<TAB>французский]»).
 
 Пишет:
   data/words.json  — словарь целиком: строка слова [армянский, русский, английский, эмодзи, французский];
@@ -97,11 +97,11 @@ def build():
             if a in seen:
                 continue
             seen.add(a)
-            words.append([a, x[1], x[2], x[3] if len(x) > 3 else ""])
+            words.append([a, x[1], x[2], x[3] if len(x) > 3 else ""] + ([x[4]] if len(x) > 4 and x[4] else []))
         if words:
             topics.append({"lv": h["lv"], "ru": h["ru"], "en": h["en"],
                            "hy": h["hy"], "ic": h["ic"], "w": words,
-                           "src": os.path.basename(f)})
+                           "src": os.path.basename(f), "fr_h": h.get("fr", "")})
 
     # уровни по порядку; внутри уровня — старые темы, затем новые
     topics.sort(key=lambda t: LEVELS.index(t["lv"]))
@@ -109,10 +109,12 @@ def build():
     for t in topics:
         if not t["en"]:
             problems.append("нет английского названия темы: " + t["ru"])
-        t["fr"] = fr_titles.get(t["ru"], "")
+        t["fr"] = t.pop("fr_h", "") or fr_titles.get(t["ru"], "")
         if not t["fr"]:
             problems.append("нет французского названия темы: " + t["ru"])
         for w in t["w"]:
+            if len(w) > 4:          # французский прямо в строке новой темы
+                continue
             if w[0] not in fr:
                 problems.append("нет французского: " + w[0])
             w.append(fr.get(w[0], ""))
