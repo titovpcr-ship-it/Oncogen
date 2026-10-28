@@ -53,6 +53,20 @@
 "adelecastillon": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"alternative pop",
+1
+],
+[
+"indie pop",
+1
+],
+[
+"pop",
+1
+]
+],
 "mb": "d87c77e3-3512-41ed-b241-6387d4a6ae4e",
 "mb_name": "Adèle Castillon",
 "name": "Adèle Castillon",
@@ -139,6 +153,32 @@
 "arianagrande": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+21
+],
+[
+"r&b",
+6
+],
+[
+"dance-pop",
+4
+],
+[
+"contemporary r&b",
+2
+],
+[
+"dance",
+1
+],
+[
+"new jack swing",
+1
+]
+],
 "mb": "f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387",
 "mb_name": "Ariana Grande",
 "name": "Ariana Grande",
@@ -161,6 +201,16 @@
 "ashe": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"indie folk",
+1
+],
+[
+"pop",
+1
+]
+],
 "mb": "36086094-c2a4-49b9-8572-0fbf12fc3409",
 "mb_name": "Ashe",
 "name": "Ashe",
@@ -227,6 +277,28 @@
 "beberexha": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+3
+],
+[
+"dance-pop",
+1
+],
+[
+"electronic",
+1
+],
+[
+"electropop",
+1
+],
+[
+"singer-songwriter",
+1
+]
+],
 "mb": "db8fad3a-e131-47a1-8782-c2ee93708cdd",
 "mb_name": "Bebe Rexha",
 "name": "Bebe Rexha",
@@ -243,6 +315,43 @@
 "name": "Benny Benassi",
 "note": "",
 "t": 1793022605,
+"type": "Person",
+"v": 3
+},
+"billieeilish": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"electropop",
+12
+],
+[
+"alternative pop",
+11
+],
+[
+"pop",
+9
+],
+[
+"alternative r&b",
+5
+],
+[
+"art pop",
+4
+],
+[
+"bedroom pop",
+3
+]
+],
+"mb": "f4abc0b5-3f7a-4eff-8f78-ac078dbce533",
+"mb_name": "Billie Eilish",
+"name": "Billie Eilish",
+"note": "",
+"t": 1793160926,
 "type": "Person",
 "v": 3
 },
@@ -277,6 +386,28 @@
 "note": "",
 "t": 1793022404,
 "type": "Group",
+"v": 3
+},
+"bonnietyler": {
+"alive": false,
+"gender": "female",
+"mb": "0aa8294b-6332-4b65-b677-e3a1f8591d3b",
+"mb_name": "Bonnie Tyler",
+"name": "Bonnie Tyler",
+"note": "умер(ла) 2026-07-08",
+"t": 1793160892,
+"type": "Person",
+"v": 3
+},
+"boosiebadazz": {
+"alive": true,
+"gender": "male",
+"mb": "8ba17cf6-bec2-4ae4-9820-b1cda47adc08",
+"mb_name": "Boosie Badazz",
+"name": "Boosie Badazz",
+"note": "",
+"t": 1793160790,
+"type": "Person",
 "v": 3
 },
 "bronskibeat": {
@@ -326,6 +457,32 @@
 "chappellroan": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+7
+],
+[
+"dance-pop",
+5
+],
+[
+"synth-pop",
+5
+],
+[
+"alternative pop",
+3
+],
+[
+"indie pop",
+3
+],
+[
+"electropop",
+2
+]
+],
 "mb": "56a55378-f155-48de-80a5-d80104221267",
 "mb_name": "Chappell Roan",
 "name": "Chappell Roan",
@@ -343,6 +500,17 @@
 "note": "",
 "t": 1793022021,
 "type": "Group",
+"v": 3
+},
+"chrisisaak": {
+"alive": true,
+"gender": "male",
+"mb": "479497d4-e7c2-4e78-972e-56e78fac3995",
+"mb_name": "Chris Isaak",
+"name": "Chris Isaak",
+"note": "",
+"t": 1793160808,
+"type": "Person",
 "v": 3
 },
 "cordae": {
@@ -378,6 +546,17 @@
 "type": "Person",
 "v": 3
 },
+"direstraits": {
+"alive": false,
+"gender": "male",
+"mb": "614e3804-7d34-41ba-857f-811bad7c2b7a",
+"mb_name": "Dire Straits",
+"name": "Dire Straits",
+"note": "распались 1995",
+"t": 1793160839,
+"type": "Group",
+"v": 3
+},
 "djgoja": {
 "alive": true,
 "gender": null,
@@ -403,11 +582,48 @@
 "dualipa": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"dance-pop",
+10
+],
+[
+"pop",
+10
+],
+[
+"contemporary r&b",
+6
+],
+[
+"electropop",
+6
+],
+[
+"synth-pop",
+5
+],
+[
+"nu disco",
+3
+]
+],
 "mb": "6f1a58bf-9b1b-49cf-a44a-6cefad7ae04f",
 "mb_name": "Dua Lipa",
 "name": "Dua Lipa",
 "note": "",
 "t": 1793022359,
+"type": "Person",
+"v": 3
+},
+"edwardmaya": {
+"alive": true,
+"gender": "male",
+"mb": "257891db-1f69-4660-894d-075e355431a8",
+"mb_name": "Edward Maya",
+"name": "Edward Maya",
+"note": "",
+"t": 1793160809,
 "type": "Person",
 "v": 3
 },
@@ -450,9 +666,46 @@
 "type": "Person",
 "v": 3
 },
+"evanescence": {
+"alive": true,
+"gender": "mixed",
+"mb": "f4a31f0a-51dd-4fa7-986d-3095c40c5ed9",
+"mb_name": "Evanescence",
+"name": "Evanescence",
+"note": "",
+"t": 1793160885,
+"type": "Group",
+"v": 3
+},
 "faouzia": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+2
+],
+[
+"ballad",
+1
+],
+[
+"contemporary r&b",
+1
+],
+[
+"dance-pop",
+1
+],
+[
+"downtempo",
+1
+],
+[
+"electronic",
+1
+]
+],
 "mb": "6aed0a74-92a7-47e6-97d1-7b6a72afec4b",
 "mb_name": "Faouzia",
 "name": "Faouzia",
@@ -516,6 +769,17 @@
 "type": "Person",
 "v": 3
 },
+"georgemichael": {
+"alive": false,
+"gender": "male",
+"mb": "ccb8f30e-4d71-40c4-8b1d-846dafe73e2c",
+"mb_name": "George Michael",
+"name": "George Michael",
+"note": "умер(ла) 2016-12-25",
+"t": 1793160820,
+"type": "Person",
+"v": 3
+},
 "grandtheftautovi": {
 "alive": null,
 "gender": null,
@@ -574,11 +838,37 @@
 "imaelangel": {
 "alive": true,
 "gender": "female",
+"genres": [],
 "mb": "a3c9387a-6e60-4f49-8405-6056998e01d7",
 "mb_name": "Imael Angel",
 "name": "Imael Angel",
 "note": "",
 "t": 1793021954,
+"type": "Person",
+"v": 3
+},
+"indila": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"folk pop",
+1
+],
+[
+"indie pop",
+1
+],
+[
+"singer-songwriter",
+1
+]
+],
+"mb": "eee14992-d2ab-4c46-b1e2-51080504ba50",
+"mb_name": "Indila",
+"name": "Indila",
+"note": "",
+"t": 1793160822,
 "type": "Person",
 "v": 3
 },
@@ -604,9 +894,72 @@
 "type": "Person",
 "v": 3
 },
+"jennie": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"k-pop",
+4
+],
+[
+"hip hop",
+2
+],
+[
+"pop",
+2
+],
+[
+"dance",
+1
+],
+[
+"dance-pop",
+1
+],
+[
+"rock",
+1
+]
+],
+"mb": "779351de-0da5-4943-928b-495a3c40e8c0",
+"mb_name": "JENNIE",
+"name": "JENNIE",
+"note": "",
+"t": 1793160917,
+"type": "Person",
+"v": 3
+},
 "jheneaiko": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"contemporary r&b",
+3
+],
+[
+"r&b",
+3
+],
+[
+"soul",
+3
+],
+[
+"hip hop",
+1
+],
+[
+"neo soul",
+1
+],
+[
+"pop",
+1
+]
+],
 "mb": "ceb3f5b7-9f1a-430f-afbe-976fdcf30482",
 "mb_name": "Jhené Aiko",
 "name": "Jhené Aiko",
@@ -640,6 +993,7 @@
 "judeline": {
 "alive": true,
 "gender": "female",
+"genres": [],
 "mb": "b828d419-2928-4286-9509-5d920d524358",
 "mb_name": "Judeline",
 "name": "Judeline",
@@ -695,6 +1049,20 @@
 "karolg": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"reggaeton",
+3
+],
+[
+"latin",
+1
+],
+[
+"r&b",
+1
+]
+],
 "mb": "de22adae-f8ac-414f-b653-b0162611bd60",
 "mb_name": "KAROL G",
 "name": "KAROL G",
@@ -784,9 +1152,46 @@
 "type": null,
 "v": 3
 },
+"kinggizzard": {
+"alive": true,
+"gender": "male",
+"mb": "f58384a4-2ad2-4f24-89c5-c7b74ae1cce7",
+"mb_name": "King Gizzard & the Lizard Wizard",
+"name": "King Gizzard",
+"note": "",
+"t": 1793160862,
+"type": "Group",
+"v": 3
+},
 "ladygaga": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+24
+],
+[
+"dance-pop",
+20
+],
+[
+"electropop",
+17
+],
+[
+"pop rock",
+9
+],
+[
+"synth-pop",
+7
+],
+[
+"electronic",
+6
+]
+],
 "mb": "650e7db6-b795-4eb5-a702-5ea2fc46c848",
 "mb_name": "Lady Gaga",
 "name": "Lady Gaga",
@@ -798,6 +1203,32 @@
 "lanadelrey": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"indie pop",
+10
+],
+[
+"pop",
+8
+],
+[
+"dream pop",
+7
+],
+[
+"electronic",
+5
+],
+[
+"trip hop",
+5
+],
+[
+"chamber pop",
+4
+]
+],
 "mb": "b7539c32-53e7-4908-bda3-81449c367da6",
 "mb_name": "Lana Del Rey",
 "name": "Lana Del Rey",
@@ -842,12 +1273,37 @@
 "lisa": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"j-pop",
+2
+],
+[
+"j-rock",
+2
+],
+[
+"pop rock",
+1
+]
+],
 "mb": "85d76093-9865-4605-97fa-8c910929d366",
 "mb_name": "LiSA",
 "name": "LISA",
 "note": "",
 "t": 1793021926,
 "type": "Person",
+"v": 3
+},
+"lizardwizard": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "The Lizard Wizard",
+"note": "нет в MusicBrainz",
+"t": 1793160863,
+"type": null,
 "v": 3
 },
 "longfaces": {
@@ -897,6 +1353,32 @@
 "madonna": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+33
+],
+[
+"dance-pop",
+14
+],
+[
+"art pop",
+7
+],
+[
+"electropop",
+6
+],
+[
+"contemporary r&b",
+4
+],
+[
+"electronic",
+3
+]
+],
 "mb": "79239441-bfd5-4981-a70c-55c3f15c1287",
 "mb_name": "Madonna",
 "name": "Madonna",
@@ -908,6 +1390,7 @@
 "mariahdeborah": {
 "alive": true,
 "gender": "female",
+"genres": [],
 "mb": "23562b07-4008-43ac-9f50-1375875b168e",
 "mb_name": "Mariah Deborah",
 "name": "Mariah Deborah",
@@ -1049,6 +1532,7 @@
 "msrachel": {
 "alive": true,
 "gender": "female",
+"genres": [],
 "mb": "3465eadc-85d2-4517-a37a-7da41f38da2e",
 "mb_name": "Ms Rachel",
 "name": "Ms. Rachel",
@@ -1126,6 +1610,20 @@
 "oliviadean": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"neo soul",
+2
+],
+[
+"pop soul",
+2
+],
+[
+"pop",
+1
+]
+],
 "mb": "15e0d608-0869-429b-898d-3d8db3ecedd5",
 "mb_name": "Olivia Dean",
 "name": "Olivia Dean",
@@ -1238,6 +1736,16 @@
 "remiwolf": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"alternative pop",
+1
+],
+[
+"pop soul",
+1
+]
+],
 "mb": "afb6cc6d-a060-4f5e-bc3a-00d4b6832e41",
 "mb_name": "Remi Wolf",
 "name": "Remi Wolf",
@@ -1249,6 +1757,32 @@
 "rihanna": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+17
+],
+[
+"r&b",
+14
+],
+[
+"contemporary r&b",
+9
+],
+[
+"dance-pop",
+9
+],
+[
+"hip hop",
+5
+],
+[
+"dance",
+4
+]
+],
 "mb": "73e5e69d-3554-40d8-8516-00cb38737a1c",
 "mb_name": "Rihanna",
 "name": "Rihanna",
@@ -1322,6 +1856,28 @@
 "shakira": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+5
+],
+[
+"latin pop",
+4
+],
+[
+"pop rock",
+3
+],
+[
+"dance-pop",
+1
+],
+[
+"latin",
+1
+]
+],
 "mb": "bf24ca37-25f4-4e34-9aec-460b94364cfc",
 "mb_name": "Shakira",
 "name": "Shakira",
@@ -1333,6 +1889,28 @@
 "siennaspiro": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop soul",
+2
+],
+[
+"alternative pop",
+1
+],
+[
+"classical crossover",
+1
+],
+[
+"pop",
+1
+],
+[
+"singer-songwriter",
+1
+]
+],
 "mb": "ea696191-407a-4bf2-8302-7e05f6c163c5",
 "mb_name": "Sienna Spiro",
 "name": "SIENNA SPIRO",
@@ -1355,12 +1933,60 @@
 "slayyyter": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+8
+],
+[
+"hyperpop",
+7
+],
+[
+"dance-pop",
+4
+],
+[
+"dance",
+2
+],
+[
+"electronica",
+1
+],
+[
+"electropop",
+1
+]
+],
 "mb": "9058d01e-8afc-47a4-8664-621fb5f159c0",
 "mb_name": "Slayyyter",
 "name": "Slayyyter",
 "note": "",
 "t": 1793022611,
 "type": "Person",
+"v": 3
+},
+"slxughter": {
+"alive": true,
+"gender": "male",
+"mb": "fc19fcf3-9e6e-4a22-a926-0d174788f343",
+"mb_name": "slxughter",
+"name": "slxughter",
+"note": "",
+"t": 1793160886,
+"type": "Person",
+"v": 3
+},
+"snap": {
+"alive": true,
+"gender": "mixed",
+"mb": "cd23732d-ffd2-444e-8884-53475d7ac7d9",
+"mb_name": "Snap!",
+"name": "SNAP!",
+"note": "",
+"t": 1793160910,
+"type": "Group",
 "v": 3
 },
 "sombr": {
@@ -1382,6 +2008,17 @@
 "name": "Steve Lacy",
 "note": "умер(ла) 2004-06-04",
 "t": 1793021928,
+"type": "Person",
+"v": 3
+},
+"sting": {
+"alive": true,
+"gender": "male",
+"mb": "7944ed53-2a58-4035-9b93-140a71e41c34",
+"mb_name": "Sting",
+"name": "Sting",
+"note": "",
+"t": 1793160821,
 "type": "Person",
 "v": 3
 },
@@ -1421,6 +2058,32 @@
 "sza": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"contemporary r&b",
+3
+],
+[
+"electronic",
+2
+],
+[
+"r&b",
+2
+],
+[
+"alternative r&b",
+1
+],
+[
+"hip hop soul",
+1
+],
+[
+"neo soul",
+1
+]
+],
 "mb": "272989c8-5535-492d-a25c-9f58803e027f",
 "mb_name": "SZA",
 "name": "SZA",
@@ -1542,6 +2205,32 @@
 "tinashe": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+4
+],
+[
+"alternative r&b",
+3
+],
+[
+"contemporary r&b",
+3
+],
+[
+"electronic",
+2
+],
+[
+"hip hop",
+2
+],
+[
+"r&b",
+1
+]
+],
 "mb": "396a9525-0994-4542-b480-c4587feeb476",
 "mb_name": "Tinashe",
 "name": "Tinashe",
@@ -1553,6 +2242,32 @@
 "tlc": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"contemporary r&b",
+2
+],
+[
+"pop",
+2
+],
+[
+"pop rap",
+2
+],
+[
+"crunk",
+1
+],
+[
+"new jack swing",
+1
+],
+[
+"r&b",
+1
+]
+],
 "mb": "99790314-885a-4975-8614-9c5bc890364d",
 "mb_name": "TLC",
 "name": "TLC",
@@ -1586,6 +2301,7 @@
 "ultranate": {
 "alive": true,
 "gender": "female",
+"genres": [],
 "mb": "0004537a-4b12-43eb-a023-04009e738d2e",
 "mb_name": "Ultra Naté",
 "name": "Ultra Naté",
@@ -1616,6 +2332,54 @@
 "type": "Group",
 "v": 3
 },
+"vikajigulina": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"deep house",
+1
+],
+[
+"electro house",
+1
+],
+[
+"electronic",
+1
+],
+[
+"eurodance",
+1
+],
+[
+"progressive house",
+1
+],
+[
+"tech house",
+1
+]
+],
+"mb": "2cb3ebf3-09fb-45fe-8267-9a45d15796df",
+"mb_name": "Vika Jigulina",
+"name": "Vika Jigulina",
+"note": "",
+"t": 1793160810,
+"type": "Person",
+"v": 3
+},
+"webbie": {
+"alive": true,
+"gender": "male",
+"mb": "d3f12a9c-5df8-4a7b-8bbe-6a697e299a5c",
+"mb_name": "Webbie",
+"name": "Webbie",
+"note": "",
+"t": 1793160791,
+"type": "Person",
+"v": 3
+},
 "weeknd": {
 "alive": true,
 "gender": "male",
@@ -1641,6 +2405,20 @@
 "yungmiami": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"hip hop",
+1
+],
+[
+"southern hip hop",
+1
+],
+[
+"trap",
+1
+]
+],
 "mb": "7e987fc0-7606-4637-8eb1-8c9c3e57a65c",
 "mb_name": "Yung Miami",
 "name": "Yung Miami",
@@ -1683,6 +2461,17 @@
 "name": "Zach Bryan",
 "note": "",
 "t": 1793021883,
+"type": "Person",
+"v": 3
+},
+"zxkai": {
+"alive": true,
+"gender": "male",
+"mb": "51a47eb2-19e5-4d6e-9495-db32864a7af9",
+"mb_name": "ZXKAI",
+"name": "ZXKAI",
+"note": "",
+"t": 1793160892,
 "type": "Person",
 "v": 3
 }

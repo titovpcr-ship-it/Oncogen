@@ -3198,3 +3198,32 @@ Tsubo» 1 596 ₽ на руки, состояние не указано). Све
 Rodrigo 28.10.2026: «Sour» $18.99–22.99 → Москва 3 115–3 495 ₽ → 1.20–1.35x
 от 4 200 ₽; «Guts» $12.98–20 (российской цены нет); снят GUTS T Blue (не
 запечатан). В Telegram — 2 сообщения.
+
+## O-110. Хайпажор — только девушки, без кантри
+
+Владелец 28.10.2026 (после вопроса «кто топ-3 по продажам после Оливии»: в
+Billboard 200 за неделю до 22.10 — Zach Bryan, Morgan Wallen, Ella Langley,
+все кантри): «Лучше только девчачьи идолы, кантри не надо».
+
+`hype.py --no-country`: жанры артиста по голосам MusicBrainz (`alive.genres`,
+кэш в `data/hype/alive.json`), кантри — когда кантри/americana/bluegrass —
+главный жанр. Не любое упоминание: у Taylor Swift pop 42 голоса против
+country 28 — остаётся; Ella Langley, Megan Moroney, Zach Bryan, Morgan
+Wallen — мимо. Отсеянные печатаются в строке «Мимо по MusicBrainz».
+
+Прогон `--women --no-country --artists 15`: Lady Gaga, Olivia Rodrigo,
+Taylor Swift, Tate McRae, Ariana Grande, Chappell Roan, Lana Del Rey, Ashe,
+KAROL G, Olivia Dean, ADÉLA, Jhené Aiko, KATSEYE, Judeline, Sienna Spiro.
+Лучшее с российской ценой — Lady Gaga «Mayhem» $19 → 4 285 ₽ (двойник:
+пересылка 0.914 кг) при plastinka 6 872 ₽ (1.60x) и «The Fame» аукцион
+$24.99 → 3 685 ₽ при appmistore 6 300 ₽ (1.71x) — но это витрины, а не
+сделка. Без российской цены: Taylor Swift «Showgirl» от $15.30 (аукцион
+$1, 1 ставка), «Midnights» аукцион $7.70, Chappell Roan аукцион $18.90 с
+бесплатной доставкой, Lana Del Rey «Born To Die» $23.95.
+
+Проверка глазами сняла 6 лотов: вскрыты (GUTS T Blue, Midnights «opened»),
+пластинка вне конверта на фото (Ashe «Rae», Tate McRae «Think Later»),
+дефект по словам продавца (Ariana «Petal»), чужой альбом («The Fame
+Monster» на месте «The Fame»). Ловушка: Mayhem Target — 2LP (сторона D —
+гравировка), а прогон считал одинарником — пересчитано вручную в файле
+прогона. В Telegram — 3 сообщения.
