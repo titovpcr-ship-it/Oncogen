@@ -3766,6 +3766,734 @@
 "fr": "bon voyage"
 },
 {
+"a": "համար",
+"lv": "A1",
+"ru": "для",
+"en": "for",
+"fr": "pour"
+},
+{
+"a": "հետ",
+"lv": "A1",
+"ru": "с (вместе)",
+"en": "with",
+"fr": "avec"
+},
+{
+"a": "մասին",
+"lv": "A1",
+"ru": "о, про",
+"en": "about",
+"fr": "à propos de, sur"
+},
+{
+"a": "մեջ",
+"lv": "A1",
+"ru": "в, внутри",
+"en": "in, inside",
+"fr": "dans"
+},
+{
+"a": "վրա",
+"lv": "A1",
+"ru": "на",
+"en": "on",
+"fr": "sur"
+},
+{
+"a": "տակ",
+"lv": "A1",
+"ru": "под",
+"en": "under",
+"fr": "sous"
+},
+{
+"a": "առջև",
+"lv": "A1",
+"ru": "перед",
+"en": "in front of",
+"fr": "devant"
+},
+{
+"a": "դեմ",
+"lv": "A1",
+"ru": "против",
+"en": "against",
+"fr": "contre"
+},
+{
+"a": "անց",
+"lv": "A1",
+"ru": "после, спустя",
+"en": "after, past",
+"fr": "après"
+},
+{
+"a": "միջև",
+"lv": "A1",
+"ru": "между",
+"en": "between, among",
+"fr": "entre"
+},
+{
+"a": "միջով",
+"lv": "A1",
+"ru": "через",
+"en": "through",
+"fr": "à travers"
+},
+{
+"a": "շնորհիվ",
+"lv": "A1",
+"ru": "благодаря",
+"en": "thanks to",
+"fr": "grâce à"
+},
+{
+"a": "պատճառով",
+"lv": "A1",
+"ru": "из-за",
+"en": "because of",
+"fr": "à cause de"
+},
+{
+"a": "պես",
+"lv": "A1",
+"ru": "как, подобно",
+"en": "like",
+"fr": "comme"
+},
+{
+"a": "սկսած",
+"lv": "A1",
+"ru": "начиная с",
+"en": "since, starting from",
+"fr": "à partir de"
+},
+{
+"a": "վերաբերյալ",
+"lv": "A1",
+"ru": "относительно",
+"en": "concerning",
+"fr": "concernant"
+},
+{
+"a": "փոխարեն",
+"lv": "A1",
+"ru": "вместо",
+"en": "instead of",
+"fr": "au lieu de"
+},
+{
+"a": "առթիվ",
+"lv": "A1",
+"ru": "по случаю",
+"en": "on the occasion of",
+"fr": "à l'occasion de"
+},
+{
+"a": "հանդեպ",
+"lv": "A1",
+"ru": "напротив",
+"en": "opposite",
+"fr": "en face de"
+},
+{
+"a": "հանդերձ",
+"lv": "A1",
+"ru": "вместе с",
+"en": "along with",
+"fr": "ainsi que"
+},
+{
+"a": "հիմամբ",
+"lv": "A1",
+"ru": "на основании",
+"en": "on the basis of",
+"fr": "sur la base de"
+},
+{
+"a": "ներքո",
+"lv": "A1",
+"ru": "под (книжн.)",
+"en": "under (formal)",
+"fr": "sous (soutenu)"
+},
+{
+"a": "նկատմամբ",
+"lv": "A1",
+"ru": "по отношению к",
+"en": "towards, regarding",
+"fr": "envers"
+},
+{
+"a": "առ",
+"lv": "A1",
+"ru": "за (день за днём)",
+"en": "by (day by day)",
+"fr": "par (jour après jour)"
+},
+{
+"a": "առանց",
+"lv": "A1",
+"ru": "без",
+"en": "without",
+"fr": "sans"
+},
+{
+"a": "բացի",
+"lv": "A1",
+"ru": "кроме",
+"en": "except",
+"fr": "sauf, à part"
+},
+{
+"a": "դեպի",
+"lv": "A1",
+"ru": "к, в сторону",
+"en": "towards",
+"fr": "vers"
+},
+{
+"a": "ընդդեմ",
+"lv": "A1",
+"ru": "против (книжн.)",
+"en": "against (formal)",
+"fr": "contre (soutenu)"
+},
+{
+"a": "ըստ",
+"lv": "A1",
+"ru": "согласно",
+"en": "according to",
+"fr": "selon"
+},
+{
+"a": "իբրև",
+"lv": "A1",
+"ru": "как, в качестве",
+"en": "as",
+"fr": "en tant que"
+},
+{
+"a": "հանուն",
+"lv": "A1",
+"ru": "во имя",
+"en": "in the name of",
+"fr": "au nom de"
+},
+{
+"a": "մինչ",
+"lv": "A1",
+"ru": "до, пока",
+"en": "until",
+"fr": "jusqu'à"
+},
+{
+"a": "նայած",
+"lv": "A1",
+"ru": "смотря по (разг.)",
+"en": "depending on",
+"fr": "selon (familier)"
+},
+{
+"a": "ինձ",
+"lv": "A1",
+"ru": "меня, мне",
+"en": "me",
+"fr": "moi, me"
+},
+{
+"a": "քեզ",
+"lv": "A1",
+"ru": "тебя, тебе",
+"en": "you (singular)",
+"fr": "toi, te"
+},
+{
+"a": "նրան",
+"lv": "A1",
+"ru": "его, ему, её, ей",
+"en": "him, her",
+"fr": "lui, le"
+},
+{
+"a": "մեզ",
+"lv": "A1",
+"ru": "нас, нам",
+"en": "us",
+"fr": "nous"
+},
+{
+"a": "ձեզ",
+"lv": "A1",
+"ru": "вас, вам",
+"en": "you (plural)",
+"fr": "vous"
+},
+{
+"a": "դրանք",
+"lv": "A1",
+"ru": "те",
+"en": "those",
+"fr": "ceux-là"
+},
+{
+"a": "սրանք",
+"lv": "A1",
+"ru": "эти",
+"en": "these",
+"fr": "ceux-ci"
+},
+{
+"a": "սա",
+"lv": "A1",
+"ru": "этот (книжн.)",
+"en": "this (formal)",
+"fr": "ceci"
+},
+{
+"a": "իմը",
+"lv": "A1",
+"ru": "мой (моё)",
+"en": "mine",
+"fr": "le mien"
+},
+{
+"a": "քոնը",
+"lv": "A1",
+"ru": "твой (твоё)",
+"en": "yours",
+"fr": "le tien"
+},
+{
+"a": "ինչ-որ",
+"lv": "A1",
+"ru": "какой-то",
+"en": "some",
+"fr": "quelque"
+},
+{
+"a": "ինչ-որ բան",
+"lv": "A1",
+"ru": "что-то",
+"en": "something",
+"fr": "quelque chose"
+},
+{
+"a": "ինչ-որ մեկը",
+"lv": "A1",
+"ru": "кто-то",
+"en": "someone",
+"fr": "quelqu'un"
+},
+{
+"a": "իրենք",
+"lv": "A1",
+"ru": "они сами",
+"en": "they themselves",
+"fr": "eux-mêmes"
+},
+{
+"a": "մեկմեկու",
+"lv": "A1",
+"ru": "друг друга (разг.)",
+"en": "each other",
+"fr": "l'un l'autre"
+},
+{
+"a": "միմյանց",
+"lv": "A1",
+"ru": "друг друга",
+"en": "one another",
+"fr": "les uns les autres"
+},
+{
+"a": "ձերոնք",
+"lv": "A1",
+"ru": "ваши (родные)",
+"en": "your folks",
+"fr": "les vôtres"
+},
+{
+"a": "մերոնք",
+"lv": "A1",
+"ru": "наши (родные)",
+"en": "our folks",
+"fr": "les nôtres"
+},
+{
+"a": "նույնքան",
+"lv": "A1",
+"ru": "столько же",
+"en": "equally, as much",
+"fr": "autant"
+},
+{
+"a": "ոմանք",
+"lv": "A1",
+"ru": "некоторые",
+"en": "some people",
+"fr": "certains"
+},
+{
+"a": "ոմն",
+"lv": "A1",
+"ru": "некий",
+"en": "a certain",
+"fr": "un certain"
+},
+{
+"a": "ոնց",
+"lv": "A1",
+"ru": "как (разг.)",
+"en": "how (colloquial)",
+"fr": "comment (familier)"
+},
+{
+"a": "ոչ մեկ",
+"lv": "A1",
+"ru": "никто (разг.)",
+"en": "no one",
+"fr": "personne"
+},
+{
+"a": "ովքեր",
+"lv": "A1",
+"ru": "которые, кто (мн.)",
+"en": "who (plural)",
+"fr": "qui (pluriel)"
+},
+{
+"a": "որչափ",
+"lv": "A1",
+"ru": "сколько",
+"en": "how much",
+"fr": "combien"
+},
+{
+"a": "որպես",
+"lv": "A1",
+"ru": "как, в качестве (синоним)",
+"en": "as",
+"fr": "comme (en qualité de)"
+},
+{
+"a": "որպիսի",
+"lv": "A1",
+"ru": "какой",
+"en": "what kind of",
+"fr": "quel"
+},
+{
+"a": "որևիցե",
+"lv": "A1",
+"ru": "какой-либо",
+"en": "any",
+"fr": "quelconque"
+},
+{
+"a": "ոք",
+"lv": "A1",
+"ru": "кто-то (книжн.)",
+"en": "somebody",
+"fr": "quelqu'un (littéraire)"
+},
+{
+"a": "սույն",
+"lv": "A1",
+"ru": "сей, данный",
+"en": "this same",
+"fr": "le présent"
+},
+{
+"a": "այդպիսի",
+"lv": "A1",
+"ru": "такой",
+"en": "such",
+"fr": "tel"
+},
+{
+"a": "այնպիսի",
+"lv": "A1",
+"ru": "таковой",
+"en": "suchlike",
+"fr": "pareil"
+},
+{
+"a": "այլք",
+"lv": "A1",
+"ru": "другие",
+"en": "others",
+"fr": "les autres"
+},
+{
+"a": "այլոց",
+"lv": "A1",
+"ru": "чужой (других)",
+"en": "of others",
+"fr": "d'autrui"
+},
+{
+"a": "ամենայն",
+"lv": "A1",
+"ru": "всякий (книжн.)",
+"en": "all, every",
+"fr": "tout"
+},
+{
+"a": "դույն",
+"lv": "A1",
+"ru": "тот же самый",
+"en": "that same",
+"fr": "le même"
+},
+{
+"a": "մի",
+"lv": "A1",
+"ru": "один",
+"en": "one",
+"fr": "un"
+},
+{
+"a": "երկու հարյուր",
+"lv": "A1",
+"ru": "двести",
+"en": "two hundred",
+"fr": "deux cents"
+},
+{
+"a": "հազար միլիոն",
+"lv": "A1",
+"ru": "миллиард",
+"en": "billion",
+"fr": "milliard"
+},
+{
+"a": "հարյուր մեկ",
+"lv": "A1",
+"ru": "сто один",
+"en": "one hundred and one",
+"fr": "cent un"
+},
+{
+"a": "հարյուրերորդ",
+"lv": "A1",
+"ru": "сотый",
+"en": "hundredth",
+"fr": "centième"
+},
+{
+"a": "հազարերորդ",
+"lv": "A1",
+"ru": "тысячный",
+"en": "thousandth",
+"fr": "millième"
+},
+{
+"a": "տասներեքերորդ",
+"lv": "A1",
+"ru": "тринадцатый",
+"en": "thirteenth",
+"fr": "treizième"
+},
+{
+"a": "տասներկուերորդ",
+"lv": "A1",
+"ru": "двенадцатый",
+"en": "twelfth",
+"fr": "douzième"
+},
+{
+"a": "տրիլիոն",
+"lv": "A1",
+"ru": "триллион",
+"en": "trillion",
+"fr": "billion (10¹²)"
+},
+{
+"a": "քսաներեք",
+"lv": "A1",
+"ru": "двадцать три",
+"en": "twenty-three",
+"fr": "vingt-trois"
+},
+{
+"a": "քսաներորդ",
+"lv": "A1",
+"ru": "двадцатый",
+"en": "twentieth",
+"fr": "vingtième"
+},
+{
+"a": "իմա",
+"lv": "A1",
+"ru": "то есть",
+"en": "that is, i.e.",
+"fr": "c'est-à-dire"
+},
+{
+"a": "պիտի",
+"lv": "A1",
+"ru": "должен (надо)",
+"en": "should, must",
+"fr": "devoir"
+},
+{
+"a": "ես քեզ սիրում եմ",
+"lv": "A1",
+"ru": "я тебя люблю",
+"en": "I love you",
+"fr": "je t'aime"
+},
+{
+"a": "ես քեզ կարոտում եմ",
+"lv": "A1",
+"ru": "я скучаю по тебе",
+"en": "I miss you",
+"fr": "tu me manques"
+},
+{
+"a": "ես հայ եմ",
+"lv": "A1",
+"ru": "я армянин",
+"en": "I am Armenian",
+"fr": "je suis arménien"
+},
+{
+"a": "ես հայերեն չգիտեմ",
+"lv": "A1",
+"ru": "я не знаю армянского",
+"en": "I don't speak Armenian",
+"fr": "je ne parle pas arménien"
+},
+{
+"a": "ես անգլերեն չեմ խոսում",
+"lv": "A1",
+"ru": "я не говорю по-английски",
+"en": "I don't speak English",
+"fr": "je ne parle pas anglais"
+},
+{
+"a": "ես թարգմանչի կարիք ունեմ",
+"lv": "A1",
+"ru": "мне нужен переводчик",
+"en": "I need an interpreter",
+"fr": "j'ai besoin d'un interprète"
+},
+{
+"a": "ես հարց ունեմ",
+"lv": "A1",
+"ru": "у меня есть вопрос",
+"en": "I have a question",
+"fr": "j'ai une question"
+},
+{
+"a": "ինչ կա չկա",
+"lv": "A1",
+"ru": "что нового?",
+"en": "what's up?",
+"fr": "quoi de neuf ?"
+},
+{
+"a": "քանի տարեկան եք",
+"lv": "A1",
+"ru": "сколько вам лет?",
+"en": "how old are you?",
+"fr": "quel âge avez-vous ?"
+},
+{
+"a": "շնորհավոր Սուրբ Ծնունդ",
+"lv": "A1",
+"ru": "С Рождеством!",
+"en": "Merry Christmas!",
+"fr": "Joyeux Noël !"
+},
+{
+"a": "Շնորհավոր Նոր Տարի և Սուրբ Ծնունդ",
+"lv": "A1",
+"ru": "С Новым годом и Рождеством!",
+"en": "Merry Christmas and Happy New Year!",
+"fr": "Joyeux Noël et bonne année !"
+},
+{
+"a": "և այլն",
+"lv": "A1",
+"ru": "и так далее",
+"en": "and so on",
+"fr": "et ainsi de suite"
+},
+{
+"a": "խոսքը մեր մեջ",
+"lv": "A1",
+"ru": "между нами",
+"en": "between you and me",
+"fr": "entre nous"
+},
+{
+"a": "ակն ընդ ական",
+"lv": "A1",
+"ru": "око за око",
+"en": "an eye for an eye",
+"fr": "œil pour œil"
+},
+{
+"a": "արջի ծառայություն մատուցել",
+"lv": "A1",
+"ru": "оказать медвежью услугу",
+"en": "to do a disservice",
+"fr": "rendre un mauvais service"
+},
+{
+"a": "խոսքը սար ու ձոր չգցել",
+"lv": "A1",
+"ru": "называть вещи своими именами",
+"en": "to call a spade a spade",
+"fr": "appeler un chat un chat"
+},
+{
+"a": "ունայնություն ունայնությանց",
+"lv": "A1",
+"ru": "суета сует",
+"en": "vanity of vanities",
+"fr": "vanité des vanités"
+},
+{
+"a": "սիրտը խառնել",
+"lv": "A1",
+"ru": "тошнить",
+"en": "to feel nauseous",
+"fr": "avoir la nausée"
+},
+{
+"a": "արյունը ջուր չի դառնա",
+"lv": "A1",
+"ru": "кровь не вода",
+"en": "blood is thicker than water",
+"fr": "le sang est plus épais que l'eau"
+},
+{
+"a": "ճաշակին ընկեր չկա",
+"lv": "A1",
+"ru": "на вкус и цвет товарищей нет",
+"en": "no accounting for taste",
+"fr": "des goûts et des couleurs on ne discute pas"
+},
+{
+"a": "չաշխատողը չի ուտի",
+"lv": "A1",
+"ru": "кто не работает, тот не ест",
+"en": "no pain, no gain",
+"fr": "qui ne travaille pas ne mange pas"
+},
+{
+"a": "չկա չարիք առանց բարիք",
+"lv": "A1",
+"ru": "нет худа без добра",
+"en": "every cloud has a silver lining",
+"fr": "à quelque chose malheur est bon"
+},
+{
 "a": "իմ",
 "lv": "A2",
 "ru": "мой",
@@ -27830,6 +28558,1182 @@
 "ru": "футбольный мяч",
 "en": "football",
 "fr": "ballon de football"
+},
+{
+"a": "առնել",
+"lv": "A2",
+"ru": "брать",
+"en": "to take",
+"fr": "prendre"
+},
+{
+"a": "արժել",
+"lv": "A2",
+"ru": "стоить",
+"en": "to cost, to be worth",
+"fr": "coûter, valoir"
+},
+{
+"a": "արտադրել",
+"lv": "A2",
+"ru": "производить",
+"en": "to produce",
+"fr": "produire"
+},
+{
+"a": "բնակել",
+"lv": "A2",
+"ru": "жить, проживать",
+"en": "to live, to reside",
+"fr": "habiter"
+},
+{
+"a": "գողանալ",
+"lv": "A2",
+"ru": "воровать, красть",
+"en": "to steal",
+"fr": "voler"
+},
+{
+"a": "գործածել",
+"lv": "A2",
+"ru": "использовать",
+"en": "to use",
+"fr": "utiliser"
+},
+{
+"a": "գտնվել",
+"lv": "A2",
+"ru": "находиться",
+"en": "to be found, to be located",
+"fr": "se trouver"
+},
+{
+"a": "երևալ",
+"lv": "A2",
+"ru": "появляться, виднеться",
+"en": "to appear",
+"fr": "apparaître"
+},
+{
+"a": "ելնել",
+"lv": "A2",
+"ru": "выходить",
+"en": "to go out",
+"fr": "sortir"
+},
+{
+"a": "գիտեմ",
+"lv": "A2",
+"ru": "я знаю",
+"en": "I know",
+"fr": "je sais"
+},
+{
+"a": "եմ",
+"lv": "A2",
+"ru": "я есмь (я … есть)",
+"en": "I am",
+"fr": "je suis"
+},
+{
+"a": "զանգահարել",
+"lv": "A2",
+"ru": "звонить (по телефону)",
+"en": "to call (by phone)",
+"fr": "téléphoner"
+},
+{
+"a": "ավլել",
+"lv": "A2",
+"ru": "подметать",
+"en": "to sweep",
+"fr": "balayer"
+},
+{
+"a": "անհանգստացնել",
+"lv": "A2",
+"ru": "беспокоить",
+"en": "to bother",
+"fr": "déranger"
+},
+{
+"a": "ամուսնացնել",
+"lv": "A2",
+"ru": "женить, выдавать замуж",
+"en": "to marry off",
+"fr": "marier"
+},
+{
+"a": "անգիր անել",
+"lv": "A2",
+"ru": "выучить наизусть",
+"en": "to learn by heart",
+"fr": "apprendre par cœur"
+},
+{
+"a": "աճապարել",
+"lv": "A2",
+"ru": "спешить",
+"en": "to hurry",
+"fr": "se dépêcher"
+},
+{
+"a": "աղտոտել",
+"lv": "A2",
+"ru": "пачкать",
+"en": "to dirty",
+"fr": "salir"
+},
+{
+"a": "աղմկել",
+"lv": "A2",
+"ru": "шуметь",
+"en": "to make noise",
+"fr": "faire du bruit"
+},
+{
+"a": "աղալ",
+"lv": "A2",
+"ru": "молоть",
+"en": "to grind",
+"fr": "moudre"
+},
+{
+"a": "ածել",
+"lv": "A2",
+"ru": "нести (яйца)",
+"en": "to lay (eggs)",
+"fr": "pondre"
+},
+{
+"a": "անձրևել",
+"lv": "A2",
+"ru": "идти (о дожде)",
+"en": "to rain",
+"fr": "pleuvoir"
+},
+{
+"a": "անվանել",
+"lv": "A2",
+"ru": "называть",
+"en": "to name, to call",
+"fr": "nommer"
+},
+{
+"a": "անց կենալ",
+"lv": "A2",
+"ru": "проходить",
+"en": "to pass",
+"fr": "passer"
+},
+{
+"a": "ապտակել",
+"lv": "A2",
+"ru": "дать пощёчину",
+"en": "to slap",
+"fr": "gifler"
+},
+{
+"a": "առաքել",
+"lv": "A2",
+"ru": "отправлять",
+"en": "to send",
+"fr": "envoyer"
+},
+{
+"a": "արտահանել",
+"lv": "A2",
+"ru": "экспортировать",
+"en": "to export",
+"fr": "exporter"
+},
+{
+"a": "արտասանել",
+"lv": "A2",
+"ru": "произносить",
+"en": "to pronounce",
+"fr": "prononcer"
+},
+{
+"a": "բացվել",
+"lv": "A2",
+"ru": "открываться",
+"en": "to open (itself)",
+"fr": "s'ouvrir"
+},
+{
+"a": "բժշկել",
+"lv": "A2",
+"ru": "лечить",
+"en": "to cure",
+"fr": "soigner"
+},
+{
+"a": "բխկալ",
+"lv": "A2",
+"ru": "рыгать",
+"en": "to burp",
+"fr": "roter"
+},
+{
+"a": "գգվել",
+"lv": "A2",
+"ru": "гладить, ласкать",
+"en": "to caress",
+"fr": "caresser"
+},
+{
+"a": "գժվել",
+"lv": "A2",
+"ru": "сходить с ума",
+"en": "to go crazy",
+"fr": "devenir fou"
+},
+{
+"a": "գծել",
+"lv": "A2",
+"ru": "чертить",
+"en": "to draw (a line)",
+"fr": "tracer"
+},
+{
+"a": "գնալ-գալ",
+"lv": "A2",
+"ru": "ходить туда-сюда",
+"en": "to come and go",
+"fr": "aller et venir"
+},
+{
+"a": "գոհանալ",
+"lv": "A2",
+"ru": "быть довольным",
+"en": "to be content",
+"fr": "se contenter"
+},
+{
+"a": "գոյություն ունենալ",
+"lv": "A2",
+"ru": "существовать",
+"en": "to exist",
+"fr": "exister"
+},
+{
+"a": "գոչել",
+"lv": "A2",
+"ru": "кричать",
+"en": "to shout",
+"fr": "crier"
+},
+{
+"a": "գուշակել",
+"lv": "A2",
+"ru": "предсказывать",
+"en": "to predict",
+"fr": "prédire"
+},
+{
+"a": "գրառել",
+"lv": "A2",
+"ru": "записывать",
+"en": "to write down",
+"fr": "noter"
+},
+{
+"a": "երթևեկել",
+"lv": "A2",
+"ru": "ездить (регулярно)",
+"en": "to commute",
+"fr": "faire la navette"
+},
+{
+"a": "երկարաձգել",
+"lv": "A2",
+"ru": "продлевать",
+"en": "to extend",
+"fr": "prolonger"
+},
+{
+"a": "երևակայել",
+"lv": "A2",
+"ru": "воображать",
+"en": "to imagine",
+"fr": "imaginer"
+},
+{
+"a": "զարկել",
+"lv": "A2",
+"ru": "ударять, стучать",
+"en": "to strike, to knock",
+"fr": "frapper"
+},
+{
+"a": "զգուշանալ",
+"lv": "A2",
+"ru": "остерегаться",
+"en": "to beware",
+"fr": "se méfier"
+},
+{
+"a": "զնգալ",
+"lv": "A2",
+"ru": "звенеть",
+"en": "to ring",
+"fr": "sonner"
+},
+{
+"a": "զննել",
+"lv": "A2",
+"ru": "осматривать",
+"en": "to examine",
+"fr": "examiner"
+},
+{
+"a": "զրկել",
+"lv": "A2",
+"ru": "лишать",
+"en": "to deprive of",
+"fr": "priver de"
+},
+{
+"a": "ըմբռնել",
+"lv": "A2",
+"ru": "понимать, постигать",
+"en": "to grasp",
+"fr": "saisir, comprendre"
+},
+{
+"a": "ընթերցել",
+"lv": "A2",
+"ru": "читать (книжн.)",
+"en": "to read (formal)",
+"fr": "lire (soutenu)"
+},
+{
+"a": "ընկերանալ",
+"lv": "A2",
+"ru": "подружиться",
+"en": "to make friends",
+"fr": "se faire des amis"
+},
+{
+"a": "թափվել",
+"lv": "A2",
+"ru": "высыпаться, падать",
+"en": "to fall, to spill",
+"fr": "tomber, se déverser"
+},
+{
+"a": "թիավարել",
+"lv": "A2",
+"ru": "грести (веслом)",
+"en": "to row",
+"fr": "ramer"
+},
+{
+"a": "թուլանալ",
+"lv": "A2",
+"ru": "слабеть",
+"en": "to weaken",
+"fr": "s'affaiblir"
+},
+{
+"a": "թունավորել",
+"lv": "A2",
+"ru": "отравлять (синоним)",
+"en": "to poison",
+"fr": "empoisonner (synonyme)"
+},
+{
+"a": "թվալ",
+"lv": "A2",
+"ru": "казаться",
+"en": "to seem",
+"fr": "sembler"
+},
+{
+"a": "թվարկել",
+"lv": "A2",
+"ru": "перечислять",
+"en": "to enumerate",
+"fr": "énumérer"
+},
+{
+"a": "թրել",
+"lv": "A2",
+"ru": "месить",
+"en": "to knead",
+"fr": "pétrir"
+},
+{
+"a": "ժառանգել",
+"lv": "A2",
+"ru": "наследовать",
+"en": "to inherit",
+"fr": "hériter"
+},
+{
+"a": "իմանալ",
+"lv": "A2",
+"ru": "знать, узнавать",
+"en": "to know, to find out",
+"fr": "savoir, apprendre"
+},
+{
+"a": "լալ",
+"lv": "A2",
+"ru": "плакать",
+"en": "to cry",
+"fr": "pleurer"
+},
+{
+"a": "լավանալ",
+"lv": "A2",
+"ru": "выздоравливать",
+"en": "to recover",
+"fr": "guérir, aller mieux"
+},
+{
+"a": "լոգանալ",
+"lv": "A2",
+"ru": "купаться (в ванне)",
+"en": "to take a bath",
+"fr": "prendre un bain"
+},
+{
+"a": "լրջանալ",
+"lv": "A2",
+"ru": "становиться серьёзным",
+"en": "to become serious",
+"fr": "devenir sérieux"
+},
+{
+"a": "խելագարվել",
+"lv": "A2",
+"ru": "сходить с ума",
+"en": "to go crazy",
+"fr": "devenir fou (synonyme)"
+},
+{
+"a": "խելոքանալ",
+"lv": "A2",
+"ru": "умнеть",
+"en": "to become wise",
+"fr": "s'assagir"
+},
+{
+"a": "խենթանալ",
+"lv": "A2",
+"ru": "сойти с ума",
+"en": "to go mad",
+"fr": "perdre la tête"
+},
+{
+"a": "խլել",
+"lv": "A2",
+"ru": "отнимать, выхватывать",
+"en": "to snatch",
+"fr": "arracher"
+},
+{
+"a": "ծածկել",
+"lv": "A2",
+"ru": "накрывать, покрывать",
+"en": "to cover",
+"fr": "couvrir"
+},
+{
+"a": "ծարավել",
+"lv": "A2",
+"ru": "хотеть пить",
+"en": "to be thirsty",
+"fr": "avoir soif"
+},
+{
+"a": "ծիկրակել",
+"lv": "A2",
+"ru": "подглядывать",
+"en": "to peek",
+"fr": "épier"
+},
+{
+"a": "ծծել",
+"lv": "A2",
+"ru": "сосать",
+"en": "to suck",
+"fr": "sucer"
+},
+{
+"a": "ծուլանալ",
+"lv": "A2",
+"ru": "лениться",
+"en": "to be lazy",
+"fr": "paresser"
+},
+{
+"a": "ծռել",
+"lv": "A2",
+"ru": "сгибать",
+"en": "to bend",
+"fr": "plier, courber"
+},
+{
+"a": "կաղալ",
+"lv": "A2",
+"ru": "хромать",
+"en": "to limp",
+"fr": "boiter"
+},
+{
+"a": "կամենալ",
+"lv": "A2",
+"ru": "желать, хотеть",
+"en": "to wish",
+"fr": "vouloir, désirer"
+},
+{
+"a": "կերցնել",
+"lv": "A2",
+"ru": "кормить",
+"en": "to feed",
+"fr": "nourrir"
+},
+{
+"a": "կիսել",
+"lv": "A2",
+"ru": "делить пополам",
+"en": "to halve",
+"fr": "partager"
+},
+{
+"a": "կոչել",
+"lv": "A2",
+"ru": "называть (именем)",
+"en": "to name",
+"fr": "appeler"
+},
+{
+"a": "կոչվել",
+"lv": "A2",
+"ru": "называться",
+"en": "to be called",
+"fr": "s'appeler"
+},
+{
+"a": "կրակել",
+"lv": "A2",
+"ru": "стрелять",
+"en": "to shoot",
+"fr": "tirer"
+},
+{
+"a": "կրծել",
+"lv": "A2",
+"ru": "грызть",
+"en": "to gnaw",
+"fr": "ronger"
+},
+{
+"a": "կրկնապատկել",
+"lv": "A2",
+"ru": "удваивать",
+"en": "to double",
+"fr": "doubler"
+},
+{
+"a": "հալել",
+"lv": "A2",
+"ru": "плавить, топить",
+"en": "to melt",
+"fr": "fondre"
+},
+{
+"a": "հաճախել",
+"lv": "A2",
+"ru": "посещать (часто)",
+"en": "to frequent",
+"fr": "fréquenter"
+},
+{
+"a": "համարել",
+"lv": "A2",
+"ru": "считать (полагать)",
+"en": "to consider",
+"fr": "considérer"
+},
+{
+"a": "համարձակվել",
+"lv": "A2",
+"ru": "осмеливаться",
+"en": "to dare",
+"fr": "oser"
+},
+{
+"a": "համբուրվել",
+"lv": "A2",
+"ru": "целоваться",
+"en": "to kiss",
+"fr": "s'embrasser"
+},
+{
+"a": "հավելել",
+"lv": "A2",
+"ru": "добавлять",
+"en": "to add",
+"fr": "ajouter"
+},
+{
+"a": "հարթուկել",
+"lv": "A2",
+"ru": "гладить (утюгом)",
+"en": "to iron",
+"fr": "repasser"
+},
+{
+"a": "հարստանալ",
+"lv": "A2",
+"ru": "богатеть",
+"en": "to become rich",
+"fr": "s'enrichir"
+},
+{
+"a": "հարվածել",
+"lv": "A2",
+"ru": "ударять (книжн.)",
+"en": "to hit",
+"fr": "frapper (soutenu)"
+},
+{
+"a": "հեգել",
+"lv": "A2",
+"ru": "произносить по буквам",
+"en": "to spell",
+"fr": "épeler"
+},
+{
+"a": "հեծնել",
+"lv": "A2",
+"ru": "садиться верхом",
+"en": "to ride (a horse)",
+"fr": "monter (à cheval)"
+},
+{
+"a": "հետաքրքրել",
+"lv": "A2",
+"ru": "интересовать",
+"en": "to interest",
+"fr": "intéresser"
+},
+{
+"a": "հետաքրքրվել",
+"lv": "A2",
+"ru": "интересоваться",
+"en": "to be interested",
+"fr": "s'intéresser"
+},
+{
+"a": "հղիանալ",
+"lv": "A2",
+"ru": "забеременеть",
+"en": "to become pregnant",
+"fr": "tomber enceinte"
+},
+{
+"a": "հղկել",
+"lv": "A2",
+"ru": "полировать",
+"en": "to polish",
+"fr": "polir"
+},
+{
+"a": "հնանալ",
+"lv": "A2",
+"ru": "стареть (о вещах)",
+"en": "to grow old",
+"fr": "vieillir"
+},
+{
+"a": "հոգնեցնել",
+"lv": "A2",
+"ru": "утомлять",
+"en": "to tire",
+"fr": "fatiguer"
+},
+{
+"a": "հոսել",
+"lv": "A2",
+"ru": "течь",
+"en": "to flow",
+"fr": "couler"
+},
+{
+"a": "հոտ առնել",
+"lv": "A2",
+"ru": "нюхать, чуять запах",
+"en": "to smell",
+"fr": "sentir"
+},
+{
+"a": "հուզել",
+"lv": "A2",
+"ru": "волновать, трогать",
+"en": "to move (emotionally)",
+"fr": "émouvoir"
+},
+{
+"a": "ձայնագրել",
+"lv": "A2",
+"ru": "записывать (звук)",
+"en": "to record",
+"fr": "enregistrer"
+},
+{
+"a": "ճաքել",
+"lv": "A2",
+"ru": "трескаться",
+"en": "to crack",
+"fr": "se fissurer"
+},
+{
+"a": "ճեմել",
+"lv": "A2",
+"ru": "прогуливаться",
+"en": "to stroll",
+"fr": "flâner"
+},
+{
+"a": "ճղել",
+"lv": "A2",
+"ru": "рвать, разрывать",
+"en": "to tear",
+"fr": "déchirer"
+},
+{
+"a": "ճմլել",
+"lv": "A2",
+"ru": "сжимать, давить",
+"en": "to squeeze",
+"fr": "presser"
+},
+{
+"a": "ճմռել",
+"lv": "A2",
+"ru": "мять",
+"en": "to crumple",
+"fr": "froisser"
+},
+{
+"a": "ճնշել",
+"lv": "A2",
+"ru": "давить, угнетать",
+"en": "to press",
+"fr": "presser, peser"
+},
+{
+"a": "ճոճել",
+"lv": "A2",
+"ru": "качать",
+"en": "to swing, to rock",
+"fr": "balancer"
+},
+{
+"a": "ճռճռալ",
+"lv": "A2",
+"ru": "скрипеть",
+"en": "to squeak",
+"fr": "grincer"
+},
+{
+"a": "մաղթել",
+"lv": "A2",
+"ru": "желать (кому-л. чего-л.)",
+"en": "to wish",
+"fr": "souhaiter"
+},
+{
+"a": "մայր մտնել",
+"lv": "A2",
+"ru": "садиться (о солнце)",
+"en": "to set (of the sun)",
+"fr": "se coucher (soleil)"
+},
+{
+"a": "ման գալ",
+"lv": "A2",
+"ru": "гулять, прогуливаться",
+"en": "to walk around",
+"fr": "se promener"
+},
+{
+"a": "մարզել",
+"lv": "A2",
+"ru": "тренировать",
+"en": "to exercise",
+"fr": "entraîner"
+},
+{
+"a": "մերսել",
+"lv": "A2",
+"ru": "массировать",
+"en": "to massage",
+"fr": "masser"
+},
+{
+"a": "մորթել",
+"lv": "A2",
+"ru": "резать (скот)",
+"en": "to slaughter",
+"fr": "abattre"
+},
+{
+"a": "մտապահել",
+"lv": "A2",
+"ru": "запоминать",
+"en": "to memorize",
+"fr": "retenir, mémoriser"
+},
+{
+"a": "նիհարել",
+"lv": "A2",
+"ru": "худеть",
+"en": "to get slim",
+"fr": "maigrir"
+},
+{
+"a": "նշանել",
+"lv": "A2",
+"ru": "обручать",
+"en": "to betroth",
+"fr": "fiancer"
+},
+{
+"a": "շահել",
+"lv": "A2",
+"ru": "выигрывать, зарабатывать",
+"en": "to earn, to win",
+"fr": "gagner"
+},
+{
+"a": "շիկնել",
+"lv": "A2",
+"ru": "краснеть",
+"en": "to blush",
+"fr": "rougir"
+},
+{
+"a": "շինել",
+"lv": "A2",
+"ru": "строить, делать",
+"en": "to make",
+"fr": "fabriquer"
+},
+{
+"a": "շոգել",
+"lv": "A2",
+"ru": "страдать от жары",
+"en": "to feel hot",
+"fr": "avoir chaud"
+},
+{
+"a": "շտկել",
+"lv": "A2",
+"ru": "выпрямлять, поправлять",
+"en": "to straighten",
+"fr": "redresser"
+},
+{
+"a": "շրջապատել",
+"lv": "A2",
+"ru": "окружать",
+"en": "to surround",
+"fr": "entourer"
+},
+{
+"a": "շփոթել",
+"lv": "A2",
+"ru": "путать",
+"en": "to confuse",
+"fr": "confondre"
+},
+{
+"a": "ոռոգել",
+"lv": "A2",
+"ru": "поливать, орошать",
+"en": "to irrigate",
+"fr": "arroser"
+},
+{
+"a": "ուզենալ",
+"lv": "A2",
+"ru": "хотеть",
+"en": "to want",
+"fr": "vouloir"
+},
+{
+"a": "ուժեղանալ",
+"lv": "A2",
+"ru": "становиться сильнее",
+"en": "to get stronger",
+"fr": "se renforcer"
+},
+{
+"a": "ունեմ",
+"lv": "A2",
+"ru": "у меня есть",
+"en": "I have",
+"fr": "j'ai"
+},
+{
+"a": "չարանալ",
+"lv": "A2",
+"ru": "злиться",
+"en": "to become angry",
+"fr": "se mettre en colère"
+},
+{
+"a": "չքանալ",
+"lv": "A2",
+"ru": "исчезать",
+"en": "to vanish",
+"fr": "disparaître"
+},
+{
+"a": "պայքարել",
+"lv": "A2",
+"ru": "бороться",
+"en": "to fight",
+"fr": "lutter"
+},
+{
+"a": "պատկերել",
+"lv": "A2",
+"ru": "изображать",
+"en": "to depict",
+"fr": "représenter"
+},
+{
+"a": "պատճառել",
+"lv": "A2",
+"ru": "причинять",
+"en": "to cause",
+"fr": "causer"
+},
+{
+"a": "պատռել",
+"lv": "A2",
+"ru": "рвать",
+"en": "to tear",
+"fr": "déchirer (synonyme)"
+},
+{
+"a": "պարծենալ",
+"lv": "A2",
+"ru": "хвастаться (синоним)",
+"en": "to boast",
+"fr": "se vanter (synonyme)"
+},
+{
+"a": "ջանալ",
+"lv": "A2",
+"ru": "стараться",
+"en": "to try",
+"fr": "s'efforcer"
+},
+{
+"a": "ջեռուցել",
+"lv": "A2",
+"ru": "отапливать",
+"en": "to heat",
+"fr": "chauffer"
+},
+{
+"a": "ջերմանալ",
+"lv": "A2",
+"ru": "согреваться",
+"en": "to warm up",
+"fr": "se réchauffer"
+},
+{
+"a": "ջղայնանալ",
+"lv": "A2",
+"ru": "нервничать",
+"en": "to be irritated",
+"fr": "s'énerver"
+},
+{
+"a": "ջղայնացնել",
+"lv": "A2",
+"ru": "раздражать",
+"en": "to irritate",
+"fr": "agacer"
+},
+{
+"a": "սարսափել",
+"lv": "A2",
+"ru": "ужасаться (бояться)",
+"en": "to be terrified",
+"fr": "être terrifié"
+},
+{
+"a": "սպասարկել",
+"lv": "A2",
+"ru": "обслуживать",
+"en": "to serve",
+"fr": "servir"
+},
+{
+"a": "ստացվել",
+"lv": "A2",
+"ru": "получаться",
+"en": "to turn out",
+"fr": "réussir, s'avérer"
+},
+{
+"a": "ստիպվել",
+"lv": "A2",
+"ru": "быть вынужденным",
+"en": "to be forced",
+"fr": "être obligé"
+},
+{
+"a": "սրճել",
+"lv": "A2",
+"ru": "пить кофе",
+"en": "to drink coffee",
+"fr": "prendre un café"
+},
+{
+"a": "վախճանվել",
+"lv": "A2",
+"ru": "скончаться",
+"en": "to pass away",
+"fr": "décéder"
+},
+{
+"a": "վերանվանել",
+"lv": "A2",
+"ru": "переименовывать",
+"en": "to rename",
+"fr": "renommer"
+},
+{
+"a": "վիճաբանել",
+"lv": "A2",
+"ru": "спорить",
+"en": "to argue",
+"fr": "se disputer"
+},
+{
+"a": "վիրահատել",
+"lv": "A2",
+"ru": "оперировать",
+"en": "to operate on",
+"fr": "opérer"
+},
+{
+"a": "վնասել",
+"lv": "A2",
+"ru": "вредить",
+"en": "to harm",
+"fr": "nuire"
+},
+{
+"a": "վնասվել",
+"lv": "A2",
+"ru": "повреждаться",
+"en": "to be damaged",
+"fr": "s'endommager"
+},
+{
+"a": "տեղավորել",
+"lv": "A2",
+"ru": "размещать",
+"en": "to install",
+"fr": "installer"
+},
+{
+"a": "տեսագրել",
+"lv": "A2",
+"ru": "снимать на видео",
+"en": "to videorecord",
+"fr": "filmer"
+},
+{
+"a": "տոկալ",
+"lv": "A2",
+"ru": "терпеть",
+"en": "to endure",
+"fr": "supporter"
+},
+{
+"a": "տրտնջալ",
+"lv": "A2",
+"ru": "жаловаться, роптать",
+"en": "to complain",
+"fr": "se plaindre"
+},
+{
+"a": "ցավազրկել",
+"lv": "A2",
+"ru": "обезболивать (синоним)",
+"en": "to relieve pain",
+"fr": "soulager la douleur"
+},
+{
+"a": "փաթեթավորել",
+"lv": "A2",
+"ru": "упаковывать",
+"en": "to pack",
+"fr": "emballer"
+},
+{
+"a": "փշրել",
+"lv": "A2",
+"ru": "раздроблять",
+"en": "to crush",
+"fr": "broyer"
+},
+{
+"a": "փոխադրել",
+"lv": "A2",
+"ru": "перевозить",
+"en": "to transport",
+"fr": "transporter"
+},
+{
+"a": "փութալ",
+"lv": "A2",
+"ru": "спешить (синоним)",
+"en": "to hurry",
+"fr": "se hâter (synonyme)"
+},
+{
+"a": "փոփոխել",
+"lv": "A2",
+"ru": "изменять",
+"en": "to change",
+"fr": "changer, modifier"
+},
+{
+"a": "փոքրանալ",
+"lv": "A2",
+"ru": "уменьшаться",
+"en": "to shrink",
+"fr": "diminuer"
+},
+{
+"a": "փսխել",
+"lv": "A2",
+"ru": "тошнить, рвать",
+"en": "to vomit",
+"fr": "vomir"
+},
+{
+"a": "քերծել",
+"lv": "A2",
+"ru": "царапать",
+"en": "to scratch",
+"fr": "égratigner"
 },
 {
 "a": "հասարակություն",
@@ -72947,6 +74851,3317 @@
 "fr": "servilité"
 },
 {
+"a": "աբսորբել",
+"lv": "B1",
+"ru": "поглощать, абсорбировать",
+"en": "to absorb",
+"fr": "absorber"
+},
+{
+"a": "աբստրահել",
+"lv": "B1",
+"ru": "абстрагировать",
+"en": "to abstract",
+"fr": "abstraire"
+},
+{
+"a": "ագահանալ",
+"lv": "B1",
+"ru": "становиться жадным",
+"en": "to become greedy",
+"fr": "devenir avide"
+},
+{
+"a": "ագուցել",
+"lv": "B1",
+"ru": "вставлять (в паз)",
+"en": "to fit in, to joint",
+"fr": "emboîter"
+},
+{
+"a": "ազատագնել",
+"lv": "B1",
+"ru": "выкупать (на свободу)",
+"en": "to ransom",
+"fr": "racheter"
+},
+{
+"a": "ազատազրկել",
+"lv": "B1",
+"ru": "лишать свободы",
+"en": "to imprison",
+"fr": "priver de liberté"
+},
+{
+"a": "ազդարարել",
+"lv": "B1",
+"ru": "объявлять, провозглашать",
+"en": "to proclaim",
+"fr": "proclamer"
+},
+{
+"a": "ազդվել",
+"lv": "B1",
+"ru": "быть тронутым",
+"en": "to be moved",
+"fr": "être ému"
+},
+{
+"a": "ածիլել",
+"lv": "B1",
+"ru": "брить (наголо)",
+"en": "to shave",
+"fr": "raser (de près)"
+},
+{
+"a": "ահաբեկել",
+"lv": "B1",
+"ru": "запугивать",
+"en": "to frighten",
+"fr": "effrayer"
+},
+{
+"a": "ահազանգել",
+"lv": "B1",
+"ru": "бить тревогу",
+"en": "to raise the alarm",
+"fr": "donner l'alarme"
+},
+{
+"a": "աղավաղել",
+"lv": "B1",
+"ru": "искажать",
+"en": "to distort",
+"fr": "déformer"
+},
+{
+"a": "աղարտել",
+"lv": "B1",
+"ru": "портить",
+"en": "to spoil",
+"fr": "gâcher"
+},
+{
+"a": "աղերսել",
+"lv": "B1",
+"ru": "умолять",
+"en": "to implore",
+"fr": "implorer"
+},
+{
+"a": "ամայանալ",
+"lv": "B1",
+"ru": "пустеть",
+"en": "to become deserted",
+"fr": "se dépeupler"
+},
+{
+"a": "ամորձատել",
+"lv": "B1",
+"ru": "кастрировать",
+"en": "to castrate",
+"fr": "castrer"
+},
+{
+"a": "այրիանալ",
+"lv": "B1",
+"ru": "овдоветь",
+"en": "to be widowed",
+"fr": "devenir veuf"
+},
+{
+"a": "անդամալուծել",
+"lv": "B1",
+"ru": "парализовать",
+"en": "to paralyze",
+"fr": "paralyser"
+},
+{
+"a": "անդամահատել",
+"lv": "B1",
+"ru": "ампутировать",
+"en": "to amputate",
+"fr": "amputer"
+},
+{
+"a": "անզգայանալ",
+"lv": "B1",
+"ru": "неметь",
+"en": "to become numb",
+"fr": "s'engourdir"
+},
+{
+"a": "անզգայացնել",
+"lv": "B1",
+"ru": "обезболивать",
+"en": "to numb",
+"fr": "anesthésier"
+},
+{
+"a": "անկախանալ",
+"lv": "B1",
+"ru": "обретать независимость",
+"en": "to gain independence",
+"fr": "devenir indépendant"
+},
+{
+"a": "ապակենտրոնանալ",
+"lv": "B1",
+"ru": "децентрализоваться",
+"en": "to decentralize",
+"fr": "se décentraliser"
+},
+{
+"a": "ապահովացնել",
+"lv": "B1",
+"ru": "обеспечивать, гарантировать",
+"en": "to guarantee",
+"fr": "garantir"
+},
+{
+"a": "ապահովվել",
+"lv": "B1",
+"ru": "обезопаситься",
+"en": "to become secured",
+"fr": "se sécuriser"
+},
+{
+"a": "ապամոնտաժել",
+"lv": "B1",
+"ru": "разбирать (демонтировать)",
+"en": "to dismantle",
+"fr": "démonter"
+},
+{
+"a": "ապաշխարել",
+"lv": "B1",
+"ru": "каяться",
+"en": "to repent",
+"fr": "se repentir"
+},
+{
+"a": "ապաշրջափակել",
+"lv": "B1",
+"ru": "снимать блокаду",
+"en": "to unblock",
+"fr": "débloquer"
+},
+{
+"a": "ապաքինել",
+"lv": "B1",
+"ru": "исцелять",
+"en": "to heal",
+"fr": "guérir"
+},
+{
+"a": "ապշել",
+"lv": "B1",
+"ru": "поражаться, остолбенеть",
+"en": "to be astonished",
+"fr": "être stupéfait"
+},
+{
+"a": "ապշեցնել",
+"lv": "B1",
+"ru": "поражать, изумлять",
+"en": "to stupefy",
+"fr": "stupéfier"
+},
+{
+"a": "ապսպրել",
+"lv": "B1",
+"ru": "заказывать",
+"en": "to order",
+"fr": "commander"
+},
+{
+"a": "առաջադիմել",
+"lv": "B1",
+"ru": "прогрессировать",
+"en": "to progress",
+"fr": "progresser"
+},
+{
+"a": "առավոտանալ",
+"lv": "B1",
+"ru": "светать",
+"en": "to dawn",
+"fr": "faire jour"
+},
+{
+"a": "առերեսել",
+"lv": "B1",
+"ru": "устраивать очную ставку",
+"en": "to confront",
+"fr": "confronter"
+},
+{
+"a": "առնչվել",
+"lv": "B1",
+"ru": "иметь отношение",
+"en": "to relate to",
+"fr": "concerner"
+},
+{
+"a": "առևանգել",
+"lv": "B1",
+"ru": "похищать",
+"en": "to kidnap",
+"fr": "enlever"
+},
+{
+"a": "ավանդել",
+"lv": "B1",
+"ru": "передавать (из поколения)",
+"en": "to pass on",
+"fr": "transmettre"
+},
+{
+"a": "ավերել",
+"lv": "B1",
+"ru": "разрушать",
+"en": "to destroy",
+"fr": "dévaster"
+},
+{
+"a": "արածել",
+"lv": "B1",
+"ru": "пастись",
+"en": "to graze",
+"fr": "paître"
+},
+{
+"a": "արծնել",
+"lv": "B1",
+"ru": "покрывать эмалью",
+"en": "to enamel",
+"fr": "émailler"
+},
+{
+"a": "արհամարհել",
+"lv": "B1",
+"ru": "презирать",
+"en": "to despise",
+"fr": "mépriser"
+},
+{
+"a": "արձագանքել",
+"lv": "B1",
+"ru": "отзываться эхом",
+"en": "to echo",
+"fr": "faire écho"
+},
+{
+"a": "արշավել",
+"lv": "B1",
+"ru": "совершать набег",
+"en": "to raid",
+"fr": "razzier, envahir"
+},
+{
+"a": "արորել",
+"lv": "B1",
+"ru": "пахать",
+"en": "to plough",
+"fr": "labourer"
+},
+{
+"a": "արտահոսել",
+"lv": "B1",
+"ru": "вытекать",
+"en": "to leak",
+"fr": "fuir, s'écouler"
+},
+{
+"a": "արտամղել",
+"lv": "B1",
+"ru": "выталкивать",
+"en": "to push out",
+"fr": "expulser"
+},
+{
+"a": "արտաշիրմել",
+"lv": "B1",
+"ru": "эксгумировать",
+"en": "to exhume",
+"fr": "exhumer"
+},
+{
+"a": "արտաքսել",
+"lv": "B1",
+"ru": "высылать",
+"en": "to deport",
+"fr": "expulser (déporter)"
+},
+{
+"a": "արտորալ",
+"lv": "B1",
+"ru": "торопиться",
+"en": "to hurry",
+"fr": "se hâter"
+},
+{
+"a": "աքսորել",
+"lv": "B1",
+"ru": "ссылать",
+"en": "to exile",
+"fr": "exiler"
+},
+{
+"a": "բազմանալ",
+"lv": "B1",
+"ru": "размножаться",
+"en": "to multiply",
+"fr": "se multiplier"
+},
+{
+"a": "բախել",
+"lv": "B1",
+"ru": "бить, ударять",
+"en": "to beat",
+"fr": "battre"
+},
+{
+"a": "բաղադրել",
+"lv": "B1",
+"ru": "составлять",
+"en": "to compose",
+"fr": "composer"
+},
+{
+"a": "բաղկանալ",
+"lv": "B1",
+"ru": "состоять из",
+"en": "to consist of",
+"fr": "se composer de"
+},
+{
+"a": "բանաձևել",
+"lv": "B1",
+"ru": "формулировать",
+"en": "to formulate",
+"fr": "formuler"
+},
+{
+"a": "բանել",
+"lv": "B1",
+"ru": "работать (о механизме)",
+"en": "to operate",
+"fr": "fonctionner"
+},
+{
+"a": "բանեցնել",
+"lv": "B1",
+"ru": "использовать, применять",
+"en": "to employ",
+"fr": "employer"
+},
+{
+"a": "բանտարկել",
+"lv": "B1",
+"ru": "заключать в тюрьму",
+"en": "to imprison",
+"fr": "emprisonner"
+},
+{
+"a": "բարբաջել",
+"lv": "B1",
+"ru": "нести вздор",
+"en": "to prattle",
+"fr": "radoter"
+},
+{
+"a": "բարեկամանալ",
+"lv": "B1",
+"ru": "подружиться",
+"en": "to become friends",
+"fr": "se lier d'amitié"
+},
+{
+"a": "բարկացնել",
+"lv": "B1",
+"ru": "сердить",
+"en": "to anger",
+"fr": "fâcher"
+},
+{
+"a": "բացականչել",
+"lv": "B1",
+"ru": "восклицать",
+"en": "to exclaim",
+"fr": "s'exclamer"
+},
+{
+"a": "բդկել",
+"lv": "B1",
+"ru": "лопаться",
+"en": "to burst",
+"fr": "éclater"
+},
+{
+"a": "բլբլալ",
+"lv": "B1",
+"ru": "болтать",
+"en": "to chatter",
+"fr": "bavarder"
+},
+{
+"a": "բխել",
+"lv": "B1",
+"ru": "вытекать, проистекать",
+"en": "to flow out",
+"fr": "jaillir, découler"
+},
+{
+"a": "բնադրել",
+"lv": "B1",
+"ru": "гнездиться",
+"en": "to nest",
+"fr": "nicher"
+},
+{
+"a": "բնորոշել",
+"lv": "B1",
+"ru": "характеризовать",
+"en": "to characterize",
+"fr": "caractériser"
+},
+{
+"a": "բողբոջել",
+"lv": "B1",
+"ru": "давать почки",
+"en": "to bud",
+"fr": "bourgeonner"
+},
+{
+"a": "բուծել",
+"lv": "B1",
+"ru": "разводить (животных)",
+"en": "to breed",
+"fr": "élever"
+},
+{
+"a": "բռնադատել",
+"lv": "B1",
+"ru": "подвергать репрессиям",
+"en": "to repress",
+"fr": "réprimer"
+},
+{
+"a": "բռնկել",
+"lv": "B1",
+"ru": "воспламенять",
+"en": "to inflame",
+"fr": "enflammer"
+},
+{
+"a": "բռնկվել",
+"lv": "B1",
+"ru": "вспыхивать",
+"en": "to flare up",
+"fr": "s'embraser"
+},
+{
+"a": "բտել",
+"lv": "B1",
+"ru": "кормить (скот)",
+"en": "to feed (an animal)",
+"fr": "nourrir (le bétail)"
+},
+{
+"a": "բրդել",
+"lv": "B1",
+"ru": "крошить",
+"en": "to crumble",
+"fr": "émietter"
+},
+{
+"a": "բևեռացնել",
+"lv": "B1",
+"ru": "поляризовать",
+"en": "to polarize",
+"fr": "polariser"
+},
+{
+"a": "գալարել",
+"lv": "B1",
+"ru": "скручивать, свивать",
+"en": "to coil",
+"fr": "enrouler"
+},
+{
+"a": "գահակալել",
+"lv": "B1",
+"ru": "восходить на трон",
+"en": "to ascend the throne",
+"fr": "monter sur le trône"
+},
+{
+"a": "գաղթել",
+"lv": "B1",
+"ru": "переселяться",
+"en": "to migrate",
+"fr": "émigrer"
+},
+{
+"a": "գամել",
+"lv": "B1",
+"ru": "заклёпывать, приковывать",
+"en": "to rivet",
+"fr": "river"
+},
+{
+"a": "գայթակղել",
+"lv": "B1",
+"ru": "соблазнять",
+"en": "to seduce",
+"fr": "séduire"
+},
+{
+"a": "գանգրել",
+"lv": "B1",
+"ru": "завивать",
+"en": "to curl",
+"fr": "friser"
+},
+{
+"a": "գարշել",
+"lv": "B1",
+"ru": "гнушаться",
+"en": "to abhor",
+"fr": "abhorrer"
+},
+{
+"a": "գիշատել",
+"lv": "B1",
+"ru": "растерзать",
+"en": "to tear to pieces",
+"fr": "déchiqueter"
+},
+{
+"a": "գլխատել",
+"lv": "B1",
+"ru": "обезглавить",
+"en": "to behead",
+"fr": "décapiter"
+},
+{
+"a": "գլոբալիզացնել",
+"lv": "B1",
+"ru": "глобализировать",
+"en": "to globalize",
+"fr": "mondialiser"
+},
+{
+"a": "գոյանալ",
+"lv": "B1",
+"ru": "возникать",
+"en": "to come into being",
+"fr": "naître, se former"
+},
+{
+"a": "գոյատևել",
+"lv": "B1",
+"ru": "выживать",
+"en": "to survive",
+"fr": "survivre"
+},
+{
+"a": "գործարկել",
+"lv": "B1",
+"ru": "запускать в работу",
+"en": "to put into operation",
+"fr": "mettre en service"
+},
+{
+"a": "գորովել",
+"lv": "B1",
+"ru": "обожать",
+"en": "to adore",
+"fr": "adorer"
+},
+{
+"a": "գուրգուրել",
+"lv": "B1",
+"ru": "нежить, ласкать",
+"en": "to cuddle",
+"fr": "câliner"
+},
+{
+"a": "գրգռել",
+"lv": "B1",
+"ru": "возбуждать",
+"en": "to excite",
+"fr": "exciter"
+},
+{
+"a": "դաջել",
+"lv": "B1",
+"ru": "отпечатывать",
+"en": "to imprint",
+"fr": "imprimer"
+},
+{
+"a": "դասդասել",
+"lv": "B1",
+"ru": "классифицировать",
+"en": "to classify",
+"fr": "classifier"
+},
+{
+"a": "դասել",
+"lv": "B1",
+"ru": "распределять по разрядам",
+"en": "to rank",
+"fr": "classer"
+},
+{
+"a": "դավադրել",
+"lv": "B1",
+"ru": "устраивать заговор",
+"en": "to conspire",
+"fr": "conspirer"
+},
+{
+"a": "դարանակալել",
+"lv": "B1",
+"ru": "устраивать засаду",
+"en": "to ambush",
+"fr": "tendre une embuscade"
+},
+{
+"a": "դարբնել",
+"lv": "B1",
+"ru": "ковать",
+"en": "to forge",
+"fr": "forger"
+},
+{
+"a": "դարսել",
+"lv": "B1",
+"ru": "укладывать (стопкой)",
+"en": "to stack",
+"fr": "empiler"
+},
+{
+"a": "դափնիների վրա հանգչել",
+"lv": "B1",
+"ru": "почивать на лаврах",
+"en": "to rest on one's laurels",
+"fr": "se reposer sur ses lauriers"
+},
+{
+"a": "դեղել",
+"lv": "B1",
+"ru": "отравлять",
+"en": "to poison",
+"fr": "empoisonner"
+},
+{
+"a": "դիմադրել",
+"lv": "B1",
+"ru": "сопротивляться",
+"en": "to resist",
+"fr": "résister"
+},
+{
+"a": "դրժել",
+"lv": "B1",
+"ru": "нарушать слово",
+"en": "to break one's word",
+"fr": "manquer à sa parole"
+},
+{
+"a": "եզրին լինել",
+"lv": "B1",
+"ru": "быть на грани",
+"en": "to be on the verge of",
+"fr": "être au bord de"
+},
+{
+"a": "ենթարկել",
+"lv": "B1",
+"ru": "подчинять",
+"en": "to subject",
+"fr": "soumettre"
+},
+{
+"a": "երգիծել",
+"lv": "B1",
+"ru": "высмеивать",
+"en": "to satirize",
+"fr": "satiriser"
+},
+{
+"a": "երերալ",
+"lv": "B1",
+"ru": "качаться",
+"en": "to sway",
+"fr": "osciller"
+},
+{
+"a": "երիտասարդանալ",
+"lv": "B1",
+"ru": "молодеть",
+"en": "to be rejuvenated",
+"fr": "rajeunir"
+},
+{
+"a": "երկայնանալ",
+"lv": "B1",
+"ru": "удлиняться",
+"en": "to become longer",
+"fr": "s'allonger"
+},
+{
+"a": "երկայնել",
+"lv": "B1",
+"ru": "удлинять",
+"en": "to lengthen",
+"fr": "allonger"
+},
+{
+"a": "երկբայել",
+"lv": "B1",
+"ru": "сомневаться",
+"en": "to doubt",
+"fr": "douter"
+},
+{
+"a": "երկյուղել",
+"lv": "B1",
+"ru": "бояться, пугаться",
+"en": "to be scared",
+"fr": "avoir peur"
+},
+{
+"a": "զառամել",
+"lv": "B1",
+"ru": "дряхлеть",
+"en": "to become decrepit",
+"fr": "devenir décrépit"
+},
+{
+"a": "զառանցել",
+"lv": "B1",
+"ru": "бредить",
+"en": "to be delirious",
+"fr": "délirer"
+},
+{
+"a": "զավթել",
+"lv": "B1",
+"ru": "захватывать",
+"en": "to seize",
+"fr": "conquérir"
+},
+{
+"a": "զարհուրել",
+"lv": "B1",
+"ru": "ужасаться",
+"en": "to be horrified",
+"fr": "être horrifié"
+},
+{
+"a": "զգացվել",
+"lv": "B1",
+"ru": "растрогаться",
+"en": "to be moved",
+"fr": "être touché"
+},
+{
+"a": "զեղծել",
+"lv": "B1",
+"ru": "растрачивать",
+"en": "to squander",
+"fr": "gaspiller"
+},
+{
+"a": "զետեղել",
+"lv": "B1",
+"ru": "помещать",
+"en": "to place",
+"fr": "placer, insérer"
+},
+{
+"a": "զոհել",
+"lv": "B1",
+"ru": "жертвовать",
+"en": "to sacrifice",
+"fr": "sacrifier"
+},
+{
+"a": "զուգել",
+"lv": "B1",
+"ru": "украшать, убирать",
+"en": "to decorate",
+"fr": "décorer"
+},
+{
+"a": "զուգվել",
+"lv": "B1",
+"ru": "наряжаться",
+"en": "to dress up",
+"fr": "se parer"
+},
+{
+"a": "զվարճախոսել",
+"lv": "B1",
+"ru": "шутить",
+"en": "to joke",
+"fr": "plaisanter"
+},
+{
+"a": "զրնգալ",
+"lv": "B1",
+"ru": "звенеть (о колоколах)",
+"en": "to peal",
+"fr": "tinter"
+},
+{
+"a": "ընդարմանալ",
+"lv": "B1",
+"ru": "оцепенеть",
+"en": "to be benumbed",
+"fr": "s'engourdir (synonyme)"
+},
+{
+"a": "ընդելուզել",
+"lv": "B1",
+"ru": "нанизывать",
+"en": "to string, to bead",
+"fr": "enfiler"
+},
+{
+"a": "ընդոստնել",
+"lv": "B1",
+"ru": "вскакивать",
+"en": "to jump up",
+"fr": "bondir"
+},
+{
+"a": "ընկերակցել",
+"lv": "B1",
+"ru": "сдружиться",
+"en": "to become companions",
+"fr": "devenir compagnons"
+},
+{
+"a": "ընկղմել",
+"lv": "B1",
+"ru": "окунать",
+"en": "to plunge",
+"fr": "plonger"
+},
+{
+"a": "ընկճել",
+"lv": "B1",
+"ru": "удручать",
+"en": "to dishearten",
+"fr": "décourager"
+},
+{
+"a": "ընկճվել",
+"lv": "B1",
+"ru": "впадать в уныние",
+"en": "to be depressed",
+"fr": "se décourager"
+},
+{
+"a": "թաթավել",
+"lv": "B1",
+"ru": "пропитывать, вымачивать",
+"en": "to soak",
+"fr": "imbiber"
+},
+{
+"a": "թանձրանալ",
+"lv": "B1",
+"ru": "густеть",
+"en": "to thicken",
+"fr": "épaissir"
+},
+{
+"a": "թավալվել",
+"lv": "B1",
+"ru": "валяться",
+"en": "to wallow",
+"fr": "se vautrer"
+},
+{
+"a": "թարգել",
+"lv": "B1",
+"ru": "бросать (привычку)",
+"en": "to quit",
+"fr": "renoncer à"
+},
+{
+"a": "թարմանալ",
+"lv": "B1",
+"ru": "освежаться",
+"en": "to freshen",
+"fr": "se rafraîchir"
+},
+{
+"a": "թլվատել",
+"lv": "B1",
+"ru": "заикаться",
+"en": "to stammer",
+"fr": "bégayer"
+},
+{
+"a": "թլփատել",
+"lv": "B1",
+"ru": "делать обрезание",
+"en": "to circumcise",
+"fr": "circoncire"
+},
+{
+"a": "թմրել",
+"lv": "B1",
+"ru": "неметь, цепенеть",
+"en": "to go numb",
+"fr": "s'engourdir"
+},
+{
+"a": "թնդալ",
+"lv": "B1",
+"ru": "грохотать",
+"en": "to rumble",
+"fr": "gronder"
+},
+{
+"a": "թոթվել",
+"lv": "B1",
+"ru": "трясти",
+"en": "to shake",
+"fr": "secouer"
+},
+{
+"a": "թողարկել",
+"lv": "B1",
+"ru": "выпускать (продукцию)",
+"en": "to produce, to release",
+"fr": "produire, émettre"
+},
+{
+"a": "թոշնել",
+"lv": "B1",
+"ru": "вянуть",
+"en": "to wither",
+"fr": "se faner"
+},
+{
+"a": "թովել",
+"lv": "B1",
+"ru": "заколдовывать",
+"en": "to enchant",
+"fr": "ensorceler"
+},
+{
+"a": "թրծել",
+"lv": "B1",
+"ru": "обжигать (глину)",
+"en": "to fire (clay)",
+"fr": "cuire (l'argile)"
+},
+{
+"a": "թրմել",
+"lv": "B1",
+"ru": "настаивать (заваривать)",
+"en": "to infuse",
+"fr": "infuser"
+},
+{
+"a": "ժայթքել",
+"lv": "B1",
+"ru": "извергаться",
+"en": "to erupt",
+"fr": "entrer en éruption"
+},
+{
+"a": "ինքնահավանել",
+"lv": "B1",
+"ru": "самодовольничать",
+"en": "to be conceited",
+"fr": "se complaire"
+},
+{
+"a": "իշխել",
+"lv": "B1",
+"ru": "править, властвовать",
+"en": "to rule",
+"fr": "régner"
+},
+{
+"a": "իրագործել",
+"lv": "B1",
+"ru": "осуществлять",
+"en": "to implement",
+"fr": "réaliser"
+},
+{
+"a": "իրականանալ",
+"lv": "B1",
+"ru": "осуществляться, сбываться",
+"en": "to come true",
+"fr": "se réaliser"
+},
+{
+"a": "լարել",
+"lv": "B1",
+"ru": "настраивать (инструмент)",
+"en": "to tune",
+"fr": "accorder"
+},
+{
+"a": "լափել",
+"lv": "B1",
+"ru": "лакать",
+"en": "to lap up",
+"fr": "laper"
+},
+{
+"a": "լիազորել",
+"lv": "B1",
+"ru": "уполномочивать",
+"en": "to authorize",
+"fr": "habiliter"
+},
+{
+"a": "լիանալ",
+"lv": "B1",
+"ru": "наполняться",
+"en": "to become full",
+"fr": "se remplir"
+},
+{
+"a": "լծել",
+"lv": "B1",
+"ru": "запрягать",
+"en": "to harness",
+"fr": "atteler"
+},
+{
+"a": "լուծարել",
+"lv": "B1",
+"ru": "ликвидировать",
+"en": "to liquidate",
+"fr": "liquider"
+},
+{
+"a": "լվից ուղտ շինել",
+"lv": "B1",
+"ru": "делать из мухи слона",
+"en": "to make a mountain out of a molehill",
+"fr": "faire d'une mouche un éléphant"
+},
+{
+"a": "լրտեսել",
+"lv": "B1",
+"ru": "шпионить",
+"en": "to spy",
+"fr": "espionner"
+},
+{
+"a": "խազել",
+"lv": "B1",
+"ru": "проводить черту, царапать",
+"en": "to scratch",
+"fr": "rayer, égratigner"
+},
+{
+"a": "խածատել",
+"lv": "B1",
+"ru": "покусывать",
+"en": "to nibble",
+"fr": "mordiller"
+},
+{
+"a": "խաղացնել",
+"lv": "B1",
+"ru": "водить за нос",
+"en": "to lead on",
+"fr": "mener en bateau"
+},
+{
+"a": "խայտառակել",
+"lv": "B1",
+"ru": "позорить",
+"en": "to disgrace",
+"fr": "déshonorer"
+},
+{
+"a": "խանգարվել",
+"lv": "B1",
+"ru": "помешаться",
+"en": "to go crazy",
+"fr": "se détraquer"
+},
+{
+"a": "խանձել",
+"lv": "B1",
+"ru": "опалять",
+"en": "to singe",
+"fr": "roussir"
+},
+{
+"a": "խաչել",
+"lv": "B1",
+"ru": "распинать",
+"en": "to crucify",
+"fr": "crucifier"
+},
+{
+"a": "խարխափել",
+"lv": "B1",
+"ru": "ощупью пробираться",
+"en": "to grope",
+"fr": "tâtonner"
+},
+{
+"a": "խարխլել",
+"lv": "B1",
+"ru": "расшатывать",
+"en": "to loosen",
+"fr": "ébranler"
+},
+{
+"a": "խափանել",
+"lv": "B1",
+"ru": "срывать (планы)",
+"en": "to thwart",
+"fr": "faire échouer"
+},
+{
+"a": "խեթալ",
+"lv": "B1",
+"ru": "смотреть косо",
+"en": "to look askance",
+"fr": "regarder de travers"
+},
+{
+"a": "խելագարել",
+"lv": "B1",
+"ru": "сводить с ума",
+"en": "to drive crazy",
+"fr": "rendre fou"
+},
+{
+"a": "խզել",
+"lv": "B1",
+"ru": "разрывать (отношения)",
+"en": "to break off",
+"fr": "rompre"
+},
+{
+"a": "խթել",
+"lv": "B1",
+"ru": "подстрекать, подгонять",
+"en": "to spur",
+"fr": "aiguillonner"
+},
+{
+"a": "խլրտալ",
+"lv": "B1",
+"ru": "шевелиться",
+"en": "to stir",
+"fr": "remuer"
+},
+{
+"a": "խոյանալ",
+"lv": "B1",
+"ru": "таранить",
+"en": "to ram into",
+"fr": "percuter"
+},
+{
+"a": "խոշտանգել",
+"lv": "B1",
+"ru": "пытать",
+"en": "to torture",
+"fr": "torturer"
+},
+{
+"a": "խոպոպել",
+"lv": "B1",
+"ru": "завивать (локоны)",
+"en": "to curl",
+"fr": "boucler"
+},
+{
+"a": "խորխել",
+"lv": "B1",
+"ru": "отхаркивать",
+"en": "to expectorate",
+"fr": "expectorer"
+},
+{
+"a": "խորտակել",
+"lv": "B1",
+"ru": "крушить",
+"en": "to wreck",
+"fr": "briser, anéantir"
+},
+{
+"a": "խուժել",
+"lv": "B1",
+"ru": "вторгаться",
+"en": "to invade",
+"fr": "envahir"
+},
+{
+"a": "խուճապի մատնվել",
+"lv": "B1",
+"ru": "впадать в панику",
+"en": "to panic",
+"fr": "paniquer"
+},
+{
+"a": "խռթալ",
+"lv": "B1",
+"ru": "хрустеть",
+"en": "to crunch",
+"fr": "craquer"
+},
+{
+"a": "խռթացնել",
+"lv": "B1",
+"ru": "хрустеть (чем-л.)",
+"en": "to grind",
+"fr": "faire craquer"
+},
+{
+"a": "խռռացնել",
+"lv": "B1",
+"ru": "храпеть (синоним)",
+"en": "to snore",
+"fr": "ronfler (synonyme)"
+},
+{
+"a": "խտղտացնել",
+"lv": "B1",
+"ru": "щекотать",
+"en": "to tickle",
+"fr": "chatouiller"
+},
+{
+"a": "խրել",
+"lv": "B1",
+"ru": "вонзать (синоним)",
+"en": "to thrust",
+"fr": "enfoncer (synonyme)"
+},
+{
+"a": "խրոխտանալ",
+"lv": "B1",
+"ru": "заноситься, возгордиться",
+"en": "to become arrogant",
+"fr": "s'enorgueillir"
+},
+{
+"a": "խրտնել",
+"lv": "B1",
+"ru": "пугаться (о лошади)",
+"en": "to shy",
+"fr": "s'effaroucher"
+},
+{
+"a": "խցել",
+"lv": "B1",
+"ru": "затыкать (пробкой)",
+"en": "to cork",
+"fr": "boucher"
+},
+{
+"a": "ծախել",
+"lv": "B1",
+"ru": "продавать",
+"en": "to sell",
+"fr": "vendre"
+},
+{
+"a": "ծախծխել",
+"lv": "B1",
+"ru": "распродавать",
+"en": "to sell out",
+"fr": "brader"
+},
+{
+"a": "ծածանել",
+"lv": "B1",
+"ru": "размахивать (флагом)",
+"en": "to wave",
+"fr": "agiter"
+},
+{
+"a": "ծանուցել",
+"lv": "B1",
+"ru": "уведомлять",
+"en": "to notify",
+"fr": "notifier"
+},
+{
+"a": "ծեփել",
+"lv": "B1",
+"ru": "штукатурить",
+"en": "to plaster",
+"fr": "plâtrer"
+},
+{
+"a": "ծլել",
+"lv": "B1",
+"ru": "прорастать",
+"en": "to sprout",
+"fr": "germer"
+},
+{
+"a": "ծնգալ",
+"lv": "B1",
+"ru": "звякать",
+"en": "to clink",
+"fr": "tinter (métal)"
+},
+{
+"a": "ծպտել",
+"lv": "B1",
+"ru": "маскировать",
+"en": "to disguise",
+"fr": "déguiser"
+},
+{
+"a": "ծպտվել",
+"lv": "B1",
+"ru": "маскироваться",
+"en": "to disguise oneself",
+"fr": "se déguiser"
+},
+{
+"a": "ծփալ",
+"lv": "B1",
+"ru": "колыхаться",
+"en": "to undulate",
+"fr": "ondoyer"
+},
+{
+"a": "ծփել",
+"lv": "B1",
+"ru": "плескаться",
+"en": "to splash",
+"fr": "clapoter"
+},
+{
+"a": "կազմավորել",
+"lv": "B1",
+"ru": "формировать, учреждать",
+"en": "to organize, to found",
+"fr": "former, fonder"
+},
+{
+"a": "կալանավորել",
+"lv": "B1",
+"ru": "заключать под стражу",
+"en": "to jail",
+"fr": "incarcérer"
+},
+{
+"a": "կալնել",
+"lv": "B1",
+"ru": "держать",
+"en": "to hold",
+"fr": "tenir"
+},
+{
+"a": "կախարդել",
+"lv": "B1",
+"ru": "околдовывать",
+"en": "to bewitch",
+"fr": "envoûter"
+},
+{
+"a": "կաղկանձել",
+"lv": "B1",
+"ru": "скулить, выть",
+"en": "to yelp",
+"fr": "glapir"
+},
+{
+"a": "կանխամտածել",
+"lv": "B1",
+"ru": "замышлять заранее",
+"en": "to premeditate",
+"fr": "préméditer"
+},
+{
+"a": "կաշառել",
+"lv": "B1",
+"ru": "подкупать",
+"en": "to bribe",
+"fr": "soudoyer"
+},
+{
+"a": "կաշկանդել",
+"lv": "B1",
+"ru": "сковывать",
+"en": "to tie up",
+"fr": "entraver"
+},
+{
+"a": "կապվել",
+"lv": "B1",
+"ru": "быть привязанным",
+"en": "to be tied up",
+"fr": "être lié"
+},
+{
+"a": "կառչել",
+"lv": "B1",
+"ru": "цепляться",
+"en": "to cling",
+"fr": "s'agripper"
+},
+{
+"a": "կատաղել",
+"lv": "B1",
+"ru": "беситься",
+"en": "to rage",
+"fr": "enrager"
+},
+{
+"a": "կարգաբանել",
+"lv": "B1",
+"ru": "классифицировать (в систематике)",
+"en": "to classify",
+"fr": "classer (taxinomie)"
+},
+{
+"a": "կեղեքել",
+"lv": "B1",
+"ru": "угнетать",
+"en": "to oppress",
+"fr": "opprimer"
+},
+{
+"a": "կեղծել",
+"lv": "B1",
+"ru": "подделывать",
+"en": "to forge",
+"fr": "falsifier"
+},
+{
+"a": "կես լինել",
+"lv": "B1",
+"ru": "раскалываться пополам",
+"en": "to split in two",
+"fr": "se fendre en deux"
+},
+{
+"a": "կետադրել",
+"lv": "B1",
+"ru": "расставлять знаки препинания",
+"en": "to punctuate",
+"fr": "ponctuer"
+},
+{
+"a": "կիտել",
+"lv": "B1",
+"ru": "накапливать",
+"en": "to accumulate",
+"fr": "amasser"
+},
+{
+"a": "կիրառվել",
+"lv": "B1",
+"ru": "применяться",
+"en": "to be applied",
+"fr": "s'appliquer"
+},
+{
+"a": "կիրարկել",
+"lv": "B1",
+"ru": "применять",
+"en": "to apply",
+"fr": "appliquer"
+},
+{
+"a": "կլանել",
+"lv": "B1",
+"ru": "поглощать",
+"en": "to absorb",
+"fr": "absorber (synonyme)"
+},
+{
+"a": "կլկլալ",
+"lv": "B1",
+"ru": "булькать",
+"en": "to gurgle",
+"fr": "gargouiller"
+},
+{
+"a": "կոծել",
+"lv": "B1",
+"ru": "бить себя в грудь (в трауре)",
+"en": "to beat one's breast",
+"fr": "se frapper la poitrine"
+},
+{
+"a": "կոտորել",
+"lv": "B1",
+"ru": "истреблять",
+"en": "to massacre",
+"fr": "massacrer"
+},
+{
+"a": "կործանել",
+"lv": "B1",
+"ru": "губить",
+"en": "to ruin",
+"fr": "ruiner"
+},
+{
+"a": "կործել",
+"lv": "B1",
+"ru": "опрокидывать (сосуд)",
+"en": "to turn over",
+"fr": "renverser"
+},
+{
+"a": "կռահել",
+"lv": "B1",
+"ru": "догадываться",
+"en": "to guess",
+"fr": "deviner"
+},
+{
+"a": "կռել",
+"lv": "B1",
+"ru": "ковать (молотом)",
+"en": "to hammer",
+"fr": "marteler"
+},
+{
+"a": "կռնչալ",
+"lv": "B1",
+"ru": "каркать, кричать",
+"en": "to croak",
+"fr": "croasser"
+},
+{
+"a": "կտակել",
+"lv": "B1",
+"ru": "завещать",
+"en": "to bequeath",
+"fr": "léguer"
+},
+{
+"a": "կտտալ",
+"lv": "B1",
+"ru": "щёлкать",
+"en": "to click",
+"fr": "cliqueter"
+},
+{
+"a": "կտցել",
+"lv": "B1",
+"ru": "клевать",
+"en": "to peck",
+"fr": "picorer"
+},
+{
+"a": "կրթել",
+"lv": "B1",
+"ru": "образовывать, обучать",
+"en": "to educate",
+"fr": "éduquer"
+},
+{
+"a": "կցել",
+"lv": "B1",
+"ru": "присоединять",
+"en": "to attach",
+"fr": "joindre"
+},
+{
+"a": "կքել",
+"lv": "B1",
+"ru": "сгибать (под тяжестью)",
+"en": "to weigh down",
+"fr": "faire ployer"
+},
+{
+"a": "հագեցնել",
+"lv": "B1",
+"ru": "насыщать",
+"en": "to satiate",
+"fr": "rassasier"
+},
+{
+"a": "հածել",
+"lv": "B1",
+"ru": "бродить",
+"en": "to roam",
+"fr": "errer"
+},
+{
+"a": "հակել",
+"lv": "B1",
+"ru": "наклонять",
+"en": "to tilt",
+"fr": "incliner"
+},
+{
+"a": "հակվել",
+"lv": "B1",
+"ru": "наклоняться",
+"en": "to lean",
+"fr": "se pencher"
+},
+{
+"a": "հաճել",
+"lv": "B1",
+"ru": "соизволить, соглашаться",
+"en": "to be pleased",
+"fr": "daigner"
+},
+{
+"a": "հաճոյախոսել",
+"lv": "B1",
+"ru": "говорить комплименты",
+"en": "to compliment",
+"fr": "complimenter"
+},
+{
+"a": "համագործել",
+"lv": "B1",
+"ru": "сотрудничать",
+"en": "to cooperate",
+"fr": "coopérer"
+},
+{
+"a": "համառել",
+"lv": "B1",
+"ru": "упрямиться",
+"en": "to be stubborn",
+"fr": "s'obstiner"
+},
+{
+"a": "համենալ",
+"lv": "B1",
+"ru": "медлить",
+"en": "to delay",
+"fr": "tarder"
+},
+{
+"a": "հայել",
+"lv": "B1",
+"ru": "пристально смотреть",
+"en": "to look intently",
+"fr": "regarder fixement"
+},
+{
+"a": "հայթայթել",
+"lv": "B1",
+"ru": "добывать",
+"en": "to procure",
+"fr": "se procurer"
+},
+{
+"a": "հայհոյել",
+"lv": "B1",
+"ru": "ругаться, богохульствовать",
+"en": "to curse",
+"fr": "jurer, blasphémer"
+},
+{
+"a": "հանդգնել",
+"lv": "B1",
+"ru": "дерзать",
+"en": "to dare",
+"fr": "oser (audace)"
+},
+{
+"a": "հանդիսանալ",
+"lv": "B1",
+"ru": "являться (кем-л.)",
+"en": "to be, to appear as",
+"fr": "constituer"
+},
+{
+"a": "հանձնարարել",
+"lv": "B1",
+"ru": "поручать",
+"en": "to entrust",
+"fr": "confier"
+},
+{
+"a": "հաշմել",
+"lv": "B1",
+"ru": "калечить",
+"en": "to maim",
+"fr": "estropier"
+},
+{
+"a": "հառել",
+"lv": "B1",
+"ru": "пристально вглядываться",
+"en": "to stare",
+"fr": "fixer du regard"
+},
+{
+"a": "հասցեագրել",
+"lv": "B1",
+"ru": "адресовать",
+"en": "to address",
+"fr": "adresser"
+},
+{
+"a": "հատակել",
+"lv": "B1",
+"ru": "мостить",
+"en": "to pave",
+"fr": "paver"
+},
+{
+"a": "հատկացնել",
+"lv": "B1",
+"ru": "выделять, назначать",
+"en": "to allocate",
+"fr": "allouer"
+},
+{
+"a": "հատնել",
+"lv": "B1",
+"ru": "иссякать",
+"en": "to run out",
+"fr": "s'épuiser"
+},
+{
+"a": "հատուցել",
+"lv": "B1",
+"ru": "возмещать",
+"en": "to compensate",
+"fr": "dédommager"
+},
+{
+"a": "հարդարել",
+"lv": "B1",
+"ru": "приводить в порядок",
+"en": "to tidy, to style",
+"fr": "arranger"
+},
+{
+"a": "հարթել",
+"lv": "B1",
+"ru": "выравнивать",
+"en": "to smooth",
+"fr": "aplanir"
+},
+{
+"a": "հարթուկել մեկի գլուխը",
+"lv": "B1",
+"ru": "уговаривать",
+"en": "to persuade",
+"fr": "convaincre"
+},
+{
+"a": "հարկադրել",
+"lv": "B1",
+"ru": "принуждать",
+"en": "to compel",
+"fr": "contraindre"
+},
+{
+"a": "հարկել",
+"lv": "B1",
+"ru": "облагать налогом",
+"en": "to tax",
+"fr": "imposer"
+},
+{
+"a": "հարսնանալ",
+"lv": "B1",
+"ru": "выходить замуж",
+"en": "to become a bride",
+"fr": "se marier (femme)"
+},
+{
+"a": "հարված հասցնել",
+"lv": "B1",
+"ru": "наносить удар",
+"en": "to deal a blow",
+"fr": "porter un coup"
+},
+{
+"a": "հարցաքննել",
+"lv": "B1",
+"ru": "допрашивать",
+"en": "to interrogate",
+"fr": "interroger"
+},
+{
+"a": "հափշտակել",
+"lv": "B1",
+"ru": "хватать, похищать",
+"en": "to snatch",
+"fr": "ravir"
+},
+{
+"a": "հեծել",
+"lv": "B1",
+"ru": "стонать",
+"en": "to moan",
+"fr": "gémir"
+},
+{
+"a": "հեծեծել",
+"lv": "B1",
+"ru": "рыдать, стенать",
+"en": "to wail",
+"fr": "se lamenter"
+},
+{
+"a": "հեղափոխել",
+"lv": "B1",
+"ru": "революционизировать",
+"en": "to revolutionise",
+"fr": "révolutionner"
+},
+{
+"a": "հեղել",
+"lv": "B1",
+"ru": "проливать",
+"en": "to spill",
+"fr": "verser"
+},
+{
+"a": "հիմարացնել",
+"lv": "B1",
+"ru": "одурачивать",
+"en": "to fool",
+"fr": "berner"
+},
+{
+"a": "հղանալ",
+"lv": "B1",
+"ru": "задумывать (идею)",
+"en": "to conceive",
+"fr": "concevoir"
+},
+{
+"a": "հղել",
+"lv": "B1",
+"ru": "посылать (книжн.)",
+"en": "to send",
+"fr": "envoyer (littéraire)"
+},
+{
+"a": "հմտանալ",
+"lv": "B1",
+"ru": "приобретать навык",
+"en": "to become skilled",
+"fr": "se perfectionner"
+},
+{
+"a": "հյուծել",
+"lv": "B1",
+"ru": "изнурять",
+"en": "to weaken",
+"fr": "épuiser"
+},
+{
+"a": "հնազանդվել",
+"lv": "B1",
+"ru": "подчиняться",
+"en": "to obey",
+"fr": "obéir"
+},
+{
+"a": "հնացնել",
+"lv": "B1",
+"ru": "выдерживать (вино)",
+"en": "to age",
+"fr": "faire vieillir"
+},
+{
+"a": "հոժարել",
+"lv": "B1",
+"ru": "соглашаться",
+"en": "to agree",
+"fr": "consentir"
+},
+{
+"a": "հոլանել",
+"lv": "B1",
+"ru": "раздевать",
+"en": "to undress",
+"fr": "déshabiller"
+},
+{
+"a": "հոխորտալ",
+"lv": "B1",
+"ru": "хвастаться",
+"en": "to boast",
+"fr": "se vanter"
+},
+{
+"a": "հոշոտել",
+"lv": "B1",
+"ru": "раздирать",
+"en": "to tear apart",
+"fr": "déchirer (lacérer)"
+},
+{
+"a": "հոսպիտալացնել",
+"lv": "B1",
+"ru": "госпитализировать",
+"en": "to hospitalize",
+"fr": "hospitaliser"
+},
+{
+"a": "հոտ քաշել",
+"lv": "B1",
+"ru": "принюхиваться",
+"en": "to sniff",
+"fr": "renifler"
+},
+{
+"a": "հոտել",
+"lv": "B1",
+"ru": "гнить",
+"en": "to rot",
+"fr": "pourrir"
+},
+{
+"a": "հոտը փոխել",
+"lv": "B1",
+"ru": "подышать свежим воздухом",
+"en": "to take a breather",
+"fr": "prendre l'air"
+},
+{
+"a": "հորդել",
+"lv": "B1",
+"ru": "переполняться",
+"en": "to overflow",
+"fr": "déborder"
+},
+{
+"a": "հուսալքել",
+"lv": "B1",
+"ru": "обескураживать",
+"en": "to discourage",
+"fr": "décourager (démoraliser)"
+},
+{
+"a": "հուսահատեցնել",
+"lv": "B1",
+"ru": "приводить в отчаяние",
+"en": "to dispirit",
+"fr": "désespérer"
+},
+{
+"a": "հպատակվել",
+"lv": "B1",
+"ru": "покоряться",
+"en": "to submit",
+"fr": "se soumettre"
+},
+{
+"a": "հռչակել",
+"lv": "B1",
+"ru": "прославлять, оглашать",
+"en": "to publicize",
+"fr": "proclamer"
+},
+{
+"a": "հսկել",
+"lv": "B1",
+"ru": "надзирать, охранять",
+"en": "to guard",
+"fr": "surveiller"
+},
+{
+"a": "հրապուրել",
+"lv": "B1",
+"ru": "привлекать, очаровывать",
+"en": "to charm",
+"fr": "charmer"
+},
+{
+"a": "հրավառել",
+"lv": "B1",
+"ru": "освещать",
+"en": "to illuminate",
+"fr": "illuminer"
+},
+{
+"a": "հրճվել",
+"lv": "B1",
+"ru": "ликовать",
+"en": "to rejoice",
+"fr": "jubiler"
+},
+{
+"a": "ձաղկել",
+"lv": "B1",
+"ru": "сечь (розгами)",
+"en": "to flog",
+"fr": "fustiger"
+},
+{
+"a": "ձգձգել",
+"lv": "B1",
+"ru": "растягивать",
+"en": "to drag out",
+"fr": "traîner en longueur"
+},
+{
+"a": "ձուլվել",
+"lv": "B1",
+"ru": "ассимилироваться",
+"en": "to assimilate",
+"fr": "s'assimiler"
+},
+{
+"a": "ճախրել",
+"lv": "B1",
+"ru": "парить",
+"en": "to soar",
+"fr": "planer"
+},
+{
+"a": "ճամփել",
+"lv": "B1",
+"ru": "отправлять (в путь)",
+"en": "to dispatch",
+"fr": "expédier"
+},
+{
+"a": "ճանկռել",
+"lv": "B1",
+"ru": "царапать (когтями)",
+"en": "to scratch",
+"fr": "griffer"
+},
+{
+"a": "ճարահատել",
+"lv": "B1",
+"ru": "отчаиваться",
+"en": "to despair",
+"fr": "désespérer (perdre espoir)"
+},
+{
+"a": "ճարել",
+"lv": "B1",
+"ru": "раздобыть",
+"en": "to obtain",
+"fr": "dénicher"
+},
+{
+"a": "ճերմականալ",
+"lv": "B1",
+"ru": "белеть",
+"en": "to whiten",
+"fr": "blanchir"
+},
+{
+"a": "ճերմակել",
+"lv": "B1",
+"ru": "белить",
+"en": "to whiten",
+"fr": "blanchir (rendre blanc)"
+},
+{
+"a": "ճշգրտել",
+"lv": "B1",
+"ru": "уточнять",
+"en": "to verify",
+"fr": "vérifier"
+},
+{
+"a": "ճողոպրել",
+"lv": "B1",
+"ru": "улизнуть",
+"en": "to escape",
+"fr": "s'échapper"
+},
+{
+"a": "ճտպտալ",
+"lv": "B1",
+"ru": "шепелявить",
+"en": "to lisp",
+"fr": "zézayer"
+},
+{
+"a": "մածվել",
+"lv": "B1",
+"ru": "приклеиваться",
+"en": "to stick",
+"fr": "adhérer"
+},
+{
+"a": "մայել",
+"lv": "B1",
+"ru": "блеять",
+"en": "to bleat",
+"fr": "bêler"
+},
+{
+"a": "մանել",
+"lv": "B1",
+"ru": "прясть",
+"en": "to spin",
+"fr": "filer"
+},
+{
+"a": "մասնագիտանալ",
+"lv": "B1",
+"ru": "специализироваться",
+"en": "to become skilled",
+"fr": "se spécialiser"
+},
+{
+"a": "մասնագիտացնել",
+"lv": "B1",
+"ru": "профессионализировать",
+"en": "to professionalize",
+"fr": "professionnaliser"
+},
+{
+"a": "մասնավորել",
+"lv": "B1",
+"ru": "уточнять (конкретизировать)",
+"en": "to specify",
+"fr": "préciser"
+},
+{
+"a": "մատակարարել",
+"lv": "B1",
+"ru": "поставлять",
+"en": "to supply",
+"fr": "fournir"
+},
+{
+"a": "մատնանշել",
+"lv": "B1",
+"ru": "указывать",
+"en": "to point out",
+"fr": "désigner"
+},
+{
+"a": "մատնել",
+"lv": "B1",
+"ru": "доносить",
+"en": "to inform on",
+"fr": "dénoncer"
+},
+{
+"a": "մատուցել",
+"lv": "B1",
+"ru": "подавать, преподносить",
+"en": "to serve, to present",
+"fr": "servir, offrir"
+},
+{
+"a": "մարտնչել",
+"lv": "B1",
+"ru": "сражаться",
+"en": "to fight",
+"fr": "combattre"
+},
+{
+"a": "մգանալ",
+"lv": "B1",
+"ru": "темнеть",
+"en": "to darken",
+"fr": "foncer, s'assombrir"
+},
+{
+"a": "մգացնել",
+"lv": "B1",
+"ru": "затемнять",
+"en": "to darken",
+"fr": "assombrir"
+},
+{
+"a": "մգլել",
+"lv": "B1",
+"ru": "плесневеть",
+"en": "to grow mouldy",
+"fr": "moisir"
+},
+{
+"a": "մեծարել",
+"lv": "B1",
+"ru": "чествовать",
+"en": "to honour",
+"fr": "honorer"
+},
+{
+"a": "մեկնարկել",
+"lv": "B1",
+"ru": "стартовать",
+"en": "to start",
+"fr": "démarrer"
+},
+{
+"a": "մեկուսանալ",
+"lv": "B1",
+"ru": "уединяться",
+"en": "to withdraw",
+"fr": "s'isoler"
+},
+{
+"a": "մեղանչել",
+"lv": "B1",
+"ru": "грешить",
+"en": "to sin",
+"fr": "pécher"
+},
+{
+"a": "մեղմել",
+"lv": "B1",
+"ru": "смягчать",
+"en": "to soften",
+"fr": "adoucir"
+},
+{
+"a": "մերձենալ",
+"lv": "B1",
+"ru": "приближаться",
+"en": "to approach",
+"fr": "se rapprocher"
+},
+{
+"a": "մի գնդակով երկու նապաստակ խփել",
+"lv": "B1",
+"ru": "убить двух зайцев",
+"en": "to kill two birds with one stone",
+"fr": "faire d'une pierre deux coups"
+},
+{
+"a": "մխալ",
+"lv": "B1",
+"ru": "дымить",
+"en": "to smoke",
+"fr": "fumer (dégager de la fumée)"
+},
+{
+"a": "մխրճել",
+"lv": "B1",
+"ru": "вонзать, погружать",
+"en": "to thrust",
+"fr": "plonger, enfoncer"
+},
+{
+"a": "մղել",
+"lv": "B1",
+"ru": "толкать, побуждать",
+"en": "to push",
+"fr": "pousser"
+},
+{
+"a": "մնչել",
+"lv": "B1",
+"ru": "бормотать",
+"en": "to mutter",
+"fr": "marmonner"
+},
+{
+"a": "մոգոնել",
+"lv": "B1",
+"ru": "выдумывать",
+"en": "to make up",
+"fr": "inventer"
+},
+{
+"a": "մոլեգնել",
+"lv": "B1",
+"ru": "свирепеть",
+"en": "to be enraged",
+"fr": "enrager (synonyme)"
+},
+{
+"a": "մոլորել",
+"lv": "B1",
+"ru": "вводить в заблуждение",
+"en": "to mislead",
+"fr": "égarer"
+},
+{
+"a": "մոտավորել",
+"lv": "B1",
+"ru": "приближать (приблизительно)",
+"en": "to approximate",
+"fr": "approcher"
+},
+{
+"a": "մուծել",
+"lv": "B1",
+"ru": "вносить (плату)",
+"en": "to put in, to pay",
+"fr": "verser"
+},
+{
+"a": "մուկ տշել",
+"lv": "B1",
+"ru": "бить баклуши",
+"en": "to idle",
+"fr": "tourner les pouces"
+},
+{
+"a": "մուրալ",
+"lv": "B1",
+"ru": "попрошайничать",
+"en": "to beg",
+"fr": "mendier"
+},
+{
+"a": "մսխել",
+"lv": "B1",
+"ru": "растрачивать (синоним)",
+"en": "to spend",
+"fr": "dépenser"
+},
+{
+"a": "մտադրել",
+"lv": "B1",
+"ru": "намереваться",
+"en": "to intend",
+"fr": "avoir l'intention"
+},
+{
+"a": "մտահոգել",
+"lv": "B1",
+"ru": "тревожить",
+"en": "to worry",
+"fr": "inquiéter"
+},
+{
+"a": "մրթմրթալ",
+"lv": "B1",
+"ru": "ворчать",
+"en": "to mutter",
+"fr": "grommeler"
+},
+{
+"a": "նազել",
+"lv": "B1",
+"ru": "ступать грациозно",
+"en": "to step gracefully",
+"fr": "marcher avec grâce"
+},
+{
+"a": "նախագծել",
+"lv": "B1",
+"ru": "проектировать",
+"en": "to design",
+"fr": "concevoir"
+},
+{
+"a": "նահանջել",
+"lv": "B1",
+"ru": "отступать",
+"en": "to retreat",
+"fr": "battre en retraite"
+},
+{
+"a": "նավել",
+"lv": "B1",
+"ru": "плыть (на судне)",
+"en": "to sail",
+"fr": "naviguer"
+},
+{
+"a": "նեխել",
+"lv": "B1",
+"ru": "гнить, тухнуть",
+"en": "to rot",
+"fr": "pourrir (synonyme)"
+},
+{
+"a": "ներածել",
+"lv": "B1",
+"ru": "ввозить",
+"en": "to import",
+"fr": "importer (synonyme)"
+},
+{
+"a": "ներարկել",
+"lv": "B1",
+"ru": "делать укол",
+"en": "to inject",
+"fr": "injecter"
+},
+{
+"a": "ներդնել",
+"lv": "B1",
+"ru": "вкладывать, вставлять",
+"en": "to insert",
+"fr": "insérer"
+},
+{
+"a": "ներխուժել",
+"lv": "B1",
+"ru": "вторгаться (синоним)",
+"en": "to invade",
+"fr": "envahir (synonyme)"
+},
+{
+"a": "ներկայանալ",
+"lv": "B1",
+"ru": "представляться",
+"en": "to present oneself",
+"fr": "se présenter"
+},
+{
+"a": "ներմուծել",
+"lv": "B1",
+"ru": "импортировать",
+"en": "to import",
+"fr": "importer"
+},
+{
+"a": "նկարահանել",
+"lv": "B1",
+"ru": "снимать (кино)",
+"en": "to film",
+"fr": "filmer (tourner)"
+},
+{
+"a": "նորմալիզացնել",
+"lv": "B1",
+"ru": "нормализовать",
+"en": "to normalize",
+"fr": "normaliser"
+},
+{
+"a": "նույնանալ",
+"lv": "B1",
+"ru": "отождествляться",
+"en": "to become identical",
+"fr": "s'identifier"
+},
+{
+"a": "նվալ",
+"lv": "B1",
+"ru": "ныть",
+"en": "to whine",
+"fr": "geindre"
+},
+{
+"a": "նվաղել",
+"lv": "B1",
+"ru": "терять сознание",
+"en": "to faint",
+"fr": "s'évanouir"
+},
+{
+"a": "շահարկել",
+"lv": "B1",
+"ru": "спекулировать (чем-л.)",
+"en": "to exploit",
+"fr": "exploiter (abusivement)"
+},
+{
+"a": "շաչել",
+"lv": "B1",
+"ru": "шуметь (синоним)",
+"en": "to make a noise",
+"fr": "faire du bruit (synonyme)"
+},
+{
+"a": "շառաչել",
+"lv": "B1",
+"ru": "звенеть, бряцать",
+"en": "to chime",
+"fr": "tinter"
+},
+{
+"a": "շատանալ",
+"lv": "B1",
+"ru": "умножаться",
+"en": "to increase",
+"fr": "se multiplier (synonyme)"
+},
+{
+"a": "շարահյուսել",
+"lv": "B1",
+"ru": "сочинять",
+"en": "to compose",
+"fr": "rédiger"
+},
+{
+"a": "շիկանալ",
+"lv": "B1",
+"ru": "раскаляться",
+"en": "to glow",
+"fr": "rougeoyer"
+},
+{
+"a": "շշմել",
+"lv": "B1",
+"ru": "ошалеть",
+"en": "to be dazed",
+"fr": "être abasourdi"
+},
+{
+"a": "շոյվել",
+"lv": "B1",
+"ru": "польщённым быть",
+"en": "to be flattered",
+"fr": "être flatté"
+},
+{
+"a": "շորթել",
+"lv": "B1",
+"ru": "вымогать",
+"en": "to extort",
+"fr": "extorquer"
+},
+{
+"a": "շունչը տալ",
+"lv": "B1",
+"ru": "испустить дух",
+"en": "to breathe one's last",
+"fr": "rendre l'âme"
+},
+{
+"a": "շրջափակել",
+"lv": "B1",
+"ru": "блокировать",
+"en": "to blockade",
+"fr": "bloquer"
+},
+{
+"a": "շփշփել",
+"lv": "B1",
+"ru": "тереть",
+"en": "to rub",
+"fr": "frotter"
+},
+{
+"a": "շփոթեցնել",
+"lv": "B1",
+"ru": "смущать, сбивать с толку",
+"en": "to confuse",
+"fr": "déconcerter"
+},
+{
+"a": "ոգևորել",
+"lv": "B1",
+"ru": "воодушевлять",
+"en": "to inspire",
+"fr": "inspirer, enthousiasmer"
+},
+{
+"a": "ողորմել",
+"lv": "B1",
+"ru": "смилостивиться",
+"en": "to take pity",
+"fr": "avoir pitié"
+},
+{
+"a": "ողջագուրել",
+"lv": "B1",
+"ru": "обнимать и целовать",
+"en": "to embrace and kiss",
+"fr": "embrasser (étreindre)"
+},
+{
+"a": "ոչնչանալ",
+"lv": "B1",
+"ru": "уничтожаться",
+"en": "to perish",
+"fr": "être anéanti"
+},
+{
+"a": "ոստոստել",
+"lv": "B1",
+"ru": "прыгать, скакать",
+"en": "to hop about",
+"fr": "sautiller"
+},
+{
+"a": "ոտքի կանգնեցնել",
+"lv": "B1",
+"ru": "поставить на ноги",
+"en": "to put back on one's feet",
+"fr": "remettre sur pied"
+},
+{
+"a": "որբանալ",
+"lv": "B1",
+"ru": "осиротеть",
+"en": "to become an orphan",
+"fr": "devenir orphelin"
+},
+{
+"a": "որոճալ",
+"lv": "B1",
+"ru": "жевать жвачку",
+"en": "to ruminate",
+"fr": "ruminer"
+},
+{
+"a": "ուխտել",
+"lv": "B1",
+"ru": "давать обет",
+"en": "to vow",
+"fr": "faire vœu"
+},
+{
+"a": "ունկնդրել",
+"lv": "B1",
+"ru": "слушать",
+"en": "to listen",
+"fr": "écouter"
+},
+{
+"a": "ուսուցանել",
+"lv": "B1",
+"ru": "обучать",
+"en": "to teach",
+"fr": "enseigner"
+},
+{
+"a": "չարաշահել",
+"lv": "B1",
+"ru": "злоупотреблять",
+"en": "to abuse",
+"fr": "abuser"
+},
+{
+"a": "չարչարել",
+"lv": "B1",
+"ru": "мучить",
+"en": "to torment",
+"fr": "tourmenter"
+},
+{
+"a": "չարչարվել",
+"lv": "B1",
+"ru": "мучиться",
+"en": "to suffer",
+"fr": "souffrir"
+},
+{
+"a": "չափչփել",
+"lv": "B1",
+"ru": "мерить по многу раз",
+"en": "to measure repeatedly",
+"fr": "mesurer et remesurer"
+},
+{
+"a": "չվել",
+"lv": "B1",
+"ru": "перелетать (о птицах)",
+"en": "to migrate (of birds)",
+"fr": "migrer"
+},
+{
+"a": "պապանձեցնել",
+"lv": "B1",
+"ru": "заставить замолчать",
+"en": "to silence",
+"fr": "faire taire"
+},
+{
+"a": "պապանձվել",
+"lv": "B1",
+"ru": "онеметь",
+"en": "to grow speechless",
+"fr": "rester muet"
+},
+{
+"a": "պատկառել",
+"lv": "B1",
+"ru": "благоговеть",
+"en": "to revere",
+"fr": "révérer"
+},
+{
+"a": "պատուհասել",
+"lv": "B1",
+"ru": "карать",
+"en": "to punish",
+"fr": "châtier"
+},
+{
+"a": "պարգևել",
+"lv": "B1",
+"ru": "даровать",
+"en": "to grant",
+"fr": "octroyer"
+},
+{
+"a": "պարուրել",
+"lv": "B1",
+"ru": "окутывать",
+"en": "to envelop",
+"fr": "envelopper"
+},
+{
+"a": "պարսկացնել",
+"lv": "B1",
+"ru": "персизировать",
+"en": "to Persianize",
+"fr": "persaniser"
+},
+{
+"a": "պլոկել",
+"lv": "B1",
+"ru": "сдирать",
+"en": "to strip",
+"fr": "dépouiller"
+},
+{
+"a": "պղծել",
+"lv": "B1",
+"ru": "осквернять",
+"en": "to defile",
+"fr": "profaner"
+},
+{
+"a": "պճնվել",
+"lv": "B1",
+"ru": "наряжаться (синоним)",
+"en": "to dress up",
+"fr": "se pomponner"
+},
+{
+"a": "պրծնել",
+"lv": "B1",
+"ru": "освобождаться (от забот)",
+"en": "to be relieved",
+"fr": "se libérer"
+},
+{
+"a": "սազել",
+"lv": "B1",
+"ru": "подходить (об одежде)",
+"en": "to suit",
+"fr": "aller (bien)"
+},
+{
+"a": "սակարկել",
+"lv": "B1",
+"ru": "торговаться",
+"en": "to haggle",
+"fr": "marchander"
+},
+{
+"a": "սանձել",
+"lv": "B1",
+"ru": "обуздывать",
+"en": "to bridle",
+"fr": "brider"
+},
+{
+"a": "սասանել",
+"lv": "B1",
+"ru": "сотрясать",
+"en": "to shake",
+"fr": "ébranler (secouer)"
+},
+{
+"a": "սարսափահարել",
+"lv": "B1",
+"ru": "приводить в ужас",
+"en": "to terrify",
+"fr": "terrifier"
+},
+{
+"a": "սթափվել",
+"lv": "B1",
+"ru": "протрезветь",
+"en": "to sober up",
+"fr": "dessoûler"
+},
+{
+"a": "սիրաբանել",
+"lv": "B1",
+"ru": "флиртовать",
+"en": "to flirt",
+"fr": "flirter"
+},
+{
+"a": "սիրտը շարժել",
+"lv": "B1",
+"ru": "трогать до глубины души",
+"en": "to touch (emotionally)",
+"fr": "toucher au cœur"
+},
+{
+"a": "սլանալ",
+"lv": "B1",
+"ru": "мчаться",
+"en": "to rush",
+"fr": "filer, foncer"
+},
+{
+"a": "սնգուրել",
+"lv": "B1",
+"ru": "румянить",
+"en": "to put rouge on",
+"fr": "farder"
+},
+{
+"a": "սուզել",
+"lv": "B1",
+"ru": "погружать",
+"en": "to plunge",
+"fr": "immerger"
+},
+{
+"a": "սսկվել",
+"lv": "B1",
+"ru": "затихать",
+"en": "to fall silent",
+"fr": "se taire"
+},
+{
+"a": "ստանձնել",
+"lv": "B1",
+"ru": "брать на себя",
+"en": "to assume",
+"fr": "assumer"
+},
+{
+"a": "ստորանալ",
+"lv": "B1",
+"ru": "унижаться",
+"en": "to grovel",
+"fr": "s'abaisser"
+},
+{
+"a": "ստրկացնել",
+"lv": "B1",
+"ru": "порабощать",
+"en": "to enslave",
+"fr": "asservir"
+},
+{
+"a": "սրամտել",
+"lv": "B1",
+"ru": "острить",
+"en": "to make witty remarks",
+"fr": "faire de l'esprit"
+},
+{
+"a": "սրբագրել",
+"lv": "B1",
+"ru": "вычитывать (корректуру)",
+"en": "to proofread",
+"fr": "corriger (épreuves)"
+},
+{
+"a": "սրբապղծել",
+"lv": "B1",
+"ru": "осквернять (святыню)",
+"en": "to desecrate",
+"fr": "profaner (synonyme)"
+},
+{
+"a": "սրտաշարժել",
+"lv": "B1",
+"ru": "трогать, волновать",
+"en": "to move, to touch",
+"fr": "émouvoir (synonyme)"
+},
+{
+"a": "վաթել",
+"lv": "B1",
+"ru": "опорожнять",
+"en": "to empty",
+"fr": "vider"
+},
+{
+"a": "վայրենանալ",
+"lv": "B1",
+"ru": "дичать",
+"en": "to go wild",
+"fr": "retourner à l'état sauvage"
+},
+{
+"a": "վանկարկել",
+"lv": "B1",
+"ru": "скандировать по слогам",
+"en": "to syllabify",
+"fr": "scander"
+},
+{
+"a": "վարկաբեկել",
+"lv": "B1",
+"ru": "дискредитировать",
+"en": "to discredit",
+"fr": "discréditer"
+},
+{
+"a": "վարպետանալ",
+"lv": "B1",
+"ru": "совершенствоваться",
+"en": "to become skilled",
+"fr": "devenir maître"
+},
+{
+"a": "վերաբերվել",
+"lv": "B1",
+"ru": "относиться (к чему-л.)",
+"en": "to treat, to regard",
+"fr": "se comporter envers"
+},
+{
+"a": "վերազինել",
+"lv": "B1",
+"ru": "перевооружать",
+"en": "to rearm",
+"fr": "réarmer"
+},
+{
+"a": "վերակոչել",
+"lv": "B1",
+"ru": "переименовывать (синоним)",
+"en": "to rename",
+"fr": "rebaptiser"
+},
+{
+"a": "վերավաճառել",
+"lv": "B1",
+"ru": "перепродавать",
+"en": "to resell",
+"fr": "revendre"
+},
+{
+"a": "վերնագրել",
+"lv": "B1",
+"ru": "озаглавливать",
+"en": "to title",
+"fr": "intituler"
+},
+{
+"a": "վերջնամշակել",
+"lv": "B1",
+"ru": "доводить до конца",
+"en": "to finish",
+"fr": "parachever"
+},
+{
+"a": "վիժել",
+"lv": "B1",
+"ru": "выкинуть (о беременности)",
+"en": "to miscarry",
+"fr": "faire une fausse couche"
+},
+{
+"a": "վխտալ",
+"lv": "B1",
+"ru": "кишеть",
+"en": "to swarm",
+"fr": "grouiller"
+},
+{
+"a": "վհատել",
+"lv": "B1",
+"ru": "падать духом",
+"en": "to lose heart",
+"fr": "perdre courage"
+},
+{
+"a": "վհատեցնել",
+"lv": "B1",
+"ru": "удручать (синоним)",
+"en": "to discourage",
+"fr": "décourager (synonyme)"
+},
+{
+"a": "վճռել",
+"lv": "B1",
+"ru": "решать (выносить решение)",
+"en": "to decide",
+"fr": "trancher"
+},
+{
+"a": "վշտանալ",
+"lv": "B1",
+"ru": "горевать",
+"en": "to grieve",
+"fr": "s'affliger"
+},
+{
+"a": "վռնդել",
+"lv": "B1",
+"ru": "выгонять",
+"en": "to kick out",
+"fr": "chasser"
+},
+{
+"a": "վտարել",
+"lv": "B1",
+"ru": "отталкивать",
+"en": "to drive away",
+"fr": "repousser"
+},
+{
+"a": "վրդովել",
+"lv": "B1",
+"ru": "возмущать",
+"en": "to vex",
+"fr": "indigner"
+},
+{
+"a": "տաղտկանալ",
+"lv": "B1",
+"ru": "скучать",
+"en": "to become bored",
+"fr": "s'ennuyer"
+},
+{
+"a": "տաշել",
+"lv": "B1",
+"ru": "тесать",
+"en": "to hew",
+"fr": "tailler"
+},
+{
+"a": "տարակուսել",
+"lv": "B1",
+"ru": "сомневаться (синоним)",
+"en": "to doubt",
+"fr": "douter (synonyme)"
+},
+{
+"a": "տարկետել",
+"lv": "B1",
+"ru": "откладывать",
+"en": "to postpone",
+"fr": "ajourner"
+},
+{
+"a": "տեղաշարժել",
+"lv": "B1",
+"ru": "сдвигать",
+"en": "to dislodge",
+"fr": "déplacer"
+},
+{
+"a": "տիրել",
+"lv": "B1",
+"ru": "господствовать",
+"en": "to dominate",
+"fr": "dominer"
+},
+{
+"a": "տնտղել",
+"lv": "B1",
+"ru": "пристально рассматривать",
+"en": "to inspect",
+"fr": "scruter"
+},
+{
+"a": "տնքալ",
+"lv": "B1",
+"ru": "стонать (синоним)",
+"en": "to groan",
+"fr": "gémir (synonyme)"
+},
+{
+"a": "տուժել",
+"lv": "B1",
+"ru": "быть наказанным",
+"en": "to be penalised",
+"fr": "être pénalisé"
+},
+{
+"a": "տպավորել",
+"lv": "B1",
+"ru": "производить впечатление",
+"en": "to impress",
+"fr": "impressionner"
+},
+{
+"a": "տռզել",
+"lv": "B1",
+"ru": "раздражаться",
+"en": "to get annoyed",
+"fr": "s'agacer"
+},
+{
+"a": "տրոհել",
+"lv": "B1",
+"ru": "разделять",
+"en": "to break up",
+"fr": "diviser"
+},
+{
+"a": "տրցակել",
+"lv": "B1",
+"ru": "собирать (в пучки)",
+"en": "to gather",
+"fr": "rassembler"
+},
+{
+"a": "ցանցել",
+"lv": "B1",
+"ru": "ловить сетью",
+"en": "to net",
+"fr": "prendre au filet"
+},
+{
+"a": "ցնծալ",
+"lv": "B1",
+"ru": "ликовать (синоним)",
+"en": "to exult",
+"fr": "exulter"
+},
+{
+"a": "փախցնել",
+"lv": "B1",
+"ru": "обращать в бегство",
+"en": "to put to flight",
+"fr": "mettre en fuite"
+},
+{
+"a": "փայլունանալ",
+"lv": "B1",
+"ru": "начинать блестеть",
+"en": "to become shiny",
+"fr": "devenir brillant"
+},
+{
+"a": "փաստարկել",
+"lv": "B1",
+"ru": "аргументировать",
+"en": "to argue",
+"fr": "argumenter"
+},
+{
+"a": "փարթամանալ",
+"lv": "B1",
+"ru": "пышно разрастаться",
+"en": "to grow lushly",
+"fr": "foisonner"
+},
+{
+"a": "փարվել",
+"lv": "B1",
+"ru": "обнимать",
+"en": "to embrace",
+"fr": "étreindre"
+},
+{
+"a": "փետել",
+"lv": "B1",
+"ru": "выщипывать",
+"en": "to pluck",
+"fr": "arracher, épiler"
+},
+{
+"a": "փետրել",
+"lv": "B1",
+"ru": "ощипывать",
+"en": "to pluck feathers",
+"fr": "plumer"
+},
+{
+"a": "փլել",
+"lv": "B1",
+"ru": "разрушать (сносить)",
+"en": "to demolish",
+"fr": "démolir"
+},
+{
+"a": "փխրել",
+"lv": "B1",
+"ru": "рыхлить",
+"en": "to loosen (the soil)",
+"fr": "ameublir"
+},
+{
+"a": "փողոտել",
+"lv": "B1",
+"ru": "перерезать горло",
+"en": "to cut the throat",
+"fr": "égorger"
+},
+{
+"a": "փութացնել",
+"lv": "B1",
+"ru": "торопить",
+"en": "to hasten",
+"fr": "presser (hâter)"
+},
+{
+"a": "փռթկացնել",
+"lv": "B1",
+"ru": "хихикать",
+"en": "to chuckle",
+"fr": "glousser"
+},
+{
+"a": "փրփրել",
+"lv": "B1",
+"ru": "пениться",
+"en": "to foam",
+"fr": "mousser"
+},
+{
+"a": "փքվել",
+"lv": "B1",
+"ru": "распушаться",
+"en": "to puff up",
+"fr": "se gonfler"
+},
+{
+"a": "քաշքշել",
+"lv": "B1",
+"ru": "тянуть туда-сюда",
+"en": "to drag back and forth",
+"fr": "tirailler"
+},
+{
+"a": "քավել",
+"lv": "B1",
+"ru": "искупать",
+"en": "to atone for",
+"fr": "expier"
+},
+{
+"a": "քերթել",
+"lv": "B1",
+"ru": "сдирать кожу",
+"en": "to flay",
+"fr": "écorcher"
+},
+{
+"a": "քոչել",
+"lv": "B1",
+"ru": "кочевать",
+"en": "to lead a nomadic life",
+"fr": "nomadiser"
+},
+{
+"a": "քչփորել",
+"lv": "B1",
+"ru": "ковыряться",
+"en": "to pick, to dig",
+"fr": "fouiller"
+},
+{
+"a": "քրիստոնեանալ",
+"lv": "B1",
+"ru": "принимать христианство",
+"en": "to become Christian",
+"fr": "se convertir au christianisme"
+},
+{
+"a": "ֆիքսել",
+"lv": "B1",
+"ru": "фиксировать",
+"en": "to fix",
+"fr": "fixer"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -114252,6 +119467,524 @@
 "ru": "ночлег, место для сна",
 "en": "sleeping place",
 "fr": "couche (gîte)"
+},
+{
+"a": "ալեկոծել",
+"lv": "C1",
+"ru": "вздыматься (о волнах)",
+"en": "to billow",
+"fr": "houler"
+},
+{
+"a": "ահագնանալ",
+"lv": "C1",
+"ru": "возрастать (книжн.)",
+"en": "to grow",
+"fr": "s'accroître"
+},
+{
+"a": "առկայծել",
+"lv": "C1",
+"ru": "мерцать, угасать",
+"en": "to fade",
+"fr": "vaciller"
+},
+{
+"a": "առոգանել",
+"lv": "C1",
+"ru": "отчётливо произносить",
+"en": "to articulate",
+"fr": "articuler"
+},
+{
+"a": "արարել",
+"lv": "C1",
+"ru": "творить (поэт.)",
+"en": "to do (poetic)",
+"fr": "faire (poétique)"
+},
+{
+"a": "արգահատել",
+"lv": "C1",
+"ru": "сжалиться",
+"en": "to take pity",
+"fr": "prendre en pitié"
+},
+{
+"a": "արծարծել",
+"lv": "C1",
+"ru": "разжигать",
+"en": "to kindle",
+"fr": "attiser"
+},
+{
+"a": "աքլորանալ",
+"lv": "C1",
+"ru": "важничать",
+"en": "to put on airs",
+"fr": "se pavaner"
+},
+{
+"a": "բազմել",
+"lv": "C1",
+"ru": "торжественно восседать",
+"en": "to sit solemnly",
+"fr": "trôner"
+},
+{
+"a": "բանդագուշել",
+"lv": "C1",
+"ru": "бредить (книжн.)",
+"en": "to rave",
+"fr": "divaguer"
+},
+{
+"a": "բաջաղել",
+"lv": "C1",
+"ru": "болтать небылицы",
+"en": "to tell fables",
+"fr": "conter des fables"
+},
+{
+"a": "բարբառել",
+"lv": "C1",
+"ru": "говорить (поэт.)",
+"en": "to speak (poetic)",
+"fr": "parler (poétique)"
+},
+{
+"a": "գեղգեղել",
+"lv": "C1",
+"ru": "заливаться трелью",
+"en": "to trill",
+"fr": "triller"
+},
+{
+"a": "գլել",
+"lv": "C1",
+"ru": "низвергать",
+"en": "to throw down",
+"fr": "terrasser"
+},
+{
+"a": "գնչել",
+"lv": "C1",
+"ru": "хрюкать (о поросёнке)",
+"en": "to grunt",
+"fr": "grogner"
+},
+{
+"a": "գոլանալ",
+"lv": "C1",
+"ru": "становиться тепловатым",
+"en": "to grow lukewarm",
+"fr": "tiédir"
+},
+{
+"a": "դավել",
+"lv": "C1",
+"ru": "строить козни",
+"en": "to plot",
+"fr": "comploter"
+},
+{
+"a": "դիմագրավել",
+"lv": "C1",
+"ru": "выступать навстречу (врагу)",
+"en": "to face (an enemy)",
+"fr": "affronter"
+},
+{
+"a": "դրվատել",
+"lv": "C1",
+"ru": "хвалить (книжн.)",
+"en": "to praise",
+"fr": "louer"
+},
+{
+"a": "եղծել",
+"lv": "C1",
+"ru": "опровергать (книжн.)",
+"en": "to refute",
+"fr": "réfuter"
+},
+{
+"a": "երկյուղածել",
+"lv": "C1",
+"ru": "пугаться (синоним)",
+"en": "to get scared",
+"fr": "s'effrayer"
+},
+{
+"a": "զեղել",
+"lv": "C1",
+"ru": "изливать",
+"en": "to pour out",
+"fr": "répandre"
+},
+{
+"a": "զեռալ",
+"lv": "C1",
+"ru": "ползать (книжн.)",
+"en": "to creep",
+"fr": "ramper"
+},
+{
+"a": "ըղձալ",
+"lv": "C1",
+"ru": "жаждать (книжн.)",
+"en": "to long for",
+"fr": "aspirer à"
+},
+{
+"a": "ըմբոշխնել",
+"lv": "C1",
+"ru": "смаковать",
+"en": "to savour",
+"fr": "savourer"
+},
+{
+"a": "ըմպել",
+"lv": "C1",
+"ru": "пить (книжн.)",
+"en": "to imbibe",
+"fr": "boire (littéraire)"
+},
+{
+"a": "թառել",
+"lv": "C1",
+"ru": "усаживаться на насест",
+"en": "to perch",
+"fr": "se percher"
+},
+{
+"a": "իջևանել",
+"lv": "C1",
+"ru": "останавливаться на постоялом дворе",
+"en": "to stay at an inn",
+"fr": "faire étape"
+},
+{
+"a": "իր վրա աշխատել",
+"lv": "C1",
+"ru": "работать над собой",
+"en": "to work on oneself",
+"fr": "travailler sur soi"
+},
+{
+"a": "լուցել",
+"lv": "C1",
+"ru": "зажигать (книжн.)",
+"en": "to kindle",
+"fr": "allumer (littéraire)"
+},
+{
+"a": "խանձատել",
+"lv": "C1",
+"ru": "обжигать",
+"en": "to scorch",
+"fr": "brûler"
+},
+{
+"a": "խարբալել",
+"lv": "C1",
+"ru": "просеивать (перен.)",
+"en": "to sift",
+"fr": "cribler"
+},
+{
+"a": "խեթել",
+"lv": "C1",
+"ru": "толкать",
+"en": "to shove",
+"fr": "pousser"
+},
+{
+"a": "խնկել",
+"lv": "C1",
+"ru": "кадить",
+"en": "to incense",
+"fr": "encenser"
+},
+{
+"a": "խոկալ",
+"lv": "C1",
+"ru": "размышлять",
+"en": "to ponder",
+"fr": "méditer"
+},
+{
+"a": "խրոխտալ",
+"lv": "C1",
+"ru": "грозить (книжн.)",
+"en": "to threaten",
+"fr": "menacer"
+},
+{
+"a": "ծլարձակել",
+"lv": "C1",
+"ru": "пускать побеги",
+"en": "to sprout",
+"fr": "pousser des pousses"
+},
+{
+"a": "կանխագրել",
+"lv": "C1",
+"ru": "писать заранее",
+"en": "to write in advance",
+"fr": "écrire à l'avance"
+},
+{
+"a": "կացնահարել",
+"lv": "C1",
+"ru": "рубить топором",
+"en": "to axe",
+"fr": "frapper à la hache"
+},
+{
+"a": "կթոտել",
+"lv": "C1",
+"ru": "хиреть",
+"en": "to grow feeble",
+"fr": "dépérir"
+},
+{
+"a": "կիզել",
+"lv": "C1",
+"ru": "жечь (книжн.)",
+"en": "to burn",
+"fr": "brûler (littéraire)"
+},
+{
+"a": "կտղել",
+"lv": "C1",
+"ru": "быть в течке",
+"en": "to be in heat",
+"fr": "être en chaleur"
+},
+{
+"a": "հառնել",
+"lv": "C1",
+"ru": "подниматься (поэт.)",
+"en": "to rise up",
+"fr": "s'élever"
+},
+{
+"a": "հղփանալ",
+"lv": "C1",
+"ru": "пресыщаться",
+"en": "to be satiated",
+"fr": "être repu"
+},
+{
+"a": "հորջորջել",
+"lv": "C1",
+"ru": "прозывать",
+"en": "to call, to name",
+"fr": "surnommer"
+},
+{
+"a": "հուռթանալ",
+"lv": "C1",
+"ru": "процветать (о земле)",
+"en": "to be watered, prosperous",
+"fr": "prospérer"
+},
+{
+"a": "մալել",
+"lv": "C1",
+"ru": "кастрировать (синоним)",
+"en": "to castrate",
+"fr": "châtrer"
+},
+{
+"a": "մանկանալ",
+"lv": "C1",
+"ru": "молодеть (книжн.)",
+"en": "to become young",
+"fr": "rajeunir (littéraire)"
+},
+{
+"a": "մաքառել",
+"lv": "C1",
+"ru": "бороться (книжн.)",
+"en": "to struggle",
+"fr": "lutter (soutenu)"
+},
+{
+"a": "մեծաբանել",
+"lv": "C1",
+"ru": "бахвалиться",
+"en": "to talk big",
+"fr": "fanfaronner"
+},
+{
+"a": "մեղկանալ",
+"lv": "C1",
+"ru": "расслабляться, раскисать",
+"en": "to slacken",
+"fr": "s'amollir"
+},
+{
+"a": "մոլել",
+"lv": "C1",
+"ru": "обезуметь",
+"en": "to lose one's senses",
+"fr": "perdre la raison"
+},
+{
+"a": "մրրկել",
+"lv": "C1",
+"ru": "бушевать",
+"en": "to storm",
+"fr": "faire rage"
+},
+{
+"a": "ներքինացնել",
+"lv": "C1",
+"ru": "оскопить",
+"en": "to castrate",
+"fr": "émasculer"
+},
+{
+"a": "նկրտել",
+"lv": "C1",
+"ru": "стремиться (книжн.)",
+"en": "to strive",
+"fr": "aspirer (littéraire)"
+},
+{
+"a": "նողկալ",
+"lv": "C1",
+"ru": "испытывать отвращение",
+"en": "to loathe",
+"fr": "abhorrer (synonyme)"
+},
+{
+"a": "ոլորակել",
+"lv": "C1",
+"ru": "модулировать (голос)",
+"en": "to modulate",
+"fr": "moduler"
+},
+{
+"a": "ողորմորալ",
+"lv": "C1",
+"ru": "умолять (книжн.)",
+"en": "to beseech",
+"fr": "supplier"
+},
+{
+"a": "ործկալ",
+"lv": "C1",
+"ru": "извергать (рвоту)",
+"en": "to vomit",
+"fr": "rendre (vomir)"
+},
+{
+"a": "պագանել",
+"lv": "C1",
+"ru": "целовать (книжн.)",
+"en": "to kiss",
+"fr": "baiser (littéraire)"
+},
+{
+"a": "պանծալ",
+"lv": "C1",
+"ru": "гордиться (книжн.)",
+"en": "to be proud",
+"fr": "s'enorgueillir (littéraire)"
+},
+{
+"a": "պարսկանալ",
+"lv": "C1",
+"ru": "персидизироваться",
+"en": "to become Persianized",
+"fr": "se persaniser"
+},
+{
+"a": "պոռոտաբանել",
+"lv": "C1",
+"ru": "пустословить",
+"en": "to prattle",
+"fr": "palabrer"
+},
+{
+"a": "սիգալ",
+"lv": "C1",
+"ru": "шествовать горделиво",
+"en": "to strut",
+"fr": "se pavaner (synonyme)"
+},
+{
+"a": "սորալ",
+"lv": "C1",
+"ru": "просачиваться",
+"en": "to leak",
+"fr": "suinter"
+},
+{
+"a": "սորել",
+"lv": "C1",
+"ru": "забираться в нору",
+"en": "to creep into a hole",
+"fr": "se terrer"
+},
+{
+"a": "սպրդել",
+"lv": "C1",
+"ru": "проникать",
+"en": "to penetrate",
+"fr": "pénétrer"
+},
+{
+"a": "սրվել",
+"lv": "C1",
+"ru": "обостряться",
+"en": "to become acute",
+"fr": "s'aiguiser"
+},
+{
+"a": "վերնալ",
+"lv": "C1",
+"ru": "подниматься",
+"en": "to ascend",
+"fr": "monter"
+},
+{
+"a": "վերուվարել",
+"lv": "C1",
+"ru": "подбрасывать",
+"en": "to bounce",
+"fr": "faire sauter"
+},
+{
+"a": "վերջավորել",
+"lv": "C1",
+"ru": "рифмовать (концы строк)",
+"en": "to rhyme",
+"fr": "rimer"
+},
+{
+"a": "վերջավորվել",
+"lv": "C1",
+"ru": "оканчиваться",
+"en": "to end",
+"fr": "se terminer"
+},
+{
+"a": "վերջափակել",
+"lv": "C1",
+"ru": "завершать",
+"en": "to complete",
+"fr": "clore"
+},
+{
+"a": "տժվժալ",
+"lv": "C1",
+"ru": "шипеть",
+"en": "to hiss",
+"fr": "siffler"
 },
 {
 "a": "վեհ",
