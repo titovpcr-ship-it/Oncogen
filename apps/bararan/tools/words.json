@@ -21847,6 +21847,307 @@
 "fr": "falafel"
 },
 {
+"a": "զավակ",
+"lv": "A2",
+"ru": "ребёнок, отпрыск",
+"en": "child, offspring",
+"fr": "enfant, descendant"
+},
+{
+"a": "ծնող",
+"lv": "A2",
+"ru": "родитель",
+"en": "parent",
+"fr": "parent"
+},
+{
+"a": "պապ",
+"lv": "A2",
+"ru": "дед (разг.)",
+"en": "grandfather (colloquial)",
+"fr": "grand-père (familier)"
+},
+{
+"a": "պապա",
+"lv": "A2",
+"ru": "папа",
+"en": "dad",
+"fr": "papa"
+},
+{
+"a": "պապի",
+"lv": "A2",
+"ru": "дедушка",
+"en": "grandpa",
+"fr": "papi"
+},
+{
+"a": "տագերակին",
+"lv": "A2",
+"ru": "жена брата мужа",
+"en": "husband's brother's wife",
+"fr": "belle-sœur (femme du frère du mari)"
+},
+{
+"a": "տնփեսա",
+"lv": "A2",
+"ru": "примак (зять, живущий в семье жены)",
+"en": "live-in son-in-law",
+"fr": "gendre vivant chez les beaux-parents"
+},
+{
+"a": "քեռակին",
+"lv": "A2",
+"ru": "жена дяди по матери",
+"en": "wife of a maternal uncle",
+"fr": "tante (femme de l'oncle maternel)"
+},
+{
+"a": "քեռայր",
+"lv": "A2",
+"ru": "зять (муж сестры)",
+"en": "brother-in-law (sister's husband)",
+"fr": "beau-frère (mari de la sœur)"
+},
+{
+"a": "լուսնոտություն",
+"lv": "A2",
+"ru": "лунатизм",
+"en": "sleepwalking",
+"fr": "somnambulisme"
+},
+{
+"a": "խռմփալ",
+"lv": "A2",
+"ru": "храпеть",
+"en": "to snore",
+"fr": "ronfler"
+},
+{
+"a": "խռմփոց",
+"lv": "A2",
+"ru": "храп",
+"en": "snore",
+"fr": "ronflement"
+},
+{
+"a": "նիրհ",
+"lv": "A2",
+"ru": "дрёма, лёгкий сон",
+"en": "slumber, doze",
+"fr": "assoupissement"
+},
+{
+"a": "ննջել",
+"lv": "A2",
+"ru": "дремать",
+"en": "to doze, to slumber",
+"fr": "somnoler"
+},
+{
+"a": "քնաշրջություն",
+"lv": "A2",
+"ru": "хождение во сне",
+"en": "sleepwalking",
+"fr": "somnambulisme (marche)"
+},
+{
+"a": "քուն",
+"lv": "A2",
+"ru": "сон",
+"en": "sleep",
+"fr": "sommeil"
+},
+{
+"a": "կեղծամ",
+"lv": "A2",
+"ru": "парик",
+"en": "wig",
+"fr": "perruque"
+},
+{
+"a": "մազաթափություն",
+"lv": "A2",
+"ru": "выпадение волос",
+"en": "hair loss",
+"fr": "chute des cheveux"
+},
+{
+"a": "մազկապ",
+"lv": "A2",
+"ru": "резинка для волос",
+"en": "hair tie",
+"fr": "élastique à cheveux"
+},
+{
+"a": "սափրել",
+"lv": "A2",
+"ru": "брить",
+"en": "to shave",
+"fr": "raser"
+},
+{
+"a": "վարսահարդարիչ",
+"lv": "A2",
+"ru": "фен",
+"en": "hairdryer",
+"fr": "sèche-cheveux"
+},
+{
+"a": "քաչալություն",
+"lv": "A2",
+"ru": "облысение (разг.)",
+"en": "baldness (informal)",
+"fr": "calvitie (familier)"
+},
+{
+"a": "կոշկատակ",
+"lv": "A2",
+"ru": "подошва",
+"en": "sole (of a shoe)",
+"fr": "semelle"
+},
+{
+"a": "մաշիկ",
+"lv": "A2",
+"ru": "балетка, пуант",
+"en": "ballet shoe",
+"fr": "chausson de danse"
+},
+{
+"a": "մույկ",
+"lv": "A2",
+"ru": "сапог",
+"en": "boot",
+"fr": "botte"
+},
+{
+"a": "աթլաս",
+"lv": "A2",
+"ru": "атлас",
+"en": "satin",
+"fr": "satin"
+},
+{
+"a": "բեհեզ",
+"lv": "A2",
+"ru": "виссон, тонкое полотно",
+"en": "fine linen, byssus",
+"fr": "byssus, lin fin"
+},
+{
+"a": "դիպակ",
+"lv": "A2",
+"ru": "парча",
+"en": "brocade",
+"fr": "brocart"
+},
+{
+"a": "թաղիք",
+"lv": "A2",
+"ru": "войлок",
+"en": "thick felt",
+"fr": "feutre épais"
+},
+{
+"a": "մետաքսյա",
+"lv": "A2",
+"ru": "шёлковый",
+"en": "silken",
+"fr": "de soie"
+},
+{
+"a": "չիթ",
+"lv": "A2",
+"ru": "ситец",
+"en": "chintz",
+"fr": "indienne, chintz"
+},
+{
+"a": "այրան",
+"lv": "A2",
+"ru": "айран",
+"en": "ayran",
+"fr": "ayran"
+},
+{
+"a": "խմիչք",
+"lv": "A2",
+"ru": "напиток (обычно спиртной)",
+"en": "drink (usually alcoholic)",
+"fr": "boisson (souvent alcoolisée)"
+},
+{
+"a": "կումիս",
+"lv": "A2",
+"ru": "кумыс",
+"en": "koumiss",
+"fr": "koumis"
+},
+{
+"a": "կվաս",
+"lv": "A2",
+"ru": "квас",
+"en": "kvass",
+"fr": "kvas"
+},
+{
+"a": "ֆրեշ",
+"lv": "A2",
+"ru": "смузи, фреш",
+"en": "smoothie",
+"fr": "smoothie"
+},
+{
+"a": "բաղարջ",
+"lv": "A2",
+"ru": "пресный хлеб",
+"en": "unleavened bread",
+"fr": "pain azyme"
+},
+{
+"a": "բոկեղ",
+"lv": "A2",
+"ru": "бублик, симит",
+"en": "simit (ring bread)",
+"fr": "simit (pain en anneau)"
+},
+{
+"a": "բրեցել",
+"lv": "A2",
+"ru": "крендель",
+"en": "pretzel",
+"fr": "bretzel"
+},
+{
+"a": "լոշ",
+"lv": "A2",
+"ru": "лаваш",
+"en": "lavash",
+"fr": "lavash"
+},
+{
+"a": "պան",
+"lv": "A2",
+"ru": "каравай",
+"en": "round loaf",
+"fr": "miche"
+},
+{
+"a": "պուրի",
+"lv": "A2",
+"ru": "пури (грузинский хлеб)",
+"en": "puri (Georgian bread)",
+"fr": "pouri (pain géorgien)"
+},
+{
+"a": "տոստ",
+"lv": "A2",
+"ru": "тост",
+"en": "toast",
+"fr": "toast, pain grillé"
+},
+{
 "a": "հասարակություն",
 "lv": "B1",
 "ru": "общество",
@@ -46431,6 +46732,3324 @@
 "fr": "profondeur"
 },
 {
+"a": "Աբասթուման",
+"lv": "B1",
+"ru": "Абастумани",
+"en": "Abastumani",
+"fr": "Abastoumani"
+},
+{
+"a": "Ախալցխա",
+"lv": "B1",
+"ru": "Ахалцихе",
+"en": "Akhaltsikhe",
+"fr": "Akhaltsikhé"
+},
+{
+"a": "Ախալքալաք",
+"lv": "B1",
+"ru": "Ахалкалаки",
+"en": "Akhalkalaki",
+"fr": "Akhalkalaki"
+},
+{
+"a": "Աջարիա",
+"lv": "B1",
+"ru": "Аджария",
+"en": "Adjara",
+"fr": "Adjarie"
+},
+{
+"a": "Գուրիա",
+"lv": "B1",
+"ru": "Гурия",
+"en": "Guria",
+"fr": "Gourie"
+},
+{
+"a": "Թուշեթ",
+"lv": "B1",
+"ru": "Тушетия",
+"en": "Tusheti",
+"fr": "Touchétie"
+},
+{
+"a": "Իմերեթ",
+"lv": "B1",
+"ru": "Имеретия",
+"en": "Imereti",
+"fr": "Iméréthie"
+},
+{
+"a": "Խևսուրեթ",
+"lv": "B1",
+"ru": "Хевсуретия",
+"en": "Khevsureti",
+"fr": "Khevsourétie"
+},
+{
+"a": "Կախեթ",
+"lv": "B1",
+"ru": "Кахетия",
+"en": "Kakheti",
+"fr": "Kakhétie"
+},
+{
+"a": "Մեգրելիա",
+"lv": "B1",
+"ru": "Мегрелия",
+"en": "Mingrelia",
+"fr": "Mingrélie"
+},
+{
+"a": "Մեսխեթ",
+"lv": "B1",
+"ru": "Месхетия",
+"en": "Meskheti",
+"fr": "Meskhétie"
+},
+{
+"a": "Նինոծմինդա",
+"lv": "B1",
+"ru": "Ниноцминда",
+"en": "Ninotsminda",
+"fr": "Ninotsminda"
+},
+{
+"a": "Ռաճա",
+"lv": "B1",
+"ru": "Рача",
+"en": "Racha",
+"fr": "Ratcha"
+},
+{
+"a": "Սուրամ",
+"lv": "B1",
+"ru": "Сурами",
+"en": "Surami",
+"fr": "Sourami"
+},
+{
+"a": "Սվանեթ",
+"lv": "B1",
+"ru": "Сванетия",
+"en": "Svaneti",
+"fr": "Svanétie"
+},
+{
+"a": "Ստեփանծմինդա",
+"lv": "B1",
+"ru": "Степанцминда (Казбеги)",
+"en": "Stepantsminda (Kazbegi)",
+"fr": "Stepantsminda (Kazbegi)"
+},
+{
+"a": "Քարթլի",
+"lv": "B1",
+"ru": "Картли",
+"en": "Kartli",
+"fr": "Kartli"
+},
+{
+"a": "Աարե",
+"lv": "B1",
+"ru": "Аре",
+"en": "Aare",
+"fr": "Aar"
+},
+{
+"a": "Ամազոն",
+"lv": "B1",
+"ru": "Амазонка",
+"en": "Amazon",
+"fr": "Amazone"
+},
+{
+"a": "Ամուդարյա",
+"lv": "B1",
+"ru": "Амударья",
+"en": "Amu Darya",
+"fr": "Amou-Daria"
+},
+{
+"a": "Դնեպր",
+"lv": "B1",
+"ru": "Днепр",
+"en": "Dnieper",
+"fr": "Dniepr"
+},
+{
+"a": "Ենիսեյ",
+"lv": "B1",
+"ru": "Енисей",
+"en": "Yenisei",
+"fr": "Ienisseï"
+},
+{
+"a": "Լենա",
+"lv": "B1",
+"ru": "Лена (река)",
+"en": "Lena (river)",
+"fr": "Léna (fleuve)"
+},
+{
+"a": "Կամա",
+"lv": "B1",
+"ru": "Кама",
+"en": "Kama",
+"fr": "Kama"
+},
+{
+"a": "Հուդզոն",
+"lv": "B1",
+"ru": "Гудзон",
+"en": "Hudson",
+"fr": "Hudson"
+},
+{
+"a": "Ճորոխ",
+"lv": "B1",
+"ru": "Чорох",
+"en": "Çoruh",
+"fr": "Çoruh"
+},
+{
+"a": "Մայն",
+"lv": "B1",
+"ru": "Майн",
+"en": "Main",
+"fr": "Main"
+},
+{
+"a": "Յանցզի",
+"lv": "B1",
+"ru": "Янцзы",
+"en": "Yangtze",
+"fr": "Yangzi Jiang"
+},
+{
+"a": "Նևա",
+"lv": "B1",
+"ru": "Нева",
+"en": "Neva",
+"fr": "Neva"
+},
+{
+"a": "Ռիոն",
+"lv": "B1",
+"ru": "Риони",
+"en": "Rioni",
+"fr": "Rioni"
+},
+{
+"a": "Վիսլա",
+"lv": "B1",
+"ru": "Висла",
+"en": "Vistula",
+"fr": "Vistule"
+},
+{
+"a": "Վոլգա",
+"lv": "B1",
+"ru": "Волга",
+"en": "Volga",
+"fr": "Volga"
+},
+{
+"a": "Օբ",
+"lv": "B1",
+"ru": "Обь",
+"en": "Ob",
+"fr": "Ob"
+},
+{
+"a": "Օկա",
+"lv": "B1",
+"ru": "Ока",
+"en": "Oka",
+"fr": "Oka"
+},
+{
+"a": "Բաթում",
+"lv": "B1",
+"ru": "Батуми",
+"en": "Batumi",
+"fr": "Batoumi"
+},
+{
+"a": "Բորժոմ",
+"lv": "B1",
+"ru": "Боржоми",
+"en": "Borjomi",
+"fr": "Borjomi"
+},
+{
+"a": "Գորի",
+"lv": "B1",
+"ru": "Гори",
+"en": "Gori",
+"fr": "Gori"
+},
+{
+"a": "Գուրջաան",
+"lv": "B1",
+"ru": "Гурджаани",
+"en": "Gurjaani",
+"fr": "Gourdjaani"
+},
+{
+"a": "Թելավ",
+"lv": "B1",
+"ru": "Телави",
+"en": "Telavi",
+"fr": "Telavi"
+},
+{
+"a": "Մցխեթ",
+"lv": "B1",
+"ru": "Мцхета",
+"en": "Mtskheta",
+"fr": "Mtskheta"
+},
+{
+"a": "Ռուսթավ",
+"lv": "B1",
+"ru": "Рустави",
+"en": "Rustavi",
+"fr": "Roustavi"
+},
+{
+"a": "Սիղնաղ",
+"lv": "B1",
+"ru": "Сигнахи",
+"en": "Sighnaghi",
+"fr": "Signagui"
+},
+{
+"a": "Փոթի",
+"lv": "B1",
+"ru": "Поти",
+"en": "Poti",
+"fr": "Poti"
+},
+{
+"a": "Քութայիս",
+"lv": "B1",
+"ru": "Кутаиси",
+"en": "Kutaisi",
+"fr": "Koutaïssi"
+},
+{
+"a": "աթլետիկա",
+"lv": "B1",
+"ru": "лёгкая атлетика",
+"en": "athletics",
+"fr": "athlétisme"
+},
+{
+"a": "ալպինիզմ",
+"lv": "B1",
+"ru": "альпинизм",
+"en": "mountaineering",
+"fr": "alpinisme"
+},
+{
+"a": "ախոյան",
+"lv": "B1",
+"ru": "соперник, противник",
+"en": "adversary, rival",
+"fr": "adversaire"
+},
+{
+"a": "բոքս",
+"lv": "B1",
+"ru": "бокс",
+"en": "boxing",
+"fr": "boxe"
+},
+{
+"a": "ծանրորդ",
+"lv": "B1",
+"ru": "штангист",
+"en": "weightlifter",
+"fr": "haltérophile"
+},
+{
+"a": "հավակնորդ",
+"lv": "B1",
+"ru": "претендент",
+"en": "contender, claimant",
+"fr": "prétendant"
+},
+{
+"a": "հնարք",
+"lv": "B1",
+"ru": "приём, уловка",
+"en": "trick, device",
+"fr": "astuce, ruse"
+},
+{
+"a": "հորիզոնական դարպասաձող",
+"lv": "B1",
+"ru": "перекладина ворот",
+"en": "crossbar",
+"fr": "barre transversale"
+},
+{
+"a": "հօգուտ",
+"lv": "B1",
+"ru": "в пользу",
+"en": "in favour of",
+"fr": "en faveur de"
+},
+{
+"a": "ձեռնագնդակ",
+"lv": "B1",
+"ru": "гандбол",
+"en": "handball",
+"fr": "handball"
+},
+{
+"a": "ուղղահայաց դարպասաձող",
+"lv": "B1",
+"ru": "штанга ворот",
+"en": "goalpost",
+"fr": "poteau de but"
+},
+{
+"a": "ջրադահուկ",
+"lv": "B1",
+"ru": "водные лыжи",
+"en": "water skiing",
+"fr": "ski nautique"
+},
+{
+"a": "սումո",
+"lv": "B1",
+"ru": "сумо",
+"en": "sumo",
+"fr": "sumo"
+},
+{
+"a": "վերջնագիծ",
+"lv": "B1",
+"ru": "финишная линия",
+"en": "finish line",
+"fr": "ligne d'arrivée"
+},
+{
+"a": "գավոտ",
+"lv": "B1",
+"ru": "гавот",
+"en": "gavotte",
+"fr": "gavotte"
+},
+{
+"a": "թվիստ",
+"lv": "B1",
+"ru": "твист",
+"en": "twist",
+"fr": "twist"
+},
+{
+"a": "լամբադա",
+"lv": "B1",
+"ru": "ламбада",
+"en": "lambada",
+"fr": "lambada"
+},
+{
+"a": "կանկան",
+"lv": "B1",
+"ru": "канкан",
+"en": "cancan",
+"fr": "cancan"
+},
+{
+"a": "հարսնապար",
+"lv": "B1",
+"ru": "танец невесты",
+"en": "bride's dance",
+"fr": "danse de la mariée"
+},
+{
+"a": "մազուրկա",
+"lv": "B1",
+"ru": "мазурка",
+"en": "mazurka",
+"fr": "mazurka"
+},
+{
+"a": "մամբո",
+"lv": "B1",
+"ru": "мамбо",
+"en": "mambo",
+"fr": "mambo"
+},
+{
+"a": "պարահանդես",
+"lv": "B1",
+"ru": "бал",
+"en": "ball (dance)",
+"fr": "bal"
+},
+{
+"a": "պոլկա",
+"lv": "B1",
+"ru": "полька",
+"en": "polka",
+"fr": "polka"
+},
+{
+"a": "ջայվ",
+"lv": "B1",
+"ru": "джайв",
+"en": "jive",
+"fr": "jive"
+},
+{
+"a": "ռումբա",
+"lv": "B1",
+"ru": "румба",
+"en": "rumba",
+"fr": "rumba"
+},
+{
+"a": "սամբա",
+"lv": "B1",
+"ru": "самба",
+"en": "samba",
+"fr": "samba"
+},
+{
+"a": "ֆլամենկո",
+"lv": "B1",
+"ru": "фламенко",
+"en": "flamenco",
+"fr": "flamenco"
+},
+{
+"a": "ֆոքստրոտ",
+"lv": "B1",
+"ru": "фокстрот",
+"en": "foxtrot",
+"fr": "fox-trot"
+},
+{
+"a": "բասկետբոլիստ",
+"lv": "B1",
+"ru": "баскетболист",
+"en": "basketball player",
+"fr": "basketteur"
+},
+{
+"a": "բասկետբոլիստուհի",
+"lv": "B1",
+"ru": "баскетболистка",
+"en": "female basketball player",
+"fr": "basketteuse"
+},
+{
+"a": "դահուկորդ",
+"lv": "B1",
+"ru": "лыжник",
+"en": "skier",
+"fr": "skieur"
+},
+{
+"a": "թենիսիստ",
+"lv": "B1",
+"ru": "теннисист",
+"en": "tennis player",
+"fr": "joueur de tennis"
+},
+{
+"a": "թենիսիստուհի",
+"lv": "B1",
+"ru": "теннисистка",
+"en": "female tennis player",
+"fr": "joueuse de tennis"
+},
+{
+"a": "մարմնամարզիկ",
+"lv": "B1",
+"ru": "гимнаст",
+"en": "gymnast",
+"fr": "gymnaste"
+},
+{
+"a": "ջրադահուկորդ",
+"lv": "B1",
+"ru": "воднолыжник",
+"en": "water skier",
+"fr": "skieur nautique"
+},
+{
+"a": "սուսերամարտիկ",
+"lv": "B1",
+"ru": "фехтовальщик",
+"en": "fencer",
+"fr": "escrimeur"
+},
+{
+"a": "վոլեյբոլիստ",
+"lv": "B1",
+"ru": "волейболист",
+"en": "volleyball player",
+"fr": "volleyeur"
+},
+{
+"a": "վոլեյբոլիստուհի",
+"lv": "B1",
+"ru": "волейболистка",
+"en": "female volleyball player",
+"fr": "volleyeuse"
+},
+{
+"a": "թամզարա",
+"lv": "B1",
+"ru": "тамзара (армянский народный танец)",
+"en": "tamzara (Armenian folk dance)",
+"fr": "tamzara (danse folklorique arménienne)"
+},
+{
+"a": "լեզգինկա",
+"lv": "B1",
+"ru": "лезгинка",
+"en": "lezginka",
+"fr": "lezguinka"
+},
+{
+"a": "լուտկի",
+"lv": "B1",
+"ru": "лутки (народный танец из Вана)",
+"en": "lutki (folk dance from Van)",
+"fr": "loutki (danse folklorique de Van)"
+},
+{
+"a": "ճոճ",
+"lv": "B1",
+"ru": "качели",
+"en": "swing (seat)",
+"fr": "balançoire"
+},
+{
+"a": "պորտապար",
+"lv": "B1",
+"ru": "танец живота",
+"en": "belly dance",
+"fr": "danse du ventre"
+},
+{
+"a": "ռազմապար",
+"lv": "B1",
+"ru": "военный танец",
+"en": "war dance",
+"fr": "danse guerrière"
+},
+{
+"a": "վալս",
+"lv": "B1",
+"ru": "вальс",
+"en": "waltz",
+"fr": "valse"
+},
+{
+"a": "վերջապար",
+"lv": "B1",
+"ru": "финал танца",
+"en": "finale (of a dance)",
+"fr": "final (d'une danse)"
+},
+{
+"a": "տանգո",
+"lv": "B1",
+"ru": "танго",
+"en": "tango",
+"fr": "tango"
+},
+{
+"a": "երաժշտագետ",
+"lv": "B1",
+"ru": "музыковед",
+"en": "musicologist",
+"fr": "musicologue"
+},
+{
+"a": "երգահան",
+"lv": "B1",
+"ru": "композитор песен",
+"en": "songwriter",
+"fr": "compositeur de chansons"
+},
+{
+"a": "խմբավար",
+"lv": "B1",
+"ru": "хормейстер, дирижёр хора",
+"en": "choirmaster, conductor",
+"fr": "chef de chœur"
+},
+{
+"a": "կրկներգ",
+"lv": "B1",
+"ru": "припев",
+"en": "chorus, refrain",
+"fr": "refrain"
+},
+{
+"a": "հիփ-հոփ",
+"lv": "B1",
+"ru": "хип-хоп",
+"en": "hip-hop",
+"fr": "hip-hop"
+},
+{
+"a": "մոտիվ",
+"lv": "B1",
+"ru": "мотив",
+"en": "motif; motive",
+"fr": "motif"
+},
+{
+"a": "մուղամ",
+"lv": "B1",
+"ru": "мугам",
+"en": "mugham",
+"fr": "mugham"
+},
+{
+"a": "նվագ",
+"lv": "B1",
+"ru": "игра (на инструменте)",
+"en": "playing (an instrument)",
+"fr": "jeu (d'un instrument)"
+},
+{
+"a": "ութնյակ",
+"lv": "B1",
+"ru": "октет",
+"en": "octet",
+"fr": "octuor"
+},
+{
+"a": "պոլիֆոնիա",
+"lv": "B1",
+"ru": "полифония",
+"en": "polyphony",
+"fr": "polyphonie"
+},
+{
+"a": "ռաբիզ",
+"lv": "B1",
+"ru": "рабиз (армянская городская песня)",
+"en": "rabiz (Armenian urban song)",
+"fr": "rabiz (chanson urbaine arménienne)"
+},
+{
+"a": "ռեգգի",
+"lv": "B1",
+"ru": "регги",
+"en": "reggae",
+"fr": "reggae"
+},
+{
+"a": "սոուլ",
+"lv": "B1",
+"ru": "соул",
+"en": "soul music",
+"fr": "soul"
+},
+{
+"a": "վերջանվագ",
+"lv": "B1",
+"ru": "финал",
+"en": "finale",
+"fr": "finale"
+},
+{
+"a": "քայլերգ",
+"lv": "B1",
+"ru": "марш",
+"en": "march",
+"fr": "marche"
+},
+{
+"a": "առանձնասենյակ",
+"lv": "B1",
+"ru": "кабинет",
+"en": "study, private office",
+"fr": "bureau, cabinet de travail"
+},
+{
+"a": "գահասրահ",
+"lv": "B1",
+"ru": "тронный зал",
+"en": "throne room",
+"fr": "salle du trône"
+},
+{
+"a": "հյուրասրահ",
+"lv": "B1",
+"ru": "гостиная",
+"en": "drawing room, reception room",
+"fr": "salon"
+},
+{
+"a": "ճաշասրահ",
+"lv": "B1",
+"ru": "столовая (зал)",
+"en": "dining hall",
+"fr": "salle à manger"
+},
+{
+"a": "ճեմասրահ",
+"lv": "B1",
+"ru": "фойе, вестибюль",
+"en": "foyer, lobby",
+"fr": "foyer, hall"
+},
+{
+"a": "ննջարան",
+"lv": "B1",
+"ru": "спальня",
+"en": "bedroom",
+"fr": "chambre à coucher"
+},
+{
+"a": "սպասասրահ",
+"lv": "B1",
+"ru": "зал ожидания",
+"en": "waiting room",
+"fr": "salle d'attente"
+},
+{
+"a": "սրահ",
+"lv": "B1",
+"ru": "зал; салон",
+"en": "hall; salon",
+"fr": "salle; salon"
+},
+{
+"a": "տանտուն",
+"lv": "B1",
+"ru": "тантун (комната с тониром)",
+"en": "tantun (room with a tonir)",
+"fr": "tantoun (pièce avec le tonir)"
+},
+{
+"a": "բուրվառ",
+"lv": "B1",
+"ru": "кадило",
+"en": "censer",
+"fr": "encensoir"
+},
+{
+"a": "թանաքաման",
+"lv": "B1",
+"ru": "чернильница",
+"en": "inkwell",
+"fr": "encrier"
+},
+{
+"a": "ճաշաման",
+"lv": "B1",
+"ru": "суповая тарелка",
+"en": "soup plate",
+"fr": "assiette creuse"
+},
+{
+"a": "սկահ",
+"lv": "B1",
+"ru": "большая чаша",
+"en": "large bowl",
+"fr": "grand bol"
+},
+{
+"a": "փամփշտակալ",
+"lv": "B1",
+"ru": "патронташ",
+"en": "cartridge belt",
+"fr": "cartouchière"
+},
+{
+"a": "քթոց",
+"lv": "B1",
+"ru": "корзина",
+"en": "basket",
+"fr": "panier"
+},
+{
+"a": "աղաց",
+"lv": "B1",
+"ru": "мельница",
+"en": "mill",
+"fr": "moulin"
+},
+{
+"a": "խաղատուն",
+"lv": "B1",
+"ru": "игорный дом, казино",
+"en": "gambling house, casino",
+"fr": "maison de jeu, casino"
+},
+{
+"a": "խրճիթ",
+"lv": "B1",
+"ru": "хижина, лачуга",
+"en": "hut, hovel",
+"fr": "cabane, masure"
+},
+{
+"a": "կազինո",
+"lv": "B1",
+"ru": "казино",
+"en": "casino",
+"fr": "casino"
+},
+{
+"a": "հոգեբուժարան",
+"lv": "B1",
+"ru": "психиатрическая больница",
+"en": "psychiatric hospital",
+"fr": "hôpital psychiatrique"
+},
+{
+"a": "միջնաբերդ",
+"lv": "B1",
+"ru": "цитадель",
+"en": "citadel",
+"fr": "citadelle"
+},
+{
+"a": "փացխա",
+"lv": "B1",
+"ru": "пацха (хижина с очагом)",
+"en": "patskha (hut with a hearth)",
+"fr": "patskha (hutte avec un foyer)"
+},
+{
+"a": "բլղուրապուր",
+"lv": "B1",
+"ru": "сладкий суп из булгура на виноградном соке",
+"en": "sweet bulgur soup in grape juice",
+"fr": "soupe sucrée de boulgour au jus de raisin"
+},
+{
+"a": "բրնձապուր",
+"lv": "B1",
+"ru": "рисовый суп",
+"en": "rice soup",
+"fr": "soupe au riz"
+},
+{
+"a": "կաթնապուր",
+"lv": "B1",
+"ru": "молочный рисовый суп",
+"en": "sweet milk and rice soup",
+"fr": "soupe de riz au lait"
+},
+{
+"a": "կոլոլիկ",
+"lv": "B1",
+"ru": "кололик (суп с фрикадельками)",
+"en": "kololik (meatball soup)",
+"fr": "kololik (soupe aux boulettes)"
+},
+{
+"a": "ձավարապուր",
+"lv": "B1",
+"ru": "суп из пшеничной крупы",
+"en": "hulled wheat soup",
+"fr": "soupe de blé concassé"
+},
+{
+"a": "մածնաբրդոշ",
+"lv": "B1",
+"ru": "окрошка на мацуне",
+"en": "matsun okroshka",
+"fr": "okrochka au matsoun"
+},
+{
+"a": "մանթապուր",
+"lv": "B1",
+"ru": "суп с манты",
+"en": "manti soup",
+"fr": "soupe aux mantis"
+},
+{
+"a": "մսաջուր",
+"lv": "B1",
+"ru": "мясной бульон",
+"en": "meat broth",
+"fr": "bouillon de viande"
+},
+{
+"a": "ոսպապուր",
+"lv": "B1",
+"ru": "чечевичный суп",
+"en": "lentil soup",
+"fr": "soupe de lentilles"
+},
+{
+"a": "չխրթմա",
+"lv": "B1",
+"ru": "чихиртма",
+"en": "chikhirtma",
+"fr": "tchikhirtma"
+},
+{
+"a": "սառնապուր",
+"lv": "B1",
+"ru": "холодный суп",
+"en": "cold soup",
+"fr": "soupe froide"
+},
+{
+"a": "սնկապուր",
+"lv": "B1",
+"ru": "грибной суп",
+"en": "mushroom soup",
+"fr": "soupe aux champignons"
+},
+{
+"a": "սուպ",
+"lv": "B1",
+"ru": "суп (разг.)",
+"en": "soup (colloquial)",
+"fr": "soupe (familier)"
+},
+{
+"a": "բուրբոն",
+"lv": "B1",
+"ru": "бурбон",
+"en": "bourbon",
+"fr": "bourbon"
+},
+{
+"a": "խնձորօղի",
+"lv": "B1",
+"ru": "сидр",
+"en": "cider",
+"fr": "cidre"
+},
+{
+"a": "մեղրագինի",
+"lv": "B1",
+"ru": "медовуха",
+"en": "mead",
+"fr": "hydromel"
+},
+{
+"a": "պորտվեյն",
+"lv": "B1",
+"ru": "портвейн",
+"en": "port wine",
+"fr": "porto"
+},
+{
+"a": "ջին",
+"lv": "B1",
+"ru": "джин",
+"en": "gin",
+"fr": "gin"
+},
+{
+"a": "ռոմ",
+"lv": "B1",
+"ru": "ром",
+"en": "rum",
+"fr": "rhum"
+},
+{
+"a": "սակե",
+"lv": "B1",
+"ru": "сакэ",
+"en": "sake",
+"fr": "saké"
+},
+{
+"a": "սկոտչ",
+"lv": "B1",
+"ru": "скотч (виски)",
+"en": "Scotch whisky",
+"fr": "scotch"
+},
+{
+"a": "վերմուտ",
+"lv": "B1",
+"ru": "вермут",
+"en": "vermouth",
+"fr": "vermouth"
+},
+{
+"a": "վիսկի",
+"lv": "B1",
+"ru": "виски",
+"en": "whisky",
+"fr": "whisky"
+},
+{
+"a": "տեկիլա",
+"lv": "B1",
+"ru": "текила",
+"en": "tequila",
+"fr": "tequila"
+},
+{
+"a": "Դելի",
+"lv": "B1",
+"ru": "Дели",
+"en": "Delhi",
+"fr": "Delhi"
+},
+{
+"a": "Կալկաթա",
+"lv": "B1",
+"ru": "Калькутта (Колката)",
+"en": "Kolkata",
+"fr": "Calcutta (Kolkata)"
+},
+{
+"a": "Հայդարաբադ",
+"lv": "B1",
+"ru": "Хайдарабад",
+"en": "Hyderabad",
+"fr": "Hyderabad"
+},
+{
+"a": "Մումբայ",
+"lv": "B1",
+"ru": "Мумбаи",
+"en": "Mumbai",
+"fr": "Bombay (Mumbai)"
+},
+{
+"a": "Նյու Դելի",
+"lv": "B1",
+"ru": "Нью-Дели",
+"en": "New Delhi",
+"fr": "New Delhi"
+},
+{
+"a": "Արաբական ծով",
+"lv": "B1",
+"ru": "Аравийское море",
+"en": "Arabian Sea",
+"fr": "mer d'Arabie"
+},
+{
+"a": "Գանգես",
+"lv": "B1",
+"ru": "Ганг",
+"en": "Ganges",
+"fr": "Gange"
+},
+{
+"a": "Ինդոս",
+"lv": "B1",
+"ru": "Инд",
+"en": "Indus",
+"fr": "Indus"
+},
+{
+"a": "Հինդուստան",
+"lv": "B1",
+"ru": "Индостан",
+"en": "Hindustan (peninsula)",
+"fr": "Hindoustan"
+},
+{
+"a": "գուջարաթի",
+"lv": "B1",
+"ru": "гуджарати (язык)",
+"en": "Gujarati",
+"fr": "gujarati"
+},
+{
+"a": "թամիլերեն",
+"lv": "B1",
+"ru": "тамильский язык",
+"en": "Tamil",
+"fr": "tamoul"
+},
+{
+"a": "կաննադա",
+"lv": "B1",
+"ru": "каннада (язык)",
+"en": "Kannada",
+"fr": "kannada"
+},
+{
+"a": "մալայալամ",
+"lv": "B1",
+"ru": "малаялам (язык)",
+"en": "Malayalam",
+"fr": "malayalam"
+},
+{
+"a": "մարաթի",
+"lv": "B1",
+"ru": "маратхи (язык)",
+"en": "Marathi",
+"fr": "marathi"
+},
+{
+"a": "պալի",
+"lv": "B1",
+"ru": "пали (язык)",
+"en": "Pali",
+"fr": "pali"
+},
+{
+"a": "սանսկրիտ",
+"lv": "B1",
+"ru": "санскрит",
+"en": "Sanskrit",
+"fr": "sanskrit"
+},
+{
+"a": "տելուգու",
+"lv": "B1",
+"ru": "телугу (язык)",
+"en": "Telugu",
+"fr": "télougou"
+},
+{
+"a": "քաշմիրի",
+"lv": "B1",
+"ru": "кашмири (язык)",
+"en": "Kashmiri",
+"fr": "cachemiri"
+},
+{
+"a": "Այսրկովկաս",
+"lv": "B1",
+"ru": "Закавказье (букв. «по эту сторону Кавказа»)",
+"en": "Transcaucasia (lit. \"this side of the Caucasus\")",
+"fr": "Transcaucasie (litt. « en deçà du Caucase »)"
+},
+{
+"a": "Անդրկովկաս",
+"lv": "B1",
+"ru": "Закавказье",
+"en": "Transcaucasia",
+"fr": "Transcaucasie"
+},
+{
+"a": "Լևանտ",
+"lv": "B1",
+"ru": "Левант",
+"en": "Levant",
+"fr": "Levant"
+},
+{
+"a": "Կենտրոնական Ասիա",
+"lv": "B1",
+"ru": "Центральная Азия",
+"en": "Central Asia",
+"fr": "Asie centrale"
+},
+{
+"a": "աբեղաձագ",
+"lv": "B1",
+"ru": "хохлатый жаворонок",
+"en": "crested lark",
+"fr": "cochevis huppé"
+},
+{
+"a": "ալբատրոս",
+"lv": "B1",
+"ru": "альбатрос",
+"en": "albatross",
+"fr": "albatros"
+},
+{
+"a": "թուխս",
+"lv": "B1",
+"ru": "насиживание (яиц)",
+"en": "brooding, sitting on eggs",
+"fr": "couvaison"
+},
+{
+"a": "հավալուսն",
+"lv": "B1",
+"ru": "пеликан",
+"en": "pelican",
+"fr": "pélican"
+},
+{
+"a": "հավք",
+"lv": "B1",
+"ru": "птица (книжн.)",
+"en": "bird (literary)",
+"fr": "oiseau (littéraire)"
+},
+{
+"a": "հոպոպ",
+"lv": "B1",
+"ru": "удод",
+"en": "hoopoe",
+"fr": "huppe"
+},
+{
+"a": "միրհավ",
+"lv": "B1",
+"ru": "тетерев",
+"en": "black grouse",
+"fr": "tétras lyre"
+},
+{
+"a": "շահեն",
+"lv": "B1",
+"ru": "шахин (сокол)",
+"en": "Barbary falcon",
+"fr": "faucon de Barbarie"
+},
+{
+"a": "սերմնագռավ",
+"lv": "B1",
+"ru": "грач",
+"en": "rook",
+"fr": "corbeau freux"
+},
+{
+"a": "սև կեռնեխ",
+"lv": "B1",
+"ru": "чёрный дрозд",
+"en": "blackbird",
+"fr": "merle noir"
+},
+{
+"a": "քնարահավ",
+"lv": "B1",
+"ru": "лирохвост",
+"en": "lyrebird",
+"fr": "oiseau-lyre"
+},
+{
+"a": "գնարբուկ",
+"lv": "B1",
+"ru": "первоцвет, примула",
+"en": "primrose",
+"fr": "primevère"
+},
+{
+"a": "եղրի",
+"lv": "B1",
+"ru": "жёлтая азалия",
+"en": "yellow azalea",
+"fr": "azalée pontique"
+},
+{
+"a": "եղրևանի",
+"lv": "B1",
+"ru": "сирень",
+"en": "lilac",
+"fr": "lilas"
+},
+{
+"a": "զարդենի",
+"lv": "B1",
+"ru": "космея",
+"en": "cosmos",
+"fr": "cosmos"
+},
+{
+"a": "թրաշուշան",
+"lv": "B1",
+"ru": "гладиолус",
+"en": "gladiolus",
+"fr": "glaïeul"
+},
+{
+"a": "լաշի",
+"lv": "B1",
+"ru": "понтийский рододендрон",
+"en": "pontic rhododendron",
+"fr": "rhododendron pontique"
+},
+{
+"a": "լեռնավարդ",
+"lv": "B1",
+"ru": "азалия",
+"en": "azalea",
+"fr": "azalée"
+},
+{
+"a": "լվածաղիկ",
+"lv": "B1",
+"ru": "пиретрум, пижма девичья",
+"en": "feverfew",
+"fr": "grande camomille"
+},
+{
+"a": "մրտավարդ",
+"lv": "B1",
+"ru": "рододендрон",
+"en": "rhododendron",
+"fr": "rhododendron"
+},
+{
+"a": "ոսկեծաղիկ",
+"lv": "B1",
+"ru": "хризантема",
+"en": "chrysanthemum",
+"fr": "chrysanthème"
+},
+{
+"a": "աշխետ",
+"lv": "B1",
+"ru": "гнедой, рыжеватый",
+"en": "bay, reddish",
+"fr": "bai, roux"
+},
+{
+"a": "բազմագույն",
+"lv": "B1",
+"ru": "разноцветный",
+"en": "multicoloured",
+"fr": "multicolore"
+},
+{
+"a": "բիլ",
+"lv": "B1",
+"ru": "голубой (поэт.)",
+"en": "light blue (poetic)",
+"fr": "bleu clair (poétique)"
+},
+{
+"a": "գազարագույն",
+"lv": "B1",
+"ru": "морковный, оранжевый",
+"en": "carrot-coloured, orange",
+"fr": "orange carotte"
+},
+{
+"a": "գորշ",
+"lv": "B1",
+"ru": "серый, бурый",
+"en": "grey, dun",
+"fr": "gris"
+},
+{
+"a": "դարչնագույն",
+"lv": "B1",
+"ru": "коричневый",
+"en": "brown",
+"fr": "marron"
+},
+{
+"a": "դեղձան",
+"lv": "B1",
+"ru": "светло-жёлтый",
+"en": "light yellowish",
+"fr": "jaune pâle"
+},
+{
+"a": "ժանգառ",
+"lv": "B1",
+"ru": "ярь-медянка, патина",
+"en": "verdigris",
+"fr": "vert-de-gris"
+},
+{
+"a": "լուրթ",
+"lv": "B1",
+"ru": "лазурный, голубой (поэт.)",
+"en": "light blue (poetic)",
+"fr": "azur"
+},
+{
+"a": "խաժ",
+"lv": "B1",
+"ru": "сине-зелёный (о глазах)",
+"en": "bluish-green (of eyes)",
+"fr": "bleu-vert (des yeux)"
+},
+{
+"a": "ծավի",
+"lv": "B1",
+"ru": "синий (поэт.)",
+"en": "blue (poetic)",
+"fr": "bleu (poétique)"
+},
+{
+"a": "սրճագույն",
+"lv": "B1",
+"ru": "кофейный",
+"en": "coffee-coloured",
+"fr": "couleur café"
+},
+{
+"a": "ար",
+"lv": "B1",
+"ru": "ар (сотка)",
+"en": "are (unit of area)",
+"fr": "are"
+},
+{
+"a": "արշին",
+"lv": "B1",
+"ru": "аршин",
+"en": "arshin",
+"fr": "archine"
+},
+{
+"a": "դեցիմետր",
+"lv": "B1",
+"ru": "дециметр",
+"en": "decimetre",
+"fr": "décimètre"
+},
+{
+"a": "թիզ",
+"lv": "B1",
+"ru": "пядь",
+"en": "span",
+"fr": "empan"
+},
+{
+"a": "կանգուն",
+"lv": "B1",
+"ru": "стоящий; локоть (мера длины)",
+"en": "standing; cubit",
+"fr": "debout; coudée"
+},
+{
+"a": "հրասախ",
+"lv": "B1",
+"ru": "фарсах, парасанг",
+"en": "parasang",
+"fr": "parasange"
+},
+{
+"a": "ձիաուժ",
+"lv": "B1",
+"ru": "лошадиная сила",
+"en": "horsepower",
+"fr": "cheval-vapeur"
+},
+{
+"a": "յարդ",
+"lv": "B1",
+"ru": "ярд",
+"en": "yard",
+"fr": "yard"
+},
+{
+"a": "նետընկեց",
+"lv": "B1",
+"ru": "полёт стрелы (расстояние)",
+"en": "bowshot",
+"fr": "portée de flèche"
+},
+{
+"a": "ոտնաչափ",
+"lv": "B1",
+"ru": "фут",
+"en": "foot (unit)",
+"fr": "pied (unité)"
+},
+{
+"a": "ցենտներ",
+"lv": "B1",
+"ru": "центнер",
+"en": "centner, quintal",
+"fr": "quintal"
+},
+{
+"a": "քառակուսի կիլոմետր",
+"lv": "B1",
+"ru": "квадратный километр",
+"en": "square kilometre",
+"fr": "kilomètre carré"
+},
+{
+"a": "Աբադան",
+"lv": "B1",
+"ru": "Абадан",
+"en": "Abadan",
+"fr": "Abadan"
+},
+{
+"a": "Թավրիզ",
+"lv": "B1",
+"ru": "Тебриз",
+"en": "Tabriz",
+"fr": "Tabriz"
+},
+{
+"a": "Համադան",
+"lv": "B1",
+"ru": "Хамадан",
+"en": "Hamadan",
+"fr": "Hamadan"
+},
+{
+"a": "Ղազվին",
+"lv": "B1",
+"ru": "Казвин",
+"en": "Qazvin",
+"fr": "Qazvin"
+},
+{
+"a": "Ղում",
+"lv": "B1",
+"ru": "Кум",
+"en": "Qom",
+"fr": "Qom"
+},
+{
+"a": "Սալմաստ",
+"lv": "B1",
+"ru": "Салмас",
+"en": "Salmas",
+"fr": "Salmas"
+},
+{
+"a": "Սպահան",
+"lv": "B1",
+"ru": "Исфахан",
+"en": "Isfahan",
+"fr": "Ispahan"
+},
+{
+"a": "Քաշան",
+"lv": "B1",
+"ru": "Кашан",
+"en": "Kashan",
+"fr": "Kachan"
+},
+{
+"a": "Քիրմանշահ",
+"lv": "B1",
+"ru": "Керманшах",
+"en": "Kermanshah",
+"fr": "Kermanchah"
+},
+{
+"a": "Բոլոնիա",
+"lv": "B1",
+"ru": "Болонья",
+"en": "Bologna",
+"fr": "Bologne"
+},
+{
+"a": "Թուրին",
+"lv": "B1",
+"ru": "Турин",
+"en": "Turin",
+"fr": "Turin"
+},
+{
+"a": "Միլան",
+"lv": "B1",
+"ru": "Милан",
+"en": "Milan",
+"fr": "Milan"
+},
+{
+"a": "Պիզա",
+"lv": "B1",
+"ru": "Пиза",
+"en": "Pisa",
+"fr": "Pise"
+},
+{
+"a": "Ջենովա",
+"lv": "B1",
+"ru": "Генуя",
+"en": "Genoa",
+"fr": "Gênes"
+},
+{
+"a": "Սիրակուզա",
+"lv": "B1",
+"ru": "Сиракузы",
+"en": "Syracuse",
+"fr": "Syracuse"
+},
+{
+"a": "Վենետիկ",
+"lv": "B1",
+"ru": "Венеция",
+"en": "Venice",
+"fr": "Venise"
+},
+{
+"a": "Ֆլորենցիա",
+"lv": "B1",
+"ru": "Флоренция",
+"en": "Florence",
+"fr": "Florence"
+},
+{
+"a": "Դնեպրոպետրովսկ",
+"lv": "B1",
+"ru": "Днепропетровск (Днепр)",
+"en": "Dnipropetrovsk (Dnipro)",
+"fr": "Dnipropetrovsk (Dnipro)"
+},
+{
+"a": "Դոնեցկ",
+"lv": "B1",
+"ru": "Донецк",
+"en": "Donetsk",
+"fr": "Donetsk"
+},
+{
+"a": "Զապորոժիե",
+"lv": "B1",
+"ru": "Запорожье",
+"en": "Zaporizhzhia",
+"fr": "Zaporijjia"
+},
+{
+"a": "Լուգանսկ",
+"lv": "B1",
+"ru": "Луганск",
+"en": "Luhansk",
+"fr": "Louhansk"
+},
+{
+"a": "Լվով",
+"lv": "B1",
+"ru": "Львов",
+"en": "Lviv",
+"fr": "Lviv"
+},
+{
+"a": "Խարկով",
+"lv": "B1",
+"ru": "Харьков",
+"en": "Kharkiv",
+"fr": "Kharkiv"
+},
+{
+"a": "Կիև",
+"lv": "B1",
+"ru": "Киев",
+"en": "Kyiv",
+"fr": "Kiev"
+},
+{
+"a": "Չեռնոբիլ",
+"lv": "B1",
+"ru": "Чернобыль",
+"en": "Chernobyl",
+"fr": "Tchernobyl"
+},
+{
+"a": "Պոլտավա",
+"lv": "B1",
+"ru": "Полтава",
+"en": "Poltava",
+"fr": "Poltava"
+},
+{
+"a": "Մալայան արշիպելագ",
+"lv": "B1",
+"ru": "Малайский архипелаг",
+"en": "Malay Archipelago",
+"fr": "archipel malais"
+},
+{
+"a": "Միջին Ասիա",
+"lv": "B1",
+"ru": "Средняя Азия",
+"en": "Central Asia",
+"fr": "Asie centrale"
+},
+{
+"a": "Տիբեթ",
+"lv": "B1",
+"ru": "Тибет",
+"en": "Tibet",
+"fr": "Tibet"
+},
+{
+"a": "Փենջաբ",
+"lv": "B1",
+"ru": "Пенджаб",
+"en": "Punjab",
+"fr": "Pendjab"
+},
+{
+"a": "Քրդստան",
+"lv": "B1",
+"ru": "Курдистан",
+"en": "Kurdistan",
+"fr": "Kurdistan"
+},
+{
+"a": "Արևելյան Եվրոպա",
+"lv": "B1",
+"ru": "Восточная Европа",
+"en": "Eastern Europe",
+"fr": "Europe de l'Est"
+},
+{
+"a": "Արևմտյան Եվրոպա",
+"lv": "B1",
+"ru": "Западная Европа",
+"en": "Western Europe",
+"fr": "Europe de l'Ouest"
+},
+{
+"a": "Բալկանյան թերակղզի",
+"lv": "B1",
+"ru": "Балканский полуостров",
+"en": "Balkan Peninsula",
+"fr": "péninsule des Balkans"
+},
+{
+"a": "Բալկաններ",
+"lv": "B1",
+"ru": "Балканы",
+"en": "the Balkans",
+"fr": "les Balkans"
+},
+{
+"a": "Բենիլյուքս",
+"lv": "B1",
+"ru": "Бенилюкс",
+"en": "Benelux",
+"fr": "Benelux"
+},
+{
+"a": "Բուկովինա",
+"lv": "B1",
+"ru": "Буковина",
+"en": "Bukovina",
+"fr": "Bucovine"
+},
+{
+"a": "Կարելիա",
+"lv": "B1",
+"ru": "Карелия",
+"en": "Karelia",
+"fr": "Carélie"
+},
+{
+"a": "Կենտրոնական Եվրոպա",
+"lv": "B1",
+"ru": "Центральная Европа",
+"en": "Central Europe",
+"fr": "Europe centrale"
+},
+{
+"a": "Հարավային Եվրոպա",
+"lv": "B1",
+"ru": "Южная Европа",
+"en": "Southern Europe",
+"fr": "Europe du Sud"
+},
+{
+"a": "Հյուսիսային Եվրոպա",
+"lv": "B1",
+"ru": "Северная Европа",
+"en": "Northern Europe",
+"fr": "Europe du Nord"
+},
+{
+"a": "Արալյան ծով",
+"lv": "B1",
+"ru": "Аральское море",
+"en": "Aral Sea",
+"fr": "mer d'Aral"
+},
+{
+"a": "Բայկալ",
+"lv": "B1",
+"ru": "Байкал",
+"en": "Lake Baikal",
+"fr": "lac Baïkal"
+},
+{
+"a": "Լադոգա",
+"lv": "B1",
+"ru": "Ладожское озеро",
+"en": "Lake Ladoga",
+"fr": "lac Ladoga"
+},
+{
+"a": "Կապուտան",
+"lv": "B1",
+"ru": "Капутан (озеро Урмия)",
+"en": "Kaputan (Lake Urmia)",
+"fr": "Kapoutan (lac d'Ourmia)"
+},
+{
+"a": "Կասպից ծով",
+"lv": "B1",
+"ru": "Каспийское море",
+"en": "Caspian Sea",
+"fr": "mer Caspienne"
+},
+{
+"a": "Մեռյալ ծով",
+"lv": "B1",
+"ru": "Мёртвое море",
+"en": "Dead Sea",
+"fr": "mer Morte"
+},
+{
+"a": "Ուրմիա",
+"lv": "B1",
+"ru": "Урмия (озеро)",
+"en": "Lake Urmia",
+"fr": "lac d'Ourmia"
+},
+{
+"a": "Օնեգա լիճ",
+"lv": "B1",
+"ru": "Онежское озеро",
+"en": "Lake Onega",
+"fr": "lac Onega"
+},
+{
+"a": "Ապենինյան թերակղզի",
+"lv": "B1",
+"ru": "Апеннинский полуостров",
+"en": "Apennine Peninsula",
+"fr": "péninsule italienne"
+},
+{
+"a": "Արաբական թերակղզի",
+"lv": "B1",
+"ru": "Аравийский полуостров",
+"en": "Arabian Peninsula",
+"fr": "péninsule Arabique"
+},
+{
+"a": "Արաբիա",
+"lv": "B1",
+"ru": "Аравия",
+"en": "Arabia",
+"fr": "Arabie"
+},
+{
+"a": "Բարեհուսո հրվանդան",
+"lv": "B1",
+"ru": "мыс Доброй Надежды",
+"en": "Cape of Good Hope",
+"fr": "cap de Bonne-Espérance"
+},
+{
+"a": "Թայմիր",
+"lv": "B1",
+"ru": "Таймыр",
+"en": "Taimyr",
+"fr": "Taïmyr"
+},
+{
+"a": "Կամչատկա",
+"lv": "B1",
+"ru": "Камчатка",
+"en": "Kamchatka",
+"fr": "Kamtchatka"
+},
+{
+"a": "Կոլայի թերակղզի",
+"lv": "B1",
+"ru": "Кольский полуостров",
+"en": "Kola Peninsula",
+"fr": "péninsule de Kola"
+},
+{
+"a": "Չուկոտյան թերակղզի",
+"lv": "B1",
+"ru": "Чукотский полуостров",
+"en": "Chukchi Peninsula",
+"fr": "péninsule des Tchouktches"
+},
+{
+"a": "Փոքր Ասիա",
+"lv": "B1",
+"ru": "Малая Азия",
+"en": "Asia Minor",
+"fr": "Asie Mineure"
+},
+{
+"a": "անտառային կզաքիս",
+"lv": "B1",
+"ru": "лесная куница",
+"en": "pine marten",
+"fr": "martre des pins"
+},
+{
+"a": "գորշուկ",
+"lv": "B1",
+"ru": "барсук",
+"en": "badger",
+"fr": "blaireau"
+},
+{
+"a": "թոխոր",
+"lv": "B1",
+"ru": "хорёк",
+"en": "polecat",
+"fr": "putois"
+},
+{
+"a": "ժանտաքիս",
+"lv": "B1",
+"ru": "чёрный хорёк",
+"en": "European polecat",
+"fr": "putois d'Europe"
+},
+{
+"a": "իշղար",
+"lv": "B1",
+"ru": "барсук (синоним)",
+"en": "badger (synonym)",
+"fr": "blaireau (synonyme)"
+},
+{
+"a": "խարզա",
+"lv": "B1",
+"ru": "харза",
+"en": "yellow-throated marten",
+"fr": "martre à gorge jaune"
+},
+{
+"a": "կնգում",
+"lv": "B1",
+"ru": "горностай",
+"en": "ermine, stoat",
+"fr": "hermine"
+},
+{
+"a": "կուղխ",
+"lv": "B1",
+"ru": "росомаха",
+"en": "wolverine",
+"fr": "glouton"
+},
+{
+"a": "արծվառյուծ",
+"lv": "B1",
+"ru": "грифон",
+"en": "griffin",
+"fr": "griffon"
+},
+{
+"a": "դրակոն",
+"lv": "B1",
+"ru": "дракон",
+"en": "dragon",
+"fr": "dragon"
+},
+{
+"a": "թզուկ",
+"lv": "B1",
+"ru": "гном, карлик",
+"en": "dwarf",
+"fr": "nain"
+},
+{
+"a": "հսկա",
+"lv": "B1",
+"ru": "великан, гигант",
+"en": "giant",
+"fr": "géant"
+},
+{
+"a": "միեղջյուր",
+"lv": "B1",
+"ru": "единорог",
+"en": "unicorn",
+"fr": "licorne"
+},
+{
+"a": "նհանգ",
+"lv": "B1",
+"ru": "нханг (водяное чудовище)",
+"en": "nhang (water monster)",
+"fr": "nhang (monstre aquatique)"
+},
+{
+"a": "ջրահարս",
+"lv": "B1",
+"ru": "русалка",
+"en": "mermaid",
+"fr": "sirène"
+},
+{
+"a": "ջրոգի",
+"lv": "B1",
+"ru": "водяной",
+"en": "water sprite",
+"fr": "esprit des eaux"
+},
+{
+"a": "վիշապ",
+"lv": "B1",
+"ru": "вишап (армянский дракон)",
+"en": "vishap (Armenian dragon)",
+"fr": "vichap (dragon arménien)"
+},
+{
+"a": "փերի",
+"lv": "B1",
+"ru": "пери, фея",
+"en": "peri, fairy",
+"fr": "péri, fée"
+},
+{
+"a": "փյունիկ",
+"lv": "B1",
+"ru": "феникс",
+"en": "phoenix",
+"fr": "phénix"
+},
+{
+"a": "բալալայկա",
+"lv": "B1",
+"ru": "балалайка",
+"en": "balalaika",
+"fr": "balalaïka"
+},
+{
+"a": "գոս",
+"lv": "B1",
+"ru": "литавра",
+"en": "kettledrum",
+"fr": "timbale"
+},
+{
+"a": "եղջերափող",
+"lv": "B1",
+"ru": "рог, валторна",
+"en": "horn",
+"fr": "cor"
+},
+{
+"a": "հարվածային գործիք",
+"lv": "B1",
+"ru": "ударный инструмент",
+"en": "percussion instrument",
+"fr": "instrument à percussion"
+},
+{
+"a": "ուդ",
+"lv": "B1",
+"ru": "уд",
+"en": "oud",
+"fr": "oud"
+},
+{
+"a": "պարկապզուկ",
+"lv": "B1",
+"ru": "волынка",
+"en": "bagpipes",
+"fr": "cornemuse"
+},
+{
+"a": "պկու",
+"lv": "B1",
+"ru": "пку (армянский духовой инструмент)",
+"en": "pku (Armenian wind instrument)",
+"fr": "pkou (instrument à vent arménien)"
+},
+{
+"a": "սանթուր",
+"lv": "B1",
+"ru": "сантур",
+"en": "santur",
+"fr": "santour"
+},
+{
+"a": "սրինգ",
+"lv": "B1",
+"ru": "свирель",
+"en": "reed pipe, panpipes",
+"fr": "pipeau, flûte de Pan"
+},
+{
+"a": "տավիղ",
+"lv": "B1",
+"ru": "арфа",
+"en": "harp",
+"fr": "harpe"
+},
+{
+"a": "երգեհոնահար",
+"lv": "B1",
+"ru": "органист",
+"en": "organist",
+"fr": "organiste"
+},
+{
+"a": "զուռնաչի",
+"lv": "B1",
+"ru": "зурнач (играющий на зурне)",
+"en": "zurna player",
+"fr": "joueur de zourna"
+},
+{
+"a": "թավջութակահար",
+"lv": "B1",
+"ru": "виолончелист",
+"en": "cellist",
+"fr": "violoncelliste"
+},
+{
+"a": "կլարնետահար",
+"lv": "B1",
+"ru": "кларнетист",
+"en": "clarinetist",
+"fr": "clarinettiste"
+},
+{
+"a": "շեփորահար",
+"lv": "B1",
+"ru": "трубач",
+"en": "trumpeter",
+"fr": "trompettiste"
+},
+{
+"a": "պարկապզուկահար",
+"lv": "B1",
+"ru": "волынщик",
+"en": "piper",
+"fr": "joueur de cornemuse"
+},
+{
+"a": "տավիղահար",
+"lv": "B1",
+"ru": "арфист",
+"en": "harpist",
+"fr": "harpiste"
+},
+{
+"a": "փողահար",
+"lv": "B1",
+"ru": "трубач, горнист",
+"en": "trumpeter, bugler",
+"fr": "trompettiste, clairon"
+},
+{
+"a": "ֆլեյտահար",
+"lv": "B1",
+"ru": "флейтист",
+"en": "flautist",
+"fr": "flûtiste"
+},
+{
+"a": "դինար",
+"lv": "B1",
+"ru": "динар",
+"en": "dinar",
+"fr": "dinar"
+},
+{
+"a": "դիրհամ",
+"lv": "B1",
+"ru": "дирхам",
+"en": "dirham",
+"fr": "dirham"
+},
+{
+"a": "կոպեկ",
+"lv": "B1",
+"ru": "копейка",
+"en": "kopek",
+"fr": "kopeck"
+},
+{
+"a": "մարկ",
+"lv": "B1",
+"ru": "марка (денежная)",
+"en": "mark (currency)",
+"fr": "mark"
+},
+{
+"a": "յեն",
+"lv": "B1",
+"ru": "иена",
+"en": "yen",
+"fr": "yen"
+},
+{
+"a": "շեկել",
+"lv": "B1",
+"ru": "шекель",
+"en": "shekel",
+"fr": "shekel"
+},
+{
+"a": "սանտիմ",
+"lv": "B1",
+"ru": "сантим",
+"en": "centime",
+"fr": "centime"
+},
+{
+"a": "փոխանակման կետ",
+"lv": "B1",
+"ru": "обменный пункт",
+"en": "currency exchange",
+"fr": "bureau de change"
+},
+{
+"a": "ֆունտ ստեռլինգ",
+"lv": "B1",
+"ru": "фунт стерлингов",
+"en": "pound sterling",
+"fr": "livre sterling"
+},
+{
+"a": "Արթիկ",
+"lv": "B1",
+"ru": "Артик",
+"en": "Artik",
+"fr": "Artik"
+},
+{
+"a": "Երասխ",
+"lv": "B1",
+"ru": "Ерасх",
+"en": "Yeraskh",
+"fr": "Yeraskh"
+},
+{
+"a": "Լճաշեն",
+"lv": "B1",
+"ru": "Лчашен",
+"en": "Lchashen",
+"fr": "Ltchachen"
+},
+{
+"a": "Խնձորեսկ",
+"lv": "B1",
+"ru": "Хндзореск",
+"en": "Khndzoresk",
+"fr": "Khndzoresk"
+},
+{
+"a": "Մարալիկ",
+"lv": "B1",
+"ru": "Маралик",
+"en": "Maralik",
+"fr": "Maralik"
+},
+{
+"a": "Վարդենիկ",
+"lv": "B1",
+"ru": "Варденик",
+"en": "Vardenik",
+"fr": "Vardenik"
+},
+{
+"a": "Վարդենիս",
+"lv": "B1",
+"ru": "Варденис",
+"en": "Vardenis",
+"fr": "Vardenis"
+},
+{
+"a": "Փարպի",
+"lv": "B1",
+"ru": "Парпи",
+"en": "Parpi",
+"fr": "Parpi"
+},
+{
+"a": "Իզմիր",
+"lv": "B1",
+"ru": "Измир",
+"en": "Izmir",
+"fr": "Izmir"
+},
+{
+"a": "Մարաշ",
+"lv": "B1",
+"ru": "Мараш",
+"en": "Marash",
+"fr": "Marach"
+},
+{
+"a": "Ուռհա",
+"lv": "B1",
+"ru": "Урфа (Эдесса)",
+"en": "Urfa (Edessa)",
+"fr": "Urfa (Édesse)"
+},
+{
+"a": "Սարիղամիշ",
+"lv": "B1",
+"ru": "Сарыкамыш",
+"en": "Sarikamish",
+"fr": "Sarıkamış"
+},
+{
+"a": "Սղերդ",
+"lv": "B1",
+"ru": "Сиирт (Сгерд)",
+"en": "Siirt",
+"fr": "Siirt"
+},
+{
+"a": "Սրուճ",
+"lv": "B1",
+"ru": "Суруч",
+"en": "Suruç",
+"fr": "Suruç"
+},
+{
+"a": "Տարսոն",
+"lv": "B1",
+"ru": "Тарс",
+"en": "Tarsus",
+"fr": "Tarse"
+},
+{
+"a": "Հոնկոնգ",
+"lv": "B1",
+"ru": "Гонконг",
+"en": "Hong Kong",
+"fr": "Hong Kong"
+},
+{
+"a": "Մակաո",
+"lv": "B1",
+"ru": "Макао",
+"en": "Macau",
+"fr": "Macao"
+},
+{
+"a": "Շանհայ",
+"lv": "B1",
+"ru": "Шанхай",
+"en": "Shanghai",
+"fr": "Shanghai"
+},
+{
+"a": "Ուհան",
+"lv": "B1",
+"ru": "Ухань",
+"en": "Wuhan",
+"fr": "Wuhan"
+},
+{
+"a": "Ուրումչի",
+"lv": "B1",
+"ru": "Урумчи",
+"en": "Ürümqi",
+"fr": "Ürümqi"
+},
+{
+"a": "Լայպցիգ",
+"lv": "B1",
+"ru": "Лейпциг",
+"en": "Leipzig",
+"fr": "Leipzig"
+},
+{
+"a": "Համբուրգ",
+"lv": "B1",
+"ru": "Гамбург",
+"en": "Hamburg",
+"fr": "Hambourg"
+},
+{
+"a": "Հաննովեր",
+"lv": "B1",
+"ru": "Ганновер",
+"en": "Hanover",
+"fr": "Hanovre"
+},
+{
+"a": "Մայնի Ֆրանկֆուրտ",
+"lv": "B1",
+"ru": "Франкфурт-на-Майне",
+"en": "Frankfurt am Main",
+"fr": "Francfort-sur-le-Main"
+},
+{
+"a": "Վայմար",
+"lv": "B1",
+"ru": "Веймар",
+"en": "Weimar",
+"fr": "Weimar"
+},
+{
+"a": "Քյոլն",
+"lv": "B1",
+"ru": "Кёльн",
+"en": "Cologne",
+"fr": "Cologne"
+},
+{
+"a": "Արևմտյան Բենգալ",
+"lv": "B1",
+"ru": "Западная Бенгалия",
+"en": "West Bengal",
+"fr": "Bengale-Occidental"
+},
+{
+"a": "Թամիլնադ",
+"lv": "B1",
+"ru": "Тамилнад",
+"en": "Tamil Nadu",
+"fr": "Tamil Nadu"
+},
+{
+"a": "Ուտտար Պրադեշ",
+"lv": "B1",
+"ru": "Уттар-Прадеш",
+"en": "Uttar Pradesh",
+"fr": "Uttar Pradesh"
+},
+{
+"a": "Ուտտարաքանդ",
+"lv": "B1",
+"ru": "Уттаракханд",
+"en": "Uttarakhand",
+"fr": "Uttarakhand"
+},
+{
+"a": "Պուտտուչչերի",
+"lv": "B1",
+"ru": "Пудучерри",
+"en": "Puducherry",
+"fr": "Pondichéry"
+},
+{
+"a": "Ռաջաստան",
+"lv": "B1",
+"ru": "Раджастхан",
+"en": "Rajasthan",
+"fr": "Rajasthan"
+},
+{
+"a": "Սիկկիմ",
+"lv": "B1",
+"ru": "Сикким",
+"en": "Sikkim",
+"fr": "Sikkim"
+},
+{
+"a": "Տրիպուրա",
+"lv": "B1",
+"ru": "Трипура",
+"en": "Tripura",
+"fr": "Tripura"
+},
+{
+"a": "Արևելյան Թիմոր",
+"lv": "B1",
+"ru": "Восточный Тимор",
+"en": "East Timor",
+"fr": "Timor oriental"
+},
+{
+"a": "Բիրմա",
+"lv": "B1",
+"ru": "Бирма",
+"en": "Burma",
+"fr": "Birmanie"
+},
+{
+"a": "Թայվան",
+"lv": "B1",
+"ru": "Тайвань",
+"en": "Taiwan",
+"fr": "Taïwan"
+},
+{
+"a": "Իրանի Իսլամական Հանրապետություն",
+"lv": "B1",
+"ru": "Исламская Республика Иран",
+"en": "Islamic Republic of Iran",
+"fr": "République islamique d'Iran"
+},
+{
+"a": "Մալդիվներ",
+"lv": "B1",
+"ru": "Мальдивы",
+"en": "Maldives",
+"fr": "Maldives"
+},
+{
+"a": "Պարսկաստան",
+"lv": "B1",
+"ru": "Персия",
+"en": "Persia",
+"fr": "Perse"
+},
+{
+"a": "Ռուսաստանի Դաշնություն",
+"lv": "B1",
+"ru": "Российская Федерация",
+"en": "Russian Federation",
+"fr": "Fédération de Russie"
+},
+{
+"a": "Լիխտենշտեյն",
+"lv": "B1",
+"ru": "Лихтенштейн",
+"en": "Liechtenstein",
+"fr": "Liechtenstein"
+},
+{
+"a": "Կոսովո",
+"lv": "B1",
+"ru": "Косово",
+"en": "Kosovo",
+"fr": "Kosovo"
+},
+{
+"a": "Միացյալ Թագավորություն",
+"lv": "B1",
+"ru": "Соединённое Королевство",
+"en": "United Kingdom",
+"fr": "Royaume-Uni"
+},
+{
+"a": "Չեխիայի Հանրապետություն",
+"lv": "B1",
+"ru": "Чешская Республика",
+"en": "Czech Republic",
+"fr": "République tchèque"
+},
+{
+"a": "Սան Մարինո",
+"lv": "B1",
+"ru": "Сан-Марино",
+"en": "San Marino",
+"fr": "Saint-Marin"
+},
+{
+"a": "Հռենոս",
+"lv": "B1",
+"ru": "Рейн",
+"en": "Rhine",
+"fr": "Rhin"
+},
+{
+"a": "Պրովանս",
+"lv": "B1",
+"ru": "Прованс",
+"en": "Provence",
+"fr": "Provence"
+},
+{
+"a": "Սեն",
+"lv": "B1",
+"ru": "Сена",
+"en": "Seine",
+"fr": "Seine"
+},
+{
+"a": "օկցիտանա",
+"lv": "B1",
+"ru": "окситанский язык",
+"en": "Occitan",
+"fr": "occitan"
+},
+{
+"a": "Իթակե",
+"lv": "B1",
+"ru": "Итака",
+"en": "Ithaca",
+"fr": "Ithaque"
+},
+{
+"a": "Կեֆալոնիա",
+"lv": "B1",
+"ru": "Кефалиния",
+"en": "Cephalonia",
+"fr": "Céphalonie"
+},
+{
+"a": "Հելլադա",
+"lv": "B1",
+"ru": "Эллада",
+"en": "Hellas",
+"fr": "Hellade"
+},
+{
+"a": "Քիոս",
+"lv": "B1",
+"ru": "Хиос",
+"en": "Chios",
+"fr": "Chios"
+},
+{
+"a": "Օլիմպոս",
+"lv": "B1",
+"ru": "Олимп",
+"en": "Olympus",
+"fr": "Olympe"
+},
+{
+"a": "Անդրբայկալ",
+"lv": "B1",
+"ru": "Забайкалье",
+"en": "Transbaikalia",
+"fr": "Transbaïkalie"
+},
+{
+"a": "Լապտևների ծով",
+"lv": "B1",
+"ru": "море Лаптевых",
+"en": "Laptev Sea",
+"fr": "mer de Laptev"
+},
+{
+"a": "Կարայի ծով",
+"lv": "B1",
+"ru": "Карское море",
+"en": "Kara Sea",
+"fr": "mer de Kara"
+},
+{
+"a": "Օխոտի ծով",
+"lv": "B1",
+"ru": "Охотское море",
+"en": "Sea of Okhotsk",
+"fr": "mer d'Okhotsk"
+},
+{
+"a": "ռուսական",
+"lv": "B1",
+"ru": "русский (прил.), российский",
+"en": "Russian (adj.)",
+"fr": "russe (adj.)"
+},
+{
+"a": "Աղվանք",
+"lv": "B1",
+"ru": "Кавказская Албания (Агванк)",
+"en": "Caucasian Albania",
+"fr": "Albanie du Caucase"
+},
+{
+"a": "Գալիցիա",
+"lv": "B1",
+"ru": "Галиция",
+"en": "Galicia",
+"fr": "Galicie"
+},
+{
+"a": "Հայասա",
+"lv": "B1",
+"ru": "Хайаса",
+"en": "Hayasa",
+"fr": "Hayasa"
+},
+{
+"a": "Հոլշտայն",
+"lv": "B1",
+"ru": "Гольштейн",
+"en": "Holstein",
+"fr": "Holstein"
+},
+{
+"a": "Պարսկական կայսրություն",
+"lv": "B1",
+"ru": "Персидская империя",
+"en": "Persian Empire",
+"fr": "Empire perse"
+},
+{
+"a": "Տաճկաստան",
+"lv": "B1",
+"ru": "Тачкастан (Османская Турция)",
+"en": "Turkey (Ottoman period)",
+"fr": "Turquie (époque ottomane)"
+},
+{
+"a": "Օսրոյենե",
+"lv": "B1",
+"ru": "Осроена",
+"en": "Osroene",
+"fr": "Osroène"
+},
+{
+"a": "Կուր",
+"lv": "B1",
+"ru": "Кура (река)",
+"en": "Kura (river)",
+"fr": "Koura (fleuve)"
+},
+{
+"a": "գյափիկ",
+"lv": "B1",
+"ru": "гяпик (монета)",
+"en": "qapik (coin)",
+"fr": "qəpik (pièce)"
+},
+{
+"a": "մանաթ",
+"lv": "B1",
+"ru": "манат",
+"en": "manat",
+"fr": "manat"
+},
+{
+"a": "գավակ",
+"lv": "B1",
+"ru": "круп (лошади)",
+"en": "rump, croup",
+"fr": "croupe"
+},
+{
+"a": "թաթ",
+"lv": "B1",
+"ru": "лапа",
+"en": "paw",
+"fr": "patte"
+},
+{
+"a": "կճղակ",
+"lv": "B1",
+"ru": "копыто",
+"en": "hoof",
+"fr": "sabot"
+},
+{
+"a": "ճիրան",
+"lv": "B1",
+"ru": "коготь",
+"en": "claw, talon",
+"fr": "griffe, serre"
+},
+{
+"a": "մռութ",
+"lv": "B1",
+"ru": "морда (разг.)",
+"en": "muzzle, snout",
+"fr": "museau"
+},
+{
+"a": "քարճիկ",
+"lv": "B1",
+"ru": "мускульный желудок (у птиц)",
+"en": "gizzard",
+"fr": "gésier"
+},
+{
+"a": "աղավնատուն",
+"lv": "B1",
+"ru": "голубятня",
+"en": "dovecote",
+"fr": "pigeonnier"
+},
+{
+"a": "հավանոց",
+"lv": "B1",
+"ru": "курятник",
+"en": "henhouse",
+"fr": "poulailler"
+},
+{
+"a": "մեղվաբույն",
+"lv": "B1",
+"ru": "улей",
+"en": "beehive",
+"fr": "ruche"
+},
+{
+"a": "որջ",
+"lv": "B1",
+"ru": "логово",
+"en": "den, lair",
+"fr": "tanière"
+},
+{
+"a": "սոր",
+"lv": "B1",
+"ru": "нора, отверстие",
+"en": "hole, opening",
+"fr": "trou, orifice"
+},
+{
+"a": "ասպանդակ",
+"lv": "B1",
+"ru": "стремя",
+"en": "stirrup",
+"fr": "étrier"
+},
+{
+"a": "երասան",
+"lv": "B1",
+"ru": "поводья, вожжи",
+"en": "reins",
+"fr": "rênes"
+},
+{
+"a": "թամբ",
+"lv": "B1",
+"ru": "седло",
+"en": "saddle",
+"fr": "selle"
+},
+{
+"a": "լկամ",
+"lv": "B1",
+"ru": "удила",
+"en": "bit (of a bridle)",
+"fr": "mors"
+},
+{
+"a": "ոտնակապ",
+"lv": "B1",
+"ru": "путы",
+"en": "fetter",
+"fr": "entrave"
+},
+{
+"a": "սանձ",
+"lv": "B1",
+"ru": "узда",
+"en": "bridle, bit",
+"fr": "bride"
+},
+{
+"a": "ախազ",
+"lv": "B1",
+"ru": "горностай (мех)",
+"en": "ermine",
+"fr": "hermine (fourrure)"
+},
+{
+"a": "այծենի",
+"lv": "B1",
+"ru": "из козьей шерсти",
+"en": "made of goat's hair",
+"fr": "en poil de chèvre"
+},
+{
+"a": "գայլենի",
+"lv": "B1",
+"ru": "из волчьей шкуры",
+"en": "made of wolf's fur",
+"fr": "en peau de loup"
+},
+{
+"a": "գառնենի",
+"lv": "B1",
+"ru": "из овчины",
+"en": "made of lambskin",
+"fr": "en peau d'agneau"
+},
+{
+"a": "կղբենի",
+"lv": "B1",
+"ru": "бобровый мех",
+"en": "beaver fur",
+"fr": "fourrure de castor"
+},
+{
+"a": "կնգմենի",
+"lv": "B1",
+"ru": "горностаевый мех",
+"en": "ermine fur",
+"fr": "fourrure d'hermine"
+},
+{
+"a": "ալոջ",
+"lv": "B1",
+"ru": "козочка",
+"en": "she-kid",
+"fr": "chevrette"
+},
+{
+"a": "լիմոն",
+"lv": "B1",
+"ru": "лимон",
+"en": "lemon",
+"fr": "citron"
+},
+{
+"a": "ծվաղ",
+"lv": "B1",
+"ru": "плод лавровишни",
+"en": "cherry laurel fruit",
+"fr": "fruit du laurier-cerise"
+},
+{
+"a": "բազմածաղիկ",
+"lv": "B1",
+"ru": "многоцветковый",
+"en": "many-flowered",
+"fr": "multiflore"
+},
+{
+"a": "բոժոժ",
+"lv": "B1",
+"ru": "кокон",
+"en": "cocoon",
+"fr": "cocon"
+},
+{
+"a": "բուսաբանություն",
+"lv": "B1",
+"ru": "ботаника",
+"en": "botany",
+"fr": "botanique"
+},
+{
+"a": "ընդավոր",
+"lv": "B1",
+"ru": "бобовые",
+"en": "legumes",
+"fr": "légumineuses"
+},
+{
+"a": "պտուկ",
+"lv": "B1",
+"ru": "почка, глазок (растения)",
+"en": "bud, eye (of a plant)",
+"fr": "bourgeon, œil"
+},
+{
+"a": "սաղարթ",
+"lv": "B1",
+"ru": "листва",
+"en": "foliage",
+"fr": "feuillage"
+},
+{
+"a": "քրքմածաղիկ",
+"lv": "B1",
+"ru": "крокус",
+"en": "crocus",
+"fr": "crocus"
+},
+{
+"a": "եղերդ",
+"lv": "B1",
+"ru": "цикорий",
+"en": "chicory",
+"fr": "chicorée"
+},
+{
+"a": "զանգակածաղիկ",
+"lv": "B1",
+"ru": "колокольчик (цветок)",
+"en": "bellflower",
+"fr": "campanule"
+},
+{
+"a": "կանկառ",
+"lv": "B1",
+"ru": "артишок",
+"en": "artichoke",
+"fr": "artichaut"
+},
+{
+"a": "կոծոծ",
+"lv": "B1",
+"ru": "лопух",
+"en": "burdock",
+"fr": "bardane"
+},
+{
+"a": "տերեփուկ",
+"lv": "B1",
+"ru": "василёк",
+"en": "knapweed, cornflower",
+"fr": "centaurée, bleuet"
+},
+{
+"a": "արքայամորի",
+"lv": "B1",
+"ru": "малина",
+"en": "raspberry",
+"fr": "framboise"
+},
+{
+"a": "հատապտուղ",
+"lv": "B1",
+"ru": "ягода",
+"en": "berry",
+"fr": "baie"
+},
+{
+"a": "մոր",
+"lv": "B1",
+"ru": "ежевика",
+"en": "blackberry",
+"fr": "mûre"
+},
+{
+"a": "մուրտ",
+"lv": "B1",
+"ru": "мирт",
+"en": "myrtle",
+"fr": "myrte"
+},
+{
+"a": "չիչխան",
+"lv": "B1",
+"ru": "облепиха",
+"en": "sea buckthorn",
+"fr": "argousier"
+},
+{
+"a": "բլոտ",
+"lv": "B1",
+"ru": "белот",
+"en": "belote",
+"fr": "belote"
+},
+{
+"a": "կառե",
+"lv": "B1",
+"ru": "каре (четыре одинаковые карты)",
+"en": "four of a kind",
+"fr": "carré"
+},
+{
+"a": "հաղթաթուղթ",
+"lv": "B1",
+"ru": "козырь",
+"en": "trump",
+"fr": "atout"
+},
+{
+"a": "պոկեր",
+"lv": "B1",
+"ru": "покер",
+"en": "poker",
+"fr": "poker"
+},
+{
+"a": "գետնից բարձր",
+"lv": "B1",
+"ru": "«пол — это лава» (игра)",
+"en": "hot lava (game)",
+"fr": "le sol est de la lave (jeu)"
+},
+{
+"a": "մահջոնգ",
+"lv": "B1",
+"ru": "маджонг",
+"en": "mahjong",
+"fr": "mah-jong"
+},
+{
+"a": "չինգաչունգ",
+"lv": "B1",
+"ru": "камень, ножницы, бумага",
+"en": "rock paper scissors",
+"fr": "pierre-feuille-ciseaux"
+},
+{
+"a": "պահմտոցի",
+"lv": "B1",
+"ru": "прятки",
+"en": "hide and seek",
+"fr": "cache-cache"
+},
+{
+"a": "սնուկեր",
+"lv": "B1",
+"ru": "снукер",
+"en": "snooker",
+"fr": "snooker"
+},
+{
+"a": "վերջնամրցում",
+"lv": "B1",
+"ru": "финальный матч",
+"en": "final match",
+"fr": "finale"
+},
+{
+"a": "սամբո",
+"lv": "B1",
+"ru": "самбо",
+"en": "sambo",
+"fr": "sambo"
+},
+{
+"a": "թխուկ",
+"lv": "B1",
+"ru": "куки (в браузере)",
+"en": "HTTP cookie",
+"fr": "cookie (navigateur)"
+},
+{
+"a": "լայվ",
+"lv": "B1",
+"ru": "прямой эфир, стрим",
+"en": "live stream",
+"fr": "direct, live"
+},
+{
+"a": "լայքել",
+"lv": "B1",
+"ru": "лайкать",
+"en": "to like (a post)",
+"fr": "liker"
+},
+{
+"a": "կոնտենտ",
+"lv": "B1",
+"ru": "контент",
+"en": "content",
+"fr": "contenu"
+},
+{
+"a": "հաճախակի տրվող հարցեր",
+"lv": "B1",
+"ru": "часто задаваемые вопросы",
+"en": "frequently asked questions",
+"fr": "foire aux questions"
+},
+{
+"a": "շեյրել",
+"lv": "B1",
+"ru": "шерить, делиться (в соцсетях)",
+"en": "to share (on social media)",
+"fr": "partager"
+},
+{
+"a": "չատ",
+"lv": "B1",
+"ru": "чат",
+"en": "chat",
+"fr": "chat, tchat"
+},
+{
+"a": "զրահագնացք",
+"lv": "B1",
+"ru": "бронепоезд",
+"en": "armoured train",
+"fr": "train blindé"
+},
+{
+"a": "լոկոմոտիվ",
+"lv": "B1",
+"ru": "локомотив",
+"en": "locomotive",
+"fr": "locomotive"
+},
+{
+"a": "լուսազդանշան",
+"lv": "B1",
+"ru": "семафор",
+"en": "semaphore",
+"fr": "sémaphore"
+},
+{
+"a": "կիսակայարան",
+"lv": "B1",
+"ru": "полустанок",
+"en": "halt (railway)",
+"fr": "halte"
+},
+{
+"a": "մետրոպոլիտեն",
+"lv": "B1",
+"ru": "метрополитен",
+"en": "metro, subway",
+"fr": "métro"
+},
+{
+"a": "շոգեքարշ",
+"lv": "B1",
+"ru": "паровоз",
+"en": "steam locomotive",
+"fr": "locomotive à vapeur"
+},
+{
+"a": "սլաք",
+"lv": "B1",
+"ru": "стрелка (указатель)",
+"en": "pointer, needle",
+"fr": "aiguille"
+},
+{
+"a": "ավտոմայրուղի",
+"lv": "B1",
+"ru": "автомагистраль",
+"en": "freeway",
+"fr": "autoroute"
+},
+{
+"a": "երթևեկելի մաս",
+"lv": "B1",
+"ru": "проезжая часть",
+"en": "roadway",
+"fr": "chaussée"
+},
+{
+"a": "խճուղի",
+"lv": "B1",
+"ru": "шоссе",
+"en": "highway",
+"fr": "route nationale"
+},
+{
+"a": "շավիղ",
+"lv": "B1",
+"ru": "тропа",
+"en": "path, trail",
+"fr": "sentier"
+},
+{
+"a": "ուղի",
+"lv": "B1",
+"ru": "путь",
+"en": "way, path",
+"fr": "voie, chemin"
+},
+{
+"a": "պրոսպեկտ",
+"lv": "B1",
+"ru": "проспект",
+"en": "avenue",
+"fr": "avenue"
+},
+{
+"a": "քառուղի",
+"lv": "B1",
+"ru": "перекрёсток",
+"en": "crossroads",
+"fr": "carrefour"
+},
+{
+"a": "դեսպակ",
+"lv": "B1",
+"ru": "паланкин, носилки",
+"en": "litter, palanquin",
+"fr": "palanquin"
+},
+{
+"a": "դիրիժաբլ",
+"lv": "B1",
+"ru": "дирижабль",
+"en": "airship",
+"fr": "dirigeable"
+},
+{
+"a": "մարշրուտկա",
+"lv": "B1",
+"ru": "маршрутка",
+"en": "minibus, fixed-route taxi",
+"fr": "marchroutka (minibus)"
+},
+{
+"a": "ջիպ",
+"lv": "B1",
+"ru": "джип",
+"en": "jeep, SUV",
+"fr": "jeep"
+},
+{
+"a": "սքեյթբորդ",
+"lv": "B1",
+"ru": "скейтборд",
+"en": "skateboard",
+"fr": "skateboard"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -64036,6 +67655,1840 @@
 "fr": "frac"
 },
 {
+"a": "ակնաբանություն",
+"lv": "B2",
+"ru": "офтальмология",
+"en": "ophthalmology",
+"fr": "ophtalmologie"
+},
+{
+"a": "ակնաբուժություն",
+"lv": "B2",
+"ru": "лечение глаз",
+"en": "eye treatment",
+"fr": "soins des yeux"
+},
+{
+"a": "արյունաբանություն",
+"lv": "B2",
+"ru": "гематология",
+"en": "haematology",
+"fr": "hématologie"
+},
+{
+"a": "բժշկագիտություն",
+"lv": "B2",
+"ru": "медицинская наука",
+"en": "medical science",
+"fr": "science médicale"
+},
+{
+"a": "բժշկում",
+"lv": "B2",
+"ru": "лечение, исцеление",
+"en": "treatment, healing",
+"fr": "traitement, guérison"
+},
+{
+"a": "դեղորայք",
+"lv": "B2",
+"ru": "медикаменты, лекарства",
+"en": "medicines, medication",
+"fr": "médicaments"
+},
+{
+"a": "կեղանք",
+"lv": "B2",
+"ru": "струп, корка на ране",
+"en": "scab",
+"fr": "croûte (sur une plaie)"
+},
+{
+"a": "հակամակարդիչ",
+"lv": "B2",
+"ru": "антикоагулянт",
+"en": "anticoagulant",
+"fr": "anticoagulant"
+},
+{
+"a": "մակարդիչ",
+"lv": "B2",
+"ru": "коагулянт",
+"en": "coagulant",
+"fr": "coagulant"
+},
+{
+"a": "մաշկաբանություն",
+"lv": "B2",
+"ru": "дерматология",
+"en": "dermatology",
+"fr": "dermatologie"
+},
+{
+"a": "նոպա",
+"lv": "B2",
+"ru": "приступ",
+"en": "fit, attack",
+"fr": "crise, accès"
+},
+{
+"a": "շիճուկ",
+"lv": "B2",
+"ru": "сыворотка",
+"en": "serum; whey",
+"fr": "sérum; petit-lait"
+},
+{
+"a": "սեղմիչ",
+"lv": "B2",
+"ru": "зажим",
+"en": "clamp, clip",
+"fr": "pince, collier de serrage"
+},
+{
+"a": "ստենտ",
+"lv": "B2",
+"ru": "стент",
+"en": "stent",
+"fr": "stent"
+},
+{
+"a": "վիժում",
+"lv": "B2",
+"ru": "выкидыш",
+"en": "miscarriage",
+"fr": "fausse couche"
+},
+{
+"a": "տեղաճարակ",
+"lv": "B2",
+"ru": "эндемия",
+"en": "endemic disease",
+"fr": "endémie"
+},
+{
+"a": "ֆիզիոլոգիա",
+"lv": "B2",
+"ru": "физиология",
+"en": "physiology",
+"fr": "physiologie"
+},
+{
+"a": "արցունքաբեր գազ",
+"lv": "B2",
+"ru": "слезоточивый газ",
+"en": "tear gas",
+"fr": "gaz lacrymogène"
+},
+{
+"a": "բաբան",
+"lv": "B2",
+"ru": "катапульта",
+"en": "catapult",
+"fr": "catapulte"
+},
+{
+"a": "բալիստիկ հրթիռ",
+"lv": "B2",
+"ru": "баллистическая ракета",
+"en": "ballistic missile",
+"fr": "missile balistique"
+},
+{
+"a": "գուրզ",
+"lv": "B2",
+"ru": "булава",
+"en": "mace",
+"fr": "masse d'armes"
+},
+{
+"a": "դաշույն",
+"lv": "B2",
+"ru": "кинжал",
+"en": "dagger",
+"fr": "poignard"
+},
+{
+"a": "զանգվածային ոչնչացման զենք",
+"lv": "B2",
+"ru": "оружие массового уничтожения",
+"en": "weapon of mass destruction",
+"fr": "arme de destruction massive"
+},
+{
+"a": "էլեկտրաշոկ",
+"lv": "B2",
+"ru": "электрошокер",
+"en": "stun gun",
+"fr": "pistolet à impulsion électrique"
+},
+{
+"a": "լախտ",
+"lv": "B2",
+"ru": "палица, дубина",
+"en": "club, mace",
+"fr": "massue"
+},
+{
+"a": "ծխանռնակ",
+"lv": "B2",
+"ru": "дымовая граната",
+"en": "smoke grenade",
+"fr": "grenade fumigène"
+},
+{
+"a": "կռփազենք",
+"lv": "B2",
+"ru": "кастет",
+"en": "brass knuckles",
+"fr": "coup-de-poing américain"
+},
+{
+"a": "հրանետ",
+"lv": "B2",
+"ru": "огнемёт",
+"en": "flamethrower",
+"fr": "lance-flammes"
+},
+{
+"a": "մահակ",
+"lv": "B2",
+"ru": "дубинка",
+"en": "club, baton",
+"fr": "matraque"
+},
+{
+"a": "շեղբ",
+"lv": "B2",
+"ru": "лезвие, клинок",
+"en": "blade",
+"fr": "lame"
+},
+{
+"a": "պարսատիկ",
+"lv": "B2",
+"ru": "праща, рогатка",
+"en": "sling, slingshot",
+"fr": "fronde, lance-pierre"
+},
+{
+"a": "սառը զենք",
+"lv": "B2",
+"ru": "холодное оружие",
+"en": "bladed weapon",
+"fr": "arme blanche"
+},
+{
+"a": "սվին",
+"lv": "B2",
+"ru": "штык",
+"en": "bayonet",
+"fr": "baïonnette"
+},
+{
+"a": "տապար",
+"lv": "B2",
+"ru": "топор",
+"en": "axe",
+"fr": "hache"
+},
+{
+"a": "ճիպոտ",
+"lv": "B2",
+"ru": "прут, хворостина",
+"en": "switch, cane",
+"fr": "verge, baguette"
+},
+{
+"a": "գնդոլորտ",
+"lv": "B2",
+"ru": "сфера (полая)",
+"en": "hollow sphere",
+"fr": "sphère creuse"
+},
+{
+"a": "երկրաչափական մարմին",
+"lv": "B2",
+"ru": "геометрическое тело",
+"en": "solid (geometry)",
+"fr": "solide"
+},
+{
+"a": "զուգահեռագիծ",
+"lv": "B2",
+"ru": "параллелограмм",
+"en": "parallelogram",
+"fr": "parallélogramme"
+},
+{
+"a": "զուգահեռանիստ",
+"lv": "B2",
+"ru": "параллелепипед",
+"en": "parallelepiped",
+"fr": "parallélépipède"
+},
+{
+"a": "կիսաշրջան",
+"lv": "B2",
+"ru": "полукруг",
+"en": "semicircle",
+"fr": "demi-cercle"
+},
+{
+"a": "կոնական",
+"lv": "B2",
+"ru": "конический",
+"en": "conical",
+"fr": "conique"
+},
+{
+"a": "կոնական հատույթ",
+"lv": "B2",
+"ru": "коническое сечение",
+"en": "conic section",
+"fr": "section conique"
+},
+{
+"a": "հավասարակողմ",
+"lv": "B2",
+"ru": "равносторонний",
+"en": "equilateral",
+"fr": "équilatéral"
+},
+{
+"a": "հավասարասրուն",
+"lv": "B2",
+"ru": "равнобедренный",
+"en": "isosceles",
+"fr": "isocèle"
+},
+{
+"a": "հարթություն",
+"lv": "B2",
+"ru": "плоскость; гладкость",
+"en": "plane; smoothness",
+"fr": "plan; planéité"
+},
+{
+"a": "ներքնաձիգ",
+"lv": "B2",
+"ru": "гипотенуза",
+"en": "hypotenuse",
+"fr": "hypoténuse"
+},
+{
+"a": "նիստ",
+"lv": "B2",
+"ru": "заседание; грань",
+"en": "session; face (of a solid)",
+"fr": "séance; face"
+},
+{
+"a": "շոշափող",
+"lv": "B2",
+"ru": "касательная",
+"en": "tangent",
+"fr": "tangente"
+},
+{
+"a": "ուղղանկյուն եռանկյուն",
+"lv": "B2",
+"ru": "прямоугольный треугольник",
+"en": "right triangle",
+"fr": "triangle rectangle"
+},
+{
+"a": "պատկեր",
+"lv": "B2",
+"ru": "изображение, картина; фигура",
+"en": "image, picture; figure",
+"fr": "image; figure"
+},
+{
+"a": "քառակողմ",
+"lv": "B2",
+"ru": "четырёхсторонний",
+"en": "quadrilateral",
+"fr": "quadrilatère"
+},
+{
+"a": "իննանկյուն",
+"lv": "B2",
+"ru": "девятиугольник",
+"en": "nonagon",
+"fr": "ennéagone"
+},
+{
+"a": "կանոնավոր բազմանկյուն",
+"lv": "B2",
+"ru": "правильный многоугольник",
+"en": "regular polygon",
+"fr": "polygone régulier"
+},
+{
+"a": "յոթանկյուն",
+"lv": "B2",
+"ru": "семиугольник",
+"en": "heptagon",
+"fr": "heptagone"
+},
+{
+"a": "ութանկյուն",
+"lv": "B2",
+"ru": "восьмиугольник",
+"en": "octagon",
+"fr": "octogone"
+},
+{
+"a": "տասնանկյուն",
+"lv": "B2",
+"ru": "десятиугольник",
+"en": "decagon",
+"fr": "décagone"
+},
+{
+"a": "տասներկուանկյուն",
+"lv": "B2",
+"ru": "двенадцатиугольник",
+"en": "dodecagon",
+"fr": "dodécagone"
+},
+{
+"a": "տասնմեկանկյուն",
+"lv": "B2",
+"ru": "одиннадцатиугольник",
+"en": "hendecagon",
+"fr": "hendécagone"
+},
+{
+"a": "փոթոր",
+"lv": "B2",
+"ru": "конусообразный",
+"en": "cone-shaped",
+"fr": "conique"
+},
+{
+"a": "քառանկյուն",
+"lv": "B2",
+"ru": "четырёхугольник",
+"en": "quadrilateral",
+"fr": "quadrilatère"
+},
+{
+"a": "Անաքսագորաս",
+"lv": "B2",
+"ru": "Анаксагор",
+"en": "Anaxagoras",
+"fr": "Anaxagore"
+},
+{
+"a": "Անաքսիմանդրոս",
+"lv": "B2",
+"ru": "Анаксимандр",
+"en": "Anaximander",
+"fr": "Anaximandre"
+},
+{
+"a": "Անաքսիմենես",
+"lv": "B2",
+"ru": "Анаксимен",
+"en": "Anaximenes",
+"fr": "Anaximène"
+},
+{
+"a": "Արիստոտել",
+"lv": "B2",
+"ru": "Аристотель",
+"en": "Aristotle",
+"fr": "Aristote"
+},
+{
+"a": "Դեմոկրիտ",
+"lv": "B2",
+"ru": "Демокрит",
+"en": "Democritus",
+"fr": "Démocrite"
+},
+{
+"a": "Զենոն",
+"lv": "B2",
+"ru": "Зенон",
+"en": "Zeno",
+"fr": "Zénon"
+},
+{
+"a": "Էմպեդոկլես",
+"lv": "B2",
+"ru": "Эмпедокл",
+"en": "Empedocles",
+"fr": "Empédocle"
+},
+{
+"a": "Էպիկուր",
+"lv": "B2",
+"ru": "Эпикур",
+"en": "Epicurus",
+"fr": "Épicure"
+},
+{
+"a": "Թալես",
+"lv": "B2",
+"ru": "Фалес",
+"en": "Thales",
+"fr": "Thalès"
+},
+{
+"a": "Պարմենիդես",
+"lv": "B2",
+"ru": "Парменид",
+"en": "Parmenides",
+"fr": "Parménide"
+},
+{
+"a": "Սոկրատես",
+"lv": "B2",
+"ru": "Сократ",
+"en": "Socrates",
+"fr": "Socrate"
+},
+{
+"a": "Քսենոփանես",
+"lv": "B2",
+"ru": "Ксенофан",
+"en": "Xenophanes",
+"fr": "Xénophane"
+},
+{
+"a": "բնազանցություն",
+"lv": "B2",
+"ru": "метафизика",
+"en": "metaphysics",
+"fr": "métaphysique"
+},
+{
+"a": "գաղափարապաշտ",
+"lv": "B2",
+"ru": "идеалист",
+"en": "idealist",
+"fr": "idéaliste"
+},
+{
+"a": "Գալիլեա",
+"lv": "B2",
+"ru": "Галилея",
+"en": "Galilee",
+"fr": "Galilée"
+},
+{
+"a": "Գաղատիա",
+"lv": "B2",
+"ru": "Галатия",
+"en": "Galatia",
+"fr": "Galatie"
+},
+{
+"a": "Գամիրք",
+"lv": "B2",
+"ru": "Гамирк (Каппадокия)",
+"en": "Gamirk (Cappadocia)",
+"fr": "Gamirk (Cappadoce)"
+},
+{
+"a": "Երիքով",
+"lv": "B2",
+"ru": "Иерихон",
+"en": "Jericho",
+"fr": "Jéricho"
+},
+{
+"a": "Եփրատ",
+"lv": "B2",
+"ru": "Евфрат",
+"en": "Euphrates",
+"fr": "Euphrate"
+},
+{
+"a": "Կապադովկիա",
+"lv": "B2",
+"ru": "Каппадокия",
+"en": "Cappadocia",
+"fr": "Cappadoce"
+},
+{
+"a": "Միջագետք",
+"lv": "B2",
+"ru": "Месопотамия",
+"en": "Mesopotamia",
+"fr": "Mésopotamie"
+},
+{
+"a": "Շումեր",
+"lv": "B2",
+"ru": "Шумер",
+"en": "Sumer",
+"fr": "Sumer"
+},
+{
+"a": "Պոնտոս",
+"lv": "B2",
+"ru": "Понт",
+"en": "Pontus",
+"fr": "Pont"
+},
+{
+"a": "Տիգրիս",
+"lv": "B2",
+"ru": "Тигр (река)",
+"en": "Tigris",
+"fr": "Tigre (fleuve)"
+},
+{
+"a": "Փյունիկիա",
+"lv": "B2",
+"ru": "Финикия",
+"en": "Phoenicia",
+"fr": "Phénicie"
+},
+{
+"a": "խեթ",
+"lv": "B2",
+"ru": "хетт",
+"en": "Hittite",
+"fr": "Hittite"
+},
+{
+"a": "ուրարտացի",
+"lv": "B2",
+"ru": "урартиец",
+"en": "Urartian",
+"fr": "Ourartéen"
+},
+{
+"a": "Թարթառ",
+"lv": "B2",
+"ru": "Тертер (река)",
+"en": "Tartar (river)",
+"fr": "Tartar (rivière)"
+},
+{
+"a": "Լեռնային Ղարաբաղ",
+"lv": "B2",
+"ru": "Нагорный Карабах",
+"en": "Nagorno-Karabakh",
+"fr": "Haut-Karabagh"
+},
+{
+"a": "Հայաստանի Հանրապետություն",
+"lv": "B2",
+"ru": "Республика Армения",
+"en": "Republic of Armenia",
+"fr": "République d'Arménie"
+},
+{
+"a": "Մեծամոր",
+"lv": "B2",
+"ru": "Мецамор (река)",
+"en": "Metsamor (river)",
+"fr": "Metsamor (rivière)"
+},
+{
+"a": "Նոր Նախիջևան",
+"lv": "B2",
+"ru": "Нахичевань-на-Дону",
+"en": "Nakhichevan-on-Don",
+"fr": "Nakhitchevan-sur-le-Don"
+},
+{
+"a": "վեղար",
+"lv": "B2",
+"ru": "вегар (клобук священника)",
+"en": "veghar (priest's hood)",
+"fr": "véghar (capuche de prêtre)"
+},
+{
+"a": "ալիբի",
+"lv": "B2",
+"ru": "алиби",
+"en": "alibi",
+"fr": "alibi"
+},
+{
+"a": "ամնիստիա",
+"lv": "B2",
+"ru": "амнистия",
+"en": "amnesty",
+"fr": "amnistie"
+},
+{
+"a": "ատյան",
+"lv": "B2",
+"ru": "инстанция (судебная)",
+"en": "instance (of a court)",
+"fr": "instance (judiciaire)"
+},
+{
+"a": "բերման ենթարկել",
+"lv": "B2",
+"ru": "принудительно доставить (в полицию, суд)",
+"en": "to detain and bring in by force",
+"fr": "amener de force"
+},
+{
+"a": "դատ",
+"lv": "B2",
+"ru": "суд, судебный процесс",
+"en": "trial",
+"fr": "procès"
+},
+{
+"a": "դրույթ",
+"lv": "B2",
+"ru": "положение (закона, договора)",
+"en": "provision, clause",
+"fr": "disposition, clause"
+},
+{
+"a": "հարուցել",
+"lv": "B2",
+"ru": "возбуждать (дело); вызывать",
+"en": "to institute (a case); to provoke",
+"fr": "intenter; provoquer"
+},
+{
+"a": "հետադարձ",
+"lv": "B2",
+"ru": "обратный",
+"en": "reverse, retro-",
+"fr": "inverse, rétro-"
+},
+{
+"a": "մարդու իրավունք",
+"lv": "B2",
+"ru": "право человека",
+"en": "human right",
+"fr": "droit de l'homme"
+},
+{
+"a": "ունեզրկում",
+"lv": "B2",
+"ru": "экспроприация",
+"en": "expropriation",
+"fr": "expropriation"
+},
+{
+"a": "ռազմական դրություն",
+"lv": "B2",
+"ru": "военное положение",
+"en": "martial law",
+"fr": "loi martiale"
+},
+{
+"a": "սև ցուցակ",
+"lv": "B2",
+"ru": "чёрный список",
+"en": "blacklist",
+"fr": "liste noire"
+},
+{
+"a": "վերաքննիչ",
+"lv": "B2",
+"ru": "апелляционный",
+"en": "appellate",
+"fr": "d'appel"
+},
+{
+"a": "արգումենտ",
+"lv": "B2",
+"ru": "аргумент",
+"en": "argument",
+"fr": "argument"
+},
+{
+"a": "արտահայտություն",
+"lv": "B2",
+"ru": "выражение",
+"en": "expression",
+"fr": "expression"
+},
+{
+"a": "բազմապատկիչ",
+"lv": "B2",
+"ru": "множитель",
+"en": "multiplier",
+"fr": "multiplicateur"
+},
+{
+"a": "դիվերգենցիա",
+"lv": "B2",
+"ru": "дивергенция",
+"en": "divergence",
+"fr": "divergence"
+},
+{
+"a": "եռանկյունաչափական",
+"lv": "B2",
+"ru": "тригонометрический",
+"en": "trigonometric",
+"fr": "trigonométrique"
+},
+{
+"a": "թվաբանություն",
+"lv": "B2",
+"ru": "арифметика",
+"en": "arithmetic",
+"fr": "arithmétique"
+},
+{
+"a": "խորանարդ արմատ",
+"lv": "B2",
+"ru": "кубический корень",
+"en": "cube root",
+"fr": "racine cubique"
+},
+{
+"a": "կեղծ թիվ",
+"lv": "B2",
+"ru": "мнимое число",
+"en": "imaginary number",
+"fr": "nombre imaginaire"
+},
+{
+"a": "կրիտիկական կետ",
+"lv": "B2",
+"ru": "критическая точка",
+"en": "critical point",
+"fr": "point critique"
+},
+{
+"a": "մեծություն",
+"lv": "B2",
+"ru": "величина",
+"en": "magnitude, quantity",
+"fr": "grandeur"
+},
+{
+"a": "մոդուլ",
+"lv": "B2",
+"ru": "модуль",
+"en": "module; modulus",
+"fr": "module"
+},
+{
+"a": "մոտավորություն",
+"lv": "B2",
+"ru": "приближение",
+"en": "approximation",
+"fr": "approximation"
+},
+{
+"a": "տարամիտել",
+"lv": "B2",
+"ru": "расходиться (о ряде)",
+"en": "to diverge",
+"fr": "diverger"
+},
+{
+"a": "առանձնյակ",
+"lv": "B2",
+"ru": "особь, индивид",
+"en": "individual",
+"fr": "individu"
+},
+{
+"a": "արհեստական ընտրություն",
+"lv": "B2",
+"ru": "искусственный отбор",
+"en": "artificial selection",
+"fr": "sélection artificielle"
+},
+{
+"a": "բջջաբան",
+"lv": "B2",
+"ru": "цитолог",
+"en": "cytologist",
+"fr": "cytologiste"
+},
+{
+"a": "դեզօքսիռիբոնուկլեինաթթու",
+"lv": "B2",
+"ru": "дезоксирибонуклеиновая кислота, ДНК",
+"en": "deoxyribonucleic acid, DNA",
+"fr": "acide désoxyribonucléique, ADN"
+},
+{
+"a": "ենթատեսակ",
+"lv": "B2",
+"ru": "подвид",
+"en": "subspecies",
+"fr": "sous-espèce"
+},
+{
+"a": "կենսաֆիզիկա",
+"lv": "B2",
+"ru": "биофизика",
+"en": "biophysics",
+"fr": "biophysique"
+},
+{
+"a": "միկրոբ",
+"lv": "B2",
+"ru": "микроб",
+"en": "microbe",
+"fr": "microbe"
+},
+{
+"a": "միկրոօրգանիզմ",
+"lv": "B2",
+"ru": "микроорганизм",
+"en": "microorganism",
+"fr": "micro-organisme"
+},
+{
+"a": "սաղմ",
+"lv": "B2",
+"ru": "эмбрион, зародыш",
+"en": "embryo",
+"fr": "embryon"
+},
+{
+"a": "սերմնաբջիջ",
+"lv": "B2",
+"ru": "сперматозоид",
+"en": "sperm cell",
+"fr": "spermatozoïde"
+},
+{
+"a": "ավիշ",
+"lv": "B2",
+"ru": "лимфа",
+"en": "lymph",
+"fr": "lymphe"
+},
+{
+"a": "արտասուք",
+"lv": "B2",
+"ru": "слеза",
+"en": "tear",
+"fr": "larme"
+},
+{
+"a": "արտասվել",
+"lv": "B2",
+"ru": "плакать, проливать слёзы",
+"en": "to weep, to shed tears",
+"fr": "pleurer, verser des larmes"
+},
+{
+"a": "լեղի",
+"lv": "B2",
+"ru": "желчь",
+"en": "bile, gall",
+"fr": "bile"
+},
+{
+"a": "լորձ",
+"lv": "B2",
+"ru": "слизь",
+"en": "mucus",
+"fr": "mucus"
+},
+{
+"a": "ծերտ",
+"lv": "B2",
+"ru": "птичий помёт",
+"en": "bird droppings",
+"fr": "fiente"
+},
+{
+"a": "մաղձ",
+"lv": "B2",
+"ru": "желчь; злоба",
+"en": "bile; spite",
+"fr": "fiel"
+},
+{
+"a": "շողիք",
+"lv": "B2",
+"ru": "слюни",
+"en": "drool",
+"fr": "bave"
+},
+{
+"a": "բլոկ",
+"lv": "B2",
+"ru": "блок",
+"en": "bloc",
+"fr": "bloc"
+},
+{
+"a": "դաշնակ",
+"lv": "B2",
+"ru": "дашнак",
+"en": "Dashnak (member of the ARF)",
+"fr": "dachnak"
+},
+{
+"a": "ընտրազանգված",
+"lv": "B2",
+"ru": "электорат",
+"en": "electorate",
+"fr": "électorat"
+},
+{
+"a": "թավշյա",
+"lv": "B2",
+"ru": "бархатный",
+"en": "velvet",
+"fr": "de velours"
+},
+{
+"a": "լոբբի",
+"lv": "B2",
+"ru": "лобби",
+"en": "lobby",
+"fr": "lobby"
+},
+{
+"a": "խամաճիկ",
+"lv": "B2",
+"ru": "марионетка",
+"en": "marionette, puppet",
+"fr": "marionnette"
+},
+{
+"a": "սենատ",
+"lv": "B2",
+"ru": "сенат",
+"en": "senate",
+"fr": "sénat"
+},
+{
+"a": "վարչակարգ",
+"lv": "B2",
+"ru": "режим",
+"en": "regime",
+"fr": "régime"
+},
+{
+"a": "օլիգարխիա",
+"lv": "B2",
+"ru": "олигархия",
+"en": "oligarchy",
+"fr": "oligarchie"
+},
+{
+"a": "Բաբելոնյան աշտարակ",
+"lv": "B2",
+"ru": "Вавилонская башня",
+"en": "Tower of Babel",
+"fr": "tour de Babel"
+},
+{
+"a": "Բեհեղզեբուղ",
+"lv": "B2",
+"ru": "Вельзевул",
+"en": "Beelzebub",
+"fr": "Belzébuth"
+},
+{
+"a": "Գողգոթա",
+"lv": "B2",
+"ru": "Голгофа",
+"en": "Golgotha, Calvary",
+"fr": "Golgotha, Calvaire"
+},
+{
+"a": "Հրեաստան",
+"lv": "B2",
+"ru": "Иудея",
+"en": "Judaea",
+"fr": "Judée"
+},
+{
+"a": "Ձիթենյաց լեռ",
+"lv": "B2",
+"ru": "Масличная (Елеонская) гора",
+"en": "Mount of Olives",
+"fr": "mont des Oliviers"
+},
+{
+"a": "Սամարիա",
+"lv": "B2",
+"ru": "Самария",
+"en": "Samaria",
+"fr": "Samarie"
+},
+{
+"a": "անդրջրհեղեղյան",
+"lv": "B2",
+"ru": "допотопный",
+"en": "antediluvian",
+"fr": "antédiluvien"
+},
+{
+"a": "բարի սամարացի",
+"lv": "B2",
+"ru": "добрый самаритянин",
+"en": "Good Samaritan",
+"fr": "bon Samaritain"
+},
+{
+"a": "քանանացի",
+"lv": "B2",
+"ru": "хананей",
+"en": "Canaanite",
+"fr": "Cananéen"
+},
+{
+"a": "Գենդալֆ",
+"lv": "B2",
+"ru": "Гэндальф",
+"en": "Gandalf",
+"fr": "Gandalf"
+},
+{
+"a": "Դնչիկ",
+"lv": "B2",
+"ru": "Пятачок",
+"en": "Piglet",
+"fr": "Porcinet"
+},
+{
+"a": "Դոն Քիշոտ",
+"lv": "B2",
+"ru": "Дон Кихот",
+"en": "Don Quixote",
+"fr": "Don Quichotte"
+},
+{
+"a": "Համլետ",
+"lv": "B2",
+"ru": "Гамлет",
+"en": "Hamlet",
+"fr": "Hamlet"
+},
+{
+"a": "Ջեյմս Բոնդ",
+"lv": "B2",
+"ru": "Джеймс Бонд",
+"en": "James Bond",
+"fr": "James Bond"
+},
+{
+"a": "Վինի-Թուխ",
+"lv": "B2",
+"ru": "Винни-Пух",
+"en": "Winnie the Pooh",
+"fr": "Winnie l'ourson"
+},
+{
+"a": "գաջ",
+"lv": "B2",
+"ru": "гипс, ганч",
+"en": "plaster",
+"fr": "plâtre"
+},
+{
+"a": "ծեփ",
+"lv": "B2",
+"ru": "штукатурка, обмазка",
+"en": "plaster, coating",
+"fr": "enduit"
+},
+{
+"a": "ծեփամածիկ",
+"lv": "B2",
+"ru": "замазка, шпаклёвка",
+"en": "putty",
+"fr": "mastic"
+},
+{
+"a": "կրաշաղախ",
+"lv": "B2",
+"ru": "известковый раствор",
+"en": "lime mortar",
+"fr": "mortier de chaux"
+},
+{
+"a": "նրբատախտակ",
+"lv": "B2",
+"ru": "фанера",
+"en": "plywood",
+"fr": "contreplaqué"
+},
+{
+"a": "շաղախ",
+"lv": "B2",
+"ru": "строительный раствор",
+"en": "mortar",
+"fr": "mortier"
+},
+{
+"a": "սալ",
+"lv": "B2",
+"ru": "плита",
+"en": "slab",
+"fr": "dalle"
+},
+{
+"a": "սալաքար",
+"lv": "B2",
+"ru": "плитняк, брусчатка",
+"en": "flagstone, paving stone",
+"fr": "pavé, dalle de pierre"
+},
+{
+"a": "գավիթ",
+"lv": "B2",
+"ru": "гавит (притвор армянской церкви)",
+"en": "gavit (narthex of an Armenian church)",
+"fr": "gavit (narthex d'église arménienne)"
+},
+{
+"a": "դալան",
+"lv": "B2",
+"ru": "крытый проход, подворотня",
+"en": "arched passageway",
+"fr": "passage voûté"
+},
+{
+"a": "հատակագիծ",
+"lv": "B2",
+"ru": "план этажа",
+"en": "floor plan",
+"fr": "plan d'étage"
+},
+{
+"a": "ճաղաշար",
+"lv": "B2",
+"ru": "перила",
+"en": "railing, banisters",
+"fr": "rampe, garde-corps"
+},
+{
+"a": "մույթ",
+"lv": "B2",
+"ru": "пилон, опора",
+"en": "pier, support",
+"fr": "pilier"
+},
+{
+"a": "որմնախորշ",
+"lv": "B2",
+"ru": "ниша",
+"en": "niche, recess",
+"fr": "niche"
+},
+{
+"a": "պատվանդան",
+"lv": "B2",
+"ru": "пьедестал, постамент",
+"en": "pedestal",
+"fr": "piédestal, socle"
+},
+{
+"a": "պուլպուլակ",
+"lv": "B2",
+"ru": "пулпулак (питьевой фонтанчик)",
+"en": "pulpulak (drinking fountain)",
+"fr": "poulpoulak (fontaine à boire)"
+},
+{
+"a": "սառցահատ",
+"lv": "B2",
+"ru": "ледорез (у моста)",
+"en": "starling (of a bridge)",
+"fr": "avant-bec"
+},
+{
+"a": "գերիրապաշտություն",
+"lv": "B2",
+"ru": "сюрреализм",
+"en": "surrealism",
+"fr": "surréalisme"
+},
+{
+"a": "դասականություն",
+"lv": "B2",
+"ru": "классицизм",
+"en": "classicism",
+"fr": "classicisme"
+},
+{
+"a": "ինքնանկար",
+"lv": "B2",
+"ru": "автопортрет",
+"en": "self-portrait",
+"fr": "autoportrait"
+},
+{
+"a": "իրապաշտ",
+"lv": "B2",
+"ru": "реалист",
+"en": "realist",
+"fr": "réaliste"
+},
+{
+"a": "իրապաշտություն",
+"lv": "B2",
+"ru": "реализм",
+"en": "realism",
+"fr": "réalisme"
+},
+{
+"a": "ծովանկար",
+"lv": "B2",
+"ru": "марина (морской пейзаж)",
+"en": "seascape",
+"fr": "marine"
+},
+{
+"a": "նեոդասականություն",
+"lv": "B2",
+"ru": "неоклассицизм",
+"en": "neoclassicism",
+"fr": "néoclassicisme"
+},
+{
+"a": "ավատատեր",
+"lv": "B2",
+"ru": "феодал",
+"en": "feudal lord",
+"fr": "seigneur féodal"
+},
+{
+"a": "ավատատիրություն",
+"lv": "B2",
+"ru": "феодализм",
+"en": "feudalism",
+"fr": "féodalité"
+},
+{
+"a": "բարոն",
+"lv": "B2",
+"ru": "барон",
+"en": "baron",
+"fr": "baron"
+},
+{
+"a": "դուքս",
+"lv": "B2",
+"ru": "герцог",
+"en": "duke",
+"fr": "duc"
+},
+{
+"a": "կոմս",
+"lv": "B2",
+"ru": "граф",
+"en": "count, earl",
+"fr": "comte"
+},
+{
+"a": "ճորտ",
+"lv": "B2",
+"ru": "крепостной",
+"en": "serf",
+"fr": "serf"
+},
+{
+"a": "ճորտատիրություն",
+"lv": "B2",
+"ru": "крепостничество",
+"en": "serfdom",
+"fr": "servage"
+},
+{
+"a": "ճորտություն",
+"lv": "B2",
+"ru": "крепостная зависимость",
+"en": "serfdom (being a serf)",
+"fr": "servage (condition de serf)"
+},
+{
+"a": "Կարմիր բանակ",
+"lv": "B2",
+"ru": "Красная армия",
+"en": "Red Army",
+"fr": "Armée rouge"
+},
+{
+"a": "բոլշևիկ",
+"lv": "B2",
+"ru": "большевик",
+"en": "Bolshevik",
+"fr": "bolchevik"
+},
+{
+"a": "լենինիզմ",
+"lv": "B2",
+"ru": "ленинизм",
+"en": "Leninism",
+"fr": "léninisme"
+},
+{
+"a": "կոմկուս",
+"lv": "B2",
+"ru": "компартия",
+"en": "Communist party",
+"fr": "parti communiste"
+},
+{
+"a": "կոմունիստ",
+"lv": "B2",
+"ru": "коммунист",
+"en": "communist",
+"fr": "communiste"
+},
+{
+"a": "մուրճ և մանգաղ",
+"lv": "B2",
+"ru": "серп и молот",
+"en": "hammer and sickle",
+"fr": "faucille et marteau"
+},
+{
+"a": "ստալինիզմ",
+"lv": "B2",
+"ru": "сталинизм",
+"en": "Stalinism",
+"fr": "stalinisme"
+},
+{
+"a": "տրոցկիզմ",
+"lv": "B2",
+"ru": "троцкизм",
+"en": "Trotskyism",
+"fr": "trotskisme"
+},
+{
+"a": "ալմաստ",
+"lv": "B2",
+"ru": "алмаз",
+"en": "diamond",
+"fr": "diamant"
+},
+{
+"a": "գոհար",
+"lv": "B2",
+"ru": "драгоценный камень, самоцвет",
+"en": "precious stone, gem",
+"fr": "pierre précieuse, gemme"
+},
+{
+"a": "դահանակ",
+"lv": "B2",
+"ru": "малахит",
+"en": "malachite",
+"fr": "malachite"
+},
+{
+"a": "խրիզոպրազ",
+"lv": "B2",
+"ru": "хризопраз",
+"en": "chrysoprase",
+"fr": "chrysoprase"
+},
+{
+"a": "կարկեհան",
+"lv": "B2",
+"ru": "гранат (камень)",
+"en": "garnet",
+"fr": "grenat"
+},
+{
+"a": "կվարց",
+"lv": "B2",
+"ru": "кварц",
+"en": "quartz",
+"fr": "quartz"
+},
+{
+"a": "նռնաքար",
+"lv": "B2",
+"ru": "гранат (самоцвет)",
+"en": "garnet (gemstone)",
+"fr": "grenat (gemme)"
+},
+{
+"a": "ոսկեքար",
+"lv": "B2",
+"ru": "хризолит",
+"en": "chrysolite",
+"fr": "chrysolithe"
+},
+{
+"a": "գլաքար",
+"lv": "B2",
+"ru": "валун",
+"en": "boulder",
+"fr": "rocher, bloc erratique"
+},
+{
+"a": "դոլմեն",
+"lv": "B2",
+"ru": "дольмен",
+"en": "dolmen",
+"fr": "dolmen"
+},
+{
+"a": "կայծքար",
+"lv": "B2",
+"ru": "кремень",
+"en": "flint",
+"fr": "silex"
+},
+{
+"a": "վեմ",
+"lv": "B2",
+"ru": "скала, монолит",
+"en": "monolith, solid rock",
+"fr": "monolithe, roc"
+},
+{
+"a": "քարափ",
+"lv": "B2",
+"ru": "скалистый берег",
+"en": "rocky shore",
+"fr": "côte rocheuse"
+},
+{
+"a": "Ազգերի լիգա",
+"lv": "B2",
+"ru": "Лига Наций",
+"en": "League of Nations",
+"fr": "Société des Nations"
+},
+{
+"a": "ալյանս",
+"lv": "B2",
+"ru": "альянс",
+"en": "alliance",
+"fr": "alliance"
+},
+{
+"a": "դեսպանորդ",
+"lv": "B2",
+"ru": "посланник",
+"en": "envoy",
+"fr": "envoyé, ministre plénipotentiaire"
+},
+{
+"a": "հավատարմագրել",
+"lv": "B2",
+"ru": "аккредитовать",
+"en": "to accredit",
+"fr": "accréditer"
+},
+{
+"a": "հյուպատոս",
+"lv": "B2",
+"ru": "консул",
+"en": "consul",
+"fr": "consul"
+},
+{
+"a": "պատվիրակություն",
+"lv": "B2",
+"ru": "делегация",
+"en": "delegation",
+"fr": "délégation"
+},
+{
+"a": "ռազմական կցորդ",
+"lv": "B2",
+"ru": "военный атташе",
+"en": "military attaché",
+"fr": "attaché militaire"
+},
+{
+"a": "արքայական",
+"lv": "B2",
+"ru": "королевский",
+"en": "royal",
+"fr": "royal"
+},
+{
+"a": "արքայություն",
+"lv": "B2",
+"ru": "царство, королевство",
+"en": "kingdom",
+"fr": "royaume"
+},
+{
+"a": "գայիսոն",
+"lv": "B2",
+"ru": "скипетр",
+"en": "sceptre",
+"fr": "sceptre"
+},
+{
+"a": "դինաստիա",
+"lv": "B2",
+"ru": "династия",
+"en": "dynasty",
+"fr": "dynastie"
+},
+{
+"a": "թագ",
+"lv": "B2",
+"ru": "корона",
+"en": "crown",
+"fr": "couronne"
+},
+{
+"a": "պրինց",
+"lv": "B2",
+"ru": "принц",
+"en": "prince",
+"fr": "prince"
+},
+{
+"a": "ցարական",
+"lv": "B2",
+"ru": "царский",
+"en": "czarist",
+"fr": "tsariste"
+},
+{
+"a": "խզում",
+"lv": "B2",
+"ru": "разрыв",
+"en": "rupture, severance",
+"fr": "rupture"
+},
+{
+"a": "խորշոմ",
+"lv": "B2",
+"ru": "морщина",
+"en": "wrinkle",
+"fr": "ride"
+},
+{
+"a": "կազմավորում",
+"lv": "B2",
+"ru": "формирование, образование",
+"en": "formation, establishment",
+"fr": "formation, création"
+},
+{
+"a": "շերտ",
+"lv": "B2",
+"ru": "слой; полоса",
+"en": "layer; stripe",
+"fr": "couche; bande"
+},
+{
+"a": "շթաքար",
+"lv": "B2",
+"ru": "сталактит",
+"en": "stalactite",
+"fr": "stalactite"
+},
+{
+"a": "պտկաքար",
+"lv": "B2",
+"ru": "сталагмит",
+"en": "stalagmite",
+"fr": "stalagmite"
+},
+{
+"a": "տեկտոնիկա",
+"lv": "B2",
+"ru": "тектоника",
+"en": "tectonics",
+"fr": "tectonique"
+},
+{
+"a": "աշել",
+"lv": "B2",
+"ru": "ашель (ашельская культура)",
+"en": "Acheulean",
+"fr": "acheuléen"
+},
+{
+"a": "բրոնզի դար",
+"lv": "B2",
+"ru": "бронзовый век",
+"en": "Bronze Age",
+"fr": "âge du bronze"
+},
+{
+"a": "երկաթի դար",
+"lv": "B2",
+"ru": "железный век",
+"en": "Iron Age",
+"fr": "âge du fer"
+},
+{
+"a": "պեղել",
+"lv": "B2",
+"ru": "раскапывать",
+"en": "to excavate",
+"fr": "fouiller, déterrer"
+},
+{
+"a": "քարի դար",
+"lv": "B2",
+"ru": "каменный век",
+"en": "Stone Age",
+"fr": "âge de pierre"
+},
+{
+"a": "ասպար",
+"lv": "B2",
+"ru": "щит",
+"en": "shield",
+"fr": "bouclier"
+},
+{
+"a": "զրահ",
+"lv": "B2",
+"ru": "броня, доспехи",
+"en": "armour",
+"fr": "armure"
+},
+{
+"a": "զրահավոր",
+"lv": "B2",
+"ru": "бронированный",
+"en": "armoured",
+"fr": "blindé"
+},
+{
+"a": "օղազրահ",
+"lv": "B2",
+"ru": "кольчуга",
+"en": "chain mail",
+"fr": "cotte de mailles"
+},
+{
+"a": "գանգրենա",
+"lv": "B2",
+"ru": "гангрена",
+"en": "gangrene",
+"fr": "gangrène"
+},
+{
+"a": "էնցեֆալիտ",
+"lv": "B2",
+"ru": "энцефалит",
+"en": "encephalitis",
+"fr": "encéphalite"
+},
+{
+"a": "ընկնավորություն",
+"lv": "B2",
+"ru": "эпилепсия",
+"en": "epilepsy",
+"fr": "épilepsie"
+},
+{
+"a": "թանչ",
+"lv": "B2",
+"ru": "дизентерия",
+"en": "dysentery",
+"fr": "dysenterie"
+},
+{
+"a": "կցաղետապ",
+"lv": "B2",
+"ru": "аппендицит",
+"en": "appendicitis",
+"fr": "appendicite"
+},
+{
+"a": "մենինգիտ",
+"lv": "B2",
+"ru": "менингит",
+"en": "meningitis",
+"fr": "méningite"
+},
+{
+"a": "պարանոյա",
+"lv": "B2",
+"ru": "паранойя",
+"en": "paranoia",
+"fr": "paranoïa"
+},
+{
+"a": "բալանս",
+"lv": "B2",
+"ru": "баланс",
+"en": "balance (sheet)",
+"fr": "bilan"
+},
+{
+"a": "ծախսագրել",
+"lv": "B2",
+"ru": "вносить в учёт (расход)",
+"en": "to record, to enter",
+"fr": "enregistrer, inscrire"
+},
+{
+"a": "ծախսագրում",
+"lv": "B2",
+"ru": "учётная запись",
+"en": "record, entry",
+"fr": "écriture comptable"
+},
+{
+"a": "ծախսամատյան",
+"lv": "B2",
+"ru": "учётный журнал",
+"en": "journal (accounting)",
+"fr": "journal comptable"
+},
+{
+"a": "վերջնահաշիվ",
+"lv": "B2",
+"ru": "итоговый отчёт",
+"en": "final account",
+"fr": "compte final"
+},
+{
+"a": "բարձրագույն ուսումնական հաստատություն",
+"lv": "B2",
+"ru": "высшее учебное заведение",
+"en": "institution of higher education",
+"fr": "établissement d'enseignement supérieur"
+},
+{
+"a": "բուհ",
+"lv": "B2",
+"ru": "вуз",
+"en": "university, college",
+"fr": "université"
+},
+{
+"a": "գիշերօթիկ դպրոց",
+"lv": "B2",
+"ru": "школа-интернат",
+"en": "boarding school",
+"fr": "internat"
+},
+{
+"a": "հատուկ դպրոց",
+"lv": "B2",
+"ru": "специальная школа",
+"en": "special school",
+"fr": "école spécialisée"
+},
+{
+"a": "վարժարան",
+"lv": "B2",
+"ru": "училище",
+"en": "college",
+"fr": "collège, école"
+},
+{
+"a": "վարպետության դաս",
+"lv": "B2",
+"ru": "мастер-класс",
+"en": "master class",
+"fr": "classe de maître"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -73976,6 +79429,608 @@
 "fr": "nœud gordien"
 },
 {
+"a": "Արծրունի",
+"lv": "C1",
+"ru": "Арцруни (княжеский род)",
+"en": "Artsruni (noble house)",
+"fr": "Arçrouni (maison princière)"
+},
+{
+"a": "Արշակունի",
+"lv": "C1",
+"ru": "Аршакиды",
+"en": "Arsacids",
+"fr": "Arsacides"
+},
+{
+"a": "Աքեմենյան",
+"lv": "C1",
+"ru": "ахеменидский",
+"en": "Achaemenid",
+"fr": "achéménide"
+},
+{
+"a": "Բագրատունի",
+"lv": "C1",
+"ru": "Багратиды, Багратуни",
+"en": "Bagratids",
+"fr": "Bagratides"
+},
+{
+"a": "Լուսինյան",
+"lv": "C1",
+"ru": "Лузиньяны",
+"en": "Lusignans",
+"fr": "Lusignan"
+},
+{
+"a": "Հեթումյան",
+"lv": "C1",
+"ru": "Хетумиды",
+"en": "Hethumids",
+"fr": "Héthoumides"
+},
+{
+"a": "Պահլավունի",
+"lv": "C1",
+"ru": "Пахлавуни (княжеский род)",
+"en": "Pahlavuni (noble house)",
+"fr": "Pahlavouni (maison princière)"
+},
+{
+"a": "Ռուբինյան",
+"lv": "C1",
+"ru": "Рубениды",
+"en": "Rubenids",
+"fr": "Roubénides"
+},
+{
+"a": "Սեֆյան",
+"lv": "C1",
+"ru": "сефевидский",
+"en": "Safavid",
+"fr": "safavide"
+},
+{
+"a": "ազատանի",
+"lv": "C1",
+"ru": "азаты, дворянство",
+"en": "the nobility, the azat class",
+"fr": "la noblesse, les azats"
+},
+{
+"a": "իշխանուհի",
+"lv": "C1",
+"ru": "княгиня, княжна",
+"en": "princess",
+"fr": "princesse"
+},
+{
+"a": "կոմսուհի",
+"lv": "C1",
+"ru": "графиня",
+"en": "countess",
+"fr": "comtesse"
+},
+{
+"a": "մարկիզ",
+"lv": "C1",
+"ru": "маркиз",
+"en": "marquess",
+"fr": "marquis"
+},
+{
+"a": "սելջուկ",
+"lv": "C1",
+"ru": "сельджук",
+"en": "Seljuk",
+"fr": "Seldjoukide"
+},
+{
+"a": "Անտոնիոս",
+"lv": "C1",
+"ru": "Антоний",
+"en": "Antony",
+"fr": "Antoine"
+},
+{
+"a": "Բրուտոս",
+"lv": "C1",
+"ru": "Брут",
+"en": "Brutus",
+"fr": "Brutus"
+},
+{
+"a": "Գրակքոս",
+"lv": "C1",
+"ru": "Гракх",
+"en": "Gracchus",
+"fr": "Gracchus"
+},
+{
+"a": "Դիոկղետիանոս",
+"lv": "C1",
+"ru": "Диоклетиан",
+"en": "Diocletian",
+"fr": "Dioclétien"
+},
+{
+"a": "Հելվեցիա",
+"lv": "C1",
+"ru": "Гельвеция",
+"en": "Helvetia",
+"fr": "Helvétie"
+},
+{
+"a": "Հորացիոս",
+"lv": "C1",
+"ru": "Гораций",
+"en": "Horace",
+"fr": "Horace"
+},
+{
+"a": "Վալենտինիանոս",
+"lv": "C1",
+"ru": "Валентиниан",
+"en": "Valentinian",
+"fr": "Valentinien"
+},
+{
+"a": "Վալերիանոս",
+"lv": "C1",
+"ru": "Валериан",
+"en": "Valerian",
+"fr": "Valérien"
+},
+{
+"a": "Վաղես",
+"lv": "C1",
+"ru": "Валент",
+"en": "Valens",
+"fr": "Valens"
+},
+{
+"a": "Վեսպասիանոս",
+"lv": "C1",
+"ru": "Веспасиан",
+"en": "Vespasian",
+"fr": "Vespasien"
+},
+{
+"a": "Վերգիլիոս",
+"lv": "C1",
+"ru": "Вергилий",
+"en": "Virgil",
+"fr": "Virgile"
+},
+{
+"a": "Օկտավիանոս",
+"lv": "C1",
+"ru": "Октавиан",
+"en": "Octavian",
+"fr": "Octavien"
+},
+{
+"a": "գլադիատոր",
+"lv": "C1",
+"ru": "гладиатор",
+"en": "gladiator",
+"fr": "gladiateur"
+},
+{
+"a": "արեգակնային քամի",
+"lv": "C1",
+"ru": "солнечный ветер",
+"en": "solar wind",
+"fr": "vent solaire"
+},
+{
+"a": "զենիթ",
+"lv": "C1",
+"ru": "зенит",
+"en": "zenith",
+"fr": "zénith"
+},
+{
+"a": "լիբրացիա",
+"lv": "C1",
+"ru": "либрация",
+"en": "libration",
+"fr": "libration"
+},
+{
+"a": "լուսատարի",
+"lv": "C1",
+"ru": "световой год",
+"en": "light year",
+"fr": "année-lumière"
+},
+{
+"a": "խավարածիր",
+"lv": "C1",
+"ru": "эклиптика",
+"en": "ecliptic",
+"fr": "écliptique"
+},
+{
+"a": "ծիր",
+"lv": "C1",
+"ru": "круг, окружность",
+"en": "circle, circumference",
+"fr": "cercle, circonférence"
+},
+{
+"a": "միջգալակտիկական",
+"lv": "C1",
+"ru": "межгалактический",
+"en": "intergalactic",
+"fr": "intergalactique"
+},
+{
+"a": "մոլորակաձև միգամածություն",
+"lv": "C1",
+"ru": "планетарная туманность",
+"en": "planetary nebula",
+"fr": "nébuleuse planétaire"
+},
+{
+"a": "մոլորակային",
+"lv": "C1",
+"ru": "планетарный",
+"en": "planetary",
+"fr": "planétaire"
+},
+{
+"a": "մութ միգամածություն",
+"lv": "C1",
+"ru": "тёмная туманность",
+"en": "dark nebula",
+"fr": "nébuleuse obscure"
+},
+{
+"a": "նադիր",
+"lv": "C1",
+"ru": "надир",
+"en": "nadir",
+"fr": "nadir"
+},
+{
+"a": "պուլսար",
+"lv": "C1",
+"ru": "пульсар",
+"en": "pulsar",
+"fr": "pulsar"
+},
+{
+"a": "ռադիոգալակտիկա",
+"lv": "C1",
+"ru": "радиогалактика",
+"en": "radio galaxy",
+"fr": "radiogalaxie"
+},
+{
+"a": "քվազար",
+"lv": "C1",
+"ru": "квазар",
+"en": "quasar",
+"fr": "quasar"
+},
+{
+"a": "Ալլահ",
+"lv": "C1",
+"ru": "Аллах",
+"en": "Allah",
+"fr": "Allah"
+},
+{
+"a": "Ղուրան",
+"lv": "C1",
+"ru": "Коран",
+"en": "Quran",
+"fr": "Coran"
+},
+{
+"a": "ազան",
+"lv": "C1",
+"ru": "азан (призыв к молитве)",
+"en": "adhan (call to prayer)",
+"fr": "adhan (appel à la prière)"
+},
+{
+"a": "դերվիշ",
+"lv": "C1",
+"ru": "дервиш",
+"en": "dervish",
+"fr": "derviche"
+},
+{
+"a": "իսլամացում",
+"lv": "C1",
+"ru": "исламизация",
+"en": "Islamization",
+"fr": "islamisation"
+},
+{
+"a": "իսմայելիտ",
+"lv": "C1",
+"ru": "исмаилит",
+"en": "Ismaili",
+"fr": "ismaélien"
+},
+{
+"a": "խալիֆաթ",
+"lv": "C1",
+"ru": "халифат",
+"en": "caliphate",
+"fr": "califat"
+},
+{
+"a": "մահմեդականություն",
+"lv": "C1",
+"ru": "ислам, магометанство",
+"en": "Islam",
+"fr": "islam"
+},
+{
+"a": "մինարեթ",
+"lv": "C1",
+"ru": "минарет",
+"en": "minaret",
+"fr": "minaret"
+},
+{
+"a": "մուսուլման",
+"lv": "C1",
+"ru": "мусульманин",
+"en": "Muslim",
+"fr": "musulman"
+},
+{
+"a": "նամազ",
+"lv": "C1",
+"ru": "намаз",
+"en": "salat, Islamic prayer",
+"fr": "salat, prière musulmane"
+},
+{
+"a": "շեյթան",
+"lv": "C1",
+"ru": "шайтан",
+"en": "shaitan",
+"fr": "chaïtan"
+},
+{
+"a": "ջիհադ",
+"lv": "C1",
+"ru": "джихад",
+"en": "jihad",
+"fr": "djihad"
+},
+{
+"a": "սուրահ",
+"lv": "C1",
+"ru": "сура",
+"en": "sura",
+"fr": "sourate"
+},
+{
+"a": "Ավոգադրոյի թիվ",
+"lv": "C1",
+"ru": "число Авогадро",
+"en": "Avogadro's number",
+"fr": "nombre d'Avogadro"
+},
+{
+"a": "ազնիվ գազ",
+"lv": "C1",
+"ru": "благородный газ",
+"en": "noble gas",
+"fr": "gaz noble"
+},
+{
+"a": "ածխաթթու",
+"lv": "C1",
+"ru": "угольная кислота",
+"en": "carbonic acid",
+"fr": "acide carbonique"
+},
+{
+"a": "արջասպ",
+"lv": "C1",
+"ru": "купорос",
+"en": "vitriol",
+"fr": "vitriol"
+},
+{
+"a": "իներտ",
+"lv": "C1",
+"ru": "инертный",
+"en": "inert",
+"fr": "inerte"
+},
+{
+"a": "իներտ գազ",
+"lv": "C1",
+"ru": "инертный газ",
+"en": "inert gas",
+"fr": "gaz inerte"
+},
+{
+"a": "հալոգեն",
+"lv": "C1",
+"ru": "галоген",
+"en": "halogen",
+"fr": "halogène"
+},
+{
+"a": "հիդրատ",
+"lv": "C1",
+"ru": "гидрат",
+"en": "hydrate",
+"fr": "hydrate"
+},
+{
+"a": "հիդրոլիզ",
+"lv": "C1",
+"ru": "гидролиз",
+"en": "hydrolysis",
+"fr": "hydrolyse"
+},
+{
+"a": "պղնձարջասպ",
+"lv": "C1",
+"ru": "медный купорос",
+"en": "copper sulphate",
+"fr": "sulfate de cuivre"
+},
+{
+"a": "ստեխիոմետրիա",
+"lv": "C1",
+"ru": "стехиометрия",
+"en": "stoichiometry",
+"fr": "stœchiométrie"
+},
+{
+"a": "ասորագիտություն",
+"lv": "C1",
+"ru": "сирология (изучение сирийской культуры)",
+"en": "Syriac studies",
+"fr": "études syriaques"
+},
+{
+"a": "թռչնաբանություն",
+"lv": "C1",
+"ru": "орнитология",
+"en": "ornithology",
+"fr": "ornithologie"
+},
+{
+"a": "լուսնագիտություն",
+"lv": "C1",
+"ru": "селенология",
+"en": "selenology",
+"fr": "sélénologie"
+},
+{
+"a": "ծագումնաբանություն",
+"lv": "C1",
+"ru": "генеалогия",
+"en": "genealogy",
+"fr": "généalogie"
+},
+{
+"a": "կենդանաբանություն",
+"lv": "C1",
+"ru": "зоология",
+"en": "zoology",
+"fr": "zoologie"
+},
+{
+"a": "կովկասագիտություն",
+"lv": "C1",
+"ru": "кавказоведение",
+"en": "Caucasology",
+"fr": "caucasologie"
+},
+{
+"a": "հայագիտություն",
+"lv": "C1",
+"ru": "арменоведение",
+"en": "Armenology",
+"fr": "arménologie"
+},
+{
+"a": "ձկնաբանություն",
+"lv": "C1",
+"ru": "ихтиология",
+"en": "ichthyology",
+"fr": "ichtyologie"
+},
+{
+"a": "միջատաբանություն",
+"lv": "C1",
+"ru": "энтомология",
+"en": "entomology",
+"fr": "entomologie"
+},
+{
+"a": "չափագիտություն",
+"lv": "C1",
+"ru": "метрология",
+"en": "metrology",
+"fr": "métrologie"
+},
+{
+"a": "պատմագիտություն",
+"lv": "C1",
+"ru": "историография, историческая наука",
+"en": "historiography, historical studies",
+"fr": "historiographie"
+},
+{
+"a": "ազգաբան",
+"lv": "C1",
+"ru": "этнолог",
+"en": "ethnologist",
+"fr": "ethnologue"
+},
+{
+"a": "ասուրագետ",
+"lv": "C1",
+"ru": "ассириолог",
+"en": "Assyriologist",
+"fr": "assyriologue"
+},
+{
+"a": "թռչնաբան",
+"lv": "C1",
+"ru": "орнитолог",
+"en": "ornithologist",
+"fr": "ornithologue"
+},
+{
+"a": "ծագումնաբան",
+"lv": "C1",
+"ru": "генеалог",
+"en": "genealogist",
+"fr": "généalogiste"
+},
+{
+"a": "կենդանաբան",
+"lv": "C1",
+"ru": "зоолог",
+"en": "zoologist",
+"fr": "zoologiste"
+},
+{
+"a": "կովկասագետ",
+"lv": "C1",
+"ru": "кавказовед",
+"en": "Caucasologist",
+"fr": "caucasologue"
+},
+{
+"a": "հայագետ",
+"lv": "C1",
+"ru": "арменовед",
+"en": "Armenologist",
+"fr": "arménologue"
+},
+{
+"a": "պատմագետ",
+"lv": "C1",
+"ru": "историк",
+"en": "historian",
+"fr": "historien"
+},
+{
+"a": "վրացագետ",
+"lv": "C1",
+"ru": "грузиновед, картвелолог",
+"en": "Kartvelologist",
+"fr": "kartvélologue"
+},
+{
 "a": "վեհ",
 "lv": "C2",
 "ru": "величественный, возвышенный",
@@ -77866,5 +83921,110 @@
 "ru": "фонон",
 "en": "phonon",
 "fr": "phonon"
+},
+{
+"a": "ենթահնչույթ",
+"lv": "C2",
+"ru": "аллофон",
+"en": "allophone",
+"fr": "allophone"
+},
+{
+"a": "եռաբարբառ",
+"lv": "C2",
+"ru": "трифтонг",
+"en": "triphthong",
+"fr": "triphtongue"
+},
+{
+"a": "ետնալեզվային",
+"lv": "C2",
+"ru": "заднеязычный",
+"en": "velar",
+"fr": "vélaire"
+},
+{
+"a": "երկբարբառ",
+"lv": "C2",
+"ru": "дифтонг",
+"en": "diphthong",
+"fr": "diphtongue"
+},
+{
+"a": "խուլ",
+"lv": "C2",
+"ru": "глухой",
+"en": "deaf; voiceless",
+"fr": "sourd"
+},
+{
+"a": "կիսաձայն",
+"lv": "C2",
+"ru": "полугласный",
+"en": "semivowel",
+"fr": "semi-voyelle"
+},
+{
+"a": "կիսաշփական",
+"lv": "C2",
+"ru": "аффрикатный",
+"en": "affricate",
+"fr": "affriqué"
+},
+{
+"a": "ձայնեղ",
+"lv": "C2",
+"ru": "звонкий, звучный",
+"en": "voiced, sonorous",
+"fr": "sonore"
+},
+{
+"a": "ձայնորդ",
+"lv": "C2",
+"ru": "сонорный",
+"en": "sonorant",
+"fr": "sonante"
+},
+{
+"a": "մենաբարբառ",
+"lv": "C2",
+"ru": "монофтонг",
+"en": "monophthong",
+"fr": "monophtongue"
+},
+{
+"a": "շրթնաետնալեզվային",
+"lv": "C2",
+"ru": "лабиовелярный",
+"en": "labiovelar",
+"fr": "labiovélaire"
+},
+{
+"a": "շրթնային",
+"lv": "C2",
+"ru": "губной",
+"en": "labial",
+"fr": "labial"
+},
+{
+"a": "շփական",
+"lv": "C2",
+"ru": "фрикативный, щелевой",
+"en": "fricative",
+"fr": "fricatif"
+},
+{
+"a": "ուղղախոսություն",
+"lv": "C2",
+"ru": "орфоэпия",
+"en": "orthoepy",
+"fr": "orthoépie"
+},
+{
+"a": "պայթական",
+"lv": "C2",
+"ru": "взрывной (звук)",
+"en": "plosive",
+"fr": "occlusif"
 }
 ]
