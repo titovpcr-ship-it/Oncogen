@@ -1,0 +1,14 @@
+{
+  "appId": "app.bararan",
+  "appName": "Bararan",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": false,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "SystemBars": { "insetsHandling": "css", "style": "DEFAULT" },
+    "SplashScreen": { "launchAutoHide": true, "launchShowDuration": 700, "backgroundColor": "#EC8B2E", "showSpinner": false }
+  }
+}

@@ -1,0 +1,4455 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Армянские слова</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Noto+Serif+Armenian:wght@400;600;700&display=swap">
+<style>
+:root{
+  --bg:#F3F1F6; --surface:#FFFFFF; --surface-2:#EAE6F0; --ink:#23182C; --ink-2:#5F546A; --ink-3:#8A8094; --line:#DCD5E4;
+  --accent:#EC8B2E; --accent-press:#D97A1F; --on-accent:#2A1503; --accent-soft:#FDE7D2;
+  --ok:#23845F; --ok-soft:#DDF3E9; --bad:#B42F45; --bad-soft:#F9DEE3; --focus:#3557A6;
+  --shadow:0 1px 0 rgba(35,24,44,.05),0 10px 26px -16px rgba(35,24,44,.35);
+  --hy:"Noto Serif Armenian","Noto Sans Armenian","Mshtakan","Sylfaen",serif;
+  --ui:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --emo:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151019; --surface:#201A27; --surface-2:#2B2333; --ink:#F3EDF6; --ink-2:#BDB1C7; --ink-3:#8F849A; --line:#382F42;
+    --accent:#FF9F4A; --accent-press:#F08C33; --on-accent:#2A1503; --accent-soft:#40291A;
+    --ok:#4CC99A; --ok-soft:#14372B; --bad:#FF7489; --bad-soft:#45202A; --focus:#9DB4FF;
+    --shadow:0 1px 0 rgba(0,0,0,.35),0 12px 28px -16px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151019; --surface:#201A27; --surface-2:#2B2333; --ink:#F3EDF6; --ink-2:#BDB1C7; --ink-3:#8F849A; --line:#382F42;
+  --accent:#FF9F4A; --accent-press:#F08C33; --on-accent:#2A1503; --accent-soft:#40291A;
+  --ok:#4CC99A; --ok-soft:#14372B; --bad:#FF7489; --bad-soft:#45202A; --focus:#9DB4FF;
+  --shadow:0 1px 0 rgba(0,0,0,.35),0 12px 28px -16px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 var(--ui);overflow-x:clip;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button,input,select{font:inherit;color:inherit}
+button{touch-action:manipulation;cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+[lang="hy"]{font-family:var(--hy)}
+
+#view{max-width:560px;margin:0 auto;padding:18px 18px calc(92px + env(safe-area-inset-bottom,0px))}
+body[data-view="session"] #view{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}
+
+/* tabs */
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;gap:4px;
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);
+  background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.tab{flex:1;max-width:180px;border:0;background:none;padding:6px 4px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--ink-3)}
+.tab svg{width:24px;height:24px}
+.tab[aria-current="page"]{color:var(--ink)}
+.tab[aria-current="page"] svg{color:var(--accent)}
+body[data-view="session"] #tabs{display:none}
+
+/* home */
+.head{padding:6px 2px 0}
+.head h1{font-family:var(--hy);font-weight:600;font-size:clamp(36px,10vw,46px);line-height:1.08;margin:0}
+.head p{margin:6px 0 0;color:var(--ink-2)}
+.head h1.pg{font-family:var(--ui);font-size:28px;font-weight:700;line-height:1.15}
+.today{margin:20px 0 30px;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow)}
+.summary{margin:0 0 14px;font-size:17px;line-height:1.4}
+.summary b{font-weight:600}
+.streak{display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;padding:4px 11px;border-radius:999px;background:var(--accent-soft);font-size:14px}
+.voice-note{margin:14px 0 0;font-size:14px;color:var(--ink-2)}
+.voice-note button{border:0;background:none;padding:0;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.actions{display:grid;gap:10px}
+.btn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:54px;padding:10px 18px;border-radius:16px;border:1.5px solid transparent;font-weight:600;font-size:17px;line-height:1.2;text-align:center}
+.btn .cap{display:block;font-weight:400;font-size:13px;opacity:.78;margin-top:2px}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.primary:active{background:var(--accent-press)}
+.btn.secondary{background:var(--surface-2);color:var(--ink)}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink-2)}
+.btn.danger{background:transparent;border-color:var(--bad);color:var(--bad)}
+.bar{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden;display:flex}
+.bar i{display:block;height:100%;background:var(--ok)}
+.bar i.l{background:var(--accent);background:color-mix(in srgb,var(--accent) 65%,transparent)}
+h2.sec{font-size:15px;font-weight:600;color:var(--ink-2);margin:0 2px 6px}
+.topics{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.topic{width:100%;display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 2px;border:0;border-bottom:1px solid var(--line);background:none;text-align:left}
+.t-ic{width:48px;height:48px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font:26px/1 var(--emo)}
+.t-body{min-width:0}
+.t-name{display:block;font-weight:600}
+.t-hy{display:block;font-family:var(--hy);color:var(--ink-2);font-size:14px;margin:1px 0 7px;overflow-wrap:anywhere}
+.t-cnt{font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+/* topic page */
+.back{border:0;background:none;color:var(--ink-2);font-size:16px;padding:6px 0 10px}
+.thead{display:flex;gap:14px;align-items:center;margin:0 0 12px}
+.thead .t-ic{width:64px;height:64px;font-size:36px;border-radius:18px;flex:none}
+.pg{font-size:28px;line-height:1.15;margin:0;font-weight:700}
+.t-hy2{font-family:var(--hy);color:var(--ink-2);margin:2px 0 0;font-size:17px}
+.page-actions{margin:14px 0 18px}
+
+/* word rows */
+.words{list-style:none;margin:6px 0 0;padding:0}
+.wrow{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.w-pic{width:44px;height:44px;display:grid;place-items:center;font-size:28px}
+.w-main{min-width:0}
+.w-hy{display:block;font-size:21px;line-height:1.25;overflow-wrap:anywhere}
+.w-sub{display:block;font-size:14px;color:var(--ink-2);overflow-wrap:anywhere}
+.w-tr{color:var(--ink-3);margin-left:8px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;background:var(--line)}
+.dot.s-learning{background:var(--accent)}
+.dot.s-learned{background:var(--ok)}
+.say{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--ink)}
+.say svg{width:20px;height:20px}
+.say.on,.aud.on{border-color:var(--accent);background:var(--accent-soft)}
+.empty{padding:22px 4px;color:var(--ink-2)}
+
+/* pictures */
+.emo{font-family:var(--emo);line-height:1}
+.sw{display:inline-block;width:1em;height:1em;border-radius:50%;border:1.5px solid rgba(128,118,140,.45)}
+.ptx{font-family:var(--ui);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.w-pic .ptx{font-size:.62em}
+.o-pic .ptx{font-size:.72em}
+
+/* letter tiles for words without a picture */
+.ltr{display:inline-grid;place-items:center;width:1em;height:1em;border-radius:.24em;background:hsl(var(--h) 65% 91%);color:hsl(var(--h) 45% 30%)}
+.ltr b{font:600 .58em/1 var(--hy)}
+.w-pic .ltr{font-size:40px}
+.pic-xl .ltr{font-size:104px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ltr{background:hsl(var(--h) 30% 22%);color:hsl(var(--h) 70% 82%)}}
+:root[data-theme="dark"] .ltr{background:hsl(var(--h) 30% 22%);color:hsl(var(--h) 70% 82%)}
+.lvl{margin-top:26px}
+.lvh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 2px}
+.lv{font-weight:700;font-size:24px;line-height:1}
+.lvc{font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.lvd{margin:4px 2px 10px;font-size:14px;color:var(--ink-2)}
+button.lvh{width:100%;border:0;background:none;padding:6px 2px;text-align:left;color:var(--ink);cursor:pointer}
+.lvh .lvc{margin-left:auto}
+.chev{color:var(--ink-3);font-size:24px;line-height:1;transition:transform .2s;margin-left:6px}
+.lvh[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.lv-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+.btn.sm{min-height:44px;font-size:15px;padding:8px 10px}
+.flag{margin-top:14px;border:0;background:none;color:var(--ink-3);font-size:14px;text-decoration:underline;text-underline-offset:3px;padding:6px}
+.flagtxt{width:100%;min-height:120px;margin-top:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);padding:10px;font:14px/1.4 var(--ui)}
+.result .note{text-align:center}
+.more-li{list-style:none;padding:14px 0}
+.more-li .btn{width:100%}
+.opts.nopic .opt{min-height:72px}
+
+/* session */
+.sess-top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 0 10px;margin:-10px 0 4px}
+.x{width:44px;height:44px;border-radius:50%;border:0;background:var(--surface-2);font-size:19px;line-height:1}
+.pbar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s ease}
+.pcount{font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+.stage{display:flex;flex-direction:column;align-items:center;text-align:center}
+.q{margin:8px 0 8px;color:var(--ink-2);font-size:15px}
+.pic-xl{font-size:92px;min-height:112px;display:grid;place-items:center;margin:2px 0 4px}
+.pic-xl .ptx{font-size:.8em}
+.hyw{font-family:var(--hy);font-weight:600;font-size:58px;line-height:1.18;white-space:nowrap;max-width:100%;overflow:hidden;margin:0 0 4px;padding:0 2px}
+.hyw.phrase{white-space:normal;overflow-wrap:anywhere}
+.lt{display:inline-block;animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(.24em)}to{opacity:1;transform:none}}
+.trn{color:var(--ink-2);font-size:17px;margin:0 0 2px;overflow-wrap:anywhere}
+.ruw{font-size:22px;font-weight:600;margin:4px 0 0;overflow-wrap:anywhere}
+.audio{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 2px}
+.aud{height:46px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;gap:8px;font-size:15px}
+.aud svg{width:21px;height:21px}
+.approx{font-size:12px;color:var(--ink-3);margin-top:4px}
+.opts{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.opts.list{grid-template-columns:1fr}
+.opt{min-width:0;min-height:106px;padding:12px 10px;border-radius:18px;border:1.5px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center}
+.o-pic{font-size:38px;min-height:42px;display:grid;place-items:center}
+.o-lbl{font-size:15px;line-height:1.25;overflow-wrap:anywhere}
+.opts.list .opt{min-height:62px;flex-direction:row;justify-content:space-between;padding:12px 16px;text-align:left}
+.o-hy{font-size:25px;line-height:1.2;overflow-wrap:anywhere;min-width:0}
+.o-tr{font-size:14px;color:var(--ink-3);padding-left:10px;text-align:right}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft);animation:pop .32s ease}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft);animation:shake .32s ease}
+.opt.dim{opacity:.45}
+.opt:disabled{cursor:default;color:var(--ink)}
+@keyframes pop{50%{transform:scale(1.035)}}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.play-big{width:116px;height:116px;border-radius:50%;border:0;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;margin:8px 0 10px}
+.play-big svg{width:50px;height:50px}
+.play-big.on{background:var(--accent-press)}
+.slots{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:18px 0 6px;max-width:100%}
+.slot{height:54px;border-radius:12px;border:0;border-bottom:2.5px solid var(--ink-3);background:var(--surface-2);font:600 26px/1 var(--hy);display:grid;place-items:center;padding:0}
+.slot.fill{background:var(--surface);border-bottom-color:var(--accent)}
+.slot.ok{background:var(--ok-soft);border-bottom-color:var(--ok)}
+.slot.bad{background:var(--bad-soft);border-bottom-color:var(--bad)}
+.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px;max-width:100%}
+.tile{min-width:50px;height:54px;padding:0 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font:600 26px/1 var(--hy);box-shadow:0 2px 0 var(--line)}
+.tile.used{visibility:hidden}
+.answer-word{margin-top:10px}
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px))}
+.foot.ok{background:var(--ok-soft);border-top-color:var(--ok)}
+.foot.bad{background:var(--bad-soft);border-top-color:var(--bad)}
+.foot-in{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.fb{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 8px;font-weight:600;font-size:16px}
+.fb.ok{color:var(--ok)}
+.fb.bad{color:var(--bad)}
+.fb .ans{font-weight:400;color:var(--ink);overflow-wrap:anywhere}
+.fb .ans b{font-family:var(--hy);font-weight:600;font-size:20px;margin-right:4px}
+.row2{display:flex;gap:10px}
+.row2 .btn{flex:1}
+
+/* results */
+.result{text-align:center;padding:26px 0 0}
+.apres{font-family:var(--hy);font-weight:700;font-size:66px;line-height:1.1;margin:6px 0 2px}
+.result .sub{color:var(--ink-2);margin:0}
+.score{font-size:20px;margin:22px 0 4px}
+.miss-h{font-size:15px;color:var(--ink-2);margin:20px 0 0;text-align:left}
+.result .words{text-align:left;margin-bottom:22px}
+
+/* settings */
+.set-sec{margin:24px 0 0}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.set-row.col{flex-direction:column;align-items:stretch}
+.lbl{min-width:0}
+.lbl b{display:block;font-weight:600}
+.lbl span{display:block;font-size:14px;color:var(--ink-2)}
+.switch{width:52px;height:32px;border-radius:99px;border:0;background:var(--surface-2);position:relative;flex:none;box-shadow:inset 0 0 0 1px var(--line)}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.switch[aria-pressed="true"]{background:var(--ok);box-shadow:none}
+.switch[aria-pressed="true"]::after{transform:translateX(20px)}
+.seg{display:flex;background:var(--surface-2);border-radius:12px;padding:3px;gap:3px;flex:none}
+.seg button{border:0;background:none;padding:8px 11px;border-radius:9px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+select{width:100%;max-width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+.note{font-size:14px;color:var(--ink-2);margin:8px 0 0;line-height:1.45}
+.legend{list-style:none;margin:8px 0 0;padding:0;font-size:15px}
+.legend li{padding:5px 0}
+.legend b{display:inline-block;min-width:38px;font-weight:600}
+.search{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.filters{margin:10px 0 4px}
+
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:12px;font-size:14px;width:max-content;max-width:min(92vw,460px);z-index:50;transition:opacity .2s,transform .2s;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main id="view"></main>
+<nav id="tabs" aria-label="Разделы">
+  <button class="tab" data-act="tab" data-arg="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg><span>Учить</span></button>
+  <button class="tab" data-act="tab" data-arg="dict"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 19.5V5.5"/></svg><span>Словарь</span></button>
+  <button class="tab" data-act="tab" data-arg="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span>Настройки</span></button>
+</nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+'use strict';
+
+/* ================= DATA ================= */
+const TOPICS=[
+{lv:'A1',ru:'Основы',hy:'Հիմունքներ',ic:'👋',w:[
+['բարև','привет','👋'],['բարև ձեզ','здравствуйте','🤝'],['բարի լույս','доброе утро','🌅'],['բարի երեկո','добрый вечер','🌆'],['բարի գիշեր','спокойной ночи','😴'],['ցտեսություն','до свидания','✌️'],['շնորհակալություն','спасибо','🙏'],['խնդրում եմ','пожалуйста','💁'],['այո','да','✅'],['ոչ','нет','❌'],['ներողություն','извините','🙇'],['լավ','хорошо','👍'],['վատ','плохо','👎']]},
+{lv:'A1',ru:'Местоимения и вопросы',hy:'Դերանուններ',ic:'👉',w:[
+['ես','я','🙋‍♂️'],['դու','ты','👉'],['նա','он, она','🧍‍♀️'],['մենք','мы','👥'],['դուք','вы','👨‍👩‍👧‍👦'],['նրանք','они','👫'],['ինչ','что','❔'],['ով','кто','🕵️'],['որտեղ','где','📍'],['երբ','когда','🕒'],['ինչու','почему','🤷'],['ինչպես','как','⚙️'],['քանի','сколько','🔢']]},
+{lv:'A1',ru:'Числа',hy:'Թվեր',ic:'🔢',w:[
+['զրո','ноль','=0'],['մեկ','один','=1'],['երկու','два','=2'],['երեք','три','=3'],['չորս','четыре','=4'],['հինգ','пять','=5'],['վեց','шесть','=6'],['յոթ','семь','=7'],['ութ','восемь','=8'],['ինը','девять','=9'],['տասը','десять','=10'],['քսան','двадцать','=20'],['երեսուն','тридцать','=30'],['հարյուր','сто','=100'],['հազար','тысяча','=1000']]},
+{lv:'A1',ru:'Семья и люди',hy:'Ընտանիք',ic:'👨‍👩‍👧',w:[
+['ընտանիք','семья','👨‍👩‍👧'],['մայր','мать','👩'],['հայր','отец','👨'],['տատիկ','бабушка','👵'],['պապիկ','дедушка','👴'],['եղբայր','брат','👬'],['քույր','сестра','👭'],['որդի','сын','👦'],['դուստր','дочь','👧'],['երեխա','ребёнок','👶'],['տղա','мальчик, парень','🧒'],['աղջիկ','девочка, девушка','👱‍♀️'],['տղամարդ','мужчина','🧔'],['կին','женщина, жена','👩‍🦰'],['ամուսին','муж, супруг','🤵'],['ընկեր','друг','🫂'],['մարդ','человек','🧑'],['անուն','имя','📛']]},
+{lv:'A1',ru:'Еда и напитки',hy:'Սնունդ',ic:'🍞',w:[
+['հաց','хлеб','🍞'],['լավաշ','лаваш','🫓'],['ջուր','вода','💧'],['կաթ','молоко','🥛'],['սուրճ','кофе','☕'],['թեյ','чай','🍵'],['հյութ','сок','🧃'],['գինի','вино','🍷'],['գարեջուր','пиво','🍺'],['միս','мясо','🥩'],['խորոված','шашлык (хоровац)','🍢'],['ձուկ','рыба','🐟'],['ձու','яйцо','🥚'],['պանիր','сыр','🧀'],['կարագ','сливочное масло','🧈'],['աղ','соль','🧂'],['շաքար','сахар','🍬'],['մեղր','мёд','🍯'],['բրինձ','рис','🍚'],['ապուր','суп','🍲'],['աղցան','салат','🥗'],['տորթ','торт','🎂'],['պաղպաղակ','мороженое','🍦'],['շոկոլադ','шоколад','🍫']]},
+{lv:'A1',ru:'Глаголы: основа',hy:'Բայեր 1',ic:'🚶',w:[
+['լինել','быть','🌟'],['ունենալ','иметь','🤲'],['գնալ','идти, уходить','🚶'],['գալ','приходить','↩️'],['ուտել','есть, кушать','🍝'],['խմել','пить','🥤'],['քնել','спать','🛌'],['արթնանալ','просыпаться','🥱'],['խոսել','говорить','🗣️'],['ասել','сказать','💬'],['լսել','слушать, слышать','🎧'],['տեսնել','видеть','👀'],['նայել','смотреть','🧐'],['կարդալ','читать','📚'],['գրել','писать','✍️'],['սովորել','учить, учиться','📝'],['աշխատել','работать','💼'],['սիրել','любить','😍'],['ուզել','хотеть','🙋'],['գիտենալ','знать','🤓'],['հասկանալ','понимать','🤔'],['անել','делать','🛠️'],['տալ','давать','🎁'],['վերցնել','брать','✊'],['գնել','покупать','🛒'],['վաճառել','продавать','🏷️']]},
+{lv:'A1',ru:'Цвета',hy:'Գույներ',ic:'🎨',w:[
+['կարմիր','красный','#D7263D'],['կապույտ','синий','#1F4FB8'],['երկնագույն','голубой','#79C7F2'],['կանաչ','зелёный','#2E9E4F'],['դեղին','жёлтый','#F5C518'],['նարնջագույն','оранжевый','#F28C28'],['մանուշակագույն','фиолетовый','#7B4BB7'],['վարդագույն','розовый','#F49AC1'],['շագանակագույն','коричневый','#7A4A2A'],['սև','чёрный','#000000'],['սպիտակ','белый','#FFFFFF'],['մոխրագույն','серый','#8E8E93']]},
+{lv:'A1',ru:'Дом и вещи',hy:'Տուն',ic:'🏠',w:[
+['տուն','дом','🏠'],['սենյակ','комната','🛋️'],['խոհանոց','кухня','🍳'],['լոգարան','ванная','🛁'],['զուգարան','туалет','🚽'],['դուռ','дверь','🚪'],['պատուհան','окно','🪟'],['սեղան','стол','🍽️'],['աթոռ','стул','🪑'],['մահճակալ','кровать','🛏️'],['լամպ','лампа','💡'],['բանալի','ключ','🔑'],['հայելի','зеркало','🪞'],['ժամացույց','часы','⌚'],['հեռախոս','телефон','📱'],['համակարգիչ','компьютер','💻'],['հեռուստացույց','телевизор','📺'],['սառնարան','холодильник','🧊'],['գիրք','книга','📖'],['գրիչ','ручка','🖊️'],['մատիտ','карандаш','✏️'],['թուղթ','бумага','📄'],['պայուսակ','сумка','👜'],['բաժակ','стакан, чашка','🥃'],['ափսե','тарелка','🥣'],['դանակ','нож','🔪'],['պատառաքաղ','вилка','🍴'],['գդալ','ложка','🥄'],['օճառ','мыло','🧼']]},
+{lv:'A1',ru:'Город и транспорт',hy:'Քաղաք',ic:'🏙️',w:[
+['քաղաք','город','🏙️'],['գյուղ','деревня','🌾'],['փողոց','улица','🛣️'],['հրապարակ','площадь','⛲'],['այգի','сад, парк','🌷'],['խանութ','магазин','🏪'],['շուկա','рынок','🧺'],['դպրոց','школа','🏫'],['համալսարան','университет','🎓'],['եկեղեցի','церковь','⛪'],['բանկ','банк','🏦'],['հյուրանոց','гостиница','🏨'],['ռեստորան','ресторан','🥂'],['սրճարան','кафе','🥐'],['թանգարան','музей','🏛️'],['կայարան','вокзал','🚉'],['օդանավակայան','аэропорт','🛫'],['մեքենա','машина','🚗'],['ավտոբուս','автобус','🚌'],['տաքսի','такси','🚕'],['գնացք','поезд','🚆'],['ինքնաթիռ','самолёт','✈️'],['մետրո','метро','🚇'],['կամուրջ','мост','🌉'],['տոմս','билет','🎫'],['փող','деньги','💵'],['դրամ','драм (валюта)','🪙']]},
+{lv:'A1',ru:'Время',hy:'Ժամանակ',ic:'⏰',w:[
+['ժամանակ','время','🕰️'],['ժամ','час','🕐'],['րոպե','минута','⏱️'],['օր','день','📅'],['գիշեր','ночь','🌃'],['առավոտ','утро','🌄'],['երեկո','вечер','🌇'],['այսօր','сегодня','📌'],['վաղը','завтра','⏭️'],['երեկ','вчера','⏮️'],['հիմա','сейчас','⏰'],['ամիս','месяц','🗓️'],['տարի','год','🎆'],['ձմեռ','зима','⛄'],['գարուն','весна','🌱'],['ամառ','лето','🏖️'],['աշուն','осень','🍂']]},
+{lv:'A1',ru:'Дни недели',hy:'Շաբաթվա օրեր',ic:'📆',w:[
+['երկուշաբթի','понедельник','=Пн'],['երեքշաբթի','вторник','=Вт'],['չորեքշաբթի','среда','=Ср'],['հինգշաբթի','четверг','=Чт'],['ուրբաթ','пятница','=Пт'],['շաբաթ','суббота; неделя','=Сб'],['կիրակի','воскресенье','=Вс']]},
+{lv:'A1',ru:'Прилагательные',hy:'Ածականներ',ic:'🌈',w:[
+['մեծ','большой','🦣'],['փոքր','маленький','🐜'],['գեղեցիկ','красивый','🌺'],['նոր','новый','🆕'],['հին','старый (о вещах)','🏚️'],['ծեր','старый (о людях)','🧓'],['երիտասարդ','молодой','🛹'],['տաք','тёплый, горячий','🥵'],['սառը','холодный','🥶'],['արագ','быстрый','⚡'],['դանդաղ','медленный','🐌'],['երկար','длинный','📏'],['կարճ','короткий','✂️'],['բարձր','высокий','🦒'],['ցածր','низкий','⬇️'],['ուրախ','весёлый','😄'],['տխուր','грустный','😞'],['հոգնած','усталый','😩'],['քաղցած','голодный','🤤'],['համեղ','вкусный','😋'],['հեշտ','лёгкий, простой','👌'],['դժվար','трудный','😓'],['թանկ','дорогой','💎'],['էժան','дешёвый','📉'],['մաքուր','чистый','✨'],['կեղտոտ','грязный','🗑️'],['ուժեղ','сильный','🏋️'],['թույլ','слабый','🥀'],['հարուստ','богатый','🤑'],['աղքատ','бедный','🥺'],['ճիշտ','правильный','✔️'],['սխալ','неправильный; ошибка','✖️'],['շատ','много, очень','➕'],['քիչ','мало','➖']]},
+{lv:'A1',ru:'Фрукты и овощи',hy:'Մրգեր և բանջարեղեն',ic:'🍑',w:[
+['խնձոր','яблоко','🍎'],['տանձ','груша','🍐'],['խաղող','виноград','🍇'],['ծիրան','абрикос','🍑'],['բալ','вишня','🍒'],['ելակ','клубника','🍓'],['ձմերուկ','арбуз','🍉'],['սեխ','дыня','🍈'],['բանան','банан','🍌'],['նարինջ','апельсин','🍊'],['կիտրոն','лимон','🍋'],['ընկույզ','орех','🌰'],['կարտոֆիլ','картофель','🥔'],['լոլիկ','помидор','🍅'],['վարունգ','огурец','🥒'],['սոխ','лук','🧅'],['սխտոր','чеснок','🧄'],['գազար','морковь','🥕'],['կաղամբ','капуста','🥬'],['պղպեղ','перец','🌶️'],['եգիպտացորեն','кукуруза','🌽'],['սունկ','гриб','🍄']]},
+{lv:'A1',ru:'Животные',hy:'Կենդանիներ',ic:'🐾',w:[
+['շուն','собака','🐕'],['կատու','кошка','🐈'],['ձի','лошадь','🐎'],['կով','корова','🐄'],['ոչխար','овца','🐑'],['այծ','коза','🐐'],['խոզ','свинья','🐖'],['հավ','курица','🐔'],['աքաղաղ','петух','🐓'],['բադ','утка','🦆'],['թռչուն','птица','🐦'],['աղավնի','голубь','🕊️'],['արծիվ','орёл','🦅'],['բու','сова','🦉'],['արջ','медведь','🐻'],['գայլ','волк','🐺'],['աղվես','лиса','🦊'],['նապաստակ','заяц, кролик','🐇'],['սկյուռ','белка','🐿️'],['ոզնի','ёж','🦔'],['մուկ','мышь','🐁'],['առյուծ','лев','🦁'],['վագր','тигр','🐅'],['փիղ','слон','🐘'],['կապիկ','обезьяна','🐒'],['ուղտ','верблюд','🐪'],['օձ','змея','🐍'],['գորտ','лягушка','🐸'],['կրիա','черепаха','🐢'],['կետ','кит','🐋'],['դելֆին','дельфин','🐬'],['մեղու','пчела','🐝'],['թիթեռ','бабочка','🦋'],['ճանճ','муха','🪰']]},
+{lv:'A1',ru:'Тело',hy:'Մարմին',ic:'🖐️',w:[
+['գլուխ','голова','🧑‍🦲'],['դեմք','лицо','😊'],['աչք','глаз','👁️'],['ականջ','ухо','👂'],['քիթ','нос','👃'],['բերան','рот','👄'],['ատամ','зуб','🦷'],['լեզու','язык','👅'],['մազ','волосы','💇'],['ձեռք','рука','✋'],['մատ','палец','👆'],['ոտք','нога','🦵'],['սիրտ','сердце','❤️'],['ուղեղ','мозг','🧠'],['ոսկոր','кость','🦴']]},
+{lv:'A1',ru:'Медицина и лаборатория',hy:'Բժշկություն',ic:'🩺',w:[
+['բժիշկ','врач','🧑‍⚕️'],['բուժքույր','медсестра','👩‍⚕️'],['հիվանդ','больной, пациент','🤒'],['հիվանդանոց','больница','🏥'],['դեղ','лекарство','💊'],['դեղատուն','аптека','⚕️'],['շտապ օգնություն','скорая помощь','🚑'],['ցավ','боль','🤕'],['ջերմություն','жар, температура','🌡️'],['ճնշում','давление','🩺'],['ներարկում','укол','💉'],['արյուն','кровь','🩸'],['արյան խումբ','группа крови','🆎'],['վիրահատություն','операция','😷'],['ախտորոշում','диагноз','📋'],['առողջ','здоровый','💪'],['առողջություն','здоровье','💚'],['լաբորատորիա','лаборатория','🥼'],['մանրադիտակ','микроскоп','🔬'],['հետազոտություն','исследование','🔎'],['վերլուծություն','анализ','📊'],['նմուշ','образец','🧫'],['փորձանոթ','пробирка','🧪'],['արդյունք','результат','📈'],['բջիջ','клетка','🔘'],['մանրէ','микроб, бактерия','🦠'],['վիրուս','вирус','🤧'],['ուռուցք','опухоль','🔴'],['քաղցկեղ','рак','🎗️'],['գեն','ген','🧬'],['մուտացիա','мутация','🔀'],['ժառանգական','наследственный','👪']]},
+{lv:'A1',ru:'Природа и погода',hy:'Բնություն',ic:'🌿',w:[
+['արև','солнце','☀️'],['լուսին','луна','🌙'],['աստղ','звезда','⭐'],['երկինք','небо','🌌'],['ամպ','облако','☁️'],['անձրև','дождь','🌧️'],['ձյուն','снег','❄️'],['քամի','ветер','🌬️'],['եղանակ','погода','🌦️'],['սար','гора','⛰️'],['ծով','море','🌊'],['լիճ','озеро','🏞️'],['գետ','река','🛶'],['ծառ','дерево','🌳'],['անտառ','лес','🌲'],['ծաղիկ','цветок','🌸'],['վարդ','роза','🌹'],['խոտ','трава','🌿'],['քար','камень','🪨'],['կրակ','огонь','🔥'],['օդ','воздух','💨'],['երկիր','страна, Земля','🌍']]},
+{lv:'A1',ru:'Глаголы: действия',hy:'Բայեր 2',ic:'🏃',w:[
+['բացել','открывать','🔓'],['փակել','закрывать','🔒'],['նստել','сидеть','🧘'],['կանգնել','стоять','🧍'],['վազել','бегать','🏃'],['լողալ','плавать','🏊'],['պարել','танцевать','💃'],['երգել','петь','🎤'],['խաղալ','играть','🎮'],['ծիծաղել','смеяться','😂'],['լացել','плакать','😢'],['սպասել','ждать','⏳'],['օգնել','помогать','🆘'],['ապրել','жить','🏡'],['մտածել','думать','💭'],['սկսել','начинать','▶️'],['վերջացնել','заканчивать','⏹️'],['եփել','варить, готовить','🥘'],['լվանալ','мыть','🧽'],['հագնել','надевать','👔'],['զանգել','звонить','📞'],['ճանապարհորդել','путешествовать','🧳'],['բերել','приносить','📦'],['հարցնել','спрашивать','❓'],['պատասխանել','отвечать','❗']]},
+{lv:'A1',ru:'Одежда',hy:'Հագուստ',ic:'👕',w:[
+['շապիկ','футболка, рубашка','👕'],['տաբատ','брюки','👖'],['զգեստ','платье','👗'],['կոշիկ','обувь, ботинок','👞'],['գլխարկ','шапка, шляпа','🧢'],['վերարկու','пальто','🧥'],['գուլպա','носок','🧦'],['ձեռնոց','перчатка','🧤'],['շարֆ','шарф','🧣'],['ակնոց','очки','👓'],['հովանոց','зонт','☂️'],['մատանի','кольцо','💍']]},
+{lv:'A1',ru:'Профессии и работа',hy:'Մասնագիտություններ',ic:'💼',w:[
+['աշխատանք','работа','🏢'],['ուսուցիչ','учитель','🧑‍🏫'],['ուսանող','студент','🧑‍🎓'],['աշակերտ','школьник, ученик','🎒'],['վարորդ','водитель','🚘'],['խոհարար','повар','🧑‍🍳'],['ոստիկան','полицейский','👮'],['ինժեներ','инженер','👷'],['ծրագրավորող','программист','👨‍💻'],['իրավաբան','юрист','⚖️'],['վաճառող','продавец','🧾'],['գյուղացի','крестьянин','👨‍🌾'],['դերասան','актёр','🎭'],['նկարիչ','художник','👨‍🎨'],['երաժիշտ','музыкант','🎻'],['լրագրող','журналист','📰']]},
+{lv:'A2',ru:'Местоимения 2',hy:'Դերանուններ 2',ic:'🫂',d:`
+իմ|мой|
+քո|твой|
+նրա|его, её|
+մեր|наш|
+ձեր|ваш|
+նրանց|их|
+ինքը|сам, сама|
+իրար|друг друга|
+այս|этот|
+այդ|этот, тот (у тебя)|
+այն|тот|
+այսպիսի|такой (как этот)|
+որևէ|какой-нибудь|
+յուրաքանչյուր|каждый|
+ամեն|каждый, всякий|
+բոլոր|все|
+որոշ|некоторые|
+մյուս|другой, остальной|
+ոչինչ|ничего|
+ոչ ոք|никто|
+բան|вещь; что-то|
+որը|который|
+ուր|куда|
+որտեղից|откуда|
+ինչքան|сколько (разг.)|
+`},
+{lv:'A2',ru:'Внешность и характер',hy:'Արտաքին և բնավորություն',ic:'🧑',d:`
+բարի|добрый|😇
+չար|злой|😠
+խելացի|умный|🧠
+հիմար|глупый|🤪
+ազնիվ|честный|
+ստախոս|лгун, лживый|🤥
+քաղաքավարի|вежливый|🎩
+կոպիտ|грубый|😤
+համբերատար|терпеливый|
+հանգիստ|спокойный|😌
+նյարդային|нервный|😬
+ամաչկոտ|застенчивый|😳
+համարձակ|смелый|🦸
+վախկոտ|трусливый|😨
+ծույլ|ленивый|🦥
+աշխատասեր|трудолюбивый|
+լուրջ|серьёзный|
+զվարճալի|забавный|🤡
+հետաքրքիր|интересный|🤩
+ձանձրալի|скучный|😑
+ընկերասեր|дружелюбный|🤗
+բարեհամբույր|приветливый|
+եսասեր|эгоистичный|
+առատաձեռն|щедрый|
+ագահ|жадный|
+խորամանկ|хитрый|
+գեր|толстый|
+նիհար|худой|
+բարձրահասակ|высокий (о росте)|
+կարճահասակ|невысокий|
+սիրուն|красивый, милый|
+տգեղ|некрасивый|
+շիկահեր|светловолосый|👱
+թխահեր|темноволосый|
+մորուք|борода|
+բեղ|усы|🥸
+տարիք|возраст|
+տարեկան|…летний (о возрасте); годовой|
+նման|похожий|
+տարբեր|разный|
+ժպիտ|улыбка|😁
+հասակ|рост (человека)|
+քաշ|вес|
+գեղեցկություն|красота|
+հպարտ|гордый|
+համեստ|скромный|
+ինքնավստահ|уверенный в себе|😎
+խենթ|сумасшедший|
+զգույշ|осторожный|
+ուշադիր|внимательный|
+անփույթ|небрежный|
+ճշտապահ|пунктуальный|
+հավատարիմ|верный|
+`},
+{lv:'A2',ru:'Чувства',hy:'Զգացմունքներ',ic:'💞',d:`
+զգացմունք|чувство|
+սեր|любовь|💞
+ատելություն|ненависть|
+ուրախություն|радость|
+տխրություն|грусть|
+վախ|страх|😱
+զայրույթ|гнев|😡
+բարկանալ|сердиться|
+զարմանք|удивление|😲
+զարմանալ|удивляться|
+ամոթ|стыд|
+ամաչել|стыдиться|
+հույս|надежда|
+հուսալ|надеяться|
+երազ|мечта; сон|🌠
+երազել|мечтать|
+կարոտ|тоска (по кому-то)|
+կարոտել|скучать (по кому-то)|
+նախանձ|зависть|
+երջանիկ|счастливый|
+երջանկություն|счастье|
+դժբախտ|несчастный|
+միայնակ|одинокий|
+անհանգիստ|беспокойный|
+անհանգստանալ|беспокоиться|
+վախենալ|бояться|
+սթրես|стресс|
+տրամադրություն|настроение|
+զգալ|чувствовать|
+հուզված|взволнованный|
+հուզվել|волноваться|
+գոհ|довольный|
+դժգոհ|недовольный|
+ձանձրանալ|скучать (от скуки)|
+ներել|прощать|
+վստահել|доверять|
+վստահություն|доверие|
+հարգանք|уважение|
+հարգել|уважать|
+ցավակցել|соболезновать|
+`},
+{lv:'A2',ru:'Родня и отношения',hy:'Հարազատներ',ic:'💑',d:`
+ծնողներ|родители|
+զարմիկ|двоюродный брат|
+զարմուհի|двоюродная сестра|
+հորեղբայր|дядя (брат отца)|
+քեռի|дядя (брат матери)|
+հորաքույր|тётя (сестра отца)|
+մորաքույր|тётя (сестра матери)|
+թոռ|внук, внучка|
+հարսանիք|свадьба|💒
+հարս|невеста; невестка|👰
+փեսա|жених; зять|
+սկեսուր|свекровь|
+սկեսրայր|свёкор|
+զոքանչ|тёща|
+աներ|тесть|
+ամուսնանալ|жениться, выйти замуж|💍
+ամուսնացած|женат, замужем|
+ամուսնալուծվել|развестись|
+ամուրի|холост, не замужем|
+նորածին|новорождённый|🍼
+ծնվել|родиться|
+ծննդյան օր|день рождения|🎉
+սիրահարված|влюблённый|💘
+սիրահարվել|влюбиться|
+զույգ|пара|💑
+հարազատ|родной; родственник|
+բարեկամ|родственник|
+հարևան|сосед|🏘️
+ծանոթ|знакомый|
+ծանոթանալ|знакомиться|
+հյուր|гость|
+հրավիրել|приглашать|💌
+այցելել|навещать, посещать|
+կնքահայր|крёстный|
+կնքամայր|крёстная|
+որբ|сирота|
+սերունդ|поколение|
+`},
+{lv:'A2',ru:'Дом и быт',hy:'Կենցաղ',ic:'🧹',d:`
+բնակարան|квартира|
+շենք|здание|🏢
+հարկ|этаж; налог|
+վերելակ|лифт|🛗
+աստիճան|ступенька; градус|
+պատշգամբ|балкон|
+բակ|двор|
+տանիք|крыша|
+պատ|стена|🧱
+հատակ|пол|
+առաստաղ|потолок|
+միջանցք|коридор|
+ննջասենյակ|спальня|
+հյուրասենյակ|гостиная|
+պահարան|шкаф|🗄️
+բազմոց|диван|
+բարձ|подушка|
+վերմակ|одеяло|
+սավան|простыня|
+գորգ|ковёр|
+վարագույր|штора|
+դարակ|полка|
+գզրոց|ящик (выдвижной)|
+լվացքի մեքենա|стиральная машина|
+արդուկ|утюг|
+փոշեկուլ|пылесос|
+ավել|веник|🧹
+աղբ|мусор|
+աղբարկղ|мусорное ведро|
+լույս|свет|
+էլեկտրականություն|электричество|🔌
+գազ|газ|
+ծորակ|кран|🚰
+լվացարան|раковина|
+ցնցուղ|душ|🚿
+սրբիչ|полотенце|
+ատամի խոզանակ|зубная щётка|🪥
+ատամի մածուկ|зубная паста|
+շամպուն|шампунь|🧴
+սանր|расчёска|
+վառարան|печь|
+կաթսա|кастрюля|
+թավա|сковорода|
+գավաթ|кружка; кубок|
+շիշ|бутылка|🍾
+տուփ|коробка|
+տոպրակ|пакет|🛍️
+մոմ|свеча|🕯️
+ծաղկաման|ваза|🏺
+նկար|картина, рисунок|🖼️
+լուսանկար|фотография|📷
+վարձ|плата, аренда|
+տանտեր|хозяин дома|
+մաքրել|чистить, убирать|
+հավաքել|собирать, убирать|
+լվացք|стирка|
+արդուկել|гладить (утюгом)|
+վերանորոգում|ремонт|🔨
+տեղափոխվել|переезжать|
+`},
+{lv:'A2',ru:'Кухня и блюда',hy:'Խոհանոց',ic:'🍲',d:`
+նախաճաշ|завтрак|🥞
+ճաշ|обед|🍛
+ընթրիք|ужин|
+կերակուր|еда, пища|
+ուտեստ|блюдо|
+բաղադրատոմս|рецепт (блюда)|
+միրգ|фрукт|🍏
+բանջարեղեն|овощи|🥦
+տավարի միս|говядина|
+խոզի միս|свинина|
+գառան միս|баранина|
+հավի միս|курятина|🍗
+երշիկ|колбаса|
+նրբերշիկ|сосиска|🌭
+կոտլետ|котлета|
+տոլմա|толма|
+խաշ|хаш|
+մածուն|мацун|
+թթվասեր|сметана|
+կաթնաշոռ|творог|
+յուղ|масло (растительное)|
+ձիթապտուղ|оливки|🫒
+ալյուր|мука|
+խմոր|тесто|
+բլիթ|блин, лепёшка|
+կարկանդակ|пирог|🥧
+թխվածք|выпечка|
+կոնֆետ|конфета|
+մուրաբա|варенье|
+հնդկաձավար|гречка|
+մակարոն|макароны|
+լոբի|фасоль|
+ոլոռ|горох|
+սիսեռ|нут|
+ոսպ|чечевица|
+կանաչի|зелень|
+համեմ|кинза|
+սամիթ|укроп|
+մաղադանոս|петрушка|
+ռեհան|базилик|
+դդում|тыква|🎃
+սմբուկ|баклажан|🍆
+դդմիկ|кабачок|
+բազուկ|свёкла|
+բողկ|редис|
+սալոր|слива|
+դեղձ|персик|
+սերկևիլ|айва|
+թուզ|инжир|
+նուռ|гранат|
+կեռաս|черешня|
+ազնվամորի|малина|
+տխիլ|фундук|
+նուշ|миндаль|
+քաղցր|сладкий|🍭
+աղի|солёный|
+թթու|кислый|
+դառը|горький|
+կծու|острый (на вкус)|
+թարմ|свежий|
+եփած|варёный|
+տապակած|жареный|
+տապակել|жарить|
+խորովել|жарить на огне|
+կտրատել|резать|
+խառնել|смешивать|
+համտեսել|пробовать (на вкус)|
+բարի ախորժակ|приятного аппетита|
+մատուցող|официант|
+հաշիվ|счёт|🧾
+թեյավճար|чаевые|
+ճաշացանկ|меню|📜
+`},
+{lv:'A2',ru:'Покупки и деньги',hy:'Գնումներ',ic:'🛍️',d:`
+գնում|покупка|
+գին|цена|
+արժենալ|стоить|
+զեղչ|скидка|
+վճարել|платить|💳
+կանխիկ|наличные|
+քարտ|карта (банковская)|
+մանր|мелочь (деньги); мелкий|
+վաճառք|продажа|
+սուպերմարկետ|супермаркет|
+դրամարկղ|касса|
+գանձապահ|кассир|
+հերթ|очередь|
+չափս|размер|
+փորձել|пробовать; примерять|
+փոխել|менять|🔁
+վերադարձնել|возвращать (вещь)|
+ապրանք|товар|
+որակ|качество|
+քանակ|количество|
+կիլոգրամ|килограмм|⚖️
+գրամ|грамм|
+լիտր|литр|
+կտոր|кусок|
+հատ|штука|
+ծախսել|тратить|
+խնայել|экономить|
+պարտք|долг|
+վարկ|кредит|
+աշխատավարձ|зарплата|💰
+եկամուտ|доход|
+ծախս|расход|
+բանկոմատ|банкомат|🏧
+փոխանակում|обмен|💱
+դոլար|доллар|💲
+եվրո|евро|💶
+ռուբլի|рубль|
+անվճար|бесплатный|🆓
+նվեր|подарок|
+պատվիրել|заказывать|
+առաքում|доставка|🚚
+`},
+{lv:'A2',ru:'По городу',hy:'Քաղաքում',ic:'🚦',d:`
+կենտրոն|центр|🎯
+թաղամաս|район, квартал|
+արվարձան|пригород|
+պողոտա|проспект|
+անկյուն|угол|
+խաչմերուկ|перекрёсток|
+լուսացույց|светофор|🚦
+մայթ|тротуар|
+կանգառ|остановка|🚏
+հասցե|адрес|
+փոստ|почта|📮
+նամակ|письмо|✉️
+ծրար|конверт|
+դեսպանատուն|посольство|
+ոստիկանություն|полиция|🚓
+հրշեջ|пожарный|🚒
+գրադարան|библиотека|
+թատրոն|театр|
+կինոթատրոն|кинотеатр|🎬
+մարզադաշտ|стадион|🏟️
+լողավազան|бассейн|
+վարսավիրանոց|парикмахерская|💈
+գործարան|завод|🏭
+գրասենյակ|офис|
+քաղաքապետարան|мэрия|
+վանք|монастырь|
+արձան|статуя|🗽
+հուշարձան|памятник|
+շատրվան|фонтан|
+կայանատեղի|парковка|🅿️
+բենզալցակայան|заправка|⛽
+ճանապարհ|дорога, путь|
+թունել|тоннель|
+նավահանգիստ|порт|⚓
+բնակիչ|житель|
+մայրաքաղաք|столица|
+շրջան|район, округ; круг|
+մարզ|область (в Армении)|
+ձախ|левый, налево|⬅️
+աջ|правый, направо|➡️
+ուղիղ|прямо; прямой|⬆️
+մոտիկ|близкий, близко|
+հեռու|далеко|
+`},
+{lv:'A2',ru:'Поездки и транспорт',hy:'Ճանապարհին',ic:'🧳',d:`
+ճանապարհորդություն|путешествие|
+ուղևորություն|поездка|
+ուղևոր|пассажир|
+ավիատոմս|авиабилет|
+թռիչք|рейс, полёт|
+թռչել|летать|
+ուղեբեռ|багаж|
+ճամպրուկ|чемодан|
+անձնագիր|паспорт|🛂
+վիզա|виза|
+սահման|граница|
+մաքսատուն|таможня|
+քարտեզ|карта (географическая)|🗺️
+ուղեցույց|путеводитель|
+զբոսաշրջիկ|турист|
+արձակուրդ|отпуск|
+ամրագրել|бронировать; фиксировать, закреплять|
+մեկնել|уезжать, отправляться|
+ժամանել|прибывать|
+մեկնում|отправление|
+ժամանում|прибытие|
+ուշանալ|опаздывать|
+հասնել|добираться, достигать|
+իջնել|выходить (из транспорта), спускаться|
+հեծանիվ|велосипед|🚲
+մոտոցիկլետ|мотоцикл|🏍️
+բեռնատար|грузовик|
+նավ|корабль|🚢
+նավակ|лодка|🚤
+ուղղաթիռ|вертолёт|🚁
+երթուղային տաքսի|маршрутка|🚐
+տրոլեյբուս|троллейбус|🚎
+երթևեկություն|дорожное движение|
+խցանում|пробка|
+արագություն|скорость|
+վթար|авария|💥
+վարորդական իրավունք|водительские права|
+վարել|водить (машину)|
+կայանել|парковаться|
+ուղղություն|направление|🧭
+հյուսիս|север|
+հարավ|юг|
+արևելք|восток|
+արևմուտք|запад|
+`},
+{lv:'A2',ru:'Календарь и время',hy:'Օրացույց',ic:'🗓️',d:`
+հունվար|январь|=Янв
+փետրվար|февраль|=Фев
+մարտ|март|=Мар
+ապրիլ|апрель|=Апр
+մայիս|май|=Май
+հունիս|июнь|=Июн
+հուլիս|июль|=Июл
+օգոստոս|август|=Авг
+սեպտեմբեր|сентябрь|=Сен
+հոկտեմբեր|октябрь|=Окт
+նոյեմբեր|ноябрь|=Ноя
+դեկտեմբեր|декабрь|=Дек
+օրացույց|календарь|
+վայրկյան|секунда|
+կեսօր|полдень|
+կեսգիշեր|полночь|
+ցերեկ|день (светлое время)|
+առավոտյան|утром|
+երեկոյան|вечером|
+գիշերը|ночью|
+հաջորդ|следующий|
+նախորդ|предыдущий|
+անցյալ|прошлый; прошлое|
+ապագա|будущее; будущий|
+ներկա|настоящее; присутствующий|
+դար|век|
+տասնամյակ|десятилетие|
+տոն|праздник|
+Նոր տարի|Новый год|🎄
+Սուրբ Ծնունդ|Рождество|
+հանգստյան օր|выходной день|
+աշխատանքային օր|рабочий день|
+շաբաթավերջ|выходные (конец недели)|
+վաղ|рано|
+ուշ|поздно|
+միշտ|всегда|
+երբեք|никогда|
+հաճախ|часто|
+երբեմն|иногда|
+հազվադեպ|редко|
+արդեն|уже|
+դեռ|ещё, пока|
+հետո|потом|
+առաջ|раньше; вперёд|
+շուտով|скоро|
+անմիջապես|немедленно|
+վերջերս|недавно|
+միանգամից|сразу|
+օրական|в день, ежедневно|
+ամեն օր|каждый день|
+ժամկետ|срок|
+տևել|длиться|
+`},
+{lv:'A2',ru:'Погода и природа',hy:'Եղանակ և բնություն',ic:'⛅',d:`
+արևոտ|солнечный|🌞
+ամպամած|облачный|🌥️
+անձրևոտ|дождливый|☔
+քամոտ|ветреный|
+մառախուղ|туман|🌫️
+կարկուտ|град|
+ամպրոպ|гроза|⛈️
+կայծակ|молния|🌩️
+ծիածան|радуга|🌈
+ջերմաստիճան|температура (воздуха)|
+շոգ|жара|
+սառնամանիք|мороз|
+սառույց|лёд|
+կլիմա|климат|
+բնություն|природа|
+դաշտ|поле|
+հովիտ|долина|
+ձոր|ущелье|
+բլուր|холм|
+գագաթ|вершина|🏔️
+լեռ|гора (лит.)|
+հրաբուխ|вулкан|🌋
+ջրվեժ|водопад|
+աղբյուր|родник, источник|
+ափ|берег; ладонь|
+կղզի|остров|🏝️
+անապատ|пустыня|🏜️
+ավազ|песок|
+քարանձավ|пещера|
+ալիք|волна|
+տերև|лист (дерева)|🍃
+ճյուղ|ветка|
+արմատ|корень|
+սերմ|семя|
+բույս|растение|🪴
+թուփ|куст|
+երկրաշարժ|землетрясение|
+ջրհեղեղ|наводнение|
+հրդեհ|пожар|
+արևածագ|восход|
+մայրամուտ|закат|
+տիեզերք|космос, вселенная|🪐
+մոլորակ|планета|
+`},
+{lv:'A2',ru:'Тело и здоровье',hy:'Մարմին և առողջություն',ic:'🩹',d:`
+պարանոց|шея|
+ուս|плечо|
+կուրծք|грудь|
+մեջք|спина|
+փոր|живот|
+ստամոքս|желудок|
+թոքեր|лёгкие|🫁
+լյարդ|печень|
+երիկամ|почка|
+արմունկ|локоть|
+ծունկ|колено|
+ոտնաթաթ|стопа|🦶
+եղունգ|ноготь|💅
+մաշկ|кожа (тела)|
+շրթունք|губа|
+այտ|щека|
+ճակատ|лоб|
+հոնք|бровь|
+թարթիչ|ресница|
+կզակ|подбородок|
+կոկորդ|горло|
+երակ|вена|
+մկան|мышца|
+ողնաշար|позвоночник|
+հիվանդություն|болезнь|
+հիվանդանալ|заболеть|
+մրսել|простудиться; мёрзнуть|
+հազ|кашель|
+հազալ|кашлять|
+փռշտալ|чихать|
+գլխացավ|головная боль|
+ատամնացավ|зубная боль|
+սրտխառնոց|тошнота|🤢
+գլխապտույտ|головокружение|😵
+թուլություն|слабость|
+վնասվածք|травма|
+կոտրվածք|перелом|
+այրվածք|ожог|
+վերք|рана|🩹
+արյունահոսություն|кровотечение|
+բուժել|лечить|
+բուժում|лечение|
+ապաքինվել|выздоравливать|
+դեղատոմս|рецепт (врача)|
+հաբ|таблетка|
+օշարակ|сироп|
+քսուք|мазь|
+վիրակապ|бинт|
+պատվաստում|прививка|
+ալերգիա|аллергия|
+ատամնաբույժ|стоматолог|
+ակնաբույժ|офтальмолог|
+մանկաբույժ|педиатр|
+հղի|беременная|🤰
+անքնություն|бессонница|
+`},
+{lv:'A2',ru:'Одежда и аксессуары',hy:'Պարագաներ',ic:'👗',d:`
+վերնաշապիկ|рубашка|
+բաճկոն|куртка|
+կոստյում|костюм|
+փողկապ|галстук|
+գոտի|ремень, пояс|
+շրջազգեստ|юбка|
+սվիտեր|свитер|
+ներքնազգեստ|нижнее бельё|
+գիշերազգեստ|пижама|
+լողազգեստ|купальник|👙
+սպորտային կոշիկ|кроссовки|👟
+սանդալ|сандалии|👡
+երկարաճիտ կոշիկ|сапоги|👢
+հողաթափ|тапочки|🥿
+գլխաշոր|платок|
+գրպան|карман|
+կոճակ|пуговица|
+օձիք|воротник|
+թև|рукав; крыло|
+զարդ|украшение|
+ականջօղ|серьга|
+վզնոց|ожерелье|📿
+ապարանջան|браслет|
+դրամապանակ|кошелёк|👛
+ուսապարկ|рюкзак|
+արևային ակնոց|солнечные очки|🕶️
+նորաձևություն|мода|
+ոճ|стиль|
+հագնվել|одеваться|
+հանել|снимать|
+կարել|шить|🧵
+մետաքս|шёлк|
+բամբակ|хлопок|
+բուրդ|шерсть|🧶
+կաշի|кожа (материал)|
+`},
+{lv:'A2',ru:'Учёба и работа',hy:'Ուսում և աշխատանք',ic:'📚',d:`
+դաս|урок|
+դասարան|класс|
+դասագիրք|учебник|📕
+տետր|тетрадь|📓
+ռետին|ластик|
+քանոն|линейка|
+գրատախտակ|доска (школьная)|
+տնային աշխատանք|домашнее задание|
+քննություն|экзамен|
+գնահատական|оценка|
+հարց|вопрос|
+պատասխան|ответ|
+վարժություն|упражнение|
+առաջադրանք|задание|
+բառ|слово|
+նախադասություն|предложение (фраза)|
+տառ|буква|🔤
+այբուբեն|алфавит|
+թարգմանել|переводить|
+թարգմանություն|перевод|
+բառարան|словарь|
+կրկնել|повторять|
+հիշել|помнить|
+մոռանալ|забывать|
+բացատրել|объяснять|
+դասախոս|преподаватель (вуза)|
+ֆակուլտետ|факультет|
+կուրս|курс|
+դիպլոմ|диплом|
+գիտելիք|знание|
+ուսում|учёба|
+կրթություն|образование|
+գործ|дело, работа|
+պաշտոն|должность|
+տնօրեն|директор|
+ղեկավար|руководитель|
+գործընկեր|коллега|
+հաճախորդ|клиент|
+հանդիպում|встреча|
+ժողով|собрание|
+պայմանագիր|договор|
+փաստաթուղթ|документ|
+ստորագրել|подписывать|
+ստորագրություն|подпись|
+դիմում|заявление|
+հարցազրույց|собеседование, интервью|
+փորձ|опыт; попытка|
+թոշակ|пенсия; стипендия|
+թոշակառու|пенсионер|
+գործազուրկ|безработный|
+աշխատող|работник|
+գործատու|работодатель|
+հերթափոխ|смена|
+արտադրություն|производство|
+`},
+{lv:'A2',ru:'Отдых и спорт',hy:'Հանգիստ և սպորտ',ic:'⚽',d:`
+ազատ ժամանակ|свободное время|
+հոբբի|хобби|
+խաղ|игра|🎲
+ֆուտբոլ|футбол|⚽
+բասկետբոլ|баскетбол|🏀
+վոլեյբոլ|волейбол|🏐
+թենիս|теннис|🎾
+շախմատ|шахматы|♟️
+նարդի|нарды|
+լող|плавание|
+վազք|бег|
+մարզում|тренировка|
+մարզիչ|тренер|
+մարզիկ|спортсмен|
+թիմ|команда|
+խաղացող|игрок|
+գնդակ|мяч|
+մրցում|соревнование|🏅
+հաղթել|побеждать|
+պարտվել|проигрывать|
+հաղթանակ|победа|
+մարզադահլիճ|спортзал|
+լեռնագնացություն|альпинизм|🧗
+արշավ|поход|🥾
+վրան|палатка|⛺
+ձկնորսություն|рыбалка|🎣
+որս|охота|
+լուսանկարչություն|фотография (занятие)|
+նկարչություն|живопись, рисование|
+երաժշտություն|музыка|🎵
+երգ|песня|🎶
+պար|танец|
+համերգ|концерт|
+կիթառ|гитара|🎸
+դաշնամուր|фортепиано|🎹
+ջութակ|скрипка|
+թմբուկ|барабан|🥁
+ֆիլմ|фильм|🎞️
+սերիալ|сериал|
+կինո|кино|
+ցուցահանդես|выставка|
+հավաքածու|коллекция|
+հանգստանալ|отдыхать|
+զբոսնել|гулять|
+զբոսանք|прогулка|
+լողափ|пляж|
+խնջույք|вечеринка, застолье|🥳
+կենաց|тост (застольный)|
+խաղալիք|игрушка|🧸
+`},
+{lv:'A2',ru:'Числа 2',hy:'Թվեր 2',ic:'💯',d:`
+տասնմեկ|одиннадцать|=11
+տասներկու|двенадцать|=12
+տասներեք|тринадцать|=13
+տասնչորս|четырнадцать|=14
+տասնհինգ|пятнадцать|=15
+տասնվեց|шестнадцать|=16
+տասնյոթ|семнадцать|=17
+տասնութ|восемнадцать|=18
+տասնինը|девятнадцать|=19
+քառասուն|сорок|=40
+հիսուն|пятьдесят|=50
+վաթսուն|шестьдесят|=60
+յոթանասուն|семьдесят|=70
+ութսուն|восемьдесят|=80
+իննսուն|девяносто|=90
+միլիոն|миллион|=10⁶
+միլիարդ|миллиард|=10⁹
+առաջին|первый|🥇
+երկրորդ|второй|🥈
+երրորդ|третий|🥉
+չորրորդ|четвёртый|=4-й
+հինգերորդ|пятый|=5-й
+վեցերորդ|шестой|=6-й
+յոթերորդ|седьмой|=7-й
+ութերորդ|восьмой|=8-й
+իններորդ|девятый|=9-й
+տասներորդ|десятый|=10-й
+վերջին|последний|
+կես|половина|=½
+քառորդ|четверть|=¼
+տոկոս|процент|=%
+թիվ|число|
+կրկնակի|двойной|
+գումարել|складывать|
+բազմապատկել|умножать|
+բաժանել|делить|➗
+հաշվել|считать|🧮
+`},
+{lv:'A2',ru:'Глаголы A2',hy:'Բայեր 3',ic:'🔁',d:`
+ժպտալ|улыбаться|
+գտնել|находить|🔍
+կորցնել|терять|
+փնտրել|искать|
+ցույց տալ|показывать|
+ուղարկել|отправлять|📤
+ստանալ|получать|📥
+դնել|класть, ставить|
+պահել|хранить, держать|
+բռնել|ловить, держать|
+գցել|ронять, бросать|
+նետել|кидать|
+քաշել|тянуть|
+հրել|толкать|
+կոտրել|ломать|
+նորոգել|чинить|🔧
+կառուցել|строить|🏗️
+քայլել|шагать, ходить|
+ընկնել|падать|
+բարձրանալ|подниматься|
+մտնել|входить|
+դուրս գալ|выходить|
+վերադառնալ|возвращаться|
+մնալ|оставаться|
+թողնել|оставлять|
+հեռանալ|уходить, удаляться|
+մոտենալ|приближаться|
+հետևել|следовать, следить|
+թեքվել|поворачивать|
+կանգ առնել|останавливаться|
+շտապել|спешить|
+խոստանալ|обещать|
+որոշել|решать|
+ընտրել|выбирать|
+համաձայնել|соглашаться|
+մերժել|отказывать|
+թույլ տալ|позволять, разрешать|
+արգելել|запрещать|
+խնդրել|просить|
+առաջարկել|предлагать|
+պատմել|рассказывать|
+բղավել|кричать|
+շշնջալ|шептать|
+լռել|молчать|
+ծխել|курить|🚬
+պառկել|лежать, ложиться|
+արթնացնել|будить|
+լողանալ|купаться, мыться|
+սափրվել|бриться|
+սանրել|расчёсывать|
+ծամել|жевать|
+կուլ տալ|глотать|
+շնչել|дышать|
+համբուրել|целовать|💋
+գրկել|обнимать|
+օգտագործել|использовать|
+միացնել|включать; соединять|
+անջատել|выключать|
+լիցքավորել|заряжать|🔋
+տպել|печатать|🖨️
+ներբեռնել|скачивать|
+ջնջել|удалять, стирать|
+պատրաստել|готовить|
+թխել|печь (выпекать)|
+լցնել|наполнять, наливать|
+դատարկել|опустошать|
+ջրել|поливать|
+տնկել|сажать (растения)|
+կերակրել|кормить|
+կանչել|звать|
+հանդիպել|встречать(ся)|
+բաժանվել|расставаться|
+վիճել|спорить|
+կռվել|драться, ссориться|
+հաշտվել|мириться|
+շնորհավորել|поздравлять|
+նվիրել|дарить|
+տոնել|праздновать|
+հրաժարվել|отказываться|
+դասավորել|раскладывать|
+քննարկել|обсуждать|
+կարծել|полагать, думать|
+հավատալ|верить|
+կասկածել|сомневаться|
+ենթադրել|предполагать|
+ճանաչել|узнавать (кого-то), знать|
+նկարել|рисовать|
+լուսանկարել|фотографировать|📸
+հավանել|одобрять, нравиться|
+դուր գալ|нравиться|
+ատել|ненавидеть|
+ցանկանալ|желать|
+կարողանալ|мочь, уметь|
+ուսումնասիրել|изучать|
+շարունակել|продолжать|
+դադարեցնել|прекращать|
+փոխվել|меняться|
+աճել|расти|
+մեծանալ|вырастать|
+ծերանալ|стареть|
+մեռնել|умирать|
+ծնել|рожать|
+թաքցնել|прятать|
+թաքնվել|прятаться|
+պաշտպանել|защищать|🛡️
+հարձակվել|нападать|
+փրկել|спасать|
+`},
+{lv:'A2',ru:'Прилагательные A2',hy:'Ածականներ 2',ic:'📐',d:`
+լայն|широкий|
+նեղ|узкий|
+հաստ|толстый (о предмете)|
+բարակ|тонкий|
+ծանր|тяжёлый|
+թեթև|лёгкий (по весу)|🪶
+խորը|глубокий|
+ծանծաղ|мелкий (о воде)|
+կլոր|круглый|⚪
+քառակուսի|квадратный; квадрат|⬛
+սուր|острый (о ноже)|
+բութ|тупой|
+փափուկ|мягкий (на ощупь)|
+կոշտ|жёсткий|
+հարթ|ровный, гладкий|
+չոր|сухой|
+թաց|мокрый|💦
+լիքը|полный|
+դատարկ|пустой|
+բաց|открытый; светлый (о цвете)|
+փակ|закрытый|
+մութ|тёмный|🌑
+լուսավոր|светлый|
+բարձրաձայն|громкий|📢
+աղմկոտ|шумный|
+լուռ|тихий, молчаливый|🤫
+ամուր|крепкий, прочный|
+փխրուն|хрупкий|
+անվտանգ|безопасный|
+վտանգավոր|опасный|⚠️
+կարևոր|важный|
+անհրաժեշտ|необходимый|
+հնարավոր|возможный|
+անհնար|невозможный|
+պատրաստ|готовый|
+զբաղված|занятый|
+ազատ|свободный|
+հայտնի|известный|
+սովորական|обычный|
+տարօրինակ|странный|
+հարմար|удобный|
+անհարմար|неудобный|
+օգտակար|полезный|
+վնասակար|вредный|
+հաճելի|приятный|
+տհաճ|неприятный|
+լավագույն|лучший|
+վատագույն|худший|
+ամբողջ|весь, целый|
+միակ|единственный|
+իսկական|настоящий|
+կեղծ|фальшивый|
+պարզ|простой, ясный|
+բարդ|сложный|
+նույն|тот же|
+ուրիշ|другой|
+հաջող|удачный|
+բախտավոր|везучий|🍀
+օտար|чужой, иностранный|
+տեղական|местный|
+միջազգային|международный|🌐
+ազգային|национальный|
+պետական|государственный|
+մասնավոր|частный|
+հանրային|общественный|
+գլխավոր|главный|
+հիմնական|основной|
+վերջնական|окончательный|
+լրիվ|полный, полностью|
+կիսատ|незаконченный|
+`},
+{lv:'A2',ru:'Наречия и союзы',hy:'Մակբայներ և շաղկապներ',ic:'🔗',d:`
+և|и|
+բայց|но|
+կամ|или|
+որովհետև|потому что|
+քանի որ|так как|
+եթե|если|
+որ|что (союз); который|
+նաև|также|
+էլ|тоже; ещё|
+նույնպես|тоже, также|
+միայն|только|
+հենց|именно|
+գուցե|может быть|
+երևի|наверное|
+անշուշտ|несомненно|
+իհարկե|конечно|
+իսկապես|действительно|
+բավական|довольно, достаточно|
+չափազանց|слишком|
+մի քիչ|немного|
+գրեթե|почти|
+միասին|вместе|
+առանձին|отдельно|
+այստեղ|здесь|👇
+այնտեղ|там|
+այդտեղ|там (у тебя)|
+ամենուր|везде|
+ոչ մի տեղ|нигде|
+ներս|внутрь|
+դուրս|наружу|
+վերև|вверху, вверх|⬆️
+ներքև|внизу, вниз|⬇️
+այսպես|так (вот так)|
+այդպես|так (так, как у тебя)|
+այնպես|так, таким образом|
+որքան|сколько, насколько|
+այնքան|настолько|
+նորից|снова|
+կրկին|вновь, ещё раз|
+հանկարծ|вдруг|
+հատկապես|особенно|
+օրինակ|пример; например|
+այսինքն|то есть|
+սակայն|однако|
+ուստի|поэтому|
+թեև|хотя|
+չնայած|несмотря на то что|
+ահա|вот|
+ուրեմն|значит|
+միգուցե|возможно|
+`},
+{lv:'B1',ru:'Общество и государство',hy:'Հասարակություն',ic:'🏛️',d:`
+հասարակություն|общество|
+պետություն|государство|
+հայրենիք|родина|
+ժողովուրդ|народ|
+ազգ|нация|
+քաղաքացի|гражданин|
+քաղաքացիություն|гражданство|
+բնակչություն|население|
+կառավարություն|правительство|
+նախագահ|президент|
+վարչապետ|премьер-министр|
+նախարար|министр|
+նախարարություն|министерство|
+խորհրդարան|парламент|
+պատգամավոր|депутат|
+ընտրություններ|выборы|🗳️
+քվեարկել|голосовать|
+կուսակցություն|партия|
+քաղաքականություն|политика|
+իշխանություն|власть|
+ժողովրդավարություն|демократия|
+ազատություն|свобода|
+իրավունք|право|
+պարտականություն|обязанность|
+օրենք|закон|
+սահմանադրություն|конституция|
+դատարան|суд|
+դատավոր|судья|
+փաստաբան|адвокат|
+հանցագործություն|преступление|
+տուգանք|штраф|
+բանակ|армия|
+զինվոր|солдат|
+պատերազմ|война|
+խաղաղություն|мир (не война)|☮️
+դրոշ|флаг|🚩
+զինանշան|герб|
+օրհներգ|гимн|
+դեսպան|посол|
+արտասահման|заграница|
+արտագաղթ|эмиграция|
+ներգաղթ|иммиграция|
+սփյուռք|диаспора|
+ավանդույթ|традиция|
+սովորույթ|обычай|
+կրոն|религия|
+քահանա|священник|
+հավատ|вера|
+բարեգործություն|благотворительность|
+կամավոր|волонтёр; добровольный|
+իրադարձություն|событие|
+հանրապետություն|республика|
+`},
+{lv:'B1',ru:'Карьера и бизнес',hy:'Կարիերա',ic:'💼',d:`
+կարիերա|карьера|
+մասնագիտություն|профессия, специальность|
+մասնագետ|специалист|
+փորձագետ|эксперт|
+ընկերություն|компания; дружба|
+կազմակերպություն|организация|
+հիմնարկ|учреждение|
+բաժին|отдел|
+վարչություն|управление (подразделение)|
+անձնակազմ|персонал|
+թափուր աշխատատեղ|вакансия|
+ռեզյումե|резюме|
+դիմել|обращаться; подавать заявку|
+ընդունել|принимать|
+ազատել|освобождать; увольнять|
+հրաժարական|отставка|
+առաջխաղացում|продвижение (по службе)|
+բարձրացում|повышение|
+գործուղում|командировка|
+նախագիծ|проект|
+պլան|план|
+նպատակ|цель|
+խնդիր|проблема, задача|
+լուծում|решение (проблемы)|
+հաշվետվություն|отчёт|
+բանակցություններ|переговоры|
+համաձայնություն|согласие|
+գործարք|сделка|
+պատվեր|заказ|
+մատակարար|поставщик|
+մրցակից|конкурент|
+բիզնես|бизнес|
+ձեռնարկատեր|предприниматель|
+սեփականատեր|владелец|
+բաժնետեր|акционер|
+շահույթ|прибыль|
+վնաս|убыток; вред|
+բյուջե|бюджет|
+ներդրում|инвестиция; вклад|
+հաջողություն|успех; удача|
+ձախողում|провал|
+պատասխանատվություն|ответственность|
+հմտություն|навык|
+ունակություն|способность|
+որակավորում|квалификация|
+վերապատրաստում|переподготовка|
+գործարար|бизнесмен; деловой|
+`},
+{lv:'B1',ru:'Наука и образование',hy:'Գիտություն',ic:'🔬',d:`
+գիտություն|наука|
+գիտնական|учёный|🧑‍🔬
+հետազոտող|исследователь|
+փորձարկում|эксперимент, испытание|
+տեսություն|теория|
+վարկած|гипотеза|
+ապացույց|доказательство|
+ապացուցել|доказывать|
+վերլուծել|анализировать|
+եզրակացություն|вывод|
+հոդված|статья|
+ատենախոսություն|диссертация|
+պրոֆեսոր|профессор|
+դոցենտ|доцент|
+ասպիրանտ|аспирант|
+բակալավր|бакалавр|
+մագիստրոս|магистр|
+ինստիտուտ|институт|
+ակադեմիա|академия|
+մանկապարտեզ|детский сад|
+ուսուցում|обучение|
+դասընթաց|курс (обучающий)|
+դասախոսություն|лекция|
+սեմինար|семинар|
+ստուգել|проверять|
+մաթեմատիկա|математика|📐
+ֆիզիկա|физика|
+քիմիա|химия|⚗️
+կենսաբանություն|биология|
+պատմություն|история|
+աշխարհագրություն|география|
+գրականություն|литература|
+փիլիսոփայություն|философия|
+հոգեբանություն|психология|
+տնտեսագիտություն|экономика (наука)|
+իրավագիտություն|юриспруденция|
+բժշկություն|медицина|
+ինֆորմատիկա|информатика|
+լեզվաբանություն|лингвистика|
+բանաձև|формула|
+հաշվարկ|расчёт|
+չափում|измерение|
+տվյալներ|данные|
+հայտնագործություն|открытие|
+գյուտ|изобретение|
+`},
+{lv:'B1',ru:'Медицина и лаборатория 2',hy:'Բժշկություն 2',ic:'🧬',d:`
+պոլիկլինիկա|поликлиника|
+ընդունարան|приёмное отделение; приёмная|
+բաժանմունք|отделение (больницы)|
+վերակենդանացում|реанимация|
+պալատ|палата; дворец|
+բուժառու|пациент|
+բուժզննում|медосмотр|
+զննում|осмотр|
+գանգատ|жалоба|
+ախտանիշ|симптом|
+համախտանիշ|синдром|
+բորբոքում|воспаление|
+վարակ|инфекция|
+վարակիչ|заразный|
+համաճարակ|эпидемия|
+համավարակ|пандемия|
+իմունիտետ|иммунитет|
+հակամարմին|антитело|
+հակաբիոտիկ|антибиотик|
+պատվաստանյութ|вакцина|
+շաքարային դիաբետ|сахарный диабет|
+ինսուլտ|инсульт|
+ինֆարկտ|инфаркт|
+հիպերտոնիա|гипертония|
+սակավարյունություն|анемия|
+թոքաբորբ|пневмония|
+բրոնխիտ|бронхит|
+գրիպ|грипп|
+տուբերկուլյոզ|туберкулёз|
+հեպատիտ|гепатит|
+ուռուցքաբանություն|онкология|
+ուռուցքաբան|онколог|
+բարորակ|доброкачественный|
+չարորակ|злокачественный|
+մետաստազ|метастаз|
+քիմիաթերապիա|химиотерапия|
+ճառագայթային թերապիա|лучевая терапия|
+բիոպսիա|биопсия|
+հյուսվածք|ткань|
+օրգան|орган|
+օրգանիզմ|организм|
+ախտաբանություն|патология|
+ախտաբան|патолог|
+արյան ընդհանուր անալիզ|общий анализ крови|
+հեմոգլոբին|гемоглобин|
+լեյկոցիտ|лейкоцит|
+էրիթրոցիտ|эритроцит|
+թրոմբոցիտ|тромбоцит|
+գլյուկոզ|глюкоза|
+խոլեստերին|холестерин|
+սպիտակուց|белок|
+ֆերմենտ|фермент|
+հորմոն|гормон|
+քրոմոսոմ|хромосома|
+ժառանգականություն|наследственность|
+գենոմ|геном|
+հաջորդականություն|последовательность|
+պոլիմերազային շղթայական ռեակցիա|ПЦР|=ПЦР
+ռեակտիվ|реактив|
+սարքավորում|оборудование|
+սարք|прибор|
+ստերիլ|стерильный|
+ախտահանել|дезинфицировать|
+դիմակ|маска|
+սպեղանի|пластырь|
+ջերմաչափ|термометр|
+ռենտգեն|рентген|
+ուլտրաձայնային հետազոտություն|УЗИ|=УЗИ
+ախտորոշել|диагностировать|
+նշանակել|назначать|
+դեղաչափ|дозировка|
+կողմնակի ազդեցություն|побочное действие|
+հակացուցում|противопоказание|
+ցուցում|показание|
+վիճակ|состояние|
+մահ|смерть|
+`},
+{lv:'B1',ru:'Туризм',hy:'Զբոսաշրջություն',ic:'🗺️',d:`
+զբոսաշրջություն|туризм|
+տեսարժան վայր|достопримечательность|
+էքսկուրսիա|экскурсия|
+զբոսավար|экскурсовод|
+հուշանվեր|сувенир|
+ամրոց|крепость, замок|🏰
+տաճար|храм|
+ավերակներ|руины|
+լեռնային|горный|
+ծովափ|побережье|
+հանգստավայր|курорт|
+հյուրատուն|гостевой дом|
+ամրագրում|бронирование|
+նստատեղ|место (сиденье)|
+ձեռքի ուղեբեռ|ручная кладь|
+ելք|выход|
+մուտք|вход|
+փոխադրում|перевозка|
+չվացուցակ|расписание|
+ուշացում|задержка|
+չեղարկել|отменять|
+տեղեկատվություն|информация|ℹ️
+կորած|потерянный|
+մոլորվել|заблудиться|
+արտարժույթ|иностранная валюта|
+ապահովագրություն|страховка|
+արկած|приключение|
+տպավորություն|впечатление|
+գեղատեսիլ|живописный|
+հնագույն|древний|
+պատմական|исторический|
+հյուրընկալ|гостеприимный|
+հյուրընկալություն|гостеприимство|
+`},
+{lv:'B1',ru:'Технологии',hy:'Տեխնոլոգիաներ',ic:'💻',d:`
+տեխնոլոգիա|технология|
+ինտերնետ|интернет|
+կայք|сайт|
+էջ|страница|
+հղում|ссылка|🔗
+էլեկտրոնային փոստ|электронная почта|📧
+գաղտնաբառ|пароль|🔐
+մուտքանուն|логин|
+գրանցվել|регистрироваться|
+մուտք գործել|войти (в систему)|
+սոցիալական ցանց|социальная сеть|
+հաղորդագրություն|сообщение|
+զանգ|звонок|
+տեսազանգ|видеозвонок|
+էկրան|экран|🖥️
+ստեղնաշար|клавиатура|⌨️
+մկնիկ|мышь (компьютерная)|🖱️
+տպիչ|принтер|
+լիցքավորիչ|зарядное устройство|🔌
+մարտկոց|батарея, аккумулятор|
+ծրագիր|программа|
+հավելված|приложение|📲
+ֆայլ|файл|📁
+թղթապանակ|папка|🗂️
+տվյալների բազա|база данных|
+ցանց|сеть|
+սերվեր|сервер|
+արհեստական բանականություն|искусственный интеллект|🤖
+ռոբոտ|робот|
+թվային|цифровой|
+տեսանյութ|видео|🎥
+ձայնագրություն|аудиозапись|🎙️
+որոնել|искать (в поиске)|
+որոնում|поиск|
+թարմացնել|обновлять|
+թարմացում|обновление|
+պահպանել|сохранять; соблюдать|💾
+վերբեռնել|загружать (в сеть)|
+համակարգ|система|
+ականջակալ|наушники|
+խոսափող|микрофон|
+տեսախցիկ|камера|📹
+`},
+{lv:'B1',ru:'Культура и СМИ',hy:'Մշակույթ',ic:'🎭',d:`
+մշակույթ|культура|
+արվեստ|искусство|
+արվեստագետ|деятель искусства|
+գրող|писатель|
+բանաստեղծ|поэт|
+բանաստեղծություն|стихотворение|
+վեպ|роман|
+պատմվածք|рассказ|
+հեքիաթ|сказка|
+հերոս|герой|
+հեղինակ|автор|
+ընթերցող|читатель|
+հրատարակել|издавать|
+ռեժիսոր|режиссёр|
+դերասանուհի|актриса|
+դեր|роль|
+բեմ|сцена|
+ներկայացում|спектакль; представление|
+հանդիսատես|зритель|
+ծափահարել|аплодировать|👏
+երգիչ|певец|
+երգչուհի|певица|
+կոմպոզիտոր|композитор|
+նվագել|играть (на инструменте)|
+նվագախումբ|оркестр|
+օպերա|опера|
+բալետ|балет|🩰
+քանդակ|скульптура|
+ճարտարապետություն|архитектура|
+լրատվություն|новости, СМИ|
+լուր|новость|
+թերթ|газета|
+ամսագիր|журнал|
+հեռուստատեսություն|телевидение|
+ռադիո|радио|📻
+հաղորդում|передача|
+եթեր|эфир|
+գովազդ|реклама|
+տեղեկություն|сведения|
+ավանդական|традиционный|
+ժամանակակից|современный|
+ժողովրդական|народный|
+տոնակատարություն|празднование|
+փառատոն|фестиваль|🎪
+մրցանակ|премия, награда|
+համբավ|слава, известность|
+`},
+{lv:'B1',ru:'Экология и ресурсы',hy:'Էկոլոգիա',ic:'♻️',d:`
+շրջակա միջավայր|окружающая среда|
+էկոլոգիա|экология|
+աղտոտում|загрязнение|
+աղտոտված|загрязнённый|
+թափոն|отходы|
+վերամշակում|переработка|♻️
+պահպանություն|охрана|
+բնապահպանություն|охрана природы|
+ռեսուրս|ресурс|
+էներգիա|энергия|
+արևային էներգիա|солнечная энергия|
+նավթ|нефть|🛢️
+ածուխ|уголь|
+հանքավայր|месторождение|
+հանք|шахта, рудник|
+ոսկի|золото|
+արծաթ|серебро|
+երկաթ|железо|
+պղինձ|медь|
+փայտ|дерево (материал)|🪵
+ապակի|стекло|
+պլաստիկ|пластик|
+քիմիական|химический|
+կենդանական աշխարհ|животный мир|
+բուսական աշխարհ|растительный мир|
+անհետանալ|исчезать|
+վտանգված|находящийся под угрозой|
+արգելոց|заповедник|
+ազգային պարկ|национальный парк|
+կլիմայի փոփոխություն|изменение климата|
+ջերմոց|теплица|
+բերք|урожай|
+գյուղատնտեսություն|сельское хозяйство|🚜
+ֆերմա|ферма|
+անասուն|скот|
+`},
+{lv:'B1',ru:'Животные 2',hy:'Կենդանիներ 2',ic:'🦜',d:`
+կենդանի|животное; живой|
+ընտանի կենդանի|домашнее животное|
+վայրի|дикий|
+ձագ|детёныш, птенец|🐣
+լակոտ|щенок|🐶
+էշ|осёл|
+եղնիկ|олень|🦌
+ջայլամ|страус|
+ծիծեռնակ|ласточка|
+ճնճղուկ|воробей|
+ագռավ|ворона|
+կարապ|лебедь|🦢
+թութակ|попугай|🦜
+սագ|гусь|
+հնդկահավ|индюк|🦃
+շնաձուկ|акула|🦈
+ութոտնուկ|осьминог|🐙
+խեցգետին|краб, рак|🦀
+մրջյուն|муравей|
+սարդ|паук|🕷️
+մոծակ|комар|🦟
+որդ|червь|🪱
+խխունջ|улитка|
+կարիճ|скорпион|🦂
+մողես|ящерица|🦎
+կոկորդիլոս|крокодил|🐊
+ընձուղտ|жираф|
+զեբր|зебра|🦓
+ռնգեղջյուր|носорог|🦏
+գետաձի|бегемот|🦛
+պինգվին|пингвин|🐧
+բևեռային արջ|белый медведь|🐻‍❄️
+փետուր|перо|
+պոչ|хвост|
+կտուց|клюв|
+բույն|гнездо|
+`},
+{lv:'B1',ru:'Абстрактные понятия',hy:'Վերացական բառեր',ic:'💡',d:`
+գաղափար|идея|
+միտք|мысль|💭
+կարծիք|мнение|
+տեսակետ|точка зрения|
+պատճառ|причина|
+հետևանք|следствие|
+իմաստ|смысл|
+նշանակություն|значение|
+կարևորություն|важность|
+ճշմարտություն|истина|
+սուտ|ложь|
+իրականություն|реальность|
+երևակայություն|воображение|
+հնարավորություն|возможность|
+պայման|условие|
+իրավիճակ|ситуация|
+դեպք|случай|
+պատահար|происшествие|
+փաստ|факт|
+տարբերություն|разница|
+նմանություն|сходство|
+համեմատություն|сравнение|
+համեմատել|сравнивать|
+կապ|связь|
+հարաբերություն|отношение|
+ազդեցություն|влияние|
+փոփոխություն|изменение|
+զարգացում|развитие|
+զարգանալ|развиваться|
+առաջընթաց|прогресс|
+սկիզբ|начало|
+վերջ|конец|
+մաս|часть|
+ամբողջություն|целое|
+տեսակ|вид, тип|
+ձև|форма; способ|
+միջոց|средство|
+մեթոդ|метод|
+կանոն|правило|
+բացառություն|исключение|
+սահմանափակում|ограничение|
+որոշում|решение (выбор)|
+ընտրություն|выбор|
+վտանգ|опасность|
+ռիսկ|риск|
+անվտանգություն|безопасность|
+դժվարություն|трудность|
+օգուտ|польза|
+արժեք|ценность; стоимость|
+պահանջ|требование|
+կարիք|нужда, потребность|
+ցանկություն|желание|
+երաշխիք|гарантия|
+խոստում|обещание|
+արդարություն|справедливость|
+հավասարություն|равенство|
+ուժ|сила|
+էություն|сущность|
+գիտակցություն|сознание|
+հոգի|душа|
+մարմին|тело|
+կյանք|жизнь|
+աշխարհ|мир (свет)|🌍
+մարդկություն|человечество|
+ժամանակաշրջան|период|
+մակարդակ|уровень|
+չափ|мера, размер|
+կողմ|сторона|
+տեղ|место|
+վայր|место, местность|
+տարածք|территория|
+հեռավորություն|расстояние|
+շարժում|движение|
+գործողություն|действие|
+գործընթաց|процесс|
+փուլ|этап|
+քայլ|шаг|👣
+նախապատրաստություն|подготовка|
+ջանք|усилие|
+ուշադրություն|внимание|
+հիշողություն|память|
+փորձառություն|жизненный опыт|
+սովորություն|привычка|
+վարքագիծ|поведение|
+գործունեություն|деятельность|
+հետաքրքրություն|интерес|
+նախասիրություն|предпочтение|
+պատիվ|честь|
+բախտ|удача, судьба|
+ճակատագիր|судьба|
+հանգամանք|обстоятельство|
+նախաձեռնություն|инициатива|
+մտահոգություն|обеспокоенность|
+հավակնություն|притязание, амбиция|
+համաձայնագիր|соглашение (документ)|
+պատրվակ|предлог, отговорка|
+առավելություն|преимущество|
+թերություն|недостаток|
+արժանապատվություն|достоинство|
+ինքնություն|идентичность|
+մոտեցում|подход|
+հեռանկար|перспектива|
+`},
+{lv:'B1',ru:'Общение',hy:'Հաղորդակցություն',ic:'💬',d:`
+հաղորդակցություն|общение|
+զրույց|беседа|
+զրուցել|беседовать|
+բանավեճ|дискуссия|
+վեճ|ссора, спор|
+համաձայն|согласный|
+առարկել|возражать|
+համոզել|убеждать|
+համոզված|убеждённый|
+խորհուրդ|совет|
+խորհուրդ տալ|советовать|
+բացատրություն|объяснение|
+թյուրիմացություն|недоразумение|
+ներողություն խնդրել|просить прощения|
+շնորհակալ|благодарный|
+երախտագիտություն|благодарность|
+հաճոյախոսություն|комплимент|
+քննադատել|критиковать|
+քննադատություն|критика|
+գովել|хвалить|
+բողոքել|жаловаться|
+բողոք|жалоба, протест|
+սպառնալ|угрожать|
+խաբել|обманывать|
+դավաճանել|предавать|
+աջակցել|поддерживать|
+աջակցություն|поддержка|
+հոգ տանել|заботиться|
+հոգատարություն|забота|
+թշնամի|враг|
+մրցակցություն|конкуренция|
+համագործակցություն|сотрудничество|🤝
+համագործակցել|сотрудничать|
+համբերություն|терпение|
+կատակ|шутка|
+կատակել|шутить|
+հումոր|юмор|
+գաղտնիք|секрет|
+բամբասանք|сплетня|
+պայմանավորվել|договариваться|
+ծանոթություն|знакомство|
+միայնություն|одиночество|
+`},
+{lv:'B1',ru:'Экономика и финансы',hy:'Տնտեսություն',ic:'📈',d:`
+տնտեսություն|экономика, хозяйство|
+տնտեսական|экономический|
+ֆինանսներ|финансы|
+արժույթ|валюта|
+փոխարժեք|курс (валюты)|
+գնաճ|инфляция|
+ճգնաժամ|кризис|
+աճ|рост (увеличение)|
+անկում|спад|
+արտահանում|экспорт|
+ներմուծում|импорт|
+արդյունաբերություն|промышленность|
+արտադրանք|продукция|
+սպառող|потребитель|
+պահանջարկ|спрос|
+առաջարկ|предложение|
+մրցունակ|конкурентоспособный|
+ծառայություն|услуга|
+հարկատու|налогоплательщик|
+հարկային|налоговый|
+մաքսային|таможенный|
+ավանդ|вклад (банковский)|
+տոկոսադրույք|процентная ставка|
+հիփոթեք|ипотека|
+բաժնետոմս|акция (ценная бумага)|
+ֆոնդային բորսա|фондовая биржа|
+սեփականություն|собственность|
+անշարժ գույք|недвижимость|
+գույք|имущество|
+վարձակալություն|аренда|
+վարձակալել|арендовать|
+գնորդ|покупатель|
+հաշվապահ|бухгалтер|
+հաշվապահություն|бухгалтерия|
+աուդիտ|аудит|
+աղքատություն|бедность|
+հարստություն|богатство|
+գործազրկություն|безработица|
+`},
+{lv:'B1',ru:'Глаголы B1',hy:'Բայեր 4',ic:'⚙️',d:`
+ազդել|влиять|
+ապահովել|обеспечивать|
+աճեցնել|выращивать|
+ամփոփել|подводить итог|
+անցնել|проходить, переходить|
+անցկացնել|проводить (время, мероприятие)|
+առաջանալ|возникать|
+արտահայտել|выражать|
+բաժանորդագրվել|подписываться|
+բարելավել|улучшать|
+բացահայտել|раскрывать, выявлять|
+բացակայել|отсутствовать|
+բավարարել|удовлетворять|
+գնահատել|оценивать|
+գործել|действовать|
+դիմանալ|выдерживать|
+դիտել|смотреть, наблюдать|
+դժգոհել|выражать недовольство|
+եզրակացնել|делать вывод|
+զարգացնել|развивать|
+զբաղվել|заниматься|
+զգուշացնել|предупреждать|
+ընդգծել|подчёркивать|
+ընդլայնել|расширять|
+ընդհատել|прерывать|
+լրացնել|заполнять; дополнять|
+խուսափել|избегать|
+ծառայել|служить|
+կազմակերպել|организовывать|
+կազմել|составлять|
+կառավարել|управлять|
+կատարել|выполнять|
+կանխել|предотвращать|
+կիրառել|применять|
+կրճատել|сокращать|
+համապատասխանել|соответствовать|
+հայտարարել|объявлять|
+հայտնել|сообщать|
+հայտնվել|появляться|
+հաստատել|подтверждать|
+հավաքվել|собираться|
+հարմարվել|приспосабливаться|
+հեռացնել|удалять|
+հետաձգել|откладывать|
+հրապարակել|публиковать|
+ձգտել|стремиться|
+ձեռք բերել|приобретать|
+ճշտել|уточнять|
+մասնակցել|участвовать|
+մշակել|разрабатывать|
+նախընտրել|предпочитать|
+նախապատրաստել|подготавливать|
+նկարագրել|описывать|
+նշել|отмечать|
+ներառել|включать (в состав)|
+ներկայացնել|представлять|
+պահանջել|требовать|
+պատահել|случаться|
+պատկանել|принадлежать|
+պարզաբանել|разъяснять|
+պարզել|выяснять|
+սահմանել|устанавливать|
+ստեղծել|создавать|
+վերահսկել|контролировать|
+տարածել|распространять|
+տիրապետել|владеть (навыком)|
+ցուցադրել|демонстрировать|
+փոխանցել|передавать|
+խթանել|стимулировать|
+հաղթահարել|преодолевать|
+կախված լինել|зависеть|
+պատկերացնել|представлять (воображать)|
+ենթարկվել|подчиняться|
+կարգավորել|регулировать, улаживать|
+վերականգնել|восстанавливать|
+գրավել|захватывать; привлекать|
+գրանցել|регистрировать|
+հետազոտել|исследовать|
+հեշտացնել|облегчать|
+բարդացնել|усложнять|
+խախտել|нарушать|
+հետապնդել|преследовать|
+վարվել|поступать (вести себя)|
+վախեցնել|пугать|
+զարմացնել|удивлять|
+ուրախացնել|радовать|
+տխրել|грустить|
+հիասթափվել|разочаровываться|
+հիանալ|восхищаться|
+զղջալ|раскаиваться|
+ափսոսալ|жалеть (о чём-то)|
+հանգստացնել|успокаивать|
+նեղանալ|обижаться|
+վիրավորել|обижать; ранить|
+խղճալ|жалеть (кого-то)|
+հպարտանալ|гордиться|
+համակերպվել|смиряться|
+օրհնել|благословлять|
+աղոթել|молиться|
+երդվել|клясться|
+արտագրել|переписывать|
+շրջանցել|обходить|
+հատել|пересекать|
+լքել|покидать|
+հասցնել|успевать; доставлять|
+բաց թողնել|пропускать; отпускать|
+ուշադրություն դարձնել|обращать внимание|
+օգտվել|пользоваться|
+բնակվել|проживать|
+տեղավորվել|помещаться, размещаться|
+փաթաթել|заворачивать|
+կապել|связывать, завязывать|
+արձակել|развязывать; отпускать|
+ամրացնել|закреплять|
+պտտել|крутить|
+սեղմել|нажимать, сжимать|
+շոշափել|трогать, ощупывать|
+դիպչել|касаться|
+ցատկել|прыгать|
+սողալ|ползать|
+սահել|скользить|
+թափել|проливать, сыпать|
+կաթել|капать|
+եռալ|кипеть|
+սառչել|замерзать, остывать|
+հալվել|таять|
+այրել|жечь|
+այրվել|гореть|
+վառել|зажигать|
+հանգցնել|гасить|
+փչել|дуть|
+նկատել|замечать|
+հիշեցնել|напоминать|
+սովորեցնել|учить (кого-то)|
+դասավանդել|преподавать|
+մարզվել|тренироваться|
+հոգնել|уставать|
+քրտնել|потеть|
+դողալ|дрожать|
+բուժվել|лечиться|
+ծաղկել|цвести|
+հասունանալ|созревать|
+չորանալ|сохнуть|
+թրջվել|промокнуть|
+լցվել|наполняться|
+դատարկվել|пустеть|
+ավարտել|завершать|
+ավարտվել|заканчиваться|
+սկսվել|начинаться|
+շարունակվել|продолжаться|
+կրկնվել|повторяться|
+փոխարինել|заменять|
+ավելացնել|добавлять|
+պակասել|уменьшаться; не хватать|
+հերիքել|хватать (быть достаточным)|
+ստիպել|заставлять|
+թույլատրել|разрешать (офиц.)|
+պատժել|наказывать|
+վարձատրել|вознаграждать|
+վարձել|нанимать; снимать (жильё)|
+`},
+{lv:'B1',ru:'Прилагательные B1',hy:'Ածականներ 3',ic:'✨',d:`
+անհատական|индивидуальный|
+ընդհանուր|общий|
+հատուկ|особый, специальный|
+հիմնարար|фундаментальный|
+էական|существенный|
+արդյունավետ|эффективный|
+անարդյունավետ|неэффективный|
+արդար|справедливый|
+անարդար|несправедливый|
+օրինական|законный|
+անօրինական|незаконный|
+պաշտոնական|официальный|
+ժամանակավոր|временный|
+մշտական|постоянный|
+հաճախակի|частый|
+հազվագյուտ|редкий|
+նախկին|бывший|
+ներկայիս|нынешний|
+հետագա|последующий|
+արդիական|актуальный|
+հնացած|устаревший|
+զգայուն|чувствительный|
+ջերմ|тёплый (сердечный)|
+սառնասիրտ|бессердечный|
+բարեսիրտ|добросердечный|
+դաժան|жестокий|
+քնքուշ|нежный|
+խիստ|строгий|
+մեղմ|мягкий (о характере, климате)|
+անկեղծ|искренний|
+կեղծավոր|лицемерный|
+վստահելի|надёжный|
+անվստահելի|ненадёжный|
+պատասխանատու|ответственный|
+անպատասխանատու|безответственный|
+ինքնուրույն|самостоятельный|
+կախյալ|зависимый|
+ակտիվ|активный|
+պասիվ|пассивный|
+ստեղծագործ|творческий|
+տաղանդավոր|талантливый|
+փորձառու|опытный|
+անփորձ|неопытный|
+գրագետ|грамотный|
+անգրագետ|неграмотный|
+կրթված|образованный|
+խելամիտ|разумный|
+անհեթեթ|абсурдный|
+տրամաբանական|логичный|
+բնական|естественный|
+արհեստական|искусственный|
+ֆիզիկական|физический|
+հոգեկան|психический|
+մտավոր|умственный|
+հոգևոր|духовный|
+նյութական|материальный|
+սոցիալական|социальный|
+քաղաքական|политический|
+մշակութային|культурный|
+գիտական|научный|
+բժշկական|медицинский|
+լաբորատոր|лабораторный|
+կլինիկական|клинический|
+տեխնիկական|технический|
+գործնական|практический|
+տեսական|теоретический|
+հստակ|чёткий|
+անորոշ|неопределённый|
+ճշգրիտ|точный|
+մոտավոր|приблизительный|
+բացարձակ|абсолютный|
+հարաբերական|относительный|
+առավելագույն|максимальный|
+նվազագույն|минимальный|
+միջին|средний|
+բազմազան|разнообразный|
+միապաղաղ|однообразный|
+բարենպաստ|благоприятный|
+անբարենպաստ|неблагоприятный|
+դրական|положительный|
+բացասական|отрицательный|
+չեզոք|нейтральный|
+լավատես|оптимистичный|
+հոռետես|пессимистичный|
+հիասքանչ|восхитительный|
+սարսափելի|ужасный|
+զարմանալի|удивительный|
+տպավորիչ|впечатляющий|
+հուզիչ|трогательный|
+ծիծաղելի|смешной, нелепый|
+կասկածելի|сомнительный|
+ակնհայտ|очевидный|
+թաքնված|скрытый|
+անհայտ|неизвестный|
+հարմարավետ|комфортный|
+ընդարձակ|просторный|
+խիտ|густой, плотный|
+նոսր|редкий (негустой)|
+թափանցիկ|прозрачный|
+պղտոր|мутный|
+պայծառ|яркий|
+գունավոր|цветной|
+գունատ|бледный|
+ոսկեգույն|золотистый|
+արծաթագույն|серебристый|
+`},
+{lv:'B1',ru:'Наречия и связки B1',hy:'Մակբայներ 2',ic:'🔗',d:`
+այնուամենայնիվ|тем не менее|
+հետևաբար|следовательно|
+բացի այդ|кроме того|
+ընդհակառակը|наоборот|
+մասնավորապես|в частности|
+ընդհանրապես|вообще|
+իրականում|на самом деле|
+համենայն դեպս|во всяком случае|
+հավանաբար|вероятно|
+անպայման|обязательно|
+մոտավորապես|приблизительно|
+վերջապես|наконец|
+սկզբում|сначала|
+վերջում|в конце|
+ապա|затем|
+միաժամանակ|одновременно|
+աստիճանաբար|постепенно|
+հանկարծակի|внезапно|
+պատահաբար|случайно|
+դիտավորյալ|нарочно|
+հաճույքով|с удовольствием|
+սիրով|с любовью, охотно|
+դժբախտաբար|к несчастью|
+բարեբախտաբար|к счастью|
+ցավոք|к сожалению|
+իբր|якобы|
+նույնիսկ|даже|
+բացառապես|исключительно|
+գոնե|хотя бы|
+համարյա|почти (разг.)|
+լիովին|полностью|
+մասամբ|частично|
+բավականաչափ|в достаточной мере|
+ուղղակի|просто; напрямую|
+պարզապես|просто|
+ինչևէ|как бы то ни было|
+այսուհետ|отныне|
+մինչդեռ|тогда как|
+կարծես|как будто|
+ասես|словно|
+որպեսզի|чтобы|
+ոչ միայն|не только|
+`},
+{lv:'B1',ru:'Армения',hy:'Հայաստան',ic:'🇦🇲',d:`
+Հայաստան|Армения|🇦🇲
+հայ|армянин|
+հայերեն|армянский язык|
+հայկական|армянский (прил.)|
+ռուսերեն|русский язык|
+անգլերեն|английский язык|
+ռուս|русский (человек)|
+Երևան|Ереван|
+Արարատ|Арарат|🏔️
+Սևանա լիճ|озеро Севан|
+խաչքար|хачкар|
+դուդուկ|дудук|
+գաթա|гата|
+ժենգյալով հաց|жингялов хац|
+սուջուխ|суджух|
+բաստուրմա|бастурма|
+կոնյակ|коньяк|
+թան|тан (напиток)|
+Վարդավառ|Вардавар (праздник воды)|💦
+Տրնդեզ|Трндез (праздник)|🔥
+Զատիկ|Пасха|🥚
+Մեծ եղեռն|Геноцид армян|
+գրաբար|грабар (древнеармянский)|
+աշխարհաբար|ашхарабар (новоармянский)|
+արևելահայերեն|восточноармянский|
+արևմտահայերեն|западноармянский|
+բարբառ|диалект|
+հայրենադարձ|репатриант|
+քոչարի|кочари (танец)|
+շալախո|шалахо (танец)|
+`},
+{lv:'B2',ru:'Личность и психология',hy:'Անհատականություն',ic:'🧠',d:`
+անհատականություն|личность, индивидуальность|
+անձ|лицо, персона|
+անձնական|личный|
+ինքնագնահատական|самооценка|
+ինքնավստահություն|уверенность в себе|
+ինքնատիրապետում|самообладание|
+ինքնաճանաչում|самопознание|
+խառնվածք|темперамент|
+հակում|склонность|
+մոտիվացիա|мотивация|
+դրդապատճառ|мотив, побуждение|
+կամք|воля|
+կամային|волевой|
+բնազդ|инстинкт|
+ենթագիտակցություն|подсознание|
+ընկալում|восприятие|
+ընկալել|воспринимать|
+զգացողություն|ощущение|
+հույզ|эмоция|
+հուզականություն|эмоциональность|
+զսպվածություն|сдержанность|
+զուսպ|сдержанный|
+դյուրագրգիռ|раздражительный|
+կոնֆլիկտային|конфликтный|
+շփվող|общительный|
+ինքնամփոփ|замкнутый|
+անկախ|независимый|
+անկախություն|независимость|
+նախաձեռնող|инициативный|
+հնարամիտ|находчивый|
+հնարամտություն|находчивость|
+սրամիտ|остроумный|
+սրամտություն|остроумие|
+խորաթափանց|проницательный|
+հետաքրքրասեր|любознательный|
+հետաքրքրասիրություն|любопытство|
+կասկածամիտ|мнительный, подозрительный|
+կամակոր|своенравный, упрямый|
+համառ|упорный|
+համառություն|упорство|
+վճռական|решительный|
+վճռականություն|решимость|
+անվճռական|нерешительный|
+հավակնոտ|амбициозный|
+զգացմունքային|сентиментальный|
+սթափ|трезвый, здравый|
+սթափություն|трезвость ума|
+լավատեսություն|оптимизм|
+հոռետեսություն|пессимизм|
+բարդույթ|комплекс (психол.)|
+վախվորած|робкий|
+հուսահատություն|отчаяние|
+հուսահատվել|отчаиваться|
+ձգտում|стремление|
+երազկոտ|мечтательный|
+`},
+{lv:'B2',ru:'Общество',hy:'Հասարակական կյանք',ic:'👥',d:`
+հասարակական|общественный (социальный)|
+խավ|слой (общества)|
+դասակարգ|класс (социальный)|
+միջին խավ|средний класс|
+անհավասարություն|неравенство|
+խտրականություն|дискриминация|
+հանդուրժողականություն|толерантность|
+բազմազանություն|разнообразие|
+համայնք|община, сообщество|
+անդամ|член (организации)|
+անդամակցություն|членство|
+միություն|союз|
+ակտիվիստ|активист|
+բողոքի ակցիա|акция протеста|
+ցույց|демонстрация (шествие)|
+հանրահավաք|митинг|
+գործադուլ|забастовка|
+արհմիություն|профсоюз|
+կենսամակարդակ|уровень жизни|
+աղքատության շեմ|черта бедности|
+սոցիալական ապահովություն|социальное обеспечение|
+նպաստ|пособие|
+կենսաթոշակ|пенсия (по старости)|
+հաշմանդամություն|инвалидность|
+խնամք|уход, попечение|
+խնամակալ|опекун|
+որդեգրել|усыновить|
+ամուսնություն|брак|
+ամուսնալուծություն|развод|
+ընտանեկան|семейный|
+դաստիարակություն|воспитание|
+դաստիարակել|воспитывать|
+երիտասարդություն|молодёжь; молодость|
+ծերություն|старость|
+մանկություն|детство|
+պատանեկություն|юность|
+հասուն|зрелый|
+տարեց|пожилой|
+միգրացիա|миграция|
+փախստական|беженец|
+օտարերկրացի|иностранец|
+ինտեգրում|интеграция|
+հարմարվողականություն|приспособляемость|
+ավանդապաշտ|традиционалист|
+առաջադեմ|прогрессивный|
+հեղինակություն|авторитет|
+վարկանիշ|рейтинг|
+ազդեցիկ|влиятельный|
+կոռուպցիա|коррупция|
+կաշառք|взятка|
+թափանցիկություն|прозрачность|
+`},
+{lv:'B2',ru:'Право и трудовые отношения',hy:'Աշխատանք և իրավունք',ic:'⚖️',d:`
+իրավական|правовой|
+իրավաբանական|юридический|
+օրենսդրություն|законодательство|
+օրենսգիրք|кодекс|
+վճիռ|решение суда|
+դատավճիռ|приговор|
+հայց|иск|
+հայցվոր|истец|
+պատասխանող|ответчик|
+վկա|свидетель|
+ցուցմունք|показания|
+մեղադրանք|обвинение|
+մեղադրյալ|обвиняемый|
+պաշտպան|защитник|
+դատախազ|прокурор|
+քննիչ|следователь|
+ձերբակալել|арестовать|
+ազատազրկում|лишение свободы|
+արդարացնել|оправдывать|
+բողոքարկել|обжаловать|
+կողմեր|стороны (договора, спора)|
+պայմանագրային|договорный|
+լիազորություն|полномочие|
+լիազորագիր|доверенность|
+նոտար|нотариус|
+վավերացնել|заверять; ратифицировать|
+արտոնություն|льгота|
+թույլտվություն|разрешение|
+լիցենզիա|лицензия|
+տուրք|пошлина|
+պետական տուրք|госпошлина|
+հարկում|налогообложение|
+հայտարարագիր|декларация|
+աշխատանքային պայմանագիր|трудовой договор|
+փորձաշրջան|испытательный срок|
+պարգևավճար|премия (денежная)|
+հավելավճար|надбавка|
+տուժանք|неустойка|
+փոխհատուցում|компенсация|
+փոխհատուցել|компенсировать|
+պարտապան|должник|
+սնանկություն|банкротство|
+սնանկ|банкрот|
+կանոնադրություն|устав|
+հիմնադիր|основатель, учредитель|
+հիմնադրել|основать|
+գրանցում|регистрация|
+հաշվառում|учёт|
+արխիվ|архив|
+գաղտնիություն|конфиденциальность|
+անձնական տվյալներ|персональные данные|
+`},
+{lv:'B2',ru:'Политика и международные отношения',hy:'Քաղաքականություն',ic:'🌐',d:`
+միջազգային հարաբերություններ|международные отношения|
+դիվանագիտություն|дипломатия|
+դիվանագետ|дипломат|
+բանակցել|вести переговоры|
+պայմանավորվածություն|договорённость|
+դաշինք|союз, альянс|
+դաշնակից|союзник|
+հակամարտություն|конфликт|
+զինադադար|перемирие|
+հրադադար|прекращение огня|
+պատժամիջոցներ|санкции|
+ինքնիշխանություն|суверенитет|
+տարածքային ամբողջականություն|территориальная целостность|
+սահմանազատում|делимитация|
+ընդդիմություն|оппозиция|
+իշխող|правящий|
+կոալիցիա|коалиция|
+ընտրող|избиратель|
+թեկնածու|кандидат|
+քարոզարշավ|предвыборная кампания|
+հանրաքվե|референдум|
+օրինագիծ|законопроект|
+վետո|вето|
+բարեփոխում|реформа|
+հեղափոխություն|революция|
+բռնապետություն|диктатура|
+միապետություն|монархия|
+կայսրություն|империя|
+գաղութ|колония|
+պետականություն|государственность|
+ազգայնականություն|национализм|
+հայրենասիրություն|патриотизм|
+հայրենասեր|патриот|
+գաղափարախոսություն|идеология|
+քարոզչություն|пропаганда|
+գրաքննություն|цензура|
+խոսքի ազատություն|свобода слова|
+մարդու իրավունքներ|права человека|
+ահաբեկչություն|терроризм|
+հումանիտար օգնություն|гуманитарная помощь|
+խաղաղապահ|миротворец|
+պետական ծառայող|госслужащий|
+պաշտոնյա|чиновник|
+բյուրոկրատիա|бюрократия|
+`},
+{lv:'B2',ru:'Экономика и бизнес 2',hy:'Տնտեսություն 2',ic:'💹',d:`
+շուկայական տնտեսություն|рыночная экономика|
+ձեռնարկություն|предприятие|
+արտադրող|производитель|
+ապրանքանիշ|бренд, торговая марка|
+մարքեթինգ|маркетинг|
+գովազդային|рекламный|
+ծավալ|объём|
+վաճառքի ծավալ|объём продаж|
+եկամտաբերություն|доходность|
+շրջանառություն|оборот|
+ինքնարժեք|себестоимость|
+խնայողություն|экономия; сбережения|
+կապիտալ|капитал|
+ակտիվներ|активы|
+պարտավորություն|обязательство|
+մասնաճյուղ|филиал|
+մենաշնորհ|монополия|
+մրցակցային|конкурентный|
+պետական գնումներ|госзакупки|
+մրցույթ|конкурс, тендер|
+հայտ|заявка|
+դրամաշնորհ|грант|
+հովանավոր|спонсор|
+հովանավորություն|спонсорство; покровительство|
+հաշվեկշիռ|баланс (бухг.)|
+կանխավճար|предоплата|
+ապառիկ|рассрочка|
+վարկառու|заёмщик|
+փոխառություն|заём|
+արժեթուղթ|ценная бумага|
+պարտատոմս|облигация|
+շահաբաժին|дивиденд|
+ներդրող|инвестор|
+ռիսկային|рискованный|
+շահավետ|выгодный|
+անշահավետ|невыгодный|
+տնտեսական աճ|экономический рост|
+համախառն ներքին արդյունք|ВВП|
+ստվերային տնտեսություն|теневая экономика|
+սակագին|тариф|
+մաքսատուրք|таможенная пошлина|
+`},
+{lv:'B2',ru:'Наука и техника',hy:'Գիտություն և տեխնիկա',ic:'⚙️',d:`
+տեխնիկա|техника|
+ինժեներիա|инженерия|
+մեխանիզմ|механизм|
+շարժիչ|двигатель|
+տվիչ|датчик|
+լար|провод; струна|
+հոսանք|ток; течение|
+լարում|напряжение|
+հզորություն|мощность|
+էներգախնայողություն|энергосбережение|
+ատոմ|атом|
+մոլեկուլ|молекула|
+տարր|элемент|
+միացություն|соединение|
+ռեակցիա|реакция|
+լուծույթ|раствор|
+խտություն|плотность; концентрация|
+զանգված|масса|
+արագացում|ускорение|
+ձգողականություն|гравитация|
+ճառագայթում|излучение|
+հաճախականություն|частота|
+երկարություն|длина|
+լայնություն|ширина|
+բարձրություն|высота|
+խորություն|глубина|
+տրամագիծ|диаметр|
+շառավիղ|радиус|
+մակերես|поверхность; площадь|
+հավասարում|уравнение|
+գործակից|коэффициент|
+միավոր|единица; балл|
+ճշգրտություն|точность|
+սխալանք|погрешность|
+նմուշառում|выборка|
+վիճակագրություն|статистика|
+հավանականություն|вероятность|
+մոդել|модель|
+նախատիպ|прототип|
+արտոնագիր|патент|
+նորարարություն|инновация|
+ալգորիթմ|алгоритм|
+ծրագրավորում|программирование|
+կոդ|код|
+տիեզերագնաց|космонавт|👩‍🚀
+արբանյակ|спутник|🛰️
+հրթիռ|ракета|🚀
+աստղադիտակ|телескоп|🔭
+`},
+{lv:'B2',ru:'Клиника',hy:'Կլինիկա',ic:'🏥',d:`
+կլինիկա|клиника|
+անամնեզ|анамнез|
+հիվանդության պատմություն|история болезни|
+ախտորոշիչ|диагностический|
+կանխարգելում|профилактика|
+կանխատեսում|прогноз|
+բարդություն|осложнение|
+սրացում|обострение|
+քրոնիկ|хронический|
+ռեցիդիվ|рецидив|
+թերապևտ|терапевт|
+վիրաբույժ|хирург|
+նյարդաբան|невролог|
+սրտաբան|кардиолог|
+մաշկաբան|дерматолог|
+գինեկոլոգ|гинеколог|
+ուրոլոգ|уролог|
+էնդոկրինոլոգ|эндокринолог|
+հոգեբույժ|психиатр|
+հոգեբան|психолог|
+անեսթեզիոլոգ|анестезиолог|
+բուժանձնակազմ|медперсонал|
+լաբորանտ|лаборант|
+ընդունելություն|приём (у врача)|
+ուղեգիր|направление (к врачу)|
+հիվանդանոցային|стационарный|
+ամբուլատոր|амбулаторный|
+հոսպիտալացում|госпитализация|
+դուրսգրում|выписка|
+անզգայացում|обезболивание, анестезия|
+ցավազրկող|обезболивающее|
+հակաբորբոքային|противовоспалительное|
+ջերմիջեցնող|жаропонижающее|
+կաթոցիկ|капельница|
+ներերակային|внутривенный|
+միջմկանային|внутримышечный|
+ներքին|внутренний|
+զարկերակ|артерия; пульс|
+զարկերակային ճնշում|артериальное давление|
+սրտի զարկ|сердцебиение|
+շնչառություն|дыхание|
+մարսողություն|пищеварение|
+նյութափոխանակություն|обмен веществ|
+իմունային համակարգ|иммунная система|
+նյարդային համակարգ|нервная система|
+արյան շրջանառություն|кровообращение|
+ուղեղի ցնցում|сотрясение мозга|
+մեկուսացում|изоляция|
+կարանտին|карантин|
+համաճարակաբանություն|эпидемиология|
+ախտածին|патогенный|
+հարուցիչ|возбудитель|
+մանրէաբանություն|микробиология|
+բժշկական քարտ|медицинская карта|
+բժշկական ապահովագրություն|медицинская страховка|
+առողջապահություն|здравоохранение|
+`},
+{lv:'B2',ru:'Искусство и литература',hy:'Արվեստ և գրականություն',ic:'🖋️',d:`
+ստեղծագործություն|произведение; творчество|
+գլուխգործոց|шедевр|
+ժանր|жанр|
+սյուժե|сюжет|
+կերպար|образ, персонаж|
+գլխավոր հերոս|главный герой|
+երկխոսություն|диалог|
+մենախոսություն|монолог|
+պատմողական|повествовательный|
+ողբերգություն|трагедия|
+կատակերգություն|комедия|
+դրամա|драма|
+պոեմ|поэма|
+տող|строка|
+հանգ|рифма|
+ոճաբանություն|стилистика|
+փոխաբերություն|метафора|
+խորհրդանիշ|символ|
+թարգմանիչ|переводчик|
+խմբագիր|редактор|
+հրատարակչություն|издательство|
+տպաքանակ|тираж|
+գրախոսություն|рецензия|
+քննադատ|критик|
+ցուցադրություն|показ, экспозиция|
+պատկերասրահ|картинная галерея|
+կտավ|холст|
+գույն|цвет|
+երանգ|оттенок|
+դիմանկար|портрет|
+բնանկար|пейзаж|
+նատյուրմորտ|натюрморт|
+որմնանկար|фреска|
+մանրանկարչություն|книжная миниатюра|
+ձեռագիր|рукопись|
+Մատենադարան|Матенадаран|
+երաժշտական գործիք|музыкальный инструмент|
+մեղեդի|мелодия|
+ռիթմ|ритм|
+երգչախումբ|хор|
+բեմադրություն|постановка|
+պրեմիերա|премьера|
+կինոնկար|кинофильм|
+սցենար|сценарий|
+էկրանավորում|экранизация|
+`},
+{lv:'B2',ru:'География и природа',hy:'Աշխարհագրություն',ic:'🌍',d:`
+աշխարհամաս|часть света|
+մայրցամաք|материк|
+օվկիանոս|океан|
+ծովածոց|залив|
+նեղուց|пролив|
+թերակղզի|полуостров|
+լեռնաշղթա|горный хребет|
+բարձրավանդակ|нагорье|
+սարահարթ|плато|
+հարթավայր|равнина|
+գետաբերան|устье|
+ջրամբար|водохранилище|
+ստորերկրյա ջրեր|подземные воды|
+ծովի մակարդակ|уровень моря|
+հասարակած|экватор|
+բևեռ|полюс|
+կլիմայական գոտի|климатический пояс|
+խոնավություն|влажность|
+տեղումներ|осадки|
+երաշտ|засуха|
+սողանք|оползень|
+ձնահյուս|лавина|
+փոթորիկ|буря|
+մրրիկ|ураган, вихрь|
+ցունամի|цунами|
+հողմ|ветер (книжн.)|
+բուսականություն|растительность|
+պոպուլյացիա|популяция|
+էկոհամակարգ|экосистема|
+կենսաբազմազանություն|биоразнообразие|
+անտառահատում|вырубка леса|
+բնական պաշար|природный ресурс|
+հանածո|полезное ископаемое|
+մետաղ|металл|
+քարածուխ|каменный уголь|
+բնակավայր|населённый пункт|
+բնակեցված|населённый|
+ամայի|безлюдный|
+`},
+{lv:'B2',ru:'Городская жизнь',hy:'Քաղաքային կյանք',ic:'🏙️',d:`
+ենթակառուցվածք|инфраструктура|
+կոմունալ ծառայություններ|коммунальные услуги|
+կոմունալ վճարներ|коммунальные платежи|
+տրանսպորտ|транспорт|
+հանրային տրանսպորտ|общественный транспорт|
+ուղեվարձ|плата за проезд|
+մայրուղի|шоссе, магистраль|
+հետիոտն|пешеход|
+հետիոտնային անցում|пешеходный переход|
+երթևեկության կանոններ|правила дорожного движения|
+կառուցապատում|застройка|
+նորակառույց|новостройка|
+բնակելի համալիր|жилой комплекс|
+կառուցապատող|застройщик|
+գործակալ|агент|
+անշարժ գույքի գործակալ|риелтор|
+վարձակալ|арендатор|
+տանտիրուհի|хозяйка (квартиры)|
+հարևանություն|соседство|
+քաղաքապետ|мэр|
+աղբահանություն|вывоз мусора|
+ջրամատակարարում|водоснабжение|
+ջեռուցում|отопление|
+օդորակիչ|кондиционер|
+էլեկտրաէներգիա|электроэнергия|
+հաշվիչ|счётчик|
+վթարային ծառայություն|аварийная служба|
+սպասարկում|обслуживание|
+հերթագրում|запись (в очередь)|
+ժամադրություն|свидание; назначенная встреча|
+առևտրի կենտրոն|торговый центр|
+սննդի առաքում|доставка еды|
+`},
+{lv:'B2',ru:'Глаголы B2',hy:'Բայեր 5',ic:'🧭',d:`
+ակնկալել|рассчитывать (ожидать)|
+ամրապնդել|укреплять|
+անդրադառնալ|затрагивать (тему)|
+ապավինել|полагаться|
+առաջնորդել|возглавлять, вести|
+առաջնորդվել|руководствоваться|
+արձանագրել|фиксировать, протоколировать|
+արտացոլել|отражать|
+բախվել|сталкиваться|
+բացառել|исключать|
+բնութագրել|характеризовать|
+գերազանցել|превосходить|
+գիտակցել|осознавать|
+դիմակայել|противостоять|
+դրսևորել|проявлять|
+դրսևորվել|проявляться|
+զիջել|уступать|
+զսպել|сдерживать|
+թերագնահատել|недооценивать|
+գերագնահատել|переоценивать|
+իրականացնել|осуществлять|
+իրացնել|реализовывать|
+լուծել|решать (задачу)|
+խորացնել|углублять|
+խոչընդոտել|препятствовать|
+կանխատեսել|предсказывать|
+կասեցնել|приостанавливать|
+կենտրոնանալ|сосредоточиться|
+կողմնորոշվել|ориентироваться|
+կոչ անել|призывать|
+համախմբվել|сплачиваться|
+համադրել|сопоставлять|
+համալրել|пополнять|
+համընկնել|совпадать|
+հանդուրժել|терпеть, допускать|
+հավակնել|претендовать|
+հարստացնել|обогащать|
+հիմնավորել|обосновывать|
+հրահրել|провоцировать|
+հրաժեշտ տալ|прощаться|
+ձևավորել|формировать|
+ձևակերպել|формулировать|
+մեկնաբանել|комментировать, толковать|
+մեղադրել|обвинять|
+միջամտել|вмешиваться|
+նախաձեռնել|инициировать|
+նախատեսել|предусматривать|
+նպաստել|способствовать|
+շեղվել|отклоняться|
+շահագործել|эксплуатировать|
+ոգեշնչել|вдохновлять|
+ոչնչացնել|уничтожать|
+պաշտպանվել|защищаться|
+պատրաստվել|готовиться|
+պարտադրել|навязывать|
+սահմանափակել|ограничивать|
+վերագրել|приписывать|
+վերաբերել|касаться, относиться|
+վերանայել|пересматривать|
+վերարտադրել|воспроизводить|
+վկայել|свидетельствовать|
+տարբերել|различать|
+տարբերվել|отличаться|
+տեղեկացնել|информировать|
+ցուցաբերել|проявлять, оказывать|
+փաստել|констатировать|
+քննել|рассматривать, исследовать|
+օժանդակել|содействовать|
+ուժեղացնել|усиливать|
+թուլացնել|ослаблять|
+երկարացնել|продлевать|
+կարճացնել|укорачивать|
+արագացնել|ускорять|
+դանդաղեցնել|замедлять|
+պարզեցնել|упрощать|
+մեծացնել|увеличивать|
+փոքրացնել|уменьшать|
+բարձրացնել|поднимать, повышать|
+իջեցնել|опускать, снижать|
+խորհրդակցել|советоваться|
+համոզվել|убеждаться|
+հերքել|опровергать|
+նախազգուշացնել|предостерегать|
+վտանգել|подвергать опасности|
+ապահովագրել|страховать|
+ներգրավել|привлекать, вовлекать|
+հավաքագրել|набирать (людей)|
+նշանակվել|назначаться|
+ընտրվել|избираться|
+հրաժարական տալ|подать в отставку|
+ղեկավարել|руководить|
+համակարգել|координировать|
+պլանավորել|планировать|
+պատվիրակել|делегировать|
+վստահեցնել|уверять|
+խրախուսել|поощрять|
+քաջալերել|ободрять|
+հուսադրել|обнадёживать|
+հիասթափեցնել|разочаровывать|
+զայրացնել|злить|
+նյարդայնացնել|нервировать|
+տանջել|мучить|
+տառապել|страдать|
+հարմարեցնել|приспосабливать|
+կատարելագործել|совершенствовать|
+արդիականացնել|модернизировать|
+թվայնացնել|цифровизировать|
+ավտոմատացնել|автоматизировать|
+ստեղծագործել|творить|
+հորինել|выдумывать, изобретать|
+հայտնագործել|совершить открытие|
+փորձարկել|испытывать|
+չափել|измерять|
+կշռել|взвешивать|
+հաշվարկել|рассчитывать|
+դասակարգել|классифицировать|
+խմբավորել|группировать|
+տեսակավորել|сортировать|
+ընդհանրացնել|обобщать|
+մանրամասնել|детализировать|
+լուսաբանել|освещать (тему)|
+`},
+{lv:'B2',ru:'Прилагательные B2',hy:'Ածականներ 4',ic:'📏',d:`
+ակնառու|выдающийся; наглядный|
+արժանի|достойный|
+անհամեմատ|несравненный|
+բացառիկ|исключительный|
+եզակի|уникальный|
+համընդհանուր|всеобщий|
+համապարփակ|всеобъемлющий|
+հետևողական|последовательный|
+անհետևողական|непоследовательный|
+համակարգված|систематизированный|
+կազմակերպված|организованный|
+ինքնաբուխ|спонтанный|
+անխուսափելի|неизбежный|
+անհապաղ|безотлагательный|
+հրատապ|насущный, срочный|
+շտապ|срочный|
+երկարաժամկետ|долгосрочный|
+կարճաժամկետ|краткосрочный|
+տևական|длительный|
+պարբերական|периодический|
+հերթական|очередной|
+նախնական|предварительный|
+լրացուցիչ|дополнительный|
+այլընտրանքային|альтернативный|
+համարժեք|равноценный|
+համաչափ|пропорциональный|
+անհամաչափ|несоразмерный|
+ծայրահեղ|крайний|
+չափավոր|умеренный|
+կտրուկ|резкий|
+սահուն|плавный|
+աննկատ|незаметный|
+նկատելի|заметный|
+զգալի|значительный|
+աննշան|незначительный|
+հիմնավոր|обоснованный|
+անհիմն|необоснованный|
+համոզիչ|убедительный|
+հակասական|противоречивый|
+միանշանակ|однозначный|
+երկիմաստ|двусмысленный|
+խճճված|запутанный|
+պարզունակ|примитивный|
+մակերեսային|поверхностный|
+խորքային|глубинный|
+երկրորդական|второстепенный|
+առաջնային|первоочередной|
+գերակա|приоритетный|
+պարտադիր|обязательный|
+կամընտիր|факультативный|
+հնազանդ|послушный|
+կարգապահ|дисциплинированный|
+անկարգ|недисциплинированный|
+բծախնդիր|придирчивый|
+պահանջկոտ|требовательный|
+հոգատար|заботливый|
+անտարբեր|равнодушный|
+հետաքրքրված|заинтересованный|
+շահագրգիռ|заинтересованный (сторона)|
+կողմնակալ|предвзятый|
+անկողմնակալ|беспристрастный|
+օբյեկտիվ|объективный|
+սուբյեկտիվ|субъективный|
+ռացիոնալ|рациональный|
+բարոյական|нравственный|
+անբարոյական|аморальный|
+էթիկական|этический|
+օրինաչափ|закономерный|
+պատահական|случайный|
+կանխամտածված|преднамеренный|
+կանխատեսելի|предсказуемый|
+անկանխատեսելի|непредсказуемый|
+ապահով|безопасный, надёжный|
+խոցելի|уязвимый|
+դիմացկուն|выносливый, прочный|
+ճկուն|гибкий|
+անշարժ|неподвижный|
+շարժական|подвижный, переносной|
+ծավալուն|объёмный|
+սեղմ|сжатый (о тексте)|
+մանրամասն|подробный|
+ֆորմալ|формальный|
+հանրահայտ|общеизвестный|
+ճանաչված|признанный|
+հեղինակավոր|авторитетный|
+`},
+{lv:'B2',ru:'Наречия и связки B2',hy:'Մակբայներ 3',ic:'🔗',d:`
+իսկ|а (союз)|
+այլ|другой; а (после «не»)|
+ոչ թե|не (… а)|
+այսպիսով|таким образом|
+ընդ որում|причём|
+մանավանդ|тем более|
+թերևս|пожалуй|
+անկասկած|без сомнения|
+իսկույն|тотчас|
+հետզհետե|мало-помалу|
+ժամանակ առ ժամանակ|время от времени|
+սովորաբար|обычно|
+սկզբունքորեն|в принципе|
+իրոք|в самом деле|
+հիրավի|воистину|
+ամենևին|вовсе (не)|
+բնավ|совсем (не)|
+թեկուզ|хоть, пусть|
+եթե նույնիսկ|даже если|
+ապա թե ոչ|иначе|
+հակառակ դեպքում|в противном случае|
+համապատասխանաբար|соответственно|
+փոխադարձաբար|взаимно|
+միանգամայն|вполне|
+քանզի|ибо|
+այդուհանդերձ|однако же|
+`},
+{lv:'C1',ru:'Философия и абстракции',hy:'Փիլիսոփայական բառեր',ic:'🏺',d:`
+գոյություն|существование|
+գոյատևում|выживание|
+էակ|существо|
+բնույթ|характер, природа (чего-то)|
+երևույթ|явление|
+իրողություն|реалия|
+օրինաչափություն|закономерность|
+պատճառականություն|причинность|
+հակասություն|противоречие|
+երկընտրանք|дилемма|
+պարադոքս|парадокс|
+հայեցակարգ|концепция|
+հասկացություն|понятие|
+սկզբունք|принцип|
+չափանիշ|критерий|
+նախադրյալ|предпосылка|
+ենթադրություն|предположение|
+եզրույթ|термин|
+սահմանում|определение|
+դասակարգում|классификация|
+վերացարկում|абстрагирование|
+ընդհանրացում|обобщение|
+համադրություն|синтез, сочетание|
+տրամաբանություն|логика|
+բանականություն|разум|
+գիտակցված|осознанный|
+ինքնագիտակցություն|самосознание|
+աշխարհայացք|мировоззрение|
+արժեհամակարգ|система ценностей|
+բարոյականություն|нравственность|
+էթիկա|этика|
+գեղագիտություն|эстетика|
+ազատ կամք|свобода воли|
+խիղճ|совесть|
+տառապանք|страдание|
+կարեկցանք|сострадание|
+անհատ|индивид|
+կոլեկտիվ|коллектив|
+հանրություն|общественность|
+քաղաքակրթություն|цивилизация|
+առաջադիմություն|прогресс; успеваемость|
+հետադիմություն|регресс|
+ավանդապաշտություն|традиционализм|
+արդիականություն|современность|
+ժառանգություն|наследие; наследство|
+պատկանելություն|принадлежность|
+օտարում|отчуждение|
+միասնություն|единство|
+բազմակարծություն|плюрализм|
+հավասարակշռություն|равновесие|
+ներդաշնակություն|гармония|
+վերելք|подъём|
+ծագում|происхождение|
+էվոլյուցիա|эволюция|
+անցում|переход|
+շրջադարձ|поворот (перелом)|
+բեկում|перелом (в событиях)|
+տեսլական|видение (будущего)|
+իդեալ|идеал|
+պատրանք|иллюзия|
+հիասթափություն|разочарование|
+`},
+{lv:'C1',ru:'Академическая и деловая речь',hy:'Ակադեմիական լեզու',ic:'🎓',d:`
+ուսումնասիրություն|изучение, исследование|
+հետազոտական|исследовательский|
+մեթոդաբանություն|методология|
+ակնարկ|обзор; намёк|
+գրականության ակնարկ|обзор литературы|
+մեջբերում|цитата|
+մեջբերել|цитировать|
+ծանոթագրություն|примечание|
+ամփոփում|резюме, итог|
+ներածություն|введение|
+եզրափակում|заключение|
+պարբերություն|абзац|
+թեզ|тезис|
+փաստարկ|аргумент|
+հակափաստարկ|контраргумент|
+հիմնավորում|обоснование|
+հայեցակետ|аспект|
+տեսանկյուն|ракурс, угол зрения|
+համատեքստ|контекст|
+շրջանակ|рамки|
+ընթացակարգ|процедура|
+արձանագրություն|протокол; надпись|
+հուշագիր|меморандум|
+զեկույց|доклад|
+զեկուցող|докладчик|
+բանախոս|оратор, лектор|
+գիտաժողով|научная конференция|
+համաժողով|форум, конгресс|
+քննարկում|обсуждение|
+օրակարգ|повестка дня|
+նախագահող|председательствующий|
+մասնակից|участник|
+կազմակերպիչ|организатор|
+գործընկերություն|партнёрство|
+համաձայնեցնել|согласовывать|
+վավերական|подлинный|
+տեղեկանք|справка|
+հավաստագիր|сертификат|
+որակի վերահսկում|контроль качества|
+չափորոշիչ|стандарт|
+ձեռնարկ|руководство, пособие|
+հրահանգ|инструкция|
+կանոնակարգ|регламент|
+մեթոդական|методический|
+արդյունավետություն|эффективность|
+ցուցանիշ|показатель|
+միտում|тенденция|
+դինամիկա|динамика|
+համեմատական|сравнительный|
+քանակական|количественный|
+որակական|качественный|
+էմպիրիկ|эмпирический|
+հուսալիություն|надёжность|
+վավերականություն|достоверность|
+կիրառելիություն|применимость|
+գիտական աստիճան|учёная степень|
+գիտությունների դոկտոր|доктор наук|
+գրախոս|рецензент|
+պաշտպանություն|защита|
+`},
+{lv:'C1',ru:'Право и государство C1',hy:'Իրավունք',ic:'📜',d:`
+իրավակարգ|правопорядок|
+իրավաչափ|правомерный|
+հակաիրավական|противоправный|
+իրավախախտում|правонарушение|
+իրավասություն|компетенция, юрисдикция|
+դատական|судебный|
+դատաքննություն|судебное разбирательство|
+սահմանադրական դատարան|конституционный суд|
+վճռաբեկ դատարան|кассационный суд|
+բողոքարկում|обжалование|
+արդարադատություն|правосудие|
+օրինականություն|законность|
+կանխավարկած|презумпция|
+անմեղության կանխավարկած|презумпция невиновности|
+հանցակազմ|состав преступления|
+պատիժ|наказание|
+պայմանական|условный|
+համաներում|амнистия|
+ներում|помилование|
+արտահանձնում|экстрадиция|
+ապաստան|убежище|
+գործադիր իշխանություն|исполнительная власть|
+օրենսդիր իշխանություն|законодательная власть|
+դատական իշխանություն|судебная власть|
+իշխանությունների տարանջատում|разделение властей|
+ինքնակառավարում|самоуправление|
+տեղական ինքնակառավարում|местное самоуправление|
+հրամանագիր|указ|
+կարգադրություն|распоряжение|
+հրաման|приказ|
+վարչական|административный|
+քրեական|уголовный|
+քաղաքացիական|гражданский|
+իրավաբանական անձ|юридическое лицо|
+ֆիզիկական անձ|физическое лицо|
+անհատ ձեռնարկատեր|индивидуальный предприниматель|
+հարկային մարմին|налоговый орган|
+հարկային արտոնություն|налоговая льгота|
+ուժի մեջ մտնել|вступать в силу|
+ուժը կորցրած|утративший силу|
+վավերացում|ратификация; заверение|
+միջազգային իրավունք|международное право|
+կոնվենցիա|конвенция|
+`},
+{lv:'C1',ru:'Финансы C1',hy:'Ֆինանսներ',ic:'💳',d:`
+դրամավարկային քաղաքականություն|денежно-кредитная политика|
+կենտրոնական բանկ|центральный банк|
+վերաֆինանսավորում|рефинансирование|
+իրացվելիություն|ликвидность|
+պետական պարտք|государственный долг|
+պարտքային բեռ|долговая нагрузка|
+պակասուրդ|дефицит (бюджета)|
+հավելուրդ|профицит|
+արժեզրկում|обесценивание, девальвация|
+գնողունակություն|покупательная способность|
+ֆոնդ|фонд|
+կենսաթոշակային ֆոնդ|пенсионный фонд|
+պորտֆել|портфель (инвестиционный)|
+դիվերսիֆիկացում|диверсификация|
+եկամտահարկ|подоходный налог|
+ավելացված արժեքի հարկ|НДС|
+շահութահարկ|налог на прибыль|
+շրջանառության հարկ|налог с оборота|
+հաշվետու|подотчётный|
+ֆինանսական հաշվետվություն|финансовая отчётность|
+տնտեսագետ|экономист|
+ֆինանսիստ|финансист|
+ձեռնարկատիրական|предпринимательский|
+գործարարություն|предпринимательство|
+սեփականաշնորհում|приватизация|
+ազգայնացում|национализация|
+շուկայական արժեք|рыночная стоимость|
+գնագոյացում|ценообразование|
+սպեկուլյացիա|спекуляция|
+խաբեություն|обман, жульничество|
+փողերի լվացում|отмывание денег|
+օֆշոր|офшор|
+հարկերից խուսափում|уклонение от налогов|
+աուդիտոր|аудитор|
+`},
+{lv:'C1',ru:'Генетика и патология',hy:'Գենետիկա և ախտաբանություն',ic:'🧬',d:`
+գենետիկական|генетический|
+մոլեկուլային|молекулярный|
+մոլեկուլային գենետիկա|молекулярная генетика|
+բջջային|клеточный|
+կորիզ|ядро (клетки); косточка|
+ցիտոպլազմա|цитоплазма|
+թաղանթ|мембрана|
+միտոքոնդրիա|митохондрия|
+բջջաբաժանում|деление клетки|
+միտոզ|митоз|
+մեյոզ|мейоз|
+ալել|аллель|
+գենոտիպ|генотип|
+ֆենոտիպ|фенотип|
+հոմոզիգոտ|гомозигота|
+հետերոզիգոտ|гетерозигота|
+գերիշխող|доминантный|
+ռեցեսիվ|рецессивный|
+կրող|носитель|
+կետային մուտացիա|точечная мутация|
+դելեցիա|делеция|
+ինսերցիա|инсерция|
+ամպլիֆիկացիա|амплификация|
+տրանսլոկացիա|транслокация|
+պոլիմորֆիզմ|полиморфизм|
+էքսոն|экзон|
+ինտրոն|интрон|
+կոդոն|кодон|
+նուկլեոտիդ|нуклеотид|
+հիմքերի զույգ|пара оснований|
+պրայմեր|праймер|
+զոնդ|зонд|
+պոլիմերազ|полимераза|
+ամպլիկոն|ампликон|
+էլեկտրոֆորեզ|электрофорез|
+սեկվենավորում|секвенирование|
+նոր սերնդի սեկվենավորում|секвенирование нового поколения (NGS)|
+բիոինֆորմատիկա|биоинформатика|
+մարկեր|маркер|
+ուռուցքային մարկեր|онкомаркер|
+կենսամարկեր|биомаркер|
+պարաֆինային բլոկ|парафиновый блок|
+հյուսվածքաբանություն|гистология|
+բջջաբանություն|цитология|
+իմունահիստոքիմիա|иммуногистохимия|
+ախտաբանական|патологический|
+ախտաձևաբանություն|патоморфология|
+քաղցկեղածին|канцерогенный|
+ինվազիվ|инвазивный|
+քաղցկեղի փուլ|стадия рака|
+թիրախային թերապիա|таргетная терапия|
+իմունաթերապիա|иммунотерапия|
+դեղակայունություն|лекарственная устойчивость|
+զգայունություն|чувствительность|
+սպեցիֆիկություն|специфичность|
+կեղծ դրական|ложноположительный|
+կեղծ բացասական|ложноотрицательный|
+հսկիչ նմուշ|контрольный образец|
+տրամաչափում|калибровка|
+վերարտադրելիություն|воспроизводимость|
+արտաքին որակի հսկողություն|внешний контроль качества|
+`},
+{lv:'C1',ru:'Эмоции и оценки C1',hy:'Գնահատական և հույզեր',ic:'🎭',d:`
+հիացմունք|восхищение|
+զզվանք|отвращение|
+արհամարհանք|презрение|
+վրդովմունք|возмущение|
+դառնություն|горечь|
+ափսոսանք|сожаление|
+զղջում|раскаяние|
+կարոտախտ|ностальгия|
+տագնապ|тревога|
+անհանգստություն|беспокойство|
+խուճապ|паника|
+սարսափ|ужас|
+ցնցում|потрясение, шок|
+թեթևություն|облегчение; лёгкость|
+բավականություն|удовлетворение|
+երախտապարտ|признательный|
+հիասթափված|разочарованный|
+վիրավորված|обиженный|
+զայրացած|разгневанный|
+շփոթված|растерянный|
+ինքնաբավ|самодостаточный|
+ինքնասիրահարված|самовлюблённый|
+խղճուկ|жалкий|
+ողորմելի|ничтожный, жалкий|
+տխրահռչակ|печально известный|
+փառավոր|славный|
+հերոսական|героический|
+անարժան|недостойный|
+ամոթալի|постыдный|
+պատվաբեր|почётный|
+նվաստացուցիչ|унизительный|
+վիրավորական|оскорбительный|
+զավեշտալի|комичный|
+ողբերգական|трагический|
+ահռելի|огромный, чудовищный|
+չնչին|ничтожный (о количестве)|
+աղետալի|катастрофический|
+անհավանական|невероятный|
+աներևակայելի|невообразимый|
+անկրկնելի|неповторимый|
+աննախադեպ|беспрецедентный|
+հուսալքված|удручённый|
+հանդարտ|спокойный, тихий (о движении)|
+խաղաղ|мирный|
+եռանդուն|энергичный|
+եռանդ|энергия, рвение|
+ոգևորություն|воодушевление|
+ոգևորված|воодушевлённый|
+կիրք|страсть|
+կրքոտ|страстный|
+սառնարյուն|хладнокровный|
+`},
+{lv:'C1',ru:'Глаголы C1',hy:'Բայեր 6',ic:'🧩',d:`
+ամրագրել|фиксировать, закреплять|
+անտեսել|игнорировать|
+ապակենտրոնացնել|децентрализовать|
+արգելափակել|блокировать|
+արժեզրկել|обесценивать|
+գերակշռել|преобладать|
+գերիշխել|доминировать|
+դյուրացնել|облегчать (книжн.)|
+եզրափակել|завершать (книжн.)|
+ընդօրինակել|подражать, копировать|
+թելադրել|диктовать|
+խեղաթյուրել|искажать|
+կանխորոշել|предопределять|
+կենտրոնացնել|концентрировать|
+կոծկել|замалчивать|
+հակազդել|противодействовать|
+հակադրել|противопоставлять|
+համախմբել|сплачивать|
+հաշվի առնել|учитывать|
+հետամուտ լինել|добиваться|
+ձեռնպահ մնալ|воздержаться|
+մեղմացնել|смягчать|
+նախանշել|намечать|
+նսեմացնել|принижать|
+շեշտադրել|акцентировать|
+ոտնահարել|попирать|
+պայմանավորել|обусловливать|
+պարտավորվել|обязываться|
+սատարել|поддерживать (книжн.)|
+վերակառուցել|перестраивать|
+վերափոխել|преобразовывать|
+վերաձևակերպել|переформулировать|
+վիճարկել|оспаривать|
+տիրանալ|завладеть|
+ցուցակագրել|вносить в список|
+փաստագրել|документировать|
+քողարկել|маскировать|
+օրինականացնել|легализовать|
+պնդել|утверждать, настаивать|
+հակաճառել|возражать (книжн.)|
+մեկուսացնել|изолировать|
+զերծ մնալ|оставаться в стороне|
+խորհել|размышлять|
+խորհրդածել|раздумывать|
+կշռադատել|взвешивать (обдумывать)|
+վարանել|колебаться (не решаться)|
+տատանվել|колебаться (о величине); сомневаться|
+հավաստել|удостоверять|
+հավաստիացնել|заверять (уверять)|
+երաշխավորել|гарантировать|
+պատասխանատվություն կրել|нести ответственность|
+ներշնչել|внушать|
+համակել|охватывать (о чувстве)|
+պատել|окутывать|
+ողողել|затоплять|
+սփռել|рассеивать, распространять|
+հեղեղել|наводнять|
+ծավալվել|разворачиваться|
+կայանալ|состояться|
+տեղի ունենալ|происходить|
+տեղի տալ|уступать (поддаваться)|
+ձախողվել|проваливаться|
+սնանկանալ|обанкротиться|
+բարգավաճել|процветать|
+խամրել|увядать|
+մարել|угасать|
+զարթնել|пробуждаться|
+վերածնվել|возрождаться|
+վերակենդանացնել|оживлять|
+հարություն առնել|воскреснуть|
+մոռացության մատնել|предать забвению|
+հիշատակել|упоминать|
+ակնարկել|намекать|
+կողմնորոշել|ориентировать|
+հաշտեցնել|примирять|
+միավորել|объединять|
+տարանջատել|разграничивать|
+զատել|отделять|
+խմբագրել|редактировать|
+վերծանել|расшифровывать|
+գաղտնագրել|шифровать|
+կոդավորել|кодировать|
+սահմանազատել|разграничивать (границы)|
+ներքաշել|втягивать|
+սադրել|подстрекать|
+դրդել|побуждать|
+`},
+{lv:'C1',ru:'Прилагательные C1',hy:'Ածականներ 5',ic:'💎',d:`
+անժխտելի|неоспоримый|
+անվիճելի|бесспорный|
+վիճելի|спорный|
+անհերքելի|неопровержимый|
+հավաստի|достоверный|
+բազմաշերտ|многослойный|
+բազմաբնույթ|многоплановый|
+բազմակողմանի|разносторонний|
+միակողմանի|односторонний|
+համակողմանի|всесторонний|
+նրբանկատ|тактичный|
+անտակտ|бестактный|
+հանդուգն|дерзкий|
+լկտի|наглый|
+պատշաճ|надлежащий|
+անպատշաճ|неподобающий|
+վայելուչ|благопристойный|
+ճաշակավոր|со вкусом|
+անճաշակ|безвкусный|
+պերճ|великолепный (книжн.)|
+շքեղ|роскошный|
+փարթամ|пышный|
+բարեխիղճ|добросовестный|
+անխիղճ|бессовестный|
+կոռումպացված|коррумпированный|
+անկաշառ|неподкупный|
+անաչառ|непредвзятый|
+ազնվական|дворянский; благородный|
+ստոր|подлый|
+նենգ|коварный|
+հմուտ|умелый, искусный|
+անփոխարինելի|незаменимый|
+գերազանց|превосходный|
+միջակ|посредственный|
+բավարար|удовлетворительный|
+անբավարար|неудовлетворительный|
+անթերի|безупречный|
+թերի|неполный, с изъянами|
+սպառիչ|исчерпывающий|
+հակիրճ|лаконичный|
+բառացի|дословный|
+փոխաբերական|переносный (о значении)|
+անուղղակի|косвенный|
+թաքուն|тайный|
+բացահայտ|явный|
+հրապարակային|публичный|
+գաղտնի|секретный|
+արմատական|радикальный, коренной|
+պահպանողական|консервативный|
+ազատական|либеральный|
+ծայրահեղական|экстремистский|
+հանդուրժող|терпимый|
+անհանդուրժող|нетерпимый|
+կայուն|устойчивый|
+անկայուն|нестабильный|
+հարատև|непреходящий|
+անցողիկ|преходящий|
+վաղանցիկ|мимолётный|
+անդառնալի|необратимый|
+ծանրակշիռ|веский|
+թեթևամիտ|легкомысленный|
+խոհեմ|благоразумный|
+անխոհեմ|неблагоразумный|
+զգոն|бдительный|
+ուշիմ|смышлёный|
+ապիկար|неумелый, бездарный|
+անկարող|неспособный|
+ընդունակ|способный|
+համեմատելի|сравнимый|
+համատեղելի|совместимый|
+անհամատեղելի|несовместимый|
+փոխկապակցված|взаимосвязанный|
+փոխադարձ|взаимный|
+միասնական|единый|
+ամբողջական|целостный|
+մասնակի|частичный|
+`},
+{lv:'C1',ru:'Устойчивые выражения',hy:'Դարձվածքներ',ic:'🗣️',d:`
+գլուխ ցավեցնել|надоедать (досл. «голову болеть заставлять»)|
+գլուխ գովալ|хвастаться|
+գլուխ հանել|разобраться, понять|
+գլուխը կորցնել|потерять голову|
+գլխի ընկնել|догадаться|
+աչք ածել|искать глазами|
+աչքի ընկնել|бросаться в глаза, выделяться|
+աչք փակել|закрывать глаза (на что-то)|
+աչքով անել|подмигнуть|
+աչքի լույս|свет очей (о дорогом человеке)|
+ականջ դնել|прислушиваться|
+լեզու գտնել|найти общий язык|
+քիթը խոթել|совать нос|
+սիրտ տալ|подбадривать|
+սիրտը կոտրել|разбить сердце, обидеть|
+ձեռք առնել|подшучивать, высмеивать|
+ձեռք մեկնել|протянуть руку (помощи)|
+ձեռքերը լվանալ|умыть руки|
+ոտքի կանգնել|встать на ноги|
+մեջք դարձնել|повернуться спиной|
+մտքով անցնել|прийти в голову|
+միտքը փոխել|передумать|
+խոսք տալ|дать слово (пообещать)|
+խոսքի տեր|человек слова|
+երես տալ|баловать|
+ջուր ծեծել|толочь воду в ступе|
+հաց ու աղ|хлеб-соль|
+հոգին ավանդել|испустить дух|
+բերանը փակել|закрыть рот (замолчать)|
+ատամները սեղմել|стиснуть зубы|
+ժամանակ սպանել|убивать время|
+հաշիվները մաքրել|свести счёты|
+ցավդ տանեմ|«возьму твою боль» (ласковое обращение)|
+ջան|дорогой (ласковое обращение)|
+ողջ լինես|спасибо, будь здоров|
+անուշ լինի|на здоровье (о еде)|
+բարով եկար|добро пожаловать (разг.)|
+բարի գալուստ|добро пожаловать|
+բարի ճանապարհ|счастливого пути|
+Աստված պահի|храни Бог|
+շնորհավոր|поздравляю|
+կենացդ|за тебя (тост)|
+ապրես|молодец (досл. «живи»)|
+`},
+{lv:'C2',ru:'Книжная и литературная лексика',hy:'Գրքային բառեր',ic:'📜',d:`
+վեհ|величественный, возвышенный|
+վեհություն|величие|
+նրբին|изысканный, тонкий|
+նրբություն|тонкость, нюанс|
+խորհրդավոր|таинственный|
+առեղծված|загадка|
+առեղծվածային|загадочный|
+անձկություն|томление|
+թախիծ|печаль|
+թախծոտ|печальный|
+երանություն|блаженство|
+երանելի|блаженный|
+գթություն|милосердие|
+գթասիրտ|милосердный|
+կարեկից|сочувствующий|
+ընչաքաղց|алчный|
+նենգություն|коварство|
+անդորր|безмятежность, покой|
+շքեղություն|роскошь|
+փառահեղ|великолепный|
+սքանչելի|прекрасный, дивный|
+անմահ|бессмертный|
+անմահություն|бессмертие|
+հավերժ|вечный; вечно|
+հավերժություն|вечность|
+անսահման|безграничный|
+անհուն|бескрайний|
+անդունդ|бездна|
+խավար|мрак|
+լուսաբաց|рассвет|
+վերջալույս|закатный свет|
+մթնշաղ|сумерки|
+երազանք|мечта (книжн.)|
+հուշ|воспоминание|
+հիշատակ|память (о ком-то)|
+վիշտ|горе|
+ողբ|плач, скорбь|
+սուգ|траур|
+ցնծություն|ликование|
+հրճվանք|восторг|
+զմայլանք|упоение|
+հմայք|обаяние, чары|
+գայթակղություն|соблазн|
+մեղք|грех; вина|
+ապաշխարանք|покаяние|
+փրկություն|спасение|
+օրհնություն|благословение|
+անեծք|проклятие|
+ճակատագրական|роковой|
+դյուցազն|богатырь|
+դյուցազնական|эпический, героический|
+վեհանձն|великодушный|
+մեծահոգի|благородный душой|
+անձնազոհ|самоотверженный|
+նվիրյալ|подвижник|
+իմաստուն|мудрый|
+իմաստություն|мудрость|
+խոհուն|вдумчивый|
+մտախոհ|задумчивый|
+խոնարհ|смиренный|
+գոռոզ|надменный|
+ամբարտավան|высокомерный|
+սնապարծ|тщеславный|
+նախանձոտ|завистливый|
+չարակամ|недоброжелательный|
+երկդիմի|двуличный|
+շողոքորթ|льстивый; льстец|
+կեղծիք|фальшь|
+խարդախ|плут; мошеннический|
+խարդախություն|мошенничество|
+դավադրություն|заговор|
+դավաճանություն|предательство|
+ըմբոստ|непокорный|
+ապստամբություն|восстание|
+զոհ|жертва|
+զոհաբերություն|жертвоприношение; самопожертвование|
+նահատակ|мученик|
+սխրանք|подвиг|
+արիություն|доблесть|
+քաջություն|мужество|
+անվեհեր|бесстрашный|
+երկյուղ|трепет, страх|
+ակնածանք|благоговение|
+խորշանք|отвращение (книжн.)|
+ատելի|ненавистный|
+սիրելի|любимый, милый|
+պաշտելի|обожаемый|
+թանկագին|драгоценный|
+գեղեցկուհի|красавица|
+արքա|царь (книжн.)|
+թագավոր|король, царь|
+թագուհի|королева|
+իշխան|князь|
+ասպետ|рыцарь|
+զորավար|полководец|
+զորք|войско|
+սուսեր|сабля|
+վահան|щит|
+նետ|стрела|
+աղեղ|лук (оружие)|
+բերդ|крепость|
+պարիսպ|крепостная стена|
+մատուռ|часовня|
+վանական|монах|
+աղոթք|молитва|
+ավետարան|Евангелие|
+սրբություն|святыня|
+սուրբ|святой|
+հրաշք|чудо|
+երկնային|небесный|
+երկրային|земной|
+աստվածային|божественный|
+`},
+{lv:'C2',ru:'Доказательная медицина и профессия',hy:'Մասնագիտական բառեր',ic:'🩺',d:`
+ախտածագում|патогенез|
+էթիոլոգիա|этиология|
+կլինիկական պատկեր|клиническая картина|
+տարբերակիչ ախտորոշում|дифференциальная диагностика|
+ապաքինում|выздоровление|
+ռեմիսիա|ремиссия|
+պալիատիվ խնամք|паллиативная помощь|
+գոյատևելիություն|выживаемость|
+մահացություն|смертность|
+հիվանդացություն|заболеваемость|
+տարածվածություն|распространённость|
+ռիսկի գործոն|фактор риска|
+նախատրամադրվածություն|предрасположенность|
+ժառանգական նախատրամադրվածություն|наследственная предрасположенность|
+սկրինինգ|скрининг|
+վաղ հայտնաբերում|раннее выявление|
+բժշկական գաղտնիք|врачебная тайна|
+իրազեկ համաձայնություն|информированное согласие|
+կլինիկական փորձարկում|клиническое испытание|
+պլացեբո|плацебо|
+կրկնակի կույր|двойной слепой (метод)|
+պատահականացված|рандомизированный|
+մետավերլուծություն|метаанализ|
+ապացուցողական բժշկություն|доказательная медицина|
+կլինիկական ուղեցույց|клинические рекомендации|
+բժշկական էթիկա|медицинская этика|
+բժշկական սխալ|врачебная ошибка|
+փորձաքննություն|экспертиза|
+դատաբժշկական փորձաքննություն|судебно-медицинская экспертиза|
+դիահերձում|вскрытие|
+օրդինատուրա|ординатура|
+մասնագիտացում|специализация|
+շարունակական մասնագիտական զարգացում|непрерывное профессиональное развитие|
+կրեդիտ|кредит (учебный балл)|
+արտոնագրում|лицензирование|
+`},
+{lv:'C2',ru:'История и культура',hy:'Պատմություն և մշակույթ',ic:'🏰',d:`
+հնություն|древность|
+միջնադար|средневековье|
+միջնադարյան|средневековый|
+նախաքրիստոնեական|дохристианский|
+քրիստոնեություն|христианство|
+հեթանոսություն|язычество|
+թագավորություն|царство|
+արքայատոհմ|династия|
+տոհմ|род|
+նախնի|предок|
+ժառանգ|наследник|
+գահ|трон|
+գահակալ|правитель на троне|
+թագադրում|коронация|
+արշավանք|военный поход|
+նվաճում|завоевание|
+նվաճող|завоеватель|
+տիրապետություն|господство|
+ազատագրում|освобождение|
+պայքար|борьба|
+ազատագրական պայքար|освободительная борьба|
+ճակատամարտ|битва|
+պաշարում|осада|
+հաշտություն|примирение|
+դաշնագիր|межгосударственный договор|
+գաղթ|переселение, исход|
+գաղթական|переселенец|
+եղեռն|резня, злодеяние|
+ցեղասպանություն|геноцид|
+վերապրող|выживший|
+հուշահամալիր|мемориал|
+Ծիծեռնակաբերդ|Цицернакаберд|
+մշակութային ժառանգություն|культурное наследие|
+հնագիտություն|археология|
+հնագետ|археолог|
+պեղումներ|раскопки|
+գտածո|находка|
+սեպագիր|клинопись|
+Ուրարտու|Урарту|
+Էրեբունի|Эребуни|
+Տիգրան Մեծ|Тигран Великий|
+Մեսրոպ Մաշտոց|Месроп Маштоц|
+Գրիգոր Լուսավորիչ|Григорий Просветитель|
+Վարդանանք|Вардананк (восстание 451 г.)|
+Ավարայրի ճակատամարտ|Аварайрская битва|
+Սարդարապատ|Сардарапат|
+`},
+{lv:'C2',ru:'Книжные глаголы',hy:'Գրքային բայեր',ic:'🪶',d:`
+հարիր լինել|подобать|
+վայելել|наслаждаться|
+գերել|пленять|
+հմայել|очаровывать|
+զմայլվել|упиваться, восхищаться|
+խորհրդանշել|символизировать|
+մարմնավորել|воплощать|
+հավերժացնել|увековечивать|
+փառաբանել|прославлять|
+գովերգել|воспевать|
+ողբալ|оплакивать|
+սգալ|скорбеть|
+տենչալ|жаждать|
+փափագել|страстно желать|
+բաղձալ|томиться желанием|
+երկրպագել|поклоняться|
+խոնարհվել|склоняться|
+նվիրաբերել|жертвовать (дарить)|
+զոհաբերել|приносить в жертву|
+ապստամբել|восставать|
+ըմբոստանալ|бунтовать|
+հաղթանակել|торжествовать|
+պարտության մատնվել|потерпеть поражение|
+նվաճել|завоёвывать|
+պաշարել|осаждать|
+գերեվարել|брать в плен|
+ազատագրել|освобождать|
+վերակերտել|воссоздавать|
+կերտել|созидать|
+հյուսել|плести, сплетать|
+քանդակել|ваять|
+պարսավել|порицать|
+անիծել|проклинать|
+գթալ|миловать|
+ներողամտություն|снисходительность|
+ներողամիտ|снисходительный|
+հանդուրժողական|толерантный|
+խորասուզվել|погружаться|
+թափառել|скитаться|
+դեգերել|блуждать|
+ընդվզել|возмущаться, восставать|
+հառաչել|вздыхать|
+շշուկ|шёпот|
+մրմնջալ|бормотать|
+ճչալ|визжать|
+`}
+];
+
+/* ================= TRANSCRIPTION ================= */
+const MAP={'ա':'а','բ':'б','գ':'г','դ':'д','զ':'з','է':'э','ը':'ы','թ':'тʰ','ժ':'ж','ի':'и','լ':'л','խ':'х','ծ':'ц','կ':'к','հ':'һ','ձ':'дз','ղ':'гх','ճ':'ч','մ':'м','ն':'н','շ':'ш','չ':'чʰ','պ':'п','ջ':'дж','ռ':'р','ս':'с','վ':'в','տ':'т','ր':'р','ց':'цʰ','փ':'пʰ','ք':'кʰ','օ':'о','ֆ':'ф'};
+const VOW=new Set(['ա','ե','է','ը','ի','ո','օ','և']);
+function isCons(c){return !!c && /[ա-ֆ]/.test(c) && !VOW.has(c) && c!=='ւ';}
+function trWord(s,tts){
+  s=s.toLowerCase(); let o='';
+  for(let i=0;i<s.length;i++){
+    const c=s[i], nx=s[i+1]||'', pv=s[i-1]||'';
+    if(c==='ո'&&nx==='ւ'){o+='у';i++;continue;}
+    if(c==='և'){o+=(tts&&isCons(pv))?'эв':'ев';continue;}
+    if(c==='յ'){
+      if(nx==='ո'&&s[i+2]==='ւ'){o+='ю';i+=2;continue;}
+      if(nx==='ա'){o+='я';i++;continue;}
+      if(nx==='ե'){o+='е';i++;continue;}
+      o+='й';continue;
+    }
+    if(c==='ի'&&nx==='ա'){o+='ия';i++;continue;}
+    if(c==='ո'){o+=(i===0&&!s.startsWith('ով'))?'во':'о';continue;}
+    if(c==='ե'){o+=(tts&&i>0&&isCons(pv))?'э':'е';continue;}
+    if(c==='ղ'&&tts){o+=VOW.has(nx)?'г':'х';continue;}
+    let m=MAP[c]; if(m===undefined) m=c;
+    if(tts) m=m.replace('ʰ','').replace('һ','х');
+    o+=m;
+  }
+  return o;
+}
+const RV='аеэиоуыяю';
+function stress(w){
+  const idx=[]; for(let i=0;i<w.length;i++) if(RV.includes(w[i])) idx.push(i);
+  if(idx.length<2) return w;
+  let k=idx[idx.length-1]; if(w[k]==='ы') k=idx[idx.length-2];
+  return w.slice(0,k+1)+'\u0301'+w.slice(k+1);
+}
+const WORDS=[], BY={};
+const DUPS=[];
+TOPICS.forEach((t,ti)=>{
+  t.list=[];
+  const rows=t.w||t.d.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>l.split('|'));
+  rows.forEach(([a,r,p])=>{
+    a=(a||'').trim(); r=(r||'').trim(); p=(p||'').trim();
+    if(!a||!r) return;
+    if(BY[a]){DUPS.push(a);return;}
+    const parts=a.split(' ');
+    const w={a,r,p,t:ti,tr:parts.map(x=>trWord(x,false)).join(' '),tts:parts.map(x=>stress(trWord(x,true))).join(' ')};
+    if(!BY[a]){BY[a]=w;WORDS.push(w);t.list.push(w);}
+  });
+});
+
+/* ================= STATE ================= */
+const LS='hy-vocab-v1';
+const INT=[0,1,2,4,7,15,30,60,120];
+const DEF={w:{},set:{tr:false,auto:true,size:10,voice:'auto'},st:{day:0,streak:0},u:0,reset:0,flag:{}};
+let S=JSON.parse(JSON.stringify(DEF));
+let LSOK=true;
+function loadLocal(){
+  try{
+    const raw=localStorage.getItem(LS);
+    if(raw){const o=JSON.parse(raw); if(o&&typeof o==='object'){S.w=o.w||{};S.set=Object.assign({},DEF.set,o.set||{});S.st=Object.assign({},DEF.st,o.st||{});S.u=o.u||0;S.reset=o.reset||0;S.flag=o.flag||{};}}
+  }catch(e){LSOK=false;}
+}
+function writeLocal(){try{localStorage.setItem(LS,JSON.stringify(S));LSOK=true;}catch(e){LSOK=false;}}
+function save(){S.u=Date.now();writeLocal();cloudSave(false);}
+function today(){const d=new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000);}
+function status(w){const s=S.w[w.a]; if(!s) return 'new'; return s.b>=4?'learned':'learning';}
+const LEVELS=['A1','A2','B1','B2','C1','C2'];
+const LVD={A1:'Самые нужные слова',A2:'Повседневная жизнь: дом, город, покупки, здоровье',B1:'Работа, общество, медицина, мнения и связки',B2:'Право, политика, экономика, клиника, наука и техника',C1:'Академическая речь, генетика и патология, идиомы',C2:'Книжная лексика, история, доказательная медицина'};
+const STLBL={new:'новое',learning:'в работе',learned:'выучено'};
+function counts(list){
+  const td=today(); let learned=0,learning=0,due=0;
+  for(const w of (list||WORDS)){const s=S.w[w.a]; if(!s) continue; if(s.b>=4) learned++; else learning++; if(s.d<=td) due++;}
+  return {learned,learning,due,seen:learned+learning,total:(list||WORDS).length};
+}
+function nextNew(ti,n){const pool=(ti==null)?WORDS:TOPICS[ti].list; return pool.filter(w=>!S.w[w.a]).slice(0,n);}
+function touchStreak(){const td=today(); if(S.st.day===td) return; S.st.streak=(S.st.day===td-1)?(S.st.streak||0)+1:1; S.st.day=td;}
+
+/* ---- cloud sync (Claude artifact db): meta + one private doc per level ---- */
+const cloud={db:null,base:'',ready:false,busy:false,again:false,last:{},timer:null};
+function lvOf(a){const w=BY[a];return w?TOPICS[w.t].lv:'X';}
+function cloudDocs(){
+  const parts={}; LEVELS.concat(['X']).forEach(l=>{parts['w_'+l]={};});
+  for(const a in S.w){ parts['w_'+lvOf(a)][a]=S.w[a]; }
+  const out={meta:JSON.stringify({set:S.set,st:S.st,u:S.u,reset:S.reset,flag:S.flag})};
+  for(const k in parts) out[k]=JSON.stringify(parts[k]);
+  return out;
+}
+async function getDoc(id){
+  const ref=cloud.db.doc(cloud.base+id);
+  try{return await ref.get();}catch(e){
+    if(e&&e.code==='unavailable'){await new Promise(r=>setTimeout(r,700+Math.random()*700)); try{return await ref.get();}catch(e2){return null;}}
+    return null;
+  }
+}
+async function initCloud(){
+  if(!window.claude||typeof window.claude.use!=='function') return;
+  try{
+    const [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
+    if(!db||!user) return;
+    const uid=await user.id(); if(!uid) return;
+    cloud.db=db; cloud.base='data/users/'+uid+'/';
+    const ids=['progress','meta'].concat(LEVELS.map(l=>'w_'+l),['w_X']);
+    const snaps=await Promise.all(ids.map(getDoc));
+    snaps.forEach((snap,i)=>{
+      if(!snap||!snap.exists) return; const d=snap.data(); if(!d||typeof d.s!=='string') return;
+      let o; try{o=JSON.parse(d.s);}catch(e){return;}
+      if(ids[i]==='progress') mergeRemote(o);
+      else if(ids[i]==='meta') mergeRemote(Object.assign({w:{}},o));
+      else mergeRemote({w:o});
+    });
+    cloud.ready=true; writeLocal(); cloudSave(true);
+    if(view!=='session') render();
+  }catch(e){cloud.ready=false;}
+}
+function mergeRemote(R){
+  if(!R||typeof R!=='object'||!R.w) return;
+  const rReset=R.reset||0;
+  if(rReset>(S.reset||0)){ for(const k in S.w){ if((S.w[k].t||0)<rReset) delete S.w[k]; } S.reset=rReset; }
+  for(const k in R.w){const x=R.w[k], y=S.w[k]; if(!x||(x.t||0)<(S.reset||0)) continue; if(!y||(x.t||0)>(y.t||0)) S.w[k]=x;}
+  if(R.set&&(R.u||0)>(S.u||0)) S.set=Object.assign({},S.set,R.set);
+  if(R.st){ if((R.st.day||0)>(S.st.day||0)) S.st=Object.assign({},R.st); else if(R.st.day===S.st.day) S.st.streak=Math.max(S.st.streak||0,R.st.streak||0); }
+  if(R.flag) S.flag=Object.assign({},R.flag,S.flag||{});
+}
+function cloudSave(now){ if(!cloud.ready) return; clearTimeout(cloud.timer); cloud.timer=setTimeout(flushCloud, now?60:1500); }
+async function flushCloud(){
+  if(!cloud.ready||!cloud.db) return;
+  if(cloud.busy){cloud.again=true;return;}
+  cloud.busy=true;
+  try{
+    const docs=cloudDocs();
+    for(const id in docs){
+      if(docs[id]===cloud.last[id]) continue;
+      if(id!=='meta'&&docs[id]==='{}'&&cloud.last[id]===undefined){cloud.last[id]=docs[id];continue;}
+      await cloud.db.doc(cloud.base+id).set({s:docs[id],u:S.u});
+      cloud.last[id]=docs[id];
+    }
+  }catch(e){
+    const c=e&&e.code;
+    if(c==='unavailable') setTimeout(flushCloud,1200+Math.random()*1200);
+    else if(['revoked','invalid_argument','not_granted','capability_disabled','quota_exceeded'].indexOf(c)>=0) cloud.ready=false;
+  }finally{ cloud.busy=false; if(cloud.again){cloud.again=false;flushCloud();} }
+}
+
+/* ================= SPEECH ================= */
+const SPEECH=('speechSynthesis' in window)&&(typeof window.SpeechSynthesisUtterance!=='undefined');
+const VOICES={hy:[],ru:[],loaded:false};
+function rankRu(v){let s=0;const n=v.name||'';if(/premium|enhanced|улучш|natural/i.test(n))s+=3;if(/milena|милена|google|svetlana|dariya|katya|yuri|irina|pavel/i.test(n))s+=2;if(v.localService)s+=1;return s;}
+function loadVoices(){
+  if(!SPEECH) return;
+  let vs=[]; try{vs=window.speechSynthesis.getVoices()||[];}catch(e){}
+  VOICES.hy=vs.filter(v=>/^hy([-_]|$)/i.test(v.lang||''));
+  VOICES.ru=vs.filter(v=>/^ru([-_]|$)/i.test(v.lang||'')).sort((a,b)=>rankRu(b)-rankRu(a));
+  if(vs.length) VOICES.loaded=true;
+  if(view==='settings'||view==='home') render();
+}
+function activeVoice(){
+  const pref=S.set.voice;
+  if(pref&&pref!=='auto'){const v=VOICES.hy.concat(VOICES.ru).find(x=>x.voiceURI===pref); if(v) return {v,hy:/^hy/i.test(v.lang)};}
+  if(VOICES.hy.length) return {v:VOICES.hy[0],hy:true};
+  if(VOICES.ru.length) return {v:VOICES.ru[0],hy:false};
+  return null;
+}
+function audioOK(){return REAL_ANY||(SPEECH&&!!activeVoice());}
+/* ---- real recorded/neural audio: one JSON file per level {word: base64 mp3} ---- */
+const AUDIO_SRC={};   // уровень → адрес файла с озвучкой (заполняется после загрузки записей)
+const REAL_ANY=Object.keys(AUDIO_SRC).length>0;
+const AUD={cache:{},loading:{},el:null,ctx:null,unlocked:false};
+const SILENT_MP3='data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//NYwAAAAAAAAAAAAEluZm8AAAAPAAAABwAABKQARUVFRUVFRUVFRUVFRUVkZGRkZGRkZGRkZGRkZIODg4ODg4ODg4ODg4ODoqKioqKioqKioqKioqKiwcHBwcHBwcHBwcHBwcHg4ODg4ODg4ODg4ODg4P//////////////////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQEIAAAAAAAAASkP7MqcwAAAAAAAAAAAAAA//NIxAAAAANIAAAAAExBTUVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NIxHwAAANIAAAAAFVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NIxHwAAANIAAAAAFVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NIxHwAAANIAAAAAFVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NIxHwAAANIAAAAAFVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NIxHwAAANIAAAAAFVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NIxHwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
+function hasReal(w){return !!(w&&AUDIO_SRC[TOPICS[w.t].lv]);}
+function loadAudio(lv){
+  if(AUD.cache[lv]) return Promise.resolve(AUD.cache[lv]);
+  if(!AUD.loading[lv]) AUD.loading[lv]=fetch(AUDIO_SRC[lv]).then(r=>{if(!r.ok) throw new Error('HTTP '+r.status); return r.json();}).then(j=>{AUD.cache[lv]=j; return j;}).catch(e=>{delete AUD.loading[lv]; throw e;});
+  return AUD.loading[lv];
+}
+function preloadAudio(list){const lvs=new Set(); (list||[]).forEach(w=>{if(hasReal(w)) lvs.add(TOPICS[w.t].lv);}); lvs.forEach(lv=>loadAudio(lv).catch(()=>{}));}
+function unlockAudio(){
+  if(AUD.unlocked||!REAL_ANY) return; AUD.unlocked=true;
+  try{AUD.el=new Audio(); AUD.el.src=SILENT_MP3; const p=AUD.el.play(); if(p&&p.catch) p.catch(()=>{});}catch(e){}
+  try{const C=window.AudioContext||window.webkitAudioContext; if(C){AUD.ctx=new C(); if(AUD.ctx.state==='suspended') AUD.ctx.resume().catch(()=>{});}}catch(e){}
+}
+document.addEventListener('pointerdown',unlockAudio,{capture:true});
+document.addEventListener('keydown',unlockAudio,{capture:true});
+let playTok=0;
+async function playReal(w,slow,btn,loud){
+  const tok=++playTok, lv=TOPICS[w.t].lv;
+  let map;
+  try{map=await loadAudio(lv);}catch(e){ if(loud) toast('Не удалось загрузить озвучку — проверьте интернет.'); speakTTS(w,slow,btn,false); return; }
+  if(tok!==playTok) return;
+  const b64=map[w.a];
+  if(!b64){speakTTS(w,slow,btn,loud); return;}
+  playB64(b64,slow,btn);
+}
+function playB64(b64,slow,btn){
+  const el=AUD.el||(AUD.el=new Audio());
+  try{el.pause();}catch(e){}
+  const off=()=>{if(btn) btn.classList.remove('on');};
+  if(btn) btn.classList.add('on');
+  el.onended=off;
+  el.src='data:audio/mpeg;base64,'+b64;
+  el.preservesPitch=true; el.webkitPreservesPitch=true;
+  el.defaultPlaybackRate=slow?0.7:1; el.playbackRate=slow?0.7:1;
+  const p=el.play();
+  if(p&&p.catch) p.catch(()=>{off(); webAudioPlay(b64,slow,btn);});
+}
+async function webAudioPlay(b64,slow,btn){
+  try{
+    const C=window.AudioContext||window.webkitAudioContext; if(!C) return;
+    AUD.ctx=AUD.ctx||new C(); if(AUD.ctx.state==='suspended') await AUD.ctx.resume();
+    const bin=atob(b64), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+    const buf=await new Promise((res,rej)=>AUD.ctx.decodeAudioData(u.buffer,res,rej));
+    const src=AUD.ctx.createBufferSource(); src.buffer=buf; src.playbackRate.value=slow?0.75:1; src.connect(AUD.ctx.destination);
+    if(btn){btn.classList.add('on'); src.onended=()=>btn.classList.remove('on');}
+    src.start(0);
+  }catch(e){}
+}
+function speak(w,slow,btn,loud){
+  if(!w) return false;
+  if(hasReal(w)){playReal(w,slow,btn,loud); return true;}
+  return speakTTS(w,slow,btn,loud);
+}
+function speakTTS(w,slow,btn,loud){
+  if(!SPEECH){if(loud) toast('Синтез речи в этом окне недоступен. Откройте страницу в браузере: Safari, Chrome или Edge.');return false;}
+  const av=activeVoice();
+  if(!av){loadVoices(); if(loud) toast(VOICES.loaded?'Не найден ни армянский, ни русский голос. Добавьте русский голос в настройках системы.':'Голоса ещё загружаются, нажмите ещё раз.'); return false;}
+  const u=new SpeechSynthesisUtterance(av.hy?w.a:w.tts);
+  u.voice=av.v; u.lang=av.v.lang; u.rate=slow?0.55:(av.hy?0.9:0.85);
+  u.onstart=()=>{if(btn) btn.classList.add('on');};
+  u.onend=u.onerror=()=>{if(btn) btn.classList.remove('on');};
+  const ss=window.speechSynthesis;
+  try{ if(ss.speaking||ss.pending){ss.cancel(); setTimeout(()=>ss.speak(u),80);} else ss.speak(u); }catch(e){return false;}
+  return true;
+}
+
+/* ================= HELPERS ================= */
+const $=s=>document.querySelector(s);
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function plural(n,one,few,many){const n10=n%10,n100=n%100; if(n10===1&&n100!==11) return one; if(n10>=2&&n10<=4&&(n100<12||n100>14)) return few; return many;}
+const slov=n=>plural(n,'слово','слова','слов');
+function buzz(){try{if(navigator.vibrate) navigator.vibrate(35);}catch(e){}}
+let toastT=null;
+function toast(msg){const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3400);}
+const ICON={
+  spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/><path d="M16.5 8.8a4.8 4.8 0 0 1 0 6.4"/><path d="M19.2 6.2a8.6 8.6 0 0 1 0 11.6"/></svg>'
+};
+function firstLetter(a){const m=a.match(/[ա-ֆԱ-Ֆև]/);return m?m[0].toUpperCase():'?';}
+function picQ(w){return w.p?pic(w):'<span class="emo" aria-hidden="true">'+TOPICS[w.t].ic+'</span>';}
+function pic(w){
+  const p=w.p;
+  if(!p) return '<span class="ltr" style="--h:'+((w.t*47+20)%360)+'" aria-hidden="true"><b>'+esc(firstLetter(w.a))+'</b></span>';
+  if(p[0]==='#') return '<span class="sw" style="background:'+p+'" aria-hidden="true"></span>';
+  if(p[0]==='=') return '<span class="ptx">'+esc(p.slice(1))+'</span>';
+  return '<span class="emo" aria-hidden="true">'+p+'</span>';
+}
+function letters(a){return [...a].map((ch,i)=>ch===' '?' ':'<span class="lt" style="animation-delay:'+(i*45)+'ms">'+esc(ch)+'</span>').join('');}
+function fitWords(){
+  document.querySelectorAll('.hyw:not(.phrase)').forEach(el=>{
+    el.style.fontSize=''; let s=parseFloat(getComputedStyle(el).fontSize)||58; let g=0;
+    while(el.scrollWidth>el.clientWidth+1&&s>20&&g++<40){s-=2;el.style.fontSize=s+'px';}
+  });
+}
+
+/* ================= EXERCISES ================= */
+const ALPHA='աբգդեզէըթժիլխծկհձղճմյնշոչպջռսվտրցփքօֆ';
+const CONF={'պ':'բփ','բ':'պփ','փ':'պբ','տ':'դթ','դ':'տթ','թ':'տդ','կ':'գք','գ':'կք','ք':'կգ','ծ':'ցձ','ձ':'ծց','ց':'ծչ','ճ':'չջ','ջ':'ճչ','չ':'ցճ','ռ':'ր','ր':'ռ','ե':'էը','է':'ե','ը':'ե','ո':'օ','օ':'ո','ս':'զշ','զ':'սժ','շ':'սչ','ժ':'շզ','հ':'խ','խ':'հղ','ղ':'խգ','ն':'մ','մ':'ն','լ':'ղ','վ':'ֆ','ֆ':'վ','ու':'ո'};
+function tilesOf(a){const o=[];for(let i=0;i<a.length;i++){if(a[i]==='ո'&&a[i+1]==='ւ'){o.push('ու');i++;}else o.push(a[i]);}return o;}
+function canSpell(w){if(w.a.indexOf(' ')>=0) return false; const n=tilesOf(w.a).length; return n>=2&&n<=10;}
+function makeSpell(w){
+  const t=tilesOf(w.a), set=new Set(t), extra=[];
+  for(const ch of shuffle(t)){const c=CONF[ch]; if(!c) continue; for(const x of [...c]){ if(!set.has(x)&&extra.indexOf(x)<0){extra.push(x);break;} } if(extra.length>=2) break;}
+  let g=0; while(extra.length<3&&g++<200){const x=ALPHA[Math.floor(Math.random()*ALPHA.length)]; if(!set.has(x)&&extra.indexOf(x)<0) extra.push(x);}
+  return {target:t, bank:shuffle(t.concat(extra)).map((ch,id)=>({ch,id,used:false})), ans:[]};
+}
+function makeOpts(w){
+  const out=[w], usedR=new Set([w.r]), usedA=new Set([w.a]);
+  const add=x=>{if(out.length>=4||usedR.has(x.r)||usedA.has(x.a)) return; out.push(x); usedR.add(x.r); usedA.add(x.a);};
+  shuffle(TOPICS[w.t].list).forEach(add);
+  if(out.length<4) shuffle(WORDS.filter(x=>x.t!==w.t)).forEach(add);
+  return shuffle(out);
+}
+function mk(k,w,extra){
+  const it=Object.assign({k,w},extra||{});
+  if(k==='a2r'||k==='r2a'||k==='listen') it.opts=makeOpts(w);
+  if(k==='spell') it.sp=makeSpell(w);
+  return it;
+}
+function spread(arr){
+  const a=shuffle(arr);
+  for(let i=1;i<a.length;i++){ if(a[i].w===a[i-1].w){ for(let j=i+1;j<a.length;j++){ if(a[j].w!==a[i-1].w){[a[i],a[j]]=[a[j],a[i]];break;} } } }
+  return a;
+}
+function kindFor(w){
+  const s=S.w[w.a], b=s?s.b:1; let ks=['a2r','r2a'];
+  if(b>=2){ if(audioOK()) ks.push('listen'); if(canSpell(w)) ks.push('spell'); }
+  if(b>=4) ks=ks.filter(k=>k!=='a2r');
+  return ks[Math.floor(Math.random()*ks.length)];
+}
+
+/* ================= SESSIONS ================= */
+let view='home', viewArg=null, sess=null, resetArm=0, dq='', dt='all', dLimit=150;
+function cur(){return sess&&sess.items[sess.i];}
+function newSess(mode,items,meta){ sess={mode,items,i:0,first:new Map(),meta:meta||{},timer:null,reps:{},ended:false}; view='session'; preloadAudio(items.map(it=>it.w)); render(true); window.scrollTo(0,0); }
+function startLearn(ti,lv){
+  const list=lv?WORDS.filter(w=>TOPICS[w.t].lv===lv&&!S.w[w.a]).slice(0,S.set.size||10):nextNew(ti,S.set.size||10);
+  if(!list.length){toast('Новых слов здесь не осталось — переходите к повторению.');return;}
+  const items=[];
+  for(let i=0;i<list.length;i+=4){
+    const ch=list.slice(i,i+4);
+    ch.forEach(w=>items.push(mk('intro',w)));
+    const qs=[];
+    ch.forEach(w=>{qs.push(mk('a2r',w)); qs.push(mk(canSpell(w)&&Math.random()<.5?'spell':'r2a',w));});
+    items.push(...spread(qs));
+  }
+  if(list.length>4) items.push(...spread(list.map(w=>mk(audioOK()&&Math.random()<.6?'listen':'r2a',w))));
+  newSess('learn',items,{ti,lv});
+}
+function startReview(){
+  const td=today();
+  const due=WORDS.filter(w=>{const s=S.w[w.a];return s&&s.d<=td;}).sort((x,y)=>S.w[x.a].d-S.w[y.a].d).slice(0,30);
+  if(!due.length){toast('На сегодня повторять нечего.');return;}
+  newSess('review',spread(due.map(w=>mk(kindFor(w),w))),{ti:null});
+}
+function startPractice(ti){
+  const seen=TOPICS[ti].list.filter(w=>S.w[w.a]);
+  if(!seen.length){toast('Сначала выучите несколько слов этой темы.');return;}
+  newSess('practice',spread(shuffle(seen).slice(0,20).map(w=>mk(kindFor(w),w))),{ti});
+}
+function startCheck(list,meta){
+  const pool=shuffle(list.filter(w=>!S.w[w.a])).slice(0,30);
+  if(!pool.length){toast('Непройденных слов здесь нет.');return;}
+  newSess('check',pool.map(w=>mk('a2r',w)),meta);
+}
+function hardWords(){return WORDS.filter(w=>{const s=S.w[w.a];return s&&(s.e||0)>=2&&s.b<4;});}
+function startHard(){
+  const list=shuffle(hardWords()).slice(0,20);
+  if(!list.length){toast('Трудных слов пока нет.');return;}
+  newSess('practice',spread(list.map(w=>{const k=kindFor(w);return mk(k==='a2r'?'r2a':k,w);})),{ti:null});
+}
+function defaultOpen(){for(const lv of LEVELS){if(WORDS.some(w=>TOPICS[w.t].lv===lv&&!S.w[w.a])) return lv;}return LEVELS[LEVELS.length-1];}
+function isOpen(lv){const o=S.set.open; if(o&&Object.prototype.hasOwnProperty.call(o,lv)) return !!o[lv]; return lv===defaultOpen();}
+function introMark(w){ if(!S.w[w.a]){ S.w[w.a]={b:1,d:today()+1,t:Date.now(),n:1,e:0}; touchStreak(); save(); } }
+function record(it,ok){
+  const a=it.w.a, td=today();
+  if(sess.mode==='check'){
+    if(!sess.first.has(a)){ sess.first.set(a,ok); if(ok&&!S.w[a]) S.w[a]={b:4,d:td+INT[4],t:Date.now(),n:1,e:0}; }
+    touchStreak(); save(); return;
+  }
+  if(sess.first.has(a)){ touchStreak(); save(); return; }
+  sess.first.set(a,ok);
+  let s=S.w[a]; if(!s) s=S.w[a]={b:1,d:td+1,t:0,n:0,e:0};
+  if(sess.mode!=='learn'){
+    const isDue=s.d<=td;
+    if(ok){ if(sess.mode==='review'||isDue){ s.b=Math.min(8,(s.b||0)+1); s.d=td+INT[s.b]; } }
+    else { s.b=1; s.d=td+1; }
+  }
+  if(!ok) s.e=(s.e||0)+1;
+  s.n=(s.n||0)+1; s.t=Date.now();
+  touchStreak(); save();
+}
+function queueRepeat(it){
+  const a=it.w.a; sess.reps[a]=(sess.reps[a]||0)+1; if(sess.reps[a]>2) return;
+  const k=it.k==='listen'?'a2r':it.k;
+  sess.items.splice(Math.min(sess.items.length,sess.i+3),0,mk(k,it.w,{rep:true}));
+}
+function answer(idx){
+  const it=cur(); if(!it||it.done||!it.opts) return;
+  const ok=it.opts[idx]===it.w;
+  it.done=true; it.ok=ok; it.pick=idx;
+  record(it,ok);
+  if(!ok){ if(sess.mode!=='check') queueRepeat(it); buzz(); }
+  render(false);
+  if(!ok||it.k==='r2a'){ if(S.set.auto||it.k==='listen') speak(it.w,false); }
+  if(ok) sess.timer=setTimeout(()=>{if(cur()===it) nextItem();}, it.k==='r2a'?1150:800);
+}
+function tileTap(id){
+  const it=cur(); if(!it||it.done||it.k!=='spell') return;
+  const sp=it.sp, t=sp.bank.find(b=>b.id===id); if(!t||t.used||sp.ans.length>=sp.target.length) return;
+  t.used=true; sp.ans.push(id);
+  if(sp.ans.length===sp.target.length) checkSpell(it); else render(false);
+}
+function slotTap(pos){
+  const it=cur(); if(!it||it.done||it.k!=='spell') return;
+  const sp=it.sp; if(pos>=sp.ans.length) return;
+  const id=sp.ans.splice(pos,1)[0]; sp.bank.find(b=>b.id===id).used=false; render(false);
+}
+function erase(){const it=cur(); if(!it||it.done||it.k!=='spell') return; const sp=it.sp; const id=sp.ans.pop(); if(id==null) return; sp.bank.find(b=>b.id===id).used=false; render(false);}
+function giveUp(){const it=cur(); if(!it||it.done) return; it.done=true; it.ok=false; it.got=it.sp.ans.map(id=>it.sp.bank.find(b=>b.id===id).ch); record(it,false); queueRepeat(it); render(false); speak(it.w,false);}
+function checkSpell(it){
+  const sp=it.sp; const got=sp.ans.map(id=>sp.bank.find(b=>b.id===id).ch);
+  const ok=got.join('')===sp.target.join('');
+  it.done=true; it.ok=ok; it.got=got;
+  record(it,ok); if(!ok){queueRepeat(it);buzz();}
+  render(false); speak(it.w,false);
+  if(ok) sess.timer=setTimeout(()=>{if(cur()===it) nextItem();},1300);
+}
+function nextItem(){
+  if(!sess) return; clearTimeout(sess.timer);
+  sess.i++;
+  if(sess.i>=sess.items.length){finish();return;}
+  render(true); window.scrollTo(0,0);
+}
+function finish(){
+  clearTimeout(sess.timer);
+  if(!sess.first.size&&!sess.known){ sess=null; go('home'); return; }
+  const firstOk=[...sess.first.values()].filter(Boolean).length;
+  const missed=[...sess.first.entries()].filter(e=>!e[1]).map(e=>BY[e[0]]);
+  sess.ended=true; sess.res={firstOk,n:sess.first.size,missed};
+  view='result'; render(); window.scrollTo(0,0);
+  flushCloud();
+}
+
+/* ================= RENDER ================= */
+function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
+function render(auto){
+  const el=$('#view');
+  document.body.dataset.view=(view==='session')?'session':view;
+  if(view==='home') el.innerHTML=homeHTML();
+  else if(view==='topic') el.innerHTML=topicHTML(viewArg);
+  else if(view==='dict'){ el.innerHTML=dictHTML(); bindDict(); }
+  else if(view==='settings'){ el.innerHTML=settingsHTML(); bindSettings(); }
+  else if(view==='result') el.innerHTML=resultHTML();
+  else if(view==='session'){ el.innerHTML=sessionHTML(); fitWords(); if(auto) onShow(); }
+  document.querySelectorAll('#tabs .tab').forEach(b=>{const t=b.dataset.arg; const curT=(view==='topic'||view==='result')?'home':view; if(t===curT) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');});
+}
+function onShow(){
+  const it=cur(); if(!it) return;
+  if(it.k==='intro') introMark(it.w);
+  if((it.k==='intro'||it.k==='a2r')&&S.set.auto) speak(it.w,false,document.querySelector('.aud'));
+  if(it.k==='listen') speak(it.w,false,document.querySelector('.play-big'));
+}
+
+function homeHTML(){
+  const c=counts(), td=today();
+  const nw=nextNew(null,S.set.size||10);
+  let sum;
+  if(!c.seen) sum='В словаре <b>'+WORDS.length+' '+slov(WORDS.length)+'</b> в '+TOPICS.length+' темах, от A1 до B1. Урок — '+(S.set.size||10)+' новых слов: карточка, потом упражнения.';
+  else sum='Выучено <b>'+c.learned+' '+slov(c.learned)+'</b> из '+c.total+', ещё '+c.learning+' в работе.'+(c.due?' Сегодня на повторение — <b>'+c.due+'</b>.':' Повторять сегодня нечего.');
+  const streak=(S.st.streak>=2&&S.st.day>=td-1)?'<div class="streak">🔥 '+S.st.streak+' '+plural(S.st.streak,'день','дня','дней')+' подряд</div>':'';
+  let acts='';
+  if(c.due) acts+='<button class="btn primary" data-act="review">Повторить '+c.due+' '+slov(c.due)+'</button>';
+  if(nw.length){
+    const names=[...new Set(nw.map(w=>TOPICS[w.t].ru))];
+    acts+='<button class="btn '+(c.due?'secondary':'primary')+'" data-act="learnNew">Учить новые слова<span class="cap">'+esc(names.slice(0,2).join(', '))+' — '+nw.length+' '+slov(nw.length)+'</span></button>';
+  }
+  const hard=hardWords().length;
+  if(hard) acts+='<button class="btn ghost" data-act="hard">Трудные слова: '+hard+'</button>';
+  const av=activeVoice();
+  let vnote='';
+  if(REAL_ANY) vnote='';
+  else if(!SPEECH) vnote='<p class="voice-note">В этом окне нет синтеза речи — звук заработает, если открыть страницу в браузере.</p>';
+  else if(VOICES.loaded&&av&&!av.hy) vnote='<p class="voice-note">Армянского голоса на устройстве нет: слова читает русский голос по транскрипции, это приблизительно. <button data-act="tab" data-arg="settings">Подробнее</button></p>';
+  const topicRow=(t,i)=>{
+    const tc=counts(t.list), pl=100*tc.learned/tc.total, pg=100*tc.learning/tc.total;
+    return '<li><button class="topic" data-act="topic" data-arg="'+i+'"><span class="t-ic">'+t.ic+'</span><span class="t-body"><span class="t-name">'+esc(t.ru)+'</span><span class="t-hy" lang="hy">'+esc(t.hy)+'</span><span class="bar"><i style="width:'+pl+'%"></i><i class="l" style="width:'+pg+'%"></i></span></span><span class="t-cnt">'+tc.learned+'/'+tc.total+'</span></button></li>';
+  };
+  const rows=LEVELS.map(lv=>{
+    const ts=TOPICS.map((t,i)=>[t,i]).filter(x=>x[0].lv===lv); if(!ts.length) return '';
+    const all=[].concat(...ts.map(x=>x[0].list)), lc=counts(all), op=isOpen(lv), nn=all.filter(w=>!S.w[w.a]).length;
+    const la=op&&nn?'<div class="lv-acts"><button class="btn primary sm" data-act="learnLevel" data-arg="'+lv+'">Учить новые</button><button class="btn secondary sm" data-act="checkLevel" data-arg="'+lv+'">Проверить, что знаю</button></div>':'';
+    return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+'</span><span class="lvc">'+lc.learned+' из '+lc.total+' выучено</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+LVD[lv]+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
+  }).join('');
+  return '<header class="head"><h1 lang="hy">Հայերեն բառեր</h1><p>Армянские слова от A1 до B1: картинка, звук, повторение по дням</p></header>'+
+    '<section class="today">'+streak+'<p class="summary">'+sum+'</p><div class="actions">'+acts+'</div>'+vnote+'</section>'+
+    rows;
+}
+function wordRow(w){
+  const st=status(w);
+  return '<li class="wrow"><span class="w-pic">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+STLBL[st]+'"></i>'+esc(w.r)+'<span class="w-tr">'+esc(w.tr)+'</span></span></span><button class="say" data-act="say" data-arg="'+esc(w.a)+'" aria-label="Произнести: '+esc(w.r)+'">'+ICON.spk+'</button></li>';
+}
+function topicHTML(ti){
+  const t=TOPICS[ti], tc=counts(t.list), nn=tc.total-tc.seen;
+  let acts='';
+  if(nn) acts+='<button class="btn primary" data-act="learnTopic" data-arg="'+ti+'">Учить новые: '+Math.min(nn,S.set.size||10)+' '+slov(Math.min(nn,S.set.size||10))+'</button>';
+  if(tc.seen) acts+='<button class="btn secondary" data-act="practice" data-arg="'+ti+'">Тренировать изученные</button>';
+  if(nn) acts+='<button class="btn ghost" data-act="checkTopic" data-arg="'+ti+'">Проверить, что уже знаю</button>';
+  return '<button class="back" data-act="tab" data-arg="home">‹ Все темы</button>'+
+    '<header class="thead"><span class="t-ic">'+t.ic+'</span><div><h1 class="pg">'+esc(t.ru)+'</h1><p class="t-hy2" lang="hy">'+esc(t.hy)+'</p></div></header>'+
+    '<p class="summary">'+tc.total+' '+slov(tc.total)+': выучено '+tc.learned+', в работе '+tc.learning+', новых '+nn+'.</p>'+
+    '<div class="actions page-actions">'+acts+'</div><ul class="words">'+t.list.map(wordRow).join('')+'</ul>';
+}
+function dictRows(){
+  const q=dq.trim().toLowerCase().replace(/h/g,'һ');
+  let list=(dt==='all')?WORDS:(dt.indexOf('lv:')===0?WORDS.filter(w=>TOPICS[w.t].lv===dt.slice(3)):TOPICS[+dt].list);
+  if(q) list=list.filter(w=>w.a.indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(q.replace(/ʰ/g,''))>=0);
+  if(!list.length) return '<li class="empty">Ничего не найдено. Проверьте написание или выберите «Все темы».</li>';
+  const more=list.length>dLimit?'<li class="more-li"><button class="btn ghost" data-act="more">Показать ещё — осталось '+(list.length-dLimit)+'</button></li>':'';
+  return list.slice(0,dLimit).map(wordRow).join('')+more;
+}
+function dictHTML(){
+  return '<header class="head"><h1 class="pg">Словарь</h1></header>'+
+    '<div class="filters"><input class="search" id="dq" type="search" inputmode="search" autocomplete="off" placeholder="Поиск по-армянски, по-русски или транскрипцией" value="'+esc(dq)+'"></div>'+
+    '<div class="filters"><select id="dt" aria-label="Тема"><option value="all">Все слова — '+WORDS.length+'</option>'+LEVELS.map(lv=>{const n=WORDS.filter(w=>TOPICS[w.t].lv===lv).length;return '<option value="lv:'+lv+'"'+(dt==='lv:'+lv?' selected':'')+'>Уровень '+lv+' — '+n+'</option>';}).join('')+LEVELS.map(lv=>'<optgroup label="Темы '+lv+'">'+TOPICS.map((t,i)=>t.lv===lv?'<option value="'+i+'"'+(String(i)===dt?' selected':'')+'>'+esc(t.ru)+' — '+t.list.length+'</option>':'').join('')+'</optgroup>').join('')+'</select></div>'+
+    '<ul class="words" id="dlist">'+dictRows()+'</ul>';
+}
+function bindDict(){
+  const i=$('#dq'); i.addEventListener('input',()=>{dq=i.value;dLimit=150;$('#dlist').innerHTML=dictRows();});
+  $('#dt').addEventListener('change',e=>{dt=e.target.value;dLimit=150;$('#dlist').innerHTML=dictRows();});
+}
+function settingsHTML(){
+  const av=activeVoice();
+  let vtext;
+  const noRec=LEVELS.filter(l=>!AUDIO_SRC[l]);
+  if(REAL_ANY) vtext='Слова озвучены армянским нейроголосом — записи встроены в приложение и звучат одинаково на любом устройстве.'+(noRec.length?' Для уровней '+noRec.join(', ')+' записей пока нет — там говорит голос устройства.':'');
+  else if(!SPEECH) vtext='Синтез речи в этом окне недоступен (так бывает во встроенных окнах приложений на Android). Откройте страницу в браузере телефона или компьютера.';
+  else if(!VOICES.loaded) vtext='Голоса загружаются…';
+  else if(av&&av.hy) vtext='Говорит армянский голос: '+esc(av.v.name)+'.';
+  else if(av) vtext='Армянского голоса на этом устройстве нет, поэтому слово читает русский голос ('+esc(av.v.name)+') по транскрипции. Это приближение: нет придыхания у тʰ, пʰ, кʰ, цʰ, чʰ, ղ и հ звучат как русское «х» или «г». Ориентируйтесь на транскрипцию. Как только в системе или браузере появится армянский голос, приложение переключится на него само.';
+  else vtext='Не найден ни армянский, ни русский голос. Установите русский голос в настройках озвучки системы.';
+  const opts=['<option value="auto"'+(S.set.voice==='auto'?' selected':'')+'>Автоматически</option>']
+    .concat(VOICES.hy.map(v=>'<option value="'+esc(v.voiceURI)+'"'+(S.set.voice===v.voiceURI?' selected':'')+'>'+esc(v.name)+' — армянский</option>'))
+    .concat(VOICES.ru.map(v=>'<option value="'+esc(v.voiceURI)+'"'+(S.set.voice===v.voiceURI?' selected':'')+'>'+esc(v.name)+' — русский, по транскрипции</option>')).join('');
+  const sync=cloud.ready?'Прогресс сохраняется в вашем аккаунте Claude и одинаков на всех устройствах.':(LSOK?'Прогресс сохраняется в этом браузере.':'Сохранение недоступно: прогресс пропадёт после закрытия страницы.');
+  const sizes=[5,10,15,20].map(n=>'<button data-act="size" data-arg="'+n+'" aria-pressed="'+((S.set.size||10)===n)+'">'+n+'</button>').join('');
+  return '<header class="head"><h1 class="pg">Настройки</h1></header>'+
+  '<section class="set-sec"><h2 class="sec">Звук</h2>'+
+    '<div class="set-row col"><label class="lbl" for="vsel"><b>Голос</b></label>'+(SPEECH?'<select id="vsel">'+opts+'</select>':'')+'<p class="note">'+vtext+'</p>'+(SPEECH?'<div class="audio" style="justify-content:flex-start"><button class="aud" data-act="say" data-arg="բարև ձեզ">'+ICON.spk+'<span>Проверить звук</span></button></div>':'')+'</div>'+
+    '<div class="set-row"><div class="lbl"><b>Автоозвучка</b><span>Произносить слово, когда оно появляется</span></div><button class="switch" data-act="tog" data-arg="auto" aria-pressed="'+!!S.set.auto+'" aria-label="Автоозвучка"></button></div>'+
+  '</section>'+
+  '<section class="set-sec"><h2 class="sec">Уроки</h2>'+
+    '<div class="set-row"><div class="lbl"><b>Транскрипция в упражнениях</b><span>На карточке нового слова она видна всегда</span></div><button class="switch" data-act="tog" data-arg="tr" aria-pressed="'+!!S.set.tr+'" aria-label="Транскрипция в упражнениях"></button></div>'+
+    '<div class="set-row"><div class="lbl"><b>Новых слов за урок</b></div><div class="seg" role="group" aria-label="Новых слов за урок">'+sizes+'</div></div>'+
+    '<div class="set-row col"><div class="lbl"><b>Как работает повторение</b></div><p class="note">Новое слово возвращается на следующий день. Каждый верный ответ отодвигает повтор: 2, 4, 7, 15, 30 дней и дальше. Ошибка — и слово снова завтра. Выученным слово считается после трёх верных повторов в разные дни.</p></div>'+
+  '</section>'+
+  '<section class="set-sec"><h2 class="sec">Как читать транскрипцию</h2><ul class="legend">'+
+    '<li><b>ʰ</b>придыхание: тʰ (թ), пʰ (փ), кʰ (ք), цʰ (ց), чʰ (չ). Без значка — без придыхания: т (տ), п (պ), к (կ), ц (ծ), ч (ճ)</li>'+
+    '<li><b>һ</b>лёгкое выдыхаемое h (հ), не русское «х» (խ)</li>'+
+    '<li><b>гх</b>ղ — горловой звук, как французское r</li>'+
+    '<li><b>ы</b>краткий нейтральный гласный ը</li>'+
+    '<li><b>р</b>и ր, и ռ; ռ — раскатистое</li>'+
+    '<li><b>´</b>ударение в армянском всегда на последнем слоге, если он не на ը</li>'+
+  '</ul></section>'+
+  flagsHTML()+
+  '<section class="set-sec"><h2 class="sec">Прогресс</h2><p class="note">'+sync+'</p><div class="actions" style="margin-top:14px"><button class="btn danger" data-act="reset">'+(resetArm?'Нажмите ещё раз — весь прогресс удалится':'Сбросить прогресс')+'</button></div></section>';
+}
+function flagsHTML(){
+  const fl=Object.keys(S.flag||{}).filter(a=>BY[a]);
+  return '<section class="set-sec"><h2 class="sec">Отмеченные слова</h2>'+(fl.length?
+    '<p class="note">Слова, в которых вы заметили ошибку. Список можно скопировать и отдать на вычитку.</p><ul class="words">'+fl.map(a=>wordRow(BY[a])).join('')+'</ul><div class="actions" style="margin-top:12px"><button class="btn secondary" data-act="copyFlags">Скопировать список ('+fl.length+')</button><button class="btn ghost" data-act="clearFlags">Очистить</button></div><textarea id="flagtxt" class="flagtxt" readonly hidden></textarea>':
+    '<p class="note">Пока пусто. На карточке нового слова есть кнопка «Ошибка в слове?».</p>')+'</section>';
+}
+function bindSettings(){
+  const s=$('#vsel'); if(s) s.addEventListener('change',()=>{S.set.voice=s.value; save(); render(); speak(BY['բարև ձեզ'],false,null,true);});
+}
+function resultHTML(){
+  const r=sess.res, c=counts(), ti=sess.meta.ti, lv=sess.meta.lv;
+  const more=lv?WORDS.filter(w=>TOPICS[w.t].lv===lv&&!S.w[w.a]).length:nextNew(ti==null?null:ti,1).length;
+  let acts='';
+  if(c.due) acts+='<button class="btn primary" data-act="review">Повторить '+c.due+' '+slov(c.due)+'</button>';
+  if(more) acts+='<button class="btn '+(c.due?'secondary':'primary')+'" data-act="learnAgain">Учить новые слова</button>';
+  acts+='<button class="btn ghost" data-act="tab" data-arg="home">На главную</button>';
+  if(sess.mode==='check'){
+    return '<div class="result"><div class="apres" lang="hy">'+(r.firstOk?'Ապրե՛ս':'Լավ է')+'</div><p class="sub">Проверка закончена</p>'+
+      '<p class="score">Знакомых слов: <b>'+r.firstOk+' из '+r.n+'</b></p><p class="note">Знакомые слова вернутся на повторение через неделю. Остальные остались новыми — их можно пройти обычным уроком.</p><div class="actions">'+acts+'</div></div>';
+  }
+  const kn=sess.known?'<p class="note">Отмечено как уже известные: '+sess.known+' — вернутся на повторение через 15 дней.</p>':'';
+  if(!r.n) return '<div class="result"><div class="apres" lang="hy">Լավ է</div>'+kn+'<div class="actions">'+acts+'</div></div>';
+  const missed=r.missed.length?'<p class="miss-h">Стоит повторить:</p><ul class="words">'+r.missed.map(wordRow).join('')+'</ul>':'';
+  const good=r.firstOk/r.n>=0.6;
+  return '<div class="result"><div class="apres" lang="hy">'+(good?'Ապրե՛ս':'Լավ է')+'</div><p class="sub">'+(good?'«Молодец» по-армянски':'«Хорошо» — ошибки вернутся на повтор')+'</p>'+
+    '<p class="score">С первого раза верно: <b>'+r.firstOk+' из '+r.n+'</b></p>'+kn+missed+'<div class="actions">'+acts+'</div></div>';
+}
+function audioRow(w){
+  if(!SPEECH&&!hasReal(w)) return '';
+  const av=activeVoice();
+  return '<div class="audio"><button class="aud" data-act="say" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>Слушать</span></button><button class="aud" data-act="saySlow" data-arg="'+esc(w.a)+'"><span aria-hidden="true">🐢</span><span>Медленно</span></button></div>'+
+    ((av&&!av.hy&&!hasReal(w))?'<div class="approx">≈ русский голос по транскрипции</div>':'');
+}
+function optCls(o,i,it){if(!it.done) return ''; if(o===it.w) return 'ok'; if(i===it.pick) return 'bad'; return 'dim';}
+function optPic(o,i,it,sp){return '<button class="opt '+optCls(o,i,it)+'" data-act="opt" data-arg="'+i+'"'+(it.done?' disabled':'')+'>'+(sp?'<span class="o-pic">'+pic(o)+'</span>':'')+'<span class="o-lbl">'+esc(o.r)+'</span></button>';}
+function optsPic(it){const sp=it.opts.every(o=>o.p);return '<div class="opts'+(sp?'':' nopic')+'">'+it.opts.map((o,i)=>optPic(o,i,it,sp)).join('')+'</div>';}
+function optHy(o,i,it){return '<button class="opt '+optCls(o,i,it)+'" data-act="opt" data-arg="'+i+'"'+(it.done?' disabled':'')+'><span class="o-hy" lang="hy">'+esc(o.a)+'</span>'+((S.set.tr||it.done)?'<span class="o-tr">'+esc(o.tr)+'</span>':'')+'</button>';}
+function fbFoot(it){
+  const w=it.w;
+  if(it.ok) return '<div class="fb ok">✓ Верно</div><button class="btn primary" data-act="next">Дальше</button>';
+  return '<div class="fb bad"><span>Правильно:</span><span class="ans"><b lang="hy">'+esc(w.a)+'</b>'+esc(w.tr)+' — '+esc(w.r)+'</span></div><button class="btn primary" data-act="next">Дальше</button>';
+}
+function sessionHTML(){
+  const it=cur(), w=it.w, n=sess.items.length;
+  const top='<div class="sess-top"><button class="x" data-act="quit" aria-label="Закончить урок">✕</button><div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="'+n+'" aria-valuenow="'+sess.i+'"><i style="width:'+Math.round(100*sess.i/n)+'%"></i></div><span class="pcount">'+(sess.i+1)+'/'+n+'</span></div>';
+  const ph=w.a.indexOf(' ')>=0?' phrase':'';
+  let body='', foot='';
+  if(it.k==='intro'){
+    body='<p class="q">Новое слово</p><div class="pic-xl">'+pic(w)+'</div><div class="hyw'+ph+'" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(w.tr)+'</div><div class="ruw">'+esc(w.r)+'</div>'+audioRow(w)+'<button class="flag" data-act="flag" data-arg="'+esc(w.a)+'">'+(S.flag&&S.flag[w.a]?'⚑ Отмечено: ошибка в слове':'⚑ Ошибка в слове?')+'</button>';
+    foot='<div class="row2"><button class="btn secondary" data-act="know">Уже знаю</button><button class="btn primary" data-act="next">Дальше</button></div>';
+  }else if(it.k==='a2r'){
+    body='<p class="q">Что значит это слово?</p><div class="hyw'+ph+'" lang="hy">'+esc(w.a)+'</div>'+((S.set.tr||it.done)?'<div class="trn">'+esc(w.tr)+'</div>':'')+audioRow(w)+optsPic(it);
+  }else if(it.k==='r2a'){
+    body='<p class="q">Как это по-армянски?</p><div class="pic-xl">'+picQ(w)+'</div><div class="ruw">'+esc(w.r)+'</div><div class="opts list">'+it.opts.map((o,i)=>optHy(o,i,it)).join('')+'</div>';
+  }else if(it.k==='listen'){
+    body='<p class="q">Что вы слышите?</p><button class="play-big" data-act="sayCur" aria-label="Прослушать ещё раз">'+ICON.spk+'</button><button class="aud" data-act="sayCurSlow"><span aria-hidden="true">🐢</span><span>Медленно</span></button>'+
+      (it.done?'<div class="hyw'+ph+' answer-word" lang="hy">'+esc(w.a)+'</div><div class="trn">'+esc(w.tr)+'</div>':'')+
+      optsPic(it);
+  }else if(it.k==='spell'){
+    const sp=it.sp, cnt=sp.target.length;
+    const wpx=Math.max(30,Math.min(46,Math.floor((Math.min(window.innerWidth,560)-40)/cnt)-6));
+    let slots='';
+    for(let p=0;p<cnt;p++){
+      const id=sp.ans[p], ch=(id!=null)?sp.bank.find(b=>b.id===id).ch:'';
+      let cls=ch?'fill':'';
+      if(it.done){ const g=it.got&&it.got[p]; cls=(g&&g===sp.target[p])?'ok':'bad'; }
+      slots+='<button class="slot '+cls+'" style="width:'+wpx+'px" data-act="slot" data-arg="'+p+'"'+(it.done?' disabled':'')+' aria-label="Буква '+(p+1)+'"><span lang="hy">'+esc(it.done?((it.got&&it.got[p])||''):ch)+'</span></button>';
+    }
+    const tiles=it.done?'':sp.bank.map(b=>'<button class="tile'+(b.used?' used':'')+'" data-act="tile" data-arg="'+b.id+'" lang="hy">'+esc(b.ch)+'</button>').join('');
+    body='<p class="q">Соберите слово из букв</p><div class="pic-xl">'+picQ(w)+'</div><div class="ruw">'+esc(w.r)+'</div>'+audioRow(w)+'<div class="slots">'+slots+'</div>'+
+      (it.done&&!it.ok?'<div class="hyw answer-word" lang="hy">'+esc(w.a)+'</div><div class="trn">'+esc(w.tr)+'</div>':'')+'<div class="tiles">'+tiles+'</div>';
+    if(!it.done) foot='<div class="row2"><button class="btn secondary" data-act="erase">Стереть</button><button class="btn ghost" data-act="giveup">Не знаю</button></div>';
+  }
+  if(it.done) foot=fbFoot(it);
+  return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
+}
+
+/* ================= EVENTS ================= */
+const H={
+  tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } go(a); },
+  topic:a=>{preloadAudio(TOPICS[+a].list); go('topic',+a);},
+  learnNew:()=>startLearn(null),
+  learnTopic:a=>startLearn(+a),
+  learnAgain:()=>{const m=sess?sess.meta:{}; startLearn(m.ti!=null?m.ti:null,m.lv||null);},
+  learnLevel:a=>startLearn(null,a),
+  checkLevel:a=>startCheck(WORDS.filter(w=>TOPICS[w.t].lv===a),{lv:a}),
+  checkTopic:a=>startCheck(TOPICS[+a].list,{ti:+a}),
+  hard:()=>startHard(),
+  lvtog:a=>{S.set.open=Object.assign({},S.set.open||{}); S.set.open[a]=!isOpen(a); save(); render();},
+  know:()=>{
+    const it=cur(); if(!it||it.k!=='intro') return;
+    const w=it.w; S.w[w.a]={b:5,d:today()+INT[5],t:Date.now(),n:1,e:0}; touchStreak(); save();
+    sess.known=(sess.known||0)+1;
+    sess.items=sess.items.filter((x,i)=>i<=sess.i||x.w!==w);
+    nextItem();
+  },
+  flag:a=>{S.flag=S.flag||{}; if(S.flag[a]) delete S.flag[a]; else S.flag[a]=1; save(); render(false); toast(S.flag[a]?'Отмечено. Список — в «Настройках».':'Отметка снята.');},
+  copyFlags:()=>{
+    const txt=Object.keys(S.flag||{}).filter(a=>BY[a]).map(a=>a+' — '+BY[a].tr+' — '+BY[a].r).join('\n');
+    const fallback=()=>{const t=$('#flagtxt'); if(t){t.hidden=false; t.value=txt; t.focus(); t.select();} toast('Список выделен — скопируйте его вручную.');};
+    try{ if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(()=>toast('Список скопирован.'),fallback); else fallback(); }catch(e){fallback();}
+  },
+  clearFlags:()=>{S.flag={}; save(); render();},
+  review:()=>startReview(),
+  practice:a=>startPractice(+a),
+  say:(a,b)=>speak(BY[a],false,b,true),
+  saySlow:(a,b)=>speak(BY[a],true,b,true),
+  sayCur:(a,b)=>{const it=cur(); if(it) speak(it.w,false,b,true);},
+  sayCurSlow:(a,b)=>{const it=cur(); if(it) speak(it.w,true,b,true);},
+  opt:a=>answer(+a),
+  next:()=>nextItem(),
+  tile:a=>tileTap(+a),
+  slot:a=>slotTap(+a),
+  erase:()=>erase(),
+  giveup:()=>giveUp(),
+  quit:()=>finish(),
+  more:()=>{dLimit+=150; const l=$('#dlist'); if(l) l.innerHTML=dictRows();},
+  tog:a=>{S.set[a]=!S.set[a]; save(); render();},
+  size:a=>{S.set.size=+a; save(); render();},
+  reset:()=>{
+    if(!resetArm){resetArm=Date.now(); render(); setTimeout(()=>{if(resetArm&&Date.now()-resetArm>=4900&&view==='settings'){resetArm=0;render();}},5000); return;}
+    S.w={}; S.st={day:0,streak:0}; S.reset=Date.now(); resetArm=0; save(); flushCloud(); render(); toast('Прогресс сброшен.');
+  }
+};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b||b.disabled) return;
+  const f=H[b.dataset.act]; if(f) f(b.dataset.arg,b,e);
+});
+document.addEventListener('keydown',e=>{
+  if(view!=='session'||!sess) return;
+  const it=cur(); if(!it) return;
+  if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
+  if(/^[1-4]$/.test(e.key)&&it.opts&&!it.done){answer(+e.key-1);return;}
+  if(e.key==='Enter'){ if(it.k==='intro'||it.done){e.preventDefault();nextItem();} return; }
+  if(e.key===' '){e.preventDefault(); speak(it.w,false,null,true); return;}
+  if(it.k==='spell'&&!it.done){
+    if(e.key==='Backspace'){e.preventDefault();erase();return;}
+    const k=(e.key||'').toLowerCase();
+    const t=it.sp.bank.find(b=>!b.used&&(b.ch===k||(b.ch==='ու'&&k==='ու')));
+    if(t) tileTap(t.id);
+  }
+});
+window.addEventListener('resize',()=>{ if(view==='session') fitWords(); });
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') flushCloud(); });
+
+/* ================= INIT ================= */
+loadLocal();
+if(SPEECH){
+  loadVoices();
+  try{ window.speechSynthesis.addEventListener('voiceschanged',loadVoices); }catch(e){ window.speechSynthesis.onvoiceschanged=loadVoices; }
+  setTimeout(loadVoices,500); setTimeout(loadVoices,1800);
+}
+render();
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
+initCloud();
+window.__hy={WORDS,TOPICS,trWord,stress,AUD};
+})();
+</script>
+</body>
+</html>

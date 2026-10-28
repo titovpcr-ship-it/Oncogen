@@ -1,0 +1,11 @@
+node_modules/
+android/app/build/
+android/.gradle/
+android/build/
+*.keystore
+*.jks
+keystore.properties
+local.properties
+.env
+tools/mp3/
+tools/hy_audio.zip

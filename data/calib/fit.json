@@ -1,0 +1,17 @@
+{
+ "params": {
+  "gamma": 2.0,
+  "c": 1.0,
+  "gamma_naive": 2.0,
+  "naive_fb": 100,
+  "k_modern": 0.3,
+  "modern_from": 1985,
+  "k_import": 1.0
+ },
+ "n": 162,
+ "naive_n": 27,
+ "loss_raw": 0.8979,
+ "loss_fit": 0.8085,
+ "loss_cv": 0.8192,
+ "date": "2026-10-25"
+}

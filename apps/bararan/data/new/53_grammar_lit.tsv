@@ -1,0 +1,56 @@
+# lv=B2; ru=Грамматика и литература; en=Grammar and literature; fr=Grammaire et littérature; hy=Քերականություն և գրականություն; ic=📖
+քերականություն	грамматика	grammar		grammaire
+ուղղագրություն	орфография	spelling		orthographe
+կետադրություն	пунктуация	punctuation		ponctuation
+հնչյունաբանություն	фонетика	phonetics		phonétique
+ձևաբանություն	морфология	morphology		morphologie
+շարահյուսություն	синтаксис	syntax		syntaxe
+բառագիտություն	лексикология	lexicology		lexicologie
+գոյական	существительное	noun		nom
+ածական	прилагательное	adjective		adjectif
+բայ	глагол	verb		verbe
+մակբայ	наречие	adverb		adverbe
+դերանուն	местоимение	pronoun		pronom
+թվական	числительное	numeral		numéral
+շաղկապ	союз	conjunction		conjonction
+ձայնարկություն	междометие	interjection		interjection
+եղանակավորող բառ	модальное слово	modal word		mot modal
+հոլով	падеж	case		cas
+ուղղական	именительный падеж	nominative		nominatif
+սեռական	родительный падеж	genitive		génitif
+տրական	дательный падеж	dative		datif
+հայցական	винительный падеж	accusative		accusatif
+բացառական	исходный падеж	ablative		ablatif
+գործիական	творительный падеж	instrumental		instrumental
+ներգոյական	местный падеж	locative		locatif
+եզակի թիվ	единственное число	singular		singulier
+հոգնակի թիվ	множественное число	plural		pluriel
+ապառնի	будущее время	future tense		futur
+ստորոգյալ	сказуемое	predicate		prédicat
+լրացում	дополнение, определение	modifier, complement		complément
+բառակապակցություն	словосочетание	phrase, word combination		groupe de mots
+վերնագիր	заголовок	title, heading		titre
+հնչյուն	звук (речи)	speech sound		son
+վանկ	слог	syllable		syllabe
+շեշտ	ударение	stress, accent		accent
+ձայնավոր	гласный	vowel		voyelle
+բաղաձայն	согласный	consonant		consonne
+վերջածանց	суффикс	suffix		suffixe
+նախածանց	приставка	prefix		préfixe
+հոմանիշ	синоним	synonym		synonyme
+հականիշ	антоним	antonym		antonyme
+համանուն	омоним	homonym		homonyme
+դարձվածք	фразеологизм	idiom		locution
+ասացվածք	поговорка	saying		dicton
+առած	пословица	proverb		proverbe
+հանելուկ	загадка	riddle	❓	devinette
+տաղ	ода, песнь (средневековая)	ode, hymn		ode
+քառյակ	четверостишие	quatrain		quatrain
+առակ	басня, притча	fable, parable	🦊	fable
+վիպակ	повесть	novella		court roman
+նովել	новелла	short story		nouvelle
+էսսե	эссе	essay		essai
+հուշագրություն	мемуары	memoirs		mémoires
+կենսագրություն	биография	biography		biographie
+ինքնակենսագրություն	автобиография	autobiography		autobiographie
+պիես	пьеса	play	🎭	pièce de théâtre

@@ -1,0 +1,55 @@
+{
+ "sellerMode": false,
+ "filter": {
+  "availability": null,
+  "categoryId": 2211,
+  "excludedCategoryIds": null,
+  "searchString": "Red Garland",
+  "status": "active",
+  "showOnly": [
+   "finishedAndSold"
+  ],
+  "timeline": null,
+  "location": {
+   "freeDelivery": false,
+   "pickup": false
+  },
+  "condition": null,
+  "type": null,
+  "priceStart": null,
+  "priceEnd": null,
+  "quantity": null,
+  "properties": null,
+  "tags": null,
+  "excludedSellers": null,
+  "sellerId": null,
+  "bidderId": null,
+  "related": null,
+  "soldStatus": null,
+  "fromT": null,
+  "tillT": null,
+  "endsFromT": null,
+  "endsTillT": null,
+  "fromD": null,
+  "tillD": null,
+  "endsFromD": null,
+  "endsTillD": null,
+  "standardDescriptionId": null,
+  "page": 1,
+  "pageSize": 20,
+  "sort": {
+   "field": "endDate",
+   "direction": 1
+  },
+  "excludedLotIds": [],
+  "featuredLotsFirst": false,
+  "onlyWithPicture": false
+ },
+ "includes": {
+  "lots": true,
+  "stats": false
+ },
+ "saveSearchRequest": false,
+ "featuredLotsFirst": false,
+ "onlyWithPicture": false
+}

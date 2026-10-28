@@ -1,0 +1,22 @@
+{
+  "url": "https://meshok.net/api/command/lots/get-items",
+  "method": "POST",
+  "status": 200,
+  "post_data": "{\"sellerMode\":false,\"filter\":{\"availability\":null,\"categoryId\":13291,\"excludedCategoryIds\":null,\"searchString\":null,\"status\":\"active\",\"showOnly\":null,\"timeline\":null,\"location\":{\"freeDelivery\":false,\"pickup\":false},\"condition\":null,\"type\":null,\"priceStart\":null,\"priceEnd\":null,\"quantity\":null,\"properties\":null,\"tags\":null,\"excludedSellers\":null,\"sellerId\":null,\"bidderId\":null,\"related\":null,\"soldStatus\":null,\"fromT\":null,\"tillT\":null,\"endsFromT\":null,\"endsTillT\":null,\"fromD\":null,\"tillD\":null,\"endsFromD\":null,\"endsTillD\":null,\"standardDescriptionId\":null,\"page\":1,\"pageSize\":20,\"sort\":{\"field\":\"endDate\",\"direction\":0},\"excludedLotIds\":[],\"featuredLotsFirst\":true,\"onlyWithPicture\":true,\"sellerMode\":false,\"cacheOptions\":{\"key\":\"category-promo-13291_page-1\",\"clientTTL\":300000}},\"includes\":{\"lots\":true,\"stats\":false},\"saveSearchRequest\":false,\"featuredLotsFirst\":false,\"onlyWithPicture\":false}",
+  "request_headers": {
+    "sec-ch-ua-platform": "\"Linux\"",
+    "referer": "https://meshok.net/good/2211",
+    "meshok-correlation-id": "03730f43e5df80b55a773b7262d30d10",
+    "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+    "accept-language": "ru-RU,ru;q=0.9,en;q=0.8",
+    "sec-ch-ua-mobile": "?0",
+    "x-hash": "369919853",
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+    "accept": "application/json, text/plain, */*",
+    "meshok-locale": "ru",
+    "content-type": "application/json",
+    "x-timeout": "30000"
+  },
+  "size": 46415,
+  "captured_for": "meshok_good_probe"
+}

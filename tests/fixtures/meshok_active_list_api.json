@@ -1,0 +1,2341 @@
+{
+ "correlationId": "dl2f2yhzbks2o7kcc6ks1t3oy8wdkhms",
+ "result": {
+  "lots": [
+   {
+    "additionalProperties": [],
+    "beginDate": "2019-07-04T09:20:05.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 6708,
+     "name": "Бузулук",
+     "popularity": 1005,
+     "region": "Оренбургская обл.",
+     "regionId": 4593,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 300,
+     "localDelivery": 1,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 19,
+    "id": 130434482,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/130434482.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/130434482.0.208x208s.jpg?1",
+       "x2": "/i/130434482.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/130434482.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/130434482.1.208x208s.jpg?1",
+       "x2": "/i/130434482.1.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CARD"
+    ],
+    "picsCount": 2,
+    "picsVersion": 1,
+    "price": 6600,
+    "normalizedPrice": 6600,
+    "quantity": 3,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "Vinyl Track",
+     "id": 316895,
+     "rating": 6052,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/316895.120x120.jpg?15",
+     "avatarThumbnailURL": "/a/316895.120x120.jpg?15",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 6600,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "JOHN COLTRANE - With The Red Garland Trio (LP) 2014 /заказ/",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2022-01-31T17:37:09.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 450,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 23,
+    "id": 215275146,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/215275146.0.jpg",
+      "thumbnail": {
+       "x1": "/i/215275146.0.208x208s.jpg",
+       "x2": "/i/215275146.0.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/215275146.1.jpg",
+      "thumbnail": {
+       "x1": "/i/215275146.1.208x208s.jpg",
+       "x2": "/i/215275146.1.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/215275146.2.jpg",
+      "thumbnail": {
+       "x1": "/i/215275146.2.208x208s.jpg",
+       "x2": "/i/215275146.2.208x208.jpg"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD",
+     "MAIL"
+    ],
+    "picsCount": 3,
+    "picsVersion": 0,
+    "price": 3898.7,
+    "normalizedPrice": 3898.7,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "DenisAir",
+     "id": 537478,
+     "rating": 7048,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/537478.120x120.jpg?6",
+     "avatarThumbnailURL": "/a/537478.120x120.jpg?6",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 3898.7,
+    "strikePrice": 0,
+    "tags": [
+     "lp",
+     "lp record",
+     "lp records",
+     "lp vinyl",
+     "music",
+     "original",
+     "record",
+     "records",
+     "rock",
+     "vinyl",
+     "vinyl records",
+     "винил",
+     "виниловые пластинки",
+     "jazz",
+     "pop",
+     "the red garland trio"
+    ],
+    "title": "Red Garland Trio ‎– Groovy PRESTIGE 1957/83 US",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Mint",
+        "valueId": 458
+       }
+      ]
+     }
+    ],
+    "beginDate": "2021-07-16T08:11:22.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 58,
+     "name": "Самара",
+     "popularity": 32937,
+     "region": "Самарская обл.",
+     "regionId": 4891,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 500,
+     "localDelivery": 2,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 2,
+    "hitsCount": 19,
+    "id": 243372123,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/243372123.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/243372123.0.208x208s.jpg?1",
+       "x2": "/i/243372123.0.208x208.jpg?1"
+      },
+      "ratio": 0.991736
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 1,
+    "picsVersion": 1,
+    "price": 9000,
+    "normalizedPrice": 9000,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "Мир Пластинок",
+     "id": 631584,
+     "rating": 1276,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": "С 15.08.26 по 11.09.26 торговля будет остановлена в связи с летними каникулами.",
+     "avatarURL": "/a/631584.120x120.jpg?7",
+     "avatarThumbnailURL": "/a/631584.120x120.jpg?7",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 9000,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Red Garland Trio - Groovy (1957/2009, Japan, NM/M, Prestige ‎– PRLP 7113)",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2021-07-18T05:42:13.000Z",
+    "bidsCount": 0,
+    "categoryId": 16783,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 6708,
+     "name": "Бузулук",
+     "popularity": 1005,
+     "region": "Оренбургская обл.",
+     "regionId": 4593,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 0,
+     "localDelivery": 1,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 21,
+    "id": 243520932,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/243520932.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/243520932.0.208x208s.jpg?1",
+       "x2": "/i/243520932.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/243520932.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/243520932.1.208x208s.jpg?1",
+       "x2": "/i/243520932.1.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CARD"
+    ],
+    "picsCount": 2,
+    "picsVersion": 1,
+    "price": 7400,
+    "normalizedPrice": 7400,
+    "quantity": 3,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "Vinyl Track",
+     "id": 316895,
+     "rating": 6052,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/316895.120x120.jpg?15",
+     "avatarThumbnailURL": "/a/316895.120x120.jpg?15",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 7400,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "The Red Garland Quintet - All Mornin' Long (Mono)   (1 LP) 2021 /заказ/",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2022-04-23T10:42:29.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 32,
+     "name": "Москва",
+     "popularity": 881179,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 0,
+     "localDelivery": 2,
+     "localPrice": 300,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 13,
+    "id": 268882211,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/268882211.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/268882211.0.208x208s.jpg?1",
+       "x2": "/i/268882211.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK"
+    ],
+    "picsCount": 1,
+    "picsVersion": 1,
+    "price": 10335,
+    "normalizedPrice": 10335,
+    "quantity": 3,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "CDVPODAROK",
+     "id": 1152370,
+     "rating": 1021,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1152370.120x120.jpg?6",
+     "avatarThumbnailURL": "/a/1152370.120x120.jpg?6",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 10335,
+    "strikePrice": 0,
+    "tags": [
+     "cdvpodarok",
+     "винил",
+     "lp",
+     "виниловые",
+     "пластинки"
+    ],
+    "title": "Red Garland (1923-1984) - Red Garland's Piano (180g) (Limited Edition)",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2022-04-23T19:20:38.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 32,
+     "name": "Москва",
+     "popularity": 881179,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 0,
+     "localDelivery": 2,
+     "localPrice": 300,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 19,
+    "id": 268920711,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/268920711.0.jpg",
+      "thumbnail": {
+       "x1": "/i/268920711.0.208x208s.jpg",
+       "x2": "/i/268920711.0.208x208.jpg"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK"
+    ],
+    "picsCount": 1,
+    "picsVersion": 0,
+    "price": 41115,
+    "normalizedPrice": 41115,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "CDVPODAROK",
+     "id": 1152370,
+     "rating": 1021,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1152370.120x120.jpg?6",
+     "avatarThumbnailURL": "/a/1152370.120x120.jpg?6",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 41115,
+    "strikePrice": 0,
+    "tags": [
+     "cdvpodarok",
+     "винил",
+     "lp",
+     "виниловые",
+     "пластинки"
+    ],
+    "title": "John Coltrane with The Red Garland Trio - Traneing In - Vinyl Lp-180 Gram",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Mint",
+        "valueId": 448
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Mint",
+        "valueId": 458
+       }
+      ]
+     }
+    ],
+    "beginDate": "2022-06-20T14:22:25.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 76,
+     "name": "Уфа",
+     "popularity": 20418,
+     "region": "Башкортостан(Башкирия)",
+     "regionId": 3296,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 273,
+     "localDelivery": 1,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 3,
+    "hitsCount": 20,
+    "id": 272515341,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/272515341.0.jpg",
+      "thumbnail": {
+       "x1": "/i/272515341.0.208x208s.jpg",
+       "x2": "/i/272515341.0.208x208.jpg"
+      },
+      "ratio": 1.08451
+     },
+     {
+      "url": "/i/272515341.1.jpg",
+      "thumbnail": {
+       "x1": "/i/272515341.1.208x208s.jpg",
+       "x2": "/i/272515341.1.208x208.jpg"
+      },
+      "ratio": 1.06162
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "NALOZH",
+     "CARD",
+     "MAIL"
+    ],
+    "picsCount": 2,
+    "picsVersion": 0,
+    "price": 3499,
+    "normalizedPrice": 3499,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "GARIK59",
+     "id": 371867,
+     "rating": 2678,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/371867.120x120.jpg?10",
+     "avatarThumbnailURL": "/a/371867.120x120.jpg?10",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 3499,
+    "strikePrice": 0,
+    "tags": [
+     "редкость",
+     "vinyl",
+     "винил",
+     "lp",
+     "jazz",
+     "cool jazz",
+     "red garland",
+     "coltrane",
+     "donald byrd"
+    ],
+    "title": "THE RED GARLAND QUINTET P/1957/1990/2014 ..SOUL JUNCTION''",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2022-06-20T16:58:05.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 76,
+     "name": "Уфа",
+     "popularity": 20418,
+     "region": "Башкортостан(Башкирия)",
+     "regionId": 3296,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 273,
+     "localDelivery": 1,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 2,
+    "hitsCount": 10,
+    "id": 272526069,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/272526069.0.jpg",
+      "thumbnail": {
+       "x1": "/i/272526069.0.208x208s.jpg",
+       "x2": "/i/272526069.0.208x208.jpg"
+      },
+      "ratio": 1.08451
+     },
+     {
+      "url": "/i/272526069.1.jpg",
+      "thumbnail": {
+       "x1": "/i/272526069.1.208x208s.jpg",
+       "x2": "/i/272526069.1.208x208.jpg"
+      },
+      "ratio": 1.06162
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "NALOZH",
+     "CARD",
+     "MAIL"
+    ],
+    "picsCount": 2,
+    "picsVersion": 0,
+    "price": 4999,
+    "normalizedPrice": 4999,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "GARIK59",
+     "id": 371867,
+     "rating": 2678,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/371867.120x120.jpg?10",
+     "avatarThumbnailURL": "/a/371867.120x120.jpg?10",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 4999,
+    "strikePrice": 0,
+    "tags": [
+     "редкость",
+     "винил",
+     "jazz",
+     "red garland",
+     "hard bop",
+     "грампластинка",
+     "john coltrane",
+     "запечатанный",
+     "art taylor",
+     "universal music"
+    ],
+    "title": "HE RED GARLAND QUINTET P/1957 ,,SOUL JUNCTION'' S/S ЗАВОДСКАЯ ЗАПЕЧАТКА",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2023-03-31T20:45:56.000Z",
+    "bidsCount": 0,
+    "categoryId": 2230,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 350,
+     "localDelivery": 2,
+     "localPrice": 200,
+     "soloDelivery": false,
+     "worldPrice": 500
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 1,
+    "id": 290291084,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/290291084.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/290291084.0.208x208s.jpg?1",
+       "x2": "/i/290291084.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/290291084.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/290291084.1.208x208s.jpg?1",
+       "x2": "/i/290291084.1.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "MAIL"
+    ],
+    "picsCount": 2,
+    "picsVersion": 1,
+    "price": 4060,
+    "normalizedPrice": 4060,
+    "quantity": 10,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "discozon",
+     "id": 343786,
+     "rating": 8170,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/343786.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/343786.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 4060,
+    "strikePrice": 0,
+    "tags": [
+     "виниловые пластинки",
+     "винил",
+     "lp vinyl",
+     "lp",
+     "винил",
+     "lp record",
+     "vinyl",
+     "vinyl records",
+     "vinyl",
+     "sealed",
+     "новые виниловые пластинки"
+    ],
+    "title": "LP Red Garland - High Pressure",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2023-03-31T22:45:16.000Z",
+    "bidsCount": 0,
+    "categoryId": 2230,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 350,
+     "localDelivery": 2,
+     "localPrice": 200,
+     "soloDelivery": false,
+     "worldPrice": 500
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 3,
+    "id": 290301742,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/290301742.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/290301742.0.208x208s.jpg?1",
+       "x2": "/i/290301742.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/290301742.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/290301742.1.208x208s.jpg?1",
+       "x2": "/i/290301742.1.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "MAIL"
+    ],
+    "picsCount": 2,
+    "picsVersion": 1,
+    "price": 5519,
+    "normalizedPrice": 5519,
+    "quantity": 10,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "discozon",
+     "id": 343786,
+     "rating": 8170,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/343786.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/343786.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 5519,
+    "strikePrice": 0,
+    "tags": [
+     "виниловые пластинки",
+     "винил",
+     "lp vinyl",
+     "lp",
+     "винил",
+     "lp record",
+     "vinyl",
+     "vinyl records",
+     "vinyl",
+     "sealed",
+     "новые виниловые пластинки"
+    ],
+    "title": "LP Red Garland (1923-1984) - All Mornin Long",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2023-04-02T02:10:11.000Z",
+    "bidsCount": 0,
+    "categoryId": 2230,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 350,
+     "localDelivery": 2,
+     "localPrice": 200,
+     "soloDelivery": false,
+     "worldPrice": 500
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 8,
+    "id": 290404918,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/290404918.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/290404918.0.208x208s.jpg?1",
+       "x2": "/i/290404918.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "MAIL"
+    ],
+    "picsCount": 1,
+    "picsVersion": 1,
+    "price": 8279,
+    "normalizedPrice": 8279,
+    "quantity": 10,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "discozon",
+     "id": 343786,
+     "rating": 8170,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/343786.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/343786.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 8279,
+    "strikePrice": 0,
+    "tags": [
+     "виниловые пластинки",
+     "винил",
+     "lp vinyl",
+     "lp",
+     "винил",
+     "lp record",
+     "vinyl",
+     "vinyl records",
+     "vinyl",
+     "sealed",
+     "новые виниловые пластинки"
+    ],
+    "title": "LP John Coltrane (1926-1967) - With The Red Garland Trio (200g) (Limited-Numbered-Edition)",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2023-04-02T02:11:02.000Z",
+    "bidsCount": 0,
+    "categoryId": 2230,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 350,
+     "localDelivery": 2,
+     "localPrice": 200,
+     "soloDelivery": false,
+     "worldPrice": 500
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 5,
+    "id": 290405136,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/290405136.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/290405136.0.208x208s.jpg?1",
+       "x2": "/i/290405136.0.208x208.jpg?1"
+      },
+      "ratio": 0.963082
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "MAIL"
+    ],
+    "picsCount": 1,
+    "picsVersion": 1,
+    "price": 8279,
+    "normalizedPrice": 8279,
+    "quantity": 10,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "discozon",
+     "id": 343786,
+     "rating": 8170,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/343786.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/343786.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 8279,
+    "strikePrice": 0,
+    "tags": [
+     "виниловые пластинки",
+     "винил",
+     "lp vinyl",
+     "lp",
+     "винил",
+     "lp record",
+     "vinyl",
+     "vinyl records",
+     "vinyl",
+     "sealed",
+     "новые виниловые пластинки"
+    ],
+    "title": "LP Red Garland (1923-1984) - All Mornin' Long (180g) (Limited Edition)",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2023-08-15T07:59:20.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 32,
+     "name": "Москва",
+     "popularity": 881179,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 450,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 2,
+    "hitsCount": 55,
+    "id": 298338354,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/298338354.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/298338354.0.208x208s.jpg?1",
+       "x2": "/i/298338354.0.208x208.jpg?1"
+      },
+      "ratio": 0.75293
+     },
+     {
+      "url": "/i/298338354.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/298338354.1.208x208s.jpg?1",
+       "x2": "/i/298338354.1.208x208.jpg?1"
+      },
+      "ratio": 0.75293
+     },
+     {
+      "url": "/i/298338354.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/298338354.2.208x208s.jpg?1",
+       "x2": "/i/298338354.2.208x208.jpg?1"
+      },
+      "ratio": 0.75293
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 3,
+    "picsVersion": 1,
+    "price": 15600,
+    "normalizedPrice": 15600,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "ТВА",
+     "id": 623093,
+     "rating": 816,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/623093.120x120.jpg?4",
+     "avatarThumbnailURL": "/a/623093.120x120.jpg?4",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 15600,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Coleman Hawkins With The Red Garland Trio – Coleman Hawkins With The Red Garland Trio   ORIGINAL",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 459
+       }
+      ]
+     }
+    ],
+    "beginDate": "2023-08-26T09:06:01.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 32,
+     "name": "Москва",
+     "popularity": 881179,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 450,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 3,
+    "hitsCount": 39,
+    "id": 298897128,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/298897128.0.jpg",
+      "thumbnail": {
+       "x1": "/i/298897128.0.208x208s.jpg",
+       "x2": "/i/298897128.0.208x208.jpg"
+      },
+      "ratio": 0.75293
+     },
+     {
+      "url": "/i/298897128.1.jpg",
+      "thumbnail": {
+       "x1": "/i/298897128.1.208x208s.jpg",
+       "x2": "/i/298897128.1.208x208.jpg"
+      },
+      "ratio": 0.75293
+     },
+     {
+      "url": "/i/298897128.2.jpg",
+      "thumbnail": {
+       "x1": "/i/298897128.2.208x208s.jpg",
+       "x2": "/i/298897128.2.208x208.jpg"
+      },
+      "ratio": 0.75293
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 3,
+    "picsVersion": 0,
+    "price": 4200,
+    "normalizedPrice": 4200,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "ТВА",
+     "id": 623093,
+     "rating": 816,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/623093.120x120.jpg?4",
+     "avatarThumbnailURL": "/a/623093.120x120.jpg?4",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 4200,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "The Red Garland Quintet Featuring John Coltrane And Donald Byrd – Jazz Junction",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 450
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 459
+       }
+      ]
+     }
+    ],
+    "beginDate": "2023-11-03T08:54:20.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 32,
+     "name": "Москва",
+     "popularity": 881179,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 2,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 450,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 3,
+    "hitsCount": 31,
+    "id": 302848371,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/302848371.0.jpg?2",
+      "thumbnail": {
+       "x1": "/i/302848371.0.208x208s.jpg?2",
+       "x2": "/i/302848371.0.208x208.jpg?2"
+      },
+      "ratio": 0.7532
+     },
+     {
+      "url": "/i/302848371.1.jpg?2",
+      "thumbnail": {
+       "x1": "/i/302848371.1.208x208s.jpg?2",
+       "x2": "/i/302848371.1.208x208.jpg?2"
+      },
+      "ratio": 0.7532
+     },
+     {
+      "url": "/i/302848371.2.jpg?2",
+      "thumbnail": {
+       "x1": "/i/302848371.2.208x208s.jpg?2",
+       "x2": "/i/302848371.2.208x208.jpg?2"
+      },
+      "ratio": 0.7532
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 3,
+    "picsVersion": 2,
+    "price": 15200,
+    "normalizedPrice": 15200,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "ТВА",
+     "id": 623093,
+     "rating": 816,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/623093.120x120.jpg?4",
+     "avatarThumbnailURL": "/a/623093.120x120.jpg?4",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 15200,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Red Garland – Red Garland At The Prelude ORIGINAL",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "VG++",
+        "valueId": 460
+       }
+      ]
+     }
+    ],
+    "beginDate": "2023-11-03T08:59:51.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 32,
+     "name": "Москва",
+     "popularity": 881179,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 450,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 26,
+    "id": 302849036,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/302849036.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/302849036.0.208x208s.jpg?1",
+       "x2": "/i/302849036.0.208x208.jpg?1"
+      },
+      "ratio": 0.7532
+     },
+     {
+      "url": "/i/302849036.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/302849036.1.208x208s.jpg?1",
+       "x2": "/i/302849036.1.208x208.jpg?1"
+      },
+      "ratio": 0.7532
+     },
+     {
+      "url": "/i/302849036.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/302849036.2.208x208s.jpg?1",
+       "x2": "/i/302849036.2.208x208.jpg?1"
+      },
+      "ratio": 0.7532
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 3,
+    "picsVersion": 1,
+    "price": 10700,
+    "normalizedPrice": 10700,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "ТВА",
+     "id": 623093,
+     "rating": 816,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/623093.120x120.jpg?4",
+     "avatarThumbnailURL": "/a/623093.120x120.jpg?4",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 10700,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Red Garland – Alone With The Blues ORIGINAL",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2023-11-19T21:25:25.000Z",
+    "bidsCount": 0,
+    "categoryId": 2230,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 350,
+     "localDelivery": 2,
+     "localPrice": 200,
+     "soloDelivery": false,
+     "worldPrice": 500
+    },
+    "endDate": null,
+    "watchCount": 1,
+    "hitsCount": 4,
+    "id": 303826423,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/303826423.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/303826423.0.208x208s.jpg?1",
+       "x2": "/i/303826423.0.208x208.jpg?1"
+      },
+      "ratio": 0.998336
+     },
+     {
+      "url": "/i/303826423.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/303826423.1.208x208s.jpg?1",
+       "x2": "/i/303826423.1.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "MAIL"
+    ],
+    "picsCount": 2,
+    "picsVersion": 1,
+    "price": 4897,
+    "normalizedPrice": 4897,
+    "quantity": 10,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "discozon",
+     "id": 343786,
+     "rating": 8170,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/343786.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/343786.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 4897,
+    "strikePrice": 4897,
+    "tags": [
+     "виниловые пластинки",
+     "винил",
+     "lp vinyl",
+     "lp",
+     "винил",
+     "lp record",
+     "vinyl",
+     "vinyl records",
+     "vinyl",
+     "sealed",
+     "новые виниловые пластинки"
+    ],
+    "title": "LP Coleman Hawkins (1904-1969) - Coleman Hawkins With The Red Garland Trio (180g) (Limited Deluxe Ed",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2023-12-22T17:00:41.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 5428,
+     "name": "Воскресенск",
+     "popularity": 1467,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 7,
+    "hitsCount": 111,
+    "id": 305837240,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/305837240.0.jpg",
+      "thumbnail": {
+       "x1": "/i/305837240.0.208x208s.jpg",
+       "x2": "/i/305837240.0.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/305837240.1.jpg",
+      "thumbnail": {
+       "x1": "/i/305837240.1.208x208s.jpg",
+       "x2": "/i/305837240.1.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/305837240.2.jpg",
+      "thumbnail": {
+       "x1": "/i/305837240.2.208x208s.jpg",
+       "x2": "/i/305837240.2.208x208.jpg"
+      },
+      "ratio": 0.365964
+     },
+     {
+      "url": "/i/305837240.3.jpg",
+      "thumbnail": {
+       "x1": "/i/305837240.3.208x208s.jpg",
+       "x2": "/i/305837240.3.208x208.jpg"
+      },
+      "ratio": 1.5716
+     },
+     {
+      "url": "/i/305837240.4.jpg",
+      "thumbnail": {
+       "x1": "/i/305837240.4.208x208s.jpg",
+       "x2": "/i/305837240.4.208x208.jpg"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "SBP"
+    ],
+    "picsCount": 5,
+    "picsVersion": 0,
+    "price": 4990,
+    "normalizedPrice": 4990,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "VladKes",
+     "id": 787863,
+     "rating": 9539,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/787863.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/787863.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 4990,
+    "strikePrice": 0,
+    "tags": [
+     "curtis fuller",
+     "red garland",
+     "paul chambers",
+     "louis hayes",
+     "jazz",
+     "hard bop"
+    ],
+    "title": "LP Curtis Fuller With Red Garland 1962/1981 (Japan) Obi New Jazz SMJ-6297 M-/NM(M)",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 450
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "VG++",
+        "valueId": 460
+       }
+      ]
+     }
+    ],
+    "beginDate": "2024-01-20T00:48:18.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 48,
+     "name": "Орел",
+     "popularity": 7293,
+     "region": "Орловская обл.",
+     "regionId": 4633,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 200,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": null,
+    "watchCount": 2,
+    "hitsCount": 32,
+    "id": 307367859,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/307367859.0.jpg",
+      "thumbnail": {
+       "x1": "/i/307367859.0.208x208s.jpg",
+       "x2": "/i/307367859.0.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/307367859.1.jpg",
+      "thumbnail": {
+       "x1": "/i/307367859.1.208x208s.jpg",
+       "x2": "/i/307367859.1.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/307367859.2.jpg",
+      "thumbnail": {
+       "x1": "/i/307367859.2.208x208s.jpg",
+       "x2": "/i/307367859.2.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/307367859.3.jpg",
+      "thumbnail": {
+       "x1": "/i/307367859.3.208x208s.jpg",
+       "x2": "/i/307367859.3.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/307367859.4.jpg",
+      "thumbnail": {
+       "x1": "/i/307367859.4.208x208s.jpg",
+       "x2": "/i/307367859.4.208x208.jpg"
+      },
+      "ratio": 1.06335
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CARD"
+    ],
+    "picsCount": 5,
+    "picsVersion": 0,
+    "price": 2500,
+    "normalizedPrice": 2500,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "Podpol57",
+     "id": 337411,
+     "rating": 11807,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/337411.120x120.jpg?16",
+     "avatarThumbnailURL": "/a/337411.120x120.jpg?16",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 2500,
+    "strikePrice": 0,
+    "tags": [
+     "red garland",
+     "rudy van gelder",
+     "jimmy rowser"
+    ],
+    "title": "RED GARLAND – At The Prelude. JAPAN. MONO. RVG",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Sealed",
+        "valueId": 447
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Sealed",
+        "valueId": 457
+       }
+      ]
+     }
+    ],
+    "beginDate": "2024-02-01T07:05:29.000Z",
+    "bidsCount": 0,
+    "categoryId": 13291,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 32,
+     "name": "Москва",
+     "popularity": 881179,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 0,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 500,
+     "localDelivery": 2,
+     "localPrice": 350,
+     "soloDelivery": false,
+     "worldPrice": 1500
+    },
+    "endDate": null,
+    "watchCount": 0,
+    "hitsCount": 2,
+    "id": 308220383,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/308220383.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/308220383.0.208x208s.jpg?1",
+       "x2": "/i/308220383.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 1,
+    "picsVersion": 1,
+    "price": 8500,
+    "normalizedPrice": 8500,
+    "quantity": 1,
+    "soldQuantity": 0,
+    "status": 0,
+    "seller": {
+     "displayName": "JapanStoreCD",
+     "id": 1246956,
+     "rating": 2648,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1246956.120x120.jpg?8",
+     "avatarThumbnailURL": "/a/1246956.120x120.jpg?8",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 8500,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Red Garland - High Pressure [New Vinyl LP] PRE-ORDER !!!",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   }
+  ],
+  "foundByDescription": [],
+  "suggest": {
+   "text": null,
+   "words": [],
+   "categories": [],
+   "queries": []
+  },
+  "lastSortValues": [
+   3,
+   2147483547000,
+   "308220383"
+  ]
+ }
+}
