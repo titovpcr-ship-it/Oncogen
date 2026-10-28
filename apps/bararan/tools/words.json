@@ -107240,6 +107240,2596 @@
 "fr": "frioulan"
 },
 {
+"a": "հայաստանակենտրոն",
+"lv": "B2",
+"ru": "ориентированный на Армению",
+"en": "Armenia-centred",
+"fr": "centré sur l'Arménie"
+},
+{
+"a": "հայաստանյան",
+"lv": "B2",
+"ru": "армянский (относящийся к Армении)",
+"en": "of Armenia",
+"fr": "d'Arménie"
+},
+{
+"a": "Պարսկահայաստան",
+"lv": "B2",
+"ru": "Персидская Армения",
+"en": "Persian Armenia",
+"fr": "Arménie perse"
+},
+{
+"a": "Ռուսահայաստան",
+"lv": "B2",
+"ru": "Российская Армения",
+"en": "Russian Armenia",
+"fr": "Arménie russe"
+},
+{
+"a": "Տաճկահայաստան",
+"lv": "B2",
+"ru": "Турецкая (Западная) Армения",
+"en": "Turkish Armenia",
+"fr": "Arménie turque"
+},
+{
+"a": "եռամարտ",
+"lv": "B2",
+"ru": "троеборье",
+"en": "triathlon (three events)",
+"fr": "triathlon"
+},
+{
+"a": "հնգամարտ",
+"lv": "B2",
+"ru": "пятиборье",
+"en": "pentathlon",
+"fr": "pentathlon"
+},
+{
+"a": "տասնամարտ",
+"lv": "B2",
+"ru": "десятиборье",
+"en": "decathlon",
+"fr": "décathlon"
+},
+{
+"a": "վայրկենապես",
+"lv": "B2",
+"ru": "мгновенно",
+"en": "instantly",
+"fr": "instantanément"
+},
+{
+"a": "իսրայելական",
+"lv": "B2",
+"ru": "израильский",
+"en": "Israeli",
+"fr": "israélien"
+},
+{
+"a": "իսրայելցի",
+"lv": "B2",
+"ru": "израильтянин",
+"en": "Israeli (person)",
+"fr": "Israélien"
+},
+{
+"a": "ասիացի",
+"lv": "B2",
+"ru": "азиат",
+"en": "Asian (person)",
+"fr": "Asiatique"
+},
+{
+"a": "գետնընկույզ",
+"lv": "B2",
+"ru": "арахис",
+"en": "peanut",
+"fr": "cacahuète"
+},
+{
+"a": "ընկուզե",
+"lv": "B2",
+"ru": "ореховый",
+"en": "made of walnut",
+"fr": "en noyer"
+},
+{
+"a": "դդմազգիներ",
+"lv": "B2",
+"ru": "тыквенные (семейство)",
+"en": "gourd family",
+"fr": "cucurbitacées"
+},
+{
+"a": "մերան",
+"lv": "B2",
+"ru": "закваска (для мацуна)",
+"en": "starter (for matzoon)",
+"fr": "ferment (pour matsoun)"
+},
+{
+"a": "այսինչ",
+"lv": "B2",
+"ru": "такой-то",
+"en": "so-and-so",
+"fr": "tel ou tel"
+},
+{
+"a": "այսչափ",
+"lv": "B2",
+"ru": "столько (книжн.)",
+"en": "this much",
+"fr": "tant (littéraire)"
+},
+{
+"a": "այնինչ",
+"lv": "B2",
+"ru": "между тем, тогда как",
+"en": "whereas",
+"fr": "tandis que"
+},
+{
+"a": "այնչափ",
+"lv": "B2",
+"ru": "настолько (книжн.)",
+"en": "that much",
+"fr": "à tel point"
+},
+{
+"a": "այնուհետ",
+"lv": "B2",
+"ru": "затем, впоследствии",
+"en": "thereafter",
+"fr": "par la suite"
+},
+{
+"a": "ծխախոտաբույծ",
+"lv": "B2",
+"ru": "табаковод",
+"en": "tobacco grower",
+"fr": "planteur de tabac"
+},
+{
+"a": "ծխախոտատուփ",
+"lv": "B2",
+"ru": "портсигар",
+"en": "cigarette case",
+"fr": "étui à cigarettes"
+},
+{
+"a": "ծխախոտաքսակ",
+"lv": "B2",
+"ru": "кисет",
+"en": "tobacco pouch",
+"fr": "blague à tabac"
+},
+{
+"a": "երկքաղաքացի",
+"lv": "B2",
+"ru": "человек с двойным гражданством",
+"en": "dual citizen",
+"fr": "binational"
+},
+{
+"a": "գաղութաբնակ",
+"lv": "B2",
+"ru": "колонист",
+"en": "colonist",
+"fr": "colon"
+},
+{
+"a": "գաղութաբնակեցում",
+"lv": "B2",
+"ru": "колонизация (заселение)",
+"en": "colonization",
+"fr": "colonisation"
+},
+{
+"a": "գաղութակալ",
+"lv": "B2",
+"ru": "колонизатор",
+"en": "colonizer",
+"fr": "colonisateur"
+},
+{
+"a": "գաղութակալություն",
+"lv": "B2",
+"ru": "колониализм (синоним)",
+"en": "colonialism",
+"fr": "colonialisme (synonyme)"
+},
+{
+"a": "գաղութահայ",
+"lv": "B2",
+"ru": "армянин из общины диаспоры",
+"en": "diaspora Armenian",
+"fr": "Arménien de la diaspora (communauté)"
+},
+{
+"a": "գաղութահայություն",
+"lv": "B2",
+"ru": "армянская община диаспоры",
+"en": "Armenian diaspora community",
+"fr": "communauté arménienne de la diaspora"
+},
+{
+"a": "գաղութային",
+"lv": "B2",
+"ru": "колониальный (синоним)",
+"en": "colonial",
+"fr": "colonial (synonyme)"
+},
+{
+"a": "տնեցի",
+"lv": "B2",
+"ru": "домочадец",
+"en": "household member",
+"fr": "membre de la maisonnée"
+},
+{
+"a": "շուկայական",
+"lv": "B2",
+"ru": "рыночный",
+"en": "market",
+"fr": "de marché"
+},
+{
+"a": "վզակոթ",
+"lv": "B2",
+"ru": "затылок",
+"en": "nape",
+"fr": "nuque"
+},
+{
+"a": "վզկապ",
+"lv": "B2",
+"ru": "галстук",
+"en": "necktie",
+"fr": "cravate"
+},
+{
+"a": "գույքահարկ",
+"lv": "B2",
+"ru": "налог на имущество",
+"en": "property tax",
+"fr": "impôt foncier"
+},
+{
+"a": "նույնարմատ",
+"lv": "B2",
+"ru": "однокоренной",
+"en": "cognate (same root)",
+"fr": "de même racine"
+},
+{
+"a": "անդրծովյան",
+"lv": "B2",
+"ru": "заморский",
+"en": "overseas",
+"fr": "d'outre-mer"
+},
+{
+"a": "ծովակալություն",
+"lv": "B2",
+"ru": "адмиралтейство",
+"en": "admiralty",
+"fr": "amirauté"
+},
+{
+"a": "ծովահենություն",
+"lv": "B2",
+"ru": "пиратство",
+"en": "piracy",
+"fr": "piraterie"
+},
+{
+"a": "ծովանկարիչ",
+"lv": "B2",
+"ru": "художник-маринист",
+"en": "marine painter",
+"fr": "peintre de marines"
+},
+{
+"a": "ծովանկարչություն",
+"lv": "B2",
+"ru": "маринистика",
+"en": "marine painting",
+"fr": "peinture de marine"
+},
+{
+"a": "ծովաջուր",
+"lv": "B2",
+"ru": "морская вода",
+"en": "seawater",
+"fr": "eau de mer"
+},
+{
+"a": "ծովոզնի",
+"lv": "B2",
+"ru": "морской ёж",
+"en": "sea urchin",
+"fr": "oursin"
+},
+{
+"a": "ռազմածովային",
+"lv": "B2",
+"ru": "военно-морской",
+"en": "naval",
+"fr": "naval"
+},
+{
+"a": "փոխծովակալ",
+"lv": "B2",
+"ru": "вице-адмирал",
+"en": "vice admiral",
+"fr": "vice-amiral"
+},
+{
+"a": "թատերագիր",
+"lv": "B2",
+"ru": "драматург",
+"en": "playwright",
+"fr": "dramaturge"
+},
+{
+"a": "թատերասրահ",
+"lv": "B2",
+"ru": "театральный зал",
+"en": "theatre hall",
+"fr": "salle de théâtre"
+},
+{
+"a": "բթանալ",
+"lv": "B2",
+"ru": "тупеть, притупляться",
+"en": "to become blunt",
+"fr": "s'émousser"
+},
+{
+"a": "միկրոտիեզերք",
+"lv": "B2",
+"ru": "микрокосм",
+"en": "microcosm",
+"fr": "microcosme"
+},
+{
+"a": "շաքարաջուր",
+"lv": "B2",
+"ru": "сахарный сироп",
+"en": "sugar syrup",
+"fr": "sirop de sucre"
+},
+{
+"a": "ծաղկային",
+"lv": "B2",
+"ru": "цветочный (синоним)",
+"en": "floral",
+"fr": "floral (synonyme)"
+},
+{
+"a": "Զորայր",
+"lv": "B2",
+"ru": "Зорайр (мужское имя)",
+"en": "Zorayr (male name)",
+"fr": "Zoraïr (prénom masculin)"
+},
+{
+"a": "կուրացնել",
+"lv": "B2",
+"ru": "ослеплять",
+"en": "to blind",
+"fr": "aveugler"
+},
+{
+"a": "թուրքալեզու",
+"lv": "B2",
+"ru": "тюркоязычный",
+"en": "Turkic-speaking",
+"fr": "turcophone"
+},
+{
+"a": "թուրքախոս",
+"lv": "B2",
+"ru": "говорящий по-турецки",
+"en": "Turkish-speaking",
+"fr": "parlant turc"
+},
+{
+"a": "պարսկալեզու",
+"lv": "B2",
+"ru": "персоязычный",
+"en": "Persian-speaking",
+"fr": "persanophone"
+},
+{
+"a": "պարսկուհի",
+"lv": "B2",
+"ru": "персиянка",
+"en": "Persian woman",
+"fr": "Persane"
+},
+{
+"a": "ասպետաբար",
+"lv": "B2",
+"ru": "по-рыцарски",
+"en": "chivalrously",
+"fr": "chevaleresquement"
+},
+{
+"a": "բարալիկ",
+"lv": "B2",
+"ru": "тоненький",
+"en": "thin",
+"fr": "tout mince"
+},
+{
+"a": "նեղլիկ",
+"lv": "B2",
+"ru": "узенький",
+"en": "narrow",
+"fr": "étroit (petit)"
+},
+{
+"a": "նեղվածք",
+"lv": "B2",
+"ru": "теснина, узкое место",
+"en": "narrows",
+"fr": "défilé, goulet"
+},
+{
+"a": "սահմանագիծ",
+"lv": "B2",
+"ru": "линия границы",
+"en": "boundary line",
+"fr": "ligne de démarcation"
+},
+{
+"a": "սահմանային",
+"lv": "B2",
+"ru": "пограничный",
+"en": "border",
+"fr": "frontalier"
+},
+{
+"a": "սահմանաքար",
+"lv": "B2",
+"ru": "пограничный камень",
+"en": "boundary stone",
+"fr": "borne"
+},
+{
+"a": "աղեղնալար",
+"lv": "B2",
+"ru": "тетива",
+"en": "bowstring",
+"fr": "corde d'arc"
+},
+{
+"a": "ոստիկանական",
+"lv": "B2",
+"ru": "полицейский (прил.)",
+"en": "police",
+"fr": "policier"
+},
+{
+"a": "ոստիկանատուն",
+"lv": "B2",
+"ru": "полицейский участок (синоним)",
+"en": "police station",
+"fr": "poste de police"
+},
+{
+"a": "ճուռակ",
+"lv": "B2",
+"ru": "пустельга",
+"en": "kestrel",
+"fr": "crécerelle"
+},
+{
+"a": "դրամագլուխ",
+"lv": "B2",
+"ru": "капитал",
+"en": "capital",
+"fr": "capital"
+},
+{
+"a": "տավարաբուծություն",
+"lv": "B2",
+"ru": "скотоводство",
+"en": "cattle breeding",
+"fr": "élevage bovin"
+},
+{
+"a": "տավարաբույծ",
+"lv": "B2",
+"ru": "скотовод",
+"en": "cattle breeder",
+"fr": "éleveur"
+},
+{
+"a": "տավարած",
+"lv": "B2",
+"ru": "пастух (коров)",
+"en": "cowherd",
+"fr": "vacher"
+},
+{
+"a": "սիզամարգ",
+"lv": "B2",
+"ru": "газон, лужайка",
+"en": "lawn",
+"fr": "gazon, pelouse"
+},
+{
+"a": "ղեկանիվ",
+"lv": "B2",
+"ru": "штурвал",
+"en": "steering wheel (of a ship)",
+"fr": "barre (gouvernail)"
+},
+{
+"a": "թայվանցի",
+"lv": "B2",
+"ru": "тайванец",
+"en": "Taiwanese (person)",
+"fr": "Taïwanais"
+},
+{
+"a": "թայվանական",
+"lv": "B2",
+"ru": "тайваньский",
+"en": "Taiwanese",
+"fr": "taïwanais"
+},
+{
+"a": "հոլովել",
+"lv": "B2",
+"ru": "склонять (грамм.)",
+"en": "to decline (grammar)",
+"fr": "décliner"
+},
+{
+"a": "դասարանցի",
+"lv": "B2",
+"ru": "ученик класса",
+"en": "class pupil",
+"fr": "élève de la classe"
+},
+{
+"a": "համադասարանցի",
+"lv": "B2",
+"ru": "одноклассник",
+"en": "classmate",
+"fr": "camarade de classe"
+},
+{
+"a": "բամբակաբուծություն",
+"lv": "B2",
+"ru": "хлопководство",
+"en": "cotton growing",
+"fr": "culture du coton"
+},
+{
+"a": "բամբակային",
+"lv": "B2",
+"ru": "хлопковый",
+"en": "cotton",
+"fr": "cotonnier"
+},
+{
+"a": "բամբակեղեն",
+"lv": "B2",
+"ru": "хлопчатобумажные изделия",
+"en": "cotton goods",
+"fr": "cotonnades"
+},
+{
+"a": "բամբակենի",
+"lv": "B2",
+"ru": "хлопчатник",
+"en": "cotton plant",
+"fr": "cotonnier (plante)"
+},
+{
+"a": "բրնձահատիկ",
+"lv": "B2",
+"ru": "рисовое зерно",
+"en": "grain of rice",
+"fr": "grain de riz"
+},
+{
+"a": "բրնձօղի",
+"lv": "B2",
+"ru": "рисовая водка",
+"en": "rice vodka",
+"fr": "alcool de riz"
+},
+{
+"a": "անդրազգային",
+"lv": "B2",
+"ru": "транснациональный (наднациональный)",
+"en": "transnational",
+"fr": "supranational"
+},
+{
+"a": "բուրդիկ",
+"lv": "B2",
+"ru": "шерстинка",
+"en": "bit of wool",
+"fr": "brin de laine"
+},
+{
+"a": "ջարդուբուրդ",
+"lv": "B2",
+"ru": "вдребезги, разгром",
+"en": "smashed to pieces",
+"fr": "en miettes"
+},
+{
+"a": "քվեաթերթ",
+"lv": "B2",
+"ru": "избирательный бюллетень",
+"en": "ballot paper",
+"fr": "bulletin de vote"
+},
+{
+"a": "աշորյա հաց",
+"lv": "B2",
+"ru": "ржаной хлеб",
+"en": "rye bread",
+"fr": "pain de seigle"
+},
+{
+"a": "կորեկահաց",
+"lv": "B2",
+"ru": "просяной хлеб",
+"en": "millet bread",
+"fr": "pain de millet"
+},
+{
+"a": "թթուտ",
+"lv": "B2",
+"ru": "тутовая роща",
+"en": "mulberry grove",
+"fr": "mûreraie"
+},
+{
+"a": "խաղ ու պար",
+"lv": "B2",
+"ru": "игры и пляски",
+"en": "games and dances",
+"fr": "jeux et danses"
+},
+{
+"a": "դիտափող",
+"lv": "B2",
+"ru": "подзорная труба",
+"en": "spyglass",
+"fr": "longue-vue"
+},
+{
+"a": "շղթայել",
+"lv": "B2",
+"ru": "сковывать цепью",
+"en": "to chain",
+"fr": "enchaîner"
+},
+{
+"a": "հավասարել",
+"lv": "B2",
+"ru": "уравнивать",
+"en": "to equalize",
+"fr": "égaliser"
+},
+{
+"a": "շնորհագեղ",
+"lv": "B2",
+"ru": "грациозный",
+"en": "graceful",
+"fr": "gracieux"
+},
+{
+"a": "ծիտիկ",
+"lv": "B2",
+"ru": "воробушек",
+"en": "little sparrow",
+"fr": "moineau (petit)"
+},
+{
+"a": "հակաքրիստոս",
+"lv": "B2",
+"ru": "антихрист",
+"en": "Antichrist",
+"fr": "Antéchrist"
+},
+{
+"a": "ծավալապաշտ",
+"lv": "B2",
+"ru": "экспансионист",
+"en": "expansionist",
+"fr": "expansionniste"
+},
+{
+"a": "ազնիվ խոսք",
+"lv": "B2",
+"ru": "честное слово",
+"en": "word of honour",
+"fr": "parole d'honneur"
+},
+{
+"a": "ազնիվ մետաղ",
+"lv": "B2",
+"ru": "благородный металл",
+"en": "precious metal",
+"fr": "métal précieux"
+},
+{
+"a": "Սաթիկ",
+"lv": "B2",
+"ru": "Сатик (женское имя)",
+"en": "Satik (female name)",
+"fr": "Satik (prénom féminin)"
+},
+{
+"a": "Գաբիկ",
+"lv": "B2",
+"ru": "Габик (уменьш. от Габриел)",
+"en": "Gabik (diminutive of Gabriel)",
+"fr": "Gabik (diminutif de Gabriel)"
+},
+{
+"a": "Հրաչիկ",
+"lv": "B2",
+"ru": "Грачик (уменьш. от Грачья)",
+"en": "Hrachik (diminutive of Hrachya)",
+"fr": "Hratchik (diminutif)"
+},
+{
+"a": "կնճիթավոր",
+"lv": "B2",
+"ru": "хоботный",
+"en": "proboscidean",
+"fr": "proboscidien"
+},
+{
+"a": "կշռաքար",
+"lv": "B2",
+"ru": "гиря",
+"en": "weight (for scales)",
+"fr": "poids (de balance)"
+},
+{
+"a": "ինքնիրեն",
+"lv": "B2",
+"ru": "сам по себе",
+"en": "by oneself",
+"fr": "de lui-même"
+},
+{
+"a": "ինչ-որ մի",
+"lv": "B2",
+"ru": "какой-то (один)",
+"en": "some (one)",
+"fr": "un certain"
+},
+{
+"a": "ինչևիցե",
+"lv": "B2",
+"ru": "как бы то ни было",
+"en": "whatever, anyhow",
+"fr": "quoi qu'il en soit"
+},
+{
+"a": "կաշեգործ",
+"lv": "B2",
+"ru": "кожевник",
+"en": "tanner",
+"fr": "tanneur"
+},
+{
+"a": "կաշեգործարան",
+"lv": "B2",
+"ru": "кожевенный завод",
+"en": "tannery",
+"fr": "tannerie (usine)"
+},
+{
+"a": "կաշեգործություն",
+"lv": "B2",
+"ru": "кожевенное производство",
+"en": "leather industry",
+"fr": "industrie du cuir"
+},
+{
+"a": "կաշեկազմ",
+"lv": "B2",
+"ru": "в кожаном переплёте",
+"en": "leather-bound",
+"fr": "relié en cuir"
+},
+{
+"a": "կաշեղեն",
+"lv": "B2",
+"ru": "кожаные изделия",
+"en": "leather goods",
+"fr": "maroquinerie"
+},
+{
+"a": "կաշվեղեն",
+"lv": "B2",
+"ru": "кожгалантерея",
+"en": "leatherware",
+"fr": "articles de cuir"
+},
+{
+"a": "ծեծկվել",
+"lv": "B2",
+"ru": "драться",
+"en": "to fight (scuffle)",
+"fr": "se battre"
+},
+{
+"a": "ծեծփայտ",
+"lv": "B2",
+"ru": "колотушка, била",
+"en": "beater",
+"fr": "battoir"
+},
+{
+"a": "ձգողական",
+"lv": "B2",
+"ru": "гравитационный",
+"en": "gravitational",
+"fr": "gravitationnel"
+},
+{
+"a": "անամոթ",
+"lv": "B2",
+"ru": "бессовестный, бесстыжий",
+"en": "shameless",
+"fr": "sans vergogne"
+},
+{
+"a": "սարքավորել",
+"lv": "B2",
+"ru": "оснащать оборудованием",
+"en": "to equip",
+"fr": "équiper"
+},
+{
+"a": "տնտեսվար",
+"lv": "B2",
+"ru": "хозяйственник",
+"en": "business manager",
+"fr": "gestionnaire"
+},
+{
+"a": "ծամկապ",
+"lv": "B2",
+"ru": "лента для кос",
+"en": "hair ribbon",
+"fr": "ruban à cheveux"
+},
+{
+"a": "հալեպահայ",
+"lv": "B2",
+"ru": "алеппский армянин",
+"en": "Armenian from Aleppo",
+"fr": "Arménien d'Alep"
+},
+{
+"a": "թաղական",
+"lv": "B2",
+"ru": "квартальный",
+"en": "district",
+"fr": "de quartier"
+},
+{
+"a": "թաղակից",
+"lv": "B2",
+"ru": "сосед по кварталу",
+"en": "neighbour (in a district)",
+"fr": "voisin de quartier"
+},
+{
+"a": "թաղային",
+"lv": "B2",
+"ru": "районный",
+"en": "district",
+"fr": "de district"
+},
+{
+"a": "թաղապետարան",
+"lv": "B2",
+"ru": "мэрия (районная)",
+"en": "district municipality",
+"fr": "mairie d'arrondissement"
+},
+{
+"a": "թաղեցի",
+"lv": "B2",
+"ru": "житель квартала",
+"en": "district resident",
+"fr": "habitant du quartier"
+},
+{
+"a": "ծիրանի գոտի",
+"lv": "B2",
+"ru": "радуга (букв. «пурпурный пояс»)",
+"en": "rainbow",
+"fr": "arc-en-ciel"
+},
+{
+"a": "վանկատել",
+"lv": "B2",
+"ru": "делить на слоги",
+"en": "to syllabify",
+"fr": "syllaber"
+},
+{
+"a": "անդամատոմս",
+"lv": "B2",
+"ru": "членский билет",
+"en": "membership card",
+"fr": "carte de membre"
+},
+{
+"a": "անցատոմս",
+"lv": "B2",
+"ru": "пропуск",
+"en": "pass",
+"fr": "laissez-passer"
+},
+{
+"a": "արժետոմս",
+"lv": "B2",
+"ru": "ценная бумага",
+"en": "security (finance)",
+"fr": "titre (valeur mobilière)"
+},
+{
+"a": "բանկատոմս",
+"lv": "B2",
+"ru": "банкнота",
+"en": "banknote",
+"fr": "billet de banque"
+},
+{
+"a": "խաղատոմս",
+"lv": "B2",
+"ru": "лотерейный билет",
+"en": "lottery ticket",
+"fr": "billet de loterie"
+},
+{
+"a": "հարցատոմս",
+"lv": "B2",
+"ru": "анкета",
+"en": "questionnaire",
+"fr": "questionnaire"
+},
+{
+"a": "սիրատոմս",
+"lv": "B2",
+"ru": "любовная записка",
+"en": "love letter",
+"fr": "billet doux"
+},
+{
+"a": "վիճակատոմս",
+"lv": "B2",
+"ru": "лотерейный билет (синоним)",
+"en": "lottery ticket",
+"fr": "billet de loterie (synonyme)"
+},
+{
+"a": "տոմսակ",
+"lv": "B2",
+"ru": "билетик, талон",
+"en": "ticket stub",
+"fr": "ticket"
+},
+{
+"a": "տոմսավաճառ",
+"lv": "B2",
+"ru": "кассир (продавец билетов)",
+"en": "ticket seller",
+"fr": "guichetier"
+},
+{
+"a": "տոմսավաճառուհի",
+"lv": "B2",
+"ru": "кассирша (продавщица билетов)",
+"en": "female ticket seller",
+"fr": "guichetière"
+},
+{
+"a": "տոմսարան",
+"lv": "B2",
+"ru": "билетная касса",
+"en": "ticket office",
+"fr": "billetterie"
+},
+{
+"a": "ուղետոմս",
+"lv": "B2",
+"ru": "проездной билет",
+"en": "travel ticket",
+"fr": "titre de transport"
+},
+{
+"a": "քննատոմս",
+"lv": "B2",
+"ru": "экзаменационный билет",
+"en": "exam paper",
+"fr": "sujet d'examen"
+},
+{
+"a": "թափ-թազա",
+"lv": "B2",
+"ru": "совершенно новый",
+"en": "brand new",
+"fr": "flambant neuf"
+},
+{
+"a": "ճուտամեր",
+"lv": "B2",
+"ru": "наседка",
+"en": "broody hen",
+"fr": "couveuse"
+},
+{
+"a": "դուքանդար",
+"lv": "B2",
+"ru": "лавочник",
+"en": "shopkeeper",
+"fr": "boutiquier"
+},
+{
+"a": "շնորհանդես",
+"lv": "B2",
+"ru": "презентация",
+"en": "presentation",
+"fr": "présentation"
+},
+{
+"a": "դժվարակնճիռ",
+"lv": "B2",
+"ru": "труднодоступный (книжн.)",
+"en": "inaccessible",
+"fr": "inextricable"
+},
+{
+"a": "կնճռել",
+"lv": "B2",
+"ru": "морщить",
+"en": "to wrinkle",
+"fr": "froncer"
+},
+{
+"a": "կնճռոտ",
+"lv": "B2",
+"ru": "морщинистый",
+"en": "wrinkled",
+"fr": "ridé"
+},
+{
+"a": "գագաթնակետ",
+"lv": "B2",
+"ru": "кульминация, вершина",
+"en": "culmination",
+"fr": "point culminant (sommet)"
+},
+{
+"a": "գազավորել",
+"lv": "B2",
+"ru": "газировать",
+"en": "to carbonate",
+"fr": "gazéifier"
+},
+{
+"a": "գազավորված",
+"lv": "B2",
+"ru": "газированный",
+"en": "carbonated",
+"fr": "gazeux (boisson)"
+},
+{
+"a": "հիմնել",
+"lv": "B2",
+"ru": "основывать",
+"en": "to found",
+"fr": "fonder"
+},
+{
+"a": "քաշի կորուստ",
+"lv": "B2",
+"ru": "потеря веса",
+"en": "weight loss",
+"fr": "perte de poids"
+},
+{
+"a": "նարտախաղ",
+"lv": "B2",
+"ru": "нарды",
+"en": "backgammon",
+"fr": "backgammon"
+},
+{
+"a": "ազատականություն",
+"lv": "B2",
+"ru": "либерализм",
+"en": "liberalism",
+"fr": "libéralisme"
+},
+{
+"a": "սրում",
+"lv": "B2",
+"ru": "заточка",
+"en": "sharpening",
+"fr": "affûtage"
+},
+{
+"a": "անլուրջ",
+"lv": "B2",
+"ru": "несерьёзный",
+"en": "frivolous",
+"fr": "pas sérieux"
+},
+{
+"a": "այդչափ",
+"lv": "B2",
+"ru": "столько (так много)",
+"en": "that much",
+"fr": "autant (cela)"
+},
+{
+"a": "այդուամենայնիվ",
+"lv": "B2",
+"ru": "тем не менее (синоним)",
+"en": "nevertheless",
+"fr": "néanmoins (synonyme)"
+},
+{
+"a": "այդուհետ",
+"lv": "B2",
+"ru": "впредь, с этих пор",
+"en": "henceforth",
+"fr": "dorénavant"
+},
+{
+"a": "ապրելակերպ",
+"lv": "B2",
+"ru": "образ жизни",
+"en": "lifestyle",
+"fr": "mode de vie (synonyme)"
+},
+{
+"a": "սաստել",
+"lv": "B2",
+"ru": "одёргивать, запрещать",
+"en": "to rebuke",
+"fr": "réprimander"
+},
+{
+"a": "ընծայել",
+"lv": "B2",
+"ru": "преподносить, дарить",
+"en": "to present",
+"fr": "offrir"
+},
+{
+"a": "սվինամարտ",
+"lv": "B2",
+"ru": "штыковой бой",
+"en": "bayonet fight",
+"fr": "combat à la baïonnette"
+},
+{
+"a": "ծածկ",
+"lv": "B2",
+"ru": "крыша, покрытие",
+"en": "roof, covering",
+"fr": "toiture"
+},
+{
+"a": "իգական սեռ",
+"lv": "B2",
+"ru": "женский род",
+"en": "feminine gender",
+"fr": "genre féminin"
+},
+{
+"a": "արական սեռ",
+"lv": "B2",
+"ru": "мужской род",
+"en": "masculine gender",
+"fr": "genre masculin"
+},
+{
+"a": "չեզոքաբար",
+"lv": "B2",
+"ru": "нейтрально",
+"en": "neutrally",
+"fr": "neutrement"
+},
+{
+"a": "չեզոքանալ",
+"lv": "B2",
+"ru": "нейтрализоваться",
+"en": "to become neutral",
+"fr": "se neutraliser"
+},
+{
+"a": "չեզոքացուցիչ",
+"lv": "B2",
+"ru": "нейтрализатор",
+"en": "neutralizer",
+"fr": "neutralisant"
+},
+{
+"a": "վեհաշուք",
+"lv": "B2",
+"ru": "величественный",
+"en": "majestic",
+"fr": "majestueux"
+},
+{
+"a": "դրոշմածրար",
+"lv": "B2",
+"ru": "конверт с маркой",
+"en": "stamped envelope",
+"fr": "enveloppe timbrée"
+},
+{
+"a": "ծրարիկ",
+"lv": "B2",
+"ru": "конвертик",
+"en": "small envelope",
+"fr": "petite enveloppe"
+},
+{
+"a": "ցողունային",
+"lv": "B2",
+"ru": "стеблевой",
+"en": "stem",
+"fr": "caulinaire"
+},
+{
+"a": "երկպատկեր",
+"lv": "B2",
+"ru": "диптих",
+"en": "diptych",
+"fr": "diptyque"
+},
+{
+"a": "բեռնագին",
+"lv": "B2",
+"ru": "плата за провоз",
+"en": "freight charge",
+"fr": "fret"
+},
+{
+"a": "բեռնագիր",
+"lv": "B2",
+"ru": "накладная (на груз)",
+"en": "bill of lading",
+"fr": "connaissement"
+},
+{
+"a": "բեռնանավ",
+"lv": "B2",
+"ru": "грузовое судно",
+"en": "cargo ship",
+"fr": "cargo"
+},
+{
+"a": "կովարած",
+"lv": "B2",
+"ru": "пастух коров",
+"en": "cowherd",
+"fr": "vacher (synonyme)"
+},
+{
+"a": "հորթարած",
+"lv": "B2",
+"ru": "телятник (пастух телят)",
+"en": "calf herder",
+"fr": "gardien de veaux"
+},
+{
+"a": "Մադրաս",
+"lv": "B2",
+"ru": "Мадрас",
+"en": "Madras",
+"fr": "Madras"
+},
+{
+"a": "արևահար",
+"lv": "B2",
+"ru": "получивший солнечный удар",
+"en": "sunstruck",
+"fr": "frappé d'insolation"
+},
+{
+"a": "ցրտահար",
+"lv": "B2",
+"ru": "побитый морозом",
+"en": "frostbitten",
+"fr": "gelé (par le froid)"
+},
+{
+"a": "չարակնություն",
+"lv": "B2",
+"ru": "дурной глаз, сглаз",
+"en": "evil eye",
+"fr": "mauvais œil"
+},
+{
+"a": "ջահելություն",
+"lv": "B2",
+"ru": "молодость",
+"en": "youth",
+"fr": "jeunesse"
+},
+{
+"a": "զտում",
+"lv": "B2",
+"ru": "фильтрация",
+"en": "filtering",
+"fr": "filtrage"
+},
+{
+"a": "անհերթ",
+"lv": "B2",
+"ru": "внеочередной (без очереди)",
+"en": "out of turn",
+"fr": "hors tour"
+},
+{
+"a": "առաջնահերթ",
+"lv": "B2",
+"ru": "первоочередной",
+"en": "priority",
+"fr": "prioritaire"
+},
+{
+"a": "երկհերթ",
+"lv": "B2",
+"ru": "двухсменный",
+"en": "two-shift",
+"fr": "à deux équipes"
+},
+{
+"a": "հերթագայել",
+"lv": "B2",
+"ru": "чередоваться",
+"en": "to alternate",
+"fr": "alterner"
+},
+{
+"a": "հերթագայություն",
+"lv": "B2",
+"ru": "чередование",
+"en": "alternation",
+"fr": "alternance"
+},
+{
+"a": "հերթականություն",
+"lv": "B2",
+"ru": "очерёдность",
+"en": "order of priority",
+"fr": "ordre de passage"
+},
+{
+"a": "հերթապահ",
+"lv": "B2",
+"ru": "дежурный",
+"en": "on duty",
+"fr": "de service"
+},
+{
+"a": "հերթապահել",
+"lv": "B2",
+"ru": "дежурить",
+"en": "to be on duty",
+"fr": "être de garde"
+},
+{
+"a": "հերթապահություն",
+"lv": "B2",
+"ru": "дежурство",
+"en": "duty",
+"fr": "permanence"
+},
+{
+"a": "հերթափոխել",
+"lv": "B2",
+"ru": "сменять (по очереди)",
+"en": "to take turns",
+"fr": "relayer"
+},
+{
+"a": "հերթափոխություն",
+"lv": "B2",
+"ru": "смена (рабочая)",
+"en": "shift",
+"fr": "relève"
+},
+{
+"a": "երկխոսել",
+"lv": "B2",
+"ru": "вести диалог",
+"en": "to hold a dialogue",
+"fr": "dialoguer"
+},
+{
+"a": "գուրգուրանք",
+"lv": "B2",
+"ru": "ласка, нежность",
+"en": "tenderness, caress",
+"fr": "tendresse"
+},
+{
+"a": "անհավատություն",
+"lv": "B2",
+"ru": "неверие",
+"en": "disbelief",
+"fr": "incrédulité"
+},
+{
+"a": "թվարկում",
+"lv": "B2",
+"ru": "перечисление",
+"en": "enumeration",
+"fr": "énumération"
+},
+{
+"a": "հեսպերյան խնձորներ",
+"lv": "B2",
+"ru": "яблоки Гесперид",
+"en": "apples of the Hesperides",
+"fr": "pommes des Hespérides"
+},
+{
+"a": "զրուցակցել",
+"lv": "B2",
+"ru": "беседовать",
+"en": "to converse",
+"fr": "converser"
+},
+{
+"a": "խոսակցել",
+"lv": "B2",
+"ru": "разговаривать",
+"en": "to talk",
+"fr": "parler, discuter"
+},
+{
+"a": "շտկում",
+"lv": "B2",
+"ru": "выпрямление, исправление",
+"en": "straightening",
+"fr": "redressement"
+},
+{
+"a": "տնջրենի",
+"lv": "B2",
+"ru": "платан (дерево)",
+"en": "plane tree",
+"fr": "platane (arbre)"
+},
+{
+"a": "վահանապտեր",
+"lv": "B2",
+"ru": "щитовник (папоротник)",
+"en": "shield fern",
+"fr": "dryoptéris"
+},
+{
+"a": "լաչառություն",
+"lv": "B2",
+"ru": "бесстыдство (синоним)",
+"en": "impudence",
+"fr": "effronterie"
+},
+{
+"a": "հնէաբանական",
+"lv": "B2",
+"ru": "палеонтологический",
+"en": "paleontological",
+"fr": "paléontologique"
+},
+{
+"a": "մակալեզվակ",
+"lv": "B2",
+"ru": "надгортанник",
+"en": "epiglottis",
+"fr": "épiglotte"
+},
+{
+"a": "ծլարձակություն",
+"lv": "B2",
+"ru": "прорастание",
+"en": "sprouting",
+"fr": "germination"
+},
+{
+"a": "վեղարակիր",
+"lv": "B2",
+"ru": "носящий вегар",
+"en": "wearing a veghar",
+"fr": "portant le véghar"
+},
+{
+"a": "թակիչ",
+"lv": "B2",
+"ru": "молоток для отбивания",
+"en": "meat tenderizer",
+"fr": "attendrisseur"
+},
+{
+"a": "մանրածովախեցգետին",
+"lv": "B2",
+"ru": "мелкий краб",
+"en": "small crab",
+"fr": "petit crabe"
+},
+{
+"a": "բոռաճանճ",
+"lv": "B2",
+"ru": "трутень",
+"en": "drone (bee)",
+"fr": "faux bourdon"
+},
+{
+"a": "անվաթրթուր",
+"lv": "B2",
+"ru": "гусеничный ход",
+"en": "caterpillar track",
+"fr": "chenille (de char)"
+},
+{
+"a": "թրթրուկ",
+"lv": "B2",
+"ru": "гусеничка",
+"en": "little caterpillar",
+"fr": "petite chenille"
+},
+{
+"a": "կաղամբաթրթուր",
+"lv": "B2",
+"ru": "капустница (гусеница)",
+"en": "cabbage caterpillar",
+"fr": "piéride du chou"
+},
+{
+"a": "բանջարաբոստանային",
+"lv": "B2",
+"ru": "овощебахчевой",
+"en": "vegetable and melon",
+"fr": "maraîcher"
+},
+{
+"a": "կորկոտապուր",
+"lv": "B2",
+"ru": "суп из крупы",
+"en": "groats soup",
+"fr": "soupe de gruau"
+},
+{
+"a": "բառափունջ",
+"lv": "B2",
+"ru": "букет слов, сборник",
+"en": "collection of words",
+"fr": "florilège"
+},
+{
+"a": "դափնեփունջ",
+"lv": "B2",
+"ru": "лавровый венок",
+"en": "laurel wreath",
+"fr": "couronne de laurier"
+},
+{
+"a": "երգափունջ",
+"lv": "B2",
+"ru": "песенный сборник",
+"en": "song collection",
+"fr": "recueil de chansons"
+},
+{
+"a": "լուսափունջ",
+"lv": "B2",
+"ru": "пучок света",
+"en": "beam of light",
+"fr": "faisceau lumineux"
+},
+{
+"a": "վարդափունջ",
+"lv": "B2",
+"ru": "букет роз",
+"en": "bouquet of roses",
+"fr": "bouquet de roses"
+},
+{
+"a": "փնջել",
+"lv": "B2",
+"ru": "собирать в пучок",
+"en": "to bunch",
+"fr": "botteler"
+},
+{
+"a": "փնջիկ",
+"lv": "B2",
+"ru": "букетик",
+"en": "small bouquet",
+"fr": "petit bouquet"
+},
+{
+"a": "պայմանավորված",
+"lv": "B2",
+"ru": "обусловленный",
+"en": "conditioned by",
+"fr": "conditionné"
+},
+{
+"a": "քնջութ",
+"lv": "B2",
+"ru": "кунжут (синоним)",
+"en": "sesame",
+"fr": "sésame (synonyme)"
+},
+{
+"a": "գռեհկաբանություն",
+"lv": "B2",
+"ru": "вульгаризм, грубая речь",
+"en": "vulgarism",
+"fr": "vulgarité"
+},
+{
+"a": "գռեհկաբար",
+"lv": "B2",
+"ru": "грубо, вульгарно",
+"en": "coarsely",
+"fr": "vulgairement"
+},
+{
+"a": "գռեհկանալ",
+"lv": "B2",
+"ru": "грубеть",
+"en": "to coarsen",
+"fr": "devenir vulgaire"
+},
+{
+"a": "գռեհկություն",
+"lv": "B2",
+"ru": "грубость, вульгарность",
+"en": "vulgarity",
+"fr": "grossièreté"
+},
+{
+"a": "կոշտաբար",
+"lv": "B2",
+"ru": "жёстко, грубо",
+"en": "harshly",
+"fr": "durement"
+},
+{
+"a": "կոշտանալ",
+"lv": "B2",
+"ru": "твердеть",
+"en": "to harden",
+"fr": "durcir"
+},
+{
+"a": "կոշտացնել",
+"lv": "B2",
+"ru": "делать жёстким",
+"en": "to stiffen",
+"fr": "raidir"
+},
+{
+"a": "կոշտություն",
+"lv": "B2",
+"ru": "жёсткость",
+"en": "hardness",
+"fr": "dureté"
+},
+{
+"a": "կոշտուկ",
+"lv": "B2",
+"ru": "мозоль",
+"en": "callus",
+"fr": "cor, durillon"
+},
+{
+"a": "հացակոշտ",
+"lv": "B2",
+"ru": "ломоть хлеба",
+"en": "chunk of bread",
+"fr": "quignon"
+},
+{
+"a": "թաղման",
+"lv": "B2",
+"ru": "похоронный",
+"en": "funeral",
+"fr": "funéraire"
+},
+{
+"a": "ներդրումային",
+"lv": "B2",
+"ru": "инвестиционный",
+"en": "investment",
+"fr": "d'investissement"
+},
+{
+"a": "խոպանչի",
+"lv": "B2",
+"ru": "отходник, сезонный рабочий",
+"en": "migrant worker",
+"fr": "travailleur saisonnier"
+},
+{
+"a": "թեքվածք",
+"lv": "B2",
+"ru": "наклон, уклон",
+"en": "slope",
+"fr": "pente"
+},
+{
+"a": "թեքություն",
+"lv": "B2",
+"ru": "наклонность, крен",
+"en": "inclination",
+"fr": "inclinaison"
+},
+{
+"a": "դյուրաբորբոք",
+"lv": "B2",
+"ru": "легковоспламеняющийся",
+"en": "flammable",
+"fr": "inflammable"
+},
+{
+"a": "դյուրազգած",
+"lv": "B2",
+"ru": "впечатлительный",
+"en": "sensitive",
+"fr": "sensible"
+},
+{
+"a": "դյուրահնչյուն",
+"lv": "B2",
+"ru": "благозвучный",
+"en": "euphonious",
+"fr": "mélodieux"
+},
+{
+"a": "դյուրամատչելի",
+"lv": "B2",
+"ru": "общедоступный",
+"en": "accessible",
+"fr": "accessible"
+},
+{
+"a": "դյուրամարս",
+"lv": "B2",
+"ru": "легкоусвояемый",
+"en": "easily digestible",
+"fr": "digeste"
+},
+{
+"a": "դյուրափշուր",
+"lv": "B2",
+"ru": "хрупкий",
+"en": "fragile",
+"fr": "fragile"
+},
+{
+"a": "դյուրընթեռնելի",
+"lv": "B2",
+"ru": "разборчивый, читаемый",
+"en": "legible",
+"fr": "lisible"
+},
+{
+"a": "պալտո",
+"lv": "B2",
+"ru": "пальто",
+"en": "coat",
+"fr": "manteau"
+},
+{
+"a": "օղակկոճակ",
+"lv": "B2",
+"ru": "петля для пуговицы",
+"en": "buttonhole",
+"fr": "boutonnière"
+},
+{
+"a": "օղիկ",
+"lv": "B2",
+"ru": "колечко",
+"en": "little ring",
+"fr": "anneau (petit)"
+},
+{
+"a": "ռոճկացուցակ",
+"lv": "B2",
+"ru": "ведомость зарплаты",
+"en": "payroll",
+"fr": "livre de paie"
+},
+{
+"a": "աննպատակահարմարություն",
+"lv": "B2",
+"ru": "нецелесообразность",
+"en": "inexpediency",
+"fr": "inopportunité"
+},
+{
+"a": "աննպատակային",
+"lv": "B2",
+"ru": "бесцельный",
+"en": "aimless",
+"fr": "sans but"
+},
+{
+"a": "բարենպատակ",
+"lv": "B2",
+"ru": "благонамеренный",
+"en": "well-intentioned",
+"fr": "bien intentionné"
+},
+{
+"a": "ինքնանպատակ",
+"lv": "B2",
+"ru": "самоцель",
+"en": "end in itself",
+"fr": "fin en soi"
+},
+{
+"a": "նպատակադիր",
+"lv": "B2",
+"ru": "целеустремлённый",
+"en": "purposeful",
+"fr": "résolu"
+},
+{
+"a": "նպատակադրել",
+"lv": "B2",
+"ru": "ставить целью",
+"en": "to aim",
+"fr": "viser"
+},
+{
+"a": "նպատակադրվել",
+"lv": "B2",
+"ru": "задаваться целью",
+"en": "to set oneself a goal",
+"fr": "se fixer un but"
+},
+{
+"a": "նպատակազուրկ",
+"lv": "B2",
+"ru": "бесцельный (синоним)",
+"en": "purposeless",
+"fr": "dépourvu de but"
+},
+{
+"a": "նպատակահարմարորեն",
+"lv": "B2",
+"ru": "целесообразно",
+"en": "expediently",
+"fr": "judicieusement"
+},
+{
+"a": "նպատակահարմարություն",
+"lv": "B2",
+"ru": "целесообразность",
+"en": "expediency",
+"fr": "opportunité"
+},
+{
+"a": "նպատակամետ",
+"lv": "B2",
+"ru": "целенаправленный",
+"en": "goal-oriented",
+"fr": "ciblé (orienté)"
+},
+{
+"a": "նպատակային",
+"lv": "B2",
+"ru": "целевой (синоним)",
+"en": "targeted",
+"fr": "finalisé"
+},
+{
+"a": "նպատակասլաց",
+"lv": "B2",
+"ru": "целеустремлённый (синоним)",
+"en": "purposeful",
+"fr": "déterminé"
+},
+{
+"a": "նպատակասլացություն",
+"lv": "B2",
+"ru": "целеустремлённость",
+"en": "purposefulness",
+"fr": "détermination"
+},
+{
+"a": "նպատակավոր",
+"lv": "B2",
+"ru": "целенаправленный (синоним)",
+"en": "purposeful",
+"fr": "délibéré"
+},
+{
+"a": "նպատակորոշ",
+"lv": "B2",
+"ru": "определяющий цель",
+"en": "purpose-setting",
+"fr": "téléologique"
+},
+{
+"a": "չարանպատակ",
+"lv": "B2",
+"ru": "злонамеренный",
+"en": "malicious",
+"fr": "malintentionné"
+},
+{
+"a": "լապտերակիր",
+"lv": "B2",
+"ru": "фонарщик",
+"en": "lamplighter",
+"fr": "allumeur de réverbères"
+},
+{
+"a": "լապտերիկ",
+"lv": "B2",
+"ru": "фонарик",
+"en": "small lantern",
+"fr": "lampe de poche"
+},
+{
+"a": "արծնապակի",
+"lv": "B2",
+"ru": "эмаль (стеклянная)",
+"en": "enamel",
+"fr": "émail"
+},
+{
+"a": "արծնապատ",
+"lv": "B2",
+"ru": "эмалированный",
+"en": "enamelled",
+"fr": "émaillé"
+},
+{
+"a": "հուշադրամ",
+"lv": "B2",
+"ru": "памятная монета",
+"en": "commemorative coin",
+"fr": "pièce commémorative"
+},
+{
+"a": "փաթիլ-փաթիլ",
+"lv": "B2",
+"ru": "хлопьями",
+"en": "in flakes",
+"fr": "à gros flocons"
+},
+{
+"a": "գահակալություն",
+"lv": "B2",
+"ru": "царствование",
+"en": "reign",
+"fr": "règne"
+},
+{
+"a": "դարանակալ",
+"lv": "B2",
+"ru": "засадный",
+"en": "ambushing",
+"fr": "embusqué"
+},
+{
+"a": "բազմացնել",
+"lv": "B2",
+"ru": "размножать",
+"en": "to multiply",
+"fr": "multiplier"
+},
+{
+"a": "ներգործել",
+"lv": "B2",
+"ru": "воздействовать",
+"en": "to act upon",
+"fr": "agir sur"
+},
+{
+"a": "թմբիկ",
+"lv": "B2",
+"ru": "бугорок",
+"en": "little mound",
+"fr": "monticule"
+},
+{
+"a": "հողաթումբ",
+"lv": "B2",
+"ru": "земляной бугор",
+"en": "earth mound",
+"fr": "tertre"
+},
+{
+"a": "զավեշտաբան",
+"lv": "B2",
+"ru": "юморист",
+"en": "humorist",
+"fr": "humoriste"
+},
+{
+"a": "զավեշտագիր",
+"lv": "B2",
+"ru": "комедиограф",
+"en": "comic writer",
+"fr": "auteur comique"
+},
+{
+"a": "զավեշտախոսություն",
+"lv": "B2",
+"ru": "юмор, остроумие",
+"en": "humour",
+"fr": "humour"
+},
+{
+"a": "պոնչո",
+"lv": "B2",
+"ru": "пончо",
+"en": "poncho",
+"fr": "poncho"
+},
+{
+"a": "սալաշար",
+"lv": "B2",
+"ru": "мостовая из плит",
+"en": "flagstone paving",
+"fr": "dallage"
+},
+{
+"a": "լորձաբեր",
+"lv": "B2",
+"ru": "слизеобразующий",
+"en": "mucus-producing",
+"fr": "mucipare"
+},
+{
+"a": "լորձագեղձ",
+"lv": "B2",
+"ru": "слизистая железа",
+"en": "mucous gland",
+"fr": "glande muqueuse"
+},
+{
+"a": "լորձային",
+"lv": "B2",
+"ru": "слизистый",
+"en": "mucous",
+"fr": "muqueux"
+},
+{
+"a": "լորձնաթաղանթ",
+"lv": "B2",
+"ru": "слизистая оболочка",
+"en": "mucous membrane",
+"fr": "muqueuse"
+},
+{
+"a": "թաղիքյա",
+"lv": "B2",
+"ru": "войлочный",
+"en": "felt",
+"fr": "en feutre"
+},
+{
+"a": "հրուշակարան",
+"lv": "B2",
+"ru": "кондитерская",
+"en": "confectionery shop",
+"fr": "pâtisserie, confiserie"
+},
+{
+"a": "շտաբային",
+"lv": "B2",
+"ru": "штабной",
+"en": "staff (military)",
+"fr": "d'état-major"
+},
+{
+"a": "ժարգոնային",
+"lv": "B2",
+"ru": "жаргонный",
+"en": "slang",
+"fr": "argotique"
+},
+{
+"a": "կաթնաշիճուկ",
+"lv": "B2",
+"ru": "молочная сыворотка",
+"en": "whey",
+"fr": "petit-lait (lactosérum)"
+},
+{
+"a": "կլայեկել",
+"lv": "B2",
+"ru": "лудить",
+"en": "to tin",
+"fr": "étamer"
+},
+{
+"a": "բորակաթթու",
+"lv": "B2",
+"ru": "азотная кислота",
+"en": "nitric acid",
+"fr": "acide nitrique"
+},
+{
+"a": "բորակածին",
+"lv": "B2",
+"ru": "азот (книжн.)",
+"en": "nitrogen (literary)",
+"fr": "azote (littéraire)"
+},
+{
+"a": "սիրաբանություն",
+"lv": "B2",
+"ru": "флирт, ухаживание",
+"en": "flirting",
+"fr": "flirt"
+},
+{
+"a": "բեմադրել",
+"lv": "B2",
+"ru": "ставить (спектакль)",
+"en": "to stage",
+"fr": "mettre en scène"
+},
+{
+"a": "բեմահարդարանք",
+"lv": "B2",
+"ru": "сценография",
+"en": "stage design",
+"fr": "scénographie"
+},
+{
+"a": "բեմարվեստ",
+"lv": "B2",
+"ru": "сценическое искусство",
+"en": "performing arts",
+"fr": "arts du spectacle"
+},
+{
+"a": "արցախահայ",
+"lv": "B2",
+"ru": "армянин Арцаха",
+"en": "Armenian of Artsakh",
+"fr": "Arménien de l'Artsakh"
+},
+{
+"a": "Խաչեն",
+"lv": "B2",
+"ru": "Хачен (историческое княжество)",
+"en": "Khachen (historic principality)",
+"fr": "Khatchen (principauté historique)"
+},
+{
+"a": "թեժանալ",
+"lv": "B2",
+"ru": "накаляться",
+"en": "to heat up",
+"fr": "s'échauffer"
+},
+{
+"a": "թեժացնել",
+"lv": "B2",
+"ru": "накалять",
+"en": "to heat up",
+"fr": "attiser"
+},
+{
+"a": "կոխոտել",
+"lv": "B2",
+"ru": "топтать",
+"en": "to trample",
+"fr": "piétiner"
+},
+{
+"a": "ջրավազան",
+"lv": "B2",
+"ru": "бассейн, водоём",
+"en": "water basin, pool",
+"fr": "bassin"
+},
+{
+"a": "ասֆալտային",
+"lv": "B2",
+"ru": "асфальтовый",
+"en": "asphalt",
+"fr": "d'asphalte"
+},
+{
+"a": "ասֆալտապատել",
+"lv": "B2",
+"ru": "асфальтировать",
+"en": "to asphalt",
+"fr": "goudronner"
+},
+{
+"a": "ժամասլաք",
+"lv": "B2",
+"ru": "часовая стрелка",
+"en": "hour hand",
+"fr": "aiguille des heures"
+},
+{
+"a": "աշնանացանք",
+"lv": "B2",
+"ru": "озимый сев",
+"en": "autumn sowing",
+"fr": "semis d'automne"
+},
+{
+"a": "գարնանացանք",
+"lv": "B2",
+"ru": "яровой сев",
+"en": "spring sowing",
+"fr": "semis de printemps"
+},
+{
+"a": "ցանքադաշտ",
+"lv": "B2",
+"ru": "посевное поле",
+"en": "sown field",
+"fr": "champ ensemencé"
+},
+{
+"a": "ցանքաշրջանառություն",
+"lv": "B2",
+"ru": "севооборот",
+"en": "crop rotation",
+"fr": "assolement"
+},
+{
+"a": "ցանքատարածություն",
+"lv": "B2",
+"ru": "посевная площадь",
+"en": "sown area",
+"fr": "surface ensemencée"
+},
+{
+"a": "կոնգրեսական",
+"lv": "B2",
+"ru": "конгрессмен; конгрессовый",
+"en": "congressman; congressional",
+"fr": "membre du Congrès"
+},
+{
+"a": "ջնարակել",
+"lv": "B2",
+"ru": "глазуровать",
+"en": "to glaze",
+"fr": "vernisser"
+},
+{
+"a": "թղթակցական",
+"lv": "B2",
+"ru": "корреспондентский",
+"en": "correspondent's",
+"fr": "de correspondant"
+},
+{
+"a": "թղթակցել",
+"lv": "B2",
+"ru": "быть корреспондентом",
+"en": "to report (as a correspondent)",
+"fr": "être correspondant"
+},
+{
+"a": "թղթակցություն",
+"lv": "B2",
+"ru": "корреспонденция",
+"en": "correspondence, report",
+"fr": "correspondance, reportage"
+},
+{
+"a": "սահունություն",
+"lv": "B2",
+"ru": "плавность",
+"en": "smoothness",
+"fr": "fluidité"
+},
+{
+"a": "վերլուծաբանություն",
+"lv": "B2",
+"ru": "аналитика",
+"en": "analytics",
+"fr": "analyse"
+},
+{
+"a": "բռնցքամարտել",
+"lv": "B2",
+"ru": "боксировать",
+"en": "to box",
+"fr": "boxer"
+},
+{
+"a": "իրապաշտական",
+"lv": "B2",
+"ru": "реалистический",
+"en": "realistic",
+"fr": "réaliste"
+},
+{
+"a": "ջարդոն",
+"lv": "B2",
+"ru": "лом, металлолом",
+"en": "scrap",
+"fr": "ferraille"
+},
+{
+"a": "հակվածություն",
+"lv": "B2",
+"ru": "склонность",
+"en": "inclination",
+"fr": "penchant"
+},
+{
+"a": "մանչիկ",
+"lv": "B2",
+"ru": "мальчик",
+"en": "little boy",
+"fr": "petit garçon"
+},
+{
+"a": "ասմունքել",
+"lv": "B2",
+"ru": "декламировать",
+"en": "to recite",
+"fr": "déclamer"
+},
+{
+"a": "կիտրոնաթթու",
+"lv": "B2",
+"ru": "лимонная кислота",
+"en": "citric acid",
+"fr": "acide citrique"
+},
+{
+"a": "կիտրոնահյութ",
+"lv": "B2",
+"ru": "лимонный сок",
+"en": "lemon juice",
+"fr": "jus de citron"
+},
+{
+"a": "կիտրոնաջուր",
+"lv": "B2",
+"ru": "лимонад",
+"en": "lemonade",
+"fr": "citronnade"
+},
+{
+"a": "կիտրոնենի",
+"lv": "B2",
+"ru": "лимонное дерево",
+"en": "lemon tree",
+"fr": "citronnier"
+},
+{
+"a": "ազգաբանություն",
+"lv": "B2",
+"ru": "этнология",
+"en": "ethnology",
+"fr": "ethnologie"
+},
+{
+"a": "լաքապատել",
+"lv": "B2",
+"ru": "лакировать",
+"en": "to varnish",
+"fr": "vernir"
+},
+{
+"a": "ըմբռնում",
+"lv": "B2",
+"ru": "понимание, концепция",
+"en": "understanding, conception",
+"fr": "compréhension, conception"
+},
+{
+"a": "ըմբռնելի",
+"lv": "B2",
+"ru": "постижимый",
+"en": "comprehensible",
+"fr": "compréhensible"
+},
+{
+"a": "բարյացակամություն",
+"lv": "B2",
+"ru": "доброжелательность",
+"en": "benevolence",
+"fr": "bienveillance"
+},
+{
+"a": "բարյացակամորեն",
+"lv": "B2",
+"ru": "доброжелательно",
+"en": "benevolently",
+"fr": "avec bienveillance"
+},
+{
+"a": "թմրադեղ",
+"lv": "B2",
+"ru": "наркотик, дурман",
+"en": "drug",
+"fr": "stupéfiant (drogue)"
+},
+{
+"a": "թմրավաճառ",
+"lv": "B2",
+"ru": "наркоторговец",
+"en": "drug dealer",
+"fr": "trafiquant de drogue"
+},
+{
+"a": "զգայացունց",
+"lv": "B2",
+"ru": "сенсационный",
+"en": "sensational",
+"fr": "sensationnel"
+},
+{
+"a": "հոգեցունց",
+"lv": "B2",
+"ru": "потрясающий (душу)",
+"en": "soul-stirring",
+"fr": "bouleversant"
+},
+{
+"a": "պատմագիտական",
+"lv": "B2",
+"ru": "историографический",
+"en": "historiographical",
+"fr": "historiographique"
+},
+{
+"a": "դիմացի",
+"lv": "B2",
+"ru": "находящийся напротив",
+"en": "opposite",
+"fr": "d'en face"
+},
+{
+"a": "դոկտորական",
+"lv": "B2",
+"ru": "докторский",
+"en": "doctoral",
+"fr": "doctoral"
+},
+{
+"a": "դոկտորություն",
+"lv": "B2",
+"ru": "докторская степень",
+"en": "doctorate",
+"fr": "doctorat"
+},
+{
+"a": "շշմեցնել",
+"lv": "B2",
+"ru": "ошеломлять",
+"en": "to stun",
+"fr": "étourdir"
+},
+{
+"a": "շշմեցուցիչ",
+"lv": "B2",
+"ru": "ошеломляющий",
+"en": "stunning",
+"fr": "stupéfiant"
+},
+{
+"a": "մարզպետարան",
+"lv": "B2",
+"ru": "администрация области (марза)",
+"en": "regional administration",
+"fr": "préfecture (marz)"
+},
+{
+"a": "ընկերակցություն",
+"lv": "B2",
+"ru": "товарищество, сопровождение",
+"en": "companionship",
+"fr": "compagnonnage"
+},
+{
+"a": "սալիկապատ",
+"lv": "B2",
+"ru": "облицованный плиткой",
+"en": "tiled",
+"fr": "carrelé"
+},
+{
+"a": "ման ածել",
+"lv": "B2",
+"ru": "водить (гулять)",
+"en": "to take around",
+"fr": "promener"
+},
+{
+"a": "դղրդալ",
+"lv": "B2",
+"ru": "громыхать",
+"en": "to rumble",
+"fr": "gronder (tonner)"
+},
+{
+"a": "նյարդայնանալ",
+"lv": "B2",
+"ru": "нервничать",
+"en": "to get nervous",
+"fr": "devenir nerveux"
+},
+{
+"a": "մեկեն",
+"lv": "B2",
+"ru": "сразу, вдруг",
+"en": "at once",
+"fr": "d'un coup"
+},
+{
+"a": "տեկտոնական",
+"lv": "B2",
+"ru": "тектонический",
+"en": "tectonic",
+"fr": "tectonique"
+},
+{
+"a": "օդափոխվել",
+"lv": "B2",
+"ru": "проветриться, отдохнуть",
+"en": "to get some fresh air",
+"fr": "prendre l'air (synonyme)"
+},
+{
+"a": "մագաղաթե",
+"lv": "B2",
+"ru": "пергаментный",
+"en": "parchment",
+"fr": "en parchemin"
+},
+{
+"a": "աննորմալ",
+"lv": "B2",
+"ru": "ненормальный",
+"en": "abnormal",
+"fr": "anormal"
+},
+{
+"a": "Թամարա",
+"lv": "B2",
+"ru": "Тамара (женское имя)",
+"en": "Tamara (female name)",
+"fr": "Tamara (prénom féminin)"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -119985,6 +122575,1420 @@
 "ru": "шипеть",
 "en": "to hiss",
 "fr": "siffler"
+},
+{
+"a": "ադամաթուզ",
+"lv": "C1",
+"ru": "банан (книжн.)",
+"en": "banana (literary)",
+"fr": "banane (littéraire)"
+},
+{
+"a": "սովետական սոցիալիստական հանրապետություն",
+"lv": "C1",
+"ru": "советская социалистическая республика",
+"en": "Soviet Socialist Republic",
+"fr": "république socialiste soviétique"
+},
+{
+"a": "մականախաղ",
+"lv": "C1",
+"ru": "хоккей (книжн.)",
+"en": "hockey",
+"fr": "hockey"
+},
+{
+"a": "սափրիչ",
+"lv": "C1",
+"ru": "цирюльник (устар.)",
+"en": "barber",
+"fr": "barbier"
+},
+{
+"a": "մրցորդ",
+"lv": "C1",
+"ru": "участник состязания",
+"en": "contestant",
+"fr": "concurrent"
+},
+{
+"a": "այր",
+"lv": "C1",
+"ru": "муж, мужчина (книжн.)",
+"en": "man (literary)",
+"fr": "homme (littéraire)"
+},
+{
+"a": "անդ",
+"lv": "C1",
+"ru": "там (книжн.)",
+"en": "there",
+"fr": "là-bas (littéraire)"
+},
+{
+"a": "խաչակիր",
+"lv": "C1",
+"ru": "крестоносец",
+"en": "crusader",
+"fr": "croisé"
+},
+{
+"a": "խաչակրաց արշավանք",
+"lv": "C1",
+"ru": "Крестовый поход",
+"en": "Crusade",
+"fr": "croisade"
+},
+{
+"a": "ծիրանափող",
+"lv": "C1",
+"ru": "дудук (поэт. «абрикосовая дудка»)",
+"en": "duduk (poetic)",
+"fr": "doudouk (poétique)"
+},
+{
+"a": "բոկոտն",
+"lv": "C1",
+"ru": "босоногий",
+"en": "barefoot",
+"fr": "nu-pieds"
+},
+{
+"a": "գարշապար",
+"lv": "C1",
+"ru": "пята",
+"en": "heel",
+"fr": "talon (littéraire)"
+},
+{
+"a": "արտոսր",
+"lv": "C1",
+"ru": "слеза (книжн.)",
+"en": "tear (literary)",
+"fr": "larme (littéraire)"
+},
+{
+"a": "ուստր",
+"lv": "C1",
+"ru": "сын (книжн.)",
+"en": "son (literary)",
+"fr": "fils (littéraire)"
+},
+{
+"a": "ձեղուն",
+"lv": "C1",
+"ru": "потолок (книжн.)",
+"en": "ceiling",
+"fr": "plafond (littéraire)"
+},
+{
+"a": "թույն",
+"lv": "C1",
+"ru": "круто! (сленг)",
+"en": "cool! (slang)",
+"fr": "génial ! (argot)"
+},
+{
+"a": "ցար",
+"lv": "C1",
+"ru": "царь",
+"en": "czar",
+"fr": "tsar"
+},
+{
+"a": "բառգիրք",
+"lv": "C1",
+"ru": "словарь (книжн.)",
+"en": "dictionary",
+"fr": "dictionnaire (littéraire)"
+},
+{
+"a": "ոստայնանկ",
+"lv": "C1",
+"ru": "ткач",
+"en": "weaver",
+"fr": "tisserand"
+},
+{
+"a": "մարաջախտ",
+"lv": "C1",
+"ru": "маршал",
+"en": "marshal",
+"fr": "maréchal"
+},
+{
+"a": "գոյ",
+"lv": "C1",
+"ru": "бытие, сущность",
+"en": "being, existence",
+"fr": "être, existence"
+},
+{
+"a": "հայք",
+"lv": "C1",
+"ru": "армяне, Армения (книжн.)",
+"en": "the Armenians, Armenia",
+"fr": "les Arméniens, l'Arménie"
+},
+{
+"a": "վիրք",
+"lv": "C1",
+"ru": "грузины, Грузия (книжн.)",
+"en": "the Georgians, Georgia",
+"fr": "les Géorgiens, la Géorgie"
+},
+{
+"a": "ունկ",
+"lv": "C1",
+"ru": "ухо (книжн.)",
+"en": "ear (literary)",
+"fr": "oreille (littéraire)"
+},
+{
+"a": "վասալ",
+"lv": "C1",
+"ru": "вассал",
+"en": "vassal",
+"fr": "vassal"
+},
+{
+"a": "ալան",
+"lv": "C1",
+"ru": "алан",
+"en": "Alan",
+"fr": "Alain"
+},
+{
+"a": "գեղմ",
+"lv": "C1",
+"ru": "руно",
+"en": "fleece",
+"fr": "toison"
+},
+{
+"a": "զարմ",
+"lv": "C1",
+"ru": "род, поколение",
+"en": "kin, generation",
+"fr": "lignée"
+},
+{
+"a": "կղզիախումբ",
+"lv": "C1",
+"ru": "архипелаг",
+"en": "archipelago",
+"fr": "archipel"
+},
+{
+"a": "հայդուկ",
+"lv": "C1",
+"ru": "гайдук",
+"en": "hajduk",
+"fr": "haïdouk"
+},
+{
+"a": "ձվագիծ",
+"lv": "C1",
+"ru": "эллипс",
+"en": "ellipse",
+"fr": "ellipse"
+},
+{
+"a": "ենիչերի",
+"lv": "C1",
+"ru": "янычар",
+"en": "janissary",
+"fr": "janissaire"
+},
+{
+"a": "շքասրահ",
+"lv": "C1",
+"ru": "парадный зал",
+"en": "reception room",
+"fr": "salon d'apparat"
+},
+{
+"a": "սրճակաթ",
+"lv": "C1",
+"ru": "кофе с молоком",
+"en": "coffee with milk",
+"fr": "café au lait"
+},
+{
+"a": "սրճաստան",
+"lv": "C1",
+"ru": "кофейная плантация",
+"en": "coffee plantation",
+"fr": "caféière"
+},
+{
+"a": "ջաղաց",
+"lv": "C1",
+"ru": "мельница",
+"en": "mill",
+"fr": "moulin (synonyme)"
+},
+{
+"a": "այգ",
+"lv": "C1",
+"ru": "заря (книжн.)",
+"en": "dawn",
+"fr": "aurore"
+},
+{
+"a": "շահաստան",
+"lv": "C1",
+"ru": "шахастан (торговый город)",
+"en": "shahastan (trade city)",
+"fr": "chahastan (ville commerçante)"
+},
+{
+"a": "խաշն",
+"lv": "C1",
+"ru": "стадо овец",
+"en": "flock of sheep",
+"fr": "troupeau de moutons"
+},
+{
+"a": "միանձն",
+"lv": "C1",
+"ru": "монах-отшельник",
+"en": "hermit monk",
+"fr": "moine ermite"
+},
+{
+"a": "արքունի",
+"lv": "C1",
+"ru": "царский, королевский (книжн.)",
+"en": "royal",
+"fr": "royal (littéraire)"
+},
+{
+"a": "հաճո",
+"lv": "C1",
+"ru": "приятный, угодный",
+"en": "pleasing",
+"fr": "agréable, plaisant"
+},
+{
+"a": "դույզն",
+"lv": "C1",
+"ru": "малейший",
+"en": "very little",
+"fr": "infime"
+},
+{
+"a": "պիոն",
+"lv": "C1",
+"ru": "пион",
+"en": "peony",
+"fr": "pivoine"
+},
+{
+"a": "մեն",
+"lv": "C1",
+"ru": "один, единственный (книжн.)",
+"en": "only, sole",
+"fr": "seul, unique"
+},
+{
+"a": "կուլակ",
+"lv": "C1",
+"ru": "кулак (зажиточный крестьянин)",
+"en": "kulak",
+"fr": "koulak"
+},
+{
+"a": "զենել",
+"lv": "C1",
+"ru": "заклать (жертву)",
+"en": "to sacrifice",
+"fr": "immoler"
+},
+{
+"a": "ստամբակ",
+"lv": "C1",
+"ru": "непокорный",
+"en": "disobedient",
+"fr": "indocile"
+},
+{
+"a": "դոժ",
+"lv": "C1",
+"ru": "дож",
+"en": "doge",
+"fr": "doge"
+},
+{
+"a": "շիջել",
+"lv": "C1",
+"ru": "гаснуть (книжн.)",
+"en": "to go out",
+"fr": "s'éteindre"
+},
+{
+"a": "ենթակառույց",
+"lv": "C1",
+"ru": "инфраструктура (синоним)",
+"en": "infrastructure",
+"fr": "infrastructure (synonyme)"
+},
+{
+"a": "անագան",
+"lv": "C1",
+"ru": "поздний (книжн.)",
+"en": "late",
+"fr": "tardif"
+},
+{
+"a": "վարշամակ",
+"lv": "C1",
+"ru": "платок, полотенце",
+"en": "handkerchief, towel",
+"fr": "mouchoir, serviette"
+},
+{
+"a": "ավատ",
+"lv": "C1",
+"ru": "феод, лен",
+"en": "fief",
+"fr": "fief"
+},
+{
+"a": "նավազ",
+"lv": "C1",
+"ru": "моряк (книжн.)",
+"en": "sailor",
+"fr": "marin (littéraire)"
+},
+{
+"a": "նաժիշտ",
+"lv": "C1",
+"ru": "служанка (книжн.)",
+"en": "maidservant",
+"fr": "servante (littéraire)"
+},
+{
+"a": "գերշուկա",
+"lv": "C1",
+"ru": "супермаркет",
+"en": "supermarket",
+"fr": "supermarché"
+},
+{
+"a": "դիպաշար",
+"lv": "C1",
+"ru": "сюжет",
+"en": "plot",
+"fr": "intrigue"
+},
+{
+"a": "համոզկեր",
+"lv": "C1",
+"ru": "убедительный",
+"en": "persuasive",
+"fr": "convaincant"
+},
+{
+"a": "ընկճախտ",
+"lv": "C1",
+"ru": "депрессия",
+"en": "depression",
+"fr": "dépression"
+},
+{
+"a": "եպերել",
+"lv": "C1",
+"ru": "порицать",
+"en": "to reproach",
+"fr": "blâmer"
+},
+{
+"a": "եպեր",
+"lv": "C1",
+"ru": "порицание",
+"en": "reproach",
+"fr": "blâme"
+},
+{
+"a": "պատիկ",
+"lv": "C1",
+"ru": "-кратный",
+"en": "-fold",
+"fr": "-uple"
+},
+{
+"a": "երկիցս",
+"lv": "C1",
+"ru": "дважды",
+"en": "twice",
+"fr": "deux fois"
+},
+{
+"a": "երիցս",
+"lv": "C1",
+"ru": "трижды",
+"en": "three times",
+"fr": "trois fois"
+},
+{
+"a": "քանիցս",
+"lv": "C1",
+"ru": "сколько раз?",
+"en": "how many times?",
+"fr": "combien de fois ?"
+},
+{
+"a": "մեռյալ",
+"lv": "C1",
+"ru": "мёртвый, покойник",
+"en": "dead",
+"fr": "mort, défunt"
+},
+{
+"a": "արտևան",
+"lv": "C1",
+"ru": "ресница (книжн.)",
+"en": "eyelash",
+"fr": "cil"
+},
+{
+"a": "լիով",
+"lv": "C1",
+"ru": "полностью",
+"en": "fully",
+"fr": "pleinement"
+},
+{
+"a": "բիոլոգիա",
+"lv": "C1",
+"ru": "биология (устар.)",
+"en": "biology (dated)",
+"fr": "biologie (vieilli)"
+},
+{
+"a": "գեոլոգիա",
+"lv": "C1",
+"ru": "геология (устар.)",
+"en": "geology (dated)",
+"fr": "géologie (vieilli)"
+},
+{
+"a": "ռևոլյուցիա",
+"lv": "C1",
+"ru": "революция (устар.)",
+"en": "revolution (dated)",
+"fr": "révolution (vieilli)"
+},
+{
+"a": "ինտելիգենցիա",
+"lv": "C1",
+"ru": "интеллигенция (устар.)",
+"en": "intelligentsia (dated)",
+"fr": "intelligentsia (vieilli)"
+},
+{
+"a": "ռոման",
+"lv": "C1",
+"ru": "роман (устар.)",
+"en": "novel (dated)",
+"fr": "roman (vieilli)"
+},
+{
+"a": "ունիվերմագ",
+"lv": "C1",
+"ru": "универмаг (устар.)",
+"en": "department store (dated)",
+"fr": "grand magasin (vieilli)"
+},
+{
+"a": "որմ",
+"lv": "C1",
+"ru": "стена (книжн.)",
+"en": "wall",
+"fr": "mur (littéraire)"
+},
+{
+"a": "պարիկ",
+"lv": "C1",
+"ru": "пари (мифическое существо)",
+"en": "pari (mythical spirit)",
+"fr": "pari (esprit mythique)"
+},
+{
+"a": "ներց",
+"lv": "C1",
+"ru": "европейская норка",
+"en": "European mink",
+"fr": "vison d'Europe"
+},
+{
+"a": "կուլտուրա",
+"lv": "C1",
+"ru": "культура (устар.)",
+"en": "culture (dated)",
+"fr": "culture (vieilli)"
+},
+{
+"a": "պոչազգեստ",
+"lv": "C1",
+"ru": "фрак",
+"en": "tailcoat",
+"fr": "frac"
+},
+{
+"a": "փիլիսոփոս",
+"lv": "C1",
+"ru": "философ (книжн.)",
+"en": "philosopher (literary)",
+"fr": "philosophe (littéraire)"
+},
+{
+"a": "թեզաուրուս",
+"lv": "C1",
+"ru": "тезаурус",
+"en": "thesaurus",
+"fr": "thésaurus"
+},
+{
+"a": "շահնշահ",
+"lv": "C1",
+"ru": "шахиншах",
+"en": "shahanshah",
+"fr": "chahinchah"
+},
+{
+"a": "խորհրդային սոցիալիստական հանրապետություն",
+"lv": "C1",
+"ru": "Советская Социалистическая Республика (синоним)",
+"en": "Soviet Socialist Republic",
+"fr": "République socialiste soviétique"
+},
+{
+"a": "ինքնավար սովետական սոցիալիստական հանրապետություն",
+"lv": "C1",
+"ru": "Автономная Советская Социалистическая Республика",
+"en": "Autonomous Soviet Socialist Republic",
+"fr": "République socialiste soviétique autonome"
+},
+{
+"a": "տկար սեռ",
+"lv": "C1",
+"ru": "слабый пол",
+"en": "the weaker sex",
+"fr": "le sexe faible"
+},
+{
+"a": "կայքավար",
+"lv": "C1",
+"ru": "администратор (сайта)",
+"en": "site admin",
+"fr": "administrateur (de site)"
+},
+{
+"a": "ամիրա",
+"lv": "C1",
+"ru": "эмир (амира)",
+"en": "emir",
+"fr": "émir (amira)"
+},
+{
+"a": "ամիրսպասալար",
+"lv": "C1",
+"ru": "амирспасалар (главнокомандующий)",
+"en": "amirspasalar (commander-in-chief)",
+"fr": "amirspassalar"
+},
+{
+"a": "կատակագուսան",
+"lv": "C1",
+"ru": "комедиант (средневековый)",
+"en": "medieval comic actor",
+"fr": "bouffon médiéval"
+},
+{
+"a": "օդատեսիլ",
+"lv": "C1",
+"ru": "мираж",
+"en": "mirage",
+"fr": "mirage"
+},
+{
+"a": "բևեռացույց",
+"lv": "C1",
+"ru": "компас (книжн.)",
+"en": "compass",
+"fr": "boussole"
+},
+{
+"a": "շրջարկ",
+"lv": "C1",
+"ru": "контекст (книжн.)",
+"en": "context",
+"fr": "contexte (littéraire)"
+},
+{
+"a": "հղացք",
+"lv": "C1",
+"ru": "концепт",
+"en": "concept",
+"fr": "concept (littéraire)"
+},
+{
+"a": "բուխ",
+"lv": "C1",
+"ru": "настоящий, неподдельный",
+"en": "genuine",
+"fr": "authentique"
+},
+{
+"a": "փայլունակ",
+"lv": "C1",
+"ru": "сверкающий",
+"en": "sparkling",
+"fr": "étincelant"
+},
+{
+"a": "հերք",
+"lv": "C1",
+"ru": "волосы (книжн.)",
+"en": "hair (literary)",
+"fr": "chevelure"
+},
+{
+"a": "աստվածամերժություն",
+"lv": "C1",
+"ru": "атеизм",
+"en": "atheism",
+"fr": "athéisme"
+},
+{
+"a": "ընթերցողուհի",
+"lv": "C1",
+"ru": "читательница",
+"en": "female reader",
+"fr": "lectrice"
+},
+{
+"a": "հարսնարան",
+"lv": "C1",
+"ru": "комната новобрачных",
+"en": "bridal chamber",
+"fr": "chambre nuptiale"
+},
+{
+"a": "սարսափեցուցիչ",
+"lv": "C1",
+"ru": "ужасающий (синоним)",
+"en": "terrifying",
+"fr": "terrifiant (synonyme)"
+},
+{
+"a": "զարհուրաբեր",
+"lv": "C1",
+"ru": "наводящий ужас",
+"en": "horrifying",
+"fr": "épouvantable"
+},
+{
+"a": "օգնակոչ",
+"lv": "C1",
+"ru": "призыв о помощи",
+"en": "call for help",
+"fr": "appel à l'aide"
+},
+{
+"a": "օգնահաս",
+"lv": "C1",
+"ru": "приходящий на помощь",
+"en": "helping",
+"fr": "secourable"
+},
+{
+"a": "վախճանական",
+"lv": "C1",
+"ru": "заключительный",
+"en": "final",
+"fr": "final (conclusif)"
+},
+{
+"a": "զբոսարշավ",
+"lv": "C1",
+"ru": "экскурсия",
+"en": "excursion",
+"fr": "excursion"
+},
+{
+"a": "սկունդ",
+"lv": "C1",
+"ru": "щенок (устар.)",
+"en": "puppy",
+"fr": "chiot (vieilli)"
+},
+{
+"a": "ծրագրաշար",
+"lv": "C1",
+"ru": "программное обеспечение",
+"en": "software",
+"fr": "logiciel"
+},
+{
+"a": "վնասագիր",
+"lv": "C1",
+"ru": "вредоносная программа",
+"en": "malware",
+"fr": "logiciel malveillant"
+},
+{
+"a": "ծրագրակազմ",
+"lv": "C1",
+"ru": "программный пакет",
+"en": "software package",
+"fr": "progiciel"
+},
+{
+"a": "գաղտ",
+"lv": "C1",
+"ru": "тайный (книжн.)",
+"en": "secret",
+"fr": "secret (littéraire)"
+},
+{
+"a": "վերմակասավան",
+"lv": "C1",
+"ru": "пододеяльник",
+"en": "duvet cover",
+"fr": "housse de couette"
+},
+{
+"a": "կաճառ",
+"lv": "C1",
+"ru": "академия (книжн.)",
+"en": "academy",
+"fr": "académie"
+},
+{
+"a": "մանեթ",
+"lv": "C1",
+"ru": "манат (рубль, устар.)",
+"en": "ruble (dated)",
+"fr": "rouble (vieilli)"
+},
+{
+"a": "իշխանապետություն",
+"lv": "C1",
+"ru": "княжество",
+"en": "principality",
+"fr": "principauté"
+},
+{
+"a": "աթաբեկ",
+"lv": "C1",
+"ru": "атабек",
+"en": "atabeg",
+"fr": "atabeg"
+},
+{
+"a": "ձյունափաթիլ",
+"lv": "C1",
+"ru": "снежинка",
+"en": "snowflake",
+"fr": "flocon de neige"
+},
+{
+"a": "մամլուք",
+"lv": "C1",
+"ru": "мамлюк",
+"en": "mameluke",
+"fr": "mamelouk"
+},
+{
+"a": "տաճարական",
+"lv": "C1",
+"ru": "тамплиер",
+"en": "Templar",
+"fr": "templier"
+},
+{
+"a": "հիմնադրուհի",
+"lv": "C1",
+"ru": "основательница",
+"en": "woman founder",
+"fr": "fondatrice"
+},
+{
+"a": "զգայապատրանք",
+"lv": "C1",
+"ru": "галлюцинация",
+"en": "hallucination",
+"fr": "hallucination"
+},
+{
+"a": "հարակարծություն",
+"lv": "C1",
+"ru": "парадокс",
+"en": "paradox",
+"fr": "paradoxe"
+},
+{
+"a": "մերկապաշտություն",
+"lv": "C1",
+"ru": "нудизм (синоним)",
+"en": "nudism",
+"fr": "naturisme"
+},
+{
+"a": "մերկապաշտ",
+"lv": "C1",
+"ru": "нудист",
+"en": "nudist",
+"fr": "naturiste"
+},
+{
+"a": "ձյունատախտակ",
+"lv": "C1",
+"ru": "сноуборд",
+"en": "snowboard",
+"fr": "snowboard"
+},
+{
+"a": "դուխ",
+"lv": "C1",
+"ru": "дух, кураж (сленг)",
+"en": "courage (slang)",
+"fr": "courage, cran (argot)"
+},
+{
+"a": "ցանցենի",
+"lv": "C1",
+"ru": "сетчатка (глаза)",
+"en": "retina",
+"fr": "rétine"
+},
+{
+"a": "նենգադուլ",
+"lv": "C1",
+"ru": "диверсия",
+"en": "sabotage",
+"fr": "sabotage (synonyme)"
+},
+{
+"a": "փուշտիպան",
+"lv": "C1",
+"ru": "телохранитель",
+"en": "bodyguard",
+"fr": "garde du corps"
+},
+{
+"a": "տաճիկ",
+"lv": "C1",
+"ru": "тачик (турок, османской эпохи)",
+"en": "Turk (Ottoman period)",
+"fr": "Turc (époque ottomane)"
+},
+{
+"a": "ասպնջական",
+"lv": "C1",
+"ru": "гостеприимный",
+"en": "hospitable",
+"fr": "hospitalier"
+},
+{
+"a": "հրովարտակ",
+"lv": "C1",
+"ru": "грамота, указ (царский)",
+"en": "royal edict",
+"fr": "édit royal"
+},
+{
+"a": "հանապազ",
+"lv": "C1",
+"ru": "всегда (книжн.)",
+"en": "always",
+"fr": "toujours (littéraire)"
+},
+{
+"a": "հազարապետ",
+"lv": "C1",
+"ru": "хазарапет (тысяцкий)",
+"en": "chiliarch (hazarapet)",
+"fr": "hazarapet"
+},
+{
+"a": "լուսաֆոր",
+"lv": "C1",
+"ru": "светофор",
+"en": "traffic light",
+"fr": "feu de circulation"
+},
+{
+"a": "արաց",
+"lv": "C1",
+"ru": "арац (шестой месяц армянского календаря)",
+"en": "Arats (Armenian month)",
+"fr": "arats (mois arménien)"
+},
+{
+"a": "մահաքաղաք",
+"lv": "C1",
+"ru": "некрополь (синоним)",
+"en": "necropolis",
+"fr": "nécropole (synonyme)"
+},
+{
+"a": "ծաղարար",
+"lv": "C1",
+"ru": "кондитер",
+"en": "pastry chef",
+"fr": "pâtissier"
+},
+{
+"a": "հեղված",
+"lv": "C1",
+"ru": "версия",
+"en": "version",
+"fr": "version"
+},
+{
+"a": "ծերակուտական",
+"lv": "C1",
+"ru": "сенатор",
+"en": "senator",
+"fr": "sénateur"
+},
+{
+"a": "ծղնի",
+"lv": "C1",
+"ru": "зимородок (синоним)",
+"en": "kingfisher",
+"fr": "alcyon"
+},
+{
+"a": "շնավարդ",
+"lv": "C1",
+"ru": "шиповник собачий",
+"en": "dog rose",
+"fr": "églantier"
+},
+{
+"a": "վերստ",
+"lv": "C1",
+"ru": "верста",
+"en": "verst",
+"fr": "verste"
+},
+{
+"a": "րաբունապետ",
+"lv": "C1",
+"ru": "рабунапет (глава учёных)",
+"en": "rabunapet (head teacher)",
+"fr": "rabounapet"
+},
+{
+"a": "թեփամողես",
+"lv": "C1",
+"ru": "панголин",
+"en": "pangolin",
+"fr": "pangolin"
+},
+{
+"a": "տորդիկ",
+"lv": "C1",
+"ru": "дрозд",
+"en": "thrush",
+"fr": "grive"
+},
+{
+"a": "տարաբանվոր",
+"lv": "C1",
+"ru": "разнорабочий",
+"en": "odd-job man",
+"fr": "manœuvre"
+},
+{
+"a": "պատկերահան",
+"lv": "C1",
+"ru": "художник (устар.)",
+"en": "painter (dated)",
+"fr": "peintre (vieilli)"
+},
+{
+"a": "ոգորել",
+"lv": "C1",
+"ru": "бороться",
+"en": "to struggle",
+"fr": "lutter (combattre)"
+},
+{
+"a": "կորուսյալ",
+"lv": "C1",
+"ru": "утраченный",
+"en": "lost",
+"fr": "perdu"
+},
+{
+"a": "արծաթասիրություն",
+"lv": "C1",
+"ru": "сребролюбие",
+"en": "love of money",
+"fr": "amour de l'argent"
+},
+{
+"a": "ամբարհավաճություն",
+"lv": "C1",
+"ru": "высокомерие (устар.)",
+"en": "arrogance",
+"fr": "arrogance (vieilli)"
+},
+{
+"a": "բալօղի",
+"lv": "C1",
+"ru": "вишнёвая наливка",
+"en": "sour cherry liqueur",
+"fr": "liqueur de griotte"
+},
+{
+"a": "անձնատվություն",
+"lv": "C1",
+"ru": "капитуляция",
+"en": "surrender",
+"fr": "capitulation"
+},
+{
+"a": "ոսոխություն",
+"lv": "C1",
+"ru": "враждебность",
+"en": "hostility",
+"fr": "hostilité"
+},
+{
+"a": "որդեգրություն",
+"lv": "C1",
+"ru": "усыновление",
+"en": "adoption",
+"fr": "adoption"
+},
+{
+"a": "դասարանակից",
+"lv": "C1",
+"ru": "одноклассник (синоним)",
+"en": "classmate",
+"fr": "camarade de classe (synonyme)"
+},
+{
+"a": "միավորություն",
+"lv": "C1",
+"ru": "союз (устар.)",
+"en": "union",
+"fr": "union"
+},
+{
+"a": "եղջերվամիս",
+"lv": "C1",
+"ru": "оленина",
+"en": "venison",
+"fr": "viande de cerf"
+},
+{
+"a": "մեղրապոպ",
+"lv": "C1",
+"ru": "арбуз (книжн.)",
+"en": "watermelon",
+"fr": "pastèque (littéraire)"
+},
+{
+"a": "ջեռանալ",
+"lv": "C1",
+"ru": "согреваться (книжн.)",
+"en": "to get warm",
+"fr": "se réchauffer (littéraire)"
+},
+{
+"a": "գառագեղ",
+"lv": "C1",
+"ru": "клетка (для зверей)",
+"en": "animal cage",
+"fr": "cage (pour animaux)"
+},
+{
+"a": "փշարմավ",
+"lv": "C1",
+"ru": "падуб",
+"en": "holly",
+"fr": "houx"
+},
+{
+"a": "ձևավոր չմշկասահք",
+"lv": "C1",
+"ru": "фигурное катание",
+"en": "figure skating",
+"fr": "patinage artistique"
+},
+{
+"a": "իռեդենտիզմ",
+"lv": "C1",
+"ru": "ирредентизм",
+"en": "irredentism",
+"fr": "irrédentisme"
+},
+{
+"a": "բեռնարգելք",
+"lv": "C1",
+"ru": "эмбарго",
+"en": "embargo",
+"fr": "embargo"
+},
+{
+"a": "դրոշակաձող",
+"lv": "C1",
+"ru": "флагшток",
+"en": "flagpole",
+"fr": "mât de drapeau"
+},
+{
+"a": "կատաղախտ",
+"lv": "C1",
+"ru": "бешенство",
+"en": "rabies",
+"fr": "rage"
+},
+{
+"a": "ծփի",
+"lv": "C1",
+"ru": "вяз гладкий",
+"en": "European white elm",
+"fr": "orme lisse"
+},
+{
+"a": "գրկախառնել",
+"lv": "C1",
+"ru": "крепко обнимать",
+"en": "to hug tightly",
+"fr": "étreindre fort"
+},
+{
+"a": "տնկադաշտ",
+"lv": "C1",
+"ru": "плантация",
+"en": "plantation",
+"fr": "plantation"
+},
+{
+"a": "ֆռանգ",
+"lv": "C1",
+"ru": "франк (западноевропеец)",
+"en": "Frank (Western European)",
+"fr": "Franc (Occidental)"
+},
+{
+"a": "մարդպետ",
+"lv": "C1",
+"ru": "мардпет (главный евнух двора)",
+"en": "mardpet (chief eunuch)",
+"fr": "mardpet"
+},
+{
+"a": "վարժապետ",
+"lv": "C1",
+"ru": "учитель (устар.)",
+"en": "teacher (dated)",
+"fr": "maître d'école"
+},
+{
+"a": "հարկապարտ",
+"lv": "C1",
+"ru": "облагаемый налогом",
+"en": "taxpaying",
+"fr": "contribuable"
+},
+{
+"a": "մելիք",
+"lv": "C1",
+"ru": "мелик",
+"en": "melik",
+"fr": "mélik"
+},
+{
+"a": "դերնախագահ",
+"lv": "C1",
+"ru": "вице-президент",
+"en": "vice-president",
+"fr": "vice-président"
+},
+{
+"a": "ոտնացուպ",
+"lv": "C1",
+"ru": "ходули",
+"en": "stilts",
+"fr": "échasses"
+},
+{
+"a": "կոլա",
+"lv": "C1",
+"ru": "кола",
+"en": "cola",
+"fr": "cola"
+},
+{
+"a": "սեղմասկավառակ",
+"lv": "C1",
+"ru": "компакт-диск",
+"en": "CD",
+"fr": "disque compact"
+},
+{
+"a": "մինիստր",
+"lv": "C1",
+"ru": "министр (устар.)",
+"en": "minister (dated)",
+"fr": "ministre (vieilli)"
+},
+{
+"a": "կրկեսամարտիկ",
+"lv": "C1",
+"ru": "гладиатор (синоним)",
+"en": "gladiator",
+"fr": "gladiateur (synonyme)"
+},
+{
+"a": "սննդադուլ",
+"lv": "C1",
+"ru": "голодовка (устар.)",
+"en": "hunger strike (dated)",
+"fr": "grève de la faim (vieilli)"
+},
+{
+"a": "հանրակառք",
+"lv": "C1",
+"ru": "омнибус",
+"en": "omnibus",
+"fr": "omnibus"
+},
+{
+"a": "սարդար",
+"lv": "C1",
+"ru": "сардар",
+"en": "sardar",
+"fr": "sardar"
+},
+{
+"a": "պայմանագրական",
+"lv": "C1",
+"ru": "договорный",
+"en": "contractual",
+"fr": "contractuel"
+},
+{
+"a": "բիլիոն",
+"lv": "C1",
+"ru": "миллиард (биллион)",
+"en": "billion",
+"fr": "milliard (billion)"
+},
+{
+"a": "վարդածառ",
+"lv": "C1",
+"ru": "рододендрон (синоним)",
+"en": "rhododendron",
+"fr": "rhododendron (synonyme)"
+},
+{
+"a": "միկիտան",
+"lv": "C1",
+"ru": "кабатчик",
+"en": "tavern owner",
+"fr": "cabaretier"
+},
+{
+"a": "արմնկակալ",
+"lv": "C1",
+"ru": "подлокотник",
+"en": "armrest",
+"fr": "accoudoir"
+},
+{
+"a": "քթթել",
+"lv": "C1",
+"ru": "моргать",
+"en": "to blink",
+"fr": "cligner"
+},
+{
+"a": "օդակարգավորիչ",
+"lv": "C1",
+"ru": "кондиционер",
+"en": "air conditioner",
+"fr": "climatiseur"
+},
+{
+"a": "ձգտան",
+"lv": "C1",
+"ru": "сухожилие",
+"en": "tendon",
+"fr": "tendon"
+},
+{
+"a": "լրագիր",
+"lv": "C1",
+"ru": "газета (устар.)",
+"en": "newspaper (dated)",
+"fr": "journal (vieilli)"
+},
+{
+"a": "աներևութացում",
+"lv": "C1",
+"ru": "исчезновение (синоним)",
+"en": "disappearance",
+"fr": "disparition (synonyme)"
+},
+{
+"a": "միտինգ",
+"lv": "C1",
+"ru": "митинг (устар.)",
+"en": "rally (dated)",
+"fr": "meeting (vieilli)"
+},
+{
+"a": "պասեք",
+"lv": "C1",
+"ru": "Пасха (иудейская)",
+"en": "Passover",
+"fr": "Pâque juive"
+},
+{
+"a": "կահ",
+"lv": "C1",
+"ru": "утварь",
+"en": "household stuff",
+"fr": "mobilier, ustensiles"
+},
+{
+"a": "զինակիր",
+"lv": "C1",
+"ru": "оруженосец",
+"en": "armour-bearer",
+"fr": "écuyer"
+},
+{
+"a": "վելոսիպեդ",
+"lv": "C1",
+"ru": "велосипед (устар.)",
+"en": "bicycle (dated)",
+"fr": "vélo (vieilli)"
+},
+{
+"a": "տրադիցիա",
+"lv": "C1",
+"ru": "традиция (устар.)",
+"en": "tradition (dated)",
+"fr": "tradition (vieilli)"
+},
+{
+"a": "ռեսպուբլիկա",
+"lv": "C1",
+"ru": "республика (устар.)",
+"en": "republic (dated)",
+"fr": "république (vieilli)"
 },
 {
 "a": "վեհ",

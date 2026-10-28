@@ -111080,6 +111080,2666 @@
 "fr": "Langues du monde 3"
 },
 {
+"lv": "B2",
+"ru": "Однокоренные слова 1",
+"en": "Word families 1",
+"hy": "Արմատակից բառեր 1",
+"ic": "🌳",
+"w": [
+[
+"հայաստանակենտրոն",
+"ориентированный на Армению",
+"Armenia-centred",
+"",
+"centré sur l'Arménie"
+],
+[
+"հայաստանյան",
+"армянский (относящийся к Армении)",
+"of Armenia",
+"",
+"d'Arménie"
+],
+[
+"Պարսկահայաստան",
+"Персидская Армения",
+"Persian Armenia",
+"",
+"Arménie perse"
+],
+[
+"Ռուսահայաստան",
+"Российская Армения",
+"Russian Armenia",
+"",
+"Arménie russe"
+],
+[
+"Տաճկահայաստան",
+"Турецкая (Западная) Армения",
+"Turkish Armenia",
+"",
+"Arménie turque"
+],
+[
+"եռամարտ",
+"троеборье",
+"triathlon (three events)",
+"",
+"triathlon"
+],
+[
+"հնգամարտ",
+"пятиборье",
+"pentathlon",
+"",
+"pentathlon"
+],
+[
+"տասնամարտ",
+"десятиборье",
+"decathlon",
+"",
+"décathlon"
+],
+[
+"վայրկենապես",
+"мгновенно",
+"instantly",
+"",
+"instantanément"
+],
+[
+"իսրայելական",
+"израильский",
+"Israeli",
+"",
+"israélien"
+],
+[
+"իսրայելցի",
+"израильтянин",
+"Israeli (person)",
+"",
+"Israélien"
+],
+[
+"ասիացի",
+"азиат",
+"Asian (person)",
+"",
+"Asiatique"
+],
+[
+"գետնընկույզ",
+"арахис",
+"peanut",
+"🥜",
+"cacahuète"
+],
+[
+"ընկուզե",
+"ореховый",
+"made of walnut",
+"",
+"en noyer"
+],
+[
+"դդմազգիներ",
+"тыквенные (семейство)",
+"gourd family",
+"",
+"cucurbitacées"
+],
+[
+"մերան",
+"закваска (для мацуна)",
+"starter (for matzoon)",
+"",
+"ferment (pour matsoun)"
+],
+[
+"այսինչ",
+"такой-то",
+"so-and-so",
+"",
+"tel ou tel"
+],
+[
+"այսչափ",
+"столько (книжн.)",
+"this much",
+"",
+"tant (littéraire)"
+],
+[
+"այնինչ",
+"между тем, тогда как",
+"whereas",
+"",
+"tandis que"
+],
+[
+"այնչափ",
+"настолько (книжн.)",
+"that much",
+"",
+"à tel point"
+],
+[
+"այնուհետ",
+"затем, впоследствии",
+"thereafter",
+"",
+"par la suite"
+],
+[
+"ծխախոտաբույծ",
+"табаковод",
+"tobacco grower",
+"",
+"planteur de tabac"
+],
+[
+"ծխախոտատուփ",
+"портсигар",
+"cigarette case",
+"",
+"étui à cigarettes"
+],
+[
+"ծխախոտաքսակ",
+"кисет",
+"tobacco pouch",
+"",
+"blague à tabac"
+],
+[
+"երկքաղաքացի",
+"человек с двойным гражданством",
+"dual citizen",
+"",
+"binational"
+],
+[
+"գաղութաբնակ",
+"колонист",
+"colonist",
+"",
+"colon"
+],
+[
+"գաղութաբնակեցում",
+"колонизация (заселение)",
+"colonization",
+"",
+"colonisation"
+],
+[
+"գաղութակալ",
+"колонизатор",
+"colonizer",
+"",
+"colonisateur"
+],
+[
+"գաղութակալություն",
+"колониализм (синоним)",
+"colonialism",
+"",
+"colonialisme (synonyme)"
+],
+[
+"գաղութահայ",
+"армянин из общины диаспоры",
+"diaspora Armenian",
+"",
+"Arménien de la diaspora (communauté)"
+],
+[
+"գաղութահայություն",
+"армянская община диаспоры",
+"Armenian diaspora community",
+"",
+"communauté arménienne de la diaspora"
+],
+[
+"գաղութային",
+"колониальный (синоним)",
+"colonial",
+"",
+"colonial (synonyme)"
+],
+[
+"տնեցի",
+"домочадец",
+"household member",
+"",
+"membre de la maisonnée"
+],
+[
+"շուկայական",
+"рыночный",
+"market",
+"",
+"de marché"
+],
+[
+"վզակոթ",
+"затылок",
+"nape",
+"",
+"nuque"
+],
+[
+"վզկապ",
+"галстук",
+"necktie",
+"👔",
+"cravate"
+],
+[
+"գույքահարկ",
+"налог на имущество",
+"property tax",
+"",
+"impôt foncier"
+],
+[
+"նույնարմատ",
+"однокоренной",
+"cognate (same root)",
+"",
+"de même racine"
+],
+[
+"անդրծովյան",
+"заморский",
+"overseas",
+"",
+"d'outre-mer"
+],
+[
+"ծովակալություն",
+"адмиралтейство",
+"admiralty",
+"",
+"amirauté"
+],
+[
+"ծովահենություն",
+"пиратство",
+"piracy",
+"🏴‍☠️",
+"piraterie"
+],
+[
+"ծովանկարիչ",
+"художник-маринист",
+"marine painter",
+"",
+"peintre de marines"
+],
+[
+"ծովանկարչություն",
+"маринистика",
+"marine painting",
+"",
+"peinture de marine"
+],
+[
+"ծովաջուր",
+"морская вода",
+"seawater",
+"",
+"eau de mer"
+],
+[
+"ծովոզնի",
+"морской ёж",
+"sea urchin",
+"",
+"oursin"
+],
+[
+"ռազմածովային",
+"военно-морской",
+"naval",
+"",
+"naval"
+],
+[
+"փոխծովակալ",
+"вице-адмирал",
+"vice admiral",
+"",
+"vice-amiral"
+],
+[
+"թատերագիր",
+"драматург",
+"playwright",
+"",
+"dramaturge"
+],
+[
+"թատերասրահ",
+"театральный зал",
+"theatre hall",
+"",
+"salle de théâtre"
+],
+[
+"բթանալ",
+"тупеть, притупляться",
+"to become blunt",
+"",
+"s'émousser"
+],
+[
+"միկրոտիեզերք",
+"микрокосм",
+"microcosm",
+"",
+"microcosme"
+],
+[
+"շաքարաջուր",
+"сахарный сироп",
+"sugar syrup",
+"",
+"sirop de sucre"
+],
+[
+"ծաղկային",
+"цветочный (синоним)",
+"floral",
+"",
+"floral (synonyme)"
+]
+],
+"fr": "Familles de mots 1"
+},
+{
+"lv": "B2",
+"ru": "Однокоренные слова 2",
+"en": "Word families 2",
+"hy": "Արմատակից բառեր 2",
+"ic": "🌳",
+"w": [
+[
+"Զորայր",
+"Зорайр (мужское имя)",
+"Zorayr (male name)",
+"",
+"Zoraïr (prénom masculin)"
+],
+[
+"կուրացնել",
+"ослеплять",
+"to blind",
+"",
+"aveugler"
+],
+[
+"թուրքալեզու",
+"тюркоязычный",
+"Turkic-speaking",
+"",
+"turcophone"
+],
+[
+"թուրքախոս",
+"говорящий по-турецки",
+"Turkish-speaking",
+"",
+"parlant turc"
+],
+[
+"պարսկալեզու",
+"персоязычный",
+"Persian-speaking",
+"",
+"persanophone"
+],
+[
+"պարսկուհի",
+"персиянка",
+"Persian woman",
+"",
+"Persane"
+],
+[
+"ասպետաբար",
+"по-рыцарски",
+"chivalrously",
+"",
+"chevaleresquement"
+],
+[
+"բարալիկ",
+"тоненький",
+"thin",
+"",
+"tout mince"
+],
+[
+"նեղլիկ",
+"узенький",
+"narrow",
+"",
+"étroit (petit)"
+],
+[
+"նեղվածք",
+"теснина, узкое место",
+"narrows",
+"",
+"défilé, goulet"
+],
+[
+"սահմանագիծ",
+"линия границы",
+"boundary line",
+"",
+"ligne de démarcation"
+],
+[
+"սահմանային",
+"пограничный",
+"border",
+"",
+"frontalier"
+],
+[
+"սահմանաքար",
+"пограничный камень",
+"boundary stone",
+"",
+"borne"
+],
+[
+"աղեղնալար",
+"тетива",
+"bowstring",
+"",
+"corde d'arc"
+],
+[
+"ոստիկանական",
+"полицейский (прил.)",
+"police",
+"",
+"policier"
+],
+[
+"ոստիկանատուն",
+"полицейский участок (синоним)",
+"police station",
+"",
+"poste de police"
+],
+[
+"ճուռակ",
+"пустельга",
+"kestrel",
+"",
+"crécerelle"
+],
+[
+"դրամագլուխ",
+"капитал",
+"capital",
+"",
+"capital"
+],
+[
+"տավարաբուծություն",
+"скотоводство",
+"cattle breeding",
+"",
+"élevage bovin"
+],
+[
+"տավարաբույծ",
+"скотовод",
+"cattle breeder",
+"",
+"éleveur"
+],
+[
+"տավարած",
+"пастух (коров)",
+"cowherd",
+"",
+"vacher"
+],
+[
+"սիզամարգ",
+"газон, лужайка",
+"lawn",
+"",
+"gazon, pelouse"
+],
+[
+"ղեկանիվ",
+"штурвал",
+"steering wheel (of a ship)",
+"",
+"barre (gouvernail)"
+],
+[
+"թայվանցի",
+"тайванец",
+"Taiwanese (person)",
+"",
+"Taïwanais"
+],
+[
+"թայվանական",
+"тайваньский",
+"Taiwanese",
+"",
+"taïwanais"
+],
+[
+"հոլովել",
+"склонять (грамм.)",
+"to decline (grammar)",
+"",
+"décliner"
+],
+[
+"դասարանցի",
+"ученик класса",
+"class pupil",
+"",
+"élève de la classe"
+],
+[
+"համադասարանցի",
+"одноклассник",
+"classmate",
+"",
+"camarade de classe"
+],
+[
+"բամբակաբուծություն",
+"хлопководство",
+"cotton growing",
+"",
+"culture du coton"
+],
+[
+"բամբակային",
+"хлопковый",
+"cotton",
+"",
+"cotonnier"
+],
+[
+"բամբակեղեն",
+"хлопчатобумажные изделия",
+"cotton goods",
+"",
+"cotonnades"
+],
+[
+"բամբակենի",
+"хлопчатник",
+"cotton plant",
+"",
+"cotonnier (plante)"
+],
+[
+"բրնձահատիկ",
+"рисовое зерно",
+"grain of rice",
+"🍚",
+"grain de riz"
+],
+[
+"բրնձօղի",
+"рисовая водка",
+"rice vodka",
+"",
+"alcool de riz"
+],
+[
+"անդրազգային",
+"транснациональный (наднациональный)",
+"transnational",
+"",
+"supranational"
+],
+[
+"բուրդիկ",
+"шерстинка",
+"bit of wool",
+"",
+"brin de laine"
+],
+[
+"ջարդուբուրդ",
+"вдребезги, разгром",
+"smashed to pieces",
+"",
+"en miettes"
+],
+[
+"քվեաթերթ",
+"избирательный бюллетень",
+"ballot paper",
+"🗳️",
+"bulletin de vote"
+],
+[
+"աշորյա հաց",
+"ржаной хлеб",
+"rye bread",
+"",
+"pain de seigle"
+],
+[
+"կորեկահաց",
+"просяной хлеб",
+"millet bread",
+"",
+"pain de millet"
+],
+[
+"թթուտ",
+"тутовая роща",
+"mulberry grove",
+"",
+"mûreraie"
+],
+[
+"խաղ ու պար",
+"игры и пляски",
+"games and dances",
+"",
+"jeux et danses"
+],
+[
+"դիտափող",
+"подзорная труба",
+"spyglass",
+"🔭",
+"longue-vue"
+],
+[
+"շղթայել",
+"сковывать цепью",
+"to chain",
+"",
+"enchaîner"
+],
+[
+"հավասարել",
+"уравнивать",
+"to equalize",
+"",
+"égaliser"
+],
+[
+"շնորհագեղ",
+"грациозный",
+"graceful",
+"",
+"gracieux"
+],
+[
+"ծիտիկ",
+"воробушек",
+"little sparrow",
+"",
+"moineau (petit)"
+],
+[
+"հակաքրիստոս",
+"антихрист",
+"Antichrist",
+"",
+"Antéchrist"
+],
+[
+"ծավալապաշտ",
+"экспансионист",
+"expansionist",
+"",
+"expansionniste"
+],
+[
+"ազնիվ խոսք",
+"честное слово",
+"word of honour",
+"",
+"parole d'honneur"
+],
+[
+"ազնիվ մետաղ",
+"благородный металл",
+"precious metal",
+"",
+"métal précieux"
+],
+[
+"Սաթիկ",
+"Сатик (женское имя)",
+"Satik (female name)",
+"",
+"Satik (prénom féminin)"
+],
+[
+"Գաբիկ",
+"Габик (уменьш. от Габриел)",
+"Gabik (diminutive of Gabriel)",
+"",
+"Gabik (diminutif de Gabriel)"
+]
+],
+"fr": "Familles de mots 2"
+},
+{
+"lv": "B2",
+"ru": "Однокоренные слова 3",
+"en": "Word families 3",
+"hy": "Արմատակից բառեր 3",
+"ic": "🌳",
+"w": [
+[
+"Հրաչիկ",
+"Грачик (уменьш. от Грачья)",
+"Hrachik (diminutive of Hrachya)",
+"",
+"Hratchik (diminutif)"
+],
+[
+"կնճիթավոր",
+"хоботный",
+"proboscidean",
+"",
+"proboscidien"
+],
+[
+"կշռաքար",
+"гиря",
+"weight (for scales)",
+"",
+"poids (de balance)"
+],
+[
+"ինքնիրեն",
+"сам по себе",
+"by oneself",
+"",
+"de lui-même"
+],
+[
+"ինչ-որ մի",
+"какой-то (один)",
+"some (one)",
+"",
+"un certain"
+],
+[
+"ինչևիցե",
+"как бы то ни было",
+"whatever, anyhow",
+"",
+"quoi qu'il en soit"
+],
+[
+"կաշեգործ",
+"кожевник",
+"tanner",
+"",
+"tanneur"
+],
+[
+"կաշեգործարան",
+"кожевенный завод",
+"tannery",
+"",
+"tannerie (usine)"
+],
+[
+"կաշեգործություն",
+"кожевенное производство",
+"leather industry",
+"",
+"industrie du cuir"
+],
+[
+"կաշեկազմ",
+"в кожаном переплёте",
+"leather-bound",
+"",
+"relié en cuir"
+],
+[
+"կաշեղեն",
+"кожаные изделия",
+"leather goods",
+"",
+"maroquinerie"
+],
+[
+"կաշվեղեն",
+"кожгалантерея",
+"leatherware",
+"",
+"articles de cuir"
+],
+[
+"ծեծկվել",
+"драться",
+"to fight (scuffle)",
+"",
+"se battre"
+],
+[
+"ծեծփայտ",
+"колотушка, била",
+"beater",
+"",
+"battoir"
+],
+[
+"ձգողական",
+"гравитационный",
+"gravitational",
+"",
+"gravitationnel"
+],
+[
+"անամոթ",
+"бессовестный, бесстыжий",
+"shameless",
+"",
+"sans vergogne"
+],
+[
+"սարքավորել",
+"оснащать оборудованием",
+"to equip",
+"",
+"équiper"
+],
+[
+"տնտեսվար",
+"хозяйственник",
+"business manager",
+"",
+"gestionnaire"
+],
+[
+"ծամկապ",
+"лента для кос",
+"hair ribbon",
+"",
+"ruban à cheveux"
+],
+[
+"հալեպահայ",
+"алеппский армянин",
+"Armenian from Aleppo",
+"",
+"Arménien d'Alep"
+],
+[
+"թաղական",
+"квартальный",
+"district",
+"",
+"de quartier"
+],
+[
+"թաղակից",
+"сосед по кварталу",
+"neighbour (in a district)",
+"",
+"voisin de quartier"
+],
+[
+"թաղային",
+"районный",
+"district",
+"",
+"de district"
+],
+[
+"թաղապետարան",
+"мэрия (районная)",
+"district municipality",
+"",
+"mairie d'arrondissement"
+],
+[
+"թաղեցի",
+"житель квартала",
+"district resident",
+"",
+"habitant du quartier"
+],
+[
+"ծիրանի գոտի",
+"радуга (букв. «пурпурный пояс»)",
+"rainbow",
+"🌈",
+"arc-en-ciel"
+],
+[
+"վանկատել",
+"делить на слоги",
+"to syllabify",
+"",
+"syllaber"
+],
+[
+"անդամատոմս",
+"членский билет",
+"membership card",
+"",
+"carte de membre"
+],
+[
+"անցատոմս",
+"пропуск",
+"pass",
+"",
+"laissez-passer"
+],
+[
+"արժետոմս",
+"ценная бумага",
+"security (finance)",
+"",
+"titre (valeur mobilière)"
+],
+[
+"բանկատոմս",
+"банкнота",
+"banknote",
+"💵",
+"billet de banque"
+],
+[
+"խաղատոմս",
+"лотерейный билет",
+"lottery ticket",
+"",
+"billet de loterie"
+],
+[
+"հարցատոմս",
+"анкета",
+"questionnaire",
+"",
+"questionnaire"
+],
+[
+"սիրատոմս",
+"любовная записка",
+"love letter",
+"💌",
+"billet doux"
+],
+[
+"վիճակատոմս",
+"лотерейный билет (синоним)",
+"lottery ticket",
+"",
+"billet de loterie (synonyme)"
+],
+[
+"տոմսակ",
+"билетик, талон",
+"ticket stub",
+"",
+"ticket"
+],
+[
+"տոմսավաճառ",
+"кассир (продавец билетов)",
+"ticket seller",
+"",
+"guichetier"
+],
+[
+"տոմսավաճառուհի",
+"кассирша (продавщица билетов)",
+"female ticket seller",
+"",
+"guichetière"
+],
+[
+"տոմսարան",
+"билетная касса",
+"ticket office",
+"🎫",
+"billetterie"
+],
+[
+"ուղետոմս",
+"проездной билет",
+"travel ticket",
+"",
+"titre de transport"
+],
+[
+"քննատոմս",
+"экзаменационный билет",
+"exam paper",
+"",
+"sujet d'examen"
+],
+[
+"թափ-թազա",
+"совершенно новый",
+"brand new",
+"",
+"flambant neuf"
+],
+[
+"ճուտամեր",
+"наседка",
+"broody hen",
+"",
+"couveuse"
+],
+[
+"դուքանդար",
+"лавочник",
+"shopkeeper",
+"",
+"boutiquier"
+],
+[
+"շնորհանդես",
+"презентация",
+"presentation",
+"🎤",
+"présentation"
+],
+[
+"դժվարակնճիռ",
+"труднодоступный (книжн.)",
+"inaccessible",
+"",
+"inextricable"
+],
+[
+"կնճռել",
+"морщить",
+"to wrinkle",
+"",
+"froncer"
+],
+[
+"կնճռոտ",
+"морщинистый",
+"wrinkled",
+"",
+"ridé"
+],
+[
+"գագաթնակետ",
+"кульминация, вершина",
+"culmination",
+"",
+"point culminant (sommet)"
+],
+[
+"գազավորել",
+"газировать",
+"to carbonate",
+"",
+"gazéifier"
+],
+[
+"գազավորված",
+"газированный",
+"carbonated",
+"🫧",
+"gazeux (boisson)"
+],
+[
+"հիմնել",
+"основывать",
+"to found",
+"",
+"fonder"
+],
+[
+"քաշի կորուստ",
+"потеря веса",
+"weight loss",
+"",
+"perte de poids"
+]
+],
+"fr": "Familles de mots 3"
+},
+{
+"lv": "B2",
+"ru": "Однокоренные слова 4",
+"en": "Word families 4",
+"hy": "Արմատակից բառեր 4",
+"ic": "🌳",
+"w": [
+[
+"նարտախաղ",
+"нарды",
+"backgammon",
+"🎲",
+"backgammon"
+],
+[
+"ազատականություն",
+"либерализм",
+"liberalism",
+"",
+"libéralisme"
+],
+[
+"սրում",
+"заточка",
+"sharpening",
+"",
+"affûtage"
+],
+[
+"անլուրջ",
+"несерьёзный",
+"frivolous",
+"",
+"pas sérieux"
+],
+[
+"այդչափ",
+"столько (так много)",
+"that much",
+"",
+"autant (cela)"
+],
+[
+"այդուամենայնիվ",
+"тем не менее (синоним)",
+"nevertheless",
+"",
+"néanmoins (synonyme)"
+],
+[
+"այդուհետ",
+"впредь, с этих пор",
+"henceforth",
+"",
+"dorénavant"
+],
+[
+"ապրելակերպ",
+"образ жизни",
+"lifestyle",
+"",
+"mode de vie (synonyme)"
+],
+[
+"սաստել",
+"одёргивать, запрещать",
+"to rebuke",
+"",
+"réprimander"
+],
+[
+"ընծայել",
+"преподносить, дарить",
+"to present",
+"",
+"offrir"
+],
+[
+"սվինամարտ",
+"штыковой бой",
+"bayonet fight",
+"",
+"combat à la baïonnette"
+],
+[
+"ծածկ",
+"крыша, покрытие",
+"roof, covering",
+"",
+"toiture"
+],
+[
+"իգական սեռ",
+"женский род",
+"feminine gender",
+"",
+"genre féminin"
+],
+[
+"արական սեռ",
+"мужской род",
+"masculine gender",
+"",
+"genre masculin"
+],
+[
+"չեզոքաբար",
+"нейтрально",
+"neutrally",
+"",
+"neutrement"
+],
+[
+"չեզոքանալ",
+"нейтрализоваться",
+"to become neutral",
+"",
+"se neutraliser"
+],
+[
+"չեզոքացուցիչ",
+"нейтрализатор",
+"neutralizer",
+"",
+"neutralisant"
+],
+[
+"վեհաշուք",
+"величественный",
+"majestic",
+"",
+"majestueux"
+],
+[
+"դրոշմածրար",
+"конверт с маркой",
+"stamped envelope",
+"",
+"enveloppe timbrée"
+],
+[
+"ծրարիկ",
+"конвертик",
+"small envelope",
+"",
+"petite enveloppe"
+],
+[
+"ցողունային",
+"стеблевой",
+"stem",
+"",
+"caulinaire"
+],
+[
+"երկպատկեր",
+"диптих",
+"diptych",
+"",
+"diptyque"
+],
+[
+"բեռնագին",
+"плата за провоз",
+"freight charge",
+"",
+"fret"
+],
+[
+"բեռնագիր",
+"накладная (на груз)",
+"bill of lading",
+"",
+"connaissement"
+],
+[
+"բեռնանավ",
+"грузовое судно",
+"cargo ship",
+"🚢",
+"cargo"
+],
+[
+"կովարած",
+"пастух коров",
+"cowherd",
+"",
+"vacher (synonyme)"
+],
+[
+"հորթարած",
+"телятник (пастух телят)",
+"calf herder",
+"",
+"gardien de veaux"
+],
+[
+"Մադրաս",
+"Мадрас",
+"Madras",
+"",
+"Madras"
+],
+[
+"արևահար",
+"получивший солнечный удар",
+"sunstruck",
+"",
+"frappé d'insolation"
+],
+[
+"ցրտահար",
+"побитый морозом",
+"frostbitten",
+"",
+"gelé (par le froid)"
+],
+[
+"չարակնություն",
+"дурной глаз, сглаз",
+"evil eye",
+"🧿",
+"mauvais œil"
+],
+[
+"ջահելություն",
+"молодость",
+"youth",
+"",
+"jeunesse"
+],
+[
+"զտում",
+"фильтрация",
+"filtering",
+"",
+"filtrage"
+],
+[
+"անհերթ",
+"внеочередной (без очереди)",
+"out of turn",
+"",
+"hors tour"
+],
+[
+"առաջնահերթ",
+"первоочередной",
+"priority",
+"",
+"prioritaire"
+],
+[
+"երկհերթ",
+"двухсменный",
+"two-shift",
+"",
+"à deux équipes"
+],
+[
+"հերթագայել",
+"чередоваться",
+"to alternate",
+"",
+"alterner"
+],
+[
+"հերթագայություն",
+"чередование",
+"alternation",
+"",
+"alternance"
+],
+[
+"հերթականություն",
+"очерёдность",
+"order of priority",
+"",
+"ordre de passage"
+],
+[
+"հերթապահ",
+"дежурный",
+"on duty",
+"",
+"de service"
+],
+[
+"հերթապահել",
+"дежурить",
+"to be on duty",
+"",
+"être de garde"
+],
+[
+"հերթապահություն",
+"дежурство",
+"duty",
+"",
+"permanence"
+],
+[
+"հերթափոխել",
+"сменять (по очереди)",
+"to take turns",
+"",
+"relayer"
+],
+[
+"հերթափոխություն",
+"смена (рабочая)",
+"shift",
+"",
+"relève"
+],
+[
+"երկխոսել",
+"вести диалог",
+"to hold a dialogue",
+"",
+"dialoguer"
+],
+[
+"գուրգուրանք",
+"ласка, нежность",
+"tenderness, caress",
+"",
+"tendresse"
+],
+[
+"անհավատություն",
+"неверие",
+"disbelief",
+"",
+"incrédulité"
+],
+[
+"թվարկում",
+"перечисление",
+"enumeration",
+"",
+"énumération"
+],
+[
+"հեսպերյան խնձորներ",
+"яблоки Гесперид",
+"apples of the Hesperides",
+"",
+"pommes des Hespérides"
+],
+[
+"զրուցակցել",
+"беседовать",
+"to converse",
+"",
+"converser"
+],
+[
+"խոսակցել",
+"разговаривать",
+"to talk",
+"",
+"parler, discuter"
+],
+[
+"շտկում",
+"выпрямление, исправление",
+"straightening",
+"",
+"redressement"
+],
+[
+"տնջրենի",
+"платан (дерево)",
+"plane tree",
+"",
+"platane (arbre)"
+]
+],
+"fr": "Familles de mots 4"
+},
+{
+"lv": "B2",
+"ru": "Однокоренные слова 5",
+"en": "Word families 5",
+"hy": "Արմատակից բառեր 5",
+"ic": "🌳",
+"w": [
+[
+"վահանապտեր",
+"щитовник (папоротник)",
+"shield fern",
+"",
+"dryoptéris"
+],
+[
+"լաչառություն",
+"бесстыдство (синоним)",
+"impudence",
+"",
+"effronterie"
+],
+[
+"հնէաբանական",
+"палеонтологический",
+"paleontological",
+"",
+"paléontologique"
+],
+[
+"մակալեզվակ",
+"надгортанник",
+"epiglottis",
+"",
+"épiglotte"
+],
+[
+"ծլարձակություն",
+"прорастание",
+"sprouting",
+"",
+"germination"
+],
+[
+"վեղարակիր",
+"носящий вегар",
+"wearing a veghar",
+"",
+"portant le véghar"
+],
+[
+"թակիչ",
+"молоток для отбивания",
+"meat tenderizer",
+"",
+"attendrisseur"
+],
+[
+"մանրածովախեցգետին",
+"мелкий краб",
+"small crab",
+"",
+"petit crabe"
+],
+[
+"բոռաճանճ",
+"трутень",
+"drone (bee)",
+"",
+"faux bourdon"
+],
+[
+"անվաթրթուր",
+"гусеничный ход",
+"caterpillar track",
+"",
+"chenille (de char)"
+],
+[
+"թրթրուկ",
+"гусеничка",
+"little caterpillar",
+"🐛",
+"petite chenille"
+],
+[
+"կաղամբաթրթուր",
+"капустница (гусеница)",
+"cabbage caterpillar",
+"",
+"piéride du chou"
+],
+[
+"բանջարաբոստանային",
+"овощебахчевой",
+"vegetable and melon",
+"",
+"maraîcher"
+],
+[
+"կորկոտապուր",
+"суп из крупы",
+"groats soup",
+"",
+"soupe de gruau"
+],
+[
+"բառափունջ",
+"букет слов, сборник",
+"collection of words",
+"",
+"florilège"
+],
+[
+"դափնեփունջ",
+"лавровый венок",
+"laurel wreath",
+"",
+"couronne de laurier"
+],
+[
+"երգափունջ",
+"песенный сборник",
+"song collection",
+"",
+"recueil de chansons"
+],
+[
+"լուսափունջ",
+"пучок света",
+"beam of light",
+"",
+"faisceau lumineux"
+],
+[
+"վարդափունջ",
+"букет роз",
+"bouquet of roses",
+"💐",
+"bouquet de roses"
+],
+[
+"փնջել",
+"собирать в пучок",
+"to bunch",
+"",
+"botteler"
+],
+[
+"փնջիկ",
+"букетик",
+"small bouquet",
+"",
+"petit bouquet"
+],
+[
+"պայմանավորված",
+"обусловленный",
+"conditioned by",
+"",
+"conditionné"
+],
+[
+"քնջութ",
+"кунжут (синоним)",
+"sesame",
+"",
+"sésame (synonyme)"
+],
+[
+"գռեհկաբանություն",
+"вульгаризм, грубая речь",
+"vulgarism",
+"",
+"vulgarité"
+],
+[
+"գռեհկաբար",
+"грубо, вульгарно",
+"coarsely",
+"",
+"vulgairement"
+],
+[
+"գռեհկանալ",
+"грубеть",
+"to coarsen",
+"",
+"devenir vulgaire"
+],
+[
+"գռեհկություն",
+"грубость, вульгарность",
+"vulgarity",
+"",
+"grossièreté"
+],
+[
+"կոշտաբար",
+"жёстко, грубо",
+"harshly",
+"",
+"durement"
+],
+[
+"կոշտանալ",
+"твердеть",
+"to harden",
+"",
+"durcir"
+],
+[
+"կոշտացնել",
+"делать жёстким",
+"to stiffen",
+"",
+"raidir"
+],
+[
+"կոշտություն",
+"жёсткость",
+"hardness",
+"",
+"dureté"
+],
+[
+"կոշտուկ",
+"мозоль",
+"callus",
+"",
+"cor, durillon"
+],
+[
+"հացակոշտ",
+"ломоть хлеба",
+"chunk of bread",
+"",
+"quignon"
+],
+[
+"թաղման",
+"похоронный",
+"funeral",
+"",
+"funéraire"
+],
+[
+"ներդրումային",
+"инвестиционный",
+"investment",
+"",
+"d'investissement"
+],
+[
+"խոպանչի",
+"отходник, сезонный рабочий",
+"migrant worker",
+"",
+"travailleur saisonnier"
+],
+[
+"թեքվածք",
+"наклон, уклон",
+"slope",
+"",
+"pente"
+],
+[
+"թեքություն",
+"наклонность, крен",
+"inclination",
+"",
+"inclinaison"
+],
+[
+"դյուրաբորբոք",
+"легковоспламеняющийся",
+"flammable",
+"",
+"inflammable"
+],
+[
+"դյուրազգած",
+"впечатлительный",
+"sensitive",
+"",
+"sensible"
+],
+[
+"դյուրահնչյուն",
+"благозвучный",
+"euphonious",
+"",
+"mélodieux"
+],
+[
+"դյուրամատչելի",
+"общедоступный",
+"accessible",
+"",
+"accessible"
+],
+[
+"դյուրամարս",
+"легкоусвояемый",
+"easily digestible",
+"",
+"digeste"
+],
+[
+"դյուրափշուր",
+"хрупкий",
+"fragile",
+"",
+"fragile"
+],
+[
+"դյուրընթեռնելի",
+"разборчивый, читаемый",
+"legible",
+"",
+"lisible"
+],
+[
+"պալտո",
+"пальто",
+"coat",
+"🧥",
+"manteau"
+],
+[
+"օղակկոճակ",
+"петля для пуговицы",
+"buttonhole",
+"",
+"boutonnière"
+],
+[
+"օղիկ",
+"колечко",
+"little ring",
+"",
+"anneau (petit)"
+],
+[
+"ռոճկացուցակ",
+"ведомость зарплаты",
+"payroll",
+"",
+"livre de paie"
+],
+[
+"աննպատակահարմարություն",
+"нецелесообразность",
+"inexpediency",
+"",
+"inopportunité"
+],
+[
+"աննպատակային",
+"бесцельный",
+"aimless",
+"",
+"sans but"
+],
+[
+"բարենպատակ",
+"благонамеренный",
+"well-intentioned",
+"",
+"bien intentionné"
+],
+[
+"ինքնանպատակ",
+"самоцель",
+"end in itself",
+"",
+"fin en soi"
+]
+],
+"fr": "Familles de mots 5"
+},
+{
+"lv": "B2",
+"ru": "Однокоренные слова 6",
+"en": "Word families 6",
+"hy": "Արմատակից բառեր 6",
+"ic": "🌳",
+"w": [
+[
+"նպատակադիր",
+"целеустремлённый",
+"purposeful",
+"",
+"résolu"
+],
+[
+"նպատակադրել",
+"ставить целью",
+"to aim",
+"",
+"viser"
+],
+[
+"նպատակադրվել",
+"задаваться целью",
+"to set oneself a goal",
+"",
+"se fixer un but"
+],
+[
+"նպատակազուրկ",
+"бесцельный (синоним)",
+"purposeless",
+"",
+"dépourvu de but"
+],
+[
+"նպատակահարմարորեն",
+"целесообразно",
+"expediently",
+"",
+"judicieusement"
+],
+[
+"նպատակահարմարություն",
+"целесообразность",
+"expediency",
+"",
+"opportunité"
+],
+[
+"նպատակամետ",
+"целенаправленный",
+"goal-oriented",
+"",
+"ciblé (orienté)"
+],
+[
+"նպատակային",
+"целевой (синоним)",
+"targeted",
+"",
+"finalisé"
+],
+[
+"նպատակասլաց",
+"целеустремлённый (синоним)",
+"purposeful",
+"",
+"déterminé"
+],
+[
+"նպատակասլացություն",
+"целеустремлённость",
+"purposefulness",
+"",
+"détermination"
+],
+[
+"նպատակավոր",
+"целенаправленный (синоним)",
+"purposeful",
+"",
+"délibéré"
+],
+[
+"նպատակորոշ",
+"определяющий цель",
+"purpose-setting",
+"",
+"téléologique"
+],
+[
+"չարանպատակ",
+"злонамеренный",
+"malicious",
+"",
+"malintentionné"
+],
+[
+"լապտերակիր",
+"фонарщик",
+"lamplighter",
+"",
+"allumeur de réverbères"
+],
+[
+"լապտերիկ",
+"фонарик",
+"small lantern",
+"🔦",
+"lampe de poche"
+],
+[
+"արծնապակի",
+"эмаль (стеклянная)",
+"enamel",
+"",
+"émail"
+],
+[
+"արծնապատ",
+"эмалированный",
+"enamelled",
+"",
+"émaillé"
+],
+[
+"հուշադրամ",
+"памятная монета",
+"commemorative coin",
+"",
+"pièce commémorative"
+],
+[
+"փաթիլ-փաթիլ",
+"хлопьями",
+"in flakes",
+"",
+"à gros flocons"
+],
+[
+"գահակալություն",
+"царствование",
+"reign",
+"",
+"règne"
+],
+[
+"դարանակալ",
+"засадный",
+"ambushing",
+"",
+"embusqué"
+],
+[
+"բազմացնել",
+"размножать",
+"to multiply",
+"",
+"multiplier"
+],
+[
+"ներգործել",
+"воздействовать",
+"to act upon",
+"",
+"agir sur"
+],
+[
+"թմբիկ",
+"бугорок",
+"little mound",
+"",
+"monticule"
+],
+[
+"հողաթումբ",
+"земляной бугор",
+"earth mound",
+"",
+"tertre"
+],
+[
+"զավեշտաբան",
+"юморист",
+"humorist",
+"",
+"humoriste"
+],
+[
+"զավեշտագիր",
+"комедиограф",
+"comic writer",
+"",
+"auteur comique"
+],
+[
+"զավեշտախոսություն",
+"юмор, остроумие",
+"humour",
+"",
+"humour"
+],
+[
+"պոնչո",
+"пончо",
+"poncho",
+"",
+"poncho"
+],
+[
+"սալաշար",
+"мостовая из плит",
+"flagstone paving",
+"",
+"dallage"
+],
+[
+"լորձաբեր",
+"слизеобразующий",
+"mucus-producing",
+"",
+"mucipare"
+],
+[
+"լորձագեղձ",
+"слизистая железа",
+"mucous gland",
+"",
+"glande muqueuse"
+],
+[
+"լորձային",
+"слизистый",
+"mucous",
+"",
+"muqueux"
+],
+[
+"լորձնաթաղանթ",
+"слизистая оболочка",
+"mucous membrane",
+"",
+"muqueuse"
+],
+[
+"թաղիքյա",
+"войлочный",
+"felt",
+"",
+"en feutre"
+],
+[
+"հրուշակարան",
+"кондитерская",
+"confectionery shop",
+"🧁",
+"pâtisserie, confiserie"
+],
+[
+"շտաբային",
+"штабной",
+"staff (military)",
+"",
+"d'état-major"
+],
+[
+"ժարգոնային",
+"жаргонный",
+"slang",
+"",
+"argotique"
+],
+[
+"կաթնաշիճուկ",
+"молочная сыворотка",
+"whey",
+"",
+"petit-lait (lactosérum)"
+],
+[
+"կլայեկել",
+"лудить",
+"to tin",
+"",
+"étamer"
+],
+[
+"բորակաթթու",
+"азотная кислота",
+"nitric acid",
+"",
+"acide nitrique"
+],
+[
+"բորակածին",
+"азот (книжн.)",
+"nitrogen (literary)",
+"",
+"azote (littéraire)"
+],
+[
+"սիրաբանություն",
+"флирт, ухаживание",
+"flirting",
+"",
+"flirt"
+],
+[
+"բեմադրել",
+"ставить (спектакль)",
+"to stage",
+"🎭",
+"mettre en scène"
+],
+[
+"բեմահարդարանք",
+"сценография",
+"stage design",
+"",
+"scénographie"
+],
+[
+"բեմարվեստ",
+"сценическое искусство",
+"performing arts",
+"",
+"arts du spectacle"
+],
+[
+"արցախահայ",
+"армянин Арцаха",
+"Armenian of Artsakh",
+"",
+"Arménien de l'Artsakh"
+],
+[
+"Խաչեն",
+"Хачен (историческое княжество)",
+"Khachen (historic principality)",
+"",
+"Khatchen (principauté historique)"
+],
+[
+"թեժանալ",
+"накаляться",
+"to heat up",
+"",
+"s'échauffer"
+],
+[
+"թեժացնել",
+"накалять",
+"to heat up",
+"",
+"attiser"
+],
+[
+"կոխոտել",
+"топтать",
+"to trample",
+"",
+"piétiner"
+],
+[
+"ջրավազան",
+"бассейн, водоём",
+"water basin, pool",
+"🏊",
+"bassin"
+],
+[
+"ասֆալտային",
+"асфальтовый",
+"asphalt",
+"",
+"d'asphalte"
+]
+],
+"fr": "Familles de mots 6"
+},
+{
+"lv": "B2",
+"ru": "Однокоренные слова 7",
+"en": "Word families 7",
+"hy": "Արմատակից բառեր 7",
+"ic": "🌳",
+"w": [
+[
+"ասֆալտապատել",
+"асфальтировать",
+"to asphalt",
+"",
+"goudronner"
+],
+[
+"ժամասլաք",
+"часовая стрелка",
+"hour hand",
+"🕐",
+"aiguille des heures"
+],
+[
+"աշնանացանք",
+"озимый сев",
+"autumn sowing",
+"",
+"semis d'automne"
+],
+[
+"գարնանացանք",
+"яровой сев",
+"spring sowing",
+"",
+"semis de printemps"
+],
+[
+"ցանքադաշտ",
+"посевное поле",
+"sown field",
+"",
+"champ ensemencé"
+],
+[
+"ցանքաշրջանառություն",
+"севооборот",
+"crop rotation",
+"",
+"assolement"
+],
+[
+"ցանքատարածություն",
+"посевная площадь",
+"sown area",
+"",
+"surface ensemencée"
+],
+[
+"կոնգրեսական",
+"конгрессмен; конгрессовый",
+"congressman; congressional",
+"",
+"membre du Congrès"
+],
+[
+"ջնարակել",
+"глазуровать",
+"to glaze",
+"",
+"vernisser"
+],
+[
+"թղթակցական",
+"корреспондентский",
+"correspondent's",
+"",
+"de correspondant"
+],
+[
+"թղթակցել",
+"быть корреспондентом",
+"to report (as a correspondent)",
+"",
+"être correspondant"
+],
+[
+"թղթակցություն",
+"корреспонденция",
+"correspondence, report",
+"",
+"correspondance, reportage"
+],
+[
+"սահունություն",
+"плавность",
+"smoothness",
+"",
+"fluidité"
+],
+[
+"վերլուծաբանություն",
+"аналитика",
+"analytics",
+"",
+"analyse"
+],
+[
+"բռնցքամարտել",
+"боксировать",
+"to box",
+"",
+"boxer"
+],
+[
+"իրապաշտական",
+"реалистический",
+"realistic",
+"",
+"réaliste"
+],
+[
+"ջարդոն",
+"лом, металлолом",
+"scrap",
+"",
+"ferraille"
+],
+[
+"հակվածություն",
+"склонность",
+"inclination",
+"",
+"penchant"
+],
+[
+"մանչիկ",
+"мальчик",
+"little boy",
+"👦",
+"petit garçon"
+],
+[
+"ասմունքել",
+"декламировать",
+"to recite",
+"",
+"déclamer"
+],
+[
+"կիտրոնաթթու",
+"лимонная кислота",
+"citric acid",
+"",
+"acide citrique"
+],
+[
+"կիտրոնահյութ",
+"лимонный сок",
+"lemon juice",
+"🍋",
+"jus de citron"
+],
+[
+"կիտրոնաջուր",
+"лимонад",
+"lemonade",
+"",
+"citronnade"
+],
+[
+"կիտրոնենի",
+"лимонное дерево",
+"lemon tree",
+"",
+"citronnier"
+],
+[
+"ազգաբանություն",
+"этнология",
+"ethnology",
+"",
+"ethnologie"
+],
+[
+"լաքապատել",
+"лакировать",
+"to varnish",
+"",
+"vernir"
+],
+[
+"ըմբռնում",
+"понимание, концепция",
+"understanding, conception",
+"",
+"compréhension, conception"
+],
+[
+"ըմբռնելի",
+"постижимый",
+"comprehensible",
+"",
+"compréhensible"
+],
+[
+"բարյացակամություն",
+"доброжелательность",
+"benevolence",
+"",
+"bienveillance"
+],
+[
+"բարյացակամորեն",
+"доброжелательно",
+"benevolently",
+"",
+"avec bienveillance"
+],
+[
+"թմրադեղ",
+"наркотик, дурман",
+"drug",
+"",
+"stupéfiant (drogue)"
+],
+[
+"թմրավաճառ",
+"наркоторговец",
+"drug dealer",
+"",
+"trafiquant de drogue"
+],
+[
+"զգայացունց",
+"сенсационный",
+"sensational",
+"",
+"sensationnel"
+],
+[
+"հոգեցունց",
+"потрясающий (душу)",
+"soul-stirring",
+"",
+"bouleversant"
+],
+[
+"պատմագիտական",
+"историографический",
+"historiographical",
+"",
+"historiographique"
+],
+[
+"դիմացի",
+"находящийся напротив",
+"opposite",
+"",
+"d'en face"
+],
+[
+"դոկտորական",
+"докторский",
+"doctoral",
+"",
+"doctoral"
+],
+[
+"դոկտորություն",
+"докторская степень",
+"doctorate",
+"",
+"doctorat"
+],
+[
+"շշմեցնել",
+"ошеломлять",
+"to stun",
+"",
+"étourdir"
+],
+[
+"շշմեցուցիչ",
+"ошеломляющий",
+"stunning",
+"",
+"stupéfiant"
+],
+[
+"մարզպետարան",
+"администрация области (марза)",
+"regional administration",
+"",
+"préfecture (marz)"
+],
+[
+"ընկերակցություն",
+"товарищество, сопровождение",
+"companionship",
+"",
+"compagnonnage"
+],
+[
+"սալիկապատ",
+"облицованный плиткой",
+"tiled",
+"",
+"carrelé"
+],
+[
+"ման ածել",
+"водить (гулять)",
+"to take around",
+"",
+"promener"
+],
+[
+"դղրդալ",
+"громыхать",
+"to rumble",
+"",
+"gronder (tonner)"
+],
+[
+"նյարդայնանալ",
+"нервничать",
+"to get nervous",
+"",
+"devenir nerveux"
+],
+[
+"մեկեն",
+"сразу, вдруг",
+"at once",
+"",
+"d'un coup"
+],
+[
+"տեկտոնական",
+"тектонический",
+"tectonic",
+"",
+"tectonique"
+],
+[
+"օդափոխվել",
+"проветриться, отдохнуть",
+"to get some fresh air",
+"",
+"prendre l'air (synonyme)"
+],
+[
+"մագաղաթե",
+"пергаментный",
+"parchment",
+"",
+"en parchemin"
+],
+[
+"աննորմալ",
+"ненормальный",
+"abnormal",
+"",
+"anormal"
+],
+[
+"Թամարա",
+"Тамара (женское имя)",
+"Tamara (female name)",
+"",
+"Tamara (prénom féminin)"
+]
+],
+"fr": "Familles de mots 7"
+},
+{
 "lv": "C1",
 "ru": "Философия и абстракции",
 "en": "Philosophy and abstractions",
@@ -124235,6 +126895,1460 @@
 ]
 ],
 "fr": "Verbes littéraires 2"
+},
+{
+"lv": "C1",
+"ru": "Редкие и книжные слова 1",
+"en": "Rare and bookish words 1",
+"hy": "Հազվադեպ և գրքային բառեր 1",
+"ic": "📜",
+"w": [
+[
+"ադամաթուզ",
+"банан (книжн.)",
+"banana (literary)",
+"🍌",
+"banane (littéraire)"
+],
+[
+"սովետական սոցիալիստական հանրապետություն",
+"советская социалистическая республика",
+"Soviet Socialist Republic",
+"",
+"république socialiste soviétique"
+],
+[
+"մականախաղ",
+"хоккей (книжн.)",
+"hockey",
+"🏒",
+"hockey"
+],
+[
+"սափրիչ",
+"цирюльник (устар.)",
+"barber",
+"💈",
+"barbier"
+],
+[
+"մրցորդ",
+"участник состязания",
+"contestant",
+"",
+"concurrent"
+],
+[
+"այր",
+"муж, мужчина (книжн.)",
+"man (literary)",
+"",
+"homme (littéraire)"
+],
+[
+"անդ",
+"там (книжн.)",
+"there",
+"",
+"là-bas (littéraire)"
+],
+[
+"խաչակիր",
+"крестоносец",
+"crusader",
+"",
+"croisé"
+],
+[
+"խաչակրաց արշավանք",
+"Крестовый поход",
+"Crusade",
+"",
+"croisade"
+],
+[
+"ծիրանափող",
+"дудук (поэт. «абрикосовая дудка»)",
+"duduk (poetic)",
+"",
+"doudouk (poétique)"
+],
+[
+"բոկոտն",
+"босоногий",
+"barefoot",
+"",
+"nu-pieds"
+],
+[
+"գարշապար",
+"пята",
+"heel",
+"",
+"talon (littéraire)"
+],
+[
+"արտոսր",
+"слеза (книжн.)",
+"tear (literary)",
+"",
+"larme (littéraire)"
+],
+[
+"ուստր",
+"сын (книжн.)",
+"son (literary)",
+"",
+"fils (littéraire)"
+],
+[
+"ձեղուն",
+"потолок (книжн.)",
+"ceiling",
+"",
+"plafond (littéraire)"
+],
+[
+"թույն",
+"круто! (сленг)",
+"cool! (slang)",
+"😎",
+"génial ! (argot)"
+],
+[
+"ցար",
+"царь",
+"czar",
+"",
+"tsar"
+],
+[
+"բառգիրք",
+"словарь (книжн.)",
+"dictionary",
+"",
+"dictionnaire (littéraire)"
+],
+[
+"ոստայնանկ",
+"ткач",
+"weaver",
+"",
+"tisserand"
+],
+[
+"մարաջախտ",
+"маршал",
+"marshal",
+"",
+"maréchal"
+],
+[
+"գոյ",
+"бытие, сущность",
+"being, existence",
+"",
+"être, existence"
+],
+[
+"հայք",
+"армяне, Армения (книжн.)",
+"the Armenians, Armenia",
+"",
+"les Arméniens, l'Arménie"
+],
+[
+"վիրք",
+"грузины, Грузия (книжн.)",
+"the Georgians, Georgia",
+"",
+"les Géorgiens, la Géorgie"
+],
+[
+"ունկ",
+"ухо (книжн.)",
+"ear (literary)",
+"",
+"oreille (littéraire)"
+],
+[
+"վասալ",
+"вассал",
+"vassal",
+"",
+"vassal"
+],
+[
+"ալան",
+"алан",
+"Alan",
+"",
+"Alain"
+],
+[
+"գեղմ",
+"руно",
+"fleece",
+"",
+"toison"
+],
+[
+"զարմ",
+"род, поколение",
+"kin, generation",
+"",
+"lignée"
+],
+[
+"կղզիախումբ",
+"архипелаг",
+"archipelago",
+"",
+"archipel"
+],
+[
+"հայդուկ",
+"гайдук",
+"hajduk",
+"",
+"haïdouk"
+],
+[
+"ձվագիծ",
+"эллипс",
+"ellipse",
+"",
+"ellipse"
+],
+[
+"ենիչերի",
+"янычар",
+"janissary",
+"",
+"janissaire"
+],
+[
+"շքասրահ",
+"парадный зал",
+"reception room",
+"",
+"salon d'apparat"
+],
+[
+"սրճակաթ",
+"кофе с молоком",
+"coffee with milk",
+"",
+"café au lait"
+],
+[
+"սրճաստան",
+"кофейная плантация",
+"coffee plantation",
+"",
+"caféière"
+],
+[
+"ջաղաց",
+"мельница",
+"mill",
+"",
+"moulin (synonyme)"
+],
+[
+"այգ",
+"заря (книжн.)",
+"dawn",
+"",
+"aurore"
+],
+[
+"շահաստան",
+"шахастан (торговый город)",
+"shahastan (trade city)",
+"",
+"chahastan (ville commerçante)"
+],
+[
+"խաշն",
+"стадо овец",
+"flock of sheep",
+"",
+"troupeau de moutons"
+],
+[
+"միանձն",
+"монах-отшельник",
+"hermit monk",
+"",
+"moine ermite"
+],
+[
+"արքունի",
+"царский, королевский (книжн.)",
+"royal",
+"",
+"royal (littéraire)"
+],
+[
+"հաճո",
+"приятный, угодный",
+"pleasing",
+"",
+"agréable, plaisant"
+],
+[
+"դույզն",
+"малейший",
+"very little",
+"",
+"infime"
+],
+[
+"պիոն",
+"пион",
+"peony",
+"",
+"pivoine"
+],
+[
+"մեն",
+"один, единственный (книжн.)",
+"only, sole",
+"",
+"seul, unique"
+],
+[
+"կուլակ",
+"кулак (зажиточный крестьянин)",
+"kulak",
+"",
+"koulak"
+],
+[
+"զենել",
+"заклать (жертву)",
+"to sacrifice",
+"",
+"immoler"
+],
+[
+"ստամբակ",
+"непокорный",
+"disobedient",
+"",
+"indocile"
+],
+[
+"դոժ",
+"дож",
+"doge",
+"",
+"doge"
+],
+[
+"շիջել",
+"гаснуть (книжн.)",
+"to go out",
+"",
+"s'éteindre"
+],
+[
+"ենթակառույց",
+"инфраструктура (синоним)",
+"infrastructure",
+"",
+"infrastructure (synonyme)"
+]
+],
+"fr": "Mots rares et littéraires 1"
+},
+{
+"lv": "C1",
+"ru": "Редкие и книжные слова 2",
+"en": "Rare and bookish words 2",
+"hy": "Հազվադեպ և գրքային բառեր 2",
+"ic": "📜",
+"w": [
+[
+"անագան",
+"поздний (книжн.)",
+"late",
+"",
+"tardif"
+],
+[
+"վարշամակ",
+"платок, полотенце",
+"handkerchief, towel",
+"",
+"mouchoir, serviette"
+],
+[
+"ավատ",
+"феод, лен",
+"fief",
+"",
+"fief"
+],
+[
+"նավազ",
+"моряк (книжн.)",
+"sailor",
+"",
+"marin (littéraire)"
+],
+[
+"նաժիշտ",
+"служанка (книжн.)",
+"maidservant",
+"",
+"servante (littéraire)"
+],
+[
+"գերշուկա",
+"супермаркет",
+"supermarket",
+"🛒",
+"supermarché"
+],
+[
+"դիպաշար",
+"сюжет",
+"plot",
+"",
+"intrigue"
+],
+[
+"համոզկեր",
+"убедительный",
+"persuasive",
+"",
+"convaincant"
+],
+[
+"ընկճախտ",
+"депрессия",
+"depression",
+"",
+"dépression"
+],
+[
+"եպերել",
+"порицать",
+"to reproach",
+"",
+"blâmer"
+],
+[
+"եպեր",
+"порицание",
+"reproach",
+"",
+"blâme"
+],
+[
+"պատիկ",
+"-кратный",
+"-fold",
+"",
+"-uple"
+],
+[
+"երկիցս",
+"дважды",
+"twice",
+"",
+"deux fois"
+],
+[
+"երիցս",
+"трижды",
+"three times",
+"",
+"trois fois"
+],
+[
+"քանիցս",
+"сколько раз?",
+"how many times?",
+"",
+"combien de fois ?"
+],
+[
+"մեռյալ",
+"мёртвый, покойник",
+"dead",
+"",
+"mort, défunt"
+],
+[
+"արտևան",
+"ресница (книжн.)",
+"eyelash",
+"",
+"cil"
+],
+[
+"լիով",
+"полностью",
+"fully",
+"",
+"pleinement"
+],
+[
+"բիոլոգիա",
+"биология (устар.)",
+"biology (dated)",
+"",
+"biologie (vieilli)"
+],
+[
+"գեոլոգիա",
+"геология (устар.)",
+"geology (dated)",
+"",
+"géologie (vieilli)"
+],
+[
+"ռևոլյուցիա",
+"революция (устар.)",
+"revolution (dated)",
+"",
+"révolution (vieilli)"
+],
+[
+"ինտելիգենցիա",
+"интеллигенция (устар.)",
+"intelligentsia (dated)",
+"",
+"intelligentsia (vieilli)"
+],
+[
+"ռոման",
+"роман (устар.)",
+"novel (dated)",
+"",
+"roman (vieilli)"
+],
+[
+"ունիվերմագ",
+"универмаг (устар.)",
+"department store (dated)",
+"",
+"grand magasin (vieilli)"
+],
+[
+"որմ",
+"стена (книжн.)",
+"wall",
+"",
+"mur (littéraire)"
+],
+[
+"պարիկ",
+"пари (мифическое существо)",
+"pari (mythical spirit)",
+"",
+"pari (esprit mythique)"
+],
+[
+"ներց",
+"европейская норка",
+"European mink",
+"",
+"vison d'Europe"
+],
+[
+"կուլտուրա",
+"культура (устар.)",
+"culture (dated)",
+"",
+"culture (vieilli)"
+],
+[
+"պոչազգեստ",
+"фрак",
+"tailcoat",
+"",
+"frac"
+],
+[
+"փիլիսոփոս",
+"философ (книжн.)",
+"philosopher (literary)",
+"",
+"philosophe (littéraire)"
+],
+[
+"թեզաուրուս",
+"тезаурус",
+"thesaurus",
+"",
+"thésaurus"
+],
+[
+"շահնշահ",
+"шахиншах",
+"shahanshah",
+"",
+"chahinchah"
+],
+[
+"խորհրդային սոցիալիստական հանրապետություն",
+"Советская Социалистическая Республика (синоним)",
+"Soviet Socialist Republic",
+"",
+"République socialiste soviétique"
+],
+[
+"ինքնավար սովետական սոցիալիստական հանրապետություն",
+"Автономная Советская Социалистическая Республика",
+"Autonomous Soviet Socialist Republic",
+"",
+"République socialiste soviétique autonome"
+],
+[
+"տկար սեռ",
+"слабый пол",
+"the weaker sex",
+"",
+"le sexe faible"
+],
+[
+"կայքավար",
+"администратор (сайта)",
+"site admin",
+"",
+"administrateur (de site)"
+],
+[
+"ամիրա",
+"эмир (амира)",
+"emir",
+"",
+"émir (amira)"
+],
+[
+"ամիրսպասալար",
+"амирспасалар (главнокомандующий)",
+"amirspasalar (commander-in-chief)",
+"",
+"amirspassalar"
+],
+[
+"կատակագուսան",
+"комедиант (средневековый)",
+"medieval comic actor",
+"",
+"bouffon médiéval"
+],
+[
+"օդատեսիլ",
+"мираж",
+"mirage",
+"",
+"mirage"
+],
+[
+"բևեռացույց",
+"компас (книжн.)",
+"compass",
+"",
+"boussole"
+],
+[
+"շրջարկ",
+"контекст (книжн.)",
+"context",
+"",
+"contexte (littéraire)"
+],
+[
+"հղացք",
+"концепт",
+"concept",
+"",
+"concept (littéraire)"
+],
+[
+"բուխ",
+"настоящий, неподдельный",
+"genuine",
+"",
+"authentique"
+],
+[
+"փայլունակ",
+"сверкающий",
+"sparkling",
+"",
+"étincelant"
+],
+[
+"հերք",
+"волосы (книжн.)",
+"hair (literary)",
+"",
+"chevelure"
+],
+[
+"աստվածամերժություն",
+"атеизм",
+"atheism",
+"",
+"athéisme"
+],
+[
+"ընթերցողուհի",
+"читательница",
+"female reader",
+"",
+"lectrice"
+],
+[
+"հարսնարան",
+"комната новобрачных",
+"bridal chamber",
+"",
+"chambre nuptiale"
+],
+[
+"սարսափեցուցիչ",
+"ужасающий (синоним)",
+"terrifying",
+"",
+"terrifiant (synonyme)"
+],
+[
+"զարհուրաբեր",
+"наводящий ужас",
+"horrifying",
+"",
+"épouvantable"
+]
+],
+"fr": "Mots rares et littéraires 2"
+},
+{
+"lv": "C1",
+"ru": "Редкие и книжные слова 3",
+"en": "Rare and bookish words 3",
+"hy": "Հազվադեպ և գրքային բառեր 3",
+"ic": "📜",
+"w": [
+[
+"օգնակոչ",
+"призыв о помощи",
+"call for help",
+"",
+"appel à l'aide"
+],
+[
+"օգնահաս",
+"приходящий на помощь",
+"helping",
+"",
+"secourable"
+],
+[
+"վախճանական",
+"заключительный",
+"final",
+"",
+"final (conclusif)"
+],
+[
+"զբոսարշավ",
+"экскурсия",
+"excursion",
+"",
+"excursion"
+],
+[
+"սկունդ",
+"щенок (устар.)",
+"puppy",
+"",
+"chiot (vieilli)"
+],
+[
+"ծրագրաշար",
+"программное обеспечение",
+"software",
+"💻",
+"logiciel"
+],
+[
+"վնասագիր",
+"вредоносная программа",
+"malware",
+"",
+"logiciel malveillant"
+],
+[
+"ծրագրակազմ",
+"программный пакет",
+"software package",
+"",
+"progiciel"
+],
+[
+"գաղտ",
+"тайный (книжн.)",
+"secret",
+"",
+"secret (littéraire)"
+],
+[
+"վերմակասավան",
+"пододеяльник",
+"duvet cover",
+"",
+"housse de couette"
+],
+[
+"կաճառ",
+"академия (книжн.)",
+"academy",
+"",
+"académie"
+],
+[
+"մանեթ",
+"манат (рубль, устар.)",
+"ruble (dated)",
+"",
+"rouble (vieilli)"
+],
+[
+"իշխանապետություն",
+"княжество",
+"principality",
+"",
+"principauté"
+],
+[
+"աթաբեկ",
+"атабек",
+"atabeg",
+"",
+"atabeg"
+],
+[
+"ձյունափաթիլ",
+"снежинка",
+"snowflake",
+"❄️",
+"flocon de neige"
+],
+[
+"մամլուք",
+"мамлюк",
+"mameluke",
+"",
+"mamelouk"
+],
+[
+"տաճարական",
+"тамплиер",
+"Templar",
+"",
+"templier"
+],
+[
+"հիմնադրուհի",
+"основательница",
+"woman founder",
+"",
+"fondatrice"
+],
+[
+"զգայապատրանք",
+"галлюцинация",
+"hallucination",
+"",
+"hallucination"
+],
+[
+"հարակարծություն",
+"парадокс",
+"paradox",
+"",
+"paradoxe"
+],
+[
+"մերկապաշտություն",
+"нудизм (синоним)",
+"nudism",
+"",
+"naturisme"
+],
+[
+"մերկապաշտ",
+"нудист",
+"nudist",
+"",
+"naturiste"
+],
+[
+"ձյունատախտակ",
+"сноуборд",
+"snowboard",
+"🏂",
+"snowboard"
+],
+[
+"դուխ",
+"дух, кураж (сленг)",
+"courage (slang)",
+"",
+"courage, cran (argot)"
+],
+[
+"ցանցենի",
+"сетчатка (глаза)",
+"retina",
+"",
+"rétine"
+],
+[
+"նենգադուլ",
+"диверсия",
+"sabotage",
+"",
+"sabotage (synonyme)"
+],
+[
+"փուշտիպան",
+"телохранитель",
+"bodyguard",
+"",
+"garde du corps"
+],
+[
+"տաճիկ",
+"тачик (турок, османской эпохи)",
+"Turk (Ottoman period)",
+"",
+"Turc (époque ottomane)"
+],
+[
+"ասպնջական",
+"гостеприимный",
+"hospitable",
+"",
+"hospitalier"
+],
+[
+"հրովարտակ",
+"грамота, указ (царский)",
+"royal edict",
+"",
+"édit royal"
+],
+[
+"հանապազ",
+"всегда (книжн.)",
+"always",
+"",
+"toujours (littéraire)"
+],
+[
+"հազարապետ",
+"хазарапет (тысяцкий)",
+"chiliarch (hazarapet)",
+"",
+"hazarapet"
+],
+[
+"լուսաֆոր",
+"светофор",
+"traffic light",
+"🚦",
+"feu de circulation"
+],
+[
+"արաց",
+"арац (шестой месяц армянского календаря)",
+"Arats (Armenian month)",
+"",
+"arats (mois arménien)"
+],
+[
+"մահաքաղաք",
+"некрополь (синоним)",
+"necropolis",
+"",
+"nécropole (synonyme)"
+],
+[
+"ծաղարար",
+"кондитер",
+"pastry chef",
+"",
+"pâtissier"
+],
+[
+"հեղված",
+"версия",
+"version",
+"",
+"version"
+],
+[
+"ծերակուտական",
+"сенатор",
+"senator",
+"",
+"sénateur"
+],
+[
+"ծղնի",
+"зимородок (синоним)",
+"kingfisher",
+"",
+"alcyon"
+],
+[
+"շնավարդ",
+"шиповник собачий",
+"dog rose",
+"",
+"églantier"
+],
+[
+"վերստ",
+"верста",
+"verst",
+"",
+"verste"
+],
+[
+"րաբունապետ",
+"рабунапет (глава учёных)",
+"rabunapet (head teacher)",
+"",
+"rabounapet"
+],
+[
+"թեփամողես",
+"панголин",
+"pangolin",
+"",
+"pangolin"
+],
+[
+"տորդիկ",
+"дрозд",
+"thrush",
+"",
+"grive"
+],
+[
+"տարաբանվոր",
+"разнорабочий",
+"odd-job man",
+"",
+"manœuvre"
+],
+[
+"պատկերահան",
+"художник (устар.)",
+"painter (dated)",
+"",
+"peintre (vieilli)"
+],
+[
+"ոգորել",
+"бороться",
+"to struggle",
+"",
+"lutter (combattre)"
+],
+[
+"կորուսյալ",
+"утраченный",
+"lost",
+"",
+"perdu"
+],
+[
+"արծաթասիրություն",
+"сребролюбие",
+"love of money",
+"",
+"amour de l'argent"
+],
+[
+"ամբարհավաճություն",
+"высокомерие (устар.)",
+"arrogance",
+"",
+"arrogance (vieilli)"
+],
+[
+"բալօղի",
+"вишнёвая наливка",
+"sour cherry liqueur",
+"🍒",
+"liqueur de griotte"
+]
+],
+"fr": "Mots rares et littéraires 3"
+},
+{
+"lv": "C1",
+"ru": "Редкие и книжные слова 4",
+"en": "Rare and bookish words 4",
+"hy": "Հազվադեպ և գրքային բառեր 4",
+"ic": "📜",
+"w": [
+[
+"անձնատվություն",
+"капитуляция",
+"surrender",
+"",
+"capitulation"
+],
+[
+"ոսոխություն",
+"враждебность",
+"hostility",
+"",
+"hostilité"
+],
+[
+"որդեգրություն",
+"усыновление",
+"adoption",
+"",
+"adoption"
+],
+[
+"դասարանակից",
+"одноклассник (синоним)",
+"classmate",
+"",
+"camarade de classe (synonyme)"
+],
+[
+"միավորություն",
+"союз (устар.)",
+"union",
+"",
+"union"
+],
+[
+"եղջերվամիս",
+"оленина",
+"venison",
+"",
+"viande de cerf"
+],
+[
+"մեղրապոպ",
+"арбуз (книжн.)",
+"watermelon",
+"",
+"pastèque (littéraire)"
+],
+[
+"ջեռանալ",
+"согреваться (книжн.)",
+"to get warm",
+"",
+"se réchauffer (littéraire)"
+],
+[
+"գառագեղ",
+"клетка (для зверей)",
+"animal cage",
+"",
+"cage (pour animaux)"
+],
+[
+"փշարմավ",
+"падуб",
+"holly",
+"",
+"houx"
+],
+[
+"ձևավոր չմշկասահք",
+"фигурное катание",
+"figure skating",
+"⛸️",
+"patinage artistique"
+],
+[
+"իռեդենտիզմ",
+"ирредентизм",
+"irredentism",
+"",
+"irrédentisme"
+],
+[
+"բեռնարգելք",
+"эмбарго",
+"embargo",
+"",
+"embargo"
+],
+[
+"դրոշակաձող",
+"флагшток",
+"flagpole",
+"",
+"mât de drapeau"
+],
+[
+"կատաղախտ",
+"бешенство",
+"rabies",
+"",
+"rage"
+],
+[
+"ծփի",
+"вяз гладкий",
+"European white elm",
+"",
+"orme lisse"
+],
+[
+"գրկախառնել",
+"крепко обнимать",
+"to hug tightly",
+"",
+"étreindre fort"
+],
+[
+"տնկադաշտ",
+"плантация",
+"plantation",
+"",
+"plantation"
+],
+[
+"ֆռանգ",
+"франк (западноевропеец)",
+"Frank (Western European)",
+"",
+"Franc (Occidental)"
+],
+[
+"մարդպետ",
+"мардпет (главный евнух двора)",
+"mardpet (chief eunuch)",
+"",
+"mardpet"
+],
+[
+"վարժապետ",
+"учитель (устар.)",
+"teacher (dated)",
+"",
+"maître d'école"
+],
+[
+"հարկապարտ",
+"облагаемый налогом",
+"taxpaying",
+"",
+"contribuable"
+],
+[
+"մելիք",
+"мелик",
+"melik",
+"",
+"mélik"
+],
+[
+"դերնախագահ",
+"вице-президент",
+"vice-president",
+"",
+"vice-président"
+],
+[
+"ոտնացուպ",
+"ходули",
+"stilts",
+"",
+"échasses"
+],
+[
+"կոլա",
+"кола",
+"cola",
+"",
+"cola"
+],
+[
+"սեղմասկավառակ",
+"компакт-диск",
+"CD",
+"💿",
+"disque compact"
+],
+[
+"մինիստր",
+"министр (устар.)",
+"minister (dated)",
+"",
+"ministre (vieilli)"
+],
+[
+"կրկեսամարտիկ",
+"гладиатор (синоним)",
+"gladiator",
+"",
+"gladiateur (synonyme)"
+],
+[
+"սննդադուլ",
+"голодовка (устар.)",
+"hunger strike (dated)",
+"",
+"grève de la faim (vieilli)"
+],
+[
+"հանրակառք",
+"омнибус",
+"omnibus",
+"",
+"omnibus"
+],
+[
+"սարդար",
+"сардар",
+"sardar",
+"",
+"sardar"
+],
+[
+"պայմանագրական",
+"договорный",
+"contractual",
+"",
+"contractuel"
+],
+[
+"բիլիոն",
+"миллиард (биллион)",
+"billion",
+"",
+"milliard (billion)"
+],
+[
+"վարդածառ",
+"рододендрон (синоним)",
+"rhododendron",
+"",
+"rhododendron (synonyme)"
+],
+[
+"միկիտան",
+"кабатчик",
+"tavern owner",
+"",
+"cabaretier"
+],
+[
+"արմնկակալ",
+"подлокотник",
+"armrest",
+"",
+"accoudoir"
+],
+[
+"քթթել",
+"моргать",
+"to blink",
+"",
+"cligner"
+],
+[
+"օդակարգավորիչ",
+"кондиционер",
+"air conditioner",
+"❄️",
+"climatiseur"
+],
+[
+"ձգտան",
+"сухожилие",
+"tendon",
+"",
+"tendon"
+],
+[
+"լրագիր",
+"газета (устар.)",
+"newspaper (dated)",
+"",
+"journal (vieilli)"
+],
+[
+"աներևութացում",
+"исчезновение (синоним)",
+"disappearance",
+"",
+"disparition (synonyme)"
+],
+[
+"միտինգ",
+"митинг (устар.)",
+"rally (dated)",
+"",
+"meeting (vieilli)"
+],
+[
+"պասեք",
+"Пасха (иудейская)",
+"Passover",
+"",
+"Pâque juive"
+],
+[
+"կահ",
+"утварь",
+"household stuff",
+"",
+"mobilier, ustensiles"
+],
+[
+"զինակիր",
+"оруженосец",
+"armour-bearer",
+"",
+"écuyer"
+],
+[
+"վելոսիպեդ",
+"велосипед (устар.)",
+"bicycle (dated)",
+"🚲",
+"vélo (vieilli)"
+],
+[
+"տրադիցիա",
+"традиция (устар.)",
+"tradition (dated)",
+"",
+"tradition (vieilli)"
+],
+[
+"ռեսպուբլիկա",
+"республика (устар.)",
+"republic (dated)",
+"",
+"république (vieilli)"
+]
+],
+"fr": "Mots rares et littéraires 4"
 },
 {
 "lv": "C2",
