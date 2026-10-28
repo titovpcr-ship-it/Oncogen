@@ -229,6 +229,21 @@ def test_tseny_rossii():
           all("Meteora" not in g["album"] for g in got))
 
 
+def test_prodazhi_vladeltsa():
+    ru = {ch.key("Olivia Rodrigo"): [
+        {"album": "Sour", "price": 4500, "src": "Авито (скрин)", "url": "",
+         "gtin": "", "sold": False},
+        {"album": "Sour", "price": 5000, "src": "продано (Авито, 2026-10-28)",
+         "url": "", "gtin": "", "sold": True}]}
+    got = H.ru_prices(ru, "Olivia Rodrigo", "SOUR", ["0602438106417"])
+    check("продажа владельца — первой, даже если витрина дешевле",
+          got[0]["sold"] and got[0]["price"] == 5000)
+    idx = H.load_ru()
+    sour = [r for r in idx.get(ch.key("Olivia Rodrigo"), []) if r.get("sold")]
+    check("data/ru_sales.csv читается: Sour — на руки 4 200 ₽, не 5 000",
+          any(r["album"] == "Sour" and r["price"] == 4200 for r in sour))
+
+
 def test_lovushki_progona():
     import ruspop as rp
     # 26.10.2026: «Number Ones» — двойник по карточке, а считался одинарником.
@@ -332,6 +347,7 @@ def test_zhenskie():
 def main():
     for fn in [test_razbor_kworb, test_soavtory, test_vzlyot_za_kvartal,
                test_rossiya, test_albomy, test_vinil_discogs, test_tseny_rossii,
+               test_prodazhi_vladeltsa,
                test_lovushki_progona, test_tolko_zhivye, test_zhenskie]:
         print(f"\n{fn.__name__}")
         fn()

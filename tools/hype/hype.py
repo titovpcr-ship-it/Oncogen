@@ -70,6 +70,11 @@ PLASTINKA = os.path.join(ROOT, "data", "ru_shop_plastinka.csv")
 APPMI = os.path.join(ROOT, "data", "ru_shop2_appmistore.csv")
 AVITO = os.path.join(ROOT, "data", "avito_price_palette.csv")
 OZON = os.path.join(ROOT, "data", "ozon_price_palette.csv")
+# Продажи владельца: реальная сделка, а не витрина; в расчёте кратности идёт
+# первой и берётся net_rub — «за вычетом доставки чистые на руки» (владелец
+# 28.10.2026: Olivia Rodrigo «Sour», выставил 5 900, продал 5 000, на руки
+# 4 200, «очень быстро ушло»), без него — sold_rub.
+SALES = os.path.join(ROOT, "data", "ru_sales.csv")
 USD_RUB = 95.0
 # Владелец 26.10.2026: «Ориентируемся на запад» — спрос задают западные
 # чарты (Olivia Rodrigo №1 в мире и ни одной строки в русских). Русские
@@ -368,10 +373,10 @@ def choose_albums(z, charting, vinyl, n, probe=None):
 # --- Россия: витрины и скриншоты владельца ------------------------------------
 
 def load_ru():
-    """{ключ артиста: [{album, price, src, url, gtin}]}"""
+    """{ключ артиста: [{album, price, src, url, gtin, sold}]}"""
     idx = {}
 
-    def add(artist, album, price, src, url="", gtin=""):
+    def add(artist, album, price, src, url="", gtin="", sold=False):
         try:
             price = float(price)
         except (TypeError, ValueError):
@@ -380,7 +385,18 @@ def load_ru():
             return
         idx.setdefault(ch.key(artist), []).append(
             {"album": album, "price": price, "src": src, "url": url,
-             "gtin": re.sub(r"\D", "", gtin or "")})
+             "gtin": re.sub(r"\D", "", gtin or ""), "sold": sold})
+
+    try:
+        with open(SALES, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                net = r.get("net_rub")
+                add(r.get("artist"), r.get("album"), net or r.get("sold_rub"),
+                    f"продано{' на руки' if net else ''} "
+                    f"({r.get('platform') or '?'}, {r.get('date', '')})",
+                    sold=True)
+    except OSError:
+        pass
 
     for path, src in ((PLASTINKA, "plastinka"), (APPMI, "appmistore"),
                       (AVITO, "Авито (скрин)"), (OZON, "Ozon (скрин)")):
@@ -400,14 +416,15 @@ def load_ru():
 
 
 def ru_prices(ru, artist, album, barcodes=()):
-    """Цены этого альбома в России; совпадение штрихкода помечается."""
+    """Цены этого альбома в России: сначала продажи владельца, затем совпавший
+    штрихкод, затем по цене; совпадение штрихкода помечается."""
     out = []
     codes = {re.sub(r"\D", "", b).lstrip("0") for b in barcodes if b}
     for r in ru.get(ch.key(artist), []):
         exact = bool(r["gtin"]) and r["gtin"].lstrip("0") in codes
         if exact or same_album(album, r["album"]):
             out.append(dict(r, exact=exact))
-    out.sort(key=lambda r: (not r["exact"], r["price"]))
+    out.sort(key=lambda r: (not r.get("sold"), not r["exact"], r["price"]))
     return out
 
 
