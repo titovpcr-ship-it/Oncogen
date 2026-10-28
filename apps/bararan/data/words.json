@@ -23068,6 +23068,1316 @@
 "fr": "Pain et boissons"
 },
 {
+"lv": "A2",
+"ru": "Дом: вещи и мебель",
+"en": "Home: things and furniture",
+"hy": "Տուն. իրեր և կահույք",
+"ic": "🪑",
+"w": [
+[
+"թակույկ",
+"кувшин",
+"jug, pitcher",
+"",
+"cruche"
+],
+[
+"խնոցի",
+"маслобойка",
+"butter churn",
+"",
+"baratte"
+],
+[
+"կովլակ",
+"пойло (для скота)",
+"swill (for animals)",
+"",
+"pâtée"
+],
+[
+"տիկ",
+"бурдюк",
+"skin (for liquids)",
+"",
+"outre"
+],
+[
+"բրոշ",
+"брошь",
+"brooch",
+"",
+"broche"
+],
+[
+"զարդասեղ",
+"брошь, булавка",
+"brooch, pin",
+"",
+"broche, épingle"
+],
+[
+"թևքաճարմանդ",
+"запонка",
+"cufflink",
+"",
+"bouton de manchette"
+],
+[
+"մահիկ",
+"полумесяц",
+"crescent",
+"🌙",
+"croissant"
+],
+[
+"պաճույճ",
+"украшение",
+"ornament, adornment",
+"",
+"parure, ornement"
+],
+[
+"հակ",
+"тюк",
+"bale, pack",
+"",
+"balle, ballot"
+],
+[
+"ուղեպարկ",
+"рюкзак",
+"backpack",
+"🎒",
+"sac à dos"
+],
+[
+"ջվալ",
+"мешок (джутовый)",
+"gunny sack",
+"",
+"sac de jute"
+],
+[
+"թախտ",
+"топчан",
+"plank bed",
+"",
+"bat-flanc"
+],
+[
+"ճոճաթոռ",
+"кресло-качалка",
+"rocking chair",
+"",
+"fauteuil à bascule"
+],
+[
+"գահույք",
+"трон",
+"throne",
+"",
+"trône"
+],
+[
+"զարդասեղան",
+"туалетный столик",
+"dressing table",
+"",
+"coiffeuse"
+],
+[
+"ճաշասեղան",
+"обеденный стол",
+"dining table",
+"",
+"table à manger"
+],
+[
+"տախտ",
+"тахта",
+"couch, sofa",
+"",
+"divan"
+],
+[
+"հարթուկ",
+"утюг",
+"iron",
+"",
+"fer à repasser"
+],
+[
+"փոշեծծիչ",
+"пылесос",
+"vacuum cleaner",
+"",
+"aspirateur"
+],
+[
+"բալակլավա",
+"балаклава",
+"balaclava",
+"",
+"cagoule"
+],
+[
+"գդակ",
+"шапка",
+"hat",
+"🧢",
+"bonnet, chapeau"
+],
+[
+"կապիշոն",
+"капюшон",
+"hood",
+"",
+"capuche"
+],
+[
+"անդրավարտիք",
+"кальсоны, трусы",
+"underpants, drawers",
+"",
+"caleçon"
+],
+[
+"սեղմիրան",
+"корсет",
+"corset",
+"",
+"corset"
+],
+[
+"վարտիք",
+"трусы",
+"underpants, knickers",
+"",
+"culotte, slip"
+],
+[
+"գամ",
+"гвоздь, заклёпка",
+"nail, rivet",
+"",
+"clou, rivet"
+],
+[
+"լվացքի ամրակ",
+"прищепка",
+"clothes peg",
+"",
+"pince à linge"
+],
+[
+"տափօղակ",
+"шайба (плоская)",
+"washer",
+"",
+"rondelle"
+]
+],
+"fr": "Maison : objets et meubles"
+},
+{
+"lv": "A2",
+"ru": "Кухня: блюда и готовка",
+"en": "Kitchen: dishes and cooking",
+"hy": "Խոհանոց. ուտեստներ և եփում",
+"ic": "🍜",
+"w": [
+[
+"աղանձել",
+"обжаривать (зерно)",
+"to roast (grain)",
+"",
+"griller (des céréales)"
+],
+[
+"բովել",
+"жарить, обжаривать",
+"to roast",
+"",
+"rôtir, torréfier"
+],
+[
+"եփող մակերես",
+"варочная поверхность",
+"hob",
+"",
+"plaque de cuisson"
+],
+[
+"խարկել",
+"поджаривать",
+"to roast, to fry",
+"",
+"faire revenir, griller"
+],
+[
+"բյորեկ",
+"бёрек",
+"borek",
+"",
+"börek"
+],
+[
+"փքաբլիթ",
+"пончик",
+"doughnut",
+"🍩",
+"beignet"
+],
+[
+"արիշտա",
+"лапша (аришта)",
+"noodles (reshte)",
+"",
+"nouilles (rechta)"
+],
+[
+"ուդոն",
+"удон",
+"udon",
+"",
+"udon"
+],
+[
+"ռամեն",
+"рамен",
+"ramen",
+"🍜",
+"ramen"
+],
+[
+"ռավիոլի",
+"равиоли",
+"ravioli",
+"",
+"raviolis"
+],
+[
+"խուրմա",
+"финик",
+"date (fruit)",
+"",
+"datte"
+],
+[
+"շողպար",
+"киви",
+"kiwifruit",
+"🥝",
+"kiwi"
+],
+[
+"մաթուզ",
+"плод земляничного дерева",
+"strawberry tree fruit",
+"",
+"arbouse"
+],
+[
+"մաթուզենի",
+"земляничное дерево",
+"strawberry tree",
+"",
+"arbousier"
+]
+],
+"fr": "Cuisine : plats et cuisson"
+},
+{
+"lv": "A2",
+"ru": "Быт и самочувствие",
+"en": "Daily life and health",
+"hy": "Կենցաղ և ինքնազգացողություն",
+"ic": "🤧",
+"w": [
+[
+"ամանեղեն",
+"посуда",
+"dishes, dishware",
+"🍽️",
+"vaisselle"
+],
+[
+"սանդ",
+"ступка",
+"mortar",
+"",
+"mortier"
+],
+[
+"քամոց",
+"дуршлаг, сито",
+"colander, strainer",
+"",
+"passoire"
+],
+[
+"բահակ",
+"шпатель (медицинский)",
+"tongue depressor",
+"",
+"abaisse-langue"
+],
+[
+"բինտ",
+"бинт",
+"bandage",
+"🩹",
+"bande, pansement"
+],
+[
+"ջեռակ",
+"грелка",
+"hot water bottle",
+"",
+"bouillotte"
+],
+[
+"հարբուխ",
+"насморк",
+"runny nose",
+"🤧",
+"rhume, nez qui coule"
+],
+[
+"շնչարգելություն",
+"одышка",
+"shortness of breath",
+"",
+"essoufflement"
+],
+[
+"սրտխառնուք",
+"тошнота",
+"nausea",
+"🤢",
+"nausée"
+],
+[
+"ահ",
+"страх, ужас",
+"fear, dread",
+"😨",
+"peur, effroi"
+],
+[
+"երկնչել",
+"бояться (книжн.)",
+"to fear",
+"",
+"craindre"
+],
+[
+"սարսուռ",
+"дрожь, озноб",
+"shiver, chill",
+"",
+"frisson"
+],
+[
+"ծխուկ",
+"окурок",
+"cigarette butt",
+"",
+"mégot"
+],
+[
+"սիգարետ",
+"сигарета",
+"cigarette",
+"🚬",
+"cigarette"
+],
+[
+"ալո",
+"алло",
+"hello (on the phone)",
+"📞",
+"allô"
+],
+[
+"ինքնապատասխանիչ",
+"автоответчик",
+"answering machine",
+"",
+"répondeur"
+],
+[
+"խելախոս",
+"смартфон",
+"smartphone",
+"📱",
+"smartphone"
+],
+[
+"բաղնիք",
+"баня",
+"bathhouse",
+"",
+"bains publics"
+],
+[
+"շոգեբաղնիք",
+"парная, паровая баня",
+"steam bath",
+"🧖",
+"bain de vapeur"
+],
+[
+"հուր",
+"огонь (книжн.)",
+"fire (literary)",
+"🔥",
+"feu (littéraire)"
+],
+[
+"հրահան",
+"огниво",
+"firesteel",
+"",
+"briquet à silex"
+],
+[
+"հրկիզել",
+"поджигать",
+"to set on fire",
+"",
+"incendier"
+],
+[
+"անուշահոտություն",
+"благоухание",
+"sweet smell",
+"",
+"parfum, bonne odeur"
+],
+[
+"բուրմունք",
+"аромат",
+"aroma, fragrance",
+"",
+"arôme"
+],
+[
+"մուշկ",
+"мускус",
+"musk",
+"",
+"musc"
+],
+[
+"աղախին",
+"служанка",
+"maidservant",
+"",
+"servante"
+],
+[
+"աշխատակցուհի",
+"сотрудница",
+"female employee",
+"",
+"employée"
+],
+[
+"թրիք",
+"навоз",
+"dung, manure",
+"",
+"fumier"
+],
+[
+"փորլուծ",
+"понос",
+"diarrhoea",
+"",
+"diarrhée"
+],
+[
+"քակոր",
+"кизяк, сухой навоз",
+"dry dung",
+"",
+"bouse séchée"
+],
+[
+"ձայնարկիչ",
+"проигрыватель",
+"record player",
+"",
+"tourne-disque"
+],
+[
+"մագնիտոֆոն",
+"магнитофон",
+"tape recorder",
+"📼",
+"magnétophone"
+],
+[
+"չիպ",
+"чип",
+"chip",
+"",
+"puce"
+],
+[
+"ինքնագլոր",
+"самокат",
+"kick scooter",
+"🛴",
+"trottinette"
+],
+[
+"լիմուզին",
+"лимузин",
+"limousine",
+"",
+"limousine"
+],
+[
+"կառք",
+"карета, повозка",
+"carriage, coach",
+"🐴",
+"carrosse, voiture"
+],
+[
+"աղբատար մեքենա",
+"мусоровоз",
+"garbage truck",
+"",
+"camion poubelle"
+],
+[
+"արագաչափ",
+"спидометр",
+"speedometer",
+"",
+"compteur de vitesse"
+],
+[
+"հալած պանիր",
+"плавленый сыр",
+"processed cheese",
+"",
+"fromage fondu"
+],
+[
+"պարմեզան",
+"пармезан",
+"parmesan",
+"🧀",
+"parmesan"
+],
+[
+"սուլուգունի",
+"сулугуни",
+"suluguni",
+"",
+"suluguni"
+],
+[
+"աղբատար խողովակ",
+"мусоропровод",
+"garbage chute",
+"",
+"vide-ordures"
+],
+[
+"ամրան",
+"арматура",
+"rebar",
+"",
+"armature"
+],
+[
+"բարավոր",
+"перемычка (над проёмом)",
+"lintel",
+"",
+"linteau"
+],
+[
+"զրուցարան",
+"беседка",
+"gazebo, arbour",
+"",
+"tonnelle, pavillon"
+]
+],
+"fr": "Vie quotidienne et santé"
+},
+{
+"lv": "A2",
+"ru": "Быт: дом, еда, время",
+"en": "Daily life: home, food, time",
+"hy": "Կենցաղ. տուն, սնունդ, ժամանակ",
+"ic": "🧹",
+"w": [
+[
+"տոնագիր",
+"юбилейный сборник",
+"festschrift",
+"",
+"mélanges (en l'honneur de)"
+],
+[
+"կոմբինատ",
+"комбинат",
+"industrial combine",
+"",
+"combinat"
+],
+[
+"ժոնգլյոր",
+"жонглёр",
+"juggler",
+"🤹",
+"jongleur"
+],
+[
+"ցախավել",
+"веник",
+"broom",
+"🧹",
+"balai"
+],
+[
+"հարավ-արևելք",
+"юго-восток",
+"southeast",
+"",
+"sud-est"
+],
+[
+"հյուսիս-արևմուտք",
+"северо-запад",
+"northwest",
+"",
+"nord-ouest"
+],
+[
+"սնգույր",
+"румяна",
+"rouge, blush",
+"",
+"fard à joues"
+],
+[
+"խամոն",
+"хамон",
+"jamón",
+"",
+"jambon cru"
+],
+[
+"չալաղաջ",
+"отбивная",
+"chop",
+"",
+"côtelette"
+],
+[
+"ատամնաշար",
+"зубной ряд",
+"set of teeth",
+"",
+"denture"
+],
+[
+"հրուշակ",
+"сласти (книжн.)",
+"sweets, confection",
+"",
+"friandises"
+],
+[
+"հրուշակեղեն",
+"кондитерские изделия",
+"confectionery",
+"🍬",
+"confiserie"
+],
+[
+"Քնած գեղեցկուհին",
+"«Спящая красавица»",
+"Sleeping Beauty",
+"",
+"la Belle au bois dormant"
+],
+[
+"կողակից",
+"супруг, супруга",
+"spouse",
+"",
+"conjoint"
+],
+[
+"տատ",
+"бабушка",
+"grandmother",
+"👵",
+"grand-mère"
+],
+[
+"հրշեջ պահպանություն",
+"пожарная охрана",
+"fire department",
+"🚒",
+"pompiers"
+],
+[
+"կանթեղ",
+"лампада, масляная лампа",
+"oil lamp",
+"",
+"lampe à huile"
+],
+[
+"ճրագ",
+"светильник, лампа",
+"lamp",
+"🪔",
+"lampe"
+],
+[
+"երկրագունդ",
+"земной шар",
+"the globe, Earth",
+"🌍",
+"globe terrestre"
+],
+[
+"ոտանավոր",
+"стишок",
+"short poem, verse",
+"",
+"poème court"
+],
+[
+"հասցեատեր",
+"адресат",
+"addressee",
+"",
+"destinataire"
+],
+[
+"փոստային",
+"почтовый",
+"postal",
+"📮",
+"postal"
+],
+[
+"չակերտ",
+"кавычка",
+"quotation mark",
+"",
+"guillemet"
+],
+[
+"փակագիծ",
+"скобка",
+"bracket, parenthesis",
+"",
+"parenthèse"
+],
+[
+"կտուր",
+"крыша",
+"roof",
+"🏠",
+"toit"
+],
+[
+"սալյամի",
+"салями",
+"salami",
+"",
+"salami"
+],
+[
+"բենզասղոց",
+"бензопила",
+"chainsaw",
+"",
+"tronçonneuse"
+],
+[
+"խզար",
+"двуручная пила",
+"two-man saw",
+"",
+"passe-partout (scie)"
+],
+[
+"դերձան",
+"нитка",
+"thread",
+"🧵",
+"fil"
+],
+[
+"մախաթ",
+"большая игла (для мешков)",
+"packing needle",
+"",
+"aiguille à emballer"
+],
+[
+"լոկ",
+"лишь, только",
+"only, just",
+"",
+"seulement"
+],
+[
+"թեյարան",
+"чайная",
+"teahouse",
+"🍵",
+"salon de thé"
+],
+[
+"մատե",
+"мате",
+"maté",
+"",
+"maté"
+],
+[
+"աղջամուղջ",
+"сумерки",
+"twilight",
+"",
+"crépuscule"
+],
+[
+"այգաբաց",
+"рассвет",
+"dawn, daybreak",
+"🌅",
+"aube"
+],
+[
+"ջուրը քաշել",
+"смыть (воду в унитазе)",
+"to flush (a toilet)",
+"",
+"tirer la chasse d'eau"
+],
+[
+"փշալար",
+"колючая проволока",
+"barbed wire",
+"",
+"fil barbelé"
+],
+[
+"ռեակտիվ ինքնաթիռ",
+"реактивный самолёт",
+"jet plane",
+"✈️",
+"avion à réaction"
+],
+[
+"պահեստային անվադող",
+"запасное колесо",
+"spare tyre",
+"",
+"roue de secours"
+],
+[
+"գարեջրատուն",
+"пивная",
+"pub, beer hall",
+"🍺",
+"brasserie"
+],
+[
+"այտամորուք",
+"бакенбарды",
+"sideburns",
+"",
+"favoris"
+],
+[
+"թելադրիչ",
+"биток (шар)",
+"cue ball",
+"🎱",
+"bille de choc"
+],
+[
+"վեգ",
+"альчик, бабка",
+"knucklebone",
+"",
+"osselet"
+]
+],
+"fr": "Quotidien : maison, repas, temps"
+},
+{
+"lv": "A2",
+"ru": "Быт: еда, дом, здоровье",
+"en": "Daily life: food, home, health",
+"hy": "Կենցաղ. սնունդ, տուն, առողջություն",
+"ic": "🍔",
+"w": [
+[
+"սացիվի",
+"сациви",
+"satsivi",
+"",
+"satsivi"
+],
+[
+"ատամնափորիչ",
+"зубочистка",
+"toothpick",
+"",
+"cure-dent"
+],
+[
+"դեղնուց",
+"желток",
+"egg yolk",
+"🥚",
+"jaune d'œuf"
+],
+[
+"զայրանալ",
+"злиться",
+"to get angry",
+"😠",
+"se fâcher"
+],
+[
+"պարապել",
+"заниматься (делом)",
+"to be engaged in",
+"",
+"s'occuper de, s'adonner à"
+],
+[
+"մարզասարք",
+"тренажёр",
+"exercise machine",
+"",
+"appareil de musculation"
+],
+[
+"կար-չկար",
+"жили-были (букв. «был — не был»)",
+"once upon a time",
+"",
+"il était une fois"
+],
+[
+"դիակառք",
+"катафалк",
+"hearse",
+"",
+"corbillard"
+],
+[
+"վիճակախաղ",
+"лотерея",
+"lottery",
+"🎟️",
+"loterie"
+],
+[
+"թևնոց",
+"браслет",
+"bracelet",
+"",
+"bracelet"
+],
+[
+"բուժկետ",
+"медпункт",
+"first aid post",
+"",
+"poste de secours"
+],
+[
+"պարտիզպան",
+"садовник",
+"gardener",
+"🧑‍🌾",
+"jardinier"
+],
+[
+"կացարան",
+"жилище",
+"dwelling, abode",
+"",
+"logis, demeure"
+],
+[
+"աղքատանոց",
+"богадельня",
+"poorhouse",
+"",
+"hospice"
+],
+[
+"կիմչի",
+"кимчи",
+"kimchi",
+"",
+"kimchi"
+],
+[
+"խնդալ",
+"смеяться",
+"to laugh",
+"😂",
+"rire"
+],
+[
+"շաղ",
+"капли, роса",
+"drops, dew",
+"",
+"gouttes, rosée"
+],
+[
+"փականք",
+"замок (запор)",
+"lock",
+"🔒",
+"serrure"
+],
+[
+"հայրիկ",
+"отец, батюшка (обращение)",
+"father (term of address)",
+"",
+"père (adresse)"
+],
+[
+"լանչ",
+"ланч, обед",
+"lunch",
+"",
+"déjeuner"
+],
+[
+"բիֆշտեքս",
+"бифштекс",
+"beefsteak",
+"🥩",
+"bifteck"
+],
+[
+"ազգային օրհներգ",
+"государственный гимн",
+"national anthem",
+"",
+"hymne national"
+],
+[
+"շնորհավոր Նոր Տարի",
+"С Новым годом!",
+"Happy New Year!",
+"🎄",
+"Bonne année !"
+],
+[
+"թմբլիկ",
+"пухленький",
+"chubby, plump",
+"",
+"potelé"
+],
+[
+"երեկույթ",
+"вечеринка",
+"party, soirée",
+"🎉",
+"soirée"
+],
+[
+"խինկալիանոց",
+"хинкальная",
+"khinkali house",
+"🥟",
+"restaurant de khinkali"
+],
+[
+"ապարանք",
+"дворец",
+"palace",
+"🏰",
+"palais"
+],
+[
+"Ռուբիկի խորանարդ",
+"кубик Рубика",
+"Rubik's cube",
+"",
+"Rubik's cube"
+],
+[
+"բուրգեր",
+"бургер",
+"burger",
+"🍔",
+"burger"
+],
+[
+"հերյուն",
+"шило",
+"awl",
+"",
+"alêne"
+],
+[
+"ծնկոսկր",
+"коленная чашечка",
+"kneecap",
+"",
+"rotule"
+],
+[
+"բուրել",
+"благоухать",
+"to smell good",
+"",
+"embaumer"
+],
+[
+"ձյունակույտ",
+"сугроб",
+"snowdrift",
+"",
+"congère"
+],
+[
+"լոխում",
+"рахат-лукум",
+"Turkish delight",
+"",
+"loukoum"
+],
+[
+"լողավարտիք",
+"плавки",
+"swimming trunks",
+"🩲",
+"maillot de bain (slip)"
+],
+[
+"աստղանիշ",
+"звёздочка (*)",
+"asterisk",
+"",
+"astérisque"
+],
+[
+"քթախոտ",
+"нюхательный табак",
+"snuff",
+"",
+"tabac à priser"
+],
+[
+"հոլ",
+"юла",
+"spinning top",
+"",
+"toupie"
+],
+[
+"միակողմանի տոմս",
+"билет в один конец",
+"one-way ticket",
+"",
+"aller simple"
+],
+[
+"բուսակերություն",
+"вегетарианство",
+"vegetarianism",
+"🥗",
+"végétarisme"
+],
+[
+"մրսածություն",
+"простуда",
+"common cold",
+"",
+"rhume"
+],
+[
+"կորոնավիրուս",
+"коронавирус",
+"coronavirus",
+"🦠",
+"coronavirus"
+],
+[
+"կուրանալ",
+"слепнуть",
+"to go blind",
+"",
+"devenir aveugle"
+],
+[
+"աղաջուր",
+"рассол",
+"brine",
+"",
+"saumure"
+],
+[
+"մեգ",
+"туман",
+"fog, haze",
+"🌫️",
+"brouillard"
+],
+[
+"մաճար",
+"сусло, молодое вино",
+"must",
+"",
+"moût"
+],
+[
+"սառցալեզվակ",
+"сосулька",
+"icicle",
+"",
+"glaçon (stalactite de glace)"
+],
+[
+"կաղ",
+"хромой",
+"lame",
+"",
+"boiteux"
+],
+[
+"սոջու",
+"соджу",
+"soju",
+"",
+"soju"
+]
+],
+"fr": "Quotidien : repas, maison, santé"
+},
+{
 "lv": "B1",
 "ru": "Общество и государство",
 "en": "Society and state",
@@ -51990,6 +53300,5061 @@
 "fr": "Routes, transports, internet"
 },
 {
+"lv": "B1",
+"ru": "Звери, детёныши, стаи",
+"en": "Beasts, young and packs",
+"hy": "Գազաններ, ձագեր, երամներ",
+"ic": "🐺",
+"w": [
+[
+"արջառ",
+"бычок",
+"young bullock",
+"",
+"jeune taureau"
+],
+[
+"կորյուն",
+"детёныш (льва, тигра, кита)",
+"cub (of a lion, tiger, whale)",
+"",
+"petit (du lion, du tigre, de la baleine)"
+],
+[
+"մանրաձուկ",
+"мальки",
+"juvenile fish, fry",
+"",
+"alevins"
+],
+[
+"մաքի",
+"овца (матка)",
+"ewe",
+"🐑",
+"brebis"
+],
+[
+"բևեռային աղվես",
+"песец",
+"arctic fox",
+"",
+"renard polaire"
+],
+[
+"հողագայլ",
+"земляной волк",
+"aardwolf",
+"",
+"protèle"
+],
+[
+"ղիյափ",
+"шакал",
+"jackal",
+"",
+"chacal"
+],
+[
+"ջրարջանման շուն",
+"енотовидная собака",
+"raccoon dog",
+"",
+"chien viverrin"
+],
+[
+"ավչարկա",
+"овчарка",
+"German Shepherd",
+"🐕",
+"berger allemand"
+],
+[
+"գամփռ",
+"волкодав (кавказская овчарка)",
+"large guard dog (Caucasian Shepherd)",
+"",
+"berger du Caucase"
+],
+[
+"դինգո",
+"динго",
+"dingo",
+"",
+"dingo"
+],
+[
+"կատվառյուծ",
+"пума",
+"puma, cougar",
+"",
+"puma"
+],
+[
+"ձյունահովազ",
+"снежный барс",
+"snow leopard",
+"",
+"panthère des neiges"
+],
+[
+"յագուար",
+"ягуар",
+"jaguar",
+"",
+"jaguar"
+],
+[
+"վագրակատու",
+"гепард (синоним)",
+"cheetah (synonym)",
+"🐆",
+"guépard (synonyme)"
+],
+[
+"կալան",
+"калан",
+"sea otter",
+"🦦",
+"loutre de mer"
+],
+[
+"երամակ",
+"табун, стадо",
+"drove, herd",
+"",
+"troupeau"
+],
+[
+"ոհմակ",
+"стая (волков, собак)",
+"pack (of wolves, dogs)",
+"",
+"meute"
+],
+[
+"պարս",
+"рой (пчёл)",
+"swarm (of bees)",
+"",
+"essaim"
+],
+[
+"բուդ",
+"окорок, бедро (мясо)",
+"haunch, hindquarter",
+"",
+"cuisse, cuissot"
+]
+],
+"fr": "Bêtes, petits et meutes"
+},
+{
+"lv": "B1",
+"ru": "Шахматы и футбол",
+"en": "Chess and football",
+"hy": "Շախմատ և ֆուտբոլ",
+"ic": "♟️",
+"w": [
+[
+"գրոսմայստեր",
+"гроссмейстер",
+"grandmaster",
+"",
+"grand maître"
+],
+[
+"շախ և մատ",
+"шах и мат",
+"checkmate",
+"♟️",
+"échec et mat"
+],
+[
+"վերջնախաղ",
+"эндшпиль",
+"endgame",
+"",
+"finale"
+],
+[
+"ցայտնոտ",
+"цейтнот",
+"time trouble (zeitnot)",
+"",
+"zeitnot"
+],
+[
+"ցուգցվանգ",
+"цугцванг",
+"zugzwang",
+"",
+"zugzwang"
+],
+[
+"ավելացված ժամանակ",
+"добавленное время",
+"injury time",
+"",
+"temps additionnel"
+],
+[
+"կիսապաշտպանություն",
+"полузащита",
+"midfield",
+"",
+"milieu de terrain"
+],
+[
+"տասնմեկ մետրանոց",
+"пенальти, одиннадцатиметровый",
+"penalty kick",
+"⚽",
+"penalty"
+]
+],
+"fr": "Échecs et football"
+},
+{
+"lv": "B1",
+"ru": "Города мира 4",
+"en": "World cities 4",
+"hy": "Աշխարհի քաղաքներ 4",
+"ic": "🌆",
+"w": [
+[
+"Աղդամ",
+"Агдам",
+"Agdam",
+"",
+"Agdam"
+],
+[
+"Գյանջա",
+"Гянджа",
+"Ganja",
+"",
+"Gandja"
+],
+[
+"Իսմայիլի",
+"Исмаиллы",
+"İsmayıllı",
+"",
+"Ismayilli"
+],
+[
+"Շամախի",
+"Шемаха",
+"Shamakhi",
+"",
+"Chamakhi"
+],
+[
+"Օրդուբադ",
+"Ордубад",
+"Ordubad",
+"",
+"Ordoubad"
+],
+[
+"Լեստեր",
+"Лестер",
+"Leicester",
+"",
+"Leicester"
+],
+[
+"Լիվերպուլ",
+"Ливерпуль",
+"Liverpool",
+"",
+"Liverpool"
+],
+[
+"Մանչեստր",
+"Манчестер",
+"Manchester",
+"",
+"Manchester"
+],
+[
+"Քեմբրիջ",
+"Кембридж",
+"Cambridge",
+"",
+"Cambridge"
+],
+[
+"Օքսֆորդ",
+"Оксфорд",
+"Oxford",
+"",
+"Oxford"
+],
+[
+"Ավինյոն",
+"Авиньон",
+"Avignon",
+"",
+"Avignon"
+],
+[
+"Կանն",
+"Канны",
+"Cannes",
+"",
+"Cannes"
+],
+[
+"Կլերմոն",
+"Клермон",
+"Clermont",
+"",
+"Clermont"
+],
+[
+"Հավր",
+"Гавр",
+"Le Havre",
+"",
+"Le Havre"
+],
+[
+"Մոնպելիե",
+"Монпелье",
+"Montpellier",
+"",
+"Montpellier"
+],
+[
+"Ասկալոն",
+"Ашкелон",
+"Ashkelon",
+"",
+"Ashkelon"
+],
+[
+"Աքքա",
+"Акко",
+"Acre",
+"",
+"Saint-Jean-d'Acre"
+],
+[
+"Թել Ավիվ",
+"Тель-Авив",
+"Tel Aviv",
+"",
+"Tel-Aviv"
+],
+[
+"Հայֆա",
+"Хайфа",
+"Haifa",
+"",
+"Haïfa"
+],
+[
+"Նազարեթ",
+"Назарет",
+"Nazareth",
+"",
+"Nazareth"
+],
+[
+"Բոտոշան",
+"Ботошани",
+"Botoșani",
+"",
+"Botoșani"
+],
+[
+"Յաշ",
+"Яссы",
+"Iași",
+"",
+"Iași"
+],
+[
+"Սուչավա",
+"Сучава",
+"Suceava",
+"",
+"Suceava"
+],
+[
+"Լաթաքիա",
+"Латакия",
+"Latakia",
+"",
+"Lattaquié"
+],
+[
+"Համա",
+"Хама",
+"Hama",
+"",
+"Hama"
+],
+[
+"Հոմս",
+"Хомс",
+"Homs",
+"",
+"Homs"
+],
+[
+"Ռակկա",
+"Ракка",
+"Raqqa",
+"",
+"Raqqa"
+],
+[
+"Տարտուս",
+"Тартус",
+"Tartus",
+"",
+"Tartous"
+],
+[
+"Գոմել",
+"Гомель",
+"Gomel",
+"",
+"Gomel"
+],
+[
+"Մինսկ",
+"Минск",
+"Minsk",
+"",
+"Minsk"
+],
+[
+"Մոգիլյով",
+"Могилёв",
+"Mogilev",
+"",
+"Moguilev"
+],
+[
+"Վիտեբսկ",
+"Витебск",
+"Vitebsk",
+"",
+"Vitebsk"
+],
+[
+"Ալմա Աթա",
+"Алма-Ата",
+"Alma-Ata",
+"",
+"Alma-Ata"
+],
+[
+"Ալմաթի",
+"Алматы",
+"Almaty",
+"",
+"Almaty"
+],
+[
+"Կարագանդա",
+"Караганда",
+"Karaganda",
+"",
+"Karaganda"
+],
+[
+"Կզըլ Օրդա",
+"Кызылорда",
+"Kyzylorda",
+"",
+"Kyzylorda"
+],
+[
+"Քիշնև",
+"Кишинёв",
+"Chișinău",
+"",
+"Chișinău"
+],
+[
+"Բեռն",
+"Берн",
+"Bern",
+"",
+"Berne"
+],
+[
+"Թուն",
+"Тун",
+"Thun",
+"",
+"Thoune"
+],
+[
+"Ժնև",
+"Женева",
+"Geneva",
+"",
+"Genève"
+],
+[
+"Լոզան",
+"Лозанна",
+"Lausanne",
+"",
+"Lausanne"
+],
+[
+"Դետրոյտ",
+"Детройт",
+"Detroit",
+"",
+"Détroit"
+],
+[
+"Լաս Վեգաս",
+"Лас-Вегас",
+"Las Vegas",
+"🎰",
+"Las Vegas"
+],
+[
+"Հոնոլուլու",
+"Гонолулу",
+"Honolulu",
+"",
+"Honolulu"
+],
+[
+"Սան Ֆրանցիսկո",
+"Сан-Франциско",
+"San Francisco",
+"🌉",
+"San Francisco"
+],
+[
+"Թաթարստան",
+"Татарстан",
+"Tatarstan",
+"",
+"Tatarstan"
+],
+[
+"Ինգուշեթիա",
+"Ингушетия",
+"Ingushetia",
+"",
+"Ingouchie"
+],
+[
+"Նիժնի Նովգորոդ",
+"Нижний Новгород",
+"Nizhny Novgorod",
+"",
+"Nijni Novgorod"
+],
+[
+"Սամարա",
+"Самара",
+"Samara",
+"",
+"Samara"
+],
+[
+"Վոլգոգրադ",
+"Волгоград",
+"Volgograd",
+"",
+"Volgograd"
+],
+[
+"Վորոնեժ",
+"Воронеж",
+"Voronezh",
+"",
+"Voronej"
+],
+[
+"Օմսկ",
+"Омск",
+"Omsk",
+"",
+"Omsk"
+]
+],
+"fr": "Villes du monde 4"
+},
+{
+"lv": "B1",
+"ru": "Страны, моря и союзы",
+"en": "Countries, seas and unions",
+"hy": "Երկրներ, ծովեր և միություններ",
+"ic": "🌎",
+"w": [
+[
+"Գվատեմալա",
+"Гватемала",
+"Guatemala",
+"",
+"Guatemala"
+],
+[
+"Հոնդուրաս",
+"Гондурас",
+"Honduras",
+"",
+"Honduras"
+],
+[
+"Նիկարագուա",
+"Никарагуа",
+"Nicaragua",
+"",
+"Nicaragua"
+],
+[
+"Պանամա",
+"Панама",
+"Panama",
+"",
+"Panama"
+],
+[
+"Սալվադոր",
+"Сальвадор",
+"El Salvador",
+"",
+"Salvador"
+],
+[
+"Գրենադա",
+"Гренада",
+"Grenada",
+"",
+"Grenade"
+],
+[
+"Դոմինիկյան Հանրապետություն",
+"Доминиканская Республика",
+"Dominican Republic",
+"",
+"République dominicaine"
+],
+[
+"Հայիթի",
+"Гаити",
+"Haiti",
+"",
+"Haïti"
+],
+[
+"Ճամայկա",
+"Ямайка",
+"Jamaica",
+"",
+"Jamaïque"
+],
+[
+"Տրինիդադ և Տոբագո",
+"Тринидад и Тобаго",
+"Trinidad and Tobago",
+"",
+"Trinité-et-Tobago"
+],
+[
+"Սահարա",
+"Сахара",
+"Sahara",
+"🏜️",
+"Sahara"
+],
+[
+"լինգալա",
+"лингала (язык)",
+"Lingala",
+"",
+"lingala"
+],
+[
+"շոնա",
+"шона (язык)",
+"Shona",
+"",
+"shona"
+],
+[
+"սվահիլի",
+"суахили",
+"Swahili",
+"",
+"swahili"
+],
+[
+"Մեմփիս",
+"Мемфис (Египет)",
+"Memphis (Egypt)",
+"",
+"Memphis (Égypte)"
+],
+[
+"Նեղոս",
+"Нил",
+"Nile",
+"",
+"Nil"
+],
+[
+"Քեոփս",
+"Хеопс",
+"Cheops",
+"",
+"Khéops"
+],
+[
+"փարավոն",
+"фараон",
+"pharaoh",
+"",
+"pharaon"
+],
+[
+"Դեղին ծով",
+"Жёлтое море",
+"Yellow Sea",
+"",
+"mer Jaune"
+],
+[
+"Հանկոու",
+"Ханькоу",
+"Hankou",
+"",
+"Hankou"
+],
+[
+"Հիմալայներ",
+"Гималаи",
+"Himalayas",
+"🏔️",
+"Himalaya"
+],
+[
+"Չինաստանի Ժողովրդական Հանրապետություն",
+"Китайская Народная Республика",
+"People's Republic of China",
+"",
+"République populaire de Chine"
+],
+[
+"Պարսից ծոց",
+"Персидский залив",
+"Persian Gulf",
+"",
+"golfe Persique"
+],
+[
+"իրանահայ",
+"иранский армянин",
+"Iranian Armenian",
+"",
+"Arménien d'Iran"
+],
+[
+"պահլավերեն",
+"среднеперсидский язык (пехлеви)",
+"Middle Persian (Pahlavi)",
+"",
+"moyen-perse (pehlevi)"
+],
+[
+"Վեզուվ",
+"Везувий",
+"Vesuvius",
+"🌋",
+"Vésuve"
+],
+[
+"Տիբեր",
+"Тибр",
+"Tiber",
+"",
+"Tibre"
+],
+[
+"Եվրախորհրդարան",
+"Европарламент",
+"European Parliament",
+"",
+"Parlement européen"
+],
+[
+"Եվրահանձնաժողով",
+"Еврокомиссия",
+"European Commission",
+"",
+"Commission européenne"
+],
+[
+"Եվրոպական խորհուրդ",
+"Европейский совет",
+"European Council",
+"",
+"Conseil européen"
+],
+[
+"Եվրոպական խորհրդարան",
+"Европейский парламент",
+"European Parliament",
+"",
+"Parlement européen"
+],
+[
+"Եվրոպական հանձնաժողով",
+"Европейская комиссия",
+"European Commission",
+"",
+"Commission européenne"
+]
+],
+"fr": "Pays, mers et unions"
+},
+{
+"lv": "B1",
+"ru": "Природа: рельеф, погода, растения",
+"en": "Nature: land, weather, plants",
+"hy": "Բնություն. ռելիեֆ, եղանակ, բույսեր",
+"ic": "🏞️",
+"w": [
+[
+"անձավ",
+"пещера",
+"cave",
+"🕳️",
+"grotte"
+],
+[
+"ապառաժ",
+"скала, утёс",
+"rock, cliff",
+"",
+"rocher, falaise"
+],
+[
+"խանդակ",
+"ров",
+"moat, ditch",
+"",
+"fossé, douve"
+],
+[
+"հրվանդան",
+"мыс",
+"cape, promontory",
+"",
+"cap, promontoire"
+],
+[
+"ամպել",
+"затягиваться тучами",
+"to cloud over",
+"☁️",
+"se couvrir de nuages"
+],
+[
+"բևեռափայլ",
+"полярное сияние",
+"aurora",
+"",
+"aurore polaire"
+],
+[
+"հյուսիսափայլ",
+"северное сияние",
+"northern lights",
+"",
+"aurore boréale"
+],
+[
+"ձյունամրրիկ",
+"метель, буран",
+"snowstorm, blizzard",
+"🌨️",
+"tempête de neige"
+],
+[
+"արևադարձ",
+"тропик",
+"tropic",
+"",
+"tropique"
+],
+[
+"լեռնաշխարհ",
+"нагорье",
+"highland",
+"",
+"hauts plateaux"
+],
+[
+"խորշ",
+"расщелина, щель",
+"cleft, chink",
+"",
+"fente, crevasse"
+],
+[
+"ծոց",
+"пазуха",
+"bosom",
+"",
+"sein (giron)"
+],
+[
+"աբեթ",
+"трут",
+"tinder, amadou",
+"",
+"amadou"
+],
+[
+"աբեթասունկ",
+"трутовик",
+"bracket fungus",
+"",
+"polypore"
+],
+[
+"բորբոս",
+"плесень",
+"mould",
+"",
+"moisissure"
+],
+[
+"լոշտակ",
+"переступень (бриония)",
+"bryony",
+"",
+"bryone"
+],
+[
+"կանեփ",
+"конопля",
+"hemp",
+"",
+"chanvre"
+],
+[
+"կնյուն",
+"осока",
+"sedge",
+"",
+"laîche"
+],
+[
+"հացաբույս",
+"злак",
+"cereal",
+"🌾",
+"céréale"
+],
+[
+"թելով լոբի",
+"стручковая фасоль",
+"string bean",
+"",
+"haricot vert"
+],
+[
+"իշառվույտ",
+"донник",
+"sweet clover",
+"",
+"mélilot"
+],
+[
+"խնձորուկ",
+"клевер",
+"clover",
+"🍀",
+"trèfle"
+],
+[
+"կորնգան",
+"эспарцет",
+"sainfoin",
+"",
+"sainfoin"
+],
+[
+"մկնականջ",
+"очный цвет (анагаллис)",
+"pimpernel",
+"",
+"mouron"
+],
+[
+"բռնչի",
+"каркас (дерево)",
+"nettle tree",
+"",
+"micocoulier"
+],
+[
+"գերմաստի",
+"гордовина",
+"wayfaring tree",
+"",
+"viorne lantane"
+],
+[
+"թանթրվենի",
+"бузина",
+"elder",
+"",
+"sureau"
+]
+],
+"fr": "Nature : relief, météo, plantes"
+},
+{
+"lv": "B1",
+"ru": "Звери, кони, пчёлы",
+"en": "Beasts, horses, bees",
+"hy": "Գազաններ, ձիեր, մեղուներ",
+"ic": "🦌",
+"w": [
+[
+"արջամուկ",
+"сурок",
+"marmot",
+"",
+"marmotte"
+],
+[
+"դաշտամուկ",
+"полевая мышь",
+"field mouse",
+"",
+"mulot"
+],
+[
+"շիկամուկ",
+"серая крыса, пасюк",
+"brown rat",
+"🐀",
+"surmulot"
+],
+[
+"քնամուկ",
+"соня (грызун)",
+"dormouse",
+"",
+"loir"
+],
+[
+"իշայծյամ",
+"лось",
+"moose, elk",
+"",
+"élan"
+],
+[
+"հյուսիսային եղջերու",
+"северный олень",
+"reindeer",
+"🦌",
+"renne"
+],
+[
+"գոճի",
+"поросёнок",
+"piglet",
+"🐖",
+"porcelet"
+],
+[
+"կինճ",
+"кабан",
+"wild boar",
+"🐗",
+"sanglier"
+],
+[
+"վայրի խոզ",
+"дикая свинья",
+"wild boar",
+"",
+"sanglier (cochon sauvage)"
+],
+[
+"այծքաղ",
+"антилопа",
+"antelope",
+"",
+"antilope"
+],
+[
+"վիթ",
+"газель",
+"gazelle",
+"",
+"gazelle"
+],
+[
+"ձերա",
+"коршун",
+"kite (bird)",
+"",
+"milan"
+],
+[
+"խրամուլի",
+"храмуля",
+"khramulya (fish)",
+"",
+"khramoulia (poisson)"
+],
+[
+"շամայի",
+"шемая",
+"Caspian shemaya",
+"",
+"chémaïa"
+],
+[
+"ստերլետ",
+"стерлядь",
+"sterlet",
+"",
+"sterlet"
+],
+[
+"երիվար",
+"верховой конь",
+"saddle horse",
+"",
+"cheval de selle"
+],
+[
+"նժույգ",
+"скакун (поэт.)",
+"steed",
+"🐎",
+"coursier"
+],
+[
+"պայտ",
+"подкова",
+"horseshoe",
+"",
+"fer à cheval"
+],
+[
+"ակնամոմ",
+"прополис",
+"propolis",
+"",
+"propolis"
+],
+[
+"մեղվաբույծ",
+"пчеловод",
+"beekeeper",
+"",
+"apiculteur"
+],
+[
+"մեղվապահ",
+"пасечник",
+"beekeeper",
+"",
+"apiculteur (rucher)"
+],
+[
+"հաչոց",
+"лай",
+"bark, barking",
+"🐕",
+"aboiement"
+],
+[
+"կաղաղ",
+"логово (зверя)",
+"den, lair",
+"",
+"repaire"
+],
+[
+"լափ",
+"пойло, мешанина (для собак)",
+"slop, swill",
+"",
+"pâtée"
+],
+[
+"մուշայ",
+"щетинник (трава)",
+"foxtail grass",
+"",
+"sétaire"
+],
+[
+"թակարդ",
+"капкан, ловушка",
+"trap, snare",
+"",
+"piège"
+],
+[
+"ծուղակ",
+"силок",
+"snare",
+"",
+"collet"
+],
+[
+"որոգայթ",
+"западня",
+"snare, trap",
+"",
+"traquenard"
+]
+],
+"fr": "Bêtes, chevaux, abeilles"
+},
+{
+"lv": "B1",
+"ru": "Океаны, проливы, города",
+"en": "Oceans, straits, cities",
+"hy": "Օվկիանոսներ, նեղուցներ, քաղաքներ",
+"ic": "🌊",
+"w": [
+[
+"Հուդզոնի ծոց",
+"Гудзонов залив",
+"Hudson Bay",
+"",
+"baie d'Hudson"
+],
+[
+"Հուրոն",
+"озеро Гурон",
+"Lake Huron",
+"",
+"lac Huron"
+],
+[
+"Սուրբ Լավրենտիոսի գետ",
+"река Святого Лаврентия",
+"Saint Lawrence River",
+"",
+"fleuve Saint-Laurent"
+],
+[
+"Հերաթ",
+"Герат",
+"Herat",
+"",
+"Hérat"
+],
+[
+"Ղանդահար",
+"Кандагар",
+"Kandahar",
+"",
+"Kandahar"
+],
+[
+"Քաբուլ",
+"Кабул",
+"Kabul",
+"",
+"Kaboul"
+],
+[
+"Ապարան",
+"Апаран",
+"Aparan",
+"",
+"Aparan"
+],
+[
+"Թալին",
+"Талин",
+"Talin",
+"",
+"Talin"
+],
+[
+"Առինջ",
+"Аринж",
+"Arinj",
+"",
+"Arindj"
+],
+[
+"Թթուջուր",
+"Ттуджур",
+"Ttujur",
+"",
+"Ttoudjour"
+],
+[
+"Բըրբանք",
+"Бербанк",
+"Burbank",
+"",
+"Burbank"
+],
+[
+"Ֆրեզնո",
+"Фресно",
+"Fresno",
+"",
+"Fresno"
+],
+[
+"Բուխարա",
+"Бухара",
+"Bukhara",
+"",
+"Boukhara"
+],
+[
+"Սամարղանդ",
+"Самарканд",
+"Samarkand",
+"",
+"Samarcande"
+],
+[
+"Տաշքենդ",
+"Ташкент",
+"Tashkent",
+"",
+"Tachkent"
+],
+[
+"Եվրասիա",
+"Евразия",
+"Eurasia",
+"",
+"Eurasie"
+],
+[
+"Լատինական Ամերիկա",
+"Латинская Америка",
+"Latin America",
+"",
+"Amérique latine"
+],
+[
+"Միկրոնեզիա",
+"Микронезия",
+"Micronesia",
+"",
+"Micronésie"
+],
+[
+"Ամերիկայի Միացյալ Նահանգներ",
+"Соединённые Штаты Америки",
+"United States of America",
+"🇺🇸",
+"États-Unis d'Amérique"
+],
+[
+"Դոմինիկա",
+"Доминика",
+"Dominica",
+"",
+"Dominique"
+],
+[
+"Միացյալ Նահանգներ",
+"Соединённые Штаты",
+"United States",
+"",
+"États-Unis"
+],
+[
+"Ալազան",
+"Алазани",
+"Alazani",
+"",
+"Alazani"
+],
+[
+"Թիֆլիս",
+"Тифлис (старое название Тбилиси)",
+"Tiflis (old name of Tbilisi)",
+"",
+"Tiflis (ancien nom de Tbilissi)"
+],
+[
+"վիրահայ",
+"грузинский армянин",
+"Georgian Armenian",
+"",
+"Arménien de Géorgie"
+],
+[
+"Զոնդյան նեղուց",
+"Зондский пролив",
+"Sunda Strait",
+"",
+"détroit de la Sonde"
+],
+[
+"Մոլուքյան կղզիներ",
+"Молуккские острова",
+"Moluccas",
+"",
+"Moluques"
+],
+[
+"Օստ Ինդիա",
+"Ост-Индия",
+"East Indies",
+"",
+"Indes orientales"
+],
+[
+"Ատլանտյան օվկիանոս",
+"Атлантический океан",
+"Atlantic Ocean",
+"🌊",
+"océan Atlantique"
+],
+[
+"Խաղաղ օվկիանոս",
+"Тихий океан",
+"Pacific Ocean",
+"",
+"océan Pacifique"
+],
+[
+"Հնդկական օվկիանոս",
+"Индийский океан",
+"Indian Ocean",
+"",
+"océan Indien"
+],
+[
+"Բաբելմանդեբի նեղուց",
+"Баб-эль-Мандебский пролив",
+"Bab el Mandeb",
+"",
+"détroit de Bab-el-Mandeb"
+],
+[
+"Մագելանի նեղուց",
+"Магелланов пролив",
+"Strait of Magellan",
+"",
+"détroit de Magellan"
+],
+[
+"Բելուջստան",
+"Белуджистан",
+"Balochistan",
+"",
+"Baloutchistan"
+],
+[
+"Հինդուկուշ",
+"Гиндукуш",
+"Hindu Kush",
+"",
+"Hindou Kouch"
+],
+[
+"Թահաթ",
+"Тахат (гора)",
+"Mount Tahat",
+"",
+"mont Tahat"
+],
+[
+"Մեծ արգելախութ",
+"Большой Барьерный риф",
+"Great Barrier Reef",
+"🐠",
+"Grande Barrière de corail"
+],
+[
+"ավստրալիացի",
+"австралиец",
+"Australian",
+"",
+"Australien"
+],
+[
+"Բահամյան Կղզիներ",
+"Багамские острова",
+"Bahamas",
+"",
+"Bahamas"
+]
+],
+"fr": "Océans, détroits, villes"
+},
+{
+"lv": "B1",
+"ru": "Столицы и города мира",
+"en": "World capitals and cities",
+"hy": "Աշխարհի մայրաքաղաքներ և քաղաքներ",
+"ic": "🏙️",
+"w": [
+[
+"Գիրոկաստրա",
+"Гирокастра",
+"Gjirokastër",
+"",
+"Gjirokastër"
+],
+[
+"Տիրանա",
+"Тирана",
+"Tirana",
+"",
+"Tirana"
+],
+[
+"Լա Պաս",
+"Ла-Пас",
+"La Paz",
+"",
+"La Paz"
+],
+[
+"Սուկրե",
+"Сукре",
+"Sucre",
+"",
+"Sucre"
+],
+[
+"Սոֆիա",
+"София",
+"Sofia",
+"",
+"Sofia"
+],
+[
+"Վառնա",
+"Варна",
+"Varna",
+"",
+"Varna"
+],
+[
+"Դուբրովնիկ",
+"Дубровник",
+"Dubrovnik",
+"",
+"Dubrovnik"
+],
+[
+"Զագրեբ",
+"Загреб",
+"Zagreb",
+"",
+"Zagreb"
+],
+[
+"Մոնակո",
+"Монако",
+"Monaco",
+"",
+"Monaco"
+],
+[
+"Վատիկան",
+"Ватикан",
+"Vatican City",
+"",
+"Vatican"
+],
+[
+"Բիբլոս",
+"Библ (Джебейль)",
+"Byblos",
+"",
+"Byblos"
+],
+[
+"Կաունաս",
+"Каунас",
+"Kaunas",
+"",
+"Kaunas"
+],
+[
+"Վիլնյուս",
+"Вильнюс",
+"Vilnius",
+"",
+"Vilnius"
+],
+[
+"Բեթղեհեմ",
+"Вифлеем",
+"Bethlehem",
+"",
+"Bethléem"
+],
+[
+"Գազա",
+"Газа",
+"Gaza",
+"",
+"Gaza"
+],
+[
+"Լոձ",
+"Лодзь",
+"Łódź",
+"",
+"Łódź"
+],
+[
+"Վարշավա",
+"Варшава",
+"Warsaw",
+"",
+"Varsovie"
+],
+[
+"Դամասկոս",
+"Дамаск",
+"Damascus",
+"",
+"Damas"
+],
+[
+"Սևր",
+"Севр",
+"Sèvres",
+"",
+"Sèvres"
+],
+[
+"Վիշի",
+"Виши",
+"Vichy",
+"",
+"Vichy"
+],
+[
+"Ղզլար",
+"Кизляр",
+"Kizlyar",
+"",
+"Kizliar"
+],
+[
+"Մեքքա",
+"Мекка",
+"Mecca",
+"",
+"La Mecque"
+],
+[
+"Աբիջան",
+"Абиджан",
+"Abidjan",
+"",
+"Abidjan"
+],
+[
+"Աբու Դաբի",
+"Абу-Даби",
+"Abu Dhabi",
+"",
+"Abou Dabi"
+],
+[
+"Աբուջա",
+"Абуджа",
+"Abuja",
+"",
+"Abuja"
+],
+[
+"Ադանա",
+"Адана",
+"Adana",
+"",
+"Adana"
+],
+[
+"Ադիս Աբեբա",
+"Аддис-Абеба",
+"Addis Ababa",
+"",
+"Addis-Abeba"
+],
+[
+"Հալեպ",
+"Алеппо (Халеб)",
+"Aleppo",
+"",
+"Alep"
+],
+[
+"Ալեքսանդրիա",
+"Александрия",
+"Alexandria",
+"",
+"Alexandrie"
+],
+[
+"Ամման",
+"Амман",
+"Amman",
+"",
+"Amman"
+],
+[
+"Ամստերդամ",
+"Амстердам",
+"Amsterdam",
+"",
+"Amsterdam"
+],
+[
+"Անկարա",
+"Анкара",
+"Ankara",
+"",
+"Ankara"
+],
+[
+"Անտանանարիվու",
+"Антананариву",
+"Antananarivo",
+"",
+"Antananarivo"
+],
+[
+"Արեկիպա",
+"Арекипа",
+"Arequipa",
+"",
+"Arequipa"
+],
+[
+"Աշխաբադ",
+"Ашхабад",
+"Ashgabat",
+"",
+"Achgabat"
+],
+[
+"Ասմարա",
+"Асмэра",
+"Asmara",
+"",
+"Asmara"
+],
+[
+"Աստանա",
+"Астана",
+"Astana",
+"",
+"Astana"
+],
+[
+"Բաղդադ",
+"Багдад",
+"Baghdad",
+"",
+"Bagdad"
+],
+[
+"Բաքու",
+"Баку",
+"Baku",
+"",
+"Bakou"
+],
+[
+"Բամակո",
+"Бамако",
+"Bamako",
+"",
+"Bamako"
+],
+[
+"Բանդունգ",
+"Бандунг",
+"Bandung",
+"",
+"Bandung"
+],
+[
+"Բենգալուրու",
+"Бангалор (Бенгалуру)",
+"Bengaluru",
+"",
+"Bangalore"
+],
+[
+"Բանջուլ",
+"Банжул",
+"Banjul",
+"",
+"Banjul"
+],
+[
+"Բելգրադ",
+"Белград",
+"Belgrade",
+"",
+"Belgrade"
+],
+[
+"Բիրմինգհեմ",
+"Бирмингем",
+"Birmingham",
+"",
+"Birmingham"
+],
+[
+"Բիշքեկ",
+"Бишкек",
+"Bishkek",
+"",
+"Bichkek"
+],
+[
+"Բոգոտա",
+"Богота",
+"Bogotá",
+"",
+"Bogota"
+],
+[
+"Բոստոն",
+"Бостон",
+"Boston",
+"",
+"Boston"
+],
+[
+"Բրյուսել",
+"Брюссель",
+"Brussels",
+"",
+"Bruxelles"
+],
+[
+"Բուխարեստ",
+"Бухарест",
+"Bucharest",
+"",
+"Bucarest"
+],
+[
+"Բուդապեշտ",
+"Будапешт",
+"Budapest",
+"",
+"Budapest"
+],
+[
+"Բուժումբուրա",
+"Бужумбура",
+"Bujumbura",
+"",
+"Bujumbura"
+],
+[
+"Կանբեռա",
+"Канберра",
+"Canberra",
+"",
+"Canberra"
+],
+[
+"Ցյուրիխ",
+"Цюрих",
+"Zurich",
+"",
+"Zurich"
+],
+[
+"Կարակաս",
+"Каракас",
+"Caracas",
+"",
+"Caracas"
+],
+[
+"Չեննայ",
+"Ченнаи",
+"Chennai",
+"",
+"Chennai"
+],
+[
+"Չիկագո",
+"Чикаго",
+"Chicago",
+"",
+"Chicago"
+]
+],
+"fr": "Capitales et villes du monde"
+},
+{
+"lv": "B1",
+"ru": "Столицы мира 2",
+"en": "World capitals 2",
+"hy": "Աշխարհի մայրաքաղաքներ 2",
+"ic": "🏛️",
+"w": [
+[
+"Մայկոպ",
+"Майкоп",
+"Maykop",
+"",
+"Maïkop"
+],
+[
+"Նիցցա",
+"Ницца",
+"Nice",
+"",
+"Nice"
+],
+[
+"Կադիս",
+"Кадис",
+"Cádiz",
+"",
+"Cadix"
+],
+[
+"Լուանդա",
+"Луанда",
+"Luanda",
+"",
+"Luanda"
+],
+[
+"Բաալբեկ",
+"Баальбек",
+"Baalbek",
+"",
+"Baalbek"
+],
+[
+"Հայդելբերգ",
+"Гейдельберг",
+"Heidelberg",
+"",
+"Heidelberg"
+],
+[
+"Մանամա",
+"Манама",
+"Manama",
+"",
+"Manama"
+],
+[
+"Դաքա",
+"Дакка",
+"Dhaka",
+"",
+"Dacca"
+],
+[
+"Ստրասբուրգ",
+"Страсбург",
+"Strasbourg",
+"",
+"Strasbourg"
+],
+[
+"Ուֆա",
+"Уфа",
+"Ufa",
+"",
+"Oufa"
+],
+[
+"Մյունխեն",
+"Мюнхен",
+"Munich",
+"",
+"Munich"
+],
+[
+"Լուվեն",
+"Лёвен",
+"Leuven",
+"",
+"Louvain"
+],
+[
+"Բելմոպան",
+"Бельмопан",
+"Belmopan",
+"",
+"Belmopan"
+],
+[
+"Պորտո Նովո",
+"Порто-Ново",
+"Porto-Novo",
+"",
+"Porto-Novo"
+],
+[
+"Թհիմփհու",
+"Тхимпху",
+"Thimphu",
+"",
+"Thimphou"
+],
+[
+"Սարաևո",
+"Сараево",
+"Sarajevo",
+"",
+"Sarajevo"
+],
+[
+"Գաբորոնե",
+"Габороне",
+"Gaborone",
+"",
+"Gaborone"
+],
+[
+"Վանկուվեր",
+"Ванкувер",
+"Vancouver",
+"",
+"Vancouver"
+],
+[
+"Բանդար Սերի Բեգավան",
+"Бандар-Сери-Бегаван",
+"Bandar Seri Begawan",
+"",
+"Bandar Seri Begawan"
+],
+[
+"Ուագադուգու",
+"Уагадугу",
+"Ouagadougou",
+"",
+"Ouagadougou"
+],
+[
+"Ուլան-Ուդե",
+"Улан-Удэ",
+"Ulan-Ude",
+"",
+"Oulan-Oudé"
+],
+[
+"Պնոմպեն",
+"Пномпень",
+"Phnom Penh",
+"",
+"Phnom Penh"
+],
+[
+"Յաունդե",
+"Яунде",
+"Yaoundé",
+"",
+"Yaoundé"
+],
+[
+"Նեապոլ",
+"Неаполь",
+"Naples",
+"",
+"Naples"
+],
+[
+"Օտտավա",
+"Оттава",
+"Ottawa",
+"",
+"Ottawa"
+],
+[
+"Պրայա",
+"Прая",
+"Praia",
+"",
+"Praia"
+],
+[
+"Սալոնիկ",
+"Салоники",
+"Thessaloniki",
+"",
+"Thessalonique"
+],
+[
+"Նջամենա",
+"Нджамена",
+"N'Djamena",
+"",
+"N'Djaména"
+],
+[
+"Գրոզնի",
+"Грозный",
+"Grozny",
+"",
+"Grozny"
+],
+[
+"Սանտյագո",
+"Сантьяго",
+"Santiago",
+"",
+"Santiago"
+],
+[
+"Չեբոքսարի",
+"Чебоксары",
+"Cheboksary",
+"",
+"Tcheboksary"
+],
+[
+"Արմենիա",
+"Армения (город в Колумбии)",
+"Armenia (city in Colombia)",
+"",
+"Armenia (ville de Colombie)"
+],
+[
+"Սան Խոսե",
+"Сан-Хосе",
+"San José",
+"",
+"San José"
+],
+[
+"Հավանա",
+"Гавана",
+"Havana",
+"",
+"La Havane"
+],
+[
+"Կոպենհագեն",
+"Копенгаген",
+"Copenhagen",
+"",
+"Copenhague"
+],
+[
+"Ռոզո",
+"Розо",
+"Roseau",
+"",
+"Roseau"
+],
+[
+"Կիտո",
+"Кито",
+"Quito",
+"",
+"Quito"
+],
+[
+"Սան Սալվադոր",
+"Сан-Сальвадор",
+"San Salvador",
+"",
+"San Salvador"
+],
+[
+"Տալլին",
+"Таллин",
+"Tallinn",
+"",
+"Tallinn"
+],
+[
+"Սուվա",
+"Сува",
+"Suva",
+"",
+"Suva"
+],
+[
+"Հելսինկի",
+"Хельсинки",
+"Helsinki",
+"",
+"Helsinki"
+],
+[
+"Լիբրևիլ",
+"Либревиль",
+"Libreville",
+"",
+"Libreville"
+],
+[
+"Սենտ Ջորջես",
+"Сент-Джорджес",
+"St. George's",
+"",
+"Saint-Georges"
+],
+[
+"Կոնակրի",
+"Конакри",
+"Conakry",
+"",
+"Conakry"
+],
+[
+"Պորտ օ Պրենս",
+"Порт-о-Пренс",
+"Port-au-Prince",
+"",
+"Port-au-Prince"
+],
+[
+"Տեգուսիգալպա",
+"Тегусигальпа",
+"Tegucigalpa",
+"",
+"Tegucigalpa"
+],
+[
+"Ռեյկյավիկ",
+"Рейкьявик",
+"Reykjavík",
+"",
+"Reykjavik"
+],
+[
+"Ջակարտա",
+"Джакарта",
+"Jakarta",
+"",
+"Jakarta"
+],
+[
+"Մոսուլ",
+"Мосул",
+"Mosul",
+"",
+"Mossoul"
+],
+[
+"Դուբլին",
+"Дублин",
+"Dublin",
+"",
+"Dublin"
+],
+[
+"Քինգստոն",
+"Кингстон",
+"Kingston",
+"",
+"Kingston"
+],
+[
+"Պետրոզավոդսկ",
+"Петрозаводск",
+"Petrozavodsk",
+"",
+"Petrozavodsk"
+]
+],
+"fr": "Capitales du monde 2"
+},
+{
+"lv": "B1",
+"ru": "Страны и народы 4",
+"en": "Countries and peoples 4",
+"hy": "Երկրներ և ժողովուրդներ 4",
+"ic": "🗺️",
+"w": [
+[
+"Վանուատու",
+"Вануату",
+"Vanuatu",
+"",
+"Vanuatu"
+],
+[
+"Ֆիջի",
+"Фиджи",
+"Fiji",
+"",
+"Fidji"
+],
+[
+"Նաուրու",
+"Науру",
+"Nauru",
+"",
+"Nauru"
+],
+[
+"Պապուա Նոր Գվինեա",
+"Папуа — Новая Гвинея",
+"Papua New Guinea",
+"",
+"Papouasie-Nouvelle-Guinée"
+],
+[
+"Գայանա",
+"Гайана",
+"Guyana",
+"",
+"Guyana"
+],
+[
+"Սուրինամ",
+"Суринам",
+"Suriname",
+"",
+"Suriname"
+],
+[
+"Բահրեյն",
+"Бахрейн",
+"Bahrain",
+"",
+"Bahreïn"
+],
+[
+"Բարբադոս",
+"Барбадос",
+"Barbados",
+"",
+"Barbade"
+],
+[
+"Բելիզ",
+"Белиз",
+"Belize",
+"",
+"Belize"
+],
+[
+"Բենին",
+"Бенин",
+"Benin",
+"",
+"Bénin"
+],
+[
+"Բութան",
+"Бутан",
+"Bhutan",
+"",
+"Bhoutan"
+],
+[
+"Բոսնիա և Հերցեգովինա",
+"Босния и Герцеговина",
+"Bosnia and Herzegovina",
+"",
+"Bosnie-Herzégovine"
+],
+[
+"Բոտսվանա",
+"Ботсвана",
+"Botswana",
+"",
+"Botswana"
+],
+[
+"Բրիտանիա",
+"Британия",
+"Britain",
+"",
+"Grande-Bretagne"
+],
+[
+"Բրունեյ",
+"Бруней",
+"Brunei",
+"",
+"Brunei"
+],
+[
+"Բուրկինա Ֆասո",
+"Буркина-Фасо",
+"Burkina Faso",
+"",
+"Burkina Faso"
+],
+[
+"Բուրունդի",
+"Бурунди",
+"Burundi",
+"",
+"Burundi"
+],
+[
+"Կաբո Վերդե",
+"Кабо-Верде",
+"Cape Verde",
+"",
+"Cap-Vert"
+],
+[
+"Չադ",
+"Чад",
+"Chad",
+"",
+"Tchad"
+],
+[
+"Հյուսիսային Իռլանդիա",
+"Северная Ирландия",
+"Northern Ireland",
+"",
+"Irlande du Nord"
+],
+[
+"Ուելս",
+"Уэльс",
+"Wales",
+"",
+"pays de Galles"
+],
+[
+"չեխական",
+"чешский",
+"Czech",
+"",
+"tchèque"
+],
+[
+"ղազախական",
+"казахский",
+"Kazakh",
+"",
+"kazakh"
+],
+[
+"լատվիական",
+"латвийский",
+"Latvian",
+"",
+"letton"
+],
+[
+"սերբական",
+"сербский",
+"Serbian",
+"",
+"serbe"
+],
+[
+"սերբերեն",
+"сербский язык",
+"Serbian (language)",
+"",
+"serbe (langue)"
+],
+[
+"գալյեգո",
+"галисийский язык",
+"Galician",
+"",
+"galicien"
+],
+[
+"իսպանական",
+"испанский",
+"Spanish",
+"",
+"espagnol"
+],
+[
+"ուրդու",
+"урду",
+"Urdu",
+"",
+"ourdou"
+],
+[
+"սինդհի",
+"синдхи",
+"Sindhi",
+"",
+"sindhi"
+],
+[
+"չիլիացի",
+"чилиец",
+"Chilean",
+"",
+"Chilien"
+],
+[
+"ամերիկահայ",
+"американский армянин",
+"American Armenian",
+"",
+"Arménien américain"
+]
+],
+"fr": "Pays et peuples 4"
+},
+{
+"lv": "B1",
+"ru": "Регионы и края",
+"en": "Regions and provinces",
+"hy": "Տարածաշրջաններ և երկրամասեր",
+"ic": "🧭",
+"w": [
+[
+"Պանամայի ջրանցք",
+"Панамский канал",
+"Panama Canal",
+"",
+"canal de Panama"
+],
+[
+"Սուեզի ջրանցք",
+"Суэцкий канал",
+"Suez Canal",
+"",
+"canal de Suez"
+],
+[
+"Հանքային լեռներ",
+"Рудные горы",
+"Ore Mountains",
+"",
+"monts Métallifères"
+],
+[
+"Լիմպոպո",
+"Лимпопо",
+"Limpopo",
+"",
+"Limpopo"
+],
+[
+"Սկանդինավյան թերակղզի",
+"Скандинавский полуостров",
+"Scandinavian Peninsula",
+"",
+"péninsule scandinave"
+],
+[
+"Ֆիննական ծոց",
+"Финский залив",
+"Gulf of Finland",
+"",
+"golfe de Finlande"
+],
+[
+"Բեովտիա",
+"Беотия",
+"Boeotia",
+"",
+"Béotie"
+],
+[
+"Թեսալիա",
+"Фессалия",
+"Thessaly",
+"",
+"Thessalie"
+],
+[
+"Տրանսիլվանիա",
+"Трансильвания",
+"Transylvania",
+"",
+"Transylvanie"
+],
+[
+"Պերմ",
+"Пермский край",
+"Perm region",
+"",
+"région de Perm"
+],
+[
+"Սիբիր",
+"Сибирь",
+"Siberia",
+"",
+"Sibérie"
+],
+[
+"Ավենտինյան բլուր",
+"Авентинский холм",
+"Aventine Hill",
+"",
+"Aventin"
+],
+[
+"Կապիտոլիում",
+"Капитолий",
+"Capitoline Hill",
+"",
+"Capitole"
+],
+[
+"Անդրկասպյան երկրամաս",
+"Закаспийская область",
+"Transcaspia",
+"",
+"Transcaspienne"
+],
+[
+"Կրասնոդար",
+"Краснодарский край",
+"Krasnodar Krai",
+"",
+"kraï de Krasnodar"
+],
+[
+"Կրասնոյարսկ",
+"Красноярский край",
+"Krasnoyarsk Krai",
+"",
+"kraï de Krasnoïarsk"
+],
+[
+"Ռիգայի ծոց",
+"Рижский залив",
+"Gulf of Riga",
+"",
+"golfe de Riga"
+],
+[
+"Գրանդ Կանյոն",
+"Гранд-Каньон",
+"Grand Canyon",
+"",
+"Grand Canyon"
+],
+[
+"Աբրուցցո",
+"Абруццо",
+"Abruzzo",
+"",
+"Abruzzes"
+],
+[
+"Ալյասկա",
+"Аляска",
+"Alaska",
+"",
+"Alaska"
+],
+[
+"Անդհրա Պրադեշ",
+"Андхра-Прадеш",
+"Andhra Pradesh",
+"",
+"Andhra Pradesh"
+],
+[
+"Անտարկտիկա",
+"Антарктида",
+"Antarctica",
+"🧊",
+"Antarctique"
+],
+[
+"Ապուլիա",
+"Апулия",
+"Apulia",
+"",
+"Pouilles"
+],
+[
+"Արունաչալ Պրադեշ",
+"Аруначал-Прадеш",
+"Arunachal Pradesh",
+"",
+"Arunachal Pradesh"
+],
+[
+"Ասսամ",
+"Ассам",
+"Assam",
+"",
+"Assam"
+],
+[
+"Հաբսբուրգ",
+"Габсбурги",
+"Habsburg",
+"",
+"Habsbourg"
+],
+[
+"Բավարիա",
+"Бавария",
+"Bavaria",
+"",
+"Bavière"
+],
+[
+"Բիհար",
+"Бихар",
+"Bihar",
+"",
+"Bihar"
+],
+[
+"Կալիֆոռնիա",
+"Калифорния",
+"California",
+"",
+"Californie"
+],
+[
+"Չեչնիա",
+"Чечня",
+"Chechnya",
+"",
+"Tchétchénie"
+],
+[
+"Չելյաբինսկ",
+"Челябинская область",
+"Chelyabinsk Oblast",
+"",
+"oblast de Tcheliabinsk"
+],
+[
+"Չատտիսգարհ",
+"Чхаттисгарх",
+"Chhattisgarh",
+"",
+"Chhattisgarh"
+],
+[
+"ինքնավար օկրուգ",
+"автономный округ",
+"autonomous okrug",
+"",
+"district autonome"
+]
+],
+"fr": "Régions et provinces"
+},
+{
+"lv": "B1",
+"ru": "Сад, лес, травы",
+"en": "Garden, forest, herbs",
+"hy": "Այգի, անտառ, խոտաբույսեր",
+"ic": "🌳",
+"w": [
+[
+"մոշենի",
+"ежевика, куманика",
+"blackberry, bramble",
+"",
+"ronce, mûre"
+],
+[
+"ալաժահրի",
+"крушина",
+"buckthorn",
+"",
+"nerprun"
+],
+[
+"ունաբ",
+"унаби (зизифус)",
+"jujube",
+"",
+"jujube"
+],
+[
+"հողմածաղիկ",
+"анемона, ветреница",
+"anemone",
+"",
+"anémone"
+],
+[
+"սոնիճ",
+"чернушка (нигелла)",
+"nigella",
+"",
+"nigelle"
+],
+[
+"պատկառուկ",
+"мимоза стыдливая",
+"sensitive plant (Mimosa pudica)",
+"",
+"sensitive (mimosa pudique)"
+],
+[
+"օշնան",
+"мыльнянка",
+"soapwort",
+"",
+"saponaire"
+],
+[
+"գինձ",
+"кинза, кориандр",
+"coriander",
+"🌿",
+"coriandre"
+],
+[
+"երնջնակ",
+"синеголовник",
+"eryngo, sea holly",
+"",
+"panicaut"
+],
+[
+"դափնեվարդ",
+"олеандр",
+"oleander",
+"",
+"laurier-rose"
+],
+[
+"տորոն",
+"марена (растение и краска)",
+"madder",
+"",
+"garance"
+],
+[
+"կաղնուտ",
+"дубрава",
+"oak grove",
+"",
+"chênaie"
+],
+[
+"հացուտ",
+"ясеневый лес",
+"ash forest",
+"",
+"frênaie"
+],
+[
+"բուրաստան",
+"благоуханный сад",
+"garden of fragrant flowers",
+"",
+"jardin parfumé"
+],
+[
+"պարտեզ",
+"сад",
+"garden",
+"🌳",
+"jardin"
+],
+[
+"ղանձլամեր",
+"чемерица (морозник)",
+"hellebore",
+"",
+"hellébore"
+],
+[
+"ժոխ",
+"крыжовник",
+"gooseberry",
+"",
+"groseille à maquereau"
+],
+[
+"հաղարջենի",
+"смородина (куст)",
+"currant (shrub)",
+"",
+"groseillier"
+],
+[
+"առվույտ",
+"люцерна",
+"alfalfa",
+"",
+"luzerne"
+],
+[
+"հացհամեմ",
+"пажитник",
+"fenugreek",
+"",
+"fenugrec"
+],
+[
+"խնջլոզ",
+"птицемлечник",
+"star-of-Bethlehem",
+"",
+"ornithogale"
+],
+[
+"մարգարտածաղիկ",
+"маргаритка",
+"daisy",
+"🌼",
+"pâquerette"
+],
+[
+"հաճարի",
+"бук",
+"beech",
+"",
+"hêtre"
+],
+[
+"գաղտրիկ",
+"огуречник",
+"borage",
+"",
+"bourrache"
+],
+[
+"ջրկոտեմ",
+"водяной кресс",
+"watercress",
+"",
+"cresson de fontaine"
+],
+[
+"բրոկկոլի",
+"брокколи",
+"broccoli",
+"🥦",
+"brocoli"
+],
+[
+"տոսախ",
+"самшит",
+"box tree",
+"",
+"buis"
+],
+[
+"մառոլ",
+"латук",
+"lettuce",
+"🥬",
+"laitue"
+],
+[
+"կենսոլորտ",
+"биосфера",
+"biosphere",
+"",
+"biosphère"
+],
+[
+"շամբ",
+"заросли тростника",
+"reed bed",
+"",
+"roselière"
+]
+],
+"fr": "Jardin, forêt, herbes"
+},
+{
+"lv": "B1",
+"ru": "Животные мира",
+"en": "Animals of the world",
+"hy": "Աշխարհի կենդանիներ",
+"ic": "🐿️",
+"w": [
+[
+"հավփալ",
+"вяхирь",
+"wood pigeon",
+"",
+"pigeon ramier"
+],
+[
+"դյուգոն",
+"дюгонь",
+"dugong",
+"",
+"dugong"
+],
+[
+"ծովակով",
+"стеллерова корова",
+"Steller's sea cow",
+"",
+"rhytine de Steller"
+],
+[
+"լուսատտիկ",
+"светлячок",
+"firefly",
+"",
+"luciole"
+],
+[
+"նոխազ",
+"козёл",
+"he-goat",
+"🐐",
+"bouc"
+],
+[
+"կովկասյան մայրեհավ",
+"кавказский тетерев",
+"Caucasian grouse",
+"",
+"tétras du Caucase"
+],
+[
+"մայրեհավ",
+"тетерев",
+"grouse",
+"",
+"tétras"
+],
+[
+"կովադիաց",
+"зелёная ящерица",
+"green lizard",
+"🦎",
+"lézard vert"
+],
+[
+"գաղտակուր",
+"жемчужница",
+"pearl oyster",
+"",
+"huître perlière"
+],
+[
+"ծովահրեշտակիկ",
+"морской ангел (моллюск)",
+"sea angel",
+"",
+"ange de mer"
+],
+[
+"բադակտուց",
+"утконос",
+"platypus",
+"",
+"ornithorynque"
+],
+[
+"եքիդնա",
+"ехидна",
+"echidna",
+"",
+"échidné"
+],
+[
+"բլբուլ",
+"соловей (поэт.)",
+"nightingale (poetic)",
+"",
+"rossignol (poétique)"
+],
+[
+"ծիծառնուկ",
+"соловей",
+"nightingale",
+"",
+"rossignol"
+],
+[
+"ծովաշուն",
+"тюлень",
+"seal",
+"🦭",
+"phoque"
+],
+[
+"ծովացուլ",
+"морж",
+"walrus",
+"",
+"morse"
+],
+[
+"գեղարքունի",
+"гегаркуни (севанская форель)",
+"gegharkuni (Sevan trout)",
+"",
+"gegharkouni (truite du Sevan)"
+],
+[
+"գյուրզա",
+"гюрза",
+"blunt-nosed viper",
+"🐍",
+"vipère lébétine"
+],
+[
+"էրունջէկ",
+"паутина",
+"spiderweb",
+"🕸️",
+"toile d'araignée"
+],
+[
+"փաղեժ",
+"тарантул",
+"tarantula",
+"",
+"tarentule"
+],
+[
+"մկռոշ",
+"кавказская белка",
+"Caucasian squirrel",
+"",
+"écureuil du Caucase"
+],
+[
+"սվորիկ",
+"белка",
+"squirrel",
+"🐿️",
+"écureuil"
+],
+[
+"տարմ",
+"стая (птиц)",
+"flock (of birds)",
+"",
+"volée"
+],
+[
+"տարմահավ",
+"розовый скворец",
+"rosy starling",
+"",
+"étourneau roselin"
+],
+[
+"ձիաբոռ",
+"шершень",
+"hornet",
+"",
+"frelon"
+],
+[
+"գառնանգղ",
+"бородач (ягнятник)",
+"bearded vulture",
+"",
+"gypaète barbu"
+],
+[
+"կորճ",
+"королевский гриф",
+"king vulture",
+"",
+"condor roi"
+],
+[
+"կաշալոտ",
+"кашалот",
+"sperm whale",
+"🐋",
+"cachalot"
+],
+[
+"թազի",
+"борзая",
+"greyhound",
+"",
+"lévrier"
+],
+[
+"պարկավոր",
+"сумчатое",
+"marsupial",
+"",
+"marsupial"
+],
+[
+"լորաճուռակ",
+"перепелятник",
+"sparrowhawk",
+"",
+"épervier"
+],
+[
+"շերեփուկ",
+"головастик",
+"tadpole",
+"",
+"têtard"
+],
+[
+"մրջնակեր",
+"муравьед",
+"anteater",
+"",
+"fourmilier"
+],
+[
+"մանգաղաթև",
+"стриж",
+"swift",
+"",
+"martinet"
+],
+[
+"ցողկ",
+"сколопендра",
+"scolopendra",
+"",
+"scolopendre"
+],
+[
+"չիղջ",
+"летучая мышь",
+"bat",
+"🦇",
+"chauve-souris"
+],
+[
+"բրետ",
+"шмель",
+"bumblebee",
+"",
+"bourdon"
+],
+[
+"երևիլ",
+"амбарный долгоносик",
+"wheat weevil",
+"",
+"charançon du blé"
+],
+[
+"յակ",
+"як",
+"yak",
+"",
+"yack"
+],
+[
+"ալպակա",
+"альпака",
+"alpaca",
+"",
+"alpaga"
+],
+[
+"մանուլ",
+"манул",
+"Pallas's cat",
+"",
+"chat de Pallas"
+],
+[
+"տավար",
+"крупный рогатый скот",
+"cattle",
+"🐄",
+"bétail"
+],
+[
+"ջրախոզուկ",
+"капибара",
+"capybara",
+"",
+"capybara"
+],
+[
+"ծովախոզ",
+"морская свинья",
+"porpoise",
+"",
+"marsouin"
+],
+[
+"աքլոր",
+"петух",
+"rooster",
+"🐓",
+"coq"
+]
+],
+"fr": "Animaux du monde"
+},
+{
+"lv": "B1",
+"ru": "Звери, птицы, рыбы",
+"en": "Beasts, birds, fish",
+"hy": "Գազաններ, թռչուններ, ձկներ",
+"ic": "🐧",
+"w": [
+[
+"ճռիկ",
+"сверчок",
+"cricket",
+"🦗",
+"grillon"
+],
+[
+"դինոզավր",
+"динозавр",
+"dinosaur",
+"🦕",
+"dinosaure"
+],
+[
+"օձաձուկ",
+"угорь",
+"eel",
+"",
+"anguille"
+],
+[
+"մամոնտ",
+"мамонт",
+"mammoth",
+"🦣",
+"mammouth"
+],
+[
+"հարսնյակ",
+"куколка (насекомого)",
+"pupa",
+"",
+"nymphe, chrysalide"
+],
+[
+"ցիռ",
+"кулан, онагр",
+"onager, wild ass",
+"",
+"onagre"
+],
+[
+"բմբուլ",
+"пух",
+"down feather",
+"🪶",
+"duvet"
+],
+[
+"մարի",
+"курица-несушка",
+"hen",
+"🐔",
+"poule"
+],
+[
+"փրփրուկ",
+"навага",
+"saffron cod",
+"",
+"navaga"
+],
+[
+"լորտու",
+"уж",
+"grass snake",
+"",
+"couleuvre à collier"
+],
+[
+"որոր",
+"чайка",
+"seagull",
+"🐦",
+"mouette"
+],
+[
+"տառեղ",
+"цапля",
+"heron",
+"",
+"héron"
+],
+[
+"քավթառքոսի",
+"гиена",
+"hyena",
+"",
+"hyène"
+],
+[
+"ցեծ",
+"ибис",
+"ibis",
+"",
+"ibis"
+],
+[
+"ալկիոն",
+"зимородок",
+"kingfisher",
+"",
+"martin-pêcheur"
+],
+[
+"գրաստ",
+"вьючное животное",
+"pack animal",
+"",
+"bête de somme"
+],
+[
+"պարկավոր արջ",
+"коала",
+"koala",
+"🐨",
+"koala"
+],
+[
+"մրջնառյուծ",
+"муравьиный лев",
+"antlion",
+"",
+"fourmilion"
+],
+[
+"գետակինճ",
+"тапир",
+"tapir",
+"",
+"tapir"
+],
+[
+"անձրուկ",
+"анчоус, хамса",
+"anchovy",
+"",
+"anchois"
+],
+[
+"բվեճ",
+"филин",
+"eagle owl",
+"🦉",
+"grand-duc"
+],
+[
+"փայտոջիլ",
+"клоп",
+"bedbug",
+"",
+"punaise"
+],
+[
+"անթևուկ",
+"пингвин",
+"penguin",
+"🐧",
+"pingouin, manchot"
+],
+[
+"պերկես",
+"окунь",
+"perch",
+"",
+"perche"
+],
+[
+"պիրոլ",
+"иволга",
+"oriole",
+"",
+"loriot"
+],
+[
+"վառեկ",
+"цыплёнок, молодая курочка",
+"chick, pullet",
+"🐣",
+"poussin, poulette"
+],
+[
+"լեմուր",
+"лемур",
+"lemur",
+"",
+"lémurien"
+],
+[
+"կտցար",
+"вальдшнеп",
+"woodcock",
+"",
+"bécasse"
+],
+[
+"թունա",
+"тунец",
+"tuna",
+"",
+"thon"
+],
+[
+"կապուտ",
+"подкаменщик",
+"European bullhead",
+"",
+"chabot"
+],
+[
+"սրընչակ",
+"землеройка",
+"shrew",
+"",
+"musaraigne"
+],
+[
+"գանգաթիթեռ",
+"мёртвая голова (бабочка)",
+"death's-head hawkmoth",
+"",
+"sphinx tête-de-mort"
+],
+[
+"ձկնկուլ",
+"баклан",
+"cormorant",
+"",
+"cormoran"
+],
+[
+"ձիաձուկ",
+"морской конёк",
+"seahorse",
+"",
+"hippocampe"
+],
+[
+"խածկտիկ",
+"снегирь",
+"bullfinch",
+"",
+"bouvreuil"
+],
+[
+"ճիճու",
+"червь",
+"worm",
+"🪱",
+"ver"
+],
+[
+"քոս",
+"чесотка, парша",
+"itch, mange",
+"",
+"gale"
+],
+[
+"դալ",
+"молозиво",
+"colostrum",
+"",
+"colostrum"
+],
+[
+"մակարդ",
+"сычужная закваска",
+"rennet",
+"",
+"présure"
+]
+],
+"fr": "Bêtes, oiseaux, poissons"
+},
+{
+"lv": "B1",
+"ru": "Деревья, пряности, травы",
+"en": "Trees, spices, herbs",
+"hy": "Ծառեր, համեմունքներ, խոտաբույսեր",
+"ic": "🌴",
+"w": [
+[
+"թավշածաղիկ",
+"бархатцы",
+"marigold",
+"🌼",
+"tagète"
+],
+[
+"գեղձի",
+"тис",
+"yew",
+"",
+"if"
+],
+[
+"չմենի",
+"кизильник",
+"cotoneaster",
+"",
+"cotonéaster"
+],
+[
+"ձարխոտ",
+"кочедыжник (папоротник)",
+"lady fern",
+"",
+"fougère femelle"
+],
+[
+"մատուտակ",
+"солодка",
+"licorice",
+"",
+"réglisse"
+],
+[
+"հիլ",
+"кардамон",
+"cardamom",
+"",
+"cardamome"
+],
+[
+"աշորա",
+"рожь",
+"rye",
+"🌾",
+"seigle"
+],
+[
+"դեղաբույս",
+"лекарственное растение",
+"herb",
+"",
+"plante médicinale"
+],
+[
+"սեզ",
+"пырей",
+"couch grass",
+"",
+"chiendent"
+],
+[
+"շնդեղ",
+"безвременник",
+"meadow saffron",
+"",
+"colchique"
+],
+[
+"արքայածաղիկ",
+"рябчик (цветок)",
+"fritillary",
+"",
+"fritillaire"
+],
+[
+"կարբ",
+"осина",
+"aspen",
+"",
+"tremble"
+],
+[
+"սրճենի",
+"кофейное дерево",
+"coffee plant",
+"",
+"caféier"
+],
+[
+"սև բիբար",
+"чёрный перец",
+"black pepper",
+"",
+"poivre noir"
+],
+[
+"բամիա",
+"бамия",
+"okra",
+"",
+"gombo"
+],
+[
+"տուղտ",
+"алтей",
+"marsh mallow",
+"",
+"guimauve"
+],
+[
+"գաղձ",
+"повилика",
+"dodder",
+"",
+"cuscute"
+],
+[
+"խցանակաղնի",
+"пробковый дуб",
+"cork oak",
+"",
+"chêne-liège"
+],
+[
+"հացի",
+"ясень",
+"ash tree",
+"",
+"frêne"
+],
+[
+"կոկոսյան արմավենի",
+"кокосовая пальма",
+"coconut palm",
+"🌴",
+"cocotier"
+],
+[
+"բիբար",
+"перец (растение)",
+"pepper (plant)",
+"",
+"poivrier"
+],
+[
+"գետնասունկ",
+"трюфель",
+"truffle",
+"",
+"truffe"
+],
+[
+"փիճի",
+"сосна (пиния)",
+"stone pine",
+"🌲",
+"pin parasol"
+],
+[
+"չինար",
+"чинара, платан",
+"plane tree",
+"",
+"platane"
+],
+[
+"ծվաղենի",
+"лавровишня",
+"cherry laurel",
+"",
+"laurier-cerise"
+],
+[
+"մասրի",
+"шиповник, роза (куст)",
+"rose (shrub)",
+"🌹",
+"rosier"
+],
+[
+"եղեսպակ",
+"шалфей",
+"sage",
+"",
+"sauge"
+],
+[
+"քիմիոն",
+"тмин, кумин",
+"cumin",
+"",
+"cumin"
+],
+[
+"պրտու",
+"папирус",
+"papyrus",
+"",
+"papyrus"
+],
+[
+"կինամոն",
+"корица",
+"cinnamon",
+"",
+"cannelle"
+],
+[
+"բալատրենի",
+"кешью (дерево)",
+"cashew tree",
+"",
+"anacardier"
+],
+[
+"տատասկ",
+"чертополох",
+"thistle",
+"",
+"chardon"
+]
+],
+"fr": "Arbres, épices, herbes"
+},
+{
+"lv": "B1",
+"ru": "Реки, края, исторические земли",
+"en": "Rivers, regions, historic lands",
+"hy": "Գետեր, երկրամասեր, պատմական հողեր",
+"ic": "🗺️",
+"w": [
+[
+"Սուրբ Հեղինեի կղզի",
+"остров Святой Елены",
+"Saint Helena",
+"",
+"Sainte-Hélène"
+],
+[
+"Մարշալյան Կղզիներ",
+"Маршалловы Острова",
+"Marshall Islands",
+"",
+"îles Marshall"
+],
+[
+"Կոստա Ռիկա",
+"Коста-Рика",
+"Costa Rica",
+"",
+"Costa Rica"
+],
+[
+"Պուերտո Ռիկո",
+"Пуэрто-Рико",
+"Puerto Rico",
+"",
+"Porto Rico"
+],
+[
+"Ազորների ինքնավար ռեգիոն",
+"Азорские острова",
+"Azores",
+"",
+"Açores"
+],
+[
+"Դաղստան",
+"Дагестан",
+"Dagestan",
+"",
+"Daghestan"
+],
+[
+"Վանդեա",
+"Вандея",
+"Vendée",
+"",
+"Vendée"
+],
+[
+"Կզըլ Կում",
+"Кызылкум",
+"Kyzyl Kum",
+"",
+"Kyzylkoum"
+],
+[
+"Ուսկյուդար",
+"Ускюдар",
+"Üsküdar",
+"",
+"Üsküdar"
+],
+[
+"Յարեն",
+"Ярен",
+"Yaren",
+"",
+"Yaren"
+],
+[
+"Դիարբեքիր",
+"Диярбакыр",
+"Diyarbakır",
+"",
+"Diyarbakır"
+],
+[
+"Դուբայ",
+"Дубай",
+"Dubai",
+"",
+"Dubaï"
+],
+[
+"Թեմզա",
+"Темза",
+"Thames",
+"",
+"Tamise"
+],
+[
+"Էպիրոս",
+"Эпир",
+"Epirus",
+"",
+"Épire"
+],
+[
+"Չուդ լիճ",
+"Чудское озеро",
+"Lake Peipus",
+"",
+"lac Peïpous"
+],
+[
+"Աբայ",
+"Аббай (Голубой Нил)",
+"Abbay (Blue Nile)",
+"",
+"Abbay (Nil Bleu)"
+],
+[
+"Քանան",
+"Ханаан",
+"Canaan",
+"",
+"Canaan"
+],
+[
+"Մակեդոնիա",
+"Македония (регион)",
+"Macedonia (region)",
+"",
+"Macédoine (région)"
+],
+[
+"Ֆլանդրիա",
+"Фландрия",
+"Flanders",
+"",
+"Flandre"
+],
+[
+"Հերցեգովինա",
+"Герцеговина",
+"Herzegovina",
+"",
+"Herzégovine"
+],
+[
+"Թրակիա",
+"Фракия",
+"Thrace",
+"",
+"Thrace"
+],
+[
+"Մանջուրիա",
+"Маньчжурия",
+"Manchuria",
+"",
+"Mandchourie"
+],
+[
+"Դալմաթիա",
+"Далмация",
+"Dalmatia",
+"",
+"Dalmatie"
+],
+[
+"Ատրպատական",
+"Атрпатакан (Иранский Азербайджан)",
+"Atropatene (Iranian Azerbaijan)",
+"",
+"Atropatène (Azerbaïdjan iranien)"
+],
+[
+"Գազայի հատված",
+"сектор Газа",
+"Gaza Strip",
+"",
+"bande de Gaza"
+],
+[
+"Հիջազ",
+"Хиджаз",
+"Hejaz",
+"",
+"Hedjaz"
+],
+[
+"Բոհեմիա",
+"Богемия",
+"Bohemia",
+"",
+"Bohême"
+],
+[
+"Շատտ էլ-Արաբ",
+"Шатт-эль-Араб",
+"Shatt al-Arab",
+"",
+"Chatt-el-Arab"
+],
+[
+"Գոլանի բարձունքներ",
+"Голанские высоты",
+"Golan Heights",
+"",
+"plateau du Golan"
+],
+[
+"Անդրհորդանան",
+"Трансиордания",
+"Transjordan",
+"",
+"Transjordanie"
+],
+[
+"Պիեմոնտ",
+"Пьемонт",
+"Piedmont",
+"",
+"Piémont"
+],
+[
+"Լիգուրիա",
+"Лигурия",
+"Liguria",
+"",
+"Ligurie"
+],
+[
+"Ռոն",
+"Рона",
+"Rhône",
+"",
+"Rhône"
+],
+[
+"Մառն",
+"Марна",
+"Marne",
+"",
+"Marne"
+],
+[
+"Լուարա",
+"Луара",
+"Loire",
+"",
+"Loire"
+],
+[
+"Մայրաբերդ",
+"Майраберд (Аскеранская крепость)",
+"Mayraberd (Askeran fortress)",
+"",
+"Mayraberd (forteresse d'Askeran)"
+],
+[
+"Դանուբ",
+"Дунай",
+"Danube",
+"",
+"Danube"
+],
+[
+"Հուանհե",
+"Хуанхэ",
+"Yellow River",
+"",
+"fleuve Jaune"
+],
+[
+"Բալթիկ ծով",
+"Балтийское море",
+"Baltic Sea",
+"",
+"mer Baltique"
+],
+[
+"Սաքսոնիա",
+"Саксония",
+"Saxony",
+"",
+"Saxe"
+],
+[
+"Ամուրի Նիկոլաևսկ",
+"Николаевск-на-Амуре",
+"Nikolayevsk-on-Amur",
+"",
+"Nikolaïevsk-sur-l'Amour"
+],
+[
+"Վորկուտա",
+"Воркута",
+"Vorkuta",
+"",
+"Vorkouta"
+],
+[
+"Դոն",
+"Дон (река)",
+"Don (river)",
+"",
+"Don (fleuve)"
+],
+[
+"Դնեստր",
+"Днестр",
+"Dniester",
+"",
+"Dniestr"
+],
+[
+"Որոնտես",
+"Оронт",
+"Orontes",
+"",
+"Oronte"
+],
+[
+"Արածանի",
+"Арацани (Восточный Евфрат)",
+"Aratsani (Eastern Euphrates)",
+"",
+"Aratsani (Euphrate oriental)"
+],
+[
+"Դոբրուջա",
+"Добруджа",
+"Dobruja",
+"",
+"Dobroudja"
+],
+[
+"Հայկական ՍՍՀ",
+"Армянская ССР",
+"Armenian SSR",
+"",
+"RSS d'Arménie"
+],
+[
+"Գերմանիայի Դաշնային Հանրապետություն",
+"Федеративная Республика Германия",
+"Federal Republic of Germany",
+"",
+"République fédérale d'Allemagne"
+],
+[
+"Չարբախ",
+"Чарбах (район Еревана)",
+"Charbakh (Yerevan neighbourhood)",
+"",
+"Tcharbakh (quartier d'Erevan)"
+],
+[
+"Նովոսիբիրսկ",
+"Новосибирская область",
+"Novosibirsk Oblast",
+"",
+"oblast de Novossibirsk"
+],
+[
+"Որսկան շներ",
+"Гончие Псы (созвездие)",
+"Canes Venatici",
+"",
+"Chiens de chasse (constellation)"
+]
+],
+"fr": "Fleuves, régions, terres historiques"
+},
+{
+"lv": "B1",
+"ru": "Штаты, провинции, языки",
+"en": "States, provinces, languages",
+"hy": "Նահանգներ, գավառներ, լեզուներ",
+"ic": "🗣️",
+"w": [
+[
+"Ջորջիա",
+"Джорджия (штат)",
+"Georgia (US state)",
+"",
+"Géorgie (État)"
+],
+[
+"Օհայո",
+"Огайо",
+"Ohio",
+"",
+"Ohio"
+],
+[
+"Օրեգոն",
+"Орегон",
+"Oregon",
+"",
+"Oregon"
+],
+[
+"Տեխաս",
+"Техас",
+"Texas",
+"🤠",
+"Texas"
+],
+[
+"Գոա",
+"Гоа",
+"Goa",
+"",
+"Goa"
+],
+[
+"Գուջարաթ",
+"Гуджарат",
+"Gujarat",
+"",
+"Gujarat"
+],
+[
+"Հարյանա",
+"Харьяна",
+"Haryana",
+"",
+"Haryana"
+],
+[
+"Հիմաչալ Պրադեշ",
+"Химачал-Прадеш",
+"Himachal Pradesh",
+"",
+"Himachal Pradesh"
+],
+[
+"Ջամմու և Քաշմիր",
+"Джамму и Кашмир",
+"Jammu and Kashmir",
+"",
+"Jammu-et-Cachemire"
+],
+[
+"Ջարքանդ",
+"Джаркханд",
+"Jharkhand",
+"",
+"Jharkhand"
+],
+[
+"Կառնատակա",
+"Карнатака",
+"Karnataka",
+"",
+"Karnataka"
+],
+[
+"Կերալա",
+"Керала",
+"Kerala",
+"",
+"Kerala"
+],
+[
+"Մադհյա Պրադեշ",
+"Мадхья-Прадеш",
+"Madhya Pradesh",
+"",
+"Madhya Pradesh"
+],
+[
+"Մահարաշտրա",
+"Махараштра",
+"Maharashtra",
+"",
+"Maharashtra"
+],
+[
+"Մանիպուր",
+"Манипур",
+"Manipur",
+"",
+"Manipur"
+],
+[
+"Մեգհալայա",
+"Мегхалая",
+"Meghalaya",
+"",
+"Meghalaya"
+],
+[
+"Միզորամ",
+"Мизорам",
+"Mizoram",
+"",
+"Mizoram"
+],
+[
+"Նագալենդ",
+"Нагаленд",
+"Nagaland",
+"",
+"Nagaland"
+],
+[
+"Օրիսա",
+"Одиша",
+"Odisha",
+"",
+"Odisha"
+],
+[
+"Հենան",
+"Хэнань",
+"Henan",
+"",
+"Henan"
+],
+[
+"Հուբեյ",
+"Хубэй",
+"Hubei",
+"",
+"Hubei"
+],
+[
+"ղպտի",
+"копт",
+"Copt",
+"",
+"Copte"
+],
+[
+"հնդկացի",
+"индеец",
+"Native American",
+"",
+"Amérindien"
+],
+[
+"ֆարերեն",
+"фарерский язык",
+"Faroese",
+"",
+"féroïen"
+],
+[
+"իսլանդերեն",
+"исландский язык",
+"Icelandic",
+"",
+"islandais"
+],
+[
+"ճապոնական",
+"японский",
+"Japanese",
+"",
+"japonais"
+],
+[
+"լիտվական",
+"литовский",
+"Lithuanian",
+"",
+"lituanien"
+],
+[
+"մալթայերեն",
+"мальтийский язык",
+"Maltese",
+"",
+"maltais"
+],
+[
+"ռուսաստանցի",
+"россиянин",
+"Russian national",
+"",
+"citoyen de Russie"
+],
+[
+"նեպալի",
+"непальский язык",
+"Nepali",
+"",
+"népalais"
+],
+[
+"մաորի",
+"маори (язык)",
+"Maori",
+"",
+"maori"
+],
+[
+"մակեդոներեն",
+"македонский язык",
+"Macedonian",
+"",
+"macédonien"
+],
+[
+"նորվեգական",
+"норвежский",
+"Norwegian",
+"",
+"norvégien"
+],
+[
+"տագալոգ",
+"тагальский язык",
+"Tagalog",
+"",
+"tagalog"
+],
+[
+"շվեդական",
+"шведский",
+"Swedish",
+"",
+"suédois"
+],
+[
+"ռոմանշ",
+"ретороманский язык",
+"Romansh",
+"",
+"romanche"
+],
+[
+"տաջիկական",
+"таджикский",
+"Tajik",
+"",
+"tadjik"
+],
+[
+"թաի",
+"тайский язык",
+"Thai",
+"",
+"thaï"
+],
+[
+"ուկրաինական",
+"украинский",
+"Ukrainian",
+"",
+"ukrainien"
+],
+[
+"բիսլամա",
+"бислама",
+"Bislama",
+"",
+"bichelamar"
+],
+[
+"վալլիերեն",
+"валлийский язык",
+"Welsh",
+"",
+"gallois"
+],
+[
+"պեսո",
+"песо",
+"peso",
+"",
+"peso"
+]
+],
+"fr": "États, provinces, langues"
+},
+{
+"lv": "B1",
+"ru": "Столицы мира 3",
+"en": "World capitals 3",
+"hy": "Աշխարհի մայրաքաղաքներ 3",
+"ic": "🌐",
+"w": [
+[
+"Նայրոբի",
+"Найроби",
+"Nairobi",
+"",
+"Nairobi"
+],
+[
+"Պրիշտինա",
+"Приштина",
+"Pristina",
+"",
+"Pristina"
+],
+[
+"Նովոռոսիյսկ",
+"Новороссийск",
+"Novorossiysk",
+"",
+"Novorossiisk"
+],
+[
+"Օշ",
+"Ош",
+"Osh",
+"",
+"Och"
+],
+[
+"Վիենտյան",
+"Вьентьян",
+"Vientiane",
+"",
+"Vientiane"
+],
+[
+"Ռիգա",
+"Рига",
+"Riga",
+"",
+"Riga"
+],
+[
+"Տյուրոս",
+"Тир",
+"Tyre",
+"",
+"Tyr"
+],
+[
+"Մասերու",
+"Масеру",
+"Maseru",
+"",
+"Maseru"
+],
+[
+"Մոնրովիա",
+"Монровия",
+"Monrovia",
+"",
+"Monrovia"
+],
+[
+"Տրիպոլի",
+"Триполи",
+"Tripoli",
+"",
+"Tripoli"
+],
+[
+"Վադուց",
+"Вадуц",
+"Vaduz",
+"",
+"Vaduz"
+],
+[
+"Լիլոնգվե",
+"Лилонгве",
+"Lilongwe",
+"",
+"Lilongwe"
+],
+[
+"Կուալա Լումպուր",
+"Куала-Лумпур",
+"Kuala Lumpur",
+"",
+"Kuala Lumpur"
+],
+[
+"Վալետա",
+"Валлетта",
+"Valletta",
+"",
+"La Valette"
+],
+[
+"Յոշկար-Օլա",
+"Йошкар-Ола",
+"Yoshkar-Ola",
+"",
+"Iochkar-Ola"
+],
+[
+"Նուակշոտ",
+"Нуакшот",
+"Nouakchott",
+"",
+"Nouakchott"
+],
+[
+"Պորտ Լուի",
+"Порт-Луи",
+"Port Louis",
+"",
+"Port-Louis"
+],
+[
+"Մեխիկո",
+"Мехико",
+"Mexico City",
+"",
+"Mexico"
+],
+[
+"Պալիկիր",
+"Паликир",
+"Palikir",
+"",
+"Palikir"
+],
+[
+"Ուլան Բատոր",
+"Улан-Батор",
+"Ulaanbaatar",
+"",
+"Oulan-Bator"
+],
+[
+"Պոդգորիցա",
+"Подгорица",
+"Podgorica",
+"",
+"Podgorica"
+],
+[
+"Ռանգուն",
+"Рангун (Янгон)",
+"Yangon (Rangoon)",
+"",
+"Rangoun"
+],
+[
+"Վինդհուկ",
+"Виндхук",
+"Windhoek",
+"",
+"Windhoek"
+],
+[
+"Կատմանդու",
+"Катманду",
+"Kathmandu",
+"",
+"Katmandou"
+],
+[
+"Վելինգտոն",
+"Веллингтон",
+"Wellington",
+"",
+"Wellington"
+],
+[
+"Մանագուա",
+"Манагуа",
+"Managua",
+"",
+"Managua"
+],
+[
+"Նիամեյ",
+"Ниамей",
+"Niamey",
+"",
+"Niamey"
+],
+[
+"Փխենյան",
+"Пхеньян",
+"Pyongyang",
+"",
+"Pyongyang"
+],
+[
+"Սկոպյե",
+"Скопье",
+"Skopje",
+"",
+"Skopje"
+],
+[
+"Օսլո",
+"Осло",
+"Oslo",
+"",
+"Oslo"
+],
+[
+"Օդեսա",
+"Одесса",
+"Odesa",
+"",
+"Odessa"
+],
+[
+"Մասկատ",
+"Маскат",
+"Muscat",
+"",
+"Mascate"
+],
+[
+"Իսլամաբադ",
+"Исламабад",
+"Islamabad",
+"",
+"Islamabad"
+],
+[
+"Լիմա",
+"Лима",
+"Lima",
+"",
+"Lima"
+],
+[
+"Դոհա",
+"Доха",
+"Doha",
+"",
+"Doha"
+],
+[
+"Դոնի Ռոստով",
+"Ростов-на-Дону",
+"Rostov-on-Don",
+"",
+"Rostov-sur-le-Don"
+],
+[
+"Աբերդին",
+"Абердин",
+"Aberdeen",
+"",
+"Aberdeen"
+],
+[
+"Բրատիսլավա",
+"Братислава",
+"Bratislava",
+"",
+"Bratislava"
+],
+[
+"Լյուբլյանա",
+"Любляна",
+"Ljubljana",
+"",
+"Ljubljana"
+],
+[
+"Լեյդեն",
+"Лейден",
+"Leiden",
+"",
+"Leyde"
+],
+[
+"Սեուլ",
+"Сеул",
+"Seoul",
+"",
+"Séoul"
+],
+[
+"Ստոկհոլմ",
+"Стокгольм",
+"Stockholm",
+"",
+"Stockholm"
+],
+[
+"Տայբեյ",
+"Тайбэй",
+"Taipei",
+"",
+"Taipei"
+],
+[
+"Դուշանբե",
+"Душанбе",
+"Dushanbe",
+"",
+"Douchanbé"
+],
+[
+"Կամպալա",
+"Кампала",
+"Kampala",
+"",
+"Kampala"
+],
+[
+"Հանոյ",
+"Ханой",
+"Hanoi",
+"",
+"Hanoï"
+],
+[
+"Նասաու",
+"Нассау",
+"Nassau",
+"",
+"Nassau"
+],
+[
+"Պրագա",
+"Прага",
+"Prague",
+"",
+"Prague"
+],
+[
+"Սանտո Դոմինգո",
+"Санто-Доминго",
+"Santo Domingo",
+"",
+"Saint-Domingue"
+],
+[
+"Մալե",
+"Мале",
+"Malé",
+"",
+"Malé"
+],
+[
+"Մաջուրո",
+"Маджуро",
+"Majuro",
+"",
+"Majuro"
+],
+[
+"Հաագա",
+"Гаага",
+"The Hague",
+"",
+"La Haye"
+],
+[
+"Ջիբրալթար",
+"Гибралтар",
+"Gibraltar",
+"",
+"Gibraltar"
+],
+[
+"Յամուսուկրո",
+"Ямусукро",
+"Yamoussoukro",
+"",
+"Yamoussoukro"
+]
+],
+"fr": "Capitales du monde 3"
+},
+{
+"lv": "B1",
+"ru": "Досуг, кино, книги",
+"en": "Leisure, film, books",
+"hy": "Ժամանց, կինո, գրքեր",
+"ic": "🎬",
+"w": [
+[
+"դարթսի տախտակ",
+"мишень для дартса",
+"dartboard",
+"🎯",
+"cible de fléchettes"
+],
+[
+"ամերիկյան ֆուտբոլ",
+"американский футбол",
+"American football",
+"🏈",
+"football américain"
+],
+[
+"ամենաբարձր բրեյկ",
+"максимальный брейк",
+"maximum break",
+"",
+"break maximum"
+],
+[
+"մարտարվեստ",
+"боевое искусство",
+"martial art",
+"🥋",
+"art martial"
+],
+[
+"թենիսի կորտ",
+"теннисный корт",
+"tennis court",
+"",
+"court de tennis"
+],
+[
+"թրիլլեր",
+"триллер",
+"thriller",
+"",
+"thriller"
+],
+[
+"սիրավեպ",
+"любовный роман",
+"romance novel",
+"",
+"roman d'amour"
+],
+[
+"դերակատար",
+"исполнитель роли",
+"performer (of a role)",
+"",
+"interprète (d'un rôle)"
+],
+[
+"Գուգլ",
+"Гугл",
+"Google",
+"",
+"Google"
+],
+[
+"Յություբ",
+"Ютуб",
+"YouTube",
+"",
+"YouTube"
+],
+[
+"Վիքիբառարան",
+"Викисловарь",
+"Wiktionary",
+"",
+"Wiktionnaire"
+],
+[
+"հատոր",
+"том (книги)",
+"volume, tome",
+"",
+"tome"
+],
+[
+"թանաք",
+"чернила",
+"ink",
+"",
+"encre"
+],
+[
+"գրամեքենա",
+"пишущая машинка",
+"typewriter",
+"",
+"machine à écrire"
+],
+[
+"հիերոգլիֆ",
+"иероглиф",
+"hieroglyph",
+"",
+"hiéroglyphe"
+],
+[
+"գլխաբառ",
+"заглавное слово (словаря)",
+"headword",
+"",
+"entrée (de dictionnaire)"
+],
+[
+"գրացուցակ",
+"каталог (книг)",
+"catalogue (of books)",
+"",
+"catalogue"
+],
+[
+"բեյթ",
+"бейт (двустишие)",
+"couplet",
+"",
+"distique"
+],
+[
+"հրատարակում",
+"издание, публикация",
+"publishing",
+"",
+"publication"
+],
+[
+"հաղորդել",
+"сообщать, передавать",
+"to transmit, to inform",
+"",
+"transmettre, communiquer"
+],
+[
+"հարթաքանդակ",
+"барельеф",
+"bas-relief",
+"",
+"bas-relief"
+],
+[
+"Սորբոն",
+"Сорбонна",
+"Sorbonne",
+"",
+"Sorbonne"
+]
+],
+"fr": "Loisirs, cinéma, livres"
+},
+{
 "lv": "B2",
 "ru": "Личность и психология",
 "en": "Personality and psychology",
@@ -72167,6 +78532,2681 @@
 ]
 ],
 "fr": "Maladies, comptabilité, études"
+},
+{
+"lv": "B2",
+"ru": "Общество, история, армия",
+"en": "Society, history, army",
+"hy": "Հասարակություն, պատմություն, բանակ",
+"ic": "🎖️",
+"w": [
+[
+"բանդա",
+"банда",
+"gang",
+"",
+"bande, gang"
+],
+[
+"պրոլետարիատ",
+"пролетариат",
+"proletariat",
+"",
+"prolétariat"
+],
+[
+"գրպանահատ",
+"карманник",
+"pickpocket",
+"",
+"pickpocket"
+],
+[
+"ձիագող",
+"конокрад",
+"horse thief",
+"",
+"voleur de chevaux"
+],
+[
+"մաքսանենգ",
+"контрабандист",
+"smuggler",
+"",
+"contrebandier"
+],
+[
+"շորթում",
+"вымогательство",
+"extortion",
+"",
+"extorsion"
+],
+[
+"գեստապո",
+"гестапо",
+"Gestapo",
+"",
+"Gestapo"
+],
+[
+"նացիզմ",
+"нацизм",
+"Nazism",
+"",
+"nazisme"
+],
+[
+"նեոնացիստ",
+"неонацист",
+"neo-Nazi",
+"",
+"néonazi"
+],
+[
+"խուլիգան",
+"хулиган",
+"hooligan",
+"",
+"voyou"
+],
+[
+"ծերուկ",
+"старик",
+"old man",
+"👴",
+"vieillard"
+],
+[
+"կոլեգա",
+"коллега",
+"colleague",
+"",
+"collègue"
+],
+[
+"պաշտոնակից",
+"сослуживец, коллега",
+"coworker",
+"",
+"collègue de travail"
+],
+[
+"ստրկատեր",
+"рабовладелец",
+"slaveholder",
+"",
+"esclavagiste"
+],
+[
+"հակասեմականություն",
+"антисемитизм",
+"anti-Semitism",
+"",
+"antisémitisme"
+],
+[
+"հոմոֆոբիա",
+"гомофобия",
+"homophobia",
+"",
+"homophobie"
+],
+[
+"սեքսիզմ",
+"сексизм",
+"sexism",
+"",
+"sexisme"
+],
+[
+"տրանսֆոբիա",
+"трансфобия",
+"transphobia",
+"",
+"transphobie"
+],
+[
+"բազմակնություն",
+"многожёнство",
+"polygamy",
+"",
+"polygamie"
+],
+[
+"նորահարս",
+"новобрачная",
+"newlywed bride",
+"👰",
+"jeune mariée"
+],
+[
+"օժիտ",
+"приданое",
+"dowry",
+"",
+"dot"
+],
+[
+"ազգային բուրժուազիա",
+"национальная буржуазия",
+"national bourgeoisie",
+"",
+"bourgeoisie nationale"
+],
+[
+"բուրժուա",
+"буржуа",
+"bourgeois",
+"",
+"bourgeois"
+],
+[
+"բուրժուազիա",
+"буржуазия",
+"bourgeoisie",
+"",
+"bourgeoisie"
+],
+[
+"պրոլետար",
+"пролетарий",
+"proletarian",
+"",
+"prolétaire"
+],
+[
+"եֆրեյտոր",
+"ефрейтор",
+"lance corporal (yefreytor)",
+"",
+"caporal"
+],
+[
+"ծովակալ",
+"адмирал",
+"admiral",
+"",
+"amiral"
+],
+[
+"հարյուրապետ",
+"сотник, центурион",
+"centurion",
+"",
+"centurion"
+],
+[
+"պորուչիկ",
+"поручик",
+"poruchik (lieutenant)",
+"",
+"lieutenant (poroutchik)"
+],
+[
+"Մոլոտովի կոկտեյլ",
+"коктейль Молотова",
+"Molotov cocktail",
+"",
+"cocktail Molotov"
+],
+[
+"ատոմային ռումբ",
+"атомная бомба",
+"atomic bomb",
+"",
+"bombe atomique"
+],
+[
+"ջրածնային ռումբ",
+"водородная бомба",
+"hydrogen bomb",
+"",
+"bombe à hydrogène"
+],
+[
+"վառոդ",
+"порох",
+"gunpowder",
+"",
+"poudre à canon"
+]
+],
+"fr": "Société, histoire, armée"
+},
+{
+"lv": "B2",
+"ru": "Минералы, металлы, приборы",
+"en": "Minerals, metals, devices",
+"hy": "Միներալներ, մետաղներ, սարքեր",
+"ic": "🧪",
+"w": [
+[
+"ալեբաստր",
+"алебастр",
+"alabaster",
+"",
+"albâtre"
+],
+[
+"բորակ",
+"селитра",
+"saltpetre",
+"",
+"salpêtre"
+],
+[
+"զմռնիտ",
+"наждак",
+"emery",
+"",
+"émeri"
+],
+[
+"կինաբար",
+"киноварь",
+"cinnabar",
+"",
+"cinabre"
+],
+[
+"լիթիում",
+"литий",
+"lithium",
+"",
+"lithium"
+],
+[
+"ռուբիդիում",
+"рубидий",
+"rubidium",
+"",
+"rubidium"
+],
+[
+"ցեզիում",
+"цезий",
+"caesium",
+"",
+"césium"
+],
+[
+"ֆրանսիում",
+"франций",
+"francium",
+"",
+"francium"
+],
+[
+"բեզմեն",
+"безмен",
+"steelyard",
+"",
+"romaine (balance)"
+],
+[
+"ծանրաչափ",
+"барометр",
+"barometer",
+"",
+"baromètre"
+],
+[
+"հողմաչափ",
+"анемометр",
+"anemometer",
+"",
+"anémomètre"
+],
+[
+"վայրկենաչափ",
+"секундомер",
+"stopwatch",
+"⏱️",
+"chronomètre"
+],
+[
+"բուլդոզեր",
+"бульдозер",
+"bulldozer",
+"🚜",
+"bulldozer"
+],
+[
+"ինքնաթափ",
+"самосвал",
+"dump truck",
+"",
+"camion-benne"
+],
+[
+"վերամբարձ կռունկ",
+"подъёмный кран",
+"crane",
+"🏗️",
+"grue"
+],
+[
+"զոդ",
+"спайка, сварка",
+"joining, welding",
+"",
+"soudure"
+],
+[
+"զոդել",
+"спаивать, соединять",
+"to join, to weld",
+"",
+"souder, joindre"
+],
+[
+"խցիկ",
+"будка, кабина",
+"booth, cabin",
+"",
+"cabine"
+],
+[
+"մանրամաս",
+"деталь",
+"part, component",
+"",
+"pièce, composant"
+]
+],
+"fr": "Minéraux, métaux, appareils"
+},
+{
+"lv": "B2",
+"ru": "Ремёсла, вера, живопись",
+"en": "Crafts, faith, painting",
+"hy": "Արհեստներ, հավատք, գեղանկարչություն",
+"ic": "🧶",
+"w": [
+[
+"ազբ",
+"бердо (ткацкого станка)",
+"reed (of a loom)",
+"",
+"peigne (de métier à tisser)"
+],
+[
+"առէջ",
+"основа (ткани)",
+"warp",
+"",
+"chaîne"
+],
+[
+"թեզան",
+"уток",
+"weft",
+"",
+"trame"
+],
+[
+"մաքոք",
+"челнок",
+"shuttle",
+"",
+"navette"
+],
+[
+"ջուլհակահաստոց",
+"ткацкий станок",
+"loom",
+"",
+"métier à tisser"
+],
+[
+"Ահրիման",
+"Ахриман",
+"Ahriman",
+"",
+"Ahriman"
+],
+[
+"Որմիզդ",
+"Ормизд (Ахура Мазда)",
+"Ahura Mazda",
+"",
+"Ormuzd (Ahura Mazda)"
+],
+[
+"ատրուշան",
+"храм огня",
+"fire temple",
+"🔥",
+"temple du feu"
+],
+[
+"մազդեզն",
+"маздеец, зороастриец",
+"Mazdean, Zoroastrian",
+"",
+"mazdéen, zoroastrien"
+],
+[
+"գնոստիկ",
+"гностик",
+"Gnostic",
+"",
+"gnostique"
+],
+[
+"գնոստիցիզմ",
+"гностицизм",
+"Gnosticism",
+"",
+"gnosticisme"
+],
+[
+"անձնանուն",
+"личное имя",
+"personal name",
+"",
+"prénom, nom de personne"
+],
+[
+"էկզոնիմ",
+"экзоним",
+"exonym",
+"",
+"exonyme"
+],
+[
+"ջրանուն",
+"гидроним",
+"hydronym",
+"",
+"hydronyme"
+],
+[
+"տեղանուն",
+"топоним",
+"place name, toponym",
+"",
+"toponyme"
+],
+[
+"բնապատկեր",
+"пейзаж (картина)",
+"landscape painting",
+"",
+"paysage (tableau)"
+],
+[
+"ներկապնակ",
+"палитра",
+"palette",
+"🎨",
+"palette"
+],
+[
+"նկարակալ",
+"мольберт",
+"easel",
+"",
+"chevalet"
+],
+[
+"ջրանկար",
+"акварель",
+"watercolour",
+"",
+"aquarelle"
+],
+[
+"գրատպություն",
+"книгопечатание",
+"book printing",
+"",
+"imprimerie"
+],
+[
+"վերջնազարդ",
+"концовка, виньетка",
+"colophon, tailpiece",
+"",
+"cul-de-lampe"
+]
+],
+"fr": "Artisanat, foi, peinture"
+},
+{
+"lv": "B2",
+"ru": "Звуки, ветер, вода",
+"en": "Sounds, wind, water",
+"hy": "Ձայներ, քամի, ջուր",
+"ic": "🌬️",
+"w": [
+[
+"խոխոջալ",
+"журчать, шелестеть",
+"to purl, to murmur",
+"",
+"murmurer, gazouiller"
+],
+[
+"շառաչյուն",
+"грохот",
+"crash, rumble",
+"",
+"fracas"
+],
+[
+"սոսափյուն",
+"шелест, шорох",
+"rustle, murmur",
+"",
+"bruissement"
+],
+[
+"դայլայլել",
+"заливаться трелью",
+"to trill",
+"",
+"triller"
+],
+[
+"քչքչալ",
+"журчать",
+"to babble, to purl",
+"",
+"gazouiller (d'un ruisseau)"
+],
+[
+"խորշակ",
+"суховей",
+"hot dry wind",
+"",
+"vent sec et brûlant"
+],
+[
+"շունչ",
+"дыхание",
+"breath",
+"",
+"souffle"
+],
+[
+"սյուք",
+"ветерок, бриз",
+"breeze",
+"🍃",
+"brise"
+],
+[
+"փաթիլ",
+"крупная снежинка",
+"large snowflake",
+"❄️",
+"gros flocon"
+],
+[
+"գետակ",
+"речка, ручей",
+"brook, rivulet",
+"",
+"ruisseau"
+],
+[
+"ծովախորշ",
+"морской залив",
+"bay, gulf",
+"",
+"golfe, baie"
+],
+[
+"բով",
+"горн, печь",
+"furnace",
+"",
+"fournaise"
+]
+],
+"fr": "Sons, vent, eau"
+},
+{
+"lv": "B2",
+"ru": "Растения 5",
+"en": "Plants 5",
+"hy": "Բույսեր 5",
+"ic": "🌿",
+"w": [
+[
+"թեղի",
+"вяз",
+"elm",
+"",
+"orme"
+],
+[
+"ժանտափուշ",
+"держи-дерево (палиурус)",
+"Christ's thorn (Paliurus)",
+"",
+"paliure"
+],
+[
+"մորմենի",
+"ежевика (куст)",
+"blackberry bush",
+"",
+"ronce"
+],
+[
+"բադրիջան",
+"баклажан",
+"aubergine, eggplant",
+"🍆",
+"aubergine"
+],
+[
+"բանջար",
+"зелень (съедобная)",
+"edible greens",
+"🥬",
+"verdure, légumes verts"
+],
+[
+"վայրի գազար",
+"пастернак",
+"parsnip",
+"",
+"panais"
+],
+[
+"ղանձիլ",
+"черемша",
+"wild garlic, ramsons",
+"",
+"ail des ours"
+],
+[
+"ճիլակ",
+"зелёный лук (батун)",
+"spring onion",
+"",
+"ciboule"
+],
+[
+"քուռաթ",
+"лук-порей",
+"leek",
+"",
+"poireau"
+],
+[
+"զրիշկ",
+"барбарис",
+"barberry",
+"",
+"épine-vinette"
+],
+[
+"դանդուռ",
+"портулак",
+"purslane",
+"",
+"pourpier"
+],
+[
+"խավարծիլ",
+"ревень",
+"rhubarb",
+"",
+"rhubarbe"
+],
+[
+"թրեֆ",
+"редька",
+"radish",
+"",
+"radis noir"
+],
+[
+"կոտեմ",
+"кресс-салат",
+"garden cress",
+"",
+"cresson alénois"
+],
+[
+"շահպրակ",
+"левкой",
+"stock (flower)",
+"",
+"giroflée"
+],
+[
+"կիպարիս",
+"кипарис",
+"cypress",
+"",
+"cyprès"
+],
+[
+"ցրդենի",
+"казацкий можжевельник",
+"savin juniper",
+"",
+"genévrier sabine"
+],
+[
+"ազոխ",
+"незрелый виноград",
+"unripe grapes",
+"",
+"raisin vert"
+],
+[
+"շրվանդ",
+"гребень грозди (без ягод)",
+"empty grape stem",
+"",
+"rafle"
+],
+[
+"ողկույզ",
+"гроздь винограда",
+"bunch of grapes",
+"🍇",
+"grappe de raisin"
+],
+[
+"լերդախոտ",
+"дубровник",
+"germander",
+"",
+"germandrée"
+],
+[
+"ոզնախոտ",
+"ежа (трава)",
+"cocksfoot grass",
+"",
+"dactyle"
+],
+[
+"որոմ",
+"плевел, сорняк",
+"ryegrass, darnel; weed",
+"",
+"ivraie"
+],
+[
+"աղավնիճ",
+"вербена",
+"vervain",
+"",
+"verveine"
+],
+[
+"եզան լեզու",
+"подорожник",
+"plantain",
+"",
+"plantain"
+],
+[
+"շուշմա",
+"кунжут",
+"sesame",
+"",
+"sésame"
+],
+[
+"աբեղախոտ",
+"чистец",
+"woundwort",
+"",
+"épiaire"
+],
+[
+"հագնի",
+"прутняк, авраамово дерево",
+"chaste tree",
+"",
+"gattilier"
+],
+[
+"պատրինջ",
+"мелисса",
+"lemon balm",
+"",
+"mélisse"
+],
+[
+"մանրագոր",
+"мандрагора",
+"mandrake",
+"",
+"mandragore"
+],
+[
+"մորմ",
+"паслён",
+"nightshade",
+"",
+"morelle"
+],
+[
+"բալատուր",
+"кешью",
+"cashew nut",
+"",
+"noix de cajou"
+],
+[
+"կոկան",
+"тёрн (ягода)",
+"sloe",
+"",
+"prunelle"
+],
+[
+"մամխենի",
+"тёрн (куст)",
+"blackthorn",
+"",
+"prunellier"
+],
+[
+"բալախ",
+"солерос",
+"glasswort",
+"",
+"salicorne"
+],
+[
+"ծիմել",
+"амарант",
+"amaranth",
+"",
+"amarante"
+],
+[
+"շաքարեղեգ",
+"сахарный тростник",
+"sugar cane",
+"",
+"canne à sucre"
+],
+[
+"սորգո",
+"сорго",
+"sorghum",
+"",
+"sorgho"
+],
+[
+"ազատքեղ",
+"петрушка",
+"parsley",
+"🌿",
+"persil"
+],
+[
+"բաղեղ",
+"плющ",
+"ivy",
+"",
+"lierre"
+],
+[
+"ռազիան",
+"фенхель",
+"fennel",
+"",
+"fenouil"
+],
+[
+"բարձվենյակ",
+"полынь (род)",
+"Artemisia",
+"",
+"armoise"
+],
+[
+"օշինդր",
+"полынь горькая",
+"wormwood",
+"",
+"absinthe (plante)"
+],
+[
+"հալվե",
+"алоэ",
+"aloe",
+"🪴",
+"aloès"
+],
+[
+"հակինթ",
+"яхонт (рубин, сапфир)",
+"ruby, sapphire",
+"",
+"rubis, saphir"
+]
+],
+"fr": "Plantes 5"
+},
+{
+"lv": "B2",
+"ru": "История и Европа",
+"en": "History and Europe",
+"hy": "Պատմություն և Եվրոպա",
+"ic": "🏰",
+"w": [
+[
+"Ատալիա",
+"Атталия (Анталья)",
+"Attalia (Antalya)",
+"",
+"Attalie (Antalya)"
+],
+[
+"Թեբե",
+"Фивы",
+"Thebes",
+"",
+"Thèbes"
+],
+[
+"Կարթագեն",
+"Карфаген",
+"Carthage",
+"",
+"Carthage"
+],
+[
+"Արբելա",
+"Арбела",
+"Arbela",
+"",
+"Arbèles"
+],
+[
+"Սենեքերիմ",
+"Синаххериб",
+"Sennacherib",
+"",
+"Sennachérib"
+],
+[
+"ասուրագիտություն",
+"ассириология",
+"Assyriology",
+"",
+"assyriologie"
+],
+[
+"Բելիսարիոս",
+"Велизарий",
+"Belisarius",
+"",
+"Bélisaire"
+],
+[
+"Կոմնենոս",
+"Комнин",
+"Comnenus",
+"",
+"Comnène"
+],
+[
+"բյուզանդացի",
+"византиец",
+"Byzantine",
+"",
+"Byzantin"
+],
+[
+"Պարսք",
+"Персида",
+"Persis",
+"",
+"Perside"
+],
+[
+"Նաիրի",
+"Наири",
+"Nairi",
+"",
+"Naïri"
+],
+[
+"ծերակույտ",
+"ареопаг",
+"Areopagus",
+"",
+"aréopage"
+],
+[
+"ֆեոդալ",
+"феодал",
+"feudal lord",
+"",
+"féodal, seigneur"
+],
+[
+"Բարդուղիմեոսյան գիշեր",
+"Варфоломеевская ночь",
+"St. Bartholomew's Day massacre",
+"",
+"massacre de la Saint-Barthélemy"
+],
+[
+"առաջին համաշխարհային պատերազմ",
+"Первая мировая война",
+"World War I",
+"",
+"Première Guerre mondiale"
+],
+[
+"երկրորդ համաշխարհային պատերազմ",
+"Вторая мировая война",
+"World War II",
+"",
+"Seconde Guerre mondiale"
+],
+[
+"Ռուսիա",
+"Русь",
+"Rus",
+"",
+"Rus'"
+],
+[
+"Հոհենցոլերն",
+"Гогенцоллерны",
+"Hohenzollern",
+"",
+"Hohenzollern"
+],
+[
+"Պրոկլետիե",
+"Проклетие (горы)",
+"Prokletije",
+"",
+"Prokletije"
+],
+[
+"լեկ",
+"лек (валюта Албании)",
+"lek",
+"",
+"lek"
+],
+[
+"Բալեարյան կղզիներ",
+"Балеарские острова",
+"Balearic Islands",
+"",
+"îles Baléares"
+],
+[
+"Կանարյան կղզիներ",
+"Канарские острова",
+"Canary Islands",
+"",
+"îles Canaries"
+],
+[
+"Կատալոնիա",
+"Каталония",
+"Catalonia",
+"",
+"Catalogne"
+],
+[
+"Զալցբուրգ",
+"Зальцбург",
+"Salzburg",
+"",
+"Salzbourg"
+],
+[
+"Լինց",
+"Линц",
+"Linz",
+"",
+"Linz"
+],
+[
+"Մելք",
+"Мельк",
+"Melk",
+"",
+"Melk"
+],
+[
+"Լիմասոլ",
+"Лимасол",
+"Limassol",
+"",
+"Limassol"
+],
+[
+"Նիկոսիա",
+"Никосия",
+"Nicosia",
+"",
+"Nicosie"
+],
+[
+"Ֆամագուստա",
+"Фамагуста",
+"Famagusta",
+"",
+"Famagouste"
+],
+[
+"Գրենլանդիա",
+"Гренландия",
+"Greenland",
+"",
+"Groenland"
+],
+[
+"Ֆարերյան կղզիներ",
+"Фарерские острова",
+"Faroe Islands",
+"",
+"îles Féroé"
+],
+[
+"Հելգոլանդ",
+"Гельголанд",
+"Heligoland",
+"",
+"Heligoland"
+],
+[
+"գերմանական",
+"немецкий, германский",
+"German",
+"",
+"allemand"
+],
+[
+"Թյուրինգիա",
+"Тюрингия",
+"Thuringia",
+"",
+"Thuringe"
+],
+[
+"Հեսսեն",
+"Гессен",
+"Hesse",
+"",
+"Hesse"
+],
+[
+"Շլեզվիգ-Հոլշտայն",
+"Шлезвиг-Гольштейн",
+"Schleswig-Holstein",
+"",
+"Schleswig-Holstein"
+],
+[
+"Բոսֆոր",
+"Босфор",
+"Bosphorus",
+"",
+"Bosphore"
+],
+[
+"Անդորրա",
+"Андорра",
+"Andorra",
+"",
+"Andorre"
+],
+[
+"Պիրենեյան թերակղզի",
+"Пиренейский полуостров",
+"Iberian Peninsula",
+"",
+"péninsule Ibérique"
+],
+[
+"Արևմտյան Դվինա",
+"Западная Двина (Даугава)",
+"Western Dvina (Daugava)",
+"",
+"Dvina occidentale (Daugava)"
+]
+],
+"fr": "Histoire et Europe"
+},
+{
+"lv": "B2",
+"ru": "Культура, вера, эпохи",
+"en": "Culture, faith, eras",
+"hy": "Մշակույթ, հավատք, դարաշրջաններ",
+"ic": "🎭",
+"w": [
+[
+"տպագրություն",
+"книгопечатание, типографское дело",
+"printing, typography",
+"",
+"imprimerie, typographie"
+],
+[
+"տպարան",
+"типография",
+"printing house",
+"",
+"imprimerie (atelier)"
+],
+[
+"Դիանա",
+"Диана",
+"Diana",
+"",
+"Diane"
+],
+[
+"Հերկուլես",
+"Геркулес",
+"Hercules",
+"",
+"Hercule"
+],
+[
+"Միներվա",
+"Минерва",
+"Minerva",
+"",
+"Minerve"
+],
+[
+"Սատուռն",
+"Сатурн (бог)",
+"Saturn (god)",
+"",
+"Saturne (dieu)"
+],
+[
+"Ծովինար",
+"Цовинар (имя; богиня вод)",
+"Tsovinar (name; water goddess)",
+"",
+"Tsovinar (prénom; déesse des eaux)"
+],
+[
+"Տորք",
+"Торк (имя; бог-силач)",
+"Tork (name; strongman god)",
+"",
+"Tork (prénom; dieu colosse)"
+],
+[
+"կիսաստված",
+"полубог",
+"demigod",
+"",
+"demi-dieu"
+],
+[
+"Կրիշնա",
+"Кришна",
+"Krishna",
+"",
+"Krishna"
+],
+[
+"Շիվա",
+"Шива",
+"Shiva",
+"",
+"Shiva"
+],
+[
+"Վիշնու",
+"Вишну",
+"Vishnu",
+"",
+"Vishnou"
+],
+[
+"կարդինալ",
+"кардинал",
+"cardinal",
+"",
+"cardinal"
+],
+[
+"ճիզվիտ",
+"иезуит",
+"Jesuit",
+"",
+"jésuite"
+],
+[
+"յոթ մահացու մեղքեր",
+"семь смертных грехов",
+"seven deadly sins",
+"",
+"sept péchés capitaux"
+],
+[
+"բագին",
+"жертвенник (языческий)",
+"pagan altar",
+"",
+"autel païen"
+],
+[
+"մեհյան",
+"языческий храм",
+"pagan temple",
+"",
+"temple païen"
+],
+[
+"քուրմ",
+"жрец",
+"pagan priest",
+"",
+"prêtre païen"
+],
+[
+"գրականագիտություն",
+"литературоведение",
+"literary studies",
+"",
+"études littéraires"
+],
+[
+"մատենագիտություն",
+"библиография",
+"bibliography",
+"",
+"bibliographie"
+],
+[
+"վերջերգ",
+"эпилог",
+"epilogue",
+"",
+"épilogue"
+],
+[
+"արար",
+"акт, действие (пьесы)",
+"act (of a play)",
+"",
+"acte"
+],
+[
+"դադար",
+"пауза, перерыв",
+"rest, pause",
+"",
+"pause"
+],
+[
+"հետնաբեմ",
+"кулисы",
+"wings (of a stage)",
+"🎭",
+"coulisses"
+],
+[
+"կարճամետրաժ",
+"короткометражный",
+"short (film)",
+"",
+"court"
+],
+[
+"կարճամետրաժ ֆիլմ",
+"короткометражный фильм",
+"short film",
+"",
+"court métrage"
+],
+[
+"կինոֆիլմ",
+"кинофильм",
+"motion picture",
+"🎬",
+"film"
+],
+[
+"Կարմիր գլխարկ",
+"Красная Шапочка",
+"Little Red Riding Hood",
+"",
+"le Petit Chaperon rouge"
+],
+[
+"Մոխրոտ",
+"Золушка",
+"Cinderella",
+"",
+"Cendrillon"
+],
+[
+"Սպիտակաձյունիկ",
+"Белоснежка",
+"Snow White",
+"",
+"Blanche-Neige"
+],
+[
+"Թվիթեր",
+"Твиттер",
+"Twitter",
+"",
+"Twitter"
+],
+[
+"Ինստագրամ",
+"Инстаграм",
+"Instagram",
+"",
+"Instagram"
+],
+[
+"Ֆեյսբուք",
+"Фейсбук",
+"Facebook",
+"",
+"Facebook"
+],
+[
+"ֆեյք",
+"фейк (поддельный аккаунт)",
+"fake account",
+"",
+"faux compte"
+],
+[
+"գլասնոստ",
+"гласность",
+"glasnost",
+"",
+"glasnost"
+],
+[
+"միլիցիա",
+"милиция",
+"militsia (Soviet police)",
+"",
+"milice (police soviétique)"
+],
+[
+"պերեստրոյկա",
+"перестройка",
+"perestroika",
+"",
+"perestroïka"
+],
+[
+"քաղաքատիպ ավան",
+"посёлок городского типа",
+"urban-type settlement",
+"",
+"commune urbaine"
+],
+[
+"հախճապակի",
+"фаянс",
+"faience",
+"",
+"faïence"
+],
+[
+"ճենապակի",
+"фарфор",
+"porcelain",
+"",
+"porcelaine"
+],
+[
+"ջնարակ",
+"глазурь",
+"glaze",
+"",
+"glaçure"
+],
+[
+"կոչական հոլով",
+"звательный падеж",
+"vocative case",
+"",
+"vocatif"
+],
+[
+"հայցական հոլով",
+"винительный падеж",
+"accusative case",
+"",
+"accusatif"
+],
+[
+"ուղղական հոլով",
+"именительный падеж",
+"nominative case",
+"",
+"nominatif"
+]
+],
+"fr": "Culture, foi, époques"
+},
+{
+"lv": "B2",
+"ru": "Оружие, суда, наука",
+"en": "Weapons, ships, science",
+"hy": "Զենք, նավեր, գիտություն",
+"ic": "⚔️",
+"w": [
+[
+"աշտե",
+"копьё (вид)",
+"type of spear",
+"",
+"type de lance"
+],
+[
+"նիզակ",
+"копьё",
+"spear, lance",
+"",
+"lance"
+],
+[
+"տեգ",
+"наконечник копья",
+"spearhead",
+"",
+"fer de lance"
+],
+[
+"թուր",
+"меч",
+"sword",
+"⚔️",
+"épée"
+],
+[
+"մաչետե",
+"мачете",
+"machete",
+"",
+"machette"
+],
+[
+"յաթաղան",
+"ятаган",
+"yataghan",
+"",
+"yatagan"
+],
+[
+"նետաձիգ",
+"лучник",
+"archer",
+"🏹",
+"archer"
+],
+[
+"կորովաձիգ",
+"меткий лучник",
+"skilled archer",
+"",
+"archer habile"
+],
+[
+"փաղանգ",
+"фаланга; шеренга",
+"phalanx; rank",
+"",
+"phalange; rang"
+],
+[
+"բուքսիրային նավ",
+"буксир",
+"tugboat",
+"",
+"remorqueur"
+],
+[
+"հածանավ",
+"крейсер",
+"cruiser",
+"",
+"croiseur"
+],
+[
+"շոգենավ",
+"пароход",
+"steamboat",
+"🚢",
+"bateau à vapeur"
+],
+[
+"խել",
+"корма",
+"stern",
+"",
+"poupe"
+],
+[
+"խուսանավել",
+"лавировать",
+"to tack",
+"",
+"louvoyer"
+],
+[
+"հերձադանակ",
+"скальпель",
+"scalpel",
+"",
+"scalpel"
+],
+[
+"հերձել",
+"вскрывать (тело)",
+"to dissect, to perform an autopsy",
+"",
+"disséquer, autopsier"
+],
+[
+"նշտար",
+"ланцет",
+"lancet",
+"",
+"lancette"
+],
+[
+"անորոշ ինտեգրալ",
+"неопределённый интеграл",
+"indefinite integral",
+"",
+"intégrale indéfinie"
+],
+[
+"գրադիենտ",
+"градиент",
+"gradient",
+"",
+"gradient"
+],
+[
+"նախնական ֆունկցիա",
+"первообразная",
+"primitive function",
+"",
+"primitive"
+],
+[
+"աստղաֆիզիկա",
+"астрофизика",
+"astrophysics",
+"",
+"astrophysique"
+],
+[
+"իրադարձությունների հորիզոն",
+"горизонт событий",
+"event horizon",
+"",
+"horizon des événements"
+],
+[
+"դիվիդենտ",
+"дивиденд",
+"dividend",
+"",
+"dividende"
+],
+[
+"ինվեստիցիա",
+"инвестиция",
+"investment",
+"",
+"investissement"
+],
+[
+"ցուցակում",
+"листинг",
+"listing",
+"",
+"cotation"
+],
+[
+"արտագաղթել",
+"эмигрировать",
+"to emigrate",
+"",
+"émigrer"
+],
+[
+"գաղթեցում",
+"переселение",
+"resettlement",
+"",
+"déplacement, réinstallation"
+],
+[
+"ներգաղթել",
+"иммигрировать",
+"to immigrate",
+"",
+"immigrer"
+],
+[
+"կոկաին",
+"кокаин",
+"cocaine",
+"",
+"cocaïne"
+],
+[
+"հերոին",
+"героин",
+"heroin",
+"",
+"héroïne"
+],
+[
+"մարիխուանա",
+"марихуана",
+"marijuana",
+"",
+"marijuana"
+],
+[
+"լիսեռ",
+"ось, вал",
+"axle, spindle",
+"",
+"axe, arbre"
+],
+[
+"քարման",
+"крестовина для прядения шерсти",
+"cross-shaped spinning tool",
+"",
+"outil de filage en croix"
+]
+],
+"fr": "Armes, navires, sciences"
+},
+{
+"lv": "B2",
+"ru": "Общество и власть",
+"en": "Society and power",
+"hy": "Հասարակություն և իշխանություն",
+"ic": "🏛️",
+"w": [
+[
+"ազատ առևտրի գոտի",
+"зона свободной торговли",
+"free trade area",
+"",
+"zone de libre-échange"
+],
+[
+"դեֆիցիտ",
+"дефицит",
+"deficit, shortage",
+"",
+"déficit, pénurie"
+],
+[
+"աբսոլյուտիզմ",
+"абсолютизм",
+"absolutism",
+"",
+"absolutisme"
+],
+[
+"թեոկրատիա",
+"теократия",
+"theocracy",
+"",
+"théocratie"
+],
+[
+"թաղապետ",
+"глава района (города)",
+"head of a municipal district",
+"",
+"chef de quartier (maire d'arrondissement)"
+],
+[
+"վարչակազմ",
+"администрация",
+"administration",
+"",
+"administration"
+],
+[
+"խալիֆ",
+"халиф",
+"caliph",
+"",
+"calife"
+],
+[
+"սուլթան",
+"султан",
+"sultan",
+"",
+"sultan"
+],
+[
+"միջին դարեր",
+"Средние века",
+"Middle Ages",
+"",
+"Moyen Âge"
+],
+[
+"նախապատմություն",
+"предыстория",
+"prehistory",
+"",
+"préhistoire"
+],
+[
+"աբոլիցիոնիզմ",
+"аболиционизм",
+"abolitionism",
+"",
+"abolitionnisme"
+],
+[
+"ստրուկ",
+"раб",
+"slave",
+"",
+"esclave"
+],
+[
+"բևեռացվածություն",
+"поляризация",
+"polarization",
+"",
+"polarisation"
+],
+[
+"հակառեյտինգ",
+"антирейтинг",
+"disapproval rating",
+"",
+"taux de désapprobation"
+],
+[
+"ակադեմիկոս",
+"академик",
+"academician",
+"",
+"académicien"
+],
+[
+"դերկոմս",
+"виконт",
+"viscount",
+"",
+"vicomte"
+],
+[
+"ընտանեկան բռնություն",
+"домашнее насилие",
+"domestic violence",
+"",
+"violence conjugale"
+],
+[
+"նախճիր",
+"резня, бойня",
+"massacre, carnage",
+"",
+"massacre, carnage"
+],
+[
+"պատվար",
+"оплот, вал",
+"wall, bulwark",
+"",
+"rempart"
+],
+[
+"անարխիզմ",
+"анархизм",
+"anarchism",
+"",
+"anarchisme"
+],
+[
+"մահապատիժ",
+"смертная казнь",
+"death penalty",
+"",
+"peine de mort"
+],
+[
+"թրեյլեր",
+"трейлер (фильма)",
+"trailer",
+"",
+"bande-annonce"
+],
+[
+"վերլուծաբան",
+"аналитик",
+"analyst",
+"",
+"analyste"
+],
+[
+"Վիքիպեդիա",
+"Википедия",
+"Wikipedia",
+"",
+"Wikipédia"
+],
+[
+"վիքի",
+"вики",
+"wiki",
+"",
+"wiki"
+]
+],
+"fr": "Société et pouvoir"
+},
+{
+"lv": "B2",
+"ru": "Наука, язык, вера",
+"en": "Science, language, faith",
+"hy": "Գիտություն, լեզու, հավատք",
+"ic": "🧠",
+"w": [
+[
+"օրթոդոնտիա",
+"ортодонтия",
+"orthodontics",
+"",
+"orthodontie"
+],
+[
+"գիշակեր",
+"плотоядный, хищный",
+"carnivorous",
+"",
+"carnivore"
+],
+[
+"որդան կարմիր",
+"кармин из армянской кошенили",
+"red dye from Armenian cochineal",
+"",
+"carmin de cochenille d'Arménie"
+],
+[
+"կնդրուկ",
+"ладан",
+"frankincense",
+"",
+"encens"
+],
+[
+"ձյութ",
+"смола, дёготь",
+"pitch, tar",
+"",
+"poix, goudron"
+],
+[
+"առանցքակալ",
+"подшипник",
+"bearing",
+"",
+"roulement"
+],
+[
+"զտել",
+"очищать, фильтровать",
+"to refine, to filter",
+"",
+"raffiner, filtrer"
+],
+[
+"մխել",
+"вонзать",
+"to thrust, to drive in",
+"",
+"enfoncer"
+],
+[
+"միջուկային",
+"ядерный",
+"nuclear",
+"☢️",
+"nucléaire"
+],
+[
+"շղթայական ռեակցիա",
+"цепная реакция",
+"chain reaction",
+"",
+"réaction en chaîne"
+],
+[
+"հմայագիր",
+"заклинание-амулет",
+"written spell (amulet)",
+"",
+"formule magique (amulette)"
+],
+[
+"հուռութ",
+"оберег, чары",
+"charm, enchantment",
+"",
+"charme, enchantement"
+],
+[
+"Լուսաբեր",
+"Утренняя звезда (Венера)",
+"morning star, Venus",
+"",
+"étoile du matin, Vénus"
+],
+[
+"անապեստ",
+"анапест",
+"anapest",
+"",
+"anapeste"
+],
+[
+"սեռանիշ",
+"гипероним",
+"hypernym",
+"",
+"hyperonyme"
+],
+[
+"տեսականիշ",
+"гипоним",
+"hyponym",
+"",
+"hyponyme"
+],
+[
+"դիսկուրս",
+"дискурс",
+"discourse",
+"",
+"discours"
+],
+[
+"խոսույթ",
+"дискурс, речь",
+"discourse",
+"",
+"discours (synonyme)"
+],
+[
+"անթրոպոմորֆիզմ",
+"антропоморфизм",
+"anthropomorphism",
+"",
+"anthropomorphisme"
+],
+[
+"սրբագիր",
+"агиограф",
+"hagiographer",
+"",
+"hagiographe"
+],
+[
+"գեղագետ",
+"эстет",
+"aesthetician",
+"",
+"esthéticien"
+],
+[
+"քառակուսի հավասարում",
+"квадратное уравнение",
+"quadratic equation",
+"",
+"équation du second degré"
+],
+[
+"կոֆեին",
+"кофеин",
+"caffeine",
+"",
+"caféine"
+],
+[
+"միջազգային հնչյունաբանական այբուբեն",
+"Международный фонетический алфавит",
+"International Phonetic Alphabet",
+"",
+"alphabet phonétique international"
+],
+[
+"նվազելի",
+"уменьшаемое",
+"minuend",
+"",
+"diminuende"
+],
+[
+"կենդանակերպի նշան",
+"знак зодиака",
+"zodiac sign",
+"♈",
+"signe du zodiaque"
+],
+[
+"կենսագիր",
+"биограф",
+"biographer",
+"",
+"biographe"
+],
+[
+"ավիացիա",
+"авиация",
+"aviation",
+"",
+"aviation"
+],
+[
+"բահայի",
+"бахаи",
+"Baháʼí",
+"",
+"bahaï"
+],
+[
+"գլխուղեղի կեղև",
+"кора головного мозга",
+"cerebral cortex",
+"🧠",
+"cortex cérébral"
+],
+[
+"վալտորն",
+"валторна",
+"French horn",
+"",
+"cor d'harmonie"
+],
+[
+"Շամբալա",
+"Шамбала",
+"Shambhala",
+"",
+"Shambhala"
+],
+[
+"գիշերահավասար",
+"равноденствие",
+"equinox",
+"",
+"équinoxe"
+],
+[
+"կանադական ֆուտբոլ",
+"канадский футбол",
+"Canadian football",
+"",
+"football canadien"
+],
+[
+"բջջանյութ",
+"целлюлоза",
+"cellulose",
+"",
+"cellulose"
+],
+[
+"սրտաբանություն",
+"кардиология",
+"cardiology",
+"❤️",
+"cardiologie"
+]
+],
+"fr": "Science, langue, foi"
+},
+{
+"lv": "B2",
+"ru": "Общество и право 2",
+"en": "Society and law 2",
+"hy": "Հասարակություն և իրավունք 2",
+"ic": "⚖️",
+"w": [
+[
+"սահմանափակ պատասխանատվությամբ ընկերություն",
+"общество с ограниченной ответственностью",
+"limited liability company",
+"",
+"société à responsabilité limitée"
+],
+[
+"անմեղսունակ",
+"невменяемый",
+"legally insane",
+"",
+"irresponsable (pénalement)"
+],
+[
+"օրենքով գող",
+"вор в законе",
+"thief in law",
+"",
+"voleur dans la loi"
+],
+[
+"ազատ աշխարհ",
+"свободный мир",
+"free world",
+"",
+"monde libre"
+],
+[
+"վարքականոն",
+"кодекс поведения",
+"code of conduct",
+"",
+"code de conduite"
+],
+[
+"կնատյացություն",
+"женоненавистничество",
+"misogyny",
+"",
+"misogynie"
+],
+[
+"հարճ",
+"наложница",
+"concubine",
+"",
+"concubine"
+],
+[
+"թերասնում",
+"недоедание",
+"malnutrition",
+"",
+"malnutrition"
+],
+[
+"ռևիզիոնիզմ",
+"ревизионизм",
+"revisionism",
+"",
+"révisionnisme"
+],
+[
+"ագրեսիա",
+"агрессия",
+"aggression",
+"",
+"agression"
+],
+[
+"միասեռական",
+"гомосексуальный",
+"homosexual",
+"",
+"homosexuel"
+],
+[
+"զորագունդ",
+"полк",
+"regiment",
+"",
+"régiment"
+],
+[
+"եղբայրասպանություն",
+"братоубийство",
+"fratricide",
+"",
+"fratricide"
+],
+[
+"արհեստակցական միություն",
+"профсоюз",
+"trade union",
+"",
+"syndicat"
+],
+[
+"օգտակար մոդել",
+"полезная модель (патент)",
+"utility model",
+"",
+"modèle d'utilité"
+],
+[
+"հակառուսականություն",
+"русофобия",
+"Russophobia",
+"",
+"russophobie"
+],
+[
+"ազդեցության ոլորտ",
+"сфера влияния",
+"sphere of influence",
+"",
+"sphère d'influence"
+],
+[
+"զնդան",
+"темница",
+"dungeon, jail",
+"",
+"cachot"
+],
+[
+"սադիզմ",
+"садизм",
+"sadism",
+"",
+"sadisme"
+],
+[
+"ֆրեյդիզմ",
+"фрейдизм",
+"Freudianism",
+"",
+"freudisme"
+],
+[
+"սեռական կողմնորոշում",
+"сексуальная ориентация",
+"sexual orientation",
+"",
+"orientation sexuelle"
+],
+[
+"հարկահավաք",
+"сборщик налогов",
+"tax collector",
+"",
+"percepteur"
+],
+[
+"տրանսգենդեր",
+"трансгендер",
+"transgender",
+"",
+"transgenre"
+],
+[
+"Սուրբ Աթոռ",
+"Святой Престол",
+"Holy See",
+"",
+"Saint-Siège"
+],
+[
+"ռազմ",
+"война, битва",
+"war, battle",
+"",
+"guerre, bataille"
+],
+[
+"դաշտանադադար",
+"менопауза",
+"menopause",
+"",
+"ménopause"
+],
+[
+"հականեխիչ",
+"антисептик",
+"antiseptic",
+"",
+"antiseptique"
+],
+[
+"ալկոհոլ",
+"алкоголь",
+"alcohol",
+"",
+"alcool"
+],
+[
+"նիկոտին",
+"никотин",
+"nicotine",
+"",
+"nicotine"
+]
+],
+"fr": "Société et droit 2"
+},
+{
+"lv": "B2",
+"ru": "Наука и мифы",
+"en": "Science and myths",
+"hy": "Գիտություն և առասպելներ",
+"ic": "🔭",
+"w": [
+[
+"էլեկտրակայան",
+"электростанция",
+"power station",
+"⚡",
+"centrale électrique"
+],
+[
+"ստենդ",
+"стенд",
+"stand, display board",
+"",
+"stand, panneau"
+],
+[
+"ֆերմիոն",
+"фермион",
+"fermion",
+"",
+"fermion"
+],
+[
+"համըմբռնում",
+"синекдоха",
+"synecdoche",
+"",
+"synecdoque"
+],
+[
+"նախամարդ",
+"древний человек (предок)",
+"early human",
+"",
+"homme préhistorique"
+],
+[
+"հայերենագիտություն",
+"армянское языкознание",
+"Armenian linguistics",
+"",
+"linguistique arménienne"
+],
+[
+"Հրուդեն",
+"Фаридун (Фредун)",
+"Fereydun",
+"",
+"Fereydoun"
+],
+[
+"թալմուդ",
+"Талмуд",
+"Talmud",
+"",
+"Talmud"
+],
+[
+"դատողություն",
+"суждение",
+"judgment",
+"",
+"jugement"
+],
+[
+"տարփ",
+"страсть, пылкая любовь (поэт.)",
+"ardent love (poetic)",
+"",
+"passion (poétique)"
+],
+[
+"հողմաշարժիչ",
+"ветродвигатель",
+"wind engine",
+"",
+"éolienne"
+],
+[
+"օդերևութաբանություն",
+"метеорология",
+"meteorology",
+"",
+"météorologie"
+],
+[
+"կվարցիտ",
+"кварцит",
+"quartzite",
+"",
+"quartzite"
+],
+[
+"բնակտոր",
+"самородок",
+"nugget",
+"",
+"pépite"
+],
+[
+"Բաբա Յագա",
+"Баба-Яга",
+"Baba Yaga",
+"",
+"Baba Yaga"
+],
+[
+"մարդագայլ",
+"оборотень",
+"werewolf",
+"🐺",
+"loup-garou"
+],
+[
+"աստրոլաբ",
+"астролябия",
+"astrolabe",
+"",
+"astrolabe"
+],
+[
+"օրնիթոլոգիա",
+"орнитология (синоним)",
+"ornithology",
+"",
+"ornithologie"
+],
+[
+"քառանիստ",
+"тетраэдр",
+"tetrahedron",
+"",
+"tétraèdre"
+],
+[
+"աղոթարար",
+"молящийся",
+"praying",
+"",
+"priant"
+],
+[
+"աստղագնաց",
+"космонавт",
+"astronaut",
+"🧑‍🚀",
+"astronaute"
+],
+[
+"բրոունյան շարժում",
+"броуновское движение",
+"Brownian motion",
+"",
+"mouvement brownien"
+],
+[
+"արփի",
+"солнце (поэт.)",
+"sun (poetic)",
+"☀️",
+"soleil (poétique)"
+],
+[
+"ծածկույթ",
+"покрытие, слой",
+"coating, layer",
+"",
+"revêtement, couche"
+],
+[
+"Օսիրիս",
+"Осирис",
+"Osiris",
+"",
+"Osiris"
+],
+[
+"Բաքոս",
+"Вакх",
+"Bacchus",
+"",
+"Bacchus"
+],
+[
+"Բրահմա",
+"Брахма",
+"Brahma",
+"",
+"Brahma"
+],
+[
+"փայլակ",
+"вспышка молнии",
+"flash of lightning",
+"⚡",
+"éclair"
+]
+],
+"fr": "Science et mythes"
 },
 {
 "lv": "C1",
