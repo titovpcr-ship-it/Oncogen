@@ -24,6 +24,24 @@
 "adela": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+4
+],
+[
+"dance-pop",
+2
+],
+[
+"electronic",
+2
+],
+[
+"singer-songwriter",
+1
+]
+],
 "mb": "f40856e6-079f-4a0a-916e-9e6a5e04f646",
 "mb_name": "ADÉLA",
 "name": "ADÉLA",
@@ -396,6 +414,12 @@
 "ellalangley": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"country",
+4
+]
+],
 "mb": "b16c0872-31a7-4db9-8569-0e3146fcecfc",
 "mb_name": "Ella Langley",
 "name": "Ella Langley",
@@ -682,6 +706,32 @@
 "katseye": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"dance-pop",
+5
+],
+[
+"pop",
+5
+],
+[
+"electronic",
+1
+],
+[
+"hip hop",
+1
+],
+[
+"hip hop soul",
+1
+],
+[
+"hyperpop",
+1
+]
+],
 "mb": "abbf7d85-9a7f-4a6c-80bd-bf71f2c7d520",
 "mb_name": "KATSEYE",
 "name": "KATSEYE",
@@ -899,6 +949,27 @@
 "type": "Group",
 "v": 3
 },
+"meganmoroney": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"country",
+4
+],
+[
+"contemporary country",
+1
+]
+],
+"mb": "9eb2030a-c311-4cbf-a8f2-c57a58aa18ce",
+"mb_name": "Megan Moroney",
+"name": "Megan Moroney",
+"note": "",
+"t": 1793160620,
+"type": "Person",
+"v": 3
+},
 "melody": {
 "alive": null,
 "gender": null,
@@ -952,6 +1023,27 @@
 "note": "распались 2003",
 "t": 1793022893,
 "type": "Group",
+"v": 3
+},
+"morganwallen": {
+"alive": true,
+"gender": "male",
+"genres": [
+[
+"country",
+2
+],
+[
+"country pop",
+1
+]
+],
+"mb": "2077273e-eaa1-4f49-903c-f286ededecb9",
+"mb_name": "Morgan Wallen",
+"name": "Morgan Wallen",
+"note": "",
+"t": 1793160610,
+"type": "Person",
 "v": 3
 },
 "msrachel": {
@@ -1045,6 +1137,32 @@
 "oliviarodrigo": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+15
+],
+[
+"pop rock",
+10
+],
+[
+"pop punk",
+8
+],
+[
+"power pop",
+5
+],
+[
+"singer-songwriter",
+5
+],
+[
+"folk pop",
+2
+]
+],
 "mb": "6925db17-f35e-42f3-a4eb-84ee6bf5d4b0",
 "mb_name": "Olivia Rodrigo",
 "name": "Olivia Rodrigo",
@@ -1158,6 +1276,35 @@
 "name": "rusowsky",
 "note": "",
 "t": 1793021795,
+"type": "Person",
+"v": 3
+},
+"sabrinacarpenter": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"pop",
+10
+],
+[
+"electropop",
+3
+],
+[
+"dance-pop",
+2
+],
+[
+"country",
+1
+]
+],
+"mb": "1882fe91-cdd9-49c9-9956-8e06a3810bd4",
+"mb_name": "Sabrina Carpenter",
+"name": "Sabrina Carpenter",
+"note": "",
+"t": 1793160626,
 "type": "Person",
 "v": 3
 },
@@ -1296,6 +1443,24 @@
 "tatemcrae": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+6
+],
+[
+"dance-pop",
+4
+],
+[
+"contemporary r&b",
+2
+],
+[
+"pop rock",
+2
+]
+],
 "mb": "f9133869-f87c-459c-9aa7-2f176cda7e06",
 "mb_name": "Tate McRae",
 "name": "Tate McRae",
@@ -1307,6 +1472,32 @@
 "taylorswift": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+42
+],
+[
+"country",
+28
+],
+[
+"country pop",
+26
+],
+[
+"singer-songwriter",
+12
+],
+[
+"pop rock",
+9
+],
+[
+"contemporary country",
+7
+]
+],
 "mb": "20244d07-534f-4eff-b4d4-930878889970",
 "mb_name": "Taylor Swift",
 "name": "Taylor Swift",
@@ -1461,6 +1652,32 @@
 "zachbryan": {
 "alive": true,
 "gender": "male",
+"genres": [
+[
+"country",
+8
+],
+[
+"alternative country",
+3
+],
+[
+"americana",
+3
+],
+[
+"red dirt",
+3
+],
+[
+"country rock",
+1
+],
+[
+"folk",
+1
+]
+],
 "mb": "51e90731-08c0-4f60-89b6-5b78e5844de8",
 "mb_name": "Zach Bryan",
 "name": "Zach Bryan",

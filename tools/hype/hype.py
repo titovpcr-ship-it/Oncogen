@@ -455,6 +455,10 @@ def run(a):
         # MusicBrainz (alive.py), не по имени.
         if a.women and v.get("gender") != "female":
             return False
+        # Владелец 28.10.2026: «Лучше только девчачьи идолы, кантри не надо».
+        if a.no_country and life.is_country(z["artist"], z.get("hints") or ()):
+            dead[z["artist"]] = "кантри — главный жанр (MusicBrainz)"
+            return False
         return True
 
     top = pick(A, a.artists, keep)
@@ -660,8 +664,8 @@ def render(res, exclude=()):
     out.append("; ".join(f"{v['artist']} ({v['ru'][0]})"
                          for v in res.get("foreign_ru", [])[:10] if v["ru"]))
     if res.get("dead"):
-        out += ["", "Мимо — не живые исполнители (MusicBrainz: умер или группа "
-                "распалась): " + ", ".join(res["dead"])]
+        out += ["", "Мимо по MusicBrainz (умер, группа распалась, кантри): "
+                + ", ".join(res["dead"])]
     novin = [f"{v['artist']}: {', '.join(v['no_vinyl'][:2])}"
              for v in res["artists"] if v.get("no_vinyl")]
     if novin:
@@ -757,6 +761,8 @@ def main():
     ap.add_argument("--women", action="store_true",
                     help="только женские исполнители (пол по MusicBrainz); "
                          "с --send — фильтр готового прогона")
+    ap.add_argument("--no-country", action="store_true",
+                    help="без кантри: главный жанр по MusicBrainz")
     ap.add_argument("--reprice", metavar="FILE",
                     help="пересчитать цены России у готового прогона")
     a = ap.parse_args()

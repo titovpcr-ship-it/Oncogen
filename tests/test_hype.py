@@ -344,11 +344,37 @@ def test_zhenskie():
           FakeMB({"a": None}).group_gender({"id": "g"}) is None)
 
 
+def test_bez_kantri():
+    import alive as al
+
+    class FakeMB(al.Alive):
+        def __init__(self, genres):
+            self.db, self.dirty, self.last, self.g = {}, False, 0.0, genres
+
+        def check(self, name, hints=()):
+            return self.db.setdefault(name, {"mb": "x", "alive": True})
+
+        def _get(self, url, what):
+            return {"genres": [{"name": n, "count": c} for n, c in self.g[what]]}
+
+    mb = FakeMB({"Zach Bryan": [("country", 9), ("americana", 4)],
+                 "Taylor Swift": [("pop", 12), ("country", 7), ("synth-pop", 3)],
+                 "Ella Langley": [("country", 3), ("country pop", 3)],
+                 "Olivia Rodrigo": [("pop", 8), ("pop rock", 6)]})
+    check("кантри — главный жанр: Zach Bryan мимо", mb.is_country("Zach Bryan"))
+    check("кантри в списке, но главный pop: Taylor Swift остаётся",
+          not mb.is_country("Taylor Swift"))
+    check("кантри-поп среди первых: Ella Langley мимо", mb.is_country("Ella Langley"))
+    check("поп: Olivia Rodrigo остаётся", not mb.is_country("Olivia Rodrigo"))
+    check("жанры кэшируются в записи", mb.db["Zach Bryan"]["genres"][0][0] == "country")
+
+
 def main():
     for fn in [test_razbor_kworb, test_soavtory, test_vzlyot_za_kvartal,
                test_rossiya, test_albomy, test_vinil_discogs, test_tseny_rossii,
                test_prodazhi_vladeltsa,
-               test_lovushki_progona, test_tolko_zhivye, test_zhenskie]:
+               test_lovushki_progona, test_tolko_zhivye, test_zhenskie,
+               test_bez_kantri]:
         print(f"\n{fn.__name__}")
         fn()
     print(f"\n{'ПРОВАЛЕНО: ' + ', '.join(FAILED) if FAILED else 'ВСЁ ЗЕЛЁНОЕ'}")

@@ -19,6 +19,11 @@ MusicBrainz (musicbrainz.org/ws/2, robots не закрывает; не чаще
 исполнителей»): у человека поле gender, у группы — «girl group» в пояснении
 или пол всех участников. По имени пол не угадывается.
 
+Жанр — тоже из MusicBrainz (владелец 28.10.2026: «Лучше только девчачьи
+идолы, кантри не надо»): жанры артиста по голосам пользователей, кантри —
+когда кантри главный жанр (больше всех голосов). Не любое упоминание:
+у Taylor Swift «country» в списке есть, но главный — pop.
+
 Кэш — data/hype/alive.json (в git: факт смерти не меняется; живых
 перепроверяем раз в 90 дней). Ручная поправка — запись с "manual": true.
 """
@@ -44,6 +49,7 @@ RECHECK = 90 * 86400
 VERSION = 3             # 2 — тёзки по записям из чартов; 3 — пол
 MEMBER = "https://musicbrainz.org/ws/2/artist/{}?fmt=json{}"
 _GIRLS = re.compile(r"\bgirl\s*group\b|\bfemale\b|\bwomen\b|девичья", re.I)
+_COUNTRY = re.compile(r"country|americana|bluegrass|honky", re.I)
 
 
 def same_name(artists, name):
@@ -210,6 +216,34 @@ class Alive:
         self.db[k] = z
         self.dirty = True
         return z
+
+    def genres(self, name, hints=()):
+        """[[жанр, голоса], …] по MusicBrainz, по убыванию голосов; нет
+        жанров — теги. С кэшем в той же записи (жанры не меняются)."""
+        z = self.check(name, hints)
+        if "genres" in z:
+            return z["genres"]
+        if not z.get("mb"):
+            return []
+        j = self._get(MEMBER.format(z["mb"], "&inc=genres+tags"), name)
+        if j is None:
+            return []
+        xs = (j.get("genres") or []) or (j.get("tags") or [])
+        g = sorted(([x.get("name", ""), x.get("count") or 0] for x in xs),
+                   key=lambda x: -x[1])[:6]
+        z["genres"] = g
+        self.db[ch.key(name)] = z
+        self.dirty = True
+        return g
+
+    def is_country(self, name, hints=()):
+        """Кантри — главный жанр (наибольшие голоса; при равенстве — любой из
+        первых)."""
+        g = self.genres(name, hints)
+        if not g:
+            return False
+        top = g[0][1]
+        return any(_COUNTRY.search(n) for n, c in g if c == top)
 
     def ok(self, name):
         """Годится ли для хайпа: всё, кроме подтверждённо умерших и распавшихся."""
