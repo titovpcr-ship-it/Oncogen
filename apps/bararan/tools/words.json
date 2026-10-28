@@ -23408,6 +23408,433 @@
 "fr": "soju"
 },
 {
+"a": "խելոք",
+"lv": "A2",
+"ru": "умный",
+"en": "smart, clever",
+"fr": "intelligent, malin"
+},
+{
+"a": "խմած",
+"lv": "A2",
+"ru": "выпивший, пьяный",
+"en": "drunk, tipsy",
+"fr": "éméché, ivre"
+},
+{
+"a": "խոշոր",
+"lv": "A2",
+"ru": "крупный, большой",
+"en": "large, big",
+"fr": "gros, grand"
+},
+{
+"a": "խոր",
+"lv": "A2",
+"ru": "глубокий",
+"en": "deep",
+"fr": "profond"
+},
+{
+"a": "խորունկ",
+"lv": "A2",
+"ru": "глубокий (синоним)",
+"en": "deep",
+"fr": "profond (synonyme)"
+},
+{
+"a": "կանացի",
+"lv": "A2",
+"ru": "женский, женственный",
+"en": "feminine",
+"fr": "féminin"
+},
+{
+"a": "կատարյալ",
+"lv": "A2",
+"ru": "совершенный, идеальный",
+"en": "perfect",
+"fr": "parfait"
+},
+{
+"a": "կարելի",
+"lv": "A2",
+"ru": "можно, возможный",
+"en": "possible",
+"fr": "possible"
+},
+{
+"a": "կարող",
+"lv": "A2",
+"ru": "способный",
+"en": "capable, able",
+"fr": "capable"
+},
+{
+"a": "կույր",
+"lv": "A2",
+"ru": "слепой",
+"en": "blind",
+"fr": "aveugle"
+},
+{
+"a": "կուշտ",
+"lv": "A2",
+"ru": "сытый",
+"en": "full, satiated",
+"fr": "rassasié"
+},
+{
+"a": "կրտսեր",
+"lv": "A2",
+"ru": "младший",
+"en": "youngest",
+"fr": "cadet, le plus jeune"
+},
+{
+"a": "հակառակ",
+"lv": "A2",
+"ru": "противоположный",
+"en": "opposite",
+"fr": "contraire, opposé"
+},
+{
+"a": "համակրելի",
+"lv": "A2",
+"ru": "симпатичный, приятный",
+"en": "likeable, nice",
+"fr": "sympathique"
+},
+{
+"a": "համր",
+"lv": "A2",
+"ru": "немой",
+"en": "mute",
+"fr": "muet"
+},
+{
+"a": "հասարակ",
+"lv": "A2",
+"ru": "простой, обычный",
+"en": "plain, ordinary",
+"fr": "simple, ordinaire"
+},
+{
+"a": "հավասար",
+"lv": "A2",
+"ru": "равный",
+"en": "equal",
+"fr": "égal"
+},
+{
+"a": "հարբած",
+"lv": "A2",
+"ru": "пьяный",
+"en": "drunk",
+"fr": "ivre"
+},
+{
+"a": "հարգելի",
+"lv": "A2",
+"ru": "уважаемый",
+"en": "respected",
+"fr": "respectable"
+},
+{
+"a": "հարկավոր",
+"lv": "A2",
+"ru": "нужный, необходимый",
+"en": "needed, necessary",
+"fr": "nécessaire"
+},
+{
+"a": "հետաքրքրական",
+"lv": "A2",
+"ru": "интересный",
+"en": "interesting",
+"fr": "intéressant"
+},
+{
+"a": "հետևյալ",
+"lv": "A2",
+"ru": "следующий",
+"en": "following",
+"fr": "suivant"
+},
+{
+"a": "հզոր",
+"lv": "A2",
+"ru": "могучий",
+"en": "mighty, powerful",
+"fr": "puissant"
+},
+{
+"a": "հիանալի",
+"lv": "A2",
+"ru": "замечательный",
+"en": "wonderful",
+"fr": "merveilleux"
+},
+{
+"a": "հոյակապ",
+"lv": "A2",
+"ru": "великолепный",
+"en": "superb",
+"fr": "superbe"
+},
+{
+"a": "հոռի",
+"lv": "A2",
+"ru": "плохой (книжн.)",
+"en": "bad",
+"fr": "mauvais"
+},
+{
+"a": "հրաշալի",
+"lv": "A2",
+"ru": "чудесный",
+"en": "wonderful",
+"fr": "merveilleux"
+},
+{
+"a": "ճշմարիտ",
+"lv": "A2",
+"ru": "истинный, правдивый",
+"en": "true, right",
+"fr": "vrai"
+},
+{
+"a": "մարդկային",
+"lv": "A2",
+"ru": "человеческий",
+"en": "human",
+"fr": "humain"
+},
+{
+"a": "մեծահասակ",
+"lv": "A2",
+"ru": "взрослый",
+"en": "adult",
+"fr": "adulte"
+},
+{
+"a": "մեռած",
+"lv": "A2",
+"ru": "мёртвый",
+"en": "dead",
+"fr": "mort"
+},
+{
+"a": "մերձ",
+"lv": "A2",
+"ru": "близкий (о месте)",
+"en": "near, close",
+"fr": "proche"
+},
+{
+"a": "մոտակա",
+"lv": "A2",
+"ru": "ближайший",
+"en": "nearest",
+"fr": "le plus proche"
+},
+{
+"a": "մտահոգ",
+"lv": "A2",
+"ru": "озабоченный, обеспокоенный",
+"en": "worried",
+"fr": "inquiet"
+},
+{
+"a": "նորմալ",
+"lv": "A2",
+"ru": "нормальный",
+"en": "normal",
+"fr": "normal"
+},
+{
+"a": "նուրբ",
+"lv": "A2",
+"ru": "тонкий, нежный",
+"en": "fine, delicate",
+"fr": "fin, délicat"
+},
+{
+"a": "ողջ",
+"lv": "A2",
+"ru": "целый, весь",
+"en": "whole, entire",
+"fr": "entier"
+},
+{
+"a": "որոշակի",
+"lv": "A2",
+"ru": "определённый",
+"en": "certain, clear",
+"fr": "certain, précis"
+},
+{
+"a": "ունակ",
+"lv": "A2",
+"ru": "способный",
+"en": "able, capable",
+"fr": "apte"
+},
+{
+"a": "չարաճճի",
+"lv": "A2",
+"ru": "озорной, шаловливый",
+"en": "naughty",
+"fr": "espiègle"
+},
+{
+"a": "չինական",
+"lv": "A2",
+"ru": "китайский",
+"en": "Chinese",
+"fr": "chinois"
+},
+{
+"a": "պակաս",
+"lv": "A2",
+"ru": "недостающий, неполный",
+"en": "missing, insufficient",
+"fr": "manquant"
+},
+{
+"a": "պաղ",
+"lv": "A2",
+"ru": "холодный",
+"en": "cold",
+"fr": "froid"
+},
+{
+"a": "պինդ",
+"lv": "A2",
+"ru": "крепкий, прочный",
+"en": "solid, strong",
+"fr": "solide, dur"
+},
+{
+"a": "ջահել",
+"lv": "A2",
+"ru": "молодой (разг.)",
+"en": "young",
+"fr": "jeune"
+},
+{
+"a": "սեփական",
+"lv": "A2",
+"ru": "собственный, частный",
+"en": "own, private",
+"fr": "propre, privé"
+},
+{
+"a": "սոված",
+"lv": "A2",
+"ru": "голодный",
+"en": "hungry",
+"fr": "affamé"
+},
+{
+"a": "սովոր",
+"lv": "A2",
+"ru": "привыкший",
+"en": "accustomed",
+"fr": "habitué"
+},
+{
+"a": "սպասելի",
+"lv": "A2",
+"ru": "ожидаемый",
+"en": "expected",
+"fr": "attendu"
+},
+{
+"a": "վատթար",
+"lv": "A2",
+"ru": "плохой, скверный",
+"en": "bad",
+"fr": "mauvais"
+},
+{
+"a": "վատթարագույն",
+"lv": "A2",
+"ru": "худший",
+"en": "worst",
+"fr": "le pire"
+},
+{
+"a": "տաղտուկ",
+"lv": "A2",
+"ru": "скучный",
+"en": "boring",
+"fr": "ennuyeux"
+},
+{
+"a": "տարածված",
+"lv": "A2",
+"ru": "распространённый",
+"en": "widespread",
+"fr": "répandu"
+},
+{
+"a": "տեղյակ",
+"lv": "A2",
+"ru": "осведомлённый, в курсе",
+"en": "informed",
+"fr": "au courant"
+},
+{
+"a": "տնական",
+"lv": "A2",
+"ru": "домашний (самодельный)",
+"en": "homemade",
+"fr": "fait maison"
+},
+{
+"a": "տնային",
+"lv": "A2",
+"ru": "домашний",
+"en": "home, domestic",
+"fr": "domestique, de maison"
+},
+{
+"a": "ցած",
+"lv": "A2",
+"ru": "низкий",
+"en": "low",
+"fr": "bas"
+},
+{
+"a": "քաղաքավար",
+"lv": "A2",
+"ru": "вежливый",
+"en": "polite",
+"fr": "poli"
+},
+{
+"a": "քաջառողջ",
+"lv": "A2",
+"ru": "совершенно здоровый",
+"en": "in good health",
+"fr": "en pleine santé"
+},
+{
+"a": "օտարերկրյա",
+"lv": "A2",
+"ru": "иностранный",
+"en": "foreign",
+"fr": "étranger"
+},
+{
+"a": "ֆրանսիական",
+"lv": "A2",
+"ru": "французский",
+"en": "French",
+"fr": "français"
+},
+{
 "a": "հասարակություն",
 "lv": "B1",
 "ru": "общество",
@@ -56175,6 +56602,6026 @@
 "fr": "Sorbonne"
 },
 {
+"a": "ազատախոս",
+"lv": "B1",
+"ru": "откровенный, прямой",
+"en": "frank, outspoken",
+"fr": "franc, direct"
+},
+{
+"a": "ականավոր",
+"lv": "B1",
+"ru": "выдающийся, известный",
+"en": "notable, famous",
+"fr": "remarquable, célèbre"
+},
+{
+"a": "ահաբեկ",
+"lv": "B1",
+"ru": "испуганный",
+"en": "scared, frightened",
+"fr": "effrayé"
+},
+{
+"a": "ահաբեր",
+"lv": "B1",
+"ru": "устрашающий",
+"en": "frightening",
+"fr": "effrayant"
+},
+{
+"a": "ահազարհուր",
+"lv": "B1",
+"ru": "перепуганный",
+"en": "terrified",
+"fr": "terrifié"
+},
+{
+"a": "ահազդու",
+"lv": "B1",
+"ru": "страшный, жуткий",
+"en": "scary, dreadful",
+"fr": "terrifiant"
+},
+{
+"a": "ամբիցիոզ",
+"lv": "B1",
+"ru": "амбициозный",
+"en": "ambitious",
+"fr": "ambitieux"
+},
+{
+"a": "ամեհի",
+"lv": "B1",
+"ru": "свирепый, неукротимый",
+"en": "fierce, untameable",
+"fr": "féroce, indomptable"
+},
+{
+"a": "ամրակազմ",
+"lv": "B1",
+"ru": "крепкий, коренастый",
+"en": "sturdy, well-built",
+"fr": "robuste, trapu"
+},
+{
+"a": "այլասիրական",
+"lv": "B1",
+"ru": "альтруистический",
+"en": "altruistic",
+"fr": "altruiste"
+},
+{
+"a": "անախորժ",
+"lv": "B1",
+"ru": "неприятный",
+"en": "unpleasant",
+"fr": "désagréable"
+},
+{
+"a": "անամուսին",
+"lv": "B1",
+"ru": "незамужняя",
+"en": "unmarried (woman)",
+"fr": "célibataire (femme)"
+},
+{
+"a": "անարի",
+"lv": "B1",
+"ru": "трусливый",
+"en": "cowardly",
+"fr": "lâche, peureux"
+},
+{
+"a": "անբաժան",
+"lv": "B1",
+"ru": "неразлучный, неделимый",
+"en": "inseparable, undivided",
+"fr": "inséparable, indivisé"
+},
+{
+"a": "անբարյացակամ",
+"lv": "B1",
+"ru": "недоброжелательный",
+"en": "unfriendly",
+"fr": "malveillant"
+},
+{
+"a": "անգործ",
+"lv": "B1",
+"ru": "безработный, праздный",
+"en": "unemployed, idle",
+"fr": "chômeur, oisif"
+},
+{
+"a": "աներկյուղ",
+"lv": "B1",
+"ru": "бесстрашный",
+"en": "fearless",
+"fr": "intrépide"
+},
+{
+"a": "անզոր",
+"lv": "B1",
+"ru": "бессильный",
+"en": "powerless",
+"fr": "impuissant"
+},
+{
+"a": "անիրավ",
+"lv": "B1",
+"ru": "несправедливый",
+"en": "unjust",
+"fr": "injuste"
+},
+{
+"a": "անխելք",
+"lv": "B1",
+"ru": "глупый, неумный",
+"en": "stupid",
+"fr": "bête, sot"
+},
+{
+"a": "անխնա",
+"lv": "B1",
+"ru": "беспощадный",
+"en": "merciless",
+"fr": "impitoyable"
+},
+{
+"a": "անկուշտ",
+"lv": "B1",
+"ru": "ненасытный",
+"en": "insatiable",
+"fr": "insatiable"
+},
+{
+"a": "անհաղթ",
+"lv": "B1",
+"ru": "непобедимый",
+"en": "invincible",
+"fr": "invaincu, invincible"
+},
+{
+"a": "անհաղթելի",
+"lv": "B1",
+"ru": "непобедимый, неодолимый",
+"en": "unconquerable",
+"fr": "invincible, imbattable"
+},
+{
+"a": "անհամաձայն",
+"lv": "B1",
+"ru": "несогласный",
+"en": "disagreeing",
+"fr": "en désaccord"
+},
+{
+"a": "անհամեստ",
+"lv": "B1",
+"ru": "нескромный",
+"en": "immodest",
+"fr": "immodeste"
+},
+{
+"a": "անհարգալից",
+"lv": "B1",
+"ru": "неуважительный",
+"en": "disrespectful",
+"fr": "irrespectueux"
+},
+{
+"a": "անհնազանդ",
+"lv": "B1",
+"ru": "непослушный",
+"en": "disobedient",
+"fr": "désobéissant"
+},
+{
+"a": "անձեռնհաս",
+"lv": "B1",
+"ru": "неумелый",
+"en": "inept, unskilful",
+"fr": "maladroit"
+},
+{
+"a": "անճար",
+"lv": "B1",
+"ru": "беспомощный, несчастный",
+"en": "helpless, wretched",
+"fr": "démuni, misérable"
+},
+{
+"a": "անճարակ",
+"lv": "B1",
+"ru": "никчёмный",
+"en": "useless, inept",
+"fr": "bon à rien"
+},
+{
+"a": "անմիտ",
+"lv": "B1",
+"ru": "безмозглый",
+"en": "brainless",
+"fr": "écervelé"
+},
+{
+"a": "աննկուն",
+"lv": "B1",
+"ru": "непреклонный",
+"en": "unyielding, resolute",
+"fr": "inflexible"
+},
+{
+"a": "անպատրաստ",
+"lv": "B1",
+"ru": "неподготовленный",
+"en": "unprepared",
+"fr": "pas prêt, non préparé"
+},
+{
+"a": "անվայել",
+"lv": "B1",
+"ru": "неподобающий",
+"en": "unbecoming",
+"fr": "inconvenant"
+},
+{
+"a": "անվանի",
+"lv": "B1",
+"ru": "знаменитый",
+"en": "renowned",
+"fr": "renommé"
+},
+{
+"a": "անվրդով",
+"lv": "B1",
+"ru": "невозмутимый",
+"en": "unperturbed, calm",
+"fr": "imperturbable"
+},
+{
+"a": "անտեղյակ",
+"lv": "B1",
+"ru": "неосведомлённый",
+"en": "uninformed, unaware",
+"fr": "mal informé"
+},
+{
+"a": "անտուն",
+"lv": "B1",
+"ru": "бездомный",
+"en": "homeless",
+"fr": "sans-abri"
+},
+{
+"a": "անրջային",
+"lv": "B1",
+"ru": "мечтательный",
+"en": "dreamy",
+"fr": "rêveur"
+},
+{
+"a": "աշխարհահռչակ",
+"lv": "B1",
+"ru": "всемирно известный",
+"en": "world-famous",
+"fr": "mondialement connu"
+},
+{
+"a": "աչալուրջ",
+"lv": "B1",
+"ru": "бдительный",
+"en": "vigilant",
+"fr": "vigilant"
+},
+{
+"a": "աչեղ",
+"lv": "B1",
+"ru": "большеглазый",
+"en": "big-eyed",
+"fr": "aux grands yeux"
+},
+{
+"a": "աչքածակ",
+"lv": "B1",
+"ru": "жадный",
+"en": "greedy",
+"fr": "avide, cupide"
+},
+{
+"a": "ապաբախտ",
+"lv": "B1",
+"ru": "незадачливый",
+"en": "unlucky",
+"fr": "malchanceux"
+},
+{
+"a": "ապերջանիկ",
+"lv": "B1",
+"ru": "несчастливый",
+"en": "unhappy",
+"fr": "malheureux"
+},
+{
+"a": "ապուշ",
+"lv": "B1",
+"ru": "тупой, глупый",
+"en": "dumb, stupid",
+"fr": "idiot"
+},
+{
+"a": "աջլիկ",
+"lv": "B1",
+"ru": "правша",
+"en": "right-handed",
+"fr": "droitier"
+},
+{
+"a": "առնական",
+"lv": "B1",
+"ru": "мужской, мужественный",
+"en": "masculine, manly",
+"fr": "viril"
+},
+{
+"a": "առույգ",
+"lv": "B1",
+"ru": "бодрый",
+"en": "lively, cheerful",
+"fr": "vif, alerte"
+},
+{
+"a": "ավագ",
+"lv": "B1",
+"ru": "старший",
+"en": "elder, senior",
+"fr": "aîné"
+},
+{
+"a": "արամբի",
+"lv": "B1",
+"ru": "замужняя",
+"en": "married (woman)",
+"fr": "mariée"
+},
+{
+"a": "արժան",
+"lv": "B1",
+"ru": "достойный",
+"en": "worthy",
+"fr": "digne"
+},
+{
+"a": "արխային",
+"lv": "B1",
+"ru": "спокойный, беззаботный",
+"en": "carefree, calm",
+"fr": "insouciant"
+},
+{
+"a": "արնախում",
+"lv": "B1",
+"ru": "кровожадный",
+"en": "bloodthirsty",
+"fr": "sanguinaire"
+},
+{
+"a": "բանական",
+"lv": "B1",
+"ru": "разумный",
+"en": "rational, reasonable",
+"fr": "rationnel, raisonnable"
+},
+{
+"a": "բարեբախտ",
+"lv": "B1",
+"ru": "счастливый, удачливый",
+"en": "fortunate, lucky",
+"fr": "chanceux"
+},
+{
+"a": "բարեկամական",
+"lv": "B1",
+"ru": "дружеский",
+"en": "friendly",
+"fr": "amical"
+},
+{
+"a": "բարեպաշտ",
+"lv": "B1",
+"ru": "набожный",
+"en": "pious",
+"fr": "pieux"
+},
+{
+"a": "բարեսեր",
+"lv": "B1",
+"ru": "добродетельный",
+"en": "kind, virtuous",
+"fr": "vertueux"
+},
+{
+"a": "բարյացակամ",
+"lv": "B1",
+"ru": "доброжелательный",
+"en": "well-wishing",
+"fr": "bienveillant"
+},
+{
+"a": "բիրտ",
+"lv": "B1",
+"ru": "грубый, жёсткий",
+"en": "harsh, rude",
+"fr": "brutal, rude"
+},
+{
+"a": "բոբիկ",
+"lv": "B1",
+"ru": "босой",
+"en": "barefoot",
+"fr": "pieds nus"
+},
+{
+"a": "բռի",
+"lv": "B1",
+"ru": "грубый, неотёсанный",
+"en": "crude, uncouth",
+"fr": "grossier, rustre"
+},
+{
+"a": "գանգրագեղ",
+"lv": "B1",
+"ru": "с красивыми кудрями",
+"en": "with beautiful curls",
+"fr": "aux belles boucles"
+},
+{
+"a": "գանգրամազ",
+"lv": "B1",
+"ru": "кудрявый",
+"en": "curly-haired",
+"fr": "aux cheveux bouclés"
+},
+{
+"a": "գիժ",
+"lv": "B1",
+"ru": "сумасшедший",
+"en": "crazy",
+"fr": "fou"
+},
+{
+"a": "գինարբու",
+"lv": "B1",
+"ru": "любитель выпить",
+"en": "drunkard",
+"fr": "ivrogne"
+},
+{
+"a": "գինով",
+"lv": "B1",
+"ru": "пьяный (от вина)",
+"en": "drunk",
+"fr": "ivre"
+},
+{
+"a": "գիտակից",
+"lv": "B1",
+"ru": "знающий, сведущий",
+"en": "expert, proficient",
+"fr": "compétent, connaisseur"
+},
+{
+"a": "գիտուն",
+"lv": "B1",
+"ru": "учёный, знающий",
+"en": "knowledgeable",
+"fr": "savant, instruit"
+},
+{
+"a": "գիրգ",
+"lv": "B1",
+"ru": "пухленький, нежный",
+"en": "plump, tender",
+"fr": "potelé, tendre"
+},
+{
+"a": "գծուծ",
+"lv": "B1",
+"ru": "скупой",
+"en": "stingy",
+"fr": "avare"
+},
+{
+"a": "գովելի",
+"lv": "B1",
+"ru": "похвальный",
+"en": "praiseworthy",
+"fr": "louable"
+},
+{
+"a": "գորովագին",
+"lv": "B1",
+"ru": "нежный, ласковый",
+"en": "tender, affectionate",
+"fr": "tendre, affectueux"
+},
+{
+"a": "գռեհիկ",
+"lv": "B1",
+"ru": "грубый, вульгарный",
+"en": "coarse, vulgar",
+"fr": "vulgaire, grossier"
+},
+{
+"a": "դադարած",
+"lv": "B1",
+"ru": "усталый",
+"en": "tired",
+"fr": "fatigué"
+},
+{
+"a": "դալկադեմ",
+"lv": "B1",
+"ru": "бледный",
+"en": "pale",
+"fr": "pâle"
+},
+{
+"a": "դանդաղկոտ",
+"lv": "B1",
+"ru": "медлительный",
+"en": "sluggish",
+"fr": "lent, lambin"
+},
+{
+"a": "դավադիր",
+"lv": "B1",
+"ru": "заговорщицкий",
+"en": "conspiring",
+"fr": "conspirateur"
+},
+{
+"a": "դատարկագլուխ",
+"lv": "B1",
+"ru": "пустоголовый",
+"en": "empty-headed",
+"fr": "tête creuse"
+},
+{
+"a": "դատարկաձեռն",
+"lv": "B1",
+"ru": "с пустыми руками",
+"en": "empty-handed",
+"fr": "les mains vides"
+},
+{
+"a": "դդմագլուխ",
+"lv": "B1",
+"ru": "тупоголовый",
+"en": "thickheaded",
+"fr": "bouché"
+},
+{
+"a": "դժխեմ",
+"lv": "B1",
+"ru": "злой, жестокий",
+"en": "evil, cruel",
+"fr": "méchant, cruel"
+},
+{
+"a": "դյուրաշարժ",
+"lv": "B1",
+"ru": "проворный, ловкий",
+"en": "nimble, agile",
+"fr": "agile, leste"
+},
+{
+"a": "եղբայրական",
+"lv": "B1",
+"ru": "братский",
+"en": "brotherly",
+"fr": "fraternel"
+},
+{
+"a": "եռանդագին",
+"lv": "B1",
+"ru": "энергичный, ревностный",
+"en": "zealous, vigorous",
+"fr": "énergique, zélé"
+},
+{
+"a": "եսասիրական",
+"lv": "B1",
+"ru": "эгоистичный",
+"en": "egoistical",
+"fr": "égoïste"
+},
+{
+"a": "երախտամոռ",
+"lv": "B1",
+"ru": "неблагодарный",
+"en": "ungrateful",
+"fr": "ingrat"
+},
+{
+"a": "երկյուղաբեկ",
+"lv": "B1",
+"ru": "испуганный, в страхе",
+"en": "frightened",
+"fr": "apeuré"
+},
+{
+"a": "երկյուղած",
+"lv": "B1",
+"ru": "боязливый",
+"en": "scared",
+"fr": "craintif"
+},
+{
+"a": "զառամ",
+"lv": "B1",
+"ru": "дряхлый",
+"en": "senile",
+"fr": "sénile"
+},
+{
+"a": "զառամյալ",
+"lv": "B1",
+"ru": "престарелый",
+"en": "elderly",
+"fr": "âgé"
+},
+{
+"a": "զավեշտական",
+"lv": "B1",
+"ru": "смешной, забавный",
+"en": "funny",
+"fr": "drôle"
+},
+{
+"a": "զարհուրկոտ",
+"lv": "B1",
+"ru": "трусливый, пугливый",
+"en": "cowardly",
+"fr": "peureux"
+},
+{
+"a": "զգաստամիտ",
+"lv": "B1",
+"ru": "трезвомыслящий",
+"en": "sober-minded",
+"fr": "lucide, sensé"
+},
+{
+"a": "զզվելի",
+"lv": "B1",
+"ru": "отвратительный",
+"en": "disgusting",
+"fr": "dégoûtant"
+},
+{
+"a": "ընկերական",
+"lv": "B1",
+"ru": "дружеский, товарищеский",
+"en": "friendly",
+"fr": "amical, de camarade"
+},
+{
+"a": "ընտանի",
+"lv": "B1",
+"ru": "домашний, ручной",
+"en": "domestic, tame",
+"fr": "domestique, apprivoisé"
+},
+{
+"a": "թերահավատ",
+"lv": "B1",
+"ru": "скептический",
+"en": "skeptical",
+"fr": "sceptique"
+},
+{
+"a": "թլվատ",
+"lv": "B1",
+"ru": "заикающийся",
+"en": "stammering",
+"fr": "bègue"
+},
+{
+"a": "թուլասիրտ",
+"lv": "B1",
+"ru": "малодушный",
+"en": "faint-hearted",
+"fr": "pusillanime"
+},
+{
+"a": "ժիր",
+"lv": "B1",
+"ru": "живой, бойкий",
+"en": "lively, vigorous",
+"fr": "vif, alerte"
+},
+{
+"a": "իրազեկ",
+"lv": "B1",
+"ru": "осведомлённый",
+"en": "informed, aware",
+"fr": "informé"
+},
+{
+"a": "լաչառ",
+"lv": "B1",
+"ru": "бесстыжий, наглый",
+"en": "shameless",
+"fr": "effronté"
+},
+{
+"a": "լավատեսական",
+"lv": "B1",
+"ru": "оптимистичный",
+"en": "optimistic",
+"fr": "optimiste"
+},
+{
+"a": "լեզվանի",
+"lv": "B1",
+"ru": "болтливый",
+"en": "talkative",
+"fr": "bavard"
+},
+{
+"a": "լրջմիտ",
+"lv": "B1",
+"ru": "серьёзный, вдумчивый",
+"en": "serious, thoughtful",
+"fr": "sérieux, réfléchi"
+},
+{
+"a": "խայտառակ",
+"lv": "B1",
+"ru": "позорный",
+"en": "disgraceful",
+"fr": "honteux"
+},
+{
+"a": "խանդակաթ",
+"lv": "B1",
+"ru": "нежный, ласковый",
+"en": "tender, compassionate",
+"fr": "tendre, affectueux"
+},
+{
+"a": "խանդավառ",
+"lv": "B1",
+"ru": "восторженный",
+"en": "enthusiastic",
+"fr": "enthousiaste"
+},
+{
+"a": "խելառ",
+"lv": "B1",
+"ru": "безумный, сумасшедший",
+"en": "crazy, mad",
+"fr": "fou, dément"
+},
+{
+"a": "խեղանդամ",
+"lv": "B1",
+"ru": "искалеченный",
+"en": "crippled",
+"fr": "mutilé, estropié"
+},
+{
+"a": "խոհական",
+"lv": "B1",
+"ru": "рассудительный",
+"en": "thoughtful",
+"fr": "réfléchi"
+},
+{
+"a": "խոհամիտ",
+"lv": "B1",
+"ru": "благоразумный",
+"en": "sensible, thoughtful",
+"fr": "sensé"
+},
+{
+"a": "խոնջ",
+"lv": "B1",
+"ru": "уставший, изнурённый",
+"en": "tired, exhausted",
+"fr": "épuisé"
+},
+{
+"a": "խոսուն",
+"lv": "B1",
+"ru": "разговорчивый",
+"en": "talkative",
+"fr": "causant, loquace"
+},
+{
+"a": "խորագին",
+"lv": "B1",
+"ru": "глубокомысленный",
+"en": "profound",
+"fr": "profond, pensif"
+},
+{
+"a": "խուճուճ",
+"lv": "B1",
+"ru": "кудрявый (о волосах)",
+"en": "curly",
+"fr": "bouclé"
+},
+{
+"a": "խումար",
+"lv": "B1",
+"ru": "с похмелья",
+"en": "hungover",
+"fr": "qui a la gueule de bois"
+},
+{
+"a": "խունջիկ-մունջիկ",
+"lv": "B1",
+"ru": "кокетливый (разг.)",
+"en": "coquettish",
+"fr": "coquet"
+},
+{
+"a": "խռով",
+"lv": "B1",
+"ru": "обиженный",
+"en": "offended",
+"fr": "vexé"
+},
+{
+"a": "խռավաթ",
+"lv": "B1",
+"ru": "затаивший обиду",
+"en": "resentful",
+"fr": "rancunier"
+},
+{
+"a": "խռպոտ",
+"lv": "B1",
+"ru": "хриплый",
+"en": "hoarse",
+"fr": "rauque"
+},
+{
+"a": "խրոխտ",
+"lv": "B1",
+"ru": "гордый, довольный собой",
+"en": "proud",
+"fr": "fier"
+},
+{
+"a": "ծերուն",
+"lv": "B1",
+"ru": "старый, пожилой",
+"en": "old, aged",
+"fr": "vieux, âgé"
+},
+{
+"a": "ծիծաղաշարժ",
+"lv": "B1",
+"ru": "смешной, потешный",
+"en": "laughable",
+"fr": "risible"
+},
+{
+"a": "ծիծաղկոտ",
+"lv": "B1",
+"ru": "смешливый",
+"en": "easily amused",
+"fr": "rieur"
+},
+{
+"a": "կակազ",
+"lv": "B1",
+"ru": "заика",
+"en": "stammering",
+"fr": "bègue"
+},
+{
+"a": "կայտառ",
+"lv": "B1",
+"ru": "бодрый, энергичный",
+"en": "lively, energetic",
+"fr": "vif, énergique"
+},
+{
+"a": "կարեկցական",
+"lv": "B1",
+"ru": "сочувственный",
+"en": "sympathetic",
+"fr": "compatissant"
+},
+{
+"a": "կարեկցելի",
+"lv": "B1",
+"ru": "сострадательный",
+"en": "compassionate",
+"fr": "compatissant (bienveillant)"
+},
+{
+"a": "կենսալի",
+"lv": "B1",
+"ru": "жизнерадостный",
+"en": "lively",
+"fr": "plein de vie"
+},
+{
+"a": "կենսախինդ",
+"lv": "B1",
+"ru": "жизнелюбивый",
+"en": "cheerful",
+"fr": "joyeux, bon vivant"
+},
+{
+"a": "կթոտ",
+"lv": "B1",
+"ru": "слабый, хилый",
+"en": "feeble",
+"fr": "chétif"
+},
+{
+"a": "կիրթ",
+"lv": "B1",
+"ru": "образованный, воспитанный",
+"en": "educated, cultivated",
+"fr": "cultivé, poli"
+},
+{
+"a": "կծծի",
+"lv": "B1",
+"ru": "скупой, жадный",
+"en": "stingy",
+"fr": "radin"
+},
+{
+"a": "կոլոտ",
+"lv": "B1",
+"ru": "низкорослый (разг.)",
+"en": "short (colloquial)",
+"fr": "petit (familier)"
+},
+{
+"a": "կոմպետենտ",
+"lv": "B1",
+"ru": "компетентный",
+"en": "competent",
+"fr": "compétent"
+},
+{
+"a": "կոռեկտ",
+"lv": "B1",
+"ru": "корректный, вежливый",
+"en": "polite, correct",
+"fr": "correct, poli"
+},
+{
+"a": "կուզեկուզ",
+"lv": "B1",
+"ru": "сгорбленный",
+"en": "hunched over",
+"fr": "voûté"
+},
+{
+"a": "կուզիկ",
+"lv": "B1",
+"ru": "горбатый",
+"en": "hunchbacked",
+"fr": "bossu"
+},
+{
+"a": "կուլտուրական",
+"lv": "B1",
+"ru": "культурный",
+"en": "cultured",
+"fr": "cultivé"
+},
+{
+"a": "կրեատիվ",
+"lv": "B1",
+"ru": "креативный",
+"en": "creative",
+"fr": "créatif"
+},
+{
+"a": "հալումաշ",
+"lv": "B1",
+"ru": "измождённый",
+"en": "worn, exhausted",
+"fr": "exténué"
+},
+{
+"a": "հաղթ",
+"lv": "B1",
+"ru": "сильный, могучий",
+"en": "strong, mighty",
+"fr": "fort"
+},
+{
+"a": "հաղթամարմին",
+"lv": "B1",
+"ru": "дородный",
+"en": "corpulent",
+"fr": "corpulent"
+},
+{
+"a": "հաճ",
+"lv": "B1",
+"ru": "довольный",
+"en": "content",
+"fr": "content, satisfait"
+},
+{
+"a": "համբավավոր",
+"lv": "B1",
+"ru": "прославленный",
+"en": "renowned",
+"fr": "renommé"
+},
+{
+"a": "համերաշխ",
+"lv": "B1",
+"ru": "дружный, единодушный",
+"en": "united, harmonious",
+"fr": "uni, solidaire"
+},
+{
+"a": "հայազգի",
+"lv": "B1",
+"ru": "армянского происхождения",
+"en": "of Armenian origin",
+"fr": "d'origine arménienne"
+},
+{
+"a": "հայրական",
+"lv": "B1",
+"ru": "отцовский",
+"en": "fatherly",
+"fr": "paternel"
+},
+{
+"a": "հանճարեղ",
+"lv": "B1",
+"ru": "гениальный",
+"en": "genius",
+"fr": "génial"
+},
+{
+"a": "հաշտ",
+"lv": "B1",
+"ru": "мирный, примирённый",
+"en": "peaceful",
+"fr": "pacifique, réconcilié"
+},
+{
+"a": "հաչաղկոտ",
+"lv": "B1",
+"ru": "завистливый",
+"en": "envious",
+"fr": "envieux"
+},
+{
+"a": "հապաղկոտ",
+"lv": "B1",
+"ru": "медлительный, мешкающий",
+"en": "tardy, sluggish",
+"fr": "traînard"
+},
+{
+"a": "հասու",
+"lv": "B1",
+"ru": "понимающий, сведущий",
+"en": "understanding",
+"fr": "connaisseur"
+},
+{
+"a": "հաստագլուխ",
+"lv": "B1",
+"ru": "твердолобый",
+"en": "thickheaded",
+"fr": "tête dure"
+},
+{
+"a": "հաստատակամ",
+"lv": "B1",
+"ru": "решительный, упорный",
+"en": "determined",
+"fr": "déterminé, tenace"
+},
+{
+"a": "հարցասեր",
+"lv": "B1",
+"ru": "любопытный",
+"en": "inquisitive",
+"fr": "curieux"
+},
+{
+"a": "հեռատես",
+"lv": "B1",
+"ru": "дальновидный",
+"en": "farsighted",
+"fr": "prévoyant"
+},
+{
+"a": "հիասթափ",
+"lv": "B1",
+"ru": "разочарованный",
+"en": "disappointed",
+"fr": "déçu"
+},
+{
+"a": "հիվանդագին",
+"lv": "B1",
+"ru": "болезненный",
+"en": "sickly",
+"fr": "maladif"
+},
+{
+"a": "հլու",
+"lv": "B1",
+"ru": "послушный",
+"en": "obedient",
+"fr": "obéissant"
+},
+{
+"a": "հուսակորույս",
+"lv": "B1",
+"ru": "отчаявшийся",
+"en": "despairing",
+"fr": "désespéré"
+},
+{
+"a": "հռետորաբան",
+"lv": "B1",
+"ru": "красноречивый",
+"en": "eloquent",
+"fr": "éloquent"
+},
+{
+"a": "ձախլիկ",
+"lv": "B1",
+"ru": "левша",
+"en": "left-handed",
+"fr": "gaucher"
+},
+{
+"a": "ձախող",
+"lv": "B1",
+"ru": "неудачливый, злосчастный",
+"en": "unlucky",
+"fr": "malchanceux"
+},
+{
+"a": "ձախորդ",
+"lv": "B1",
+"ru": "несчастный, злополучный",
+"en": "hapless",
+"fr": "infortuné"
+},
+{
+"a": "ձեռնպահ",
+"lv": "B1",
+"ru": "воздержавшийся",
+"en": "abstaining",
+"fr": "abstentionniste"
+},
+{
+"a": "ձերբակալ",
+"lv": "B1",
+"ru": "арестованный",
+"en": "arrested",
+"fr": "arrêté"
+},
+{
+"a": "ճապուկ",
+"lv": "B1",
+"ru": "ловкий, юркий",
+"en": "nimble",
+"fr": "agile"
+},
+{
+"a": "ճարահատ",
+"lv": "B1",
+"ru": "безвыходный",
+"en": "helpless",
+"fr": "désespéré"
+},
+{
+"a": "ճարտար",
+"lv": "B1",
+"ru": "искусный",
+"en": "skilful",
+"fr": "habile"
+},
+{
+"a": "ճերմակ",
+"lv": "B1",
+"ru": "седой",
+"en": "white-haired",
+"fr": "aux cheveux blancs"
+},
+{
+"a": "մազաթափ",
+"lv": "B1",
+"ru": "лысеющий",
+"en": "balding",
+"fr": "chauve"
+},
+{
+"a": "մազոտ",
+"lv": "B1",
+"ru": "волосатый (синоним)",
+"en": "hairy",
+"fr": "velu"
+},
+{
+"a": "մայրական",
+"lv": "B1",
+"ru": "материнский",
+"en": "motherly",
+"fr": "maternel"
+},
+{
+"a": "մանկամարդ",
+"lv": "B1",
+"ru": "юный",
+"en": "young",
+"fr": "jeune"
+},
+{
+"a": "մասխարա",
+"lv": "B1",
+"ru": "смешной, нелепый",
+"en": "ridiculous",
+"fr": "ridicule"
+},
+{
+"a": "մարդատյաց",
+"lv": "B1",
+"ru": "человеконенавистнический",
+"en": "misanthropic",
+"fr": "misanthrope"
+},
+{
+"a": "մեծաբազուկ",
+"lv": "B1",
+"ru": "мускулистый",
+"en": "muscular",
+"fr": "musclé"
+},
+{
+"a": "մեծաբան",
+"lv": "B1",
+"ru": "хвастливый, болтун",
+"en": "loudmouthed",
+"fr": "vantard"
+},
+{
+"a": "մեծանուն",
+"lv": "B1",
+"ru": "знаменитый, прославленный",
+"en": "renowned",
+"fr": "illustre"
+},
+{
+"a": "մեծարգո",
+"lv": "B1",
+"ru": "уважаемый, почтенный",
+"en": "honourable",
+"fr": "honorable"
+},
+{
+"a": "մեղկ",
+"lv": "B1",
+"ru": "слабовольный",
+"en": "weak-willed",
+"fr": "mou, veule"
+},
+{
+"a": "մենավոր",
+"lv": "B1",
+"ru": "одинокий",
+"en": "solitary",
+"fr": "solitaire"
+},
+{
+"a": "միականի",
+"lv": "B1",
+"ru": "одноглазый",
+"en": "one-eyed",
+"fr": "borgne"
+},
+{
+"a": "մնջիկ",
+"lv": "B1",
+"ru": "молчаливый",
+"en": "silent",
+"fr": "taciturne"
+},
+{
+"a": "մոլի",
+"lv": "B1",
+"ru": "страстный, заядлый",
+"en": "ardent, inveterate",
+"fr": "passionné, invétéré"
+},
+{
+"a": "մունջ",
+"lv": "B1",
+"ru": "немой",
+"en": "dumb, mute",
+"fr": "muet (synonyme)"
+},
+{
+"a": "մտածող",
+"lv": "B1",
+"ru": "мыслящий",
+"en": "thinking",
+"fr": "pensant"
+},
+{
+"a": "մտառու",
+"lv": "B1",
+"ru": "сообразительный",
+"en": "quick-witted",
+"fr": "vif d'esprit"
+},
+{
+"a": "մտերմական",
+"lv": "B1",
+"ru": "дружеский, близкий",
+"en": "familiar",
+"fr": "intime"
+},
+{
+"a": "նախանձկոտ",
+"lv": "B1",
+"ru": "завистливый, ревнивый",
+"en": "jealous",
+"fr": "jaloux"
+},
+{
+"a": "նենգավոր",
+"lv": "B1",
+"ru": "коварный",
+"en": "treacherous",
+"fr": "perfide"
+},
+{
+"a": "նվաղկոտ",
+"lv": "B1",
+"ru": "слабый, хилый",
+"en": "weak",
+"fr": "faible"
+},
+{
+"a": "շիլ",
+"lv": "B1",
+"ru": "косоглазый",
+"en": "cross-eyed",
+"fr": "louche"
+},
+{
+"a": "շրջահայաց",
+"lv": "B1",
+"ru": "осмотрительный",
+"en": "careful, considerate",
+"fr": "prudent, circonspect"
+},
+{
+"a": "ոխերիմ",
+"lv": "B1",
+"ru": "злопамятный",
+"en": "rancorous",
+"fr": "rancunier"
+},
+{
+"a": "ողջախոհ",
+"lv": "B1",
+"ru": "здравомыслящий",
+"en": "sensible",
+"fr": "sensé"
+},
+{
+"a": "որդեսեր",
+"lv": "B1",
+"ru": "любящий детей",
+"en": "loving one's children",
+"fr": "qui aime ses enfants"
+},
+{
+"a": "որկրամոլ",
+"lv": "B1",
+"ru": "прожорливый",
+"en": "gluttonous",
+"fr": "glouton"
+},
+{
+"a": "ունևոր",
+"lv": "B1",
+"ru": "состоятельный",
+"en": "wealthy",
+"fr": "aisé"
+},
+{
+"a": "չարաչար",
+"lv": "B1",
+"ru": "злой, жестокий",
+"en": "wicked",
+"fr": "cruel"
+},
+{
+"a": "չքավոր",
+"lv": "B1",
+"ru": "бедный, нищий",
+"en": "poor",
+"fr": "pauvre"
+},
+{
+"a": "պատրաստակամ",
+"lv": "B1",
+"ru": "готовый помочь",
+"en": "willing, obliging",
+"fr": "serviable"
+},
+{
+"a": "պարապ",
+"lv": "B1",
+"ru": "праздный, бездельный",
+"en": "idle",
+"fr": "oisif"
+},
+{
+"a": "պարկեշտ",
+"lv": "B1",
+"ru": "скромный, порядочный",
+"en": "modest",
+"fr": "modeste, décent"
+},
+{
+"a": "պերճախոս",
+"lv": "B1",
+"ru": "красноречивый (синоним)",
+"en": "eloquent",
+"fr": "disert"
+},
+{
+"a": "պնդակազմ",
+"lv": "B1",
+"ru": "коренастый",
+"en": "stocky",
+"fr": "trapu"
+},
+{
+"a": "պնչատ",
+"lv": "B1",
+"ru": "курносый",
+"en": "snub-nosed",
+"fr": "au nez camus"
+},
+{
+"a": "պոռոտաբան",
+"lv": "B1",
+"ru": "пустозвон",
+"en": "bigmouthed",
+"fr": "fanfaron"
+},
+{
+"a": "ջղային",
+"lv": "B1",
+"ru": "нервный",
+"en": "nervous",
+"fr": "nerveux"
+},
+{
+"a": "սակավախոս",
+"lv": "B1",
+"ru": "немногословный",
+"en": "taciturn",
+"fr": "taciturne"
+},
+{
+"a": "սանձարձակ",
+"lv": "B1",
+"ru": "разнузданный",
+"en": "unbridled",
+"fr": "débridé"
+},
+{
+"a": "սապատավոր",
+"lv": "B1",
+"ru": "горбатый (с горбом)",
+"en": "humpbacked",
+"fr": "bossu (à bosse)"
+},
+{
+"a": "սեգ",
+"lv": "B1",
+"ru": "гордый, довольный",
+"en": "proud",
+"fr": "fier (content)"
+},
+{
+"a": "սերտ",
+"lv": "B1",
+"ru": "близкий, тесный",
+"en": "close, intimate",
+"fr": "étroit, intime"
+},
+{
+"a": "սիրալիր",
+"lv": "B1",
+"ru": "любезный",
+"en": "amiable",
+"fr": "aimable"
+},
+{
+"a": "սնահավատ",
+"lv": "B1",
+"ru": "суеверный",
+"en": "superstitious",
+"fr": "superstitieux"
+},
+{
+"a": "սովալլուկ",
+"lv": "B1",
+"ru": "изголодавшийся",
+"en": "famished",
+"fr": "affamé (famélique)"
+},
+{
+"a": "սուտասան",
+"lv": "B1",
+"ru": "лживый",
+"en": "lying",
+"fr": "menteur"
+},
+{
+"a": "սրտյա",
+"lv": "B1",
+"ru": "отважный",
+"en": "bold, intrepid",
+"fr": "hardi"
+},
+{
+"a": "վայիս",
+"lv": "B1",
+"ru": "проказливый",
+"en": "mischievous",
+"fr": "turbulent"
+},
+{
+"a": "վայրագ",
+"lv": "B1",
+"ru": "свирепый, зверский",
+"en": "ferocious",
+"fr": "féroce"
+},
+{
+"a": "վայրենի",
+"lv": "B1",
+"ru": "дикий",
+"en": "wild, savage",
+"fr": "sauvage"
+},
+{
+"a": "վատասիրտ",
+"lv": "B1",
+"ru": "малодушный, трусливый",
+"en": "fainthearted",
+"fr": "poltron"
+},
+{
+"a": "վարժ",
+"lv": "B1",
+"ru": "опытный, умелый",
+"en": "experienced",
+"fr": "expérimenté"
+},
+{
+"a": "վարկաբեկ",
+"lv": "B1",
+"ru": "дискредитированный",
+"en": "discredited",
+"fr": "discrédité"
+},
+{
+"a": "վզան",
+"lv": "B1",
+"ru": "высокомерный",
+"en": "haughty",
+"fr": "hautain"
+},
+{
+"a": "վհատ",
+"lv": "B1",
+"ru": "отчаявшийся, унылый",
+"en": "despairing",
+"fr": "abattu"
+},
+{
+"a": "վտիտ",
+"lv": "B1",
+"ru": "тщедушный",
+"en": "scrawny",
+"fr": "chétif, malingre"
+},
+{
+"a": "տարտամ",
+"lv": "B1",
+"ru": "вялый",
+"en": "sluggish",
+"fr": "languissant"
+},
+{
+"a": "տգետ",
+"lv": "B1",
+"ru": "невежественный",
+"en": "ignorant",
+"fr": "ignorant"
+},
+{
+"a": "տեսարժան",
+"lv": "B1",
+"ru": "достопримечательный",
+"en": "worth seeing",
+"fr": "digne d'intérêt"
+},
+{
+"a": "տխմար",
+"lv": "B1",
+"ru": "глупый, дурацкий",
+"en": "silly",
+"fr": "niais"
+},
+{
+"a": "տկար",
+"lv": "B1",
+"ru": "слабый, немощный",
+"en": "weak, feeble",
+"fr": "faible"
+},
+{
+"a": "տմարդի",
+"lv": "B1",
+"ru": "бесчеловечный, подлый",
+"en": "inhuman, base",
+"fr": "inhumain"
+},
+{
+"a": "ցասկոտ",
+"lv": "B1",
+"ru": "вспыльчивый",
+"en": "irascible",
+"fr": "irascible"
+},
+{
+"a": "փառամոլ",
+"lv": "B1",
+"ru": "тщеславный",
+"en": "vainglorious",
+"fr": "vaniteux"
+},
+{
+"a": "փառասեր",
+"lv": "B1",
+"ru": "честолюбивый",
+"en": "ambitious",
+"fr": "ambitieux (de gloire)"
+},
+{
+"a": "փարիսեցիական",
+"lv": "B1",
+"ru": "лицемерный",
+"en": "hypocritical",
+"fr": "hypocrite"
+},
+{
+"a": "փնթի",
+"lv": "B1",
+"ru": "неряшливый",
+"en": "untidy",
+"fr": "négligé"
+},
+{
+"a": "փութաջան",
+"lv": "B1",
+"ru": "усердный",
+"en": "diligent",
+"fr": "diligent"
+},
+{
+"a": "քույրական",
+"lv": "B1",
+"ru": "сестринский",
+"en": "sisterly",
+"fr": "fraternel (de sœur)"
+},
+{
+"a": "քրտնաջան",
+"lv": "B1",
+"ru": "упорный, кропотливый",
+"en": "painstaking",
+"fr": "laborieux"
+},
+{
+"a": "աբրեշումե",
+"lv": "B1",
+"ru": "шёлковый",
+"en": "silken",
+"fr": "de soie"
+},
+{
+"a": "ազդու",
+"lv": "B1",
+"ru": "действенный, впечатляющий",
+"en": "effective, impressive",
+"fr": "efficace, impressionnant"
+},
+{
+"a": "ալաճա",
+"lv": "B1",
+"ru": "пёстрый, пегий",
+"en": "multicoloured, piebald",
+"fr": "bigarré, pie"
+},
+{
+"a": "ալեբաստրե",
+"lv": "B1",
+"ru": "алебастровый",
+"en": "alabaster",
+"fr": "d'albâtre"
+},
+{
+"a": "ալկոհոլային",
+"lv": "B1",
+"ru": "алкогольный",
+"en": "alcoholic",
+"fr": "alcoolisé"
+},
+{
+"a": "ականակիտ",
+"lv": "B1",
+"ru": "прозрачный, чистый (о воде)",
+"en": "clear, limpid",
+"fr": "limpide"
+},
+{
+"a": "ակներև",
+"lv": "B1",
+"ru": "явный, очевидный",
+"en": "apparent, obvious",
+"fr": "évident"
+},
+{
+"a": "ակնհայտնի",
+"lv": "B1",
+"ru": "очевидный",
+"en": "obvious",
+"fr": "manifeste"
+},
+{
+"a": "ահագին",
+"lv": "B1",
+"ru": "огромный",
+"en": "very big, huge",
+"fr": "énorme"
+},
+{
+"a": "աղավաղ",
+"lv": "B1",
+"ru": "искажённый",
+"en": "distorted",
+"fr": "déformé"
+},
+{
+"a": "աղեբեկ",
+"lv": "B1",
+"ru": "с проседью",
+"en": "grey-flecked",
+"fr": "grisonnant"
+},
+{
+"a": "աղճատ",
+"lv": "B1",
+"ru": "извращённый, искривлённый",
+"en": "twisted, warped",
+"fr": "tordu, faussé"
+},
+{
+"a": "աղտեղի",
+"lv": "B1",
+"ru": "грязный, нечистый",
+"en": "dirty, impure",
+"fr": "sale, impur"
+},
+{
+"a": "աղտոտ",
+"lv": "B1",
+"ru": "грязный",
+"en": "dirty",
+"fr": "sale"
+},
+{
+"a": "ամանորյա",
+"lv": "B1",
+"ru": "новогодний",
+"en": "New Year's",
+"fr": "du Nouvel An"
+},
+{
+"a": "ամառային",
+"lv": "B1",
+"ru": "летний",
+"en": "summer",
+"fr": "d'été"
+},
+{
+"a": "ամուլ",
+"lv": "B1",
+"ru": "бесплодный",
+"en": "barren, sterile",
+"fr": "stérile"
+},
+{
+"a": "այլևայլ",
+"lv": "B1",
+"ru": "различный, разнообразный",
+"en": "various, sundry",
+"fr": "divers, varié"
+},
+{
+"a": "անալի",
+"lv": "B1",
+"ru": "несолёный",
+"en": "unsalted",
+"fr": "sans sel"
+},
+{
+"a": "անակնկալ",
+"lv": "B1",
+"ru": "неожиданный",
+"en": "unexpected",
+"fr": "inattendu"
+},
+{
+"a": "անաղարտ",
+"lv": "B1",
+"ru": "нетронутый, чистый",
+"en": "intact, unadulterated",
+"fr": "intact, pur"
+},
+{
+"a": "անառիկ",
+"lv": "B1",
+"ru": "неприступный",
+"en": "impregnable",
+"fr": "imprenable"
+},
+{
+"a": "անբիծ",
+"lv": "B1",
+"ru": "незапятнанный",
+"en": "spotless",
+"fr": "immaculé"
+},
+{
+"a": "անբնակ",
+"lv": "B1",
+"ru": "необитаемый",
+"en": "uninhabited",
+"fr": "inhabité"
+},
+{
+"a": "անբովանդակ",
+"lv": "B1",
+"ru": "бессодержательный",
+"en": "empty, void",
+"fr": "vide de sens"
+},
+{
+"a": "անգործածելի",
+"lv": "B1",
+"ru": "непригодный к использованию",
+"en": "unusable",
+"fr": "inutilisable"
+},
+{
+"a": "անընդունելի",
+"lv": "B1",
+"ru": "неприемлемый",
+"en": "unacceptable",
+"fr": "inacceptable"
+},
+{
+"a": "անթարգմանելի",
+"lv": "B1",
+"ru": "непереводимый",
+"en": "untranslatable",
+"fr": "intraduisible"
+},
+{
+"a": "անթիվ",
+"lv": "B1",
+"ru": "бесчисленный",
+"en": "countless",
+"fr": "innombrable"
+},
+{
+"a": "անթև",
+"lv": "B1",
+"ru": "бескрылый",
+"en": "wingless",
+"fr": "aptère, sans ailes"
+},
+{
+"a": "անիմաստ",
+"lv": "B1",
+"ru": "бессмысленный",
+"en": "meaningless",
+"fr": "insensé"
+},
+{
+"a": "անկարելի",
+"lv": "B1",
+"ru": "невозможный",
+"en": "impossible",
+"fr": "impossible"
+},
+{
+"a": "անհամար",
+"lv": "B1",
+"ru": "несметный",
+"en": "myriad",
+"fr": "incalculable"
+},
+{
+"a": "անհապաղելի",
+"lv": "B1",
+"ru": "безотлагательный",
+"en": "immediate",
+"fr": "urgent, immédiat"
+},
+{
+"a": "անհաջող",
+"lv": "B1",
+"ru": "неудачный",
+"en": "unsuccessful",
+"fr": "raté"
+},
+{
+"a": "անհատակ",
+"lv": "B1",
+"ru": "бездонный",
+"en": "bottomless",
+"fr": "sans fond"
+},
+{
+"a": "անհեռանկարային",
+"lv": "B1",
+"ru": "бесперспективный",
+"en": "unpromising",
+"fr": "sans avenir"
+},
+{
+"a": "անհետ",
+"lv": "B1",
+"ru": "бесследный",
+"en": "traceless",
+"fr": "sans laisser de trace"
+},
+{
+"a": "անհետաքրքիր",
+"lv": "B1",
+"ru": "неинтересный",
+"en": "uninteresting",
+"fr": "inintéressant"
+},
+{
+"a": "անճոռնի",
+"lv": "B1",
+"ru": "уродливый, безобразный",
+"en": "hideous, ungainly",
+"fr": "hideux, difforme"
+},
+{
+"a": "անմիս",
+"lv": "B1",
+"ru": "постный (без мяса)",
+"en": "meatless",
+"fr": "maigre (sans viande)"
+},
+{
+"a": "աննկարագրելի",
+"lv": "B1",
+"ru": "неописуемый",
+"en": "indescribable",
+"fr": "indescriptible"
+},
+{
+"a": "աննման",
+"lv": "B1",
+"ru": "непохожий, несравненный",
+"en": "unlike, unique",
+"fr": "dissemblable, sans pareil"
+},
+{
+"a": "աննշմարելի",
+"lv": "B1",
+"ru": "незаметный",
+"en": "indiscernible",
+"fr": "imperceptible"
+},
+{
+"a": "աննպաստ",
+"lv": "B1",
+"ru": "неблагоприятный",
+"en": "unfavourable",
+"fr": "défavorable"
+},
+{
+"a": "անշշուկ",
+"lv": "B1",
+"ru": "бесшумный",
+"en": "silent, noiseless",
+"fr": "silencieux"
+},
+{
+"a": "անշուք",
+"lv": "B1",
+"ru": "скромный, без украшений",
+"en": "plain, unadorned",
+"fr": "sobre, sans ornement"
+},
+{
+"a": "անշրջելի",
+"lv": "B1",
+"ru": "необратимый",
+"en": "irreversible",
+"fr": "irréversible"
+},
+{
+"a": "անորոշակի",
+"lv": "B1",
+"ru": "неопределённый",
+"en": "indefinite, vague",
+"fr": "indéfini, vague"
+},
+{
+"a": "անուշ",
+"lv": "B1",
+"ru": "сладкий",
+"en": "sweet",
+"fr": "doux, sucré"
+},
+{
+"a": "անուշաբույր",
+"lv": "B1",
+"ru": "благоуханный",
+"en": "fragrant",
+"fr": "parfumé"
+},
+{
+"a": "անչափ",
+"lv": "B1",
+"ru": "безмерный",
+"en": "measureless",
+"fr": "démesuré"
+},
+{
+"a": "անպատեհ",
+"lv": "B1",
+"ru": "несвоевременный",
+"en": "untimely",
+"fr": "inopportun"
+},
+{
+"a": "անպիտան",
+"lv": "B1",
+"ru": "негодный",
+"en": "unfit, unsuitable",
+"fr": "impropre"
+},
+{
+"a": "անջատ",
+"lv": "B1",
+"ru": "отдельный",
+"en": "separate",
+"fr": "séparé, distinct"
+},
+{
+"a": "անջրդի",
+"lv": "B1",
+"ru": "засушливый",
+"en": "arid",
+"fr": "aride"
+},
+{
+"a": "անսարք",
+"lv": "B1",
+"ru": "неисправный",
+"en": "out of order",
+"fr": "en panne"
+},
+{
+"a": "անսպառ",
+"lv": "B1",
+"ru": "неисчерпаемый",
+"en": "inexhaustible",
+"fr": "inépuisable"
+},
+{
+"a": "անվերծանելի",
+"lv": "B1",
+"ru": "неразборчивый",
+"en": "illegible",
+"fr": "illisible"
+},
+{
+"a": "անվնաս",
+"lv": "B1",
+"ru": "безвредный",
+"en": "harmless",
+"fr": "inoffensif"
+},
+{
+"a": "անտառային",
+"lv": "B1",
+"ru": "лесной",
+"en": "forest, sylvan",
+"fr": "forestier"
+},
+{
+"a": "անտերունչ",
+"lv": "B1",
+"ru": "бесхозный, беззащитный",
+"en": "ownerless, helpless",
+"fr": "sans maître"
+},
+{
+"a": "անտոմս",
+"lv": "B1",
+"ru": "безбилетный",
+"en": "ticketless",
+"fr": "sans billet"
+},
+{
+"a": "անտրամաբանական",
+"lv": "B1",
+"ru": "нелогичный",
+"en": "illogical",
+"fr": "illogique"
+},
+{
+"a": "անցած",
+"lv": "B1",
+"ru": "прошлый, минувший",
+"en": "past, bygone",
+"fr": "passé"
+},
+{
+"a": "ապրիլյան",
+"lv": "B1",
+"ru": "апрельский",
+"en": "April",
+"fr": "d'avril"
+},
+{
+"a": "առաջիկա",
+"lv": "B1",
+"ru": "предстоящий",
+"en": "upcoming",
+"fr": "prochain, à venir"
+},
+{
+"a": "առասպելական",
+"lv": "B1",
+"ru": "сказочный, легендарный",
+"en": "fabulous, legendary",
+"fr": "fabuleux, légendaire"
+},
+{
+"a": "առատ",
+"lv": "B1",
+"ru": "обильный",
+"en": "abundant",
+"fr": "abondant"
+},
+{
+"a": "առերևույթ",
+"lv": "B1",
+"ru": "мнимый, кажущийся",
+"en": "seeming",
+"fr": "apparent"
+},
+{
+"a": "առկա",
+"lv": "B1",
+"ru": "имеющийся, наличный",
+"en": "present, available",
+"fr": "présent, disponible"
+},
+{
+"a": "առկախ",
+"lv": "B1",
+"ru": "нерешённый",
+"en": "unresolved",
+"fr": "non résolu"
+},
+{
+"a": "առկայծ",
+"lv": "B1",
+"ru": "мерцающий, угасающий",
+"en": "fading, dimming",
+"fr": "vacillant"
+},
+{
+"a": "առձեռն",
+"lv": "B1",
+"ru": "подручный, под рукой",
+"en": "on hand, handy",
+"fr": "sous la main"
+},
+{
+"a": "առողջարար",
+"lv": "B1",
+"ru": "целебный",
+"en": "curative",
+"fr": "curatif"
+},
+{
+"a": "ասվեղ",
+"lv": "B1",
+"ru": "косматый",
+"en": "shaggy",
+"fr": "hirsute"
+},
+{
+"a": "ասվի",
+"lv": "B1",
+"ru": "шерстяной",
+"en": "woollen",
+"fr": "en laine"
+},
+{
+"a": "աստիճանավոր",
+"lv": "B1",
+"ru": "постепенный",
+"en": "gradual",
+"fr": "graduel"
+},
+{
+"a": "աստղակերպ",
+"lv": "B1",
+"ru": "звездообразный",
+"en": "starlike",
+"fr": "étoilé"
+},
+{
+"a": "աստուճ",
+"lv": "B1",
+"ru": "чёрствый (о хлебе)",
+"en": "dry, stale (of bread)",
+"fr": "rassis"
+},
+{
+"a": "ավարտված",
+"lv": "B1",
+"ru": "законченный",
+"en": "finished",
+"fr": "terminé"
+},
+{
+"a": "ավեր",
+"lv": "B1",
+"ru": "разорённый",
+"en": "ruined, desolate",
+"fr": "dévasté"
+},
+{
+"a": "արատավոր",
+"lv": "B1",
+"ru": "порочный, дефектный",
+"en": "faulty, flawed",
+"fr": "défectueux"
+},
+{
+"a": "արգավանդ",
+"lv": "B1",
+"ru": "плодородный",
+"en": "fertile",
+"fr": "fertile"
+},
+{
+"a": "արդի",
+"lv": "B1",
+"ru": "современный",
+"en": "modern",
+"fr": "moderne"
+},
+{
+"a": "արծաթապատ",
+"lv": "B1",
+"ru": "посеребрённый",
+"en": "silver-plated",
+"fr": "argenté"
+},
+{
+"a": "արծաթի",
+"lv": "B1",
+"ru": "серебряный",
+"en": "silver",
+"fr": "d'argent"
+},
+{
+"a": "արյունաքամ",
+"lv": "B1",
+"ru": "обескровленный",
+"en": "drained of blood",
+"fr": "exsangue"
+},
+{
+"a": "արյունոտ",
+"lv": "B1",
+"ru": "окровавленный",
+"en": "bloody",
+"fr": "ensanglanté"
+},
+{
+"a": "արու",
+"lv": "B1",
+"ru": "мужской (пол)",
+"en": "male",
+"fr": "mâle"
+},
+{
+"a": "արևակեզ",
+"lv": "B1",
+"ru": "опалённый солнцем",
+"en": "sun-scorched",
+"fr": "brûlé par le soleil"
+},
+{
+"a": "արևային",
+"lv": "B1",
+"ru": "солнечный",
+"en": "solar, sunny",
+"fr": "solaire, ensoleillé"
+},
+{
+"a": "արևապաշտպան",
+"lv": "B1",
+"ru": "солнцезащитный",
+"en": "sunscreening",
+"fr": "solaire (protection)"
+},
+{
+"a": "բազմաթիվ",
+"lv": "B1",
+"ru": "многочисленный",
+"en": "numerous",
+"fr": "nombreux"
+},
+{
+"a": "բազմամարդ",
+"lv": "B1",
+"ru": "многолюдный",
+"en": "crowded, populous",
+"fr": "populeux, bondé"
+},
+{
+"a": "բազմերանգ",
+"lv": "B1",
+"ru": "многоцветный",
+"en": "multicoloured",
+"fr": "multicolore"
+},
+{
+"a": "բազում",
+"lv": "B1",
+"ru": "многие, множество",
+"en": "many, numerous",
+"fr": "maints, nombreux"
+},
+{
+"a": "բանուկ",
+"lv": "B1",
+"ru": "оживлённый (о месте)",
+"en": "busy",
+"fr": "animé, fréquenté"
+},
+{
+"a": "բարկ",
+"lv": "B1",
+"ru": "палящий, знойный",
+"en": "scorching",
+"fr": "brûlant, torride"
+},
+{
+"a": "բարձիթողի",
+"lv": "B1",
+"ru": "заброшенный",
+"en": "abandoned",
+"fr": "abandonné"
+},
+{
+"a": "բարձրաբերձ",
+"lv": "B1",
+"ru": "высоченный",
+"en": "very high",
+"fr": "très haut"
+},
+{
+"a": "բարձրագույն",
+"lv": "B1",
+"ru": "высший",
+"en": "highest, supreme",
+"fr": "suprême, supérieur"
+},
+{
+"a": "բարձրաստիճան",
+"lv": "B1",
+"ru": "высокопоставленный",
+"en": "high-ranking",
+"fr": "haut placé"
+},
+{
+"a": "բարձրորակ",
+"lv": "B1",
+"ru": "высококачественный",
+"en": "high-quality",
+"fr": "de haute qualité"
+},
+{
+"a": "բարվոք",
+"lv": "B1",
+"ru": "благополучный",
+"en": "well-off, fine",
+"fr": "prospère, bon"
+},
+{
+"a": "բացակա",
+"lv": "B1",
+"ru": "отсутствующий",
+"en": "absent",
+"fr": "absent"
+},
+{
+"a": "բացորոշ",
+"lv": "B1",
+"ru": "очевидный, ясный",
+"en": "obvious",
+"fr": "évident, clair"
+},
+{
+"a": "բացօթյա",
+"lv": "B1",
+"ru": "под открытым небом",
+"en": "open-air",
+"fr": "en plein air"
+},
+{
+"a": "բեղմնավոր",
+"lv": "B1",
+"ru": "плодовитый",
+"en": "fecund",
+"fr": "fécond"
+},
+{
+"a": "բեղուն",
+"lv": "B1",
+"ru": "плодородный",
+"en": "fertile",
+"fr": "fertile"
+},
+{
+"a": "բերրի",
+"lv": "B1",
+"ru": "урожайный",
+"en": "fruitful",
+"fr": "fructueux"
+},
+{
+"a": "բյուր",
+"lv": "B1",
+"ru": "бесчисленный (книжн.)",
+"en": "myriad",
+"fr": "myriade de"
+},
+{
+"a": "բնիկ",
+"lv": "B1",
+"ru": "коренной, местный",
+"en": "native, indigenous",
+"fr": "autochtone"
+},
+{
+"a": "բնովի",
+"lv": "B1",
+"ru": "врождённый, природный",
+"en": "innate, natural",
+"fr": "inné, naturel"
+},
+{
+"a": "բոլորակ",
+"lv": "B1",
+"ru": "круглый",
+"en": "round",
+"fr": "rond"
+},
+{
+"a": "բովանդակ",
+"lv": "B1",
+"ru": "весь, целый (книжн.)",
+"en": "whole, entire",
+"fr": "entier"
+},
+{
+"a": "բորբ",
+"lv": "B1",
+"ru": "яркий, пылающий",
+"en": "bright, aflame",
+"fr": "ardent, flamboyant"
+},
+{
+"a": "բոցարձակ",
+"lv": "B1",
+"ru": "пламенный, пылающий",
+"en": "blazing",
+"fr": "flamboyant"
+},
+{
+"a": "բոցեղեն",
+"lv": "B1",
+"ru": "огненный",
+"en": "fiery",
+"fr": "de feu"
+},
+{
+"a": "բունկեն",
+"lv": "B1",
+"ru": "дырявый",
+"en": "full of holes",
+"fr": "troué"
+},
+{
+"a": "բուսական",
+"lv": "B1",
+"ru": "растительный",
+"en": "vegetable, plant",
+"fr": "végétal"
+},
+{
+"a": "բուսակեր",
+"lv": "B1",
+"ru": "травоядный",
+"en": "herbivorous",
+"fr": "herbivore"
+},
+{
+"a": "բուրավետ",
+"lv": "B1",
+"ru": "благовонный",
+"en": "fragrant",
+"fr": "odorant"
+},
+{
+"a": "բրդոտ",
+"lv": "B1",
+"ru": "волосатый",
+"en": "hairy",
+"fr": "poilu"
+},
+{
+"a": "բևեռային",
+"lv": "B1",
+"ru": "полярный",
+"en": "polar",
+"fr": "polaire"
+},
+{
+"a": "գազային",
+"lv": "B1",
+"ru": "газовый",
+"en": "gas",
+"fr": "gazeux, à gaz"
+},
+{
+"a": "գաղջ",
+"lv": "B1",
+"ru": "тёпленький, тепловатый",
+"en": "lukewarm",
+"fr": "tiède"
+},
+{
+"a": "գանգրավոր",
+"lv": "B1",
+"ru": "кудрявый, курчавый",
+"en": "curly",
+"fr": "frisé"
+},
+{
+"a": "գարնանային",
+"lv": "B1",
+"ru": "весенний",
+"en": "vernal, spring",
+"fr": "printanier"
+},
+{
+"a": "գարշ",
+"lv": "B1",
+"ru": "мерзкий",
+"en": "abominable",
+"fr": "abominable"
+},
+{
+"a": "գարշելի",
+"lv": "B1",
+"ru": "отвратительный, гнусный",
+"en": "detestable",
+"fr": "détestable"
+},
+{
+"a": "գել",
+"lv": "B1",
+"ru": "тугой, скрученный",
+"en": "tight, twisted",
+"fr": "serré, tordu"
+},
+{
+"a": "գեղանի",
+"lv": "B1",
+"ru": "прекрасный (поэт.)",
+"en": "very beautiful",
+"fr": "très beau"
+},
+{
+"a": "գեջ",
+"lv": "B1",
+"ru": "сырой, влажный",
+"en": "moist, humid",
+"fr": "humide"
+},
+{
+"a": "գերագույն",
+"lv": "B1",
+"ru": "верховный",
+"en": "supreme",
+"fr": "suprême"
+},
+{
+"a": "գերմակ",
+"lv": "B1",
+"ru": "мелкий (помол)",
+"en": "finely milled",
+"fr": "finement moulu"
+},
+{
+"a": "գիշերային",
+"lv": "B1",
+"ru": "ночной",
+"en": "night",
+"fr": "nocturne"
+},
+{
+"a": "գլոբալ",
+"lv": "B1",
+"ru": "глобальный",
+"en": "global",
+"fr": "global"
+},
+{
+"a": "գյուղական",
+"lv": "B1",
+"ru": "сельский",
+"en": "rural",
+"fr": "rural"
+},
+{
+"a": "գնահատելի",
+"lv": "B1",
+"ru": "ощутимый",
+"en": "appreciable",
+"fr": "appréciable"
+},
+{
+"a": "գողունի",
+"lv": "B1",
+"ru": "краденый",
+"en": "stolen",
+"fr": "volé"
+},
+{
+"a": "գործուն",
+"lv": "B1",
+"ru": "действующий",
+"en": "working, acting",
+"fr": "actif"
+},
+{
+"a": "գորշավուն",
+"lv": "B1",
+"ru": "сероватый",
+"en": "greyish",
+"fr": "grisâtre"
+},
+{
+"a": "գունային",
+"lv": "B1",
+"ru": "цветовой",
+"en": "chromatic",
+"fr": "chromatique"
+},
+{
+"a": "գռուզ",
+"lv": "B1",
+"ru": "жёсткий, курчавый (о волосах)",
+"en": "frizzy",
+"fr": "crépu"
+},
+{
+"a": "գրավոր",
+"lv": "B1",
+"ru": "письменный",
+"en": "written",
+"fr": "écrit"
+},
+{
+"a": "դալար",
+"lv": "B1",
+"ru": "зелёный, свежий (о растениях)",
+"en": "verdant",
+"fr": "verdoyant"
+},
+{
+"a": "դառն",
+"lv": "B1",
+"ru": "горький",
+"en": "bitter",
+"fr": "amer"
+},
+{
+"a": "դեկտեմբերյան",
+"lv": "B1",
+"ru": "декабрьский",
+"en": "December",
+"fr": "de décembre"
+},
+{
+"a": "դիպուկ",
+"lv": "B1",
+"ru": "меткий, точный",
+"en": "accurate",
+"fr": "précis, juste"
+},
+{
+"a": "դյուր",
+"lv": "B1",
+"ru": "лёгкий, нетрудный",
+"en": "easy",
+"fr": "facile"
+},
+{
+"a": "դյուրաթեք",
+"lv": "B1",
+"ru": "гибкий",
+"en": "flexible",
+"fr": "souple"
+},
+{
+"a": "դուրեկան",
+"lv": "B1",
+"ru": "приятный, милый",
+"en": "pleasant",
+"fr": "agréable"
+},
+{
+"a": "դռնփակ",
+"lv": "B1",
+"ru": "закрытый (для посторонних)",
+"en": "closed-door",
+"fr": "à huis clos"
+},
+{
+"a": "ենթադրելի",
+"lv": "B1",
+"ru": "предполагаемый",
+"en": "supposed",
+"fr": "supposé"
+},
+{
+"a": "ենթադրյալ",
+"lv": "B1",
+"ru": "мнимый, предполагаемый",
+"en": "presumed",
+"fr": "présumé"
+},
+{
+"a": "երբեմնի",
+"lv": "B1",
+"ru": "бывший, былой",
+"en": "erstwhile",
+"fr": "d'autrefois"
+},
+{
+"a": "երեսնամյա",
+"lv": "B1",
+"ru": "тридцатилетний",
+"en": "thirty-year",
+"fr": "trentenaire"
+},
+{
+"a": "երեքկին",
+"lv": "B1",
+"ru": "тройной",
+"en": "triple",
+"fr": "triple"
+},
+{
+"a": "երթևեկելի",
+"lv": "B1",
+"ru": "проезжий",
+"en": "drivable",
+"fr": "carrossable"
+},
+{
+"a": "երկաթյա",
+"lv": "B1",
+"ru": "железный",
+"en": "iron",
+"fr": "de fer"
+},
+{
+"a": "երկայն",
+"lv": "B1",
+"ru": "длинный",
+"en": "long",
+"fr": "long"
+},
+{
+"a": "երկարամյա",
+"lv": "B1",
+"ru": "многолетний",
+"en": "long, of many years",
+"fr": "de longue durée"
+},
+{
+"a": "երկարավուն",
+"lv": "B1",
+"ru": "продолговатый",
+"en": "oblong",
+"fr": "oblong"
+},
+{
+"a": "երկբայելի",
+"lv": "B1",
+"ru": "сомнительный",
+"en": "doubtful",
+"fr": "douteux"
+},
+{
+"a": "երկլեզու",
+"lv": "B1",
+"ru": "двуязычный",
+"en": "bilingual",
+"fr": "bilingue"
+},
+{
+"a": "երկկողմ",
+"lv": "B1",
+"ru": "двусторонний",
+"en": "bilateral",
+"fr": "bilatéral"
+},
+{
+"a": "երկոտանի",
+"lv": "B1",
+"ru": "двуногий",
+"en": "two-legged",
+"fr": "bipède"
+},
+{
+"a": "երկսայրի",
+"lv": "B1",
+"ru": "обоюдоострый",
+"en": "double-edged",
+"fr": "à double tranchant"
+},
+{
+"a": "երևակայածին",
+"lv": "B1",
+"ru": "вымышленный",
+"en": "imaginary",
+"fr": "imaginaire"
+},
+{
+"a": "երևակայելի",
+"lv": "B1",
+"ru": "мыслимый",
+"en": "imaginable",
+"fr": "imaginable"
+},
+{
+"a": "երևելի",
+"lv": "B1",
+"ru": "известный, заметный",
+"en": "notable",
+"fr": "notable"
+},
+{
+"a": "զայիֆ",
+"lv": "B1",
+"ru": "худой, тощий",
+"en": "skinny",
+"fr": "maigre"
+},
+{
+"a": "զանազան",
+"lv": "B1",
+"ru": "разный, разнообразный",
+"en": "various, diverse",
+"fr": "divers"
+},
+{
+"a": "զանգվածային",
+"lv": "B1",
+"ru": "массовый",
+"en": "mass",
+"fr": "de masse"
+},
+{
+"a": "զառիվեր",
+"lv": "B1",
+"ru": "крутой (склон)",
+"en": "steep",
+"fr": "escarpé"
+},
+{
+"a": "զատ",
+"lv": "B1",
+"ru": "отдельный, обособленный",
+"en": "separate, isolated",
+"fr": "isolé"
+},
+{
+"a": "զարդարուն",
+"lv": "B1",
+"ru": "украшенный",
+"en": "adorned",
+"fr": "orné"
+},
+{
+"a": "զարհուրագին",
+"lv": "B1",
+"ru": "ужасающий",
+"en": "horrifying",
+"fr": "horrifiant"
+},
+{
+"a": "զինված",
+"lv": "B1",
+"ru": "вооружённый",
+"en": "armed",
+"fr": "armé"
+},
+{
+"a": "զով",
+"lv": "B1",
+"ru": "прохладный",
+"en": "cool",
+"fr": "frais"
+},
+{
+"a": "զուտ",
+"lv": "B1",
+"ru": "чистый, беспримесный",
+"en": "pure, unmixed",
+"fr": "pur"
+},
+{
+"a": "զուր",
+"lv": "B1",
+"ru": "напрасный",
+"en": "vain, futile",
+"fr": "vain"
+},
+{
+"a": "զուրկ",
+"lv": "B1",
+"ru": "лишённый",
+"en": "deprived of",
+"fr": "privé de"
+},
+{
+"a": "զտարյուն",
+"lv": "B1",
+"ru": "чистокровный",
+"en": "purebred",
+"fr": "pur-sang"
+},
+{
+"a": "զրահակիր",
+"lv": "B1",
+"ru": "бронированный, в доспехах",
+"en": "armour-clad",
+"fr": "cuirassé"
+},
+{
+"a": "էգ",
+"lv": "B1",
+"ru": "самка (о животных)",
+"en": "female (of animals)",
+"fr": "femelle"
+},
+{
+"a": "էլեկտրական",
+"lv": "B1",
+"ru": "электрический",
+"en": "electric",
+"fr": "électrique"
+},
+{
+"a": "ընթացիկ",
+"lv": "B1",
+"ru": "текущий",
+"en": "current, ongoing",
+"fr": "courant, en cours"
+},
+{
+"a": "ընկեցիկ",
+"lv": "B1",
+"ru": "брошенный",
+"en": "abandoned",
+"fr": "abandonné (délaissé)"
+},
+{
+"a": "ընտիր",
+"lv": "B1",
+"ru": "отборный",
+"en": "select, choice",
+"fr": "de choix"
+},
+{
+"a": "ընտրյալ",
+"lv": "B1",
+"ru": "избранный",
+"en": "elect, chosen",
+"fr": "élu"
+},
+{
+"a": "թանձր",
+"lv": "B1",
+"ru": "густой, плотный",
+"en": "thick, dense",
+"fr": "épais, dense"
+},
+{
+"a": "թառամ",
+"lv": "B1",
+"ru": "увядший",
+"en": "withered",
+"fr": "fané"
+},
+{
+"a": "թավ",
+"lv": "B1",
+"ru": "густой (о волосах, лесе)",
+"en": "thick, dense",
+"fr": "touffu"
+},
+{
+"a": "թավշակերպ",
+"lv": "B1",
+"ru": "бархатистый",
+"en": "velvety",
+"fr": "velouté"
+},
+{
+"a": "թափուր",
+"lv": "B1",
+"ru": "вакантный, пустой",
+"en": "vacant",
+"fr": "vacant"
+},
+{
+"a": "թաքթաքուր",
+"lv": "B1",
+"ru": "тайный, скрытый",
+"en": "hidden, clandestine",
+"fr": "secret, caché"
+},
+{
+"a": "թեթևաշարժ",
+"lv": "B1",
+"ru": "лёгкий на ногу, проворный",
+"en": "brisk",
+"fr": "leste"
+},
+{
+"a": "թեժ",
+"lv": "B1",
+"ru": "горячий, жаркий",
+"en": "heated, hot",
+"fr": "chaud, ardent"
+},
+{
+"a": "թթվաշ",
+"lv": "B1",
+"ru": "кисловатый",
+"en": "sourish",
+"fr": "aigrelet"
+},
+{
+"a": "թյուր",
+"lv": "B1",
+"ru": "ложный, неверный",
+"en": "false, wrong",
+"fr": "faux, erroné"
+},
+{
+"a": "թևավոր",
+"lv": "B1",
+"ru": "крылатый",
+"en": "winged",
+"fr": "ailé"
+},
+{
+"a": "ժանգոտ",
+"lv": "B1",
+"ru": "ржавый",
+"en": "rusty",
+"fr": "rouillé"
+},
+{
+"a": "լայնալիճ",
+"lv": "B1",
+"ru": "широкий, туго натянутый (о луке)",
+"en": "broad, well-bent (of a bow)",
+"fr": "large, bien tendu"
+},
+{
+"a": "լայնատարած",
+"lv": "B1",
+"ru": "обширный",
+"en": "expansive",
+"fr": "étendu"
+},
+{
+"a": "լերկ",
+"lv": "B1",
+"ru": "безволосый",
+"en": "hairless",
+"fr": "glabre"
+},
+{
+"a": "լեցուն",
+"lv": "B1",
+"ru": "полный, наполненный",
+"en": "full, filled",
+"fr": "plein, rempli"
+},
+{
+"a": "լի",
+"lv": "B1",
+"ru": "полный (чего-л.)",
+"en": "full (of)",
+"fr": "plein de"
+},
+{
+"a": "լիակազմ",
+"lv": "B1",
+"ru": "в полном составе",
+"en": "in full force",
+"fr": "au complet"
+},
+{
+"a": "լույծ",
+"lv": "B1",
+"ru": "водянистый",
+"en": "watery",
+"fr": "aqueux"
+},
+{
+"a": "լռին",
+"lv": "B1",
+"ru": "безмолвный",
+"en": "silent",
+"fr": "silencieux, muet"
+},
+{
+"a": "լքյալ",
+"lv": "B1",
+"ru": "покинутый",
+"en": "abandoned",
+"fr": "délaissé"
+},
+{
+"a": "խառն",
+"lv": "B1",
+"ru": "смешанный",
+"en": "mixed",
+"fr": "mélangé"
+},
+{
+"a": "խավարչուտ",
+"lv": "B1",
+"ru": "тёмный, мрачный",
+"en": "dark",
+"fr": "sombre"
+},
+{
+"a": "խափան",
+"lv": "B1",
+"ru": "неисправный, сломанный",
+"en": "broken, inoperative",
+"fr": "en panne"
+},
+{
+"a": "խճող",
+"lv": "B1",
+"ru": "набитый",
+"en": "stuffed, packed",
+"fr": "bourré"
+},
+{
+"a": "խնդրահարույց",
+"lv": "B1",
+"ru": "проблематичный",
+"en": "problematic",
+"fr": "problématique"
+},
+{
+"a": "խոնավավուն",
+"lv": "B1",
+"ru": "сыроватый",
+"en": "dampish",
+"fr": "humide (légèrement)"
+},
+{
+"a": "խորդուբորդ",
+"lv": "B1",
+"ru": "ухабистый, неровный",
+"en": "bumpy, rugged",
+"fr": "cahoteux"
+},
+{
+"a": "խորթ",
+"lv": "B1",
+"ru": "неродной, сводный",
+"en": "step-, unrelated",
+"fr": "beau- (par alliance)"
+},
+{
+"a": "խուռն",
+"lv": "B1",
+"ru": "многолюдный, толпой",
+"en": "crowded",
+"fr": "en foule"
+},
+{
+"a": "խռովահույզ",
+"lv": "B1",
+"ru": "бурный, мятежный",
+"en": "turbulent",
+"fr": "tumultueux"
+},
+{
+"a": "խրթին",
+"lv": "B1",
+"ru": "запутанный, сложный",
+"en": "complicated",
+"fr": "compliqué, abscons"
+},
+{
+"a": "ծախու",
+"lv": "B1",
+"ru": "продажный, на продажу",
+"en": "for sale",
+"fr": "à vendre"
+},
+{
+"a": "ծախվող",
+"lv": "B1",
+"ru": "ходовой (о товаре)",
+"en": "sellable",
+"fr": "vendable"
+},
+{
+"a": "ծակոտ",
+"lv": "B1",
+"ru": "дырявый, рваный",
+"en": "torn, full of holes",
+"fr": "troué, déchiré"
+},
+{
+"a": "ծակոտկեն",
+"lv": "B1",
+"ru": "пористый",
+"en": "porous",
+"fr": "poreux"
+},
+{
+"a": "ծաղկյա",
+"lv": "B1",
+"ru": "цветочный",
+"en": "floral",
+"fr": "floral"
+},
+{
+"a": "ծանրաբեռ",
+"lv": "B1",
+"ru": "тяжело гружёный",
+"en": "heavily loaded",
+"fr": "lourdement chargé"
+},
+{
+"a": "ծարավի",
+"lv": "B1",
+"ru": "жаждущий",
+"en": "thirsty",
+"fr": "assoiffé"
+},
+{
+"a": "ծափահարելի",
+"lv": "B1",
+"ru": "достойный аплодисментов",
+"en": "commendable",
+"fr": "applaudissable"
+},
+{
+"a": "ծղոտե",
+"lv": "B1",
+"ru": "соломенный",
+"en": "made of straw",
+"fr": "de paille"
+},
+{
+"a": "ծուռումուռ",
+"lv": "B1",
+"ru": "кривой, извилистый",
+"en": "crooked, winding",
+"fr": "tortueux"
+},
+{
+"a": "ծպտյալ",
+"lv": "B1",
+"ru": "замаскированный, скрытый",
+"en": "disguised",
+"fr": "déguisé"
+},
+{
+"a": "կախ",
+"lv": "B1",
+"ru": "висячий, свисающий",
+"en": "hanging",
+"fr": "pendant"
+},
+{
+"a": "կախարդական",
+"lv": "B1",
+"ru": "волшебный",
+"en": "magical",
+"fr": "magique"
+},
+{
+"a": "կանաչազարդ",
+"lv": "B1",
+"ru": "украшенный зеленью",
+"en": "verdant",
+"fr": "verdoyant"
+},
+{
+"a": "կանաչապատ",
+"lv": "B1",
+"ru": "зелёный, утопающий в зелени",
+"en": "lush",
+"fr": "luxuriant"
+},
+{
+"a": "կավե",
+"lv": "B1",
+"ru": "глиняный",
+"en": "made of clay",
+"fr": "en argile"
+},
+{
+"a": "կատաղի",
+"lv": "B1",
+"ru": "бешеный",
+"en": "rabid",
+"fr": "enragé"
+},
+{
+"a": "կարծր",
+"lv": "B1",
+"ru": "твёрдый, жёсткий",
+"en": "hard, rigid",
+"fr": "dur, rigide"
+},
+{
+"a": "կարճառոտ",
+"lv": "B1",
+"ru": "краткий, лаконичный",
+"en": "brief, concise",
+"fr": "bref, concis"
+},
+{
+"a": "կարճավուն",
+"lv": "B1",
+"ru": "коротковатый",
+"en": "shortish",
+"fr": "un peu court"
+},
+{
+"a": "կարևորագույն",
+"lv": "B1",
+"ru": "важнейший",
+"en": "most important",
+"fr": "le plus important"
+},
+{
+"a": "կենարար",
+"lv": "B1",
+"ru": "животворный",
+"en": "life-giving",
+"fr": "vivifiant"
+},
+{
+"a": "կենտ",
+"lv": "B1",
+"ru": "нечётный",
+"en": "odd",
+"fr": "impair"
+},
+{
+"a": "կեռ",
+"lv": "B1",
+"ru": "изогнутый, кривой",
+"en": "curved",
+"fr": "courbé"
+},
+{
+"a": "կիզիչ",
+"lv": "B1",
+"ru": "жгучий, палящий",
+"en": "scorching",
+"fr": "brûlant"
+},
+{
+"a": "կիպ",
+"lv": "B1",
+"ru": "плотный, тугой",
+"en": "tight, compact",
+"fr": "serré"
+},
+{
+"a": "կիսաբաց",
+"lv": "B1",
+"ru": "полуоткрытый",
+"en": "half-open",
+"fr": "entrouvert"
+},
+{
+"a": "կիրակնօրյա",
+"lv": "B1",
+"ru": "воскресный",
+"en": "Sunday",
+"fr": "dominical"
+},
+{
+"a": "կլորավուն",
+"lv": "B1",
+"ru": "кругловатый",
+"en": "roundish",
+"fr": "arrondi"
+},
+{
+"a": "կճատ",
+"lv": "B1",
+"ru": "укороченный",
+"en": "shortened",
+"fr": "écourté"
+},
+{
+"a": "կոկոսյան",
+"lv": "B1",
+"ru": "кокосовый",
+"en": "coconut",
+"fr": "de coco"
+},
+{
+"a": "կողմնակի",
+"lv": "B1",
+"ru": "посторонний",
+"en": "outside, extraneous",
+"fr": "étranger, extérieur"
+},
+{
+"a": "կոնկրետ",
+"lv": "B1",
+"ru": "конкретный",
+"en": "concrete, specific",
+"fr": "concret"
+},
+{
+"a": "կոնֆիդենցիալ",
+"lv": "B1",
+"ru": "конфиденциальный",
+"en": "confidential",
+"fr": "confidentiel"
+},
+{
+"a": "կոտոր",
+"lv": "B1",
+"ru": "сломанный",
+"en": "broken",
+"fr": "cassé"
+},
+{
+"a": "կորդ",
+"lv": "B1",
+"ru": "целинный (о земле)",
+"en": "uncultivated",
+"fr": "en friche"
+},
+{
+"a": "կոփածո",
+"lv": "B1",
+"ru": "тёсаный",
+"en": "hewn",
+"fr": "taillé"
+},
+{
+"a": "կռածո",
+"lv": "B1",
+"ru": "кованый",
+"en": "forged",
+"fr": "forgé"
+},
+{
+"a": "կտրական",
+"lv": "B1",
+"ru": "категорический, окончательный",
+"en": "curt, definitive",
+"fr": "catégorique"
+},
+{
+"a": "հազարավոր",
+"lv": "B1",
+"ru": "тысячи",
+"en": "thousands",
+"fr": "des milliers"
+},
+{
+"a": "հաղթական",
+"lv": "B1",
+"ru": "победный",
+"en": "victorious",
+"fr": "victorieux"
+},
+{
+"a": "համագույն",
+"lv": "B1",
+"ru": "одного цвета",
+"en": "of the same colour",
+"fr": "de même couleur"
+},
+{
+"a": "համառոտ",
+"lv": "B1",
+"ru": "краткий",
+"en": "brief",
+"fr": "bref, concis"
+},
+{
+"a": "համատարած",
+"lv": "B1",
+"ru": "повсеместный",
+"en": "ubiquitous",
+"fr": "omniprésent"
+},
+{
+"a": "համեմատ",
+"lv": "B1",
+"ru": "соответствующий",
+"en": "corresponding",
+"fr": "correspondant"
+},
+{
+"a": "համով",
+"lv": "B1",
+"ru": "вкусный (разг.)",
+"en": "tasty",
+"fr": "bon (familier)"
+},
+{
+"a": "հանդիսավոր",
+"lv": "B1",
+"ru": "торжественный",
+"en": "festive",
+"fr": "solennel"
+},
+{
+"a": "հանուր",
+"lv": "B1",
+"ru": "всеобщий",
+"en": "general, universal",
+"fr": "universel"
+},
+{
+"a": "հաստատ",
+"lv": "B1",
+"ru": "твёрдый, прочный",
+"en": "solid, firm",
+"fr": "ferme, solide"
+},
+{
+"a": "հասցեական",
+"lv": "B1",
+"ru": "адресный, целевой",
+"en": "targeted",
+"fr": "ciblé"
+},
+{
+"a": "հավիտենական",
+"lv": "B1",
+"ru": "вечный",
+"en": "eternal",
+"fr": "éternel"
+},
+{
+"a": "հավուր պատշաճի",
+"lv": "B1",
+"ru": "подобающий случаю",
+"en": "fitting the occasion",
+"fr": "de circonstance"
+},
+{
+"a": "հատու",
+"lv": "B1",
+"ru": "острый, режущий",
+"en": "sharp, cutting",
+"fr": "tranchant"
+},
+{
+"a": "հատուկենտ",
+"lv": "B1",
+"ru": "редкий, единичный",
+"en": "few, scarce",
+"fr": "rare, épars"
+},
+{
+"a": "հարկադրական",
+"lv": "B1",
+"ru": "принудительный",
+"en": "compulsory",
+"fr": "obligatoire, forcé"
+},
+{
+"a": "հարսանեկան",
+"lv": "B1",
+"ru": "свадебный",
+"en": "wedding",
+"fr": "nuptial"
+},
+{
+"a": "հեգնական",
+"lv": "B1",
+"ru": "иронический",
+"en": "ironic",
+"fr": "ironique"
+},
+{
+"a": "հեծյալ",
+"lv": "B1",
+"ru": "конный",
+"en": "mounted",
+"fr": "à cheval"
+},
+{
+"a": "հետին",
+"lv": "B1",
+"ru": "последний",
+"en": "last, final",
+"fr": "dernier"
+},
+{
+"a": "հետմահու",
+"lv": "B1",
+"ru": "посмертный",
+"en": "posthumous",
+"fr": "posthume"
+},
+{
+"a": "հերքելի",
+"lv": "B1",
+"ru": "опровержимый",
+"en": "refutable",
+"fr": "réfutable"
+},
+{
+"a": "հիբրիդային",
+"lv": "B1",
+"ru": "гибридный",
+"en": "hybrid",
+"fr": "hybride"
+},
+{
+"a": "հինավուրց",
+"lv": "B1",
+"ru": "древний, стародавний",
+"en": "ancient",
+"fr": "ancien, antique"
+},
+{
+"a": "հյութեղ",
+"lv": "B1",
+"ru": "сочный",
+"en": "juicy",
+"fr": "juteux"
+},
+{
+"a": "հյուսկեն",
+"lv": "B1",
+"ru": "плетёный",
+"en": "braided, woven",
+"fr": "tressé"
+},
+{
+"a": "հնադարյան",
+"lv": "B1",
+"ru": "древний",
+"en": "ancient",
+"fr": "ancien"
+},
+{
+"a": "հնամյա",
+"lv": "B1",
+"ru": "старинный",
+"en": "archaic",
+"fr": "archaïque"
+},
+{
+"a": "հնավուն",
+"lv": "B1",
+"ru": "староватый",
+"en": "oldish",
+"fr": "vieillot"
+},
+{
+"a": "հնգամյա",
+"lv": "B1",
+"ru": "пятилетний",
+"en": "five-year",
+"fr": "quinquennal"
+},
+{
+"a": "հնոտի",
+"lv": "B1",
+"ru": "ветхий, поношенный",
+"en": "worn out",
+"fr": "usé"
+},
+{
+"a": "հոգնեցուցիչ",
+"lv": "B1",
+"ru": "утомительный",
+"en": "tiresome",
+"fr": "fatigant"
+},
+{
+"a": "հոլանի",
+"lv": "B1",
+"ru": "непокрытый, голый",
+"en": "bare, uncovered",
+"fr": "nu, découvert"
+},
+{
+"a": "հոկտեմբերյան",
+"lv": "B1",
+"ru": "октябрьский",
+"en": "October",
+"fr": "d'octobre"
+},
+{
+"a": "հոյակառույց",
+"lv": "B1",
+"ru": "величественный (о постройке)",
+"en": "splendidly built",
+"fr": "majestueux"
+},
+{
+"a": "հոռետեսական",
+"lv": "B1",
+"ru": "пессимистический",
+"en": "pessimistic",
+"fr": "pessimiste"
+},
+{
+"a": "հոսանուտ",
+"lv": "B1",
+"ru": "текучий",
+"en": "flowing",
+"fr": "coulant"
+},
+{
+"a": "հով",
+"lv": "B1",
+"ru": "свежий, прохладный",
+"en": "fresh, cool",
+"fr": "frais"
+},
+{
+"a": "հորդ",
+"lv": "B1",
+"ru": "проливной, обильный",
+"en": "torrential",
+"fr": "torrentiel"
+},
+{
+"a": "հորդորեցուցիչ",
+"lv": "B1",
+"ru": "убеждающий",
+"en": "persuading",
+"fr": "persuasif"
+},
+{
+"a": "հուժկու",
+"lv": "B1",
+"ru": "мощный, могучий",
+"en": "powerful",
+"fr": "puissant (vigoureux)"
+},
+{
+"a": "հուլիսյան",
+"lv": "B1",
+"ru": "июльский",
+"en": "July",
+"fr": "de juillet"
+},
+{
+"a": "հունիսյան",
+"lv": "B1",
+"ru": "июньский",
+"en": "June",
+"fr": "de juin"
+},
+{
+"a": "հունվարյան",
+"lv": "B1",
+"ru": "январский",
+"en": "January",
+"fr": "de janvier"
+},
+{
+"a": "հուսակտուր",
+"lv": "B1",
+"ru": "безнадёжный",
+"en": "hopeless",
+"fr": "sans espoir"
+},
+{
+"a": "հրամայական",
+"lv": "B1",
+"ru": "повелительный",
+"en": "imperative",
+"fr": "impératif"
+},
+{
+"a": "հրաշակերտ",
+"lv": "B1",
+"ru": "чудесно сделанный",
+"en": "wonderfully made",
+"fr": "merveilleusement fait"
+},
+{
+"a": "հրատ",
+"lv": "B1",
+"ru": "огненный (книжн.)",
+"en": "fiery",
+"fr": "ardent"
+},
+{
+"a": "հրեղեն",
+"lv": "B1",
+"ru": "огненный",
+"en": "fiery, igneous",
+"fr": "igné"
+},
+{
+"a": "ձեռնմխելի",
+"lv": "B1",
+"ru": "уязвимый",
+"en": "vulnerable",
+"fr": "vulnérable"
+},
+{
+"a": "ձմեռային",
+"lv": "B1",
+"ru": "зимний",
+"en": "winter",
+"fr": "d'hiver"
+},
+{
+"a": "ձյունե",
+"lv": "B1",
+"ru": "снежный",
+"en": "made of snow",
+"fr": "de neige"
+},
+{
+"a": "ձուլածո",
+"lv": "B1",
+"ru": "литой",
+"en": "cast",
+"fr": "moulé"
+},
+{
+"a": "ձևավոր",
+"lv": "B1",
+"ru": "фигурный",
+"en": "shaped",
+"fr": "façonné"
+},
+{
+"a": "ճակատային",
+"lv": "B1",
+"ru": "лобовой, фронтальный",
+"en": "frontal",
+"fr": "frontal"
+},
+{
+"a": "ճամփորդական",
+"lv": "B1",
+"ru": "дорожный (о путешествии)",
+"en": "travel",
+"fr": "de voyage"
+},
+{
+"a": "ճանապարհային",
+"lv": "B1",
+"ru": "дорожный",
+"en": "road",
+"fr": "routier"
+},
+{
+"a": "ճանճկեն",
+"lv": "B1",
+"ru": "в крапинку",
+"en": "speckled",
+"fr": "moucheté"
+},
+{
+"a": "ճոխ",
+"lv": "B1",
+"ru": "роскошный",
+"en": "splendid",
+"fr": "somptueux"
+},
+{
+"a": "ճոռոմ",
+"lv": "B1",
+"ru": "напыщенный (о стиле)",
+"en": "ornate, inflated",
+"fr": "ampoulé"
+},
+{
+"a": "մազապուրծ",
+"lv": "B1",
+"ru": "чудом уцелевший",
+"en": "narrowly escaped",
+"fr": "rescapé de justesse"
+},
+{
+"a": "մահաբեր",
+"lv": "B1",
+"ru": "смертоносный",
+"en": "deadly",
+"fr": "mortifère"
+},
+{
+"a": "մահացու",
+"lv": "B1",
+"ru": "смертельный",
+"en": "lethal",
+"fr": "mortel"
+},
+{
+"a": "մահկանացու",
+"lv": "B1",
+"ru": "смертный",
+"en": "mortal",
+"fr": "mortel (humain)"
+},
+{
+"a": "մայիսյան",
+"lv": "B1",
+"ru": "майский",
+"en": "May",
+"fr": "de mai"
+},
+{
+"a": "մանկական",
+"lv": "B1",
+"ru": "детский",
+"en": "children's",
+"fr": "enfantin"
+},
+{
+"a": "մանվածապատ",
+"lv": "B1",
+"ru": "запутанный",
+"en": "convoluted",
+"fr": "embrouillé"
+},
+{
+"a": "մաշկյա",
+"lv": "B1",
+"ru": "кожаный",
+"en": "leather",
+"fr": "en cuir"
+},
+{
+"a": "մառախլապատ",
+"lv": "B1",
+"ru": "туманный",
+"en": "foggy",
+"fr": "brumeux"
+},
+{
+"a": "մատակ",
+"lv": "B1",
+"ru": "самка (о животных)",
+"en": "female (of animals)",
+"fr": "femelle (synonyme)"
+},
+{
+"a": "մատղաշ",
+"lv": "B1",
+"ru": "молодой, только проросший",
+"en": "newly sprouted",
+"fr": "jeune, tendre"
+},
+{
+"a": "մարդաշատ",
+"lv": "B1",
+"ru": "многолюдный, населённый",
+"en": "populous",
+"fr": "peuplé"
+},
+{
+"a": "մարմնական",
+"lv": "B1",
+"ru": "телесный",
+"en": "bodily",
+"fr": "corporel"
+},
+{
+"a": "մարտյան",
+"lv": "B1",
+"ru": "мартовский",
+"en": "March",
+"fr": "de mars"
+},
+{
+"a": "մգլահոտ",
+"lv": "B1",
+"ru": "затхлый",
+"en": "musty",
+"fr": "moisi"
+},
+{
+"a": "մեծագույն",
+"lv": "B1",
+"ru": "величайший",
+"en": "greatest",
+"fr": "le plus grand"
+},
+{
+"a": "մեծահանդես",
+"lv": "B1",
+"ru": "пышный, великолепный",
+"en": "magnificent",
+"fr": "fastueux"
+},
+{
+"a": "մեծաշեն",
+"lv": "B1",
+"ru": "монументальный",
+"en": "monumental",
+"fr": "monumental"
+},
+{
+"a": "մեծաշիթ",
+"lv": "B1",
+"ru": "проливной",
+"en": "torrential",
+"fr": "diluvien"
+},
+{
+"a": "մեծաշուք",
+"lv": "B1",
+"ru": "великолепный",
+"en": "very splendid",
+"fr": "magnifique"
+},
+{
+"a": "մեծավոր",
+"lv": "B1",
+"ru": "главный",
+"en": "main, chief",
+"fr": "principal"
+},
+{
+"a": "մեծաքանակ",
+"lv": "B1",
+"ru": "многочисленный, обильный",
+"en": "numerous",
+"fr": "abondant"
+},
+{
+"a": "մեկին",
+"lv": "B1",
+"ru": "ясный, понятный",
+"en": "clear",
+"fr": "clair"
+},
+{
+"a": "մեկտեղանոց",
+"lv": "B1",
+"ru": "одноместный",
+"en": "single",
+"fr": "à une place"
+},
+{
+"a": "մետրանոց",
+"lv": "B1",
+"ru": "метровый",
+"en": "one-metre",
+"fr": "d'un mètre"
+},
+{
+"a": "մերկ",
+"lv": "B1",
+"ru": "голый",
+"en": "naked",
+"fr": "nu"
+},
+{
+"a": "մերօրյա",
+"lv": "B1",
+"ru": "современный, нынешний",
+"en": "contemporary",
+"fr": "actuel"
+},
+{
+"a": "մթար",
+"lv": "B1",
+"ru": "тёмный",
+"en": "dark",
+"fr": "obscur"
+},
+{
+"a": "միահամուռ",
+"lv": "B1",
+"ru": "общий, единый",
+"en": "collective, united",
+"fr": "unanime, collectif"
+},
+{
+"a": "միաձայն",
+"lv": "B1",
+"ru": "единогласный",
+"en": "unanimous",
+"fr": "unanime"
+},
+{
+"a": "միատոն",
+"lv": "B1",
+"ru": "монотонный",
+"en": "monotonous",
+"fr": "monotone"
+},
+{
+"a": "միացյալ",
+"lv": "B1",
+"ru": "объединённый",
+"en": "united, joint",
+"fr": "uni"
+},
+{
+"a": "մնացական",
+"lv": "B1",
+"ru": "постоянный, прочный",
+"en": "lasting",
+"fr": "durable"
+},
+{
+"a": "մնացյալ",
+"lv": "B1",
+"ru": "оставшийся",
+"en": "remaining",
+"fr": "restant"
+},
+{
+"a": "մշուշապատ",
+"lv": "B1",
+"ru": "туманный, мглистый",
+"en": "hazy",
+"fr": "brumeux (voilé)"
+},
+{
+"a": "մոլար",
+"lv": "B1",
+"ru": "ошибочный",
+"en": "erroneous",
+"fr": "erroné"
+},
+{
+"a": "մոլոր",
+"lv": "B1",
+"ru": "заблудший",
+"en": "strayed",
+"fr": "égaré"
+},
+{
+"a": "մոտալուտ",
+"lv": "B1",
+"ru": "неминуемый",
+"en": "imminent",
+"fr": "imminent"
+},
+{
+"a": "մսալի",
+"lv": "B1",
+"ru": "мясистый",
+"en": "fleshy",
+"fr": "charnu"
+},
+{
+"a": "մսացու",
+"lv": "B1",
+"ru": "на убой",
+"en": "for slaughter",
+"fr": "de boucherie"
+},
+{
+"a": "մսեղեն",
+"lv": "B1",
+"ru": "мясной",
+"en": "made of meat",
+"fr": "de viande"
+},
+{
+"a": "մտադիր",
+"lv": "B1",
+"ru": "намеренный",
+"en": "intent",
+"fr": "résolu (à)"
+},
+{
+"a": "մտադրական",
+"lv": "B1",
+"ru": "умышленный",
+"en": "intentional",
+"fr": "intentionnel"
+},
+{
+"a": "մրգային",
+"lv": "B1",
+"ru": "фруктовый",
+"en": "fruit",
+"fr": "fruité"
+},
+{
+"a": "մրգատու",
+"lv": "B1",
+"ru": "плодоносящий",
+"en": "fruit-bearing",
+"fr": "fructifère"
+},
+{
+"a": "յուղալի",
+"lv": "B1",
+"ru": "жирный, маслянистый",
+"en": "greasy",
+"fr": "gras, huileux"
+},
+{
+"a": "յուրահատուկ",
+"lv": "B1",
+"ru": "своеобразный, уникальный",
+"en": "unique, peculiar",
+"fr": "particulier, unique"
+},
+{
+"a": "յուրօրինակ",
+"lv": "B1",
+"ru": "оригинальный, своеобразный",
+"en": "original",
+"fr": "original"
+},
+{
+"a": "նախավերջին",
+"lv": "B1",
+"ru": "предпоследний",
+"en": "penultimate",
+"fr": "avant-dernier"
+},
+{
+"a": "նեգատիվ",
+"lv": "B1",
+"ru": "отрицательный",
+"en": "negative",
+"fr": "négatif"
+},
+{
+"a": "նեխած",
+"lv": "B1",
+"ru": "гнилой",
+"en": "rotten",
+"fr": "pourri"
+},
+{
+"a": "նեյտրալ",
+"lv": "B1",
+"ru": "нейтральный",
+"en": "neutral",
+"fr": "neutre"
+},
+{
+"a": "նկարեն",
+"lv": "B1",
+"ru": "разукрашенный",
+"en": "painted, variegated",
+"fr": "bariolé"
+},
+{
+"a": "նկուն",
+"lv": "B1",
+"ru": "поверженный",
+"en": "defeated",
+"fr": "vaincu"
+},
+{
+"a": "նմանատիպ",
+"lv": "B1",
+"ru": "однотипный, подобный",
+"en": "similar",
+"fr": "similaire"
+},
+{
+"a": "նշանակալից",
+"lv": "B1",
+"ru": "значительный",
+"en": "significant",
+"fr": "significatif"
+},
+{
+"a": "նողկալի",
+"lv": "B1",
+"ru": "омерзительный",
+"en": "vile",
+"fr": "ignoble"
+},
+{
+"a": "նորաոճ",
+"lv": "B1",
+"ru": "модный",
+"en": "stylish",
+"fr": "à la mode"
+},
+{
+"a": "նորապսակ",
+"lv": "B1",
+"ru": "новобрачный",
+"en": "newlywed",
+"fr": "jeune marié"
+},
+{
+"a": "նորեկ",
+"lv": "B1",
+"ru": "новоприбывший",
+"en": "newly arrived",
+"fr": "nouveau venu"
+},
+{
+"a": "նորընտիր",
+"lv": "B1",
+"ru": "новоизбранный",
+"en": "newly elected",
+"fr": "nouvellement élu"
+},
+{
+"a": "նորոգ",
+"lv": "B1",
+"ru": "обновлённый",
+"en": "renewed, repaired",
+"fr": "rénové"
+},
+{
+"a": "նպաստավոր",
+"lv": "B1",
+"ru": "благоприятный",
+"en": "favourable",
+"fr": "favorable"
+},
+{
+"a": "նվազ",
+"lv": "B1",
+"ru": "меньший",
+"en": "less",
+"fr": "moindre"
+},
+{
+"a": "նրբագեղ",
+"lv": "B1",
+"ru": "изящный",
+"en": "elegant",
+"fr": "élégant"
+},
+{
+"a": "շահեկան",
+"lv": "B1",
+"ru": "выгодный",
+"en": "profitable",
+"fr": "rentable"
+},
+{
+"a": "շարժուն",
+"lv": "B1",
+"ru": "подвижный",
+"en": "movable",
+"fr": "mobile"
+},
+{
+"a": "շեղ",
+"lv": "B1",
+"ru": "косой, наклонный",
+"en": "oblique",
+"fr": "oblique"
+},
+{
+"a": "շեն",
+"lv": "B1",
+"ru": "населённый, обжитой",
+"en": "inhabited",
+"fr": "habité"
+},
+{
+"a": "շերտավոր",
+"lv": "B1",
+"ru": "полосатый",
+"en": "striped",
+"fr": "rayé"
+},
+{
+"a": "շինծու",
+"lv": "B1",
+"ru": "поддельный",
+"en": "fake",
+"fr": "faux, factice"
+},
+{
+"a": "շղթայական",
+"lv": "B1",
+"ru": "цепной",
+"en": "chain",
+"fr": "en chaîne"
+},
+{
+"a": "շնորհավորական",
+"lv": "B1",
+"ru": "поздравительный",
+"en": "congratulatory",
+"fr": "de félicitations"
+},
+{
+"a": "շոգեշարժ",
+"lv": "B1",
+"ru": "паровой",
+"en": "steam-powered",
+"fr": "à vapeur"
+},
+{
+"a": "շողոտ",
+"lv": "B1",
+"ru": "сияющий",
+"en": "radiant",
+"fr": "rayonnant"
+},
+{
+"a": "շուտափույթ",
+"lv": "B1",
+"ru": "скорый",
+"en": "speedy",
+"fr": "rapide, prompt"
+},
+{
+"a": "շրջիկ",
+"lv": "B1",
+"ru": "странствующий",
+"en": "itinerant",
+"fr": "itinérant"
+},
+{
+"a": "ոգելից",
+"lv": "B1",
+"ru": "спиртной",
+"en": "alcoholic",
+"fr": "spiritueux"
+},
+{
+"a": "ոլոր",
+"lv": "B1",
+"ru": "извилистый",
+"en": "winding",
+"fr": "sinueux"
+},
+{
+"a": "ոլոր-մոլոր",
+"lv": "B1",
+"ru": "петляющий",
+"en": "winding",
+"fr": "tortueux"
+},
+{
+"a": "ոսկեզօծ",
+"lv": "B1",
+"ru": "позолоченный",
+"en": "gilded",
+"fr": "doré"
+},
+{
+"a": "ոսկեղեն",
+"lv": "B1",
+"ru": "золотой",
+"en": "golden",
+"fr": "en or"
+},
+{
+"a": "չորավուն",
+"lv": "B1",
+"ru": "суховатый",
+"en": "dryish",
+"fr": "un peu sec"
+},
+{
+"a": "չորքոտանի",
+"lv": "B1",
+"ru": "четвероногий",
+"en": "four-legged",
+"fr": "quadrupède"
+},
+{
+"a": "չիրքին",
+"lv": "B1",
+"ru": "некрасивый",
+"en": "ugly",
+"fr": "laid"
+},
+{
+"a": "չնաշխարհիկ",
+"lv": "B1",
+"ru": "бесподобный",
+"en": "unmatched",
+"fr": "incomparable"
+},
+{
+"a": "չքնաղ",
+"lv": "B1",
+"ru": "прелестный",
+"en": "ravishing",
+"fr": "ravissant"
+},
+{
+"a": "պալատական",
+"lv": "B1",
+"ru": "дворцовый",
+"en": "palatial",
+"fr": "palatial"
+},
+{
+"a": "պայմանավոր",
+"lv": "B1",
+"ru": "условленный",
+"en": "arranged",
+"fr": "convenu"
+},
+{
+"a": "պաշտոնավոր",
+"lv": "B1",
+"ru": "официальный",
+"en": "official",
+"fr": "officiel"
+},
+{
+"a": "պաշտպանական",
+"lv": "B1",
+"ru": "оборонительный",
+"en": "defensive",
+"fr": "défensif"
+},
+{
+"a": "պատկառելի",
+"lv": "B1",
+"ru": "почтенный",
+"en": "venerable",
+"fr": "vénérable"
+},
+{
+"a": "պատվարժան",
+"lv": "B1",
+"ru": "уважаемый",
+"en": "honourable",
+"fr": "honorable"
+},
+{
+"a": "պարզորոշ",
+"lv": "B1",
+"ru": "очевидный, отчётливый",
+"en": "clear, evident",
+"fr": "net, évident"
+},
+{
+"a": "պարտ",
+"lv": "B1",
+"ru": "обязанный",
+"en": "obliged",
+"fr": "obligé"
+},
+{
+"a": "պեսպես",
+"lv": "B1",
+"ru": "разнообразный",
+"en": "diverse",
+"fr": "divers"
+},
+{
+"a": "պերմանենտ",
+"lv": "B1",
+"ru": "постоянный",
+"en": "permanent",
+"fr": "permanent"
+},
+{
+"a": "պիղծ",
+"lv": "B1",
+"ru": "нечистый, осквернённый",
+"en": "impure, profane",
+"fr": "impur, profane"
+},
+{
+"a": "պիտանի",
+"lv": "B1",
+"ru": "пригодный",
+"en": "suitable",
+"fr": "propre (à), apte"
+},
+{
+"a": "պյուռոսյան",
+"lv": "B1",
+"ru": "пиррова (победа)",
+"en": "Pyrrhic",
+"fr": "à la Pyrrhus"
+},
+{
+"a": "պոզիտիվ",
+"lv": "B1",
+"ru": "положительный",
+"en": "positive",
+"fr": "positif"
+},
+{
+"a": "պոչավոր",
+"lv": "B1",
+"ru": "хвостатый",
+"en": "tailed",
+"fr": "à queue"
+},
+{
+"a": "պոչատ",
+"lv": "B1",
+"ru": "бесхвостый",
+"en": "tailless",
+"fr": "sans queue"
+},
+{
+"a": "պոռոտ",
+"lv": "B1",
+"ru": "ослепительный",
+"en": "dazzling",
+"fr": "éblouissant"
+},
+{
+"a": "պտղաբեր",
+"lv": "B1",
+"ru": "плодовитый, плодоносный",
+"en": "fruitful",
+"fr": "fécond"
+},
+{
+"a": "պրիմիտիվ",
+"lv": "B1",
+"ru": "примитивный",
+"en": "primitive",
+"fr": "primitif"
+},
+{
+"a": "պրոդուկտիվ",
+"lv": "B1",
+"ru": "продуктивный",
+"en": "productive",
+"fr": "productif"
+},
+{
+"a": "ջեռ",
+"lv": "B1",
+"ru": "тёплый",
+"en": "warm",
+"fr": "chaud"
+},
+{
+"a": "ջինջ",
+"lv": "B1",
+"ru": "прозрачный, чистый",
+"en": "clear, limpid",
+"fr": "limpide"
+},
+{
+"a": "ջրային",
+"lv": "B1",
+"ru": "водный",
+"en": "aquatic, water",
+"fr": "aquatique"
+},
+{
+"a": "ջրեղեն",
+"lv": "B1",
+"ru": "водянистый (жидкий)",
+"en": "watery",
+"fr": "aqueux (liquide)"
+},
+{
+"a": "ռանդոմ",
+"lv": "B1",
+"ru": "случайный (рандомный)",
+"en": "random",
+"fr": "aléatoire"
+},
+{
+"a": "ռեկորդային",
+"lv": "B1",
+"ru": "рекордный",
+"en": "record",
+"fr": "record"
+},
+{
+"a": "սակավ",
+"lv": "B1",
+"ru": "скудный, редкий",
+"en": "scarce",
+"fr": "rare, maigre"
+},
+{
+"a": "սակավաթիվ",
+"lv": "B1",
+"ru": "немногочисленный",
+"en": "few",
+"fr": "peu nombreux"
+},
+{
+"a": "սահմանափակիչ",
+"lv": "B1",
+"ru": "ограничительный",
+"en": "restrictive",
+"fr": "restrictif"
+},
+{
+"a": "սառն",
+"lv": "B1",
+"ru": "холодный (перен.)",
+"en": "cold, cool",
+"fr": "froid (au figuré)"
+},
+{
+"a": "սառնավուն",
+"lv": "B1",
+"ru": "холодноватый",
+"en": "coldish",
+"fr": "frais, un peu froid"
+},
+{
+"a": "սառուցյալ",
+"lv": "B1",
+"ru": "замёрзший",
+"en": "frozen",
+"fr": "gelé"
+},
+{
+"a": "սառցե",
+"lv": "B1",
+"ru": "ледяной",
+"en": "made of ice",
+"fr": "de glace"
+},
+{
+"a": "սաստիկ",
+"lv": "B1",
+"ru": "сильный, жестокий (мороз, боль)",
+"en": "severe, intense",
+"fr": "violent, intense"
+},
+{
+"a": "սարսափահար",
+"lv": "B1",
+"ru": "охваченный ужасом",
+"en": "horrified",
+"fr": "horrifié"
+},
+{
+"a": "սենյակային",
+"lv": "B1",
+"ru": "комнатный",
+"en": "room",
+"fr": "d'intérieur"
+},
+{
+"a": "սեպտեմբերյան",
+"lv": "B1",
+"ru": "сентябрьский",
+"en": "September",
+"fr": "de septembre"
+},
+{
+"a": "սին",
+"lv": "B1",
+"ru": "пустой, тщетный",
+"en": "vain, futile",
+"fr": "vain"
+},
+{
+"a": "սղոցաձև",
+"lv": "B1",
+"ru": "пилообразный",
+"en": "serrated",
+"fr": "dentelé"
+},
+{
+"a": "սնկային",
+"lv": "B1",
+"ru": "грибковый",
+"en": "fungal",
+"fr": "fongique"
+},
+{
+"a": "սնոտի",
+"lv": "B1",
+"ru": "бесполезный",
+"en": "useless",
+"fr": "inutile"
+},
+{
+"a": "սուղ",
+"lv": "B1",
+"ru": "недостаточный",
+"en": "scarce, insufficient",
+"fr": "insuffisant"
+},
+{
+"a": "ստորգետնյա",
+"lv": "B1",
+"ru": "подземный",
+"en": "underground",
+"fr": "souterrain"
+},
+{
+"a": "ստորերկրյա",
+"lv": "B1",
+"ru": "подземный (синоним)",
+"en": "underground",
+"fr": "souterrain (synonyme)"
+},
+{
+"a": "ստվար",
+"lv": "B1",
+"ru": "толстый, объёмный",
+"en": "thick, large",
+"fr": "épais, volumineux"
+},
+{
+"a": "ստվարաթիվ",
+"lv": "B1",
+"ru": "многочисленный (книжн.)",
+"en": "numerous",
+"fr": "nombreux"
+},
+{
+"a": "ստվարաթղթե",
+"lv": "B1",
+"ru": "картонный",
+"en": "cardboard",
+"fr": "en carton"
+},
+{
+"a": "ստվարածավալ",
+"lv": "B1",
+"ru": "объёмистый",
+"en": "voluminous",
+"fr": "volumineux"
+},
+{
+"a": "սրբազան",
+"lv": "B1",
+"ru": "священный",
+"en": "holy, sacred",
+"fr": "sacré"
+},
+{
+"a": "սրընթաց",
+"lv": "B1",
+"ru": "стремительный",
+"en": "swift",
+"fr": "rapide"
+},
+{
+"a": "սրտաճմլիկ",
+"lv": "B1",
+"ru": "душераздирающий",
+"en": "heart-breaking",
+"fr": "déchirant"
+},
+{
+"a": "սրտաշարժ",
+"lv": "B1",
+"ru": "трогательный",
+"en": "touching",
+"fr": "émouvant"
+},
+{
+"a": "սրտառուչ",
+"lv": "B1",
+"ru": "трогательный (синоним)",
+"en": "moving",
+"fr": "touchant"
+},
+{
+"a": "վաղորդյան",
+"lv": "B1",
+"ru": "утренний",
+"en": "morning",
+"fr": "matinal"
+},
+{
+"a": "վայել",
+"lv": "B1",
+"ru": "подобающий",
+"en": "seemly",
+"fr": "convenable"
+},
+{
+"a": "վայրկենական",
+"lv": "B1",
+"ru": "мгновенный",
+"en": "instantaneous",
+"fr": "instantané"
+},
+{
+"a": "վարար",
+"lv": "B1",
+"ru": "обильный, бурный",
+"en": "torrential",
+"fr": "abondant, torrentiel"
+},
+{
+"a": "վերահաս",
+"lv": "B1",
+"ru": "надвигающийся",
+"en": "impending",
+"fr": "imminent"
+},
+{
+"a": "վերացական",
+"lv": "B1",
+"ru": "отвлечённый, абстрактный",
+"en": "abstract",
+"fr": "abstrait"
+},
+{
+"a": "վերջալույսային",
+"lv": "B1",
+"ru": "сумеречный",
+"en": "twilit",
+"fr": "crépusculaire"
+},
+{
+"a": "վերջնային",
+"lv": "B1",
+"ru": "конечный",
+"en": "final",
+"fr": "final"
+},
+{
+"a": "վճիտ",
+"lv": "B1",
+"ru": "ясный, безоблачный",
+"en": "limpid",
+"fr": "limpide"
+},
+{
+"a": "վնասաբեր",
+"lv": "B1",
+"ru": "вредный",
+"en": "harmful",
+"fr": "nuisible"
+},
+{
+"a": "վնասարար",
+"lv": "B1",
+"ru": "вредоносный",
+"en": "malicious",
+"fr": "malveillant"
+},
+{
+"a": "տակնուվրա",
+"lv": "B1",
+"ru": "перевёрнутый вверх дном",
+"en": "upside down",
+"fr": "sens dessus dessous"
+},
+{
+"a": "տաղտկավուն",
+"lv": "B1",
+"ru": "скучноватый",
+"en": "dullish",
+"fr": "un peu ennuyeux"
+},
+{
+"a": "տամուկ",
+"lv": "B1",
+"ru": "влажный, сырой",
+"en": "damp",
+"fr": "humide"
+},
+{
+"a": "տար",
+"lv": "B1",
+"ru": "далёкий (книжн.)",
+"en": "distant",
+"fr": "lointain"
+},
+{
+"a": "տարատեսակ",
+"lv": "B1",
+"ru": "разнородный",
+"en": "diverse",
+"fr": "hétérogène"
+},
+{
+"a": "տարերային",
+"lv": "B1",
+"ru": "стихийный",
+"en": "elemental",
+"fr": "élémentaire"
+},
+{
+"a": "տաքավուն",
+"lv": "B1",
+"ru": "тепловатый",
+"en": "warmish",
+"fr": "tiède"
+},
+{
+"a": "տիկնիկային",
+"lv": "B1",
+"ru": "кукольный",
+"en": "doll's",
+"fr": "de poupée"
+},
+{
+"a": "տհաս",
+"lv": "B1",
+"ru": "незрелый",
+"en": "unripe",
+"fr": "vert, immature"
+},
+{
+"a": "տձև",
+"lv": "B1",
+"ru": "бесформенный",
+"en": "misshapen",
+"fr": "difforme"
+},
+{
+"a": "տոկուն",
+"lv": "B1",
+"ru": "стойкий, выносливый",
+"en": "enduring",
+"fr": "résistant"
+},
+{
+"a": "տպավորված",
+"lv": "B1",
+"ru": "впечатлённый",
+"en": "impressed",
+"fr": "impressionné"
+},
+{
+"a": "րոպեական",
+"lv": "B1",
+"ru": "минутный",
+"en": "momentary",
+"fr": "momentané"
+},
+{
+"a": "ցամաք",
+"lv": "B1",
+"ru": "сухой (перен.)",
+"en": "dry",
+"fr": "sec"
+},
+{
+"a": "ցամաքային",
+"lv": "B1",
+"ru": "сухопутный",
+"en": "land",
+"fr": "terrestre"
+},
+{
+"a": "ցրտավուն",
+"lv": "B1",
+"ru": "прохладный, холодноватый",
+"en": "coldish",
+"fr": "frisquet"
+},
+{
+"a": "փայտեղեն",
+"lv": "B1",
+"ru": "деревянный",
+"en": "made of wood",
+"fr": "en bois"
+},
+{
+"a": "փայտյա",
+"lv": "B1",
+"ru": "деревянный (синоним)",
+"en": "wooden",
+"fr": "boisé, en bois"
+},
+{
+"a": "փառապանծ",
+"lv": "B1",
+"ru": "славный",
+"en": "glorious",
+"fr": "glorieux"
+},
+{
+"a": "փաստացի",
+"lv": "B1",
+"ru": "фактический",
+"en": "actual",
+"fr": "effectif, réel"
+},
+{
+"a": "փետրվարյան",
+"lv": "B1",
+"ru": "февральский",
+"en": "February",
+"fr": "de février"
+},
+{
+"a": "փշոտ",
+"lv": "B1",
+"ru": "колючий",
+"en": "thorny",
+"fr": "épineux"
+},
+{
+"a": "փուչ",
+"lv": "B1",
+"ru": "пустой, полый",
+"en": "hollow",
+"fr": "creux"
+},
+{
+"a": "փչացած",
+"lv": "B1",
+"ru": "испорченный",
+"en": "spoilt",
+"fr": "gâté, avarié"
+},
+{
+"a": "փքուն",
+"lv": "B1",
+"ru": "надутый, раздутый",
+"en": "swollen",
+"fr": "gonflé"
+},
+{
+"a": "քաղաքային",
+"lv": "B1",
+"ru": "городской",
+"en": "urban",
+"fr": "urbain"
+},
+{
+"a": "քաղցրահամ",
+"lv": "B1",
+"ru": "сладкий на вкус",
+"en": "sweet-tasting",
+"fr": "au goût sucré"
+},
+{
+"a": "քաղցրավուն",
+"lv": "B1",
+"ru": "сладковатый",
+"en": "sweetish",
+"fr": "douceâtre"
+},
+{
+"a": "քաոսային",
+"lv": "B1",
+"ru": "хаотичный",
+"en": "chaotic",
+"fr": "chaotique"
+},
+{
+"a": "քարեղեն",
+"lv": "B1",
+"ru": "каменный",
+"en": "made of stone",
+"fr": "en pierre"
+},
+{
+"a": "օգոստոսյան",
+"lv": "B1",
+"ru": "августовский",
+"en": "August",
+"fr": "d'août"
+},
+{
+"a": "օդային",
+"lv": "B1",
+"ru": "воздушный",
+"en": "air, aerial",
+"fr": "aérien"
+},
+{
+"a": "օպտիմալ",
+"lv": "B1",
+"ru": "оптимальный",
+"en": "optimal",
+"fr": "optimal"
+},
+{
+"a": "օտարոտի",
+"lv": "B1",
+"ru": "странный, чуждый",
+"en": "strange, alien",
+"fr": "étrange"
+},
+{
+"a": "օրհասական",
+"lv": "B1",
+"ru": "смертельный (книжн.)",
+"en": "fatal",
+"fr": "fatal"
+},
+{
+"a": "ֆակուլտատիվ",
+"lv": "B1",
+"ru": "факультативный",
+"en": "optional",
+"fr": "facultatif"
+},
+{
+"a": "աբխազական",
+"lv": "B1",
+"ru": "абхазский",
+"en": "Abkhazian",
+"fr": "abkhaze"
+},
+{
+"a": "ադրբեջանական",
+"lv": "B1",
+"ru": "азербайджанский",
+"en": "Azerbaijani",
+"fr": "azerbaïdjanais"
+},
+{
+"a": "ամերիկյան",
+"lv": "B1",
+"ru": "американский",
+"en": "American",
+"fr": "américain"
+},
+{
+"a": "այսրկովկասյան",
+"lv": "B1",
+"ru": "закавказский",
+"en": "Transcaucasian",
+"fr": "transcaucasien"
+},
+{
+"a": "անատոլիական",
+"lv": "B1",
+"ru": "анатолийский",
+"en": "Anatolian",
+"fr": "anatolien"
+},
+{
+"a": "ապենինյան",
+"lv": "B1",
+"ru": "апеннинский",
+"en": "Apennine",
+"fr": "apennin"
+},
+{
+"a": "աջարական",
+"lv": "B1",
+"ru": "аджарский",
+"en": "Adjaran",
+"fr": "adjar"
+},
+{
+"a": "առաջավորասիական",
+"lv": "B1",
+"ru": "переднеазиатский",
+"en": "West Asian",
+"fr": "d'Asie occidentale"
+},
+{
+"a": "ասիական",
+"lv": "B1",
+"ru": "азиатский",
+"en": "Asian",
+"fr": "asiatique"
+},
+{
+"a": "ավստրալիական",
+"lv": "B1",
+"ru": "австралийский",
+"en": "Australian",
+"fr": "australien"
+},
+{
+"a": "ավստրիական",
+"lv": "B1",
+"ru": "австрийский",
+"en": "Austrian",
+"fr": "autrichien"
+},
+{
+"a": "արաբական",
+"lv": "B1",
+"ru": "арабский",
+"en": "Arab, Arabic",
+"fr": "arabe"
+},
+{
+"a": "արարատյան",
+"lv": "B1",
+"ru": "араратский",
+"en": "Ararat",
+"fr": "de l'Ararat"
+},
+{
+"a": "արցախյան",
+"lv": "B1",
+"ru": "арцахский",
+"en": "of Artsakh",
+"fr": "de l'Artsakh"
+},
+{
+"a": "աքայական",
+"lv": "B1",
+"ru": "ахейский",
+"en": "Achaean",
+"fr": "achéen"
+},
+{
+"a": "աֆրիկական",
+"lv": "B1",
+"ru": "африканский",
+"en": "African",
+"fr": "africain"
+},
+{
+"a": "բալթիկ",
+"lv": "B1",
+"ru": "балтийский",
+"en": "Baltic",
+"fr": "balte"
+},
+{
+"a": "բալթիկ-սլավոնական",
+"lv": "B1",
+"ru": "балто-славянский",
+"en": "Balto-Slavic",
+"fr": "balto-slave"
+},
+{
+"a": "բահամյան",
+"lv": "B1",
+"ru": "багамский",
+"en": "Bahamian",
+"fr": "bahaméen"
+},
+{
+"a": "բելառուսական",
+"lv": "B1",
+"ru": "белорусский",
+"en": "Belarusian",
+"fr": "biélorusse"
+},
+{
+"a": "բելուջական",
+"lv": "B1",
+"ru": "белуджский",
+"en": "Balochi",
+"fr": "baloutche"
+},
+{
+"a": "բյուզանդական",
+"lv": "B1",
+"ru": "византийский",
+"en": "Byzantine",
+"fr": "byzantin"
+},
+{
+"a": "բուխարական",
+"lv": "B1",
+"ru": "бухарский",
+"en": "Bukharan",
+"fr": "boukhare"
+},
+{
+"a": "բուրգունդյան",
+"lv": "B1",
+"ru": "бургундский",
+"en": "Burgundian",
+"fr": "bourguignon"
+},
+{
+"a": "բրիտանական",
+"lv": "B1",
+"ru": "британский",
+"en": "British",
+"fr": "britannique"
+},
+{
+"a": "դանիական",
+"lv": "B1",
+"ru": "датский",
+"en": "Danish",
+"fr": "danois"
+},
+{
+"a": "եվրասիական",
+"lv": "B1",
+"ru": "евразийский",
+"en": "Eurasian",
+"fr": "eurasien"
+},
+{
+"a": "եվրոպական",
+"lv": "B1",
+"ru": "европейский",
+"en": "European",
+"fr": "européen"
+},
+{
+"a": "երևանյան",
+"lv": "B1",
+"ru": "ереванский",
+"en": "Yerevan",
+"fr": "d'Erevan"
+},
+{
+"a": "զրադաշտական",
+"lv": "B1",
+"ru": "зороастрийский",
+"en": "Zoroastrian",
+"fr": "zoroastrien"
+},
+{
+"a": "էստոնական",
+"lv": "B1",
+"ru": "эстонский",
+"en": "Estonian",
+"fr": "estonien"
+},
+{
+"a": "էտրուսկյան",
+"lv": "B1",
+"ru": "этрусский",
+"en": "Etruscan",
+"fr": "étrusque"
+},
+{
+"a": "թյուրքական",
+"lv": "B1",
+"ru": "тюркский",
+"en": "Turkic",
+"fr": "turcique"
+},
+{
+"a": "թոխարական",
+"lv": "B1",
+"ru": "тохарский",
+"en": "Tocharian",
+"fr": "tokharien"
+},
+{
+"a": "թուրքական",
+"lv": "B1",
+"ru": "турецкий",
+"en": "Turkish",
+"fr": "turc"
+},
+{
+"a": "թուրքմենական",
+"lv": "B1",
+"ru": "туркменский",
+"en": "Turkmen",
+"fr": "turkmène"
+},
+{
+"a": "իլլիրիական",
+"lv": "B1",
+"ru": "иллирийский",
+"en": "Illyrian",
+"fr": "illyrien"
+},
+{
+"a": "իտալական",
+"lv": "B1",
+"ru": "итальянский",
+"en": "Italian",
+"fr": "italien"
+},
+{
+"a": "իրանական",
+"lv": "B1",
+"ru": "иранский",
+"en": "Iranian",
+"fr": "iranien"
+},
+{
+"a": "լատինական",
+"lv": "B1",
+"ru": "латинский",
+"en": "Latin",
+"fr": "latin"
+},
+{
+"a": "լեհական",
+"lv": "B1",
+"ru": "польский",
+"en": "Polish",
+"fr": "polonais"
+},
+{
+"a": "լուվական",
+"lv": "B1",
+"ru": "лувийский",
+"en": "Luwian",
+"fr": "louvite"
+},
+{
+"a": "խեթական",
+"lv": "B1",
+"ru": "хеттский",
+"en": "Hittite",
+"fr": "hittite"
+},
+{
+"a": "խորվաթական",
+"lv": "B1",
+"ru": "хорватский",
+"en": "Croatian",
+"fr": "croate"
+},
+{
+"a": "կանադական",
+"lv": "B1",
+"ru": "канадский",
+"en": "Canadian",
+"fr": "canadien"
+},
+{
+"a": "կարիբյան",
+"lv": "B1",
+"ru": "карибский",
+"en": "Caribbean",
+"fr": "caribéen"
+},
+{
+"a": "կելտական",
+"lv": "B1",
+"ru": "кельтский",
+"en": "Celtic",
+"fr": "celtique"
+},
+{
+"a": "կիլիկյան",
+"lv": "B1",
+"ru": "киликийский",
+"en": "Cilician",
+"fr": "cilicien"
+},
+{
+"a": "կովկասյան",
+"lv": "B1",
+"ru": "кавказский",
+"en": "Caucasian",
+"fr": "caucasien"
+},
+{
+"a": "հայկյան",
+"lv": "B1",
+"ru": "армянский (поэт.)",
+"en": "Armenian (poetic)",
+"fr": "arménien (poétique)"
+},
+{
+"a": "հայոց",
+"lv": "B1",
+"ru": "армянский (род. п.)",
+"en": "Armenian (of Armenians)",
+"fr": "arménien (des Arméniens)"
+},
+{
+"a": "հնդկական",
+"lv": "B1",
+"ru": "индийский",
+"en": "Indian",
+"fr": "indien"
+},
+{
+"a": "հոլանդական",
+"lv": "B1",
+"ru": "голландский",
+"en": "Dutch",
+"fr": "néerlandais"
+},
+{
+"a": "հունական",
+"lv": "B1",
+"ru": "греческий",
+"en": "Greek",
+"fr": "grec"
+},
+{
+"a": "հռոմեական",
+"lv": "B1",
+"ru": "римский",
+"en": "Roman",
+"fr": "romain"
+},
+{
+"a": "հրեական",
+"lv": "B1",
+"ru": "еврейский",
+"en": "Jewish, Hebrew",
+"fr": "juif, hébreu"
+},
+{
+"a": "ղարաբաղյան",
+"lv": "B1",
+"ru": "карабахский",
+"en": "of Karabakh",
+"fr": "du Karabagh"
+},
+{
+"a": "ղպտիական",
+"lv": "B1",
+"ru": "коптский",
+"en": "Coptic",
+"fr": "copte"
+},
+{
+"a": "ղրղզական",
+"lv": "B1",
+"ru": "киргизский",
+"en": "Kyrgyz",
+"fr": "kirghize"
+},
+{
+"a": "մադրիդյան",
+"lv": "B1",
+"ru": "мадридский",
+"en": "of Madrid",
+"fr": "madrilène"
+},
+{
+"a": "մակեդոնական",
+"lv": "B1",
+"ru": "македонский",
+"en": "Macedonian",
+"fr": "macédonien"
+},
+{
+"a": "մարոնիտյան",
+"lv": "B1",
+"ru": "маронитский",
+"en": "Maronite",
+"fr": "maronite"
+},
+{
+"a": "միջերկրական",
+"lv": "B1",
+"ru": "средиземноморский",
+"en": "Mediterranean",
+"fr": "méditerranéen"
+},
+{
+"a": "միջինասիական",
+"lv": "B1",
+"ru": "среднеазиатский",
+"en": "Central Asian",
+"fr": "d'Asie centrale"
+},
+{
+"a": "մոլդովական",
+"lv": "B1",
+"ru": "молдавский",
+"en": "Moldovan",
+"fr": "moldave"
+},
+{
+"a": "մոնղոլական",
+"lv": "B1",
+"ru": "монгольский",
+"en": "Mongolian",
+"fr": "mongol"
+},
+{
+"a": "նիդերլանդական",
+"lv": "B1",
+"ru": "нидерландский",
+"en": "Dutch",
+"fr": "néerlandais"
+},
+{
+"a": "նորմանական",
+"lv": "B1",
+"ru": "норманнский",
+"en": "Norman",
+"fr": "normand"
+},
+{
+"a": "ուրարտական",
+"lv": "B1",
+"ru": "урартский",
+"en": "Urartian",
+"fr": "ourartéen"
+},
+{
+"a": "չիլիական",
+"lv": "B1",
+"ru": "чилийский",
+"en": "Chilean",
+"fr": "chilien"
+},
+{
+"a": "չին-տիբեթական",
+"lv": "B1",
+"ru": "сино-тибетский",
+"en": "Sino-Tibetan",
+"fr": "sino-tibétain"
+},
+{
+"a": "պամիրյան",
+"lv": "B1",
+"ru": "памирский",
+"en": "Pamir",
+"fr": "du Pamir"
+},
+{
+"a": "պարսկական",
+"lv": "B1",
+"ru": "персидский",
+"en": "Persian",
+"fr": "persan"
+},
+{
+"a": "պիզայական",
+"lv": "B1",
+"ru": "пизанский",
+"en": "Pisan",
+"fr": "pisan"
+},
+{
+"a": "պիրենեյան",
+"lv": "B1",
+"ru": "пиренейский",
+"en": "Pyrenean",
+"fr": "pyrénéen"
+},
+{
+"a": "պոնտական",
+"lv": "B1",
+"ru": "понтийский",
+"en": "Pontic",
+"fr": "pontique"
+},
+{
+"a": "պորտուգալական",
+"lv": "B1",
+"ru": "португальский",
+"en": "Portuguese",
+"fr": "portugais"
+},
+{
+"a": "ջենովական",
+"lv": "B1",
+"ru": "генуэзский",
+"en": "Genoese",
+"fr": "génois"
+},
+{
+"a": "ռումինական",
+"lv": "B1",
+"ru": "румынский",
+"en": "Romanian",
+"fr": "roumain"
+},
+{
+"a": "ռուսաց",
+"lv": "B1",
+"ru": "русский (поэт.)",
+"en": "Russian (poetic)",
+"fr": "russe (poétique)"
+},
+{
+"a": "սելջուկյան",
+"lv": "B1",
+"ru": "сельджукский",
+"en": "Seljuk",
+"fr": "seldjoukide"
+},
+{
+"a": "սլավոնական",
+"lv": "B1",
+"ru": "славянский",
+"en": "Slavic",
+"fr": "slave"
+},
+{
+"a": "սկանդինավյան",
+"lv": "B1",
+"ru": "скандинавский",
+"en": "Scandinavian",
+"fr": "scandinave"
+},
+{
+"a": "վարյագական",
+"lv": "B1",
+"ru": "варяжский",
+"en": "Varangian",
+"fr": "varègue"
+},
+{
+"a": "վեդայական",
+"lv": "B1",
+"ru": "ведический",
+"en": "Vedic",
+"fr": "védique"
+},
+{
+"a": "վենետիկյան",
+"lv": "B1",
+"ru": "венецианский",
+"en": "Venetian",
+"fr": "vénitien"
+},
+{
+"a": "վիետնամական",
+"lv": "B1",
+"ru": "вьетнамский",
+"en": "Vietnamese",
+"fr": "vietnamien"
+},
+{
+"a": "վրաց",
+"lv": "B1",
+"ru": "грузинский (поэт.)",
+"en": "Georgian (poetic)",
+"fr": "géorgien (poétique)"
+},
+{
+"a": "վրացական",
+"lv": "B1",
+"ru": "грузинский",
+"en": "Georgian",
+"fr": "géorgien"
+},
+{
+"a": "վրացատառ",
+"lv": "B1",
+"ru": "грузинскими буквами",
+"en": "in Georgian letters",
+"fr": "en lettres géorgiennes"
+},
+{
+"a": "տիբեթական",
+"lv": "B1",
+"ru": "тибетский",
+"en": "Tibetan",
+"fr": "tibétain"
+},
+{
+"a": "փարիզյան",
+"lv": "B1",
+"ru": "парижский",
+"en": "Parisian",
+"fr": "parisien"
+},
+{
+"a": "փռյուգական",
+"lv": "B1",
+"ru": "фригийский",
+"en": "Phrygian",
+"fr": "phrygien"
+},
+{
+"a": "քարթվելական",
+"lv": "B1",
+"ru": "картвельский",
+"en": "Kartvelian",
+"fr": "kartvélien"
+},
+{
+"a": "օմանական",
+"lv": "B1",
+"ru": "оманский",
+"en": "Omani",
+"fr": "omanais"
+},
+{
+"a": "օսական",
+"lv": "B1",
+"ru": "осетинский",
+"en": "Ossetian",
+"fr": "ossète"
+},
+{
+"a": "օսմանական",
+"lv": "B1",
+"ru": "османский",
+"en": "Ottoman",
+"fr": "ottoman"
+},
+{
+"a": "ֆինլանդական",
+"lv": "B1",
+"ru": "финляндский",
+"en": "of Finland",
+"fr": "finlandais"
+},
+{
+"a": "ֆիննական",
+"lv": "B1",
+"ru": "финский",
+"en": "Finnish",
+"fr": "finnois"
+},
+{
+"a": "ֆիջիական",
+"lv": "B1",
+"ru": "фиджийский",
+"en": "Fijian",
+"fr": "fidjien"
+},
+{
+"a": "ֆիլիպինական",
+"lv": "B1",
+"ru": "филиппинский",
+"en": "Philippine",
+"fr": "philippin"
+},
+{
+"a": "ֆրանկական",
+"lv": "B1",
+"ru": "франкский",
+"en": "Frankish",
+"fr": "franc"
+},
+{
+"a": "ֆրիզյան",
+"lv": "B1",
+"ru": "фризский",
+"en": "Frisian",
+"fr": "frison"
+},
+{
 "a": "անհատականություն",
 "lv": "B2",
 "ru": "личность, индивидуальность",
@@ -78169,6 +84616,2211 @@
 "fr": "éclair"
 },
 {
+"a": "աբոնեմենտային",
+"lv": "B2",
+"ru": "абонементный",
+"en": "subscription",
+"fr": "d'abonnement"
+},
+{
+"a": "աբստրակտ",
+"lv": "B2",
+"ru": "абстрактный",
+"en": "abstract",
+"fr": "abstrait"
+},
+{
+"a": "ագրարային",
+"lv": "B2",
+"ru": "аграрный",
+"en": "agrarian",
+"fr": "agraire"
+},
+{
+"a": "ազգագրական",
+"lv": "B2",
+"ru": "этнографический",
+"en": "ethnographic",
+"fr": "ethnographique"
+},
+{
+"a": "ազգադավ",
+"lv": "B2",
+"ru": "предательский (по отношению к своему народу)",
+"en": "treasonous (to one's nation)",
+"fr": "traître à sa nation"
+},
+{
+"a": "ազգամիջյան",
+"lv": "B2",
+"ru": "межэтнический",
+"en": "interethnic",
+"fr": "interethnique"
+},
+{
+"a": "ալգորիթմական",
+"lv": "B2",
+"ru": "алгоритмический",
+"en": "algorithmic",
+"fr": "algorithmique"
+},
+{
+"a": "ախտարար",
+"lv": "B2",
+"ru": "болезнетворный",
+"en": "morbific",
+"fr": "pathogène"
+},
+{
+"a": "ակնային",
+"lv": "B2",
+"ru": "глазной",
+"en": "ocular",
+"fr": "oculaire"
+},
+{
+"a": "ահաբեկչական",
+"lv": "B2",
+"ru": "террористический",
+"en": "terrorist",
+"fr": "terroriste"
+},
+{
+"a": "աղանդավորական",
+"lv": "B2",
+"ru": "сектантский",
+"en": "sectarian",
+"fr": "sectaire"
+},
+{
+"a": "այլախոհ",
+"lv": "B2",
+"ru": "инакомыслящий",
+"en": "dissenting",
+"fr": "dissident"
+},
+{
+"a": "այլատյաց",
+"lv": "B2",
+"ru": "ксенофобский",
+"en": "xenophobic",
+"fr": "xénophobe"
+},
+{
+"a": "անգիր",
+"lv": "B2",
+"ru": "бесписьменный",
+"en": "having no written language",
+"fr": "sans écriture"
+},
+{
+"a": "անզգայացուցիչ",
+"lv": "B2",
+"ru": "обезболивающий",
+"en": "numbing",
+"fr": "anesthésiant"
+},
+{
+"a": "անլուծելի",
+"lv": "B2",
+"ru": "нерастворимый",
+"en": "insoluble",
+"fr": "insoluble"
+},
+{
+"a": "անձավաբնակ",
+"lv": "B2",
+"ru": "пещерный (живущий в пещерах)",
+"en": "cave-dwelling",
+"fr": "troglodyte"
+},
+{
+"a": "անչափահաս",
+"lv": "B2",
+"ru": "несовершеннолетний",
+"en": "underage, minor",
+"fr": "mineur"
+},
+{
+"a": "անպատժելի",
+"lv": "B2",
+"ru": "ненаказуемый",
+"en": "not punishable",
+"fr": "non punissable"
+},
+{
+"a": "անջուր",
+"lv": "B2",
+"ru": "безводный",
+"en": "anhydrous",
+"fr": "anhydre"
+},
+{
+"a": "անտիկ",
+"lv": "B2",
+"ru": "античный",
+"en": "antique (classical)",
+"fr": "antique"
+},
+{
+"a": "անտիպ",
+"lv": "B2",
+"ru": "неизданный",
+"en": "unpublished",
+"fr": "inédit"
+},
+{
+"a": "անօդաչու",
+"lv": "B2",
+"ru": "беспилотный",
+"en": "unmanned",
+"fr": "sans pilote"
+},
+{
+"a": "աշխատանքային",
+"lv": "B2",
+"ru": "рабочий, трудовой",
+"en": "working, labour",
+"fr": "de travail"
+},
+{
+"a": "աշխատունակ",
+"lv": "B2",
+"ru": "трудоспособный",
+"en": "able-bodied",
+"fr": "apte au travail"
+},
+{
+"a": "աշխարհագրական",
+"lv": "B2",
+"ru": "географический",
+"en": "geographical",
+"fr": "géographique"
+},
+{
+"a": "աշխարհաքաղաքական",
+"lv": "B2",
+"ru": "геополитический",
+"en": "geopolitical",
+"fr": "géopolitique"
+},
+{
+"a": "աշուղական",
+"lv": "B2",
+"ru": "ашугский",
+"en": "ashugh (minstrel)",
+"fr": "d'achough (ménestrel)"
+},
+{
+"a": "ապակառուցողական",
+"lv": "B2",
+"ru": "неконструктивный",
+"en": "unconstructive",
+"fr": "non constructif"
+},
+{
+"a": "ապացուցողական",
+"lv": "B2",
+"ru": "доказательный",
+"en": "evidentiary",
+"fr": "probant"
+},
+{
+"a": "առանցքային",
+"lv": "B2",
+"ru": "осевой, ключевой",
+"en": "axial, pivotal",
+"fr": "axial, clé"
+},
+{
+"a": "առաջադիմական",
+"lv": "B2",
+"ru": "прогрессивный",
+"en": "progressive",
+"fr": "progressiste"
+},
+{
+"a": "առաջավոր",
+"lv": "B2",
+"ru": "передовой",
+"en": "leading, advanced",
+"fr": "avancé, d'avant-garde"
+},
+{
+"a": "առաջատար",
+"lv": "B2",
+"ru": "ведущий",
+"en": "leading",
+"fr": "principal, de tête"
+},
+{
+"a": "առևտրային",
+"lv": "B2",
+"ru": "торговый",
+"en": "trade",
+"fr": "commercial"
+},
+{
+"a": "աստվածաբանական",
+"lv": "B2",
+"ru": "богословский",
+"en": "theological",
+"fr": "théologique"
+},
+{
+"a": "ավատական",
+"lv": "B2",
+"ru": "феодальный",
+"en": "feudal",
+"fr": "féodal"
+},
+{
+"a": "ատոմային",
+"lv": "B2",
+"ru": "атомный",
+"en": "atomic",
+"fr": "atomique"
+},
+{
+"a": "արբանյակային",
+"lv": "B2",
+"ru": "спутниковый",
+"en": "satellite",
+"fr": "satellitaire"
+},
+{
+"a": "արդյունաբերական",
+"lv": "B2",
+"ru": "промышленный",
+"en": "industrial",
+"fr": "industriel"
+},
+{
+"a": "արեգակնային",
+"lv": "B2",
+"ru": "солнечный (о Солнце)",
+"en": "solar",
+"fr": "solaire"
+},
+{
+"a": "արիական",
+"lv": "B2",
+"ru": "арийский",
+"en": "Aryan, Indo-Iranian",
+"fr": "aryen"
+},
+{
+"a": "արտահերթ",
+"lv": "B2",
+"ru": "внеочередной",
+"en": "extraordinary, out-of-turn",
+"fr": "extraordinaire"
+},
+{
+"a": "արցունքաբեր",
+"lv": "B2",
+"ru": "слезоточивый",
+"en": "lachrymatory",
+"fr": "lacrymogène"
+},
+{
+"a": "արևելագիտական",
+"lv": "B2",
+"ru": "востоковедческий",
+"en": "of oriental studies",
+"fr": "orientaliste"
+},
+{
+"a": "աքսորական",
+"lv": "B2",
+"ru": "ссыльный",
+"en": "exilic",
+"fr": "d'exil"
+},
+{
+"a": "աքսորյալ",
+"lv": "B2",
+"ru": "изгнанный",
+"en": "exiled",
+"fr": "exilé"
+},
+{
+"a": "բազմագիտակարգային",
+"lv": "B2",
+"ru": "междисциплинарный",
+"en": "multidisciplinary",
+"fr": "pluridisciplinaire"
+},
+{
+"a": "բազմավանկ",
+"lv": "B2",
+"ru": "многосложный",
+"en": "polysyllabic",
+"fr": "polysyllabique"
+},
+{
+"a": "բանաստեղծական",
+"lv": "B2",
+"ru": "поэтический",
+"en": "poetic",
+"fr": "poétique"
+},
+{
+"a": "բանավոր",
+"lv": "B2",
+"ru": "устный",
+"en": "oral, verbal",
+"fr": "oral"
+},
+{
+"a": "բանկային",
+"lv": "B2",
+"ru": "банковский",
+"en": "banking",
+"fr": "bancaire"
+},
+{
+"a": "բառարանային",
+"lv": "B2",
+"ru": "словарный",
+"en": "dictionary",
+"fr": "lexicographique"
+},
+{
+"a": "բարբառային",
+"lv": "B2",
+"ru": "диалектный",
+"en": "dialectal",
+"fr": "dialectal"
+},
+{
+"a": "բարգավաճ",
+"lv": "B2",
+"ru": "процветающий",
+"en": "prosperous",
+"fr": "prospère"
+},
+{
+"a": "բարեգործական",
+"lv": "B2",
+"ru": "благотворительный",
+"en": "charitable",
+"fr": "caritatif"
+},
+{
+"a": "բարիդրացիական",
+"lv": "B2",
+"ru": "добрососедский",
+"en": "good-neighbourly",
+"fr": "de bon voisinage"
+},
+{
+"a": "բացականչական",
+"lv": "B2",
+"ru": "восклицательный",
+"en": "exclamatory",
+"fr": "exclamatif"
+},
+{
+"a": "բեմական",
+"lv": "B2",
+"ru": "сценический",
+"en": "stage",
+"fr": "scénique"
+},
+{
+"a": "բերանային",
+"lv": "B2",
+"ru": "ротовой",
+"en": "oral",
+"fr": "buccal"
+},
+{
+"a": "բյուջետային",
+"lv": "B2",
+"ru": "бюджетный",
+"en": "budgetary",
+"fr": "budgétaire"
+},
+{
+"a": "բնազդական",
+"lv": "B2",
+"ru": "инстинктивный",
+"en": "instinctive",
+"fr": "instinctif"
+},
+{
+"a": "բովանդակային",
+"lv": "B2",
+"ru": "содержательный",
+"en": "substantive",
+"fr": "substantiel"
+},
+{
+"a": "բուժական",
+"lv": "B2",
+"ru": "лечебный",
+"en": "therapeutic",
+"fr": "thérapeutique"
+},
+{
+"a": "բուսաբանական",
+"lv": "B2",
+"ru": "ботанический",
+"en": "botanical",
+"fr": "botanique"
+},
+{
+"a": "բջջաբանական",
+"lv": "B2",
+"ru": "цитологический",
+"en": "cytological",
+"fr": "cytologique"
+},
+{
+"a": "բրոունյան",
+"lv": "B2",
+"ru": "броуновский",
+"en": "Brownian",
+"fr": "brownien"
+},
+{
+"a": "գալակտիկական",
+"lv": "B2",
+"ru": "галактический",
+"en": "galactic",
+"fr": "galactique"
+},
+{
+"a": "գաղափարախոսական",
+"lv": "B2",
+"ru": "идеологический",
+"en": "ideological",
+"fr": "idéologique"
+},
+{
+"a": "գաղութատիրական",
+"lv": "B2",
+"ru": "колониальный",
+"en": "colonial",
+"fr": "colonial"
+},
+{
+"a": "գաղութարար",
+"lv": "B2",
+"ru": "колонизаторский",
+"en": "colonizing",
+"fr": "colonisateur"
+},
+{
+"a": "գավառական",
+"lv": "B2",
+"ru": "провинциальный",
+"en": "provincial",
+"fr": "provincial"
+},
+{
+"a": "գեղարվեստական",
+"lv": "B2",
+"ru": "художественный",
+"en": "artistic",
+"fr": "artistique"
+},
+{
+"a": "գիշերօթիկ",
+"lv": "B2",
+"ru": "с пансионом (школа-интернат)",
+"en": "boarding",
+"fr": "en internat"
+},
+{
+"a": "գիտակարգային",
+"lv": "B2",
+"ru": "дисциплинарный (научный)",
+"en": "disciplinary",
+"fr": "disciplinaire"
+},
+{
+"a": "գիտակցական",
+"lv": "B2",
+"ru": "сознательный",
+"en": "of consciousness",
+"fr": "conscient"
+},
+{
+"a": "գյուղատնտեսական",
+"lv": "B2",
+"ru": "сельскохозяйственный",
+"en": "agricultural",
+"fr": "agricole"
+},
+{
+"a": "գործառնական",
+"lv": "B2",
+"ru": "операционный",
+"en": "operational",
+"fr": "opérationnel"
+},
+{
+"a": "գրաբարյան",
+"lv": "B2",
+"ru": "древнеармянский (грабар)",
+"en": "Old Armenian (Grabar)",
+"fr": "arménien classique (grabar)"
+},
+{
+"a": "գրական",
+"lv": "B2",
+"ru": "литературный",
+"en": "literary",
+"fr": "littéraire"
+},
+{
+"a": "գրանցիչ",
+"lv": "B2",
+"ru": "регистрирующий",
+"en": "recording",
+"fr": "enregistreur"
+},
+{
+"a": "գրենական",
+"lv": "B2",
+"ru": "письменный (о принадлежностях)",
+"en": "stationery",
+"fr": "de papeterie"
+},
+{
+"a": "գրոհային",
+"lv": "B2",
+"ru": "штурмовой",
+"en": "assault",
+"fr": "d'assaut"
+},
+{
+"a": "դաշնային",
+"lv": "B2",
+"ru": "федеральный",
+"en": "federal",
+"fr": "fédéral"
+},
+{
+"a": "դաշտային",
+"lv": "B2",
+"ru": "полевой",
+"en": "field",
+"fr": "des champs"
+},
+{
+"a": "դեմոկրատական",
+"lv": "B2",
+"ru": "демократический",
+"en": "democratic",
+"fr": "démocratique"
+},
+{
+"a": "դեստրուկտիվ",
+"lv": "B2",
+"ru": "деструктивный",
+"en": "destructive",
+"fr": "destructeur"
+},
+{
+"a": "դիվանագիտական",
+"lv": "B2",
+"ru": "дипломатический",
+"en": "diplomatic",
+"fr": "diplomatique"
+},
+{
+"a": "դիվերսիոն",
+"lv": "B2",
+"ru": "диверсионный",
+"en": "subversive",
+"fr": "de sabotage"
+},
+{
+"a": "դիտորդական",
+"lv": "B2",
+"ru": "наблюдательный (пункт)",
+"en": "observation",
+"fr": "d'observation"
+},
+{
+"a": "դրակոնյան",
+"lv": "B2",
+"ru": "драконовский",
+"en": "draconian",
+"fr": "draconien"
+},
+{
+"a": "դրամատուրգիական",
+"lv": "B2",
+"ru": "драматургический",
+"en": "dramaturgic",
+"fr": "dramaturgique"
+},
+{
+"a": "դրացիական",
+"lv": "B2",
+"ru": "соседский",
+"en": "neighbourly",
+"fr": "de voisin"
+},
+{
+"a": "եկեղեցական",
+"lv": "B2",
+"ru": "церковный",
+"en": "ecclesiastical",
+"fr": "ecclésiastique"
+},
+{
+"a": "եղերական",
+"lv": "B2",
+"ru": "трагический",
+"en": "tragic",
+"fr": "tragique"
+},
+{
+"a": "երաժշտական",
+"lv": "B2",
+"ru": "музыкальный",
+"en": "musical",
+"fr": "musical"
+},
+{
+"a": "երդվյալ",
+"lv": "B2",
+"ru": "присяжный",
+"en": "sworn",
+"fr": "juré"
+},
+{
+"a": "երթուղային",
+"lv": "B2",
+"ru": "маршрутный",
+"en": "route",
+"fr": "d'itinéraire"
+},
+{
+"a": "երիտասարդական",
+"lv": "B2",
+"ru": "молодёжный",
+"en": "youth",
+"fr": "de jeunesse"
+},
+{
+"a": "երկաթուղային",
+"lv": "B2",
+"ru": "железнодорожный",
+"en": "railway",
+"fr": "ferroviaire"
+},
+{
+"a": "երկրաբանական",
+"lv": "B2",
+"ru": "геологический",
+"en": "geologic",
+"fr": "géologique"
+},
+{
+"a": "երկրաչափական",
+"lv": "B2",
+"ru": "геометрический",
+"en": "geometrical",
+"fr": "géométrique"
+},
+{
+"a": "էթնիկ",
+"lv": "B2",
+"ru": "этнический",
+"en": "ethnic",
+"fr": "ethnique"
+},
+{
+"a": "էմոցիոնալ",
+"lv": "B2",
+"ru": "эмоциональный",
+"en": "emotional",
+"fr": "émotionnel"
+},
+{
+"a": "էվոլյուցիոն",
+"lv": "B2",
+"ru": "эволюционный",
+"en": "evolutionary",
+"fr": "évolutionnaire"
+},
+{
+"a": "էքսպերիմենտալ",
+"lv": "B2",
+"ru": "экспериментальный",
+"en": "experimental",
+"fr": "expérimental"
+},
+{
+"a": "ընտրական",
+"lv": "B2",
+"ru": "избирательный",
+"en": "electoral",
+"fr": "électoral"
+},
+{
+"a": "թատերական",
+"lv": "B2",
+"ru": "театральный",
+"en": "theatrical",
+"fr": "théâtral"
+},
+{
+"a": "թափառական",
+"lv": "B2",
+"ru": "бродячий, кочевой",
+"en": "wandering, nomadic",
+"fr": "errant, nomade"
+},
+{
+"a": "թեոկրատական",
+"lv": "B2",
+"ru": "теократический",
+"en": "theocratic",
+"fr": "théocratique"
+},
+{
+"a": "թիմային",
+"lv": "B2",
+"ru": "командный",
+"en": "team",
+"fr": "d'équipe"
+},
+{
+"a": "թիրախային",
+"lv": "B2",
+"ru": "целевой",
+"en": "target",
+"fr": "cible"
+},
+{
+"a": "թունելային",
+"lv": "B2",
+"ru": "туннельный",
+"en": "tunnel",
+"fr": "de tunnel"
+},
+{
+"a": "թոքային",
+"lv": "B2",
+"ru": "лёгочный",
+"en": "pulmonary",
+"fr": "pulmonaire"
+},
+{
+"a": "թվաբանական",
+"lv": "B2",
+"ru": "арифметический",
+"en": "arithmetical",
+"fr": "arithmétique"
+},
+{
+"a": "ժողովրդագրական",
+"lv": "B2",
+"ru": "демографический",
+"en": "demographic",
+"fr": "démographique"
+},
+{
+"a": "ժողովրդավարական",
+"lv": "B2",
+"ru": "демократический (народовластный)",
+"en": "democratic",
+"fr": "démocratique (populaire)"
+},
+{
+"a": "իմպերիալիստական",
+"lv": "B2",
+"ru": "империалистический",
+"en": "imperialistic",
+"fr": "impérialiste"
+},
+{
+"a": "ինժեներական",
+"lv": "B2",
+"ru": "инженерный",
+"en": "engineering",
+"fr": "d'ingénierie"
+},
+{
+"a": "ինստիտուցիոնալ",
+"lv": "B2",
+"ru": "институциональный",
+"en": "institutional",
+"fr": "institutionnel"
+},
+{
+"a": "ինտերնետային",
+"lv": "B2",
+"ru": "интернет- (интернетный)",
+"en": "internet",
+"fr": "d'internet"
+},
+{
+"a": "ինքնակենսագրական",
+"lv": "B2",
+"ru": "автобиографический",
+"en": "autobiographical",
+"fr": "autobiographique"
+},
+{
+"a": "ինքնաշարժ",
+"lv": "B2",
+"ru": "самоходный",
+"en": "self-propelled",
+"fr": "automoteur"
+},
+{
+"a": "ինքնավար",
+"lv": "B2",
+"ru": "автономный",
+"en": "autonomous",
+"fr": "autonome"
+},
+{
+"a": "իռացիոնալ",
+"lv": "B2",
+"ru": "иррациональный",
+"en": "irrational",
+"fr": "irrationnel"
+},
+{
+"a": "իսլամական",
+"lv": "B2",
+"ru": "исламский",
+"en": "Islamic",
+"fr": "islamique"
+},
+{
+"a": "իրավազուրկ",
+"lv": "B2",
+"ru": "бесправный",
+"en": "disenfranchised",
+"fr": "privé de droits"
+},
+{
+"a": "իրավապահ",
+"lv": "B2",
+"ru": "правоохранительный",
+"en": "law enforcement",
+"fr": "des forces de l'ordre"
+},
+{
+"a": "լազերային",
+"lv": "B2",
+"ru": "лазерный",
+"en": "laser",
+"fr": "laser"
+},
+{
+"a": "լեգիտիմ",
+"lv": "B2",
+"ru": "легитимный",
+"en": "legitimate",
+"fr": "légitime"
+},
+{
+"a": "լեզվաբանական",
+"lv": "B2",
+"ru": "лингвистический",
+"en": "linguistic",
+"fr": "linguistique"
+},
+{
+"a": "լեզվական",
+"lv": "B2",
+"ru": "языковой",
+"en": "linguistic",
+"fr": "langagier"
+},
+{
+"a": "լեռնագրական",
+"lv": "B2",
+"ru": "орографический",
+"en": "orographic",
+"fr": "orographique"
+},
+{
+"a": "լիագումար",
+"lv": "B2",
+"ru": "пленарный",
+"en": "plenary",
+"fr": "plénier"
+},
+{
+"a": "լիազորված",
+"lv": "B2",
+"ru": "уполномоченный",
+"en": "authorized",
+"fr": "autorisé, mandaté"
+},
+{
+"a": "լուսանկարչական",
+"lv": "B2",
+"ru": "фотографический",
+"en": "photographic",
+"fr": "photographique"
+},
+{
+"a": "լուսանցքային",
+"lv": "B2",
+"ru": "маргинальный (на полях)",
+"en": "marginal",
+"fr": "marginal"
+},
+{
+"a": "լուսնոտ",
+"lv": "B2",
+"ru": "лунатический",
+"en": "somnambulistic",
+"fr": "somnambule"
+},
+{
+"a": "լրատվական",
+"lv": "B2",
+"ru": "информационный",
+"en": "news, information",
+"fr": "d'information"
+},
+{
+"a": "խմբակային",
+"lv": "B2",
+"ru": "кружковой (групповой)",
+"en": "group",
+"fr": "de groupe"
+},
+{
+"a": "խոհարարական",
+"lv": "B2",
+"ru": "кулинарный",
+"en": "culinary",
+"fr": "culinaire"
+},
+{
+"a": "խոսակցական",
+"lv": "B2",
+"ru": "разговорный",
+"en": "colloquial",
+"fr": "familier"
+},
+{
+"a": "խորհրդանշական",
+"lv": "B2",
+"ru": "символический",
+"en": "symbolic",
+"fr": "symbolique"
+},
+{
+"a": "խորհրդարանական",
+"lv": "B2",
+"ru": "парламентский",
+"en": "parliamentary",
+"fr": "parlementaire"
+},
+{
+"a": "ծախսային",
+"lv": "B2",
+"ru": "расходный",
+"en": "expenditure",
+"fr": "de dépenses"
+},
+{
+"a": "ծրագրային",
+"lv": "B2",
+"ru": "программный",
+"en": "programmatic",
+"fr": "programmatique"
+},
+{
+"a": "կադրային",
+"lv": "B2",
+"ru": "кадровый",
+"en": "personnel",
+"fr": "du personnel"
+},
+{
+"a": "կազմակերպչական",
+"lv": "B2",
+"ru": "организационный",
+"en": "organizational",
+"fr": "organisationnel"
+},
+{
+"a": "կայսերապաշտական",
+"lv": "B2",
+"ru": "империалистический (синоним)",
+"en": "imperialistic",
+"fr": "impérialiste"
+},
+{
+"a": "կանխարգելիչ",
+"lv": "B2",
+"ru": "профилактический",
+"en": "preventive",
+"fr": "préventif"
+},
+{
+"a": "կապիտալիստական",
+"lv": "B2",
+"ru": "капиталистический",
+"en": "capitalist",
+"fr": "capitaliste"
+},
+{
+"a": "կառուցակարգային",
+"lv": "B2",
+"ru": "институциональный (синоним)",
+"en": "institutional",
+"fr": "institutionnel"
+},
+{
+"a": "կառուցողական",
+"lv": "B2",
+"ru": "конструктивный",
+"en": "constructive",
+"fr": "constructif"
+},
+{
+"a": "կառուցվածքային",
+"lv": "B2",
+"ru": "структурный",
+"en": "structural",
+"fr": "structurel"
+},
+{
+"a": "կաստայական",
+"lv": "B2",
+"ru": "кастовый",
+"en": "caste",
+"fr": "de caste"
+},
+{
+"a": "կատակերգական",
+"lv": "B2",
+"ru": "комедийный",
+"en": "comic",
+"fr": "comique"
+},
+{
+"a": "կարգաբանական",
+"lv": "B2",
+"ru": "таксономический",
+"en": "taxonomic",
+"fr": "taxinomique"
+},
+{
+"a": "կարգապահական",
+"lv": "B2",
+"ru": "дисциплинарный",
+"en": "disciplinary",
+"fr": "disciplinaire"
+},
+{
+"a": "կարգավարական",
+"lv": "B2",
+"ru": "диспетчерский",
+"en": "dispatching",
+"fr": "de régulation"
+},
+{
+"a": "կարմիրբանակային",
+"lv": "B2",
+"ru": "красноармейский",
+"en": "Red Army",
+"fr": "de l'Armée rouge"
+},
+{
+"a": "կենդանաբանական",
+"lv": "B2",
+"ru": "зоологический",
+"en": "zoological",
+"fr": "zoologique"
+},
+{
+"a": "կենսաբանական",
+"lv": "B2",
+"ru": "биологический",
+"en": "biological",
+"fr": "biologique"
+},
+{
+"a": "կենտրոնախույս",
+"lv": "B2",
+"ru": "центробежный",
+"en": "centrifugal",
+"fr": "centrifuge"
+},
+{
+"a": "կենտրոնաձիգ",
+"lv": "B2",
+"ru": "центростремительный",
+"en": "centripetal",
+"fr": "centripète"
+},
+{
+"a": "կետադրական",
+"lv": "B2",
+"ru": "пунктуационный",
+"en": "punctuation",
+"fr": "de ponctuation"
+},
+{
+"a": "կիզանուտ",
+"lv": "B2",
+"ru": "горючий",
+"en": "combustible",
+"fr": "combustible"
+},
+{
+"a": "կղերական",
+"lv": "B2",
+"ru": "клерикальный",
+"en": "clerical",
+"fr": "clérical"
+},
+{
+"a": "կղզիաբնակ",
+"lv": "B2",
+"ru": "островной",
+"en": "island-dwelling",
+"fr": "insulaire"
+},
+{
+"a": "կնատյաց",
+"lv": "B2",
+"ru": "женоненавистнический",
+"en": "misogynistic",
+"fr": "misogyne"
+},
+{
+"a": "կոմունիստական",
+"lv": "B2",
+"ru": "коммунистический",
+"en": "communist",
+"fr": "communiste"
+},
+{
+"a": "կոռուպցիոն",
+"lv": "B2",
+"ru": "коррупционный",
+"en": "corruption",
+"fr": "de corruption"
+},
+{
+"a": "կոսմետիկական",
+"lv": "B2",
+"ru": "косметический",
+"en": "cosmetic",
+"fr": "cosmétique"
+},
+{
+"a": "կոսմոպոլիտական",
+"lv": "B2",
+"ru": "космополитический",
+"en": "cosmopolitan",
+"fr": "cosmopolite"
+},
+{
+"a": "կրթական",
+"lv": "B2",
+"ru": "образовательный",
+"en": "educational",
+"fr": "éducatif"
+},
+{
+"a": "կրոնական",
+"lv": "B2",
+"ru": "религиозный",
+"en": "religious",
+"fr": "religieux"
+},
+{
+"a": "հակածխախոտային",
+"lv": "B2",
+"ru": "антитабачный",
+"en": "antitobacco",
+"fr": "antitabac"
+},
+{
+"a": "հակակրելի",
+"lv": "B2",
+"ru": "антипатичный",
+"en": "antipathetic",
+"fr": "antipathique"
+},
+{
+"a": "հակահեղափոխական",
+"lv": "B2",
+"ru": "контрреволюционный",
+"en": "counterrevolutionary",
+"fr": "contre-révolutionnaire"
+},
+{
+"a": "հակաճիճվային",
+"lv": "B2",
+"ru": "противоглистный",
+"en": "antihelminthic",
+"fr": "vermifuge"
+},
+{
+"a": "հակապատմական",
+"lv": "B2",
+"ru": "антиисторический",
+"en": "ahistorical",
+"fr": "antihistorique"
+},
+{
+"a": "հակասեմական",
+"lv": "B2",
+"ru": "антисемитский",
+"en": "anti-Semitic",
+"fr": "antisémite"
+},
+{
+"a": "հակաօդային",
+"lv": "B2",
+"ru": "зенитный, противовоздушный",
+"en": "anti-aircraft",
+"fr": "antiaérien"
+},
+{
+"a": "հաճախորդամետ",
+"lv": "B2",
+"ru": "клиентоориентированный",
+"en": "customer-oriented",
+"fr": "orienté client"
+},
+{
+"a": "համակարգային",
+"lv": "B2",
+"ru": "системный",
+"en": "systemic",
+"fr": "systémique"
+},
+{
+"a": "համակարգչային",
+"lv": "B2",
+"ru": "компьютерный",
+"en": "computer",
+"fr": "informatique"
+},
+{
+"a": "համահայկական",
+"lv": "B2",
+"ru": "общеармянский",
+"en": "Pan-Armenian",
+"fr": "panarménien"
+},
+{
+"a": "համամարդկային",
+"lv": "B2",
+"ru": "общечеловеческий",
+"en": "universal (of mankind)",
+"fr": "universel (humain)"
+},
+{
+"a": "համամիութենական",
+"lv": "B2",
+"ru": "всесоюзный",
+"en": "all-union",
+"fr": "pansoviétique"
+},
+{
+"a": "համացանցային",
+"lv": "B2",
+"ru": "интернетный (книжн.)",
+"en": "internet",
+"fr": "d'internet"
+},
+{
+"a": "հայաբնակ",
+"lv": "B2",
+"ru": "населённый армянами",
+"en": "Armenian-populated",
+"fr": "peuplé d'Arméniens"
+},
+{
+"a": "հայագիտական",
+"lv": "B2",
+"ru": "арменоведческий",
+"en": "Armenological",
+"fr": "arménologique"
+},
+{
+"a": "հայատառ",
+"lv": "B2",
+"ru": "армянскими буквами",
+"en": "in Armenian letters",
+"fr": "en lettres arméniennes"
+},
+{
+"a": "հայատյաց",
+"lv": "B2",
+"ru": "армянофобский",
+"en": "Armenophobic",
+"fr": "arménophobe"
+},
+{
+"a": "հայրենասիրական",
+"lv": "B2",
+"ru": "патриотический",
+"en": "patriotic",
+"fr": "patriotique"
+},
+{
+"a": "հանգուցյալ",
+"lv": "B2",
+"ru": "покойный",
+"en": "deceased",
+"fr": "défunt"
+},
+{
+"a": "հանրապետական",
+"lv": "B2",
+"ru": "республиканский",
+"en": "republican",
+"fr": "républicain"
+},
+{
+"a": "հանքաբանական",
+"lv": "B2",
+"ru": "минералогический",
+"en": "mineralogical",
+"fr": "minéralogique"
+},
+{
+"a": "հանքային",
+"lv": "B2",
+"ru": "минеральный",
+"en": "mineral",
+"fr": "minéral"
+},
+{
+"a": "հաշվապահական",
+"lv": "B2",
+"ru": "бухгалтерский",
+"en": "accounting",
+"fr": "comptable"
+},
+{
+"a": "հաշվետվողական",
+"lv": "B2",
+"ru": "подотчётный",
+"en": "accountable",
+"fr": "responsable, redevable"
+},
+{
+"a": "հեղափոխական",
+"lv": "B2",
+"ru": "революционный",
+"en": "revolutionary",
+"fr": "révolutionnaire"
+},
+{
+"a": "հետախուզական",
+"lv": "B2",
+"ru": "разведывательный",
+"en": "reconnaissance",
+"fr": "de renseignement"
+},
+{
+"a": "հետխորհրդային",
+"lv": "B2",
+"ru": "постсоветский",
+"en": "post-Soviet",
+"fr": "postsoviétique"
+},
+{
+"a": "հերքիչ",
+"lv": "B2",
+"ru": "опровергающий",
+"en": "refuting",
+"fr": "réfutant"
+},
+{
+"a": "հիմնադրական",
+"lv": "B2",
+"ru": "учредительный",
+"en": "foundational",
+"fr": "fondateur"
+},
+{
+"a": "հնդեվրոպական",
+"lv": "B2",
+"ru": "индоевропейский",
+"en": "Indo-European",
+"fr": "indo-européen"
+},
+{
+"a": "հնչյունաբանական",
+"lv": "B2",
+"ru": "фонетический",
+"en": "phonetic",
+"fr": "phonétique"
+},
+{
+"a": "հնչյունական",
+"lv": "B2",
+"ru": "звуковой",
+"en": "phonic",
+"fr": "sonore"
+},
+{
+"a": "հոբելյանական",
+"lv": "B2",
+"ru": "юбилейный",
+"en": "jubilee",
+"fr": "jubilaire"
+},
+{
+"a": "հոգեբանական",
+"lv": "B2",
+"ru": "психологический",
+"en": "psychological",
+"fr": "psychologique"
+},
+{
+"a": "հոտազերծիչ",
+"lv": "B2",
+"ru": "дезодорирующий",
+"en": "deodorant",
+"fr": "déodorant"
+},
+{
+"a": "հումանիտար",
+"lv": "B2",
+"ru": "гуманитарный",
+"en": "humanitarian",
+"fr": "humanitaire"
+},
+{
+"a": "հրթիռային",
+"lv": "B2",
+"ru": "ракетный",
+"en": "rocket",
+"fr": "de fusée"
+},
+{
+"a": "ձկնաբանական",
+"lv": "B2",
+"ru": "ихтиологический",
+"en": "ichthyological",
+"fr": "ichtyologique"
+},
+{
+"a": "ձկնորսական",
+"lv": "B2",
+"ru": "рыболовный",
+"en": "fishing",
+"fr": "de pêche"
+},
+{
+"a": "ճարտարագիտական",
+"lv": "B2",
+"ru": "инженерный (технический)",
+"en": "engineering",
+"fr": "technique"
+},
+{
+"a": "մակրոտնտեսական",
+"lv": "B2",
+"ru": "макроэкономический",
+"en": "macroeconomic",
+"fr": "macroéconomique"
+},
+{
+"a": "մանկավարժական",
+"lv": "B2",
+"ru": "педагогический",
+"en": "pedagogical",
+"fr": "pédagogique"
+},
+{
+"a": "մանվածքային",
+"lv": "B2",
+"ru": "прядильный",
+"en": "spinning",
+"fr": "de filature"
+},
+{
+"a": "մանրէաբանական",
+"lv": "B2",
+"ru": "микробиологический",
+"en": "microbiological",
+"fr": "microbiologique"
+},
+{
+"a": "մարդաբանական",
+"lv": "B2",
+"ru": "антропологический",
+"en": "anthropological",
+"fr": "anthropologique"
+},
+{
+"a": "մարդասիրական",
+"lv": "B2",
+"ru": "гуманный, человеколюбивый",
+"en": "humanitarian",
+"fr": "humanitaire"
+},
+{
+"a": "մարմնամարզական",
+"lv": "B2",
+"ru": "гимнастический",
+"en": "gymnastic",
+"fr": "gymnique"
+},
+{
+"a": "մարտական",
+"lv": "B2",
+"ru": "боевой",
+"en": "combat",
+"fr": "de combat"
+},
+{
+"a": "մեսրոպատառ",
+"lv": "B2",
+"ru": "месроповскими буквами",
+"en": "in Armenian letters",
+"fr": "en alphabet de Mesrop"
+},
+{
+"a": "միավանկ",
+"lv": "B2",
+"ru": "односложный",
+"en": "monosyllabic",
+"fr": "monosyllabique"
+},
+{
+"a": "միկրոալիքային",
+"lv": "B2",
+"ru": "микроволновый",
+"en": "microwave",
+"fr": "micro-ondes"
+},
+{
+"a": "միութենական",
+"lv": "B2",
+"ru": "союзный",
+"en": "union",
+"fr": "de l'union"
+},
+{
+"a": "միջատաբանական",
+"lv": "B2",
+"ru": "энтомологический",
+"en": "entomological",
+"fr": "entomologique"
+},
+{
+"a": "միջգիտակարգային",
+"lv": "B2",
+"ru": "междисциплинарный (синоним)",
+"en": "interdisciplinary",
+"fr": "interdisciplinaire"
+},
+{
+"a": "միջմոլորակային",
+"lv": "B2",
+"ru": "межпланетный",
+"en": "interplanetary",
+"fr": "interplanétaire"
+},
+{
+"a": "միջնորդական",
+"lv": "B2",
+"ru": "посреднический",
+"en": "intermediary",
+"fr": "d'intermédiaire"
+},
+{
+"a": "նախագահական",
+"lv": "B2",
+"ru": "президентский",
+"en": "presidential",
+"fr": "présidentiel"
+},
+{
+"a": "նախագծահետազոտական",
+"lv": "B2",
+"ru": "проектно-исследовательский",
+"en": "design and research",
+"fr": "d'études et de recherche"
+},
+{
+"a": "նախադպրոցական",
+"lv": "B2",
+"ru": "дошкольный",
+"en": "preschool",
+"fr": "préscolaire"
+},
+{
+"a": "նախապատմական",
+"lv": "B2",
+"ru": "доисторический",
+"en": "prehistoric",
+"fr": "préhistorique"
+},
+{
+"a": "նախընտրական",
+"lv": "B2",
+"ru": "предвыборный",
+"en": "preelection",
+"fr": "préélectoral"
+},
+{
+"a": "նահանգապետական",
+"lv": "B2",
+"ru": "губернаторский",
+"en": "gubernatorial",
+"fr": "de gouverneur"
+},
+{
+"a": "նացիստական",
+"lv": "B2",
+"ru": "нацистский",
+"en": "Nazi",
+"fr": "nazi"
+},
+{
+"a": "նեյտրոնային",
+"lv": "B2",
+"ru": "нейтронный",
+"en": "neutron",
+"fr": "neutronique"
+},
+{
+"a": "ներքաղաքական",
+"lv": "B2",
+"ru": "внутриполитический",
+"en": "domestic political",
+"fr": "de politique intérieure"
+},
+{
+"a": "նկուղային",
+"lv": "B2",
+"ru": "подвальный",
+"en": "basement",
+"fr": "de sous-sol"
+},
+{
+"a": "շահագործական",
+"lv": "B2",
+"ru": "эксплуататорский",
+"en": "exploitative",
+"fr": "d'exploitation"
+},
+{
+"a": "շահախարդախ",
+"lv": "B2",
+"ru": "мошеннический",
+"en": "fraudulent",
+"fr": "frauduleux"
+},
+{
+"a": "շինարարական",
+"lv": "B2",
+"ru": "строительный",
+"en": "construction",
+"fr": "de construction"
+},
+{
+"a": "շփագիտական",
+"lv": "B2",
+"ru": "трибологический",
+"en": "tribological",
+"fr": "tribologique"
+},
+{
+"a": "ողբերգակատակերգական",
+"lv": "B2",
+"ru": "трагикомический",
+"en": "tragicomic",
+"fr": "tragicomique"
+},
+{
+"a": "ուժային",
+"lv": "B2",
+"ru": "силовой",
+"en": "power",
+"fr": "de force"
+},
+{
+"a": "ուղեղային",
+"lv": "B2",
+"ru": "мозговой",
+"en": "cerebral",
+"fr": "cérébral"
+},
+{
+"a": "ուղղագրական",
+"lv": "B2",
+"ru": "орфографический",
+"en": "orthographic",
+"fr": "orthographique"
+},
+{
+"a": "ուղղախոսական",
+"lv": "B2",
+"ru": "орфоэпический",
+"en": "orthoepic",
+"fr": "orthoépique"
+},
+{
+"a": "ուռուցքաբանական",
+"lv": "B2",
+"ru": "онкологический",
+"en": "oncological",
+"fr": "oncologique"
+},
+{
+"a": "ուսումնական",
+"lv": "B2",
+"ru": "учебный",
+"en": "educational",
+"fr": "scolaire"
+},
+{
+"a": "չվացուցակային",
+"lv": "B2",
+"ru": "расписания (о расписании)",
+"en": "timetable",
+"fr": "d'horaire"
+},
+{
+"a": "պահեստային",
+"lv": "B2",
+"ru": "запасной, складской",
+"en": "reserve, storage",
+"fr": "de réserve"
+},
+{
+"a": "պարադոքսային",
+"lv": "B2",
+"ru": "парадоксальный",
+"en": "paradoxical",
+"fr": "paradoxal"
+},
+{
+"a": "պարետային",
+"lv": "B2",
+"ru": "комендантский",
+"en": "commandant's",
+"fr": "du commandant"
+},
+{
+"a": "պարտիզանական",
+"lv": "B2",
+"ru": "партизанский",
+"en": "guerrilla",
+"fr": "de guérilla"
+},
+{
+"a": "պարտվողական",
+"lv": "B2",
+"ru": "пораженческий",
+"en": "defeatist",
+"fr": "défaitiste"
+},
+{
+"a": "պլենար",
+"lv": "B2",
+"ru": "пленарный (синоним)",
+"en": "plenary",
+"fr": "plénier (synonyme)"
+},
+{
+"a": "պոպուլիստական",
+"lv": "B2",
+"ru": "популистский",
+"en": "populist",
+"fr": "populiste"
+},
+{
+"a": "ջերմաստիճանային",
+"lv": "B2",
+"ru": "температурный",
+"en": "temperature",
+"fr": "de température"
+},
+{
+"a": "ջրածնային",
+"lv": "B2",
+"ru": "водородный",
+"en": "hydrogen",
+"fr": "à hydrogène"
+},
+{
+"a": "ռազմական",
+"lv": "B2",
+"ru": "военный",
+"en": "military",
+"fr": "militaire"
+},
+{
+"a": "ռազմավարական",
+"lv": "B2",
+"ru": "стратегический",
+"en": "strategic",
+"fr": "stratégique"
+},
+{
+"a": "սահմանադրական",
+"lv": "B2",
+"ru": "конституционный",
+"en": "constitutional",
+"fr": "constitutionnel"
+},
+{
+"a": "սեմական",
+"lv": "B2",
+"ru": "семитский",
+"en": "Semitic",
+"fr": "sémitique"
+},
+{
+"a": "սիմվոլիկ",
+"lv": "B2",
+"ru": "символичный",
+"en": "symbolic",
+"fr": "symbolique (synonyme)"
+},
+{
+"a": "սնկասպան",
+"lv": "B2",
+"ru": "фунгицидный",
+"en": "fungicidal",
+"fr": "fongicide"
+},
+{
+"a": "սովետական",
+"lv": "B2",
+"ru": "советский",
+"en": "Soviet",
+"fr": "soviétique"
+},
+{
+"a": "սոցիալիստական",
+"lv": "B2",
+"ru": "социалистический",
+"en": "socialist",
+"fr": "socialiste"
+},
+{
+"a": "ստեղծագործական",
+"lv": "B2",
+"ru": "творческий",
+"en": "creative",
+"fr": "créatif"
+},
+{
+"a": "ստուգաբանական",
+"lv": "B2",
+"ru": "этимологический",
+"en": "etymological",
+"fr": "étymologique"
+},
+{
+"a": "սրտային",
+"lv": "B2",
+"ru": "сердечный",
+"en": "cardiac",
+"fr": "cardiaque"
+},
+{
+"a": "վավերագրական",
+"lv": "B2",
+"ru": "документальный",
+"en": "documentary",
+"fr": "documentaire"
+},
+{
+"a": "վարկային",
+"lv": "B2",
+"ru": "кредитный",
+"en": "credit",
+"fr": "de crédit"
+},
+{
+"a": "վարորդական",
+"lv": "B2",
+"ru": "водительский",
+"en": "driver's",
+"fr": "de conducteur"
+},
+{
+"a": "վերազգային",
+"lv": "B2",
+"ru": "транснациональный",
+"en": "transnational",
+"fr": "transnational"
+},
+{
+"a": "վերլուծական",
+"lv": "B2",
+"ru": "аналитический",
+"en": "analytical",
+"fr": "analytique"
+},
+{
+"a": "վերջածանցային",
+"lv": "B2",
+"ru": "суффиксальный",
+"en": "suffixal",
+"fr": "suffixal"
+},
+{
+"a": "վիճակագրական",
+"lv": "B2",
+"ru": "статистический",
+"en": "statistical",
+"fr": "statistique"
+},
+{
+"a": "վիրաբուժական",
+"lv": "B2",
+"ru": "хирургический",
+"en": "surgical",
+"fr": "chirurgical"
+},
+{
+"a": "տակտիկական",
+"lv": "B2",
+"ru": "тактический",
+"en": "tactical",
+"fr": "tactique"
+},
+{
+"a": "տարածաժամանակային",
+"lv": "B2",
+"ru": "пространственно-временной",
+"en": "spacetime",
+"fr": "spatio-temporel"
+},
+{
+"a": "տարածքային",
+"lv": "B2",
+"ru": "территориальный",
+"en": "territorial",
+"fr": "territorial"
+},
+{
+"a": "տարիքային",
+"lv": "B2",
+"ru": "возрастной",
+"en": "age",
+"fr": "d'âge"
+},
+{
+"a": "տափաստանային",
+"lv": "B2",
+"ru": "степной",
+"en": "steppe",
+"fr": "des steppes"
+},
+{
+"a": "տեղեկատվական",
+"lv": "B2",
+"ru": "информационный (синоним)",
+"en": "informational",
+"fr": "informationnel"
+},
+{
+"a": "տեռորիստական",
+"lv": "B2",
+"ru": "террористический (синоним)",
+"en": "terrorist",
+"fr": "terroriste"
+},
+{
+"a": "տեսչական",
+"lv": "B2",
+"ru": "инспекционный",
+"en": "inspection",
+"fr": "d'inspection"
+},
+{
+"a": "տիպաբանական",
+"lv": "B2",
+"ru": "типологический",
+"en": "typological",
+"fr": "typologique"
+},
+{
+"a": "տնտեսագիտական",
+"lv": "B2",
+"ru": "экономический (о науке)",
+"en": "economic (science)",
+"fr": "économique"
+},
+{
+"a": "տուրիստական",
+"lv": "B2",
+"ru": "туристический",
+"en": "tourist",
+"fr": "touristique"
+},
+{
+"a": "ցեղասպան",
+"lv": "B2",
+"ru": "совершающий геноцид",
+"en": "genocidal",
+"fr": "génocidaire"
+},
+{
+"a": "ցուցադրական",
+"lv": "B2",
+"ru": "демонстративный",
+"en": "demonstrative",
+"fr": "démonstratif"
+},
+{
+"a": "փաստահավաք",
+"lv": "B2",
+"ru": "следственный (по сбору фактов)",
+"en": "fact-finding",
+"fr": "d'enquête"
+},
+{
+"a": "փորձագիտական",
+"lv": "B2",
+"ru": "экспертный",
+"en": "expert",
+"fr": "d'expertise"
+},
+{
+"a": "փուլային",
+"lv": "B2",
+"ru": "поэтапный",
+"en": "phased",
+"fr": "par étapes"
+},
+{
+"a": "քարոզչական",
+"lv": "B2",
+"ru": "пропагандистский",
+"en": "propagandistic",
+"fr": "de propagande"
+},
+{
+"a": "քարտեզագրական",
+"lv": "B2",
+"ru": "картографический",
+"en": "cartographic",
+"fr": "cartographique"
+},
+{
+"a": "քերականագիտական",
+"lv": "B2",
+"ru": "грамматоведческий",
+"en": "of grammar studies",
+"fr": "grammairien"
+},
+{
+"a": "քերականական",
+"lv": "B2",
+"ru": "грамматический",
+"en": "grammatical",
+"fr": "grammatical"
+},
+{
+"a": "քոչվորական",
+"lv": "B2",
+"ru": "кочевой",
+"en": "nomadic",
+"fr": "nomade"
+},
+{
+"a": "քրեակատարողական",
+"lv": "B2",
+"ru": "уголовно-исполнительный",
+"en": "penitentiary",
+"fr": "pénitentiaire"
+},
+{
+"a": "քրիստոնեական",
+"lv": "B2",
+"ru": "христианский",
+"en": "Christian",
+"fr": "chrétien"
+},
+{
+"a": "օդատիեզերական",
+"lv": "B2",
+"ru": "аэрокосмический",
+"en": "aerospace",
+"fr": "aérospatial"
+},
+{
+"a": "օդերևութաբանական",
+"lv": "B2",
+"ru": "метеорологический",
+"en": "meteorological",
+"fr": "météorologique"
+},
+{
+"a": "օպերային",
+"lv": "B2",
+"ru": "оперный",
+"en": "operatic",
+"fr": "d'opéra"
+},
+{
+"a": "ֆաշիստական",
+"lv": "B2",
+"ru": "фашистский",
+"en": "fascist",
+"fr": "fasciste"
+},
+{
+"a": "ֆեոդալական",
+"lv": "B2",
+"ru": "феодальный (синоним)",
+"en": "feudal",
+"fr": "féodal (synonyme)"
+},
+{
+"a": "ֆիզիոլոգիական",
+"lv": "B2",
+"ru": "физиологический",
+"en": "physiological",
+"fr": "physiologique"
+},
+{
+"a": "ֆինանսական",
+"lv": "B2",
+"ru": "финансовый",
+"en": "financial",
+"fr": "financier"
+},
+{
+"a": "ֆոնոնային",
+"lv": "B2",
+"ru": "фононный",
+"en": "phonon",
+"fr": "phononique"
+},
+{
+"a": "ֆոտոնային",
+"lv": "B2",
+"ru": "фотонный",
+"en": "photon",
+"fr": "photonique"
+},
+{
+"a": "ֆուտբոլային",
+"lv": "B2",
+"ru": "футбольный",
+"en": "football",
+"fr": "de football"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",
@@ -88709,6 +97361,881 @@
 "ru": "грузиновед, картвелолог",
 "en": "Kartvelologist",
 "fr": "kartvélologue"
+},
+{
+"a": "ազդարար",
+"lv": "C1",
+"ru": "возвещающий",
+"en": "heralding",
+"fr": "annonciateur"
+},
+{
+"a": "ալեզարդ",
+"lv": "C1",
+"ru": "седой, белоголовый (поэт.)",
+"en": "hoary, white-haired",
+"fr": "chenu"
+},
+{
+"a": "ալեկոծ",
+"lv": "C1",
+"ru": "бурлящий (о волнах)",
+"en": "surging, billowing",
+"fr": "houleux"
+},
+{
+"a": "ալևոր",
+"lv": "C1",
+"ru": "седовласый",
+"en": "grey-haired",
+"fr": "aux cheveux gris"
+},
+{
+"a": "ակնածալի",
+"lv": "C1",
+"ru": "благоговейный",
+"en": "reverent",
+"fr": "révérencieux"
+},
+{
+"a": "ակնածելի",
+"lv": "C1",
+"ru": "почтенный",
+"en": "venerable",
+"fr": "vénérable"
+},
+{
+"a": "ահեղ",
+"lv": "C1",
+"ru": "грозный, ужасный",
+"en": "formidable, terrifying",
+"fr": "redoutable"
+},
+{
+"a": "աղիողորմ",
+"lv": "C1",
+"ru": "скорбный, жалобный",
+"en": "mournful, plaintive",
+"fr": "plaintif, lugubre"
+},
+{
+"a": "աղու",
+"lv": "C1",
+"ru": "приятный, сладостный",
+"en": "pleasant, sweet",
+"fr": "agréable, doux"
+},
+{
+"a": "ամբարիշտ",
+"lv": "C1",
+"ru": "нечестивый",
+"en": "impious",
+"fr": "impie"
+},
+{
+"a": "ամենագետ",
+"lv": "C1",
+"ru": "всезнающий",
+"en": "omniscient",
+"fr": "omniscient"
+},
+{
+"a": "ամենազոր",
+"lv": "C1",
+"ru": "всемогущий",
+"en": "almighty",
+"fr": "tout-puissant"
+},
+{
+"a": "ամենակալ",
+"lv": "C1",
+"ru": "вседержитель, всевластный",
+"en": "almighty (of God)",
+"fr": "tout-puissant (de Dieu)"
+},
+{
+"a": "այրացի",
+"lv": "C1",
+"ru": "мужественный, храбрый",
+"en": "brave, manly",
+"fr": "brave, viril"
+},
+{
+"a": "անագորույն",
+"lv": "C1",
+"ru": "жестокий, беспощадный (книжн.)",
+"en": "cruel, merciless",
+"fr": "cruel, impitoyable"
+},
+{
+"a": "անամոք",
+"lv": "C1",
+"ru": "безутешный",
+"en": "inconsolable",
+"fr": "inconsolable"
+},
+{
+"a": "անապատական",
+"lv": "C1",
+"ru": "отшельнический",
+"en": "eremitical",
+"fr": "érémitique"
+},
+{
+"a": "անաստված",
+"lv": "C1",
+"ru": "безбожный",
+"en": "godless, atheist",
+"fr": "athée, impie"
+},
+{
+"a": "անարատ",
+"lv": "C1",
+"ru": "непорочный",
+"en": "immaculate, chaste",
+"fr": "immaculé, chaste"
+},
+{
+"a": "անդրշիրիմյան",
+"lv": "C1",
+"ru": "загробный",
+"en": "otherworldly",
+"fr": "d'outre-tombe"
+},
+{
+"a": "անթառամ",
+"lv": "C1",
+"ru": "неувядающий",
+"en": "unfading",
+"fr": "impérissable"
+},
+{
+"a": "անիծյալ",
+"lv": "C1",
+"ru": "проклятый",
+"en": "cursed, damned",
+"fr": "maudit"
+},
+{
+"a": "անկորնչելի",
+"lv": "C1",
+"ru": "нетленный",
+"en": "imperishable",
+"fr": "impérissable"
+},
+{
+"a": "անձնյա",
+"lv": "C1",
+"ru": "статный",
+"en": "well-made, fine-limbed",
+"fr": "de belle prestance"
+},
+{
+"a": "անմեռ",
+"lv": "C1",
+"ru": "бессмертный",
+"en": "immortal",
+"fr": "immortel"
+},
+{
+"a": "աննվաճ",
+"lv": "C1",
+"ru": "непокорённый",
+"en": "unconquered",
+"fr": "invaincu"
+},
+{
+"a": "անշեջ",
+"lv": "C1",
+"ru": "неугасимый",
+"en": "inextinguishable",
+"fr": "inextinguible"
+},
+{
+"a": "անուշակ",
+"lv": "C1",
+"ru": "приятный (книжн.)",
+"en": "agreeable",
+"fr": "agréable"
+},
+{
+"a": "աշխարհային",
+"lv": "C1",
+"ru": "мирской, земной",
+"en": "earthly",
+"fr": "terrestre, mondain"
+},
+{
+"a": "աստվածեղեն",
+"lv": "C1",
+"ru": "божественный",
+"en": "divine",
+"fr": "divin"
+},
+{
+"a": "արյունալի",
+"lv": "C1",
+"ru": "кровавый",
+"en": "sanguinary",
+"fr": "sanglant"
+},
+{
+"a": "արյունահեղ",
+"lv": "C1",
+"ru": "кровопролитный",
+"en": "bloody, sanguinary",
+"fr": "sanguinaire"
+},
+{
+"a": "արփենի",
+"lv": "C1",
+"ru": "лучезарный (поэт.)",
+"en": "luminous, celestial",
+"fr": "radieux"
+},
+{
+"a": "բայղուշ",
+"lv": "C1",
+"ru": "зловещий",
+"en": "ominous",
+"fr": "sinistre"
+},
+{
+"a": "բոյով",
+"lv": "C1",
+"ru": "рослый (разг.)",
+"en": "tall (colloquial)",
+"fr": "grand (familier)"
+},
+{
+"a": "բորոտ",
+"lv": "C1",
+"ru": "прокажённый",
+"en": "leprous",
+"fr": "lépreux"
+},
+{
+"a": "գուշակիչ",
+"lv": "C1",
+"ru": "предвещающий",
+"en": "presageful",
+"fr": "prémonitoire"
+},
+{
+"a": "գրաբարախառն",
+"lv": "C1",
+"ru": "с примесью грабара",
+"en": "mixed with Classical Armenian",
+"fr": "mêlé d'arménien classique"
+},
+{
+"a": "դժվարամատույց",
+"lv": "C1",
+"ru": "труднодоступный",
+"en": "hard to access",
+"fr": "difficile d'accès"
+},
+{
+"a": "եդեմային",
+"lv": "C1",
+"ru": "райский, эдемский",
+"en": "Edenic",
+"fr": "édénique"
+},
+{
+"a": "եթերային",
+"lv": "C1",
+"ru": "эфирный, небесный",
+"en": "ethereal",
+"fr": "éthéré"
+},
+{
+"a": "եղբայրասպան",
+"lv": "C1",
+"ru": "братоубийственный",
+"en": "fratricidal",
+"fr": "fratricide"
+},
+{
+"a": "եռանդալի",
+"lv": "C1",
+"ru": "полный рвения",
+"en": "full of zeal",
+"fr": "plein d'ardeur"
+},
+{
+"a": "երգեցիկ",
+"lv": "C1",
+"ru": "певчий",
+"en": "singing",
+"fr": "chanteur"
+},
+{
+"a": "երկնաթռիչ",
+"lv": "C1",
+"ru": "взмывающий в небо (поэт.)",
+"en": "soaring to heaven",
+"fr": "qui s'envole au ciel"
+},
+{
+"a": "երջանկահիշատակ",
+"lv": "C1",
+"ru": "блаженной памяти",
+"en": "of blessed memory",
+"fr": "de bienheureuse mémoire"
+},
+{
+"a": "զարհուրելի",
+"lv": "C1",
+"ru": "ужасающий (книжн.)",
+"en": "terrifying",
+"fr": "effroyable"
+},
+{
+"a": "զեղխ",
+"lv": "C1",
+"ru": "распутный",
+"en": "debauched",
+"fr": "débauché"
+},
+{
+"a": "զեղուն",
+"lv": "C1",
+"ru": "переполненный (поэт.)",
+"en": "brimful",
+"fr": "débordant"
+},
+{
+"a": "զոր",
+"lv": "C1",
+"ru": "могучий (поэт.)",
+"en": "mighty",
+"fr": "puissant"
+},
+{
+"a": "զորավոր",
+"lv": "C1",
+"ru": "могущественный",
+"en": "powerful, mighty",
+"fr": "puissant"
+},
+{
+"a": "զորեղ",
+"lv": "C1",
+"ru": "мощный",
+"en": "powerful",
+"fr": "vigoureux, puissant"
+},
+{
+"a": "ընկալուչ",
+"lv": "C1",
+"ru": "понятливый",
+"en": "quick to understand",
+"fr": "compréhensif, vif d'esprit"
+},
+{
+"a": "թաթավուչ",
+"lv": "C1",
+"ru": "пропитанный",
+"en": "soaked, imbued",
+"fr": "imprégné"
+},
+{
+"a": "թուլաբարո",
+"lv": "C1",
+"ru": "нестрогих нравов",
+"en": "of loose morals",
+"fr": "aux mœurs légères"
+},
+{
+"a": "ժանտ",
+"lv": "C1",
+"ru": "беспощадный, злой (книжн.)",
+"en": "merciless, cruel",
+"fr": "cruel, impitoyable"
+},
+{
+"a": "ժուժկալ",
+"lv": "C1",
+"ru": "воздержанный",
+"en": "abstinent",
+"fr": "abstinent"
+},
+{
+"a": "ժպիրհ",
+"lv": "C1",
+"ru": "дерзкий",
+"en": "insolent",
+"fr": "insolent"
+},
+{
+"a": "լծորդ",
+"lv": "C1",
+"ru": "сопряжённый, союзный",
+"en": "joined, allied",
+"fr": "associé, allié"
+},
+{
+"a": "լուսունակ",
+"lv": "C1",
+"ru": "светоносный",
+"en": "having light",
+"fr": "lumineux"
+},
+{
+"a": "լքավեր",
+"lv": "C1",
+"ru": "заброшенный и разрушенный",
+"en": "abandoned and ruined",
+"fr": "abandonné et en ruine"
+},
+{
+"a": "խաբեպատիր",
+"lv": "C1",
+"ru": "обманчивый (книжн.)",
+"en": "illusory, deceitful",
+"fr": "illusoire, trompeur"
+},
+{
+"a": "խավարասեր",
+"lv": "C1",
+"ru": "любящий мрак",
+"en": "loving darkness",
+"fr": "ami des ténèbres"
+},
+{
+"a": "խենեշ",
+"lv": "C1",
+"ru": "изнеженный, распущенный",
+"en": "effeminate, dissolute",
+"fr": "efféminé, débauché"
+},
+{
+"a": "խնդակից",
+"lv": "C1",
+"ru": "разделяющий радость",
+"en": "sharing joy",
+"fr": "qui partage la joie"
+},
+{
+"a": "խրոխտագին",
+"lv": "C1",
+"ru": "горделивый",
+"en": "extremely proud",
+"fr": "orgueilleux"
+},
+{
+"a": "ծառաբնակ",
+"lv": "C1",
+"ru": "древесный (живущий на деревьях)",
+"en": "arboreal",
+"fr": "arboricole"
+},
+{
+"a": "կապուտակ",
+"lv": "C1",
+"ru": "лазурный (поэт.)",
+"en": "blue (poetic)",
+"fr": "azuré"
+},
+{
+"a": "կարեկցաբեր",
+"lv": "C1",
+"ru": "вызывающий сочувствие",
+"en": "causing pity",
+"fr": "attendrissant"
+},
+{
+"a": "կենդանավետ",
+"lv": "C1",
+"ru": "полный жизни",
+"en": "full of life",
+"fr": "plein de vie"
+},
+{
+"a": "հայանպաստ",
+"lv": "C1",
+"ru": "полезный для армян",
+"en": "beneficial to Armenians",
+"fr": "bénéfique aux Arméniens"
+},
+{
+"a": "հայրենի",
+"lv": "C1",
+"ru": "отчий",
+"en": "paternal",
+"fr": "paternel (ancestral)"
+},
+{
+"a": "հայրենյաց",
+"lv": "C1",
+"ru": "отечественный",
+"en": "of the native land",
+"fr": "de la patrie"
+},
+{
+"a": "հառաչալից",
+"lv": "C1",
+"ru": "полный вздохов",
+"en": "full of sighs",
+"fr": "plein de soupirs"
+},
+{
+"a": "հառաչական",
+"lv": "C1",
+"ru": "скорбный, печальный",
+"en": "mournful",
+"fr": "lugubre"
+},
+{
+"a": "հետամուտ",
+"lv": "C1",
+"ru": "преследующий",
+"en": "pursuing",
+"fr": "poursuivant"
+},
+{
+"a": "հոգեղեն",
+"lv": "C1",
+"ru": "духовный",
+"en": "spiritual",
+"fr": "spirituel"
+},
+{
+"a": "հողեղեն",
+"lv": "C1",
+"ru": "земной, бренный",
+"en": "earthly, mortal",
+"fr": "terrestre, mortel"
+},
+{
+"a": "հոյակերտ",
+"lv": "C1",
+"ru": "прекрасно построенный",
+"en": "superbly built",
+"fr": "superbement construit"
+},
+{
+"a": "հուռթի",
+"lv": "C1",
+"ru": "орошаемый",
+"en": "irrigated",
+"fr": "irrigué"
+},
+{
+"a": "հրեատյաց",
+"lv": "C1",
+"ru": "юдофобский",
+"en": "anti-Semitic",
+"fr": "judéophobe"
+},
+{
+"a": "ձույլ",
+"lv": "C1",
+"ru": "литой, сплавленный",
+"en": "cast, smelted",
+"fr": "fondu"
+},
+{
+"a": "ճարահատյալ",
+"lv": "C1",
+"ru": "доведённый до отчаяния",
+"en": "having no way out",
+"fr": "acculé"
+},
+{
+"a": "ճոռոմաբան",
+"lv": "C1",
+"ru": "велеречивый",
+"en": "grandiloquent",
+"fr": "grandiloquent"
+},
+{
+"a": "մայրենի",
+"lv": "C1",
+"ru": "родной (материнский)",
+"en": "maternal",
+"fr": "maternel (natal)"
+},
+{
+"a": "մաշկաթև",
+"lv": "C1",
+"ru": "перепончатокрылый",
+"en": "skin-winged",
+"fr": "aux ailes membraneuses"
+},
+{
+"a": "մարգարտահուռ",
+"lv": "C1",
+"ru": "украшенный жемчугом",
+"en": "adorned with pearls",
+"fr": "orné de perles"
+},
+{
+"a": "մարմնավոր",
+"lv": "C1",
+"ru": "телесный, имеющий тело",
+"en": "bodied",
+"fr": "corporel"
+},
+{
+"a": "մելամաղձ",
+"lv": "C1",
+"ru": "меланхоличный (поэт.)",
+"en": "melancholic",
+"fr": "mélancolique"
+},
+{
+"a": "մեծանձն",
+"lv": "C1",
+"ru": "статный, рослый",
+"en": "of lofty stature",
+"fr": "de haute stature"
+},
+{
+"a": "մեծաշքեղ",
+"lv": "C1",
+"ru": "пышный, роскошный",
+"en": "lavish",
+"fr": "somptueux, fastueux"
+},
+{
+"a": "միասիրտ",
+"lv": "C1",
+"ru": "единодушный",
+"en": "of one mind",
+"fr": "unanime (de cœur)"
+},
+{
+"a": "մոտաբնակ",
+"lv": "C1",
+"ru": "соседний (живущий рядом)",
+"en": "neighbouring",
+"fr": "voisin"
+},
+{
+"a": "նորաբնակ",
+"lv": "C1",
+"ru": "новосёл (новопоселённый)",
+"en": "newly settled",
+"fr": "nouvellement établi"
+},
+{
+"a": "շանթահար",
+"lv": "C1",
+"ru": "поражённый молнией",
+"en": "struck by lightning",
+"fr": "foudroyé"
+},
+{
+"a": "շնորհաբաշխ",
+"lv": "C1",
+"ru": "милостивый (книжн.)",
+"en": "granting favours",
+"fr": "bienfaisant"
+},
+{
+"a": "ողորմածիկ",
+"lv": "C1",
+"ru": "покойный (о человеке)",
+"en": "late, deceased",
+"fr": "feu, défunt"
+},
+{
+"a": "ոսկեհուռ",
+"lv": "C1",
+"ru": "шитый золотом",
+"en": "embroidered with gold",
+"fr": "brodé d'or"
+},
+{
+"a": "ոտնաշրջիկ",
+"lv": "C1",
+"ru": "странствующий пешком",
+"en": "peripatetic",
+"fr": "pérégrin"
+},
+{
+"a": "ունայն",
+"lv": "C1",
+"ru": "тщетный, суетный",
+"en": "vain",
+"fr": "vain (vanité)"
+},
+{
+"a": "ուրախակից",
+"lv": "C1",
+"ru": "разделяющий радость",
+"en": "sharing joy",
+"fr": "qui se réjouit avec"
+},
+{
+"a": "ուրախավետ",
+"lv": "C1",
+"ru": "радостный",
+"en": "joyous",
+"fr": "joyeux"
+},
+{
+"a": "չարաչք",
+"lv": "C1",
+"ru": "с дурным глазом",
+"en": "evil-eyed",
+"fr": "au mauvais œil"
+},
+{
+"a": "պաճուճաբան",
+"lv": "C1",
+"ru": "витиеватый",
+"en": "flowery",
+"fr": "fleuri, alambiqué"
+},
+{
+"a": "ջրատար",
+"lv": "C1",
+"ru": "уносимый водой",
+"en": "carried away by water",
+"fr": "emporté par les eaux"
+},
+{
+"a": "սասան",
+"lv": "C1",
+"ru": "дрожащий (поэт.)",
+"en": "trembling",
+"fr": "tremblant"
+},
+{
+"a": "սինլքոր",
+"lv": "C1",
+"ru": "деклассированный",
+"en": "déclassé",
+"fr": "déclassé"
+},
+{
+"a": "ստերջ",
+"lv": "C1",
+"ru": "бесплодный (перен.)",
+"en": "sterile, barren",
+"fr": "stérile"
+},
+{
+"a": "սևամորթ",
+"lv": "C1",
+"ru": "темнокожий",
+"en": "black-skinned",
+"fr": "à la peau noire"
+},
+{
+"a": "վախճանամերձ",
+"lv": "C1",
+"ru": "умирающий",
+"en": "moribund",
+"fr": "moribond"
+},
+{
+"a": "վահանակիր",
+"lv": "C1",
+"ru": "щитоносный",
+"en": "shield-bearing",
+"fr": "porte-bouclier"
+},
+{
+"a": "վերամբարձ",
+"lv": "C1",
+"ru": "подъёмный",
+"en": "lifting",
+"fr": "élévateur"
+},
+{
+"a": "վերջամուտ",
+"lv": "C1",
+"ru": "недавно введённый",
+"en": "newly introduced",
+"fr": "récemment introduit"
+},
+{
+"a": "վերջավոր",
+"lv": "C1",
+"ru": "конечный (книжн.)",
+"en": "finite",
+"fr": "fini"
+},
+{
+"a": "վերջնահաս",
+"lv": "C1",
+"ru": "последним прибывший",
+"en": "last to arrive",
+"fr": "dernier arrivé"
+},
+{
+"a": "վիժանուտ",
+"lv": "C1",
+"ru": "низвергающийся",
+"en": "rushing down",
+"fr": "qui dévale"
+},
+{
+"a": "վհատական",
+"lv": "C1",
+"ru": "удручающий",
+"en": "causing despair",
+"fr": "désespérant"
+},
+{
+"a": "վտարանդի",
+"lv": "C1",
+"ru": "изгнанный",
+"en": "banished",
+"fr": "banni"
+},
+{
+"a": "տատական",
+"lv": "C1",
+"ru": "бабушкин",
+"en": "grandmotherly",
+"fr": "de grand-mère"
+},
+{
+"a": "փափկամորթ",
+"lv": "C1",
+"ru": "нежнокожий",
+"en": "soft-skinned",
+"fr": "à la peau douce"
+},
+{
+"a": "քարուկիր",
+"lv": "C1",
+"ru": "каменной кладки",
+"en": "of stone masonry",
+"fr": "en maçonnerie"
+},
+{
+"a": "օդապար",
+"lv": "C1",
+"ru": "парящий",
+"en": "floating, flying",
+"fr": "planant"
+},
+{
+"a": "օծյալ",
+"lv": "C1",
+"ru": "помазанный",
+"en": "anointed",
+"fr": "oint"
+},
+{
+"a": "օտարագիր",
+"lv": "C1",
+"ru": "написанный иностранцами",
+"en": "written by foreigners",
+"fr": "écrit par des étrangers"
+},
+{
+"a": "օրհնյալ",
+"lv": "C1",
+"ru": "благословенный",
+"en": "blessed",
+"fr": "béni"
 },
 {
 "a": "վեհ",
