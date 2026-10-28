@@ -80952,6 +80952,2963 @@
 "fr": "Que faire ? Verbes 9"
 },
 {
+"lv": "B1",
+"ru": "Как? Когда? Наречия 1",
+"en": "How? When? Adverbs 1",
+"hy": "Ինչպե՞ս, ե՞րբ. մակբայներ 1",
+"ic": "⏱️",
+"w": [
+[
+"ազնվորեն",
+"честно",
+"honestly",
+"",
+"honnêtement"
+],
+[
+"ամբողջությամբ",
+"целиком, полностью",
+"fully, in entirety",
+"",
+"entièrement"
+],
+[
+"այբբենական կարգով",
+"в алфавитном порядке",
+"alphabetically",
+"",
+"par ordre alphabétique"
+],
+[
+"այն է",
+"а именно",
+"namely",
+"",
+"à savoir"
+],
+[
+"այս գիշեր",
+"этой ночью",
+"tonight (night)",
+"🌙",
+"cette nuit"
+],
+[
+"այս երեկո",
+"сегодня вечером",
+"tonight (evening)",
+"",
+"ce soir"
+],
+[
+"անապահով",
+"небезопасно",
+"unsafely",
+"",
+"de façon dangereuse"
+],
+[
+"անխտրաբար",
+"без разбора",
+"indiscriminately",
+"",
+"sans distinction"
+],
+[
+"անհավատալի",
+"невероятно",
+"unbelievably",
+"",
+"incroyablement"
+],
+[
+"անհերքելիորեն",
+"неопровержимо",
+"incontrovertibly",
+"",
+"irréfutablement"
+],
+[
+"անհրաժեշտաբար",
+"обязательно, непременно",
+"necessarily",
+"",
+"nécessairement"
+],
+[
+"անցած տարի",
+"в прошлом году",
+"last year",
+"",
+"l'année dernière"
+],
+[
+"ապշեցուցիչ",
+"поразительно",
+"astonishingly",
+"",
+"étonnamment"
+],
+[
+"ավելի ու ավելի",
+"всё больше и больше",
+"more and more",
+"",
+"de plus en plus"
+],
+[
+"ավելի ուշ",
+"позже",
+"later",
+"",
+"plus tard"
+],
+[
+"ավտոմատ կերպով",
+"автоматически",
+"automatically",
+"",
+"automatiquement"
+],
+[
+"արհամարհաբար",
+"презрительно",
+"contemptuously",
+"",
+"avec mépris"
+],
+[
+"բանականորեն",
+"разумно",
+"reasonably",
+"",
+"raisonnablement"
+],
+[
+"բառ առ բառ",
+"слово в слово",
+"word for word",
+"",
+"mot pour mot"
+],
+[
+"բառացիորեն",
+"буквально",
+"literally",
+"",
+"littéralement"
+],
+[
+"գիտականորեն",
+"научно",
+"scientifically",
+"",
+"scientifiquement"
+],
+[
+"գլխավորապես",
+"главным образом",
+"chiefly",
+"",
+"principalement"
+],
+[
+"գլխիվայր",
+"вверх ногами",
+"upside down",
+"",
+"la tête en bas"
+],
+[
+"դեմառդեմ",
+"лицом к лицу",
+"face to face",
+"",
+"face à face"
+],
+[
+"դժվարությամբ",
+"с трудом",
+"hardly",
+"",
+"difficilement"
+],
+[
+"դռնեդուռ",
+"от двери к двери",
+"door to door",
+"",
+"porte-à-porte"
+],
+[
+"երբևիցե",
+"когда-либо",
+"ever",
+"",
+"jamais (un jour)"
+],
+[
+"երկու անգամ",
+"два раза",
+"twice",
+"",
+"deux fois (synonyme)"
+],
+[
+"երկու օրից",
+"через два дня",
+"in two days",
+"",
+"dans deux jours"
+],
+[
+"երկուստեք",
+"взаимно",
+"mutually",
+"",
+"mutuellement"
+],
+[
+"զարմանալիորեն",
+"удивительно",
+"amazingly",
+"",
+"étonnamment (synonyme)"
+],
+[
+"էապես",
+"существенно",
+"substantially",
+"",
+"substantiellement"
+],
+[
+"ընդարձակորեն",
+"обширно, широко",
+"extensively",
+"",
+"largement"
+],
+[
+"թեթևակի",
+"слегка",
+"lightly",
+"",
+"légèrement"
+],
+[
+"ի թիվս այլոց",
+"в том числе",
+"inter alia",
+"",
+"entre autres"
+],
+[
+"ի լրացում",
+"кроме того, в дополнение",
+"in addition",
+"",
+"en outre"
+],
+[
+"ի հիշատակ",
+"в память",
+"in memoriam",
+"",
+"en mémoire de"
+]
+],
+"fr": "Comment ? Quand ? Adverbes 1"
+},
+{
+"lv": "B1",
+"ru": "Как? Когда? Наречия 2",
+"en": "How? When? Adverbs 2",
+"hy": "Ինչպե՞ս, ե՞րբ. մակբայներ 2",
+"ic": "⏱️",
+"w": [
+[
+"ի նորո",
+"заново",
+"anew",
+"",
+"à nouveau"
+],
+[
+"ի սրտե",
+"от всего сердца",
+"from the heart",
+"",
+"du fond du cœur"
+],
+[
+"իրար հետ",
+"вместе (друг с другом)",
+"together",
+"",
+"ensemble (l'un avec l'autre)"
+],
+[
+"ծայրաստիճան",
+"в высшей степени",
+"supremely",
+"",
+"suprêmement"
+],
+[
+"կամա թե ակամա",
+"волей-неволей",
+"willy-nilly",
+"",
+"bon gré mal gré"
+],
+[
+"կասկածելիորեն",
+"подозрительно (синоним)",
+"suspiciously",
+"",
+"suspicieusement"
+],
+[
+"կատարելապես",
+"совершенно, в совершенстве",
+"completely, perfectly",
+"",
+"parfaitement"
+],
+[
+"հաջորդիվ",
+"в следующий раз",
+"next",
+"",
+"la prochaine fois"
+],
+[
+"հե՛նց հիմա",
+"прямо сейчас",
+"right now",
+"",
+"tout de suite"
+],
+[
+"հեշտորեն",
+"легко",
+"easily",
+"",
+"facilement"
+],
+[
+"հեշտությամբ",
+"с лёгкостью",
+"with ease",
+"",
+"aisément"
+],
+[
+"հիանալիորեն",
+"превосходно",
+"admirably",
+"",
+"admirablement"
+],
+[
+"հնարավորինս շուտ",
+"как можно скорее",
+"as soon as possible",
+"",
+"dès que possible"
+],
+[
+"հրաշալիորեն",
+"чудесно",
+"wonderfully",
+"",
+"merveilleusement"
+],
+[
+"ձրի",
+"бесплатно",
+"free of charge",
+"🆓",
+"gratuitement"
+],
+[
+"մեկ և ընդմիշտ",
+"раз и навсегда",
+"once and for all",
+"",
+"une fois pour toutes"
+],
+[
+"մյուս տարի",
+"в следующем году",
+"next year",
+"",
+"l'année prochaine"
+],
+[
+"նախորդիվ",
+"ранее",
+"previously",
+"",
+"précédemment"
+],
+[
+"նույն տեղում",
+"там же",
+"ibid.",
+"",
+"ibidem"
+],
+[
+"ոչ դիտավորյալ",
+"нечаянно",
+"accidentally",
+"",
+"par mégarde"
+],
+[
+"ոչ մի կերպ",
+"никоим образом",
+"in no way",
+"",
+"nullement"
+],
+[
+"ոտքից գլուխ",
+"с головы до ног",
+"head to toe",
+"",
+"de la tête aux pieds"
+],
+[
+"որպես օրենք",
+"как правило",
+"as a rule",
+"",
+"en règle générale"
+],
+[
+"ուղիղ եթերով",
+"в прямом эфире",
+"live",
+"",
+"en direct"
+],
+[
+"չափից ավելի",
+"слишком, чересчур",
+"way too",
+"",
+"beaucoup trop"
+],
+[
+"չափից դուրս",
+"чрезмерно",
+"excessively",
+"",
+"excessivement"
+],
+[
+"պասսիվորեն",
+"пассивно",
+"passively",
+"",
+"passivement"
+],
+[
+"պատահականորեն",
+"случайно",
+"by chance",
+"",
+"par hasard"
+],
+[
+"սառնորեն",
+"холодно (равнодушно)",
+"icily",
+"",
+"froidement"
+],
+[
+"վաղ թե ուշ",
+"рано или поздно",
+"sooner or later",
+"",
+"tôt ou tard"
+],
+[
+"տրամաբանորեն",
+"логично",
+"logically",
+"",
+"logiquement"
+],
+[
+"փոխաբերաբար",
+"в переносном смысле",
+"metaphorically",
+"",
+"métaphoriquement"
+],
+[
+"քաղաքավարիորեն",
+"вежливо",
+"politely",
+"",
+"poliment"
+],
+[
+"քաջաբար",
+"храбро (синоним)",
+"bravely",
+"",
+"vaillamment"
+],
+[
+"օր ու գիշեր",
+"день и ночь",
+"day and night",
+"",
+"jour et nuit"
+],
+[
+"ֆանտաստիկորեն",
+"фантастически",
+"fantastically",
+"",
+"fantastiquement"
+]
+],
+"fr": "Comment ? Quand ? Adverbes 2"
+},
+{
+"lv": "B1",
+"ru": "Глаголы и выражения 1",
+"en": "Verbs and expressions 1",
+"hy": "Բայեր և արտահայտություններ 1",
+"ic": "🔁",
+"w": [
+[
+"ազատականանալ",
+"либерализоваться",
+"to liberalize (oneself)",
+"",
+"se libéraliser"
+],
+[
+"ազատականացնել",
+"либерализовать",
+"to liberalize",
+"",
+"libéraliser"
+],
+[
+"ազգայնացնել",
+"национализировать",
+"to nationalize",
+"",
+"nationaliser"
+],
+[
+"ականազերծել",
+"разминировать",
+"to demine",
+"",
+"déminer"
+],
+[
+"ականջ կախել",
+"подслушивать",
+"to eavesdrop",
+"",
+"écouter aux portes"
+],
+[
+"ամաչեցնել",
+"смущать, стыдить",
+"to embarrass",
+"",
+"embarrasser"
+],
+[
+"ամուսնալուծել",
+"разводить (супругов)",
+"to divorce",
+"",
+"divorcer"
+],
+[
+"ամրանալ",
+"крепнуть",
+"to grow stronger",
+"",
+"se fortifier"
+],
+[
+"անակնկալի բերել",
+"удивлять",
+"to surprise",
+"😮",
+"surprendre"
+],
+[
+"անդրադարձնել",
+"отражать",
+"to reflect",
+"",
+"refléter"
+],
+[
+"անհատականացնել",
+"персонализировать",
+"to personalize",
+"",
+"personnaliser"
+],
+[
+"անհետացնել",
+"заставить исчезнуть",
+"to make vanish",
+"",
+"faire disparaître"
+],
+[
+"անձնատուր լինել",
+"сдаваться",
+"to capitulate",
+"",
+"capituler"
+],
+[
+"անուշ անել",
+"смаковать (синоним)",
+"to savour",
+"",
+"savourer (synonyme)"
+],
+[
+"ապակայունացնել",
+"дестабилизировать",
+"to destabilize",
+"",
+"déstabiliser"
+],
+[
+"ապամարդկայնացնել",
+"дегуманизировать",
+"to dehumanize",
+"",
+"déshumaniser"
+],
+[
+"ապատեղադրել",
+"удалять (программу)",
+"to uninstall",
+"",
+"désinstaller"
+],
+[
+"ապարտեիդ",
+"апартеид",
+"apartheid",
+"",
+"apartheid"
+],
+[
+"ապրանքներ փոխանակել",
+"обмениваться товарами",
+"to barter",
+"",
+"troquer"
+],
+[
+"ապրուստ վաստակել",
+"зарабатывать на жизнь",
+"to make a living",
+"",
+"gagner sa vie"
+],
+[
+"առանձնացնել",
+"отделять",
+"to separate",
+"",
+"séparer"
+],
+[
+"առաջ մղել",
+"продвигать вперёд",
+"to propel",
+"",
+"propulser"
+],
+[
+"առաջ տալ",
+"перематывать вперёд",
+"to fast-forward",
+"",
+"avancer (rapide)"
+],
+[
+"առաջացնել",
+"вызывать, порождать",
+"to cause, to evoke",
+"",
+"provoquer, susciter"
+],
+[
+"առաջն առնել",
+"предотвращать",
+"to foil",
+"",
+"déjouer"
+],
+[
+"առավելագույնի հասցնել",
+"максимизировать",
+"to maximize",
+"",
+"maximiser"
+],
+[
+"առգրավել",
+"конфисковать",
+"to confiscate",
+"",
+"confisquer"
+],
+[
+"առևտուր անել",
+"делать покупки",
+"to shop",
+"🛍️",
+"faire du shopping"
+],
+[
+"աստվածացնել",
+"обожествлять",
+"to deify",
+"",
+"déifier"
+],
+[
+"ատամները լվանալ",
+"чистить зубы",
+"to brush one's teeth",
+"🪥",
+"se brosser les dents"
+],
+[
+"արատավորել",
+"порочить",
+"to blemish",
+"",
+"entacher"
+],
+[
+"արբենալ",
+"пьянеть",
+"to get drunk",
+"",
+"s'enivrer"
+],
+[
+"արգելակել",
+"тормозить",
+"to brake",
+"",
+"freiner"
+],
+[
+"արեւի լոգանք ընդունել",
+"загорать",
+"to sunbathe",
+"🏖️",
+"bronzer"
+],
+[
+"արխիվացնել",
+"архивировать",
+"to archive",
+"",
+"archiver"
+],
+[
+"արտահանձնել",
+"экстрадировать",
+"to extradite",
+"",
+"extrader"
+],
+[
+"արտացոլվել",
+"отражаться",
+"to be reflected",
+"",
+"se refléter"
+],
+[
+"բաբախել",
+"биться (о сердце), пульсировать",
+"to beat, to pulsate",
+"",
+"battre, palpiter"
+],
+[
+"բանալ",
+"открывать (книжн.)",
+"to open",
+"",
+"ouvrir (littéraire)"
+],
+[
+"բանավիճել",
+"дебатировать",
+"to debate",
+"",
+"débattre"
+],
+[
+"բավականացնել",
+"хватать, быть достаточным",
+"to suffice",
+"",
+"suffire"
+],
+[
+"բարելավվել",
+"улучшаться",
+"to improve",
+"",
+"s'améliorer"
+],
+[
+"բերքը հավաքել",
+"собирать урожай",
+"to harvest",
+"🌾",
+"récolter"
+],
+[
+"բխեցնել",
+"выводить (заключение)",
+"to derive",
+"",
+"déduire"
+],
+[
+"բողոք հայտնել",
+"подавать жалобу",
+"to complain (formally)",
+"",
+"porter plainte"
+],
+[
+"բոյկոտել",
+"бойкотировать",
+"to boycott",
+"",
+"boycotter"
+],
+[
+"բռնագրավել",
+"конфисковать (синоним)",
+"to confiscate",
+"",
+"saisir"
+],
+[
+"գահընկեց անել",
+"свергать",
+"to depose",
+"",
+"destituer"
+],
+[
+"գաղափար չունեմ",
+"понятия не имею",
+"I have no idea",
+"🤷",
+"je n'en ai aucune idée"
+],
+[
+"գաղտնիացնել",
+"засекречивать",
+"to classify",
+"",
+"classifier (secret)"
+],
+[
+"գայթակղեցնել",
+"искушать",
+"to tempt",
+"",
+"tenter"
+],
+[
+"գանգատվել",
+"жаловаться",
+"to complain",
+"",
+"se plaindre (synonyme)"
+],
+[
+"գլխավորել",
+"возглавлять",
+"to lead",
+"",
+"diriger"
+],
+[
+"գլուխը կտրել",
+"отрубить голову",
+"to behead",
+"",
+"trancher la tête"
+]
+],
+"fr": "Verbes et expressions 1"
+},
+{
+"lv": "B1",
+"ru": "Глаголы и выражения 2",
+"en": "Verbs and expressions 2",
+"hy": "Բայեր և արտահայտություններ 2",
+"ic": "🔁",
+"w": [
+[
+"գոյակցել",
+"сосуществовать",
+"to coexist",
+"",
+"coexister"
+],
+[
+"գոտիավորել",
+"зонировать",
+"to zone",
+"",
+"zoner"
+],
+[
+"գործի գնալ",
+"идти на работу",
+"to go to work",
+"",
+"aller au travail"
+],
+[
+"գուգլել",
+"гуглить",
+"to google",
+"",
+"googler"
+],
+[
+"գունաթափվել",
+"выцветать",
+"to fade",
+"",
+"pâlir, se décolorer"
+],
+[
+"գրագրվել",
+"переписываться",
+"to correspond",
+"",
+"correspondre"
+],
+[
+"գրաքննել",
+"цензурировать",
+"to censor",
+"",
+"censurer"
+],
+[
+"դակել",
+"дырявить, пробивать",
+"to punch",
+"",
+"perforer"
+],
+[
+"դաս տալ",
+"давать уроки",
+"to teach",
+"",
+"donner des cours"
+],
+[
+"դասախոսություն կարդալ",
+"читать лекцию",
+"to lecture",
+"",
+"faire un cours"
+],
+[
+"դեն նետել",
+"выбрасывать",
+"to throw away",
+"🗑️",
+"jeter"
+],
+[
+"դիմակազերծել",
+"разоблачать",
+"to unmask",
+"",
+"démasquer"
+],
+[
+"դիվերսիֆիկացնել",
+"диверсифицировать",
+"to diversify",
+"",
+"diversifier"
+],
+[
+"դուրս մղել",
+"изгонять",
+"to expel",
+"",
+"expulser (synonyme)"
+],
+[
+"եզրատել",
+"обрезать (фото)",
+"to crop",
+"",
+"recadrer"
+],
+[
+"եռապատկել",
+"утраивать",
+"to triple",
+"",
+"tripler"
+],
+[
+"ետ խլել",
+"отбить, вернуть",
+"to retake",
+"",
+"reprendre"
+],
+[
+"ետ կանգնել",
+"отойти назад",
+"to stand back",
+"",
+"reculer"
+],
+[
+"երդվեցնել",
+"приводить к присяге",
+"to swear in",
+"",
+"faire prêter serment"
+],
+[
+"երիտասարդացնել",
+"омолаживать",
+"to rejuvenate",
+"",
+"rajeunir (quelqu'un)"
+],
+[
+"զարթեցնել",
+"будить",
+"to wake",
+"⏰",
+"réveiller"
+],
+[
+"զարթնեցնել",
+"разбудить",
+"to wake up",
+"",
+"réveiller (synonyme)"
+],
+[
+"զգուշացի՛ր",
+"осторожно!",
+"beware!",
+"⚠️",
+"attention !"
+],
+[
+"զեկուցել",
+"докладывать",
+"to report",
+"",
+"faire un rapport"
+],
+[
+"զեղչել",
+"давать скидку",
+"to discount",
+"",
+"faire une remise"
+],
+[
+"զինաթափել",
+"разоружать",
+"to disarm",
+"",
+"désarmer"
+],
+[
+"զկռտալ",
+"икать",
+"to hiccup",
+"",
+"avoir le hoquet"
+],
+[
+"զորացնել",
+"укреплять",
+"to strengthen",
+"",
+"renforcer"
+],
+[
+"զուգորդել",
+"ассоциировать",
+"to associate",
+"",
+"associer"
+],
+[
+"էվակուացնել",
+"эвакуировать",
+"to evacuate",
+"",
+"évacuer"
+],
+[
+"թագավորել",
+"царствовать",
+"to reign",
+"",
+"régner (synonyme)"
+],
+[
+"թալանել",
+"грабить",
+"to plunder",
+"",
+"piller"
+],
+[
+"թախծել",
+"тосковать",
+"to languish",
+"",
+"languir"
+],
+[
+"թմբկահարել",
+"барабанить",
+"to drum",
+"🥁",
+"tambouriner"
+],
+[
+"թոթվել ուսերը",
+"пожимать плечами",
+"to shrug",
+"🤷",
+"hausser les épaules"
+],
+[
+"թութակի պես կրկնել",
+"повторять как попугай",
+"to parrot",
+"🦜",
+"répéter comme un perroquet"
+],
+[
+"թուխս նստել",
+"насиживать яйца",
+"to brood",
+"",
+"couver"
+],
+[
+"թռնել",
+"летать (разг.)",
+"to fly",
+"",
+"voler (familier)"
+],
+[
+"թռչկոտել",
+"подпрыгивать",
+"to hop",
+"",
+"sautiller (synonyme)"
+],
+[
+"թրքացնել",
+"отуречивать",
+"to Turkify",
+"",
+"turquiser"
+],
+[
+"թքարտադրել",
+"выделять слюну",
+"to salivate",
+"",
+"saliver"
+],
+[
+"ժառանգությունից զրկել",
+"лишать наследства",
+"to disinherit",
+"",
+"déshériter"
+],
+[
+"ժողովրդավարացնել",
+"демократизировать",
+"to democratize",
+"",
+"démocratiser"
+],
+[
+"ի վիճակի լինել",
+"быть в состоянии",
+"to be able to",
+"",
+"être en mesure de"
+],
+[
+"ինքնահրկիզվել",
+"совершить самосожжение",
+"to self-immolate",
+"",
+"s'immoler"
+],
+[
+"ինքնասպան լինել",
+"покончить с собой",
+"to commit suicide",
+"",
+"se suicider"
+],
+[
+"ինքնին հասկանալի է",
+"само собой разумеется",
+"it goes without saying",
+"",
+"cela va sans dire"
+],
+[
+"իսլամացնել",
+"исламизировать",
+"to Islamize",
+"",
+"islamiser"
+],
+[
+"լավացնել",
+"улучшать",
+"to improve",
+"",
+"améliorer"
+],
+[
+"լուծարվել",
+"растворяться",
+"to dissolve",
+"",
+"se dissoudre"
+],
+[
+"լույս աշխարհ բերել",
+"производить на свет",
+"to give birth",
+"",
+"mettre au monde"
+],
+[
+"լպստել",
+"лизать",
+"to lick",
+"👅",
+"lécher"
+],
+[
+"լվալ",
+"мыть",
+"to wash",
+"",
+"laver"
+],
+[
+"խաղաղել",
+"усмирять",
+"to pacify",
+"",
+"pacifier"
+]
+],
+"fr": "Verbes et expressions 2"
+},
+{
+"lv": "B1",
+"ru": "Глаголы и выражения 3",
+"en": "Verbs and expressions 3",
+"hy": "Բայեր և արտահայտություններ 3",
+"ic": "🔁",
+"w": [
+[
+"խաղաղեցնել",
+"успокаивать",
+"to appease",
+"",
+"apaiser"
+],
+[
+"խարանել",
+"клеймить",
+"to stigmatize",
+"",
+"stigmatiser"
+],
+[
+"խափանվել",
+"выходить из строя",
+"to crash",
+"",
+"planter (tomber en panne)"
+],
+[
+"խեղաթյուրել իրականությունը",
+"искажать правду",
+"to bend the truth",
+"",
+"travestir la vérité"
+],
+[
+"խենթացնել",
+"сводить с ума (синоним)",
+"to madden",
+"",
+"rendre fou (synonyme)"
+],
+[
+"խզբզել",
+"каракулями писать",
+"to scribble",
+"",
+"griffonner"
+],
+[
+"խլացնել",
+"оглушать",
+"to deafen",
+"",
+"assourdir"
+],
+[
+"խմորել",
+"бродить (о тесте, вине)",
+"to ferment",
+"",
+"fermenter"
+],
+[
+"խոժոռվել",
+"хмуриться",
+"to frown",
+"",
+"froncer les sourcils"
+],
+[
+"խոնարհել",
+"спрягать",
+"to conjugate",
+"",
+"conjuguer"
+],
+[
+"խոստում դրժել",
+"нарушить обещание",
+"to break one's promise",
+"",
+"manquer à sa promesse"
+],
+[
+"խոսքն ու գործը մեկ անել",
+"держать слово",
+"to walk the talk",
+"",
+"joindre le geste à la parole"
+],
+[
+"խորը տապակել",
+"жарить во фритюре",
+"to deep-fry",
+"",
+"frire"
+],
+[
+"խորհրդատվություն տալ",
+"консультировать",
+"to counsel",
+"",
+"conseiller (professionnellement)"
+],
+[
+"խորտակվել",
+"обрушиваться",
+"to collapse",
+"",
+"s'effondrer"
+],
+[
+"խտացնել",
+"концентрировать",
+"to concentrate",
+"",
+"concentrer"
+],
+[
+"խրամապատել",
+"окапывать",
+"to entrench",
+"",
+"retrancher"
+],
+[
+"խցկել",
+"втискивать",
+"to squeeze in",
+"",
+"caser"
+],
+[
+"ծախսահատուցել",
+"возмещать расходы",
+"to refund",
+"",
+"rembourser"
+],
+[
+"ծախվել",
+"продаваться",
+"to be sold",
+"",
+"se vendre"
+],
+[
+"ծածանվել",
+"развеваться",
+"to flutter",
+"",
+"flotter"
+],
+[
+"ծածկադմփոց անել",
+"замять (дело)",
+"to sweep under the rug",
+"",
+"étouffer (une affaire)"
+],
+[
+"ծերացնել",
+"старить",
+"to age",
+"",
+"vieillir (quelqu'un)"
+],
+[
+"ծլկել",
+"улизнуть (незаметно)",
+"to slip away",
+"",
+"s'éclipser"
+],
+[
+"ծնկել",
+"становиться на колени",
+"to kneel",
+"",
+"s'agenouiller"
+],
+[
+"ծորալ",
+"сочиться",
+"to ooze, to trickle",
+"",
+"suinter, ruisseler"
+],
+[
+"ծուղակի մեջ գցել",
+"поймать в ловушку",
+"to trap",
+"",
+"piéger"
+],
+[
+"ծռվել",
+"гнуться",
+"to bend",
+"",
+"se plier"
+],
+[
+"կա",
+"есть, имеется",
+"there is",
+"",
+"il y a"
+],
+[
+"կան",
+"есть (мн.), имеются",
+"there are",
+"",
+"il y a (pluriel)"
+],
+[
+"կազմաձեւել",
+"настраивать (конфигурировать)",
+"to configure",
+"",
+"configurer"
+],
+[
+"կանխագուշակել",
+"предвещать",
+"to portend",
+"",
+"présager"
+],
+[
+"կանխավճարային",
+"предоплаченный",
+"prepaid",
+"",
+"prépayé"
+],
+[
+"կարանտինի ենթարկել",
+"помещать на карантин",
+"to quarantine",
+"",
+"mettre en quarantaine"
+],
+[
+"կարմրանալ",
+"краснеть (становиться красным)",
+"to redden",
+"",
+"rougir (devenir rouge)"
+],
+[
+"կարմրացնել",
+"окрашивать в красный",
+"to make red",
+"",
+"rougir (rendre rouge)"
+],
+[
+"կարող է",
+"может (возможно)",
+"might",
+"",
+"il se peut"
+],
+[
+"կենդանի մնալ",
+"выжить",
+"to survive",
+"",
+"survivre (synonyme)"
+],
+[
+"կլորացնել",
+"округлять",
+"to round",
+"",
+"arrondir"
+],
+[
+"կլպել",
+"чистить (от кожуры)",
+"to peel",
+"",
+"éplucher"
+],
+[
+"կշտացնել",
+"насыщать (синоним)",
+"to satiate",
+"",
+"rassasier (synonyme)"
+],
+[
+"կողպածը բանալ",
+"отпирать",
+"to unlock",
+"🔓",
+"déverrouiller"
+],
+[
+"կոճապղպեղաբլիթ",
+"имбирный пряник",
+"gingerbread",
+"",
+"pain d'épices"
+],
+[
+"կոմպլիմենտ անել",
+"делать комплимент",
+"to compliment",
+"",
+"faire un compliment"
+],
+[
+"կոորդինացնել",
+"координировать",
+"to coordinate",
+"",
+"coordonner"
+],
+[
+"կոպտանալ",
+"грубеть (синоним)",
+"to coarsen",
+"",
+"s'endurcir"
+],
+[
+"կոտրատել",
+"разламывать",
+"to break",
+"",
+"casser (en morceaux)"
+],
+[
+"կորել",
+"заблудиться",
+"to get lost",
+"",
+"se perdre"
+],
+[
+"կռռալ",
+"каркать",
+"to caw",
+"",
+"croasser (synonyme)"
+],
+[
+"կտածել",
+"делать татуировку",
+"to tattoo",
+"",
+"tatouer"
+],
+[
+"կրակ բացել",
+"открыть огонь",
+"to open fire",
+"",
+"ouvrir le feu"
+],
+[
+"կրակ տալ",
+"поджечь",
+"to ignite",
+"",
+"allumer, mettre le feu"
+],
+[
+"հակագրոհել",
+"контратаковать",
+"to counter-attack",
+"",
+"contre-attaquer"
+],
+[
+"հակադրվել",
+"противостоять",
+"to antagonize",
+"",
+"s'opposer"
+]
+],
+"fr": "Verbes et expressions 3"
+},
+{
+"lv": "B1",
+"ru": "Глаголы и выражения 4",
+"en": "Verbs and expressions 4",
+"hy": "Բայեր և արտահայտություններ 4",
+"ic": "🔁",
+"w": [
+[
+"հաղորդակցվել",
+"общаться",
+"to communicate",
+"",
+"communiquer"
+],
+[
+"համաձայնվել",
+"соглашаться",
+"to agree",
+"",
+"être d'accord"
+],
+[
+"համատեղել",
+"совмещать",
+"to combine",
+"",
+"combiner"
+],
+[
+"համարակալել",
+"нумеровать",
+"to number",
+"",
+"numéroter"
+],
+[
+"հանգել",
+"приходить к выводу",
+"to conclude",
+"",
+"conclure"
+],
+[
+"հանգչիր խաղաղությամբ",
+"покойся с миром",
+"rest in peace",
+"",
+"repose en paix"
+],
+[
+"հանդարտեցնել",
+"успокаивать (синоним)",
+"to calm",
+"",
+"calmer"
+],
+[
+"հանցանքի տեղում բռնել",
+"поймать с поличным",
+"to catch red-handed",
+"",
+"prendre sur le fait"
+],
+[
+"հաշմանդամ դարձնել",
+"искалечить",
+"to maim",
+"",
+"mutiler"
+],
+[
+"հաչալ",
+"лаять",
+"to bark",
+"🐕",
+"aboyer"
+],
+[
+"հապավել",
+"сокращать (слово)",
+"to abbreviate",
+"",
+"abréger"
+],
+[
+"հավաստիանալ",
+"удостовериться",
+"to ascertain",
+"",
+"s'assurer"
+],
+[
+"հատվել",
+"пересекаться",
+"to intersect",
+"",
+"se croiser"
+],
+[
+"հաց կիսել",
+"преломлять хлеб",
+"to break bread",
+"",
+"rompre le pain"
+],
+[
+"հեծնվել",
+"ехать (верхом, в транспорте)",
+"to ride",
+"",
+"aller (en voiture, à cheval)"
+],
+[
+"հեղեղվել",
+"переполняться (синоним)",
+"to overflow",
+"",
+"déborder (synonyme)"
+],
+[
+"հեռագրել",
+"телеграфировать",
+"to telegraph",
+"",
+"télégraphier"
+],
+[
+"հեռաձայնել",
+"звонить (синоним)",
+"to call (by phone)",
+"",
+"appeler"
+],
+[
+"հետախուզել",
+"исследовать, разведывать",
+"to explore",
+"",
+"explorer"
+],
+[
+"հեւալ",
+"задыхаться",
+"to gasp",
+"",
+"haleter"
+],
+[
+"հիդրատացնել",
+"увлажнять",
+"to hydrate",
+"",
+"hydrater"
+],
+[
+"հիմնվել",
+"основываться",
+"to be based",
+"",
+"se fonder"
+],
+[
+"հիմքը դնել",
+"закладывать основу",
+"to lay the foundation",
+"",
+"poser les fondations"
+],
+[
+"հյուծվել",
+"изнемогать",
+"to languish",
+"",
+"dépérir"
+],
+[
+"հոգին փչել",
+"испустить дух (синоним)",
+"to give up the ghost",
+"",
+"rendre l'âme (synonyme)"
+],
+[
+"հոգոց հանել",
+"вздыхать",
+"to sigh",
+"😮‍💨",
+"soupirer"
+],
+[
+"հոտ արձակել",
+"пахнуть",
+"to smell (of)",
+"",
+"sentir"
+],
+[
+"ձայն հանել",
+"издавать звук",
+"to sound",
+"",
+"émettre un son"
+],
+[
+"ձեռնպահ լինել",
+"воздерживаться (при голосовании)",
+"to abstain",
+"",
+"s'abstenir"
+],
+[
+"ձմեռային քուն մտնել",
+"впадать в спячку",
+"to hibernate",
+"",
+"hiberner"
+],
+[
+"ձոնել",
+"посвящать",
+"to dedicate",
+"",
+"dédier"
+],
+[
+"ձուկ բռնել",
+"ловить рыбу",
+"to fish",
+"🎣",
+"pêcher"
+],
+[
+"ճանապարհորդել ավտոստոպով",
+"путешествовать автостопом",
+"to hitchhike",
+"",
+"faire de l'auto-stop"
+],
+[
+"ճղվել",
+"рваться",
+"to tear",
+"",
+"se déchirer"
+],
+[
+"ճոճորվել",
+"качаться на качелях",
+"to swing",
+"",
+"se balancer"
+],
+[
+"ճռալ",
+"скрипеть (синоним)",
+"to creak",
+"",
+"grincer (synonyme)"
+],
+[
+"մանրամասն ուսումնասիրել",
+"тщательно изучать",
+"to scrutinize",
+"",
+"scruter"
+],
+[
+"մատի վրա խաղացնել",
+"вертеть кем-то",
+"to wrap around one's finger",
+"",
+"mener par le bout du nez"
+],
+[
+"մենամարտել",
+"драться на дуэли",
+"to duel",
+"",
+"se battre en duel"
+],
+[
+"մենաշնորհել",
+"монополизировать",
+"to monopolize",
+"",
+"monopoliser"
+],
+[
+"մեջքին կանգնած լինել",
+"прикрывать спину",
+"to have someone's back",
+"",
+"soutenir quelqu'un"
+],
+[
+"մթնեցնել",
+"затемнять (синоним)",
+"to darken",
+"",
+"obscurcir"
+],
+[
+"միասնականացնել",
+"объединять",
+"to unify",
+"",
+"unifier"
+],
+[
+"միջադրել",
+"вставлять (между)",
+"to interpose",
+"",
+"interposer"
+],
+[
+"միջնորդել",
+"ходатайствовать",
+"to intercede",
+"",
+"intercéder"
+],
+[
+"մոլորեցնել",
+"вводить в заблуждение (синоним)",
+"to mislead",
+"",
+"induire en erreur"
+],
+[
+"մոնպանսիե",
+"монпансье",
+"fruit drops",
+"",
+"pastilles"
+],
+[
+"մտադիր լինել",
+"намереваться (синоним)",
+"to intend",
+"",
+"avoir l'intention de"
+],
+[
+"յոթնապատկել",
+"увеличивать в семь раз",
+"to septuple",
+"",
+"septupler"
+],
+[
+"յուղ վառել",
+"ходить вокруг да около",
+"to beat around the bush",
+"",
+"tourner autour du pot"
+],
+[
+"նախագուշակել",
+"предсказывать (синоним)",
+"to foretell",
+"",
+"prédire (synonyme)"
+],
+[
+"նահատակել",
+"делать мучеником",
+"to martyr",
+"",
+"martyriser"
+],
+[
+"նավ նստել",
+"садиться на корабль",
+"to embark",
+"🚢",
+"embarquer"
+],
+[
+"նեղացնել",
+"сужать",
+"to narrow",
+"",
+"rétrécir"
+]
+],
+"fr": "Verbes et expressions 4"
+},
+{
+"lv": "B1",
+"ru": "Глаголы и выражения 5",
+"en": "Verbs and expressions 5",
+"hy": "Բայեր և արտահայտություններ 5",
+"ic": "🔁",
+"w": [
+[
+"ներդաշնակացնել",
+"гармонизировать",
+"to harmonize",
+"",
+"harmoniser"
+],
+[
+"ներծծել",
+"впитывать",
+"to absorb",
+"",
+"absorber (imbiber)"
+],
+[
+"նշկահել",
+"пренебрегать",
+"to ignore",
+"",
+"ignorer"
+],
+[
+"նոր կյանք սկսել",
+"начать новую жизнь",
+"to start afresh",
+"",
+"repartir à zéro"
+],
+[
+"նորացնել",
+"обновлять",
+"to renovate",
+"",
+"rénover"
+],
+[
+"նորմալացնել",
+"нормализовать (синоним)",
+"to normalize",
+"",
+"normaliser (synonyme)"
+],
+[
+"նույնականացնել",
+"идентифицировать",
+"to identify",
+"",
+"identifier"
+],
+[
+"նպատակ հետապնդել",
+"преследовать цель",
+"to pursue",
+"",
+"poursuivre (un but)"
+],
+[
+"նվագակցել",
+"аккомпанировать",
+"to accompany",
+"",
+"accompagner"
+],
+[
+"նվագարկել",
+"проигрывать (запись)",
+"to play (a recording)",
+"▶️",
+"lire (un enregistrement)"
+],
+[
+"նվազագույնի հասցնել",
+"минимизировать",
+"to minimize",
+"",
+"minimiser"
+],
+[
+"նվիրվել",
+"посвящать себя",
+"to dedicate oneself",
+"",
+"se consacrer"
+],
+[
+"շաղ տալ",
+"разбрызгивать",
+"to sprinkle",
+"",
+"éparpiller"
+],
+[
+"շանտաժի ենթարկել",
+"шантажировать",
+"to blackmail",
+"",
+"faire chanter"
+],
+[
+"շատացնել",
+"умножать, увеличивать",
+"to multiply",
+"",
+"multiplier (augmenter)"
+],
+[
+"շաքարել",
+"сахарить",
+"to sugar",
+"",
+"sucrer"
+],
+[
+"շվացնել",
+"свистеть",
+"to whistle",
+"😗",
+"siffler"
+],
+[
+"ողջ մնալ",
+"остаться в живых",
+"to survive",
+"",
+"rester en vie"
+],
+[
+"որսագողությամբ զբաղվել",
+"браконьерствовать",
+"to poach",
+"",
+"braconner"
+],
+[
+"ուղեղը լվանալ",
+"промывать мозги",
+"to brainwash",
+"",
+"laver le cerveau"
+],
+[
+"ուշադրություն գրավել",
+"привлекать внимание",
+"to draw attention",
+"",
+"attirer l'attention"
+],
+[
+"ուշադրությունը շեղել",
+"отвлекать",
+"to distract",
+"",
+"distraire"
+],
+[
+"ուշացնել",
+"задерживать",
+"to delay",
+"",
+"retarder"
+],
+[
+"ուշք դարձնել",
+"обращать внимание",
+"to pay attention",
+"👀",
+"faire attention"
+],
+[
+"ուռել",
+"опухать",
+"to swell",
+"",
+"enfler"
+],
+[
+"չափից դուրս արձագանքել",
+"слишком остро реагировать",
+"to overreact",
+"",
+"réagir de manière excessive"
+],
+[
+"չեղյալ հայտարարել",
+"аннулировать",
+"to revoke",
+"",
+"annuler"
+],
+[
+"չխկչխկալ",
+"греметь, дребезжать",
+"to rattle",
+"",
+"cliqueter (synonyme)"
+],
+[
+"չմշկել",
+"кататься на коньках",
+"to skate",
+"⛸️",
+"patiner"
+],
+[
+"պահածոյացնել",
+"консервировать",
+"to can, to preserve",
+"",
+"mettre en conserve"
+],
+[
+"պայտել",
+"подковывать",
+"to shoe (a horse)",
+"",
+"ferrer"
+],
+[
+"պաշոտ եփել",
+"варить пашот",
+"to poach (egg)",
+"",
+"pocher"
+],
+[
+"պաս պահել",
+"поститься",
+"to fast",
+"",
+"jeûner"
+],
+[
+"պատերազմ հայտարարել",
+"объявлять войну",
+"to declare war",
+"",
+"déclarer la guerre"
+],
+[
+"պատերազմ մղել",
+"воевать",
+"to wage war",
+"",
+"faire la guerre"
+],
+[
+"պատռվել",
+"рваться (синоним)",
+"to get torn",
+"",
+"se déchirer (synonyme)"
+],
+[
+"պարենավորել",
+"снабжать продовольствием",
+"to provision",
+"",
+"ravitailler"
+],
+[
+"պարզաջրել",
+"полоскать",
+"to rinse",
+"",
+"rincer"
+],
+[
+"պարունակել",
+"содержать",
+"to contain",
+"",
+"contenir"
+],
+[
+"պարտության մատնել",
+"наносить поражение",
+"to defeat",
+"",
+"vaincre"
+],
+[
+"պարտք վերցնել",
+"брать в долг",
+"to borrow",
+"",
+"emprunter"
+],
+[
+"պետականացնել",
+"огосударствлять",
+"to nationalize",
+"",
+"étatiser"
+],
+[
+"պետք է",
+"надо, должен",
+"must",
+"",
+"il faut"
+],
+[
+"պլոկվել",
+"шелушиться",
+"to peel",
+"",
+"peler"
+],
+[
+"պղպեղել",
+"перчить",
+"to pepper",
+"",
+"poivrer"
+],
+[
+"պղտորել",
+"мутить (воду)",
+"to roil",
+"",
+"troubler"
+],
+[
+"պոկվել",
+"взлетать",
+"to take off",
+"🛫",
+"décoller"
+],
+[
+"պոռթկալ",
+"лопаться, прорываться",
+"to burst",
+"",
+"éclater (synonyme)"
+],
+[
+"ջանք թափել",
+"прилагать усилия",
+"to make an effort",
+"",
+"faire des efforts"
+],
+[
+"ջարդվել",
+"ломаться",
+"to break",
+"",
+"se casser"
+],
+[
+"ջուր տալ",
+"поить",
+"to water",
+"",
+"abreuver"
+],
+[
+"ջրահեղձ լինել",
+"тонуть",
+"to drown",
+"",
+"se noyer"
+],
+[
+"սազեցնել",
+"подгонять (по размеру)",
+"to fit, to tailor",
+"",
+"ajuster"
+],
+[
+"սահեցնել",
+"скользить, двигать",
+"to slide",
+"",
+"faire glisser"
+]
+],
+"fr": "Verbes et expressions 5"
+},
+{
+"lv": "B1",
+"ru": "Глаголы и выражения 6",
+"en": "Verbs and expressions 6",
+"hy": "Բայեր և արտահայտություններ 6",
+"ic": "🔁",
+"w": [
+[
+"սառույցը կոտրել",
+"растопить лёд (в общении)",
+"to break the ice",
+"",
+"briser la glace"
+],
+[
+"սաստկացնել",
+"усугублять",
+"to exacerbate",
+"",
+"aggraver"
+],
+[
+"սերել",
+"происходить (от)",
+"to derive from",
+"",
+"provenir de"
+],
+[
+"սեփականաշնորհել",
+"приватизировать",
+"to privatize",
+"",
+"privatiser"
+],
+[
+"սիրախաղ անել",
+"флиртовать (синоним)",
+"to flirt",
+"",
+"flirter (synonyme)"
+],
+[
+"սիրահարեցնել",
+"влюблять в себя",
+"to make fall in love",
+"",
+"rendre amoureux"
+],
+[
+"սխալ հասկանալ",
+"неправильно понять",
+"to misunderstand",
+"",
+"mal comprendre"
+],
+[
+"սկիզբ առնել",
+"брать начало",
+"to originate",
+"",
+"prendre naissance"
+],
+[
+"սոսնձել",
+"клеить",
+"to glue",
+"",
+"coller"
+],
+[
+"սուբսիդավորել",
+"субсидировать",
+"to subsidize",
+"",
+"subventionner"
+],
+[
+"ստորացնել",
+"унижать",
+"to debase",
+"",
+"avilir"
+],
+[
+"ստուգաբանել",
+"этимологизировать",
+"to etymologize",
+"",
+"étymologiser"
+],
+[
+"սրբադասել",
+"канонизировать",
+"to canonize",
+"",
+"canoniser"
+],
+[
+"սևացնել",
+"очернять",
+"to denigrate",
+"",
+"dénigrer"
+],
+[
+"վազանց անել",
+"обгонять",
+"to overtake",
+"",
+"dépasser"
+],
+[
+"վալսել",
+"танцевать вальс",
+"to waltz",
+"",
+"valser"
+],
+[
+"վաճառել աճուրդով",
+"продавать с аукциона",
+"to auction",
+"",
+"vendre aux enchères"
+],
+[
+"վատթարանալ",
+"ухудшаться",
+"to worsen",
+"",
+"empirer"
+],
+[
+"վերահաշվարկել",
+"пересчитывать",
+"to recount",
+"",
+"recompter"
+],
+[
+"վերահրատարակել",
+"переиздавать",
+"to republish",
+"",
+"rééditer"
+],
+[
+"վերամիավորում",
+"воссоединение",
+"reunion",
+"",
+"réunification"
+],
+[
+"վերանվաճել",
+"отвоёвывать",
+"to reconquer",
+"",
+"reconquérir"
+],
+[
+"վերապատրաստել",
+"переподготавливать",
+"to retrain",
+"",
+"former (en cours d'emploi)"
+],
+[
+"վերափաթաթել",
+"перематывать",
+"to rewind",
+"",
+"rembobiner"
+],
+[
+"վիժեցնել",
+"прерывать (беременность)",
+"to abort",
+"",
+"interrompre"
+],
+[
+"վիրակապել",
+"перевязывать",
+"to bandage",
+"",
+"bander"
+],
+[
+"վկայություն տալ",
+"давать показания",
+"to testify",
+"",
+"témoigner"
+],
+[
+"վտանգի ենթարկել",
+"подвергать опасности",
+"to jeopardize",
+"",
+"mettre en danger"
+],
+[
+"վրեժ լուծել",
+"мстить",
+"to avenge",
+"",
+"venger"
+],
+[
+"վրիպազերծել",
+"отлаживать (программу)",
+"to debug",
+"",
+"déboguer"
+],
+[
+"տանջվել",
+"мучиться (синоним)",
+"to suffer",
+"",
+"souffrir (synonyme)"
+],
+[
+"տապակվել",
+"жариться",
+"to fry",
+"",
+"frire (cuire)"
+],
+[
+"տարածվել",
+"простираться",
+"to extend",
+"",
+"s'étendre"
+],
+[
+"տարաձայնել",
+"расходиться во мнениях",
+"to dissent",
+"",
+"être en désaccord"
+],
+[
+"տկարանալ",
+"слабеть (синоним)",
+"to weaken",
+"",
+"s'affaiblir (synonyme)"
+],
+[
+"տուգանել",
+"штрафовать",
+"to fine",
+"",
+"mettre une amende"
+],
+[
+"տրիտոն",
+"тритон",
+"newt",
+"",
+"triton"
+],
+[
+"ցածրացնել",
+"опускать, понижать",
+"to lower",
+"",
+"abaisser"
+],
+[
+"ցավ պատճառել",
+"причинять боль",
+"to cause pain",
+"",
+"faire mal"
+],
+[
+"ցիտել",
+"цитировать",
+"to quote",
+"",
+"citer"
+],
+[
+"ցրտահարել",
+"обморозить",
+"to frostbite",
+"",
+"geler"
+],
+[
+"փաղաքշել",
+"уговаривать ласково",
+"to coax",
+"",
+"amadouer"
+],
+[
+"փայտով ծեծել",
+"бить палкой",
+"to cane",
+"",
+"bâtonner"
+],
+[
+"փափկացնել",
+"палатализовать",
+"to palatalize",
+"",
+"palataliser"
+],
+[
+"փնչացնել",
+"шмыгать носом",
+"to sniff",
+"",
+"renifler (synonyme)"
+],
+[
+"փոխ առնել",
+"заимствовать",
+"to borrow",
+"",
+"emprunter (synonyme)"
+],
+[
+"փոխ տալ",
+"давать в долг",
+"to lend",
+"",
+"prêter"
+],
+[
+"փոխարկել",
+"переключать",
+"to switch",
+"",
+"commuter, basculer"
+],
+[
+"փոխպատվաստել",
+"пересаживать (орган)",
+"to transplant",
+"",
+"transplanter"
+],
+[
+"փոշեծծիչով մաքրել",
+"пылесосить",
+"to vacuum",
+"",
+"passer l'aspirateur"
+],
+[
+"փոշիանալ",
+"превращаться в порошок",
+"to pulverize",
+"",
+"se pulvériser"
+],
+[
+"փուլ գալ",
+"рухнуть",
+"to collapse",
+"",
+"s'écrouler"
+],
+[
+"փրկվել",
+"спастись",
+"to be saved",
+"",
+"être sauvé"
+],
+[
+"քակել",
+"развязывать",
+"to untie",
+"",
+"dénouer"
+],
+[
+"քաղաքակրթել",
+"цивилизовать",
+"to civilize",
+"",
+"civiliser"
+],
+[
+"քամել",
+"выжимать",
+"to wring",
+"",
+"essorer"
+],
+[
+"քարշ տալ",
+"тащить",
+"to drag",
+"",
+"traîner"
+],
+[
+"քել",
+"давай(те)! (призыв)",
+"let's",
+"",
+"allons !"
+],
+[
+"քիթը մաքրել",
+"высморкаться",
+"to blow one's nose",
+"",
+"se moucher"
+],
+[
+"քոր գալ",
+"чесаться",
+"to itch",
+"",
+"démanger"
+],
+[
+"քվեարկել ոտքերով",
+"голосовать ногами",
+"to vote with one's feet",
+"",
+"voter avec ses pieds"
+],
+[
+"քրքրվել",
+"изнашиваться",
+"to wear out",
+"",
+"s'user"
+],
+[
+"օգուտ բերել",
+"приносить пользу",
+"to be of use",
+"",
+"être utile"
+],
+[
+"օգուտ քաղել",
+"извлекать пользу",
+"to take advantage",
+"",
+"tirer profit"
+],
+[
+"օծել",
+"помазывать",
+"to anoint",
+"",
+"oindre"
+],
+[
+"օճառվել",
+"намыливаться",
+"to soap oneself",
+"",
+"se savonner"
+],
+[
+"ֆինանսավորել",
+"финансировать",
+"to finance",
+"",
+"financer"
+],
+[
+"ֆսֆսալ",
+"сопеть",
+"to sniffle",
+"",
+"renifler"
+]
+],
+"fr": "Verbes et expressions 6"
+},
+{
 "lv": "B2",
 "ru": "Личность и психология",
 "en": "Personality and psychology",
@@ -113738,6 +116695,4162 @@
 ]
 ],
 "fr": "Familles de mots 7"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 1",
+"en": "Adjectives 1",
+"hy": "Ածականներ 1",
+"ic": "🎨",
+"w": [
+[
+"աբբայական",
+"аббатский",
+"abbatial",
+"",
+"abbatial"
+],
+[
+"աբելյան",
+"абелев",
+"abelian",
+"",
+"abélien"
+],
+[
+"ադրիական",
+"адриатический",
+"Adriatic",
+"",
+"adriatique"
+],
+[
+"ազգակից",
+"родственный (о языках)",
+"cognate",
+"",
+"apparenté"
+],
+[
+"ազգայնական",
+"националистический",
+"nationalist",
+"",
+"nationaliste"
+],
+[
+"ալանական",
+"аланский",
+"Alanic",
+"",
+"alain"
+],
+[
+"ալբանական",
+"албанский",
+"Albanian",
+"",
+"albanais"
+],
+[
+"ալժիրական",
+"алжирский",
+"Algerian",
+"",
+"algérien"
+],
+[
+"ալպյան",
+"альпийский",
+"Alpine",
+"",
+"alpin"
+],
+[
+"ալտրուիստական",
+"альтруистичный",
+"altruistic",
+"",
+"altruiste (synonyme)"
+],
+[
+"ախորժահամ",
+"вкусный, аппетитный",
+"palatable",
+"",
+"savoureux"
+],
+[
+"ախտանշական",
+"симптоматический",
+"symptomatic",
+"",
+"symptomatique"
+],
+[
+"ածականական",
+"адъективный",
+"adjectival",
+"",
+"adjectival"
+],
+[
+"ակնարկիչ",
+"намекающий",
+"allusive",
+"",
+"allusif"
+],
+[
+"ակնոցավոր",
+"в очках",
+"bespectacled",
+"👓",
+"à lunettes"
+],
+[
+"ակտուարական",
+"актуарный",
+"actuarial",
+"",
+"actuariel"
+],
+[
+"ահավոր",
+"ужасный",
+"awful, terrible",
+"",
+"affreux"
+],
+[
+"ահարկու",
+"грозный, устрашающий",
+"formidable",
+"",
+"redoutable (synonyme)"
+],
+[
+"աղիքային",
+"кишечный",
+"intestinal",
+"",
+"intestinal"
+],
+[
+"աղմկալի",
+"шумный",
+"noisy",
+"",
+"bruyant"
+],
+[
+"աղվանական",
+"кавказско-албанский",
+"Caucasian Albanian",
+"",
+"albanien du Caucase"
+],
+[
+"ամբողջատիրական",
+"тоталитарный",
+"totalitarian",
+"",
+"totalitaire"
+],
+[
+"ամենալավ",
+"самый лучший",
+"the best",
+"",
+"le meilleur"
+],
+[
+"ամենակարող",
+"всемогущий (синоним)",
+"omnipotent",
+"",
+"omnipotent"
+],
+[
+"ամերիկական",
+"американский (о континенте)",
+"American (of the Americas)",
+"",
+"américain (des Amériques)"
+],
+[
+"ամուսնալուծված",
+"разведённый",
+"divorced",
+"",
+"divorcé"
+],
+[
+"այլաբանական",
+"аллегорический",
+"allegorical",
+"",
+"allégorique"
+],
+[
+"այսպես կոչված",
+"так называемый",
+"so-called",
+"",
+"soi-disant"
+],
+[
+"անալոգային",
+"аналоговый",
+"analog",
+"",
+"analogique"
+],
+[
+"անախրոնիկ",
+"анахроничный",
+"anachronistic",
+"",
+"anachronique"
+],
+[
+"անամպ",
+"безоблачный",
+"cloudless",
+"",
+"sans nuages"
+],
+[
+"անանուն",
+"анонимный, безымянный",
+"anonymous",
+"",
+"anonyme"
+],
+[
+"անանցողական",
+"непереходный (глагол)",
+"intransitive",
+"",
+"intransitif"
+],
+[
+"անառակ",
+"распутный, беспутный",
+"profligate",
+"",
+"débauché (dévoyé)"
+],
+[
+"անաստղ",
+"беззвёздный",
+"starless",
+"",
+"sans étoiles"
+],
+[
+"անարյուն",
+"бескровный",
+"bloodless",
+"",
+"exsangue (sans sang)"
+],
+[
+"անբախտ",
+"несчастливый, злополучный",
+"hapless",
+"",
+"malheureux (infortuné)"
+],
+[
+"անբացատրելի",
+"необъяснимый",
+"inexplicable",
+"",
+"inexplicable"
+],
+[
+"անբուժելի",
+"неизлечимый",
+"incurable",
+"",
+"incurable"
+],
+[
+"անգին",
+"бесценный",
+"invaluable",
+"",
+"inestimable"
+],
+[
+"անգլիախոս",
+"англоязычный",
+"Anglophone",
+"",
+"anglophone"
+],
+[
+"անգլիական",
+"английский (об Англии)",
+"English",
+"",
+"anglais"
+],
+[
+"անգլո-սաքսոնական",
+"англосаксонский",
+"Anglo-Saxon",
+"",
+"anglo-saxon"
+],
+[
+"անգոհ",
+"недовольный",
+"dissatisfied",
+"",
+"mécontent"
+],
+[
+"անգութ",
+"жестокий, безжалостный",
+"cruel, ruthless",
+"",
+"cruel, impitoyable"
+],
+[
+"անդեմ",
+"безликий",
+"faceless",
+"",
+"sans visage"
+],
+[
+"անդրսահարյան",
+"южнее Сахары",
+"sub-Saharan",
+"",
+"subsaharien"
+],
+[
+"անզգա",
+"бесчувственный, онемевший",
+"numb, insensate",
+"",
+"insensible"
+],
+[
+"անզգույշ",
+"неосторожный",
+"indiscreet",
+"",
+"indiscret"
+],
+[
+"անզույգ",
+"непарный",
+"unpaired",
+"",
+"impair (non apparié)"
+],
+[
+"անընթեռնելի",
+"неразборчивый (почерк)",
+"illegible",
+"",
+"illisible (synonyme)"
+],
+[
+"անխոնջ",
+"неутомимый",
+"indefatigable",
+"",
+"infatigable"
+],
+[
+"անխոս",
+"молчаливый, безмолвный",
+"tacit",
+"",
+"tacite"
+],
+[
+"անկապ",
+"бессвязный, нелепый",
+"senseless",
+"",
+"incohérent"
+]
+],
+"fr": "Adjectifs 1"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 2",
+"en": "Adjectives 2",
+"hy": "Ածականներ 2",
+"ic": "🎨",
+"w": [
+[
+"անկենդան",
+"безжизненный",
+"lifeless",
+"",
+"inanimé"
+],
+[
+"անկշիռ",
+"невесомый",
+"weightless",
+"",
+"en apesanteur"
+],
+[
+"անկործան",
+"неразрушимый",
+"indestructible",
+"",
+"indestructible"
+],
+[
+"անհամեմատելի",
+"несравнимый",
+"incomparable",
+"",
+"incomparable"
+],
+[
+"անհանգստացնող",
+"тревожный, беспокоящий",
+"bothersome",
+"",
+"inquiétant"
+],
+[
+"անհաշվելի",
+"неисчислимый; неисчисляемый",
+"uncountable",
+"",
+"indénombrable"
+],
+[
+"անհաստատ",
+"неустойчивый",
+"erratic",
+"",
+"instable"
+],
+[
+"անհավակնոտ",
+"скромный, неброский",
+"understated",
+"",
+"discret"
+],
+[
+"անհոգ",
+"беспечный",
+"reckless, nonchalant",
+"",
+"insouciant"
+],
+[
+"անձայն",
+"беззвучный",
+"inaudible",
+"",
+"inaudible"
+],
+[
+"անմոռաց",
+"незабываемый",
+"unforgettable",
+"",
+"inoubliable"
+],
+[
+"անմորուք",
+"безбородый",
+"beardless",
+"",
+"imberbe"
+],
+[
+"աններելի",
+"непростительный",
+"unforgivable",
+"",
+"impardonnable"
+],
+[
+"անշրջահայաց",
+"опрометчивый",
+"reckless",
+"",
+"imprudent"
+],
+[
+"անուշահոտ",
+"душистый",
+"fragrant",
+"",
+"odorant (parfumé)"
+],
+[
+"անպատիժ",
+"безнаказанный",
+"unpunished",
+"",
+"impuni"
+],
+[
+"անպատկառ",
+"дерзкий, наглый",
+"insolent",
+"",
+"insolent (impertinent)"
+],
+[
+"անպտղաբեր",
+"бесплодный (синоним)",
+"barren",
+"",
+"stérile (synonyme)"
+],
+[
+"անջատված",
+"отключённый, рассеянный",
+"disconnected, absent",
+"",
+"déconnecté"
+],
+[
+"անսխալական",
+"непогрешимый",
+"infallible",
+"",
+"infaillible"
+],
+[
+"անսփոփ",
+"безутешный (синоним)",
+"disconsolate",
+"",
+"inconsolable (synonyme)"
+],
+[
+"անվայելուչ",
+"неприличный",
+"unseemly",
+"",
+"malséant"
+],
+[
+"անտաշ",
+"неотёсанный",
+"churlish",
+"",
+"rustre"
+],
+[
+"անցումային",
+"переходный",
+"transitional",
+"",
+"transitoire"
+],
+[
+"անօտարելի",
+"неотъемлемый",
+"inalienable",
+"",
+"inaliénable"
+],
+[
+"աշխարհիկ",
+"светский, мирской",
+"secular",
+"",
+"laïque, séculier"
+],
+[
+"աշնանային",
+"осенний",
+"autumnal",
+"🍂",
+"automnal"
+],
+[
+"ապաշխարող",
+"кающийся",
+"penitent",
+"",
+"pénitent"
+],
+[
+"ապստամբած",
+"восставший",
+"insurgent",
+"",
+"insurgé"
+],
+[
+"առաձգական",
+"упругий, эластичный",
+"elastic",
+"",
+"élastique"
+],
+[
+"առարկայական",
+"предметный",
+"objective",
+"",
+"objectif (matériel)"
+],
+[
+"ասող-խոսող",
+"разговорчивый, словоохотливый",
+"voluble",
+"",
+"volubile"
+],
+[
+"ասորեստանյան",
+"ассирийский",
+"Assyrian",
+"",
+"assyrien"
+],
+[
+"ասպիրանտական",
+"аспирантский",
+"postgraduate",
+"",
+"de troisième cycle"
+],
+[
+"աստղագիտական",
+"астрономический",
+"astronomical",
+"",
+"astronomique"
+],
+[
+"աստուրիական",
+"астурийский",
+"Asturian",
+"",
+"asturien"
+],
+[
+"ավատատիրական",
+"феодальный (синоним)",
+"feudal",
+"",
+"féodal (synonyme)"
+],
+[
+"ավարական",
+"аварский",
+"Avar",
+"",
+"avar"
+],
+[
+"ավելի լավ",
+"лучше",
+"better",
+"",
+"meilleur, mieux"
+],
+[
+"ավելի վատ",
+"хуже",
+"worse",
+"",
+"pire"
+],
+[
+"ավտոկեֆալ",
+"автокефальный",
+"autocephalous",
+"",
+"autocéphale"
+],
+[
+"ավտոմատ",
+"автоматический",
+"automatic",
+"",
+"automatique"
+],
+[
+"ավտորիտար",
+"авторитарный",
+"authoritarian",
+"",
+"autoritaire"
+],
+[
+"ատամնաբուժական",
+"стоматологический",
+"dental",
+"",
+"dentaire"
+],
+[
+"արամեական",
+"арамейский",
+"Aramaic",
+"",
+"araméen"
+],
+[
+"արգելված",
+"запрещённый",
+"forbidden",
+"🚫",
+"interdit"
+],
+[
+"արեւելաեվրոպական",
+"восточноевропейский",
+"Eastern European",
+"",
+"d'Europe de l'Est"
+],
+[
+"արհեստավարժ",
+"профессиональный",
+"professional",
+"",
+"professionnel"
+],
+[
+"արձակված",
+"развязанный, свободный",
+"loose, untied",
+"",
+"délié"
+],
+[
+"արյունարբու",
+"кровожадный (синоним)",
+"bloodthirsty",
+"",
+"assoiffé de sang"
+],
+[
+"արտասահմանյան",
+"иностранный, зарубежный",
+"foreign",
+"",
+"étranger (de l'étranger)"
+],
+[
+"արցունքոտ",
+"заплаканный",
+"tearful",
+"",
+"en larmes"
+],
+[
+"աֆղանական",
+"афганский",
+"Afghan",
+"",
+"afghan"
+],
+[
+"բազմաբջիջ",
+"многоклеточный",
+"multicellular",
+"",
+"multicellulaire"
+]
+],
+"fr": "Adjectifs 2"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 3",
+"en": "Adjectives 3",
+"hy": "Ածականներ 3",
+"ic": "🎨",
+"w": [
+[
+"բազմաբևեռ",
+"многополярный",
+"multipolar",
+"",
+"multipolaire"
+],
+[
+"բազմադարյան",
+"многовековой",
+"centuries-old",
+"",
+"séculaire"
+],
+[
+"բազմակի օգտագործման",
+"многоразовый",
+"reusable",
+"♻️",
+"réutilisable"
+],
+[
+"բազմահատոր",
+"многотомный",
+"multivolume",
+"",
+"en plusieurs volumes"
+],
+[
+"բազմամշակութային",
+"многокультурный",
+"multicultural",
+"",
+"multiculturel"
+],
+[
+"բալթիական",
+"балтийский (синоним)",
+"Baltic",
+"",
+"balte (synonyme)"
+],
+[
+"բաղաձայնային",
+"согласный (о звуке)",
+"consonantal",
+"",
+"consonantique"
+],
+[
+"բանասիրական",
+"филологический",
+"philological",
+"",
+"philologique"
+],
+[
+"բանիմաց",
+"знающий, сведущий",
+"knowledgeable",
+"",
+"connaisseur (synonyme)"
+],
+[
+"բաշկիրական",
+"башкирский",
+"Bashkir",
+"",
+"bachkir"
+],
+[
+"բառագիտական",
+"лексикологический",
+"lexicological",
+"",
+"lexicologique"
+],
+[
+"բառակազմական",
+"словообразовательный",
+"word-formational",
+"",
+"dérivationnel"
+],
+[
+"բավարական",
+"баварский",
+"Bavarian",
+"",
+"bavarois"
+],
+[
+"բարբառագիտական",
+"диалектологический",
+"dialectological",
+"",
+"dialectologique"
+],
+[
+"բարբարոսական",
+"варварский",
+"barbaric",
+"",
+"barbare"
+],
+[
+"բարկահամ",
+"солёный, пикантный",
+"savory",
+"",
+"salé"
+],
+[
+"բարձրակարգ",
+"высококлассный",
+"fine, high-class",
+"",
+"de haute qualité (synonyme)"
+],
+[
+"բարոյագիտական",
+"этический",
+"ethical",
+"",
+"éthique"
+],
+[
+"բացօդյա",
+"на открытом воздухе",
+"outdoor",
+"",
+"extérieur"
+],
+[
+"բաքվյան",
+"бакинский",
+"Bakuvian",
+"",
+"de Bakou"
+],
+[
+"բելգիական",
+"бельгийский",
+"Belgian",
+"",
+"belge"
+],
+[
+"բեմոլ",
+"бемоль",
+"flat (music)",
+"♭",
+"bémol"
+],
+[
+"բևեռագիր",
+"клинописный",
+"cuneiform",
+"",
+"cunéiforme"
+],
+[
+"բիրմանական",
+"бирманский",
+"Burmese",
+"",
+"birman"
+],
+[
+"բոլորաձև",
+"круглый, круговой",
+"circular",
+"",
+"circulaire"
+],
+[
+"բոսնիական",
+"боснийский",
+"Bosnian",
+"",
+"bosniaque"
+],
+[
+"բուժիչ",
+"лекарственный",
+"medicinal",
+"",
+"médicinal"
+],
+[
+"բուլղարական",
+"болгарский",
+"Bulgarian",
+"",
+"bulgare"
+],
+[
+"բուրժուական",
+"буржуазный",
+"bourgeois",
+"",
+"bourgeois"
+],
+[
+"բուրյաթական",
+"бурятский",
+"Buryat",
+"",
+"bouriate"
+],
+[
+"բռնապետական",
+"деспотичный",
+"dictatorial",
+"",
+"dictatorial"
+],
+[
+"բրազիլական",
+"бразильский",
+"Brazilian",
+"",
+"brésilien"
+],
+[
+"գալվանական",
+"гальванический",
+"galvanic",
+"",
+"galvanique"
+],
+[
+"գաղտնապահ",
+"скрытный",
+"secretive",
+"",
+"secret (discret)"
+],
+[
+"գերբնական",
+"сверхъестественный",
+"supernatural",
+"",
+"surnaturel"
+],
+[
+"գնդակերպ",
+"шарообразный",
+"orbicular",
+"",
+"sphérique"
+],
+[
+"գնչուական",
+"цыганский",
+"Romani",
+"",
+"rom, tzigane"
+],
+[
+"գոյություն չունեցող",
+"несуществующий",
+"nonexistent",
+"",
+"inexistant"
+],
+[
+"գոտկատեղի",
+"поясничный",
+"lumbar",
+"",
+"lombaire"
+],
+[
+"գործածելի",
+"пригодный к использованию",
+"usable",
+"",
+"utilisable"
+],
+[
+"գործիմաց",
+"практичный, деловой",
+"practical",
+"",
+"pratique"
+],
+[
+"գույնզգույն",
+"разноцветный (пёстрый)",
+"multicoloured",
+"",
+"bariolé (synonyme)"
+],
+[
+"գրանիտե",
+"гранитный",
+"granitic",
+"",
+"granitique"
+],
+[
+"դանդալոշ",
+"тупица, глупый",
+"stupid, blockhead",
+"",
+"idiot, cruche"
+],
+[
+"դասագրքային",
+"хрестоматийный",
+"textbook",
+"",
+"d'école, classique"
+],
+[
+"դեդուկտիվ",
+"дедуктивный",
+"deductive",
+"",
+"déductif"
+],
+[
+"դեղագործական",
+"фармацевтический",
+"pharmaceutical",
+"",
+"pharmaceutique"
+],
+[
+"դեղնակարմիր",
+"охряный",
+"ochre",
+"",
+"ocre"
+],
+[
+"դեմոգրաֆիական",
+"демографический (синоним)",
+"demographic",
+"",
+"démographique (synonyme)"
+],
+[
+"դժոխային",
+"адский",
+"hellish",
+"",
+"infernal"
+],
+[
+"դժվար թե",
+"вряд ли",
+"unlikely",
+"",
+"peu probable"
+],
+[
+"դիալեկտիկական",
+"диалектический",
+"dialectical",
+"",
+"dialectique"
+],
+[
+"դիետիկ",
+"диетический",
+"dietetic",
+"",
+"diététique"
+],
+[
+"դիլետանտական",
+"дилетантский",
+"amateurish",
+"",
+"d'amateur"
+]
+],
+"fr": "Adjectifs 3"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 4",
+"en": "Adjectives 4",
+"hy": "Ածականներ 4",
+"ic": "🎨",
+"w": [
+[
+"դինաստիական",
+"династический",
+"dynastic",
+"",
+"dynastique"
+],
+[
+"դիցաբանական",
+"мифический",
+"mythical",
+"",
+"mythique"
+],
+[
+"դյուրազգաց",
+"сентиментальный",
+"maudlin",
+"",
+"sentimental"
+],
+[
+"դոգմատիկ",
+"догматичный",
+"dogmatic",
+"",
+"dogmatique"
+],
+[
+"դողացող",
+"дрожащий",
+"tremulous",
+"",
+"tremblant"
+],
+[
+"դողդոջուն",
+"трепещущий",
+"tremulous",
+"",
+"tremblotant"
+],
+[
+"դոնկիխոտյան",
+"донкихотский",
+"quixotic",
+"",
+"donquichottesque"
+],
+[
+"դրամական",
+"денежный",
+"monetary",
+"",
+"monétaire"
+],
+[
+"դրամատիկ",
+"драматический",
+"dramatic",
+"",
+"dramatique"
+],
+[
+"եբենոսե",
+"эбеновый",
+"ebony",
+"",
+"d'ébène"
+],
+[
+"եբրայական",
+"еврейский (древнееврейский)",
+"Hebrew",
+"",
+"hébreu"
+],
+[
+"եգիպտական",
+"египетский",
+"Egyptian",
+"",
+"égyptien"
+],
+[
+"ենթադրվող",
+"подразумеваемый",
+"implied",
+"",
+"implicite"
+],
+[
+"ենթարկվող",
+"послушный, сговорчивый",
+"tractable",
+"",
+"docile"
+],
+[
+"եպիսկոպոսյան",
+"епископальный",
+"episcopal",
+"",
+"épiscopal"
+],
+[
+"եռակողմ",
+"трёхсторонний",
+"trilateral",
+"",
+"trilatéral"
+],
+[
+"եռավանկ",
+"трёхсложный",
+"trisyllabic",
+"",
+"trisyllabique"
+],
+[
+"եռացող",
+"кипящий",
+"boiling",
+"",
+"bouillant"
+],
+[
+"եռօրյա",
+"трёхдневный",
+"three-day",
+"",
+"de trois jours"
+],
+[
+"ետդասական",
+"постклассический",
+"postclassical",
+"",
+"postclassique"
+],
+[
+"ետևի",
+"задний",
+"back, rear",
+"",
+"arrière, de derrière"
+],
+[
+"երազական",
+"сновидческий",
+"oneiric",
+"",
+"onirique"
+],
+[
+"երեխայական",
+"ребяческий",
+"childish",
+"",
+"puéril"
+],
+[
+"երեսուներորդ",
+"тридцатый",
+"thirtieth",
+"",
+"trentième"
+],
+[
+"երկերեսանի",
+"двуличный",
+"two-faced",
+"",
+"hypocrite (à deux visages)"
+],
+[
+"երկշրթնային",
+"губно-губной",
+"bilabial",
+"",
+"bilabial"
+],
+[
+"երկուական",
+"двоичный",
+"binary",
+"",
+"binaire"
+],
+[
+"երկուհարյուրերորդ",
+"двухсотый",
+"two-hundredth",
+"",
+"deux-centième"
+],
+[
+"երկսեռական",
+"бисексуальный",
+"bisexual",
+"",
+"bisexuel"
+],
+[
+"երկրաջերմային",
+"геотермальный",
+"geothermal",
+"",
+"géothermique"
+],
+[
+"զառիթափ",
+"крутой, отвесный",
+"steep",
+"",
+"abrupt"
+],
+[
+"զարգացող",
+"развивающийся",
+"developing",
+"",
+"en développement"
+],
+[
+"զարթուն",
+"бодрствующий",
+"awake",
+"",
+"éveillé (synonyme)"
+],
+[
+"զարհուրած",
+"охваченный ужасом",
+"aghast",
+"",
+"horrifié (synonyme)"
+],
+[
+"զբոսաշրջային",
+"туристический (синоним)",
+"touristic",
+"",
+"touristique (synonyme)"
+],
+[
+"զրոերորդ",
+"нулевой",
+"zeroth",
+"",
+"zéroième"
+],
+[
+"էլեկտրամագնիսական",
+"электромагнитный",
+"electromagnetic",
+"",
+"électromagnétique"
+],
+[
+"էկոլոգիական",
+"экологический",
+"ecological",
+"🌱",
+"écologique"
+],
+[
+"էնդոգեն",
+"эндогенный",
+"endogenous",
+"",
+"endogène"
+],
+[
+"էքսպանսիոնիստական",
+"экспансионистский",
+"expansionist",
+"",
+"expansionniste"
+],
+[
+"ընդերկրյա",
+"подземный (книжн.)",
+"subterranean",
+"",
+"souterrain (littéraire)"
+],
+[
+"ընթեռնելի",
+"разборчивый (о почерке)",
+"legible",
+"",
+"lisible (synonyme)"
+],
+[
+"թաթարական",
+"татарский",
+"Tatar",
+"",
+"tatar"
+],
+[
+"թալիշական",
+"талышский",
+"Talysh",
+"",
+"talych"
+],
+[
+"թառամած",
+"высохший, сморщенный",
+"wizened",
+"",
+"ratatiné"
+],
+[
+"թարմացնող",
+"освежающий",
+"refreshing",
+"",
+"rafraîchissant"
+],
+[
+"թեմատիկ",
+"тематический",
+"thematic",
+"",
+"thématique"
+],
+[
+"թերակղզային",
+"полуостровной",
+"peninsular",
+"",
+"péninsulaire"
+],
+[
+"թերապևտիկ",
+"терапевтический",
+"therapeutic",
+"",
+"thérapeutique"
+],
+[
+"թեփուկածածկ",
+"чешуйчатый",
+"scaly",
+"",
+"écailleux"
+],
+[
+"թթվային",
+"кислотный",
+"acid",
+"",
+"acide"
+],
+[
+"թմրած",
+"онемевший",
+"numb",
+"",
+"engourdi"
+],
+[
+"թուջե",
+"чугунный",
+"cast iron",
+"",
+"en fonte"
+],
+[
+"թռուցիկ",
+"мимолётный; листовка",
+"fleeting; flyer",
+"",
+"fugace; tract"
+]
+],
+"fr": "Adjectifs 4"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 5",
+"en": "Adjectives 5",
+"hy": "Ածականներ 5",
+"ic": "🎨",
+"w": [
+[
+"թրակյան",
+"фракийский",
+"Thracian",
+"",
+"thrace"
+],
+[
+"ժամանակագրական",
+"хронологический",
+"chronological",
+"",
+"chronologique"
+],
+[
+"ժխտական",
+"отрицательный (синоним)",
+"negative",
+"",
+"négatif (synonyme)"
+],
+[
+"իդեալական",
+"идеальный",
+"ideal",
+"",
+"idéal"
+],
+[
+"իդիոսինկրատիկ",
+"своеобразный (идиосинкратический)",
+"idiosyncratic",
+"",
+"idiosyncrasique"
+],
+[
+"իմպուլսիվ",
+"импульсивный",
+"impetuous",
+"",
+"impulsif"
+],
+[
+"ինգուշական",
+"ингушский",
+"Ingush",
+"",
+"ingouche"
+],
+[
+"ինդուկտիվ",
+"индуктивный",
+"inductive",
+"",
+"inductif"
+],
+[
+"իննսուներորդ",
+"девяностый",
+"ninetieth",
+"",
+"quatre-vingt-dixième"
+],
+[
+"ինտերակտիվ",
+"интерактивный",
+"interactive",
+"",
+"interactif"
+],
+[
+"ինքնասպանական",
+"суицидальный",
+"suicidal",
+"",
+"suicidaire"
+],
+[
+"ինքնիշխան",
+"суверенный",
+"sovereign",
+"",
+"souverain"
+],
+[
+"իռլանդական",
+"ирландский",
+"Irish",
+"",
+"irlandais"
+],
+[
+"իսլանդական",
+"исландский",
+"Icelandic",
+"",
+"islandais"
+],
+[
+"իսրայելյան",
+"израильский (синоним)",
+"Israeli",
+"",
+"israélien (synonyme)"
+],
+[
+"իտալիկյան",
+"италийский",
+"Italic",
+"",
+"italique"
+],
+[
+"իրավասու",
+"компетентный (юрид.)",
+"competent (law)",
+"",
+"compétent"
+],
+[
+"իրացվելի",
+"ликвидный",
+"liquid (asset)",
+"",
+"liquide"
+],
+[
+"իրաքյան",
+"иракский",
+"Iraqi",
+"",
+"irakien"
+],
+[
+"լայնախոհ",
+"широких взглядов",
+"broad-minded",
+"",
+"large d'esprit"
+],
+[
+"լայնածավալ",
+"обширный, масштабный",
+"ample, large-scale",
+"",
+"ample, d'envergure"
+],
+[
+"լիբիական",
+"ливийский",
+"Libyan",
+"",
+"libyen"
+],
+[
+"լիրբ",
+"бесстыжий, наглый (книжн.)",
+"brazen",
+"",
+"effronté (littéraire)"
+],
+[
+"լուծելի",
+"разрешимый",
+"solvable",
+"",
+"soluble (résoluble)"
+],
+[
+"լուծողական",
+"слабительный",
+"laxative",
+"",
+"laxatif"
+],
+[
+"լսողական",
+"слуховой",
+"auditory",
+"",
+"auditif"
+],
+[
+"խազարական",
+"хазарский",
+"Khazar",
+"",
+"khazar"
+],
+[
+"խաղաղասեր",
+"миролюбивый",
+"peace-loving",
+"",
+"pacifique"
+],
+[
+"խաղողագործական",
+"виноградарский",
+"viticultural",
+"",
+"viticole"
+],
+[
+"խայտուցավոր",
+"крапчатый",
+"mottled",
+"",
+"tacheté"
+],
+[
+"խառը",
+"беспорядочный",
+"haphazard",
+"",
+"désordonné"
+],
+[
+"խեցեգործական",
+"керамический",
+"ceramic",
+"",
+"céramique"
+],
+[
+"խմորանման",
+"тестообразный",
+"doughy",
+"",
+"pâteux"
+],
+[
+"խոզային",
+"свиной",
+"porcine",
+"",
+"porcin"
+],
+[
+"խոժոռ",
+"угрюмый",
+"morose, sullen",
+"",
+"maussade"
+],
+[
+"խուռիական",
+"хурритский",
+"Hurrian",
+"",
+"hourrite"
+],
+[
+"խրատական",
+"поучительный",
+"didactic",
+"",
+"didactique"
+],
+[
+"խրտնող",
+"пугливый",
+"skittish",
+"",
+"ombrageux"
+],
+[
+"ծածկված",
+"покрытый",
+"covered",
+"",
+"couvert"
+],
+[
+"ծանրաբարո",
+"скромный, сдержанный",
+"demure",
+"",
+"réservé"
+],
+[
+"ծավալային",
+"объёмный",
+"voluminous",
+"",
+"volumineux (synonyme)"
+],
+[
+"ծեծված",
+"банальный, избитый",
+"banal",
+"",
+"banal"
+],
+[
+"ծիսական",
+"обрядовый, ритуальный",
+"ritual",
+"",
+"rituel"
+],
+[
+"ծովային",
+"морской",
+"marine",
+"⚓",
+"marin"
+],
+[
+"ծուռկողանի",
+"кособокий",
+"lopsided",
+"",
+"de guingois"
+],
+[
+"կալիֆոռնիական",
+"калифорнийский",
+"Californian",
+"",
+"californien"
+],
+[
+"կախված",
+"зависимый",
+"dependent",
+"",
+"dépendant"
+],
+[
+"կամայական",
+"произвольный",
+"arbitrary",
+"",
+"arbitraire"
+],
+[
+"կամբոջական",
+"камбоджийский",
+"Cambodian",
+"",
+"cambodgien"
+],
+[
+"կայսերական",
+"имперский",
+"imperial",
+"",
+"impérial"
+],
+[
+"կանխատես",
+"предусмотрительный",
+"provident",
+"",
+"prévoyant"
+],
+[
+"կանոնական",
+"канонический",
+"canonical",
+"",
+"canonique"
+],
+[
+"կառավարական",
+"правительственный",
+"governmental",
+"",
+"gouvernemental"
+],
+[
+"կասկածապաշտական",
+"скептический (синоним)",
+"skeptical",
+"",
+"sceptique (synonyme)"
+]
+],
+"fr": "Adjectifs 5"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 6",
+"en": "Adjectives 6",
+"hy": "Ածականներ 6",
+"ic": "🎨",
+"w": [
+[
+"կասպիական",
+"каспийский",
+"Caspian",
+"",
+"caspien"
+],
+[
+"կատալոնական",
+"каталонский",
+"Catalan",
+"",
+"catalan"
+],
+[
+"կարելական",
+"карельский",
+"Karelian",
+"",
+"carélien"
+],
+[
+"կարթաձև",
+"крючковидный",
+"unciform",
+"",
+"unciforme"
+],
+[
+"կարճատես",
+"близорукий",
+"myopic",
+"",
+"myope"
+],
+[
+"կարճատեւ",
+"кратковременный",
+"fleeting",
+"",
+"éphémère"
+],
+[
+"կարոլինգյան",
+"каролингский",
+"Carolingian",
+"",
+"carolingien"
+],
+[
+"կենսաբժշկական",
+"биомедицинский",
+"biomedical",
+"",
+"biomédical"
+],
+[
+"կենսաչափական",
+"биометрический",
+"biometric",
+"",
+"biométrique"
+],
+[
+"կիեւյան",
+"киевский",
+"Kyivan",
+"",
+"kiévien"
+],
+[
+"կինեմատիկ",
+"кинематический",
+"kinematic",
+"",
+"cinématique"
+],
+[
+"կիսաթանկարժեք",
+"полудрагоценный",
+"semi-precious",
+"",
+"semi-précieux"
+],
+[
+"կիսամեռ",
+"полумёртвый",
+"half-dead",
+"",
+"à moitié mort"
+],
+[
+"կիրգիզական",
+"киргизский (синоним)",
+"Kyrgyz",
+"",
+"kirghiz (synonyme)"
+],
+[
+"կլորաձև",
+"округлый",
+"round",
+"",
+"arrondi (synonyme)"
+],
+[
+"կղզային",
+"островной (синоним)",
+"insular",
+"",
+"insulaire (synonyme)"
+],
+[
+"կճղակավոր",
+"копытный",
+"ungulate",
+"",
+"ongulé"
+],
+[
+"կնաբարո",
+"женоподобный",
+"effeminate",
+"",
+"efféminé"
+],
+[
+"կնամեծար",
+"галантный",
+"gallant",
+"",
+"galant"
+],
+[
+"կողմնական",
+"боковой",
+"lateral",
+"",
+"latéral"
+],
+[
+"կոմպլեքս",
+"комплексный",
+"complex",
+"",
+"complexe"
+],
+[
+"կոշերային",
+"кошерный",
+"kosher",
+"",
+"casher"
+],
+[
+"կոտրված",
+"сломанный (синоним)",
+"broken",
+"",
+"cassé (synonyme)"
+],
+[
+"կորեական",
+"корейский",
+"Korean",
+"",
+"coréen"
+],
+[
+"կուսական",
+"девственный, нетронутый",
+"virgin",
+"",
+"vierge"
+],
+[
+"կրճատ",
+"сокращённый",
+"short, abbreviated",
+"",
+"abrégé"
+],
+[
+"կցական",
+"агглютинативный",
+"agglutinative",
+"",
+"agglutinant"
+],
+[
+"հազարապատիկ",
+"тысячекратный",
+"thousandfold",
+"",
+"mille fois"
+],
+[
+"հալալ",
+"халяльный",
+"halal",
+"",
+"halal"
+],
+[
+"հակագիտական",
+"антинаучный",
+"antiscientific",
+"",
+"antiscientifique"
+],
+[
+"հակամանրէային",
+"антимикробный",
+"antimicrobial",
+"",
+"antimicrobien"
+],
+[
+"հակապատերազմական",
+"антивоенный",
+"anti-war",
+"☮️",
+"antiguerre"
+],
+[
+"հակառետրովիրուսային",
+"антиретровирусный",
+"antiretroviral",
+"",
+"antirétroviral"
+],
+[
+"հաղթանակած",
+"победивший",
+"victorious",
+"",
+"vainqueur"
+],
+[
+"համադրական",
+"синтетический (грамм.)",
+"synthetic",
+"",
+"synthétique (grammaire)"
+],
+[
+"համահունչ",
+"последовательный, согласованный",
+"consistent",
+"",
+"cohérent"
+],
+[
+"հայհոյական",
+"богохульный",
+"blasphemous",
+"",
+"blasphématoire"
+],
+[
+"հայրենական",
+"отечественный (синоним)",
+"domestic",
+"",
+"national (intérieur)"
+],
+[
+"հանգած",
+"погасший",
+"extinct, out",
+"",
+"éteint"
+],
+[
+"հանելուկային",
+"загадочный",
+"mysterious",
+"",
+"mystérieux"
+],
+[
+"հանրագիտական",
+"энциклопедический",
+"encyclopedic",
+"",
+"encyclopédique"
+],
+[
+"հանրահաշվական",
+"алгебраический",
+"algebraic",
+"",
+"algébrique"
+],
+[
+"հանցավոր",
+"виновный",
+"guilty",
+"",
+"coupable"
+],
+[
+"հաջորդական",
+"последовательный",
+"consecutive",
+"",
+"consécutif"
+],
+[
+"հավերժական",
+"вечный (синоним)",
+"eternal",
+"",
+"éternel (synonyme)"
+],
+[
+"հարավարևելյան",
+"юго-восточный",
+"southeastern",
+"",
+"du sud-est"
+],
+[
+"հարավարևմտյան",
+"юго-западный",
+"southwestern",
+"",
+"du sud-ouest"
+],
+[
+"հարավկորեական",
+"южнокорейский",
+"South Korean",
+"",
+"sud-coréen"
+],
+[
+"հարմարեցված",
+"сделанный на заказ",
+"custom-made",
+"",
+"fait sur mesure"
+],
+[
+"հարցական",
+"вопросительный",
+"interrogative",
+"",
+"interrogatif"
+],
+[
+"հեթանոսական",
+"языческий",
+"pagan",
+"",
+"païen"
+],
+[
+"հեղհեղուկ",
+"непостоянный",
+"fickle",
+"",
+"inconstant"
+],
+[
+"հեռագրական",
+"телеграфный",
+"telegraphic",
+"",
+"télégraphique"
+],
+[
+"հետերոսեքսուալ",
+"гетеросексуальный",
+"heterosexual",
+"",
+"hétérosexuel"
+]
+],
+"fr": "Adjectifs 6"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 7",
+"en": "Adjectives 7",
+"hy": "Ածականներ 7",
+"ic": "🎨",
+"w": [
+[
+"հետիոտնային",
+"пешеходный",
+"pedestrian",
+"",
+"piétonnier"
+],
+[
+"հետճգնաժամային",
+"посткризисный",
+"postcrisis",
+"",
+"post-crise"
+],
+[
+"հետվճարային",
+"с постоплатой",
+"postpaid",
+"",
+"postpayé"
+],
+[
+"հիսուներորդ",
+"пятидесятый",
+"fiftieth",
+"",
+"cinquantième"
+],
+[
+"հիվանդոտ",
+"болезненный (нездоровый)",
+"morbid",
+"",
+"maladif (morbide)"
+],
+[
+"հլու-հնազանդ",
+"угодливый",
+"obsequious",
+"",
+"obséquieux"
+],
+[
+"հյուսիսատլանտյան",
+"североатлантический",
+"North Atlantic",
+"",
+"nord-atlantique"
+],
+[
+"հյուսիսարևելյան",
+"северо-восточный",
+"northeastern",
+"",
+"du nord-est"
+],
+[
+"հյուսիսարևմտյան",
+"северо-западный",
+"northwestern",
+"",
+"du nord-ouest"
+],
+[
+"հյուսիսկորեական",
+"северокорейский",
+"North Korean",
+"",
+"nord-coréen"
+],
+[
+"հնագիտական",
+"археологический",
+"archaeological",
+"",
+"archéologique"
+],
+[
+"հնամենի",
+"древний, стародавний (синоним)",
+"ancient",
+"",
+"antique (synonyme)"
+],
+[
+"հնարովի",
+"искусственный, выдуманный",
+"factitious",
+"",
+"factice"
+],
+[
+"հնդիրանական",
+"индоиранский",
+"Indo-Iranian",
+"",
+"indo-iranien"
+],
+[
+"հնդկացիական",
+"индейский",
+"Native American",
+"",
+"amérindien"
+],
+[
+"հնչույթաբանական",
+"фонологический",
+"phonological",
+"",
+"phonologique"
+],
+[
+"հնչույթային",
+"фонематический",
+"phonemic",
+"",
+"phonémique"
+],
+[
+"հոդաբաշխ",
+"красноречивый, чётко излагающий",
+"articulate",
+"",
+"éloquent (clair)"
+],
+[
+"հոլովական",
+"склонительный",
+"declensional",
+"",
+"déclinatif"
+],
+[
+"հողմահակառակ",
+"подветренный",
+"leeward",
+"",
+"sous le vent"
+],
+[
+"հունա-հռոմեական",
+"греко-римский",
+"Greco-Roman",
+"",
+"gréco-romain"
+],
+[
+"հունադավան",
+"православный",
+"Orthodox",
+"",
+"orthodoxe"
+],
+[
+"հունգարական",
+"венгерский",
+"Hungarian",
+"",
+"hongrois"
+],
+[
+"հռենոսյան",
+"рейнский",
+"Rhenish",
+"",
+"rhénan"
+],
+[
+"հրապուրիչ",
+"привлекательный",
+"attractive",
+"",
+"attrayant"
+],
+[
+"հրեշտակային",
+"ангельский",
+"angelic",
+"😇",
+"angélique"
+],
+[
+"ձեռնհաս",
+"компетентный (синоним)",
+"competent",
+"",
+"compétent (synonyme)"
+],
+[
+"ձեռքերը կանթած",
+"подбоченившись",
+"akimbo",
+"",
+"les poings sur les hanches"
+],
+[
+"ձեռքի",
+"ручной",
+"manual",
+"",
+"manuel"
+],
+[
+"ղաջարական",
+"каджарский",
+"Qajar",
+"",
+"qadjar"
+],
+[
+"ճառագայթաակտիվ",
+"радиоактивный",
+"radioactive",
+"☢️",
+"radioactif"
+],
+[
+"ճարպային",
+"жировой",
+"adipose",
+"",
+"adipeux"
+],
+[
+"ճղճիմ",
+"обыденный, мелочный",
+"mundane",
+"",
+"banal (mesquin)"
+],
+[
+"ճնշող",
+"гнетущий",
+"depressing",
+"",
+"déprimant"
+],
+[
+"ճշմարտացի",
+"правдивый",
+"truthful",
+"",
+"véridique"
+],
+[
+"մագնիսական",
+"магнитный",
+"magnetic",
+"🧲",
+"magnétique"
+],
+[
+"մաթեմատիկական",
+"математический",
+"mathematical",
+"",
+"mathématique"
+],
+[
+"մալայական",
+"малайский",
+"Malay",
+"",
+"malais"
+],
+[
+"մաղձային",
+"желчный",
+"bilious",
+"",
+"biliaire"
+],
+[
+"մաղձոտ",
+"желчный (раздражительный)",
+"irascible",
+"",
+"bilieux"
+],
+[
+"մանիքեական",
+"манихейский",
+"Manichaean",
+"",
+"manichéen"
+],
+[
+"մանջուրական",
+"маньчжурский",
+"Manchu",
+"",
+"mandchou"
+],
+[
+"մանրախնդիր",
+"придирчивый",
+"captious",
+"",
+"pointilleux"
+],
+[
+"մանրէազերծ",
+"стерильный",
+"sterile",
+"",
+"stérile"
+],
+[
+"մաշկաբանական",
+"дерматологический",
+"dermatological",
+"",
+"dermatologique"
+],
+[
+"մաոիստական",
+"маоистский",
+"Maoist",
+"",
+"maoïste"
+],
+[
+"մարած",
+"угасший",
+"extinct",
+"",
+"éteint (synonyme)"
+],
+[
+"մարգարեական",
+"пророческий",
+"prophetic",
+"",
+"prophétique"
+],
+[
+"մարտավարական",
+"тактический (синоним)",
+"tactical",
+"",
+"tactique (synonyme)"
+],
+[
+"մարտնչող",
+"воинствующий",
+"militant",
+"",
+"militant"
+],
+[
+"մարքսիստական",
+"марксистский",
+"Marxist",
+"",
+"marxiste"
+],
+[
+"մաքիավելյան",
+"макиавеллиевский",
+"Machiavellian",
+"",
+"machiavélique"
+],
+[
+"մեգրելական",
+"мегрельский",
+"Mingrelian",
+"",
+"mingrélien"
+],
+[
+"մեծականջ",
+"лопоухий",
+"big-eared",
+"",
+"aux grandes oreilles"
+]
+],
+"fr": "Adjectifs 7"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 8",
+"en": "Adjectives 8",
+"hy": "Ածականներ 8",
+"ic": "🎨",
+"w": [
+[
+"մեղադրական",
+"обвинительный",
+"accusatory",
+"",
+"accusateur"
+],
+[
+"մետրական",
+"метрический (о стихе)",
+"metrical",
+"",
+"métrique"
+],
+[
+"մերովինգյան",
+"меровингский",
+"Merovingian",
+"",
+"mérovingien"
+],
+[
+"մթին",
+"мрачный, тёмный",
+"gloomy",
+"",
+"ténébreux"
+],
+[
+"մթնոլորտային",
+"атмосферный",
+"atmospheric",
+"",
+"atmosphérique"
+],
+[
+"միաբան",
+"единодушный (синоним)",
+"unanimous",
+"",
+"unanime (synonyme)"
+],
+[
+"միաբջիջ",
+"одноклеточный",
+"unicellular",
+"",
+"unicellulaire"
+],
+[
+"միաբևեռ",
+"однополярный",
+"unipolar",
+"",
+"unipolaire"
+],
+[
+"միածին",
+"единородный",
+"only-begotten",
+"",
+"unique (fils unique)"
+],
+[
+"միակին",
+"моногамный",
+"monogamous",
+"",
+"monogame"
+],
+[
+"միամոր",
+"единственный (ребёнок)",
+"only (child)",
+"",
+"unique (enfant)"
+],
+[
+"միանգամյա օգտագործման",
+"одноразовый",
+"disposable",
+"",
+"jetable"
+],
+[
+"միավորող",
+"объединяющий",
+"unifying",
+"",
+"unificateur"
+],
+[
+"միացրած",
+"включённый",
+"on, switched on",
+"",
+"allumé"
+],
+[
+"միլիոներորդ",
+"миллионный",
+"millionth",
+"",
+"millionième"
+],
+[
+"մինիմալ",
+"минимальный",
+"minimal",
+"",
+"minimal"
+],
+[
+"միջաստղային",
+"межзвёздный",
+"interstellar",
+"✨",
+"interstellaire"
+],
+[
+"միջատակեր",
+"насекомоядный",
+"insectivorous",
+"",
+"insectivore"
+],
+[
+"միջհանրապետական",
+"межреспубликанский",
+"interrepublic",
+"",
+"interrépublicain"
+],
+[
+"միջձայնավորային",
+"интервокальный",
+"intervocalic",
+"",
+"intervocalique"
+],
+[
+"միջտարածաշրջանային",
+"межрегиональный",
+"interregional",
+"",
+"interrégional"
+],
+[
+"մնացած",
+"оставшийся (синоним)",
+"leftover",
+"",
+"restant (synonyme)"
+],
+[
+"մոգական",
+"магический",
+"magic",
+"",
+"magique"
+],
+[
+"մոլորված",
+"заблудившийся",
+"lost",
+"",
+"perdu (égaré)"
+],
+[
+"մոսկովյան",
+"московский",
+"Muscovite",
+"",
+"moscovite"
+],
+[
+"մոր կողմից",
+"по материнской линии",
+"maternal",
+"",
+"du côté maternel"
+],
+[
+"մուլտիմոդալ",
+"мультимодальный",
+"multimodal",
+"",
+"multimodal"
+],
+[
+"մսակեր",
+"плотоядный (синоним)",
+"carnivorous",
+"",
+"carnivore (synonyme)"
+],
+[
+"մրրկային",
+"вихревой",
+"vortical",
+"",
+"tourbillonnaire"
+],
+[
+"յոթանասուներորդ",
+"семидесятый",
+"seventieth",
+"",
+"soixante-dixième"
+],
+[
+"նախահնդեվրոպական",
+"праиндоевропейский",
+"Proto-Indo-European",
+"",
+"proto-indo-européen (adj.)"
+],
+[
+"նախամուսնական",
+"добрачный",
+"premarital",
+"",
+"prénuptial"
+],
+[
+"նախանձախնդիր",
+"ревностный, ревнивый",
+"jealous",
+"",
+"jaloux (zélé)"
+],
+[
+"նախավերջընթերային",
+"третий от конца",
+"antepenultimate",
+"",
+"antépénultième"
+],
+[
+"նեղացկոտ",
+"обидчивый",
+"touchy",
+"",
+"susceptible"
+],
+[
+"նենգոտ",
+"хитрый, коварный",
+"tricky",
+"",
+"retors"
+],
+[
+"ներատոմային",
+"субатомный",
+"subatomic",
+"",
+"subatomique"
+],
+[
+"ներելի",
+"простительный",
+"pardonable",
+"",
+"pardonnable"
+],
+[
+"ներհատուկ",
+"присущий",
+"inherent",
+"",
+"inhérent"
+],
+[
+"նկարագրական",
+"описательный",
+"descriptive",
+"",
+"descriptif"
+],
+[
+"նյամ",
+"вкусно! ням",
+"yum",
+"😋",
+"miam"
+],
+[
+"նշված",
+"упомянутый",
+"mentioned",
+"",
+"mentionné"
+],
+[
+"նոր աշխարհ",
+"Новый Свет",
+"New World",
+"",
+"Nouveau Monde"
+],
+[
+"նորերս պատահած",
+"недавний",
+"recent",
+"",
+"récent"
+],
+[
+"շան",
+"собачий",
+"canine",
+"",
+"canin"
+],
+[
+"շիիթական",
+"шиитский",
+"Shiite",
+"",
+"chiite"
+],
+[
+"շիկակարմիր",
+"рыжий",
+"ginger, red-haired",
+"",
+"roux"
+],
+[
+"շնչառական",
+"дыхательный",
+"respiratory",
+"",
+"respiratoire"
+],
+[
+"շնչեղ",
+"придыхательный",
+"aspirated",
+"",
+"aspiré"
+],
+[
+"շոյված",
+"польщённый",
+"flattered",
+"",
+"flatté"
+],
+[
+"շչական",
+"свистящий",
+"sibilant",
+"",
+"sifflant"
+],
+[
+"շվայտ",
+"распутный (книжн.)",
+"dissolute",
+"",
+"dissolu"
+],
+[
+"շվարած",
+"остолбеневший",
+"aghast",
+"",
+"sidéré"
+],
+[
+"շվեյցարական",
+"швейцарский",
+"Swiss",
+"",
+"suisse"
+]
+],
+"fr": "Adjectifs 8"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 9",
+"en": "Adjectives 9",
+"hy": "Ածականներ 9",
+"ic": "🎨",
+"w": [
+[
+"շրթնատամնային",
+"губно-зубной",
+"labiodental",
+"",
+"labiodental"
+],
+[
+"շրջանագծային",
+"окружной (кругообразный)",
+"circular",
+"",
+"circulaire (synonyme)"
+],
+[
+"շրջանաձև",
+"круглый (кругообразный)",
+"circular",
+"",
+"rond"
+],
+[
+"ոխակալ",
+"мстительный",
+"vindictive",
+"",
+"vindicatif"
+],
+[
+"ողնաշարային",
+"позвоночный",
+"vertebral",
+"",
+"vertébral"
+],
+[
+"ողնաշարի",
+"спинной",
+"spinal",
+"",
+"spinal"
+],
+[
+"ողորմած",
+"милосердный",
+"merciful",
+"",
+"miséricordieux"
+],
+[
+"ոչ բռնի",
+"ненасильственный",
+"non-violent",
+"",
+"non violent"
+],
+[
+"ոչ միանշանակ",
+"неоднозначный",
+"ambivalent",
+"",
+"ambivalent"
+],
+[
+"ոչ պարտադիր",
+"необязательный",
+"optional",
+"",
+"facultatif (synonyme)"
+],
+[
+"ոչնչով աչքի չընկնող",
+"ничем не примечательный",
+"unremarkable",
+"",
+"quelconque"
+],
+[
+"որակավորված",
+"квалифицированный",
+"qualified",
+"",
+"qualifié"
+],
+[
+"որոճող",
+"жвачный",
+"ruminant",
+"",
+"ruminant"
+],
+[
+"ուզբեկական",
+"узбекский",
+"Uzbek",
+"",
+"ouzbek"
+],
+[
+"ութական",
+"восьмеричный",
+"octal",
+"",
+"octal"
+],
+[
+"ութսուներորդ",
+"восьмидесятый",
+"eightieth",
+"",
+"quatre-vingtième"
+],
+[
+"ուղղադավան",
+"ортодоксальный",
+"orthodox",
+"",
+"orthodoxe (doctrinal)"
+],
+[
+"ունիկալ",
+"уникальный",
+"unique",
+"",
+"unique"
+],
+[
+"ուսուցողական",
+"обучающий",
+"educational",
+"",
+"éducatif (synonyme)"
+],
+[
+"ուտելի",
+"съедобный",
+"edible",
+"",
+"comestible"
+],
+[
+"չամուսնացած",
+"холостой, незамужняя",
+"unmarried, single",
+"",
+"célibataire"
+],
+[
+"չարագուշակ",
+"зловещий (синоним)",
+"ominous",
+"",
+"de mauvais augure"
+],
+[
+"չեչենական",
+"чеченский",
+"Chechen",
+"",
+"tchétchène"
+],
+[
+"չերքեզական",
+"черкесский",
+"Circassian",
+"",
+"circassien"
+],
+[
+"չլուծվող",
+"нерастворимый (синоним)",
+"insoluble",
+"",
+"insoluble (synonyme)"
+],
+[
+"չհասած",
+"незрелый (синоним)",
+"unripe",
+"",
+"pas mûr"
+],
+[
+"չմշակված",
+"необработанный",
+"raw",
+"",
+"brut"
+],
+[
+"չորացած",
+"высохший",
+"withered",
+"",
+"desséché"
+],
+[
+"չուվաշական",
+"чувашский",
+"Chuvash",
+"",
+"tchouvache"
+],
+[
+"չվկայված",
+"незасвидетельствованный",
+"unattested",
+"",
+"non attesté"
+],
+[
+"պաղեստինյան",
+"палестинский",
+"Palestinian",
+"",
+"palestinien"
+],
+[
+"պայթուցիկ",
+"взрывчатый",
+"explosive",
+"",
+"explosif"
+],
+[
+"պանրային",
+"сырный",
+"cheesy",
+"",
+"fromager"
+],
+[
+"պապական",
+"папский",
+"papal",
+"",
+"papal"
+],
+[
+"պառլամենտական",
+"парламентский (синоним)",
+"parliamentary",
+"",
+"parlementaire (synonyme)"
+],
+[
+"պատերազմող",
+"воюющий",
+"belligerent",
+"",
+"belligérant"
+],
+[
+"պարականոն",
+"апокрифический",
+"apocryphal",
+"",
+"apocryphe"
+],
+[
+"պարապած",
+"спортивный (о фигуре)",
+"athletic",
+"",
+"athlétique"
+],
+[
+"պարզամիտ",
+"простодушный",
+"naive",
+"",
+"naïf"
+],
+[
+"պարթևական",
+"парфянский",
+"Parthian",
+"",
+"parthe"
+],
+[
+"պլաստմասսայե",
+"пластмассовый",
+"plastic",
+"",
+"en plastique"
+],
+[
+"պլեբեյական",
+"плебейский",
+"plebeian",
+"",
+"plébéien"
+],
+[
+"պոռթկուն",
+"порывистый",
+"impetuous",
+"",
+"fougueux"
+],
+[
+"պոռոտախոս",
+"хвастливый (синоним)",
+"bigmouthed",
+"",
+"fanfaron (synonyme)"
+],
+[
+"պորտային",
+"пупочный",
+"umbilical",
+"",
+"ombilical"
+],
+[
+"պորտուգալախոս",
+"португалоязычный",
+"Lusophone",
+"",
+"lusophone"
+],
+[
+"պուպուշ",
+"миленький",
+"cute",
+"🥰",
+"mignon"
+],
+[
+"պստլիկ",
+"крошечный",
+"tiny",
+"",
+"minuscule"
+],
+[
+"պտղոմեոսյան",
+"птолемеевский",
+"Ptolemaic",
+"",
+"ptolémaïque"
+],
+[
+"պտուտակաձև",
+"спиралевидный",
+"corkscrew",
+"",
+"en tire-bouchon"
+],
+[
+"պրոկրուստյան",
+"прокрустов",
+"procrustean",
+"",
+"procustéen"
+],
+[
+"ջարդված",
+"разбитый",
+"broken",
+"",
+"brisé"
+],
+[
+"ջղագրգիռ",
+"нервный (синоним)",
+"nervous",
+"",
+"nerveux (synonyme)"
+],
+[
+"ջրաբաշխական",
+"гидравлический",
+"hydraulic",
+"",
+"hydraulique"
+]
+],
+"fr": "Adjectifs 9"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 10",
+"en": "Adjectives 10",
+"hy": "Ածականներ 10",
+"ic": "🎨",
+"w": [
+[
+"ջրիկ",
+"жидкий (негустой)",
+"thin, watery",
+"",
+"clair (liquide)"
+],
+[
+"ռասիստական",
+"расистский",
+"racist",
+"",
+"raciste"
+],
+[
+"ռոմանական",
+"романский",
+"Romance",
+"",
+"roman (langues)"
+],
+[
+"սաղարթավոր",
+"лиственный",
+"deciduous",
+"",
+"à feuilles caduques"
+],
+[
+"սայթաքուն",
+"скользкий",
+"slippery",
+"",
+"glissant"
+],
+[
+"սասանյան",
+"сасанидский",
+"Sasanian",
+"",
+"sassanide"
+],
+[
+"սեռային",
+"половой",
+"sexual",
+"",
+"sexuel"
+],
+[
+"սեքսուալ",
+"сексуальный, привлекательный",
+"sexy",
+"",
+"sexy"
+],
+[
+"սթրեսային",
+"стрессовый",
+"stressful",
+"",
+"stressant"
+],
+[
+"սինթետիկ",
+"синтетический",
+"synthetic",
+"",
+"synthétique"
+],
+[
+"սիրիական",
+"сирийский",
+"Syrian",
+"",
+"syrien"
+],
+[
+"սիրտ-անոթային",
+"сердечно-сосудистый",
+"cardiovascular",
+"",
+"cardiovasculaire"
+],
+[
+"սիցիլիական",
+"сицилийский",
+"Sicilian",
+"",
+"sicilien"
+],
+[
+"սլովակական",
+"словацкий",
+"Slovak",
+"",
+"slovaque"
+],
+[
+"սկյութական",
+"скифский",
+"Scythian",
+"",
+"scythe"
+],
+[
+"սոցիալ-դեմոկրատական",
+"социал-демократический",
+"social democratic",
+"",
+"social-démocrate"
+],
+[
+"սոցիոլոգիական",
+"социологический",
+"sociological",
+"",
+"sociologique"
+],
+[
+"սպասված",
+"долгожданный, ожидаемый",
+"welcome, expected",
+"",
+"bienvenu, attendu"
+],
+[
+"սպորտային",
+"спортивный",
+"athletic, sports",
+"",
+"sportif"
+],
+[
+"ստեղծարար",
+"созидательный",
+"creative",
+"",
+"créatif (synonyme)"
+],
+[
+"ստորջրյա",
+"подводный",
+"submarine",
+"",
+"sous-marin"
+],
+[
+"սրբապիղծ",
+"кощунственный",
+"sacrilegious",
+"",
+"sacrilège"
+],
+[
+"սրտագրավ",
+"трогательный (согревающий душу)",
+"heart-warming",
+"",
+"réconfortant"
+],
+[
+"սև-սպիտակ",
+"чёрно-белый",
+"monochrome",
+"",
+"noir et blanc"
+],
+[
+"վաթսուներորդ",
+"шестидесятый",
+"sixtieth",
+"",
+"soixantième"
+],
+[
+"վաղանցուկ",
+"преходящий",
+"ephemeral",
+"",
+"éphémère (synonyme)"
+],
+[
+"վաղեմի",
+"давний",
+"old, antique",
+"",
+"ancien (d'autrefois)"
+],
+[
+"վաճառվել է",
+"распродано",
+"sold out",
+"",
+"épuisé (vendu)"
+],
+[
+"վատառողջ",
+"нездоровый",
+"unhealthy",
+"",
+"malsain"
+],
+[
+"վարժված",
+"привыкший (синоним)",
+"accustomed",
+"",
+"accoutumé"
+],
+[
+"վեհապանծ",
+"величественный (синоним)",
+"majestic",
+"",
+"majestueux (synonyme)"
+],
+[
+"վերածնված",
+"возрождённый",
+"reborn",
+"",
+"rené"
+],
+[
+"վերամշակելի",
+"перерабатываемый",
+"recyclable",
+"♻️",
+"recyclable"
+],
+[
+"վիճահարույց",
+"спорный",
+"controversial",
+"",
+"controversé"
+],
+[
+"վկայված",
+"засвидетельствованный",
+"attested",
+"",
+"attesté"
+],
+[
+"վնասվածքային",
+"травматический",
+"traumatic",
+"",
+"traumatique"
+],
+[
+"վշտալի",
+"скорбный (синоним)",
+"sorrowful",
+"",
+"affligé"
+],
+[
+"վշտահար",
+"удручённый",
+"disconsolate",
+"",
+"désolé"
+],
+[
+"վոկալ",
+"вокальный",
+"vocal",
+"",
+"vocal"
+],
+[
+"վրեժխնդիր",
+"мстительный (синоним)",
+"vindictive",
+"",
+"rancunier (synonyme)"
+],
+[
+"տագնապալից",
+"тревожный",
+"anxious",
+"😰",
+"anxieux"
+],
+[
+"տաղտկալի",
+"скучный, утомительный",
+"tedious",
+"",
+"fastidieux"
+],
+[
+"տառաճանաչ",
+"грамотный",
+"literate",
+"",
+"lettré, alphabétisé"
+],
+[
+"տասական",
+"десятичный",
+"decimal",
+"",
+"décimal"
+],
+[
+"տասնիններորդ",
+"девятнадцатый",
+"nineteenth",
+"",
+"dix-neuvième"
+],
+[
+"տասնհինգերորդ",
+"пятнадцатый",
+"fifteenth",
+"",
+"quinzième"
+],
+[
+"տասնմեկերորդ",
+"одиннадцатый",
+"eleventh",
+"",
+"onzième"
+],
+[
+"տասնյոթերորդ",
+"семнадцатый",
+"seventeenth",
+"",
+"dix-septième"
+],
+[
+"տասնութերորդ",
+"восемнадцатый",
+"eighteenth",
+"",
+"dix-huitième"
+],
+[
+"տասնչորսերորդ",
+"четырнадцатый",
+"fourteenth",
+"",
+"quatorzième"
+],
+[
+"տասնվեցական",
+"шестнадцатеричный",
+"hexadecimal",
+"",
+"hexadécimal"
+],
+[
+"տասնվեցերորդ",
+"шестнадцатый",
+"sixteenth",
+"",
+"seizième"
+],
+[
+"տատանվող",
+"нерешительный",
+"indecisive",
+"",
+"indécis"
+],
+[
+"տարածական",
+"пространственный",
+"spatial",
+"",
+"spatial"
+]
+],
+"fr": "Adjectifs 10"
+},
+{
+"lv": "B2",
+"ru": "Какой? Прилагательные 11",
+"en": "Adjectives 11",
+"hy": "Ածականներ 11",
+"ic": "🎨",
+"w": [
+[
+"տեխնոլոգիական",
+"технологический",
+"technological",
+"",
+"technologique"
+],
+[
+"տիեզերական",
+"космический",
+"cosmic",
+"",
+"cosmique"
+],
+[
+"տկլոր",
+"голый, нагой",
+"nude",
+"",
+"nu (dénudé)"
+],
+[
+"տկռոշ",
+"пузатый",
+"potbellied",
+"",
+"ventru"
+],
+[
+"տղամարդու",
+"мужской (для мужчин)",
+"masculine",
+"",
+"masculin (d'homme)"
+],
+[
+"տոպոլոգիական",
+"топологический",
+"topological",
+"",
+"topologique"
+],
+[
+"տոտալիտար",
+"тоталитарный (синоним)",
+"totalitarian",
+"",
+"totalitaire (synonyme)"
+],
+[
+"տտիպ",
+"терпкий",
+"tart",
+"",
+"âpre"
+],
+[
+"տրանսցենդենտ",
+"трансцендентный",
+"transcendental",
+"",
+"transcendant"
+],
+[
+"ցինիկ",
+"циничный",
+"cynical",
+"",
+"cynique"
+],
+[
+"ցնծալից",
+"радостный, весёлый",
+"cheerful",
+"",
+"joyeux (synonyme)"
+],
+[
+"ցուցական",
+"указательный (грамм.)",
+"demonstrative",
+"",
+"démonstratif"
+],
+[
+"ցուցչային",
+"экспоненциальный",
+"exponential",
+"",
+"exponentiel"
+],
+[
+"փիրուզե",
+"бирюзовый",
+"turquoise",
+"",
+"turquoise"
+],
+[
+"փյունիկական",
+"финикийский",
+"Phoenician",
+"",
+"phénicien"
+],
+[
+"փոխարինելի",
+"взаимозаменяемый",
+"fungible",
+"",
+"fongible"
+],
+[
+"փոշոտ",
+"пыльный",
+"dusty",
+"",
+"poussiéreux"
+],
+[
+"փորձնական",
+"пробный, предварительный",
+"tentative",
+"",
+"provisoire, d'essai"
+],
+[
+"փուխր",
+"рыхлый",
+"friable",
+"",
+"friable"
+],
+[
+"քաղաքակիրթ",
+"цивилизованный",
+"civilized",
+"",
+"civilisé"
+],
+[
+"քաղցրահնչյուն",
+"благозвучный (синоним)",
+"sweet-sounding",
+"",
+"harmonieux"
+],
+[
+"քարաշեն",
+"каменный (из камня)",
+"stone-built",
+"",
+"en pierre (bâti)"
+],
+[
+"քարքարոտ",
+"каменистый",
+"rocky",
+"",
+"rocailleux"
+],
+[
+"քերականորեն ճիշտ",
+"грамматически правильный",
+"grammatical",
+"",
+"grammatical (correct)"
+],
+[
+"քերականորեն ոչ ճիշտ",
+"грамматически неправильный",
+"ungrammatical",
+"",
+"agrammatical"
+],
+[
+"քիմքի",
+"нёбный",
+"palatal",
+"",
+"palatal"
+],
+[
+"քինոտ",
+"злопамятный (синоним)",
+"vindictive",
+"",
+"rancunier"
+],
+[
+"քնած",
+"спящий",
+"asleep",
+"😴",
+"endormi"
+],
+[
+"քննական",
+"критический",
+"critical",
+"",
+"critique"
+],
+[
+"քվանտային",
+"квантовый",
+"quantum",
+"",
+"quantique"
+],
+[
+"քրդական",
+"курдский",
+"Kurdish",
+"",
+"kurde"
+],
+[
+"քրտնքոտ",
+"потный",
+"sweaty",
+"",
+"en sueur"
+],
+[
+"օլիմպիական",
+"олимпийский",
+"Olympic",
+"🏅",
+"olympique"
+],
+[
+"օձակերպ",
+"змеиный",
+"ophidian",
+"",
+"ophidien"
+],
+[
+"օրենսդրական",
+"законодательный",
+"legislative",
+"",
+"législatif"
+],
+[
+"օֆշորային",
+"офшорный",
+"offshore",
+"",
+"offshore"
+],
+[
+"ֆիլիպինյան",
+"филиппинский (синоним)",
+"Filipino",
+"",
+"philippin (synonyme)"
+],
+[
+"ֆլամանդական",
+"фламандский",
+"Flemish",
+"",
+"flamand"
+]
+],
+"fr": "Adjectifs 11"
 },
 {
 "lv": "C1",
