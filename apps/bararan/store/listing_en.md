@@ -1,13 +1,13 @@
-# Bararan — Learn Armenian: 5000 words
+# Bararan — Learn Armenian: 20,000 words
 
 **Short description (up to 80 characters):**
-Eastern Armenian: 5000 words with pictures, audio and spaced repetition
+Eastern Armenian: 20,000 words with pictures, audio and spaced repetition
 
 **Full description:**
 
 Bararan (Բառարան, "dictionary") teaches Armenian vocabulary to English and Russian speakers. It uses Eastern Armenian in reformed spelling — the language spoken and written in Armenia today.
 
-• 10,022 words in 246 topics, A1 to C2: family, food, town, work, medicine, law, science, Armenian cuisine, holidays and traditions
+• 20,121 words in 485 topics, A1 to C2: family, food, town, work, medicine, law, science, Armenian cuisine, holidays and traditions
 • Every word voiced by a neural voice with Eastern Armenian pronunciation — built in, no internet needed
 • Latin or Cyrillic transliteration with reading tips
 • A beautiful alphabet: 39 letters with names, sounds, examples and practice
@@ -18,6 +18,8 @@ Bararan (Բառարան, "dictionary") teaches Armenian vocabulary to English an
 • "Test what I know" quickly marks familiar words so you don't waste time on them
 • Works offline, no ads, no sign-up
 
-Free: level A1 (538 words and phrases) and the whole alphabet. Bararan Premium unlocks levels A2–C2.
+Part of the word list is based on Wiktionary (CC BY-SA 4.0); the translations and exercises are our own.
+
+Free: level A1 (642 words and phrases) and the whole alphabet. Bararan Premium unlocks levels A2–C2.
 
 For the Armenian diaspora reconnecting with their language, for travellers to Armenia, and for everyone who loves languages.

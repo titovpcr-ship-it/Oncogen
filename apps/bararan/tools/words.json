@@ -116753,6 +116753,5942 @@
 "fr": "flamand"
 },
 {
+"a": "ԱԱՀ",
+"lv": "B2",
+"ru": "НДС (налог на добавленную стоимость)",
+"en": "VAT",
+"fr": "TVA"
+},
+{
+"a": "ԱԹՍ",
+"lv": "B2",
+"ru": "БПЛА (беспилотник)",
+"en": "UAV, drone",
+"fr": "drone (UAV)"
+},
+{
+"a": "Ալցհայմերի հիվանդություն",
+"lv": "B2",
+"ru": "болезнь Альцгеймера",
+"en": "Alzheimer's disease",
+"fr": "maladie d'Alzheimer"
+},
+{
+"a": "Աշխատանքի օր",
+"lv": "B2",
+"ru": "День труда (1 Мая)",
+"en": "May Day",
+"fr": "fête du Travail"
+},
+{
+"a": "Ապոլլոն",
+"lv": "B2",
+"ru": "Аполлон",
+"en": "Apollo",
+"fr": "Apollon"
+},
+{
+"a": "Ավագ ուրբաթ",
+"lv": "B2",
+"ru": "Страстная пятница",
+"en": "Good Friday",
+"fr": "Vendredi saint"
+},
+{
+"a": "Բարբի",
+"lv": "B2",
+"ru": "Барби",
+"en": "Barbie",
+"fr": "Barbie"
+},
+{
+"a": "Գուլագ",
+"lv": "B2",
+"ru": "ГУЛАГ",
+"en": "gulag",
+"fr": "goulag"
+},
+{
+"a": "Դդմից լապտեր",
+"lv": "B2",
+"ru": "фонарь из тыквы",
+"en": "jack-o'-lantern",
+"fr": "citrouille d'Halloween"
+},
+{
+"a": "ԶԼՄ",
+"lv": "B2",
+"ru": "СМИ",
+"en": "mass media",
+"fr": "médias"
+},
+{
+"a": "Թյուդոր",
+"lv": "B2",
+"ru": "Тюдоры",
+"en": "Tudor",
+"fr": "Tudor"
+},
+{
+"a": "Լոնդոնցի",
+"lv": "B2",
+"ru": "лондонец",
+"en": "Londoner",
+"fr": "Londonien"
+},
+{
+"a": "Կաթոլիկ եկեղեցի",
+"lv": "B2",
+"ru": "Католическая церковь",
+"en": "Catholic Church",
+"fr": "Église catholique"
+},
+{
+"a": "Կեսար",
+"lv": "B2",
+"ru": "Цезарь; салат «Цезарь»",
+"en": "Caesar; Caesar salad",
+"fr": "César; salade César"
+},
+{
+"a": "Հիգսի բոզոն",
+"lv": "B2",
+"ru": "бозон Хиггса",
+"en": "Higgs boson",
+"fr": "boson de Higgs"
+},
+{
+"a": "Հոգեգալուստ",
+"lv": "B2",
+"ru": "Пятидесятница",
+"en": "Whitsunday, Pentecost",
+"fr": "Pentecôte"
+},
+{
+"a": "Հռոմի պապ",
+"lv": "B2",
+"ru": "Папа Римский",
+"en": "pope",
+"fr": "pape"
+},
+{
+"a": "ՁԻԱՀ",
+"lv": "B2",
+"ru": "СПИД",
+"en": "AIDS",
+"fr": "sida"
+},
+{
+"a": "ՄԻԱՎ",
+"lv": "B2",
+"ru": "ВИЧ",
+"en": "HIV",
+"fr": "VIH"
+},
+{
+"a": "ՄՌՏ",
+"lv": "B2",
+"ru": "МРТ",
+"en": "MRI",
+"fr": "IRM"
+},
+{
+"a": "Մարզպանական Հայաստան",
+"lv": "B2",
+"ru": "марзпанская Армения",
+"en": "marzpanate Armenia",
+"fr": "Arménie marzpanate"
+},
+{
+"a": "Նոբելյան մրցանակ",
+"lv": "B2",
+"ru": "Нобелевская премия",
+"en": "Nobel Prize",
+"fr": "prix Nobel"
+},
+{
+"a": "Շվարցվալդ տորթ",
+"lv": "B2",
+"ru": "торт «Шварцвальд»",
+"en": "Black Forest gâteau",
+"fr": "forêt-noire"
+},
+{
+"a": "Ուելսի արքայազն",
+"lv": "B2",
+"ru": "принц Уэльский",
+"en": "Prince of Wales",
+"fr": "prince de Galles"
+},
+{
+"a": "Ուրախ Ռոջեր",
+"lv": "B2",
+"ru": "Весёлый Роджер",
+"en": "Jolly Roger",
+"fr": "Jolly Roger"
+},
+{
+"a": "Պանդորայի արկղ",
+"lv": "B2",
+"ru": "ящик Пандоры",
+"en": "Pandora's box",
+"fr": "boîte de Pandore"
+},
+{
+"a": "Պարկինսոն",
+"lv": "B2",
+"ru": "болезнь Паркинсона",
+"en": "Parkinson's disease",
+"fr": "maladie de Parkinson"
+},
+{
+"a": "ՍԴ",
+"lv": "B2",
+"ru": "Конституционный суд",
+"en": "constitutional court",
+"fr": "Cour constitutionnelle"
+},
+{
+"a": "ՍՊԸ",
+"lv": "B2",
+"ru": "ООО",
+"en": "LLC, Ltd.",
+"fr": "SARL"
+},
+{
+"a": "Սըր",
+"lv": "B2",
+"ru": "сэр",
+"en": "Sir",
+"fr": "sir"
+},
+{
+"a": "Վրացագիտություն",
+"lv": "B2",
+"ru": "картвелология",
+"en": "Kartvelian studies",
+"fr": "kartvélologie"
+},
+{
+"a": "ՏՏ",
+"lv": "B2",
+"ru": "IT, информационные технологии",
+"en": "IT",
+"fr": "informatique (TI)"
+},
+{
+"a": "ՔԿԱԳ",
+"lv": "B2",
+"ru": "ЗАГС",
+"en": "civil registry",
+"fr": "état civil"
+},
+{
+"a": "Ֆոլքսվագեն",
+"lv": "B2",
+"ru": "Фольксваген",
+"en": "Volkswagen",
+"fr": "Volkswagen"
+},
+{
+"a": "աբազին",
+"lv": "B2",
+"ru": "абазин",
+"en": "Abaza",
+"fr": "Abaza"
+},
+{
+"a": "աբաժուր",
+"lv": "B2",
+"ru": "абажур",
+"en": "lampshade",
+"fr": "abat-jour"
+},
+{
+"a": "աբանոս",
+"lv": "B2",
+"ru": "эбеновое дерево",
+"en": "ebony",
+"fr": "ébène"
+},
+{
+"a": "աբբահայր",
+"lv": "B2",
+"ru": "аббат",
+"en": "abbot",
+"fr": "abbé"
+},
+{
+"a": "աբբայություն",
+"lv": "B2",
+"ru": "аббатство",
+"en": "abbacy",
+"fr": "abbaye"
+},
+{
+"a": "աբջադ",
+"lv": "B2",
+"ru": "абджад",
+"en": "abjad",
+"fr": "abjad"
+},
+{
+"a": "աբսենտ",
+"lv": "B2",
+"ru": "абсент",
+"en": "absinthe",
+"fr": "absinthe"
+},
+{
+"a": "աբստրակտ հանրահաշիվ",
+"lv": "B2",
+"ru": "абстрактная алгебра",
+"en": "abstract algebra",
+"fr": "algèbre abstraite"
+},
+{
+"a": "աբսցիս",
+"lv": "B2",
+"ru": "абсцисса",
+"en": "abscissa",
+"fr": "abscisse"
+},
+{
+"a": "ագավա",
+"lv": "B2",
+"ru": "агава",
+"en": "agave",
+"fr": "agave"
+},
+{
+"a": "ագուռ",
+"lv": "B2",
+"ru": "бубны (масть)",
+"en": "diamonds (suit)",
+"fr": "carreau (couleur)"
+},
+{
+"a": "ագռավի ճանկեր",
+"lv": "B2",
+"ru": "куриный почерк",
+"en": "chicken scratch",
+"fr": "pattes de mouche"
+},
+{
+"a": "ագրեսիվություն",
+"lv": "B2",
+"ru": "агрессивность",
+"en": "aggressiveness",
+"fr": "agressivité"
+},
+{
+"a": "ագրեսոր",
+"lv": "B2",
+"ru": "агрессор",
+"en": "aggressor",
+"fr": "agresseur"
+},
+{
+"a": "ագրոնոմ",
+"lv": "B2",
+"ru": "агроном",
+"en": "agronomist",
+"fr": "agronome"
+},
+{
+"a": "ագրոնոմիա",
+"lv": "B2",
+"ru": "агрономия",
+"en": "agronomy",
+"fr": "agronomie"
+},
+{
+"a": "ագրոքիմիա",
+"lv": "B2",
+"ru": "агрохимия",
+"en": "agrochemistry",
+"fr": "agrochimie"
+},
+{
+"a": "ադամաթզենու հանրապետություն",
+"lv": "B2",
+"ru": "банановая республика",
+"en": "banana republic",
+"fr": "république bananière"
+},
+{
+"a": "ադամախնձոր",
+"lv": "B2",
+"ru": "кадык",
+"en": "Adam's apple",
+"fr": "pomme d'Adam"
+},
+{
+"a": "ադապտացիա",
+"lv": "B2",
+"ru": "адаптация",
+"en": "adaptation",
+"fr": "adaptation"
+},
+{
+"a": "ադի-բուդի",
+"lv": "B2",
+"ru": "попкорн",
+"en": "popcorn",
+"fr": "pop-corn"
+},
+{
+"a": "ադմին",
+"lv": "B2",
+"ru": "админ",
+"en": "admin",
+"fr": "admin"
+},
+{
+"a": "աերոդրոմ",
+"lv": "B2",
+"ru": "аэродром",
+"en": "aerodrome",
+"fr": "aérodrome"
+},
+{
+"a": "աերոզոլ",
+"lv": "B2",
+"ru": "аэрозоль",
+"en": "aerosol",
+"fr": "aérosol"
+},
+{
+"a": "աերոպլան",
+"lv": "B2",
+"ru": "аэроплан (устар.)",
+"en": "airplane (dated)",
+"fr": "aéroplane"
+},
+{
+"a": "աերոստատ",
+"lv": "B2",
+"ru": "аэростат",
+"en": "aerostat",
+"fr": "aérostat"
+},
+{
+"a": "ազատ հարված",
+"lv": "B2",
+"ru": "штрафной удар",
+"en": "free kick",
+"fr": "coup franc"
+},
+{
+"a": "ազատ օգտագործում",
+"lv": "B2",
+"ru": "добросовестное использование",
+"en": "fair use",
+"fr": "usage loyal"
+},
+{
+"a": "ազատամարտիկ",
+"lv": "B2",
+"ru": "борец за свободу",
+"en": "freedom fighter",
+"fr": "combattant de la liberté"
+},
+{
+"a": "ազատամիտ",
+"lv": "B2",
+"ru": "вольнодумец",
+"en": "freethinker",
+"fr": "libre penseur"
+},
+{
+"a": "ազբեստոզ",
+"lv": "B2",
+"ru": "асбестоз",
+"en": "asbestosis",
+"fr": "asbestose"
+},
+{
+"a": "ազգ պետություն",
+"lv": "B2",
+"ru": "национальное государство",
+"en": "nation-state",
+"fr": "État-nation"
+},
+{
+"a": "ազգակցություն",
+"lv": "B2",
+"ru": "родство",
+"en": "kinship",
+"fr": "parenté"
+},
+{
+"a": "ազգային տոն",
+"lv": "B2",
+"ru": "национальный праздник",
+"en": "national holiday",
+"fr": "fête nationale"
+},
+{
+"a": "ազդագիր",
+"lv": "B2",
+"ru": "проспект (буклет)",
+"en": "prospectus",
+"fr": "prospectus"
+},
+{
+"a": "ազդանյութ",
+"lv": "B2",
+"ru": "реагент",
+"en": "reagent",
+"fr": "réactif"
+},
+{
+"a": "ազդրապուխտ",
+"lv": "B2",
+"ru": "окорок",
+"en": "ham",
+"fr": "jambon"
+},
+{
+"a": "ազնիվ եղջերու",
+"lv": "B2",
+"ru": "благородный олень",
+"en": "red deer",
+"fr": "cerf élaphe"
+},
+{
+"a": "ազնվականություն",
+"lv": "B2",
+"ru": "дворянство",
+"en": "nobility",
+"fr": "noblesse (synonyme)"
+},
+{
+"a": "աիլուրոֆոբիա",
+"lv": "B2",
+"ru": "айлурофобия (боязнь кошек)",
+"en": "ailurophobia",
+"fr": "ailurophobie"
+},
+{
+"a": "ալբանացի",
+"lv": "B2",
+"ru": "албанец",
+"en": "Albanian (person)",
+"fr": "Albanais"
+},
+{
+"a": "ալիյա",
+"lv": "B2",
+"ru": "алия (репатриация в Израиль)",
+"en": "aliyah",
+"fr": "alya"
+},
+{
+"a": "ալիքային ֆունկցիա",
+"lv": "B2",
+"ru": "волновая функция",
+"en": "wavefunction",
+"fr": "fonction d'onde"
+},
+{
+"a": "ալիֆ",
+"lv": "B2",
+"ru": "алиф",
+"en": "alif",
+"fr": "alif"
+},
+{
+"a": "ալկալի",
+"lv": "B2",
+"ru": "щёлочь",
+"en": "alkali",
+"fr": "alcali"
+},
+{
+"a": "ալկասար",
+"lv": "B2",
+"ru": "алькасар",
+"en": "alcazar",
+"fr": "alcazar"
+},
+{
+"a": "ալյումինի օքսիդ",
+"lv": "B2",
+"ru": "оксид алюминия",
+"en": "aluminium oxide",
+"fr": "alumine"
+},
+{
+"a": "ալոկազիա",
+"lv": "B2",
+"ru": "алоказия",
+"en": "alocasia",
+"fr": "alocasia"
+},
+{
+"a": "ալֆա",
+"lv": "B2",
+"ru": "альфа",
+"en": "alpha",
+"fr": "alpha"
+},
+{
+"a": "ալֆախոտ",
+"lv": "B2",
+"ru": "альфа (трава)",
+"en": "esparto",
+"fr": "alfa (sparte)"
+},
+{
+"a": "ախոնդ",
+"lv": "B2",
+"ru": "ахунд",
+"en": "akhund",
+"fr": "akhound"
+},
+{
+"a": "ախտահանիչ միջոց",
+"lv": "B2",
+"ru": "дезинфицирующее средство",
+"en": "disinfectant",
+"fr": "désinfectant"
+},
+{
+"a": "ախտահոգեբանություն",
+"lv": "B2",
+"ru": "патопсихология",
+"en": "abnormal psychology",
+"fr": "psychopathologie"
+},
+{
+"a": "ածելու սայր",
+"lv": "B2",
+"ru": "лезвие бритвы",
+"en": "razor blade",
+"fr": "lame de rasoir"
+},
+{
+"a": "ածխածնի երկօքսիդ",
+"lv": "B2",
+"ru": "углекислый газ",
+"en": "carbon dioxide",
+"fr": "dioxyde de carbone"
+},
+{
+"a": "ականակիր",
+"lv": "B2",
+"ru": "эсминец",
+"en": "destroyer",
+"fr": "destroyer"
+},
+{
+"a": "ականապատ դաշտ",
+"lv": "B2",
+"ru": "минное поле",
+"en": "minefield",
+"fr": "champ de mines"
+},
+{
+"a": "ականջակալներ",
+"lv": "B2",
+"ru": "наушники (гарнитура)",
+"en": "headset",
+"fr": "casque audio"
+},
+{
+"a": "ականջավոր բու",
+"lv": "B2",
+"ru": "ушастая сова",
+"en": "long-eared owl",
+"fr": "hibou moyen-duc"
+},
+{
+"a": "ակարներ",
+"lv": "B2",
+"ru": "клещи (мн.)",
+"en": "mites",
+"fr": "acariens"
+},
+{
+"a": "ակնոցավոր արջ",
+"lv": "B2",
+"ru": "очковый медведь",
+"en": "spectacled bear",
+"fr": "ours à lunettes"
+},
+{
+"a": "ակորդեոնահար",
+"lv": "B2",
+"ru": "аккордеонист",
+"en": "accordionist",
+"fr": "accordéoniste"
+},
+{
+"a": "ակումուլյատոր",
+"lv": "B2",
+"ru": "аккумулятор",
+"en": "battery",
+"fr": "batterie"
+},
+{
+"a": "ակուստիկ կիթառ",
+"lv": "B2",
+"ru": "акустическая гитара",
+"en": "acoustic guitar",
+"fr": "guitare acoustique"
+},
+{
+"a": "ակվալանգ",
+"lv": "B2",
+"ru": "акваланг",
+"en": "aqualung",
+"fr": "scaphandre autonome"
+},
+{
+"a": "ակվապոնիկա",
+"lv": "B2",
+"ru": "аквапоника",
+"en": "aquaponics",
+"fr": "aquaponie"
+},
+{
+"a": "ակվարիում",
+"lv": "B2",
+"ru": "аквариум",
+"en": "aquarium",
+"fr": "aquarium"
+},
+{
+"a": "ակրոմեգալիա",
+"lv": "B2",
+"ru": "акромегалия",
+"en": "acromegaly",
+"fr": "acromégalie"
+},
+{
+"a": "ակցենտ",
+"lv": "B2",
+"ru": "акцент",
+"en": "accent",
+"fr": "accent"
+},
+{
+"a": "ակցիոներ",
+"lv": "B2",
+"ru": "акционер",
+"en": "shareholder",
+"fr": "actionnaire"
+},
+{
+"a": "աղանդապետ",
+"lv": "B2",
+"ru": "ересиарх",
+"en": "heresiarch",
+"fr": "hérésiarque"
+},
+{
+"a": "աղավաղում",
+"lv": "B2",
+"ru": "деформация",
+"en": "deformation",
+"fr": "déformation"
+},
+{
+"a": "աղավնյակ",
+"lv": "B2",
+"ru": "голубёнок",
+"en": "squab",
+"fr": "pigeonneau"
+},
+{
+"a": "աղավնոց",
+"lv": "B2",
+"ru": "голубятня (синоним)",
+"en": "dovecote",
+"fr": "colombier"
+},
+{
+"a": "աղացպան",
+"lv": "B2",
+"ru": "мельник",
+"en": "miller",
+"fr": "meunier"
+},
+{
+"a": "աղբի բեռնարկղ",
+"lv": "B2",
+"ru": "мусорный бак",
+"en": "garbage can",
+"fr": "poubelle"
+},
+{
+"a": "աղեթափություն",
+"lv": "B2",
+"ru": "грыжа",
+"en": "hernia",
+"fr": "hernie"
+},
+{
+"a": "աղմուկ ականջներում",
+"lv": "B2",
+"ru": "звон в ушах",
+"en": "tinnitus",
+"fr": "acouphène"
+},
+{
+"a": "աղոթագիրք",
+"lv": "B2",
+"ru": "молитвенник",
+"en": "prayer book",
+"fr": "livre de prières"
+},
+{
+"a": "աղոթագորգ",
+"lv": "B2",
+"ru": "молитвенный коврик",
+"en": "prayer rug",
+"fr": "tapis de prière"
+},
+{
+"a": "աղվաներեն",
+"lv": "B2",
+"ru": "кавказско-албанский язык",
+"en": "Caucasian Albanian language",
+"fr": "albanien du Caucase (langue)"
+},
+{
+"a": "աղվեսակ",
+"lv": "B2",
+"ru": "фуксия",
+"en": "fuchsia",
+"fr": "fuchsia"
+},
+{
+"a": "աղվեսուհի",
+"lv": "B2",
+"ru": "лисица (самка)",
+"en": "vixen",
+"fr": "renarde"
+},
+{
+"a": "աղտոր",
+"lv": "B2",
+"ru": "сумах",
+"en": "sumac",
+"fr": "sumac"
+},
+{
+"a": "աղքատները",
+"lv": "B2",
+"ru": "бедные (мн.)",
+"en": "the poor",
+"fr": "les pauvres"
+},
+{
+"a": "աճանստվածք",
+"lv": "B2",
+"ru": "аккреция",
+"en": "accretion",
+"fr": "accrétion"
+},
+{
+"a": "աճար",
+"lv": "B2",
+"ru": "полба",
+"en": "emmer",
+"fr": "amidonnier"
+},
+{
+"a": "ամազոնուհի",
+"lv": "B2",
+"ru": "амазонка",
+"en": "Amazon (warrior)",
+"fr": "amazone"
+},
+{
+"a": "աման լվացող սարք",
+"lv": "B2",
+"ru": "посудомоечная машина",
+"en": "dishwasher",
+"fr": "lave-vaisselle"
+},
+{
+"a": "ամբոխավարություն",
+"lv": "B2",
+"ru": "охлократия",
+"en": "ochlocracy",
+"fr": "ochlocratie"
+},
+{
+"a": "ամբողջատիրություն",
+"lv": "B2",
+"ru": "тоталитаризм",
+"en": "totalitarianism",
+"fr": "totalitarisme"
+},
+{
+"a": "ամբուլատորիա",
+"lv": "B2",
+"ru": "амбулатория",
+"en": "outpatient clinic",
+"fr": "dispensaire"
+},
+{
+"a": "ամբրոսիա",
+"lv": "B2",
+"ru": "амброзия",
+"en": "ambrosia",
+"fr": "ambroisie"
+},
+{
+"a": "ամեթիստ",
+"lv": "B2",
+"ru": "аметист",
+"en": "amethyst",
+"fr": "améthyste"
+},
+{
+"a": "ամենագիտակ",
+"lv": "B2",
+"ru": "всезнайка",
+"en": "know-it-all",
+"fr": "je-sais-tout"
+},
+{
+"a": "ամերիկանացում",
+"lv": "B2",
+"ru": "американизация",
+"en": "Americanisation",
+"fr": "américanisation"
+},
+{
+"a": "ամերիկանո",
+"lv": "B2",
+"ru": "американо",
+"en": "americano",
+"fr": "americano"
+},
+{
+"a": "ամիր",
+"lv": "B2",
+"ru": "эмир (синоним)",
+"en": "emir",
+"fr": "émir (synonyme)"
+},
+{
+"a": "ամիրապետ",
+"lv": "B2",
+"ru": "халиф (синоним)",
+"en": "caliph",
+"fr": "calife (synonyme)"
+},
+{
+"a": "ամնիոն",
+"lv": "B2",
+"ru": "амнион",
+"en": "amnion",
+"fr": "amnios"
+},
+{
+"a": "ամոնիումի նիտրատ",
+"lv": "B2",
+"ru": "нитрат аммония",
+"en": "ammonium nitrate",
+"fr": "nitrate d'ammonium"
+},
+{
+"a": "ամուսնական գործակալություն",
+"lv": "B2",
+"ru": "брачное агентство",
+"en": "marriage agency",
+"fr": "agence matrimoniale"
+},
+{
+"a": "ամուսնական զույգ",
+"lv": "B2",
+"ru": "супружеская пара",
+"en": "married couple",
+"fr": "couple marié"
+},
+{
+"a": "ամուրիկ",
+"lv": "B2",
+"ru": "зяблик",
+"en": "chaffinch",
+"fr": "pinson"
+},
+{
+"a": "ամպերմետր",
+"lv": "B2",
+"ru": "амперметр",
+"en": "ammeter",
+"fr": "ampèremètre"
+},
+{
+"a": "ամպերսանդ",
+"lv": "B2",
+"ru": "амперсанд (&)",
+"en": "ampersand",
+"fr": "esperluette"
+},
+{
+"a": "ամպլուա",
+"lv": "B2",
+"ru": "амплуа",
+"en": "stock character",
+"fr": "emploi (rôle type)"
+},
+{
+"a": "ամպուլա",
+"lv": "B2",
+"ru": "ампула",
+"en": "ampoule",
+"fr": "ampoule (médicale)"
+},
+{
+"a": "ամրակառույց կրակակետ",
+"lv": "B2",
+"ru": "дот",
+"en": "pillbox",
+"fr": "casemate"
+},
+{
+"a": "ամրակիչ",
+"lv": "B2",
+"ru": "степлер",
+"en": "stapler",
+"fr": "agrafeuse"
+},
+{
+"a": "ամֆիթատրոն",
+"lv": "B2",
+"ru": "амфитеатр",
+"en": "amphitheatre",
+"fr": "amphithéâtre"
+},
+{
+"a": "ամֆիսբենա",
+"lv": "B2",
+"ru": "амфисбена",
+"en": "amphisbaena",
+"fr": "amphisbène"
+},
+{
+"a": "այ-այ",
+"lv": "B2",
+"ru": "ай-ай (руконожка)",
+"en": "aye-aye",
+"fr": "aye-aye"
+},
+{
+"a": "այաթոլլա",
+"lv": "B2",
+"ru": "аятолла",
+"en": "ayatollah",
+"fr": "ayatollah"
+},
+{
+"a": "այբբենական կարգ",
+"lv": "B2",
+"ru": "алфавитный порядок",
+"en": "alphabetical order",
+"fr": "ordre alphabétique"
+},
+{
+"a": "այլակերպություն",
+"lv": "B2",
+"ru": "метаморфоза",
+"en": "metamorphosis",
+"fr": "métamorphose"
+},
+{
+"a": "այլասերվածություն",
+"lv": "B2",
+"ru": "извращённость",
+"en": "perversion",
+"fr": "perversion"
+},
+{
+"a": "այլասիրություն",
+"lv": "B2",
+"ru": "альтруизм",
+"en": "altruism",
+"fr": "altruisme"
+},
+{
+"a": "այլընտրանքային ծախս",
+"lv": "B2",
+"ru": "альтернативные издержки",
+"en": "opportunity cost",
+"fr": "coût d'opportunité"
+},
+{
+"a": "այծենակաճ",
+"lv": "B2",
+"ru": "бурка",
+"en": "burka (felt cloak)",
+"fr": "bourka"
+},
+{
+"a": "այնինգ",
+"lv": "B2",
+"ru": "иннинг",
+"en": "inning",
+"fr": "manche (baseball)"
+},
+{
+"a": "այսրկովկասցի",
+"lv": "B2",
+"ru": "закавказец",
+"en": "Transcaucasian",
+"fr": "Transcaucasien"
+},
+{
+"a": "այտուցվածություն",
+"lv": "B2",
+"ru": "отёчность",
+"en": "swelling",
+"fr": "enflure (synonyme)"
+},
+{
+"a": "այրոց",
+"lv": "B2",
+"ru": "изжога",
+"en": "heartburn",
+"fr": "brûlures d'estomac"
+},
+{
+"a": "այֆոն",
+"lv": "B2",
+"ru": "айфон",
+"en": "iPhone",
+"fr": "iPhone"
+},
+{
+"a": "անագրամա",
+"lv": "B2",
+"ru": "анаграмма",
+"en": "anagram",
+"fr": "anagramme"
+},
+{
+"a": "անալոգիա",
+"lv": "B2",
+"ru": "аналогия",
+"en": "analogy",
+"fr": "analogie"
+},
+{
+"a": "անախորժ դրություն",
+"lv": "B2",
+"ru": "неприятное положение",
+"en": "pickle (difficult situation)",
+"fr": "pétrin"
+},
+{
+"a": "անախրոնիզմ",
+"lv": "B2",
+"ru": "анахронизм",
+"en": "anachronism",
+"fr": "anachronisme"
+},
+{
+"a": "անառակություն",
+"lv": "B2",
+"ru": "распутство (разгул)",
+"en": "debauchery",
+"fr": "débauche"
+},
+{
+"a": "անառողջ սնունդ",
+"lv": "B2",
+"ru": "вредная еда, фастфуд",
+"en": "junk food",
+"fr": "malbouffe"
+},
+{
+"a": "անառողջություն",
+"lv": "B2",
+"ru": "нездоровье",
+"en": "illness",
+"fr": "maladie (mauvaise santé)"
+},
+{
+"a": "անարատություն",
+"lv": "B2",
+"ru": "непорочность",
+"en": "purity",
+"fr": "pureté"
+},
+{
+"a": "անարգանք",
+"lv": "B2",
+"ru": "поношение",
+"en": "contumely",
+"fr": "outrage"
+},
+{
+"a": "անգար",
+"lv": "B2",
+"ru": "ангар",
+"en": "hangar",
+"fr": "hangar"
+},
+{
+"a": "անգլիաբանություն",
+"lv": "B2",
+"ru": "англицизм",
+"en": "Anglicism",
+"fr": "anglicisme"
+},
+{
+"a": "անգլիական եղջերափող",
+"lv": "B2",
+"ru": "английский рожок",
+"en": "cor anglais",
+"fr": "cor anglais"
+},
+{
+"a": "անգլիական սոնետ",
+"lv": "B2",
+"ru": "английский сонет",
+"en": "Shakespearean sonnet",
+"fr": "sonnet anglais"
+},
+{
+"a": "անգլիկացում",
+"lv": "B2",
+"ru": "англизация",
+"en": "anglicisation",
+"fr": "anglicisation"
+},
+{
+"a": "անգլոսաքս",
+"lv": "B2",
+"ru": "англосакс",
+"en": "Anglo-Saxon (person)",
+"fr": "Anglo-Saxon"
+},
+{
+"a": "անգուժատ",
+"lv": "B2",
+"ru": "асафетида",
+"en": "asafoetida",
+"fr": "ase fétide"
+},
+{
+"a": "անգստրոմ",
+"lv": "B2",
+"ru": "ангстрем",
+"en": "angstrom",
+"fr": "angström"
+},
+{
+"a": "անդրանիկություն",
+"lv": "B2",
+"ru": "первородство",
+"en": "primogeniture",
+"fr": "primogéniture"
+},
+{
+"a": "անդրոիդ",
+"lv": "B2",
+"ru": "андроид",
+"en": "android",
+"fr": "androïde"
+},
+{
+"a": "անեզական գոյական",
+"lv": "B2",
+"ru": "существительное без единственного числа",
+"en": "plurale tantum",
+"fr": "plurale tantum"
+},
+{
+"a": "անեքսիա",
+"lv": "B2",
+"ru": "аннексия",
+"en": "annexation",
+"fr": "annexion"
+},
+{
+"a": "անընդհատ ֆունկցիա",
+"lv": "B2",
+"ru": "непрерывная функция",
+"en": "continuous function",
+"fr": "fonction continue"
+},
+{
+"a": "անընդհատություն",
+"lv": "B2",
+"ru": "непрерывность",
+"en": "continuity",
+"fr": "continuité"
+},
+{
+"a": "անթել հեռագրություն",
+"lv": "B2",
+"ru": "радиотелеграфия",
+"en": "radiotelegraphy",
+"fr": "radiotélégraphie"
+},
+{
+"a": "անթուրծ աղյուս",
+"lv": "B2",
+"ru": "саманный кирпич",
+"en": "adobe",
+"fr": "adobe"
+},
+{
+"a": "անթրոպոլոգիա",
+"lv": "B2",
+"ru": "антропология",
+"en": "anthropology",
+"fr": "anthropologie"
+},
+{
+"a": "անթրոպոցենտրիզմ",
+"lv": "B2",
+"ru": "антропоцентризм",
+"en": "anthropocentrism",
+"fr": "anthropocentrisme"
+},
+{
+"a": "անժուացի",
+"lv": "B2",
+"ru": "анжуйец",
+"en": "Angevin",
+"fr": "Angevin"
+},
+{
+"a": "անիմացիա",
+"lv": "B2",
+"ru": "анимация",
+"en": "animation",
+"fr": "animation"
+},
+{
+"a": "անիմե",
+"lv": "B2",
+"ru": "аниме",
+"en": "anime",
+"fr": "anime"
+},
+{
+"a": "անիրականալի երազանք",
+"lv": "B2",
+"ru": "несбыточная мечта",
+"en": "pipe dream",
+"fr": "chimère"
+},
+{
+"a": "անխոսություն",
+"lv": "B2",
+"ru": "афазия",
+"en": "aphasia",
+"fr": "aphasie"
+},
+{
+"a": "անխռովություն",
+"lv": "B2",
+"ru": "безмятежность",
+"en": "tranquillity",
+"fr": "sérénité"
+},
+{
+"a": "անկանոն բայ",
+"lv": "B2",
+"ru": "неправильный глагол",
+"en": "irregular verb",
+"fr": "verbe irrégulier"
+},
+{
+"a": "անկանոնություն",
+"lv": "B2",
+"ru": "аномалия",
+"en": "anomaly",
+"fr": "anomalie"
+},
+{
+"a": "անկապակացություն",
+"lv": "B2",
+"ru": "непоследовательность",
+"en": "inconsistency",
+"fr": "incohérence"
+},
+{
+"a": "անկատար",
+"lv": "B2",
+"ru": "несовершенный вид (прош. вр.)",
+"en": "imperfect (tense)",
+"fr": "imparfait"
+},
+{
+"a": "անկիզապատ",
+"lv": "B2",
+"ru": "брандмауэр, огнестойкая стена",
+"en": "firewall",
+"fr": "pare-feu"
+},
+{
+"a": "անկիլոզ",
+"lv": "B2",
+"ru": "анкилоз",
+"en": "ankylosis",
+"fr": "ankylose"
+},
+{
+"a": "անկյունահղկիչ",
+"lv": "B2",
+"ru": "угловая шлифмашина (болгарка)",
+"en": "angle grinder",
+"fr": "meuleuse d'angle"
+},
+{
+"a": "անկյունային արագություն",
+"lv": "B2",
+"ru": "угловая скорость",
+"en": "angular velocity",
+"fr": "vitesse angulaire"
+},
+{
+"a": "անկումայնություն",
+"lv": "B2",
+"ru": "упадничество, декаданс",
+"en": "decadence",
+"fr": "décadence"
+},
+{
+"a": "անկտի",
+"lv": "B2",
+"ru": "коромысло",
+"en": "carrying pole",
+"fr": "palanche"
+},
+{
+"a": "անհաղթահարելի ուժ",
+"lv": "B2",
+"ru": "форс-мажор",
+"en": "force majeure",
+"fr": "force majeure"
+},
+{
+"a": "անհատական համակարգիչ",
+"lv": "B2",
+"ru": "персональный компьютер",
+"en": "personal computer",
+"fr": "ordinateur personnel"
+},
+{
+"a": "անհրաժեշտ պայման",
+"lv": "B2",
+"ru": "необходимое условие",
+"en": "sine qua non",
+"fr": "condition sine qua non"
+},
+{
+"a": "անձավաբուժություն",
+"lv": "B2",
+"ru": "спелеотерапия",
+"en": "speleotherapy",
+"fr": "spéléothérapie"
+},
+{
+"a": "անձի պաշտամունք",
+"lv": "B2",
+"ru": "культ личности",
+"en": "cult of personality",
+"fr": "culte de la personnalité"
+},
+{
+"a": "անձնական դերանուն",
+"lv": "B2",
+"ru": "личное местоимение",
+"en": "personal pronoun",
+"fr": "pronom personnel"
+},
+{
+"a": "անձնական տվյալ",
+"lv": "B2",
+"ru": "персональные данные",
+"en": "personal data",
+"fr": "données personnelles"
+},
+{
+"a": "անձնային խանգարում",
+"lv": "B2",
+"ru": "расстройство личности",
+"en": "personality disorder",
+"fr": "trouble de la personnalité"
+},
+{
+"a": "անձներական թվական",
+"lv": "B2",
+"ru": "собирательное числительное",
+"en": "collective numeral",
+"fr": "numéral collectif"
+},
+{
+"a": "անշրջելիություն",
+"lv": "B2",
+"ru": "необратимость",
+"en": "irreversibility",
+"fr": "irréversibilité"
+},
+{
+"a": "անոթաբանություն",
+"lv": "B2",
+"ru": "ангиология",
+"en": "angiology",
+"fr": "angiologie"
+},
+{
+"a": "անոթալայնանք",
+"lv": "B2",
+"ru": "аневризма",
+"en": "aneurysm",
+"fr": "anévrisme"
+},
+{
+"a": "անոմալիա",
+"lv": "B2",
+"ru": "аномалия (синоним)",
+"en": "anomaly",
+"fr": "anomalie (synonyme)"
+},
+{
+"a": "անորոշ դերանուն",
+"lv": "B2",
+"ru": "неопределённое местоимение",
+"en": "indefinite pronoun",
+"fr": "pronom indéfini"
+},
+{
+"a": "անուշադր",
+"lv": "B2",
+"ru": "нашатырь",
+"en": "sal ammoniac",
+"fr": "sel ammoniac"
+},
+{
+"a": "անպատասխան սեր",
+"lv": "B2",
+"ru": "неразделённая любовь",
+"en": "unrequited love",
+"fr": "amour non partagé"
+},
+{
+"a": "անպատկառություն",
+"lv": "B2",
+"ru": "нахальство",
+"en": "effrontery",
+"fr": "effronterie (synonyme)"
+},
+{
+"a": "անջատականություն",
+"lv": "B2",
+"ru": "сепаратизм",
+"en": "separatism",
+"fr": "séparatisme"
+},
+{
+"a": "անջատման գիծ",
+"lv": "B2",
+"ru": "тире",
+"en": "dash",
+"fr": "tiret"
+},
+{
+"a": "անջատում",
+"lv": "B2",
+"ru": "отделение, сецессия",
+"en": "separation, secession",
+"fr": "séparation, sécession"
+},
+{
+"a": "անսահմանություն",
+"lv": "B2",
+"ru": "бесконечность",
+"en": "infinity",
+"fr": "infini"
+},
+{
+"a": "անվակոս",
+"lv": "B2",
+"ru": "колея",
+"en": "rut",
+"fr": "ornière"
+},
+{
+"a": "անվակունդ",
+"lv": "B2",
+"ru": "ступица (колеса)",
+"en": "hub",
+"fr": "moyeu"
+},
+{
+"a": "անվաճաղ",
+"lv": "B2",
+"ru": "спица (колеса)",
+"en": "spoke",
+"fr": "rayon (de roue)"
+},
+{
+"a": "անվանակից",
+"lv": "B2",
+"ru": "тёзка",
+"en": "namesake",
+"fr": "homonyme"
+},
+{
+"a": "անվաորդեր",
+"lv": "B2",
+"ru": "коловратка",
+"en": "rotifer",
+"fr": "rotifère"
+},
+{
+"a": "անվավերություն",
+"lv": "B2",
+"ru": "недействительность",
+"en": "invalidity",
+"fr": "invalidité"
+},
+{
+"a": "անվստահելի պատմիչ",
+"lv": "B2",
+"ru": "ненадёжный рассказчик",
+"en": "unreliable narrator",
+"fr": "narrateur non fiable"
+},
+{
+"a": "անվստահելիություն",
+"lv": "B2",
+"ru": "неуверенность",
+"en": "insecurity",
+"fr": "insécurité"
+},
+{
+"a": "անտաշ մարդ",
+"lv": "B2",
+"ru": "неотёсанный человек",
+"en": "bumpkin",
+"fr": "rustre (personne)"
+},
+{
+"a": "անտառակտցար",
+"lv": "B2",
+"ru": "вальдшнеп (лесной)",
+"en": "Eurasian woodcock",
+"fr": "bécasse des bois"
+},
+{
+"a": "անտառահատ",
+"lv": "B2",
+"ru": "лесоруб",
+"en": "lumberjack",
+"fr": "bûcheron"
+},
+{
+"a": "անտառանյութ",
+"lv": "B2",
+"ru": "древесина, лес",
+"en": "timber",
+"fr": "bois de construction"
+},
+{
+"a": "անտենա",
+"lv": "B2",
+"ru": "антенна (синоним)",
+"en": "aerial",
+"fr": "antenne (synonyme)"
+},
+{
+"a": "անտեսանելիություն",
+"lv": "B2",
+"ru": "невидимость",
+"en": "invisibility",
+"fr": "invisibilité"
+},
+{
+"a": "անտիկլինալ",
+"lv": "B2",
+"ru": "антиклиналь",
+"en": "anticline",
+"fr": "anticlinal"
+},
+{
+"a": "անտինոմիա",
+"lv": "B2",
+"ru": "антиномия",
+"en": "antinomy",
+"fr": "antinomie"
+},
+{
+"a": "անտիֆրիզ",
+"lv": "B2",
+"ru": "антифриз",
+"en": "antifreeze",
+"fr": "antigel"
+},
+{
+"a": "անտոմս ուղեւոր",
+"lv": "B2",
+"ru": "безбилетник",
+"en": "fare dodger",
+"fr": "resquilleur"
+},
+{
+"a": "անցած գիշեր",
+"lv": "B2",
+"ru": "прошлой ночью",
+"en": "last night",
+"fr": "la nuit dernière"
+},
+{
+"a": "անցողական բայ",
+"lv": "B2",
+"ru": "переходный глагол",
+"en": "transitive verb",
+"fr": "verbe transitif"
+},
+{
+"a": "անցվոր",
+"lv": "B2",
+"ru": "прохожий",
+"en": "passer-by",
+"fr": "passant"
+},
+{
+"a": "անփութություն",
+"lv": "B2",
+"ru": "небрежность, халатность",
+"en": "negligence",
+"fr": "négligence"
+},
+{
+"a": "անօրինական ներգաղթյալ",
+"lv": "B2",
+"ru": "нелегальный иммигрант",
+"en": "illegal immigrant",
+"fr": "immigré clandestin"
+},
+{
+"a": "աշխատակազմի ղեկավար",
+"lv": "B2",
+"ru": "руководитель аппарата",
+"en": "chief of staff, CEO",
+"fr": "directeur général"
+},
+{
+"a": "աշխատանքի բաժանում",
+"lv": "B2",
+"ru": "разделение труда",
+"en": "division of labour",
+"fr": "division du travail"
+},
+{
+"a": "աշխատանքի իրավունք",
+"lv": "B2",
+"ru": "трудовое право",
+"en": "labour law",
+"fr": "droit du travail"
+},
+{
+"a": "աշխատասենյակ",
+"lv": "B2",
+"ru": "рабочий кабинет",
+"en": "study",
+"fr": "bureau (pièce)"
+},
+{
+"a": "աշխատավայր",
+"lv": "B2",
+"ru": "рабочее место",
+"en": "workplace",
+"fr": "lieu de travail"
+},
+{
+"a": "աշխատավարձի օր",
+"lv": "B2",
+"ru": "день зарплаты",
+"en": "payday",
+"fr": "jour de paie"
+},
+{
+"a": "աշխարհագրական նշում",
+"lv": "B2",
+"ru": "географическое указание",
+"en": "geographical indication",
+"fr": "indication géographique"
+},
+{
+"a": "աշխարհաքաղաքականություն",
+"lv": "B2",
+"ru": "геополитика",
+"en": "geopolitics",
+"fr": "géopolitique"
+},
+{
+"a": "աշխարհի առաջնություն",
+"lv": "B2",
+"ru": "чемпионат мира",
+"en": "World Cup",
+"fr": "Coupe du monde"
+},
+{
+"a": "աշխարհկառուցում",
+"lv": "B2",
+"ru": "построение вымышленного мира",
+"en": "worldbuilding",
+"fr": "création d'univers"
+},
+{
+"a": "աշխուժություն",
+"lv": "B2",
+"ru": "бодрость, живость",
+"en": "alacrity",
+"fr": "entrain"
+},
+{
+"a": "աուդիոգիրք",
+"lv": "B2",
+"ru": "аудиокнига",
+"en": "audiobook",
+"fr": "livre audio"
+},
+{
+"a": "աուդիոմետրիա",
+"lv": "B2",
+"ru": "аудиометрия",
+"en": "audiometry",
+"fr": "audiométrie"
+},
+{
+"a": "աուսկուլտացիա",
+"lv": "B2",
+"ru": "аускультация",
+"en": "auscultation",
+"fr": "auscultation"
+},
+{
+"a": "աչքի վիրակապ",
+"lv": "B2",
+"ru": "повязка на глаз",
+"en": "eye patch",
+"fr": "cache-œil"
+},
+{
+"a": "ապաբանաքաղում",
+"lv": "B2",
+"ru": "декомпиляция",
+"en": "decompilation",
+"fr": "décompilation"
+},
+{
+"a": "ապակե առաստաղ",
+"lv": "B2",
+"ru": "стеклянный потолок",
+"en": "glass ceiling",
+"fr": "plafond de verre"
+},
+{
+"a": "ապակեհարթակ",
+"lv": "B2",
+"ru": "предметное стекло",
+"en": "microscope slide",
+"fr": "lame de microscope"
+},
+{
+"a": "ապակոմունիզացիա",
+"lv": "B2",
+"ru": "декоммунизация",
+"en": "decommunization",
+"fr": "décommunisation"
+},
+{
+"a": "ապամասնատում",
+"lv": "B2",
+"ru": "дефрагментация",
+"en": "defragmentation",
+"fr": "défragmentation"
+},
+{
+"a": "ապամարդկայնացում",
+"lv": "B2",
+"ru": "дегуманизация",
+"en": "dehumanization",
+"fr": "déshumanisation"
+},
+{
+"a": "ապանացիստականացում",
+"lv": "B2",
+"ru": "денацификация",
+"en": "denazification",
+"fr": "dénazification"
+},
+{
+"a": "ապառազմականացում",
+"lv": "B2",
+"ru": "демилитаризация",
+"en": "demilitarisation",
+"fr": "démilitarisation"
+},
+{
+"a": "ապառնի ժամանակ",
+"lv": "B2",
+"ru": "будущее время",
+"en": "future tense",
+"fr": "futur"
+},
+{
+"a": "ապաստան հայցող",
+"lv": "B2",
+"ru": "соискатель убежища",
+"en": "asylum seeker",
+"fr": "demandeur d'asile"
+},
+{
+"a": "ապատիտ",
+"lv": "B2",
+"ru": "апатит",
+"en": "apatite",
+"fr": "apatite"
+},
+{
+"a": "ապաքրեականացում",
+"lv": "B2",
+"ru": "декриминализация",
+"en": "decriminalization",
+"fr": "dépénalisation"
+},
+{
+"a": "ապոպտոզ",
+"lv": "B2",
+"ru": "апоптоз",
+"en": "apoptosis",
+"fr": "apoptose"
+},
+{
+"a": "ապոստրոֆ",
+"lv": "B2",
+"ru": "апостроф",
+"en": "apostrophe",
+"fr": "apostrophe"
+},
+{
+"a": "ապոֆենիա",
+"lv": "B2",
+"ru": "апофения",
+"en": "apophenia",
+"fr": "apophénie"
+},
+{
+"a": "ապրանքապահեստ",
+"lv": "B2",
+"ru": "товарный склад",
+"en": "warehouse",
+"fr": "entrepôt (de marchandises)"
+},
+{
+"a": "ապրանքափոխանակություն",
+"lv": "B2",
+"ru": "бартер",
+"en": "barter",
+"fr": "troc"
+},
+{
+"a": "աջափնյա",
+"lv": "B2",
+"ru": "правобережный; правый берег",
+"en": "right bank",
+"fr": "rive droite"
+},
+{
+"a": "աջիկա",
+"lv": "B2",
+"ru": "аджика",
+"en": "adjika",
+"fr": "adjika"
+},
+{
+"a": "առագաստալաթ",
+"lv": "B2",
+"ru": "парусина",
+"en": "sailcloth",
+"fr": "toile à voile"
+},
+{
+"a": "առաձգականություն",
+"lv": "B2",
+"ru": "упругость",
+"en": "elasticity",
+"fr": "élasticité"
+},
+{
+"a": "առանձնացում",
+"lv": "B2",
+"ru": "изоляция",
+"en": "insulation",
+"fr": "isolation"
+},
+{
+"a": "առանցքային կետ",
+"lv": "B2",
+"ru": "ключевой момент",
+"en": "crux",
+"fr": "point crucial"
+},
+{
+"a": "առաջ քաշված եզրային կիսապաշտպան",
+"lv": "B2",
+"ru": "вингер (крайний полузащитник)",
+"en": "winger",
+"fr": "ailier"
+},
+{
+"a": "առաջային ուղեղ",
+"lv": "B2",
+"ru": "передний мозг",
+"en": "forebrain",
+"fr": "prosencéphale"
+},
+{
+"a": "առաջարկ եւ պահանջարկ",
+"lv": "B2",
+"ru": "спрос и предложение",
+"en": "supply and demand",
+"fr": "offre et demande"
+},
+{
+"a": "առաջարկի կոր",
+"lv": "B2",
+"ru": "кривая предложения",
+"en": "supply curve",
+"fr": "courbe d'offre"
+},
+{
+"a": "առաջարկում",
+"lv": "B2",
+"ru": "рекомендация",
+"en": "recommendation",
+"fr": "recommandation"
+},
+{
+"a": "առաջին հարկ",
+"lv": "B2",
+"ru": "первый этаж",
+"en": "ground floor",
+"fr": "rez-de-chaussée"
+},
+{
+"a": "առաջին սեր",
+"lv": "B2",
+"ru": "первая любовь",
+"en": "first love",
+"fr": "premier amour"
+},
+{
+"a": "առաջին տիկին",
+"lv": "B2",
+"ru": "первая леди",
+"en": "First Lady",
+"fr": "Première dame"
+},
+{
+"a": "առաջնագիծ",
+"lv": "B2",
+"ru": "линия фронта",
+"en": "front line",
+"fr": "ligne de front"
+},
+{
+"a": "առաջնային հրապարակային տեղաբաշխում",
+"lv": "B2",
+"ru": "первичное размещение акций (IPO)",
+"en": "initial public offering",
+"fr": "introduction en bourse"
+},
+{
+"a": "առաջնային շարքի ձայնավոր",
+"lv": "B2",
+"ru": "гласный переднего ряда",
+"en": "front vowel",
+"fr": "voyelle antérieure"
+},
+{
+"a": "առասպելույթ",
+"lv": "B2",
+"ru": "мифологема",
+"en": "mythologem",
+"fr": "mythologème"
+},
+{
+"a": "առատության եղջյուր",
+"lv": "B2",
+"ru": "рог изобилия",
+"en": "cornucopia",
+"fr": "corne d'abondance"
+},
+{
+"a": "առդիր",
+"lv": "B2",
+"ru": "вложение (файл)",
+"en": "attachment (file)",
+"fr": "pièce jointe"
+},
+{
+"a": "առեւտրայնացում",
+"lv": "B2",
+"ru": "коммерциализация",
+"en": "commercialization",
+"fr": "commercialisation"
+},
+{
+"a": "առկայծում",
+"lv": "B2",
+"ru": "мерцание",
+"en": "twinkle",
+"fr": "scintillement (synonyme)"
+},
+{
+"a": "առում",
+"lv": "B2",
+"ru": "захват",
+"en": "capture",
+"fr": "capture"
+},
+{
+"a": "առօրյա",
+"lv": "B2",
+"ru": "повседневность",
+"en": "everyday life",
+"fr": "quotidien"
+},
+{
+"a": "առևտրական պալատ",
+"lv": "B2",
+"ru": "торговая палата",
+"en": "chamber of commerce",
+"fr": "chambre de commerce"
+},
+{
+"a": "առևտրային գաղտնիք",
+"lv": "B2",
+"ru": "коммерческая тайна",
+"en": "trade secret",
+"fr": "secret commercial"
+},
+{
+"a": "առևտրի ավտոմատ",
+"lv": "B2",
+"ru": "торговый автомат",
+"en": "vending machine",
+"fr": "distributeur automatique"
+},
+{
+"a": "աս",
+"lv": "B2",
+"ru": "туз",
+"en": "ace",
+"fr": "as"
+},
+{
+"a": "ասեղնաբուժություն",
+"lv": "B2",
+"ru": "иглоукалывание",
+"en": "acupuncture",
+"fr": "acupuncture"
+},
+{
+"a": "ասլանճ",
+"lv": "B2",
+"ru": "хвощ",
+"en": "horsetail",
+"fr": "prêle"
+},
+{
+"a": "ասղաման",
+"lv": "B2",
+"ru": "игольник",
+"en": "needlecase",
+"fr": "étui à aiguilles"
+},
+{
+"a": "ասորեստանցի",
+"lv": "B2",
+"ru": "ассириец",
+"en": "Assyrian (person)",
+"fr": "Assyrien"
+},
+{
+"a": "ասույթ",
+"lv": "B2",
+"ru": "апофегма, изречение",
+"en": "apothegm",
+"fr": "apophtegme"
+},
+{
+"a": "ասույթաբանություն",
+"lv": "B2",
+"ru": "паремиология",
+"en": "paremiology",
+"fr": "parémiologie"
+},
+{
+"a": "ասուպների հոսք",
+"lv": "B2",
+"ru": "метеорный поток",
+"en": "meteor shower",
+"fr": "pluie d'étoiles filantes"
+},
+{
+"a": "ասպատակություն",
+"lv": "B2",
+"ru": "набег, вторжение",
+"en": "incursion",
+"fr": "incursion"
+},
+{
+"a": "ասպիրին",
+"lv": "B2",
+"ru": "аспирин",
+"en": "aspirin",
+"fr": "aspirine"
+},
+{
+"a": "աստիգմատիզմ",
+"lv": "B2",
+"ru": "астигматизм",
+"en": "astigmatism",
+"fr": "astigmatisme"
+},
+{
+"a": "աստիճաններ",
+"lv": "B2",
+"ru": "лестница (ступени)",
+"en": "stairway",
+"fr": "escalier"
+},
+{
+"a": "աստղաբաշխ",
+"lv": "B2",
+"ru": "астроном",
+"en": "astronomer",
+"fr": "astronome"
+},
+{
+"a": "աստղակույտեր",
+"lv": "B2",
+"ru": "звёздное скопление",
+"en": "star cluster",
+"fr": "amas d'étoiles (synonyme)"
+},
+{
+"a": "աստղային համակարգ",
+"lv": "B2",
+"ru": "звёздная система",
+"en": "star system",
+"fr": "système stellaire"
+},
+{
+"a": "աստղաչափություն",
+"lv": "B2",
+"ru": "астрометрия",
+"en": "astrometry",
+"fr": "astrométrie"
+},
+{
+"a": "աստվածասպանություն",
+"lv": "B2",
+"ru": "богоубийство",
+"en": "deicide",
+"fr": "déicide"
+},
+{
+"a": "աստվածիմացություն",
+"lv": "B2",
+"ru": "теософия",
+"en": "theosophy",
+"fr": "théosophie"
+},
+{
+"a": "աստրոցիտ",
+"lv": "B2",
+"ru": "астроцит",
+"en": "astrocyte",
+"fr": "astrocyte"
+},
+{
+"a": "ասցիտ",
+"lv": "B2",
+"ru": "асцит",
+"en": "ascites",
+"fr": "ascite"
+},
+{
+"a": "ավագանու անդամ",
+"lv": "B2",
+"ru": "член городского совета",
+"en": "alderman",
+"fr": "conseiller municipal"
+},
+{
+"a": "ավազակապետություն",
+"lv": "B2",
+"ru": "клептократия",
+"en": "kleptocracy",
+"fr": "kleptocratie"
+},
+{
+"a": "ավազի փոթորիկ",
+"lv": "B2",
+"ru": "песчаная буря",
+"en": "sandstorm",
+"fr": "tempête de sable"
+},
+{
+"a": "ավարտական քննություն",
+"lv": "B2",
+"ru": "выпускной экзамен",
+"en": "final exam, baccalaureate",
+"fr": "examen de fin d'études"
+},
+{
+"a": "ավգիտ",
+"lv": "B2",
+"ru": "авгит",
+"en": "augite",
+"fr": "augite"
+},
+{
+"a": "ավենտուրին",
+"lv": "B2",
+"ru": "авантюрин",
+"en": "aventurine",
+"fr": "aventurine"
+},
+{
+"a": "ավշահանգույց",
+"lv": "B2",
+"ru": "лимфатический узел",
+"en": "lymph node",
+"fr": "ganglion lymphatique"
+},
+{
+"a": "ավստրալիական ընկույզ",
+"lv": "B2",
+"ru": "макадамия (орех)",
+"en": "macadamia nut",
+"fr": "noix de macadamia"
+},
+{
+"a": "ավստրալիական ջայլամ",
+"lv": "B2",
+"ru": "эму",
+"en": "emu",
+"fr": "émeu"
+},
+{
+"a": "ավստրալոպիտեկ",
+"lv": "B2",
+"ru": "австралопитек",
+"en": "australopith",
+"fr": "australopithèque"
+},
+{
+"a": "ավտարկիա",
+"lv": "B2",
+"ru": "автаркия",
+"en": "autarky",
+"fr": "autarcie"
+},
+{
+"a": "ավտոբուսի կանգառ",
+"lv": "B2",
+"ru": "автобусная остановка",
+"en": "bus stop",
+"fr": "arrêt de bus"
+},
+{
+"a": "ավտոկեֆալություն",
+"lv": "B2",
+"ru": "автокефалия",
+"en": "autocephaly",
+"fr": "autocéphalie"
+},
+{
+"a": "ավտոմատ միջմոլորակային կայան",
+"lv": "B2",
+"ru": "автоматическая межпланетная станция",
+"en": "space probe",
+"fr": "sonde spatiale"
+},
+{
+"a": "ավտոմոբիլ",
+"lv": "B2",
+"ru": "автомобиль",
+"en": "automobile",
+"fr": "automobile"
+},
+{
+"a": "ավտոստոպով ճամփորդող",
+"lv": "B2",
+"ru": "автостопщик",
+"en": "hitchhiker",
+"fr": "auto-stoppeur"
+},
+{
+"a": "ատամի թել",
+"lv": "B2",
+"ru": "зубная нить",
+"en": "dental floss",
+"fr": "fil dentaire"
+},
+{
+"a": "ատարաքսիա",
+"lv": "B2",
+"ru": "атараксия",
+"en": "ataraxia",
+"fr": "ataraxie"
+},
+{
+"a": "ատմոսֆերա",
+"lv": "B2",
+"ru": "атмосфера",
+"en": "atmosphere",
+"fr": "atmosphère"
+},
+{
+"a": "ատոմական համար",
+"lv": "B2",
+"ru": "атомный номер",
+"en": "atomic number",
+"fr": "numéro atomique"
+},
+{
+"a": "ատրակցիոնների զբոսայգի",
+"lv": "B2",
+"ru": "парк аттракционов",
+"en": "amusement park",
+"fr": "parc d'attractions"
+},
+{
+"a": "ատրճանակ-գնդացիր",
+"lv": "B2",
+"ru": "пистолет-пулемёт",
+"en": "submachine gun",
+"fr": "pistolet-mitrailleur"
+},
+{
+"a": "արաբական թիվ",
+"lv": "B2",
+"ru": "арабская цифра",
+"en": "Arabic numeral",
+"fr": "chiffre arabe"
+},
+{
+"a": "արաբական խեժ",
+"lv": "B2",
+"ru": "гуммиарабик",
+"en": "gum arabic",
+"fr": "gomme arabique"
+},
+{
+"a": "արաբականացում",
+"lv": "B2",
+"ru": "арабизация",
+"en": "Arabisation",
+"fr": "arabisation"
+},
+{
+"a": "արագ սնունդ",
+"lv": "B2",
+"ru": "фастфуд",
+"en": "fast food",
+"fr": "restauration rapide"
+},
+{
+"a": "արագախոսություն",
+"lv": "B2",
+"ru": "беглость речи",
+"en": "fluency",
+"fr": "aisance (à l'oral)"
+},
+{
+"a": "արանչինի",
+"lv": "B2",
+"ru": "аранчини",
+"en": "arancino",
+"fr": "arancini"
+},
+{
+"a": "արարողակարգ",
+"lv": "B2",
+"ru": "протокол (дипломатический)",
+"en": "protocol",
+"fr": "protocole"
+},
+{
+"a": "արբալետ",
+"lv": "B2",
+"ru": "арбалет",
+"en": "crossbow",
+"fr": "arbalète"
+},
+{
+"a": "արբեցում",
+"lv": "B2",
+"ru": "опьянение",
+"en": "intoxication",
+"fr": "ivresse (synonyme)"
+},
+{
+"a": "արգանդափող",
+"lv": "B2",
+"ru": "маточная труба",
+"en": "Fallopian tube",
+"fr": "trompe de Fallope"
+},
+{
+"a": "արգելանք",
+"lv": "B2",
+"ru": "арест имущества",
+"en": "attachment (legal)",
+"fr": "saisie"
+},
+{
+"a": "արդյունաբերական նմուշ",
+"lv": "B2",
+"ru": "право на промышленный образец",
+"en": "industrial design right",
+"fr": "droit des dessins et modèles"
+},
+{
+"a": "արդյունաբերական պարկ",
+"lv": "B2",
+"ru": "индустриальный парк",
+"en": "industrial park",
+"fr": "zone industrielle"
+},
+{
+"a": "արդյունաբերական սեփականություն",
+"lv": "B2",
+"ru": "промышленная собственность",
+"en": "industrial property",
+"fr": "propriété industrielle"
+},
+{
+"a": "արդուկի սեղան",
+"lv": "B2",
+"ru": "гладильная доска",
+"en": "ironing board",
+"fr": "planche à repasser"
+},
+{
+"a": "արեգակի խավարում",
+"lv": "B2",
+"ru": "солнечное затмение",
+"en": "solar eclipse",
+"fr": "éclipse solaire"
+},
+{
+"a": "արենա",
+"lv": "B2",
+"ru": "арена",
+"en": "arena",
+"fr": "arène"
+},
+{
+"a": "արեւապսակի զանգվածի արտանետում",
+"lv": "B2",
+"ru": "корональный выброс массы",
+"en": "coronal mass ejection",
+"fr": "éjection de masse coronale"
+},
+{
+"a": "արեւմտակովկասյան տուր",
+"lv": "B2",
+"ru": "западнокавказский тур",
+"en": "West Caucasian tur",
+"fr": "tur du Caucase occidental"
+},
+{
+"a": "արթնացում",
+"lv": "B2",
+"ru": "пробуждение (синоним)",
+"en": "awakening",
+"fr": "réveil"
+},
+{
+"a": "արիացի",
+"lv": "B2",
+"ru": "ариец",
+"en": "Aryan",
+"fr": "Aryen"
+},
+{
+"a": "արիստոկրատիա",
+"lv": "B2",
+"ru": "аристократия",
+"en": "aristocracy",
+"fr": "aristocratie"
+},
+{
+"a": "արխեոգենետիկա",
+"lv": "B2",
+"ru": "археогенетика",
+"en": "archaeogenetics",
+"fr": "archéogénétique"
+},
+{
+"a": "արխիվարիուս",
+"lv": "B2",
+"ru": "архивариус",
+"en": "archivist",
+"fr": "archiviste"
+},
+{
+"a": "արծաթագործ",
+"lv": "B2",
+"ru": "серебряных дел мастер",
+"en": "silversmith",
+"fr": "orfèvre (argent)"
+},
+{
+"a": "արծաթեղեն",
+"lv": "B2",
+"ru": "серебро (изделия)",
+"en": "silverware",
+"fr": "argenterie"
+},
+{
+"a": "արծվապտեր",
+"lv": "B2",
+"ru": "орляк (папоротник)",
+"en": "bracken",
+"fr": "fougère aigle"
+},
+{
+"a": "արծվաքիթ",
+"lv": "B2",
+"ru": "орлиный нос",
+"en": "aquiline nose",
+"fr": "nez aquilin"
+},
+{
+"a": "արկածախնդրություն",
+"lv": "B2",
+"ru": "авантюризм",
+"en": "adventurism",
+"fr": "esprit d'aventure"
+},
+{
+"a": "արճվան",
+"lv": "B2",
+"ru": "иудино дерево",
+"en": "Judas tree",
+"fr": "arbre de Judée"
+},
+{
+"a": "արմավենու յուղյուղ",
+"lv": "B2",
+"ru": "пальмовое масло",
+"en": "palm oil",
+"fr": "huile de palme"
+},
+{
+"a": "արմատականություն",
+"lv": "B2",
+"ru": "радикализм",
+"en": "radicalism",
+"fr": "radicalisme"
+},
+{
+"a": "արմենիզմ",
+"lv": "B2",
+"ru": "арменизм",
+"en": "Armenism",
+"fr": "arménisme"
+},
+{
+"a": "արյան բիոքիմիական քննություն",
+"lv": "B2",
+"ru": "биохимический анализ крови",
+"en": "blood test",
+"fr": "analyse de sang"
+},
+{
+"a": "արյան թիթեղիկ",
+"lv": "B2",
+"ru": "тромбоцит",
+"en": "platelet",
+"fr": "plaquette"
+},
+{
+"a": "արյան պլազմա",
+"lv": "B2",
+"ru": "плазма крови",
+"en": "blood plasma",
+"fr": "plasma sanguin"
+},
+{
+"a": "արյան վրիժառություն",
+"lv": "B2",
+"ru": "кровная месть",
+"en": "vendetta",
+"fr": "vendetta (vengeance)"
+},
+{
+"a": "արյունակցություն",
+"lv": "B2",
+"ru": "кровное родство",
+"en": "blood relationship",
+"fr": "consanguinité"
+},
+{
+"a": "արյունահեղություն",
+"lv": "B2",
+"ru": "кровопролитие",
+"en": "bloodshed",
+"fr": "effusion de sang"
+},
+{
+"a": "արյունային երշիկ",
+"lv": "B2",
+"ru": "кровяная колбаса",
+"en": "blood sausage",
+"fr": "boudin noir"
+},
+{
+"a": "արյունապղծություն",
+"lv": "B2",
+"ru": "инцест",
+"en": "incest",
+"fr": "inceste"
+},
+{
+"a": "արյունաստեղծում",
+"lv": "B2",
+"ru": "кроветворение",
+"en": "hematopoiesis",
+"fr": "hématopoïèse"
+},
+{
+"a": "արյունարգելություն",
+"lv": "B2",
+"ru": "ишемия",
+"en": "ischemia",
+"fr": "ischémie"
+},
+{
+"a": "արշալուսիկ",
+"lv": "B2",
+"ru": "малиновка",
+"en": "robin",
+"fr": "rouge-gorge"
+},
+{
+"a": "արոս",
+"lv": "B2",
+"ru": "дрофа",
+"en": "bustard",
+"fr": "outarde"
+},
+{
+"a": "արոսենի",
+"lv": "B2",
+"ru": "рябина",
+"en": "rowan",
+"fr": "sorbier"
+},
+{
+"a": "արոսենի մշակովի",
+"lv": "B2",
+"ru": "рябина домашняя",
+"en": "service tree",
+"fr": "cormier"
+},
+{
+"a": "արու խոզ",
+"lv": "B2",
+"ru": "хряк",
+"en": "boar",
+"fr": "verrat"
+},
+{
+"a": "արջասխտոր",
+"lv": "B2",
+"ru": "черемша (синоним)",
+"en": "ramsons",
+"fr": "ail des ours (synonyme)"
+},
+{
+"a": "արջի խնդեղնի",
+"lv": "B2",
+"ru": "бузина чёрная",
+"en": "elder",
+"fr": "sureau noir"
+},
+{
+"a": "արջտակ",
+"lv": "B2",
+"ru": "цикламен",
+"en": "cyclamen",
+"fr": "cyclamen"
+},
+{
+"a": "արվանտակ",
+"lv": "B2",
+"ru": "свинорой (бермудская трава)",
+"en": "Bermuda grass",
+"fr": "chiendent pied-de-poule"
+},
+{
+"a": "արվեստանոց",
+"lv": "B2",
+"ru": "мастерская, студия",
+"en": "studio",
+"fr": "atelier d'artiste"
+},
+{
+"a": "արվեստի պատմաբան",
+"lv": "B2",
+"ru": "искусствовед",
+"en": "art historian",
+"fr": "historien de l'art"
+},
+{
+"a": "արտաբերման եղանակ",
+"lv": "B2",
+"ru": "способ артикуляции",
+"en": "manner of articulation",
+"fr": "mode d'articulation"
+},
+{
+"a": "արտաբերման տեղ",
+"lv": "B2",
+"ru": "место артикуляции",
+"en": "place of articulation",
+"fr": "point d'articulation"
+},
+{
+"a": "արտաբնափայտ",
+"lv": "B2",
+"ru": "заболонь",
+"en": "sapwood",
+"fr": "aubier"
+},
+{
+"a": "արտագաղթող",
+"lv": "B2",
+"ru": "эмигрант",
+"en": "emigrant",
+"fr": "émigrant"
+},
+{
+"a": "արտագրություն",
+"lv": "B2",
+"ru": "транскрипция (запись)",
+"en": "transcription",
+"fr": "transcription"
+},
+{
+"a": "արտադրության միջոցներ",
+"lv": "B2",
+"ru": "средства производства",
+"en": "means of production",
+"fr": "moyens de production"
+},
+{
+"a": "արտադրում",
+"lv": "B2",
+"ru": "производство",
+"en": "production",
+"fr": "production"
+},
+{
+"a": "արտալա",
+"lv": "B2",
+"ru": "голяшка",
+"en": "shank",
+"fr": "jarret"
+},
+{
+"a": "արտածծան",
+"lv": "B2",
+"ru": "аспиратор",
+"en": "aspirator",
+"fr": "aspirateur (médical)"
+},
+{
+"a": "արտածում",
+"lv": "B2",
+"ru": "дедукция",
+"en": "deduction",
+"fr": "déduction"
+},
+{
+"a": "արտահանող",
+"lv": "B2",
+"ru": "экспортёр",
+"en": "exporter",
+"fr": "exportateur"
+},
+{
+"a": "արտամարմնային բեղմնավորում",
+"lv": "B2",
+"ru": "экстракорпоральное оплодотворение (ЭКО)",
+"en": "in vitro fertilization",
+"fr": "fécondation in vitro"
+},
+{
+"a": "արտարկում",
+"lv": "B2",
+"ru": "экстраполяция",
+"en": "extrapolation",
+"fr": "extrapolation"
+},
+{
+"a": "արտաքին ազդակ",
+"lv": "B2",
+"ru": "внешний эффект",
+"en": "externality",
+"fr": "externalité"
+},
+{
+"a": "արտաքին անկյուն",
+"lv": "B2",
+"ru": "внешний угол",
+"en": "exterior angle",
+"fr": "angle extérieur"
+},
+{
+"a": "արտաքին գործերի նախարարություն",
+"lv": "B2",
+"ru": "министерство иностранных дел",
+"en": "foreign ministry",
+"fr": "ministère des Affaires étrangères"
+},
+{
+"a": "արտաքսում",
+"lv": "B2",
+"ru": "высылка, изгнание",
+"en": "expulsion",
+"fr": "expulsion"
+},
+{
+"a": "արտերկիր",
+"lv": "B2",
+"ru": "заграница",
+"en": "foreign country",
+"fr": "étranger (pays)"
+},
+{
+"a": "արտոնագրաունակություն",
+"lv": "B2",
+"ru": "патентоспособность",
+"en": "patentability",
+"fr": "brevetabilité"
+},
+{
+"a": "արտոնյալ ժամկետ",
+"lv": "B2",
+"ru": "льготный период",
+"en": "grace period",
+"fr": "délai de grâce"
+},
+{
+"a": "արքայասպան",
+"lv": "B2",
+"ru": "цареубийца",
+"en": "regicide",
+"fr": "régicide"
+},
+{
+"a": "արքայից արքա",
+"lv": "B2",
+"ru": "царь царей",
+"en": "king of kings",
+"fr": "roi des rois"
+},
+{
+"a": "արքիդուքս",
+"lv": "B2",
+"ru": "эрцгерцог",
+"en": "archduke",
+"fr": "archiduc"
+},
+{
+"a": "արևելագիտություն",
+"lv": "B2",
+"ru": "востоковедение",
+"en": "Oriental studies",
+"fr": "orientalisme"
+},
+{
+"a": "ացիդոզ",
+"lv": "B2",
+"ru": "ацидоз",
+"en": "acidosis",
+"fr": "acidose"
+},
+{
+"a": "ացիկլովիր",
+"lv": "B2",
+"ru": "ацикловир",
+"en": "aciclovir",
+"fr": "aciclovir"
+},
+{
+"a": "աքիլեսյան գարշապար",
+"lv": "B2",
+"ru": "ахиллесова пята (синоним)",
+"en": "Achilles heel",
+"fr": "talon d'Achille (synonyme)"
+},
+{
+"a": "աքլորակռիվ",
+"lv": "B2",
+"ru": "петушиный бой",
+"en": "cockfight",
+"fr": "combat de coqs"
+},
+{
+"a": "աքչե",
+"lv": "B2",
+"ru": "акче",
+"en": "akçe",
+"fr": "aspre (akçe)"
+},
+{
+"a": "աքսելերատոր",
+"lv": "B2",
+"ru": "акселератор",
+"en": "accelerator",
+"fr": "accélérateur"
+},
+{
+"a": "աքվատինտա",
+"lv": "B2",
+"ru": "акватинта",
+"en": "aquatint",
+"fr": "aquatinte"
+},
+{
+"a": "աֆազիա",
+"lv": "B2",
+"ru": "афазия (синоним)",
+"en": "aphasia",
+"fr": "aphasie (synonyme)"
+},
+{
+"a": "աֆալինա",
+"lv": "B2",
+"ru": "афалина",
+"en": "bottlenose dolphin",
+"fr": "grand dauphin"
+},
+{
+"a": "աֆիշա",
+"lv": "B2",
+"ru": "афиша",
+"en": "poster, placard",
+"fr": "affiche"
+},
+{
+"a": "աֆղանի",
+"lv": "B2",
+"ru": "афгани (валюта)",
+"en": "afghani",
+"fr": "afghani"
+},
+{
+"a": "աֆրիկյան մրջնակեր",
+"lv": "B2",
+"ru": "трубкозуб",
+"en": "aardvark",
+"fr": "oryctérope"
+},
+{
+"a": "բաբայ",
+"lv": "B2",
+"ru": "баю-бай",
+"en": "bye-bye (bedtime)",
+"fr": "dodo"
+},
+{
+"a": "բագ",
+"lv": "B2",
+"ru": "баг (ошибка в программе)",
+"en": "bug",
+"fr": "bogue"
+},
+{
+"a": "բադմինթոնիստ",
+"lv": "B2",
+"ru": "бадминтонист",
+"en": "badminton player",
+"fr": "joueur de badminton"
+},
+{
+"a": "բազազ",
+"lv": "B2",
+"ru": "торговец тканями",
+"en": "draper",
+"fr": "drapier"
+},
+{
+"a": "բազիս",
+"lv": "B2",
+"ru": "базис",
+"en": "basis",
+"fr": "base (vectorielle)"
+},
+{
+"a": "բազկի երկգլուխ մկան",
+"lv": "B2",
+"ru": "двуглавая мышца плеча",
+"en": "biceps brachii",
+"fr": "biceps brachial"
+},
+{
+"a": "բազմալեզվություն",
+"lv": "B2",
+"ru": "многоязычие",
+"en": "multilingualism",
+"fr": "multilinguisme"
+},
+{
+"a": "բազմամշակութայնություն",
+"lv": "B2",
+"ru": "мультикультурализм",
+"en": "multiculturalism",
+"fr": "multiculturalisme"
+},
+{
+"a": "բազմանիստ",
+"lv": "B2",
+"ru": "многогранник",
+"en": "polyhedron",
+"fr": "polyèdre"
+},
+{
+"a": "բազմապատկման աղյուսակ",
+"lv": "B2",
+"ru": "таблица умножения",
+"en": "multiplication table",
+"fr": "table de multiplication"
+},
+{
+"a": "բազմասիրություն",
+"lv": "B2",
+"ru": "полиамория",
+"en": "polyamory",
+"fr": "polyamour"
+},
+{
+"a": "բաժանարար",
+"lv": "B2",
+"ru": "делитель",
+"en": "divisor",
+"fr": "diviseur"
+},
+{
+"a": "բաժանելի",
+"lv": "B2",
+"ru": "делимое",
+"en": "dividend",
+"fr": "dividende (arithmétique)"
+},
+{
+"a": "բաժանման նշան",
+"lv": "B2",
+"ru": "знак деления",
+"en": "division sign",
+"fr": "signe de division"
+},
+{
+"a": "բաժուկ",
+"lv": "B2",
+"ru": "пробор",
+"en": "parting",
+"fr": "raie"
+},
+{
+"a": "բալասան",
+"lv": "B2",
+"ru": "бальзам",
+"en": "balsam",
+"fr": "baume"
+},
+{
+"a": "բալիստիկա",
+"lv": "B2",
+"ru": "баллистика",
+"en": "ballistics",
+"fr": "balistique"
+},
+{
+"a": "բակալավրի աստիճան",
+"lv": "B2",
+"ru": "степень бакалавра",
+"en": "bachelor's degree",
+"fr": "licence (diplôme)"
+},
+{
+"a": "բաղադրամաս",
+"lv": "B2",
+"ru": "составная часть",
+"en": "component",
+"fr": "composante"
+},
+{
+"a": "բաղադրյալ թիվ",
+"lv": "B2",
+"ru": "составное число",
+"en": "composite number",
+"fr": "nombre composé"
+},
+{
+"a": "բամբակաձողիկ",
+"lv": "B2",
+"ru": "ватная палочка",
+"en": "cotton swab",
+"fr": "coton-tige"
+},
+{
+"a": "բամպեր",
+"lv": "B2",
+"ru": "бампер",
+"en": "bumper",
+"fr": "pare-chocs"
+},
+{
+"a": "բայական գոյական",
+"lv": "B2",
+"ru": "отглагольное существительное",
+"en": "verbal noun",
+"fr": "nom verbal"
+},
+{
+"a": "բայական սեռ",
+"lv": "B2",
+"ru": "залог (грамм.)",
+"en": "voice (grammar)",
+"fr": "voix (grammaire)"
+},
+{
+"a": "բայդարկա",
+"lv": "B2",
+"ru": "байдарка",
+"en": "kayak",
+"fr": "kayak"
+},
+{
+"a": "բայտ",
+"lv": "B2",
+"ru": "байт",
+"en": "byte",
+"fr": "octet"
+},
+{
+"a": "բանագիտություն",
+"lv": "B2",
+"ru": "фольклористика",
+"en": "folkloristics",
+"fr": "folkloristique"
+},
+{
+"a": "բանագողություն",
+"lv": "B2",
+"ru": "плагиат",
+"en": "plagiarism",
+"fr": "plagiat"
+},
+{
+"a": "բանալու անցք",
+"lv": "B2",
+"ru": "замочная скважина",
+"en": "keyhole",
+"fr": "trou de serrure"
+},
+{
+"a": "բանահյուսական",
+"lv": "B2",
+"ru": "фольклор",
+"en": "folklore",
+"fr": "folklore"
+},
+{
+"a": "բանգի",
+"lv": "B2",
+"ru": "белена",
+"en": "henbane",
+"fr": "jusquiame"
+},
+{
+"a": "բանդուրա",
+"lv": "B2",
+"ru": "бандура",
+"en": "bandura",
+"fr": "bandoura"
+},
+{
+"a": "բանկային հաշիվ",
+"lv": "B2",
+"ru": "банковский счёт",
+"en": "bank account",
+"fr": "compte bancaire"
+},
+{
+"a": "բանշի",
+"lv": "B2",
+"ru": "банши",
+"en": "banshee",
+"fr": "banshee"
+},
+{
+"a": "բանուկ փողոց",
+"lv": "B2",
+"ru": "оживлённая улица",
+"en": "thoroughfare",
+"fr": "artère"
+},
+{
+"a": "բանջո",
+"lv": "B2",
+"ru": "банджо",
+"en": "banjo",
+"fr": "banjo"
+},
+{
+"a": "բանսարկություն",
+"lv": "B2",
+"ru": "интрига",
+"en": "intrigue",
+"fr": "intrigue (complot)"
+},
+{
+"a": "բանվոր դասակարգ",
+"lv": "B2",
+"ru": "рабочий класс",
+"en": "working class",
+"fr": "classe ouvrière"
+},
+{
+"a": "բաշկիր",
+"lv": "B2",
+"ru": "башкир",
+"en": "Bashkir (person)",
+"fr": "Bachkir"
+},
+{
+"a": "բաջանաղ",
+"lv": "B2",
+"ru": "свояк (муж сестры жены)",
+"en": "brother-in-law (wife's sister's husband)",
+"fr": "beau-frère (mari de la belle-sœur)"
+},
+{
+"a": "բառաքննություն",
+"lv": "B2",
+"ru": "лексикология",
+"en": "lexicology",
+"fr": "lexicologie"
+},
+{
+"a": "բառելյեֆ",
+"lv": "B2",
+"ru": "барельеф (синоним)",
+"en": "relief",
+"fr": "relief (sculpture)"
+},
+{
+"a": "բասկ",
+"lv": "B2",
+"ru": "баск",
+"en": "Basque (person)",
+"fr": "Basque"
+},
+{
+"a": "բասկետբոլի գնդակ",
+"lv": "B2",
+"ru": "баскетбольный мяч",
+"en": "basketball",
+"fr": "ballon de basket"
+},
+{
+"a": "բաստիոն",
+"lv": "B2",
+"ru": "бастион",
+"en": "bastion",
+"fr": "bastion"
+},
+{
+"a": "բավարարում",
+"lv": "B2",
+"ru": "удовлетворение (потребности)",
+"en": "satisfaction",
+"fr": "satisfaction (d'un besoin)"
+},
+{
+"a": "բատատ",
+"lv": "B2",
+"ru": "батат",
+"en": "sweet potato",
+"fr": "patate douce"
+},
+{
+"a": "բատուտ",
+"lv": "B2",
+"ru": "батут",
+"en": "trampoline",
+"fr": "trampoline"
+},
+{
+"a": "բարապան",
+"lv": "B2",
+"ru": "привратник",
+"en": "doorman",
+"fr": "portier"
+},
+{
+"a": "բարաք",
+"lv": "B2",
+"ru": "барак",
+"en": "hut, barracks",
+"fr": "baraque"
+},
+{
+"a": "բարբառագետ",
+"lv": "B2",
+"ru": "диалектолог",
+"en": "dialectologist",
+"fr": "dialectologue"
+},
+{
+"a": "բարբիտուրատ",
+"lv": "B2",
+"ru": "барбитурат",
+"en": "barbiturate",
+"fr": "barbiturique"
+},
+{
+"a": "բարդացում",
+"lv": "B2",
+"ru": "осложнение (болезни)",
+"en": "complication",
+"fr": "complication"
+},
+{
+"a": "բարդի արծաթափայլ",
+"lv": "B2",
+"ru": "тополь белый",
+"en": "white poplar",
+"fr": "peuplier blanc"
+},
+{
+"a": "բարդիշ",
+"lv": "B2",
+"ru": "бердыш",
+"en": "bardiche",
+"fr": "bardiche"
+},
+{
+"a": "բարել",
+"lv": "B2",
+"ru": "баррель",
+"en": "barrel",
+"fr": "baril"
+},
+{
+"a": "բարելավում",
+"lv": "B2",
+"ru": "улучшение",
+"en": "improvement",
+"fr": "amélioration"
+},
+{
+"a": "բարեկրթություն",
+"lv": "B2",
+"ru": "учтивость",
+"en": "courtesy",
+"fr": "courtoisie"
+},
+{
+"a": "բարերար",
+"lv": "B2",
+"ru": "благодетель",
+"en": "benefactor",
+"fr": "bienfaiteur"
+},
+{
+"a": "բարկարոլ",
+"lv": "B2",
+"ru": "баркарола",
+"en": "barcarole",
+"fr": "barcarolle"
+},
+{
+"a": "բարձրադիր",
+"lv": "B2",
+"ru": "возвышенность (нагорье)",
+"en": "highland",
+"fr": "hautes terres"
+},
+{
+"a": "բարձրակետ",
+"lv": "B2",
+"ru": "кульминация (астр.)",
+"en": "culmination",
+"fr": "culmination"
+},
+{
+"a": "բարձրաչափ",
+"lv": "B2",
+"ru": "высотомер",
+"en": "altimeter",
+"fr": "altimètre"
+},
+{
+"a": "բարձրացնովի կամուրջ",
+"lv": "B2",
+"ru": "подъёмный мост",
+"en": "drawbridge",
+"fr": "pont-levis"
+},
+{
+"a": "բարոմետր",
+"lv": "B2",
+"ru": "барометр (синоним)",
+"en": "barometer",
+"fr": "baromètre (synonyme)"
+},
+{
+"a": "բարոյահոգեբանական վիճակ",
+"lv": "B2",
+"ru": "боевой дух",
+"en": "morale",
+"fr": "moral"
+},
+{
+"a": "բարոնուհի",
+"lv": "B2",
+"ru": "баронесса",
+"en": "baroness",
+"fr": "baronne"
+},
+{
+"a": "բաց աշխարհ",
+"lv": "B2",
+"ru": "открытый мир (в игре)",
+"en": "open world",
+"fr": "monde ouvert"
+},
+{
+"a": "բաց վանկ",
+"lv": "B2",
+"ru": "открытый слог",
+"en": "open syllable",
+"fr": "syllabe ouverte"
+},
+{
+"a": "բացառական հոլով",
+"lv": "B2",
+"ru": "исходный падеж (аблатив)",
+"en": "ablative case",
+"fr": "ablatif"
+},
+{
+"a": "բացասում",
+"lv": "B2",
+"ru": "отрицание",
+"en": "negation",
+"fr": "négation"
+},
+{
+"a": "բացատ",
+"lv": "B2",
+"ru": "поляна",
+"en": "glade, clearing",
+"fr": "clairière"
+},
+{
+"a": "բացատրագիր",
+"lv": "B2",
+"ru": "условные обозначения",
+"en": "key, legend",
+"fr": "légende (symboles)"
+},
+{
+"a": "բացատրական դերանուն",
+"lv": "B2",
+"ru": "указательное местоимение",
+"en": "demonstrative pronoun",
+"fr": "pronom démonstratif"
+},
+{
+"a": "բացարձակ արժեք",
+"lv": "B2",
+"ru": "модуль (абсолютное значение)",
+"en": "absolute value",
+"fr": "valeur absolue"
+},
+{
+"a": "բացարձակ միապետություն",
+"lv": "B2",
+"ru": "абсолютная монархия",
+"en": "absolute monarchy",
+"fr": "monarchie absolue"
+},
+{
+"a": "բացիլ",
+"lv": "B2",
+"ru": "бацилла",
+"en": "bacillus",
+"fr": "bacille"
+},
+{
+"a": "բացմենակ",
+"lv": "B2",
+"ru": "тысячелистник",
+"en": "yarrow",
+"fr": "achillée millefeuille"
+},
+{
+"a": "բաք",
+"lv": "B2",
+"ru": "бак",
+"en": "tank",
+"fr": "réservoir"
+},
+{
+"a": "բաքվեցի",
+"lv": "B2",
+"ru": "бакинец",
+"en": "Bakuvian (person)",
+"fr": "Bakinois"
+},
+{
+"a": "բեբիսիտեր",
+"lv": "B2",
+"ru": "няня (бебиситтер)",
+"en": "babysitter",
+"fr": "baby-sitter"
+},
+{
+"a": "բեդվին",
+"lv": "B2",
+"ru": "бедуин",
+"en": "Bedouin",
+"fr": "Bédouin"
+},
+{
+"a": "բեզե",
+"lv": "B2",
+"ru": "безе",
+"en": "meringue",
+"fr": "meringue"
+},
+{
+"a": "բելոռուս",
+"lv": "B2",
+"ru": "белорус",
+"en": "Belarusian (person)",
+"fr": "Biélorusse"
+},
+{
+"a": "բեղիկ",
+"lv": "B2",
+"ru": "усик (насекомого)",
+"en": "antenna, whisker",
+"fr": "antenne (d'insecte)"
+},
+{
+"a": "բեղլու",
+"lv": "B2",
+"ru": "усач (рыба)",
+"en": "barbel",
+"fr": "barbeau"
+},
+{
+"a": "բեղմնիկ",
+"lv": "B2",
+"ru": "спора",
+"en": "spore",
+"fr": "spore"
+},
+{
+"a": "բեմականացում",
+"lv": "B2",
+"ru": "постановка (сценическая)",
+"en": "production",
+"fr": "mise en scène"
+},
+{
+"a": "բեյ",
+"lv": "B2",
+"ru": "бей",
+"en": "bey",
+"fr": "bey"
+},
+{
+"a": "բեյսբոլիստ",
+"lv": "B2",
+"ru": "бейсболист",
+"en": "baseball player",
+"fr": "joueur de baseball"
+},
+{
+"a": "բենգալյան կրակ",
+"lv": "B2",
+"ru": "бенгальский огонь",
+"en": "sparkler",
+"fr": "cierge magique"
+},
+{
+"a": "բենզոլ",
+"lv": "B2",
+"ru": "бензол",
+"en": "benzene",
+"fr": "benzène"
+},
+{
+"a": "բենզոյական թթու",
+"lv": "B2",
+"ru": "бензойная кислота",
+"en": "benzoic acid",
+"fr": "acide benzoïque"
+},
+{
+"a": "բերի-բերի",
+"lv": "B2",
+"ru": "бери-бери",
+"en": "beriberi",
+"fr": "béribéri"
+},
+{
+"a": "բերուկ",
+"lv": "B2",
+"ru": "аллювий",
+"en": "alluvium",
+"fr": "alluvion"
+},
+{
+"a": "բերսերկ",
+"lv": "B2",
+"ru": "берсерк",
+"en": "berserk",
+"fr": "berserker"
+},
+{
+"a": "բերքատվություն",
+"lv": "B2",
+"ru": "урожайность",
+"en": "crop yield",
+"fr": "rendement"
+},
+{
+"a": "բեւեկն",
+"lv": "B2",
+"ru": "скипидар",
+"en": "turpentine",
+"fr": "térébenthine"
+},
+{
+"a": "բեւեկնի",
+"lv": "B2",
+"ru": "терпентинное дерево",
+"en": "terebinth",
+"fr": "térébinthe"
+},
+{
+"a": "բիզանտ",
+"lv": "B2",
+"ru": "безант",
+"en": "bezant",
+"fr": "besant"
+},
+{
+"a": "բիզնես կառավարում",
+"lv": "B2",
+"ru": "управление бизнесом",
+"en": "business administration",
+"fr": "gestion d'entreprise"
+},
+{
+"a": "բիզնես ցիկլ",
+"lv": "B2",
+"ru": "деловой цикл",
+"en": "business cycle",
+"fr": "cycle économique"
+},
+{
+"a": "բիթքոին",
+"lv": "B2",
+"ru": "биткойн",
+"en": "bitcoin",
+"fr": "bitcoin"
+},
+{
+"a": "բիկինի",
+"lv": "B2",
+"ru": "бикини",
+"en": "bikini",
+"fr": "bikini"
+},
+{
+"a": "բինգո",
+"lv": "B2",
+"ru": "бинго",
+"en": "bingo",
+"fr": "bingo"
+},
+{
+"a": "բիոտեխնոլոգիա",
+"lv": "B2",
+"ru": "биотехнология",
+"en": "biotechnology",
+"fr": "biotechnologie"
+},
+{
+"a": "բիոտիտ",
+"lv": "B2",
+"ru": "биотит",
+"en": "biotite",
+"fr": "biotite"
+},
+{
+"a": "բիոֆիզիկոս",
+"lv": "B2",
+"ru": "биофизик",
+"en": "biophysicist",
+"fr": "biophysicien"
+},
+{
+"a": "բիպոլյար աֆեկտիվ խանգարում",
+"lv": "B2",
+"ru": "биполярное аффективное расстройство",
+"en": "bipolar disorder",
+"fr": "trouble bipolaire"
+},
+{
+"a": "բիսկվիթ",
+"lv": "B2",
+"ru": "бисквит",
+"en": "sponge cake",
+"fr": "génoise"
+},
+{
+"a": "բիտ",
+"lv": "B2",
+"ru": "шпора",
+"en": "spur",
+"fr": "éperon"
+},
+{
+"a": "բիրմացի",
+"lv": "B2",
+"ru": "бирманец",
+"en": "Burmese (person)",
+"fr": "Birman"
+},
+{
+"a": "բիցեպս",
+"lv": "B2",
+"ru": "бицепс",
+"en": "biceps",
+"fr": "biceps"
+},
+{
+"a": "բլանբերզում",
+"lv": "B2",
+"ru": "мушкетон",
+"en": "blunderbuss",
+"fr": "tromblon"
+},
+{
+"a": "բլդբլդոց",
+"lv": "B2",
+"ru": "бульканье",
+"en": "gurgle",
+"fr": "gargouillis"
+},
+{
+"a": "բլեֆ",
+"lv": "B2",
+"ru": "блеф",
+"en": "bluff",
+"fr": "bluff"
+},
+{
+"a": "բլեֆարիտ",
+"lv": "B2",
+"ru": "блефарит",
+"en": "blepharitis",
+"fr": "blépharite"
+},
+{
+"a": "բլիցկրիգ",
+"lv": "B2",
+"ru": "блицкриг",
+"en": "blitzkrieg",
+"fr": "guerre éclair"
+},
+{
+"a": "բլոգոլորտ",
+"lv": "B2",
+"ru": "блогосфера",
+"en": "blogosphere",
+"fr": "blogosphère"
+},
+{
+"a": "բլոկբաստեր",
+"lv": "B2",
+"ru": "блокбастер",
+"en": "blockbuster",
+"fr": "superproduction"
+},
+{
+"a": "բլոկնոտ",
+"lv": "B2",
+"ru": "блокнот",
+"en": "notebook",
+"fr": "bloc-notes"
+},
+{
+"a": "բծախնդրություն",
+"lv": "B2",
+"ru": "придирка",
+"en": "cavil",
+"fr": "chicane"
+},
+{
+"a": "բյուրեղապակի",
+"lv": "B2",
+"ru": "хрусталь",
+"en": "crystal",
+"fr": "cristal"
+},
+{
+"a": "բյուրո",
+"lv": "B2",
+"ru": "бюро",
+"en": "bureau",
+"fr": "bureau (office)"
+},
+{
+"a": "բյուրոկրատ",
+"lv": "B2",
+"ru": "бюрократ",
+"en": "bureaucrat",
+"fr": "bureaucrate"
+},
+{
+"a": "բնական գազ",
+"lv": "B2",
+"ru": "природный газ",
+"en": "natural gas",
+"fr": "gaz naturel"
+},
+{
+"a": "բնական լոգարիթմ",
+"lv": "B2",
+"ru": "натуральный логарифм",
+"en": "natural logarithm",
+"fr": "logarithme naturel"
+},
+{
+"a": "բնակչության խտություն",
+"lv": "B2",
+"ru": "плотность населения",
+"en": "population density",
+"fr": "densité de population"
+},
+{
+"a": "բնաձայնություն",
+"lv": "B2",
+"ru": "звукоподражание",
+"en": "onomatopoeia",
+"fr": "onomatopée"
+},
+{
+"a": "բնամիջուկ",
+"lv": "B2",
+"ru": "ядровая древесина",
+"en": "heartwood",
+"fr": "bois de cœur"
+},
+{
+"a": "բնորդ",
+"lv": "B2",
+"ru": "натурщик, модель",
+"en": "model",
+"fr": "modèle (pose)"
+},
+{
+"a": "բնորոշ գիծ",
+"lv": "B2",
+"ru": "характерная черта",
+"en": "characteristic",
+"fr": "trait caractéristique"
+},
+{
+"a": "բնութագիր",
+"lv": "B2",
+"ru": "характеристика (отзыв)",
+"en": "reference",
+"fr": "lettre de référence"
+},
+{
+"a": "բոգատիր",
+"lv": "B2",
+"ru": "богатырь",
+"en": "bogatyr",
+"fr": "bogatyr"
+},
+{
+"a": "բոգոմիլ",
+"lv": "B2",
+"ru": "богомил",
+"en": "Bogomil",
+"fr": "bogomile"
+},
+{
+"a": "բոդիբիլդեր",
+"lv": "B2",
+"ru": "бодибилдер",
+"en": "bodybuilder",
+"fr": "culturiste"
+},
+{
+"a": "բոդիբիլդինգ",
+"lv": "B2",
+"ru": "бодибилдинг",
+"en": "bodybuilding",
+"fr": "culturisme"
+},
+{
+"a": "բոդհիսատվա",
+"lv": "B2",
+"ru": "бодхисаттва",
+"en": "bodhisattva",
+"fr": "bodhisattva"
+},
+{
+"a": "բոզա",
+"lv": "B2",
+"ru": "боза (напиток)",
+"en": "boza",
+"fr": "boza"
+},
+{
+"a": "բոլշևիզմ",
+"lv": "B2",
+"ru": "большевизм",
+"en": "Bolshevism",
+"fr": "bolchevisme"
+},
+{
+"a": "բոկե",
+"lv": "B2",
+"ru": "боке",
+"en": "bokeh",
+"fr": "bokeh"
+},
+{
+"a": "բողոքարկման խորհուրդ",
+"lv": "B2",
+"ru": "апелляционный совет",
+"en": "board of appeals",
+"fr": "commission de recours"
+},
+{
+"a": "բոյար",
+"lv": "B2",
+"ru": "боярин",
+"en": "boyar",
+"fr": "boyard"
+},
+{
+"a": "բոնապարտիզմ",
+"lv": "B2",
+"ru": "бонапартизм",
+"en": "Bonapartism",
+"fr": "bonapartisme"
+},
+{
+"a": "բոշա",
+"lv": "B2",
+"ru": "боша (армянские цыгане)",
+"en": "Bosha",
+"fr": "Bocha"
+},
+{
+"a": "բոս",
+"lv": "B2",
+"ru": "босс",
+"en": "boss",
+"fr": "patron"
+},
+{
+"a": "բոսնիացի",
+"lv": "B2",
+"ru": "боснийцы",
+"en": "Bosnians",
+"fr": "Bosniens"
+},
+{
+"a": "բոստան",
+"lv": "B2",
+"ru": "огород",
+"en": "vegetable garden",
+"fr": "potager"
+},
+{
+"a": "բոցենի",
+"lv": "B2",
+"ru": "флокс",
+"en": "phlox",
+"fr": "phlox"
+},
+{
+"a": "բուդդայական",
+"lv": "B2",
+"ru": "буддист",
+"en": "Buddhist",
+"fr": "bouddhiste"
+},
+{
+"a": "բուլսի",
+"lv": "B2",
+"ru": "яблочко (мишени)",
+"en": "bullseye",
+"fr": "mille (de la cible)"
+},
+{
+"a": "բուկինիստ",
+"lv": "B2",
+"ru": "букинист",
+"en": "second-hand bookseller",
+"fr": "bouquiniste"
+},
+{
+"a": "բուն էություն",
+"lv": "B2",
+"ru": "квинтэссенция",
+"en": "quintessence",
+"fr": "quintessence"
+},
+{
+"a": "բունտ",
+"lv": "B2",
+"ru": "бунт",
+"en": "insurrection",
+"fr": "révolte"
+},
+{
+"a": "բուշել",
+"lv": "B2",
+"ru": "бушель",
+"en": "bushel",
+"fr": "boisseau"
+},
+{
+"a": "բուտան",
+"lv": "B2",
+"ru": "бутан",
+"en": "butane",
+"fr": "butane"
+},
+{
+"a": "բուտերբրոդ",
+"lv": "B2",
+"ru": "бутерброд",
+"en": "open sandwich",
+"fr": "tartine"
+},
+{
+"a": "բուրգունդացի",
+"lv": "B2",
+"ru": "бургундец",
+"en": "Burgundian (person)",
+"fr": "Bourguignon"
+},
+{
+"a": "բուրկա",
+"lv": "B2",
+"ru": "паранджа (бурка)",
+"en": "burqa",
+"fr": "burqa"
+},
+{
+"a": "բուրկեն",
+"lv": "B2",
+"ru": "амбра",
+"en": "ambergris",
+"fr": "ambre gris"
+},
+{
+"a": "բուրյաթ",
+"lv": "B2",
+"ru": "бурят",
+"en": "Buryat (person)",
+"fr": "Bouriate"
+},
+{
+"a": "բուֆերային գոտի",
+"lv": "B2",
+"ru": "буферная зона",
+"en": "buffer zone",
+"fr": "zone tampon"
+},
+{
+"a": "բոքսիտ",
+"lv": "B2",
+"ru": "боксит",
+"en": "bauxite",
+"fr": "bauxite"
+},
+{
+"a": "բջջագենետիկա",
+"lv": "B2",
+"ru": "цитогенетика",
+"en": "cytogenetics",
+"fr": "cytogénétique"
+},
+{
+"a": "բռնագրավում",
+"lv": "B2",
+"ru": "экспроприация, изъятие",
+"en": "expropriation, seizure",
+"fr": "saisie, expropriation"
+},
+{
+"a": "բռնակցում",
+"lv": "B2",
+"ru": "присоединение, аннексия",
+"en": "annexation",
+"fr": "rattachement"
+},
+{
+"a": "բռնաճնշում",
+"lv": "B2",
+"ru": "угнетение",
+"en": "oppression",
+"fr": "oppression"
+},
+{
+"a": "բռնոցի",
+"lv": "B2",
+"ru": "салки (игра)",
+"en": "tag (game)",
+"fr": "chat (jeu)"
+},
+{
+"a": "բռնում",
+"lv": "B2",
+"ru": "хватка",
+"en": "grip",
+"fr": "prise"
+},
+{
+"a": "բրեզենտ",
+"lv": "B2",
+"ru": "брезент",
+"en": "tarpaulin",
+"fr": "bâche"
+},
+{
+"a": "բրելոկ",
+"lv": "B2",
+"ru": "брелок",
+"en": "charm, trinket",
+"fr": "porte-clés"
+},
+{
+"a": "բրինձ քացախ",
+"lv": "B2",
+"ru": "рисовый уксус",
+"en": "rice vinegar",
+"fr": "vinaigre de riz"
+},
+{
+"a": "բրիտանական անդրծովյան տարածք",
+"lv": "B2",
+"ru": "британская заморская территория",
+"en": "British overseas territory",
+"fr": "territoire britannique d'outre-mer"
+},
+{
+"a": "բրիֆինգ",
+"lv": "B2",
+"ru": "брифинг (синоним)",
+"en": "briefing",
+"fr": "briefing (synonyme)"
+},
+{
+"a": "բրոշյուր",
+"lv": "B2",
+"ru": "брошюра",
+"en": "pamphlet",
+"fr": "brochure"
+},
+{
+"a": "բրուտագործական արտադրանք",
+"lv": "B2",
+"ru": "гончарные изделия",
+"en": "pottery",
+"fr": "poterie"
+},
+{
+"a": "բրոքեր",
+"lv": "B2",
+"ru": "брокер",
+"en": "broker",
+"fr": "courtier"
+},
+{
+"a": "բևեռային գլխարկ",
+"lv": "B2",
+"ru": "полярная шапка",
+"en": "polar cap",
+"fr": "calotte polaire"
+},
+{
+"a": "գագաուզ",
+"lv": "B2",
+"ru": "гагауз",
+"en": "Gagauz (person)",
+"fr": "Gagaouze"
+},
+{
+"a": "գազամուղ",
+"lv": "B2",
+"ru": "газопровод",
+"en": "pipeline",
+"fr": "gazoduc"
+},
+{
+"a": "գազատուրբինային շարժիչ",
+"lv": "B2",
+"ru": "турбовальный двигатель",
+"en": "turboshaft",
+"fr": "turbomoteur"
+},
+{
+"a": "գալարազարդ",
+"lv": "B2",
+"ru": "волюта",
+"en": "volute",
+"fr": "volute"
+},
+{
+"a": "գալարակ",
+"lv": "B2",
+"ru": "свиток",
+"en": "scroll",
+"fr": "rouleau"
+},
+{
+"a": "գալարակծկանք",
+"lv": "B2",
+"ru": "перистальтика",
+"en": "peristalsis",
+"fr": "péristaltisme"
+},
+{
+"a": "գալիսիական բարբառ",
+"lv": "B2",
+"ru": "галисийский диалект",
+"en": "Galician",
+"fr": "galicien (dialecte)"
+},
+{
+"a": "գալիք",
+"lv": "B2",
+"ru": "будущее",
+"en": "future",
+"fr": "avenir"
+},
+{
+"a": "գահավորակ",
+"lv": "B2",
+"ru": "паланкин (синоним)",
+"en": "palanquin",
+"fr": "palanquin (synonyme)"
+},
+{
+"a": "գահի խնամակալ",
+"lv": "B2",
+"ru": "регент",
+"en": "regent",
+"fr": "régent"
+},
+{
+"a": "գաղափարագրություն",
+"lv": "B2",
+"ru": "идеография",
+"en": "ideography",
+"fr": "idéographie"
+},
+{
+"a": "գաղթում",
+"lv": "B2",
+"ru": "миграция",
+"en": "migration",
+"fr": "migration"
+},
+{
+"a": "գաղտնի գործակալ",
+"lv": "B2",
+"ru": "секретный агент",
+"en": "secret agent",
+"fr": "agent secret"
+},
+{
+"a": "գաճաճ մոլորակ",
+"lv": "B2",
+"ru": "карликовая планета",
+"en": "dwarf planet",
+"fr": "planète naine"
+},
+{
+"a": "գամիր",
+"lv": "B2",
+"ru": "киммериец (синоним)",
+"en": "Cimmerian",
+"fr": "Cimmérien (synonyme)"
+},
+{
+"a": "գայթակղում",
+"lv": "B2",
+"ru": "соблазнение",
+"en": "seduction",
+"fr": "séduction"
+},
+{
+"a": "գայլուկ",
+"lv": "B2",
+"ru": "хмель",
+"en": "hop",
+"fr": "houblon"
+},
+{
+"a": "գանացի",
+"lv": "B2",
+"ru": "ганец",
+"en": "Ghanaian",
+"fr": "Ghanéen"
+},
+{
+"a": "գանգագիտություն",
+"lv": "B2",
+"ru": "френология",
+"en": "phrenology",
+"fr": "phrénologie"
+},
+{
+"a": "գանգահատություն",
+"lv": "B2",
+"ru": "трепанация",
+"en": "trepanation",
+"fr": "trépanation"
+},
+{
+"a": "գանգստեր",
+"lv": "B2",
+"ru": "гангстер",
+"en": "gangster",
+"fr": "gangster"
+},
+{
+"a": "գաջեթ",
+"lv": "B2",
+"ru": "гаджет",
+"en": "gadget",
+"fr": "gadget"
+},
+{
+"a": "գասկոնցի",
+"lv": "B2",
+"ru": "гасконец",
+"en": "Gascon",
+"fr": "Gascon"
+},
+{
+"a": "գաստրոէնտերոլոգիա",
+"lv": "B2",
+"ru": "гастроэнтерология",
+"en": "gastroenterology",
+"fr": "gastro-entérologie"
+},
+{
+"a": "գավառամտություն",
+"lv": "B2",
+"ru": "провинциализм",
+"en": "provincialism",
+"fr": "provincialisme"
+},
+{
+"a": "գարեջրագործ",
+"lv": "B2",
+"ru": "пивовар",
+"en": "brewer",
+"fr": "brasseur"
+},
+{
+"a": "գարեջրի գործարան",
+"lv": "B2",
+"ru": "пивоваренный завод",
+"en": "brewery",
+"fr": "brasserie (usine)"
+},
+{
+"a": "գարշահոտություն",
+"lv": "B2",
+"ru": "зловоние",
+"en": "stench",
+"fr": "puanteur"
+},
+{
+"a": "գեղադիտակ",
+"lv": "B2",
+"ru": "калейдоскоп",
+"en": "kaleidoscope",
+"fr": "kaléidoscope"
+},
+{
+"a": "գեղանկարչություն",
+"lv": "B2",
+"ru": "живопись",
+"en": "painting",
+"fr": "peinture"
+},
+{
+"a": "գեղասահորդ",
+"lv": "B2",
+"ru": "фигурист",
+"en": "figure skater",
+"fr": "patineur artistique"
+},
+{
+"a": "գեղասահորդուհի",
+"lv": "B2",
+"ru": "фигуристка",
+"en": "female figure skater",
+"fr": "patineuse artistique"
+},
+{
+"a": "գեղարվեստական մարմնամարզություն",
+"lv": "B2",
+"ru": "художественная гимнастика",
+"en": "rhythmic gymnastics",
+"fr": "gymnastique rythmique"
+},
+{
+"a": "գեղեցիկ սեռ",
+"lv": "B2",
+"ru": "прекрасный пол",
+"en": "fair sex",
+"fr": "beau sexe"
+},
+{
+"a": "գեյշա",
+"lv": "B2",
+"ru": "гейша",
+"en": "geisha",
+"fr": "geisha"
+},
+{
+"a": "գենդեր",
+"lv": "B2",
+"ru": "гендер",
+"en": "gender",
+"fr": "genre (identité)"
+},
+{
+"a": "գենդերային ինքնություն",
+"lv": "B2",
+"ru": "гендерная идентичность",
+"en": "gender identity",
+"fr": "identité de genre"
+},
+{
+"a": "գենետիկա",
+"lv": "B2",
+"ru": "генетика",
+"en": "genetics",
+"fr": "génétique"
+},
+{
+"a": "գենետիկական կոդ",
+"lv": "B2",
+"ru": "генетический код",
+"en": "genetic code",
+"fr": "code génétique"
+},
+{
+"a": "գեներալ-գնդապետ",
+"lv": "B2",
+"ru": "генерал-полковник",
+"en": "colonel general",
+"fr": "colonel-général"
+},
+{
+"a": "գեներալ-լեյտենանտ",
+"lv": "B2",
+"ru": "генерал-лейтенант",
+"en": "lieutenant general",
+"fr": "lieutenant-général"
+},
+{
+"a": "գեներացիա",
+"lv": "B2",
+"ru": "генерация, порождение",
+"en": "generation",
+"fr": "génération (production)"
+},
+{
+"a": "գեների էքսպրեսիա",
+"lv": "B2",
+"ru": "экспрессия генов",
+"en": "gene expression",
+"fr": "expression génique"
+},
+{
+"a": "գենոցիդ",
+"lv": "B2",
+"ru": "геноцид",
+"en": "genocide",
+"fr": "génocide"
+},
+{
+"a": "գեոգլիֆ",
+"lv": "B2",
+"ru": "геоглиф",
+"en": "geoglyph",
+"fr": "géoglyphe"
+},
+{
+"a": "գեոգրաֆիա",
+"lv": "B2",
+"ru": "география",
+"en": "geography",
+"fr": "géographie"
+},
+{
+"a": "գեոդեզիա",
+"lv": "B2",
+"ru": "геодезия",
+"en": "geodesy",
+"fr": "géodésie"
+},
+{
+"a": "գեոիդ",
+"lv": "B2",
+"ru": "геоид",
+"en": "geoid",
+"fr": "géoïde"
+},
+{
+"a": "գեորգենի",
+"lv": "B2",
+"ru": "георгин",
+"en": "dahlia",
+"fr": "dahlia"
+},
+{
+"a": "գետնանուշի կարագ",
+"lv": "B2",
+"ru": "арахисовое масло",
+"en": "peanut butter",
+"fr": "beurre de cacahuète"
+},
+{
+"a": "գետնանցում",
+"lv": "B2",
+"ru": "подземный переход",
+"en": "underpass",
+"fr": "passage souterrain"
+},
+{
+"a": "գետնառյուծ",
+"lv": "B2",
+"ru": "хамелеон",
+"en": "chameleon",
+"fr": "caméléon"
+},
+{
+"a": "գետնատուն",
+"lv": "B2",
+"ru": "землянка",
+"en": "dugout",
+"fr": "abri enterré"
+},
+{
+"a": "գետտո",
+"lv": "B2",
+"ru": "гетто",
+"en": "ghetto",
+"fr": "ghetto"
+},
+{
+"a": "գերագույն դատարան",
+"lv": "B2",
+"ru": "Верховный суд",
+"en": "supreme court",
+"fr": "Cour suprême"
+},
+{
+"a": "գերազանցություն օդում",
+"lv": "B2",
+"ru": "господство в воздухе",
+"en": "air supremacy",
+"fr": "suprématie aérienne"
+},
+{
+"a": "գերբագիտություն",
+"lv": "B2",
+"ru": "геральдика",
+"en": "heraldry",
+"fr": "héraldique"
+},
+{
+"a": "գերեզմանագիր",
+"lv": "B2",
+"ru": "эпитафия",
+"en": "epitaph",
+"fr": "épitaphe"
+},
+{
+"a": "գերեզմանափոր",
+"lv": "B2",
+"ru": "могильщик",
+"en": "gravedigger",
+"fr": "fossoyeur"
+},
+{
+"a": "գերհարուստները",
+"lv": "B2",
+"ru": "сверхбогачи",
+"en": "the superrich",
+"fr": "les ultra-riches"
+},
+{
+"a": "գերման",
+"lv": "B2",
+"ru": "германец",
+"en": "German (tribesman)",
+"fr": "Germain"
+},
+{
+"a": "գերմանական հովվաշուն",
+"lv": "B2",
+"ru": "немецкая овчарка",
+"en": "German shepherd",
+"fr": "berger allemand (synonyme)"
+},
+{
+"a": "գերշտկում",
+"lv": "B2",
+"ru": "гиперкоррекция",
+"en": "hypercorrection",
+"fr": "hypercorrection"
+},
+{
+"a": "գերություն",
+"lv": "B2",
+"ru": "плен",
+"en": "captivity",
+"fr": "captivité (synonyme)"
+},
+{
+"a": "գերունդիում",
+"lv": "B2",
+"ru": "герундий",
+"en": "gerund",
+"fr": "gérondif"
+},
+{
+"a": "գերտերություն",
+"lv": "B2",
+"ru": "сверхдержава",
+"en": "superpower",
+"fr": "superpuissance"
+},
+{
+"a": "գթասրտություն",
+"lv": "B2",
+"ru": "милосердие",
+"en": "clemency",
+"fr": "clémence"
+},
+{
+"a": "գիգաբայտ",
+"lv": "B2",
+"ru": "гигабайт",
+"en": "gigabyte",
+"fr": "gigaoctet"
+},
+{
+"a": "գիդ",
+"lv": "B2",
+"ru": "гид",
+"en": "guide",
+"fr": "guide"
+},
+{
+"a": "գիլդիա",
+"lv": "B2",
+"ru": "гильдия",
+"en": "guild",
+"fr": "guilde"
+},
+{
+"a": "գիմնազիա",
+"lv": "B2",
+"ru": "гимназия",
+"en": "gymnasium",
+"fr": "gymnase (lycée)"
+},
+{
+"a": "գինեգիտություն",
+"lv": "B2",
+"ru": "энология",
+"en": "oenology",
+"fr": "œnologie"
+},
+{
+"a": "գինեկոլոգիա",
+"lv": "B2",
+"ru": "гинекология",
+"en": "gynecology",
+"fr": "gynécologie"
+},
+{
+"a": "գիշատիչ թռչուն",
+"lv": "B2",
+"ru": "хищная птица",
+"en": "bird of prey",
+"fr": "rapace"
+},
+{
+"a": "գիշերային ակումբ",
+"lv": "B2",
+"ru": "ночной клуб",
+"en": "nightclub",
+"fr": "boîte de nuit"
+},
+{
+"a": "գիշերանոթ",
+"lv": "B2",
+"ru": "ночной горшок",
+"en": "chamber pot",
+"fr": "pot de chambre"
+},
+{
+"a": "գիշերաքար",
+"lv": "B2",
+"ru": "гагат",
+"en": "jet (stone)",
+"fr": "jais"
+},
+{
+"a": "գիրոս",
+"lv": "B2",
+"ru": "гирос",
+"en": "gyro",
+"fr": "gyros"
+},
+{
+"a": "գիրք սաղմոսաց",
+"lv": "B2",
+"ru": "Псалтырь",
+"en": "psalter",
+"fr": "psautier"
+},
+{
+"a": "գիք",
+"lv": "B2",
+"ru": "гик",
+"en": "geek",
+"fr": "geek"
+},
+{
+"a": "գլանակատուփ",
+"lv": "B2",
+"ru": "портсигар (синоним)",
+"en": "cigarette case",
+"fr": "étui à cigarettes (synonyme)"
+},
+{
+"a": "գլգլակ",
+"lv": "B2",
+"ru": "кальян",
+"en": "hookah",
+"fr": "narguilé"
+},
+{
+"a": "գլդոն",
+"lv": "B2",
+"ru": "каток (дорожный)",
+"en": "road roller",
+"fr": "rouleau compresseur"
+},
+{
+"a": "գլխամաս",
+"lv": "B2",
+"ru": "штаб-квартира",
+"en": "headquarters",
+"fr": "siège (QG)"
+},
+{
+"a": "գլխանոց",
+"lv": "B2",
+"ru": "капюшон (монашеский)",
+"en": "cowl",
+"fr": "capuchon (de moine)"
+},
+{
+"a": "գլխավոր հրամանատար",
+"lv": "B2",
+"ru": "главнокомандующий",
+"en": "commander-in-chief",
+"fr": "commandant en chef"
+},
+{
+"a": "գլխավոր փողոց",
+"lv": "B2",
+"ru": "главная улица",
+"en": "high street",
+"fr": "rue principale"
+},
+{
+"a": "գլխավոր քարտուղար",
+"lv": "B2",
+"ru": "генеральный секретарь",
+"en": "Secretary General",
+"fr": "secrétaire général"
+},
+{
+"a": "գլխացավանք",
+"lv": "B2",
+"ru": "головная боль (перен.)",
+"en": "headache (nuisance)",
+"fr": "casse-tête"
+},
+{
+"a": "գլխոտանի",
+"lv": "B2",
+"ru": "головоногое",
+"en": "cephalopod",
+"fr": "céphalopode"
+},
+{
+"a": "գլխուղեղի մահ",
+"lv": "B2",
+"ru": "смерть мозга",
+"en": "brain death",
+"fr": "mort cérébrale"
+},
+{
+"a": "գլխուղեղի ուռուցք",
+"lv": "B2",
+"ru": "опухоль мозга",
+"en": "brain tumor",
+"fr": "tumeur cérébrale"
+},
+{
+"a": "գլյասե",
+"lv": "B2",
+"ru": "глясе",
+"en": "iced coffee",
+"fr": "café glacé"
+},
+{
+"a": "գլոբալիզացիա",
+"lv": "B2",
+"ru": "глобализация",
+"en": "globalisation",
+"fr": "mondialisation"
+},
+{
+"a": "գլոբալիզմ",
+"lv": "B2",
+"ru": "глобализм",
+"en": "globalism",
+"fr": "mondialisme"
+},
+{
+"a": "գծային հավասարում",
+"lv": "B2",
+"ru": "линейное уравнение",
+"en": "linear equation",
+"fr": "équation linéaire"
+},
+{
+"a": "գծային ֆունկցիա",
+"lv": "B2",
+"ru": "линейная функция",
+"en": "linear function",
+"fr": "fonction linéaire"
+},
+{
+"a": "գյուղ տեղ",
+"lv": "B2",
+"ru": "сельская местность",
+"en": "countryside",
+"fr": "campagne"
+},
+{
+"a": "գյուղակ",
+"lv": "B2",
+"ru": "деревушка",
+"en": "hamlet",
+"fr": "hameau"
+},
+{
+"a": "գյուղական ծիծեռնակ",
+"lv": "B2",
+"ru": "деревенская ласточка",
+"en": "barn swallow",
+"fr": "hirondelle rustique"
+},
+{
+"a": "գնահատություն",
+"lv": "B2",
+"ru": "признание (заслуг)",
+"en": "recognition",
+"fr": "reconnaissance"
+},
+{
+"a": "գնարբուկ գարնանային",
+"lv": "B2",
+"ru": "первоцвет весенний",
+"en": "cowslip",
+"fr": "primevère officinale"
+},
+{
+"a": "գնդակահարողների խումբ",
+"lv": "B2",
+"ru": "расстрельная команда",
+"en": "firing squad",
+"fr": "peloton d'exécution"
+},
+{
+"a": "գնդապարկ",
+"lv": "B2",
+"ru": "луза",
+"en": "pocket (billiards)",
+"fr": "poche (billard)"
+},
+{
+"a": "գնդառանցքակալ",
+"lv": "B2",
+"ru": "шарикоподшипник",
+"en": "ball bearing",
+"fr": "roulement à billes"
+},
+{
+"a": "գնդասեղ",
+"lv": "B2",
+"ru": "булавка",
+"en": "pin",
+"fr": "épingle"
+},
+{
+"a": "գնի առաջարկ",
+"lv": "B2",
+"ru": "заявка (на аукционе)",
+"en": "bid",
+"fr": "enchère"
+},
+{
+"a": "գնող",
+"lv": "B2",
+"ru": "покупатель",
+"en": "buyer",
+"fr": "acheteur"
+},
+{
+"a": "գնողունակության համարժեքություն",
+"lv": "B2",
+"ru": "паритет покупательной способности",
+"en": "purchasing power parity",
+"fr": "parité de pouvoir d'achat"
+},
+{
+"a": "գնոմոն",
+"lv": "B2",
+"ru": "гномон",
+"en": "gnomon",
+"fr": "gnomon"
+},
+{
+"a": "գնումներ",
+"lv": "B2",
+"ru": "покупки",
+"en": "shopping",
+"fr": "achats"
+},
+{
+"a": "գնչու",
+"lv": "B2",
+"ru": "цыган",
+"en": "Rom, gypsy",
+"fr": "Rom, gitan"
+},
+{
+"a": "գո",
+"lv": "B2",
+"ru": "го (игра)",
+"en": "go (board game)",
+"fr": "go (jeu)"
+},
+{
+"a": "գոգլի-մոգլի",
+"lv": "B2",
+"ru": "гоголь-моголь",
+"en": "eggnog (kogel mogel)",
+"fr": "lait de poule"
+},
+{
+"a": "գոճամայր",
+"lv": "B2",
+"ru": "свиноматка",
+"en": "sow",
+"fr": "truie"
+},
+{
+"a": "գոյական խառնիչ",
+"lv": "B2",
+"ru": "блендер",
+"en": "blender",
+"fr": "mixeur"
+},
+{
+"a": "գոնգեղ",
+"lv": "B2",
+"ru": "брюква",
+"en": "rutabaga",
+"fr": "rutabaga"
+},
+{
+"a": "գոնդոլավար",
+"lv": "B2",
+"ru": "гондольер",
+"en": "gondolier",
+"fr": "gondolier"
+},
+{
+"a": "գոնոռեա",
+"lv": "B2",
+"ru": "гонорея",
+"en": "gonorrhea",
+"fr": "gonorrhée"
+},
+{
+"a": "գոռոց",
+"lv": "B2",
+"ru": "крик, вопль",
+"en": "shout",
+"fr": "cri, hurlement"
+},
+{
+"a": "գովազդագիր",
+"lv": "B2",
+"ru": "копирайтер",
+"en": "copywriter",
+"fr": "rédacteur publicitaire"
+},
+{
+"a": "գովերգ",
+"lv": "B2",
+"ru": "гимн, ода",
+"en": "hymn, ode",
+"fr": "hymne, ode"
+},
+{
+"a": "գոտիավորում",
+"lv": "B2",
+"ru": "зонирование",
+"en": "zoning",
+"fr": "zonage"
+},
+{
+"a": "գոտկային պունկցիա",
+"lv": "B2",
+"ru": "люмбальная пункция",
+"en": "lumbar puncture",
+"fr": "ponction lombaire"
+},
+{
+"a": "գորգոն",
+"lv": "B2",
+"ru": "горгона",
+"en": "gorgon",
+"fr": "gorgone"
+},
+{
+"a": "գործադիր",
+"lv": "B2",
+"ru": "приложение (программа)",
+"en": "app",
+"fr": "application"
+},
+{
+"a": "գործադուլաբեկ",
+"lv": "B2",
+"ru": "штрейкбрехер",
+"en": "strikebreaker",
+"fr": "briseur de grève"
+},
+{
+"a": "գործակատար",
+"lv": "B2",
+"ru": "продавец",
+"en": "salesperson",
+"fr": "vendeur"
+},
+{
+"a": "գործիական հոլով",
+"lv": "B2",
+"ru": "творительный падеж",
+"en": "instrumental case",
+"fr": "instrumental"
+},
+{
+"a": "գործող անձ",
+"lv": "B2",
+"ru": "действующее лицо",
+"en": "character",
+"fr": "personnage"
+},
+{
+"a": "գործող հրաբուխ",
+"lv": "B2",
+"ru": "действующий вулкан",
+"en": "active volcano",
+"fr": "volcan actif"
+},
+{
+"a": "գորշ ածուխ",
+"lv": "B2",
+"ru": "бурый уголь",
+"en": "lignite",
+"fr": "lignite"
+},
+{
+"a": "գորշ նյութ",
+"lv": "B2",
+"ru": "серое вещество",
+"en": "grey matter",
+"fr": "matière grise"
+},
+{
+"a": "գուավա",
+"lv": "B2",
+"ru": "гуава",
+"en": "guava",
+"fr": "goyave"
+},
+{
+"a": "գուբերնիա",
+"lv": "B2",
+"ru": "губерния",
+"en": "guberniya",
+"fr": "gouvernement (goubernia)"
+},
+{
+"a": "գուլ",
+"lv": "B2",
+"ru": "гуль",
+"en": "ghoul",
+"fr": "goule"
+},
+{
+"a": "գուլյաշ",
+"lv": "B2",
+"ru": "гуляш",
+"en": "goulash",
+"fr": "goulache"
+},
+{
+"a": "գույքագրում",
+"lv": "B2",
+"ru": "инвентаризация",
+"en": "stocktaking",
+"fr": "inventaire"
+},
+{
+"a": "գունանյութ",
+"lv": "B2",
+"ru": "пигмент",
+"en": "pigment",
+"fr": "pigment"
+},
+{
+"a": "գունավոր կավիճ",
+"lv": "B2",
+"ru": "цветной мелок",
+"en": "crayon",
+"fr": "craie de couleur"
+},
+{
+"a": "գունավոր մատիտ",
+"lv": "B2",
+"ru": "цветной карандаш",
+"en": "coloured pencil",
+"fr": "crayon de couleur"
+},
+{
+"a": "գուրման",
+"lv": "B2",
+"ru": "гурман",
+"en": "gourmand",
+"fr": "gourmet"
+},
+{
+"a": "գուրու",
+"lv": "B2",
+"ru": "гуру",
+"en": "guru",
+"fr": "gourou"
+},
+{
+"a": "գռիվնա",
+"lv": "B2",
+"ru": "гривна",
+"en": "hryvnia",
+"fr": "hryvnia"
+},
+{
+"a": "գրագիր",
+"lv": "B2",
+"ru": "писарь",
+"en": "clerk",
+"fr": "scribe"
+},
+{
+"a": "գրադարանագիտություն",
+"lv": "B2",
+"ru": "библиотековедение",
+"en": "library science",
+"fr": "bibliothéconomie"
+},
+{
+"a": "գրադարանապետ",
+"lv": "B2",
+"ru": "директор библиотеки",
+"en": "librarian",
+"fr": "directeur de bibliothèque"
+},
+{
+"a": "գրադարձություն",
+"lv": "B2",
+"ru": "транслитерация",
+"en": "transliteration",
+"fr": "translittération"
+},
+{
+"a": "գրամոլ",
+"lv": "B2",
+"ru": "книжный червь",
+"en": "bookworm",
+"fr": "rat de bibliothèque"
+},
+{
+"a": "գրամոֆոն",
+"lv": "B2",
+"ru": "граммофон",
+"en": "record player",
+"fr": "gramophone"
+},
+{
+"a": "գրասալիկը",
+"lv": "B2",
+"ru": "планшет",
+"en": "tablet computer",
+"fr": "tablette"
+},
+{
+"a": "գրասենյակային ծառայող",
+"lv": "B2",
+"ru": "конторский служащий",
+"en": "office clerk",
+"fr": "employé de bureau"
+},
+{
+"a": "գրավապահ",
+"lv": "B2",
+"ru": "ростовщик",
+"en": "pawnbroker",
+"fr": "prêteur sur gages"
+},
+{
+"a": "գրավատուն",
+"lv": "B2",
+"ru": "ломбард",
+"en": "pawnshop",
+"fr": "mont-de-piété"
+},
+{
+"a": "գրավիտացիոն ալիք",
+"lv": "B2",
+"ru": "гравитационная волна",
+"en": "gravitational wave",
+"fr": "onde gravitationnelle"
+},
+{
+"a": "գրավիտացիոն սինգուլյարություն",
+"lv": "B2",
+"ru": "гравитационная сингулярность",
+"en": "gravitational singularity",
+"fr": "singularité gravitationnelle"
+},
+{
+"a": "գրավլաքս",
+"lv": "B2",
+"ru": "гравлакс",
+"en": "gravlax",
+"fr": "gravlax"
+},
+{
+"a": "գրաքննիչ",
+"lv": "B2",
+"ru": "цензор",
+"en": "censor",
+"fr": "censeur"
+},
+{
+"a": "գրաֆների տեսություն",
+"lv": "B2",
+"ru": "теория графов",
+"en": "graph theory",
+"fr": "théorie des graphes"
+},
+{
+"a": "գրելը",
+"lv": "B2",
+"ru": "письмо (процесс)",
+"en": "writing",
+"fr": "écriture"
+},
+{
+"a": "գրելին",
+"lv": "B2",
+"ru": "грелин",
+"en": "ghrelin",
+"fr": "ghréline"
+},
+{
+"a": "գրիմ",
+"lv": "B2",
+"ru": "грим",
+"en": "makeup",
+"fr": "maquillage (de scène)"
+},
+{
+"a": "գրկախառնություն",
+"lv": "B2",
+"ru": "объятие (синоним)",
+"en": "embrace",
+"fr": "étreinte (synonyme)"
+},
+{
+"a": "գրոգ",
+"lv": "B2",
+"ru": "грог",
+"en": "grog",
+"fr": "grog"
+},
+{
+"a": "գրոհային հրացան",
+"lv": "B2",
+"ru": "автомат (штурмовая винтовка)",
+"en": "assault rifle",
+"fr": "fusil d'assaut"
+},
+{
+"a": "գրոշ",
+"lv": "B2",
+"ru": "грош",
+"en": "groschen",
+"fr": "gros (pièce)"
+},
+{
+"a": "գրչածայր",
+"lv": "B2",
+"ru": "перо (ручки)",
+"en": "nib",
+"fr": "plume (de stylo)"
+},
+{
+"a": "գրչակից ընկեր",
+"lv": "B2",
+"ru": "друг по переписке",
+"en": "pen pal",
+"fr": "correspondant"
+},
+{
+"a": "գրպանի դանակ",
+"lv": "B2",
+"ru": "перочинный нож",
+"en": "pocketknife",
+"fr": "canif"
+},
+{
+"a": "գրպանի էլեկտրական լապտեր",
+"lv": "B2",
+"ru": "карманный фонарик",
+"en": "flashlight",
+"fr": "lampe de poche (synonyme)"
+},
+{
+"a": "գրպանի փող",
+"lv": "B2",
+"ru": "карманные деньги",
+"en": "pocket money",
+"fr": "argent de poche"
+},
+{
+"a": "գրքագիտություն",
+"lv": "B2",
+"ru": "книговедение",
+"en": "bibliology",
+"fr": "bibliologie"
+},
+{
+"a": "գրքային փոխառություն",
+"lv": "B2",
+"ru": "книжное заимствование",
+"en": "learned borrowing",
+"fr": "emprunt savant"
+},
+{
+"a": "գրքույկ",
+"lv": "B2",
+"ru": "буклет",
+"en": "brochure",
+"fr": "livret"
+},
+{
+"a": "դալթոնիզմ",
+"lv": "B2",
+"ru": "дальтонизм",
+"en": "color blindness",
+"fr": "daltonisme"
+},
+{
+"a": "դակիչ",
+"lv": "B2",
+"ru": "дырокол",
+"en": "hole punch",
+"fr": "perforatrice"
+},
+{
+"a": "դակտիլոսկոպիա",
+"lv": "B2",
+"ru": "дактилоскопия",
+"en": "dactyloscopy",
+"fr": "dactyloscopie"
+},
+{
+"a": "դահիրա",
+"lv": "B2",
+"ru": "бубен",
+"en": "tambourine",
+"fr": "tambourin"
+},
+{
+"a": "դաղալություն",
+"lv": "B2",
+"ru": "проделки",
+"en": "shenanigans",
+"fr": "manigances"
+},
+{
+"a": "դաղձ",
+"lv": "B2",
+"ru": "мята",
+"en": "mint",
+"fr": "menthe"
+},
+{
+"a": "դաղստանցի",
+"lv": "B2",
+"ru": "дагестанец",
+"en": "Dagestani",
+"fr": "Daghestanais"
+},
+{
+"a": "դամբանագիր",
+"lv": "B2",
+"ru": "эпитафия (синоним)",
+"en": "epitaph",
+"fr": "épitaphe (synonyme)"
+},
+{
+"a": "դամոկլյան սուր",
+"lv": "B2",
+"ru": "дамоклов меч",
+"en": "sword of Damocles",
+"fr": "épée de Damoclès"
+},
+{
+"a": "դաշնային կառավարություն",
+"lv": "B2",
+"ru": "федеральное правительство",
+"en": "federal government",
+"fr": "gouvernement fédéral"
+},
+{
+"a": "դաշնային նահանգ",
+"lv": "B2",
+"ru": "федеральная земля (штат)",
+"en": "federal state",
+"fr": "État fédéré"
+},
+{
+"a": "դաշտագայլ",
+"lv": "B2",
+"ru": "койот",
+"en": "coyote",
+"fr": "coyote"
+},
+{
+"a": "դաշտի քվանտային տեսություն",
+"lv": "B2",
+"ru": "квантовая теория поля",
+"en": "quantum field theory",
+"fr": "théorie quantique des champs"
+},
+{
+"a": "դաջում",
+"lv": "B2",
+"ru": "татуировка",
+"en": "tattoo",
+"fr": "tatouage"
+},
+{
+"a": "դառը գարեջուր",
+"lv": "B2",
+"ru": "горькое пиво (биттер)",
+"en": "bitter (beer)",
+"fr": "bière amère"
+},
+{
+"a": "դասատու",
+"lv": "B2",
+"ru": "преподаватель",
+"en": "teacher",
+"fr": "enseignant"
+},
+{
+"a": "դասարանախաղ",
+"lv": "B2",
+"ru": "классики (игра)",
+"en": "hopscotch",
+"fr": "marelle"
+},
+{
+"a": "դասընկերուհի",
+"lv": "B2",
+"ru": "одноклассница",
+"en": "female classmate",
+"fr": "camarade de classe (fille)"
+},
+{
+"a": "դավանանք",
+"lv": "B2",
+"ru": "вероучение, догма",
+"en": "doctrine",
+"fr": "doctrine (dogme)"
+},
+{
+"a": "դատախազություն",
+"lv": "B2",
+"ru": "прокуратура",
+"en": "prosecutor's office",
+"fr": "parquet"
+},
+{
+"a": "դատական գործ",
+"lv": "B2",
+"ru": "судебное дело",
+"en": "court case",
+"fr": "affaire judiciaire"
+},
+{
+"a": "դատական կարգադրիչ",
+"lv": "B2",
+"ru": "судебный пристав",
+"en": "bailiff",
+"fr": "huissier de justice"
+},
+{
+"a": "դատարկաբանություն",
+"lv": "B2",
+"ru": "тарабарщина",
+"en": "gibberish",
+"fr": "charabia (synonyme)"
+},
+{
+"a": "դատարկաշրջիկ",
+"lv": "B2",
+"ru": "бездельник-бродяга",
+"en": "gadabout",
+"fr": "vadrouilleur"
+},
+{
+"a": "դարապղպեղ",
+"lv": "B2",
+"ru": "чёрный перец (пряность)",
+"en": "black pepper",
+"fr": "poivre (épice)"
+},
+{
+"a": "դարձածալ",
+"lv": "B2",
+"ru": "лацкан",
+"en": "lapel",
+"fr": "revers"
+},
+{
+"a": "դափնեպսակ",
+"lv": "B2",
+"ru": "лавровый венок (синоним)",
+"en": "laurel wreath",
+"fr": "couronne de lauriers (synonyme)"
+},
+{
+"a": "դեբյուտ",
+"lv": "B2",
+"ru": "дебют",
+"en": "debut",
+"fr": "début (première)"
+},
+{
+"a": "դելեգատ",
+"lv": "B2",
+"ru": "делегат",
+"en": "delegate",
+"fr": "délégué"
+},
+{
+"a": "դելֆինարիում",
+"lv": "B2",
+"ru": "дельфинарий",
+"en": "dolphinarium",
+"fr": "delphinarium"
+},
+{
+"a": "դեկալիտր",
+"lv": "B2",
+"ru": "декалитр",
+"en": "decalitre",
+"fr": "décalitre"
+},
+{
+"a": "դեկոմպիլյատոր",
+"lv": "B2",
+"ru": "декомпилятор",
+"en": "decompiler",
+"fr": "décompilateur"
+},
+{
+"a": "դեղահաբերի տուփ",
+"lv": "B2",
+"ru": "таблетница",
+"en": "pillbox",
+"fr": "pilulier"
+},
+{
+"a": "դեղամիջոց",
+"lv": "B2",
+"ru": "лекарственное средство",
+"en": "medication",
+"fr": "médicament (remède)"
+},
+{
+"a": "դեղին թեյ",
+"lv": "B2",
+"ru": "жёлтый чай",
+"en": "yellow tea",
+"fr": "thé jaune"
+},
+{
+"a": "դեղին մամուլ",
+"lv": "B2",
+"ru": "жёлтая пресса",
+"en": "yellow press",
+"fr": "presse à sensation"
+},
+{
+"a": "դեղին տառեղ",
+"lv": "B2",
+"ru": "жёлтая цапля",
+"en": "squacco heron",
+"fr": "crabier chevelu"
+},
+{
+"a": "դեղնահող",
+"lv": "B2",
+"ru": "охра",
+"en": "ochre",
+"fr": "ocre (pigment)"
+},
+{
+"a": "դեմոգրաֆիա",
+"lv": "B2",
+"ru": "демография",
+"en": "demography",
+"fr": "démographie"
+},
+{
+"a": "դեոնտոլոգիա",
+"lv": "B2",
+"ru": "деонтология",
+"en": "deontology",
+"fr": "déontologie"
+},
+{
+"a": "դեսանտավոր",
+"lv": "B2",
+"ru": "десантник",
+"en": "paratrooper",
+"fr": "parachutiste"
+},
+{
+"a": "դեսերտ",
+"lv": "B2",
+"ru": "десерт",
+"en": "dessert",
+"fr": "dessert"
+},
+{
+"a": "դերասանություն",
+"lv": "B2",
+"ru": "актёрское мастерство",
+"en": "acting",
+"fr": "jeu d'acteur"
+},
+{
+"a": "դեւշիրմե",
+"lv": "B2",
+"ru": "девширме",
+"en": "devshirme",
+"fr": "devchirmé"
+},
+{
+"a": "դեֆիբրիլյատոր",
+"lv": "B2",
+"ru": "дефибриллятор",
+"en": "defibrillator",
+"fr": "défibrillateur"
+},
+{
+"a": "դեֆիս",
+"lv": "B2",
+"ru": "дефис",
+"en": "hyphen",
+"fr": "trait d'union"
+},
+{
+"a": "դեֆորմացիա",
+"lv": "B2",
+"ru": "деформация (синоним)",
+"en": "deformation",
+"fr": "déformation (synonyme)"
+},
+{
+"a": "դժնիկ",
+"lv": "B2",
+"ru": "крушина (синоним)",
+"en": "buckthorn",
+"fr": "nerprun (synonyme)"
+},
+{
+"a": "դժոխքի դարպաս",
+"lv": "B2",
+"ru": "врата ада",
+"en": "gate of hell",
+"fr": "porte de l'enfer"
+},
+{
+"a": "դժվախտություն",
+"lv": "B2",
+"ru": "бедствие, напасть",
+"en": "plague",
+"fr": "fléau (synonyme)"
+},
+{
+"a": "դիագնոզ",
+"lv": "B2",
+"ru": "диагноз",
+"en": "diagnosis",
+"fr": "diagnostic"
+},
+{
+"a": "դիագրամ",
+"lv": "B2",
+"ru": "диаграмма",
+"en": "diagram",
+"fr": "diagramme"
+},
+{
+"a": "դիահերձարան",
+"lv": "B2",
+"ru": "морг",
+"en": "morgue",
+"fr": "morgue"
+},
+{
+"a": "դիապոզիտիվ",
+"lv": "B2",
+"ru": "диапозитив",
+"en": "slide",
+"fr": "diapositive (synonyme)"
+},
+{
+"a": "դիարխիա",
+"lv": "B2",
+"ru": "диархия",
+"en": "diarchy",
+"fr": "dyarchie"
+},
+{
+"a": "դիզայն",
+"lv": "B2",
+"ru": "дизайн",
+"en": "design",
+"fr": "design"
+},
+{
+"a": "դիլետանտ",
+"lv": "B2",
+"ru": "дилетант",
+"en": "dilettante",
+"fr": "dilettante"
+},
+{
+"a": "դիկտատոր",
+"lv": "B2",
+"ru": "диктатор (синоним)",
+"en": "dictator",
+"fr": "dictateur (synonyme)"
+},
+{
+"a": "դիկտատուրա",
+"lv": "B2",
+"ru": "диктатура",
+"en": "dictatorship",
+"fr": "dictature"
+},
+{
 "a": "գոյություն",
 "lv": "C1",
 "ru": "существование",

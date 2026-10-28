@@ -120853,6 +120853,6102 @@
 "fr": "Adjectifs 11"
 },
 {
+"lv": "B2",
+"ru": "Предметы и понятия 1",
+"en": "Things and concepts 1",
+"hy": "Առարկաներ և հասկացություններ 1",
+"ic": "💡",
+"w": [
+[
+"ԱԱՀ",
+"НДС (налог на добавленную стоимость)",
+"VAT",
+"",
+"TVA"
+],
+[
+"ԱԹՍ",
+"БПЛА (беспилотник)",
+"UAV, drone",
+"",
+"drone (UAV)"
+],
+[
+"Ալցհայմերի հիվանդություն",
+"болезнь Альцгеймера",
+"Alzheimer's disease",
+"",
+"maladie d'Alzheimer"
+],
+[
+"Աշխատանքի օր",
+"День труда (1 Мая)",
+"May Day",
+"",
+"fête du Travail"
+],
+[
+"Ապոլլոն",
+"Аполлон",
+"Apollo",
+"",
+"Apollon"
+],
+[
+"Ավագ ուրբաթ",
+"Страстная пятница",
+"Good Friday",
+"",
+"Vendredi saint"
+],
+[
+"Բարբի",
+"Барби",
+"Barbie",
+"",
+"Barbie"
+],
+[
+"Գուլագ",
+"ГУЛАГ",
+"gulag",
+"",
+"goulag"
+],
+[
+"Դդմից լապտեր",
+"фонарь из тыквы",
+"jack-o'-lantern",
+"🎃",
+"citrouille d'Halloween"
+],
+[
+"ԶԼՄ",
+"СМИ",
+"mass media",
+"",
+"médias"
+],
+[
+"Թյուդոր",
+"Тюдоры",
+"Tudor",
+"",
+"Tudor"
+],
+[
+"Լոնդոնցի",
+"лондонец",
+"Londoner",
+"",
+"Londonien"
+],
+[
+"Կաթոլիկ եկեղեցի",
+"Католическая церковь",
+"Catholic Church",
+"",
+"Église catholique"
+],
+[
+"Կեսար",
+"Цезарь; салат «Цезарь»",
+"Caesar; Caesar salad",
+"",
+"César; salade César"
+],
+[
+"Հիգսի բոզոն",
+"бозон Хиггса",
+"Higgs boson",
+"",
+"boson de Higgs"
+],
+[
+"Հոգեգալուստ",
+"Пятидесятница",
+"Whitsunday, Pentecost",
+"",
+"Pentecôte"
+],
+[
+"Հռոմի պապ",
+"Папа Римский",
+"pope",
+"",
+"pape"
+],
+[
+"ՁԻԱՀ",
+"СПИД",
+"AIDS",
+"",
+"sida"
+],
+[
+"ՄԻԱՎ",
+"ВИЧ",
+"HIV",
+"",
+"VIH"
+],
+[
+"ՄՌՏ",
+"МРТ",
+"MRI",
+"",
+"IRM"
+],
+[
+"Մարզպանական Հայաստան",
+"марзпанская Армения",
+"marzpanate Armenia",
+"",
+"Arménie marzpanate"
+],
+[
+"Նոբելյան մրցանակ",
+"Нобелевская премия",
+"Nobel Prize",
+"🏅",
+"prix Nobel"
+],
+[
+"Շվարցվալդ տորթ",
+"торт «Шварцвальд»",
+"Black Forest gâteau",
+"",
+"forêt-noire"
+],
+[
+"Ուելսի արքայազն",
+"принц Уэльский",
+"Prince of Wales",
+"",
+"prince de Galles"
+],
+[
+"Ուրախ Ռոջեր",
+"Весёлый Роджер",
+"Jolly Roger",
+"🏴‍☠️",
+"Jolly Roger"
+],
+[
+"Պանդորայի արկղ",
+"ящик Пандоры",
+"Pandora's box",
+"",
+"boîte de Pandore"
+],
+[
+"Պարկինսոն",
+"болезнь Паркинсона",
+"Parkinson's disease",
+"",
+"maladie de Parkinson"
+],
+[
+"ՍԴ",
+"Конституционный суд",
+"constitutional court",
+"",
+"Cour constitutionnelle"
+],
+[
+"ՍՊԸ",
+"ООО",
+"LLC, Ltd.",
+"",
+"SARL"
+],
+[
+"Սըր",
+"сэр",
+"Sir",
+"",
+"sir"
+],
+[
+"Վրացագիտություն",
+"картвелология",
+"Kartvelian studies",
+"",
+"kartvélologie"
+],
+[
+"ՏՏ",
+"IT, информационные технологии",
+"IT",
+"",
+"informatique (TI)"
+],
+[
+"ՔԿԱԳ",
+"ЗАГС",
+"civil registry",
+"",
+"état civil"
+],
+[
+"Ֆոլքսվագեն",
+"Фольксваген",
+"Volkswagen",
+"",
+"Volkswagen"
+],
+[
+"աբազին",
+"абазин",
+"Abaza",
+"",
+"Abaza"
+],
+[
+"աբաժուր",
+"абажур",
+"lampshade",
+"",
+"abat-jour"
+],
+[
+"աբանոս",
+"эбеновое дерево",
+"ebony",
+"",
+"ébène"
+],
+[
+"աբբահայր",
+"аббат",
+"abbot",
+"",
+"abbé"
+],
+[
+"աբբայություն",
+"аббатство",
+"abbacy",
+"",
+"abbaye"
+],
+[
+"աբջադ",
+"абджад",
+"abjad",
+"",
+"abjad"
+],
+[
+"աբսենտ",
+"абсент",
+"absinthe",
+"",
+"absinthe"
+],
+[
+"աբստրակտ հանրահաշիվ",
+"абстрактная алгебра",
+"abstract algebra",
+"",
+"algèbre abstraite"
+],
+[
+"աբսցիս",
+"абсцисса",
+"abscissa",
+"",
+"abscisse"
+],
+[
+"ագավա",
+"агава",
+"agave",
+"",
+"agave"
+],
+[
+"ագուռ",
+"бубны (масть)",
+"diamonds (suit)",
+"♦️",
+"carreau (couleur)"
+],
+[
+"ագռավի ճանկեր",
+"куриный почерк",
+"chicken scratch",
+"",
+"pattes de mouche"
+],
+[
+"ագրեսիվություն",
+"агрессивность",
+"aggressiveness",
+"",
+"agressivité"
+],
+[
+"ագրեսոր",
+"агрессор",
+"aggressor",
+"",
+"agresseur"
+],
+[
+"ագրոնոմ",
+"агроном",
+"agronomist",
+"",
+"agronome"
+],
+[
+"ագրոնոմիա",
+"агрономия",
+"agronomy",
+"",
+"agronomie"
+],
+[
+"ագրոքիմիա",
+"агрохимия",
+"agrochemistry",
+"",
+"agrochimie"
+],
+[
+"ադամաթզենու հանրապետություն",
+"банановая республика",
+"banana republic",
+"",
+"république bananière"
+],
+[
+"ադամախնձոր",
+"кадык",
+"Adam's apple",
+"",
+"pomme d'Adam"
+],
+[
+"ադապտացիա",
+"адаптация",
+"adaptation",
+"",
+"adaptation"
+],
+[
+"ադի-բուդի",
+"попкорн",
+"popcorn",
+"🍿",
+"pop-corn"
+]
+],
+"fr": "Objets et notions 1"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 2",
+"en": "Things and concepts 2",
+"hy": "Առարկաներ և հասկացություններ 2",
+"ic": "💡",
+"w": [
+[
+"ադմին",
+"админ",
+"admin",
+"",
+"admin"
+],
+[
+"աերոդրոմ",
+"аэродром",
+"aerodrome",
+"",
+"aérodrome"
+],
+[
+"աերոզոլ",
+"аэрозоль",
+"aerosol",
+"",
+"aérosol"
+],
+[
+"աերոպլան",
+"аэроплан (устар.)",
+"airplane (dated)",
+"",
+"aéroplane"
+],
+[
+"աերոստատ",
+"аэростат",
+"aerostat",
+"",
+"aérostat"
+],
+[
+"ազատ հարված",
+"штрафной удар",
+"free kick",
+"",
+"coup franc"
+],
+[
+"ազատ օգտագործում",
+"добросовестное использование",
+"fair use",
+"",
+"usage loyal"
+],
+[
+"ազատամարտիկ",
+"борец за свободу",
+"freedom fighter",
+"",
+"combattant de la liberté"
+],
+[
+"ազատամիտ",
+"вольнодумец",
+"freethinker",
+"",
+"libre penseur"
+],
+[
+"ազբեստոզ",
+"асбестоз",
+"asbestosis",
+"",
+"asbestose"
+],
+[
+"ազգ պետություն",
+"национальное государство",
+"nation-state",
+"",
+"État-nation"
+],
+[
+"ազգակցություն",
+"родство",
+"kinship",
+"",
+"parenté"
+],
+[
+"ազգային տոն",
+"национальный праздник",
+"national holiday",
+"",
+"fête nationale"
+],
+[
+"ազդագիր",
+"проспект (буклет)",
+"prospectus",
+"",
+"prospectus"
+],
+[
+"ազդանյութ",
+"реагент",
+"reagent",
+"",
+"réactif"
+],
+[
+"ազդրապուխտ",
+"окорок",
+"ham",
+"",
+"jambon"
+],
+[
+"ազնիվ եղջերու",
+"благородный олень",
+"red deer",
+"",
+"cerf élaphe"
+],
+[
+"ազնվականություն",
+"дворянство",
+"nobility",
+"",
+"noblesse (synonyme)"
+],
+[
+"աիլուրոֆոբիա",
+"айлурофобия (боязнь кошек)",
+"ailurophobia",
+"",
+"ailurophobie"
+],
+[
+"ալբանացի",
+"албанец",
+"Albanian (person)",
+"",
+"Albanais"
+],
+[
+"ալիյա",
+"алия (репатриация в Израиль)",
+"aliyah",
+"",
+"alya"
+],
+[
+"ալիքային ֆունկցիա",
+"волновая функция",
+"wavefunction",
+"",
+"fonction d'onde"
+],
+[
+"ալիֆ",
+"алиф",
+"alif",
+"",
+"alif"
+],
+[
+"ալկալի",
+"щёлочь",
+"alkali",
+"",
+"alcali"
+],
+[
+"ալկասար",
+"алькасар",
+"alcazar",
+"",
+"alcazar"
+],
+[
+"ալյումինի օքսիդ",
+"оксид алюминия",
+"aluminium oxide",
+"",
+"alumine"
+],
+[
+"ալոկազիա",
+"алоказия",
+"alocasia",
+"",
+"alocasia"
+],
+[
+"ալֆա",
+"альфа",
+"alpha",
+"",
+"alpha"
+],
+[
+"ալֆախոտ",
+"альфа (трава)",
+"esparto",
+"",
+"alfa (sparte)"
+],
+[
+"ախոնդ",
+"ахунд",
+"akhund",
+"",
+"akhound"
+],
+[
+"ախտահանիչ միջոց",
+"дезинфицирующее средство",
+"disinfectant",
+"",
+"désinfectant"
+],
+[
+"ախտահոգեբանություն",
+"патопсихология",
+"abnormal psychology",
+"",
+"psychopathologie"
+],
+[
+"ածելու սայր",
+"лезвие бритвы",
+"razor blade",
+"",
+"lame de rasoir"
+],
+[
+"ածխածնի երկօքսիդ",
+"углекислый газ",
+"carbon dioxide",
+"",
+"dioxyde de carbone"
+],
+[
+"ականակիր",
+"эсминец",
+"destroyer",
+"",
+"destroyer"
+],
+[
+"ականապատ դաշտ",
+"минное поле",
+"minefield",
+"",
+"champ de mines"
+],
+[
+"ականջակալներ",
+"наушники (гарнитура)",
+"headset",
+"🎧",
+"casque audio"
+],
+[
+"ականջավոր բու",
+"ушастая сова",
+"long-eared owl",
+"",
+"hibou moyen-duc"
+],
+[
+"ակարներ",
+"клещи (мн.)",
+"mites",
+"",
+"acariens"
+],
+[
+"ակնոցավոր արջ",
+"очковый медведь",
+"spectacled bear",
+"",
+"ours à lunettes"
+],
+[
+"ակորդեոնահար",
+"аккордеонист",
+"accordionist",
+"",
+"accordéoniste"
+],
+[
+"ակումուլյատոր",
+"аккумулятор",
+"battery",
+"🔋",
+"batterie"
+],
+[
+"ակուստիկ կիթառ",
+"акустическая гитара",
+"acoustic guitar",
+"🎸",
+"guitare acoustique"
+],
+[
+"ակվալանգ",
+"акваланг",
+"aqualung",
+"",
+"scaphandre autonome"
+],
+[
+"ակվապոնիկա",
+"аквапоника",
+"aquaponics",
+"",
+"aquaponie"
+],
+[
+"ակվարիում",
+"аквариум",
+"aquarium",
+"🐠",
+"aquarium"
+],
+[
+"ակրոմեգալիա",
+"акромегалия",
+"acromegaly",
+"",
+"acromégalie"
+],
+[
+"ակցենտ",
+"акцент",
+"accent",
+"",
+"accent"
+],
+[
+"ակցիոներ",
+"акционер",
+"shareholder",
+"",
+"actionnaire"
+],
+[
+"աղանդապետ",
+"ересиарх",
+"heresiarch",
+"",
+"hérésiarque"
+],
+[
+"աղավաղում",
+"деформация",
+"deformation",
+"",
+"déformation"
+],
+[
+"աղավնյակ",
+"голубёнок",
+"squab",
+"",
+"pigeonneau"
+],
+[
+"աղավնոց",
+"голубятня (синоним)",
+"dovecote",
+"",
+"colombier"
+],
+[
+"աղացպան",
+"мельник",
+"miller",
+"",
+"meunier"
+],
+[
+"աղբի բեռնարկղ",
+"мусорный бак",
+"garbage can",
+"🗑️",
+"poubelle"
+]
+],
+"fr": "Objets et notions 2"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 3",
+"en": "Things and concepts 3",
+"hy": "Առարկաներ և հասկացություններ 3",
+"ic": "💡",
+"w": [
+[
+"աղեթափություն",
+"грыжа",
+"hernia",
+"",
+"hernie"
+],
+[
+"աղմուկ ականջներում",
+"звон в ушах",
+"tinnitus",
+"",
+"acouphène"
+],
+[
+"աղոթագիրք",
+"молитвенник",
+"prayer book",
+"",
+"livre de prières"
+],
+[
+"աղոթագորգ",
+"молитвенный коврик",
+"prayer rug",
+"",
+"tapis de prière"
+],
+[
+"աղվաներեն",
+"кавказско-албанский язык",
+"Caucasian Albanian language",
+"",
+"albanien du Caucase (langue)"
+],
+[
+"աղվեսակ",
+"фуксия",
+"fuchsia",
+"",
+"fuchsia"
+],
+[
+"աղվեսուհի",
+"лисица (самка)",
+"vixen",
+"",
+"renarde"
+],
+[
+"աղտոր",
+"сумах",
+"sumac",
+"",
+"sumac"
+],
+[
+"աղքատները",
+"бедные (мн.)",
+"the poor",
+"",
+"les pauvres"
+],
+[
+"աճանստվածք",
+"аккреция",
+"accretion",
+"",
+"accrétion"
+],
+[
+"աճար",
+"полба",
+"emmer",
+"",
+"amidonnier"
+],
+[
+"ամազոնուհի",
+"амазонка",
+"Amazon (warrior)",
+"",
+"amazone"
+],
+[
+"աման լվացող սարք",
+"посудомоечная машина",
+"dishwasher",
+"",
+"lave-vaisselle"
+],
+[
+"ամբոխավարություն",
+"охлократия",
+"ochlocracy",
+"",
+"ochlocratie"
+],
+[
+"ամբողջատիրություն",
+"тоталитаризм",
+"totalitarianism",
+"",
+"totalitarisme"
+],
+[
+"ամբուլատորիա",
+"амбулатория",
+"outpatient clinic",
+"",
+"dispensaire"
+],
+[
+"ամբրոսիա",
+"амброзия",
+"ambrosia",
+"",
+"ambroisie"
+],
+[
+"ամեթիստ",
+"аметист",
+"amethyst",
+"💜",
+"améthyste"
+],
+[
+"ամենագիտակ",
+"всезнайка",
+"know-it-all",
+"",
+"je-sais-tout"
+],
+[
+"ամերիկանացում",
+"американизация",
+"Americanisation",
+"",
+"américanisation"
+],
+[
+"ամերիկանո",
+"американо",
+"americano",
+"☕",
+"americano"
+],
+[
+"ամիր",
+"эмир (синоним)",
+"emir",
+"",
+"émir (synonyme)"
+],
+[
+"ամիրապետ",
+"халиф (синоним)",
+"caliph",
+"",
+"calife (synonyme)"
+],
+[
+"ամնիոն",
+"амнион",
+"amnion",
+"",
+"amnios"
+],
+[
+"ամոնիումի նիտրատ",
+"нитрат аммония",
+"ammonium nitrate",
+"",
+"nitrate d'ammonium"
+],
+[
+"ամուսնական գործակալություն",
+"брачное агентство",
+"marriage agency",
+"",
+"agence matrimoniale"
+],
+[
+"ամուսնական զույգ",
+"супружеская пара",
+"married couple",
+"💑",
+"couple marié"
+],
+[
+"ամուրիկ",
+"зяблик",
+"chaffinch",
+"",
+"pinson"
+],
+[
+"ամպերմետր",
+"амперметр",
+"ammeter",
+"",
+"ampèremètre"
+],
+[
+"ամպերսանդ",
+"амперсанд (&)",
+"ampersand",
+"",
+"esperluette"
+],
+[
+"ամպլուա",
+"амплуа",
+"stock character",
+"",
+"emploi (rôle type)"
+],
+[
+"ամպուլա",
+"ампула",
+"ampoule",
+"",
+"ampoule (médicale)"
+],
+[
+"ամրակառույց կրակակետ",
+"дот",
+"pillbox",
+"",
+"casemate"
+],
+[
+"ամրակիչ",
+"степлер",
+"stapler",
+"",
+"agrafeuse"
+],
+[
+"ամֆիթատրոն",
+"амфитеатр",
+"amphitheatre",
+"",
+"amphithéâtre"
+],
+[
+"ամֆիսբենա",
+"амфисбена",
+"amphisbaena",
+"",
+"amphisbène"
+],
+[
+"այ-այ",
+"ай-ай (руконожка)",
+"aye-aye",
+"",
+"aye-aye"
+],
+[
+"այաթոլլա",
+"аятолла",
+"ayatollah",
+"",
+"ayatollah"
+],
+[
+"այբբենական կարգ",
+"алфавитный порядок",
+"alphabetical order",
+"",
+"ordre alphabétique"
+],
+[
+"այլակերպություն",
+"метаморфоза",
+"metamorphosis",
+"",
+"métamorphose"
+],
+[
+"այլասերվածություն",
+"извращённость",
+"perversion",
+"",
+"perversion"
+],
+[
+"այլասիրություն",
+"альтруизм",
+"altruism",
+"",
+"altruisme"
+],
+[
+"այլընտրանքային ծախս",
+"альтернативные издержки",
+"opportunity cost",
+"",
+"coût d'opportunité"
+],
+[
+"այծենակաճ",
+"бурка",
+"burka (felt cloak)",
+"",
+"bourka"
+],
+[
+"այնինգ",
+"иннинг",
+"inning",
+"",
+"manche (baseball)"
+],
+[
+"այսրկովկասցի",
+"закавказец",
+"Transcaucasian",
+"",
+"Transcaucasien"
+],
+[
+"այտուցվածություն",
+"отёчность",
+"swelling",
+"",
+"enflure (synonyme)"
+],
+[
+"այրոց",
+"изжога",
+"heartburn",
+"",
+"brûlures d'estomac"
+],
+[
+"այֆոն",
+"айфон",
+"iPhone",
+"📱",
+"iPhone"
+],
+[
+"անագրամա",
+"анаграмма",
+"anagram",
+"",
+"anagramme"
+],
+[
+"անալոգիա",
+"аналогия",
+"analogy",
+"",
+"analogie"
+],
+[
+"անախորժ դրություն",
+"неприятное положение",
+"pickle (difficult situation)",
+"",
+"pétrin"
+],
+[
+"անախրոնիզմ",
+"анахронизм",
+"anachronism",
+"",
+"anachronisme"
+],
+[
+"անառակություն",
+"распутство (разгул)",
+"debauchery",
+"",
+"débauche"
+],
+[
+"անառողջ սնունդ",
+"вредная еда, фастфуд",
+"junk food",
+"🍟",
+"malbouffe"
+]
+],
+"fr": "Objets et notions 3"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 4",
+"en": "Things and concepts 4",
+"hy": "Առարկաներ և հասկացություններ 4",
+"ic": "💡",
+"w": [
+[
+"անառողջություն",
+"нездоровье",
+"illness",
+"",
+"maladie (mauvaise santé)"
+],
+[
+"անարատություն",
+"непорочность",
+"purity",
+"",
+"pureté"
+],
+[
+"անարգանք",
+"поношение",
+"contumely",
+"",
+"outrage"
+],
+[
+"անգար",
+"ангар",
+"hangar",
+"",
+"hangar"
+],
+[
+"անգլիաբանություն",
+"англицизм",
+"Anglicism",
+"",
+"anglicisme"
+],
+[
+"անգլիական եղջերափող",
+"английский рожок",
+"cor anglais",
+"",
+"cor anglais"
+],
+[
+"անգլիական սոնետ",
+"английский сонет",
+"Shakespearean sonnet",
+"",
+"sonnet anglais"
+],
+[
+"անգլիկացում",
+"англизация",
+"anglicisation",
+"",
+"anglicisation"
+],
+[
+"անգլոսաքս",
+"англосакс",
+"Anglo-Saxon (person)",
+"",
+"Anglo-Saxon"
+],
+[
+"անգուժատ",
+"асафетида",
+"asafoetida",
+"",
+"ase fétide"
+],
+[
+"անգստրոմ",
+"ангстрем",
+"angstrom",
+"",
+"angström"
+],
+[
+"անդրանիկություն",
+"первородство",
+"primogeniture",
+"",
+"primogéniture"
+],
+[
+"անդրոիդ",
+"андроид",
+"android",
+"🤖",
+"androïde"
+],
+[
+"անեզական գոյական",
+"существительное без единственного числа",
+"plurale tantum",
+"",
+"plurale tantum"
+],
+[
+"անեքսիա",
+"аннексия",
+"annexation",
+"",
+"annexion"
+],
+[
+"անընդհատ ֆունկցիա",
+"непрерывная функция",
+"continuous function",
+"",
+"fonction continue"
+],
+[
+"անընդհատություն",
+"непрерывность",
+"continuity",
+"",
+"continuité"
+],
+[
+"անթել հեռագրություն",
+"радиотелеграфия",
+"radiotelegraphy",
+"",
+"radiotélégraphie"
+],
+[
+"անթուրծ աղյուս",
+"саманный кирпич",
+"adobe",
+"",
+"adobe"
+],
+[
+"անթրոպոլոգիա",
+"антропология",
+"anthropology",
+"",
+"anthropologie"
+],
+[
+"անթրոպոցենտրիզմ",
+"антропоцентризм",
+"anthropocentrism",
+"",
+"anthropocentrisme"
+],
+[
+"անժուացի",
+"анжуйец",
+"Angevin",
+"",
+"Angevin"
+],
+[
+"անիմացիա",
+"анимация",
+"animation",
+"",
+"animation"
+],
+[
+"անիմե",
+"аниме",
+"anime",
+"",
+"anime"
+],
+[
+"անիրականալի երազանք",
+"несбыточная мечта",
+"pipe dream",
+"",
+"chimère"
+],
+[
+"անխոսություն",
+"афазия",
+"aphasia",
+"",
+"aphasie"
+],
+[
+"անխռովություն",
+"безмятежность",
+"tranquillity",
+"",
+"sérénité"
+],
+[
+"անկանոն բայ",
+"неправильный глагол",
+"irregular verb",
+"",
+"verbe irrégulier"
+],
+[
+"անկանոնություն",
+"аномалия",
+"anomaly",
+"",
+"anomalie"
+],
+[
+"անկապակացություն",
+"непоследовательность",
+"inconsistency",
+"",
+"incohérence"
+],
+[
+"անկատար",
+"несовершенный вид (прош. вр.)",
+"imperfect (tense)",
+"",
+"imparfait"
+],
+[
+"անկիզապատ",
+"брандмауэр, огнестойкая стена",
+"firewall",
+"",
+"pare-feu"
+],
+[
+"անկիլոզ",
+"анкилоз",
+"ankylosis",
+"",
+"ankylose"
+],
+[
+"անկյունահղկիչ",
+"угловая шлифмашина (болгарка)",
+"angle grinder",
+"",
+"meuleuse d'angle"
+],
+[
+"անկյունային արագություն",
+"угловая скорость",
+"angular velocity",
+"",
+"vitesse angulaire"
+],
+[
+"անկումայնություն",
+"упадничество, декаданс",
+"decadence",
+"",
+"décadence"
+],
+[
+"անկտի",
+"коромысло",
+"carrying pole",
+"",
+"palanche"
+],
+[
+"անհաղթահարելի ուժ",
+"форс-мажор",
+"force majeure",
+"",
+"force majeure"
+],
+[
+"անհատական համակարգիչ",
+"персональный компьютер",
+"personal computer",
+"🖥️",
+"ordinateur personnel"
+],
+[
+"անհրաժեշտ պայման",
+"необходимое условие",
+"sine qua non",
+"",
+"condition sine qua non"
+],
+[
+"անձավաբուժություն",
+"спелеотерапия",
+"speleotherapy",
+"",
+"spéléothérapie"
+],
+[
+"անձի պաշտամունք",
+"культ личности",
+"cult of personality",
+"",
+"culte de la personnalité"
+],
+[
+"անձնական դերանուն",
+"личное местоимение",
+"personal pronoun",
+"",
+"pronom personnel"
+],
+[
+"անձնական տվյալ",
+"персональные данные",
+"personal data",
+"",
+"données personnelles"
+],
+[
+"անձնային խանգարում",
+"расстройство личности",
+"personality disorder",
+"",
+"trouble de la personnalité"
+],
+[
+"անձներական թվական",
+"собирательное числительное",
+"collective numeral",
+"",
+"numéral collectif"
+],
+[
+"անշրջելիություն",
+"необратимость",
+"irreversibility",
+"",
+"irréversibilité"
+],
+[
+"անոթաբանություն",
+"ангиология",
+"angiology",
+"",
+"angiologie"
+],
+[
+"անոթալայնանք",
+"аневризма",
+"aneurysm",
+"",
+"anévrisme"
+],
+[
+"անոմալիա",
+"аномалия (синоним)",
+"anomaly",
+"",
+"anomalie (synonyme)"
+],
+[
+"անորոշ դերանուն",
+"неопределённое местоимение",
+"indefinite pronoun",
+"",
+"pronom indéfini"
+],
+[
+"անուշադր",
+"нашатырь",
+"sal ammoniac",
+"",
+"sel ammoniac"
+],
+[
+"անպատասխան սեր",
+"неразделённая любовь",
+"unrequited love",
+"💔",
+"amour non partagé"
+],
+[
+"անպատկառություն",
+"нахальство",
+"effrontery",
+"",
+"effronterie (synonyme)"
+],
+[
+"անջատականություն",
+"сепаратизм",
+"separatism",
+"",
+"séparatisme"
+]
+],
+"fr": "Objets et notions 4"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 5",
+"en": "Things and concepts 5",
+"hy": "Առարկաներ և հասկացություններ 5",
+"ic": "💡",
+"w": [
+[
+"անջատման գիծ",
+"тире",
+"dash",
+"",
+"tiret"
+],
+[
+"անջատում",
+"отделение, сецессия",
+"separation, secession",
+"",
+"séparation, sécession"
+],
+[
+"անսահմանություն",
+"бесконечность",
+"infinity",
+"♾️",
+"infini"
+],
+[
+"անվակոս",
+"колея",
+"rut",
+"",
+"ornière"
+],
+[
+"անվակունդ",
+"ступица (колеса)",
+"hub",
+"",
+"moyeu"
+],
+[
+"անվաճաղ",
+"спица (колеса)",
+"spoke",
+"",
+"rayon (de roue)"
+],
+[
+"անվանակից",
+"тёзка",
+"namesake",
+"",
+"homonyme"
+],
+[
+"անվաորդեր",
+"коловратка",
+"rotifer",
+"",
+"rotifère"
+],
+[
+"անվավերություն",
+"недействительность",
+"invalidity",
+"",
+"invalidité"
+],
+[
+"անվստահելի պատմիչ",
+"ненадёжный рассказчик",
+"unreliable narrator",
+"",
+"narrateur non fiable"
+],
+[
+"անվստահելիություն",
+"неуверенность",
+"insecurity",
+"",
+"insécurité"
+],
+[
+"անտաշ մարդ",
+"неотёсанный человек",
+"bumpkin",
+"",
+"rustre (personne)"
+],
+[
+"անտառակտցար",
+"вальдшнеп (лесной)",
+"Eurasian woodcock",
+"",
+"bécasse des bois"
+],
+[
+"անտառահատ",
+"лесоруб",
+"lumberjack",
+"",
+"bûcheron"
+],
+[
+"անտառանյութ",
+"древесина, лес",
+"timber",
+"",
+"bois de construction"
+],
+[
+"անտենա",
+"антенна (синоним)",
+"aerial",
+"",
+"antenne (synonyme)"
+],
+[
+"անտեսանելիություն",
+"невидимость",
+"invisibility",
+"",
+"invisibilité"
+],
+[
+"անտիկլինալ",
+"антиклиналь",
+"anticline",
+"",
+"anticlinal"
+],
+[
+"անտինոմիա",
+"антиномия",
+"antinomy",
+"",
+"antinomie"
+],
+[
+"անտիֆրիզ",
+"антифриз",
+"antifreeze",
+"",
+"antigel"
+],
+[
+"անտոմս ուղեւոր",
+"безбилетник",
+"fare dodger",
+"",
+"resquilleur"
+],
+[
+"անցած գիշեր",
+"прошлой ночью",
+"last night",
+"",
+"la nuit dernière"
+],
+[
+"անցողական բայ",
+"переходный глагол",
+"transitive verb",
+"",
+"verbe transitif"
+],
+[
+"անցվոր",
+"прохожий",
+"passer-by",
+"",
+"passant"
+],
+[
+"անփութություն",
+"небрежность, халатность",
+"negligence",
+"",
+"négligence"
+],
+[
+"անօրինական ներգաղթյալ",
+"нелегальный иммигрант",
+"illegal immigrant",
+"",
+"immigré clandestin"
+],
+[
+"աշխատակազմի ղեկավար",
+"руководитель аппарата",
+"chief of staff, CEO",
+"",
+"directeur général"
+],
+[
+"աշխատանքի բաժանում",
+"разделение труда",
+"division of labour",
+"",
+"division du travail"
+],
+[
+"աշխատանքի իրավունք",
+"трудовое право",
+"labour law",
+"",
+"droit du travail"
+],
+[
+"աշխատասենյակ",
+"рабочий кабинет",
+"study",
+"",
+"bureau (pièce)"
+],
+[
+"աշխատավայր",
+"рабочее место",
+"workplace",
+"",
+"lieu de travail"
+],
+[
+"աշխատավարձի օր",
+"день зарплаты",
+"payday",
+"💰",
+"jour de paie"
+],
+[
+"աշխարհագրական նշում",
+"географическое указание",
+"geographical indication",
+"",
+"indication géographique"
+],
+[
+"աշխարհաքաղաքականություն",
+"геополитика",
+"geopolitics",
+"",
+"géopolitique"
+],
+[
+"աշխարհի առաջնություն",
+"чемпионат мира",
+"World Cup",
+"🏆",
+"Coupe du monde"
+],
+[
+"աշխարհկառուցում",
+"построение вымышленного мира",
+"worldbuilding",
+"",
+"création d'univers"
+],
+[
+"աշխուժություն",
+"бодрость, живость",
+"alacrity",
+"",
+"entrain"
+],
+[
+"աուդիոգիրք",
+"аудиокнига",
+"audiobook",
+"🎧",
+"livre audio"
+],
+[
+"աուդիոմետրիա",
+"аудиометрия",
+"audiometry",
+"",
+"audiométrie"
+],
+[
+"աուսկուլտացիա",
+"аускультация",
+"auscultation",
+"",
+"auscultation"
+],
+[
+"աչքի վիրակապ",
+"повязка на глаз",
+"eye patch",
+"",
+"cache-œil"
+],
+[
+"ապաբանաքաղում",
+"декомпиляция",
+"decompilation",
+"",
+"décompilation"
+],
+[
+"ապակե առաստաղ",
+"стеклянный потолок",
+"glass ceiling",
+"",
+"plafond de verre"
+],
+[
+"ապակեհարթակ",
+"предметное стекло",
+"microscope slide",
+"",
+"lame de microscope"
+],
+[
+"ապակոմունիզացիա",
+"декоммунизация",
+"decommunization",
+"",
+"décommunisation"
+],
+[
+"ապամասնատում",
+"дефрагментация",
+"defragmentation",
+"",
+"défragmentation"
+],
+[
+"ապամարդկայնացում",
+"дегуманизация",
+"dehumanization",
+"",
+"déshumanisation"
+],
+[
+"ապանացիստականացում",
+"денацификация",
+"denazification",
+"",
+"dénazification"
+],
+[
+"ապառազմականացում",
+"демилитаризация",
+"demilitarisation",
+"",
+"démilitarisation"
+],
+[
+"ապառնի ժամանակ",
+"будущее время",
+"future tense",
+"",
+"futur"
+],
+[
+"ապաստան հայցող",
+"соискатель убежища",
+"asylum seeker",
+"",
+"demandeur d'asile"
+],
+[
+"ապատիտ",
+"апатит",
+"apatite",
+"",
+"apatite"
+],
+[
+"ապաքրեականացում",
+"декриминализация",
+"decriminalization",
+"",
+"dépénalisation"
+],
+[
+"ապոպտոզ",
+"апоптоз",
+"apoptosis",
+"",
+"apoptose"
+],
+[
+"ապոստրոֆ",
+"апостроф",
+"apostrophe",
+"",
+"apostrophe"
+]
+],
+"fr": "Objets et notions 5"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 6",
+"en": "Things and concepts 6",
+"hy": "Առարկաներ և հասկացություններ 6",
+"ic": "💡",
+"w": [
+[
+"ապոֆենիա",
+"апофения",
+"apophenia",
+"",
+"apophénie"
+],
+[
+"ապրանքապահեստ",
+"товарный склад",
+"warehouse",
+"",
+"entrepôt (de marchandises)"
+],
+[
+"ապրանքափոխանակություն",
+"бартер",
+"barter",
+"",
+"troc"
+],
+[
+"աջափնյա",
+"правобережный; правый берег",
+"right bank",
+"",
+"rive droite"
+],
+[
+"աջիկա",
+"аджика",
+"adjika",
+"🌶️",
+"adjika"
+],
+[
+"առագաստալաթ",
+"парусина",
+"sailcloth",
+"",
+"toile à voile"
+],
+[
+"առաձգականություն",
+"упругость",
+"elasticity",
+"",
+"élasticité"
+],
+[
+"առանձնացում",
+"изоляция",
+"insulation",
+"",
+"isolation"
+],
+[
+"առանցքային կետ",
+"ключевой момент",
+"crux",
+"",
+"point crucial"
+],
+[
+"առաջ քաշված եզրային կիսապաշտպան",
+"вингер (крайний полузащитник)",
+"winger",
+"",
+"ailier"
+],
+[
+"առաջային ուղեղ",
+"передний мозг",
+"forebrain",
+"",
+"prosencéphale"
+],
+[
+"առաջարկ եւ պահանջարկ",
+"спрос и предложение",
+"supply and demand",
+"",
+"offre et demande"
+],
+[
+"առաջարկի կոր",
+"кривая предложения",
+"supply curve",
+"",
+"courbe d'offre"
+],
+[
+"առաջարկում",
+"рекомендация",
+"recommendation",
+"",
+"recommandation"
+],
+[
+"առաջին հարկ",
+"первый этаж",
+"ground floor",
+"",
+"rez-de-chaussée"
+],
+[
+"առաջին սեր",
+"первая любовь",
+"first love",
+"💘",
+"premier amour"
+],
+[
+"առաջին տիկին",
+"первая леди",
+"First Lady",
+"",
+"Première dame"
+],
+[
+"առաջնագիծ",
+"линия фронта",
+"front line",
+"",
+"ligne de front"
+],
+[
+"առաջնային հրապարակային տեղաբաշխում",
+"первичное размещение акций (IPO)",
+"initial public offering",
+"",
+"introduction en bourse"
+],
+[
+"առաջնային շարքի ձայնավոր",
+"гласный переднего ряда",
+"front vowel",
+"",
+"voyelle antérieure"
+],
+[
+"առասպելույթ",
+"мифологема",
+"mythologem",
+"",
+"mythologème"
+],
+[
+"առատության եղջյուր",
+"рог изобилия",
+"cornucopia",
+"",
+"corne d'abondance"
+],
+[
+"առդիր",
+"вложение (файл)",
+"attachment (file)",
+"📎",
+"pièce jointe"
+],
+[
+"առեւտրայնացում",
+"коммерциализация",
+"commercialization",
+"",
+"commercialisation"
+],
+[
+"առկայծում",
+"мерцание",
+"twinkle",
+"",
+"scintillement (synonyme)"
+],
+[
+"առում",
+"захват",
+"capture",
+"",
+"capture"
+],
+[
+"առօրյա",
+"повседневность",
+"everyday life",
+"",
+"quotidien"
+],
+[
+"առևտրական պալատ",
+"торговая палата",
+"chamber of commerce",
+"",
+"chambre de commerce"
+],
+[
+"առևտրային գաղտնիք",
+"коммерческая тайна",
+"trade secret",
+"",
+"secret commercial"
+],
+[
+"առևտրի ավտոմատ",
+"торговый автомат",
+"vending machine",
+"",
+"distributeur automatique"
+],
+[
+"աս",
+"туз",
+"ace",
+"🂡",
+"as"
+],
+[
+"ասեղնաբուժություն",
+"иглоукалывание",
+"acupuncture",
+"",
+"acupuncture"
+],
+[
+"ասլանճ",
+"хвощ",
+"horsetail",
+"",
+"prêle"
+],
+[
+"ասղաման",
+"игольник",
+"needlecase",
+"",
+"étui à aiguilles"
+],
+[
+"ասորեստանցի",
+"ассириец",
+"Assyrian (person)",
+"",
+"Assyrien"
+],
+[
+"ասույթ",
+"апофегма, изречение",
+"apothegm",
+"",
+"apophtegme"
+],
+[
+"ասույթաբանություն",
+"паремиология",
+"paremiology",
+"",
+"parémiologie"
+],
+[
+"ասուպների հոսք",
+"метеорный поток",
+"meteor shower",
+"🌠",
+"pluie d'étoiles filantes"
+],
+[
+"ասպատակություն",
+"набег, вторжение",
+"incursion",
+"",
+"incursion"
+],
+[
+"ասպիրին",
+"аспирин",
+"aspirin",
+"💊",
+"aspirine"
+],
+[
+"աստիգմատիզմ",
+"астигматизм",
+"astigmatism",
+"",
+"astigmatisme"
+],
+[
+"աստիճաններ",
+"лестница (ступени)",
+"stairway",
+"",
+"escalier"
+],
+[
+"աստղաբաշխ",
+"астроном",
+"astronomer",
+"",
+"astronome"
+],
+[
+"աստղակույտեր",
+"звёздное скопление",
+"star cluster",
+"",
+"amas d'étoiles (synonyme)"
+],
+[
+"աստղային համակարգ",
+"звёздная система",
+"star system",
+"",
+"système stellaire"
+],
+[
+"աստղաչափություն",
+"астрометрия",
+"astrometry",
+"",
+"astrométrie"
+],
+[
+"աստվածասպանություն",
+"богоубийство",
+"deicide",
+"",
+"déicide"
+],
+[
+"աստվածիմացություն",
+"теософия",
+"theosophy",
+"",
+"théosophie"
+],
+[
+"աստրոցիտ",
+"астроцит",
+"astrocyte",
+"",
+"astrocyte"
+],
+[
+"ասցիտ",
+"асцит",
+"ascites",
+"",
+"ascite"
+],
+[
+"ավագանու անդամ",
+"член городского совета",
+"alderman",
+"",
+"conseiller municipal"
+],
+[
+"ավազակապետություն",
+"клептократия",
+"kleptocracy",
+"",
+"kleptocratie"
+],
+[
+"ավազի փոթորիկ",
+"песчаная буря",
+"sandstorm",
+"",
+"tempête de sable"
+],
+[
+"ավարտական քննություն",
+"выпускной экзамен",
+"final exam, baccalaureate",
+"",
+"examen de fin d'études"
+],
+[
+"ավգիտ",
+"авгит",
+"augite",
+"",
+"augite"
+]
+],
+"fr": "Objets et notions 6"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 7",
+"en": "Things and concepts 7",
+"hy": "Առարկաներ և հասկացություններ 7",
+"ic": "💡",
+"w": [
+[
+"ավենտուրին",
+"авантюрин",
+"aventurine",
+"",
+"aventurine"
+],
+[
+"ավշահանգույց",
+"лимфатический узел",
+"lymph node",
+"",
+"ganglion lymphatique"
+],
+[
+"ավստրալիական ընկույզ",
+"макадамия (орех)",
+"macadamia nut",
+"",
+"noix de macadamia"
+],
+[
+"ավստրալիական ջայլամ",
+"эму",
+"emu",
+"",
+"émeu"
+],
+[
+"ավստրալոպիտեկ",
+"австралопитек",
+"australopith",
+"",
+"australopithèque"
+],
+[
+"ավտարկիա",
+"автаркия",
+"autarky",
+"",
+"autarcie"
+],
+[
+"ավտոբուսի կանգառ",
+"автобусная остановка",
+"bus stop",
+"🚏",
+"arrêt de bus"
+],
+[
+"ավտոկեֆալություն",
+"автокефалия",
+"autocephaly",
+"",
+"autocéphalie"
+],
+[
+"ավտոմատ միջմոլորակային կայան",
+"автоматическая межпланетная станция",
+"space probe",
+"🛰️",
+"sonde spatiale"
+],
+[
+"ավտոմոբիլ",
+"автомобиль",
+"automobile",
+"🚗",
+"automobile"
+],
+[
+"ավտոստոպով ճամփորդող",
+"автостопщик",
+"hitchhiker",
+"",
+"auto-stoppeur"
+],
+[
+"ատամի թել",
+"зубная нить",
+"dental floss",
+"🦷",
+"fil dentaire"
+],
+[
+"ատարաքսիա",
+"атараксия",
+"ataraxia",
+"",
+"ataraxie"
+],
+[
+"ատմոսֆերա",
+"атмосфера",
+"atmosphere",
+"",
+"atmosphère"
+],
+[
+"ատոմական համար",
+"атомный номер",
+"atomic number",
+"",
+"numéro atomique"
+],
+[
+"ատրակցիոնների զբոսայգի",
+"парк аттракционов",
+"amusement park",
+"🎢",
+"parc d'attractions"
+],
+[
+"ատրճանակ-գնդացիր",
+"пистолет-пулемёт",
+"submachine gun",
+"",
+"pistolet-mitrailleur"
+],
+[
+"արաբական թիվ",
+"арабская цифра",
+"Arabic numeral",
+"",
+"chiffre arabe"
+],
+[
+"արաբական խեժ",
+"гуммиарабик",
+"gum arabic",
+"",
+"gomme arabique"
+],
+[
+"արաբականացում",
+"арабизация",
+"Arabisation",
+"",
+"arabisation"
+],
+[
+"արագ սնունդ",
+"фастфуд",
+"fast food",
+"🍔",
+"restauration rapide"
+],
+[
+"արագախոսություն",
+"беглость речи",
+"fluency",
+"",
+"aisance (à l'oral)"
+],
+[
+"արանչինի",
+"аранчини",
+"arancino",
+"",
+"arancini"
+],
+[
+"արարողակարգ",
+"протокол (дипломатический)",
+"protocol",
+"",
+"protocole"
+],
+[
+"արբալետ",
+"арбалет",
+"crossbow",
+"",
+"arbalète"
+],
+[
+"արբեցում",
+"опьянение",
+"intoxication",
+"",
+"ivresse (synonyme)"
+],
+[
+"արգանդափող",
+"маточная труба",
+"Fallopian tube",
+"",
+"trompe de Fallope"
+],
+[
+"արգելանք",
+"арест имущества",
+"attachment (legal)",
+"",
+"saisie"
+],
+[
+"արդյունաբերական նմուշ",
+"право на промышленный образец",
+"industrial design right",
+"",
+"droit des dessins et modèles"
+],
+[
+"արդյունաբերական պարկ",
+"индустриальный парк",
+"industrial park",
+"",
+"zone industrielle"
+],
+[
+"արդյունաբերական սեփականություն",
+"промышленная собственность",
+"industrial property",
+"",
+"propriété industrielle"
+],
+[
+"արդուկի սեղան",
+"гладильная доска",
+"ironing board",
+"",
+"planche à repasser"
+],
+[
+"արեգակի խավարում",
+"солнечное затмение",
+"solar eclipse",
+"🌒",
+"éclipse solaire"
+],
+[
+"արենա",
+"арена",
+"arena",
+"",
+"arène"
+],
+[
+"արեւապսակի զանգվածի արտանետում",
+"корональный выброс массы",
+"coronal mass ejection",
+"",
+"éjection de masse coronale"
+],
+[
+"արեւմտակովկասյան տուր",
+"западнокавказский тур",
+"West Caucasian tur",
+"",
+"tur du Caucase occidental"
+],
+[
+"արթնացում",
+"пробуждение (синоним)",
+"awakening",
+"",
+"réveil"
+],
+[
+"արիացի",
+"ариец",
+"Aryan",
+"",
+"Aryen"
+],
+[
+"արիստոկրատիա",
+"аристократия",
+"aristocracy",
+"",
+"aristocratie"
+],
+[
+"արխեոգենետիկա",
+"археогенетика",
+"archaeogenetics",
+"",
+"archéogénétique"
+],
+[
+"արխիվարիուս",
+"архивариус",
+"archivist",
+"",
+"archiviste"
+],
+[
+"արծաթագործ",
+"серебряных дел мастер",
+"silversmith",
+"",
+"orfèvre (argent)"
+],
+[
+"արծաթեղեն",
+"серебро (изделия)",
+"silverware",
+"",
+"argenterie"
+],
+[
+"արծվապտեր",
+"орляк (папоротник)",
+"bracken",
+"",
+"fougère aigle"
+],
+[
+"արծվաքիթ",
+"орлиный нос",
+"aquiline nose",
+"",
+"nez aquilin"
+],
+[
+"արկածախնդրություն",
+"авантюризм",
+"adventurism",
+"",
+"esprit d'aventure"
+],
+[
+"արճվան",
+"иудино дерево",
+"Judas tree",
+"",
+"arbre de Judée"
+],
+[
+"արմավենու յուղյուղ",
+"пальмовое масло",
+"palm oil",
+"",
+"huile de palme"
+],
+[
+"արմատականություն",
+"радикализм",
+"radicalism",
+"",
+"radicalisme"
+],
+[
+"արմենիզմ",
+"арменизм",
+"Armenism",
+"",
+"arménisme"
+],
+[
+"արյան բիոքիմիական քննություն",
+"биохимический анализ крови",
+"blood test",
+"🩸",
+"analyse de sang"
+],
+[
+"արյան թիթեղիկ",
+"тромбоцит",
+"platelet",
+"",
+"plaquette"
+],
+[
+"արյան պլազմա",
+"плазма крови",
+"blood plasma",
+"",
+"plasma sanguin"
+],
+[
+"արյան վրիժառություն",
+"кровная месть",
+"vendetta",
+"",
+"vendetta (vengeance)"
+],
+[
+"արյունակցություն",
+"кровное родство",
+"blood relationship",
+"",
+"consanguinité"
+]
+],
+"fr": "Objets et notions 7"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 8",
+"en": "Things and concepts 8",
+"hy": "Առարկաներ և հասկացություններ 8",
+"ic": "💡",
+"w": [
+[
+"արյունահեղություն",
+"кровопролитие",
+"bloodshed",
+"",
+"effusion de sang"
+],
+[
+"արյունային երշիկ",
+"кровяная колбаса",
+"blood sausage",
+"",
+"boudin noir"
+],
+[
+"արյունապղծություն",
+"инцест",
+"incest",
+"",
+"inceste"
+],
+[
+"արյունաստեղծում",
+"кроветворение",
+"hematopoiesis",
+"",
+"hématopoïèse"
+],
+[
+"արյունարգելություն",
+"ишемия",
+"ischemia",
+"",
+"ischémie"
+],
+[
+"արշալուսիկ",
+"малиновка",
+"robin",
+"",
+"rouge-gorge"
+],
+[
+"արոս",
+"дрофа",
+"bustard",
+"",
+"outarde"
+],
+[
+"արոսենի",
+"рябина",
+"rowan",
+"",
+"sorbier"
+],
+[
+"արոսենի մշակովի",
+"рябина домашняя",
+"service tree",
+"",
+"cormier"
+],
+[
+"արու խոզ",
+"хряк",
+"boar",
+"",
+"verrat"
+],
+[
+"արջասխտոր",
+"черемша (синоним)",
+"ramsons",
+"",
+"ail des ours (synonyme)"
+],
+[
+"արջի խնդեղնի",
+"бузина чёрная",
+"elder",
+"",
+"sureau noir"
+],
+[
+"արջտակ",
+"цикламен",
+"cyclamen",
+"",
+"cyclamen"
+],
+[
+"արվանտակ",
+"свинорой (бермудская трава)",
+"Bermuda grass",
+"",
+"chiendent pied-de-poule"
+],
+[
+"արվեստանոց",
+"мастерская, студия",
+"studio",
+"🎨",
+"atelier d'artiste"
+],
+[
+"արվեստի պատմաբան",
+"искусствовед",
+"art historian",
+"",
+"historien de l'art"
+],
+[
+"արտաբերման եղանակ",
+"способ артикуляции",
+"manner of articulation",
+"",
+"mode d'articulation"
+],
+[
+"արտաբերման տեղ",
+"место артикуляции",
+"place of articulation",
+"",
+"point d'articulation"
+],
+[
+"արտաբնափայտ",
+"заболонь",
+"sapwood",
+"",
+"aubier"
+],
+[
+"արտագաղթող",
+"эмигрант",
+"emigrant",
+"",
+"émigrant"
+],
+[
+"արտագրություն",
+"транскрипция (запись)",
+"transcription",
+"",
+"transcription"
+],
+[
+"արտադրության միջոցներ",
+"средства производства",
+"means of production",
+"",
+"moyens de production"
+],
+[
+"արտադրում",
+"производство",
+"production",
+"",
+"production"
+],
+[
+"արտալա",
+"голяшка",
+"shank",
+"",
+"jarret"
+],
+[
+"արտածծան",
+"аспиратор",
+"aspirator",
+"",
+"aspirateur (médical)"
+],
+[
+"արտածում",
+"дедукция",
+"deduction",
+"",
+"déduction"
+],
+[
+"արտահանող",
+"экспортёр",
+"exporter",
+"",
+"exportateur"
+],
+[
+"արտամարմնային բեղմնավորում",
+"экстракорпоральное оплодотворение (ЭКО)",
+"in vitro fertilization",
+"",
+"fécondation in vitro"
+],
+[
+"արտարկում",
+"экстраполяция",
+"extrapolation",
+"",
+"extrapolation"
+],
+[
+"արտաքին ազդակ",
+"внешний эффект",
+"externality",
+"",
+"externalité"
+],
+[
+"արտաքին անկյուն",
+"внешний угол",
+"exterior angle",
+"",
+"angle extérieur"
+],
+[
+"արտաքին գործերի նախարարություն",
+"министерство иностранных дел",
+"foreign ministry",
+"",
+"ministère des Affaires étrangères"
+],
+[
+"արտաքսում",
+"высылка, изгнание",
+"expulsion",
+"",
+"expulsion"
+],
+[
+"արտերկիր",
+"заграница",
+"foreign country",
+"",
+"étranger (pays)"
+],
+[
+"արտոնագրաունակություն",
+"патентоспособность",
+"patentability",
+"",
+"brevetabilité"
+],
+[
+"արտոնյալ ժամկետ",
+"льготный период",
+"grace period",
+"",
+"délai de grâce"
+],
+[
+"արքայասպան",
+"цареубийца",
+"regicide",
+"",
+"régicide"
+],
+[
+"արքայից արքա",
+"царь царей",
+"king of kings",
+"",
+"roi des rois"
+],
+[
+"արքիդուքս",
+"эрцгерцог",
+"archduke",
+"",
+"archiduc"
+],
+[
+"արևելագիտություն",
+"востоковедение",
+"Oriental studies",
+"",
+"orientalisme"
+],
+[
+"ացիդոզ",
+"ацидоз",
+"acidosis",
+"",
+"acidose"
+],
+[
+"ացիկլովիր",
+"ацикловир",
+"aciclovir",
+"",
+"aciclovir"
+],
+[
+"աքիլեսյան գարշապար",
+"ахиллесова пята (синоним)",
+"Achilles heel",
+"",
+"talon d'Achille (synonyme)"
+],
+[
+"աքլորակռիվ",
+"петушиный бой",
+"cockfight",
+"",
+"combat de coqs"
+],
+[
+"աքչե",
+"акче",
+"akçe",
+"",
+"aspre (akçe)"
+],
+[
+"աքսելերատոր",
+"акселератор",
+"accelerator",
+"",
+"accélérateur"
+],
+[
+"աքվատինտա",
+"акватинта",
+"aquatint",
+"",
+"aquatinte"
+],
+[
+"աֆազիա",
+"афазия (синоним)",
+"aphasia",
+"",
+"aphasie (synonyme)"
+],
+[
+"աֆալինա",
+"афалина",
+"bottlenose dolphin",
+"🐬",
+"grand dauphin"
+],
+[
+"աֆիշա",
+"афиша",
+"poster, placard",
+"",
+"affiche"
+],
+[
+"աֆղանի",
+"афгани (валюта)",
+"afghani",
+"",
+"afghani"
+],
+[
+"աֆրիկյան մրջնակեր",
+"трубкозуб",
+"aardvark",
+"",
+"oryctérope"
+],
+[
+"բաբայ",
+"баю-бай",
+"bye-bye (bedtime)",
+"",
+"dodo"
+],
+[
+"բագ",
+"баг (ошибка в программе)",
+"bug",
+"🐞",
+"bogue"
+],
+[
+"բադմինթոնիստ",
+"бадминтонист",
+"badminton player",
+"🏸",
+"joueur de badminton"
+]
+],
+"fr": "Objets et notions 8"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 9",
+"en": "Things and concepts 9",
+"hy": "Առարկաներ և հասկացություններ 9",
+"ic": "💡",
+"w": [
+[
+"բազազ",
+"торговец тканями",
+"draper",
+"",
+"drapier"
+],
+[
+"բազիս",
+"базис",
+"basis",
+"",
+"base (vectorielle)"
+],
+[
+"բազկի երկգլուխ մկան",
+"двуглавая мышца плеча",
+"biceps brachii",
+"",
+"biceps brachial"
+],
+[
+"բազմալեզվություն",
+"многоязычие",
+"multilingualism",
+"",
+"multilinguisme"
+],
+[
+"բազմամշակութայնություն",
+"мультикультурализм",
+"multiculturalism",
+"",
+"multiculturalisme"
+],
+[
+"բազմանիստ",
+"многогранник",
+"polyhedron",
+"",
+"polyèdre"
+],
+[
+"բազմապատկման աղյուսակ",
+"таблица умножения",
+"multiplication table",
+"✖️",
+"table de multiplication"
+],
+[
+"բազմասիրություն",
+"полиамория",
+"polyamory",
+"",
+"polyamour"
+],
+[
+"բաժանարար",
+"делитель",
+"divisor",
+"",
+"diviseur"
+],
+[
+"բաժանելի",
+"делимое",
+"dividend",
+"",
+"dividende (arithmétique)"
+],
+[
+"բաժանման նշան",
+"знак деления",
+"division sign",
+"➗",
+"signe de division"
+],
+[
+"բաժուկ",
+"пробор",
+"parting",
+"",
+"raie"
+],
+[
+"բալասան",
+"бальзам",
+"balsam",
+"",
+"baume"
+],
+[
+"բալիստիկա",
+"баллистика",
+"ballistics",
+"",
+"balistique"
+],
+[
+"բակալավրի աստիճան",
+"степень бакалавра",
+"bachelor's degree",
+"🎓",
+"licence (diplôme)"
+],
+[
+"բաղադրամաս",
+"составная часть",
+"component",
+"",
+"composante"
+],
+[
+"բաղադրյալ թիվ",
+"составное число",
+"composite number",
+"",
+"nombre composé"
+],
+[
+"բամբակաձողիկ",
+"ватная палочка",
+"cotton swab",
+"",
+"coton-tige"
+],
+[
+"բամպեր",
+"бампер",
+"bumper",
+"",
+"pare-chocs"
+],
+[
+"բայական գոյական",
+"отглагольное существительное",
+"verbal noun",
+"",
+"nom verbal"
+],
+[
+"բայական սեռ",
+"залог (грамм.)",
+"voice (grammar)",
+"",
+"voix (grammaire)"
+],
+[
+"բայդարկա",
+"байдарка",
+"kayak",
+"🛶",
+"kayak"
+],
+[
+"բայտ",
+"байт",
+"byte",
+"",
+"octet"
+],
+[
+"բանագիտություն",
+"фольклористика",
+"folkloristics",
+"",
+"folkloristique"
+],
+[
+"բանագողություն",
+"плагиат",
+"plagiarism",
+"",
+"plagiat"
+],
+[
+"բանալու անցք",
+"замочная скважина",
+"keyhole",
+"",
+"trou de serrure"
+],
+[
+"բանահյուսական",
+"фольклор",
+"folklore",
+"",
+"folklore"
+],
+[
+"բանգի",
+"белена",
+"henbane",
+"",
+"jusquiame"
+],
+[
+"բանդուրա",
+"бандура",
+"bandura",
+"",
+"bandoura"
+],
+[
+"բանկային հաշիվ",
+"банковский счёт",
+"bank account",
+"",
+"compte bancaire"
+],
+[
+"բանշի",
+"банши",
+"banshee",
+"",
+"banshee"
+],
+[
+"բանուկ փողոց",
+"оживлённая улица",
+"thoroughfare",
+"",
+"artère"
+],
+[
+"բանջո",
+"банджо",
+"banjo",
+"🪕",
+"banjo"
+],
+[
+"բանսարկություն",
+"интрига",
+"intrigue",
+"",
+"intrigue (complot)"
+],
+[
+"բանվոր դասակարգ",
+"рабочий класс",
+"working class",
+"",
+"classe ouvrière"
+],
+[
+"բաշկիր",
+"башкир",
+"Bashkir (person)",
+"",
+"Bachkir"
+],
+[
+"բաջանաղ",
+"свояк (муж сестры жены)",
+"brother-in-law (wife's sister's husband)",
+"",
+"beau-frère (mari de la belle-sœur)"
+],
+[
+"բառաքննություն",
+"лексикология",
+"lexicology",
+"",
+"lexicologie"
+],
+[
+"բառելյեֆ",
+"барельеф (синоним)",
+"relief",
+"",
+"relief (sculpture)"
+],
+[
+"բասկ",
+"баск",
+"Basque (person)",
+"",
+"Basque"
+],
+[
+"բասկետբոլի գնդակ",
+"баскетбольный мяч",
+"basketball",
+"🏀",
+"ballon de basket"
+],
+[
+"բաստիոն",
+"бастион",
+"bastion",
+"",
+"bastion"
+],
+[
+"բավարարում",
+"удовлетворение (потребности)",
+"satisfaction",
+"",
+"satisfaction (d'un besoin)"
+],
+[
+"բատատ",
+"батат",
+"sweet potato",
+"🍠",
+"patate douce"
+],
+[
+"բատուտ",
+"батут",
+"trampoline",
+"",
+"trampoline"
+],
+[
+"բարապան",
+"привратник",
+"doorman",
+"",
+"portier"
+],
+[
+"բարաք",
+"барак",
+"hut, barracks",
+"",
+"baraque"
+],
+[
+"բարբառագետ",
+"диалектолог",
+"dialectologist",
+"",
+"dialectologue"
+],
+[
+"բարբիտուրատ",
+"барбитурат",
+"barbiturate",
+"",
+"barbiturique"
+],
+[
+"բարդացում",
+"осложнение (болезни)",
+"complication",
+"",
+"complication"
+],
+[
+"բարդի արծաթափայլ",
+"тополь белый",
+"white poplar",
+"",
+"peuplier blanc"
+],
+[
+"բարդիշ",
+"бердыш",
+"bardiche",
+"",
+"bardiche"
+],
+[
+"բարել",
+"баррель",
+"barrel",
+"",
+"baril"
+],
+[
+"բարելավում",
+"улучшение",
+"improvement",
+"",
+"amélioration"
+],
+[
+"բարեկրթություն",
+"учтивость",
+"courtesy",
+"",
+"courtoisie"
+]
+],
+"fr": "Objets et notions 9"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 10",
+"en": "Things and concepts 10",
+"hy": "Առարկաներ և հասկացություններ 10",
+"ic": "💡",
+"w": [
+[
+"բարերար",
+"благодетель",
+"benefactor",
+"",
+"bienfaiteur"
+],
+[
+"բարկարոլ",
+"баркарола",
+"barcarole",
+"",
+"barcarolle"
+],
+[
+"բարձրադիր",
+"возвышенность (нагорье)",
+"highland",
+"",
+"hautes terres"
+],
+[
+"բարձրակետ",
+"кульминация (астр.)",
+"culmination",
+"",
+"culmination"
+],
+[
+"բարձրաչափ",
+"высотомер",
+"altimeter",
+"",
+"altimètre"
+],
+[
+"բարձրացնովի կամուրջ",
+"подъёмный мост",
+"drawbridge",
+"",
+"pont-levis"
+],
+[
+"բարոմետր",
+"барометр (синоним)",
+"barometer",
+"",
+"baromètre (synonyme)"
+],
+[
+"բարոյահոգեբանական վիճակ",
+"боевой дух",
+"morale",
+"",
+"moral"
+],
+[
+"բարոնուհի",
+"баронесса",
+"baroness",
+"",
+"baronne"
+],
+[
+"բաց աշխարհ",
+"открытый мир (в игре)",
+"open world",
+"",
+"monde ouvert"
+],
+[
+"բաց վանկ",
+"открытый слог",
+"open syllable",
+"",
+"syllabe ouverte"
+],
+[
+"բացառական հոլով",
+"исходный падеж (аблатив)",
+"ablative case",
+"",
+"ablatif"
+],
+[
+"բացասում",
+"отрицание",
+"negation",
+"",
+"négation"
+],
+[
+"բացատ",
+"поляна",
+"glade, clearing",
+"",
+"clairière"
+],
+[
+"բացատրագիր",
+"условные обозначения",
+"key, legend",
+"",
+"légende (symboles)"
+],
+[
+"բացատրական դերանուն",
+"указательное местоимение",
+"demonstrative pronoun",
+"",
+"pronom démonstratif"
+],
+[
+"բացարձակ արժեք",
+"модуль (абсолютное значение)",
+"absolute value",
+"",
+"valeur absolue"
+],
+[
+"բացարձակ միապետություն",
+"абсолютная монархия",
+"absolute monarchy",
+"",
+"monarchie absolue"
+],
+[
+"բացիլ",
+"бацилла",
+"bacillus",
+"",
+"bacille"
+],
+[
+"բացմենակ",
+"тысячелистник",
+"yarrow",
+"",
+"achillée millefeuille"
+],
+[
+"բաք",
+"бак",
+"tank",
+"",
+"réservoir"
+],
+[
+"բաքվեցի",
+"бакинец",
+"Bakuvian (person)",
+"",
+"Bakinois"
+],
+[
+"բեբիսիտեր",
+"няня (бебиситтер)",
+"babysitter",
+"",
+"baby-sitter"
+],
+[
+"բեդվին",
+"бедуин",
+"Bedouin",
+"",
+"Bédouin"
+],
+[
+"բեզե",
+"безе",
+"meringue",
+"",
+"meringue"
+],
+[
+"բելոռուս",
+"белорус",
+"Belarusian (person)",
+"",
+"Biélorusse"
+],
+[
+"բեղիկ",
+"усик (насекомого)",
+"antenna, whisker",
+"",
+"antenne (d'insecte)"
+],
+[
+"բեղլու",
+"усач (рыба)",
+"barbel",
+"",
+"barbeau"
+],
+[
+"բեղմնիկ",
+"спора",
+"spore",
+"",
+"spore"
+],
+[
+"բեմականացում",
+"постановка (сценическая)",
+"production",
+"",
+"mise en scène"
+],
+[
+"բեյ",
+"бей",
+"bey",
+"",
+"bey"
+],
+[
+"բեյսբոլիստ",
+"бейсболист",
+"baseball player",
+"⚾",
+"joueur de baseball"
+],
+[
+"բենգալյան կրակ",
+"бенгальский огонь",
+"sparkler",
+"🎇",
+"cierge magique"
+],
+[
+"բենզոլ",
+"бензол",
+"benzene",
+"",
+"benzène"
+],
+[
+"բենզոյական թթու",
+"бензойная кислота",
+"benzoic acid",
+"",
+"acide benzoïque"
+],
+[
+"բերի-բերի",
+"бери-бери",
+"beriberi",
+"",
+"béribéri"
+],
+[
+"բերուկ",
+"аллювий",
+"alluvium",
+"",
+"alluvion"
+],
+[
+"բերսերկ",
+"берсерк",
+"berserk",
+"",
+"berserker"
+],
+[
+"բերքատվություն",
+"урожайность",
+"crop yield",
+"",
+"rendement"
+],
+[
+"բեւեկն",
+"скипидар",
+"turpentine",
+"",
+"térébenthine"
+],
+[
+"բեւեկնի",
+"терпентинное дерево",
+"terebinth",
+"",
+"térébinthe"
+],
+[
+"բիզանտ",
+"безант",
+"bezant",
+"",
+"besant"
+],
+[
+"բիզնես կառավարում",
+"управление бизнесом",
+"business administration",
+"",
+"gestion d'entreprise"
+],
+[
+"բիզնես ցիկլ",
+"деловой цикл",
+"business cycle",
+"",
+"cycle économique"
+],
+[
+"բիթքոին",
+"биткойн",
+"bitcoin",
+"₿",
+"bitcoin"
+],
+[
+"բիկինի",
+"бикини",
+"bikini",
+"👙",
+"bikini"
+],
+[
+"բինգո",
+"бинго",
+"bingo",
+"",
+"bingo"
+],
+[
+"բիոտեխնոլոգիա",
+"биотехнология",
+"biotechnology",
+"",
+"biotechnologie"
+],
+[
+"բիոտիտ",
+"биотит",
+"biotite",
+"",
+"biotite"
+],
+[
+"բիոֆիզիկոս",
+"биофизик",
+"biophysicist",
+"",
+"biophysicien"
+],
+[
+"բիպոլյար աֆեկտիվ խանգարում",
+"биполярное аффективное расстройство",
+"bipolar disorder",
+"",
+"trouble bipolaire"
+],
+[
+"բիսկվիթ",
+"бисквит",
+"sponge cake",
+"",
+"génoise"
+],
+[
+"բիտ",
+"шпора",
+"spur",
+"",
+"éperon"
+],
+[
+"բիրմացի",
+"бирманец",
+"Burmese (person)",
+"",
+"Birman"
+],
+[
+"բիցեպս",
+"бицепс",
+"biceps",
+"💪",
+"biceps"
+]
+],
+"fr": "Objets et notions 10"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 11",
+"en": "Things and concepts 11",
+"hy": "Առարկաներ և հասկացություններ 11",
+"ic": "💡",
+"w": [
+[
+"բլանբերզում",
+"мушкетон",
+"blunderbuss",
+"",
+"tromblon"
+],
+[
+"բլդբլդոց",
+"бульканье",
+"gurgle",
+"",
+"gargouillis"
+],
+[
+"բլեֆ",
+"блеф",
+"bluff",
+"",
+"bluff"
+],
+[
+"բլեֆարիտ",
+"блефарит",
+"blepharitis",
+"",
+"blépharite"
+],
+[
+"բլիցկրիգ",
+"блицкриг",
+"blitzkrieg",
+"",
+"guerre éclair"
+],
+[
+"բլոգոլորտ",
+"блогосфера",
+"blogosphere",
+"",
+"blogosphère"
+],
+[
+"բլոկբաստեր",
+"блокбастер",
+"blockbuster",
+"",
+"superproduction"
+],
+[
+"բլոկնոտ",
+"блокнот",
+"notebook",
+"📓",
+"bloc-notes"
+],
+[
+"բծախնդրություն",
+"придирка",
+"cavil",
+"",
+"chicane"
+],
+[
+"բյուրեղապակի",
+"хрусталь",
+"crystal",
+"",
+"cristal"
+],
+[
+"բյուրո",
+"бюро",
+"bureau",
+"",
+"bureau (office)"
+],
+[
+"բյուրոկրատ",
+"бюрократ",
+"bureaucrat",
+"",
+"bureaucrate"
+],
+[
+"բնական գազ",
+"природный газ",
+"natural gas",
+"",
+"gaz naturel"
+],
+[
+"բնական լոգարիթմ",
+"натуральный логарифм",
+"natural logarithm",
+"",
+"logarithme naturel"
+],
+[
+"բնակչության խտություն",
+"плотность населения",
+"population density",
+"",
+"densité de population"
+],
+[
+"բնաձայնություն",
+"звукоподражание",
+"onomatopoeia",
+"",
+"onomatopée"
+],
+[
+"բնամիջուկ",
+"ядровая древесина",
+"heartwood",
+"",
+"bois de cœur"
+],
+[
+"բնորդ",
+"натурщик, модель",
+"model",
+"",
+"modèle (pose)"
+],
+[
+"բնորոշ գիծ",
+"характерная черта",
+"characteristic",
+"",
+"trait caractéristique"
+],
+[
+"բնութագիր",
+"характеристика (отзыв)",
+"reference",
+"",
+"lettre de référence"
+],
+[
+"բոգատիր",
+"богатырь",
+"bogatyr",
+"",
+"bogatyr"
+],
+[
+"բոգոմիլ",
+"богомил",
+"Bogomil",
+"",
+"bogomile"
+],
+[
+"բոդիբիլդեր",
+"бодибилдер",
+"bodybuilder",
+"",
+"culturiste"
+],
+[
+"բոդիբիլդինգ",
+"бодибилдинг",
+"bodybuilding",
+"",
+"culturisme"
+],
+[
+"բոդհիսատվա",
+"бодхисаттва",
+"bodhisattva",
+"",
+"bodhisattva"
+],
+[
+"բոզա",
+"боза (напиток)",
+"boza",
+"",
+"boza"
+],
+[
+"բոլշևիզմ",
+"большевизм",
+"Bolshevism",
+"",
+"bolchevisme"
+],
+[
+"բոկե",
+"боке",
+"bokeh",
+"",
+"bokeh"
+],
+[
+"բողոքարկման խորհուրդ",
+"апелляционный совет",
+"board of appeals",
+"",
+"commission de recours"
+],
+[
+"բոյար",
+"боярин",
+"boyar",
+"",
+"boyard"
+],
+[
+"բոնապարտիզմ",
+"бонапартизм",
+"Bonapartism",
+"",
+"bonapartisme"
+],
+[
+"բոշա",
+"боша (армянские цыгане)",
+"Bosha",
+"",
+"Bocha"
+],
+[
+"բոս",
+"босс",
+"boss",
+"",
+"patron"
+],
+[
+"բոսնիացի",
+"боснийцы",
+"Bosnians",
+"",
+"Bosniens"
+],
+[
+"բոստան",
+"огород",
+"vegetable garden",
+"🥕",
+"potager"
+],
+[
+"բոցենի",
+"флокс",
+"phlox",
+"",
+"phlox"
+],
+[
+"բուդդայական",
+"буддист",
+"Buddhist",
+"",
+"bouddhiste"
+],
+[
+"բուլսի",
+"яблочко (мишени)",
+"bullseye",
+"🎯",
+"mille (de la cible)"
+],
+[
+"բուկինիստ",
+"букинист",
+"second-hand bookseller",
+"",
+"bouquiniste"
+],
+[
+"բուն էություն",
+"квинтэссенция",
+"quintessence",
+"",
+"quintessence"
+],
+[
+"բունտ",
+"бунт",
+"insurrection",
+"",
+"révolte"
+],
+[
+"բուշել",
+"бушель",
+"bushel",
+"",
+"boisseau"
+],
+[
+"բուտան",
+"бутан",
+"butane",
+"",
+"butane"
+],
+[
+"բուտերբրոդ",
+"бутерброд",
+"open sandwich",
+"🥪",
+"tartine"
+],
+[
+"բուրգունդացի",
+"бургундец",
+"Burgundian (person)",
+"",
+"Bourguignon"
+],
+[
+"բուրկա",
+"паранджа (бурка)",
+"burqa",
+"",
+"burqa"
+],
+[
+"բուրկեն",
+"амбра",
+"ambergris",
+"",
+"ambre gris"
+],
+[
+"բուրյաթ",
+"бурят",
+"Buryat (person)",
+"",
+"Bouriate"
+],
+[
+"բուֆերային գոտի",
+"буферная зона",
+"buffer zone",
+"",
+"zone tampon"
+],
+[
+"բոքսիտ",
+"боксит",
+"bauxite",
+"",
+"bauxite"
+],
+[
+"բջջագենետիկա",
+"цитогенетика",
+"cytogenetics",
+"",
+"cytogénétique"
+],
+[
+"բռնագրավում",
+"экспроприация, изъятие",
+"expropriation, seizure",
+"",
+"saisie, expropriation"
+],
+[
+"բռնակցում",
+"присоединение, аннексия",
+"annexation",
+"",
+"rattachement"
+],
+[
+"բռնաճնշում",
+"угнетение",
+"oppression",
+"",
+"oppression"
+],
+[
+"բռնոցի",
+"салки (игра)",
+"tag (game)",
+"",
+"chat (jeu)"
+]
+],
+"fr": "Objets et notions 11"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 12",
+"en": "Things and concepts 12",
+"hy": "Առարկաներ և հասկացություններ 12",
+"ic": "💡",
+"w": [
+[
+"բռնում",
+"хватка",
+"grip",
+"",
+"prise"
+],
+[
+"բրեզենտ",
+"брезент",
+"tarpaulin",
+"",
+"bâche"
+],
+[
+"բրելոկ",
+"брелок",
+"charm, trinket",
+"",
+"porte-clés"
+],
+[
+"բրինձ քացախ",
+"рисовый уксус",
+"rice vinegar",
+"",
+"vinaigre de riz"
+],
+[
+"բրիտանական անդրծովյան տարածք",
+"британская заморская территория",
+"British overseas territory",
+"",
+"territoire britannique d'outre-mer"
+],
+[
+"բրիֆինգ",
+"брифинг (синоним)",
+"briefing",
+"",
+"briefing (synonyme)"
+],
+[
+"բրոշյուր",
+"брошюра",
+"pamphlet",
+"",
+"brochure"
+],
+[
+"բրուտագործական արտադրանք",
+"гончарные изделия",
+"pottery",
+"",
+"poterie"
+],
+[
+"բրոքեր",
+"брокер",
+"broker",
+"",
+"courtier"
+],
+[
+"բևեռային գլխարկ",
+"полярная шапка",
+"polar cap",
+"",
+"calotte polaire"
+],
+[
+"գագաուզ",
+"гагауз",
+"Gagauz (person)",
+"",
+"Gagaouze"
+],
+[
+"գազամուղ",
+"газопровод",
+"pipeline",
+"",
+"gazoduc"
+],
+[
+"գազատուրբինային շարժիչ",
+"турбовальный двигатель",
+"turboshaft",
+"",
+"turbomoteur"
+],
+[
+"գալարազարդ",
+"волюта",
+"volute",
+"",
+"volute"
+],
+[
+"գալարակ",
+"свиток",
+"scroll",
+"",
+"rouleau"
+],
+[
+"գալարակծկանք",
+"перистальтика",
+"peristalsis",
+"",
+"péristaltisme"
+],
+[
+"գալիսիական բարբառ",
+"галисийский диалект",
+"Galician",
+"",
+"galicien (dialecte)"
+],
+[
+"գալիք",
+"будущее",
+"future",
+"",
+"avenir"
+],
+[
+"գահավորակ",
+"паланкин (синоним)",
+"palanquin",
+"",
+"palanquin (synonyme)"
+],
+[
+"գահի խնամակալ",
+"регент",
+"regent",
+"",
+"régent"
+],
+[
+"գաղափարագրություն",
+"идеография",
+"ideography",
+"",
+"idéographie"
+],
+[
+"գաղթում",
+"миграция",
+"migration",
+"",
+"migration"
+],
+[
+"գաղտնի գործակալ",
+"секретный агент",
+"secret agent",
+"🕵️",
+"agent secret"
+],
+[
+"գաճաճ մոլորակ",
+"карликовая планета",
+"dwarf planet",
+"",
+"planète naine"
+],
+[
+"գամիր",
+"киммериец (синоним)",
+"Cimmerian",
+"",
+"Cimmérien (synonyme)"
+],
+[
+"գայթակղում",
+"соблазнение",
+"seduction",
+"",
+"séduction"
+],
+[
+"գայլուկ",
+"хмель",
+"hop",
+"",
+"houblon"
+],
+[
+"գանացի",
+"ганец",
+"Ghanaian",
+"",
+"Ghanéen"
+],
+[
+"գանգագիտություն",
+"френология",
+"phrenology",
+"",
+"phrénologie"
+],
+[
+"գանգահատություն",
+"трепанация",
+"trepanation",
+"",
+"trépanation"
+],
+[
+"գանգստեր",
+"гангстер",
+"gangster",
+"",
+"gangster"
+],
+[
+"գաջեթ",
+"гаджет",
+"gadget",
+"",
+"gadget"
+],
+[
+"գասկոնցի",
+"гасконец",
+"Gascon",
+"",
+"Gascon"
+],
+[
+"գաստրոէնտերոլոգիա",
+"гастроэнтерология",
+"gastroenterology",
+"",
+"gastro-entérologie"
+],
+[
+"գավառամտություն",
+"провинциализм",
+"provincialism",
+"",
+"provincialisme"
+],
+[
+"գարեջրագործ",
+"пивовар",
+"brewer",
+"🍺",
+"brasseur"
+]
+],
+"fr": "Objets et notions 12"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 13",
+"en": "Things and concepts 13",
+"hy": "Առարկաներ և հասկացություններ 13",
+"ic": "💡",
+"w": [
+[
+"գարեջրի գործարան",
+"пивоваренный завод",
+"brewery",
+"",
+"brasserie (usine)"
+],
+[
+"գարշահոտություն",
+"зловоние",
+"stench",
+"",
+"puanteur"
+],
+[
+"գեղադիտակ",
+"калейдоскоп",
+"kaleidoscope",
+"",
+"kaléidoscope"
+],
+[
+"գեղանկարչություն",
+"живопись",
+"painting",
+"🖼️",
+"peinture"
+],
+[
+"գեղասահորդ",
+"фигурист",
+"figure skater",
+"",
+"patineur artistique"
+],
+[
+"գեղասահորդուհի",
+"фигуристка",
+"female figure skater",
+"",
+"patineuse artistique"
+],
+[
+"գեղարվեստական մարմնամարզություն",
+"художественная гимнастика",
+"rhythmic gymnastics",
+"",
+"gymnastique rythmique"
+],
+[
+"գեղեցիկ սեռ",
+"прекрасный пол",
+"fair sex",
+"",
+"beau sexe"
+],
+[
+"գեյշա",
+"гейша",
+"geisha",
+"",
+"geisha"
+],
+[
+"գենդեր",
+"гендер",
+"gender",
+"",
+"genre (identité)"
+],
+[
+"գենդերային ինքնություն",
+"гендерная идентичность",
+"gender identity",
+"",
+"identité de genre"
+],
+[
+"գենետիկա",
+"генетика",
+"genetics",
+"🧬",
+"génétique"
+],
+[
+"գենետիկական կոդ",
+"генетический код",
+"genetic code",
+"",
+"code génétique"
+],
+[
+"գեներալ-գնդապետ",
+"генерал-полковник",
+"colonel general",
+"",
+"colonel-général"
+],
+[
+"գեներալ-լեյտենանտ",
+"генерал-лейтенант",
+"lieutenant general",
+"",
+"lieutenant-général"
+],
+[
+"գեներացիա",
+"генерация, порождение",
+"generation",
+"",
+"génération (production)"
+],
+[
+"գեների էքսպրեսիա",
+"экспрессия генов",
+"gene expression",
+"",
+"expression génique"
+],
+[
+"գենոցիդ",
+"геноцид",
+"genocide",
+"",
+"génocide"
+],
+[
+"գեոգլիֆ",
+"геоглиф",
+"geoglyph",
+"",
+"géoglyphe"
+],
+[
+"գեոգրաֆիա",
+"география",
+"geography",
+"🗺️",
+"géographie"
+],
+[
+"գեոդեզիա",
+"геодезия",
+"geodesy",
+"",
+"géodésie"
+],
+[
+"գեոիդ",
+"геоид",
+"geoid",
+"",
+"géoïde"
+],
+[
+"գեորգենի",
+"георгин",
+"dahlia",
+"",
+"dahlia"
+],
+[
+"գետնանուշի կարագ",
+"арахисовое масло",
+"peanut butter",
+"🥜",
+"beurre de cacahuète"
+],
+[
+"գետնանցում",
+"подземный переход",
+"underpass",
+"",
+"passage souterrain"
+],
+[
+"գետնառյուծ",
+"хамелеон",
+"chameleon",
+"🦎",
+"caméléon"
+],
+[
+"գետնատուն",
+"землянка",
+"dugout",
+"",
+"abri enterré"
+],
+[
+"գետտո",
+"гетто",
+"ghetto",
+"",
+"ghetto"
+],
+[
+"գերագույն դատարան",
+"Верховный суд",
+"supreme court",
+"",
+"Cour suprême"
+],
+[
+"գերազանցություն օդում",
+"господство в воздухе",
+"air supremacy",
+"",
+"suprématie aérienne"
+],
+[
+"գերբագիտություն",
+"геральдика",
+"heraldry",
+"",
+"héraldique"
+],
+[
+"գերեզմանագիր",
+"эпитафия",
+"epitaph",
+"",
+"épitaphe"
+],
+[
+"գերեզմանափոր",
+"могильщик",
+"gravedigger",
+"",
+"fossoyeur"
+],
+[
+"գերհարուստները",
+"сверхбогачи",
+"the superrich",
+"",
+"les ultra-riches"
+],
+[
+"գերման",
+"германец",
+"German (tribesman)",
+"",
+"Germain"
+],
+[
+"գերմանական հովվաշուն",
+"немецкая овчарка",
+"German shepherd",
+"",
+"berger allemand (synonyme)"
+],
+[
+"գերշտկում",
+"гиперкоррекция",
+"hypercorrection",
+"",
+"hypercorrection"
+],
+[
+"գերություն",
+"плен",
+"captivity",
+"",
+"captivité (synonyme)"
+],
+[
+"գերունդիում",
+"герундий",
+"gerund",
+"",
+"gérondif"
+],
+[
+"գերտերություն",
+"сверхдержава",
+"superpower",
+"",
+"superpuissance"
+],
+[
+"գթասրտություն",
+"милосердие",
+"clemency",
+"",
+"clémence"
+],
+[
+"գիգաբայտ",
+"гигабайт",
+"gigabyte",
+"",
+"gigaoctet"
+],
+[
+"գիդ",
+"гид",
+"guide",
+"",
+"guide"
+],
+[
+"գիլդիա",
+"гильдия",
+"guild",
+"",
+"guilde"
+],
+[
+"գիմնազիա",
+"гимназия",
+"gymnasium",
+"",
+"gymnase (lycée)"
+],
+[
+"գինեգիտություն",
+"энология",
+"oenology",
+"",
+"œnologie"
+],
+[
+"գինեկոլոգիա",
+"гинекология",
+"gynecology",
+"",
+"gynécologie"
+],
+[
+"գիշատիչ թռչուն",
+"хищная птица",
+"bird of prey",
+"🦅",
+"rapace"
+],
+[
+"գիշերային ակումբ",
+"ночной клуб",
+"nightclub",
+"",
+"boîte de nuit"
+],
+[
+"գիշերանոթ",
+"ночной горшок",
+"chamber pot",
+"",
+"pot de chambre"
+],
+[
+"գիշերաքար",
+"гагат",
+"jet (stone)",
+"",
+"jais"
+],
+[
+"գիրոս",
+"гирос",
+"gyro",
+"🥙",
+"gyros"
+]
+],
+"fr": "Objets et notions 13"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 14",
+"en": "Things and concepts 14",
+"hy": "Առարկաներ և հասկացություններ 14",
+"ic": "💡",
+"w": [
+[
+"գիրք սաղմոսաց",
+"Псалтырь",
+"psalter",
+"",
+"psautier"
+],
+[
+"գիք",
+"гик",
+"geek",
+"🤓",
+"geek"
+],
+[
+"գլանակատուփ",
+"портсигар (синоним)",
+"cigarette case",
+"",
+"étui à cigarettes (synonyme)"
+],
+[
+"գլգլակ",
+"кальян",
+"hookah",
+"",
+"narguilé"
+],
+[
+"գլդոն",
+"каток (дорожный)",
+"road roller",
+"",
+"rouleau compresseur"
+],
+[
+"գլխամաս",
+"штаб-квартира",
+"headquarters",
+"",
+"siège (QG)"
+],
+[
+"գլխանոց",
+"капюшон (монашеский)",
+"cowl",
+"",
+"capuchon (de moine)"
+],
+[
+"գլխավոր հրամանատար",
+"главнокомандующий",
+"commander-in-chief",
+"",
+"commandant en chef"
+],
+[
+"գլխավոր փողոց",
+"главная улица",
+"high street",
+"",
+"rue principale"
+],
+[
+"գլխավոր քարտուղար",
+"генеральный секретарь",
+"Secretary General",
+"",
+"secrétaire général"
+],
+[
+"գլխացավանք",
+"головная боль (перен.)",
+"headache (nuisance)",
+"",
+"casse-tête"
+],
+[
+"գլխոտանի",
+"головоногое",
+"cephalopod",
+"🐙",
+"céphalopode"
+],
+[
+"գլխուղեղի մահ",
+"смерть мозга",
+"brain death",
+"",
+"mort cérébrale"
+],
+[
+"գլխուղեղի ուռուցք",
+"опухоль мозга",
+"brain tumor",
+"",
+"tumeur cérébrale"
+],
+[
+"գլյասե",
+"глясе",
+"iced coffee",
+"",
+"café glacé"
+],
+[
+"գլոբալիզացիա",
+"глобализация",
+"globalisation",
+"🌐",
+"mondialisation"
+],
+[
+"գլոբալիզմ",
+"глобализм",
+"globalism",
+"",
+"mondialisme"
+],
+[
+"գծային հավասարում",
+"линейное уравнение",
+"linear equation",
+"",
+"équation linéaire"
+],
+[
+"գծային ֆունկցիա",
+"линейная функция",
+"linear function",
+"",
+"fonction linéaire"
+],
+[
+"գյուղ տեղ",
+"сельская местность",
+"countryside",
+"",
+"campagne"
+],
+[
+"գյուղակ",
+"деревушка",
+"hamlet",
+"",
+"hameau"
+],
+[
+"գյուղական ծիծեռնակ",
+"деревенская ласточка",
+"barn swallow",
+"",
+"hirondelle rustique"
+],
+[
+"գնահատություն",
+"признание (заслуг)",
+"recognition",
+"",
+"reconnaissance"
+],
+[
+"գնարբուկ գարնանային",
+"первоцвет весенний",
+"cowslip",
+"",
+"primevère officinale"
+],
+[
+"գնդակահարողների խումբ",
+"расстрельная команда",
+"firing squad",
+"",
+"peloton d'exécution"
+],
+[
+"գնդապարկ",
+"луза",
+"pocket (billiards)",
+"",
+"poche (billard)"
+],
+[
+"գնդառանցքակալ",
+"шарикоподшипник",
+"ball bearing",
+"",
+"roulement à billes"
+],
+[
+"գնդասեղ",
+"булавка",
+"pin",
+"📌",
+"épingle"
+],
+[
+"գնի առաջարկ",
+"заявка (на аукционе)",
+"bid",
+"",
+"enchère"
+],
+[
+"գնող",
+"покупатель",
+"buyer",
+"",
+"acheteur"
+],
+[
+"գնողունակության համարժեքություն",
+"паритет покупательной способности",
+"purchasing power parity",
+"",
+"parité de pouvoir d'achat"
+],
+[
+"գնոմոն",
+"гномон",
+"gnomon",
+"",
+"gnomon"
+],
+[
+"գնումներ",
+"покупки",
+"shopping",
+"🛍️",
+"achats"
+],
+[
+"գնչու",
+"цыган",
+"Rom, gypsy",
+"",
+"Rom, gitan"
+],
+[
+"գո",
+"го (игра)",
+"go (board game)",
+"",
+"go (jeu)"
+],
+[
+"գոգլի-մոգլի",
+"гоголь-моголь",
+"eggnog (kogel mogel)",
+"",
+"lait de poule"
+],
+[
+"գոճամայր",
+"свиноматка",
+"sow",
+"",
+"truie"
+],
+[
+"գոյական խառնիչ",
+"блендер",
+"blender",
+"",
+"mixeur"
+],
+[
+"գոնգեղ",
+"брюква",
+"rutabaga",
+"",
+"rutabaga"
+],
+[
+"գոնդոլավար",
+"гондольер",
+"gondolier",
+"",
+"gondolier"
+],
+[
+"գոնոռեա",
+"гонорея",
+"gonorrhea",
+"",
+"gonorrhée"
+],
+[
+"գոռոց",
+"крик, вопль",
+"shout",
+"",
+"cri, hurlement"
+],
+[
+"գովազդագիր",
+"копирайтер",
+"copywriter",
+"",
+"rédacteur publicitaire"
+],
+[
+"գովերգ",
+"гимн, ода",
+"hymn, ode",
+"",
+"hymne, ode"
+],
+[
+"գոտիավորում",
+"зонирование",
+"zoning",
+"",
+"zonage"
+],
+[
+"գոտկային պունկցիա",
+"люмбальная пункция",
+"lumbar puncture",
+"",
+"ponction lombaire"
+],
+[
+"գորգոն",
+"горгона",
+"gorgon",
+"",
+"gorgone"
+],
+[
+"գործադիր",
+"приложение (программа)",
+"app",
+"📲",
+"application"
+],
+[
+"գործադուլաբեկ",
+"штрейкбрехер",
+"strikebreaker",
+"",
+"briseur de grève"
+],
+[
+"գործակատար",
+"продавец",
+"salesperson",
+"",
+"vendeur"
+],
+[
+"գործիական հոլով",
+"творительный падеж",
+"instrumental case",
+"",
+"instrumental"
+],
+[
+"գործող անձ",
+"действующее лицо",
+"character",
+"",
+"personnage"
+]
+],
+"fr": "Objets et notions 14"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 15",
+"en": "Things and concepts 15",
+"hy": "Առարկաներ և հասկացություններ 15",
+"ic": "💡",
+"w": [
+[
+"գործող հրաբուխ",
+"действующий вулкан",
+"active volcano",
+"🌋",
+"volcan actif"
+],
+[
+"գորշ ածուխ",
+"бурый уголь",
+"lignite",
+"",
+"lignite"
+],
+[
+"գորշ նյութ",
+"серое вещество",
+"grey matter",
+"",
+"matière grise"
+],
+[
+"գուավա",
+"гуава",
+"guava",
+"",
+"goyave"
+],
+[
+"գուբերնիա",
+"губерния",
+"guberniya",
+"",
+"gouvernement (goubernia)"
+],
+[
+"գուլ",
+"гуль",
+"ghoul",
+"",
+"goule"
+],
+[
+"գուլյաշ",
+"гуляш",
+"goulash",
+"",
+"goulache"
+],
+[
+"գույքագրում",
+"инвентаризация",
+"stocktaking",
+"",
+"inventaire"
+],
+[
+"գունանյութ",
+"пигмент",
+"pigment",
+"",
+"pigment"
+],
+[
+"գունավոր կավիճ",
+"цветной мелок",
+"crayon",
+"🖍️",
+"craie de couleur"
+],
+[
+"գունավոր մատիտ",
+"цветной карандаш",
+"coloured pencil",
+"✏️",
+"crayon de couleur"
+],
+[
+"գուրման",
+"гурман",
+"gourmand",
+"",
+"gourmet"
+],
+[
+"գուրու",
+"гуру",
+"guru",
+"",
+"gourou"
+],
+[
+"գռիվնա",
+"гривна",
+"hryvnia",
+"",
+"hryvnia"
+],
+[
+"գրագիր",
+"писарь",
+"clerk",
+"",
+"scribe"
+],
+[
+"գրադարանագիտություն",
+"библиотековедение",
+"library science",
+"",
+"bibliothéconomie"
+],
+[
+"գրադարանապետ",
+"директор библиотеки",
+"librarian",
+"",
+"directeur de bibliothèque"
+],
+[
+"գրադարձություն",
+"транслитерация",
+"transliteration",
+"",
+"translittération"
+],
+[
+"գրամոլ",
+"книжный червь",
+"bookworm",
+"📚",
+"rat de bibliothèque"
+],
+[
+"գրամոֆոն",
+"граммофон",
+"record player",
+"",
+"gramophone"
+],
+[
+"գրասալիկը",
+"планшет",
+"tablet computer",
+"",
+"tablette"
+],
+[
+"գրասենյակային ծառայող",
+"конторский служащий",
+"office clerk",
+"",
+"employé de bureau"
+],
+[
+"գրավապահ",
+"ростовщик",
+"pawnbroker",
+"",
+"prêteur sur gages"
+],
+[
+"գրավատուն",
+"ломбард",
+"pawnshop",
+"",
+"mont-de-piété"
+],
+[
+"գրավիտացիոն ալիք",
+"гравитационная волна",
+"gravitational wave",
+"",
+"onde gravitationnelle"
+],
+[
+"գրավիտացիոն սինգուլյարություն",
+"гравитационная сингулярность",
+"gravitational singularity",
+"",
+"singularité gravitationnelle"
+],
+[
+"գրավլաքս",
+"гравлакс",
+"gravlax",
+"",
+"gravlax"
+],
+[
+"գրաքննիչ",
+"цензор",
+"censor",
+"",
+"censeur"
+],
+[
+"գրաֆների տեսություն",
+"теория графов",
+"graph theory",
+"",
+"théorie des graphes"
+],
+[
+"գրելը",
+"письмо (процесс)",
+"writing",
+"✍️",
+"écriture"
+],
+[
+"գրելին",
+"грелин",
+"ghrelin",
+"",
+"ghréline"
+],
+[
+"գրիմ",
+"грим",
+"makeup",
+"",
+"maquillage (de scène)"
+],
+[
+"գրկախառնություն",
+"объятие (синоним)",
+"embrace",
+"",
+"étreinte (synonyme)"
+],
+[
+"գրոգ",
+"грог",
+"grog",
+"",
+"grog"
+],
+[
+"գրոհային հրացան",
+"автомат (штурмовая винтовка)",
+"assault rifle",
+"",
+"fusil d'assaut"
+],
+[
+"գրոշ",
+"грош",
+"groschen",
+"",
+"gros (pièce)"
+],
+[
+"գրչածայր",
+"перо (ручки)",
+"nib",
+"🖋️",
+"plume (de stylo)"
+],
+[
+"գրչակից ընկեր",
+"друг по переписке",
+"pen pal",
+"",
+"correspondant"
+],
+[
+"գրպանի դանակ",
+"перочинный нож",
+"pocketknife",
+"",
+"canif"
+],
+[
+"գրպանի էլեկտրական լապտեր",
+"карманный фонарик",
+"flashlight",
+"🔦",
+"lampe de poche (synonyme)"
+],
+[
+"գրպանի փող",
+"карманные деньги",
+"pocket money",
+"",
+"argent de poche"
+],
+[
+"գրքագիտություն",
+"книговедение",
+"bibliology",
+"",
+"bibliologie"
+],
+[
+"գրքային փոխառություն",
+"книжное заимствование",
+"learned borrowing",
+"",
+"emprunt savant"
+],
+[
+"գրքույկ",
+"буклет",
+"brochure",
+"",
+"livret"
+],
+[
+"դալթոնիզմ",
+"дальтонизм",
+"color blindness",
+"",
+"daltonisme"
+],
+[
+"դակիչ",
+"дырокол",
+"hole punch",
+"",
+"perforatrice"
+],
+[
+"դակտիլոսկոպիա",
+"дактилоскопия",
+"dactyloscopy",
+"",
+"dactyloscopie"
+],
+[
+"դահիրա",
+"бубен",
+"tambourine",
+"",
+"tambourin"
+],
+[
+"դաղալություն",
+"проделки",
+"shenanigans",
+"",
+"manigances"
+],
+[
+"դաղձ",
+"мята",
+"mint",
+"🌿",
+"menthe"
+],
+[
+"դաղստանցի",
+"дагестанец",
+"Dagestani",
+"",
+"Daghestanais"
+],
+[
+"դամբանագիր",
+"эпитафия (синоним)",
+"epitaph",
+"",
+"épitaphe (synonyme)"
+]
+],
+"fr": "Objets et notions 15"
+},
+{
+"lv": "B2",
+"ru": "Предметы и понятия 16",
+"en": "Things and concepts 16",
+"hy": "Առարկաներ և հասկացություններ 16",
+"ic": "💡",
+"w": [
+[
+"դամոկլյան սուր",
+"дамоклов меч",
+"sword of Damocles",
+"",
+"épée de Damoclès"
+],
+[
+"դաշնային կառավարություն",
+"федеральное правительство",
+"federal government",
+"",
+"gouvernement fédéral"
+],
+[
+"դաշնային նահանգ",
+"федеральная земля (штат)",
+"federal state",
+"",
+"État fédéré"
+],
+[
+"դաշտագայլ",
+"койот",
+"coyote",
+"",
+"coyote"
+],
+[
+"դաշտի քվանտային տեսություն",
+"квантовая теория поля",
+"quantum field theory",
+"",
+"théorie quantique des champs"
+],
+[
+"դաջում",
+"татуировка",
+"tattoo",
+"",
+"tatouage"
+],
+[
+"դառը գարեջուր",
+"горькое пиво (биттер)",
+"bitter (beer)",
+"",
+"bière amère"
+],
+[
+"դասատու",
+"преподаватель",
+"teacher",
+"👩‍🏫",
+"enseignant"
+],
+[
+"դասարանախաղ",
+"классики (игра)",
+"hopscotch",
+"",
+"marelle"
+],
+[
+"դասընկերուհի",
+"одноклассница",
+"female classmate",
+"",
+"camarade de classe (fille)"
+],
+[
+"դավանանք",
+"вероучение, догма",
+"doctrine",
+"",
+"doctrine (dogme)"
+],
+[
+"դատախազություն",
+"прокуратура",
+"prosecutor's office",
+"",
+"parquet"
+],
+[
+"դատական գործ",
+"судебное дело",
+"court case",
+"",
+"affaire judiciaire"
+],
+[
+"դատական կարգադրիչ",
+"судебный пристав",
+"bailiff",
+"",
+"huissier de justice"
+],
+[
+"դատարկաբանություն",
+"тарабарщина",
+"gibberish",
+"",
+"charabia (synonyme)"
+],
+[
+"դատարկաշրջիկ",
+"бездельник-бродяга",
+"gadabout",
+"",
+"vadrouilleur"
+],
+[
+"դարապղպեղ",
+"чёрный перец (пряность)",
+"black pepper",
+"",
+"poivre (épice)"
+],
+[
+"դարձածալ",
+"лацкан",
+"lapel",
+"",
+"revers"
+],
+[
+"դափնեպսակ",
+"лавровый венок (синоним)",
+"laurel wreath",
+"",
+"couronne de lauriers (synonyme)"
+],
+[
+"դեբյուտ",
+"дебют",
+"debut",
+"",
+"début (première)"
+],
+[
+"դելեգատ",
+"делегат",
+"delegate",
+"",
+"délégué"
+],
+[
+"դելֆինարիում",
+"дельфинарий",
+"dolphinarium",
+"",
+"delphinarium"
+],
+[
+"դեկալիտր",
+"декалитр",
+"decalitre",
+"",
+"décalitre"
+],
+[
+"դեկոմպիլյատոր",
+"декомпилятор",
+"decompiler",
+"",
+"décompilateur"
+],
+[
+"դեղահաբերի տուփ",
+"таблетница",
+"pillbox",
+"",
+"pilulier"
+],
+[
+"դեղամիջոց",
+"лекарственное средство",
+"medication",
+"",
+"médicament (remède)"
+],
+[
+"դեղին թեյ",
+"жёлтый чай",
+"yellow tea",
+"",
+"thé jaune"
+],
+[
+"դեղին մամուլ",
+"жёлтая пресса",
+"yellow press",
+"",
+"presse à sensation"
+],
+[
+"դեղին տառեղ",
+"жёлтая цапля",
+"squacco heron",
+"",
+"crabier chevelu"
+],
+[
+"դեղնահող",
+"охра",
+"ochre",
+"",
+"ocre (pigment)"
+],
+[
+"դեմոգրաֆիա",
+"демография",
+"demography",
+"",
+"démographie"
+],
+[
+"դեոնտոլոգիա",
+"деонтология",
+"deontology",
+"",
+"déontologie"
+],
+[
+"դեսանտավոր",
+"десантник",
+"paratrooper",
+"",
+"parachutiste"
+],
+[
+"դեսերտ",
+"десерт",
+"dessert",
+"🍰",
+"dessert"
+],
+[
+"դերասանություն",
+"актёрское мастерство",
+"acting",
+"",
+"jeu d'acteur"
+],
+[
+"դեւշիրմե",
+"девширме",
+"devshirme",
+"",
+"devchirmé"
+],
+[
+"դեֆիբրիլյատոր",
+"дефибриллятор",
+"defibrillator",
+"",
+"défibrillateur"
+],
+[
+"դեֆիս",
+"дефис",
+"hyphen",
+"",
+"trait d'union"
+],
+[
+"դեֆորմացիա",
+"деформация (синоним)",
+"deformation",
+"",
+"déformation (synonyme)"
+],
+[
+"դժնիկ",
+"крушина (синоним)",
+"buckthorn",
+"",
+"nerprun (synonyme)"
+],
+[
+"դժոխքի դարպաս",
+"врата ада",
+"gate of hell",
+"",
+"porte de l'enfer"
+],
+[
+"դժվախտություն",
+"бедствие, напасть",
+"plague",
+"",
+"fléau (synonyme)"
+],
+[
+"դիագնոզ",
+"диагноз",
+"diagnosis",
+"",
+"diagnostic"
+],
+[
+"դիագրամ",
+"диаграмма",
+"diagram",
+"📊",
+"diagramme"
+],
+[
+"դիահերձարան",
+"морг",
+"morgue",
+"",
+"morgue"
+],
+[
+"դիապոզիտիվ",
+"диапозитив",
+"slide",
+"",
+"diapositive (synonyme)"
+],
+[
+"դիարխիա",
+"диархия",
+"diarchy",
+"",
+"dyarchie"
+],
+[
+"դիզայն",
+"дизайн",
+"design",
+"",
+"design"
+],
+[
+"դիլետանտ",
+"дилетант",
+"dilettante",
+"",
+"dilettante"
+],
+[
+"դիկտատոր",
+"диктатор (синоним)",
+"dictator",
+"",
+"dictateur (synonyme)"
+],
+[
+"դիկտատուրա",
+"диктатура",
+"dictatorship",
+"",
+"dictature"
+]
+],
+"fr": "Objets et notions 16"
+},
+{
 "lv": "C1",
 "ru": "Философия и абстракции",
 "en": "Philosophy and abstractions",

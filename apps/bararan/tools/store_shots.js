@@ -15,11 +15,11 @@ const srv=http.createServer((q,r)=>{let f=path.join(ROOT,decodeURIComponent(q.ur
     await ctx.addInitScript(l=>{ if(localStorage.getItem('shot')) return; localStorage.setItem('shot','1');
       localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:l}));
       const D=window.BARARAN_DATA; },lang);
-    const pg=await ctx.newPage(); await pg.goto(base); await pg.waitForTimeout(300);
+    const pg=await ctx.newPage(); await pg.goto(base); await pg.waitForFunction(()=>window.__bararan,null,{timeout:30000});
     await pg.evaluate(()=>{const B=window.__bararan, td=Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/86400000), w={};
       B.WORDS.filter(x=>B.TOPICS[x.t].lv==='A1').slice(0,74).forEach((x,i)=>{w[x.a]={b:i<52?4:2,d:td+(i%9===0?0:3),t:Date.now(),n:3,e:0};});
       localStorage.setItem('hy-vocab-v1',JSON.stringify({w,set:{tr:false,auto:true,size:10},st:{day:td,streak:6},u:Date.now(),reset:0,flag:{}}));});
-    await pg.reload(); await pg.evaluate(()=>document.fonts.ready); await pg.waitForTimeout(300);
+    await pg.reload(); await pg.waitForFunction(()=>window.__bararan,null,{timeout:30000}); await pg.evaluate(()=>document.fonts.ready); await pg.waitForTimeout(300);
     let n=0; const shot=async name=>{ n++; await pg.screenshot({path:path.join(out,String(n).padStart(2,'0')+'-'+name+'.png')}); };
     await shot('home');
     await pg.click('[data-act=learnNew]'); await pg.waitForTimeout(900); await shot('new-word');
