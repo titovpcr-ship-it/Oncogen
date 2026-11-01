@@ -17,8 +17,10 @@ Discogs — как в «алмазах» (`diamonds.assess`, грубо — по
 Находки последнего прогона — `out/fresh/last.json`; `--send [--exclude …]
 [--note …]` — в Telegram после проверки глазами (без находок — молчит).
 
-    python3.13 tools/sellers/fresh.py --max-price 15
+    python3.13 tools/sellers/fresh.py --screen 300
     python3.13 tools/sellers/fresh.py --send --exclude 1234567890
+    python3.13 tools/sellers/fresh.py --backfill 12 --pages 50 --screen 800
+    python3.13 tools/sellers/fresh.py --backfill 12 --send --exclude …
 """
 import argparse
 import datetime as dt
@@ -118,11 +120,19 @@ def main():
                     help="сколько лучших по признакам ценности — на Discogs")
     ap.add_argument("--hours", type=float, default=2.0,
                     help="без отметки прошлого прогона — столько часов назад")
+    ap.add_argument("--backfill", type=float, default=0,
+                    help="разово: новые за столько часов, отметку прошлого "
+                         "прогона не трогать, находки — в last_backfill.json")
+    ap.add_argument("--pages", type=int, default=15,
+                    help="страниц по 200 (eBay отдаёт до 10 000 — 50 страниц)")
     ap.add_argument("--send", action="store_true")
     ap.add_argument("--exclude", nargs="*", default=[])
     ap.add_argument("--note", default="")
     a = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
+    global LAST
+    if a.backfill:
+        LAST = os.path.join(OUT, "last_backfill.json")
     if a.send:
         return send_last(a)
 
@@ -133,10 +143,12 @@ def main():
     now = dt.datetime.now(dt.timezone.utc)
     since = iso(st["mark"]) if st.get("mark") else now - dt.timedelta(hours=a.hours)
     seen = set(st.get("seen") or [])
+    if a.backfill:
+        since, seen = now - dt.timedelta(hours=a.backfill), set()
 
     token = ebay_token()
     H = {"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
-    items, pages = fetch_new(H, a.max_price, since)
+    items, pages = fetch_new(H, a.max_price, since, min(a.pages, 50))
     items = [it for it in items if it["itemId"] not in seen]
     print(f"новых с {since:%Y-%m-%d %H:%M} UTC: {len(items)} ({pages} стр.)",
           file=sys.stderr)
@@ -216,10 +228,10 @@ def main():
     vc.save()
 
     marks = [iso(it["itemCreationDate"]) for it in items if it.get("itemCreationDate")]
-    if marks:
+    if marks and not a.backfill:
         st["mark"] = max(marks).isoformat()
-    st["seen"] = (list(seen) + [it["itemId"] for it in items])[-5000:]
-    json.dump(st, open(STATE, "w", encoding="utf-8"))
+        st["seen"] = (list(seen) + [it["itemId"] for it in items])[-5000:]
+        json.dump(st, open(STATE, "w", encoding="utf-8"))
     j = {"time": time.strftime("%Y-%m-%d %H:%M"), "new": len(items),
          "rows": len(rows), "screened": len(part), "drops": drops, "finds": finds}
     json.dump(j, open(LAST, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
