@@ -63,14 +63,52 @@ _NOISE = re.compile(
     r"flat\s*\$\d+\s*shipping|stereo|mono|hype)\b|\b2x\b|!|\.\.+|"
     r"\b(?:19[4-9]\d|20[0-2]\d)\b", re.I)
 _SELF = re.compile(r"\bself[\s-]*title[ds]?\b|\bself\b", re.I)
-_SKIP = re.compile(r"\b7\"|\b45\s*rpm\b|\b45\b|\bsingle\b|\blot\s+of\b|"
+_SKIP = re.compile(r"\b7\"|\b45\s*rpm\b(?!.*\blp\b)|\b45\b(?!\s*rpm)(?!.*\blp\b)|"
+                   r"\bsingle\b|\blot\s+of\b|\bbundle\b|"
                    r"\bno\s+record\b|\bpick\s*&\s*choose\b|\b12\"\s*single\b|"
-                   r"\b78\s*rpm\b|\bcassette\b|\bcd\b", re.I)
+                   r"\b78\s*rpm\b|\b78\b|\bcassette\b|\bcd\b", re.I)
+# Хвост заголовка, который не название: формат, состояние, издание, цвет,
+# лейбл, страна («Quintessence Impulse LP EX+ to NM Beautiful Glossy Vinyl»,
+# «Sings 1964 Blue Silver», «Freeform Blue Note … New York Label 1966»).
+# Срезается с краёв, но не до пустого — «Joni Mitchell - Blue …» цела.
+_EDGE = set("""lp lps vinyl record records album shrink shrinkwrap hype sticker
+promo dj wlp beautiful glossy signed autographed import imports quadraphonic quad
+gatefold die cut jacket uk brazil japan obi holland italy germany canada france
+stereo mono rvg press pressing pressed 1st first orig original vintage repress
+reissue club edition limited numbered deluxe anniversary exclusive target walmart
+new sealed 180gm 180g 180gram 200gm 200g gram gm 2lp 3lp 2x insert inserts
+matching inner by band test private folk rare red blue gold yellow green clear
+white pink marble marbled opaque translucent splatter swirl smoke gray grey black
+purple orange teal cyan burgundy olive mint colored coloured crystal lenticular
+pic picture disc silver brown stripe screen print half speed master mastered
+expanded version 45rpm 33rpm rpm to ex nm vg m impulse impulse! prestige riverside verve columbia
+emarcy bluesville contemporary atlantic mercury capitol rca victor decca reprise
+warner world pacific note label york mov rhino and with &""".split())
+
+
+# С начала названия — только формат и лейблы: цвет там — часть названия
+# («Blue Moods», «Red In Bluesville»).
+_LEAD = set("""lp vinyl record album shrink promo dj wlp mono stereo prestige impulse
+impulse! riverside verve columbia emarcy bluesville contemporary atlantic mercury
+capitol rca decca reprise orig original 1st first vintage rvg""".split())
+
+
+def trim_edges(x):
+    w = x.split()
+    num = re.compile(r"^(?:19[4-9]\d|20[0-3]\d|\d{3,}|\d*/\d+|ex\+|vg\+|g\+|#\d+|"
+                     r"(?:33|45)\s*rpm)$", re.I)
+    low = lambda t: t.lower().strip(".,!?'\"")
+    while len(w) > 1 and (low(w[-1]) in _EDGE or num.match(w[-1])):
+        w.pop()
+    while len(w) > 1 and (low(w[0]) in _LEAD or num.match(w[0])):
+        w.pop(0)
+    return " ".join(w)
 
 
 def parse_title(t):
     """«FLORA PURIM - Nothing Will be As it Was Tomorrow LP Vinyl VG+/VG+»
     → (артист, альбом, оценка пластинки, оценка конверта)."""
+    t = re.sub(r"\b(EX\+?|NM|VG\+?)\s+to\s+(?:NM|M|EX\+?)\b", r"\1", t, flags=re.I)
     g = list(_GRADE.finditer(t))
     rec = sleeve = None
     if g:
@@ -88,7 +126,8 @@ def parse_title(t):
     self_titled = bool(_SELF.search(album))
     album = _SELF.sub(" ", album)
     clean = lambda x: re.sub(r"\s+", " ", re.sub(r"[^\w'&.,+ ]", " ", x)).strip(" .,")
-    artist, album = clean(_NOISE.sub(" ", artist)), clean(album)
+    artist, album = clean(_NOISE.sub(" ", artist)), trim_edges(clean(album))
+    artist = re.sub(r"\s*&\s*co\.?$", "", artist, flags=re.I)
     if self_titled and artist:
         album = artist
     norm = lambda g_: {"VG++": "VG+", "EX+": "EX"}.get(g_, g_) if g_ else None
@@ -175,6 +214,33 @@ def variation_rows(H, it, max_price, min_price=0.0):
     return out
 
 
+def _sim(a, b):
+    from difflib import SequenceMatcher
+    a, b = dm._norm(a), dm._norm(b)
+    if not a or not b:
+        return 0.0
+    if b.startswith(a) and len(a) >= 6:        # обрезанное название
+        return 0.95
+    return SequenceMatcher(None, a, b).ratio()
+
+
+def _pick(rows, artist, album, need_artist):
+    best = None
+    for r in rows:
+        rt = r.get("title") or ""
+        if " - " not in rt:
+            continue
+        a_, b_ = rt.split(" - ", 1)
+        a_ = re.sub(r"\s*\(\d+\)$", "", a_).replace("*", "")
+        sa, sb = _sim(artist, a_), _sim(album, b_)
+        if sa < need_artist or sb < 0.72:
+            continue
+        key = sa + sb
+        if best is None or key > best[0]:
+            best = (key, a_, b_, r)
+    return best
+
+
 def want_screen(d, artist, album, text):
     """Поиск Discogs: (артист, альбом, хотят, есть) лучшего совпадения.
     Без артиста — общий поиск по тексту заголовка."""
@@ -184,6 +250,23 @@ def want_screen(d, artist, album, text):
             w = max(int((r.get("community") or {}).get("want") or 0) for r in rows)
             h = max(int((r.get("community") or {}).get("have") or 0) for r in rows)
             return artist, album, w, h
+    # Опечатка или обрезка в названии («Precous Time», «The Mind of»):
+    # релизы исполнителя, альбом — самый похожий.
+    if artist and album:
+        s = d.get(dm.SEARCH + urlencode({"type": "release", "format": "Vinyl",
+                                         "per_page": 100, "artist": artist})) or {}
+        b = _pick(s.get("results") or [], artist, album, 0.6)
+        if not b and len(album.split()) >= 2:
+            # Опечатка в имени («Jackie McClean», «Micheal»): по названию.
+            s = d.get(dm.SEARCH + urlencode({"type": "release", "format": "Vinyl",
+                                             "per_page": 50, "release_title": album})) or {}
+            b = _pick(s.get("results") or [], artist, album, 0.78)
+        if b:
+            rows = [r for r in (s.get("results") or [])
+                    if (r.get("title") or "").split(" - ", 1)[-1] == b[2]]
+            w = max(int((r.get("community") or {}).get("want") or 0) for r in rows)
+            h = max(int((r.get("community") or {}).get("have") or 0) for r in rows)
+            return b[1], b[2], w, h
     q = re.sub(r"\s+", " ", f"{artist} {album}").strip()
     if not q:
         return None
@@ -200,6 +283,29 @@ def want_screen(d, artist, album, text):
             return a_, b_, int((r.get("community") or {}).get("want") or 0), \
                 int((r.get("community") or {}).get("have") or 0)
     return None
+
+
+def rough_value(d, artist, album):
+    """Грубо: самый дешёвый запрос среди до 5 найденных релизов (USD)."""
+    rows = dm._search_rel(d, artist, album, exact=dm._norm(album) == dm._norm(artist))
+    if not rows:
+        s = d.get(dm.SEARCH + urlencode({"type": "release", "format": "Vinyl",
+                                         "per_page": 25, "artist": artist,
+                                         "release_title": album})) or {}
+        rows = s.get("results") or []
+    lows = []
+    for r in rows[:5]:
+        st = d.get(f"https://api.discogs.com/marketplace/stats/{r['id']}?curr_abbr=USD") or {}
+        v = (st.get("lowest_price") or {}).get("value")
+        if v:
+            lows.append((float(v), r))
+    if not lows:
+        return None
+    low = min(v for v, _ in lows)
+    parts = [{"year": r.get("year") or "", "label": ", ".join(r.get("label") or [])[:22],
+              "catno": r.get("catno") or "", "country": r.get("country") or "",
+              "p": 1 / len(lows), "floor": v} for v, r in lows]
+    return {"low": low, "ev": sum(v for v, _ in lows) / len(lows), "parts": parts}
 
 
 def main():
@@ -234,7 +340,12 @@ def main():
     lots = seller_lots(H, a.seller, a.max_price)
     print(f"{a.seller}: виниловых лотов {len(lots)}", file=sys.stderr)
 
-    rows, ships = [], {}
+    rows, ships, skipped = [], {}, []
+    cpath = os.path.join(wd, "cards_all.json")
+    try:
+        cards = json.load(open(cpath, encoding="utf-8"))
+    except (OSError, ValueError):
+        cards = {}
     for it in lots:
         p = lot_price(it)
         if p is None:
@@ -255,8 +366,13 @@ def main():
         if p > a.max_price or p <= a.min_price:
             continue
         if _SKIP.search(t):
+            skipped.append(f"${p:.2f} {t}")
             continue
-        item = ebay_get(H, ITEM.format(it["itemId"])) or {}
+        item = cards.get(it["itemId"])
+        if item is None:
+            item = ebay_get(H, ITEM.format(it["itemId"])) or {}
+            cards[it["itemId"]] = {k: item.get(k) for k in (
+                "localizedAspects", "shippingOptions", "gtin", "conditionDescription")}
         asp = {x.get("name"): x.get("value") for x in item.get("localizedAspects") or []}
         artist, album, rec, sl = parse_title(t)
         cg = fs.card_grade(asp.get("Record Grading"))
@@ -274,6 +390,7 @@ def main():
                      "ship": st, "text": t, "qty": 1,
                      "condition": it.get("condition") or ""})
         time.sleep(0.1)
+    json.dump(cards, open(cpath, "w", encoding="utf-8"), ensure_ascii=False)
     if a.limit:
         rows = rows[:a.limit]
     print(f"до ${a.max_price:g}: {len(rows)} пластинок", file=sys.stderr)
@@ -326,8 +443,11 @@ def main():
             drop(f"ошибка оценки: {type(e).__name__}")
             continue
         if not x:
-            drop("оценка не вышла")
-            continue
+            x = rough_value(d, r["artist"], r["album"])
+            if not x:
+                drop("оценка не вышла")
+                continue
+            r["rough"] = 1
         cost = r["price"] + share
         r.update({"low": round(x["low"], 2), "ev": round(x["ev"], 2),
                   "cost": round(cost, 2), "gap": round(x["low"] / cost, 1),
@@ -350,7 +470,7 @@ def main():
 
     stamp = time.strftime("%Y-%m-%d_%H%M%S")
     path = os.path.join(wd, f"assessed_{stamp}.csv")
-    keys = ["verdict", "low", "ev", "gap", "cost", "price", "kind", "artist",
+    keys = ["verdict", "rough", "low", "ev", "gap", "cost", "price", "kind", "artist",
             "album", "grade", "sleeve", "want", "have", "parts", "line", "url",
             "id", "qty"]
     with open(path, "w", newline="", encoding="utf-8") as f:
@@ -359,6 +479,8 @@ def main():
         w.writerows(sorted(finds, key=lambda r: -r["low"]))
     with open(os.path.join(wd, f"unknown_{stamp}.txt"), "w", encoding="utf-8") as f:
         f.write("\n".join(unknown) + "\n")
+    with open(os.path.join(wd, f"skipped_{stamp}.txt"), "w", encoding="utf-8") as f:
+        f.write("\n".join(skipped) + "\n")
     json.dump({"ships": {f"{k[2]} ${k[0]:.2f} + ${k[1] if k[1] is not None else '?'}": v
                          for k, v in ships.items()},
                "rows": len(rows), "screened": len(screened), "assessed": len(finds),
