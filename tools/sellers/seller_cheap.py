@@ -271,9 +271,26 @@ def want_screen(d, artist, album, text):
     q = re.sub(r"\s+", " ", f"{artist} {album}").strip()
     if not q:
         return None
-    s = d.get(dm.SEARCH + urlencode({"type": "release", "format": "Vinyl",
-                                     "per_page": 10, "q": q})) or {}
-    for r in s.get("results") or []:
+    # Заголовок без тире («Herbie Hancock Head Hunters LP Columbia 1973
+    # VG+»): поиск по всей фразе с шумом ничего не находит — шумовые слова
+    # вон отовсюду, и поиск по первым 5, затем 3 словам (свежие объявления,
+    # 01.11.2026: не опознано 247 из 400).
+    words = [w for w in re.findall(r"[\w'&]+", q)
+             if w.lower() not in _EDGE and not re.fullmatch(r"\d{2,}", w)]
+    qs = [q] + [" ".join(words[:k]) for k in (5, 3) if len(words) > k - 1]
+    rows_all = []
+    for qq in dict.fromkeys(qs):
+        s = d.get(dm.SEARCH + urlencode({"type": "release", "format": "Vinyl",
+                                         "per_page": 10, "q": qq})) or {}
+        rows_all = s.get("results") or []
+        hit = _pick_q(rows_all, text)
+        if hit:
+            return hit
+    return None
+
+
+def _pick_q(rows, text):
+    for r in rows:
         rt = r.get("title") or ""
         if " - " not in rt:
             continue
