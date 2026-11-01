@@ -695,6 +695,12 @@ def main():
                          "(по карточке — общий --min-score)")
     ap.add_argument("--watch", type=int, default=0,
                     help="сколько продавцов-коллекций из списка проверять")
+    ap.add_argument("--worn", action="store_true",
+                    help="ценность в потёртом (владелец 01.11.2026): оценка "
+                         "хуже VG допускается, брак — нет; с --ev")
+    ap.add_argument("--min-desire", type=float, default=0.0,
+                    help="с --worn: желанность (хотят / имеют по изданиям, "
+                         "совместимым с лотом) не ниже этой")
     ap.add_argument("--tg", action="store_true")
     # Владелец 24.10.2026: «поиск винила на ебей до 40$ чтобы находить
     # алмазы в б/у джазовых пластинках. Никаких аукционов — либо купить
@@ -954,7 +960,7 @@ def main():
                          item.get("desc") or ""))
         grade = " / ".join(x for x in (asp.get("Record Grading"),
                                        asp.get("Sleeve Grading")) if x)
-        if low_grade(asp.get("Record Grading")):
+        if low_grade(asp.get("Record Grading")) and not a.worn:
             drop("пластинка хуже VG")
             continue
         m = tp.defect(text)
@@ -977,10 +983,10 @@ def main():
         # любой «буквы + цифры» из заголовка — «New Jazz NJLP 8242».
         catno = asp.get("Catalog Number") or (c[1] if c else "") or \
             (tp.fx.catno_of(item, t) or "")
-        if _TITLE_LOW.search(t):
+        if _TITLE_LOW.search(t) and not a.worn:
             drop("оценка хуже VG в заголовке")
             continue
-        if not asp.get("Record Grading") and _DESC_LOW.search(
+        if not a.worn and not asp.get("Record Grading") and _DESC_LOW.search(
                 " ".join((item.get("conditionDescription") or "",
                           (item.get("desc") or "")[:1500]))):
             drop("оценка хуже VG в описании")
@@ -1471,6 +1477,11 @@ def ev_find(d, vc, z, a, fresh=False):
     p_big, thr = dm.chance(x, p, a.min_floor, a.up_mult)
     se = it.get("seller") or {}
     up = x["up"]
+    # Желанность — по изданиям, совместимым с лотом, с их долями: «хотят»
+    # к «имеют». Больше 1 — пластинку ищут чаще, чем она есть у людей.
+    want = sum(v["p"] * (v.get("want") or 0) for v in x["parts"])
+    have = sum(v["p"] * (v.get("have") or 0) for v in x["parts"])
+    desire = round(want / max(have, 1), 2)
     f = {"group": g or "", "title": it.get("title") or "", "price": p,
          "ask": ask, "kind": z["kind"], "ship": shipping_usd(it),
          "artist": z["artist"], "album": z["album"], "catno": z["catno"],
@@ -1490,10 +1501,14 @@ def ev_find(d, vc, z, a, fresh=False):
          "limit": dm.price_limit(x, a.min_floor, a.min_gap, a.up_mult,
                                  a.p_min) or "",
          "seller": se.get("username") or "", "fb": se.get("feedbackScore"),
+         "want": round(want), "have": round(have), "desire": desire,
          "id": it["itemId"],
          "url": (it.get("itemWebUrl") or "").split("?")[0], "_z": z}
     if not g:
         f["why"] = "ставка не сходится"
+        f.pop("_z")
+    elif getattr(a, "worn", False) and desire < a.min_desire:
+        f["why"] = "мало желающих"
         f.pop("_z")
     return f
 
@@ -1550,6 +1565,9 @@ def render_ev(z):
              f"${z['low']:.0f} · шанс {z['p_big'] * 100:.0f}% на издание от "
              f"${z['big_thr']:.0f}" + (f": {z['up']}" if z["up"] else ""),
              f"   расклад: {z['parts']}"]
+    if z.get("desire") is not None:
+        lines.append(f"   желанность {z['desire']}: хотят {z.get('want')}, "
+                     f"имеют {z.get('have')} (по изданиям лота)")
     if z["notes"]:
         lines.append(f"   улики: {z['notes']}")
     if z.get("offer_hint"):
