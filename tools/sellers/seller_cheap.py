@@ -286,13 +286,20 @@ def want_screen(d, artist, album, text):
 
 
 def rough_value(d, artist, album):
-    """Грубо: самый дешёвый запрос среди до 5 найденных релизов (USD)."""
+    """Грубо: самый дешёвый запрос среди до 5 найденных релизов (USD).
+    Одноимённый альбом без номера — нет: «Rainmakers» садился на
+    филиппинское издание 1978 года ($250), «Shinedown» — на бокс-сет
+    (01.11.2026); то же правило у «алмазов». Бокс-сеты и синглы — мимо."""
+    if dm._norm(album) == dm._norm(artist):
+        return None
     rows = dm._search_rel(d, artist, album, exact=dm._norm(album) == dm._norm(artist))
     if not rows:
         s = d.get(dm.SEARCH + urlencode({"type": "release", "format": "Vinyl",
                                          "per_page": 25, "artist": artist,
                                          "release_title": album})) or {}
         rows = s.get("results") or []
+    rows = [r for r in rows if not any(
+        re.search(r"box\s*set|^7\"$|single|^45 rpm$", f, re.I) for f in r.get("format") or [])]
     lows = []
     for r in rows[:5]:
         st = d.get(f"https://api.discogs.com/marketplace/stats/{r['id']}?curr_abbr=USD") or {}
@@ -454,7 +461,9 @@ def main():
                   "parts": " | ".join(dm.describe(x, 4))})
         if x["low"] >= a.min_floor and x["low"] >= a.min_gap * cost:
             r["verdict"] = "надёжная"
-        elif x["ev"] >= a.min_floor and x["ev"] >= a.min_gap * cost:
+        elif x["ev"] >= a.min_floor and x["ev"] >= a.min_gap * cost \
+                and not r.get("rough"):
+            # У грубой оценки «ожидание» — среднее случайных изданий.
             r["verdict"] = "ожидание"
         elif x["low"] >= a.margin_gap * cost and x["low"] - cost >= 10:
             r["verdict"] = "есть запас"
@@ -501,7 +510,7 @@ def main():
     for r in sorted(finds, key=lambda r: (order[r["verdict"]], -r["gap"])):
         if not r["verdict"]:
             continue
-        print(f"\n[{r['verdict']}] {r['artist']} — {r['album']}  ${r['price']:.2f} "
+        print(f"\n[{r['verdict']}{' (грубо)' if r.get('rough') else ''}] {r['artist']} — {r['album']}  ${r['price']:.2f} "
               f"[{r['kind']}] {r['grade'] or '?'}/{r['sleeve'] or '?'}")
         print(f"   худший случай ${r['low']:.0f}, ожидание ${r['ev']:.0f} "
               f"(x{r['gap']} к ${r['cost']:.2f} с долей доставки); "
