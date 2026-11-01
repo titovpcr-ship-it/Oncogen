@@ -152,7 +152,7 @@ def ship_terms(item):
     return best
 
 
-def variation_rows(H, it, max_price):
+def variation_rows(H, it, max_price, min_price=0.0):
     """Варианты «You Pick & Choose»: строка «ARTIST - Album VG+/VG»."""
     gid = it["itemId"].split("|")[1]
     j = ebay_get(H, GROUP, item_group_id=gid) or {}
@@ -161,7 +161,7 @@ def variation_rows(H, it, max_price):
         p = lot_price(v)
         qty = ((v.get("estimatedAvailabilities") or [{}])[0]
                .get("estimatedAvailableQuantity"))
-        if p is None or p > max_price or qty == 0:
+        if p is None or p > max_price or p <= min_price or qty == 0:
             continue
         asp = {a.get("name"): a.get("value") for a in v.get("localizedAspects") or []}
         line = next((val for k, val in asp.items() if k and k.lower().startswith(
@@ -206,6 +206,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("seller")
     ap.add_argument("--max-price", type=float, default=6.0)
+    ap.add_argument("--min-price", type=float, default=0.0,
+                    help="только дороже (уже разобранное ниже — мимо)")
+    ap.add_argument("--screen-below", type=float, default=1e9,
+                    help="отсев по спросу — только у лотов дешевле этого; "
+                         "дорогие оцениваются все (их цену уже назвал продавец)")
+    ap.add_argument("--margin-gap", type=float, default=1.5,
+                    help="«есть запас»: худший случай от этой доли цены")
     ap.add_argument("--min-want", type=int, default=150,
                     help="отсев: сколько копий хотят на Discogs")
     ap.add_argument("--rare-want", type=int, default=40,
@@ -234,7 +241,7 @@ def main():
             continue
         t = it.get("title") or ""
         if it.get("itemGroupType") or it.get("itemGroupHref"):
-            vs = variation_rows(H, it, a.max_price)
+            vs = variation_rows(H, it, a.max_price, a.min_price)
             print(f"  объявление с вариантами «{t[:50]}»: {len(vs)} до "
                   f"${a.max_price:g}", file=sys.stderr)
             for v in vs:
@@ -245,7 +252,7 @@ def main():
                 if v["ship"]:
                     ships[v["ship"]] = ships.get(v["ship"], 0) + 1
             continue
-        if p > a.max_price:
+        if p > a.max_price or p <= a.min_price:
             continue
         if _SKIP.search(t):
             continue
@@ -292,7 +299,7 @@ def main():
         # Редкое: хотят немногие, но есть ещё у меньшего числа — частный
         # пресс, малый тираж (хотят 80, есть 40).
         rare = r["want"] >= a.rare_want and r["want"] >= a.rare_ratio * r["have"]
-        if r["want"] < a.min_want and not rare:
+        if r["want"] < a.min_want and not rare and r["price"] < a.screen_below:
             drop(f"спрос меньше {a.min_want}")
             continue
         screened.append(r)
@@ -308,7 +315,12 @@ def main():
     for i, r in enumerate(screened, 1):
         asp = {"Record Label": r.get("label")} if r.get("label") else {}
         try:
-            x = dm.assess(d, vc, r["artist"], r["album"], "", r["text"],
+            c = None
+            for lbl in cs.LABELS:
+                c = cs.label_catno(lbl, r["text"])
+                if c:
+                    break
+            x = dm.assess(d, vc, r["artist"], r["album"], c[1] if c else "", r["text"],
                           r["text"], asp, seller=a.seller, price=r["price"])
         except Exception as e:                              # noqa: BLE001
             drop(f"ошибка оценки: {type(e).__name__}")
@@ -324,6 +336,8 @@ def main():
             r["verdict"] = "надёжная"
         elif x["ev"] >= a.min_floor and x["ev"] >= a.min_gap * cost:
             r["verdict"] = "ожидание"
+        elif x["low"] >= a.margin_gap * cost and x["low"] - cost >= 10:
+            r["verdict"] = "есть запас"
         else:
             r["verdict"] = ""
         finds.append(r)
@@ -351,7 +365,8 @@ def main():
                "drops": drops}, open(os.path.join(wd, f"summary_{stamp}.json"), "w"),
               ensure_ascii=False, indent=1)
 
-    print(f"\n{a.seller}: до ${a.max_price:g} — {len(rows)} пластинок")
+    span = f"${a.min_price:g}–{a.max_price:g}" if a.min_price else f"до ${a.max_price:g}"
+    print(f"\n{a.seller}: {span} — {len(rows)} пластинок")
     for k, v in sorted(ships.items(), key=lambda x: -x[1]):
         add = "?" if k[1] is None else f"${k[1]:.2f}"
         print(f"  доставка: {k[2]} — первый лот ${k[0]:.2f}, каждый следующий "
@@ -360,7 +375,8 @@ def main():
     print(f"  по спросу (хотят от {a.min_want}) прошло {len(screened)}, оценено {len(finds)}")
     for k, v in sorted(drops.items(), key=lambda x: -x[1]):
         print(f"  снято: {k} — {v}")
-    for r in sorted(finds, key=lambda r: (r["verdict"] == "", -r["low"])):
+    order = {"надёжная": 0, "ожидание": 1, "есть запас": 2, "": 3}
+    for r in sorted(finds, key=lambda r: (order[r["verdict"]], -r["gap"])):
         if not r["verdict"]:
             continue
         print(f"\n[{r['verdict']}] {r['artist']} — {r['album']}  ${r['price']:.2f} "
