@@ -148,6 +148,9 @@ def main():
     vc = dm.Versions(d)
     screened = []
     for i, r in enumerate(part, 1):
+        if i % 100 == 0:        # до отсева: иначе печать только у прошедших
+            print(f"  отсев {i}/{len(part)}, прошло {len(screened)}", file=sys.stderr)
+            d.save()
         s = sc.want_screen(d, r["artist"], r["album"], r["title"])
         if not s:
             drop("нет на Discogs / не опознан")
@@ -158,14 +161,13 @@ def main():
             drop(f"спрос меньше {a.min_want}")
             continue
         screened.append(r)
-        if i % 100 == 0:
-            print(f"  отсев {i}/{len(part)}, прошло {len(screened)}", file=sys.stderr)
-            d.save()
     d.save()
     print(f"по спросу прошло {len(screened)}", file=sys.stderr)
 
     finds = []
     for i, r in enumerate(screened, 1):
+        if i % 25 == 0:
+            print(f"  оценено {i}/{len(screened)}", file=sys.stderr)
         try:
             x = dm.assess(d, vc, r["artist"], r["album"], "", r["title"],
                           r["title"], {}, price=r["price"])
@@ -189,7 +191,6 @@ def main():
             r["group"] = ""
         finds.append(r)
         if i % 25 == 0:
-            print(f"  оценено {i}/{len(screened)}", file=sys.stderr)
             d.save()
             vc.save()
     d.save()
