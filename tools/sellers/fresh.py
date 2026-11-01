@@ -172,7 +172,12 @@ def main():
             drop("пластинка хуже G")
             continue
         opts = it.get("buyingOptions") or []
-        rows.append({"id": it["itemId"], "title": t, "price": sc.lot_price(it),
+        p = sc.lot_price(it, auctions=False)
+        if p is None or p > a.max_price:
+            # Аукцион с «купить сейчас»: фильтр поиска сверяет ставку.
+            drop("«купить сейчас» дороже потолка")
+            continue
+        rows.append({"id": it["itemId"], "title": t, "price": p,
                      "kind": "торг" if "BEST_OFFER" in opts else "купить",
                      "artist": artist, "album": album, "grade": rec or "",
                      "cond": it.get("condition") or "",

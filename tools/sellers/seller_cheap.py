@@ -170,8 +170,19 @@ def seller_lots(H, seller, max_price):
     return lots
 
 
-def lot_price(it):
-    p = it.get("currentBidPrice") or it.get("price") or {}
+def lot_price(it, auctions=True):
+    """Цена лота без доставки; у аукциона — текущая ставка.
+
+    auctions=False — только «купить сейчас» (владелец 01.11.2026: «Не давай
+    мне аукционы»): у аукциона с кнопкой «купить сейчас» в поиске
+    currentBidPrice — ставка ($19.99 при «купить сейчас» за $59.99, O-119),
+    берётся price.
+    """
+    opts = it.get("buyingOptions") or []
+    if not auctions and "FIXED_PRICE" in opts:
+        p = it.get("price") or {}
+    else:
+        p = it.get("currentBidPrice") or it.get("price") or {}
     try:
         return float(p.get("value"))
     except (TypeError, ValueError):
@@ -422,7 +433,7 @@ def main():
     except (OSError, ValueError):
         cards = {}
     for it in lots:
-        p = lot_price(it)
+        p = lot_price(it, a.auctions)
         if p is None:
             continue
         t = it.get("title") or ""
@@ -460,7 +471,8 @@ def main():
                      "artist": artist, "album": album,
                      "grade": rec or cg, "sleeve": sl or fs.card_grade(asp.get("Sleeve Grading")),
                      "label": asp.get("Record Label") or "",
-                     "kind": "аукцион" if "AUCTION" in opts else
+                     "kind": "аукцион" if "AUCTION" in opts and (
+                                 a.auctions or "FIXED_PRICE" not in opts) else
                              "торг" if "BEST_OFFER" in opts else "купить сейчас",
                      "ship": st, "text": t, "qty": 1,
                      "condition": it.get("condition") or ""})

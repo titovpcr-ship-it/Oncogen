@@ -138,7 +138,10 @@ def main():
         if rec and not sc.grade_ok(rec, "G"):
             drop("пластинка хуже G")
             continue
-        p = sc.lot_price(it)
+        p = sc.lot_price(it, kind == "аукцион")
+        if p is None or p > a.max_price:
+            drop("«купить сейчас» дороже потолка")
+            continue
         rows.append({"id": it["itemId"], "title": t, "price": p, "kind": kind,
                      "cond": it.get("condition") or "", "artist": artist,
                      "album": album, "grade": rec or "", "sleeve": sl or "",
