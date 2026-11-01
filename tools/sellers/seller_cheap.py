@@ -52,6 +52,7 @@ ITEM = "https://api.ebay.com/buy/browse/v1/item/{}"
 GROUP = "https://api.ebay.com/buy/browse/v1/item/get_items_by_item_group"
 VINYL = "176985"
 OUT = os.path.join(ROOT, "out")
+WATCH = os.path.join(ROOT, "data", "seller_watch")
 GRADES = ("M", "NM", "EX", "VG+", "VG", "G+", "G", "F", "P")
 
 # Оценка в заголовке: «VG+/VG+», «EX/EX», «VG/G», «EX», «EX+».
@@ -315,6 +316,41 @@ def rough_value(d, artist, album):
     return {"low": low, "ev": sum(v for v, _ in lows) / len(lows), "parts": parts}
 
 
+def send_last(a, usd_rub=95.0, kg=0.400, per_kg=22.0, basket=7):
+    """Находки последней слежки — в Telegram (после проверки глазами)."""
+    import html
+    sys.path.insert(0, ROOT)
+    from telegram_notify import TelegramNotifier
+    path = os.path.join(OUT, f"seller_{a.seller}", "last_watch.json")
+    j = json.load(open(path, encoding="utf-8"))
+    ex = {x.split("|")[1] if "|" in x else x for x in a.exclude}
+    finds = [f for f in j["finds"]
+             if f["id"].split("|")[1] not in ex and f["id"] not in ex]
+    e = html.escape
+    head = (f"<b>Продавец {e(a.seller)} — слежка, {e(j['time'])}</b>\n"
+            f"Лотов {j['total']}, новых и подешевевших {j['new']}, "
+            f"находок {len(finds)}. Доставка $6 на весь заказ.")
+    blocks = []
+    for f in finds:
+        share = 6.0 / basket
+        msk = f"{round((f['price'] + share + kg * per_kg) * usd_rub / 10) * 10:,}".replace(",", " ")
+        blocks.append(
+            f"<b>{e(f['artist'])} — {e(f['album'])}</b> [{e(f.get('new') or '')}]\n"
+            f"   ${f['price']:.2f} ({e(f['kind'])}), {e(f.get('grade') or '?')}/"
+            f"{e(f.get('sleeve') or '?')} → Москва ~{msk} ₽\n"
+            f"   Discogs: худший случай ${f['low']:.0f}, ожидание ${f['ev']:.0f}; "
+            f"хотят {f.get('want')}, есть у {f.get('have')}\n"
+            f"   {e(f['url'])}")
+    msg = head + ("\n\n" + "\n\n".join(blocks) if blocks else "")
+    if a.note:
+        msg += "\n\n" + e(a.note)
+    msg += "\n\nПол Discogs — самый дешёвый запрос за любое состояние, не сделка."
+    print(msg)
+    ok = TelegramNotifier().send(msg)
+    print(f"Telegram: {'отправлено' if ok else 'НЕ отправлено'}")
+    return 0 if ok else 1
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("seller")
@@ -338,7 +374,19 @@ def main():
                     help="пластинок в одной посылке (доля доставки)")
     ap.add_argument("--worst-grade", default="VG")
     ap.add_argument("--limit", type=int, default=0, help="для отладки")
+    ap.add_argument("--watch", action="store_true",
+                    help="слежка: только новые лоты и подешевевшие на $1+ "
+                         "(база — data/seller_watch/<продавец>.json)")
+    ap.add_argument("--seed", action="store_true",
+                    help="с --watch: записать все текущие лоты в базу без оценки")
+    ap.add_argument("--send", action="store_true",
+                    help="находки последней слежки — в Telegram")
+    ap.add_argument("--exclude", nargs="*", default=[],
+                    help="с --send: номера лотов, отсеянных проверкой глазами")
+    ap.add_argument("--note", default="", help="с --send: что отсеяно и почему")
     a = ap.parse_args()
+    if a.send:
+        return send_last(a)
 
     token = ebay_token()
     H = {"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
@@ -398,6 +446,36 @@ def main():
                      "condition": it.get("condition") or ""})
         time.sleep(0.1)
     json.dump(cards, open(cpath, "w", encoding="utf-8"), ensure_ascii=False)
+    total_rows = len(rows)
+    if a.watch:
+        os.makedirs(WATCH, exist_ok=True)
+        spath = os.path.join(WATCH, f"{a.seller}.json")
+        try:
+            seen = json.load(open(spath, encoding="utf-8"))
+        except (OSError, ValueError):
+            seen = {}
+        fresh = []
+        for r in rows:
+            old = seen.get(r["id"])
+            if old is None:
+                r["new"] = "новый"
+            elif r["price"] <= old - 1:
+                r["new"] = f"дешевле: было ${old:.2f}"
+            else:
+                continue
+            fresh.append(r)
+        if not a.limit:
+            # Цена в базе — последняя увиденная: повторно о том же лоте
+            # сообщается, только если он подешевел ещё на $1.
+            seen.update({r["id"]: r["price"] for r in rows})
+            json.dump(seen, open(spath, "w", encoding="utf-8"), indent=0,
+                      sort_keys=True)
+        print(f"слежка: всего {len(rows)}, новых и подешевевших {len(fresh)}",
+              file=sys.stderr)
+        if a.seed:
+            print(f"база {spath}: {len(seen)} лотов")
+            return 0
+        rows = fresh
     if a.limit:
         rows = rows[:a.limit]
     print(f"до ${a.max_price:g}: {len(rows)} пластинок", file=sys.stderr)
@@ -496,6 +574,16 @@ def main():
                "drops": drops}, open(os.path.join(wd, f"summary_{stamp}.json"), "w"),
               ensure_ascii=False, indent=1)
 
+    if a.watch:
+        keep = [{k: r.get(k) for k in keys + ["new", "title"]}
+                for r in finds if r.get("verdict")]
+        json.dump({"seller": a.seller, "time": time.strftime("%Y-%m-%d %H:%M"),
+                   "total": total_rows, "new": len(rows),
+                   "assessed": len(finds), "finds": keep},
+                  open(os.path.join(wd, "last_watch.json"), "w", encoding="utf-8"),
+                  ensure_ascii=False, indent=1)
+        print(f"\nслежка {a.seller}: всего {total_rows}, новых и подешевевших "
+              f"{len(rows)}, оценено {len(finds)}, находок {len(keep)}")
     span = f"${a.min_price:g}–{a.max_price:g}" if a.min_price else f"до ${a.max_price:g}"
     print(f"\n{a.seller}: {span} — {len(rows)} пластинок")
     for k, v in sorted(ships.items(), key=lambda x: -x[1]):
@@ -510,7 +598,8 @@ def main():
     for r in sorted(finds, key=lambda r: (order[r["verdict"]], -r["gap"])):
         if not r["verdict"]:
             continue
-        print(f"\n[{r['verdict']}{' (грубо)' if r.get('rough') else ''}] {r['artist']} — {r['album']}  ${r['price']:.2f} "
+        print(f"\n[{r['verdict']}{' (грубо)' if r.get('rough') else ''}]"
+              f"{' [' + r['new'] + ']' if r.get('new') else ''} {r['artist']} — {r['album']}  ${r['price']:.2f} "
               f"[{r['kind']}] {r['grade'] or '?'}/{r['sleeve'] or '?'}")
         print(f"   худший случай ${r['low']:.0f}, ожидание ${r['ev']:.0f} "
               f"(x{r['gap']} к ${r['cost']:.2f} с долей доставки); "
