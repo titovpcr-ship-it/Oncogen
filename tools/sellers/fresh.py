@@ -123,7 +123,8 @@ def main():
     ap.add_argument("--backfill", type=float, default=0,
                     help="разово: новые за столько часов, отметку прошлого "
                          "прогона не трогать, находки — в last_backfill.json")
-    ap.add_argument("--pages", type=int, default=15,
+    # 01.11.2026, вечер США: 3 000 новых за 1.5 часа упёрлись в 15 страниц.
+    ap.add_argument("--pages", type=int, default=30,
                     help="страниц по 200 (eBay отдаёт до 10 000 — 50 страниц)")
     ap.add_argument("--send", action="store_true")
     ap.add_argument("--exclude", nargs="*", default=[])

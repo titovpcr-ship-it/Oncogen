@@ -301,12 +301,27 @@ def want_screen(d, artist, album, text):
     return None
 
 
+def _words_in(text, name):
+    """Все значимые слова названия есть в заголовке (у длинного — без одного).
+
+    Поиск по заголовку без тире садился на похожее чужое: «A Funny Thing
+    Happened on the Way to the Forum … Zero Mostel» (саундтрек 1966 года,
+    от $0.88) опознан как The Forum «A Funny Thing Happened On Our Way To
+    The Tree» (Vanco 1971, $75) — половины слов `album_matches` мало
+    (свежие объявления 01.11.2026, O-119)."""
+    name = re.sub(r"['’`]", "", name.lower())
+    words = [w for w in re.findall(r"[a-z0-9]{3,}", name) if w not in cs._STOP]
+    low = re.sub(r"['’`]", "", text.lower())
+    miss = sum(1 for w in words if not re.search(rf"\b{re.escape(w)}\b", low))
+    return miss <= (1 if len(words) >= 5 else 0)
+
+
 def _pick_q(rows, text):
     for r in rows:
         rt = r.get("title") or ""
         if " - " not in rt:
             continue
-        if cs.album_matches(text, rt) and cs.album_matches(
+        if _words_in(text, rt.split(" - ", 1)[1]) and cs.album_matches(
                 text, rt.split(" - ", 1)[0] + " - " + rt.split(" - ", 1)[0]):
             a_, b_ = rt.split(" - ", 1)
             a_ = re.sub(r"\s*\(\d+\)$", "", a_)

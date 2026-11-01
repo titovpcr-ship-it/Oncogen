@@ -42,7 +42,22 @@ def test_cena_bez_aukcionov():
                                           auctions=False) is None)
 
 
+def test_opoznanie_po_slovam():
+    print("опознание заголовка без тире — все слова альбома (O-119):")
+    t = "A Funny Thing Happened on the Way to the Forum, Vinyl LP VG- Signed, Zero Mostel"
+    check("саундтрек не садится на The Forum «…On Our Way To The Tree»",
+          not sc._words_in(t, "A Funny Thing Happened On Our Way To The Tree"))
+    check("тот же саундтрек опознаётся",
+          sc._words_in(t, "A Funny Thing Happened On The Way To The Forum"))
+    check("Head Hunters в заголовке без тире",
+          sc._words_in("Herbie Hancock Head Hunters LP Columbia 1973 VG+", "Head Hunters"))
+    rows = [{"title": "Forum, The - A Funny Thing Happened On Our Way To The Tree",
+             "community": {"want": 95, "have": 43}}]
+    check("_pick_q: чужой альбом — None", sc._pick_q(rows, t) is None)
+
+
 if __name__ == "__main__":
     test_cena_bez_aukcionov()
+    test_opoznanie_po_slovam()
     print("\nВСЁ ЗЕЛЁНОЕ" if not FAILED else f"\nПРОВАЛЕНО: {len(FAILED)}")
     sys.exit(1 if FAILED else 0)
