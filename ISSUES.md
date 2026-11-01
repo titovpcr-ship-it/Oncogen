@@ -3391,3 +3391,17 @@ John Coltrane «My Favorite Things» SD 1361 ($7.99), но по фото эти�
 прозрачный делюкс ($4.25, от $45). Проверены по фото, в Telegram и в
 чат. Вывод: до $10 при полу от $45 бывают только аукционы с низким
 стартом — ставка вырастет; предел — пол / 2.
+
+Б/у (владелец: «Проверь не запечатанные тоже»): `digger.py --no-artists
+--pages 2 --max-price 10 --min-floor 45 --min-gap 3` — 41 запрос по
+лейблам ярусов A/B, 7 854 лота до $10, 1 707 кандидатов, оценено 154;
+`sellers/scan.py --max-buy 10 --min-floor 45` по реестру (jazzlover1960,
+wild.records, oldcrowqueen, theinsideworld). «Купить сейчас» — ноль;
+две находки, обе аукционы: Tina Brooks «Back To The Tracks» (Blue Note
+ST-84052, Япония 1990, NM/NM, theinsideworld, $3.75 — все издания на
+Discogs от $75, это — от $80) и Coltrane & Harden «Mainstream 1958»
+(Savoy MG 12127, бордовая этикетка Newark — оригинал от $50.82,
+oldcrowqueen, $7.99). Сняты по карточке: Jazz Messengers «Buhaina's
+Delight» (год 1966 — не оригинал), Duke Pearson «Sweet Honey Bee»
+(«water damage»). Итог тот же, что в O-93: до $10 ценное — только
+аукционы с низким стартом.
