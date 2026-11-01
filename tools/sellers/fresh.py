@@ -108,8 +108,10 @@ def send_last(a):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--max-price", type=float, default=15.0)
-    ap.add_argument("--min-floor", type=float, default=25.0)
+    # Владелец 01.11.2026: «подними планку до 23$», «пол дискогса 3x
+    # минимум, но не меньше 50$»; аукционов нет вовсе.
+    ap.add_argument("--max-price", type=float, default=23.0)
+    ap.add_argument("--min-floor", type=float, default=50.0)
     ap.add_argument("--min-gap", type=float, default=3.0)
     ap.add_argument("--min-want", type=int, default=100)
     ap.add_argument("--screen", type=int, default=400,

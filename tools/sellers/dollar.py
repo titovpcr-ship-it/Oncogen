@@ -73,10 +73,13 @@ def priority(t):
     return sum(w for w, rx in _VALUE if re.search(rx, t, re.I))
 
 
-def fetch(H, max_price):
-    """Все лоты до порога: (summary, kind)."""
+def fetch(H, max_price, auctions=False):
+    """Все лоты до порога: (summary, kind). Аукционы — только с флагом:
+    владелец 01.11.2026 — «не давай мне аукционы»."""
     plans = []
-    for opt, kind in (("FIXED_PRICE|BEST_OFFER", "купить"), ("AUCTION", "аукцион")):
+    opts = [("FIXED_PRICE|BEST_OFFER", "купить")] + \
+        ([("AUCTION", "аукцион")] if auctions else [])
+    for opt, kind in opts:
         for cond in ("USED", "NEW"):
             for lo, hi in ((0, max_price / 2), (max_price / 2 + 0.01, max_price)):
                 plans.append((opt, kind, cond, lo, hi))
@@ -107,6 +110,8 @@ def main():
     ap.add_argument("--max-price", type=float, default=1.0)
     ap.add_argument("--min-floor", type=float, default=25.0)
     ap.add_argument("--min-want", type=int, default=150)
+    ap.add_argument("--auctions", action="store_true",
+                    help="и аукционы (владелец их не берёт — только по просьбе)")
     ap.add_argument("--screen", type=int, default=1500,
                     help="сколько лучших по признакам ценности — на Discogs")
     a = ap.parse_args()
@@ -114,7 +119,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     token = ebay_token()
     H = {"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
-    lots = fetch(H, a.max_price)
+    lots = fetch(H, a.max_price, a.auctions)
     drops = {}
 
     def drop(w):

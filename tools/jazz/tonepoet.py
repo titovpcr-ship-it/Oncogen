@@ -820,8 +820,8 @@ def main():
         json.dump({"time": time.strftime("%d.%m.%Y %H:%M"),
                    "max_price": a.max_price, "total": len(lots),
                    "head": head, "society": society,
-                   "new": [{"id": z["id"], "text": new_block(z)}
-                           for z in fresh]}, f, ensure_ascii=False, indent=1)
+                   "new": [{"id": z["id"], "text": new_block(z),
+                            "kind": z["kind"]} for z in fresh]}, f, ensure_ascii=False, indent=1)
     print(f"\nНОВЫЕ ЛОТЫ ({len(fresh)} из {len(lots)}):")
     for z in fresh:
         print("\n" + new_block(z))
@@ -911,7 +911,10 @@ def send_new(a):
         r = json.load(f)
     drop = {str(x).split("|")[1] if "|" in str(x) else str(x)
             for x in a.exclude or []}
-    keep = [b for b in r["new"] if b["id"].split("|")[1] not in drop]
+    # Владелец 01.11.2026: «Не давай мне аукционы, давай только купить
+    # сейчас или предложить цену».
+    keep = [b for b in r["new"] if b["id"].split("|")[1] not in drop
+            and b.get("kind") != "аукцион"]
     head = (f"<b>Tone Poet, запечатанные до ${r['max_price']:.0f} — "
             f"{r['time']}: новых {len(keep)}</b>\n"
             f"в продаже лотов {r['total']}; {esc(r['head'])}")

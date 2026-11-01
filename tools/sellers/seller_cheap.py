@@ -5,7 +5,8 @@
 что у него есть до $6, разберись с доставкой, поищи выгоду по Discogs».
 
 Что делает:
-1. Все виниловые лоты продавца из США (купить сейчас, торг, аукцион) до
+1. Все виниловые лоты продавца из США (купить сейчас и торг; аукцион —
+   только с --auctions, владелец 01.11.2026: «Не давай мне аукционы») до
    --max-price (цена или текущая ставка, без доставки) — и варианты
    объявлений «You Pick & Choose» (одно объявление, до 250 пластинок в
    выпадающем списке, у каждой своя цена и остаток).
@@ -390,6 +391,8 @@ def main():
     ap.add_argument("--basket", type=int, default=10,
                     help="пластинок в одной посылке (доля доставки)")
     ap.add_argument("--worst-grade", default="VG")
+    ap.add_argument("--auctions", action="store_true",
+                    help="и аукционы (владелец 01.11.2026: по умолчанию — нет)")
     ap.add_argument("--limit", type=int, default=0, help="для отладки")
     ap.add_argument("--watch", action="store_true",
                     help="слежка: только новые лоты и подешевевшие на $1+ "
@@ -463,6 +466,9 @@ def main():
                      "condition": it.get("condition") or ""})
         time.sleep(0.1)
     json.dump(cards, open(cpath, "w", encoding="utf-8"), ensure_ascii=False)
+    if not a.auctions:
+        # Владелец 01.11.2026: «Не давай мне аукционы».
+        rows = [r for r in rows if r["kind"] != "аукцион"]
     total_rows = len(rows)
     if a.watch:
         os.makedirs(WATCH, exist_ok=True)
@@ -593,7 +599,7 @@ def main():
 
     if a.watch:
         keep = [{k: r.get(k) for k in keys + ["new", "title"]}
-                for r in finds if r.get("verdict")]
+                for r in finds if r.get("verdict") in ("надёжная", "ожидание")]
         json.dump({"seller": a.seller, "time": time.strftime("%Y-%m-%d %H:%M"),
                    "total": total_rows, "new": len(rows),
                    "assessed": len(finds), "finds": keep},
