@@ -208,6 +208,10 @@ def main():
     ap.add_argument("--max-price", type=float, default=6.0)
     ap.add_argument("--min-want", type=int, default=150,
                     help="отсев: сколько копий хотят на Discogs")
+    ap.add_argument("--rare-want", type=int, default=40,
+                    help="редкое: хотят от стольких…")
+    ap.add_argument("--rare-ratio", type=float, default=0.6,
+                    help="…и хотят от этой доли тех, у кого есть")
     ap.add_argument("--min-floor", type=float, default=15.0)
     ap.add_argument("--min-gap", type=float, default=2.0)
     ap.add_argument("--basket", type=int, default=10,
@@ -274,7 +278,7 @@ def main():
     def drop(why):
         drops[why] = drops.get(why, 0) + 1
 
-    screened = []
+    screened, unknown = [], []
     for i, r in enumerate(rows, 1):
         if r["grade"] and not grade_ok(r["grade"], a.worst_grade):
             drop(f"пластинка хуже {a.worst_grade}")
@@ -282,9 +286,13 @@ def main():
         s = want_screen(d, r["artist"], r["album"], r["text"])
         if not s:
             drop("нет на Discogs / не опознан")
+            unknown.append(r["line"])
             continue
         r["artist"], r["album"], r["want"], r["have"] = s
-        if r["want"] < a.min_want:
+        # Редкое: хотят немногие, но есть ещё у меньшего числа — частный
+        # пресс, малый тираж (хотят 80, есть 40).
+        rare = r["want"] >= a.rare_want and r["want"] >= a.rare_ratio * r["have"]
+        if r["want"] < a.min_want and not rare:
             drop(f"спрос меньше {a.min_want}")
             continue
         screened.append(r)
@@ -335,6 +343,8 @@ def main():
         w = csv.DictWriter(f, fieldnames=keys, extrasaction="ignore")
         w.writeheader()
         w.writerows(sorted(finds, key=lambda r: -r["low"]))
+    with open(os.path.join(wd, f"unknown_{stamp}.txt"), "w", encoding="utf-8") as f:
+        f.write("\n".join(unknown) + "\n")
     json.dump({"ships": {f"{k[2]} ${k[0]:.2f} + ${k[1] if k[1] is not None else '?'}": v
                          for k, v in ships.items()},
                "rows": len(rows), "screened": len(screened), "assessed": len(finds),
