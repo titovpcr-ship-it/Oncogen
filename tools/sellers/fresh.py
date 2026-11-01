@@ -27,6 +27,7 @@ import datetime as dt
 import html
 import json
 import os
+import re
 import sys
 import time
 
@@ -72,6 +73,21 @@ def fetch_new(H, max_price, since, max_pages=15):
             break
         time.sleep(0.15)
     return out, page + 1
+
+
+def card_single(H, item_id):
+    """Сингл по карточке: 7", тип Single или 45 об/мин не у 12".
+
+    «Electric Light Orchestra (ELO) "Mr. Blue Sky / One Summer Dream" G+»
+    за $8 (01.11.2026) — сорокапятка Jet 1978, а грубая оценка села на
+    сборник «Mr. Blue Sky: The Very Best Of» ($80): в заголовке ни 7", ни
+    45. Карточка — один запрос eBay на находку, находки редки."""
+    it = sc.ebay_get(H, sc.ITEM.format(item_id)) or {}
+    asp = {x.get("name"): str(x.get("value") or "")
+           for x in it.get("localizedAspects") or []}
+    size, typ, speed = asp.get("Record Size", ""), asp.get("Type", ""), asp.get("Speed", "")
+    return bool(re.search(r"\b7\b|\b10\b", size) or re.search(r"single", typ, re.I)
+                or (re.search(r"\b45\b", speed) and "12" not in size))
 
 
 def send_last(a):
@@ -226,6 +242,9 @@ def main():
             g = "ожидание"
         else:
             drop("пол Discogs ниже порога")
+            continue
+        if card_single(H, r["id"]):
+            drop("сингл по карточке (7\", 45)")
             continue
         r.update({"group": g, "rough": int(rough), "low": round(x["low"], 2),
                   "ev": round(x["ev"], 2), "parts": " | ".join(dm.describe(x, 4))})
