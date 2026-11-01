@@ -205,6 +205,10 @@ def match_album(title, rows):
         alt = re.split(r"\s+with\s+", core, flags=re.I)[0]
         cores = [core] + ([alt] if alt != core and len(alt.split()) >= 2
                           else [])
+        # «Lee Konitz Plays With …» — продавцы пишут без «Plays».
+        m = re.match(re.escape(r["who"]) + r"\s+plays\s+(?=\S)", core, re.I)
+        if m:
+            cores.append(r["who"] + " " + core[m.end():])
         hit = [c for c in cores for tt in (t, t_and)
                if album_ok(tt, r["who"], c)]
         if not hit:
@@ -218,6 +222,42 @@ def match_album(title, rows):
         if best is None or key > (len(best["title"]), int(best.get("copies") or 0)):
             best = r
     return best
+
+
+_Q_STOP = {"the", "a", "an", "and", "of", "at", "on", "in", "with", "by",
+           "volume", "vol"}
+
+
+def catalog_queries(r):
+    """Запросы eBay по альбому каталога: прежний (имя + название целиком)
+    и мягкий — ядро названия без имени, без тома, без служебных слов и
+    без «Plays» после имени. Продавцы пишут «Lee Konitz With The Gerry
+    Mulligan Quartet» без «Plays», «State of the Tenor Vol. 2» без «Live
+    At The Village Vanguard» — прежний запрос требовал эти слова, и лот
+    Lee Konitz за $12.50 не находился (01.11.2026)."""
+    q0 = rp._plain(f"{r['who']} {r['title']} vinyl").replace(" and ", " ")[:90]
+    core = re.sub(r"\bvolume \d+\b", " ", core_album(r["title"]))
+    who = r["who"].lower().split()
+    # «Sings And Plays With Bud Shank, Russ Freeman And Strings» → до «With».
+    alt = re.split(r"\s+with\s+", core, flags=re.I)[0]
+    if alt != core and len([w for w in rp._plain(alt).lower().split()
+                            if w not in who and w not in _Q_STOP]) >= 2:
+        core = alt
+    words = rp._plain(core).lower().split()
+    if words[:len(who)] == who and words[len(who):len(who) + 1] == ["plays"]:
+        words = words[len(who) + 1:]
+    # Имя вырезается фразой целиком: у «Face To Face» (Baby Face
+    # Willette) и «Modern Art» (Art Pepper) слова имени — часть названия.
+    for i in range(len(words) - len(who) + 1):
+        if who and words[i:i + len(who)] == who:
+            words = words[:i] + words[i + len(who):]
+            break
+    words = [w for w in words if w not in _Q_STOP]
+    q1 = " ".join([r["who"]] + words + ["vinyl"])[:90]
+    # Второй запрос — только если он снимает значимое слово, а не одни
+    # «the» и «of»: лимит eBay общий для всех прогонов.
+    sig = lambda q: {w for w in q.lower().split() if w not in _Q_STOP}
+    return [q0] + ([q1] if sig(q1) != sig(q0) else [])
 
 
 def tp_barcodes(d, rows):
@@ -543,15 +583,18 @@ def main():
             part = rows[lo:hi]
         cand = []
         for i, r in enumerate(part, 1):
-            q = rp._plain(f"{r['who']} {r['title']} vinyl").replace(" and ", " ")
-            try:
-                j = search_page(token, q=q[:90], category_id=hunt.CATEGORY,
-                                limit=200, sort="price", flt=flt(a.max_price))
-            except ApiRefused as e:
-                refused += 1
-                print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
-                continue
-            for it in j.get("itemSummaries") or []:
+            found = []
+            for q in catalog_queries(r):
+                try:
+                    j = search_page(token, q=q, category_id=hunt.CATEGORY,
+                                    limit=200, sort="price",
+                                    flt=flt(a.max_price))
+                except ApiRefused as e:
+                    refused += 1
+                    print(f"  отказ eBay «{q}»: {e}", file=sys.stderr)
+                    continue
+                found += j.get("itemSummaries") or []
+            for it in found:
                 iid = it.get("itemId")
                 if iid in seen:
                     continue

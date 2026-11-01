@@ -3247,3 +3247,32 @@ $24.43.
 `pr-ojc` (1982-2025, по номеру «OJC-<цифры>» в тексте; «not an OJC» не
 считается), тесты — `tests/test_diamonds.py`. Записано в
 `data/diamonds_bought.csv` и `tools/jazz/DIAMONDS.md`.
+
+## O-112. Tone Poet — лот Lee Konitz за $12.50 не находился
+
+Владелец 01.11.2026 прислал лот «Lee Konitz With The Gerry Mulligan
+Quartet Vinyl LP NEW Blue Note Sealed 2021» — $12.50 + $5.13, США,
+запечатан, наклейка Tone Poet на фото, штрихкод 602435268194 = релиз
+Tone Poet на Discogs, выставлен ещё 11.11.2025: «а почему это ты
+проспал?». Прогон того же утра показал по альбому лучший лот за $25.
+
+Причина — запрос захода по каталогу: имя + название целиком, «Lee Konitz
+Lee Konitz Plays With The Gerry Mulligan Quartet vinyl» (5 лотов). В
+заголовке нет «Plays», и eBay его не вернул; запрос без «Plays» — 14
+лотов, этот среди них. Второе — матчер: ядро «… Plays With …» без
+«Plays» в заголовке не садилось на альбом.
+
+Правка (`tonepoet.catalog_queries`): к прежнему запросу — мягкий: ядро
+названия без имени (имя вырезается фразой, «Face To Face» у Baby Face
+Willette цело), без тома (его проверяет матчер), без служебных слов,
+без хвоста «With …» и без «Plays» после имени. Второй запрос — только
+когда снимает значимое слово: 9 альбомов из 175 (Konitz, оба «State Of
+The Tenor», оба «At The Half Note Cafe», «Sings And Plays», «Trio
+Fascination», «On View At The Five Spot Cafe», «Sonny Rollins Vol. 2»),
++9 запросов eBay за прогон. Матчер принимает «<имя> With …» вместо
+«<имя> Plays With …». Тесты — `tests/test_tonepoet.py`.
+
+Пол Discogs у альбома — $6 (121 в продаже, запрос, а не сделка), так
+что по разрыву с Discogs лот не находка; по Москве — $12.50 + $5.13 +
+$11.31 (0.514 кг × $22) = $28.94 ≈ 2 750 ₽ против ориентира владельца
+6 700–7 000 ₽ за Tone Poet.

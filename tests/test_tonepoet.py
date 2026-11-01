@@ -155,6 +155,30 @@ def test_sings_and_plays():
     m = T.match_album("Lee Konitz Plays With The Gerry Mulligan Quartet "
                       "[Blue Note Tone Poet]", rows)
     check("Lee Konitz — опознаётся", m is not None and "Konitz" in m["artist"])
+    m = T.match_album("Lee Konitz With The Gerry Mulligan Quartet Vinyl LP "
+                      "NEW Blue Note Sealed 2021", rows)
+    check("Lee Konitz без «Plays» — тот же альбом (лот $12.50, 01.11.2026)",
+          m is not None and "Konitz" in m["artist"])
+
+
+def test_zaprosy_kataloga():
+    rows = {r["title"]: r for r in T.load_catalog()}
+    q = T.catalog_queries(rows["Lee Konitz Plays With The Gerry Mulligan Quartet"])
+    check("Konitz: второй запрос без «Plays» и без повтора имени",
+          len(q) == 2 and q[1].lower() == "lee konitz gerry mulligan quartet vinyl")
+    q = T.catalog_queries(rows["The State Of The Tenor (Live At The Village "
+                               "Vanguard Volume 1)"])
+    check("State Of The Tenor: без хвоста и тома (том проверит матчер)",
+          q[-1].lower() == "joe henderson state tenor vinyl")
+    q = T.catalog_queries(rows["Sings And Plays With Bud Shank, Russ Freeman "
+                               "And Strings"])
+    check("Sings And Plays: хвост «With …» отрезан",
+          q[-1].lower() == "chet baker sings plays vinyl")
+    check("Face To Face: слово имени внутри названия не теряется",
+          T.catalog_queries(rows["Face To Face"]) ==
+          T.catalog_queries(rows["Face To Face"])[:1])
+    check("«The Prisoner»: второй запрос не нужен (только «the»)",
+          len(T.catalog_queries(rows["The Prisoner"])) == 1)
 
 
 def test_society():
@@ -187,7 +211,7 @@ def test_society():
 
 
 def main():
-    for fn in [test_society, test_peresylka_po_vesu, test_sings_and_plays, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
+    for fn in [test_society, test_peresylka_po_vesu, test_sings_and_plays, test_zaprosy_kataloga, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
                test_ne_ta_seriya, test_bu_dopuskaetsya_brak_net]:
         print(f"\n{fn.__name__}")
         fn()
