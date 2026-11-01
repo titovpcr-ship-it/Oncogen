@@ -193,6 +193,12 @@ def test_epokhi_etiketok():
     check("«blue trident» — Prestige 1964-1971",
           (dm.era_of("blue trident label", "prestige") or (0, 0))[:2]
           == (1964, 1971))
+    check("реплика этикетки с номером OJC-131 — OJC с 1982",
+          (dm.era_of("yellow label OJC-131 (P-7188)", "prestige")
+           or (0, 0))[:2] == (1982, 2025))
+    check("«not an OJC» — не улика OJC",
+          dm.era_of("original pressing, not an OJC reissue", "prestige")
+          is None)
     check("«Liberty label» — Blue Note 1966-1970",
           (dm.era_of("Liberty label pressing", "blue note") or (0, 0))[:2]
           == (1966, 1970))

@@ -430,6 +430,11 @@ ERAS = {
                    r"\bdistributed\s*by\s*fantasy\b|\bfantasy\s*labels?\b|"
                    r"\b(?:olive\s*)?green\s*labels?\b|\bberkeley\b",
                    False, "зелёная «distributed by Fantasy Records, Berkeley»"),
+    # OJC (Original Jazz Classics, Fantasy, с 1982) печатает реплику
+    # жёлто-чёрной «фейерверк» 1950-х: отличие — номер «OJC-131» и
+    # «(P-7188)» в скобках над треками («Lush Life» владельца, 01.11.2026).
+    "pr-ojc": ("prestige", (1982, 2025), r"\bojc[\s-]*\d", False,
+               "реплика жёлто-чёрной «фейерверк» с номером «OJC-…» на этикетке"),
     "nj-purple": ("new jazz", (1958, 1965), r"\bpurple\s*labels?\b", False,
                   "фиолетовая New Jazz, Bergenfield"),
     "im-orange": ("impulse", (1961, 1967),
