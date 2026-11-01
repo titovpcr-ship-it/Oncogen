@@ -3415,3 +3415,9 @@ Recording», слева «MG-12127», «West 42nd Street» полностью; �
 копий лучше. `digger` прочёл только «OG DG 1st Press» в заголовке —
 оценки в карточке не было, а состояние стояло в HTML-описании после
 стилей. В Telegram — поправка. Ловушка Savoy — в `DIAMONDS.md`.
+Причина пропуска: `tonepoet.card` чистил описание только от тегов, и
+CSS из `<style>` (шаблоны продавцов: «body { font-family… }») оставался
+текстом и съедал лимит — до «visual G+» проверка брака не доходила.
+`tonepoet.clean_desc` вырезает `<style>`/`<script>` и правила CSS, в том
+числе в уже закэшированных карточках; пользуются `digger`, `freeship`,
+`tonepoet`. Тест — `tests/test_tonepoet.py`.

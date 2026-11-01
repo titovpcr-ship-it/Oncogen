@@ -181,6 +181,18 @@ def test_zaprosy_kataloga():
           len(T.catalog_queries(rows["The Prisoner"])) == 1)
 
 
+def test_opisanie_bez_stiley():
+    raw = ("<style> body { font-family: x; } .c { max-width: 800px; } "
+           ".h { color: #fff; }</style><div>Condition Details Vinyl "
+           "Condition: RVG original 1st Press DG, visual G+, audibly VG-</div>")
+    d = T.clean_desc(raw)
+    check("описание без CSS — состояние в начале (Mainstream 1958)",
+          d.startswith("Condition Details") and "G+" in d)
+    check("CSS текстом в кэше — тоже вычищается",
+          "{" not in T.clean_desc("x body { a: b; } .c { d: e; } .h { f: g; } "
+                                  "visual G+"))
+
+
 def test_society():
     rows = T.load_catalog()
     soc = T.society_rows(rows)
@@ -211,7 +223,7 @@ def test_society():
 
 
 def main():
-    for fn in [test_society, test_peresylka_po_vesu, test_sings_and_plays, test_zaprosy_kataloga, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
+    for fn in [test_opisanie_bez_stiley, test_society, test_peresylka_po_vesu, test_sings_and_plays, test_zaprosy_kataloga, test_novye_loty, test_imena_kak_pishut_prodavtsy, test_albom_po_zagolovku,
                test_ne_ta_seriya, test_bu_dopuskaetsya_brak_net]:
         print(f"\n{fn.__name__}")
         fn()

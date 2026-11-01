@@ -291,11 +291,29 @@ def fresh_floor(d, r):
     return tg.usd_floor(st), st.get("num_for_sale")
 
 
+_CSS_RULE = re.compile(r"[^{}]{0,200}\{[^{}]*\}")
+
+
+def clean_desc(raw):
+    """Текст описания без тегов, стилей и скриптов. У продавцов с
+    шаблоном описание начиналось с сотен строк CSS («body { font-family…
+    }»), и до «visual G+, audibly VG-» проверка брака не доходила
+    («Mainstream 1958», oldcrowqueen, 01.11.2026)."""
+    raw = re.sub(r"<(style|script)\b.*?</\1\s*>", " ", raw or "",
+                 flags=re.S | re.I)
+    text = html.unescape(re.sub(r"<[^>]+>", " ", raw))
+    if text.count("{") >= 3:
+        text = _CSS_RULE.sub(" ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def card(H, cards, iid):
     """Карточка лота: штрихкод, характеристики, состояние, описание.
     В общий кэш карточек — с описанием, чтобы б/у проверять на брак."""
     item = cards.get(iid)
     if item is not None and "desc" in item:
+        if (item.get("desc") or "").count("{") >= 3:
+            item["desc"] = clean_desc(item["desc"])[:3000]
         return item
     try:
         r = requests.get(fx.ITEM.format(iid), headers=H, timeout=30)
@@ -304,8 +322,7 @@ def card(H, cards, iid):
     if r.status_code != 200:
         return item
     j = r.json()
-    desc = re.sub(r"\s+", " ", html.unescape(
-        re.sub(r"<[^>]+>", " ", j.get("description") or ""))).strip()
+    desc = clean_desc(j.get("description"))
     item = {"gtin": j.get("gtin"),
             "localizedAspects": j.get("localizedAspects") or [],
             "conditionDescription": j.get("conditionDescription") or "",
