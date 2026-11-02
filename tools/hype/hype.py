@@ -510,7 +510,8 @@ def run(a):
               + (f", без винила: {novinyl}" if novinyl else ""), file=sys.stderr)
         for al in albums:
             modes = rp.album_lots(token, d, cards, z["artist"], al["album"],
-                                  a.max_price, a.per_album, rate) or {}
+                                  a.max_price, a.per_album, rate,
+                                  kinds=a.kinds, coloured=a.coloured) or {}
             codes = [m["barcode"] for m in modes.values() if m.get("barcode")]
             rp_ = ru_prices(ru, z["artist"], al["album"], codes)
             ru_min = rp_[0]["price"] if rp_ else None
@@ -770,6 +771,13 @@ def main():
                          "с --send — фильтр готового прогона")
     ap.add_argument("--no-country", action="store_true",
                     help="без кантри: главный жанр по MusicBrainz")
+    ap.add_argument("--kinds", nargs="*", default=None,
+                    choices=["купить сейчас", "предложить цену", "аукцион"],
+                    help="только эти способы покупки (владелец 02.11.2026: "
+                         "«с возможностью предложить цену»)")
+    ap.add_argument("--coloured", action="store_true",
+                    help="только цветной винил (владелец 02.11.2026: "
+                         "«обязательно цветные»)")
     ap.add_argument("--reprice", metavar="FILE",
                     help="пересчитать цены России у готового прогона")
     a = ap.parse_args()

@@ -289,10 +289,51 @@ def card(token, cards, iid):
     return item
 
 
-def album_lots(token, d, cards, artist, album, max_price, per_album, rate):
+_TEXTURE_WORDS = re.compile(
+    r"\b(?:colou?red|colou?r\s+vinyl|splatter|marble[d]?|glitter|translucent|"
+    r"transparent|clear|smoke[dy]?|picture\s+disc|zoetrope|swirl|galaxy|"
+    r"tie[-\s]?dye|neon|glow)\b", re.I)
+
+
+def colour_of(title, item, artist, album):
+    """«цветной», «чёрный» или None (не сказано) — по заголовку, затем по
+    карточке (Color, Vinyl Color, Features). Слова исполнителя и альбома —
+    не цвет («Pink», «Red», «Golden Hour»), как в `sealed.colour_mismatch`.
+    Владелец 02.11.2026: «обязательно цветные»."""
+    low = (title or "").lower()
+    for w in re.findall(r"[a-z]+", f"{artist} {album}".lower()):
+        if len(w) > 2:
+            low = re.sub(rf"\b{re.escape(w)}\b", " ", low)
+    for k, v in fx._SHADE.items():
+        low = re.sub(rf"\b{k}\b", v, low)
+    cols = fx.colours(low)
+    if cols - {"black"} or _TEXTURE_WORDS.search(low):
+        return "цветной"
+    if "black" in cols:
+        return "чёрный"
+    if item:
+        asp = {x.get("name"): str(x.get("value") or "").lower()
+               for x in item.get("localizedAspects") or []}
+        feats = asp.get("Features", "")
+        if "colored" in feats or "coloured" in feats:
+            return "цветной"
+        for k in ("Vinyl Color", "Record Color", "Color"):
+            v = asp.get(k)
+            if not v:
+                continue
+            if re.fullmatch(r"\s*black\s*", v):
+                return "чёрный"
+            if fx.colours(v) - {"black"} or _TEXTURE_WORDS.search(v) or "multi" in v:
+                return "цветной"
+    return None
+
+
+def album_lots(token, d, cards, artist, album, max_price, per_album, rate,
+               kinds=None, coloured=False):
     """Лучший запечатанный лот альбома из США в каждом способе покупки:
     {способ: {...}} или None, если eBay отказал. Общая механика ruspop,
-    хайпа (tools/hype) и прочих «попсовых» режимов."""
+    хайпа (tools/hype) и прочих «попсовых» режимов. kinds — только эти
+    способы покупки; coloured — только цветной винил (`colour_of`)."""
     q = (f"{album} soundtrack vinyl" if artist.lower() == "various"
          else f"{artist} {album} vinyl")
     q = _plain(q).replace(" and ", " ")
@@ -323,7 +364,10 @@ def album_lots(token, d, cards, artist, album, max_price, per_album, rate):
         p, expect, kind, note = hunt.lot_price(it, 2.0)
         if _PREORDER.search(raw):
             note = (note + "; " if note else "") + "ПРЕДЗАКАЗ — отправят после выхода"
-        if p is None or kind not in by_kind:
+        if p is None or kind not in by_kind or (kinds and kind not in kinds):
+            continue
+        col = colour_of(raw, None, artist, album) if coloured else None
+        if coloured and col == "чёрный":
             continue
         # Владелец 24.10.2026: «Дороже 25$ не скидывай» — к цене лота
         # без доставки, у аукциона к текущей ставке.
@@ -331,13 +375,17 @@ def album_lots(token, d, cards, artist, album, max_price, per_album, rate):
             continue
         sh = shipping_usd(it)
         by_kind[kind].append((p + (sh if sh is not None else SHIP_GUESS),
-                              p, sh, kind, note, it))
+                              p, sh, kind, note, it, col))
     modes = {}
     for kind, lots in by_kind.items():
-        lots.sort(key=lambda x: x[0])
-        for total, p, sh, _, note, it in lots[:per_album]:
+        # Цвет назван в заголовке — первыми; не назван — проверка по карточке.
+        lots.sort(key=lambda x: (coloured and x[6] != "цветной", x[0]))
+        for total, p, sh, _, note, it, col in lots[:per_album * (2 if coloured else 1)]:
             item = card(token, cards, it["itemId"])
             if item is None:
+                continue
+            if coloured and col is None and colour_of(
+                    it.get("title"), item, artist, album) != "цветной":
                 continue
             t = it.get("title") or ""
             if not fx.vinyl_proven(item, t):
