@@ -145,6 +145,37 @@ def fetch_new(H, names, since, max_price):
     return list(out.values()), calls
 
 
+_LEAD_NOISE = re.compile(
+    r"^(?:(?:brand\s+new|new|sealed|factory\s+sealed|still\s+sealed|rare|limited|"
+    r"ltd|exclusive|official|signed|autographed|in\s+hand|nib|vinyl|lp|record)\s+)+")
+
+
+def artist_lead(title, artist):
+    """Исполнительница — в первых словах заголовка («Interscope Records
+    BILLIE EILISH …», «TONY BENNETT & LADY GAGA …»), «by <имя>» или
+    «<имя> -», а не в хвосте («… Kanye West Dua Lipa», «… banks lana del rey»)."""
+    t = _LEAD_NOISE.sub("", plain(title))
+    a = plain(artist)
+    m = re.search(rf"\b{re.escape(a)}\b", t)
+    if not m:
+        return False
+    return (len(t[:m.start()].split()) <= 3 or f"by {a}" in t
+            or bool(re.search(rf"\b{re.escape(a)}\s+-", t)))
+
+
+def album_in(title, albums):
+    """Запасное опознание альбома — фразой в заголовке («The Life of a
+    Showgirl [Portofino Orange Glitter Vinyl] Taylor Swift»); у коротких
+    названий («Red», «30», «Rae») — нет: слово может быть цветом или числом."""
+    t = " " + plain(title) + " "
+    for x in albums:
+        key = [w for w in plain(x["album"]).split() if w != "the"]
+        if len(key) >= 2 or (key and len(key[0]) >= 6):
+            if " " + " ".join(key) + " " in t:
+                return x["album"]
+    return ""
+
+
 def who(title, artists):
     import sealed as fx
     for a in sorted(artists, key=lambda a: -len(a)):
@@ -209,8 +240,8 @@ def run(a):
         if (hunt._NOT_RECORD.search(t) or hunt._FORTY_FIVE.search(t)
                 or fx._JUNK.search(t) or hunt._BAD.search(t)
                 or rp._SINGLE.search(raw) or rp._NOT_ALBUM.search(raw)
-                or re.search(r'\b7\s*(?:"|”|inch|in\b)|\bcassette\b|\bcd\b', raw, re.I)):
-            drop("не альбом (сингл, 7\", CD, кассета, мерч)")
+                or rp.not_album(raw)):
+            drop("не альбом (сингл, 7\", 45, мини, CD, кассета, мерч)")
             continue
         if not fx.is_sealed(it)[0]:
             drop("не запечатан")
@@ -219,16 +250,24 @@ def run(a):
         if not artist:
             drop("не из списка (совпало слово)")
             continue
-        col = rp.colour_of(raw, None, artist, "")
-        if col == "чёрный":
-            drop("чёрный")
-            continue
         albums = hp.vinyl_albums(d, artist, dgc)
         album = next((x["album"] for x in albums if rp.is_the_album(t, artist, x["album"])), "")
+        album = album or album_in(raw, albums)
         if not album and len(plain(artist).split()) == 1:
-            # «ROSÉ» садилась на «Dan Rose "Close Opposites"» (02.11.2026):
-            # у имени из одного слова альбом обязан опознаться.
+            # «ROSÉ» садилась на «Dan Rose "Close Opposites"», LISA — на Lisa
+            # Stansfield, RAYE — на Martha Raye, TWICE — на «Don't Think Twice»
+            # (02.11.2026): у имени из одного слова альбом обязан опознаться.
             drop("имя из одного слова, альбом не опознан")
+            continue
+        if not album and not artist_lead(raw, artist):
+            # «Pop Smoke Faith … Kanye West Dua Lipa» — упоминание в хвосте.
+            drop("исполнительница не в начале, альбом не опознан")
+            continue
+        # Цвет — после альбома: «Taylor Swift Red», «Doja Cat Hot Pink» —
+        # название, а не цвет (аудит 02.11.2026, O-124).
+        col = rp.colour_of(raw, None, artist, album)
+        if col == "чёрный":
+            drop("чёрный")
             continue
         item = rp.card(token, cards, it["itemId"], need_desc=True)
         if item is None:

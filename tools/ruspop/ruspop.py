@@ -303,20 +303,57 @@ def card(token, cards, iid, need_desc=False):
 
 _TEXTURE_WORDS = re.compile(
     r"\b(?:colou?red|colou?r\s+vinyl|splatter|marble[d]?|glitter|translucent|"
-    r"transparent|clear|smoke[dy]?|picture\s+disc|zoetrope|swirl|galaxy|"
-    r"tie[-\s]?dye|neon|glow)\b", re.I)
+    r"transparent|clear|picture\s+disc|zoetrope|swirl|galaxy|tie[-\s]?dye|neon|"
+    r"glow|eco[-\s]?mix|starburst|colou?r[-\s]in[-\s]colou?r|half[-\s]+(?:and|&)[-\s]+half|"
+    r"frost(?:ed|y)?|pearl(?:escent|y)?|iridescent|holographic|metallic|opal(?:escent)?|"
+    r"(?<!pop\s)smok(?:e|ey|y)|"
+    r"(?:coke|cola|bottle)\s+(?:bottle|clear|green)|rainbow\s+vinyl)\b", re.I)
+
+# Оттенки, которые продавцы пишут вместо цвета (аудит 02.11.2026: «Honey
+# Vinyl», «Custard», «Golden Vinyl», «Midnight burgundy», «Tiny Bubbles in
+# Champagne» не считались цветными). Без двусмысленных: «mint» — это
+# «Sealed Mint»/«Near Mint» (Pop Smoke шёл зелёным), «rose» — Pam Rose,
+# Rose Marie, «sky», «royal», «cherry», «lemon», «lime», «jade» (JADE).
+_SHADES = {
+    "golden": "gold", "honey": "yellow", "custard": "yellow", "butter": "yellow",
+    "buttercream": "yellow", "mustard": "yellow", "canary": "yellow",
+    "sunflower": "yellow", "champagne": "gold", "bronze": "gold", "copper": "orange",
+    "amber": "orange", "tangerine": "orange", "coral": "orange", "peach": "orange",
+    "apricot": "orange", "dreamsicle": "orange", "creamsicle": "orange",
+    "sherbet": "orange", "burgundy": "red", "maroon": "red", "wine": "red",
+    "crimson": "red", "ruby": "red", "scarlet": "red", "blush": "pink",
+    "bubblegum": "pink", "fuchsia": "pink", "lavender": "purple", "lilac": "purple",
+    "orchid": "purple", "mauve": "purple", "plum": "purple", "grape": "purple",
+    "amethyst": "purple", "cobalt": "blue", "navy": "blue", "sapphire": "blue",
+    "indigo": "blue", "cyan": "blue", "seafoam": "green", "emerald": "green",
+    "olive": "green", "khaki": "green", "beige": "cream", "ivory": "white",
+    "milky": "white", "opaque white": "white"}
+_GRADE_MINT = re.compile(r"\b(?:near\s+)?mint\b(?:\s*(?:minus|condition|-))?", re.I)
 
 
 def colour_of(title, item, artist, album):
     """«цветной», «чёрный» или None (не сказано) — по заголовку, затем по
-    карточке (Color, Vinyl Color, Features). Слова исполнителя и альбома —
-    не цвет («Pink», «Red», «Golden Hour»), как в `sealed.colour_mismatch`.
-    Владелец 02.11.2026: «обязательно цветные»."""
-    low = (title or "").lower()
-    for w in re.findall(r"[a-z]+", f"{artist} {album}".lower()):
-        if len(w) > 2:
-            low = re.sub(rf"\b{re.escape(w)}\b", " ", low)
-    for k, v in fx._SHADE.items():
+    карточке. Слова исполнителя и альбома — не цвет («Red», «Hot Pink»,
+    «Golden Hour»), как в `sealed.colour_mismatch`; «Mint» — оценка, не
+    цвет. Карточка: Vinyl Color / Record Color — верим; Color — один цвет
+    верим, список цветов («Black, Pink, Gray» — это обложка) и «Multicolor»
+    — только вместе с Features «Colored Vinyl». Владелец 02.11.2026:
+    «обязательно цветные»; аудит на живых лотах — ISSUES O-124."""
+    low = _GRADE_MINT.sub(" ", (title or "").lower())
+    # Имя и название вырезаются один раз и фразой: «DOJA CAT HOT PINK
+    # (150G/OPAQUE PINK VINYL)» — второе «pink» и есть цвет (аудит O-124).
+    for name in (artist, album):
+        words = [w for w in re.findall(r"[a-z0-9]+", (name or "").lower()) if len(w) > 1]
+        if not words:
+            continue
+        phrase = r"\b" + r"\W+".join(map(re.escape, words)) + r"\b"
+        if re.search(phrase, low):
+            low = re.sub(phrase, " ", low, count=1)
+        else:
+            for w in words:
+                if len(w) > 2:
+                    low = re.sub(rf"\b{re.escape(w)}\b", " ", low, count=1)
+    for k, v in _SHADES.items():
         low = re.sub(rf"\b{k}\b", v, low)
     cols = fx.colours(low)
     if cols - {"black"} or _TEXTURE_WORDS.search(low):
@@ -327,17 +364,47 @@ def colour_of(title, item, artist, album):
         asp = {x.get("name"): str(x.get("value") or "").lower()
                for x in item.get("localizedAspects") or []}
         feats = asp.get("Features", "")
-        if "colored" in feats or "coloured" in feats:
-            return "цветной"
+        feat_col = "colored vinyl" in feats or "coloured vinyl" in feats
         for k in ("Vinyl Color", "Record Color", "Color"):
             v = asp.get(k)
-            if not v:
+            if not v or re.fullmatch(r"\s*(?:unknown|not sure|n/?a|none|does not apply)\s*", v):
                 continue
+            for sk, sv in _SHADES.items():
+                v = re.sub(rf"\b{sk}\b", sv, v)
+            vc = fx.colours(v)
+            # «Black, Pink, Gray» — цвета обложки списком; «Opaque Pink And
+            # Pale Yellow Pearlescent» — описание винила (фактура).
+            several = bool(re.search(r"[,/]", v)) and "black" in v
             if re.fullmatch(r"\s*black\s*", v):
                 return "чёрный"
-            if fx.colours(v) - {"black"} or _TEXTURE_WORDS.search(v) or "multi" in v:
+            if _TEXTURE_WORDS.search(v):
                 return "цветной"
+            if k != "Color":
+                if vc - {"black"} or _TEXTURE_WORDS.search(v):
+                    return "цветной"
+                continue
+            if ("multi" in v or several) and not feat_col:
+                continue        # цвета обложки, а не винила
+            if vc - {"black"} or _TEXTURE_WORDS.search(v) or "multi" in v:
+                return "цветной"
+        if feat_col:
+            return "цветной"
     return None
+
+
+# Не альбом: синглы и сорокапятки, мини-пластинки, игрушки, фотобуки
+# (аудит «Идола» 02.11.2026: «7inPicture Disc», «7-inch», «45RPM», «Vinyl
+# Single», MGA Miniverse, «Tiny 4in Vinyl», K-pop «Photobook»).
+_NOT_ALBUM_IDOL = re.compile(
+    r"\b7\s*-?\s*(?:\"|”|''|inch|in)(?![a-z])|\b7in|\bvinyl\s+single\b|"
+    r"\bsingle\b(?!\s*-?\s*(?:lp|sided|disc|vinyl\s+lp))|\btiny\b|\bminiverse\b|"
+    r"\bmini[\s-]?(?:verse|vinyl|record)s?\b|\b[34]\s*(?:\"|”|in|inch)\b|\btoy\b|"
+    r"\bphoto\s*book\b|\bcassette\b|\bcd\b", re.I)
+_FORTY_FIVE_NO_LP = re.compile(r"\b45\s*rpm\b(?!.*\blp\b)", re.I)
+
+
+def not_album(raw):
+    return bool(_NOT_ALBUM_IDOL.search(raw or "") or _FORTY_FIVE_NO_LP.search(raw or ""))
 
 
 # Описание продавца против раздела «New» (девчачьи цветные, 02.11.2026):
