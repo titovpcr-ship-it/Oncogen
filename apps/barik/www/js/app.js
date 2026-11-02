@@ -110,13 +110,13 @@ function canUse(w){return lvOpen(TOPICS[w.t].lv);}
 /* ================= STATE ================= */
 const LS='hy-vocab-v1';
 const INT=[0,1,2,4,7,15,30,60,120];
-const DEF={w:{},set:{tr:false,auto:true,size:10,voice:'auto'},st:{day:0,streak:0},u:0,reset:0,flag:{}};
+const DEF={w:{},set:{tr:false,auto:true,size:10,voice:'auto'},st:{day:0,streak:0},u:0,reset:0,flag:{},pen:{}};
 let S=JSON.parse(JSON.stringify(DEF));
 let LSOK=true;
 function loadLocal(){
   try{
     const raw=localStorage.getItem(LS);
-    if(raw){const o=JSON.parse(raw); if(o&&typeof o==='object'){S.w=o.w||{};S.set=Object.assign({},DEF.set,o.set||{});S.st=Object.assign({},DEF.st,o.st||{});S.u=o.u||0;S.reset=o.reset||0;S.flag=o.flag||{};}}
+    if(raw){const o=JSON.parse(raw); if(o&&typeof o==='object'){S.w=o.w||{};S.set=Object.assign({},DEF.set,o.set||{});S.st=Object.assign({},DEF.st,o.st||{});S.u=o.u||0;S.reset=o.reset||0;S.flag=o.flag||{};S.pen=o.pen||{};}}
   }catch(e){LSOK=false;}
 }
 function writeLocal(){try{localStorage.setItem(LS,JSON.stringify(S));LSOK=true;}catch(e){LSOK=false;}}
@@ -225,6 +225,8 @@ function buzz(){try{if(navigator.vibrate) navigator.vibrate(35);}catch(e){}}
 let toastT=null;
 function toast(msg){const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3400);}
 const ICON={
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h8"/><path d="M15.6 4.4a2 2 0 0 1 2.9 2.9L8 17.8l-4 1 1-4z"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>',
   again:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>',
   spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/><path d="M16.5 8.8a4.8 4.8 0 0 1 0 6.4"/><path d="M19.2 6.2a8.6 8.6 0 0 1 0 11.6"/></svg>',
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>',
@@ -525,7 +527,7 @@ document.addEventListener('touchend',e=>{
 /* ================= RENDER ================= */
 function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc') return 'settings'; return ''; }
+function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -542,6 +544,7 @@ function render(auto){
   else if(view==='dict'){ el.innerHTML=dictHTML(); bindDict(); }
   else if(view==='abc') el.innerHTML=abcHTML();
   else if(view==='letter'){ el.innerHTML=letterHTML(viewArg); writeCursive(); }
+  else if(view==='pen'){ el.innerHTML=penHTML(); penMount(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -615,7 +618,8 @@ function onboardHTML(){
   '<section class="ld-stats"><div class="ld-wrap"><ul>'+stats+'</ul></div></section>'+
   '<section class="ld-sec"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.fTitle)+'</h2><span class="orn ld-orn"></span>'+
     '<div class="ld-feat"><div class="fx"><h3>'+esc(D.f1)+'</h3><p>'+esc(D.f1t(PW.length))+'</p></div><ul class="ld-tiles">'+tiles+'</ul></div>'+
-    '<div class="ld-feat rev"><div class="fx"><h3>'+esc(D.f2)+'</h3><p>'+esc(D.f2t)+'</p></div><div class="ld-cb" id="featCb"><div class="cbw"></div><div class="ld-abc" role="group" aria-label="'+esc(D.abcPick)+'">'+keys+'</div></div></div>'+
+    '<div class="ld-feat rev"><div class="fx"><h3>'+esc(D.f2)+'</h3><p>'+esc(D.f2t)+'</p></div><div class="ld-cb" id="featCb"><div class="cbw"></div><div class="ld-abc" role="group" aria-label="'+esc(D.abcPick)+'">'+keys+'</div>'+
+      '<div class="ld-try"><button class="btn primary" data-act="landPen">'+ICON.pen+esc(T('penBtn'))+'</button></div></div></div>'+
     '<div class="ld-feat"><div class="fx"><h3>'+esc(D.f3)+'</h3><p>'+esc(D.f3t)+'</p></div>'+ladder+'</div>'+
     '<ul class="ld-mini">'+mini+'</ul></div></section>'+
   '<section class="ld-sec ld-lv"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.lvTitle)+'</h2><span class="orn ld-orn"></span><p class="ld-lead">'+esc(D.lvSub(TOPICS.length))+'</p><ul class="lv-grid">'+lv+'</ul></div></section>'+
@@ -760,10 +764,12 @@ function bindDict(){
   $('#dt').addEventListener('change',e=>{dt=e.target.value;dLimit=150;$('#dlist').innerHTML=dictRows();});
 }
 function abcHTML(){
-  const tiles=ABC.map((x,i)=>'<li><button data-act="letter" data-arg="'+i+'" aria-label="'+esc(x.up+' '+x.lo+' — '+rd(x))+'"><span class="up" lang="hy">'+esc(x.up)+(x.lo!==x.up?'<i>'+esc(x.lo)+'</i>':'')+'</span><span class="snd">'+esc(rd(x))+'</span></button></li>').join('');
+  const tiles=ABC.map((x,i)=>'<li><button data-act="letter" data-arg="'+i+'" aria-label="'+esc(x.up+' '+x.lo+' — '+rd(x))+'"><span class="up" lang="hy">'+esc(x.up)+(x.lo!==x.up?'<i>'+esc(x.lo)+'</i>':'')+'</span><span class="snd">'+esc(rd(x))+'</span>'+(S.pen[x.up]?'<span class="pen-mark" aria-hidden="true">★</span>':'')+'</button></li>').join('');
+  const penN=ABC.filter(x=>S.pen[x.up]).length;
   return '<header class="head"><h1 class="pg">'+esc(T('abcTitle'))+'</h1><p class="t-hy2" lang="hy">Այբուբեն</p></header>'+
     '<p class="note">'+esc(T('abcNote'))+'</p>'+
-    '<div class="actions abc-acts"><button class="btn primary" data-act="abcQuiz">'+esc(T('abcTrain'))+'</button></div>'+
+    '<div class="actions abc-acts"><button class="btn primary" data-act="abcQuiz">'+esc(T('abcTrain'))+'</button>'+
+    '<button class="btn secondary" data-act="penGo">'+esc(T('penAbc'))+'<span class="cap">'+esc(T('penCount',penN,ABC.length))+'</span></button></div>'+
     '<ul class="abc">'+tiles+'</ul>';
 }
 /* ================= ПРОПИСЬ ================= */
@@ -786,7 +792,8 @@ function cursiveHTML(x){
   if(!CUR[x.up]) return '';
   return '<section class="copybook"><div class="cb-head"><h2 class="sec">'+esc(T('cursive'))+'</h2>'+
     '<button class="aud" data-act="write">'+ICON.again+'<span>'+esc(T('cursiveAgain'))+'</span></button></div>'+
-    cursiveSVG(x)+'<p class="cb-note">'+esc(T('cursiveNote'))+'</p></section>';
+    cursiveSVG(x)+'<p class="cb-note">'+esc(T('cursiveNote'))+'</p>'+
+    '<button class="btn primary pen-cta" data-act="pen" data-arg="'+ABC.indexOf(x)+'">'+ICON.pen+esc(T('penBtn'))+(S.pen[x.up]?'<span class="pen-have" aria-label="'+S.pen[x.up]+' / 3">'+'★'.repeat(S.pen[x.up])+'</span>':'')+'</button></section>';
 }
 /* Перо как у живой руки: на прямых быстрее, на изгибах медленнее (закон «двух третей» рукописи:
    скорость ~ кривизна^(-1/3)), в изломе почти останавливается; штрих разгоняется и тормозит,
@@ -860,6 +867,227 @@ function writeCursive(svgArg,onDone){
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
+}
+/* ================= ТРЕНАЖЁР ПРОПИСИ (O-133) =================
+   Букву обводят пальцем (мышью, стилусом) по образцу — штрих за штрихом, с оранжевой точки, в ту
+   сторону, куда ведёт перо. Каждый штрих сверяется с эталоном из cursive.js: обе линии делятся на
+   равные по длине отрезки и выравниваются (DTW) — так проверяются и форма, и направление, и место.
+   Допуски — в пикселях экрана: палец везде одинаковый, а буква на экране бывает крупнее и мельче
+   (строчная показывается крупно). Принятый штрих остаётся чернилами, неверный краснеет и гаснет,
+   после двух промахов подряд перо само показывает этот штрих. Лучший результат — звёзды в S.pen. */
+const PEN={N:48, start:40, cover:36, stray:44, mean:16, free:1.35, gone:650};
+let penT=null;
+const still=()=>!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const penLine=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
+const PEN_LINES='<g class="cb-lines">'+penLine(0,'t')+penLine(64,'x')+penLine(100,'b')+penLine(152,'t')+'</g>';
+const penD=P=>P.length?'M'+P.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'):'';
+const penDot=p=>'M'+p[0].toFixed(1)+' '+p[1].toFixed(1)+'h.01';
+function penNew(i,keep){
+  const x=ABC[i], g=x&&CUR[x.up]; if(!g) return null;
+  const parts=x.lo===x.up?[g.l]:[g.U,g.l];
+  penT={i,x,parts,part:0,ghost:keep&&penT?penT.ghost:true,ink:parts.map(()=>[]),sc:parts.map(()=>[]),miss:0,misses:0,fin:false,wait:false};
+  return penT;
+}
+function penHTML(){
+  if(!penT||penT.i!==viewArg) penNew(viewArg||0);
+  const st=penT, x=st.x, name=x.up+(x.lo!==x.up?' '+x.lo:'');
+  const head='<header class="pen-top"><button class="back" data-act="letter" data-arg="'+st.i+'">‹ <span lang="hy">'+esc(name)+'</span></button><h1 class="pen-h">'+esc(T('penTitle'))+'</h1></header>';
+  if(st.fin) return head+penResultHTML();
+  const p=st.parts[st.part];
+  const tabs=st.parts.length<2?'':'<div class="pen-parts">'+st.parts.map((q,j)=>'<button data-act="penPart" data-arg="'+j+'" aria-pressed="'+(j===st.part)+'"><b lang="hy">'+esc(j?x.lo:x.up)+'</b><span>'+esc(T(j?'penSmall':'penCap'))+'</span>'+
+    (st.ink[j].length===q.d.length?'<i class="pen-tick" aria-hidden="true">✓</i>':'')+'</button>').join('')+'</div>';
+  const svg='<svg class="cb pen-svg" id="penSvg" preserveAspectRatio="xMidYMid meet" aria-label="'+esc(T('penTitle')+': '+(st.part?x.lo:x.up))+'">'+PEN_LINES+
+    '<g class="pen-ghost'+(st.ghost?'':' off')+'">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g><path class="pen-cur"/><g class="pen-ok"></g>'+
+    '<path class="pen-live"/><path class="pen-halo"/><path class="pen-start"/><path class="pen-comet"/>'+
+    '<g class="cb-ink pen-demo gone"></g><g class="nib"><circle class="halo" r="8.5"/><circle r="4.1"/></g></svg>';
+  return head+tabs+'<div class="pen-card">'+svg+'</div>'+
+    '<div class="pen-bar"><p class="pen-msg" id="penMsg" aria-live="polite"></p><span class="pen-dots" id="penDots" role="img"></span></div>'+
+    '<div class="pen-acts"><button class="btn secondary" data-act="penShow">'+ICON.play+esc(T('penShow'))+'</button><button class="btn secondary" data-act="penClear">'+ICON.again+esc(T('penClear'))+'</button>'+
+    '<button class="btn ghost" data-act="penGhost">'+esc(T(st.ghost?'penNoModel':'penModel'))+'</button></div>';
+}
+function penResultHTML(){
+  const st=penT, n=ABC.length, nx=ABC[(st.i+1)%n], base=st.parts[0].x0;
+  let right=0, ghost='', ink='';
+  st.parts.forEach((p,j)=>{ right=Math.max(right,p.x0+p.w-base); ghost+=p.d.map(d=>'<path d="'+d+'"/>').join(''); ink+=st.ink[j].map(P=>'<path d="'+penD(P)+'"/>').join(''); });
+  const svg='<svg class="cb pen-res" viewBox="-30 -24 '+(right+60).toFixed(1)+' 200" role="img" aria-label="'+esc(T('penYours'))+'">'+PEN_LINES+
+    '<g transform="translate('+(-base).toFixed(1)+',0)"><g class="pen-ghost">'+ghost+'</g><g class="pen-ok">'+ink+'</g></g></svg>';
+  const stars='<p class="pen-stars" role="img" aria-label="'+st.stars+' / 3">'+[1,2,3].map(j=>'<span class="'+(j<=st.stars?'on':'')+'">★</span>').join('')+'</p>';
+  return '<div class="pen-card pen-done"><span class="pen-cap">'+esc(T('penYours'))+'</span>'+svg+'</div><div class="pen-result">'+stars+
+    '<p class="pen-score">'+esc(T('penDone',st.x.up,st.pct))+'</p><div class="actions">'+
+    '<button class="btn primary" data-act="pen" data-arg="'+((st.i+1)%n)+'">'+esc(T('penNext',nx.up+(nx.lo!==nx.up?' '+nx.lo:'')))+'</button>'+
+    '<button class="btn secondary" data-act="penAgain">'+esc(T('penAgain'))+'</button></div></div>';
+}
+/* После вывода: рамка буквы (viewBox), точки эталона, толщины линий в пикселях, касания. */
+function penMount(){
+  const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg) return;
+  const ghost=svg.querySelector('.pen-ghost');
+  st.ref=[...ghost.querySelectorAll('path')].map(e=>{
+    const L=e.getTotalLength(), P=[]; for(let i=0;i<PEN.N;i++){ const q=e.getPointAtLength(L*i/(PEN.N-1)); P.push([q.x,q.y]); }
+    return {L,P,d:e.getAttribute('d')};
+  });
+  const b=ghost.getBBox(), m=24, y0=Math.min(b.y,64)-m, y1=Math.max(b.y+b.height,100)+m, x0=b.x-m-8, x1=b.x+b.width+m+8;
+  svg.setAttribute('viewBox',[x0,y0,x1-x0,y1-y0].map(v=>v.toFixed(1)).join(' '));
+  svg.querySelector('.pen-ok').innerHTML=st.ink[st.part].map(P=>'<path d="'+penD(P)+'"/>').join('');
+  penWidths(); penCue(true); penBind(svg);
+}
+function penWidths(){
+  const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg) return;
+  const m=svg.getScreenCTM(); if(!m||!m.a) return;
+  const u=st.u=1/m.a, set=(s,w)=>svg.querySelectorAll(s).forEach(e=>{ e.style.strokeWidth=(w*u).toFixed(3); });
+  set('.pen-ghost path',20); set('.pen-cur',20); set('.pen-ok path',7); set('.pen-live',7); set('.pen-start',18); set('.pen-halo',36); set('.pen-comet',13);
+  set('.pen-demo path',6.5); set('.cb-lines line',1.4);
+  const xl=svg.querySelector('.cb-lines .x'); if(xl) xl.style.strokeDasharray=(7*u).toFixed(2)+' '+(8*u).toFixed(2);
+  svg.querySelectorAll('.nib circle').forEach((c,j)=>c.setAttribute('r',((j?5.5:11)*u).toFixed(2)));
+}
+function penSay(t,tone){ const e=document.getElementById('penMsg'); if(!e) return; e.textContent=t; e.className='pen-msg'+(tone?' '+tone:''); }
+/* Текущий штрих: подсветка (с образцом), точка начала, кружки штрихов, бегущая точка по ходу пера. */
+function penCue(first){
+  const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg) return;
+  const n=st.ref.length, k=st.ink[st.part].length, R=st.ref[k];
+  const cur=svg.querySelector('.pen-cur'), s=svg.querySelector('.pen-start'), h=svg.querySelector('.pen-halo');
+  if(R){ cur.setAttribute('d',R.d); s.setAttribute('d',penDot(R.P[0])); h.setAttribute('d',penDot(R.P[0])); }
+  cur.style.display=R&&st.ghost?'':'none'; s.style.display=h.style.display=R?'':'none';
+  const dots=document.getElementById('penDots');
+  if(dots){ dots.innerHTML=st.ref.map((_,j)=>'<i class="'+(j<k?'ok':(j===k?'cur':''))+'"></i>').join(''); dots.setAttribute('aria-label',T('penStroke',Math.min(k+1,n),n)); }
+  if(first) penSay(T(st.ghost?'penHint':'penFree'));
+  if(R) penComet();
+}
+function penComet(){
+  const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg||!st.ghost||still()) return;
+  const R=st.ref[st.ink[st.part].length]; if(!R) return;
+  const c=svg.querySelector('.pen-comet'), el=svg.querySelector('.pen-cur'), my=st.cm=(st.cm||0)+1;
+  const dur=Math.min(2400,Math.max(700,R.L/(st.u||1)/.42)); let t0=null;
+  const f=now=>{
+    if(penT!==st||st.cm!==my||!c.isConnected){ return; }
+    if(t0===null) t0=now;
+    const e=Math.min(1,(now-t0)/dur), q=el.getPointAtLength(R.L*sm(e));
+    c.setAttribute('d',penDot([q.x,q.y])); c.style.opacity=e<.85?1:(1-e)/.15;
+    if(e<1) requestAnimationFrame(f); else c.removeAttribute('d');
+  };
+  requestAnimationFrame(f);
+}
+function penBind(svg){
+  let pid=null, pts=[]; const live=svg.querySelector('.pen-live'), sp=svg.createSVGPoint();
+  const at=e=>{ const m=svg.getScreenCTM(); if(!m) return null; sp.x=e.clientX; sp.y=e.clientY; const q=sp.matrixTransform(m.inverse()); return [q.x,q.y]; };
+  svg.addEventListener('pointerdown',e=>{
+    const st=penT; if(!st||st.fin||st.wait||pid!==null||st.ink[st.part].length>=st.ref.length) return;
+    if(e.pointerType==='mouse'&&e.button!==0) return;
+    if(st.demo) penDemoStop();
+    st.cm=(st.cm||0)+1; st.bad=(st.bad||0)+1;
+    const c=svg.querySelector('.pen-comet'); if(c) c.removeAttribute('d');
+    pid=e.pointerId; try{ svg.setPointerCapture(pid); }catch(_){}
+    const p=at(e); pts=p?[p]:[]; live.classList.remove('bad'); live.setAttribute('d',penD(pts));
+    e.preventDefault();
+  });
+  svg.addEventListener('pointermove',e=>{
+    if(e.pointerId!==pid) return;
+    const ev=e.getCoalescedEvents?e.getCoalescedEvents():[];
+    (ev.length?ev:[e]).forEach(q=>{ const p=at(q); if(p) pts.push(p); });
+    live.setAttribute('d',penD(pts)); e.preventDefault();
+  });
+  const end=e=>{
+    if(e.pointerId!==pid) return; pid=null;
+    if(e.type==='pointercancel'){ live.removeAttribute('d'); pts=[]; return; }
+    const P=pts; pts=[]; penJudge(P);
+  };
+  svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end);
+}
+function penResample(P,N){
+  const pts=P.map(p=>p.slice()); let L=0;
+  for(let i=1;i<pts.length;i++) L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+  const I=L/(N-1), out=[pts[0]]; let D=0;
+  for(let i=1;i<pts.length;i++){
+    const a=pts[i-1], b=pts[i], d=Math.hypot(b[0]-a[0],b[1]-a[1]);
+    if(d>0&&D+d>=I){ const t=(I-D)/d, q=[a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1])]; out.push(q); pts.splice(i,0,q); D=0; }
+    else D+=d;
+  }
+  while(out.length<N) out.push(pts[pts.length-1]);
+  return out.slice(0,N);
+}
+function penDTW(A,B){
+  const n=A.length, m=B.length, W=Math.max(6,Math.ceil(n/4)), M=m+1;
+  const C=new Float64Array((n+1)*M).fill(Infinity), K=new Float64Array((n+1)*M); C[0]=0;
+  for(let i=1;i<=n;i++) for(let j=Math.max(1,i-W);j<=Math.min(m,i+W);j++){
+    const a=A[i-1], b=B[j-1], c=Math.hypot(a[0]-b[0],a[1]-b[1]), q=(i-1)*M+j-1;
+    let best=C[q], kk=K[q];
+    if(C[q+1]<best){ best=C[q+1]; kk=K[q+1]; }
+    if(C[i*M+j-1]<best){ best=C[i*M+j-1]; kk=K[i*M+j-1]; }
+    C[i*M+j]=best+c; K[i*M+j]=kk+1;
+  }
+  return C[n*M+m]/K[n*M+m];
+}
+/* Штрих ученика против эталона: точки — в единицах буквы, u — единиц на пиксель, k — послабление
+   без образца. Причина отказа нужна для подсказки: не с того конца, не от точки, коротко, мимо. */
+function penCheck(pts,R,u,k){
+  const N=PEN.N, px=v=>v/u, d=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+  let len=0; for(let i=1;i<pts.length;i++) len+=d(pts[i],pts[i-1]);
+  if(pts.length<3||px(len)<14) return {ok:false,why:'short'};
+  const U=penResample(pts,N), P=R.P;
+  const s0=px(d(U[0],P[0])), e0=px(d(U[N-1],P[N-1])), fwd=penDTW(U,P), bwd=penDTW(U,P.slice().reverse());
+  // в обратную сторону: обратный эталон ложится заметно лучше (так ловится и петля, где начало = конец)
+  if(bwd<fwd*.75&&px(bwd)<PEN.mean*k*1.6) return {ok:false,why:'rev'};
+  if(s0>PEN.start*k) return {ok:false,why:'start'};
+  if(e0>PEN.start*k) return {ok:false,why:len<R.L*.92?'short':'off'};
+  const far=(A,B)=>{ let mx=0; for(const a of A){ let mn=1e9; for(const b of B){ const v=d(a,b); if(v<mn) mn=v; } if(mn>mx) mx=mn; } return px(mx); };
+  const cover=far(P,U), stray=far(U,P), mean=px(fwd);
+  if(cover>PEN.cover*k) return {ok:false,why:len<R.L*.75?'short':'off',cover,stray,mean};
+  if(stray>PEN.stray*k||mean>PEN.mean*k) return {ok:false,why:'off',cover,stray,mean};
+  return {ok:true,s:Math.max(0,Math.min(1,1-(mean/k-4)/14)),cover,stray,mean};
+}
+function penSmooth(P){
+  if(P.length<5) return P;
+  return P.map((p,i)=>{ if(i===0||i===P.length-1) return p; let x=0,y=0,w=0;
+    for(let j=-2;j<=2;j++){ const q=P[Math.min(P.length-1,Math.max(0,i+j))], g=3-Math.abs(j); x+=q[0]*g; y+=q[1]*g; w+=g; }
+    return [x/w,y/w]; });
+}
+function penJudge(pts){
+  const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg) return;
+  const live=svg.querySelector('.pen-live'), k=st.ink[st.part].length, R=st.ref[k]; if(!R) return;
+  const r=penCheck(pts,R,st.u||1,st.ghost?1:PEN.free); st.last=r;
+  if(r.ok){
+    const P=penSmooth(pts); st.ink[st.part].push(P); st.sc[st.part].push(r.s); st.miss=0;
+    const e=document.createElementNS('http://www.w3.org/2000/svg','path'); e.setAttribute('d',penD(P)); e.style.strokeWidth=(7*(st.u||1)).toFixed(3);
+    svg.querySelector('.pen-ok').appendChild(e); live.removeAttribute('d');
+    const g=T('penGood'); penSay(r.s>=.7?g[(st.misses+k+st.part)%g.length]:T('penOkMsg'),'ok');
+    try{ if(navigator.vibrate) navigator.vibrate(12); }catch(_){}
+    if(k+1<st.ref.length) penCue(); else { penCue(); penPartDone(); }
+    return;
+  }
+  st.miss++; st.misses++;
+  live.classList.add('bad'); const my=st.bad=(st.bad||0)+1;
+  setTimeout(()=>{ if(st.bad===my){ live.removeAttribute('d'); live.classList.remove('bad'); } },PEN.gone);
+  penSay(T({rev:'penRev',start:'penStart',short:'penShort',off:'penOff'}[r.why]),'bad');
+  if(st.miss>=2&&st.ghost){ st.miss=0; setTimeout(()=>{ if(penT===st&&!st.demo&&st.bad===my) penDemo(k); },PEN.gone); }
+  else penComet();
+}
+function penPartDone(){
+  const st=penT; st.wait=true;
+  const next=st.parts.findIndex((p,j)=>st.ink[j].length<p.d.length);
+  if(next<0){ setTimeout(()=>{ if(penT===st&&view==='pen'){ st.wait=false; penFinish(); } },750); return; }
+  penSay(T(st.part===0?'penCapDone':'penSmallDone'),'ok');
+  setTimeout(()=>{ if(penT===st&&view==='pen'){ st.wait=false; st.part=next; st.miss=0; render(); } },1150);
+}
+function penFinish(){
+  const st=penT, all=st.sc.flat(), acc=all.reduce((a,b)=>a+b,0)/Math.max(1,all.length);
+  let stars=acc>=.8?3:(acc>=.55?2:1); if(st.misses>=4&&stars>1) stars--;
+  st.pct=Math.round(acc*100); st.stars=stars; st.fin=true;
+  if((S.pen[st.x.up]||0)<stars){ S.pen[st.x.up]=stars; save(); }
+  render();
+}
+/* Перо показывает часть буквы целиком или один штрих; коснуться — показ гаснет, можно писать. */
+function penDemo(k){
+  const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg||st.fin) return;
+  const g=svg.querySelector('.pen-demo'), ds=st.parts[st.part].d;
+  g.innerHTML=(k==null?ds:[ds[k]]).map(d=>'<path d="'+d+'"/>').join(''); g.classList.remove('gone');
+  penWidths(); st.demo=true; st.cm=(st.cm||0)+1;
+  const c=svg.querySelector('.pen-comet'); if(c) c.removeAttribute('d');
+  writeCursive(svg,()=>{ if(penT!==st) return; setTimeout(()=>{ if(penT!==st||!st.demo) return; st.demo=false; g.classList.add('gone'); penComet(); },still()?1600:350); });
+}
+function penDemoStop(){
+  const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg) return;
+  svg.__a=(svg.__a||0)+1; st.demo=false;
+  const g=svg.querySelector('.pen-demo'); if(g) g.classList.add('gone');
+  const nib=svg.querySelector('.nib'); if(nib) nib.style.opacity=0;
 }
 function letterHTML(i){
   const x=ABC[i], w=BY[x.ex], n=ABC.length;
@@ -1129,6 +1357,15 @@ const H={
   pickLang:a=>{setLang(a); go('home');},
   landLang:a=>{ if(a===L) return; L=a; document.documentElement.lang=a; renderTabs(); render(); },
   landGo:()=>{setLang(L); go('home');},
+  landPen:()=>{ const box=document.getElementById('featCb'), seq=CUR_ABC(), k=box&&box.__k?(box.__k-1+seq.length)%seq.length:0, i=Math.max(0,ABC.findIndex(x=>x.up===seq[k]));
+    setLang(L); penNew(i); go('pen',i); },
+  pen:a=>{ penNew(+a); go('pen',+a); },
+  penGo:()=>{ const i=ABC.findIndex(x=>CUR[x.up]&&!S.pen[x.up]); penNew(i<0?0:i); go('pen',penT.i); },
+  penPart:a=>{ const st=penT; if(!st||st.wait||+a===st.part) return; if(st.demo) penDemoStop(); st.part=+a; st.miss=0; render(); },
+  penClear:()=>{ const st=penT; if(!st||st.wait) return; if(st.demo) penDemoStop(); st.ink[st.part]=[]; st.sc[st.part]=[]; st.miss=0; render(); },
+  penGhost:()=>{ const st=penT; if(!st||st.wait) return; penNew(st.i); penT.ghost=!st.ghost; render(); },
+  penShow:()=>{ if(penT&&!penT.wait) penDemo(); },
+  penAgain:()=>{ penNew(penT.i,true); render(); window.scrollTo(0,0); },
   landAbc:()=>{setLang(L); go('abc');},
   landLetter:a=>{ const box=document.getElementById('featCb'); if(!box||!box.__one) return; if(box.__io) box.__io.disconnect(); box.__k=+a; box.__one(); },
   landDoc:a=>{setLang(L); docFrom='home'; go('doc',a);},
@@ -1221,7 +1458,7 @@ const H={
   docBack:()=>go(docFrom==='paywall'?'paywall':(docFrom||'settings')),
   reset:()=>{
     if(!resetArm){resetArm=Date.now(); render(); setTimeout(()=>{if(resetArm&&Date.now()-resetArm>=4900&&view==='settings'){resetArm=0;render();}},5000); return;}
-    S.w={}; S.st={day:0,streak:0}; S.reset=Date.now(); resetArm=0; save(); render(); toast(T('resetDone'));
+    S.w={}; S.st={day:0,streak:0}; S.pen={}; S.reset=Date.now(); resetArm=0; save(); render(); toast(T('resetDone'));
   }
 };
 document.addEventListener('click',e=>{
@@ -1257,6 +1494,7 @@ function onBack(){
   if(view==='session'&&sess&&!sess.ended){finish(); return true;}
   if(view==='abcquiz'){H.abcQuit(); return true;}
   if(view==='letter'){go('abc'); return true;}
+  if(view==='pen'){go('letter',penT?penT.i:0); return true;}
   if(view==='pquiz'){H.picQuit(); return true;}
   if(view==='tquiz'){H.typeQuit(); return true;}
   if(view==='pcard'){go('pics'); return true;}
@@ -1271,14 +1509,15 @@ loadLocal();
 document.documentElement.lang=L;
 renderTabs();
 if(SPEECH){ loadVoices(); try{ window.speechSynthesis.addEventListener('voiceschanged',loadVoices); }catch(e){} }
-BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz') render(); });
+BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
+addEventListener('resize',()=>{ if(view==='pen') penWidths(); });
 BILL.onBack(onBack);
 // …/#welcome (или ?welcome) — показать главную для гостя и тому, кто уже выбрал язык (ссылка из рекламы, показ).
 const WELCOME=/(?:^|[?&#])welcome(?:[&=]|$)/.test((location.search||'')+(location.hash||''));
 view=UI.lang&&!WELCOME?'home':'onboard';
 render();
 BILL.hideSplash();
-Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz') render(); });
+Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,get tq(){return tq;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

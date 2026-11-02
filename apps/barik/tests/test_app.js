@@ -79,6 +79,25 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.waitForTimeout(7000);
     const ink=await pg.evaluate(()=>[...document.querySelectorAll('.cb-ink path')].map(p=>parseFloat(getComputedStyle(p).strokeDashoffset)||0));
     ok(ink.length&&ink.every(v=>Math.abs(v)<0.5),'пропись: перо дописало букву '+ink.map(v=>v.toFixed(0)).join(','));
+    if(scheme==='light'){
+      // тренажёр прописи: обвести Ղ ղ по образцу — задом наперёд не принимается, по эталону — три звезды
+      const pens=async k=>pg.evaluate(k=>{ const svg=document.getElementById('penSvg'), p=svg.querySelectorAll('.pen-ghost path')[k]; if(!p) return null;
+        const L=p.getTotalLength(), m=svg.getScreenCTM(), out=[]; for(let i=0;i<=40;i++){ const q=p.getPointAtLength(L*i/40), s=svg.createSVGPoint(); s.x=q.x; s.y=q.y; const c=s.matrixTransform(m); out.push([c.x,c.y]); } return out; },k);
+      const trace=async P=>{ await pg.mouse.move(P[0][0],P[0][1]); await pg.mouse.down(); for(const [x,y] of P.slice(1)) await pg.mouse.move(x,y,{steps:2}); await pg.mouse.up(); await pg.waitForTimeout(80); };
+      const okN=()=>pg.locator('#penSvg .pen-ok path').count();
+      await pg.click('.pen-cta'); await pg.waitForTimeout(300);
+      ok(await pg.locator('#penSvg .pen-ghost path').count()===2&&await pg.locator('#penDots i').count()===2,'тренажёр: у Ղ два штриха, кружки штрихов');
+      await shot('pen'); await noHScroll('pen');
+      await trace((await pens(0)).reverse());
+      ok(await okN()===0&&(await pg.getAttribute('#penMsg','class')).includes('bad')&&(await pg.textContent('#penMsg')).includes('другую сторону'),'тренажёр: задом наперёд не принят — «в другую сторону»');
+      for(let part=0;part<2;part++){ for(let k=0;k<2;k++) await trace(await pens(k)); if(!part){ ok(await okN()===2,'тренажёр: заглавная обведена'); await pg.waitForTimeout(1300); } }
+      await pg.waitForTimeout(900);
+      ok(await pg.locator('.pen-stars .on').count()===3&&(await pg.textContent('.pen-score')).includes('Ղ'),'тренажёр: Ղ ղ — три звезды, '+(await pg.textContent('.pen-score').catch(()=>'')));
+      await shot('pen-done');
+      await pg.click('[data-act=tab][data-arg=abc]');
+      ok(await pg.locator('.abc button >> nth=17').locator('.pen-mark').count()===1&&(await pg.textContent('[data-act=penGo]')).includes('1 из 39'),'алфавит: звёздочка у Ղ, «обведено 1 из 39»');
+      await pg.click('.abc button >> nth=17'); ok((await pg.textContent('.pen-cta')).includes('★★★'),'на странице буквы — лучший результат');
+    }
     await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('[data-act=abcQuiz]');
     for(let i=0;i<12;i++){ await pg.locator('.opt').first().click(); await pg.waitForTimeout(30); if(i===0) await shot('abcquiz'); if(await pg.locator('[data-act=abcNext]').count()) await pg.click('[data-act=abcNext]'); else await pg.waitForTimeout(950); }
     ok(await pg.locator('.result .score').count()===1,'тренировка букв закончилась итогом'); await noHScroll('abcquiz');
@@ -137,6 +156,20 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('hy-vocab-v1')).w).length)>0,'прогресс сохранён в hy-vocab-v1');
     ok(errs.length===0,'ошибок JS нет '+errs.join(' | '));
     ok(ext.length===0,'внешних запросов нет '+ext.slice(0,3).join(' '));
+    await ctx.close();
+  }
+  { // палец на телефоне: касания идут в штрих, страница не прокручивается
+    const ctx=await br.newContext({viewport:{width:360,height:640},deviceScaleFactor:3,isMobile:true,hasTouch:true,locale:'ru-RU'});
+    const pg=await ctx.newPage(); await pg.goto(base); await pg.tap('[data-act=pickLang][data-arg=ru]');
+    await pg.evaluate(()=>window.__bararan.H.pen('1')); await pg.waitForTimeout(400);
+    const P=await pg.evaluate(()=>{ const svg=document.getElementById('penSvg'), p=svg.querySelector('.pen-ghost path'), L=p.getTotalLength(), m=svg.getScreenCTM(), out=[];
+      for(let i=0;i<=50;i++){ const q=p.getPointAtLength(L*i/50), s=svg.createSVGPoint(); s.x=q.x; s.y=q.y; const c=s.matrixTransform(m); out.push([c.x,c.y]); } return out; });
+    const cdp=await ctx.newCDPSession(pg), y0=await pg.evaluate(()=>scrollY);
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:P[0][0],y:P[0][1]}]});
+    for(const [x,y] of P.slice(1)) await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y}]});
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]}); await pg.waitForTimeout(150);
+    const r=await pg.evaluate(()=>({n:document.querySelectorAll('#penSvg .pen-ok path').length,y:scrollY}));
+    ok(r.n===1&&r.y===y0,'тренажёр: палец (касания) — штрих принят, страница стоит');
     await ctx.close();
   }
   await br.close(); srv.close();
