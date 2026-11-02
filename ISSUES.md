@@ -3602,3 +3602,26 @@ eBay $21.45; в России — только предзаказ RSD BF 2026 у 
 Поправка: appmistore пишет фамилию первой («DEAN OLIVIA», «DEL REY LANA»)
 — `hype.load_ru` кладёт такие цены и под «Olivia Dean» (хайп и ruspop
 тоже их не находили).
+
+## O-121. Трендовые девчачьи, запечатанные, цветные, только торг, до $25
+
+Владелец 02.11.2026: «Поищи трендовые девчачие запечатанные до 25$ с
+возможностью предложить цену, обязательно цветные». `hype.py --women
+--no-country --kinds "предложить цену" --coloured --max-price 25 --artists
+30`: новые фильтры `ruspop.album_lots(kinds=…, coloured=True)` и
+`ruspop.colour_of` — цвет по заголовку (слова исполнителя и альбома
+вырезаются: «Red», «Pink», «Golden Hour» — не цвет), затем по карточке
+(Color, Vinyl Color, Features «Colored Vinyl»); «black» — мимо.
+
+15 лотов, проверено по карточкам: подтверждены 6 — Taylor Swift «The Life
+of a Showgirl» оранжевый $15.50 (Москва 2 784 ₽, appmistore 7 400 ₽ —
+x2.66; продавец с 10 отзывами), Lady Gaga «Mayhem» жёлтый Target 2LP
+$19.99 (4 366 ₽ с пересылкой двойника, plastinka 6 872 ₽ — x1.57),
+Dua Lipa «Radical Optimism» красный $19 (x1.09), Shakira «Las Mujeres Ya
+No Lloran» красный 2LP $17.99, Ashe «Rae» красный $18.99, Ms. Rachel
+розовый $18 (России нет). Отсеяны: вскрытые и «как новые» (GUTS, ADÉLA,
+Tate McRae — VG+ в описании, Billie Eilish WWAFA без плёнки), с дефектом
+(Ariana Petal), чёрный по описанию при «Colored Vinyl» в карточке
+(Chappell Roan). Ловушки: «New» в карточке ≠ запечатан — смотреть
+описание; характеристика «Colored Vinyl» бывает ложной; двойник по
+описанию — пересылка $20.11, а не $8.80.

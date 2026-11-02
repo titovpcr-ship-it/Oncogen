@@ -1,4 +1,15 @@
 {
+"1975": {
+"alive": true,
+"gender": "male",
+"mb": "5b6ebfe0-f72b-4902-bba9-74c8af0f1af0",
+"mb_name": "The 1975",
+"name": "The 1975",
+"note": "",
+"t": 1793600516,
+"type": "Group",
+"v": 3
+},
 "54ultra": {
 "alive": true,
 "gender": null,
@@ -19,6 +30,23 @@
 "note": "",
 "t": 1793022360,
 "type": null,
+"v": 3
+},
+"a2olite": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"k-pop",
+3
+]
+],
+"mb": "d0ebbbd9-eae8-4469-8ecb-9dcde740d343",
+"mb_name": "A2O LITE",
+"name": "A2O LITE",
+"note": "",
+"t": 1793600569,
+"type": "Group",
 "v": 3
 },
 "adela": {
@@ -75,6 +103,17 @@
 "type": "Person",
 "v": 3
 },
+"alexwarren": {
+"alive": true,
+"gender": "male",
+"mb": "609a2ea3-f446-4e31-8eef-9f7591afb55a",
+"mb_name": "Alex Warren",
+"name": "Alex Warren",
+"note": "",
+"t": 1793600553,
+"type": "Person",
+"v": 3
+},
 "alok": {
 "alive": true,
 "gender": "male",
@@ -114,6 +153,17 @@
 "name": "Anderson .Paak",
 "note": "",
 "t": 1793021919,
+"type": "Person",
+"v": 3
+},
+"andrewgold": {
+"alive": null,
+"gender": null,
+"mb": "10876f5a-9ac7-49c7-a2b6-46a3f1ac3523",
+"mb_name": "Andrew Gold",
+"name": "Andrew Gold",
+"note": "тёзки в MusicBrainz, не различить",
+"t": 1793600550,
 "type": "Person",
 "v": 3
 },
@@ -198,6 +248,17 @@
 "type": "Person",
 "v": 3
 },
+"asake": {
+"alive": true,
+"gender": "male",
+"mb": "2b37ba5e-2162-46ca-bbad-f076f6a333bd",
+"mb_name": "Asake",
+"name": "Asake",
+"note": "",
+"t": 1793600545,
+"type": "Person",
+"v": 3
+},
 "ashe": {
 "alive": true,
 "gender": "female",
@@ -228,6 +289,23 @@
 "note": "",
 "t": 1793022485,
 "type": "Person",
+"v": 3
+},
+"babymonster": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"k-pop",
+4
+]
+],
+"mb": "5829cd4f-e693-4b03-abe5-1226243c23d6",
+"mb_name": "BABYMONSTER",
+"name": "BABYMONSTER",
+"note": "",
+"t": 1793600623,
+"type": "Group",
 "v": 3
 },
 "badbunny": {
@@ -261,6 +339,17 @@
 "note": "",
 "t": 1793022354,
 "type": null,
+"v": 3
+},
+"banjaare": {
+"alive": true,
+"gender": null,
+"mb": "4148e7d8-fec9-4af3-9e87-8b1b2cea126d",
+"mb_name": "Banjaare",
+"name": "Banjaare",
+"note": "",
+"t": 1793600503,
+"type": "Group",
 "v": 3
 },
 "basta": {
@@ -315,6 +404,17 @@
 "name": "Benny Benassi",
 "note": "",
 "t": 1793022605,
+"type": "Person",
+"v": 3
+},
+"bigxthaplug": {
+"alive": true,
+"gender": "male",
+"mb": "d25f6294-686a-4569-b1b9-fe64bfef2519",
+"mb_name": "BigXthaPlug",
+"name": "BigXthaPlug",
+"note": "",
+"t": 1793600443,
 "type": "Person",
 "v": 3
 },
@@ -385,6 +485,28 @@
 "name": "bôa",
 "note": "",
 "t": 1793022404,
+"type": "Group",
+"v": 3
+},
+"bobbyborispickett": {
+"alive": false,
+"gender": "male",
+"mb": "58dd5fa6-6eed-432a-90a5-6df1ae8d2b8d",
+"mb_name": "Bobby “Boris” Pickett",
+"name": "Bobby \"Boris\" Pickett",
+"note": "умер(ла) 2007-04-25",
+"t": 1793600544,
+"type": "Person",
+"v": 3
+},
+"bonjovi": {
+"alive": true,
+"gender": "male",
+"mb": "5dcdb5eb-cb72-4e6e-9e63-b7bace604965",
+"mb_name": "Bon Jovi",
+"name": "Bon Jovi",
+"note": "",
+"t": 1793600534,
 "type": "Group",
 "v": 3
 },
@@ -513,6 +635,17 @@
 "type": "Person",
 "v": 3
 },
+"citizensofhalloween": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "The Citizens of Halloween",
+"note": "нет в MusicBrainz",
+"t": 1793600555,
+"type": null,
+"v": 3
+},
 "cordae": {
 "alive": true,
 "gender": "male",
@@ -533,6 +666,17 @@
 "note": "распались 2019",
 "t": 1793022172,
 "type": "Group",
+"v": 3
+},
+"daddyyankee": {
+"alive": true,
+"gender": "male",
+"mb": "2f522f5c-111c-4ce8-8bd0-d82e97c227ad",
+"mb_name": "Daddy Yankee",
+"name": "Daddy Yankee",
+"note": "",
+"t": 1793600465,
+"type": "Person",
 "v": 3
 },
 "davidguetta": {
@@ -566,6 +710,28 @@
 "note": "",
 "t": 1793022016,
 "type": null,
+"v": 3
+},
+"dominicfike": {
+"alive": true,
+"gender": "male",
+"mb": "e337c918-098f-418e-97a2-81dc224b1bf9",
+"mb_name": "Dominic Fike",
+"name": "Dominic Fike",
+"note": "",
+"t": 1793600444,
+"type": "Person",
+"v": 3
+},
+"dontoliver": {
+"alive": true,
+"gender": "male",
+"mb": "a0723a3c-4135-438e-85c5-012712144ede",
+"mb_name": "Don Toliver",
+"name": "Don Toliver",
+"note": "",
+"t": 1793600546,
+"type": "Person",
 "v": 3
 },
 "drake": {
@@ -802,6 +968,17 @@
 "type": "Person",
 "v": 3
 },
+"hamzamalik": {
+"alive": true,
+"gender": "male",
+"mb": "64dee7b7-ed0c-446f-8493-0998107eae6f",
+"mb_name": "Hamza Malik",
+"name": "Hamza Malik",
+"note": "",
+"t": 1793600473,
+"type": "Person",
+"v": 3
+},
 "harrystyles": {
 "alive": true,
 "gender": "male",
@@ -833,6 +1010,34 @@
 "note": "",
 "t": 1793022000,
 "type": "Person",
+"v": 3
+},
+"hugoguilherme": {
+"alive": true,
+"gender": null,
+"mb": "4cd2e0a1-c918-4f9c-b690-9ba2850c5cd1",
+"mb_name": "Hugo & Guilherme",
+"name": "Hugo & Guilherme",
+"note": "",
+"t": 1793600536,
+"type": "Group",
+"v": 3
+},
+"illit": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"k-pop",
+6
+]
+],
+"mb": "6b128dd7-e998-4edb-a4f5-400fef190445",
+"mb_name": "ILLIT",
+"name": "ILLIT",
+"note": "",
+"t": 1793600603,
+"type": "Group",
 "v": 3
 },
 "imaelangel": {
@@ -869,6 +1074,18 @@
 "name": "Indila",
 "note": "",
 "t": 1793160822,
+"type": "Person",
+"v": 3
+},
+"jade": {
+"alive": true,
+"gender": "female",
+"genres": [],
+"mb": "f4108df8-cf1f-4279-a840-599b2a291127",
+"mb_name": "JADE",
+"name": "JADE",
+"note": "",
+"t": 1793600491,
 "type": "Person",
 "v": 3
 },
@@ -1111,6 +1328,32 @@
 "katyperry": {
 "alive": true,
 "gender": "female",
+"genres": [
+[
+"pop",
+18
+],
+[
+"pop rock",
+6
+],
+[
+"electropop",
+4
+],
+[
+"bubblegum pop",
+3
+],
+[
+"dance-pop",
+3
+],
+[
+"dance",
+1
+]
+],
 "mb": "122d63fc-8671-43e4-9752-34e846d62a9c",
 "mb_name": "Katy Perry",
 "name": "Katy Perry",
@@ -1161,6 +1404,17 @@
 "note": "",
 "t": 1793160862,
 "type": "Group",
+"v": 3
+},
+"kirkfranklin": {
+"alive": true,
+"gender": "male",
+"mb": "685332a4-12ed-4c3b-8d0e-04e6a37e28f0",
+"mb_name": "Kirk Franklin",
+"name": "Kirk Franklin",
+"note": "",
+"t": 1793600488,
+"type": "Person",
 "v": 3
 },
 "ladygaga": {
@@ -1235,6 +1489,17 @@
 "note": "",
 "t": 1793022179,
 "type": "Person",
+"v": 3
+},
+"latinmafia": {
+"alive": true,
+"gender": null,
+"mb": "33118d4b-cec1-4030-b37c-0e81fdf97dc8",
+"mb_name": "LATIN MAFIA",
+"name": "LATIN MAFIA",
+"note": "",
+"t": 1793600495,
+"type": "Group",
 "v": 3
 },
 "leagueoflegendsmusic": {
@@ -1387,6 +1652,17 @@
 "type": "Person",
 "v": 3
 },
+"maliedonn": {
+"alive": true,
+"gender": null,
+"mb": "fc10dc6d-1153-42ce-b5ca-7446eeb076a4",
+"mb_name": "Malie Donn",
+"name": "Malie Donn",
+"note": "",
+"t": 1793600539,
+"type": null,
+"v": 3
+},
 "mariahdeborah": {
 "alive": true,
 "gender": "female",
@@ -1419,6 +1695,17 @@
 "note": "",
 "t": 1793022743,
 "type": "Person",
+"v": 3
+},
+"mauvaisdjo": {
+"alive": true,
+"gender": null,
+"mb": "e5a28249-66b4-4349-8052-4884fb2d6961",
+"mb_name": "Mauvais Djo",
+"name": "Mauvais Djo",
+"note": "",
+"t": 1793600497,
+"type": null,
 "v": 3
 },
 "mazzystar": {
@@ -1497,6 +1784,23 @@
 "type": null,
 "v": 3
 },
+"miyeon": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"k-pop",
+2
+]
+],
+"mb": "eb2eb5dd-4eb6-4a73-8c52-8ddc86f8f5d1",
+"mb_name": "MIYEON",
+"name": "MIYEON",
+"note": "",
+"t": 1793600612,
+"type": "Person",
+"v": 3
+},
 "moderntalking": {
 "alive": false,
 "gender": "male",
@@ -1560,6 +1864,28 @@
 "name": "The Neighbourhood",
 "note": "",
 "t": 1793022324,
+"type": "Group",
+"v": 3
+},
+"netonvega": {
+"alive": true,
+"gender": "male",
+"mb": "dc1c4d9b-80ab-452b-b316-f201915b29db",
+"mb_name": "Neton Vega",
+"name": "Neton Vega",
+"note": "",
+"t": 1793600472,
+"type": "Person",
+"v": 3
+},
+"nickelback": {
+"alive": true,
+"gender": "male",
+"mb": "bc710bcf-8815-42cf-bad2-3f1d12246aeb",
+"mb_name": "Nickelback",
+"name": "Nickelback",
+"note": "",
+"t": 1793600488,
 "type": "Group",
 "v": 3
 },
@@ -1680,6 +2006,17 @@
 "type": "Person",
 "v": 3
 },
+"paramore": {
+"alive": true,
+"gender": "mixed",
+"mb": "44cf61b8-5197-448a-b82b-cef6ee89fac5",
+"mb_name": "Paramore",
+"name": "Paramore",
+"note": "",
+"t": 1793600593,
+"type": "Group",
+"v": 3
+},
 "poohshiesty": {
 "alive": true,
 "gender": "male",
@@ -1711,6 +2048,17 @@
 "t": 1793018002,
 "type": "Group"
 },
+"queensofthestoneage": {
+"alive": true,
+"gender": "male",
+"mb": "7dc8f5bd-9d0b-4087-9f73-dc164950bbd8",
+"mb_name": "Queens of the Stone Age",
+"name": "Queens of the Stone Age",
+"note": "",
+"t": 1793600463,
+"type": "Group",
+"v": 3
+},
 "raimlaode": {
 "alive": true,
 "gender": "male",
@@ -1731,6 +2079,28 @@
 "note": "",
 "t": 1793021969,
 "type": "Group",
+"v": 3
+},
+"rauwalejandro": {
+"alive": true,
+"gender": "male",
+"mb": "197b70c7-8910-4030-ad03-632d82aa40e3",
+"mb_name": "Rauw Alejandro",
+"name": "Rauw Alejandro",
+"note": "",
+"t": 1793600554,
+"type": "Person",
+"v": 3
+},
+"rayparkerjr": {
+"alive": true,
+"gender": "male",
+"mb": "af9c073c-f230-4527-8fcd-2338fe1e129e",
+"mb_name": "Ray Parker Jr.",
+"name": "Ray Parker Jr.",
+"note": "",
+"t": 1793600504,
+"type": "Person",
 "v": 3
 },
 "remiwolf": {
@@ -2000,6 +2370,52 @@
 "type": "Person",
 "v": 3
 },
+"sophiepowers": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"alternative pop",
+1
+],
+[
+"glitch pop",
+1
+],
+[
+"hyperpop",
+1
+],
+[
+"pop punk",
+1
+]
+],
+"mb": "60b05240-a42c-4617-bba9-06a40c730ea6",
+"mb_name": "Sophie Powers",
+"name": "Sophie Powers",
+"note": "",
+"t": 1793600608,
+"type": "Person",
+"v": 3
+},
+"soyeon": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"k-pop",
+2
+]
+],
+"mb": "c62e0aeb-d7e2-406a-9036-d14881661e0e",
+"mb_name": "JEON SOYEON",
+"name": "SOYEON",
+"note": "",
+"t": 1793600593,
+"type": "Person",
+"v": 3
+},
 "stevelacy": {
 "alive": false,
 "gender": "male",
@@ -2132,6 +2548,17 @@
 "type": "Person",
 "v": 3
 },
+"tatu": {
+"alive": false,
+"gender": "female",
+"mb": "7c20f558-d664-42bd-b6f1-81acf9dbb72d",
+"mb_name": "t.A.T.u.",
+"name": "t.A.T.u.",
+"note": "распались 2011",
+"t": 1793600521,
+"type": "Group",
+"v": 3
+},
 "taylorswift": {
 "alive": true,
 "gender": "female",
@@ -2236,6 +2663,17 @@
 "name": "Tinashe",
 "note": "",
 "t": 1793022352,
+"type": "Person",
+"v": 3
+},
+"titodoublep": {
+"alive": true,
+"gender": "male",
+"mb": "37316157-4e01-4ea8-b897-65a1a5a6bb30",
+"mb_name": "Tito Double P",
+"name": "Tito Double P",
+"note": "",
+"t": 1793600537,
 "type": "Person",
 "v": 3
 },
@@ -2399,6 +2837,17 @@
 "name": "Yeat",
 "note": "",
 "t": 1793021909,
+"type": "Person",
+"v": 3
+},
+"youngnudy": {
+"alive": true,
+"gender": "male",
+"mb": "79c9b9a6-4b78-4738-8b81-95b066321ea9",
+"mb_name": "Young Nudy",
+"name": "Young Nudy",
+"note": "",
+"t": 1793600464,
 "type": "Person",
 "v": 3
 },
