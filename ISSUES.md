@@ -3644,3 +3644,31 @@ Tate McRae — VG+ в описании, Billie Eilish WWAFA без плёнки)
 плёнкой снималась за «(VG)» — это шкала оценок продавца в описании
 («Very Good (VG) - A record in Very Good condition will…»), не оценка
 лота; такие предложения вырезаются (`ruspop._strip_legend`), тест есть.
+
+## O-123. «Идол» каждый час по новым объявлениям; кого добавили
+
+Владелец 02.11.2026: «Идол каждый час по новым лотам на eBay. Об
+остальном пока забудь. Проанализируй исполнителей, может, кого-то
+добавь». `tools/hype/idol.py`: поиск eBay с «ИЛИ» — `(taylor swift, lady
+gaga, …)`, проверено: 10 имён в запросе работают, 141 символ — тоже;
+newlyListed, BEST_OFFER, США, до $25 — ~7 запросов в час на 63 имени.
+Фильтры как в `--idol` плюс «FIXED_PRICE» обязателен (поиск отдаёт и
+«AUCTION + BEST_OFFER»).
+
+Разбор списка: из 600 артистов снимка MusicBrainz спрошен лишь о тех, до
+кого дошла очередь, — женских известно 44; в 30 по взлёту не попадают
+популярные без свежего взлёта (Sabrina Carpenter — 53M слушателей, SZA
+71M, Zara Larsson — Kworb 626, Gracie Abrams, Adele, Doja Cat). Мерило
+спроса в России — позиции в витринах plastinka/appmistore: Madonna 22,
+Mylène Farmer 14, Kylie Minogue 11, Lana Del Rey 10, Charli xcx 10,
+Miley Cyrus 10, Björk 9, Sia 8, Beyoncé 6 (медиана 9 317 ₽). Постоянные —
+`data/hype/idol_extra.txt` (43 имени с пометками), исключена Ms. Rachel
+(детское). Группы — только женские (Florence + The Machine, Paramore —
+нет).
+
+Первый прогон за 6 часов: новых 24, находок 3 — Lady Gaga «Harlequin»
+красный $25 (продавец 80% положительных), Charli xcx «Brat and It's
+Completely Different» зелёный 2LP $23 (ремиксы, не «Brat»), «Dan Rose»
+под ROSÉ — отсеян; поправка: имя из одного слова — только с опознанным
+альбомом. В Telegram — двое. Расписание: часовой слот «свежих» отдан
+«Идолу»; surfriders и Tone Poet — выключены (не удалены).
