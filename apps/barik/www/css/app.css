@@ -357,6 +357,21 @@ select{width:100%;max-width:100%;background:var(--surface);border:1px solid var(
 .quiz-letter{font:700 110px/1.05 var(--hy);font-stretch:86%;margin:6px 0 4px;color:var(--pom)}
 .opts .o-big{font:700 36px/1 var(--hy);color:var(--pom)}
 
+/* ---------- пропись: тетрадная строка, перо пишет букву ---------- */
+.copybook{margin:20px 0 0;padding:14px 14px 10px;border-radius:22px;background:var(--surface);border:1px solid var(--line);text-align:left;position:relative;overflow:hidden}
+.copybook::before{content:"";position:absolute;top:0;bottom:0;left:22px;width:1.5px;background:var(--pom);opacity:.28}
+.cb-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 4px;padding-left:18px}
+.cb-head .sec{margin:0}
+.cb-head .aud{height:40px;padding:0 14px;font-size:14px}
+.cb-head .aud svg{width:18px;height:18px}
+.cb{display:block;width:100%;height:auto;max-height:260px}
+.cb-lines line{stroke:var(--line);stroke-width:1.3}
+.cb-lines .x{stroke:var(--gold);stroke-dasharray:6 7;opacity:.6}
+.cb-lines .b{stroke:var(--pom);opacity:.4;stroke-width:1.6}
+.cb-ink path{fill:none;stroke:var(--ink);stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}
+.nib{fill:var(--accent);opacity:0;transition:opacity .2s;filter:drop-shadow(0 0 5px var(--accent))}
+.cb-note{font-size:13px;color:var(--ink-3);margin:2px 0 0;padding-left:18px}
+
 /* ---------- подписка ---------- */
 .pw{padding-top:4px}
 .pw-hero{text-align:center;margin:4px 0 18px}

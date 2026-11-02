@@ -225,6 +225,7 @@ function buzz(){try{if(navigator.vibrate) navigator.vibrate(35);}catch(e){}}
 let toastT=null;
 function toast(msg){const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3400);}
 const ICON={
+  again:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>',
   spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/><path d="M16.5 8.8a4.8 4.8 0 0 1 0 6.4"/><path d="M19.2 6.2a8.6 8.6 0 0 1 0 11.6"/></svg>',
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>',
   abc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 16.5V9.8a2.8 2.8 0 0 1 5.6 0v6.7"/><path d="M13.6 12.5H16"/></svg>',
@@ -539,7 +540,7 @@ function render(auto){
   else if(view==='topic') el.innerHTML=topicHTML(viewArg);
   else if(view==='dict'){ el.innerHTML=dictHTML(); bindDict(); }
   else if(view==='abc') el.innerHTML=abcHTML();
-  else if(view==='letter') el.innerHTML=letterHTML(viewArg);
+  else if(view==='letter'){ el.innerHTML=letterHTML(viewArg); writeCursive(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -654,6 +655,49 @@ function abcHTML(){
     '<div class="actions abc-acts"><button class="btn primary" data-act="abcQuiz">'+esc(T('abcTrain'))+'</button></div>'+
     '<ul class="abc">'+tiles+'</ul>';
 }
+/* ================= ПРОПИСЬ ================= */
+/* Как пишется буква от руки: перо ведёт каждый штрих по порядку по разлинованной строке
+   (www/js/cursive.js — свои штрихи, tools/cursive.py). Координаты без наклона, наклон — skewX. */
+const CUR=window.BARARAN_CURSIVE||{}, SLANT=0.287;
+let wAnim=0;
+function cursiveHTML(x){
+  const g=CUR[x.up]; if(!g) return '';
+  const parts=x.lo===x.up?[g.l]:[g.U,g.l], gap=36;
+  let dx=0, ink='';
+  parts.forEach(p=>{ ink+='<g transform="translate('+(dx-p.x0).toFixed(1)+',0)">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g>'; dx+=p.w+gap; });
+  // линии тетради — во всю ширину карточки: за пределами viewBox они тоже видны
+  const x0=-34, w=dx-gap+80, line=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
+  return '<section class="copybook"><div class="cb-head"><h2 class="sec">'+esc(T('cursive'))+'</h2>'+
+    '<button class="aud" data-act="write">'+ICON.again+'<span>'+esc(T('cursiveAgain'))+'</span></button></div>'+
+    '<svg class="cb" viewBox="'+x0+' -26 '+w+' 218" role="img" aria-label="'+esc(T('cursive')+': '+x.up+(x.lo!==x.up?' '+x.lo:''))+'">'+
+    '<g class="cb-lines">'+line(0,'t')+line(54,'x')+line(100,'b')+line(172,'t')+'</g>'+
+    '<g class="cb-ink" transform="matrix(1,0,'+(-SLANT)+',1,'+(SLANT*100)+',0)">'+ink+'<circle class="nib" r="4.6" cx="0" cy="0"/></g></svg>'+
+    '<p class="cb-note">'+esc(T('cursiveNote'))+'</p></section>';
+}
+function writeCursive(){
+  const svg=document.querySelector('.cb'); if(!svg) return;
+  const my=++wAnim, paths=[...svg.querySelectorAll('.cb-ink path')], nib=svg.querySelector('.nib');
+  const lens=paths.map(p=>p.getTotalLength());
+  const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  paths.forEach((p,k)=>{ p.style.strokeDasharray=lens[k]+' '+lens[k]; p.style.strokeDashoffset=still?0:lens[k]; });
+  if(still||!paths.length){ nib.style.opacity=0; return; }
+  const SPEED=0.21;                       // единиц пути за мс
+  const ease=t=>0.7*t+0.3*(0.5-0.5*Math.cos(Math.PI*t));
+  let k=0, t0=null;
+  const step=ts=>{
+    if(my!==wAnim||!svg.isConnected) return;
+    if(t0===null) t0=ts;
+    const p=paths[k], len=lens[k], t=Math.min(1,(ts-t0)*SPEED/Math.max(len,1)), e=ease(t);
+    p.style.strokeDashoffset=len*(1-e);
+    const pt=p.getPointAtLength(len*e), ox=p.parentNode.transform.baseVal.length?p.parentNode.transform.baseVal[0].matrix.e:0;
+    nib.setAttribute('cx',(pt.x+ox).toFixed(1)); nib.setAttribute('cy',pt.y.toFixed(1)); nib.style.opacity=1;
+    if(t<1){ requestAnimationFrame(step); return; }
+    k++; t0=null;
+    if(k>=paths.length){ setTimeout(()=>{ if(my===wAnim) nib.style.opacity=0; },250); return; }
+    setTimeout(()=>{ if(my===wAnim) requestAnimationFrame(step); }, paths[k].parentNode!==p.parentNode?480:160);
+  };
+  setTimeout(()=>{ if(my===wAnim) requestAnimationFrame(step); },380);
+}
 function letterHTML(i){
   const x=ABC[i], w=BY[x.ex], n=ABC.length;
   const big=esc(x.up)+(x.lo!==x.up?' <i>'+esc(x.lo)+'</i>':'');
@@ -663,7 +707,7 @@ function letterHTML(i){
     '<div class="l-name" lang="hy">'+esc(x.nm)+'<small>'+esc(T('letterName'))+': '+esc(trL(x.nm))+'</small></div>'+
     '<div class="audio"><button class="aud" data-act="sayLetter" data-arg="'+i+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="sayLetterSlow" data-arg="'+i+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>'+
     '<div class="l-facts"><div><b>'+esc(rd(x))+'</b><span>'+esc(T('reads'))+'</span></div><div><b>['+esc(x.ipa)+']</b><span>'+esc(T('ipa'))+'</span></div><div><b>'+(i+1)+'</b><span>'+esc(T('ofN',n))+'</span></div></div>'+
-    '<p class="l-tip">'+esc(L==='fr'?x.tfr:(L==='en'?x.ten:x.tru))+'</p></div>'+ex+
+    '<p class="l-tip">'+esc(L==='fr'?x.tfr:(L==='en'?x.ten:x.tru))+'</p></div>'+cursiveHTML(x)+ex+
     '<div class="l-nav"><button class="btn secondary" data-act="letter" data-arg="'+((i+n-1)%n)+'">‹ '+esc(ABC[(i+n-1)%n].up)+'</button><button class="btn secondary" data-act="letter" data-arg="'+((i+1)%n)+'">'+esc(ABC[(i+1)%n].up)+' ›</button></div>';
 }
 function abcQuizHTML(){
@@ -979,6 +1023,7 @@ const H={
   size:a=>{S.set.size=+a; save(); render();},
   letter:a=>go('letter',+a),
   sayLetter:(a,b)=>speakLetter(ABC[+a],false,b),
+  write:()=>writeCursive(),
   sayLetterSlow:(a,b)=>speakLetter(ABC[+a],true,b),
   abcQuiz:()=>startAbcQuiz(),
   abcOpt:a=>abcAnswer(+a),
