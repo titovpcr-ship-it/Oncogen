@@ -304,6 +304,8 @@ button.lvh{width:100%;border:0;background:none;padding:4px 2px;text-align:left;c
 .set-sec{margin:24px 0 0}
 .set-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
 .set-row.col{flex-direction:column;align-items:stretch}
+.set-row.lang-row .seg{flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:560px){.set-row.lang-row{flex-direction:column;align-items:stretch}.set-row.lang-row .seg{display:grid;grid-template-columns:1fr 1fr}}
 .lbl{min-width:0}
 .lbl b{display:block;font-weight:600}
 .lbl span{display:block;font-size:14px;color:var(--ink-2)}

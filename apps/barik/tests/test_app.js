@@ -38,6 +38,9 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       await pg.click('[data-act=landLang][data-arg=en]');
       ok((await pg.textContent('.ld h1')).includes('little word')&&await pg.evaluate(()=>document.documentElement.lang)==='en','обложка по-английски');
       ok(await pg.locator('.ld-price li').count()===4&&(await pg.textContent('.ld-price')).includes('subscription'),'цена: A2–C2 — по подписке, когда не всё открыто');
+      await pg.click('[data-act=landLang][data-arg=es]');
+      ok((await pg.textContent('.ld h1')).includes('palabrita')&&await pg.evaluate(()=>document.documentElement.lang)==='es','обложка по-испански');
+      ok((await pg.textContent('.ld-hero')).includes('Empezar gratis'),'обложка: «Empezar gratis»'); await shot('landing-es'); await noHScroll('landing-es');
       await pg.click('[data-act=landLang][data-arg=ru]');
     }
     await pg.click('[data-act=pickLang][data-arg=ru]');
@@ -48,8 +51,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const im=await pg.evaluate(()=>{const a=[...document.querySelectorAll('img.e3d')];return {n:a.length,ok:a.filter(i=>i.complete&&i.naturalWidth>0).length,bad:a.filter(i=>i.complete&&i.naturalWidth===0).length};});
     ok(im.ok>=5&&im.bad===0,'объёмные картинки Fluent 3D на главной: '+JSON.stringify(im));
     ok(await pg.locator('.today .wotd .wd-hy').count()===1,'слово дня на главной');
-    const d=await pg.evaluate(()=>{const B=window.__bararan; return {n:B.WORDS.length, noEn:B.WORDS.filter(w=>!w.e).length, noFr:B.WORDS.filter(w=>!w.f||!w.ft).length, frTopics:B.TOPICS.filter(t=>!t.fr).length, ex:B.ABC.filter(x=>!B.BY[x.ex]).map(x=>x.ex), abc:B.ABC.length, lat:B.trLat('երեխա')+'|'+B.trLat('ոտք')+'|'+B.trLat('արև')+'|'+B.trLat('թռչուն'), cyr:B.trWord('երեխա',false)};});
-    ok(d.n>=5000,'слов в словаре: '+d.n); ok(d.noEn===0,'у всех слов есть английский'); ok(d.noFr===0,'у всех слов есть французский'); ok(d.frTopics===0,'у всех тем есть французское название'); ok(d.ex.length===0,'примеры букв есть в словаре '+d.ex); ok(d.abc===39,'букв: '+d.abc);
+    const d=await pg.evaluate(()=>{const B=window.__bararan; return {n:B.WORDS.length, noEn:B.WORDS.filter(w=>!w.e).length, noFr:B.WORDS.filter(w=>!w.f||!w.ft).length, frTopics:B.TOPICS.filter(t=>!t.fr).length, noEs:window.BARARAN_DATA.topics.reduce((n,t)=>n+t.w.filter(r=>!(r[5]||'').trim()).length,0), esTopics:window.BARARAN_DATA.topics.filter(t=>!t.es).length, noSt:B.WORDS.filter(w=>!w.st).length, ex:B.ABC.filter(x=>!B.BY[x.ex]).map(x=>x.ex), abc:B.ABC.length, lat:B.trLat('երեխա')+'|'+B.trLat('ոտք')+'|'+B.trLat('արև')+'|'+B.trLat('թռչուն'), cyr:B.trWord('երեխա',false)};});
+    ok(d.n>=5000,'слов в словаре: '+d.n); ok(d.noEn===0,'у всех слов есть английский'); ok(d.noFr===0,'у всех слов есть французский'); ok(d.frTopics===0,'у всех тем есть французское название'); ok(d.noEs===0&&d.noSt===0,'у всех слов есть испанский перевод и транскрипция'); ok(d.esTopics===0,'у всех тем есть испанское название'); ok(d.ex.length===0,'примеры букв есть в словаре '+d.ex); ok(d.abc===39,'букв: '+d.abc);
     ok(d.lat==='yerekha|votkʰ|arev|tʰrrchʰun','латиница: '+d.lat); ok(d.cyr==='ерехա'.slice(0,0)+'ерехa'.replace('a','а'),'кириллица: '+d.cyr);
     // уровень A2 закрыт: открыть секцию, нажать тему → кнопка подписки
     await pg.click('[data-act=lvtog][data-arg=A2]');
@@ -150,6 +153,20 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('.abc button >> nth=4'); ok((await pg.textContent('.l-facts')).includes('yé'),'буква Ե по-французски: yé'); ok((await pg.textContent('.l-tip')).includes('début'),'подсказка к букве по-французски'); await shot('letter-fr');
     await pg.click('[data-act=tab][data-arg=pics]'); await pg.click('.pgrid .pcell >> nth=0'); ok((await pg.textContent('.pcard .trn'))==='tsarr','картинка: французская транскрипция ծառ → tsarr');
     await pg.click('[data-act=tab][data-arg=home]'); await pg.click('[data-act=learnNew]'); await pg.click('.foot [data-act=next]'); ok(await pg.locator('.sess-top').count()===1,'урок на французском'); await shot('lesson-fr'); await pg.click('[data-act=quit]');
+    // испанская версия
+    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg=es]');
+    ok((await pg.textContent('#tabs')).includes('Diccionario'),'интерфейс на испанском'); await shot('settings-es'); await noHScroll('settings-es');
+    ok(await pg.evaluate(()=>{const S=window.BARARAN_STR; return Object.keys(S.ru).every(k=>k in S.es);}),'все тексты интерфейса есть по-испански');
+    await pg.click('[data-act=tab][data-arg=home]'); ok((await pg.textContent('.today')).includes('palabras'),'главная по-испански'); ok((await pg.textContent('.topics')).includes('Lo básico'),'темы по-испански'); await shot('home-es'); await noHScroll('home-es');
+    await pg.click('[data-act=tab][data-arg=dict]'); await pg.fill('#dq','perro'); ok((await pg.textContent('#dlist')).includes('շուն'),'поиск по-испански: perro → շուն');
+    await pg.fill('#dq','arbol'); ok((await pg.textContent('#dlist')).includes('ծառ'),'поиск без ударений: arbol → ծառ (árbol)');
+    await pg.fill('#dq','shun'); ok((await pg.textContent('#dlist')).includes('շուն'),'поиск испанской транскрипцией'); await pg.fill('#dq','');
+    const esRow=await pg.textContent('#dlist .wrow .w-sub'); ok(esRow.includes('hola')&&esRow.includes('barev'),'словарь: испанский перевод и транскрипция: '+esRow); await shot('dict-es');
+    const tes=await pg.evaluate(()=>{const B=window.__bararan; return ['Երևան','Հայաստան','խաչքար','գինի','ձուկ','կատու','ժամ','գե'].map(B.trEs).join('|');});
+    ok(tes==='yereván|hayastán|jachʰkʰar|guiní|dzuk|katú|zham|gue','испанская транскрипция: '+tes);
+    await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('.abc button >> nth=4'); ok((await pg.textContent('.l-facts')).includes('ye / e'),'буква Ե по-испански: ye / e'); ok((await pg.textContent('.l-tip')).includes('principio'),'подсказка к букве по-испански'); await shot('letter-es');
+    await pg.click('[data-act=tab][data-arg=pics]'); await pg.click('.pgrid .pcell >> nth=0'); ok((await pg.textContent('.pcard .trn'))==='tsarr','картинка: испанская транскрипция ծառ → tsarr');
+    await pg.click('[data-act=tab][data-arg=home]'); await pg.click('[data-act=learnNew]'); await pg.click('.foot [data-act=next]'); ok(await pg.locator('.sess-top').count()===1,'урок на испанском'); await shot('lesson-es'); await pg.click('[data-act=quit]');
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg=en]');
     // перезапуск помнит язык и прогресс
     await pg.reload(); await pg.waitForTimeout(200); ok(await pg.locator('.onb').count()===0&&(await pg.textContent('#tabs')).includes('Learn'),'после перезапуска — английский без выбора языка');

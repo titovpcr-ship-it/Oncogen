@@ -2,7 +2,7 @@
    бренд, заголовок, «Բառ առ բառ», три обещания и телефон в арке с прописью. Режим «без движения»
    (prefers-reduced-motion) даёт неподвижный кадр: верный ответ подсвечен, буква «Ա ա» дописана.
 
-     node tools/make_og.js            # → assets/og/og-ru.jpg, og-en.jpg, og-fr.jpg
+     node tools/make_og.js            # → assets/og/og-ru.jpg, og-en.jpg, og-fr.jpg, og-es.jpg
 
    Перезапускать после правок обложки (тексты land в i18n.js, стили .ld в app.css). */
 const {chromium}=require('playwright'); const http=require('http'),fs=require('fs'),path=require('path');
@@ -34,7 +34,7 @@ const CSS=`html,body{overflow:hidden!important}
   await new Promise(r=>srv.listen(0,r)); const base='http://127.0.0.1:'+srv.address().port+'/';
   fs.mkdirSync(OUT,{recursive:true});
   const br=await chromium.launch();
-  for(const [L,loc] of [['ru','ru-RU'],['en','en-US'],['fr','fr-FR']]){
+  for(const [L,loc] of [['ru','ru-RU'],['en','en-US'],['fr','fr-FR'],['es','es-AR']]){
     const ctx=await br.newContext({viewport:{width:1200,height:630},deviceScaleFactor:2,locale:loc,reducedMotion:'reduce',colorScheme:'light'});
     const pg=await ctx.newPage(); const errs=[];
     pg.on('pageerror',e=>errs.push(e.message));

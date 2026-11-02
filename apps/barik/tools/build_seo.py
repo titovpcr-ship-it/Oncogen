@@ -12,7 +12,7 @@
   /{ru,en,fr}/t/<тема>.html         тема: все слова с произношением
   /{ru,en,fr}/w/<слово>.html        слово: перевод, произношение, тема,
                                     соседние слова, schema.org DefinedTerm
-  /seo.css, /sitemap.xml (+ sitemap-ru/en/fr.xml), строка Sitemap в robots.txt.
+  /seo.css, /sitemap.xml (+ sitemap-ru/en/fr/es.xml), строка Sitemap в robots.txt.
 У каждой страницы canonical и hreflang (ru, en, fr, x-default → en).
 Часть словника — по Викисловарю (CC BY-SA 4.0): ссылка в подвале каждой страницы.
 
@@ -29,7 +29,7 @@ import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
-LANGS = ("ru", "en", "fr")
+LANGS = ("ru", "en", "fr", "es")
 LV = ("A1", "A2", "B1", "B2", "C1", "C2")
 NEIGHBOURS = 12
 
@@ -55,7 +55,7 @@ TXT = {
         "lvname": {"A1": "A1 — начальный", "A2": "A2 — базовый", "B1": "B1 — средний",
                    "B2": "B2 — выше среднего", "C1": "C1 — продвинутый", "C2": "C2 — свободный"},
         "words": "слов", "prev": "← Предыдущее", "next": "Следующее →",
-        "foot": "Barik — восточноармянский язык для русскоязычных, англоязычных и франкоязычных. "
+        "foot": "Barik — восточноармянский язык для русскоязычных, англоязычных, франкоязычных и испаноязычных. "
                 "Часть словника — по <a href=\"https://www.wiktionary.org/\">Викисловарю</a> "
                 "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
                 "переводы — свои.",
@@ -82,7 +82,7 @@ TXT = {
         "lvname": {"A1": "A1 — beginner", "A2": "A2 — elementary", "B1": "B1 — intermediate",
                    "B2": "B2 — upper intermediate", "C1": "C1 — advanced", "C2": "C2 — proficient"},
         "words": "words", "prev": "← Previous", "next": "Next →",
-        "foot": "Barik — Eastern Armenian for English, Russian and French speakers. Part of the word "
+        "foot": "Barik — Eastern Armenian for English, Russian, French and Spanish speakers. Part of the word "
                 "list is based on <a href=\"https://www.wiktionary.org/\">Wiktionary</a> "
                 "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>); "
                 "translations are our own.",
@@ -109,17 +109,44 @@ TXT = {
         "lvname": {"A1": "A1 — débutant", "A2": "A2 — élémentaire", "B1": "B1 — intermédiaire",
                    "B2": "B2 — avancé", "C1": "C1 — autonome", "C2": "C2 — maîtrise"},
         "words": "mots", "prev": "← Précédent", "next": "Suivant →",
-        "foot": "Barik — l’arménien oriental pour francophones, anglophones et russophones. Une partie "
+        "foot": "Barik — l’arménien oriental pour francophones, anglophones, russophones et hispanophones. Une partie "
                 "du lexique s’appuie sur le <a href=\"https://www.wiktionary.org/\">Wiktionnaire</a> "
                 "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
                 "traductions originales.",
         "lang_name": "Français",
     },
+    "es": {
+        "title_w": "«{x}» en armenio — {a} ({tr}) | Barik",
+        "desc_w": "Cómo se dice «{x}» en armenio: {a}, se pronuncia {tr}. Tema: {t}, nivel {lv}. "
+                  "Aprende palabras armenias gratis con Barik.",
+        "h_tr": "Pronunciación", "h_tx": "Traducción", "lv": "Nivel", "topic": "Tema",
+        "more": "Más palabras del tema «{t}»", "all_topic": "Las {n} {w} del tema",
+        "cta": "Aprende armenio con Barik — gratis",
+        "dict": "Diccionario armenio", "home": "Barik",
+        "title_t": "{t} en armenio — {n} {w} con pronunciación | Barik",
+        "desc_t": "{t} en armenio: {n} {w} con traducción al español y pronunciación, nivel {lv}. "
+                  "Armenio oriental — aprende con Barik.",
+        "h_t": "{t} en armenio", "intro_t": "{n} {w}, nivel {lv}. Armenio oriental, "
+                                           "pronunciación en letras latinas para hispanohablantes.",
+        "title_i": "Diccionario armenio — {n} {w} por temas con pronunciación | Barik",
+        "desc_i": "Diccionario de armenio oriental: {n} {w} en {k} temas de A1 a C2, traducción "
+                  "al español y pronunciación. Aprende gratis con Barik.",
+        "h_i": "Diccionario armenio", "intro_i": "{n} {w} en {k} temas — de las primeras palabras "
+                                                "(A1) al dominio (C2). Elige un tema.",
+        "lvname": {"A1": "A1 — principiante", "A2": "A2 — básico", "B1": "B1 — intermedio",
+                   "B2": "B2 — intermedio alto", "C1": "C1 — avanzado", "C2": "C2 — dominio"},
+        "words": "palabras", "prev": "← Anterior", "next": "Siguiente →",
+        "foot": "Barik — armenio oriental para hispanohablantes, anglófonos, francófonos y rusohablantes. "
+                "Parte del léxico se basa en el <a href=\"https://www.wiktionary.org/\">Wikcionario</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "traducciones propias.",
+        "lang_name": "Español",
+    },
 }
-HL = {"ru": "ru", "en": "en", "fr": "fr"}
-TX = {"ru": "r", "en": "e", "fr": "f"}      # перевод
-TR = {"ru": "tr", "en": "lt", "fr": "ft"}   # транскрипция
-TN = {"ru": "ru", "en": "en", "fr": "fr"}   # название темы
+HL = {"ru": "ru", "en": "en", "fr": "fr", "es": "es"}
+TX = {"ru": "r", "en": "e", "fr": "f", "es": "s"}      # перевод
+TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st"}   # транскрипция
+TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es"}   # название темы
 
 CSS = """@font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02B0,U+02C6,U+02DA,U+02DC,U+0259,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}

@@ -1,4 +1,4 @@
-/* Проверка страниц поиска dist/site/{ru,en,fr}/ (tools/build_seo.py через build_site.py):
+/* Проверка страниц поиска dist/site/{ru,en,fr,es}/ (tools/build_seo.py через build_site.py):
    у каждой страницы — title, description, canonical, hreflang ×3 + x-default;
    ни одной битой ссылки на всех 60 000+ страницах; sitemap совпадает с файлами;
    в браузере — армянский шрифт, разметка schema.org, нет ошибок и внешних запросов;
@@ -18,7 +18,7 @@ const srv=http.createServer((q,r)=>{
 });
 let fails=0;
 const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  ',m); };
-const LANGS=['ru','en','fr'];
+const LANGS=['ru','en','fr','es'];
 (async()=>{
   if(!fs.existsSync(path.join(ROOT,'ru','index.html'))){console.log('нет страниц поиска — python3 tools/build_site.py'); process.exit(1);}
   const words=JSON.parse(fs.readFileSync(path.join(__dirname,'..','dist','words_tr.json'),'utf8'));
@@ -53,7 +53,7 @@ const LANGS=['ru','en','fr'];
   console.log('     заголовков слов одинаковых (одно слово — разные армянские):',dups.length);
   // 2. sitemap
   const idx=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
-  ok(LANGS.every(L=>idx.includes(BASE+'sitemap-'+L+'.xml')),'sitemap.xml — указатель на три языка');
+  ok(LANGS.every(L=>idx.includes(BASE+'sitemap-'+L+'.xml')),'sitemap.xml — указатель на все языки ('+LANGS.length+')');
   let locs=0, miss=[];
   for(const L of LANGS){
     const sm=fs.readFileSync(path.join(ROOT,'sitemap-'+L+'.xml'),'utf8');
@@ -62,11 +62,11 @@ const LANGS=['ru','en','fr'];
     ok(fs.statSync(path.join(ROOT,'sitemap-'+L+'.xml')).size<50e6,'sitemap-'+L+' меньше 50 МБ (предел поисковиков)');
   }
   ok(locs===pages&&miss.length===0,'в sitemap все страницы: '+locs+' из '+pages+' '+miss.slice(0,3).join(' '));
-  ok(locs/3<=50000,'в одном sitemap не больше 50 000 адресов');
+  ok(locs/LANGS.length<=50000,'в одном sitemap не больше 50 000 адресов');
   ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8')),'robots.txt знает sitemap');
   // 3. Приложение
   const sw=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8');
-  ok(!/"\.\/(ru|en|fr)\//.test(sw)&&!sw.includes('sitemap'),'страниц поиска нет в кэше приложения');
+  ok(!/"\.\/(ru|en|fr|es)\//.test(sw)&&!sw.includes('sitemap'),'страниц поиска нет в кэше приложения');
   ok(/<noscript>.*href="ru\/".*<\/noscript>/.test(fs.readFileSync(path.join(ROOT,'index.html'),'utf8')),'с главной — ссылки на словари');
   // 4. В браузере
   await new Promise(r=>srv.listen(0,'127.0.0.1',r)); const base='http://127.0.0.1:'+srv.address().port+'/';
@@ -78,7 +78,7 @@ const LANGS=['ru','en','fr'];
   // озвучки пока нет (ключ Azure) — приложение спрашивает audio/manifest.json и обходится без неё
   pg.on('response',r=>{ if(r.status()>=400&&!r.url().includes('/audio/')) bad.push(r.status()+' '+r.url()); });
   const W=words.words[0];
-  for(const [u,shot] of [['ru/w/barev.html','word_ru'],['en/w/barev.html','word_en'],['fr/w/barev.html','word_fr'],
+  for(const [u,shot] of [['ru/w/barev.html','word_ru'],['en/w/barev.html','word_en'],['fr/w/barev.html','word_fr'],['es/w/barev.html','word_es'],
                           ['en/t/basics.html','topic_en'],['ru/index.html','index_ru']]){
     await pg.goto(base+u); await pg.evaluate(()=>document.fonts.ready);
     if(SHOTS) await pg.screenshot({path:path.join(SHOTS,shot+'.png'),fullPage:false});
@@ -98,6 +98,13 @@ const LANGS=['ru','en','fr'];
   ok(nt===words.topics.length,'оглавление: все темы ('+nt+')');
   await pg.click('a.cta'); await pg.waitForSelector('.brand');
   ok(pg.url()===base+'?lang=fr'&&await pg.evaluate(()=>document.documentElement.lang)==='fr','кнопка ведёт в приложение, сразу на французском');
+  await pg.goto(base+'ru/w/barev.html'); await pg.click('nav.langs a[hreflang=es]');
+  ok((await pg.title()).includes('en armenio')&&(await pg.textContent('.tx')).includes(W.s)&&await pg.evaluate(()=>document.documentElement.lang)==='es','переключатель языка: ES — '+W.s);
+  ok((await pg.textContent('.tr')).includes(W.st),'слово по-испански: произношение ['+W.st+']');
+  await pg.click('.crumbs a >> nth=1'); ok(pg.url().endsWith('es/t/basics.html'),'испанская тема: '+pg.url());
+  await pg.evaluate(()=>localStorage.clear());   // язык из ссылки — только если его ещё не выбирали (выше выбран французский)
+  await pg.click('a.cta'); await pg.waitForSelector('.brand');
+  ok(pg.url()===base+'?lang=es'&&await pg.evaluate(()=>document.documentElement.lang)==='es','кнопка ведёт в приложение, сразу на испанском');
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(bad.length===0,'все запросы 200 '+bad.join(' '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));

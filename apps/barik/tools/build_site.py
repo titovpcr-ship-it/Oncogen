@@ -37,7 +37,7 @@ OUT = os.path.join(APP, "dist", "site")
 SITE_URL = "https://barik.am/"   # адрес сайта (O-125); --url "" — без canonical и страниц поиска
 
 NAME = {"ru": "Barik — армянские слова", "en": "Barik — Armenian words",
-        "fr": "Barik — mots arméniens"}
+        "fr": "Barik — mots arméniens", "es": "Barik — palabras armenias"}
 DESC = ("Восточноармянский язык: 20 000 слов с русским, английским и французским "
         "переводом, транскрипция, алфавит, упражнения и интервальное повторение.")
 
@@ -111,9 +111,9 @@ def land_meta():
     s = open(os.path.join(SRC, "js", "i18n.js"), encoding="utf-8").read()
     q = r"'((?:\\.|[^'\\])*)'"
     found = re.findall(r"land:\{\s*title:" + q + r",\s*desc:" + q, s)
-    assert len(found) == 3, "в i18n.js не три раздела land"
+    assert len(found) == 4, "в i18n.js не четыре раздела land"
     un = lambda x: x.replace("\\'", "'")
-    return {L: (un(t), un(d)) for L, (t, d) in zip(("ru", "en", "fr"), found)}
+    return {L: (un(t), un(d)) for L, (t, d) in zip(("ru", "en", "fr", "es"), found)}
 
 
 def esc(x):
@@ -124,8 +124,9 @@ def esc(x):
 OG_W, OG_H = 2400, 1260
 OG_ALT = {"ru": "Barik: телефон с уроком армянского в арке, пропись буквы Ա",
           "en": "Barik: a phone with an Armenian lesson in an arch, handwriting of the letter Ա",
-          "fr": "Barik : un téléphone avec une leçon d'arménien dans une arche, écriture de la lettre Ա"}
-OG_LOC = {"ru": "ru_RU", "en": "en_US", "fr": "fr_FR"}
+          "fr": "Barik : un téléphone avec une leçon d'arménien dans une arche, écriture de la lettre Ա",
+          "es": "Barik: un teléfono con una lección de armenio dentro de un arco, escritura de la letra Ա"}
+OG_LOC = {"ru": "ru_RU", "en": "en_US", "fr": "fr_FR", "es": "es_ES"}
 
 
 def og_tags(L, url, title, desc):
@@ -221,7 +222,7 @@ def build(out=OUT, url=SITE_URL, seo=True):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
             if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css") or rel.startswith(("audio/", "pics/", "og/"))
-                    or rel.split("/")[0] in ("ru", "en", "fr") or rel.startswith("sitemap")):
+                    or rel.split("/")[0] in ("ru", "en", "fr", "es") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel)
             h.update(rel.encode())
@@ -248,7 +249,7 @@ def seo_pages(out, url):
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     links = " · ".join(f'<a href="{L}/">{n}</a>' for L, n in
                        (("ru", "Армянский словарь"), ("en", "Armenian dictionary"),
-                        ("fr", "Dictionnaire arménien")))
+                        ("fr", "Dictionnaire arménien"), ("es", "Diccionario armenio")))
     html = html.replace("</body>", f"<noscript><p>{links}</p></noscript>\n</body>", 1)
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
 

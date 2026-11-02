@@ -14,9 +14,9 @@ function saveUI(){try{localStorage.setItem(UIK,JSON.stringify(UI));}catch(e){}}
 const NAV=(navigator.language||'').toLowerCase();
 /* Со страницы поиска (/fr/w/…) — сразу на языке страницы, без выбора языка;
    выбор, сделанный раньше, не трогаем. */
-const QL=(/[?&]lang=(ru|en|fr)(?:&|$)/.exec(location.search||'')||[])[1];
+const QL=(/[?&]lang=(ru|en|fr|es)(?:&|$)/.exec(location.search||'')||[])[1];
 if(QL&&!UI.lang){UI.lang=QL; saveUI();}
-let L=UI.lang||(NAV.indexOf('ru')===0?'ru':(NAV.indexOf('fr')===0?'fr':'en'));
+let L=UI.lang||(NAV.indexOf('ru')===0?'ru':(NAV.indexOf('fr')===0?'fr':(NAV.indexOf('es')===0?'es':'en')));
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}
 
@@ -82,7 +82,30 @@ function trFr(s){
   }
   return o;
 }
-const TRF={ru:y=>trWord(y,false),en:trLat,fr:trFr};
+/* испанская (O-134): խ — j (как в «jamón»), ռ/ր — rr/r (как «perro»/«pero»), ճ — ch, չ — chʰ, շ — sh,
+   ժ — zh, ջ — dj, ը — ë (как в ISO 9985), ու — u, ե/և в начале — ye/yev, ո в начале — vo; գ перед e, i, ë —
+   gu. Армянское ударение — на последнем слоге (кроме слога с ը); где испанец по своим правилам ударил бы
+   раньше (слово на гласную, n или s), над гласной ставится знак: Yereván, Hayastán, katú. */
+const ESM={'ա':'a','բ':'b','գ':'g','դ':'d','զ':'z','է':'e','ը':'ë','թ':'tʰ','ժ':'zh','ի':'i','լ':'l','խ':'j','ծ':'ts','կ':'k','հ':'h','ձ':'dz','ղ':'gh','ճ':'ch','մ':'m','յ':'y','ն':'n','շ':'sh','չ':'chʰ','պ':'p','ջ':'dj','ռ':'rr','ս':'s','վ':'v','տ':'t','ր':'r','ց':'tsʰ','փ':'pʰ','ք':'kʰ','օ':'o','ֆ':'f'};
+const ACUTE={a:'á',e:'é',i:'í',o:'ó',u:'ú'};
+function trEs(s){
+  s=s.toLowerCase(); let o='';
+  for(let i=0;i<s.length;i++){
+    const c=s[i], nx=s[i+1]||'';
+    if(PUNCT.indexOf(c)>=0) continue;
+    if(c==='ո'&&nx==='ւ'){o+='u';i++;continue;}
+    if(c==='և'){o+=(i===0)?'yev':'ev';continue;}
+    if(c==='ե'){o+=(i===0)?'ye':'e';continue;}
+    if(c==='ո'){o+=(i===0&&!s.startsWith('ով'))?'vo':'o';continue;}
+    if(c==='գ'&&'եէիը'.indexOf(nx)>=0){o+='gu';continue;}
+    const m=ESM[c]; o+=(m===undefined)?c:m;
+  }
+  const v=[]; for(let i=0;i<o.length;i++) if('aeiouë'.indexOf(o[i])>=0&&!(o[i]==='u'&&o[i-1]==='g'&&'eië'.indexOf(o[i+1]||'')>=0)) v.push(i);
+  const end=o[o.length-1]||'', k=v[v.length-1];
+  if(v.length>=2&&o[k]!=='ë'&&('aeiou'.indexOf(end)>=0||end==='n'||end==='s')) o=o.slice(0,k)+ACUTE[o[k]]+o.slice(k+1);
+  return o;
+}
+const TRF={ru:y=>trWord(y,false),en:trLat,fr:trFr,es:trEs};
 function trPhrase(a,mode){const f=TRF[mode]||TRF.ru; return a.split(' ').map(x=>x.split('-').map(f).join('-')).join(' ');}
 const trL=a=>trPhrase(a,L);   // транскрипция на языке интерфейса
 const WORDS=[], BY={};
@@ -91,15 +114,15 @@ TOPICS.forEach((t,ti)=>{
   (t.w||[]).forEach(row=>{
     const a=(row[0]||'').trim(), r=(row[1]||'').trim(), e=(row[2]||'').trim()||r, p=(row[3]||'').trim();
     if(!a||!r||BY[a]) return;
-    const f=(row[4]||'').trim()||e;
-    const w={a,r,e,f,p,t:ti,tr:trPhrase(a,'ru'),lt:trPhrase(a,'en'),ft:trPhrase(a,'fr')};
+    const f=(row[4]||'').trim()||e, es=(row[5]||'').trim()||e;
+    const w={a,r,e,f,s:es,p,t:ti,tr:trPhrase(a,'ru'),lt:trPhrase(a,'en'),ft:trPhrase(a,'fr'),st:trPhrase(a,'es')};
     BY[a]=w; WORDS.push(w); t.list.push(w);
   });
 });
 const PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
-const tx=w=>L==='fr'?w.f:(L==='en'?w.e:w.r);      // перевод на языке интерфейса
-const trn=w=>L==='fr'?w.ft:(L==='en'?w.lt:w.tr);   // транскрипция на языке интерфейса
-const tn=t=>(L==='fr'&&t.fr)?t.fr:(L==='en'?t.en:t.ru);   // название темы
+const tx=w=>L==='es'?w.s:(L==='fr'?w.f:(L==='en'?w.e:w.r));       // перевод на языке интерфейса
+const trn=w=>L==='es'?w.st:(L==='fr'?w.ft:(L==='en'?w.lt:w.tr));   // транскрипция на языке интерфейса
+const tn=t=>(L==='es'&&t.es)?t.es:((L==='fr'&&t.fr)?t.fr:(L==='en'||L==='es'?t.en:t.ru));   // название темы
 
 /* ================= ACCESS ================= */
 const FREE_LV='A1';
@@ -414,7 +437,7 @@ function finish(){
 
 /* ================= ALPHABET QUIZ ================= */
 let aq=null;
-const rd=x=>L==='fr'?x.fr:(L==='en'?x.en:x.ru);
+const rd=x=>L==='es'?x.es:(L==='fr'?x.fr:(L==='en'?x.en:x.ru));
 function startAbcQuiz(){
   const kinds=hasRealKey('L')?['l2s','s2l','hear']:['l2s','s2l'];
   const items=shuffle(ABC).slice(0,12).map(x=>{
@@ -581,7 +604,7 @@ function onboardHTML(){
   const D=LND(), a1=WORDS.filter(w=>TOPICS[w.t].lv==='A1').length, chk=T('lvCheck');
   const ok='<svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.6 3.4 7.4-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const cta=c=>'<button class="btn primary '+(c||'')+'" data-act="pickLang" data-arg="'+L+'">'+esc(D.cta)+'<span class="arr" aria-hidden="true">→</span></button>';
-  const langs=[['ru','RU'],['en','EN'],['fr','FR']].map(x=>'<button class="lng" data-act="landLang" data-arg="'+x[0]+'" aria-pressed="'+(x[0]===L)+'" lang="'+x[0]+'">'+x[1]+'</button>').join('');
+  const langs=[['ru','RU'],['en','EN'],['fr','FR'],['es','ES']].map(x=>'<button class="lng" data-act="landLang" data-arg="'+x[0]+'" aria-pressed="'+(x[0]===L)+'" lang="'+x[0]+'">'+x[1]+'</button>').join('');
   const byA=a=>BY[a]&&PICS[a]?BY[a]:null;
   const tile=w=>'<li class="ld-tile"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(tx(w))+'</span></li>';
   const tiles=FEAT.map(byA).filter(Boolean).map(tile).join('');
@@ -744,11 +767,12 @@ function topicHTML(ti){
     '<p class="summary">'+esc(T('topicSum',tc.total,tc.learned,tc.learning,nn))+'</p>'+
     '<div class="actions page-actions">'+acts+'</div><ul class="words">'+t.list.map(w=>wordRow(w)).join('')+'</ul>';
 }
+const fold=x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'');   // без ударений и точек: é → e, ë → e
 function dictRows(){
   const q=dq.trim().toLowerCase();
-  const qc=q.replace(/h/g,'һ').replace(/ʰ/g,''), ql=q.replace(/ʰ/g,'');
+  const qc=q.replace(/h/g,'һ').replace(/ʰ/g,''), ql=q.replace(/ʰ/g,''), qf=fold(ql);
   let list=(dt==='all')?WORDS:(dt.indexOf('lv:')===0?WORDS.filter(w=>TOPICS[w.t].lv===dt.slice(3)):TOPICS[+dt].list);
-  if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0||w.f.toLowerCase().indexOf(q)>=0||w.ft.replace(/ʰ/g,'').indexOf(ql)>=0);
+  if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0||fold(w.f.toLowerCase()).indexOf(qf)>=0||fold(w.ft.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.s.toLowerCase()).indexOf(qf)>=0||fold(w.st.replace(/ʰ/g,'')).indexOf(qf)>=0);
   if(!list.length) return '<li class="empty">'+esc(T('dictEmpty'))+'</li>';
   const more=list.length>dLimit?'<li class="more-li"><button class="btn ghost" data-act="more">'+esc(T('showMore',list.length-dLimit))+'</button></li>':'';
   return list.slice(0,dLimit).map(w=>wordRow(w)).join('')+more;
@@ -1098,7 +1122,7 @@ function letterHTML(i){
     '<div class="l-name" lang="hy">'+esc(x.nm)+'<small>'+esc(T('letterName'))+': '+esc(trL(x.nm))+'</small></div>'+
     '<div class="audio"><button class="aud" data-act="sayLetter" data-arg="'+i+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="sayLetterSlow" data-arg="'+i+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>'+
     '<div class="l-facts"><div><b>'+esc(rd(x))+'</b><span>'+esc(T('reads'))+'</span></div><div><b>['+esc(x.ipa)+']</b><span>'+esc(T('ipa'))+'</span></div><div><b>'+(i+1)+'</b><span>'+esc(T('ofN',n))+'</span></div></div>'+
-    '<p class="l-tip">'+esc(L==='fr'?x.tfr:(L==='en'?x.ten:x.tru))+'</p></div>'+cursiveHTML(x)+ex+
+    '<p class="l-tip">'+esc(L==='es'?x.tes:(L==='fr'?x.tfr:(L==='en'?x.ten:x.tru)))+'</p></div>'+cursiveHTML(x)+ex+
     '<div class="l-nav"><button class="btn secondary" data-act="letter" data-arg="'+((i+n-1)%n)+'">‹ '+esc(ABC[(i+n-1)%n].up)+'</button><button class="btn secondary" data-act="letter" data-arg="'+((i+1)%n)+'">'+esc(ABC[(i+1)%n].up)+' ›</button></div>';
 }
 function abcQuizHTML(){
@@ -1203,7 +1227,7 @@ function tquizHTML(){
 }
 function settingsHTML(){
   const sizes=[5,10,15,20].map(n=>'<button data-act="size" data-arg="'+n+'" aria-pressed="'+((S.set.size||10)===n)+'">'+n+'</button>').join('');
-  const langs=[['ru','Русский'],['en','English'],['fr','Français']].map(x=>'<button data-act="lang" data-arg="'+x[0]+'" aria-pressed="'+(L===x[0])+'">'+x[1]+'</button>').join('');
+  const langs=[['ru','Русский'],['en','English'],['fr','Français'],['es','Español']].map(x=>'<button data-act="lang" data-arg="'+x[0]+'" aria-pressed="'+(L===x[0])+'">'+x[1]+'</button>').join('');
   const vtext=REAL_ANY?T('audioOn'):(HYV?T('audioSys'):T('audioOff'));
   const prem=premium();
   let sub='<p class="note">'+esc(prem?T('subOn'):T('subOff'))+'</p><div class="actions" style="margin-top:12px">';
@@ -1213,7 +1237,7 @@ function settingsHTML(){
   sub+='</div>';
   return '<header class="head"><h1 class="pg">'+esc(T('setTitle'))+'</h1><p class="t-hy2" lang="hy">Կարգավորումներ</p></header>'+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setLang'))+'</h2>'+
-    '<div class="set-row"><div class="lbl"><b>'+esc(T('setLangLbl'))+'</b><span>'+esc(T('setLangSub'))+'</span></div><div class="seg" role="group" aria-label="'+esc(T('setLang'))+'">'+langs+'</div></div>'+
+    '<div class="set-row lang-row"><div class="lbl"><b>'+esc(T('setLangLbl'))+'</b><span>'+esc(T('setLangSub'))+'</span></div><div class="seg" role="group" aria-label="'+esc(T('setLang'))+'">'+langs+'</div></div>'+
   '</section>'+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setKb'))+'</h2>'+
     '<div class="set-row"><div class="lbl"><b>'+esc(T('setKbLbl'))+'</b><span>'+esc(T('setKbSub'))+'</span></div><div class="seg" role="group" aria-label="'+esc(T('setKb'))+'"><button data-act="kbSys" aria-pressed="'+!kbOwn()+'">'+esc(T('kbPhone'))+'</button><button data-act="kbOwn" aria-pressed="'+kbOwn()+'">'+esc(T('kbBuiltIn'))+'</button></div></div>'+
@@ -1519,5 +1543,5 @@ render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();
