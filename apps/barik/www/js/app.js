@@ -12,6 +12,10 @@ let UI={lang:null};
 try{const o=JSON.parse(localStorage.getItem(UIK)||'null'); if(o&&typeof o==='object') UI=Object.assign(UI,o);}catch(e){}
 function saveUI(){try{localStorage.setItem(UIK,JSON.stringify(UI));}catch(e){}}
 const NAV=(navigator.language||'').toLowerCase();
+/* Со страницы поиска (/fr/w/…) — сразу на языке страницы, без выбора языка;
+   выбор, сделанный раньше, не трогаем. */
+const QL=(/[?&]lang=(ru|en|fr)(?:&|$)/.exec(location.search||'')||[])[1];
+if(QL&&!UI.lang){UI.lang=QL; saveUI();}
 let L=UI.lang||(NAV.indexOf('ru')===0?'ru':(NAV.indexOf('fr')===0?'fr':'en'));
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}

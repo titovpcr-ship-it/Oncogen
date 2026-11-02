@@ -13,10 +13,12 @@ nginx), плюс то, что делает сайт приложением (PWA)
   * sw.js — работа без интернета: всё приложение (слова, картинки, шрифты)
     кэшируется при первом заходе, озвучка — по мере прослушивания;
   * config.js с WEB_ALL_FREE: true — пока оплата не подключена, открыто всё;
-  * robots.txt, .htaccess (типы файлов, сжатие, кэш, HTTPS) для Apache.
+  * robots.txt, .htaccess (типы файлов, сжатие, кэш, HTTPS) для Apache;
+  * страницы поиска /ru/, /en/, /fr/ — по странице на слово и тему, sitemap.xml
+    (tools/build_seo.py; слова с транскрипцией — node tools/dump_words.js).
 
-    python3 tools/build_site.py            # → dist/site/
-    python3 tools/build_site.py --url https://barik.am/   # с адресом сайта
+    python3 tools/build_site.py            # → dist/site/ (адрес https://barik.am/)
+    python3 tools/build_site.py --no-seo   # без страниц поиска — быстро
     python3 tools/build_site.py --serve    # и показать на http://localhost:8080
 """
 import argparse
@@ -31,7 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 SRC = os.path.join(APP, "www")
 OUT = os.path.join(APP, "dist", "site")
-SITE_URL = ""          # адрес сайта: --url https://<домен>.am/ (barik.am, O-125)
+SITE_URL = "https://barik.am/"   # адрес сайта (O-125); --url "" — без canonical и страниц поиска
 
 NAME = {"ru": "Barik — армянские слова", "en": "Barik — Armenian words",
         "fr": "Barik — mots arméniens"}
@@ -146,7 +148,7 @@ AddDefaultCharset utf-8
 """
 
 
-def build(out=OUT, url=SITE_URL):
+def build(out=OUT, url=SITE_URL, seo=True):
     if os.path.isdir(out):
         shutil.rmtree(out)
     shutil.copytree(SRC, out, ignore=shutil.ignore_patterns("vendor"))
@@ -169,11 +171,15 @@ def build(out=OUT, url=SITE_URL):
               ensure_ascii=False, indent=1)
     open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n")
     open(os.path.join(out, ".htaccess"), "w").write(HTACCESS)
+    if seo and url:
+        seo_pages(out, url)
+    # Приложение не знает о страницах поиска — в его кэш (без интернета) они не идут.
     shell, h = ["./"], hashlib.sha1()
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if rel in (".htaccess", "sw.js", "robots.txt") or rel.startswith("audio/"):
+            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css") or rel.startswith("audio/")
+                    or rel.split("/")[0] in ("ru", "en", "fr") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel)
             h.update(rel.encode())
@@ -186,13 +192,33 @@ def build(out=OUT, url=SITE_URL):
     return out
 
 
+def seo_pages(out, url):
+    """Страницы поиска: слова с транскрипцией берутся из настоящего приложения
+    в браузере (dump_words.js), чтобы произношение совпало с тем, что в нём видно."""
+    import subprocess
+    words = os.path.join(APP, "dist", "words_tr.json")
+    src = [os.path.join(r, f) for r, _, fs in os.walk(os.path.join(SRC, "js")) for f in fs]
+    if not os.path.exists(words) or os.path.getmtime(words) < max(map(os.path.getmtime, src)):
+        subprocess.run(["node", os.path.join(HERE, "dump_words.js"), words], check=True, cwd=APP)
+    sys.path.insert(0, HERE)
+    import build_seo
+    build_seo.build(out, url, words)
+    html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
+    links = " · ".join(f'<a href="{L}/">{n}</a>' for L, n in
+                       (("ru", "Армянский словарь"), ("en", "Armenian dictionary"),
+                        ("fr", "Dictionnaire arménien")))
+    html = html.replace("</body>", f"<noscript><p>{links}</p></noscript>\n</body>", 1)
+    open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=OUT)
     ap.add_argument("--url", default=SITE_URL, help="адрес сайта, например https://barik.am/")
+    ap.add_argument("--no-seo", action="store_true", help="без страниц поиска")
     ap.add_argument("--serve", action="store_true")
     a = ap.parse_args()
-    out = build(a.out, a.url if not a.url or a.url.endswith("/") else a.url + "/")
+    out = build(a.out, a.url if not a.url or a.url.endswith("/") else a.url + "/", not a.no_seo)
     if a.serve:
         import functools
         import http.server
