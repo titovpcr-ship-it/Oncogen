@@ -672,32 +672,80 @@ function cursiveHTML(x){
     '<button class="aud" data-act="write">'+ICON.again+'<span>'+esc(T('cursiveAgain'))+'</span></button></div>'+
     '<svg class="cb" viewBox="'+x0+' -24 '+w+' 200" role="img" aria-label="'+esc(T('cursive')+': '+x.up+(x.lo!==x.up?' '+x.lo:''))+'">'+
     '<g class="cb-lines">'+line(0,'t')+line(64,'x')+line(100,'b')+line(152,'t')+'</g>'+
-    '<g class="cb-ink">'+ink+'<circle class="nib" r="4.6" cx="0" cy="0"/></g></svg>'+
+    '<g class="cb-ink">'+ink+'</g><g class="nib"><circle class="halo" r="8.5"/><circle r="4.1"/></g></svg>'+
     '<p class="cb-note">'+esc(T('cursiveNote'))+'</p></section>';
+}
+/* Перо как у живой руки: на прямых быстрее, на изгибах медленнее (закон «двух третей» рукописи:
+   скорость ~ кривизна^(-1/3)), в изломе почти останавливается; штрих разгоняется и тормозит,
+   между штрихами перо приподнимается и переходит по воздуху. Всё считается заранее по времени —
+   кадры не дёргаются, даже если браузер пропустит какой-то. */
+const CB={V:.42, A:.0034, K0:.05, VMIN:.018, lead:420, lift:110, gap:300, tail:320};
+const sm=x=>x<=0?0:x>=1?1:x*x*(3-2*x);
+function cbProfile(p,off){
+  const L=p.getTotalLength(), n=Math.max(4,Math.ceil(L/1.5)), h=L/n;
+  const X=new Float64Array(n+1), Y=new Float64Array(n+1), th=new Float64Array(n+1), v=new Float64Array(n+1), w=new Float64Array(n+1), T=new Float64Array(n+1);
+  for(let i=0;i<=n;i++){ const q=p.getPointAtLength(i*h); X[i]=q.x+off; Y[i]=q.y; }
+  const wrap=d=>Math.atan2(Math.sin(d),Math.cos(d));
+  for(let i=0;i<=n;i++){ const a=Math.max(0,i-1), b=Math.min(n,i+1); th[i]=Math.atan2(Y[b]-Y[a],X[b]-X[a]); }
+  for(let i=0;i<=n;i++){                                   // предел скорости по кривизне
+    const a=Math.max(0,i-2), b=Math.min(n,i+2), k=Math.abs(wrap(th[b]-th[a]))/Math.max(h*(b-a),1e-6);
+    v[i]=CB.V*Math.min(1,Math.max(.3,Math.cbrt(CB.K0/(k+CB.K0))));
+  }
+  for(let i=1;i<n;i++) if(Math.abs(wrap(th[i+1]-th[i-1]))>1.5) v[i]=CB.VMIN;   // излом — остановка
+  v[0]=v[n]=CB.VMIN;                                       // штрих — с места и до остановки
+  for(let i=1;i<=n;i++) v[i]=Math.min(v[i],Math.sqrt(v[i-1]*v[i-1]+2*CB.A*h));   // разгон не резче A
+  for(let i=n-1;i>=0;i--) v[i]=Math.min(v[i],Math.sqrt(v[i+1]*v[i+1]+2*CB.A*h)); // и торможение
+  for(let i=0;i<=n;i++){ let S=0,W=0; for(let j=-2;j<=2;j++){ const q=i+j; if(q<0||q>n) continue; const g=Math.exp(-j*j/3); S+=v[q]*g; W+=g; } w[i]=Math.max(CB.VMIN,S/W); }
+  for(let i=1;i<=n;i++) T[i]=T[i-1]+2*h/(w[i-1]+w[i]);
+  return {L,n,h,X,Y,T};
+}
+function cbPlan(paths){
+  const st=[]; let t=CB.lead, prev=null, prevG=null;
+  paths.forEach(p=>{
+    const tr=p.parentNode.transform.baseVal, f=cbProfile(p,tr.length?tr[0].matrix.e:0);
+    if(prev){ const d=Math.hypot(f.X[0]-prev.x,f.Y[0]-prev.y), dur=CB.lift+Math.sqrt(6*d/CB.A)+(p.parentNode!==prevG?CB.gap:0);
+      st.push({air:1,x0:prev.x,y0:prev.y,x1:f.X[0],y1:f.Y[0],d,t0:t,t1:t+dur}); t+=dur; }
+    st.push({p,f,t0:t,t1:t+f.T[f.n]}); t+=f.T[f.n];
+    prev={x:f.X[f.n],y:f.Y[f.n]}; prevG=p.parentNode;
+  });
+  return {st,T:t};
 }
 function writeCursive(){
   const svg=document.querySelector('.cb'); if(!svg) return;
   const my=++wAnim, paths=[...svg.querySelectorAll('.cb-ink path')], nib=svg.querySelector('.nib');
   const lens=paths.map(p=>p.getTotalLength());
   const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  paths.forEach((p,k)=>{ p.style.strokeDasharray=lens[k]+' '+lens[k]; p.style.strokeDashoffset=still?0:lens[k]; });
+  paths.forEach((p,k)=>{ p.style.strokeDasharray=lens[k]+' '+(lens[k]+2); p.style.strokeDashoffset=still?0:lens[k]+1; });
   if(still||!paths.length){ nib.style.opacity=0; return; }
-  const SPEED=0.21;                       // единиц пути за мс
-  const ease=t=>0.7*t+0.3*(0.5-0.5*Math.cos(Math.PI*t));
-  let k=0, t0=null;
-  const step=ts=>{
+  const {st,T}=cbPlan(paths), f0=st[0].f;
+  const put=(x,y,o,sc)=>{ nib.setAttribute('transform','translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+sc.toFixed(3)+')'); nib.style.opacity=o.toFixed(3); };
+  put(f0.X[0],f0.Y[0],0,.55);
+  let t0=null, j=0;
+  const frame=now=>{
     if(my!==wAnim||!svg.isConnected) return;
-    if(t0===null) t0=ts;
-    const p=paths[k], len=lens[k], t=Math.min(1,(ts-t0)*SPEED/Math.max(len,1)), e=ease(t);
-    p.style.strokeDashoffset=len*(1-e);
-    const pt=p.getPointAtLength(len*e), ox=p.parentNode.transform.baseVal.length?p.parentNode.transform.baseVal[0].matrix.e:0;
-    nib.setAttribute('cx',(pt.x+ox).toFixed(1)); nib.setAttribute('cy',pt.y.toFixed(1)); nib.style.opacity=1;
-    if(t<1){ requestAnimationFrame(step); return; }
-    k++; t0=null;
-    if(k>=paths.length){ setTimeout(()=>{ if(my===wAnim) nib.style.opacity=0; },250); return; }
-    setTimeout(()=>{ if(my===wAnim) requestAnimationFrame(step); }, paths[k].parentNode!==p.parentNode?480:160);
+    if(t0===null) t0=now;
+    const t=now-t0;
+    if(t<CB.lead){ const e=sm(t/CB.lead); put(f0.X[0],f0.Y[0],e,.55+.45*e); requestAnimationFrame(frame); return; }
+    while(j<st.length-1&&t>=st[j].t1){ if(!st[j].air) st[j].p.style.strokeDashoffset=0; j++; }
+    const q=st[j];
+    if(t>=T){                                   // дописано: перо поднимается и гаснет
+      q.p.style.strokeDashoffset=0;
+      const e=sm((t-T)/CB.tail), f=q.f; put(f.X[f.n],f.Y[f.n],1-e,1-.35*e);
+      if(e<1) requestAnimationFrame(frame); return;
+    }
+    if(q.air){
+      const u=Math.min(1,(t-q.t0)/(q.t1-q.t0)), e=sm(u), up=Math.sin(Math.PI*u);
+      put(q.x0+(q.x1-q.x0)*e, q.y0+(q.y1-q.y0)*e-(3+q.d*.05)*up, 1-.5*up, 1-.28*up);
+    } else {
+      const f=q.f, tt=t-q.t0;
+      let a=0, b=f.n; while(b-a>1){ const m=(a+b)>>1; if(f.T[m]<=tt) a=m; else b=m; }
+      const fr=Math.min(1,Math.max(0,(tt-f.T[a])/((f.T[b]-f.T[a])||1))), s=(a+fr)*f.h;
+      q.p.style.strokeDashoffset=Math.max(0,f.L-s);
+      put(f.X[a]+(f.X[b]-f.X[a])*fr, f.Y[a]+(f.Y[b]-f.Y[a])*fr, 1, 1);
+    }
+    requestAnimationFrame(frame);
   };
-  setTimeout(()=>{ if(my===wAnim) requestAnimationFrame(step); },380);
+  requestAnimationFrame(frame);
 }
 function letterHTML(i){
   const x=ABC[i], w=BY[x.ex], n=ABC.length;

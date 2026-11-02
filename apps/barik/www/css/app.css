@@ -364,12 +364,13 @@ select{width:100%;max-width:100%;background:var(--surface);border:1px solid var(
 .cb-head .sec{margin:0}
 .cb-head .aud{height:40px;padding:0 14px;font-size:14px}
 .cb-head .aud svg{width:18px;height:18px}
-.cb{display:block;width:100%;height:auto;max-height:260px}
+.cb{display:block;width:100%;height:auto;max-height:260px;shape-rendering:geometricPrecision}
 .cb-lines line{stroke:var(--line);stroke-width:1.3}
 .cb-lines .x{stroke:var(--gold);stroke-dasharray:6 7;opacity:.6}
 .cb-lines .b{stroke:var(--pom);opacity:.4;stroke-width:1.6}
-.cb-ink path{fill:none;stroke:var(--ink);stroke-width:3.8;stroke-linecap:round;stroke-linejoin:round}
-.nib{fill:var(--accent);opacity:0;transition:opacity .2s;filter:drop-shadow(0 0 5px var(--accent))}
+.cb-ink path{fill:none;stroke:var(--ink);stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}
+.nib{fill:var(--accent);opacity:0}
+.nib .halo{opacity:.22}
 .cb-note{font-size:13px;color:var(--ink-3);margin:2px 0 0;padding-left:18px}
 
 /* ---------- подписка ---------- */

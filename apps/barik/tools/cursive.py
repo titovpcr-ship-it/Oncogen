@@ -52,11 +52,13 @@ def _wrap(a):
     return a
 
 
-def path_of(knots):
+def segments_of(knots):
+    """Кривая Хобби через точки пера → список кубических кусков (z0, c1, c2, z1)."""
     pts = [(float(k[0]), float(k[1])) for k in knots]
     n = len(pts)
     if n == 2 and all(len(k) == 2 for k in knots):
-        return f"M{pts[0][0]:g} {pts[0][1]:g}L{pts[1][0]:g} {pts[1][1]:g}"
+        z0, z1 = pts
+        return [(z0, _lerp(z0, z1, 1 / 3), _lerp(z0, z1, 2 / 3), z1)]
     din, dout = [None] * n, [None] * n
     for i, k in enumerate(knots):
         if len(k) == 3:
@@ -78,7 +80,7 @@ def path_of(knots):
         ch = _ang((pts[-1][0] - pts[-2][0], pts[-1][1] - pts[-2][1]))
         prv = dout[-2] if n > 2 and dout[-2] is not None else ch
         din[-1] = dout[-1] = ch - _wrap(prv - ch) if n > 2 else ch
-    d = f"M{pts[0][0]:g} {pts[0][1]:g}"
+    segs = []
     for i in range(n - 1):
         z0, z1 = pts[i], pts[i + 1]
         dx, dy = z1[0] - z0[0], z1[1] - z0[1]
@@ -89,8 +91,227 @@ def path_of(knots):
         r0, r1 = _rho(th, ph) * L / 3, _rho(ph, th) * L / 3
         c1 = (z0[0] + r0 * math.cos(dout[i]), z0[1] + r0 * math.sin(dout[i]))
         c2 = (z1[0] - r1 * math.cos(din[i + 1]), z1[1] - r1 * math.sin(din[i + 1]))
+        segs.append((z0, c1, c2, z1))
+    return segs
+
+
+def _d(segs, prec=1):
+    f = lambda v: f"{round(v, prec):g}"
+    z = segs[0][0]
+    out = f"M{f(z[0])} {f(z[1])}"
+    for _, c1, c2, z1 in segs:
+        out += f"C{f(c1[0])} {f(c1[1])} {f(c2[0])} {f(c2[1])} {f(z1[0])} {f(z1[1])}"
+    return out
+
+
+def path_of(knots):
+    """Кривая через точки пера как есть (без сглаживания) — для сверки с образцом."""
+    pts = [(float(k[0]), float(k[1])) for k in knots]
+    if len(pts) == 2 and all(len(k) == 2 for k in knots):
+        return f"M{pts[0][0]:g} {pts[0][1]:g}L{pts[1][0]:g} {pts[1][1]:g}"
+    segs = segments_of(knots)
+    d = f"M{pts[0][0]:g} {pts[0][1]:g}"
+    for _, c1, c2, z1 in segs:
         d += f"C{c1[0]:.1f} {c1[1]:.1f} {c2[0]:.1f} {c2[1]:.1f} {z1[0]:g} {z1[1]:g}"
     return d
+
+
+# ---------- сглаживание: убрать мелкую «дрожь» промера, изломы оставить ----------
+# Точки промера стоят в середине линии с точностью ±0.5, направления в них — на глаз; между
+# точками кривая от этого чуть «гуляет». Штрих режется по изломам (точка с двумя углами), каждый
+# кусок проходится с шагом 0.5, сглаживается гауссом (σ 2.4 — мельче ширины линии, форма не
+# меняется, концы и изломы на месте) и заново укладывается в немногие кубические кривые (Шнайдер,
+# отклонение ≤ 0.2) — линия ровная, а файл маленький.
+
+def _lerp(a, b, t):
+    return (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
+
+
+def _bez(seg, t):
+    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = seg
+    u = 1 - t
+    a, b, c, d = u * u * u, 3 * u * u * t, 3 * u * t * t, t * t * t
+    return (a * x0 + b * x1 + c * x2 + d * x3, a * y0 + b * y1 + c * y2 + d * y3)
+
+
+def _bez_d1(seg, t):
+    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = seg
+    u = 1 - t
+    return (3 * (u * u * (x1 - x0) + 2 * u * t * (x2 - x1) + t * t * (x3 - x2)),
+            3 * (u * u * (y1 - y0) + 2 * u * t * (y2 - y1) + t * t * (y3 - y2)))
+
+
+def _bez_d2(seg, t):
+    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = seg
+    u = 1 - t
+    return (6 * (u * (x2 - 2 * x1 + x0) + t * (x3 - 2 * x2 + x1)),
+            6 * (u * (y2 - 2 * y1 + y0) + t * (y3 - 2 * y2 + y1)))
+
+
+def _resample(segs, h):
+    fine = [segs[0][0]]
+    for sg in segs:
+        for j in range(1, 41):
+            fine.append(_bez(sg, j / 40))
+    acc = [0.0]
+    for i in range(1, len(fine)):
+        acc.append(acc[-1] + math.dist(fine[i - 1], fine[i]))
+    L = acc[-1]
+    n = max(2, int(round(L / h)))
+    out, j = [], 0
+    for i in range(n + 1):
+        s = L * i / n
+        while j < len(acc) - 2 and acc[j + 1] < s:
+            j += 1
+        span = acc[j + 1] - acc[j] or 1
+        out.append(_lerp(fine[j], fine[j + 1], (s - acc[j]) / span))
+    return out, L
+
+
+def _gauss(pts, sigma, h):
+    n = len(pts)
+    r = int(3 * sigma / h)
+    w = [math.exp(-0.5 * (k * h / sigma) ** 2) for k in range(-r, r + 1)]
+    p0, p1 = pts[0], pts[-1]
+
+    def at(i):   # нечётное отражение: конец на месте, касательная сохраняется
+        if i < 0:
+            q = pts[min(-i, n - 1)]
+            return (2 * p0[0] - q[0], 2 * p0[1] - q[1])
+        if i >= n:
+            q = pts[max(2 * (n - 1) - i, 0)]
+            return (2 * p1[0] - q[0], 2 * p1[1] - q[1])
+        return pts[i]
+    out = []
+    for i in range(n):
+        sx = sy = sw = 0.0
+        for k, wk in zip(range(-r, r + 1), w):
+            q = at(i + k)
+            sx += q[0] * wk
+            sy += q[1] * wk
+            sw += wk
+        out.append((sx / sw, sy / sw))
+    out[0], out[-1] = p0, p1
+    return out
+
+
+def _norm(v):
+    l = math.hypot(*v) or 1
+    return (v[0] / l, v[1] / l)
+
+
+def _fit(pts, tol):
+    """Шнайдер (Graphics Gems I): точки → кубические кривые с отклонением не больше tol."""
+    n = len(pts)
+    t1 = _norm((pts[min(2, n - 1)][0] - pts[0][0], pts[min(2, n - 1)][1] - pts[0][1]))
+    t2 = _norm((pts[max(n - 3, 0)][0] - pts[-1][0], pts[max(n - 3, 0)][1] - pts[-1][1]))
+    return _fit_cubic(pts, t1, t2, tol * tol, 0)
+
+
+def _fit_cubic(pts, t1, t2, err2, depth):
+    n = len(pts)
+    p0, p3 = pts[0], pts[-1]
+    if n <= 3 or depth > 14:
+        d = math.dist(p0, p3) / 3
+        return [(p0, (p0[0] + t1[0] * d, p0[1] + t1[1] * d), (p3[0] + t2[0] * d, p3[1] + t2[1] * d), p3)]
+    acc = [0.0]
+    for i in range(1, n):
+        acc.append(acc[-1] + math.dist(pts[i - 1], pts[i]))
+    u = [a / acc[-1] for a in acc]
+    seg = _gen(pts, u, t1, t2)
+    e, split = _err(pts, seg, u)
+    if e < err2:
+        return [seg]
+    if e < err2 * 25:
+        for _ in range(8):
+            u = [_newton(seg, p, t) for p, t in zip(pts, u)]
+            seg = _gen(pts, u, t1, t2)
+            e, split = _err(pts, seg, u)
+            if e < err2:
+                return [seg]
+    tc = _norm((pts[split - 1][0] - pts[split + 1][0], pts[split - 1][1] - pts[split + 1][1]))
+    return (_fit_cubic(pts[:split + 1], t1, tc, err2, depth + 1)
+            + _fit_cubic(pts[split:], (-tc[0], -tc[1]), t2, err2, depth + 1))
+
+
+def _gen(pts, u, t1, t2):
+    p0, p3 = pts[0], pts[-1]
+    c00 = c01 = c11 = x0 = x1 = 0.0
+    for p, t in zip(pts, u):
+        s = 1 - t
+        b0, b1, b2, b3 = s * s * s, 3 * t * s * s, 3 * t * t * s, t * t * t
+        a1 = (t1[0] * b1, t1[1] * b1)
+        a2 = (t2[0] * b2, t2[1] * b2)
+        c00 += a1[0] * a1[0] + a1[1] * a1[1]
+        c01 += a1[0] * a2[0] + a1[1] * a2[1]
+        c11 += a2[0] * a2[0] + a2[1] * a2[1]
+        tx = p[0] - (p0[0] * (b0 + b1) + p3[0] * (b2 + b3))
+        ty = p[1] - (p0[1] * (b0 + b1) + p3[1] * (b2 + b3))
+        x0 += a1[0] * tx + a1[1] * ty
+        x1 += a2[0] * tx + a2[1] * ty
+    det = c00 * c11 - c01 * c01
+    seglen = math.dist(p0, p3)
+    if abs(det) > 1e-12:
+        al1 = (x0 * c11 - x1 * c01) / det
+        al2 = (c00 * x1 - c01 * x0) / det
+    else:
+        al1 = al2 = 0
+    if al1 < 1e-6 * seglen or al2 < 1e-6 * seglen:
+        al1 = al2 = seglen / 3
+    return (p0, (p0[0] + t1[0] * al1, p0[1] + t1[1] * al1), (p3[0] + t2[0] * al2, p3[1] + t2[1] * al2), p3)
+
+
+def _err(pts, seg, u):
+    best, split = -1.0, len(pts) // 2
+    for i in range(1, len(pts) - 1):
+        q = _bez(seg, u[i])
+        e = (q[0] - pts[i][0]) ** 2 + (q[1] - pts[i][1]) ** 2
+        if e >= best:
+            best, split = e, i
+    return best, split
+
+
+def _newton(seg, p, t):
+    q, q1, q2 = _bez(seg, t), _bez_d1(seg, t), _bez_d2(seg, t)
+    num = (q[0] - p[0]) * q1[0] + (q[1] - p[1]) * q1[1]
+    den = q1[0] ** 2 + q1[1] ** 2 + (q[0] - p[0]) * q2[0] + (q[1] - p[1]) * q2[1]
+    return min(1.0, max(0.0, t - num / den)) if den else t
+
+
+SIGMA, TOL = 2.4, 0.2
+
+
+def _pieces(knots):
+    """Штрих → куски между изломами (точка с двумя разными углами)."""
+    out, cur = [], []
+    for i, k in enumerate(knots):
+        if len(k) >= 4 and i not in (0, len(knots) - 1) and abs(_wrap(math.radians(k[3] - k[2]))) > 0.02:
+            cur.append((k[0], k[1], k[2]))
+            out.append(cur)
+            cur = [(k[0], k[1], k[3])]
+        else:
+            cur.append(k)
+    out.append(cur)
+    return out
+
+
+def smooth_d(knots, sigma=SIGMA, tol=TOL):
+    """Ровная линия штриха: по кускам между изломами — гаусс по длине и подгонка кривыми."""
+    if len(knots) == 2 and all(len(k) == 2 for k in knots):
+        return path_of(knots)
+    segs = []
+    for piece in _pieces(knots):
+        raw = segments_of(piece)
+        pts, L = _resample(raw, 0.5)
+        sg = min(sigma, L / 5)
+        if sg > 0.3:
+            pts = _gauss(pts, sg, L / (len(pts) - 1))
+        step = max(1, int(round(1.0 / (L / (len(pts) - 1)))))
+        sub = pts[::step]
+        if sub[-1] != pts[-1]:
+            sub.append(pts[-1])
+        segs += _fit(sub, tol)
+    return _d(segs)
 
 
 # ---------- буквы ----------
@@ -105,7 +326,7 @@ def load():
 
 def glyph(strokes):
     xs = [p[0] for s in strokes for p in s]
-    return {"x0": round(min(xs), 1), "w": round(max(xs) - min(xs), 1), "d": [path_of(s) for s in strokes]}
+    return {"x0": round(min(xs), 1), "w": round(max(xs) - min(xs), 1), "d": [smooth_d(s) for s in strokes]}
 
 
 def build(data=None):
