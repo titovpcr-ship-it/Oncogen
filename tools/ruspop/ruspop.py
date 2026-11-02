@@ -361,9 +361,24 @@ _DESC_DOUBLE = re.compile(r"\b2\s*-?\s*x?\s*LPs?\b|\bdouble\s+(?:lp|vinyl|album)
                           r"\btwo\s+(?:lps|records|discs|vinyls)\b", re.I)
 
 
+_LEGEND = re.compile(
+    r"\b(?:an?|the)\s+(?:record|sleeve|cover|jacket)\s+in\b|\bcondition\s+will\b|"
+    r"\bwill\s+(?:show|have)\b|\bgrading\b|\bgoldmine\b|"
+    r"\b(?:mint|near\s+mint|excellent|very\s+good(?:\s+plus)?|good(?:\s+plus)?|fair|poor)"
+    r"\s*\((?:m-?|nm|ex\+?|vg\+?|g\+?|f|p)\)\s*[-–:]", re.I)
+
+
+def _strip_legend(d):
+    """Без шкалы оценок продавца: «Very Good (VG) - A record in Very Good
+    condition will have numerous light scratches…» — шаблон, а не этот лот
+    (Lady Gaga «Mayhem», заводская плёнка, снималась за «(VG)», 02.11.2026)."""
+    parts = re.split(r"(?<=[.!?])\s+", d or "")
+    return " ".join(x for x in parts if not _LEGEND.search(x))
+
+
 def desc_reject(desc, title_colour=None, coloured=False):
     """Причина отказа по описанию продавца или None."""
-    d = desc or ""
+    d = _strip_legend(desc)
     m = _DESC_OPENED.search(d)
     if m:
         return f"вскрыт по описанию («{m.group(0)}»)"
@@ -378,7 +393,7 @@ def desc_reject(desc, title_colour=None, coloured=False):
 
 
 def desc_discs(desc):
-    return 2 if _DESC_DOUBLE.search(desc or "") else 1
+    return 2 if _DESC_DOUBLE.search(_strip_legend(desc)) else 1
 
 
 def album_lots(token, d, cards, artist, album, max_price, per_album, rate,

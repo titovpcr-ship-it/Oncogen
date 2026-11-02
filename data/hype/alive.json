@@ -810,6 +810,27 @@
 "type": "Person",
 "v": 3
 },
+"elleyduhe": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"alternative pop",
+1
+],
+[
+"electropop",
+1
+]
+],
+"mb": "de7efde3-b5db-456a-903a-df145c8b3fbd",
+"mb_name": "Elley Duhé",
+"name": "Elley Duhé",
+"note": "",
+"t": 1793601120,
+"type": "Person",
+"v": 3
+},
 "eminem": {
 "alive": true,
 "gender": "male",
