@@ -403,6 +403,46 @@ _NOT_ALBUM_IDOL = re.compile(
 _FORTY_FIVE_NO_LP = re.compile(r"\b45\s*rpm\b(?!.*\blp\b)", re.I)
 
 
+def colour_evidence(title, item, artist, album):
+    """(«цветной» / «чёрный» / None, откуда): заголовок верен на 24 из 24
+    проверенных по фото; карточка с Vinyl Color или Features «Colored
+    Vinyl» — верна почти всегда; одно поле Color — в половине случаев
+    («Grey» у Love For Sale Target с чёрным винилом, «Green» у Midwest
+    Princess Popstar) — только «по фото»; эксклюзив магазина без цвета
+    (Target, Walmart, Amazon, UO, webstore) — часто цветной, «по фото»."""
+    c = colour_of(title, None, artist, album)
+    if c:
+        return c, "заголовок"
+    if item:
+        asp = {x.get("name"): str(x.get("value") or "").lower()
+               for x in item.get("localizedAspects") or []}
+        feats = asp.get("Features", "")
+        c = colour_of("", item, artist, album)
+        if c == "чёрный":
+            return c, "карточка"
+        if c == "цветной":
+            strong = ("colored vinyl" in feats or "coloured vinyl" in feats
+                      or asp.get("Vinyl Color") or asp.get("Record Color"))
+            return c, "карточка" if strong else "карточка (только Color) — по фото"
+        ed = " ".join(asp.get(k, "") for k in ("Edition", "Features", "Special Attributes"))
+    else:
+        ed = ""
+    if re.search(r"\bexclusive\b|\btarget\b|\bwalmart\b|\bamazon\b|\burban\s+outfitters\b|"
+                 r"\buo\b|\bwebstore\b|\bindie\b|\bspotify\b|\bbarnes\b", f"{title} {ed}", re.I):
+        return None, "эксклюзив, цвет не назван — по фото"
+    return None, ""
+
+
+def card_not_album(item):
+    """Сингл по карточке: 7"/10", тип Single, 45 об/мин не у 12" («Good
+    Luck, Babe! by Chappell Roan (Record, 2024)» — 7", в заголовке ни слова)."""
+    asp = {x.get("name"): str(x.get("value") or "")
+           for x in (item or {}).get("localizedAspects") or []}
+    size, typ, speed = asp.get("Record Size", ""), asp.get("Type", ""), asp.get("Speed", "")
+    return bool(re.search(r"\b(?:7|10)\b", size) or re.search(r"\bsingle\b", typ, re.I)
+                or (re.search(r"\b45\b", speed) and "12" not in size))
+
+
 def not_album(raw):
     return bool(_NOT_ALBUM_IDOL.search(raw or "") or _FORTY_FIVE_NO_LP.search(raw or ""))
 
@@ -443,9 +483,26 @@ def _strip_legend(d):
     return " ".join(x for x in parts if not _LEGEND.search(x))
 
 
-def desc_reject(desc, title_colour=None, coloured=False):
+# Слова б/у при молчании о плёнке (аудит O-124: Chromatica «Great condition,
+# comes with a protective vinyl sleeve», Midnights «lavender edition NM»).
+_DESC_USED = re.compile(
+    r"\b(?:nm|vg\+?|ex|m-)\b|\bnear\s+mint\b|\b(?:great|good|excellent)\s+condition\b|"
+    r"\bplays\s+(?:great|well|perfectly|fine)\b|\bprotective\s+(?:vinyl\s+)?sleeve\b", re.I)
+
+
+def sealed_said(*texts):
+    """Плёнка названа в заголовке, описании или характеристиках."""
+    return any(_DESC_SEALED.search(t or "") or re.search(r"\bunopened\b|\bnever\s+opened\b",
+                                                        t or "", re.I) for t in texts)
+
+
+def desc_reject(desc, title_colour=None, coloured=False, title=""):
     """Причина отказа по описанию продавца или None."""
     d = _strip_legend(desc)
+    if coloured and not sealed_said(d, title):
+        m = _DESC_USED.search(d)
+        if m:
+            return f"оценка б/у без «sealed» («{m.group(0)}»)"
     m = _DESC_OPENED.search(d)
     if m:
         return f"вскрыт по описанию («{m.group(0)}»)"

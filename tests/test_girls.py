@@ -130,6 +130,39 @@ def test_ispolnitelnica():
           idol.album_in("Taylor Swift Red Vinyl", [{"album": "Red"}]) == "")
 
 
+def test_istochnik_cveta():
+    print("откуда цвет и что досмотреть (O-124):")
+    check("цвет в заголовке — источник «заголовок»",
+          rp.colour_evidence("Lady Gaga Harlequin Red Vinyl LP SEALED", None, "Lady Gaga",
+                             "Harlequin") == ("цветной", "заголовок"))
+    check("Features «Colored Vinyl» — «карточка»",
+          rp.colour_evidence("Katy Perry 143 LP", card(("Features", "Colored Vinyl")),
+                             "Katy Perry", "143") == ("цветной", "карточка"))
+    check("одно поле Color — «по фото» (Love For Sale Target: Grey, винил чёрный)",
+          rp.colour_evidence("Tony Bennett & Lady Gaga - Love For Sale Target Exclusive",
+                             card(("Color", "Grey"), ("Features", "180-220 gram")),
+                             "Lady Gaga", "Love For Sale")[1].endswith("по фото"))
+    check("эксклюзив без цвета — «по фото»",
+          rp.colour_evidence("Billie Eilish HIT ME HARD AND SOFT Exclusive Vinyl LP", card(),
+                             "Billie Eilish", "Hit Me Hard And Soft")
+          == (None, "эксклюзив, цвет не назван — по фото"))
+    check("без цвета и без эксклюзива — мимо",
+          rp.colour_evidence("Born to Die by Lana Del Rey (Record, 2012)", card(),
+                             "Lana Del Rey", "Born To Die") == (None, ""))
+    check("7\" по карточке — не альбом («Good Luck, Babe!»)",
+          rp.card_not_album(card(("Type", "Single"), ("Record Size", '7"'))))
+    check("12\" LP по карточке — альбом",
+          not rp.card_not_album(card(("Type", "LP"), ("Record Size", '12"'))))
+    check("«Great condition … protective vinyl sleeve» без «sealed» — мимо",
+          rp.desc_reject("Great condition Comes with a protective vinyl sleeve", "цветной", True,
+                         "Lady Gaga Chromatica Vinyl LP Milky Clear") is not None)
+    check("«NM» при «Sealed» в заголовке — годен",
+          rp.desc_reject("lavender edition NM", "цветной", True,
+                         "Taylor Swift Midnights Lavender Marbled Vinyl Sealed") is None)
+    check("плёнка названа — sealed_said",
+          rp.sealed_said("Brand new still in plastic") and not rp.sealed_said("Olivia Rodrigo Sour Vinyl LP"))
+
+
 def test_opisanie():
     print("описание продавца:")
     bad = ["Only selling because I have the GUTS spilled vinyl! besides it not being sealed.",
@@ -162,6 +195,7 @@ if __name__ == "__main__":
     test_audit_cveta()
     test_ne_albom()
     test_ispolnitelnica()
+    test_istochnik_cveta()
     test_opisanie()
     print("\nВСЁ ЗЕЛЁНОЕ" if not FAILED else f"\nПРОВАЛЕНО: {len(FAILED)}")
     sys.exit(1 if FAILED else 0)

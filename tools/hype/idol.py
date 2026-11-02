@@ -273,13 +273,26 @@ def run(a):
         if item is None:
             drop("карточка не открылась")
             continue
-        why = rp.desc_reject(item.get("desc"), col, True)
+        if rp.card_not_album(item):
+            drop("не альбом по карточке (7\", 45, Single)")
+            continue
+        why = rp.desc_reject(item.get("desc"), col, True, raw)
         if why:
             drop(why.split(" («")[0])
             continue
-        if col is None and rp.colour_of(raw, item, artist, album) != "цветной":
+        col, col_src = rp.colour_evidence(raw, item, artist, album)
+        if col == "чёрный":
+            drop("чёрный по карточке")
+            continue
+        if col is None and not col_src:
             drop("цвет не назван")
             continue
+        asp_f = " ".join(str(x.get("value") or "") for x in item.get("localizedAspects") or []
+                         if x.get("name") == "Features")
+        check = [x for x in (
+            col_src if "по фото" in col_src else "",
+            "" if rp.sealed_said(raw, item.get("desc"), asp_f, item.get("cond_desc"))
+            else "плёнка не названа — по фото") if x]
         if not fx.vinyl_proven(item, t):
             drop("винил не доказан")
             continue
@@ -297,6 +310,7 @@ def run(a):
             "landed_rub": rub, "ru": [{"price": x["price"], "src": x["src"],
                                        "album": x["album"]} for x in rup[:3]],
             "ru_min": ru_min, "ratio": round(ru_min / rub, 2) if ru_min else None,
+            "check": check,
             "seller": seller.get("username") or "", "fb": seller.get("feedbackScore"),
             "created": it.get("itemCreationDate") or "",
             "url": (it.get("itemWebUrl") or "").split("?")[0]})
@@ -328,6 +342,8 @@ def run(a):
               + (f" | Россия {f['ru_min']:,.0f} ₽ ({f['ru'][0]['src']}) → x{f['ratio']}"
                  .replace(",", " ") if f["ru_min"] else " | России нет"))
         print(f"   {f['title'][:95]}")
+        if f.get("check"):
+            print(f"   ПРОВЕРИТЬ: {'; '.join(f['check'])}")
         print(f"   продавец {f['seller']} ({f['fb']}), выставлен {f['created'][:16]}; {f['url']}")
     return 0
 
