@@ -75,19 +75,30 @@ def fetch_new(H, max_price, since, max_pages=15):
     return out, page + 1
 
 
-def card_single(H, item_id):
-    """Сингл по карточке: 7", тип Single или 45 об/мин не у 12".
+def card_reject(H, item_id):
+    """Причина отказа по карточке находки или None.
+
+    Аукцион без «купить сейчас» (поиск с фильтром FIXED_PRICE|BEST_OFFER
+    отдал The Queers «Love Songs for the Retarded», а в карточке только
+    AUCTION — 02.11.2026); дороже потолка по карточке; сингл: 7", тип
+    Single или 45 об/мин не у 12".
 
     «Electric Light Orchestra (ELO) "Mr. Blue Sky / One Summer Dream" G+»
     за $8 (01.11.2026) — сорокапятка Jet 1978, а грубая оценка села на
     сборник «Mr. Blue Sky: The Very Best Of» ($80): в заголовке ни 7", ни
     45. Карточка — один запрос eBay на находку, находки редки."""
     it = sc.ebay_get(H, sc.ITEM.format(item_id)) or {}
+    if not it:
+        return None
+    if "FIXED_PRICE" not in (it.get("buyingOptions") or []):
+        return "аукцион по карточке"
     asp = {x.get("name"): str(x.get("value") or "")
            for x in it.get("localizedAspects") or []}
     size, typ, speed = asp.get("Record Size", ""), asp.get("Type", ""), asp.get("Speed", "")
-    return bool(re.search(r"\b7\b|\b10\b", size) or re.search(r"single", typ, re.I)
-                or (re.search(r"\b45\b", speed) and "12" not in size))
+    if (re.search(r"\b7\b|\b10\b", size) or re.search(r"single", typ, re.I)
+            or (re.search(r"\b45\b", speed) and "12" not in size)):
+        return "сингл по карточке (7\", 45)"
+    return None
 
 
 def send_last(a):
@@ -189,6 +200,11 @@ def main():
             drop("пластинка хуже G")
             continue
         opts = it.get("buyingOptions") or []
+        if "FIXED_PRICE" not in opts:
+            # Фильтр поиска FIXED_PRICE|BEST_OFFER пропускает и чистые
+            # аукционы (The Queers, 02.11.2026: в карточке только AUCTION).
+            drop("аукцион")
+            continue
         p = sc.lot_price(it, auctions=False)
         if p is None or p > a.max_price:
             # Аукцион с «купить сейчас»: фильтр поиска сверяет ставку.
@@ -243,8 +259,9 @@ def main():
         else:
             drop("пол Discogs ниже порога")
             continue
-        if card_single(H, r["id"]):
-            drop("сингл по карточке (7\", 45)")
+        why = card_reject(H, r["id"])
+        if why:
+            drop(why)
             continue
         r.update({"group": g, "rough": int(rough), "low": round(x["low"], 2),
                   "ev": round(x["ev"], 2), "parts": " | ".join(dm.describe(x, 4))})
