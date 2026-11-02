@@ -103,6 +103,44 @@ self.addEventListener('fetch', e => {
 });
 """
 
+
+
+def land_meta():
+    """Заголовок и описание главной на трёх языках — из текстов обложки (i18n.js, раздел land),
+    чтобы превью ссылки и поиск говорили то же, что сама страница."""
+    s = open(os.path.join(SRC, "js", "i18n.js"), encoding="utf-8").read()
+    q = r"'((?:\\.|[^'\\])*)'"
+    found = re.findall(r"land:\{\s*title:" + q + r",\s*desc:" + q, s)
+    assert len(found) == 3, "в i18n.js не три раздела land"
+    un = lambda x: x.replace("\\'", "'")
+    return {L: (un(t), un(d)) for L, (t, d) in zip(("ru", "en", "fr"), found)}
+
+
+def esc(x):
+    return x.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+
+
+# Превью ссылки (Telegram, WhatsApp, соцсети): картинки 2400×1260 из обложки — tools/make_og.js.
+OG_W, OG_H = 2400, 1260
+OG_ALT = {"ru": "Barik: телефон с уроком армянского в арке, пропись буквы Ա",
+          "en": "Barik: a phone with an Armenian lesson in an arch, handwriting of the letter Ա",
+          "fr": "Barik : un téléphone avec une leçon d'arménien dans une arche, écriture de la lettre Ա"}
+OG_LOC = {"ru": "ru_RU", "en": "en_US", "fr": "fr_FR"}
+
+
+def og_tags(L, url, title, desc):
+    img = f"{url}og/og-{L}.jpg"
+    alt = "".join(f'<meta property="og:locale:alternate" content="{OG_LOC[x]}">\n'
+                  for x in OG_LOC if x != L)
+    return (f'<meta property="og:type" content="website">\n<meta property="og:site_name" content="Barik">\n'
+            f'<meta property="og:locale" content="{OG_LOC[L]}">\n{alt}'
+            f'<meta property="og:title" content="{esc(title)}">\n<meta property="og:description" content="{esc(desc)}">\n'
+            f'<meta property="og:image" content="{img}">\n<meta property="og:image:width" content="{OG_W}">\n'
+            f'<meta property="og:image:height" content="{OG_H}">\n<meta property="og:image:alt" content="{esc(OG_ALT[L])}">\n'
+            f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="{esc(title)}">\n'
+            f'<meta name="twitter:description" content="{esc(desc)}">\n<meta name="twitter:image" content="{img}">\n')
+
+
 HEAD = """<meta name="description" content="%(desc)s">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -111,9 +149,6 @@ HEAD = """<meta name="description" content="%(desc)s">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Barik">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta property="og:title" content="%(name)s">
-<meta property="og:description" content="%(desc)s">
-<meta property="og:image" content="%(url)sicons/icon-512.png">
 """
 CANON = """<link rel="canonical" href="%(url)s">
 <meta property="og:url" content="%(url)s">
@@ -161,10 +196,10 @@ def build(out=OUT, url=SITE_URL, seo=True):
     # Capacitor на сайте не нужен: billing.js сам видит, что он не в приложении.
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     html = re.sub(r'\s*<script src="js/vendor/capacitor\.js"></script>', "", html)
+    title, desc = land_meta()["ru"]
     html = html.replace("<title>Barik</title>",
-                        f"<title>{NAME['ru']}</title>\n" + HEAD % {
-                            "desc": DESC, "url": url, "name": NAME["ru"]}
-                        + (CANON % {"url": url} if url else ""))
+                        f"<title>{esc(title)}</title>\n" + HEAD % {"desc": esc(desc)}
+                        + og_tags("ru", url, title, desc) + (CANON % {"url": url} if url else ""))
     html = html.replace("</body>", REGISTER + "</body>")
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
     cfg = os.path.join(out, "js", "config.js")
@@ -173,6 +208,7 @@ def build(out=OUT, url=SITE_URL, seo=True):
     assert s2 != s, "в config.js нет WEB_ALL_FREE"
     open(cfg, "w", encoding="utf-8").write(s2)
     icons(out)
+    shutil.copytree(os.path.join(APP, "assets", "og"), os.path.join(out, "og"))
     json.dump(MANIFEST, open(os.path.join(out, "manifest.webmanifest"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
     open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n")
@@ -184,7 +220,7 @@ def build(out=OUT, url=SITE_URL, seo=True):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css") or rel.startswith(("audio/", "pics/"))
+            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css") or rel.startswith(("audio/", "pics/", "og/"))
                     or rel.split("/")[0] in ("ru", "en", "fr") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel)

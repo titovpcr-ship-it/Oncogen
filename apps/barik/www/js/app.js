@@ -535,7 +535,8 @@ function render(auto){
   const el=$('#view');
   document.body.dataset.view=(view==='session'||(view==='abcquiz'&&aq&&aq.i<aq.items.length)||(view==='pquiz'&&pq&&pq.i<pq.items.length)||(view==='tquiz'&&tq&&tq.i<tq.items.length))?'session':view;
   const tk=tcur(); document.body.classList.toggle('kbon',view==='tquiz'&&!!tk&&!tk.done&&kbOwn());
-  if(view==='onboard') el.innerHTML=onboardHTML();
+  if(view!=='onboard') landStop();
+  if(view==='onboard'){ el.innerHTML=onboardHTML(); landStart(); }
   else if(view==='home') el.innerHTML=homeHTML();
   else if(view==='topic') el.innerHTML=topicHTML(viewArg);
   else if(view==='dict'){ el.innerHTML=dictHTML(); bindDict(); }
@@ -561,12 +562,122 @@ function onShow(){
   if(it.k==='listen') speak(it.w,false,document.querySelector('.play-big'));
 }
 const MARK='<span class="mark" aria-hidden="true" lang="hy">Ա</span>';
+/* ================= ГЛАВНАЯ ДЛЯ ГОСТЯ (первый заход) =================
+   Что это, чем хорошо, сколько стоит — и «Начать». Язык страницы — из браузера, переключатель
+   вверху; выбор сохраняется, только когда человек нажал «Начать» (pickLang). Живые вставки:
+   телефон с уроком (картинка → слово → верный ответ) и пропись, которую пишет перо. */
+const LND=()=>(STR[L]&&STR[L].land)||STR.ru.land;
+const DEMO=['ծիրան','նուռ','խաղող','սար','արև','կատու','սուրճ','հաց'];
+const FEAT=['ծիրան','նուռ','խաղող','սար','ծով','լուսին'];
+const LETTERS=['Ա','Բ','Գ','Դ','Ե','Զ','Է','Թ','Ժ','Ի','Լ','Խ'];
+let landT=[], landK=0, landIO=null;
+function landStop(){ landT.forEach(clearTimeout); landT=[]; if(landIO){ landIO.disconnect(); landIO=null; } }
+function landLater(f,ms){ landT.push(setTimeout(()=>{ if(view==='onboard') f(); },ms)); }
+function setMeta(){ const D=LND(); document.title=D.title; const m=document.querySelector('meta[name=description]'); if(m) m.setAttribute('content',D.desc); }
 function onboardHTML(){
-  return '<section class="onb">'+MARK+'<div><h1>Barik</h1><p lang="hy" style="font-family:var(--hy);font-size:20px">Բառիկ</p></div>'+
-    '<p>Выберите язык · Choose your language · Choisissez votre langue</p>'+
-    '<div class="actions"><button class="btn primary" data-act="pickLang" data-arg="ru">🇷🇺 Русский<span class="cap">Армянский для русскоязычных</span></button><button class="btn secondary" data-act="pickLang" data-arg="en">🇬🇧 English<span class="cap">Armenian for English speakers</span></button><button class="btn secondary" data-act="pickLang" data-arg="fr">🇫🇷 Français<span class="cap">L\'arménien pour les francophones</span></button></div>'+
-    '<p class="note">'+({en:'You can change it later in Settings.',fr:'Vous pourrez la changer dans les Réglages.'}[L]||'Язык можно сменить в настройках.')+'</p></section>';
+  const D=LND(), a1=WORDS.filter(w=>TOPICS[w.t].lv==='A1').length, chk=T('lvCheck');
+  const ok='<svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.6 3.4 7.4-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const cta=c=>'<button class="btn primary '+(c||'')+'" data-act="pickLang" data-arg="'+L+'">'+esc(D.cta)+'<span class="arr" aria-hidden="true">→</span></button>';
+  const langs=[['ru','RU'],['en','EN'],['fr','FR']].map(x=>'<button class="lng" data-act="landLang" data-arg="'+x[0]+'" aria-pressed="'+(x[0]===L)+'" lang="'+x[0]+'">'+x[1]+'</button>').join('');
+  const byA=a=>BY[a]&&PICS[a]?BY[a]:null;
+  const tile=w=>'<li class="ld-tile"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(tx(w))+'</span></li>';
+  const tiles=FEAT.map(byA).filter(Boolean).map(tile).join('');
+  const stats=D.stats(WORDS.length,TOPICS.length,ABC.length).map(x=>'<li><b>'+esc(x[0])+'</b><span>'+esc(x[1])+'</span></li>').join('');
+  const days=[1,2,4,7,15,30];
+  const ladder='<ol class="ladder">'+days.map((d,i)=>'<li style="--i:'+i+'"><b>'+d+'</b><span>'+esc(D.ladder[i])+'</span></li>').join('')+'</ol>';
+  const mini=D.mini.map(m=>'<li><span class="mi-ic">'+emo(m[0])+'</span><h3>'+esc(m[1])+'</h3><p>'+esc(m[2])+'</p></li>').join('');
+  const lv=LEVELS.map((v,i)=>{
+    const ts=TOPICS.filter(t=>t.lv===v); if(!ts.length) return '';
+    const n=ts.reduce((k,t)=>k+t.list.length,0);
+    return '<li class="lv-c" style="--k:'+i+'"><span class="lv-b">'+v+'</span><span class="lv-n">'+esc(D.lvName[v]||'')+'</span><span class="lv-w">'+esc(D.lvWords(n))+'</span>'+
+      '<span class="lv-t">'+ts.slice(0,3).map(t=>'<span>'+emo(t.ic)+esc(tn(t))+'</span>').join('')+'</span></li>';
+  }).join('');
+  const pr=D.prList(a1,PW.length,premium()).map(x=>'<li>'+ok+'<span>'+esc(x)+'</span></li>').join('');
+  const faq=D.faq(chk).map((q,i)=>'<details'+(i===0?' open':'')+'><summary>'+esc(q[0])+'<span class="pm" aria-hidden="true"></span></summary><p>'+esc(q[1])+'</p></details>').join('');
+  const micro=D.micro.map(x=>'<li>'+ok+esc(x)+'</li>').join('');
+  const keys=CUR_ABC().map((u,i)=>'<button data-act="landLetter" data-arg="'+i+'" aria-pressed="false" lang="hy">'+esc(u)+'</button>').join('');
+  return '<div class="onb ld">'+
+  '<header class="ld-nav"><div class="ld-wrap"><a class="ld-brand" href="./" aria-label="Barik">'+MARK+'<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a>'+
+    '<div class="ld-navr"><div class="lngs" role="group" aria-label="'+esc(D.nav)+'">'+langs+'</div><button class="btn ghost ld-open" data-act="landGo">'+esc(D.open)+'</button></div></div></header>'+
+  '<section class="ld-hero"><div class="ld-wrap ld-hero-in">'+
+    '<div class="ld-copy"><p class="ld-eyebrow">'+esc(D.eyebrow)+'</p><h1>'+esc(D.h1)+'</h1>'+
+      '<p class="ld-hy"><span lang="hy">'+esc(D.hy)+'</span> <i>'+esc(D.hyTr)+'</i></p>'+
+      '<p class="ld-sub">'+esc(D.sub(WORDS.length))+'</p>'+
+      '<div class="ld-ctas">'+cta('xl')+'<button class="btn secondary xl" data-act="landAbc">'+esc(D.cta2)+'</button></div>'+
+      '<ul class="ld-micro">'+micro+'</ul></div>'+
+    '<div class="ld-art" aria-hidden="true"><div class="ld-arch"><span class="rose"></span></div>'+
+      '<div class="ph"><div class="ph-scr"><div class="ph-top"><span class="ph-x">✕</span><span class="ph-bar"><i></i></span><span class="ph-n">4/10</span></div>'+
+        '<p class="ph-k">'+esc(T('qMeaning'))+'</p><div class="ph-card" id="phCard"></div><div class="ph-opts" id="phOpts"></div></div></div>'+
+      '<div class="fl-cb"><span class="fl-k">'+esc(D.write)+'</span><div id="heroCb"></div></div>'+
+      '<div class="fl-chip">'+emo('🔥','ie')+'<span>'+esc(D.streak)+'</span></div>'+
+      '<span class="fl-3d f1">'+emo('🍇')+'</span><span class="fl-3d f2">'+emo('⭐')+'</span><span class="fl-3d f3">'+emo('🍑')+'</span>'+
+    '</div></div></section>'+
+  '<section class="ld-stats"><div class="ld-wrap"><ul>'+stats+'</ul></div></section>'+
+  '<section class="ld-sec"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.fTitle)+'</h2><span class="orn ld-orn"></span>'+
+    '<div class="ld-feat"><div class="fx"><h3>'+esc(D.f1)+'</h3><p>'+esc(D.f1t(PW.length))+'</p></div><ul class="ld-tiles">'+tiles+'</ul></div>'+
+    '<div class="ld-feat rev"><div class="fx"><h3>'+esc(D.f2)+'</h3><p>'+esc(D.f2t)+'</p></div><div class="ld-cb" id="featCb"><div class="cbw"></div><div class="ld-abc" role="group" aria-label="'+esc(D.abcPick)+'">'+keys+'</div></div></div>'+
+    '<div class="ld-feat"><div class="fx"><h3>'+esc(D.f3)+'</h3><p>'+esc(D.f3t)+'</p></div>'+ladder+'</div>'+
+    '<ul class="ld-mini">'+mini+'</ul></div></section>'+
+  '<section class="ld-sec ld-lv"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.lvTitle)+'</h2><span class="orn ld-orn"></span><p class="ld-lead">'+esc(D.lvSub(TOPICS.length))+'</p><ul class="lv-grid">'+lv+'</ul></div></section>'+
+  '<section class="ld-sec"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.prTitle)+'</h2><span class="orn ld-orn"></span>'+
+    '<div class="ld-price"><span class="rose"></span><p class="pr-big">'+esc(D.prFree)+'</p><p class="pr-note">'+esc(D.prNote)+'</p><ul>'+pr+'</ul>'+cta('xl')+'</div></div></section>'+
+  '<section class="ld-sec"><div class="ld-wrap ld-narrow"><h2 class="ld-h2">'+esc(D.qTitle)+'</h2><span class="orn ld-orn"></span><div class="ld-faq">'+faq+'</div></div></section>'+
+  '<section class="ld-end"><div class="ld-wrap"><span class="rose"></span><p class="end-hy"><span lang="hy">'+esc(D.endHy)+'</span> <i>'+esc(D.endTr)+'</i></p><h2>'+esc(D.endTitle)+'</h2>'+cta('xl')+'<ul class="ld-micro">'+micro+'</ul></div></section>'+
+  '<footer class="ld-foot"><div class="ld-wrap"><a class="ld-brand" href="./" aria-label="Barik">'+MARK+'<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a><p>'+esc(D.foot)+'</p>'+
+    '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button></p><p class="cr">© 2026 Barik</p></div></footer>'+
+  '</div>';
 }
+/* Телефон на обложке: картинка и слово, через миг загорается верный ответ, потом следующее слово. */
+function landDemo(){
+  const card=document.getElementById('phCard'), opts=document.getElementById('phOpts'); if(!card) return;
+  const ws=DEMO.map(a=>BY[a]&&PICS[a]?BY[a]:null).filter(Boolean); if(!ws.length) return;
+  const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const show=()=>{
+    const w=ws[landK%ws.length], other=ws.filter(x=>x!==w);
+    const o=[w,other[(landK*3+1)%other.length],other[(landK*5+3)%other.length]];
+    const pick=[o[(landK)%3],o[(landK+1)%3],o[(landK+2)%3]];
+    card.classList.remove('in'); void card.offsetWidth;
+    card.innerHTML='<span class="pimg">'+picSvg(w)+'</span><span class="ph-hy" lang="hy">'+esc(w.a)+'</span><span class="ph-tr">'+esc(trn(w))+'</span>';
+    opts.innerHTML=pick.map(x=>'<span class="ph-opt'+(x===w?' right':'')+'">'+esc(tx(x))+'</span>').join('');
+    card.classList.add('in');
+    const bar=document.querySelector('.ph-bar i'); if(bar) bar.style.width=(20+(landK%8)*10)+'%';
+    const n=document.querySelector('.ph-n'); if(n) n.textContent=((landK%8)+3)+'/10';
+    if(still) { opts.querySelector('.right').classList.add('ok'); return; }
+    landLater(()=>{ const r=opts.querySelector('.right'); if(r) r.classList.add('ok'); },1500);
+    landLater(()=>{ landK++; show(); },3600);
+  };
+  show();
+}
+/* Пропись на обложке и в разделе «Пропись»: перо пишет букву, потом следующую. В разделе под
+   прописью — весь алфавит: нажатая буква пишется сразу, дальше снова по порядку. */
+const CUR_ABC=()=>ABC.map(a=>a.up).filter(u=>CUR[u]);
+function landWrite(id,start,seq){
+  const box=document.getElementById(id); if(!box) return;
+  const host=box.querySelector('.cbw')||box, keys=[...box.querySelectorAll('.ld-abc button')];
+  box.__k=start;
+  const one=()=>{
+    const g=box.__g=(box.__g||0)+1, k=box.__k%seq.length, x=ABC.find(a=>a.up===seq[k]); box.__k=k+1;
+    keys.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===k)));
+    host.innerHTML=cursiveSVG(x,LND().write);
+    writeCursive(host.querySelector('.cb'),()=>landLater(()=>{ if(box.__g===g) one(); },1600));
+  };
+  box.__one=one;
+  if('IntersectionObserver' in window&&id!=='heroCb'){
+    const io=box.__io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); one(); } },{threshold:.35});
+    io.observe(box);
+  } else one();
+}
+/* Разделы ниже первого экрана мягко всплывают при прокрутке (в списках — лесенкой). Что уже
+   видно при открытии, не прячется; без IntersectionObserver и в режиме «без движения» — сразу. */
+function landReveal(){
+  if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  landIO=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); landIO.unobserve(e.target); } }),{rootMargin:'0px 0px -6% 0px',threshold:.1});
+  document.querySelectorAll('.ld-stats ul,.ld-h2,.ld-lead,.ld-feat,.ld-mini li,.lv-c,.ld-price,.ld-faq details,.ld-end h2').forEach(el=>{
+    if(el.getBoundingClientRect().top<innerHeight) return;
+    el.classList.add('rv'); el.style.setProperty('--d',([...el.parentElement.children].indexOf(el)%3)*80+'ms'); landIO.observe(el);
+  });
+}
+function landStart(){ landStop(); setMeta(); landDemo(); landWrite('heroCb',0,LETTERS); landWrite('featCb',0,CUR_ABC()); landReveal(); }
 function premCTA(){
   if(premium()) return '';
   return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">'+emo('✨')+'</span><span><b>'+esc(T('ctaTitle',WORDS.length))+'</b><span>'+esc(T('ctaSub'))+'</span></span></button>';
@@ -660,20 +771,22 @@ function abcHTML(){
    (www/js/cursive.js — свои штрихи, tools/cursive.py). Координаты уже с наклоном прописи; заглавная
    и строчная стоят в общих координатах — на том расстоянии, что в образце. */
 const CUR=window.BARARAN_CURSIVE||{};
-let wAnim=0;
-function cursiveHTML(x){
+function cursiveSVG(x,label){
   const g=CUR[x.up]; if(!g) return '';
   const parts=x.lo===x.up?[g.l]:[g.U,g.l], base=parts[0].x0;
   let ink='', right=0;
   parts.forEach(p=>{ ink+='<g transform="translate('+(-base).toFixed(1)+',0)">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g>'; right=Math.max(right,p.x0+p.w-base); });
   // линии тетради — во всю ширину карточки: за пределами viewBox они тоже видны
   const x0=-30, w=right+60, line=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
+  return '<svg class="cb" viewBox="'+x0+' -24 '+w+' 200" role="img" aria-label="'+esc((label||T('cursive'))+': '+x.up+(x.lo!==x.up?' '+x.lo:''))+'">'+
+    '<g class="cb-lines">'+line(0,'t')+line(64,'x')+line(100,'b')+line(152,'t')+'</g>'+
+    '<g class="cb-ink">'+ink+'</g><g class="nib"><circle class="halo" r="8.5"/><circle r="4.1"/></g></svg>';
+}
+function cursiveHTML(x){
+  if(!CUR[x.up]) return '';
   return '<section class="copybook"><div class="cb-head"><h2 class="sec">'+esc(T('cursive'))+'</h2>'+
     '<button class="aud" data-act="write">'+ICON.again+'<span>'+esc(T('cursiveAgain'))+'</span></button></div>'+
-    '<svg class="cb" viewBox="'+x0+' -24 '+w+' 200" role="img" aria-label="'+esc(T('cursive')+': '+x.up+(x.lo!==x.up?' '+x.lo:''))+'">'+
-    '<g class="cb-lines">'+line(0,'t')+line(64,'x')+line(100,'b')+line(152,'t')+'</g>'+
-    '<g class="cb-ink">'+ink+'</g><g class="nib"><circle class="halo" r="8.5"/><circle r="4.1"/></g></svg>'+
-    '<p class="cb-note">'+esc(T('cursiveNote'))+'</p></section>';
+    cursiveSVG(x)+'<p class="cb-note">'+esc(T('cursiveNote'))+'</p></section>';
 }
 /* Перо как у живой руки: на прямых быстрее, на изгибах медленнее (закон «двух третей» рукописи:
    скорость ~ кривизна^(-1/3)), в изломе почти останавливается; штрих разгоняется и тормозит,
@@ -710,19 +823,20 @@ function cbPlan(paths){
   });
   return {st,T:t};
 }
-function writeCursive(){
-  const svg=document.querySelector('.cb'); if(!svg) return;
-  const my=++wAnim, paths=[...svg.querySelectorAll('.cb-ink path')], nib=svg.querySelector('.nib');
+function writeCursive(svgArg,onDone){
+  const svg=svgArg||document.querySelector('.copybook .cb'); if(!svg) return;
+  const my=svg.__a=(svg.__a||0)+1, alive=()=>my===svg.__a&&svg.isConnected;
+  const paths=[...svg.querySelectorAll('.cb-ink path')], nib=svg.querySelector('.nib');
   const lens=paths.map(p=>p.getTotalLength());
   const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   paths.forEach((p,k)=>{ p.style.strokeDasharray=lens[k]+' '+(lens[k]+2); p.style.strokeDashoffset=still?0:lens[k]+1; });
-  if(still||!paths.length){ nib.style.opacity=0; return; }
+  if(still||!paths.length){ nib.style.opacity=0; if(onDone) onDone(); return; }
   const {st,T}=cbPlan(paths), f0=st[0].f;
   const put=(x,y,o,sc)=>{ nib.setAttribute('transform','translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+sc.toFixed(3)+')'); nib.style.opacity=o.toFixed(3); };
   put(f0.X[0],f0.Y[0],0,.55);
   let t0=null, j=0;
   const frame=now=>{
-    if(my!==wAnim||!svg.isConnected) return;
+    if(!alive()) return;
     if(t0===null) t0=now;
     const t=now-t0;
     if(t<CB.lead){ const e=sm(t/CB.lead); put(f0.X[0],f0.Y[0],e,.55+.45*e); requestAnimationFrame(frame); return; }
@@ -731,7 +845,7 @@ function writeCursive(){
     if(t>=T){                                   // дописано: перо поднимается и гаснет
       q.p.style.strokeDashoffset=0;
       const e=sm((t-T)/CB.tail), f=q.f; put(f.X[f.n],f.Y[f.n],1-e,1-.35*e);
-      if(e<1) requestAnimationFrame(frame); return;
+      if(e<1) requestAnimationFrame(frame); else if(onDone) onDone(); return;
     }
     if(q.air){
       const u=Math.min(1,(t-q.t0)/(q.t1-q.t0)), e=sm(u), up=Math.sin(Math.PI*u);
@@ -1013,6 +1127,11 @@ const H={
   brand:()=>ACT.tab('home'),
   tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='tquiz') tq=null; if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} if(view==='pquiz'&&pq){clearTimeout(pq.timer); pq=null;} go(a); },
   pickLang:a=>{setLang(a); go('home');},
+  landLang:a=>{ if(a===L) return; L=a; document.documentElement.lang=a; renderTabs(); render(); },
+  landGo:()=>{setLang(L); go('home');},
+  landAbc:()=>{setLang(L); go('abc');},
+  landLetter:a=>{ const box=document.getElementById('featCb'); if(!box||!box.__one) return; if(box.__io) box.__io.disconnect(); box.__k=+a; box.__one(); },
+  landDoc:a=>{setLang(L); docFrom='home'; go('doc',a);},
   lang:a=>{setLang(a); render();},
   topic:a=>{const t=TOPICS[+a]; if(lvOpen(t.lv)) preloadAudio(t.list); go('topic',+a);},
   learnNew:()=>startLearn(null),

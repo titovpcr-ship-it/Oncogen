@@ -26,6 +26,20 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const noHScroll=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,window.innerWidth]); ok(w[0]<=w[1],scheme+' '+n+': без горизонтальной прокрутки ('+w+')'); };
     ok(await pg.locator('.onb').count()===1,'первый запуск — выбор языка');
     await shot('onboard'); await noHScroll('onboard');
+    if(scheme==='light'){
+      // обложка для гостя: живой урок в телефоне, пропись с алфавитом, переключение языка
+      ok(await pg.locator('.ld h1').count()===1&&(await pg.textContent('.ld h1')).includes('словечко'),'обложка: заголовок');
+      await pg.waitForSelector('#phOpts .ph-opt.ok',{timeout:4000}).catch(()=>{});
+      ok(await pg.locator('#phOpts .ph-opt.ok').count()===1,'телефон на обложке: верный ответ подсвечен');
+      ok(await pg.locator('.ld-abc button').count()===39,'под прописью — все 39 букв');
+      await pg.click('.ld-abc button >> nth=17');
+      const lab=await pg.getAttribute('#featCb .cb','aria-label')||'';
+      ok(lab.includes('Ղ')&&await pg.getAttribute('.ld-abc button >> nth=17','aria-pressed')==='true','нажатая буква пишется: '+lab);
+      await pg.click('[data-act=landLang][data-arg=en]');
+      ok((await pg.textContent('.ld h1')).includes('little word')&&await pg.evaluate(()=>document.documentElement.lang)==='en','обложка по-английски');
+      ok(await pg.locator('.ld-price li').count()===4&&(await pg.textContent('.ld-price')).includes('subscription'),'цена: A2–C2 — по подписке, когда не всё открыто');
+      await pg.click('[data-act=landLang][data-arg=ru]');
+    }
     await pg.click('[data-act=pickLang][data-arg=ru]');
     ok((await pg.textContent('.brand')).includes('Barik'),'главная: бренд Barik');
     ok((await pg.textContent('#tabs')).includes('Алфавит'),'вкладка «Алфавит»');

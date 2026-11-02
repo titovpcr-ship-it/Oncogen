@@ -32,6 +32,13 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   await pg.reload(); await pg.waitForTimeout(400);
   ok(await pg.evaluate(()=>!!navigator.serviceWorker.controller),'service worker управляет страницей');
   ok(await pg.locator('.onb').count()===1,'первый заход — выбор языка');
+  // превью ссылки (Open Graph / Twitter): картинка из обложки, заголовок и описание — из её текстов
+  const og=await pg.evaluate(()=>{const m=n=>{const e=document.querySelector('meta[property="'+n+'"],meta[name="'+n+'"]'); return e?e.content:'';};
+    return {img:m('og:image'), w:m('og:image:width'), card:m('twitter:card'), title:m('og:title'), desc:m('description')};});
+  ok(/og\/og-ru\.jpg$/.test(og.img)&&og.w==='2400'&&og.card==='summary_large_image','превью ссылки: '+og.img+' '+og.w+' '+og.card);
+  ok(og.title.startsWith('Barik — армянский язык')&&og.desc.includes('пропись'),'превью: заголовок и описание обложки');
+  for(const L of ['ru','en','fr']){ const r=await pg.request.get(base+'og/og-'+L+'.jpg'); ok(r.ok()&&(await r.body()).length>50000,'картинка превью og-'+L+'.jpg'); }
+  ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\/og\//.test(q.url))))),'картинки превью не лежат в кэше приложения');
   await pg.click('[data-act=pickLang][data-arg=ru]');
   ok((await pg.textContent('.brand')).includes('Barik'),'главная: Barik');
   await pg.click('[data-act=lvtog][data-arg=A2]');
