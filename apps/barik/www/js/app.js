@@ -657,21 +657,22 @@ function abcHTML(){
 }
 /* ================= ПРОПИСЬ ================= */
 /* Как пишется буква от руки: перо ведёт каждый штрих по порядку по разлинованной строке
-   (www/js/cursive.js — свои штрихи, tools/cursive.py). Координаты без наклона, наклон — skewX. */
-const CUR=window.BARARAN_CURSIVE||{}, SLANT=0.3;
+   (www/js/cursive.js — свои штрихи, tools/cursive.py). Координаты уже с наклоном прописи; заглавная
+   и строчная стоят в общих координатах — на том расстоянии, что в образце. */
+const CUR=window.BARARAN_CURSIVE||{};
 let wAnim=0;
 function cursiveHTML(x){
   const g=CUR[x.up]; if(!g) return '';
-  const parts=x.lo===x.up?[g.l]:[g.U,g.l], gap=36;
-  let dx=0, ink='';
-  parts.forEach(p=>{ ink+='<g transform="translate('+(dx-p.x0).toFixed(1)+',0)">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g>'; dx+=p.w+gap; });
+  const parts=x.lo===x.up?[g.l]:[g.U,g.l], base=parts[0].x0;
+  let ink='', right=0;
+  parts.forEach(p=>{ ink+='<g transform="translate('+(-base).toFixed(1)+',0)">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g>'; right=Math.max(right,p.x0+p.w-base); });
   // линии тетради — во всю ширину карточки: за пределами viewBox они тоже видны
-  const x0=-34, w=dx-gap+80, line=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
+  const x0=-30, w=right+60, line=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
   return '<section class="copybook"><div class="cb-head"><h2 class="sec">'+esc(T('cursive'))+'</h2>'+
     '<button class="aud" data-act="write">'+ICON.again+'<span>'+esc(T('cursiveAgain'))+'</span></button></div>'+
-    '<svg class="cb" viewBox="'+x0+' -26 '+w+' 218" role="img" aria-label="'+esc(T('cursive')+': '+x.up+(x.lo!==x.up?' '+x.lo:''))+'">'+
-    '<g class="cb-lines">'+line(0,'t')+line(54,'x')+line(100,'b')+line(172,'t')+'</g>'+
-    '<g class="cb-ink" transform="matrix(1,0,'+(-SLANT)+',1,'+(SLANT*100)+',0)">'+ink+'<circle class="nib" r="4.6" cx="0" cy="0"/></g></svg>'+
+    '<svg class="cb" viewBox="'+x0+' -24 '+w+' 200" role="img" aria-label="'+esc(T('cursive')+': '+x.up+(x.lo!==x.up?' '+x.lo:''))+'">'+
+    '<g class="cb-lines">'+line(0,'t')+line(64,'x')+line(100,'b')+line(152,'t')+'</g>'+
+    '<g class="cb-ink">'+ink+'<circle class="nib" r="4.6" cx="0" cy="0"/></g></svg>'+
     '<p class="cb-note">'+esc(T('cursiveNote'))+'</p></section>';
 }
 function writeCursive(){
