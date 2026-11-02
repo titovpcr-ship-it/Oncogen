@@ -39,7 +39,7 @@ const LANGS=['ru','en','fr'];
         if(need.some(x=>!s.includes(x))) nohead.push(rel);
         const t=(s.match(/<title>([^<]*)<\/title>/)||[])[1]||'';
         if(sub==='w') dupTitle.set(t,(dupTitle.get(t)||0)+1);
-        for(const m of s.matchAll(/href="([^"#?]*)/g)){
+        for(const m of s.matchAll(/(?:href|src)="([^"#?]*)/g)){
           const h=m[1]; if(/^https?:/.test(h)) continue;
           let q=path.join(path.dirname(p),h); if(h===''||h.endsWith('/')) q=path.join(q,'index.html');
           if(!fs.existsSync(q)) broken.push(rel+' → '+h);
@@ -48,7 +48,7 @@ const LANGS=['ru','en','fr'];
     }
   }
   ok(nohead.length===0,'у всех '+pages+' страниц canonical, hreflang, description '+nohead.slice(0,3).join(' '));
-  ok(broken.length===0,'битых ссылок нет '+broken.length+' '+broken.slice(0,5).join('; '));
+  ok(broken.length===0,'битых ссылок и картинок нет '+broken.length+' '+broken.slice(0,5).join('; '));
   const dups=[...dupTitle].filter(([,n])=>n>1);
   console.log('     заголовков слов одинаковых (одно слово — разные армянские):',dups.length);
   // 2. sitemap

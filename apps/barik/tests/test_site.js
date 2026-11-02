@@ -6,7 +6,7 @@ const {chromium}=require('playwright');
 const http=require('http'), fs=require('fs'), path=require('path');
 const ROOT=path.join(__dirname,'..','dist','site');
 const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json',
-  '.woff2':'font/woff2','.png':'image/png','.svg':'image/svg+xml','.webmanifest':'application/manifest+json'};
+  '.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.webmanifest':'application/manifest+json'};
 const srv=http.createServer((q,r)=>{
   let f=path.join(ROOT,decodeURIComponent(q.url.split('?')[0]));
   if(f.endsWith('/')) f+='index.html';

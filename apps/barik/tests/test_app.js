@@ -4,7 +4,7 @@
 const {chromium}=require('playwright');
 const http=require('http'), fs=require('fs'), path=require('path');
 const ROOT=path.join(__dirname,'..','www'), SHOTS=process.argv[2]||'';
-const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.woff2':'font/woff2','.png':'image/png','.svg':'image/svg+xml'};
+const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml'};
 const srv=http.createServer((q,r)=>{
   let f=path.join(ROOT,decodeURIComponent(q.url.split('?')[0]));
   if(f.endsWith('/')) f+='index.html';
@@ -30,6 +30,10 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok((await pg.textContent('.brand')).includes('Barik'),'главная: бренд Barik');
     ok((await pg.textContent('#tabs')).includes('Алфавит'),'вкладка «Алфавит»');
     await shot('home-ru'); await noHScroll('home');
+    await pg.waitForTimeout(300);
+    const im=await pg.evaluate(()=>{const a=[...document.querySelectorAll('img.e3d')];return {n:a.length,ok:a.filter(i=>i.complete&&i.naturalWidth>0).length,bad:a.filter(i=>i.complete&&i.naturalWidth===0).length};});
+    ok(im.ok>=5&&im.bad===0,'объёмные картинки Fluent 3D на главной: '+JSON.stringify(im));
+    ok(await pg.locator('.today .wotd .wd-hy').count()===1,'слово дня на главной');
     const d=await pg.evaluate(()=>{const B=window.__bararan; return {n:B.WORDS.length, noEn:B.WORDS.filter(w=>!w.e).length, noFr:B.WORDS.filter(w=>!w.f||!w.ft).length, frTopics:B.TOPICS.filter(t=>!t.fr).length, ex:B.ABC.filter(x=>!B.BY[x.ex]).map(x=>x.ex), abc:B.ABC.length, lat:B.trLat('երեխա')+'|'+B.trLat('ոտք')+'|'+B.trLat('արև')+'|'+B.trLat('թռչուն'), cyr:B.trWord('երեխա',false)};});
     ok(d.n>=5000,'слов в словаре: '+d.n); ok(d.noEn===0,'у всех слов есть английский'); ok(d.noFr===0,'у всех слов есть французский'); ok(d.frTopics===0,'у всех тем есть французское название'); ok(d.ex.length===0,'примеры букв есть в словаре '+d.ex); ok(d.abc===39,'букв: '+d.abc);
     ok(d.lat==='yerekha|votkʰ|arev|tʰrrchʰun','латиница: '+d.lat); ok(d.cyr==='ерехա'.slice(0,0)+'ерехa'.replace('a','а'),'кириллица: '+d.cyr);

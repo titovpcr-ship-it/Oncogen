@@ -10,8 +10,9 @@ www/ → dist/site/ — обычные статичные файлы для лю
 nginx), плюс то, что делает сайт приложением (PWA):
   * manifest.webmanifest и иконки — «На экран Домой» на iPhone и Android,
     открывается без адресной строки, со своей иконкой «Ա»;
-  * sw.js — работа без интернета: всё приложение (слова, картинки, шрифты)
-    кэшируется при первом заходе, озвучка — по мере прослушивания;
+  * sw.js — работа без интернета: всё приложение (слова, сцены, шрифты)
+    кэшируется при первом заходе, озвучка и 3D-картинки (pics/) — по мере показа
+    (без сети и не в кэше — системный эмодзи);
   * config.js с WEB_ALL_FREE: true — пока оплата не подключена, открыто всё;
   * robots.txt, .htaccess (типы файлов, сжатие, кэш, HTTPS) для Apache;
   * страницы поиска /ru/, /en/, /fr/ — по странице на слово и тему, sitemap.xml
@@ -63,7 +64,7 @@ def icons(out):
 MANIFEST = {
     "name": NAME["ru"], "short_name": "Barik", "lang": "ru", "dir": "ltr",
     "description": DESC, "start_url": "./", "scope": "./", "display": "standalone",
-    "background_color": "#F3F1F6", "theme_color": "#EC8B2E", "orientation": "portrait",
+    "background_color": "#F4ECE7", "theme_color": "#1E2A66", "orientation": "portrait",
     "categories": ["education", "books"],
     "icons": [
         {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
@@ -76,20 +77,21 @@ SW = r"""/* Barik — работа без интернета. Версия ме�
    новый кэш ставится, старый удаляется. */
 const VERSION = '%(version)s';
 const SHELL = %(shell)s;
-const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v1';
+const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v1', PICS = 'barik-pics-v1';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('barik-')
-    && k !== CACHE && k !== AUDIO).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+    && k !== CACHE && k !== AUDIO && k !== PICS).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 self.addEventListener('fetch', e => {
   const r = e.request;
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
   const path = new URL(r.url).pathname;
-  if (path.includes('/audio/')) {             // озвучка — по мере прослушивания
-    e.respondWith(caches.open(AUDIO).then(c => c.match(r).then(hit => hit ||
+  const media = path.includes('/audio/') ? AUDIO : (path.includes('/pics/') ? PICS : '');
+  if (media) {                                // озвучка и картинки — по мере показа
+    e.respondWith(caches.open(media).then(c => c.match(r).then(hit => hit ||
       fetch(r).then(res => { if (res.ok) c.put(r, res.clone()); return res; }))));
     return;
   }
@@ -127,6 +129,7 @@ HTACCESS = r"""# Barik — Apache (армянский хостинг). Типы 
 AddType application/manifest+json .webmanifest
 AddType text/javascript .js
 AddType font/woff2 .woff2
+AddType image/webp .webp
 AddDefaultCharset utf-8
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -142,6 +145,9 @@ AddDefaultCharset utf-8
   </FilesMatch>
   <FilesMatch "\.(js|css|woff2|png|svg|json|mp3)$">
     Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "\.webp$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   Header set X-Content-Type-Options "nosniff"
 </IfModule>
@@ -178,7 +184,7 @@ def build(out=OUT, url=SITE_URL, seo=True):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css") or rel.startswith("audio/")
+            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css") or rel.startswith(("audio/", "pics/"))
                     or rel.split("/")[0] in ("ru", "en", "fr") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel)

@@ -4,7 +4,11 @@
 Для упражнения на множественное число — та же сцена с тремя уменьшенными предметами и форма
 мн. числа (PLURAL, только надёжные слова; исключения вроде ձուկ → ձկներ отмечены).
 
-Пишет www/js/pictures.js: window.BARARAN_PICS = {слово: {s: svg, m: svg мн. числа, pl: форма}}.
+Пишет www/js/pictures.js: window.BARARAN_PICS = {слово: {s: svg, m: svg мн. числа, pl: форма,
+b: только фон, o: эмодзи}}. С 02.11.2026 («хочу более выразительные картинки») предмет в режиме
+«Картинки» — объёмный Fluent Emoji 3D (o) на нарисованном фоне (b); нарисованный предмет (s, m)
+остаётся там, где эмодзи не подходит (DRAWN: гранат и абрикос — своих эмодзи нет, стол, река)
+и как запас, если картинка не загрузилась.
 Запуск: python3 tools/make_pictures.py
 """
 import json, os, re
@@ -709,15 +713,23 @@ def plural_scene(bg, f, p):
     shadows = ''.join(SH(cx, 152, 26) for cx in (78, 160, 242)) if bg in ('sky', 'table', 'room', 'plain', 'plaingreen', 'plainblue', 'plainpink') else ''
     return svg(BGS[bg](p + 'm') + shadows + copies)
 
+DRAWN = {'նուռ', 'ծիրան', 'սեղան', 'գետ'}
+
+
 def main():
     words = json.load(open(os.path.join(ROOT, 'data', 'words.json'), encoding='utf-8'))
     have = {w[0] for t in words for w in t['w']}
+    emo_of = {w[0]: w[3] for t in words for w in t['w'] if len(w) > 3 and w[3] and w[3][0] not in '#='}
+    emo_js = open(os.path.join(ROOT, 'www', 'js', 'emoji.js'), encoding='utf-8').read()
+    emo3d = set(json.loads(re.search(r'BARARAN_EMO=(\{.*\});', emo_js).group(1)))
     out, missing = {}, []
     for i, (key, (bg, f, pl)) in enumerate(O.items()):
         if key not in have:
             missing.append(key); continue
         p = f'q{i}'
         rec = {'s': svg(BGS[bg](p) + draw(f, p))}
+        if key not in DRAWN and emo_of.get(key) in emo3d:
+            rec['b'], rec['o'] = svg(BGS[bg](p + 'b')), emo_of[key]
         if pl:
             e = ending(key)
             assert pl.endswith(e), (key, pl, e)
@@ -730,7 +742,7 @@ def main():
           json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n')
     path = os.path.join(ROOT, 'www', 'js', 'pictures.js')
     open(path, 'w', encoding='utf-8').write(js)
-    print(f'картинок {len(out)}, с мн. числом {sum(1 for r in out.values() if "pl" in r)}, {len(js) // 1024} КБ', ('нет в словаре: ' + ', '.join(missing)) if missing else '')
+    print(f'картинок {len(out)}, объёмных {sum(1 for r in out.values() if "o" in r)}, с мн. числом {sum(1 for r in out.values() if "pl" in r)}, {len(js) // 1024} КБ', ('нет в словаре: ' + ', '.join(missing)) if missing else '')
 
 if __name__ == '__main__':
     main()

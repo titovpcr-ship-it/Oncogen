@@ -4,7 +4,7 @@
 (function(){
 'use strict';
 const TOPICS=window.BARARAN_DATA.topics, ABC=window.BARARAN_ABC, CFG=window.BARARAN_CONFIG||{};
-const BILL=window.BARARAN_BILLING, STR=window.BARARAN_STR, PICS=window.BARARAN_PICS||{};
+const BILL=window.BARARAN_BILLING, STR=window.BARARAN_STR, PICS=window.BARARAN_PICS||{}, EMO=window.BARARAN_EMO||{};
 
 /* ================= LANGUAGE ================= */
 const UIK='bararan-ui-v1';
@@ -233,13 +233,20 @@ const ICON={
   set:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>'
 };
 function firstLetter(a){const m=a.match(/[ա-ֆԱ-Ֆև]/);return m?m[0].toUpperCase():'?';}
-function picQ(w){return w.p?pic(w):'<span class="emo" aria-hidden="true">'+TOPICS[w.t].ic+'</span>';}
+/* Картинка-эмодзи — объёмная Fluent Emoji 3D (www/pics, tools/fetch_pics.py); нет файла или не загрузился
+   (без интернета, ещё не в кэше) — системный эмодзи, см. обработчик error ниже. */
+function emo(e,cls){const n=EMO[e], c=cls?' '+cls:'';
+  if(!n) return '<span class="emo'+c+'" aria-hidden="true">'+e+'</span>';
+  return '<img class="e3d'+c+'" src="'+(n.indexOf(':')>=0?n:'pics/'+n+'.webp')+'" data-e="'+esc(e)+'" alt="" draggable="false" decoding="async" loading="lazy">';}
+document.addEventListener('error',ev=>{const t=ev.target; if(!t||t.tagName!=='IMG'||!t.dataset||!t.dataset.e) return;
+  const sp=document.createElement('span'); sp.className=t.className.replace('e3d','emo')+' emo'; sp.style.cssText=t.style.cssText; sp.setAttribute('aria-hidden','true'); sp.textContent=t.dataset.e; t.replaceWith(sp);},true);
+function picQ(w){return w.p?pic(w):emo(TOPICS[w.t].ic);}
 function pic(w){
   const p=w.p;
   if(!p) return '<span class="ltr" style="--h:'+((w.t*47+20)%360)+'" aria-hidden="true"><b>'+esc(firstLetter(w.a))+'</b></span>';
   if(p[0]==='#') return '<span class="sw" style="background:'+p+'" aria-hidden="true"></span>';
   if(p[0]==='=') return '<span class="ptx">'+esc(p.slice(1))+'</span>';
-  return '<span class="emo" aria-hidden="true">'+p+'</span>';
+  return emo(p);
 }
 function letters(a){return [...a].map((ch,i)=>ch===' '?' ':'<span class="lt" style="animation-delay:'+(i*45)+'ms">'+esc(ch)+'</span>').join('');}
 function fitWords(){
@@ -427,7 +434,13 @@ function abcNext(){ if(!aq) return; clearTimeout(aq.timer); aq.i++; render(); wi
 /* ================= PICTURES ================= */
 /* Режим без перевода: картинка, армянское слово, транскрипция. Бесплатный, прогресс не пишет. */
 let pq=null;
-function picSvg(w,many){const r=PICS[w.a]; return r?(many&&r.m?r.m:r.s):'';}
+/* Сцена: нарисованный фон (b) и объёмный предмет Fluent 3D (o); где эмодзи не подходит — нарисованный целиком (s, m). */
+const P3D_ONE=[[50,54,62]], P3D_MANY=[[24.4,61,33],[50,56,33],[75.6,61,33]];
+function picSvg(w,many){const r=PICS[w.a]; if(!r) return '';
+  const n=r.o&&EMO[r.o];
+  if(!n) return many&&r.m?r.m:r.s;
+  const src=n.indexOf(':')>=0?n:'pics/'+n+'.webp';
+  return r.b+(many&&r.m?P3D_MANY:P3D_ONE).map(q=>'<img class="p3d" src="'+src+'" data-e="'+esc(r.o)+'" alt="" draggable="false" decoding="async" style="left:'+q[0]+'%;top:'+q[1]+'%;height:'+q[2]+'%">').join('');}
 function startPicQuiz(){
   const pool=shuffle(PW).slice(0,12);
   const items=pool.map((w,i)=>{
@@ -515,7 +528,7 @@ function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
-  nav.innerHTML=tabs.map(t=>'<button class="tab" data-act="tab" data-arg="'+t[0]+'">'+t[1]+'<span>'+esc(t[2])+'</span></button>').join('');
+  nav.innerHTML='<button class="tbrand" data-act="brand" aria-label="Barik">'+MARK+'<b>Barik</b><span lang="hy">Բառիկ</span></button>'+tabs.map(t=>'<button class="tab" data-act="tab" data-arg="'+t[0]+'">'+t[1]+'<span>'+esc(t[2])+'</span></button>').join('');
 }
 function render(auto){
   const el=$('#view');
@@ -555,7 +568,7 @@ function onboardHTML(){
 }
 function premCTA(){
   if(premium()) return '';
-  return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">✨</span><span><b>'+esc(T('ctaTitle',WORDS.length))+'</b><span>'+esc(T('ctaSub'))+'</span></span></button>';
+  return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">'+emo('✨')+'</span><span><b>'+esc(T('ctaTitle',WORDS.length))+'</b><span>'+esc(T('ctaSub'))+'</span></span></button>';
 }
 function homeHTML(){
   const c=counts(), td=today();
@@ -563,7 +576,7 @@ function homeHTML(){
   let sum;
   if(!c.seen) sum=T('sumFirst',WORDS.length,TOPICS.length,S.set.size||10);
   else sum=T('sumProgress',c.learned,c.total,c.learning,c.due);
-  const streak=(S.st.streak>=2&&S.st.day>=td-1)?'<div class="streak">🔥 '+esc(T('streak',S.st.streak))+'</div>':'';
+  const streak=(S.st.streak>=2&&S.st.day>=td-1)?'<div class="streak">'+emo('🔥','ie')+' '+esc(T('streak',S.st.streak))+'</div>':'';
   let acts='';
   if(c.due) acts+='<button class="btn primary" data-act="review">'+esc(T('btnReview',c.due))+'</button>';
   if(nw.length){
@@ -574,36 +587,44 @@ function homeHTML(){
   if(hard) acts+='<button class="btn ghost" data-act="hard">'+esc(T('btnHard',hard))+'</button>';
   const topicRow=(t,i)=>{
     const tc=counts(t.list), pl=100*tc.learned/tc.total, pg=100*tc.learning/tc.total, op=lvOpen(t.lv);
-    return '<li><button class="topic'+(op?'':' locked')+'" data-act="topic" data-arg="'+i+'"><span class="t-ic">'+t.ic+'</span><span class="t-body"><span class="t-name">'+esc(tn(t))+'</span><span class="t-hy" lang="hy">'+esc(t.hy)+'</span><span class="bar"><i style="width:'+pl+'%"></i><i class="l" style="width:'+pg+'%"></i></span></span><span class="t-cnt">'+(op?tc.learned+'/'+tc.total:'<span class="lock" aria-label="'+esc(T('locked'))+'">🔒</span>')+'</span></button></li>';
+    return '<li><button class="topic'+(op?'':' locked')+'" data-act="topic" data-arg="'+i+'"><span class="t-ic">'+emo(t.ic)+'</span><span class="t-body"><span class="t-name">'+esc(tn(t))+'</span><span class="t-hy" lang="hy">'+esc(t.hy)+'</span><span class="bar"><i style="width:'+pl+'%"></i><i class="l" style="width:'+pg+'%"></i></span></span><span class="t-cnt">'+(op?tc.learned+'/'+tc.total:'<span class="lock" role="img" aria-label="'+esc(T('locked'))+'">'+emo('🔒','ie')+'</span>')+'</span></button></li>';
   };
   const rows=LEVELS.map(lv=>{
     const ts=TOPICS.map((t,i)=>[t,i]).filter(x=>x[0].lv===lv); if(!ts.length) return '';
     const all=[].concat(...ts.map(x=>x[0].list)), lc=counts(all), op=isOpen(lv), nn=all.filter(w=>!S.w[w.a]).length, free=lvOpen(lv);
     let la='';
-    if(op&&!free) la='<div class="lv-acts"><button class="btn primary sm" data-act="paywall" style="grid-column:1/-1">🔒 '+esc(T('unlockLevel',lv))+'</button></div>';
+    if(op&&!free) la='<div class="lv-acts"><button class="btn primary sm" data-act="paywall" style="grid-column:1/-1">'+emo('🔒','ie')+' '+esc(T('unlockLevel',lv))+'</button></div>';
     else if(op&&nn) la='<div class="lv-acts"><button class="btn primary sm" data-act="learnLevel" data-arg="'+lv+'">'+esc(T('lvLearn'))+'</button><button class="btn secondary sm" data-act="checkLevel" data-arg="'+lv+'">'+esc(T('lvCheck'))+'</button></div>';
-    return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+(free?'':' <span class="lock">🔒</span>')+'</span><span class="lvc">'+esc(T('lvCount',lc.learned,lc.total))+'</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+esc(T('lvd_'+lv))+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
+    return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+(free?'':' <span class="lock">'+emo('🔒','ie')+'</span>')+'</span><span class="lvc">'+esc(T('lvCount',lc.learned,lc.total))+'</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+esc(T('lvd_'+lv))+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
   }).join('');
-  return '<header class="head"><div class="brand">'+MARK+'<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">'+esc(T('tagline'))+'</p></header>'+
-    '<section class="today">'+streak+'<p class="summary">'+sum+'</p>'+premCTA()+'<div class="actions">'+acts+'</div></section>'+
-    rows;
+  return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">'+MARK+'<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">'+esc(T('tagline'))+'</p></header>'+
+    '<section class="today">'+streak+wotdHTML()+'<p class="summary">'+sum+'</p>'+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
+    '<div class="home-main">'+rows+'</div></div>';
+}
+/* Слово дня: каждый день другое, с объёмной картинкой, из открытых уровней. */
+function wotdHTML(){
+  // предметные слова режима «Картинки» — у них картинка точно про слово
+  const pool=PW.filter(w=>w.p&&EMO[w.p]&&canUse(w));
+  if(!pool.length) return '';
+  const w=pool[(Math.imul(today()+7,2654435761)>>>0)%pool.length];
+  return '<div class="wotd"><span class="wd-pic">'+pic(w)+'</span><span class="wd-main"><span class="wd-k">'+esc(T('wotd'))+'</span><span class="wd-hy" lang="hy">'+esc(w.a)+'</span><span class="wd-sub">'+esc(trn(w))+' — '+esc(tx(w))+'</span></span><button class="say" data-act="sayFree" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+ICON.spk+'</button></div>';
 }
 function wordRow(w,free){
   const st=status(w), op=free||canUse(w);
-  return '<li class="wrow"><span class="w-pic">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+esc(T('st_'+st))+'"></i>'+esc(tx(w))+'<span class="w-tr">'+esc(trn(w))+'</span></span></span><button class="say" data-act="'+(free?'sayFree':'say')+'" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+(op?ICON.spk:'<span aria-hidden="true">🔒</span>')+'</button></li>';
+  return '<li class="wrow"><span class="w-pic">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+esc(T('st_'+st))+'"></i>'+esc(tx(w))+'<span class="w-tr">'+esc(trn(w))+'</span></span></span><button class="say" data-act="'+(free?'sayFree':'say')+'" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+(op?ICON.spk:emo('🔒','ie'))+'</button></li>';
 }
 function topicHTML(ti){
   const t=TOPICS[ti], tc=counts(t.list), nn=tc.total-tc.seen, op=lvOpen(t.lv);
   let acts='';
-  if(!op) acts='<button class="btn primary" data-act="paywall">🔒 '+esc(T('unlockTopic'))+'</button>';
+  if(!op) acts='<button class="btn primary" data-act="paywall">'+emo('🔒','ie')+' '+esc(T('unlockTopic'))+'</button>';
   else{
     if(nn) acts+='<button class="btn primary" data-act="learnTopic" data-arg="'+ti+'">'+esc(T('learnTopic',Math.min(nn,S.set.size||10)))+'</button>';
     if(tc.seen) acts+='<button class="btn secondary" data-act="practice" data-arg="'+ti+'">'+esc(T('practice'))+'</button>';
-    if(tc.seen) acts+='<button class="btn ghost" data-act="typeTopic" data-arg="'+ti+'">⌨️ '+esc(T('typeTopic'))+'</button>';
+    if(tc.seen) acts+='<button class="btn ghost" data-act="typeTopic" data-arg="'+ti+'">'+emo('⌨️','ie')+' '+esc(T('typeTopic'))+'</button>';
     if(nn) acts+='<button class="btn ghost" data-act="checkTopic" data-arg="'+ti+'">'+esc(T('checkTopic'))+'</button>';
   }
   return '<button class="back" data-act="tab" data-arg="home">‹ '+esc(T('allTopics'))+'</button>'+
-    '<header class="thead"><span class="t-ic">'+t.ic+'</span><div><h1 class="pg">'+esc(tn(t))+'</h1><p class="t-hy2" lang="hy">'+esc(t.hy)+'</p></div></header>'+
+    '<header class="thead"><span class="t-ic">'+emo(t.ic)+'</span><div><h1 class="pg">'+esc(tn(t))+'</h1><p class="t-hy2" lang="hy">'+esc(t.hy)+'</p></div></header>'+
     '<p class="summary">'+esc(T('topicSum',tc.total,tc.learned,tc.learning,nn))+'</p>'+
     '<div class="actions page-actions">'+acts+'</div><ul class="words">'+t.list.map(w=>wordRow(w)).join('')+'</ul>';
 }
@@ -617,7 +638,7 @@ function dictRows(){
   return list.slice(0,dLimit).map(w=>wordRow(w)).join('')+more;
 }
 function dictHTML(){
-  return '<header class="head"><h1 class="pg">'+esc(T('dictTitle'))+'</h1></header>'+
+  return '<header class="head"><h1 class="pg">'+esc(T('dictTitle'))+'</h1><p class="t-hy2" lang="hy">Բառարան</p></header>'+
     '<div class="filters"><input class="search" id="dq" type="search" inputmode="search" autocomplete="off" placeholder="'+esc(T('dictPh'))+'" value="'+esc(dq)+'"></div>'+
     '<div class="filters"><select id="dt" aria-label="'+esc(T('topicAria'))+'"><option value="all">'+esc(T('allWords',WORDS.length))+'</option>'+LEVELS.map(lv=>{const n=WORDS.filter(w=>TOPICS[w.t].lv===lv).length;return '<option value="lv:'+lv+'"'+(dt==='lv:'+lv?' selected':'')+'>'+esc(T('levelN',lv,n))+'</option>';}).join('')+LEVELS.map(lv=>'<optgroup label="'+esc(T('topicsOf',lv))+'">'+TOPICS.map((t,i)=>t.lv===lv?'<option value="'+i+'"'+(String(i)===dt?' selected':'')+'>'+esc(tn(t))+' — '+t.list.length+'</option>':'').join('')+'</optgroup>').join('')+'</select></div>'+
     '<ul class="words" id="dlist">'+dictRows()+'</ul>';
@@ -640,7 +661,7 @@ function letterHTML(i){
   return '<button class="back" data-act="tab" data-arg="abc">‹ '+esc(T('abcTitle'))+'</button>'+
     '<div class="letter"><div class="big-letter" lang="hy">'+big+'</div>'+
     '<div class="l-name" lang="hy">'+esc(x.nm)+'<small>'+esc(T('letterName'))+': '+esc(trL(x.nm))+'</small></div>'+
-    '<div class="audio"><button class="aud" data-act="sayLetter" data-arg="'+i+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="sayLetterSlow" data-arg="'+i+'"><span aria-hidden="true">🐢</span><span>'+esc(T('slow'))+'</span></button></div>'+
+    '<div class="audio"><button class="aud" data-act="sayLetter" data-arg="'+i+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="sayLetterSlow" data-arg="'+i+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>'+
     '<div class="l-facts"><div><b>'+esc(rd(x))+'</b><span>'+esc(T('reads'))+'</span></div><div><b>['+esc(x.ipa)+']</b><span>'+esc(T('ipa'))+'</span></div><div><b>'+(i+1)+'</b><span>'+esc(T('ofN',n))+'</span></div></div>'+
     '<p class="l-tip">'+esc(L==='fr'?x.tfr:(L==='en'?x.ten:x.tru))+'</p></div>'+ex+
     '<div class="l-nav"><button class="btn secondary" data-act="letter" data-arg="'+((i+n-1)%n)+'">‹ '+esc(ABC[(i+n-1)%n].up)+'</button><button class="btn secondary" data-act="letter" data-arg="'+((i+1)%n)+'">'+esc(ABC[(i+1)%n].up)+' ›</button></div>';
@@ -672,7 +693,7 @@ function picsHTML(){
   const cards=PW.map((w,i)=>'<li><button class="pcell" data-act="pcard" data-arg="'+i+'"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(trn(w))+'</span></button></li>').join('');
   return '<header class="head"><h1 class="pg">'+esc(T('picsTitle'))+'</h1><p class="t-hy2" lang="hy">Նկարներ</p></header>'+
     '<p class="note">'+esc(T('picsNote',PW.length))+'</p>'+
-    '<div class="actions abc-acts"><button class="btn primary" data-act="picQuiz">'+esc(T('picsQuiz'))+'</button><button class="btn secondary" data-act="picType">⌨️ '+esc(T('picsType'))+'</button><button class="btn ghost" data-act="pcard" data-arg="0">'+esc(T('picsCards'))+'</button></div>'+
+    '<div class="actions abc-acts"><button class="btn primary" data-act="picQuiz">'+esc(T('picsQuiz'))+'</button><button class="btn secondary" data-act="picType">'+emo('⌨️','ie')+' '+esc(T('picsType'))+'</button><button class="btn ghost" data-act="pcard" data-arg="0">'+esc(T('picsCards'))+'</button></div>'+
     '<ul class="pgrid">'+cards+'</ul>';
 }
 function pcardHTML(i){
@@ -681,7 +702,7 @@ function pcardHTML(i){
   return '<button class="back" data-act="tab" data-arg="pics">‹ '+esc(T('picsTitle'))+'</button>'+
     '<div class="pcard"><div class="pimg big">'+picSvg(w)+'</div>'+
     '<div class="hyw" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div>'+
-    '<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlowFree" data-arg="'+esc(w.a)+'"><span aria-hidden="true">🐢</span><span>'+esc(T('slow'))+'</span></button></div>'+pl+
+    '<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlowFree" data-arg="'+esc(w.a)+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>'+pl+
     '<p class="pcount" style="text-align:center;margin-top:10px">'+(i+1)+' / '+n+'</p></div>'+
     '<div class="l-nav"><button class="btn secondary" data-act="pcard" data-arg="'+((i+n-1)%n)+'">‹</button><button class="btn secondary" data-act="pcard" data-arg="'+((i+1)%n)+'">›</button></div>';
 }
@@ -724,7 +745,7 @@ function tquizHTML(){
   }
   const it=tq.items[tq.i], w=it.w, own=kbOwn();
   const prompt=tq.mode==='pic'?'<div class="pimg big">'+picSvg(w)+'</div>':'<div class="pic-xl">'+picQ(w)+'</div><div class="ruw">'+esc(tx(w))+'</div>';
-  const audio='<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlowFree" data-arg="'+esc(w.a)+'"><span aria-hidden="true">🐢</span><span>'+esc(T('slow'))+'</span></button></div>';
+  const audio='<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlowFree" data-arg="'+esc(w.a)+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>';
   let field, after='', foot='';
   if(it.done){
     field='<div class="tin done '+(it.ok?'ok':'bad')+'" lang="hy">'+(it.ok?esc(normHy(it.val)):tdiff(it.val,w.a))+'</div>';
@@ -755,7 +776,7 @@ function settingsHTML(){
   sub+='<button class="btn secondary" data-act="restore">'+esc(T('restore'))+'</button>';
   if(prem&&BILL.available()) sub+='<button class="btn ghost" data-act="manageSub">'+esc(T('subManage'))+'</button>';
   sub+='</div>';
-  return '<header class="head"><h1 class="pg">'+esc(T('setTitle'))+'</h1></header>'+
+  return '<header class="head"><h1 class="pg">'+esc(T('setTitle'))+'</h1><p class="t-hy2" lang="hy">Կարգավորումներ</p></header>'+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setLang'))+'</h2>'+
     '<div class="set-row"><div class="lbl"><b>'+esc(T('setLangLbl'))+'</b><span>'+esc(T('setLangSub'))+'</span></div><div class="seg" role="group" aria-label="'+esc(T('setLang'))+'">'+langs+'</div></div>'+
   '</section>'+
@@ -818,7 +839,7 @@ function paywallHTML(){
   }
   return '<div class="pw"><div class="sess-top" style="grid-template-columns:44px 1fr"><button class="x" data-act="pwClose" aria-label="'+esc(T('close'))+'">✕</button><span></span></div>'+
     '<div class="pw-hero"><span class="mark" aria-hidden="true" lang="hy">Ա</span><h1>'+esc(T('pwTitle'))+'</h1><p>'+esc(T('pwSub'))+'</p></div>'+
-    '<ul class="pw-list">'+ben.map(b=>'<li><span aria-hidden="true">'+b[0]+'</span><span>'+esc(b[1])+'</span></li>').join('')+'</ul>'+
+    '<ul class="pw-list">'+ben.map(b=>'<li><span aria-hidden="true">'+emo(b[0])+'</span><span>'+esc(b[1])+'</span></li>').join('')+'</ul>'+
     plans+
     '<div class="actions" style="margin-top:10px"><button class="btn ghost" data-act="restore">'+esc(T('restore'))+'</button></div>'+
     '<p class="pw-legal">'+esc(T('pwLegal'))+'</p>'+
@@ -847,7 +868,7 @@ function resultHTML(){
 }
 function audioRow(w){
   if(!audioOK()) return '';
-  return '<div class="audio"><button class="aud" data-act="say" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlow" data-arg="'+esc(w.a)+'"><span aria-hidden="true">🐢</span><span>'+esc(T('slow'))+'</span></button></div>';
+  return '<div class="audio"><button class="aud" data-act="say" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlow" data-arg="'+esc(w.a)+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>';
 }
 function optCls(o,i,it){if(!it.done) return ''; if(o===it.w) return 'ok'; if(i===it.pick) return 'bad'; return 'dim';}
 function optPic(o,i,it,sp){return '<button class="opt '+optCls(o,i,it)+'" data-act="opt" data-arg="'+i+'"'+(it.done?' disabled':'')+'>'+(sp?'<span class="o-pic">'+pic(o)+'</span>':'')+'<span class="o-lbl">'+esc(tx(o))+'</span></button>';}
@@ -871,7 +892,7 @@ function sessionHTML(){
   }else if(it.k==='r2a'){
     body='<p class="q">'+esc(T('qHow'))+'</p><div class="pic-xl">'+picQ(w)+'</div><div class="ruw">'+esc(tx(w))+'</div><div class="opts list">'+it.opts.map((o,i)=>optHy(o,i,it)).join('')+'</div>';
   }else if(it.k==='listen'){
-    body='<p class="q">'+esc(T('qListen'))+'</p><button class="play-big" data-act="sayCur" aria-label="'+esc(T('listenAgain'))+'">'+ICON.spk+'</button><button class="aud" data-act="sayCurSlow"><span aria-hidden="true">🐢</span><span>'+esc(T('slow'))+'</span></button>'+
+    body='<p class="q">'+esc(T('qListen'))+'</p><button class="play-big" data-act="sayCur" aria-label="'+esc(T('listenAgain'))+'">'+ICON.spk+'</button><button class="aud" data-act="sayCurSlow">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button>'+
       (it.done?'<div class="hyw'+ph+' answer-word" lang="hy">'+esc(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div>':'')+
       optsPic(it);
   }else if(it.k==='spell'){
@@ -896,6 +917,7 @@ function sessionHTML(){
 /* ================= EVENTS ================= */
 let docFrom='settings';
 const H={
+  brand:()=>ACT.tab('home'),
   tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='tquiz') tq=null; if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} if(view==='pquiz'&&pq){clearTimeout(pq.timer); pq=null;} go(a); },
   pickLang:a=>{setLang(a); go('home');},
   lang:a=>{setLang(a); render();},

@@ -30,7 +30,9 @@ npm run apk                      # отладочный APK → android/app/buil
 npm run aab                      # релизный AAB (нужен android/keystore.properties)
 node tests/test_app.js           # проверка
 node tools/store_shots.js        # скриншоты для Google Play
+python3 tools/fetch_pics.py      # объёмные картинки Fluent Emoji 3D → www/pics/, www/js/emoji.js
 python3 tools/make_pictures.py   # картинки режима «Картинки»
+node tools/make_icons.js         # значок (арка с «Ա»), заставка, графика стора
 python3 tools/web_demo.py out.html  # один HTML для показа в браузере (iPhone)
 python3 tools/build_site.py         # сайт (PWA) → dist/site/, проверка: node tests/test_site.js
                                     # + страницы поиска ru/en/fr и sitemap, проверка: node tests/test_seo.js

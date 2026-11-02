@@ -8,7 +8,7 @@ const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 
 const ru={
   tabsAria:'Разделы', tabLearn:'Учить', tabPics:'Картинки', tabAbc:'Алфавит', tabDict:'Словарь', tabSet:'Настройки',
-  tagline:'Восточноармянский: слова с картинкой, звуком и повторением по дням',
+  wotd:'Слово дня', tagline:'Восточноармянский: слова с картинкой, звуком и повторением по дням',
   sumFirst:(n,t,s)=>'В словаре <b>'+fmt(n)+' '+slov(n)+'</b> в '+t+' темах, от A1 до C2. Урок — '+s+' новых слов: карточка, потом упражнения.',
   sumProgress:(l,t,g,d)=>'Выучено <b>'+fmt(l)+' '+slov(l)+'</b> из '+fmt(t)+', ещё '+g+' в работе.'+(d?' Сегодня на повторение — <b>'+d+'</b>.':' Повторять сегодня нечего.'),
   streak:n=>n+' '+pl(n,'день','дня','дней')+' подряд',
@@ -78,7 +78,7 @@ const ru={
 
 const en={
   tabsAria:'Sections', tabLearn:'Learn', tabPics:'Pictures', tabAbc:'Alphabet', tabDict:'Dictionary', tabSet:'Settings',
-  tagline:'Eastern Armenian words with pictures, audio and spaced repetition',
+  wotd:'Word of the day', tagline:'Eastern Armenian words with pictures, audio and spaced repetition',
   sumFirst:(n,t,s)=>'The dictionary has <b>'+fmt(n)+' words</b> in '+t+' topics, from A1 to C2. A lesson is '+s+' new words: a card, then exercises.',
   sumProgress:(l,t,g,d)=>'Learned <b>'+fmt(l)+' '+words(l)+'</b> of '+fmt(t)+', '+g+' more in progress.'+(d?' Due for review today: <b>'+d+'</b>.':' Nothing to review today.'),
   streak:n=>n+' days in a row',
@@ -148,7 +148,7 @@ const en={
 const mots=n=>n<2?'mot':'mots';
 const fr={
   tabsAria:'Sections', tabLearn:'Apprendre', tabPics:'Images', tabAbc:'Alphabet', tabDict:'Dictionnaire', tabSet:'Réglages',
-  tagline:'L\'arménien oriental : des mots avec images, son et répétition espacée',
+  wotd:'Mot du jour', tagline:'L\'arménien oriental : des mots avec images, son et répétition espacée',
   sumFirst:(n,t,s)=>'Le dictionnaire compte <b>'+fmt(n)+' mots</b> en '+t+' thèmes, du niveau A1 au C2. Une leçon, c\'est '+s+' nouveaux mots : une carte, puis des exercices.',
   sumProgress:(l,t,g,d)=>'<b>'+fmt(l)+' '+mots(l)+'</b> appris sur '+fmt(t)+', '+g+' en cours.'+(d?' À réviser aujourd\'hui : <b>'+d+'</b>.':' Rien à réviser aujourd\'hui.'),
   streak:n=>n+' jours d\'affilée',
