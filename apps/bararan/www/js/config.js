@@ -6,5 +6,6 @@ window.BARARAN_CONFIG={
   ENTITLEMENT:'premium',
   PRODUCTS:{monthly:'premium_monthly',yearly:'premium_yearly'},
   FORCE_PREMIUM:false,
+  WEB_ALL_FREE:false,   // сайт: true — всё открыто, пока нет оплаты (ставит tools/build_site.py)
   VERSION:'1.0.0'
 };

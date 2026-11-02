@@ -31,7 +31,8 @@ function emit(){B.listeners.forEach(f=>{try{f(B);}catch(e){}});}
 function unwrap(r){return r&&r.customerInfo?r.customerInfo:r;}
 
 B.available=()=>!!(NATIVE&&Purchases&&CFG.RC_ANDROID_KEY);
-B.isPremium=()=>!!(CFG.FORCE_PREMIUM||B.premium);
+// Сайт: пока оплата не подключена, открыто всё (WEB_ALL_FREE ставит tools/build_site.py).
+B.isPremium=()=>!!(CFG.FORCE_PREMIUM||B.premium||(!NATIVE&&CFG.WEB_ALL_FREE));
 B.onChange=f=>{B.listeners.push(f);};
 
 B.init=async function(){

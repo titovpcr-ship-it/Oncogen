@@ -9,3 +9,4 @@ local.properties
 .env
 tools/mp3/
 tools/hy_audio.zip
+dist/

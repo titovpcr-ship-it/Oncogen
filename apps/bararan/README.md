@@ -32,6 +32,7 @@ node tests/test_app.js           # проверка
 node tools/store_shots.js        # скриншоты для Google Play
 python3 tools/make_pictures.py   # картинки режима «Картинки»
 python3 tools/web_demo.py out.html  # один HTML для показа в браузере (iPhone)
+python3 tools/build_site.py         # сайт (PWA) → dist/site/, проверка: node tests/test_site.js
 ```
 
 Нужны Node 22, Java 21, Android SDK (`android/local.properties`: `sdk.dir=…`).
