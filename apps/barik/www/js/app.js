@@ -658,7 +658,7 @@ function abcHTML(){
 /* ================= ПРОПИСЬ ================= */
 /* Как пишется буква от руки: перо ведёт каждый штрих по порядку по разлинованной строке
    (www/js/cursive.js — свои штрихи, tools/cursive.py). Координаты без наклона, наклон — skewX. */
-const CUR=window.BARARAN_CURSIVE||{}, SLANT=0.287;
+const CUR=window.BARARAN_CURSIVE||{}, SLANT=0.3;
 let wAnim=0;
 function cursiveHTML(x){
   const g=CUR[x.up]; if(!g) return '';
