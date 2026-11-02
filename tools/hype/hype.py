@@ -412,6 +412,13 @@ def load_ru():
                 continue
             add(r.get("artist"), r.get("album"), r.get("price_rub"), src,
                 r.get("url", ""), r.get("gtin", ""))
+            w = (r.get("artist") or "").split()
+            if src == "appmistore" and len(w) >= 2:
+                # appmistore пишет фамилию первой: «DEAN OLIVIA», «DEL REY
+                # LANA» — ещё и под «Olivia Dean», «Lana Del Rey» (витрина
+                # Target, 02.11.2026: Olivia Dean не находилась).
+                add(" ".join(w[-1:] + w[:-1]), r.get("album"), r.get("price_rub"),
+                    src, r.get("url", ""), r.get("gtin", ""))
     return idx
 
 

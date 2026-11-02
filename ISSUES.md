@@ -3580,3 +3580,25 @@ Queers «Love Songs for the Retarded» (цветной, Asian Man) за $12.99 �
 FIXED_PRICE|BEST_OFFER отдал чистый аукцион. Отсеян по правилу. Поправка:
 `fresh.py` снимает лоты без FIXED_PRICE ещё в сводке поиска, а у находки
 — по карточке (`card_reject`: аукцион, сингл).
+
+## O-120. Витрина Target против цены в России
+
+Владелец 02.11.2026 прислал первую страницу самых продаваемых пластинок
+Target (23 позиции) — `data/ruspop/target_bestsellers.csv`,
+`tools/ruspop/retail.py`: цена Target + пересылка $22/кг (доставка до
+форвардера бесплатная, налога нет), курс 95 ₽/$, против продаж владельца,
+plastinka (SS), appmistore (в наличии), скринов Авито/Ozon; `--ebay` —
+лучший запечатанный лот eBay США до $25 (без аукционов).
+
+Итог: попса из Target в Москву — x0.84–1.21 к витринам (SOUR Target $29.99
+→ 3 685 ₽ против продажи владельца 4 200 ₽ на руки: +515 ₽; Thriller и
+Number Ones — в минус к Авито). Выделяются двое: Vince Guaraldi Trio «A
+Charlie Brown Christmas» (джаз, к Новому году: Target $25.99 → 3 305 ₽,
+eBay $21.45; в России — только предзаказ RSD BF 2026 у plastinka за
+6 993 ₽, другое издание) и Olivia Dean «The Art Of Loving» (appmistore
+6 300 ₽ против 4 445 ₽). Совпадение Lana Del Rey с appmistore ложное —
+там «Paradise Edition EP». Витрина — не сделка.
+
+Поправка: appmistore пишет фамилию первой («DEAN OLIVIA», «DEL REY LANA»)
+— `hype.load_ru` кладёт такие цены и под «Olivia Dean» (хайп и ruspop
+тоже их не находили).
