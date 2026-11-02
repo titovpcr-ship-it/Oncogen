@@ -778,9 +778,20 @@ def main():
     ap.add_argument("--coloured", action="store_true",
                     help="только цветной винил (владелец 02.11.2026: "
                          "«обязательно цветные»)")
+    ap.add_argument("--girls", action="store_true",
+                    help="ОСНОВНОЙ РЕЖИМ (владелец 02.11.2026): трендовые "
+                         "исполнительницы без кантри, запечатанные, только "
+                         "«предложить цену», только цветной винил, до $25, "
+                         "30 артистов")
     ap.add_argument("--reprice", metavar="FILE",
                     help="пересчитать цены России у готового прогона")
     a = ap.parse_args()
+    if a.girls:
+        # «Зафиксируй этот режим, он теперь основной» (02.11.2026).
+        a.women, a.no_country, a.coloured = True, True, True
+        a.kinds = a.kinds or ["предложить цену"]
+        if a.artists == 25:
+            a.artists = 30
     if a.reprice:
         return reprice(a.reprice)
     if a.send:

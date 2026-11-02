@@ -21,6 +21,7 @@ eBay сравнивается самое дешёвое запечатанное
 """
 import argparse
 import csv
+import html
 import os
 import re
 import sys
@@ -273,10 +274,19 @@ def discs_card(item):
     return 1
 
 
-def card(token, cards, iid):
-    """Карточка лота (штрихкод и характеристики), кэш cache/ebay_cards.json."""
+def _plain_desc(raw):
+    """Описание лота без разметки и CSS (как `tonepoet.clean_desc`)."""
+    t = re.sub(r"(?is)<(style|script)[^>]*>.*?</\1>", " ", raw or "")
+    t = re.sub(r"(?s)<[^>]+>", " ", t)
+    t = re.sub(r"[^{}]{0,200}\{[^{}]*\}", " ", t)
+    return re.sub(r"\s+", " ", html.unescape(t)).strip()[:2000]
+
+
+def card(token, cards, iid, need_desc=False):
+    """Карточка лота (штрихкод, характеристики, описание), кэш
+    cache/ebay_cards.json; need_desc — перечитать старую запись без описания."""
     item = cards.get(iid)
-    if item is None:
+    if item is None or (need_desc and "desc" not in item):
         r = requests.get(fx.ITEM.format(iid), timeout=30,
                          headers={"Authorization": f"Bearer {token}",
                                   "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"})
@@ -284,7 +294,9 @@ def card(token, cards, iid):
             return None
         jj = r.json()
         item = {"gtin": jj.get("gtin"),
-                "localizedAspects": jj.get("localizedAspects") or []}
+                "localizedAspects": jj.get("localizedAspects") or [],
+                "desc": _plain_desc(jj.get("description")),
+                "cond_desc": jj.get("conditionDescription") or ""}
         cards[iid] = item
     return item
 
@@ -326,6 +338,47 @@ def colour_of(title, item, artist, album):
             if fx.colours(v) - {"black"} or _TEXTURE_WORDS.search(v) or "multi" in v:
                 return "цветной"
     return None
+
+
+# Описание продавца против раздела «New» (девчачьи цветные, 02.11.2026):
+# «not being sealed», «New, Used once», «very good plus (VG+)», «missing
+# shrink wrap», «MIND THE DEFECT», «Standard Black» при «Colored Vinyl».
+_DESC_OPENED = re.compile(
+    r"\b(?:not|isn'?t|no\s+longer)\s+(?:being\s+)?(?:factory\s+)?sealed\b|"
+    r"\bused\s+once\b|\bplayed\s+(?:once|twice|a\s+few\s+times|only)\b|"
+    r"\b(?:missing|no|without)\s+(?:the\s+)?(?:shrink|plastic|seal)\b|"
+    r"\bshrink\s*(?:wrap)?\s+(?:removed|missing|opened)\b|(?<!never\s)(?<!not\s)\bopened\b|"
+    r"\bvery\s+good\s+plus\b|\(vg\+?\)|\blike\s+new\b|\bopen\s+box\b",
+    re.I)
+_DESC_DEFECT = re.compile(r"\bdefects?\b|\bwarp(?:ed|ing)?\b|\bcrack(?:ed)?\b|"
+                          r"\bskips?\b|\bscratch(?:es|ed)?\b|\bdent(?:ed)?\b", re.I)
+_DESC_NEVER_PLAYED = re.compile(r"\bnever\s+(?:been\s+)?played\b", re.I)
+_DESC_SEALED = re.compile(r"\bsealed\b|\bshrink\s*wrap(?:ped)?\b|\bin\s+(?:the\s+)?plastic\b",
+                          re.I)
+_DESC_BLACK = re.compile(r"\b(?:standard|classic|regular)\s+black\b|"
+                         r"\bblack\s+(?:vinyl|lp|record|pressing)\b", re.I)
+_DESC_DOUBLE = re.compile(r"\b2\s*-?\s*x?\s*LPs?\b|\bdouble\s+(?:lp|vinyl|album)\b|"
+                          r"\btwo\s+(?:lps|records|discs|vinyls)\b", re.I)
+
+
+def desc_reject(desc, title_colour=None, coloured=False):
+    """Причина отказа по описанию продавца или None."""
+    d = desc or ""
+    m = _DESC_OPENED.search(d)
+    if m:
+        return f"вскрыт по описанию («{m.group(0)}»)"
+    if _DESC_NEVER_PLAYED.search(d) and not _DESC_SEALED.search(d):
+        return "«never played» без «sealed» — вскрыт"
+    m = _DESC_DEFECT.search(d)
+    if m:
+        return f"дефект по описанию («{m.group(0)}»)"
+    if coloured and title_colour is None and _DESC_BLACK.search(d):
+        return "чёрный по описанию"
+    return None
+
+
+def desc_discs(desc):
+    return 2 if _DESC_DOUBLE.search(desc or "") else 1
 
 
 def album_lots(token, d, cards, artist, album, max_price, per_album, rate,
@@ -381,8 +434,12 @@ def album_lots(token, d, cards, artist, album, max_price, per_album, rate,
         # Цвет назван в заголовке — первыми; не назван — проверка по карточке.
         lots.sort(key=lambda x: (coloured and x[6] != "цветной", x[0]))
         for total, p, sh, _, note, it, col in lots[:per_album * (2 if coloured else 1)]:
-            item = card(token, cards, it["itemId"])
+            item = card(token, cards, it["itemId"], need_desc=coloured)
             if item is None:
+                continue
+            why = desc_reject(item.get("desc"), col, coloured) if coloured else None
+            if why:
+                print(f"  мимо: {why} — {(it.get('title') or '')[:60]}", file=sys.stderr)
                 continue
             if coloured and col is None and colour_of(
                     it.get("title"), item, artist, album) != "цветной":
@@ -395,7 +452,7 @@ def album_lots(token, d, cards, artist, album, max_price, per_album, rate,
             if code:
                 v, _ = fx.discogs_value(d, code, None if artist.lower()
                                         == "various" else artist)
-            discs = max(discs_of(t), discs_card(item))
+            discs = max(discs_of(t), discs_card(item), desc_discs(item.get("desc")))
             if v and v.get("format"):
                 m = re.match(r"(\d+)\s*x", v["format"])
                 if m:
