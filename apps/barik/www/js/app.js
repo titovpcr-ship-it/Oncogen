@@ -1273,7 +1273,9 @@ renderTabs();
 if(SPEECH){ loadVoices(); try{ window.speechSynthesis.addEventListener('voiceschanged',loadVoices); }catch(e){} }
 BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz') render(); });
 BILL.onBack(onBack);
-view=UI.lang?'home':'onboard';
+// …/#welcome (или ?welcome) — показать главную для гостя и тому, кто уже выбрал язык (ссылка из рекламы, показ).
+const WELCOME=/(?:^|[?&#])welcome(?:[&=]|$)/.test((location.search||'')+(location.hash||''));
+view=UI.lang&&!WELCOME?'home':'onboard';
 render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz') render(); });
