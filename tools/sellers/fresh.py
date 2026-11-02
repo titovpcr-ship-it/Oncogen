@@ -210,7 +210,10 @@ def main():
             # Аукцион с «купить сейчас»: фильтр поиска сверяет ставку.
             drop("«купить сейчас» дороже потолка")
             continue
+        so = (it.get("shippingOptions") or [{}])[0]
+        ship = (so.get("shippingCost") or {}).get("value")
         rows.append({"id": it["itemId"], "title": t, "price": p,
+                     "ship": float(ship) if ship is not None else None,
                      "kind": "торг" if "BEST_OFFER" in opts else "купить",
                      "artist": artist, "album": album, "grade": rec or "",
                      "cond": it.get("condition") or "",
@@ -224,7 +227,7 @@ def main():
 
     d = cs.D(tg._env_file_token())
     vc = dm.Versions(d)
-    finds = []
+    finds, assessed = [], []
     for i, r in enumerate(part, 1):
         if i % 100 == 0:
             print(f"  Discogs {i}/{len(part)}, находок {len(finds)}", file=sys.stderr)
@@ -251,6 +254,9 @@ def main():
         if not x:
             drop("оценка не вышла")
             continue
+        # Все оценённые — в out/fresh/assessed_*.csv: «что если» порогов.
+        assessed.append(dict(r, low=round(x["low"], 2), ev=round(x["ev"], 2),
+                             rough=int(rough)))
         need = max(a.min_floor, a.min_gap * r["price"])
         if x["low"] >= need:
             g = "надёжная"
@@ -268,6 +274,15 @@ def main():
         finds.append(r)
     d.save()
     vc.save()
+    if assessed:
+        import csv
+        keys = ["id", "price", "ship", "kind", "artist", "album", "grade", "cond",
+                "low", "ev", "rough", "want", "have", "seller", "created", "title", "url"]
+        with open(os.path.join(OUT, f"assessed_{time.strftime('%Y-%m-%d_%H%M')}.csv"),
+                  "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=keys, extrasaction="ignore")
+            w.writeheader()
+            w.writerows(assessed)
 
     marks = [iso(it["itemCreationDate"]) for it in items if it.get("itemCreationDate")]
     if marks and not a.backfill:
