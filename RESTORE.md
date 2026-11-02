@@ -182,9 +182,9 @@ python tools/sellers/scan.py            # список — data/sellers.csv
 
 ## Словарик Bararan
 
-`apps/bararan/` — отдельное Android-приложение (армянские слова), к винилу не относится. Как собрать и
-что нужно от владельца — `apps/bararan/README.md`; ключи Azure и keystore — в `apps/bararan/.env` и
-`apps/bararan/android/keystore.properties` (в gitignore, хранить отдельно).
+`apps/barik/` — Barik (до 02.11.2026 Bararan): сайт и Android-приложение (армянские слова), к винилу не относится. Как собрать и
+что нужно от владельца — `apps/barik/README.md`; ключи Azure и keystore — в `apps/barik/.env` и
+`apps/barik/android/keystore.properties` (в gitignore, хранить отдельно).
 
 ## Как обновить этот бэкап
 
