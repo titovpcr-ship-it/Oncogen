@@ -156,28 +156,42 @@ function nextNew(ti,n){const pool=(ti==null)?WORDS:TOPICS[ti].list; return pool.
 function touchStreak(){const td=today(); if(S.st.day===td) return; S.st.streak=(S.st.day===td-1)?(S.st.streak||0)+1:1; S.st.day=td;}
 
 /* ================= SPEECH ================= */
-/* Записи нейроголоса: www/audio/audio_<уровень>.json и audio_letters.json вида {"текст":"base64 mp3"},
-   список готовых файлов — audio/manifest.json (пишет tools/gen_audio.py). */
-const AUDIO_SRC={A1:'audio/audio_A1.json',A2:'audio/audio_A2.json',B1:'audio/audio_B1.json',B2:'audio/audio_B2.json',C1:'audio/audio_C1.json',C2:'audio/audio_C2.json',L:'audio/audio_letters.json'};
-let MAN={};                       // уровень → число записей
+/* Записи нейроголоса Azure (O-135): файл на слово — audio/<голос>/<ab>/<aid>.mp3, имя — хэш текста aid()
+   (тот же считает tools/gen_audio.py); голос и число записей — audio/manifest.json. Файл берётся, когда
+   слово звучит (на сайте service worker хранит его без интернета); нет файла — системный армянский голос. */
+let MAN={};                       // {voice, dir, count, total}
 let REAL_ANY=false;
 const SPEECH=('speechSynthesis' in window)&&(typeof window.SpeechSynthesisUtterance!=='undefined');
 let HYV=null;
 function loadVoices(){ if(!SPEECH) return; try{HYV=(window.speechSynthesis.getVoices()||[]).find(v=>/^hy([-_]|$)/i.test(v.lang||''))||null;}catch(e){} }
 function audioOK(){return REAL_ANY||!!HYV;}
-const AUD={cache:{},loading:{},el:null,ctx:null,unlocked:false};
+const AUD={el:null,ctx:null,unlocked:false};
 const SILENT_MP3='data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//NYwAAAAAAAAAAAAEluZm8AAAAPAAAABwAABKQARUVFRUVFRUVFRUVFRUVkZGRkZGRkZGRkZGRkZIODg4ODg4ODg4ODg4ODoqKioqKioqKioqKioqKiwcHBwcHBwcHBwcHBwcHg4ODg4ODg4ODg4ODg4P//////////////////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQEIAAAAAAAAASkP7MqcwAAAAAAAAAAAAAA//NIxAAAAANIAAAAAExBTUVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NIxHwAAANIAAAAAFVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
-function hasRealKey(g){return (MAN[g]||0)>0;}
-function hasReal(w){return !!(w&&hasRealKey(TOPICS[w.t].lv));}
-function loadAudio(g){
-  if(AUD.cache[g]) return Promise.resolve(AUD.cache[g]);
-  if(!AUD.loading[g]) AUD.loading[g]=fetch(AUDIO_SRC[g]).then(r=>{if(!r.ok) throw new Error('HTTP '+r.status); return r.json();}).then(j=>{AUD.cache[g]=j; return j;}).catch(e=>{delete AUD.loading[g]; throw e;});
-  return AUD.loading[g];
-}
+const ENC=(typeof TextEncoder!=='undefined')?new TextEncoder():null;
+function utf8(s){ if(ENC) return ENC.encode(s); const u=unescape(encodeURIComponent(s)), b=new Uint8Array(u.length); for(let i=0;i<u.length;i++) b[i]=u.charCodeAt(i); return b; }
+function fnv(b,h){ for(let i=0;i<b.length;i++) h=Math.imul(h^b[i],0x01000193); return h>>>0; }
+function hex8(n){return ('0000000'+n.toString(16)).slice(-8);}
+function aid(s){const b=utf8(s); return hex8(fnv(b,0x811c9dc5))+hex8(fnv(b,0x050c5d1f));}
+function audioUrl(text){const h=aid(text); return 'audio/'+MAN.dir+'/'+h.slice(0,2)+'/'+h+'.mp3';}
+function hasRealKey(){return REAL_ANY;}
+function hasReal(w){return !!(w&&REAL_ANY);}
 function loadManifest(){
-  return fetch('audio/manifest.json').then(r=>r.ok?r.json():{}).then(j=>{MAN=(j&&j.files)||{}; REAL_ANY=Object.keys(MAN).some(k=>MAN[k]>0);}).catch(()=>{MAN={};REAL_ANY=false;});
+  return fetch('audio/manifest.json').then(r=>r.ok?r.json():{}).then(j=>{MAN=j||{}; REAL_ANY=!!(MAN.dir&&MAN.count>0);}).catch(()=>{MAN={};REAL_ANY=false;});
 }
-function preloadAudio(list){const lvs=new Set(); (list||[]).forEach(w=>{if(hasReal(w)) lvs.add(TOPICS[w.t].lv);}); lvs.forEach(lv=>loadAudio(lv).catch(()=>{}));}
+/* Запись берётся целиком (fetch: на сайте — через service worker, он хранит её без интернета) и играется
+   из памяти (blob:). Ссылку на файл плееру не даём: плеер просит файл кусками (Range), а куски из кэша
+   service worker Safari не играет. */
+const BLOB=new Map();             // адрес записи → blob: (на время сеанса)
+function getAudio(url){
+  if(BLOB.has(url)) return Promise.resolve(BLOB.get(url));
+  return fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.blob(); })
+    .then(b=>{ const o=URL.createObjectURL(b); BLOB.set(url,o); return o; });
+}
+/* слова урока и темы — заранее: звучат сразу и потом без интернета */
+function preloadAudio(list){
+  if(!REAL_ANY) return;
+  (list||[]).slice(0,60).forEach(w=>{ if(w) getAudio(audioUrl(w.a)).catch(()=>{}); });
+}
 function unlockAudio(){
   if(AUD.unlocked||!REAL_ANY) return; AUD.unlocked=true;
   try{AUD.el=new Audio(); AUD.el.src=SILENT_MP3; const p=AUD.el.play(); if(p&&p.catch) p.catch(()=>{});}catch(e){}
@@ -186,33 +200,30 @@ function unlockAudio(){
 document.addEventListener('pointerdown',unlockAudio,{capture:true});
 document.addEventListener('keydown',unlockAudio,{capture:true});
 let playTok=0;
-async function playKey(g,key,slow,btn,loud){
+function playUrl(url,text,slow,btn,loud){
   const tok=++playTok;
-  let map;
-  try{map=await loadAudio(g);}catch(e){ if(loud) toast(T('audioLoadFail')); return false; }
-  if(tok!==playTok) return true;
-  const b64=map[key];
-  if(!b64){ return speakTTS(key,slow,btn,loud); }
-  playB64(b64,slow,btn); return true;
-}
-function playB64(b64,slow,btn){
   const el=AUD.el||(AUD.el=new Audio());
   try{el.pause();}catch(e){}
   const off=()=>{if(btn) btn.classList.remove('on');};
   if(btn) btn.classList.add('on');
-  el.onended=off;
-  el.src='data:audio/mpeg;base64,'+b64;
-  el.preservesPitch=true; el.webkitPreservesPitch=true;
-  el.defaultPlaybackRate=slow?0.7:1; el.playbackRate=slow?0.7:1;
-  const p=el.play();
-  if(p&&p.catch) p.catch(()=>{off(); webAudioPlay(b64,slow,btn);});
+  const fail=()=>{ off(); if(tok!==playTok) return; if(!speakTTS(text,slow,btn,false)&&loud) toast(T(navigator.onLine===false?'audioLoadFail':'noAudio')); };
+  getAudio(url).then(src=>{
+    if(tok!==playTok) return;
+    el.onended=off; el.onerror=fail;
+    el.src=src;
+    el.preservesPitch=true; el.webkitPreservesPitch=true;
+    el.defaultPlaybackRate=slow?0.7:1; el.playbackRate=slow?0.7:1;
+    const p=el.play();
+    if(p&&p.catch) p.catch(e=>{ if(tok===playTok&&e&&e.name==='NotAllowedError'){off(); webAudioPlay(url,slow,btn);} });
+  }).catch(fail);
+  return true;
 }
-async function webAudioPlay(b64,slow,btn){
+async function webAudioPlay(url,slow,btn){
   try{
     const C=window.AudioContext||window.webkitAudioContext; if(!C) return;
     AUD.ctx=AUD.ctx||new C(); if(AUD.ctx.state==='suspended') await AUD.ctx.resume();
-    const bin=atob(b64), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
-    const buf=await new Promise((res,rej)=>AUD.ctx.decodeAudioData(u.buffer,res,rej));
+    const ab=await (await fetch(url)).arrayBuffer();
+    const buf=await new Promise((res,rej)=>AUD.ctx.decodeAudioData(ab,res,rej));
     const src=AUD.ctx.createBufferSource(); src.buffer=buf; src.playbackRate.value=slow?0.75:1; src.connect(AUD.ctx.destination);
     if(btn){btn.classList.add('on'); src.onended=()=>btn.classList.remove('on');}
     src.start(0);
@@ -220,7 +231,7 @@ async function webAudioPlay(b64,slow,btn){
 }
 function speak(w,slow,btn,loud){
   if(!w) return false;
-  if(hasReal(w)){playKey(TOPICS[w.t].lv,w.a,slow,btn,loud); return true;}
+  if(hasReal(w)) return playUrl(audioUrl(w.a),w.a,slow,btn,loud);
   return speakTTS(w.a,slow,btn,loud);
 }
 /* системный армянский голос — только если записей нет, а голос в системе есть */
@@ -236,7 +247,7 @@ function speakTTS(text,slow,btn,loud){
   return true;
 }
 function speakLetter(x,slow,btn,quiet){
-  if(hasRealKey('L')){playKey('L',x.nm,slow,btn,!quiet); return;}
+  if(REAL_ANY){playUrl(audioUrl(x.nm),x.nm,slow,btn,!quiet); return;}
   speakTTS(x.nm,slow,btn,!quiet);
 }
 
@@ -1543,5 +1554,5 @@ render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

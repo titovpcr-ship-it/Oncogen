@@ -184,7 +184,9 @@ python tools/sellers/scan.py            # список — data/sellers.csv
 
 `apps/barik/` — Barik (до 02.11.2026 Bararan): сайт и Android-приложение (армянские слова), к винилу не относится. Как собрать и
 что нужно от владельца — `apps/barik/README.md`; ключи Azure и keystore — в `apps/barik/.env` и
-`apps/barik/android/keystore.properties` (в gitignore, хранить отдельно).
+`apps/barik/android/keystore.properties` (в gitignore, хранить отдельно). Бэкап кладёт ключ Azure
+отдельным файлом `barik_keys.env` → `cp ../barik_keys.env apps/barik/.env && chmod 600 apps/barik/.env`;
+записи озвучки (`apps/barik/www/audio/`) — в git, заново озвучивать не нужно.
 
 ## Как обновить этот бэкап
 

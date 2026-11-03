@@ -8,7 +8,7 @@ const {chromium}=require('playwright');
 const http=require('http'), fs=require('fs'), path=require('path');
 const ROOT=path.join(__dirname,'..','dist','site'), SHOTS=process.argv[2]||'';
 const BASE='https://barik.am/';
-const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json',
+const TYPES={'.mp3':'audio/mpeg','.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json',
   '.woff2':'font/woff2','.png':'image/png','.xml':'application/xml','.webmanifest':'application/manifest+json'};
 const srv=http.createServer((q,r)=>{
   let f=path.join(ROOT,decodeURIComponent(q.url.split('?')[0]));
@@ -75,8 +75,7 @@ const LANGS=['ru','en','fr','es'];
   const pg=await ctx.newPage(); const errs=[], ext=[], bad=[];
   pg.on('pageerror',e=>errs.push(String(e)));
   pg.on('request',q=>{const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')) ext.push(u);});
-  // озвучки пока нет (ключ Azure) — приложение спрашивает audio/manifest.json и обходится без неё
-  pg.on('response',r=>{ if(r.status()>=400&&!r.url().includes('/audio/')) bad.push(r.status()+' '+r.url()); });
+  pg.on('response',r=>{ if(r.status()>=400) bad.push(r.status()+' '+r.url()); });
   const W=words.words[0];
   for(const [u,shot] of [['ru/w/barev.html','word_ru'],['en/w/barev.html','word_en'],['fr/w/barev.html','word_fr'],['es/w/barev.html','word_es'],
                           ['en/t/basics.html','topic_en'],['ru/index.html','index_ru']]){
@@ -87,6 +86,14 @@ const LANGS=['ru','en','fr','es'];
   ok((await pg.title()).includes('«привет» по-армянски')&&(await pg.textContent('h1'))===W.a,'слово: «привет» по-армянски — '+W.a);
   ok((await pg.textContent('.tr')).includes(W.tr),'слово: произношение ['+W.tr+']');
   ok(await pg.evaluate(()=>document.fonts.check('700 40px A','բարև')),'армянский шрифт загружен');
+  { // «Слушать» (O-135): та же запись, что в приложении
+    const src=await pg.getAttribute('.tr .say','data-src').catch(()=>null);
+    const f=src?path.join(ROOT,'ru','w',src):'';
+    ok(!!src&&fs.existsSync(f),'слово: кнопка «Слушать», запись на месте ('+src+')');
+    const resp=pg.waitForResponse(r=>/\/audio\/.+\.mp3$/.test(r.url()),{timeout:5000}).catch(()=>null);
+    await pg.click('.tr .say'); const r=await resp;
+    ok(!!r&&r.status()<300&&/audio\/mpeg/.test(r.headers()['content-type']||''),'«Слушать» берёт mp3: '+(r?r.status()+' '+r.url():'нет запроса'));
+  }
   const ld=await pg.evaluate(()=>JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent));
   ok(ld['@type']==='DefinedTerm'&&ld.inLanguage==='hy'&&ld.url===BASE+'ru/w/barev.html','schema.org DefinedTerm');
   ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'без прокрутки вбок на телефоне');

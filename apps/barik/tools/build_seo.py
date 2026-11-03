@@ -38,7 +38,7 @@ TXT = {
         "title_w": "«{x}» по-армянски — {a} [{tr}] | Barik",
         "desc_w": "Как будет «{x}» по-армянски: {a}, произношение — {tr}. Тема «{t}», уровень {lv}. "
                   "Учите армянские слова бесплатно с Barik.",
-        "h_tr": "Произношение", "h_tx": "Перевод", "lv": "Уровень", "topic": "Тема",
+        "h_tr": "Произношение", "listen": "Слушать", "h_tx": "Перевод", "lv": "Уровень", "topic": "Тема",
         "more": "Другие слова темы «{t}»", "all_topic": "Все {n} {w} темы",
         "cta": "Учить армянские слова в Barik — бесплатно",
         "dict": "Армянский словарь", "home": "Barik",
@@ -65,7 +65,7 @@ TXT = {
         "title_w": "“{x}” in Armenian — {a} ({tr}) | Barik",
         "desc_w": "How to say “{x}” in Armenian: {a}, pronounced {tr}. Topic: {t}, level {lv}. "
                   "Learn Armenian words for free with Barik.",
-        "h_tr": "Pronunciation", "h_tx": "Translation", "lv": "Level", "topic": "Topic",
+        "h_tr": "Pronunciation", "listen": "Listen", "h_tx": "Translation", "lv": "Level", "topic": "Topic",
         "more": "More words: {t}", "all_topic": "All {n} {w} of the topic",
         "cta": "Learn Armenian words with Barik — free",
         "dict": "Armenian dictionary", "home": "Barik",
@@ -92,7 +92,7 @@ TXT = {
         "title_w": "« {x} » en arménien — {a} ({tr}) | Barik",
         "desc_w": "Comment dit-on « {x} » en arménien : {a}, prononciation {tr}. Thème : {t}, "
                   "niveau {lv}. Apprenez les mots arméniens gratuitement avec Barik.",
-        "h_tr": "Prononciation", "h_tx": "Traduction", "lv": "Niveau", "topic": "Thème",
+        "h_tr": "Prononciation", "listen": "Écouter", "h_tx": "Traduction", "lv": "Niveau", "topic": "Thème",
         "more": "Autres mots du thème « {t} »", "all_topic": "Les {n} {w} du thème",
         "cta": "Apprendre l’arménien avec Barik — gratuit",
         "dict": "Dictionnaire arménien", "home": "Barik",
@@ -119,7 +119,7 @@ TXT = {
         "title_w": "«{x}» en armenio — {a} ({tr}) | Barik",
         "desc_w": "Cómo se dice «{x}» en armenio: {a}, se pronuncia {tr}. Tema: {t}, nivel {lv}. "
                   "Aprende palabras armenias gratis con Barik.",
-        "h_tr": "Pronunciación", "h_tx": "Traducción", "lv": "Nivel", "topic": "Tema",
+        "h_tr": "Pronunciación", "listen": "Escuchar", "h_tx": "Traducción", "lv": "Nivel", "topic": "Tema",
         "more": "Más palabras del tema «{t}»", "all_topic": "Las {n} {w} del tema",
         "cta": "Aprende armenio con Barik — gratis",
         "dict": "Diccionario armenio", "home": "Barik",
@@ -180,7 +180,9 @@ h1{margin:0;font:700 clamp(38px,9vw,60px)/1.12 A,serif;font-stretch:86%;overflow
 h1.pg{font:400 clamp(30px,6.5vw,40px)/1.15 F,Georgia,serif;font-stretch:100%}
 .eyebrow{margin:0 0 4px;font:600 12.5px/1.3 G,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--pom)}
 .eyebrow[lang=hy]{font:600 17px/1.3 A,serif;letter-spacing:.01em;text-transform:none}
-.tr{font-size:21px;color:var(--mut);margin:4px 0 10px}.tx{font-size:25px;font-weight:600;margin:0 0 10px}
+.tr{font-size:21px;color:var(--mut);margin:4px 0 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.say{flex:none;width:46px;height:46px;border-radius:50%;border:0;padding:0;background:var(--acc);color:var(--acc-ink);display:inline-grid;place-items:center;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.say svg{width:23px;height:23px}.say.on{background:var(--pom);color:#fff}.tx{font-size:25px;font-weight:600;margin:0 0 10px}
 .meta{font-size:15px;color:var(--mut);margin:0}
 .cta{display:block;text-align:center;margin:20px 0;padding:15px 18px;border-radius:16px;background:var(--acc);color:var(--acc-ink);font-weight:700;text-decoration:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
 h2{font:600 13px/1.3 G,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--pom);margin:30px 0 10px}
@@ -265,6 +267,26 @@ def icon(e, up, size):
     return f'<span aria-hidden="true">{esc(e)}</span>'
 
 
+SPK = ('<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" '
+       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/>'
+       '<path d="M16.5 8.8a4.8 4.8 0 0 1 0 6.4"/><path d="M19.2 6.2a8.6 8.6 0 0 1 0 11.6"/></svg>')
+# «Слушать» на странице слова (O-135): запись та же, что в приложении; плеер — простой <audio>
+SEO_JS = """document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');if(!b)return;
+var a=b._a||(b._a=new Audio(b.getAttribute('data-src')));b.classList.add('on');a.onended=a.onerror=function(){b.classList.remove('on');};
+try{a.currentTime=0;}catch(x){}var p=a.play();if(p&&p.catch)p.catch(function(){b.classList.remove('on');});});
+"""
+
+
+def aid(text):
+    """Имя файла записи — как aid() в www/js/app.js и tools/gen_audio.py: два FNV-1a по UTF-8."""
+    def fnv(data, h):
+        for x in data:
+            h = ((h ^ x) * 0x01000193) & 0xFFFFFFFF
+        return h
+    b = text.encode("utf-8")
+    return "%08x%08x" % (fnv(b, 0x811C9DC5), fnv(b, 0x050C5D1F))
+
+
 def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
     up = "../" * depth
     alt = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{base}{p}">' for l, p in alts.items())
@@ -283,7 +305,8 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
             f'<meta property="og:image" content="{base}og/og-{L}.jpg"><meta property="og:image:width" content="2400"><meta property="og:image:height" content="1260">'
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
             f'<link rel="icon" type="image/png" href="{up}favicon.png"><link rel="apple-touch-icon" href="{up}icons/apple-touch-icon.png">'
-            f'<link rel="stylesheet" href="{up}seo.css"><meta name="theme-color" content="#1E2A66">{ld}</head>'
+            f'<link rel="stylesheet" href="{up}seo.css"><meta name="theme-color" content="#1E2A66">{ld}'
+            + (f'<script src="{up}seo.js" defer></script>' if 'data-src=' in body else '') + '</head>'
             f'<body><header class="top"><div class="top-in"><a class="brand" href="{up}"><span class="mk" aria-hidden="true">Ա</span>'
             f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
             f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
@@ -318,6 +341,19 @@ def build(site, base, words_path):
     files, urls = 0, {l: [] for l in LANGS}
     os.makedirs(site, exist_ok=True)
     open(os.path.join(site, "seo.css"), "w", encoding="utf-8").write(CSS)
+    open(os.path.join(site, "seo.js"), "w", encoding="utf-8").write(SEO_JS)
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = (json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None)
+
+    def say(w, up, label):
+        if not vdir:
+            return ""
+        h = aid(w["a"])
+        rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return (f'<button class="say" type="button" data-src="{up}{rel}" aria-label="{esc(label)}" '
+                f'title="{esc(label)}">{SPK}</button>')
 
     def write(rel, content):
         nonlocal files
@@ -353,7 +389,7 @@ def build(site, base, words_path):
                 body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p>'
                         f'<div class="word"><div class="win" aria-hidden="true">{picture(w, "../../")}</div><div>'
                         f'<p class="eyebrow">{esc(tname)} · {t["lv"]}</p><h1 lang="hy">{esc(w["a"])}</h1>'
-                        f'<p class="tr" title="{T["h_tr"]}">[{esc(w[trk])}]</p>'
+                        f'<p class="tr"><span title="{T["h_tr"]}">[{esc(w[trk])}]</span>{say(w, "../../", T["listen"])}</p>'
                         f'<p class="tx">{esc(x)}</p>'
                         f'<p class="meta">{T["lv"]} {t["lv"]} · {T["topic"]}: <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p></div></div>'
                         f'<a class="cta" href="../../?lang={L}">{T["cta"]}</a>'

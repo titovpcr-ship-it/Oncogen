@@ -91,8 +91,9 @@ self.addEventListener('fetch', e => {
   const path = new URL(r.url).pathname;
   const media = path.includes('/audio/') ? AUDIO : (path.includes('/pics/') ? PICS : '');
   if (media) {                                // озвучка и картинки — по мере показа
+    if (r.headers.has('range')) return;       // кусок файла (Range) — прямо в сеть: в кэш кладём только целое
     e.respondWith(caches.open(media).then(c => c.match(r).then(hit => hit ||
-      fetch(r).then(res => { if (res.ok) c.put(r, res.clone()); return res; }))));
+      fetch(r).then(res => { if (res.status === 200) c.put(r, res.clone()); return res; }))));
     return;
   }
   if (r.mode === 'navigate') {                // страница: сеть, без сети — из кэша
@@ -221,7 +222,7 @@ def build(out=OUT, url=SITE_URL, seo=True):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css") or rel.startswith(("audio/", "pics/", "og/"))
+            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js") or rel.startswith(("audio/", "pics/", "og/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel)

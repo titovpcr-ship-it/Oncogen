@@ -6,7 +6,7 @@ const {chromium}=require('playwright');
 const http=require('http'), fs=require('fs'), path=require('path');
 const ROOT=path.join(__dirname,'..','dist','site');
 const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json',
-  '.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.webmanifest':'application/manifest+json'};
+  '.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.webmanifest':'application/manifest+json','.mp3':'audio/mpeg'};
 const srv=http.createServer((q,r)=>{
   let f=path.join(ROOT,decodeURIComponent(q.url.split('?')[0]));
   if(f.endsWith('/')) f+='index.html';
@@ -43,6 +43,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   ok((await pg.textContent('.brand')).includes('Barik'),'главная: Barik');
   await pg.click('[data-act=lvtog][data-arg=A2]');
   ok(await pg.locator('.topic.locked').count()===0,'на сайте всё открыто: замков нет (WEB_ALL_FREE)');
+  // озвучка (O-135): запись слова берётся, когда звучит, и остаётся без интернета; заранее в кэш не грузится
+  const au=await pg.evaluate(()=>window.__bararan.audioUrl('բարև ձեզ'));
+  await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=say][data-arg="բարև ձեզ"]'); await pg.waitForTimeout(800);
+  ok(await pg.evaluate(u=>caches.open('barik-audio-v1').then(c=>c.match(u)).then(r=>!!r&&r.status===200),au),'озвучка: прослушанная запись в кэше озвучки ('+au+')');
+  ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.filter(k=>k!=='barik-audio-v1').map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\.mp3$/.test(q.url))))),'записи не грузятся заранее в кэш приложения');
   // без интернета
   await ctx.setOffline(true);
   await pg.reload(); await pg.waitForTimeout(500);
@@ -50,6 +55,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   const n=await pg.evaluate(()=>window.__bararan&&window.__bararan.WORDS.length);
   ok(n>=20000,'без интернета: словарь на месте ('+n+' слов)');
   ok(await pg.evaluate(()=>document.fonts.check('16px "Noto Serif Armenian"')),'без интернета: армянский шрифт');
+  ok(await pg.evaluate(u=>fetch(u).then(r=>r.ok&&r.blob()).then(b=>!!b&&b.size>1000).catch(()=>false),au),'без интернета: прослушанное слово звучит (запись из кэша)');
   await ctx.setOffline(false);
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));

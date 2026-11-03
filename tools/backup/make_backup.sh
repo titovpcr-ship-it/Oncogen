@@ -51,3 +51,8 @@ if [ -f "$ROOT/.env" ]; then
   chmod 600 "$OUT/oncogen_keys.env"
   echo "ключи: $OUT/oncogen_keys.env — хранить отдельно от архива"
 fi
+if [ -f "$ROOT/apps/barik/.env" ]; then      # ключ Azure Speech словарика (O-135)
+  cp "$ROOT/apps/barik/.env" "$OUT/barik_keys.env"
+  chmod 600 "$OUT/barik_keys.env"
+  echo "ключи Barik: $OUT/barik_keys.env — хранить отдельно от архива"
+fi

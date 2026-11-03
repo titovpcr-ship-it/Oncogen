@@ -10,3 +10,4 @@ local.properties
 tools/mp3/
 tools/hy_audio.zip
 dist/
+www/audio/**/*.part

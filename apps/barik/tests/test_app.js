@@ -4,7 +4,7 @@
 const {chromium}=require('playwright');
 const http=require('http'), fs=require('fs'), path=require('path');
 const ROOT=path.join(__dirname,'..','www'), SHOTS=process.argv[2]||'';
-const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml'};
+const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.mp3':'audio/mpeg'};
 const srv=http.createServer((q,r)=>{
   let f=path.join(ROOT,decodeURIComponent(q.url.split('?')[0]));
   if(f.endsWith('/')) f+='index.html';
@@ -20,7 +20,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:360,height:780},deviceScaleFactor:2,colorScheme:scheme,locale:'ru-RU'});
     const pg=await ctx.newPage(); const errs=[], ext=[];
     pg.on('pageerror',e=>errs.push(String(e))); pg.on('console',m=>{if(m.type()==='error'&&!/404/.test(m.text())) errs.push(m.text());});
-    pg.on('request',q=>{const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')) ext.push(u);});
+    pg.on('request',q=>{const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')&&!u.startsWith('blob:')) ext.push(u);});
     await pg.goto(base); await pg.waitForTimeout(300);
     const shot=async n=>{ if(SHOTS&&scheme==='light'||SHOTS&&n==='home-ru') await pg.screenshot({path:path.join(SHOTS,scheme+'-'+n+'.png'),fullPage:false}); };
     const noHScroll=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,window.innerWidth]); ok(w[0]<=w[1],scheme+' '+n+': без горизонтальной прокрутки ('+w+')'); };
@@ -187,6 +187,24 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]}); await pg.waitForTimeout(150);
     const r=await pg.evaluate(()=>({n:document.querySelectorAll('#penSvg .pen-ok path').length,y:scrollY}));
     ok(r.n===1&&r.y===y0,'тренажёр: палец (касания) — штрих принят, страница стоит');
+    await ctx.close();
+  }
+  { // озвучка (O-135): запись у каждого слова и буквы, «Проверить звук» берёт файл слова, mp3 читается
+    const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
+    const pg=await ctx.newPage(), got=[];
+    pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+(r.headers()['content-type']||'')+' '+r.url()); });
+    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
+    const A=await pg.evaluate(()=>{const B=window.__bararan; return {man:B.MAN, urls:[...new Set(B.WORDS.map(w=>B.audioUrl(w.a)).concat(B.ABC.map(x=>B.audioUrl(x.nm))))], hi:B.aid('բարև ձեզ')};});
+    const miss=A.urls.filter(u=>!fs.existsSync(path.join(ROOT,u)));
+    ok(A.man.count>0&&miss.length===0&&A.man.count===A.man.total,'озвучка: запись у всех '+A.urls.length+' слов и названий букв ('+A.man.voice+'), нет: '+miss.length);
+    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=say][data-arg="բարև ձեզ"]'); await pg.waitForTimeout(700);
+    ok(got.some(x=>x.startsWith('200 audio/mpeg')&&x.includes(A.hi)),'«Проверить звук» берёт запись слова: '+got.join(' '));
+    const dur=await pg.evaluate(u=>new Promise(r=>{const a=new Audio(u); a.onloadedmetadata=()=>r(a.duration); a.onerror=()=>r(-1);}),A.urls[0]);
+    ok(dur>0.2&&dur<5,'mp3 читается браузером, длина '+dur.toFixed(2)+' с');
+    await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('.abc button >> nth=0'); got.length=0;
+    await pg.click('[data-act=sayLetter]'); await pg.waitForTimeout(500);
+    ok(got.some(x=>x.startsWith('200')),'буква Ա: «Слушать» берёт запись названия «այբ»');
     await ctx.close();
   }
   await br.close(); srv.close();
