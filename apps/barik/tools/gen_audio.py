@@ -19,7 +19,7 @@ Azure читает каждую строку отдельной фразой и 
 
 Запуск:  python3.13 tools/gen_audio.py [--voice hy-AM-HaykNeural] [--only A1,L] [--limit 200] [--check]
 """
-import argparse, json, os, re, subprocess, sys, threading, time, wave
+import argparse, json, os, re, shutil, subprocess, sys, threading, time, wave
 import urllib.error, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from xml.sax.saxutils import escape
@@ -29,6 +29,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT_DIR = os.path.join(ROOT, 'www', 'audio')
+RESERVE = os.path.join(HERE, 'audio_reserve')          # запас: слова, которых ещё нет в словаре
 USAGE = os.path.join(HERE, 'audio_usage.json')
 META = os.path.join(ROOT, 'dist', 'audio_meta.json')      # длительности и пачки — для разбора, не в git
 LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
@@ -67,9 +68,9 @@ def aid(text):
     return '%08x%08x' % (fnv(b, 0x811C9DC5), fnv(b, 0x050C5D1F))
 
 
-def path_of(text, vdir):
+def path_of(text, vdir, base=OUT_DIR):
     h = aid(text)
-    return os.path.join(OUT_DIR, vdir, h[:2], h + '.mp3')
+    return os.path.join(base, vdir, h[:2], h + '.mp3')
 
 
 def items():
@@ -229,7 +230,10 @@ def main():
     ap.add_argument('--batch', type=int, default=50, help='слов в одном запросе')
     ap.add_argument('--workers', type=int, default=3)
     ap.add_argument('--per-min', type=int, default=18, help='запросов в минуту (F0 — до 20)')
-    ap.add_argument('--max-chars', type=int, default=450000, help='потолок знаков за месяц')
+    ap.add_argument('--max-chars', type=int, default=1000000, help='потолок знаков за месяц (S0: $15 за 1 млн)')
+    ap.add_argument('--tier', default='S0', help='ценовая категория службы — пишется в manifest.json; права на '
+                    'коммерческое использование звука — только у платной (S0), O-135')
+    ap.add_argument('--reserve', action='store_true', help='озвучить запас tools/audio_reserve/words.txt')
     ap.add_argument('--only', default='', help='группы через запятую: A1,A2,…,C2,L (L — буквы)')
     ap.add_argument('--limit', type=int, default=0, help='озвучить не больше N (проба)')
     ap.add_argument('--check', action='store_true', help='без запросов: чего не хватает, манифест')
@@ -237,18 +241,33 @@ def main():
     args = ap.parse_args()
 
     vdir = VOICES[args.voice]
-    allitems = items()
+    base = RESERVE if args.reserve else OUT_DIR
+    if args.reserve:
+        allitems = [('R', w.strip()) for w in open(os.path.join(RESERVE, 'words.txt'), encoding='utf-8')
+                    if w.strip() and not w.startswith('#')]
+    else:
+        allitems = items()
+        # новое слово словаря, озвученное заранее в запасе, — копией, без запроса
+        got = 0
+        for _, t in allitems:
+            src, dst = path_of(t, vdir, RESERVE), path_of(t, vdir)
+            if not os.path.exists(dst) and os.path.exists(src):
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                shutil.copyfile(src, dst)
+                got += 1
+        if got:
+            print('Из запаса: %d' % got)
     todo_items = allitems
     if args.only:
         keep = {x.strip().upper() for x in args.only.split(',')}
         todo_items = [x for x in allitems if x[0] in keep]
     if args.redo and not args.check:
         rx = re.compile(args.redo)
-        gone = [t for _, t in todo_items if rx.search(t) and os.path.exists(path_of(t, vdir))]
+        gone = [t for _, t in todo_items if rx.search(t) and os.path.exists(path_of(t, vdir, base))]
         for t in gone:
-            os.remove(path_of(t, vdir))
+            os.remove(path_of(t, vdir, base))
         print('--redo %r: снято записей %d' % (args.redo, len(gone)))
-    todo = [t for _, t in todo_items if not os.path.exists(path_of(t, vdir))]
+    todo = [t for _, t in todo_items if not os.path.exists(path_of(t, vdir, base))]
     print('Записей: %d, уже есть: %d, нет: %d' % (len(todo_items), len(todo_items) - len(todo), len(todo)))
     if args.limit:
         todo = todo[:args.limit]
@@ -313,7 +332,7 @@ def main():
             if len(texts) > 1 and not plausible(texts, [d for _, d in pieces]):
                 return halve(texts, tag)
             for t, (s, d) in zip(texts, pieces):
-                encode(s, path_of(t, vdir))
+                encode(s, path_of(t, vdir, base))
                 with lock:
                     meta[t] = {'d': round(d, 2), 'n': len(texts), 'b': tag}
             with lock:
@@ -343,14 +362,15 @@ def main():
         if stat['fail']:
             print('Не озвучено %d — запустите ещё раз: %s' % (len(stat['fail']), ', '.join(stat['fail'][:20])))
 
-    have = sum(os.path.exists(path_of(t, vdir)) for _, t in allitems)
-    missing = [t for _, t in allitems if not os.path.exists(path_of(t, vdir))]
-    os.makedirs(OUT_DIR, exist_ok=True)
-    with open(os.path.join(OUT_DIR, 'manifest.json'), 'w', encoding='utf-8') as f:
-        json.dump({'voice': args.voice, 'dir': vdir, 'count': have, 'total': len(allitems),
-                   'made': time.strftime('%Y-%m-%d')}, f, ensure_ascii=False)
-    size = sum(os.path.getsize(os.path.join(dp, x)) for dp, _, fs in os.walk(os.path.join(OUT_DIR, vdir))
-               for x in fs) if os.path.isdir(os.path.join(OUT_DIR, vdir)) else 0
+    have = sum(os.path.exists(path_of(t, vdir, base)) for _, t in allitems)
+    missing = [t for _, t in allitems if not os.path.exists(path_of(t, vdir, base))]
+    if not args.reserve:
+        os.makedirs(OUT_DIR, exist_ok=True)
+        with open(os.path.join(OUT_DIR, 'manifest.json'), 'w', encoding='utf-8') as f:
+            json.dump({'voice': args.voice, 'dir': vdir, 'count': have, 'total': len(allitems),
+                       'tier': args.tier, 'made': time.strftime('%Y-%m-%d')}, f, ensure_ascii=False)
+    size = sum(os.path.getsize(os.path.join(dp, x)) for dp, _, fs in os.walk(os.path.join(base, vdir))
+               for x in fs) if os.path.isdir(os.path.join(base, vdir)) else 0
     print('Записей готово: %d из %d, %.1f МБ. Нет: %d%s' % (have, len(allitems), size / 1e6, len(missing),
           (' — ' + ', '.join(missing[:10])) if missing else ''))
 

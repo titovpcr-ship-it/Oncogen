@@ -26,9 +26,11 @@ python3.13 tools/gen_audio.py --check         # без запросов: чег�
 python3.13 tools/gen_audio.py --only L        # только буквы
 python3.13 tools/gen_audio.py --limit 200     # проба
 python3.13 tools/gen_audio.py --redo 'և'      # переозвучить записи, где текст подходит под выражение
+python3.13 tools/gen_audio.py --reserve       # запас: tools/audio_reserve/words.txt → tools/audio_reserve/anahit/
 python3.13 tools/gen_audio.py --voice hy-AM-HaykNeural   # мужской голос — в свою папку audio/hayk/
 ```
-Новое слово в словаре → `build_data.py` → `gen_audio.py` (озвучит только новое) → `node tests/test_app.js`
+Новое слово в словаре → `build_data.py` → `gen_audio.py` (возьмёт из запаса копией, если слово там есть, иначе
+озвучит только новое) → `node tests/test_app.js`
 (тест падает, если у слова нет записи).
 
 ## Как устроено
@@ -45,6 +47,10 @@ python3.13 tools/gen_audio.py --voice hy-AM-HaykNeural   # мужской гол
 - **Лигатура «և»:** голос Azure её глотает (одна «և» — пустой WAV, «սև» — 0,17 с вместо 0,55, «բարև» —
   без «ев» на конце). В запрос идёт «եւ» (`spoken()` — то же произношение), имя файла — по слову.
   Переозвучить по выражению: `python3.13 tools/gen_audio.py --redo 'և'`.
+- **Запас** (чтобы новые слова не требовали Azure): `tools/audio_reserve/words.txt` — 2 473 армянских слова
+  Викисловаря, которых нет в словаре на 03.11.2026; записи — `tools/audio_reserve/anahit/` (на сайт не идут).
+  Обычный запуск сначала копирует оттуда записи новых слов словаря и только потом спрашивает Azure.
+- `manifest.json` — голос, папка, число записей и **ценовая категория** (`tier`: S0 — права есть).
 - Знаки по месяцам — `tools/audio_usage.json`; дальше `--max-chars` (450 тыс.) за месяц скрипт не идёт.
   Длительности и пачки последнего прогона — `dist/audio_meta.json` (не в git).
 - **Воспроизведение** (`app.js`): запись берётся `fetch` целиком (на сайте — через service worker, он
