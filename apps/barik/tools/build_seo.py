@@ -200,7 +200,7 @@ ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .
 .tp small{display:block;color:var(--mut)}
 .pn{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-size:15px}
 footer{max-width:820px;margin:0 auto;padding:22px 16px 44px;font-size:13px;color:var(--mut)}
-@media (max-width:540px){.word{grid-template-columns:1fr;justify-items:center;text-align:center}}
+@media (max-width:540px){.word{grid-template-columns:1fr;justify-items:center;text-align:center}.tr{justify-content:center}}
 """
 
 

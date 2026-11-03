@@ -39,6 +39,10 @@ LOUD_DB, SOFT_DB = -45.0, -60.0         # речь / слабый хвост (ս
 MERGE_GAP = 45                          # паузы короче 0,45 с — внутри фразы; между строками ~1 с
 LEAD, TAIL = 6, 12                      # запас до и после речи, кадров по 10 мс
 SOLO = re.compile(r'[,՝՜]')             # запятая — пауза внутри фразы: такие — по одной
+# Лигатуру «և» Azure (hy-AM) глотает: одна «և» — пустой WAV (44 байта), «սև» — 0,17 с вместо 0,55 с,
+# «բարև» — 0,44 вместо 0,59 (03.11.2026). В запрос идёт «եւ» (то же произношение), имя файла — по слову.
+def spoken(t):
+    return t.replace('և', 'եւ')
 
 
 def load_env():
@@ -126,7 +130,7 @@ class Usage:
 
 
 def ssml_body(texts, rate):
-    body = '\n'.join(escape(t) for t in texts)
+    body = '\n'.join(escape(spoken(t)) for t in texts)
     if rate and rate not in ('0%', '+0%', '0'):
         body = "<prosody rate='%s'>%s</prosody>" % (rate, body)
     return body
@@ -146,6 +150,9 @@ def synth(body, key, region, voice):
 
 
 def pcm(wav_bytes):
+    """WAV → отсчёты; пустой ответ (только заголовок, формат 0) — пустой массив, без повторов."""
+    if len(wav_bytes) <= 44:
+        return np.zeros(0, dtype=np.int16)
     tmp = '/dev/shm/barik_%d_%d.wav' % (os.getpid(), threading.get_ident())
     with open(tmp, 'wb') as f:
         f.write(wav_bytes)
@@ -199,7 +206,7 @@ def plausible(texts, durs):
     """Длина куска сходится с длиной текста (кусок не склеен с соседом и не обрезан): речь ≈ 0,25 с +
     0,06 с на знак (проба 03.11.2026: ծառ 0,47, բարև 0,44, շնորհակալություն 1,10, բարի լույս 0,95);
     склейка с соседом — вдвое-вчетверо длиннее (пауза ~1 с внутри), половина слова — вдвое короче."""
-    return all(0.4 <= d / (0.25 + 0.06 * len(t)) <= 2.4 for t, d in zip(texts, durs))
+    return all(0.4 <= d / (0.25 + 0.06 * len(spoken(t))) <= 2.4 for t, d in zip(texts, durs))
 
 
 def encode(samples, dst):
@@ -226,6 +233,7 @@ def main():
     ap.add_argument('--only', default='', help='группы через запятую: A1,A2,…,C2,L (L — буквы)')
     ap.add_argument('--limit', type=int, default=0, help='озвучить не больше N (проба)')
     ap.add_argument('--check', action='store_true', help='без запросов: чего не хватает, манифест')
+    ap.add_argument('--redo', default='', help='переозвучить записи, где текст подходит под регулярное выражение')
     args = ap.parse_args()
 
     vdir = VOICES[args.voice]
@@ -234,6 +242,12 @@ def main():
     if args.only:
         keep = {x.strip().upper() for x in args.only.split(',')}
         todo_items = [x for x in allitems if x[0] in keep]
+    if args.redo and not args.check:
+        rx = re.compile(args.redo)
+        gone = [t for _, t in todo_items if rx.search(t) and os.path.exists(path_of(t, vdir))]
+        for t in gone:
+            os.remove(path_of(t, vdir))
+        print('--redo %r: снято записей %d' % (args.redo, len(gone)))
     todo = [t for _, t in todo_items if not os.path.exists(path_of(t, vdir))]
     print('Записей: %d, уже есть: %d, нет: %d' % (len(todo_items), len(todo_items) - len(todo), len(todo)))
     if args.limit:
