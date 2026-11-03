@@ -237,6 +237,8 @@ Google Переводчик, Forvo, Meta MMS) → владелец сам зав
   картинки, шрифты), озвучка кэшируется по мере прослушивания; `.htaccess` (Apache: MIME, сжатие, кэш,
   HTTPS). `WEB_ALL_FREE: true` в `js/config.js` сайта — всё открыто, пока оплата не подключена
   (`billing.js`: `isPremium` = premium или сайт и WEB_ALL_FREE). Capacitor на сайте не грузится.
+- **В облаке сайт собирать `python3.13`**: у `python3` там сломан PIL — сборка падает на иконках (03.11.2026,
+  O-137). Все тесты разом — `bash tools/check_all.sh --full` из корня репозитория.
 - Проверка сайта: `python3 tools/build_site.py && node tests/test_site.js` (манифест, иконки, service
   worker, нет замков, офлайн: страница, 20 121 слово, армянский шрифт, нет внешних запросов); приложение —
   по-прежнему `node tests/test_app.js`.
