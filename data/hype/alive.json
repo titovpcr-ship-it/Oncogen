@@ -967,6 +967,35 @@
 "type": "Person",
 "v": 3
 },
+"gracieabrams": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"pop",
+4
+],
+[
+"folk pop",
+3
+],
+[
+"bedroom pop",
+2
+],
+[
+"singer-songwriter",
+2
+]
+],
+"mb": "f7441bc7-d7de-4813-a2fc-31a4033d396d",
+"mb_name": "Gracie Abrams",
+"name": "Gracie Abrams",
+"note": "",
+"t": 1793689143,
+"type": "Person",
+"v": 3
+},
 "grandtheftautovi": {
 "alive": null,
 "gender": null,
