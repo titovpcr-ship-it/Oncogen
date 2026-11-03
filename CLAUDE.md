@@ -275,7 +275,8 @@ Android-сборка (Capacitor) — на паузе. Владелец 27.10.202
 ## Окружение
 
 - Python — `python3.13` (у `python3` нет `requests`). Тесты — `tests/test_*.py`,
-  запуск `python3.13 tests/test_X.py`.
+  запуск `python3.13 tests/test_X.py`; все тесты обоих проектов разом — `bash tools/check_all.sh`
+  (`--full` — со сборкой сайта Barik и страницами поиска; журналы — `out/check/`).
 - eBay — 5 000 запросов в день, сброс в полночь по Тихоокеанскому времени: 07:00 UTC
   летом, **08:00 UTC (11:00 Москва) с ноября** (02.11.2026: в 07:06 UTC остаток 50,
   «reset 08:00Z»); точное время — `rate_limit` API (поле reset). getItems 403.
