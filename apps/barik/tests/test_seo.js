@@ -75,7 +75,8 @@ const LANGS=['ru','en','fr','es'];
   const pg=await ctx.newPage(); const errs=[], ext=[], bad=[];
   pg.on('pageerror',e=>errs.push(String(e)));
   pg.on('request',q=>{const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')) ext.push(u);});
-  pg.on('response',r=>{ if(r.status()>=400) bad.push(r.status()+' '+r.url()); });
+  // здесь сервер без PHP: личный кабинет (/api/) отвечает 404 — его проверяет tests/test_account.js
+  pg.on('response',r=>{ if(r.status()>=400&&!r.url().includes('/api/')) bad.push(r.status()+' '+r.url()); });
   const W=words.words[0];
   for(const [u,shot] of [['ru/w/barev.html','word_ru'],['en/w/barev.html','word_en'],['fr/w/barev.html','word_fr'],['es/w/barev.html','word_es'],
                           ['en/t/basics.html','topic_en'],['ru/index.html','index_ru']]){

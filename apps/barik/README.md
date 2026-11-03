@@ -13,6 +13,7 @@
 | Словарь: 20 121 слово, 485 тем, A1–C2, перевод на русский, английский, французский и испанский | исходники `data/topics_src.json` (81 старая тема), `data/en/*.tsv` (английский), `data/fr/*.tsv` (французский, `topics.tsv` — темы), `data/es/*.tsv` (испанский, `topics.tsv` — темы), `data/new/*.tsv` (404 новые темы; с 39-й французский прямо в строке) → `python3 tools/build_data.py` → `data/words.json`, `www/js/data.js` |
 | Режим «Картинки» без перевода: 95 векторных картинок, нарисованных кодом, упражнения «что на картинке», «найди картинку», окончание мн. числа -եր/-ներ | `tools/make_pictures.py` → `www/js/pictures.js` |
 | Озвучка нейроголосом Azure `hy-AM-AnahitNeural`: 20 121 слово + названия букв, файл на слово (O-135, `tools/README_AUDIO.md`) | `tools/gen_audio.py` → `www/audio/anahit/<ab>/<aid>.mp3` + `manifest.json` |
+| Личный кабинет сайта: почта + никнейм, вход по коду из письма, подписка через Paddle (O-136) | `server/api/` (PHP 8.1+, SQLite) → `dist/site/api/`; настройки — `config.php` на хостинге по шаблону `server/config.example.php`; проверка `node tests/test_account.js` |
 | Android-проект (Capacitor 8, targetSdk 36) | `android/`, `capacitor.config.json`, appId `app.bararan` |
 | Иконка «Ա» на абрикосовом, заставка | `assets/` (исходники) → `npx capacitor-assets generate --android` |
 | Материалы для Google Play | `store/` — описания ru/en/fr, `privacy.md`, `data_safety.md`, иконка 512, баннер 1024×500, скриншоты 1080×1920 |
@@ -30,6 +31,7 @@ python3.13 tools/gen_audio.py    # озвучка нового (ключ Azure �
 npm run apk                      # отладочный APK → android/app/build/outputs/apk/debug/app-debug.apk
 npm run aab                      # релизный AAB (нужен android/keystore.properties)
 node tests/test_app.js           # проверка
+node tests/test_account.js       # личный кабинет: PHP-сервер, вход по коду, Paddle (после build_site.py)
 node tools/store_shots.js        # скриншоты для Google Play
 python3 tools/fetch_pics.py      # объёмные картинки Fluent Emoji 3D → www/pics/, www/js/emoji.js
 python3 tools/cursive.py         # пропись букв (штрихи пера) → www/js/cursive.js
@@ -46,12 +48,17 @@ python3 tools/build_site.py         # сайт (PWA) → dist/site/, прове�
 
 1. ~~Ключ Azure Speech~~ — есть с 03.11.2026 (служба речи F0, North Europe, ключ в `apps/barik/.env`);
    словарь озвучен. Если ключ потеряется — `tools/README_AUDIO.md`, «Ключ».
-2. **RevenueCat**: проект → Android-приложение `app.bararan` → публичный ключ (начинается с `goog_`)
+2. **Личный кабинет на хостинге** (O-136): PHP 8.1+ с pdo_sqlite. Скопировать `server/config.example.php` в
+   `public_html/api/config.php`, вписать PEPPER (случайная строка), почту для писем с кодом (ящик no-reply@barik.am:
+   SMTP-сервер, логин, пароль) и ключи Paddle: Developer tools → Authentication (client-side token, API key),
+   Catalog → цены месяц/год (pri_…), Notifications → адрес `https://barik.am/api/?r=paddle`, события subscription.* →
+   секрет. Сначала песочница (PADDLE_ENV sandbox), потом production и `build_site.py --paid`.
+3. **RevenueCat**: проект → Android-приложение `app.bararan` → публичный ключ (начинается с `goog_`)
    → в `www/js/config.js`, поле `RC_ANDROID_KEY`. В RevenueCat: entitlement `premium`, продукты
    `premium_monthly`, `premium_yearly`, offering «default» с двумя пакетами (Monthly, Annual).
-3. **Пароль для keystore** — Claude создаст файл подписи `bararan-release.jks`; файл и пароль хранить
+4. **Пароль для keystore** — Claude создаст файл подписи `bararan-release.jks`; файл и пароль хранить
    минимум в двух местах, без них обновления не выпустить.
-4. **Google Play Console**: создать приложение, подписки `premium_monthly` и `premium_yearly` с ценами,
+5. **Google Play Console**: создать приложение, подписки `premium_monthly` и `premium_yearly` с ценами,
    закрытый тест (12 тестировщиков 14 дней для личного аккаунта), карточка — из `store/`.
    Политику конфиденциальности (`store/privacy.md`) разместить по публичной ссылке (например, Google Sites).
 

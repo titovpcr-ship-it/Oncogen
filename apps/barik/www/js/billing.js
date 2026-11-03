@@ -21,6 +21,18 @@ function readCache(){
   if(B.premium&&B.until&&Date.now()>B.until+3*86400000) B.premium=false;
 }
 function writeCache(){try{localStorage.setItem(LSK,JSON.stringify({p:B.premium,u:B.until,t:Date.now()}));}catch(e){}}
+/* Сайт (O-136): подписка из личного кабинета (Paddle) — статус от сервера, кэш на устройстве для офлайна */
+const LSW='bararan-web-premium-v1';
+B.webPremium=false; B.webUntil=0;
+function readWeb(){
+  try{const o=JSON.parse(localStorage.getItem(LSW)||'null'); if(o&&typeof o==='object'){B.webPremium=!!o.p; B.webUntil=o.u||0;}}catch(e){}
+  if(B.webPremium&&B.webUntil&&Date.now()>B.webUntil+3*86400000) B.webPremium=false;
+}
+B.setWeb=function(p,until){
+  B.webPremium=!!p; B.webUntil=until||0;
+  try{localStorage.setItem(LSW,JSON.stringify({p:B.webPremium,u:B.webUntil,t:Date.now()}));}catch(e){}
+  emit();
+};
 function apply(info){
   const ent=info&&info.entitlements&&info.entitlements.active&&info.entitlements.active[CFG.ENTITLEMENT||'premium'];
   B.premium=!!ent;
@@ -32,11 +44,11 @@ function unwrap(r){return r&&r.customerInfo?r.customerInfo:r;}
 
 B.available=()=>!!(NATIVE&&Purchases&&CFG.RC_ANDROID_KEY);
 // Сайт: пока оплата не подключена, открыто всё (WEB_ALL_FREE ставит tools/build_site.py).
-B.isPremium=()=>!!(CFG.FORCE_PREMIUM||B.premium||(!NATIVE&&CFG.WEB_ALL_FREE));
+B.isPremium=()=>!!(CFG.FORCE_PREMIUM||B.premium||B.webPremium||(!NATIVE&&CFG.WEB_ALL_FREE));
 B.onChange=f=>{B.listeners.push(f);};
 
 B.init=async function(){
-  readCache();
+  readCache(); readWeb();
   if(!B.available()){B.ready=true; return B;}
   try{
     await Purchases.configure({apiKey:CFG.RC_ANDROID_KEY});

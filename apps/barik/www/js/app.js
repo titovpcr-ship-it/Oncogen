@@ -561,7 +561,7 @@ document.addEventListener('touchend',e=>{
 /* ================= RENDER ================= */
 function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc') return 'settings'; return ''; }
+function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -586,6 +586,7 @@ function render(auto){
   else if(view==='tquiz') el.innerHTML=tquizHTML();
   else if(view==='settings') el.innerHTML=settingsHTML();
   else if(view==='paywall') el.innerHTML=paywallHTML();
+  else if(view==='account') el.innerHTML=accountHTML();
   else if(view==='doc') el.innerHTML=docHTML(viewArg);
   else if(view==='result') el.innerHTML=resultHTML();
   else if(view==='session'){ el.innerHTML=sessionHTML(); fitWords(); if(auto) onShow(); }
@@ -1245,8 +1246,12 @@ function settingsHTML(){
   if(!prem) sub+='<button class="btn primary" data-act="paywall">'+esc(T('subGet'))+'</button>';
   sub+='<button class="btn secondary" data-act="restore">'+esc(T('restore'))+'</button>';
   if(prem&&BILL.available()) sub+='<button class="btn ghost" data-act="manageSub">'+esc(T('subManage'))+'</button>';
+  else if(prem&&ACC.me&&ACC.me.portal) sub+='<button class="btn ghost" data-act="accPortal">'+esc(T('subManage'))+'</button>';
   sub+='</div>';
-  return '<header class="head"><h1 class="pg">'+esc(T('setTitle'))+'</h1><p class="t-hy2" lang="hy">Կարգավորումներ</p></header>'+
+  const accSec=(BILL.native||ACC.srv===false)?'':'<section class="set-sec acc-set"><h2 class="sec">'+esc(T('acc'))+'</h2>'+(ACC.me?
+    '<div class="set-row"><div class="lbl"><b>'+esc(ACC.me.nick)+'</b><span>'+esc(ACC.me.email)+'</span></div><button class="btn secondary sm" data-act="accGo">'+esc(T('accOpen'))+'</button></div>':
+    '<div class="set-row col"><p class="note" style="margin:0">'+esc(T('accSub'))+'</p><div class="actions" style="margin-top:12px"><button class="btn primary" data-act="accGo">'+esc(T('accEnter'))+'</button></div></div>')+'</section>';
+  return '<header class="head"><h1 class="pg">'+esc(T('setTitle'))+'</h1><p class="t-hy2" lang="hy">Կարգավորումներ</p></header>'+accSec+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setLang'))+'</h2>'+
     '<div class="set-row lang-row"><div class="lbl"><b>'+esc(T('setLangLbl'))+'</b><span>'+esc(T('setLangSub'))+'</span></div><div class="seg" role="group" aria-label="'+esc(T('setLang'))+'">'+langs+'</div></div>'+
   '</section>'+
@@ -1293,6 +1298,7 @@ function paywallHTML(){
   const ben=[['📚',T('ben1',WORDS.length,TOPICS.length)],['🔓',T('ben2',lvls)],['🔊',T('ben3')],['✈️',T('ben4')],['🚫',T('ben5')]];
   let plans='';
   if(premium()) plans='<p class="summary" style="text-align:center">✓ '+esc(T('subOn'))+'</p>';
+  else if(!BILL.native) plans=webPlansHTML();
   else if(!BILL.available()) plans='<p class="note" style="text-align:center">'+esc(T('pwUnavailable'))+'</p>';
   else if(pwState.plans===null) plans='<p class="note" style="text-align:center">'+esc(T('pwLoading'))+'</p>';
   else if(!pwState.plans.length) plans='<p class="note" style="text-align:center">'+esc(T('pwNoPlans'))+'</p>';
@@ -1312,11 +1318,158 @@ function paywallHTML(){
     '<ul class="pw-list">'+ben.map(b=>'<li><span aria-hidden="true">'+emo(b[0])+'</span><span>'+esc(b[1])+'</span></li>').join('')+'</ul>'+
     plans+
     '<div class="actions" style="margin-top:10px"><button class="btn ghost" data-act="restore">'+esc(T('restore'))+'</button></div>'+
-    '<p class="pw-legal">'+esc(T('pwLegal'))+'</p>'+
+    '<p class="pw-legal">'+esc(T(BILL.native?'pwLegal':'pwLegalWeb'))+'</p>'+
     '<div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button></div></div>';
 }
+/* ---- личный кабинет (O-136): почта + никнейм, вход по коду из письма; сервер — api/ (PHP, tools/../server) ----
+   Только сайт (в приложении Android — Google Play). Нет сервера (показ, файл) — кабинета не видно. */
+const ACC={srv:null,me:null,pay:{},step:'email',email:'',code:'',nick:'',needNick:false,busy:false,err:'',errArg:'',
+  sentAt:0,gap:60,next:null,del:0,edit:false,timer:null};
+let accFrom={v:'settings'};
+function api(r,body){
+  const o={credentials:'same-origin',cache:'no-store',headers:{'X-Barik':'1'}};
+  if(body!==undefined){o.method='POST'; o.headers['Content-Type']='application/json'; o.body=JSON.stringify(body);}
+  return fetch('api/?r='+r,o).then(res=>{
+    if((res.headers.get('content-type')||'').indexOf('json')<0) return {ok:false,err:res.status===404?'nosrv':'server',status:res.status};
+    return res.json().then(j=>{j.status=res.status; return j;});
+  }).catch(()=>({ok:false,err:'net'}));
+}
+function accApply(j){
+  if(j&&'user' in j) ACC.me=j.user;
+  if(j&&j.pay) ACC.pay=j.pay;
+  BILL.setWeb(!!(ACC.me&&ACC.me.premium),(ACC.me&&ACC.me.until)||0);
+}
+function accInit(){
+  if(BILL.native){ ACC.srv=false; return Promise.resolve(); }
+  return api('me').then(j=>{ if(j.ok){ ACC.srv=true; accApply(j); } else if(j.err!=='net') ACC.srv=false; });
+}
+function accSet(p){ Object.assign(ACC,p); if(view==='account') render(); }
+function accWait(){ return Math.max(0,ACC.gap-Math.floor((Date.now()-ACC.sentAt)/1000)); }
+function accTick(){
+  clearInterval(ACC.timer);
+  ACC.timer=setInterval(()=>{
+    const b=document.querySelector('[data-act=accResend]');
+    if(view!=='account'||ACC.step!=='code'||!b){ clearInterval(ACC.timer); return; }
+    const w=accWait(); b.disabled=!!w; b.textContent=w?T('accResendIn',w):T('accResend'); if(!w) clearInterval(ACC.timer);
+  },1000);
+}
+async function accSendCode(){
+  const email=(ACC.email||'').trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ accSet({err:'email'}); return; }
+  accSet({busy:true,err:''});
+  const j=await api('start',{email,lang:L});
+  if(j.ok||(j.err==='wait'&&ACC.step==='email'&&j.retry&&j.retry<=60)){
+    // код ушёл (или ушёл минуту назад) — к вводу кода
+    accSet({busy:false,step:'code',err:'',code:'',needNick:false,gap:j.gap||60,sentAt:j.ok?Date.now():Date.now()-(60-j.retry)*1000});
+    accTick(); setTimeout(()=>{ const i=$('#accCode'); if(i) i.focus(); },30); return;
+  }
+  accSet({busy:false,err:j.err||'server',errArg:j.retry||''});
+}
+function openAccount(next){
+  ACC.next=next||null; ACC.err=''; ACC.del=0; ACC.edit=false;
+  if(view!=='account') accFrom={v:view,a:viewArg};
+  go('account');
+  if(ACC.srv!==true) accInit().then(()=>{ if(view==='account') render(); });
+}
+function accErrHTML(){
+  if(!ACC.err) return '';
+  let m=T('accErr_'+ACC.err,ACC.errArg); if(m==='accErr_'+ACC.err) m=T('accErr_server');
+  return '<p class="acc-err" role="alert">'+esc(m)+'</p>';
+}
+function fmtDate(ms){
+  try{ return new Date(ms).toLocaleDateString(({ru:'ru-RU',en:'en-GB',fr:'fr-FR',es:'es-ES'})[L]||L,{day:'numeric',month:'long',year:'numeric'}); }
+  catch(e){ return new Date(ms).toISOString().slice(0,10); }
+}
+function accountHTML(){
+  const head='<button class="back" data-act="accBack">‹ '+esc(T('back'))+'</button>'+
+    '<header class="head"><h1 class="pg">'+esc(T('acc'))+'</h1><p class="t-hy2" lang="hy">Անձնական էջ</p></header>';
+  if(ACC.srv===false) return head+'<section class="set-sec"><p class="note">'+esc(T('accNoServer'))+'</p></section>';
+  if(ACC.srv===null&&!ACC.me) return head+'<section class="set-sec"><p class="note">'+esc(T('accErr_net'))+'</p></section>';
+  if(ACC.me) return head+accProfileHTML();
+  let f;
+  if(ACC.step==='email'){
+    f='<form class="acc-form" data-act="accEmail" novalidate><p class="note">'+esc(T('accSub'))+'</p>'+
+      '<label class="fld"><span>'+esc(T('accEmail'))+'</span><input id="accEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" value="'+esc(ACC.email)+'" placeholder="you@example.com"></label>'+
+      accErrHTML()+'<div class="actions"><button class="btn primary" type="submit"'+(ACC.busy?' disabled':'')+'>'+esc(ACC.busy?T('pwBusy'):T('accGetCode'))+'</button></div></form>';
+  } else {
+    const w=accWait();
+    f='<form class="acc-form" data-act="accCode" novalidate><p class="note">'+esc(T('accCodeSent',ACC.email))+'</p>'+
+      '<label class="fld"><span>'+esc(T('accCode'))+'</span><input id="accCode" class="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="'+esc(ACC.code)+'" placeholder="000000"></label>'+
+      (ACC.needNick?'<p class="note acc-new">'+esc(T('accNickNew'))+'</p><label class="fld"><span>'+esc(T('accNick'))+'</span><input id="accNick" type="text" autocomplete="nickname" autocapitalize="off" maxlength="24" value="'+esc(ACC.nick)+'"><small>'+esc(T('accNickHint'))+'</small></label>':'')+
+      accErrHTML()+'<div class="actions"><button class="btn primary" type="submit"'+(ACC.busy?' disabled':'')+'>'+esc(ACC.busy?T('pwBusy'):T('accLogin'))+'</button></div>'+
+      '<div class="linkrow"><button class="linkbtn" type="button" data-act="accResend"'+(w?' disabled':'')+'>'+esc(w?T('accResendIn',w):T('accResend'))+'</button><button class="linkbtn" type="button" data-act="accOther">'+esc(T('accOther'))+'</button></div></form>';
+  }
+  return head+'<section class="set-sec acc">'+f+'</section>';
+}
+function accProfileHTML(){
+  const u=ACC.me, first=(u.nick||'?').trim().charAt(0).toUpperCase();
+  let sub='<div class="acc-sub'+(u.premium?' on':'')+'"><b>'+esc(u.premium?T('accPremium',u.until?fmtDate(u.until):''):T('accFree'))+'</b>'+
+    (u.premium&&u.plan?'<span>'+esc(T(u.plan==='month'?'planMonth':'planYear'))+'</span>':'')+'</div><div class="actions">';
+  if(!u.premium) sub+='<button class="btn primary" data-act="paywall">'+esc(T('accBuy'))+'</button>';
+  if(u.portal) sub+='<button class="btn secondary" data-act="accPortal">'+esc(T('accManage'))+'</button>';
+  sub+='</div>';
+  const edit=ACC.edit?'<form class="acc-form" data-act="accNickSave" novalidate><label class="fld"><span>'+esc(T('accNick'))+'</span><input id="accNick" type="text" autocapitalize="off" maxlength="24" value="'+esc(ACC.nick||u.nick)+'"><small>'+esc(T('accNickHint'))+'</small></label>'+
+    accErrHTML()+'<div class="actions"><button class="btn primary" type="submit"'+(ACC.busy?' disabled':'')+'>'+esc(T('accSave'))+'</button><button class="btn ghost" type="button" data-act="accNickCancel">'+esc(T('accCancel'))+'</button></div></form>':'';
+  return '<section class="set-sec acc"><div class="acc-card"><span class="acc-av" aria-hidden="true">'+esc(first)+'</span><div class="acc-who"><b class="acc-nick">'+esc(u.nick)+'</b><span class="acc-mail">'+esc(u.email)+'</span></div>'+
+      (ACC.edit?'':'<button class="linkbtn" data-act="accNickEdit">'+esc(T('accNickChange'))+'</button>')+'</div>'+edit+'</section>'+
+    '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
+    '<section class="set-sec"><div class="actions"><button class="btn secondary" data-act="accLogout">'+esc(T('accLogout'))+'</button><button class="btn danger" data-act="accDel">'+esc(ACC.del?T('accDeleteArm'):T('accDelete'))+'</button></div>'+
+      (ACC.edit?'':accErrHTML())+'<p class="note">'+esc(T('accData'))+'</p></section>';
+}
+/* на сайте: оплата Paddle из кабинета (без входа — сначала войти) */
+function webPlansHTML(){
+  if(ACC.srv===false) return '<p class="note" style="text-align:center">'+esc(T('accNoServer'))+'</p>';
+  if(!ACC.me) return '<p class="note" style="text-align:center">'+esc(T('accLoginToPay'))+'</p><div class="actions"><button class="btn primary" data-act="accGo" data-arg="paywall">'+esc(T('accEnter'))+'</button></div>';
+  const P=ACC.pay||{};
+  if(!P.ready) return '<p class="note" style="text-align:center">'+esc(T('accPaySoon'))+'</p>';
+  const ks=[]; if(P.year) ks.push('yearly'); if(P.month) ks.push('monthly');
+  if(ks.indexOf(pwState.sel)<0) pwState.sel=ks[0];
+  return '<p class="note" style="text-align:center">'+esc(T('accAs',ACC.me.nick))+'</p><div class="plans" role="radiogroup">'+ks.map(k=>{
+      const lab=k==='yearly'?P.yLabel:P.mLabel;
+      return '<button class="plan" role="radio" data-act="plan" data-arg="'+k+'" aria-pressed="'+(k===pwState.sel)+'" aria-checked="'+(k===pwState.sel)+'"><span class="rd" aria-hidden="true"></span><span><b>'+esc(T(k==='yearly'?'planYear':'planMonth'))+(k==='yearly'?'<span class="badge">'+esc(T('best'))+'</span>':'')+'</b></span><span class="pr">'+esc(lab||'')+'</span></button>';
+    }).join('')+'</div>'+
+    '<div class="actions"><button class="btn primary" data-act="webBuy"'+(pwState.busy?' disabled':'')+'>'+esc(pwState.busy?T('pwBusy'):T('subscribe'))+'</button></div>';
+}
+let PADDLE=null, paddleInit=false;
+function loadPaddle(){
+  if(window.Paddle) return Promise.resolve(window.Paddle);
+  if(!PADDLE) PADDLE=new Promise((res,rej)=>{
+    const sc=document.createElement('script'); sc.src='https://cdn.paddle.com/paddle/v2/paddle.js'; sc.async=true;
+    sc.onload=()=>window.Paddle?res(window.Paddle):rej(new Error('paddle'));
+    sc.onerror=()=>{ PADDLE=null; rej(new Error('paddle')); };
+    document.head.appendChild(sc);
+  });
+  return PADDLE;
+}
+async function webBuy(plan){
+  if(!ACC.me){ openAccount('paywall'); return; }
+  pwState.busy=true; render();
+  const j=await api('checkout',{plan});
+  if(!j.ok){ pwState.busy=false; render(); toast(T('accErr_'+(j.err||'server'))); if(j.err==='auth'){ accApply({user:null}); render(); } return; }
+  try{
+    const P=await loadPaddle();
+    if(!paddleInit){
+      if(j.env==='sandbox'&&P.Environment) P.Environment.set('sandbox');
+      P.Initialize({token:j.token,eventCallback:ev=>{ if(ev&&ev.name==='checkout.completed') webPaid(); }});
+      paddleInit=true;
+    }
+    const dark=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches;
+    P.Checkout.open({items:[{priceId:j.price,quantity:1}],customer:{email:j.email},customData:j.custom,
+      settings:{displayMode:'overlay',locale:L,theme:dark?'dark':'light',allowLogout:false}});
+  }catch(e){ toast(T('accErr_net')); }
+  pwState.busy=false; render();
+}
+async function webPaid(){   // вебхук Paddle доходит не сразу — спросить сервер несколько раз
+  for(let i=0;i<12;i++){
+    const j=await api('me');
+    if(j.ok){ accApply(j); if(j.user&&j.user.premium){ toast(T('thanks')); if(view==='paywall') go(backTo.v,backTo.a); else render(); return; } }
+    await new Promise(r=>setTimeout(r,2500));
+  }
+  toast(T('pending'));
+}
 function docHTML(k){
-  return '<button class="back" data-act="docBack">‹ '+esc(T('back'))+'</button><article class="doc">'+T('doc_'+k)+'</article>';
+  const web=!BILL.native&&STR.ru['doc_'+k+'_web'];
+  return '<button class="back" data-act="docBack">‹ '+esc(T('back'))+'</button><article class="doc">'+T('doc_'+k+(web?'_web':''))+'</article>';
 }
 function resultHTML(){
   const r=sess.res, c=counts(), ti=sess.meta.ti, lv=sess.meta.lv;
@@ -1471,6 +1624,43 @@ const H={
   abcHear:(a,b)=>{const it=aq&&aq.items[aq.i]; if(it) speakLetter(it.x,false,b);},
   abcQuit:()=>{if(aq) clearTimeout(aq.timer); aq=null; go('abc');},
   paywall:()=>openPaywall(),
+  accGo:a=>openAccount(a),
+  accBack:()=>{ const f=accFrom||{v:'settings'}; if(f.v==='account') go('settings'); else go(f.v,f.a); },
+  accEmail:()=>{ const i=$('#accEmail'); if(i) ACC.email=i.value.trim(); accSendCode(); },
+  accResend:()=>accSendCode(),
+  accOther:()=>accSet({step:'email',code:'',err:'',needNick:false}),
+  accCode:async()=>{
+    const c=$('#accCode'), n=$('#accNick'); ACC.code=c?c.value.replace(/\D/g,''):''; if(n) ACC.nick=n.value.trim();
+    if(ACC.code.length!==6){ accSet({err:'code6'}); return; }
+    if(ACC.needNick&&!ACC.nick){ accSet({err:'nick'}); return; }
+    accSet({busy:true,err:''});
+    const body={email:ACC.email,code:ACC.code}; if(ACC.needNick) body.nick=ACC.nick;
+    const j=await api('verify',body);
+    if(j.ok){
+      accApply(j); Object.assign(ACC,{busy:false,step:'email',code:'',needNick:false,nick:''}); clearInterval(ACC.timer);
+      toast(T('accHello',j.user.nick));
+      if(ACC.next==='paywall'){ ACC.next=null; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); } else render();   // backTo — прежний: после оплаты туда же
+      return;
+    }
+    if(j.err==='need_nick'){ accSet({busy:false,needNick:true,err:''}); setTimeout(()=>{ const i=$('#accNick'); if(i) i.focus(); },30); return; }
+    accSet({busy:false,err:j.err||'server',errArg:j.left!=null?j.left:''});
+  },
+  accNickEdit:()=>accSet({edit:true,nick:ACC.me?ACC.me.nick:'',err:''}),
+  accNickCancel:()=>accSet({edit:false,err:''}),
+  accNickSave:async()=>{
+    const n=$('#accNick'), nick=n?n.value.trim():''; accSet({busy:true,err:'',nick});
+    const j=await api('nick',{nick});
+    if(j.ok){ accApply(j); accSet({busy:false,edit:false,nick:''}); toast(T('accSaved')); } else accSet({busy:false,err:j.err||'server'});
+  },
+  accLogout:async()=>{ await api('logout',{}); accApply({user:null}); Object.assign(ACC,{step:'email',del:0,err:''}); render(); toast(T('accBye')); },
+  accDel:async()=>{
+    if(!ACC.del){ ACC.del=Date.now(); render(); setTimeout(()=>{ if(ACC.del&&Date.now()-ACC.del>=4900){ ACC.del=0; if(view==='account') render(); } },5000); return; }
+    ACC.del=0; const j=await api('delete',{});
+    if(j.ok){ accApply({user:null}); Object.assign(ACC,{step:'email',email:'',err:''}); render(); toast(T('accDeleted')); }
+    else accSet({err:j.err||'server'});
+  },
+  accPortal:async()=>{ const j=await api('portal',{}); if(j.ok&&j.url) location.assign(j.url); else toast(T('accErr_'+(j.err==='nosub'?'nosub':'pay'))); },
+  webBuy:()=>webBuy(pwState.sel==='monthly'?'month':'year'),
   pwClose:()=>go(backTo.v,backTo.a),
   plan:a=>{pwState.sel=a; render();},
   buy:async()=>{
@@ -1483,6 +1673,7 @@ const H={
     toast(T('buyFail')); render();
   },
   restore:async()=>{
+    if(!BILL.native){ await accInit(); toast(premium()?T('restored'):(ACC.me?T('nothingRestore'):T('accLoginToPay'))); if(premium()&&view==='paywall') go(backTo.v,backTo.a); else render(); return; }
     if(!BILL.available()){ toast(T('pwUnavailable')); return; }
     const r=await BILL.restore();
     toast(r==='ok'?T('restored'):(r==='none'?T('nothingRestore'):T('buyFail')));
@@ -1497,9 +1688,10 @@ const H={
   }
 };
 document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-act]'); if(!b||b.disabled) return;
+  const b=e.target.closest('[data-act]'); if(!b||b.disabled||b.tagName==='FORM') return;
   const f=H[b.dataset.act]; if(f) f(b.dataset.arg,b,e);
 });
+document.addEventListener('submit',e=>{ const f=e.target.closest('form[data-act]'); if(!f) return; e.preventDefault(); const h=H[f.dataset.act]; if(h) h(f.dataset.arg,f,e); });
 document.addEventListener('keydown',e=>{
   if(view==='tquiz'&&tq){ const it=tcur(); if(!it) return;
     if(e.key==='Enter'){ e.preventDefault(); if(it.done) tnext(); else tcheck(); return; }
@@ -1535,6 +1727,7 @@ function onBack(){
   if(view==='pcard'){go('pics'); return true;}
   if(view==='doc'){H.docBack(); return true;}
   if(view==='paywall'){H.pwClose(); return true;}
+  if(view==='account'){H.accBack(); return true;}
   if(view==='onboard'||view==='home') return false;
   go('home'); return true;
 }
@@ -1552,7 +1745,7 @@ const WELCOME=/(?:^|[?&#])welcome(?:[&=]|$)/.test((location.search||'')+(locatio
 view=UI.lang&&!WELCOME?'home':'onboard';
 render();
 BILL.hideSplash();
-Promise.all([loadManifest(),BILL.init()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
+Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

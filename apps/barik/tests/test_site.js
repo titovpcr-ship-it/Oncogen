@@ -57,6 +57,9 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   ok(await pg.evaluate(()=>document.fonts.check('16px "Noto Serif Armenian"')),'без интернета: армянский шрифт');
   ok(await pg.evaluate(u=>fetch(u).then(r=>r.ok&&r.blob()).then(b=>!!b&&b.size>1000).catch(()=>false),au),'без интернета: прослушанное слово звучит (запись из кэша)');
   await ctx.setOffline(false);
+  // личный кабинет (O-136): сервер в api/ — в сборке, ключей нет, service worker его не кэширует
+  ok(fs.existsSync(path.join(ROOT,'api','index.php'))&&fs.existsSync(path.join(ROOT,'api','.htaccess'))&&!fs.existsSync(path.join(ROOT,'api','config.php')),'api/: index.php и .htaccess на месте, config.php с ключами — нет');
+  ok(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').includes("path.includes('/api/')"),'sw.js: запросы кабинета мимо кэша');
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));
   await br.close(); srv.close();

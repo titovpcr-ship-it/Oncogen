@@ -89,6 +89,7 @@ self.addEventListener('fetch', e => {
   const r = e.request;
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
   const path = new URL(r.url).pathname;
+  if (path.includes('/api/')) return;         // личный кабинет — всегда сеть, не кэш
   const media = path.includes('/audio/') ? AUDIO : (path.includes('/pics/') ? PICS : '');
   if (media) {                                // озвучка и картинки — по мере показа
     if (r.headers.has('range')) return;       // кусок файла (Range) — прямо в сеть: в кэш кладём только целое
@@ -191,7 +192,7 @@ AddDefaultCharset utf-8
 """
 
 
-def build(out=OUT, url=SITE_URL, seo=True):
+def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     if os.path.isdir(out):
         shutil.rmtree(out)
     shutil.copytree(SRC, out, ignore=shutil.ignore_patterns("vendor"))
@@ -206,9 +207,14 @@ def build(out=OUT, url=SITE_URL, seo=True):
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
     cfg = os.path.join(out, "js", "config.js")
     s = open(cfg, encoding="utf-8").read()
-    s2 = re.sub(r"WEB_ALL_FREE:\s*false", "WEB_ALL_FREE:true", s)
-    assert s2 != s, "в config.js нет WEB_ALL_FREE"
+    s2 = re.sub(r"WEB_ALL_FREE:\s*false", "WEB_ALL_FREE:false" if paid else "WEB_ALL_FREE:true", s)
+    assert "WEB_ALL_FREE" in s2, "в config.js нет WEB_ALL_FREE"
     open(cfg, "w", encoding="utf-8").write(s2)
+    # личный кабинет (O-136): сервер PHP в api/ (config.php с ключами — только на хостинге)
+    api = os.path.join(out, "api")
+    os.makedirs(api, exist_ok=True)
+    for f in ("index.php", "lib.php", ".htaccess"):
+        shutil.copy(os.path.join(APP, "server", "api", f), os.path.join(api, f))
     icons(out)
     shutil.copytree(os.path.join(APP, "assets", "og"), os.path.join(out, "og"))
     json.dump(MANIFEST, open(os.path.join(out, "manifest.webmanifest"), "w", encoding="utf-8"),
@@ -222,7 +228,7 @@ def build(out=OUT, url=SITE_URL, seo=True):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js") or rel.startswith(("audio/", "pics/", "og/"))
+            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js") or rel.startswith(("audio/", "pics/", "og/", "api/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel)
@@ -260,9 +266,10 @@ def main():
     ap.add_argument("--out", default=OUT)
     ap.add_argument("--url", default=SITE_URL, help="адрес сайта, например https://barik.am/")
     ap.add_argument("--no-seo", action="store_true", help="без страниц поиска")
+    ap.add_argument("--paid", action="store_true", help="оплата включена: A2–C2 по подписке (WEB_ALL_FREE false)")
     ap.add_argument("--serve", action="store_true")
     a = ap.parse_args()
-    out = build(a.out, a.url if not a.url or a.url.endswith("/") else a.url + "/", not a.no_seo)
+    out = build(a.out, a.url if not a.url or a.url.endswith("/") else a.url + "/", not a.no_seo, a.paid)
     if a.serve:
         import functools
         import http.server
