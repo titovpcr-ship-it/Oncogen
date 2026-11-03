@@ -4024,6 +4024,13 @@ Google Cloud армянского голоса нет. Владелец выбр
   идёт «եւ» (`spoken()`, то же произношение), имя файла — по слову;
   переозвучено 389 записей (`gen_audio.py --redo 'և'`). Пустой ответ больше не
   повторяется восемь раз.
+- **Ловушка прав: F0 не даёт права на коммерческое использование звука.**
+  Microsoft Product Terms (MCA, Text-to-Speech): «TTS Service output use
+  rights: For Customers of the paid tier TTS Service only, Customer may use the
+  audio output of prebuilt neural voices… including for commercial purposes».
+  Совет «бесплатного F0 хватит» был ошибкой — проверено по первоисточнику после
+  вопроса владельца о независимости от Azure. Решение: служба → Standard S0
+  ($15 за 1 млн знаков, словарь ≈ $3,3), переозвучить всё (`--redo .`).
 - «Звук» и «О приложении»: «синтезированный голос Microsoft Azure». Страницы
   поиска: кнопка «Слушать» у слова (`seo.js`, простой `<audio>`; страниц —
   626 МБ вместо 587).

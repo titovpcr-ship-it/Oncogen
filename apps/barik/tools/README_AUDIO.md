@@ -1,15 +1,20 @@
 # Озвучка: ключ Azure и запуск (O-135)
 
 Голоса Microsoft для восточноармянского: женский `hy-AM-AnahitNeural` (по умолчанию, им озвучен словарь)
-и мужской `hy-AM-HaykNeural`. Это официальный сервис с коммерческой лицензией — подходит для платного
-продукта; в «О приложении» и в настройках звука сказано, что голос синтезированный.
+и мужской `hy-AM-HaykNeural`. В «О приложении» и в настройках звука сказано, что голос синтезированный.
+
+**Права — только платный тариф.** Microsoft Product Terms (MCA, раздел Text-to-Speech, сверено 03.11.2026):
+«TTS Service output use rights: For Customers of the paid tier TTS Service only, Customer may use the audio
+output of prebuilt neural voices generated using the TTS Service, including for commercial purposes».
+Записи, сделанные на бесплатном F0, права на коммерческое использование не получают — для сайта
+озвучивать на **Standard S0** ($15 за 1 млн знаков: словарь ~220 тыс. знаков — около $3,3).
 
 ## Ключ (один раз, около 10 минут; владелец завёл 03.11.2026)
 1. portal.azure.com → бесплатная пробная подписка (телефон и карта не российского банка; страна в анкете
    — страна карты, потом не меняется).
 2. Поиск **Speech** → «Службы речи» → «Создать»: группа ресурсов `Barik`, регион **North Europe**
    (West Europe новых клиентов не принимает: «RequestDisallowedByAzure … not accepting new customers»),
-   ценовая категория **Free F0**, сеть — «Все сети, включая Интернет».
+   ценовая категория **Standard S0** (не F0 — см. «Права»), сеть — «Все сети, включая Интернет».
 3. В службе: «Ключи и конечная точка» → **КЛЮЧ 1** и **регион** (`northeurope`).
 4. `.env` рядом с `package.json` (шаблон `.env.example`, права 600, в git не попадает):
    `AZURE_SPEECH_KEY=…` и `AZURE_SPEECH_REGION=northeurope`.
