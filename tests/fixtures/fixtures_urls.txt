@@ -1,0 +1,19 @@
+# Фикстуры, снятые живьём 30.08.2026 через tools/capture.py и прямыми
+# запросами к найденному JSON-эндпоинту. Разбор — docs/ru_market_notes.md
+#
+# name	requested_url	final_url	status	size	note
+meshok_category	https://meshok.net/good/2211	https://meshok.net/good/2211	HTTP 200	529973 B	категория «Пластинки», 2 046 996 лотов
+meshok_sold_list	https://meshok.net/listing?a_o=25&good=2211&search=Red%20Garland	https://meshok.net/listing?a_o=25&good=2211&search=Red%20Garland	HTTP 200	331535 B	«Успешно завершенные»; a_o=25 и есть этот режим
+meshok_sold_item	https://meshok.net/item/365085650	https://meshok.net/item/365085650	HTTP 200	234411 B	завершённый аукцион, 1347 ₽, EX/EX, 2026-08-23
+mv_search_blocked	https://marketvinila.ru/marketplace	https://en.marketvinila.ru/marketplace	HTTP 403	27553 B	Cloudflare-challenge; НЕ фикстура для парсера, а свидетельство §5 отчёта
+#
+# Ответы JSON-эндпоинта (приоритетный путь по §3.1 — на них и пишутся парсеры):
+meshok_sold_list_api	POST https://meshok.net/api/command/lots/get-items	-	HTTP 200	71302 B	showOnly=["finishedAndSold"], searchString="Red Garland"; 20 лотов, 16 разных дат
+meshok_active_list_api	POST https://meshok.net/api/command/lots/get-items	-	HTTP 200	54980 B	status="active", тот же запрос — оценка насыщенности рынка
+meshok_validation_error	POST https://meshok.net/api/command/lots/get-items	-	HTTP 418	482 B	soldStatus в buyer mode; на нём тест проверяет, что ошибку валидатора не глотают
+#
+# Перехваты браузера (page.on("response")) — в xhr/, рядом с каждым .json
+# лежит .meta.json с URL, методом, телом POST и заголовками запроса.
+#
+# Индексы:
+mv_release_sitemap_ranges	https://marketvinila.ru/sitemap-release*.xml	-	HTTP 200	-	98 файлов, границы id; собран tools/build_mv_release_index.py

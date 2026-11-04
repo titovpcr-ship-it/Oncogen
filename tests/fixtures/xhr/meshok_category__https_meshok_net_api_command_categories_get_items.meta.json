@@ -1,0 +1,21 @@
+{
+  "url": "https://meshok.net/api/command/categories/get-items",
+  "method": "POST",
+  "status": 200,
+  "post_data": "{\"identifiers\":[2,5,6,10,19,20,63,86,109,134,140,179,281,1612,1613,1636,1637,1853,1887,2097,2100,2366,2368,2788,2816,12411,13454],\"childsLevel\":1,\"includeParents\":false}",
+  "request_headers": {
+    "sec-ch-ua-platform": "\"Linux\"",
+    "referer": "https://meshok.net/good/2211",
+    "meshok-correlation-id": "03730f43e5df80b55a773b7262d30d10",
+    "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+    "accept-language": "ru-RU,ru;q=0.9,en;q=0.8",
+    "sec-ch-ua-mobile": "?0",
+    "x-hash": "671963882",
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+    "accept": "application/json, text/plain, */*",
+    "meshok-locale": "ru",
+    "content-type": "application/json"
+  },
+  "size": 74210,
+  "captured_for": "meshok_good_probe"
+}

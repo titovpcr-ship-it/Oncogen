@@ -1,0 +1,14 @@
+node_modules/
+android/app/build/
+android/.gradle/
+android/build/
+*.keystore
+*.jks
+keystore.properties
+local.properties
+.env
+tools/mp3/
+tools/hy_audio.zip
+dist/
+www/audio/**/*.part
+server/api/config.php

@@ -1,0 +1,20 @@
+{
+  "url": "https://meshok.net/api/command/lots/get-lot-bids",
+  "method": "POST",
+  "status": 200,
+  "post_data": "{\"lotId\":365085650}",
+  "request_headers": {
+    "sec-ch-ua-platform": "\"Linux\"",
+    "referer": "https://meshok.net/item/365085650",
+    "meshok-correlation-id": "9db3d1bfe25a3818fc34ff5b532d9b37",
+    "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+    "accept-language": "ru-RU,ru;q=0.9,en;q=0.8",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+    "accept": "application/json, text/plain, */*",
+    "meshok-locale": "ru",
+    "content-type": "application/json"
+  },
+  "size": 5221,
+  "captured_for": "meshok_sold_item"
+}
