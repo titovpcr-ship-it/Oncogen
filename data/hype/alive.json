@@ -912,6 +912,17 @@
 "type": null,
 "v": 3
 },
+"feid": {
+"alive": true,
+"gender": "male",
+"mb": "eaee97f6-f2e4-414a-966c-f31a1fb4696a",
+"mb_name": "Feid",
+"name": "Feid",
+"note": "",
+"t": 1793786337,
+"type": "Person",
+"v": 3
+},
 "felipeerodrigo": {
 "alive": true,
 "gender": null,
@@ -2960,6 +2971,43 @@
 "name": "Zach Bryan",
 "note": "",
 "t": 1793021883,
+"type": "Person",
+"v": 3
+},
+"zaralarsson": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"pop",
+5
+],
+[
+"dance-pop",
+4
+],
+[
+"electropop",
+4
+],
+[
+"contemporary r&b",
+3
+],
+[
+"alternative pop",
+2
+],
+[
+"dance",
+1
+]
+],
+"mb": "134e6410-6954-45d1-bd4a-0f2d2ad5471d",
+"mb_name": "Zara Larsson",
+"name": "Zara Larsson",
+"note": "",
+"t": 1793786333,
 "type": "Person",
 "v": 3
 },
