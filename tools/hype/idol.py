@@ -54,6 +54,7 @@ EXTRA = os.path.join(ROOT, "data", "hype", "idol_extra.txt")
 EXCLUDE = os.path.join(ROOT, "data", "hype", "idol_exclude.txt")
 PER_QUERY = 10            # имён в одном запросе с «ИЛИ»
 MAX_PAGES = 3             # страниц по 200 на запрос за прогон
+LAG_H = 3                 # часов перекрытия с прошлым прогоном
 
 
 def _names(path):
@@ -198,7 +199,11 @@ def run(a):
     except (OSError, ValueError):
         st = {}
     now = dt.datetime.now(dt.timezone.utc)
-    since = iso(st["mark"]) if st.get("mark") else now - dt.timedelta(hours=a.hours)
+    # перекрытие LAG_H: eBay показывает объявление в поиске с опозданием, а время
+    # выставления у него раннее — без запаса оно оказалось бы «старше метки» (O-138);
+    # повторы отсекает seen
+    since = (iso(st["mark"]) - dt.timedelta(hours=LAG_H) if st.get("mark")
+             else now - dt.timedelta(hours=a.hours))
     seen = set(st.get("seen") or [])
     token = ebay_token()
     H = {"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
