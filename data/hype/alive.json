@@ -49,6 +49,28 @@
 "type": "Group",
 "v": 3
 },
+"abba": {
+"alive": false,
+"gender": "mixed",
+"mb": "d87e52c5-bb8d-4da8-b941-9f4928627dc8",
+"mb_name": "ABBA",
+"name": "ABBA",
+"note": "распались 2022",
+"t": 1793788167,
+"type": "Group",
+"v": 3
+},
+"abc": {
+"alive": true,
+"gender": "male",
+"mb": "87199477-b0df-4ead-84ee-9b54b4abfc3d",
+"mb_name": "ABC",
+"name": "ABC",
+"note": "",
+"t": 1793788238,
+"type": "Group",
+"v": 3
+},
 "adela": {
 "alive": true,
 "gender": "female",
@@ -136,6 +158,17 @@
 "type": "Person",
 "v": 3
 },
+"america": {
+"alive": true,
+"gender": "male",
+"mb": "34cf95c7-4be9-4efd-a48a-c2ea4a0bb114",
+"mb_name": "America",
+"name": "America",
+"note": "",
+"t": 1793787863,
+"type": "Group",
+"v": 3
+},
 "amywinehouse": {
 "alive": false,
 "mb": "dfe9a7c4-8cf2-47f4-9dcb-d233c2b86ec3",
@@ -167,6 +200,17 @@
 "type": "Person",
 "v": 3
 },
+"angel": {
+"alive": true,
+"gender": "male",
+"mb": "4ddb8322-9996-48b7-a92a-8089d175fc0f",
+"mb_name": "Angel",
+"name": "Angel",
+"note": "",
+"t": 1793788059,
+"type": "Group",
+"v": 3
+},
 "anirudhravichander": {
 "alive": true,
 "gender": "male",
@@ -175,6 +219,17 @@
 "name": "Anirudh Ravichander",
 "note": "",
 "t": 1793022929,
+"type": "Person",
+"v": 3
+},
+"annemurray": {
+"alive": true,
+"gender": "female",
+"mb": "cff63c14-b081-4686-9357-eea84d5348fc",
+"mb_name": "Anne Murray",
+"name": "Anne Murray",
+"note": "",
+"t": 1793788270,
 "type": "Person",
 "v": 3
 },
@@ -197,6 +252,17 @@
 "name": "Anuel AA",
 "note": "",
 "t": 1793021954,
+"type": "Person",
+"v": 3
+},
+"arethafranklin": {
+"alive": false,
+"gender": "female",
+"mb": "2f9ecbed-27be-40e6-abca-6de49d50299e",
+"mb_name": "Aretha Franklin",
+"name": "Aretha Franklin",
+"note": "умер(ла) 2018-08-16",
+"t": 1793788184,
 "type": "Person",
 "v": 3
 },
@@ -280,6 +346,17 @@
 "type": "Person",
 "v": 3
 },
+"autograph": {
+"alive": false,
+"gender": "male",
+"mb": "272a7f09-ed20-468d-aaa7-abcb97437d8d",
+"mb_name": "Autograph",
+"name": "Autograph",
+"note": "распались 2023",
+"t": 1793787944,
+"type": "Group",
+"v": 3
+},
 "babyfxcee": {
 "alive": true,
 "gender": "male",
@@ -305,6 +382,17 @@
 "name": "BABYMONSTER",
 "note": "",
 "t": 1793600623,
+"type": "Group",
+"v": 3
+},
+"backstreetboys": {
+"alive": true,
+"gender": "male",
+"mb": "2f569e60-0a1b-4fb9-95a4-3dc1525d1aad",
+"mb_name": "Backstreet Boys",
+"name": "Backstreet Boys",
+"note": "",
+"t": 1793788267,
 "type": "Group",
 "v": 3
 },
@@ -341,6 +429,17 @@
 "type": null,
 "v": 3
 },
+"band": {
+"alive": false,
+"gender": "male",
+"mb": "8c90ad8c-9150-4c51-a1eb-342232e99d06",
+"mb_name": "The Band",
+"name": "The Band",
+"note": "распались 1999",
+"t": 1793787693,
+"type": "Group",
+"v": 3
+},
 "banjaare": {
 "alive": true,
 "gender": null,
@@ -352,6 +451,39 @@
 "type": "Group",
 "v": 3
 },
+"barbaramandrell": {
+"alive": true,
+"gender": "female",
+"mb": "f9af8ba9-78d9-4355-85f5-f3c8abdaa31f",
+"mb_name": "Barbara Mandrell",
+"name": "Barbara Mandrell",
+"note": "",
+"t": 1793788220,
+"type": "Person",
+"v": 3
+},
+"barbrastreisand": {
+"alive": true,
+"gender": "female",
+"mb": "56cd15a1-0d74-438b-8244-c96ffe1cae03",
+"mb_name": "Barbra Streisand",
+"name": "Barbra Streisand",
+"note": "",
+"t": 1793787899,
+"type": "Person",
+"v": 3
+},
+"barrymanilow": {
+"alive": true,
+"gender": "male",
+"mb": "7bb60591-46f3-4147-b692-1814a87e832e",
+"mb_name": "Barry Manilow",
+"name": "Barry Manilow",
+"note": "",
+"t": 1793788345,
+"type": "Person",
+"v": 3
+},
 "basta": {
 "alive": null,
 "gender": null,
@@ -360,6 +492,17 @@
 "name": "Basta",
 "note": "тёзки в MusicBrainz, не различить",
 "t": 1793022564,
+"type": "Group",
+"v": 3
+},
+"beatles": {
+"alive": false,
+"gender": "male",
+"mb": "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+"mb_name": "The Beatles",
+"name": "The Beatles",
+"note": "распались 1970",
+"t": 1793787881,
 "type": "Group",
 "v": 3
 },
@@ -393,6 +536,17 @@
 "name": "Bebe Rexha",
 "note": "",
 "t": 1793022895,
+"type": "Person",
+"v": 3
+},
+"beethoven": {
+"alive": false,
+"gender": "male",
+"mb": "1f9df192-a621-4f54-8850-2c5373b7eac9",
+"mb_name": "Ludwig van Beethoven",
+"name": "Beethoven",
+"note": "умер(ла) 1827-03-26",
+"t": 1793787896,
 "type": "Person",
 "v": 3
 },
@@ -466,6 +620,28 @@
 "type": "Person",
 "v": 3
 },
+"bingcrosby": {
+"alive": false,
+"gender": "male",
+"mb": "2437980f-513a-44fc-80f1-b90d9d7fcf8f",
+"mb_name": "Bing Crosby",
+"name": "Bing Crosby",
+"note": "умер(ла) 1977-10-14",
+"t": 1793787837,
+"type": "Person",
+"v": 3
+},
+"blakeshelton": {
+"alive": true,
+"gender": "male",
+"mb": "2ad66473-ccb3-41d2-8756-b56680cdfe62",
+"mb_name": "Blake Shelton",
+"name": "Blake Shelton",
+"note": "",
+"t": 1793787982,
+"type": "Person",
+"v": 3
+},
 "blok3": {
 "alive": true,
 "gender": null,
@@ -499,6 +675,17 @@
 "type": "Person",
 "v": 3
 },
+"bobdylan": {
+"alive": true,
+"gender": "male",
+"mb": "72c536dc-7137-4477-a521-567eeb840fa8",
+"mb_name": "Bob Dylan",
+"name": "Bob Dylan",
+"note": "",
+"t": 1793788271,
+"type": "Person",
+"v": 3
+},
 "bonjovi": {
 "alive": true,
 "gender": "male",
@@ -529,6 +716,50 @@
 "name": "Boosie Badazz",
 "note": "",
 "t": 1793160790,
+"type": "Person",
+"v": 3
+},
+"boston": {
+"alive": true,
+"gender": "male",
+"mb": "0d8b0d50-e4cf-4da4-965d-f24c58ec3268",
+"mb_name": "Boston",
+"name": "Boston",
+"note": "",
+"t": 1793787826,
+"type": "Group",
+"v": 3
+},
+"brad": {
+"alive": true,
+"gender": "mixed",
+"mb": "edbaa513-b8d3-4e8f-b81f-ef640b8ad128",
+"mb_name": "Brad",
+"name": "Brad",
+"note": "",
+"t": 1793788427,
+"type": "Group",
+"v": 3
+},
+"brandicarlile": {
+"alive": true,
+"gender": "female",
+"mb": "baf05baf-69fb-47dd-93c2-033536b8c385",
+"mb_name": "Brandi Carlile",
+"name": "Brandi Carlile",
+"note": "",
+"t": 1793788127,
+"type": "Person",
+"v": 3
+},
+"britneyspears": {
+"alive": true,
+"gender": "female",
+"mb": "45a663b5-b1cb-4a91-bff6-2bef7bbfdd76",
+"mb_name": "Britney Spears",
+"name": "Britney Spears",
+"note": "",
+"t": 1793788482,
 "type": "Person",
 "v": 3
 },
@@ -576,6 +807,39 @@
 "type": "Person",
 "v": 3
 },
+"cancer": {
+"alive": true,
+"gender": "male",
+"mb": "84638ab0-46f0-4bd7-90e2-b1ebc573c65c",
+"mb_name": "Cancer",
+"name": "Cancer",
+"note": "",
+"t": 1793787774,
+"type": "Group",
+"v": 3
+},
+"carpenters": {
+"alive": false,
+"gender": "mixed",
+"mb": "4580d83b-093e-4241-91fb-2dd71f5f1f3f",
+"mb_name": "Carpenters",
+"name": "Carpenters",
+"note": "распались 1983",
+"t": 1793787799,
+"type": "Group",
+"v": 3
+},
+"carrieunderwood": {
+"alive": true,
+"gender": "female",
+"mb": "70f0e309-5418-49b6-a130-666e2f76eecd",
+"mb_name": "Carrie Underwood",
+"name": "Carrie Underwood",
+"note": "",
+"t": 1793788088,
+"type": "Person",
+"v": 3
+},
 "chappellroan": {
 "alive": true,
 "gender": "female",
@@ -613,6 +877,28 @@
 "type": "Person",
 "v": 3
 },
+"charlierich": {
+"alive": false,
+"gender": "male",
+"mb": "9fb7fe77-4e8b-4cbd-ba8f-84bcd80a24bc",
+"mb_name": "Charlie Rich",
+"name": "Charlie Rich",
+"note": "умер(ла) 1995-07-24",
+"t": 1793788155,
+"type": "Person",
+"v": 3
+},
+"cheaptrick": {
+"alive": true,
+"gender": "male",
+"mb": "9f870653-72b0-4c6d-8c59-439a95963e09",
+"mb_name": "Cheap Trick",
+"name": "Cheap Trick",
+"note": "",
+"t": 1793788481,
+"type": "Group",
+"v": 3
+},
 "chemicalbrothers": {
 "alive": true,
 "gender": "male",
@@ -621,6 +907,17 @@
 "name": "The Chemical Brothers",
 "note": "",
 "t": 1793022021,
+"type": "Group",
+"v": 3
+},
+"chicago": {
+"alive": true,
+"gender": "male",
+"mb": "3f5be744-e867-42fb-8913-5fd69e4099b5",
+"mb_name": "Chicago",
+"name": "Chicago",
+"note": "",
+"t": 1793788374,
 "type": "Group",
 "v": 3
 },
@@ -646,6 +943,50 @@
 "type": null,
 "v": 3
 },
+"clark": {
+"alive": true,
+"gender": "male",
+"mb": "5d0c202c-e30f-40c4-abf5-c0007af0d1cc",
+"mb_name": "Clark",
+"name": "Clark",
+"note": "",
+"t": 1793788120,
+"type": "Person",
+"v": 3
+},
+"cold": {
+"alive": true,
+"gender": "male",
+"mb": "d9a2f1e6-6429-41ce-9d32-9a66188fb39c",
+"mb_name": "Cold",
+"name": "Cold",
+"note": "",
+"t": 1793788102,
+"type": "Group",
+"v": 3
+},
+"coldplay": {
+"alive": true,
+"gender": "male",
+"mb": "cc197bad-dc9c-440d-a5b5-d52ba2e14234",
+"mb_name": "Coldplay",
+"name": "Coldplay",
+"note": "",
+"t": 1793788455,
+"type": "Group",
+"v": 3
+},
+"common": {
+"alive": true,
+"gender": "male",
+"mb": "c0a1179b-b14a-4d68-a3c1-1fdab16ed602",
+"mb_name": "Common",
+"name": "Common",
+"note": "",
+"t": 1793787982,
+"type": "Person",
+"v": 3
+},
 "cordae": {
 "alive": true,
 "gender": "male",
@@ -668,6 +1009,28 @@
 "type": "Group",
 "v": 3
 },
+"cream": {
+"alive": false,
+"gender": "male",
+"mb": "04cd0cfd-bfd1-4c36-bc38-95c35e2c045f",
+"mb_name": "Cream",
+"name": "Cream",
+"note": "распались 1968",
+"t": 1793787928,
+"type": "Group",
+"v": 3
+},
+"creedenceclearwaterrevival": {
+"alive": false,
+"gender": "male",
+"mb": "109958eb-a335-4c5e-907e-597ff4c6af46",
+"mb_name": "Creedence Clearwater Revival",
+"name": "Creedence Clearwater Revival",
+"note": "распались 1972",
+"t": 1793788284,
+"type": "Group",
+"v": 3
+},
 "daddyyankee": {
 "alive": true,
 "gender": "male",
@@ -679,6 +1042,17 @@
 "type": "Person",
 "v": 3
 },
+"davidbowie": {
+"alive": false,
+"gender": "male",
+"mb": "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+"mb_name": "David Bowie",
+"name": "David Bowie",
+"note": "умер(ла) 2016-01-10",
+"t": 1793787897,
+"type": "Person",
+"v": 3
+},
 "davidguetta": {
 "alive": true,
 "gender": "male",
@@ -687,6 +1061,61 @@
 "name": "David Guetta",
 "note": "",
 "t": 1793022894,
+"type": "Person",
+"v": 3
+},
+"death": {
+"alive": false,
+"gender": "male",
+"mb": "dbb3b771-ae77-4381-b61c-758b5b7898ec",
+"mb_name": "Death",
+"name": "Death",
+"note": "распались 1998",
+"t": 1793787760,
+"type": "Group",
+"v": 3
+},
+"deep": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "Deep",
+"note": "нет в MusicBrainz",
+"t": 1793787999,
+"type": null,
+"v": 3
+},
+"deeppurple": {
+"alive": true,
+"gender": "male",
+"mb": "79491354-3d83-40e3-9d8e-7592d58d790a",
+"mb_name": "Deep Purple",
+"name": "Deep Purple",
+"note": "",
+"t": 1793788218,
+"type": "Group",
+"v": 3
+},
+"demilovato": {
+"alive": true,
+"gender": "non-binary",
+"mb": "faf4cefb-036c-4c88-b93a-5b03dd0a0e6b",
+"mb_name": "Demi Lovato",
+"name": "Demi Lovato",
+"note": "",
+"t": 1793788153,
+"type": "Person",
+"v": 3
+},
+"dianaross": {
+"alive": true,
+"gender": "female",
+"mb": "60d41417-feda-4734-bbbf-7dcc30e08a83",
+"mb_name": "Diana Ross",
+"name": "Diana Ross",
+"note": "",
+"t": 1793788085,
 "type": "Person",
 "v": 3
 },
@@ -712,6 +1141,17 @@
 "type": null,
 "v": 3
 },
+"dollyparton": {
+"alive": false,
+"gender": "female",
+"mb": "1d543e07-d0d2-4834-a8db-d65c50c2a856",
+"mb_name": "Dolly Parton",
+"name": "Dolly Parton",
+"note": "умер(ла) 2026-08-25",
+"t": 1793787841,
+"type": "Person",
+"v": 3
+},
 "dominicfike": {
 "alive": true,
 "gender": "male",
@@ -734,6 +1174,28 @@
 "type": "Person",
 "v": 3
 },
+"doors": {
+"alive": false,
+"gender": "male",
+"mb": "9efff43b-3b29-4082-824e-bc82f646f93d",
+"mb_name": "The Doors",
+"name": "The Doors",
+"note": "распались 1973",
+"t": 1793788148,
+"type": "Group",
+"v": 3
+},
+"down": {
+"alive": true,
+"gender": "male",
+"mb": "4c01333f-e8e8-43bd-9923-8de83ef6f63d",
+"mb_name": "Down",
+"name": "Down",
+"note": "",
+"t": 1793787725,
+"type": "Group",
+"v": 3
+},
 "drake": {
 "alive": true,
 "gender": "male",
@@ -742,6 +1204,17 @@
 "name": "Drake",
 "note": "",
 "t": 1793021891,
+"type": "Person",
+"v": 3
+},
+"drdre": {
+"alive": true,
+"gender": "male",
+"mb": "5f6ab597-f57a-40da-be9e-adad48708203",
+"mb_name": "Dr. Dre",
+"name": "Dr. Dre",
+"note": "",
+"t": 1793788339,
 "type": "Person",
 "v": 3
 },
@@ -782,6 +1255,39 @@
 "type": "Person",
 "v": 3
 },
+"eagles": {
+"alive": true,
+"gender": "male",
+"mb": "f46bd570-5768-462e-b84c-c7c993bbf47e",
+"mb_name": "Eagles",
+"name": "Eagles",
+"note": "",
+"t": 1793788359,
+"type": "Group",
+"v": 3
+},
+"earth": {
+"alive": true,
+"gender": "male",
+"mb": "60dd41cf-8f9d-46d8-bc19-dc7e5acb24c8",
+"mb_name": "Earth",
+"name": "Earth",
+"note": "",
+"t": 1793788307,
+"type": "Group",
+"v": 3
+},
+"edsheeran": {
+"alive": true,
+"gender": "male",
+"mb": "b8a7c51f-362c-4dcb-a259-bc6e0095f0a6",
+"mb_name": "Ed Sheeran",
+"name": "Ed Sheeran",
+"note": "",
+"t": 1793787800,
+"type": "Person",
+"v": 3
+},
 "edwardmaya": {
 "alive": true,
 "gender": "male",
@@ -790,6 +1296,17 @@
 "name": "Edward Maya",
 "note": "",
 "t": 1793160809,
+"type": "Person",
+"v": 3
+},
+"ellafitzgerald": {
+"alive": false,
+"gender": "female",
+"mb": "54799c0e-eb45-4eea-996d-c4d71a63c499",
+"mb_name": "Ella Fitzgerald",
+"name": "Ella Fitzgerald",
+"note": "умер(ла) 1996-06-15",
+"t": 1793788396,
 "type": "Person",
 "v": 3
 },
@@ -831,6 +1348,39 @@
 "type": "Person",
 "v": 3
 },
+"eltonjohn": {
+"alive": true,
+"gender": "male",
+"mb": "b83bc61f-8451-4a5d-8b8e-7e9ed295e822",
+"mb_name": "Elton John",
+"name": "Elton John",
+"note": "",
+"t": 1793787761,
+"type": "Person",
+"v": 3
+},
+"elviscostello": {
+"alive": true,
+"gender": "male",
+"mb": "8a338e06-d182-46f2-bd16-30a09bc840ba",
+"mb_name": "Elvis Costello",
+"name": "Elvis Costello",
+"note": "",
+"t": 1793788387,
+"type": "Person",
+"v": 3
+},
+"elvispresley": {
+"alive": false,
+"gender": "male",
+"mb": "01809552-4f87-45b0-afff-2c6f0730a3be",
+"mb_name": "Elvis Presley",
+"name": "Elvis Presley",
+"note": "умер(ла) 1977-08-16",
+"t": 1793787613,
+"type": "Person",
+"v": 3
+},
 "eminem": {
 "alive": true,
 "gender": "male",
@@ -839,6 +1389,17 @@
 "name": "Eminem",
 "note": "",
 "t": 1793022786,
+"type": "Person",
+"v": 3
+},
+"ericchurch": {
+"alive": true,
+"gender": "male",
+"mb": "15856215-cc51-4423-879c-9ac955ccb11a",
+"mb_name": "Eric Church",
+"name": "Eric Church",
+"note": "",
+"t": 1793788337,
 "type": "Person",
 "v": 3
 },
@@ -934,6 +1495,17 @@
 "type": "Group",
 "v": 3
 },
+"floridageorgialine": {
+"alive": false,
+"gender": "male",
+"mb": "c16817df-0160-490d-a437-c128cbca9218",
+"mb_name": "Florida Georgia Line",
+"name": "Florida Georgia Line",
+"note": "распались 2022",
+"t": 1793787731,
+"type": "Group",
+"v": 3
+},
 "fontainesdc": {
 "alive": true,
 "gender": "male",
@@ -943,6 +1515,28 @@
 "note": "",
 "t": 1793021818,
 "type": "Group",
+"v": 3
+},
+"foofighters": {
+"alive": true,
+"gender": "male",
+"mb": "67f66c07-6e61-4026-ade5-7e782fad3a5d",
+"mb_name": "Foo Fighters",
+"name": "Foo Fighters",
+"note": "",
+"t": 1793787912,
+"type": "Group",
+"v": 3
+},
+"franksinatra": {
+"alive": false,
+"gender": "male",
+"mb": "197450cd-0124-4164-b723-3c22dd16494d",
+"mb_name": "Frank Sinatra",
+"name": "Frank Sinatra",
+"note": "умер(ла) 1998-05-14",
+"t": 1793787957,
+"type": "Person",
 "v": 3
 },
 "fuerzaregida": {
@@ -956,6 +1550,39 @@
 "type": "Group",
 "v": 3
 },
+"fun": {
+"alive": true,
+"gender": "male",
+"mb": "136c4166-85b3-4994-aa04-59857c434199",
+"mb_name": "Fun",
+"name": "Fun.",
+"note": "",
+"t": 1793788018,
+"type": "Group",
+"v": 3
+},
+"future": {
+"alive": true,
+"gender": "male",
+"mb": "48262e82-db9f-4a92-b650-dfef979b73ec",
+"mb_name": "Future",
+"name": "Future",
+"note": "",
+"t": 1793787883,
+"type": "Person",
+"v": 3
+},
+"garthbrooks": {
+"alive": true,
+"gender": "male",
+"mb": "b76645c5-78b0-4e4c-8f95-003f40013a45",
+"mb_name": "Garth Brooks",
+"name": "Garth Brooks",
+"note": "",
+"t": 1793788087,
+"type": "Person",
+"v": 3
+},
 "gener8ion": {
 "alive": true,
 "gender": "male",
@@ -967,6 +1594,17 @@
 "type": "Person",
 "v": 3
 },
+"georgeharrison": {
+"alive": false,
+"gender": "male",
+"mb": "42a8f507-8412-4611-854f-926571049fa0",
+"mb_name": "George Harrison",
+"name": "George Harrison",
+"note": "умер(ла) 2001-11-29",
+"t": 1793788198,
+"type": "Person",
+"v": 3
+},
 "georgemichael": {
 "alive": false,
 "gender": "male",
@@ -975,6 +1613,28 @@
 "name": "George Michael",
 "note": "умер(ла) 2016-12-25",
 "t": 1793160820,
+"type": "Person",
+"v": 3
+},
+"glencampbell": {
+"alive": false,
+"gender": "male",
+"mb": "57976431-1a5c-4968-a422-b92c5e9b0d4f",
+"mb_name": "Glen Campbell",
+"name": "Glen Campbell",
+"note": "умер(ла) 2017-08-08",
+"t": 1793788125,
+"type": "Person",
+"v": 3
+},
+"gloriaestefan": {
+"alive": true,
+"gender": "female",
+"mb": "becd8cc6-a453-4183-af88-dedaaec859a6",
+"mb_name": "Gloria Estefan",
+"name": "Gloria Estefan",
+"note": "",
+"t": 1793788416,
 "type": "Person",
 "v": 3
 },
@@ -1018,6 +1678,39 @@
 "type": null,
 "v": 3
 },
+"gratefuldead": {
+"alive": false,
+"gender": "male",
+"mb": "6faa7ca7-0d99-4a5e-bfa6-1fd5037520c6",
+"mb_name": "Grateful Dead",
+"name": "Grateful Dead",
+"note": "распались 1995",
+"t": 1793788448,
+"type": "Group",
+"v": 3
+},
+"greenday": {
+"alive": true,
+"gender": "male",
+"mb": "084308bd-1654-436f-ba03-df6697104e19",
+"mb_name": "Green Day",
+"name": "Green Day",
+"note": "",
+"t": 1793787836,
+"type": "Group",
+"v": 3
+},
+"gwenstefani": {
+"alive": true,
+"gender": "female",
+"mb": "2e41ae9c-afd2-4f20-8f1e-17281ce9b472",
+"mb_name": "Gwen Stefani",
+"name": "Gwen Stefani",
+"note": "",
+"t": 1793787929,
+"type": "Person",
+"v": 3
+},
 "haddaway": {
 "alive": true,
 "gender": "male",
@@ -1027,6 +1720,17 @@
 "note": "",
 "t": 1793022901,
 "type": "Person",
+"v": 3
+},
+"haim": {
+"alive": true,
+"gender": "mixed",
+"mb": "aef06569-098f-4218-a577-b413944d9493",
+"mb_name": "HAIM",
+"name": "HAIM",
+"note": "",
+"t": 1793788044,
+"type": "Group",
 "v": 3
 },
 "hamzamalik": {
@@ -1049,6 +1753,17 @@
 "note": "",
 "t": 1793022409,
 "type": "Person",
+"v": 3
+},
+"heart": {
+"alive": true,
+"gender": "mixed",
+"mb": "bdbd48f5-abf3-4a4f-9a21-4551dbc3fde9",
+"mb_name": "Heart",
+"name": "Heart",
+"note": "",
+"t": 1793787660,
+"type": "Group",
 "v": 3
 },
 "hoobastank": {
@@ -1150,6 +1865,17 @@
 "type": "Person",
 "v": 3
 },
+"jamesbay": {
+"alive": true,
+"gender": "male",
+"mb": "6a997121-0919-482b-a91b-c6fe1b55a4b9",
+"mb_name": "James Bay",
+"name": "James Bay",
+"note": "",
+"t": 1793788276,
+"type": "Person",
+"v": 3
+},
 "jamiemiller": {
 "alive": true,
 "gender": "male",
@@ -1209,6 +1935,17 @@
 "type": "Person",
 "v": 3
 },
+"jenniferlopez": {
+"alive": true,
+"gender": "female",
+"mb": "f0602f55-1770-483d-89bd-4bae0d0ac086",
+"mb_name": "Jennifer Lopez",
+"name": "Jennifer Lopez",
+"note": "",
+"t": 1793788036,
+"type": "Person",
+"v": 3
+},
 "jheneaiko": {
 "alive": true,
 "gender": "female",
@@ -1246,6 +1983,28 @@
 "type": "Person",
 "v": 3
 },
+"jimihendrix": {
+"alive": false,
+"gender": "male",
+"mb": "06fb1c8b-566e-4cb2-985b-b467c90781d4",
+"mb_name": "Jimi Hendrix",
+"name": "Jimi Hendrix",
+"note": "умер(ла) 1970-09-18",
+"t": 1793788083,
+"type": "Person",
+"v": 3
+},
+"jimmyswaggart": {
+"alive": false,
+"gender": "male",
+"mb": "b0822dbe-7d3a-465f-9449-a80e7174bb2f",
+"mb_name": "Jimmy Swaggart",
+"name": "Jimmy Swaggart",
+"note": "умер(ла) 2025-07-01",
+"t": 1793788381,
+"type": "Person",
+"v": 3
+},
 "joaogustavoemurilo": {
 "alive": null,
 "gender": null,
@@ -1257,6 +2016,61 @@
 "type": null,
 "v": 3
 },
+"johnanderson": {
+"alive": false,
+"gender": "male",
+"mb": "21bffe8e-4e04-47f6-b1aa-7ede4b14cc4e",
+"mb_name": "John Anderson",
+"name": "John Anderson",
+"note": "умер(ла) 2026-10-21",
+"t": 1793788481,
+"type": "Person",
+"v": 3
+},
+"johncoltrane": {
+"alive": false,
+"gender": "male",
+"mb": "b625448e-bf4a-41c3-a421-72ad46cdb831",
+"mb_name": "John Coltrane",
+"name": "John Coltrane",
+"note": "умер(ла) 1967-07-17",
+"t": 1793788338,
+"type": "Person",
+"v": 3
+},
+"johnlegend": {
+"alive": true,
+"gender": "male",
+"mb": "75a72702-a5ef-4513-bca5-c5b944903546",
+"mb_name": "John Legend",
+"name": "John Legend",
+"note": "",
+"t": 1793788086,
+"type": "Person",
+"v": 3
+},
+"johnnycash": {
+"alive": false,
+"gender": "male",
+"mb": "d43d12a1-2dc9-4257-a2fd-0a3bb1081b86",
+"mb_name": "Johnny Cash",
+"name": "Johnny Cash",
+"note": "умер(ла) 2003-09-12",
+"t": 1793787920,
+"type": "Person",
+"v": 3
+},
+"johnnymathis": {
+"alive": true,
+"gender": "male",
+"mb": "48896dee-a985-424d-9849-84802f7e79c9",
+"mb_name": "Johnny Mathis",
+"name": "Johnny Mathis",
+"note": "",
+"t": 1793788119,
+"type": "Person",
+"v": 3
+},
 "josiahqueen": {
 "alive": true,
 "gender": "male",
@@ -1266,6 +2080,17 @@
 "note": "",
 "t": 1793022338,
 "type": "Person",
+"v": 3
+},
+"journey": {
+"alive": true,
+"gender": "male",
+"mb": "abd506e1-6f2b-4d6f-b937-92c267f6f88b",
+"mb_name": "Journey",
+"name": "Journey",
+"note": "",
+"t": 1793787956,
+"type": "Group",
 "v": 3
 },
 "judeline": {
@@ -1310,6 +2135,28 @@
 "name": "Justin Bieber",
 "note": "",
 "t": 1793022909,
+"type": "Person",
+"v": 3
+},
+"justintimberlake": {
+"alive": true,
+"gender": "male",
+"mb": "596ffa74-3d08-44ef-b113-765d43d12738",
+"mb_name": "Justin Timberlake",
+"name": "Justin Timberlake",
+"note": "",
+"t": 1793787865,
+"type": "Person",
+"v": 3
+},
+"kaceymusgraves": {
+"alive": true,
+"gender": "female",
+"mb": "d1393ecb-431b-4fde-a6ea-d769f2f040cb",
+"mb_name": "Kacey Musgraves",
+"name": "Kacey Musgraves",
+"note": "",
+"t": 1793787838,
 "type": "Person",
 "v": 3
 },
@@ -1434,6 +2281,28 @@
 "type": "Group",
 "v": 3
 },
+"keithurban": {
+"alive": true,
+"gender": "male",
+"mb": "f45da029-7b00-4bf3-962c-0eeb20309cc4",
+"mb_name": "Keith Urban",
+"name": "Keith Urban",
+"note": "",
+"t": 1793788047,
+"type": "Person",
+"v": 3
+},
+"kennyrogers": {
+"alive": false,
+"gender": "male",
+"mb": "c3d14b41-a48d-488f-bfed-ce0597bb0b1f",
+"mb_name": "Kenny Rogers",
+"name": "Kenny Rogers",
+"note": "умер(ла) 2020-03-20",
+"t": 1793787840,
+"type": "Person",
+"v": 3
+},
 "khalid": {
 "alive": true,
 "gender": "male",
@@ -1442,6 +2311,17 @@
 "name": "Khalid",
 "note": "",
 "t": 1793022767,
+"type": "Person",
+"v": 3
+},
+"kidcudi": {
+"alive": true,
+"gender": "male",
+"mb": "e0e1db18-f7ba-4dee-95ff-7ae8cf545460",
+"mb_name": "Kid Cudi",
+"name": "Kid Cudi",
+"note": "",
+"t": 1793787733,
 "type": "Person",
 "v": 3
 },
@@ -1476,6 +2356,28 @@
 "note": "",
 "t": 1793600488,
 "type": "Person",
+"v": 3
+},
+"kiss": {
+"alive": false,
+"gender": "male",
+"mb": "e1f1e33e-2e4c-4d43-b91b-7064068d3283",
+"mb_name": "KISS",
+"name": "Kiss",
+"note": "распались 2023",
+"t": 1793787980,
+"type": "Group",
+"v": 3
+},
+"kpop": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "K'Pop",
+"note": "нет в MusicBrainz",
+"t": 1793787900,
+"type": null,
 "v": 3
 },
 "ladygaga": {
@@ -1552,6 +2454,17 @@
 "type": "Person",
 "v": 3
 },
+"last": {
+"alive": true,
+"gender": "male",
+"mb": "49db7100-9316-426f-9c46-1feb1cbe2705",
+"mb_name": "The Last",
+"name": "The Last",
+"note": "",
+"t": 1793788182,
+"type": "Group",
+"v": 3
+},
 "latinmafia": {
 "alive": true,
 "gender": null,
@@ -1574,6 +2487,39 @@
 "type": null,
 "v": 3
 },
+"leonardbernstein": {
+"alive": false,
+"gender": "male",
+"mb": "fa39bc82-9b27-4bbb-9425-d719a72e09ac",
+"mb_name": "Leonard Bernstein",
+"name": "Leonard Bernstein",
+"note": "умер(ла) 1990-10-14",
+"t": 1793788269,
+"type": "Person",
+"v": 3
+},
+"lights": {
+"alive": true,
+"gender": "female",
+"mb": "efdbd3b1-2d20-4cea-af46-dffbc1e7daba",
+"mb_name": "Lights",
+"name": "Lights",
+"note": "",
+"t": 1793787695,
+"type": "Person",
+"v": 3
+},
+"lilwayne": {
+"alive": true,
+"gender": "male",
+"mb": "ac9a487a-d9d2-4f27-bb23-0f4686488345",
+"mb_name": "Lil Wayne",
+"name": "Lil Wayne",
+"note": "",
+"t": 1793788063,
+"type": "Person",
+"v": 3
+},
 "limpbizkit": {
 "alive": true,
 "gender": "male",
@@ -1583,6 +2529,17 @@
 "note": "",
 "t": 1793022838,
 "type": "Group",
+"v": 3
+},
+"lindseystirling": {
+"alive": true,
+"gender": "female",
+"mb": "53e40f93-f4af-4f8c-819c-7bbe4b6f0a1c",
+"mb_name": "Lindsey Stirling",
+"name": "Lindsey Stirling",
+"note": "",
+"t": 1793787882,
+"type": "Person",
 "v": 3
 },
 "linkinpark": {
@@ -1621,6 +2578,17 @@
 "type": "Person",
 "v": 3
 },
+"live": {
+"alive": true,
+"gender": "male",
+"mb": "cba77ba2-862d-4cee-a8f6-d3f9daf7211c",
+"mb_name": "Live",
+"name": "Live",
+"note": "",
+"t": 1793787709,
+"type": "Group",
+"v": 3
+},
 "lizardwizard": {
 "alive": null,
 "gender": null,
@@ -1654,6 +2622,39 @@
 "type": "Person",
 "v": 3
 },
+"los": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "Los",
+"note": "нет в MusicBrainz",
+"t": 1793788023,
+"type": null,
+"v": 3
+},
+"love": {
+"alive": false,
+"gender": "male",
+"mb": "34ec9a8d-c65b-48fd-bcdd-aad2f72fdb47",
+"mb_name": "Love",
+"name": "Love",
+"note": "распались 2005",
+"t": 1793787678,
+"type": "Group",
+"v": 3
+},
+"lp": {
+"alive": true,
+"gender": "non-binary",
+"mb": "6301cda3-f614-4501-a1c4-b19b27c2efac",
+"mb_name": "LP",
+"name": "LP",
+"note": "",
+"t": 1793787610,
+"type": "Person",
+"v": 3
+},
 "lucki": {
 "alive": true,
 "gender": "male",
@@ -1674,6 +2675,17 @@
 "note": "",
 "t": 1793021931,
 "type": "Other",
+"v": 3
+},
+"madness": {
+"alive": true,
+"gender": "male",
+"mb": "5f58803e-8c4c-478e-8b51-477f38483ede",
+"mb_name": "Madness",
+"name": "Madness",
+"note": "",
+"t": 1793788321,
+"type": "Group",
 "v": 3
 },
 "madonna": {
@@ -1736,6 +2748,17 @@
 "type": "Person",
 "v": 3
 },
+"maroon5": {
+"alive": true,
+"gender": "male",
+"mb": "0ab49580-c84f-44d4-875f-d83760ea2cfe",
+"mb_name": "Maroon 5",
+"name": "Maroon 5",
+"note": "",
+"t": 1793788254,
+"type": "Group",
+"v": 3
+},
 "martingarrix": {
 "alive": true,
 "gender": "male",
@@ -1744,6 +2767,17 @@
 "name": "Martin Garrix",
 "note": "",
 "t": 1793022567,
+"type": "Person",
+"v": 3
+},
+"marvingaye": {
+"alive": false,
+"gender": "male",
+"mb": "afdb7919-059d-43c1-b668-ba1d265e7e42",
+"mb_name": "Marvin Gaye",
+"name": "Marvin Gaye",
+"note": "умер(ла) 1984-04-01",
+"t": 1793788035,
 "type": "Person",
 "v": 3
 },
@@ -1798,6 +2832,17 @@
 "name": "Megan Moroney",
 "note": "",
 "t": 1793160620,
+"type": "Person",
+"v": 3
+},
+"meghantrainor": {
+"alive": true,
+"gender": "female",
+"mb": "b2029169-2574-4305-820f-252a5fde3697",
+"mb_name": "Meghan Trainor",
+"name": "Meghan Trainor",
+"note": "",
+"t": 1793788360,
 "type": "Person",
 "v": 3
 },
@@ -1894,6 +2939,17 @@
 "type": "Person",
 "v": 3
 },
+"mozart": {
+"alive": false,
+"gender": "male",
+"mb": "b972f589-fb0e-474e-b64a-803b0364fa75",
+"mb_name": "Wolfgang Amadeus Mozart",
+"name": "Mozart",
+"note": "умер(ла) 1791-12-05",
+"t": 1793788062,
+"type": "Person",
+"v": 3
+},
 "msrachel": {
 "alive": true,
 "gender": "female",
@@ -1904,6 +2960,28 @@
 "note": "",
 "t": 1793022339,
 "type": "Person",
+"v": 3
+},
+"mumfordsons": {
+"alive": true,
+"gender": "male",
+"mb": "c44e9c22-ef82-4a77-9bcd-af6c958446d6",
+"mb_name": "Mumford & Sons",
+"name": "Mumford & Sons",
+"note": "",
+"t": 1793787918,
+"type": "Group",
+"v": 3
+},
+"mymorningjacket": {
+"alive": true,
+"gender": "male",
+"mb": "ea5883b7-68ce-48b3-b115-61746ea53b8c",
+"mb_name": "My Morning Jacket",
+"name": "My Morning Jacket",
+"note": "",
+"t": 1793788083,
+"type": "Group",
 "v": 3
 },
 "natanaelcano": {
@@ -1917,6 +2995,17 @@
 "type": "Person",
 "v": 3
 },
+"natkingcole": {
+"alive": false,
+"gender": "male",
+"mb": "fbe054ec-a143-4101-9e9e-64abc5ff5ac9",
+"mb_name": "Nat King Cole",
+"name": "Nat King Cole",
+"note": "умер(ла) 1965-02-15",
+"t": 1793787983,
+"type": "Person",
+"v": 3
+},
 "neighbourhood": {
 "alive": true,
 "gender": "male",
@@ -1925,6 +3014,28 @@
 "name": "The Neighbourhood",
 "note": "",
 "t": 1793022324,
+"type": "Group",
+"v": 3
+},
+"neildiamond": {
+"alive": true,
+"gender": "male",
+"mb": "a42d3fd5-55de-4206-86c3-4fbb5404018f",
+"mb_name": "Neil Diamond",
+"name": "Neil Diamond",
+"note": "",
+"t": 1793788199,
+"type": "Person",
+"v": 3
+},
+"nelson": {
+"alive": true,
+"gender": "male",
+"mb": "3b281ee2-43a1-48c5-b8dc-f6126917debb",
+"mb_name": "Nelson",
+"name": "Nelson",
+"note": "",
+"t": 1793787966,
 "type": "Group",
 "v": 3
 },
@@ -1948,6 +3059,17 @@
 "note": "",
 "t": 1793600488,
 "type": "Group",
+"v": 3
+},
+"ninasimone": {
+"alive": false,
+"gender": "female",
+"mb": "2944824d-4c26-476f-a981-be849081942f",
+"mb_name": "Nina Simone",
+"name": "Nina Simone",
+"note": "умер(ла) 2003-04-21",
+"t": 1793788382,
+"type": "Person",
 "v": 3
 },
 "nirvana": {
@@ -1983,6 +3105,39 @@
 "type": "Person",
 "v": 3
 },
+"nofx": {
+"alive": false,
+"gender": "male",
+"mb": "dcaa4f81-bfb7-44eb-8594-4e74f004b6e4",
+"mb_name": "NOFX",
+"name": "Nofx",
+"note": "распались 2024",
+"t": 1793788336,
+"type": "Group",
+"v": 3
+},
+"notoriousbig": {
+"alive": false,
+"gender": "male",
+"mb": "d5d97b2b-b83b-4976-814a-056d9076c8c3",
+"mb_name": "The Notorious B.I.G.",
+"name": "The Notorious B.I.G.",
+"note": "умер(ла) 1997-03-09",
+"t": 1793788483,
+"type": "Person",
+"v": 3
+},
+"notspecified": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "Not Specified",
+"note": "нет в MusicBrainz",
+"t": 1793787608,
+"type": null,
+"v": 3
+},
 "odetari": {
 "alive": true,
 "gender": "male",
@@ -2016,6 +3171,17 @@
 "name": "Olivia Dean",
 "note": "",
 "t": 1793021944,
+"type": "Person",
+"v": 3
+},
+"olivianewtonjohn": {
+"alive": false,
+"gender": "female",
+"mb": "10ccb5d8-f9d5-4954-9441-3419b522a214",
+"mb_name": "Olivia Newton‐John",
+"name": "Olivia Newton-John",
+"note": "умер(ла) 2022-08-08",
+"t": 1793788048,
 "type": "Person",
 "v": 3
 },
@@ -2067,6 +3233,17 @@
 "type": "Person",
 "v": 3
 },
+"onerepublic": {
+"alive": true,
+"gender": "male",
+"mb": "c33c2065-b1c3-4406-b066-d33a9e2ea71a",
+"mb_name": "OneRepublic",
+"name": "OneRepublic",
+"note": "",
+"t": 1793788035,
+"type": "Group",
+"v": 3
+},
 "paramore": {
 "alive": true,
 "gender": "mixed",
@@ -2078,6 +3255,61 @@
 "type": "Group",
 "v": 3
 },
+"paulmccartney": {
+"alive": true,
+"gender": "male",
+"mb": "ba550d0e-adac-4864-b88b-407cab5e76af",
+"mb_name": "Paul McCartney",
+"name": "Paul McCartney",
+"note": "",
+"t": 1793787734,
+"type": "Person",
+"v": 3
+},
+"pearljam": {
+"alive": true,
+"gender": "male",
+"mb": "83b9cbe7-9857-49e2-ab8e-b57b01038103",
+"mb_name": "Pearl Jam",
+"name": "Pearl Jam",
+"note": "",
+"t": 1793788118,
+"type": "Group",
+"v": 3
+},
+"pentatonix": {
+"alive": true,
+"gender": "mixed",
+"mb": "79c67eb5-3851-4b28-bfe0-3adfcd6f58d7",
+"mb_name": "Pentatonix",
+"name": "Pentatonix",
+"note": "",
+"t": 1793788072,
+"type": "Group",
+"v": 3
+},
+"pink": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "Pink",
+"note": "нет в MusicBrainz",
+"t": 1793787642,
+"type": null,
+"v": 3
+},
+"pnk": {
+"alive": true,
+"gender": "female",
+"mb": "f4d5cc07-3bc9-4836-9b15-88a08359bc63",
+"mb_name": "P!nk",
+"name": "P!nk",
+"note": "",
+"t": 1793787632,
+"type": "Person",
+"v": 3
+},
 "poohshiesty": {
 "alive": true,
 "gender": "male",
@@ -2086,6 +3318,17 @@
 "name": "Pooh Shiesty",
 "note": "",
 "t": 1793022298,
+"type": "Person",
+"v": 3
+},
+"prince": {
+"alive": false,
+"gender": "male",
+"mb": "070d193a-845c-479f-980e-bef15710653e",
+"mb_name": "Prince",
+"name": "Prince",
+"note": "умер(ла) 2016-04-21",
+"t": 1793788061,
 "type": "Person",
 "v": 3
 },
@@ -2102,12 +3345,14 @@
 },
 "queen": {
 "alive": false,
+"gender": "male",
 "mb": "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
 "mb_name": "Queen",
 "name": "Queen",
 "note": "распались",
-"t": 1793018002,
-"type": "Group"
+"t": 1793787784,
+"type": "Group",
+"v": 3
 },
 "queensofthestoneage": {
 "alive": true,
@@ -2164,6 +3409,17 @@
 "type": "Person",
 "v": 3
 },
+"redhotchilipeppers": {
+"alive": true,
+"gender": "male",
+"mb": "8bfac288-ccc5-448d-9573-c33ea2aa5c30",
+"mb_name": "Red Hot Chili Peppers",
+"name": "Red Hot Chili Peppers",
+"note": "",
+"t": 1793787813,
+"type": "Group",
+"v": 3
+},
 "remiwolf": {
 "alive": true,
 "gender": "female",
@@ -2183,6 +3439,17 @@
 "note": "",
 "t": 1793022411,
 "type": "Person",
+"v": 3
+},
+"ride": {
+"alive": true,
+"gender": "male",
+"mb": "3f575ecd-627d-4f08-a89f-abd46d469c7e",
+"mb_name": "Ride",
+"name": "Ride",
+"note": "",
+"t": 1793788197,
+"type": "Group",
 "v": 3
 },
 "rihanna": {
@@ -2231,6 +3498,17 @@
 "note": "",
 "t": 1793021926,
 "type": "Person",
+"v": 3
+},
+"rollingstones": {
+"alive": true,
+"gender": "male",
+"mb": "b071f9fa-14b0-4217-8e97-eb41da73f598",
+"mb_name": "The Rolling Stones",
+"name": "The Rolling Stones",
+"note": "",
+"t": 1793788011,
+"type": "Group",
 "v": 3
 },
 "rusowsky": {
@@ -2284,6 +3562,28 @@
 "type": "Group",
 "v": 3
 },
+"seal": {
+"alive": true,
+"gender": "male",
+"mb": "f053ae01-dae6-4aae-9883-e8c279fdbef4",
+"mb_name": "Seal",
+"name": "Seal",
+"note": "",
+"t": 1793787607,
+"type": "Person",
+"v": 3
+},
+"selenagomez": {
+"alive": true,
+"gender": "female",
+"mb": "e4bc69e2-a064-4f93-ada1-f7f209cc1cc3",
+"mb_name": "Selena Gomez",
+"name": "Selena Gomez",
+"note": "",
+"t": 1793788012,
+"type": "Person",
+"v": 3
+},
 "shakira": {
 "alive": true,
 "gender": "female",
@@ -2314,6 +3614,39 @@
 "name": "Shakira",
 "note": "",
 "t": 1793022350,
+"type": "Person",
+"v": 3
+},
+"shaniatwain": {
+"alive": true,
+"gender": "female",
+"mb": "faabb55d-3c9e-4c23-8779-732ac2ee2c0d",
+"mb_name": "Shania Twain",
+"name": "Shania Twain",
+"note": "",
+"t": 1793787847,
+"type": "Person",
+"v": 3
+},
+"shawnmendes": {
+"alive": true,
+"gender": "male",
+"mb": "b7d92248-97e3-4450-8057-6fe06738f735",
+"mb_name": "Shawn Mendes",
+"name": "Shawn Mendes",
+"note": "",
+"t": 1793788126,
+"type": "Person",
+"v": 3
+},
+"sherylcrow": {
+"alive": true,
+"gender": "female",
+"mb": "80ccfede-c258-4575-a7ad-c982e9932e0f",
+"mb_name": "Sheryl Crow",
+"name": "Sheryl Crow",
+"note": "",
+"t": 1793788185,
 "type": "Person",
 "v": 3
 },
@@ -2398,6 +3731,17 @@
 "type": "Person",
 "v": 3
 },
+"sleep": {
+"alive": true,
+"gender": "male",
+"mb": "6fc69ec6-3e59-4ff7-849d-b5da932abe4d",
+"mb_name": "Sleep",
+"name": "Sleep",
+"note": "",
+"t": 1793788470,
+"type": "Group",
+"v": 3
+},
 "slxughter": {
 "alive": true,
 "gender": "male",
@@ -2418,6 +3762,28 @@
 "note": "",
 "t": 1793160910,
 "type": "Group",
+"v": 3
+},
+"snoopdogg": {
+"alive": true,
+"gender": "male",
+"mb": "f90e8b26-9e52-4669-a5c9-e28529c47894",
+"mb_name": "Snoop Dogg",
+"name": "Snoop Dogg",
+"note": "",
+"t": 1793788428,
+"type": "Person",
+"v": 3
+},
+"snow": {
+"alive": false,
+"gender": "male",
+"mb": "a1d3685a-c61d-49aa-a294-bcfc25e516b5",
+"mb_name": "Mark Snow",
+"name": "Snow",
+"note": "умер(ла) 2025-07-04",
+"t": 1793787898,
+"type": "Person",
 "v": 3
 },
 "sombr": {
@@ -2477,6 +3843,17 @@
 "type": "Person",
 "v": 3
 },
+"specials": {
+"alive": true,
+"gender": "male",
+"mb": "07eb40a2-2914-439c-a01d-15a685b84ddf",
+"mb_name": "The Specials",
+"name": "The Specials",
+"note": "",
+"t": 1793787998,
+"type": "Group",
+"v": 3
+},
 "stevelacy": {
 "alive": false,
 "gender": "male",
@@ -2518,6 +3895,17 @@
 "name": "Swedish House Mafia",
 "note": "",
 "t": 1793022716,
+"type": "Group",
+"v": 3
+},
+"sweet": {
+"alive": false,
+"gender": "male",
+"mb": "dc73bb40-b697-4df9-a2ec-0555bebdba75",
+"mb_name": "Sweet",
+"name": "Sweet",
+"note": "распались 1982",
+"t": 1793787747,
 "type": "Group",
 "v": 3
 },
@@ -2567,6 +3955,17 @@
 "note": "",
 "t": 1793022351,
 "type": "Person",
+"v": 3
+},
+"talktalk": {
+"alive": false,
+"gender": "male",
+"mb": "a74f43e4-50c4-4b19-a2ce-c05ce9bccb03",
+"mb_name": "Talk Talk",
+"name": "Talk Talk",
+"note": "распались 1991",
+"t": 1793788395,
+"type": "Group",
 "v": 3
 },
 "tameimpala": {
@@ -2786,6 +4185,17 @@
 "type": "Person",
 "v": 3
 },
+"top": {
+"alive": true,
+"gender": "male",
+"mb": "bb7246a8-40b6-4397-8322-448aaa2d33a3",
+"mb_name": "T.O.P",
+"name": "T.O.P",
+"note": "",
+"t": 1793788038,
+"type": "Person",
+"v": 3
+},
 "topic": {
 "alive": true,
 "gender": "male",
@@ -2795,6 +4205,17 @@
 "note": "",
 "t": 1793022896,
 "type": "Person",
+"v": 3
+},
+"u2": {
+"alive": true,
+"gender": "male",
+"mb": "a3cb23fc-acd3-4ce0-8f36-1e5aa6a18432",
+"mb_name": "U2",
+"name": "U2",
+"note": "",
+"t": 1793788140,
+"type": "Group",
 "v": 3
 },
 "ultranate": {
@@ -2807,6 +4228,28 @@
 "note": "",
 "t": 1793022010,
 "type": "Person",
+"v": 3
+},
+"underoath": {
+"alive": true,
+"gender": "male",
+"mb": "674a7e8c-9682-419a-8e05-2358e28b5359",
+"mb_name": "Underoath",
+"name": "Underoath",
+"note": "",
+"t": 1793788414,
+"type": "Group",
+"v": 3
+},
+"used": {
+"alive": true,
+"gender": "male",
+"mb": "8262d8e4-9137-4bb3-a787-3caabbbc13e9",
+"mb_name": "The Used",
+"name": "The Used",
+"note": "",
+"t": 1793787631,
+"type": "Group",
 "v": 3
 },
 "victormendivil": {
@@ -2868,6 +4311,17 @@
 "type": "Person",
 "v": 3
 },
+"war": {
+"alive": false,
+"gender": "male",
+"mb": "3e6bbdb8-66c8-439c-a3d9-87391ce88740",
+"mb_name": "War",
+"name": "War",
+"note": "распались 1994",
+"t": 1793787895,
+"type": "Group",
+"v": 3
+},
 "webbie": {
 "alive": true,
 "gender": "male",
@@ -2887,6 +4341,17 @@
 "name": "The Weeknd",
 "note": "",
 "t": 1793021943,
+"type": "Person",
+"v": 3
+},
+"willienelson": {
+"alive": true,
+"gender": "male",
+"mb": "668fd73c-bf54-4310-a139-305517f05311",
+"mb_name": "Willie Nelson",
+"name": "Willie Nelson",
+"note": "",
+"t": 1793787847,
 "type": "Person",
 "v": 3
 },
