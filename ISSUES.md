@@ -4115,3 +4115,25 @@ Google Cloud армянского голоса нет. Владелец выбр
   прогон» (09:56 03.11.2026). В одном скрипте — `pgrep -a -x python3.13 | grep -q hype/idol`.
 - Прогон `--full` 03.11.2026 — 156 с, всё зелёное: python 11 из 11, сборка
   38 с, `test_app` 231 проверка, `test_account` 42, `test_site` 26, `test_seo` 35.
+
+## O-138. «Идол»: неполный список — добор 16 исполнительниц
+
+Владелец 04.11.2026: «У нас полный список идолов? Разберись».
+
+- Проверка: распределение исполнителей на eBay по цветному винилу (8 запросов
+  с ASPECT_REFINEMENTS, 1 401 имя) и счёт живых объявлений под условия «Идола»
+  (новый, цветной, торг, США, до $25) у 64 кандидаток и 22 участниц списка.
+- Пробелы: Meghan Trainor 38, Selena Gomez 30, Jennifer Lopez 29, Lizzo 25,
+  Lucy Dacus 24, Gwen Stefani 22, Lindsey Stirling 16, Nicki Minaj 12, Doechii 12,
+  Kelly Clarkson 10, Demi Lovato 10, Kehlani 7, Tyla 6, KATSEYE 6, Ava Max 6,
+  Britney Spears 5 — для сравнения Sabrina Carpenter 14, Chappell Roan 35.
+  Добавлены в `data/hype/idol_extra.txt`, список — 77 имён (~8 запросов в час).
+- Не добавлены: Barbra Streisand (20) и Gloria Estefan (23) — много, но не
+  «трендовые»; кантри (Kacey Musgraves, Shania Twain, Carrie Underwood) — по
+  правилу владельца; P!nk — `plain()` даёт «p nk», а «pink» ловит розовый винил.
+- Ловушки: MusicBrainz записал Tyla мужчиной, Kehlani и Demi Lovato —
+  non-binary: из чартов они бы не прошли, в постоянном списке пол не проверяется.
+  У 9 имён из чартов (Faouzia, Judeline, ADÉLA, SIENNA SPIRO, Imael Angel,
+  Mariah Deborah, TLC, Jhené Aiko, Remi Wolf) таких объявлений сейчас 0 —
+  список чартов пересчитывается сам, запросы на них дешёвые.
+
