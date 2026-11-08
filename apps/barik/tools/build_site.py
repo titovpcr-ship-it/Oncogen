@@ -163,33 +163,74 @@ if ('serviceWorker' in navigator) addEventListener('load', () =>
 </script>
 """
 
-HTACCESS = r"""# Barik — Apache (армянский хостинг). Типы файлов, сжатие, кэш, только HTTPS.
+HTACCESS = r"""# Barik — Apache (армянский хостинг, cPanel). Типы, сжатие, кэш, HTTPS, www → barik.am, 404 (O-147).
 AddType application/manifest+json .webmanifest
 AddType text/javascript .js
 AddType font/woff2 .woff2
 AddType image/webp .webp
 AddDefaultCharset utf-8
+Options -Indexes
+ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # проверка домена для сертификата (AutoSSL / Let's Encrypt) идёт по http — её не перенаправлять
+  RewriteCond %{REQUEST_URI} ^/\.well-known/ [NC]
+  RewriteRule ^ - [L]
+  # www.barik.am → barik.am (и сразу https)
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
   RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
+# служебное наружу не отдаётся: архивы выкладки, базы, журналы, скрытые файлы
+<FilesMatch "(\.(zip|sqlite|db|log|bak|sh|py)|^\..+)$">
+  Require all denied
+</FilesMatch>
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/json application/manifest+json image/svg+xml
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/json application/manifest+json image/svg+xml application/xml text/xml text/plain
 </IfModule>
 <IfModule mod_headers.c>
-  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest)$">
+  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest|404\.html)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  <FilesMatch "\.(js|css|woff2|png|svg|json|mp3)$">
+  <FilesMatch "\.(js|css|woff2|png|svg|json|jpg)$">
     Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
-  <FilesMatch "\.webp$">
+  # имя записи и картинки — по содержимому: файл не меняется никогда
+  <FilesMatch "\.(webp|mp3)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  Header set X-Content-Type-Options "nosniff"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # HSTS — только когда сертификат работает (иначе браузеры запрут сайт на месяцы): после запуска
+  # Header always set Strict-Transport-Security "max-age=31536000"
 </IfModule>
 """
+
+PAGE404 = """<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Barik — 404</title><meta name="robots" content="noindex"><link rel="icon" href="/favicon.png">
+<style>
+:root{--bg:#F4ECE7;--ink:#1C2045;--ink2:#4C4F6E;--acc:#EF8B2C;--pom:#A8173A;--card:#FFFBF8;--line:#E4D5CC}
+@media (prefers-color-scheme:dark){:root{--bg:#10122A;--ink:#F4EEE8;--ink2:#BDB8D0;--acc:#FFA03F;--pom:#FF8FA6;--card:#1A1E40;--line:#2E3462}}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:520px;padding:32px 16px;text-align:center}
+.mark{font:700 64px/1 "Noto Serif Armenian",serif;color:var(--pom)}
+h1{font-size:22px;margin:12px 0 4px}p{margin:4px 0;color:var(--ink2)}
+.go{display:inline-block;margin-top:20px;padding:14px 22px;border-radius:16px;background:var(--acc);color:#2B1404;font-weight:600;text-decoration:none}
+nav{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}nav a{color:var(--ink2)}
+</style></head><body><main>
+<div class="mark" lang="hy">Բառիկ</div>
+<h1>Такой страницы нет · Page not found</h1>
+<p>Page introuvable · Página no encontrada</p>
+<p lang="hy">Նման էջ չկա</p>
+<a class="go" href="/">Barik →</a>
+<nav><a href="/ru/">Слова</a><a href="/en/">Words</a><a href="/fr/">Mots</a><a href="/es/">Palabras</a></nav>
+</main></body></html>
+"""
+
 
 
 def build(out=OUT, url=SITE_URL, seo=True, paid=False):
@@ -221,6 +262,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
               ensure_ascii=False, indent=1)
     open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n")
     open(os.path.join(out, ".htaccess"), "w").write(HTACCESS)
+    open(os.path.join(out, "404.html"), "w", encoding="utf-8").write(PAGE404)
     if seo and url:
         seo_pages(out, url)
     # Приложение не знает о страницах поиска — в его кэш (без интернета) они не идут.
@@ -228,7 +270,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js") or rel.startswith(("audio/", "pics/", "og/", "api/"))
+            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel)
