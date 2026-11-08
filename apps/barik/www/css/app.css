@@ -875,3 +875,7 @@ details[open] .pm::after{transform:rotate(0)}
 .pl-rows li{display:flex;justify-content:space-between;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line)}
 .pl-rows b{font-variant-numeric:tabular-nums;color:var(--pom)}
 .p-res .p-can{max-width:460px;margin:8px auto 14px}
+/* этап D: подсказка лица в таблице, замок у формул Premium */
+.p-hint{font:600 18px/1.2 var(--hy);color:var(--ink-3);margin-bottom:2px}
+.p-unit.locked{background:transparent}
+.p-unit.locked .t-name,.p-unit.locked .t-hy,.p-unit.locked .t-ic{opacity:.7}

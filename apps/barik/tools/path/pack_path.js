@@ -88,10 +88,24 @@ if (course) {
         }
         if (d.items.length < 4) errs.push(at + ': в упражнении меньше 4 слов');
         delete d.words;
+      } else if (d.t === 'conj') {
+        // спряжение: [глагол, формы key ×6, [формы alt ×6, …]] — лицо выбирает приложение
+        has4(d.q, at + ' q');
+        d.items = [];
+        for (const v of d.verbs) {
+          if (!gold.verbs[v]) { errs.push(at + ': у глагола «' + v + '» нет эталона — в формулы нельзя'); continue; }
+          if (!dict.has(v)) errs.push(at + ': «' + v + '» нет в словаре');
+          const f = G.verb(v, d.key);
+          if (!Array.isArray(f) || f.length !== 6) { errs.push(at + ': у «' + v + '» нет 6 лиц ' + d.key); continue; }
+          d.items.push([v, f, d.alt.map(k => G.verb(v, k))]);
+          f.forEach(x => say.add(x));
+        }
+        if (d.items.length < 4) errs.push(at + ': в спряжении меньше 4 глаголов');
+        delete d.verbs;
       } else if (d.t === 'mean') {
         for (const w of d.words) if (!dict.has(w)) errs.push(at + ': «' + w + '» нет в словаре');
       } else if (d.t === 'table') {
-        for (const [a, b] of d.rows) say.add(d.frame.replace('{0}', a).replace('___', b));
+        for (const [a, b] of d.rows) say.add((d.hint ? d.frame : d.frame.replace('{0}', a)).replace('___', b));
       } else if (d.t === 'num') {
         for (const [, w] of d.items) say.add(w);
       } else if (d.t === 'pick') {
@@ -99,13 +113,10 @@ if (course) {
       } else errs.push(at + ': неизвестное упражнение ' + d.t);
     }
   }
-  // входной тест: формы глаголов (настоящее, аорист, будущее — 1-е лицо; настоящее 3-е — для выбора)
-  for (const v of (course.place && course.place.verbs) || []) {
-    if (!gold.verbs[v]) { errs.push('place: у глагола «' + v + '» нет эталона'); continue; }
-    if (!dict.has(v)) errs.push('place: «' + v + '» нет в словаре');
-    for (const k of ['pres', 'aor', 'fut']) say.add(G.verb(v, k)[0]);
-    say.add(G.verb(v, 'pres')[2]);
-  }
+  // слово из армянских и латинских/кириллических букв вперемешку — опечатка («вրա»)
+  const mixed = o => typeof o === 'string' ? o.split(/\s+/).filter(w => /[\u0531-\u058F]/.test(w) && /[A-Za-zА-Яа-яЁё]/.test(w))
+    : (o && typeof o === 'object' ? Object.values(o).flatMap(mixed) : []);
+  for (const w of mixed(course)) errs.push('слово вперемешку армянскими и другими буквами: ' + w);
   if (errs.length) { console.error('Курс сломан:\n  ' + errs.join('\n  ')); process.exit(1); }
   // что озвучить (tools/gen_audio.py): реплики сцен и ответы упражнений, кроме уже озвученных слов словаря
   const txt = [...say].filter(t => !dict.has(t)).sort();

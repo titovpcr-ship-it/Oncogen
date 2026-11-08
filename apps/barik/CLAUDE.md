@@ -20,6 +20,9 @@
 **Этап C сделан (O-143):** входной тест (`placeItems`/`placeApply`, глаголы — `course.json` → `place.verbs`),
 урожай дня (`harvestItems`, `PG.h`), проверка чтения ступени 0 (`readItems`, `PG.abc`) — режимы `startDrill(kind)`
 поверх той же практики (`PU.kind`: unit | place | harvest | read).
+**Этап D сделан (O-144):** ступени 2–3 — 16 формул (`course.json`, свой текст ×4), упражнение `conj` (6 лиц,
+эталон), `table.hint`; ступени 2+ — Premium (`unitOpen`); входной тест ступенчатый (`placeStage`/`placeMore`,
+70%); гранат — `grains(n)`. Проверка подписки в тестах — `BARARAN_CONFIG.FORCE_PREMIUM=true`.
 
 ## НАЗВАНИЕ — Barik (02.11.2026)
 Владелец 02.11.2026: «Подумай над названием проекта, проверь barer на свободность» → «Берём Barik,

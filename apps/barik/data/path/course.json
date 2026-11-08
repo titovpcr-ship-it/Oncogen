@@ -1,226 +1,3679 @@
 {
- "_": "Метод «Гранат» (O-140, этап B): ступени и формулы. Всё — свой текст: формулы, объяснения, сцены и переводы. Упражнения «form»/«verb» разворачивает tools/path/pack_path.js через www/js/grammar.js (формы — только у слов с эталоном Викисловаря).",
+ "_": "Метод «Гранат» (O-140, этап B): ступени и формулы. Всё — свой текст: формулы, объяснения, сцены и переводы. Упражнения «form»/«verb» разворачивает tools/path/pack_path.js через www/js/grammar.js (формы — только у слов с эталоном Викисловаря). Упражнение «conj» — спряжение по лицам: pack_path.js кладёт формы времени key и alt всех 6 лиц. У «table» hint: подсказка в скобках, в саму фразу не входит.",
  "stages": [
-  {"id": 0, "hy": "Այբուբեն", "lv": "A0", "ru": "Алфавит", "en": "Alphabet", "fr": "Alphabet", "es": "Alfabeto",
-   "can": {"ru": "читаю и пишу все 39 букв", "en": "I can read and write all 39 letters", "fr": "je lis et j'écris les 39 lettres", "es": "leo y escribo las 39 letras"}},
-  {"id": 1, "hy": "Հատիկ", "lv": "A1.1", "ru": "Зерно", "en": "Seed", "fr": "Graine", "es": "Semilla",
-   "can": {"ru": "знакомлюсь, называю вещи, считаю, спрашиваю «где» и «сколько»", "en": "I can introduce myself, name things, count, ask where and how much", "fr": "je me présente, je nomme les choses, je compte, je demande où et combien", "es": "me presento, nombro cosas, cuento, pregunto dónde y cuánto"}},
-  {"id": 2, "hy": "Ծիլ", "lv": "A1.2", "ru": "Росток", "en": "Sprout", "fr": "Pousse", "es": "Brote",
-   "can": {"ru": "рассказываю о себе и своём дне, покупаю, договариваюсь о времени", "en": "I can talk about myself and my day, shop, agree on a time", "fr": "je parle de moi et de ma journée, j'achète, je fixe un rendez-vous", "es": "hablo de mí y de mi día, compro, quedo a una hora"}},
-  {"id": 3, "hy": "Ճյուղ", "lv": "A2", "ru": "Ветвь", "en": "Branch", "fr": "Branche", "es": "Rama",
-   "can": {"ru": "рассказываю, что было и будет, сравниваю, объясняю дорогу", "en": "I can tell what happened and will happen, compare, give directions", "fr": "je raconte le passé et l'avenir, je compare, j'explique un chemin", "es": "cuento lo que pasó y pasará, comparo, explico un camino"}},
-  {"id": 4, "hy": "Ծաղիկ", "lv": "B1", "ru": "Цвет", "en": "Blossom", "fr": "Fleur", "es": "Flor",
-   "can": {"ru": "рассуждаю, советую, ставлю условия, читаю простые новости", "en": "I can reason, advise, set conditions, read simple news", "fr": "je raisonne, je conseille, je pose des conditions, je lis des nouvelles simples", "es": "razono, aconsejo, pongo condiciones, leo noticias simples"}},
-  {"id": 5, "hy": "Պտուղ", "lv": "B2", "ru": "Плод", "en": "Fruit", "fr": "Fruit", "es": "Fruto",
-   "can": {"ru": "читаю подлинные тексты и понимаю живую речь", "en": "I can read authentic texts and follow natural speech", "fr": "je lis des textes authentiques et je comprends la langue parlée", "es": "leo textos auténticos y entiendo el habla real"}}
+  {
+   "id": 0,
+   "hy": "Այբուբեն",
+   "lv": "A0",
+   "ru": "Алфавит",
+   "en": "Alphabet",
+   "fr": "Alphabet",
+   "es": "Alfabeto",
+   "can": {
+    "ru": "читаю и пишу все 39 букв",
+    "en": "I can read and write all 39 letters",
+    "fr": "je lis et j'écris les 39 lettres",
+    "es": "leo y escribo las 39 letras"
+   }
+  },
+  {
+   "id": 1,
+   "hy": "Հատիկ",
+   "lv": "A1.1",
+   "ru": "Зерно",
+   "en": "Seed",
+   "fr": "Graine",
+   "es": "Semilla",
+   "can": {
+    "ru": "знакомлюсь, называю вещи, считаю, спрашиваю «где» и «сколько»",
+    "en": "I can introduce myself, name things, count, ask where and how much",
+    "fr": "je me présente, je nomme les choses, je compte, je demande où et combien",
+    "es": "me presento, nombro cosas, cuento, pregunto dónde y cuánto"
+   }
+  },
+  {
+   "id": 2,
+   "hy": "Ծիլ",
+   "lv": "A1.2",
+   "ru": "Росток",
+   "en": "Sprout",
+   "fr": "Pousse",
+   "es": "Brote",
+   "can": {
+    "ru": "рассказываю о себе и своём дне, покупаю, договариваюсь о времени",
+    "en": "I can talk about myself and my day, shop, agree on a time",
+    "fr": "je parle de moi et de ma journée, j'achète, je fixe un rendez-vous",
+    "es": "hablo de mí y de mi día, compro, quedo a una hora"
+   }
+  },
+  {
+   "id": 3,
+   "hy": "Ճյուղ",
+   "lv": "A2",
+   "ru": "Ветвь",
+   "en": "Branch",
+   "fr": "Branche",
+   "es": "Rama",
+   "can": {
+    "ru": "рассказываю, что было и будет, сравниваю, объясняю дорогу",
+    "en": "I can tell what happened and will happen, compare, give directions",
+    "fr": "je raconte le passé et l'avenir, je compare, j'explique un chemin",
+    "es": "cuento lo que pasó y pasará, comparo, explico un camino"
+   }
+  },
+  {
+   "id": 4,
+   "hy": "Ծաղիկ",
+   "lv": "B1",
+   "ru": "Цвет",
+   "en": "Blossom",
+   "fr": "Fleur",
+   "es": "Flor",
+   "can": {
+    "ru": "рассуждаю, советую, ставлю условия, читаю простые новости",
+    "en": "I can reason, advise, set conditions, read simple news",
+    "fr": "je raisonne, je conseille, je pose des conditions, je lis des nouvelles simples",
+    "es": "razono, aconsejo, pongo condiciones, leo noticias simples"
+   }
+  },
+  {
+   "id": 5,
+   "hy": "Պտուղ",
+   "lv": "B2",
+   "ru": "Плод",
+   "en": "Fruit",
+   "fr": "Fruit",
+   "es": "Fruto",
+   "can": {
+    "ru": "читаю подлинные тексты и понимаю живую речь",
+    "en": "I can read authentic texts and follow natural speech",
+    "fr": "je lis des textes authentiques et je comprends la langue parlée",
+    "es": "leo textos auténticos y entiendo el habla real"
+   }
+  }
  ],
- "place": {"_": "Входной тест: глаголы для вопроса о временах (ступень 2) — настоящее, аорист, будущее 1-го лица.", "verbs": ["գրել", "կարդալ", "խոսել", "խմել", "աշխատել"]},
  "units": [
-  {"id": "s1u1", "stage": 1, "ic": "🤝",
-   "title": {"ru": "Я — …", "en": "I am …", "fr": "Je suis …", "es": "Yo soy …"},
+  {
+   "id": "s1u1",
+   "stage": 1,
+   "ic": "🤝",
+   "title": {
+    "ru": "Я — …",
+    "en": "I am …",
+    "fr": "Je suis …",
+    "es": "Yo soy …"
+   },
    "formula": "Ես [ով] եմ",
    "note": {
     "ru": "«Быть» — маленькое слово в конце фразы: Ես հայ եմ — «я армянин», дословно «я армянин есть». Оно меняется по лицам: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. Вопрос — тем же порядком, со знаком ՞ над ударной гласной: Դուք հա՞յ եք։",
     "en": "“To be” is a small word at the end: Ես հայ եմ — “I am Armenian”, literally “I Armenian am”. It changes with the person: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. A question keeps the order and puts ՞ over the stressed vowel: Դուք հա՞յ եք։",
     "fr": "« Être » est un petit mot en fin de phrase : Ես հայ եմ — « je suis arménien », mot à mot « je arménien suis ». Il change selon la personne : ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. La question garde l'ordre, avec ՞ sur la voyelle accentuée : Դուք հա՞յ եք։",
-    "es": "«Ser» es una palabra corta al final: Ես հայ եմ — «soy armenio», literalmente «yo armenio soy». Cambia según la persona: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. La pregunta mantiene el orden y lleva ՞ sobre la vocal acentuada: Դուք հա՞յ եք։"},
-   "scene": {"title": {"ru": "Соседка", "en": "The neighbour", "fr": "La voisine", "es": "La vecina"},
-    "who": {"Ա": {"ru": "Анаит", "en": "Anahit", "fr": "Anahit", "es": "Anahit"}, "Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}},
+    "es": "«Ser» es una palabra corta al final: Ես հայ եմ — «soy armenio», literalmente «yo armenio soy». Cambia según la persona: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. La pregunta mantiene el orden y lleva ՞ sobre la vocal acentuada: Դուք հա՞յ եք։"
+   },
+   "scene": {
+    "title": {
+     "ru": "Соседка",
+     "en": "The neighbour",
+     "fr": "La voisine",
+     "es": "La vecina"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
     "lines": [
-     ["Ա", "Բարև ձեզ։", "Здравствуйте!", "Hello!", "Bonjour !", "¡Hola!"],
-     ["Մ", "Բարև ձեզ։ Ես Մարկն եմ։", "Здравствуйте! Я Марк.", "Hello! I'm Mark.", "Bonjour ! Je suis Mark.", "¡Hola! Soy Mark."],
-     ["Ա", "Իսկ ես Անահիտն եմ։ Դուք ռո՞ւս եք։", "А я Анаит. Вы русский?", "And I'm Anahit. Are you Russian?", "Et moi, je suis Anahit. Vous êtes russe ?", "Y yo soy Anahit. ¿Usted es ruso?"],
-     ["Մ", "Այո, ես ռուս եմ։ Իսկ դուք հա՞յ եք։", "Да, я русский. А вы армянка?", "Yes, I'm Russian. And are you Armenian?", "Oui, je suis russe. Et vous, vous êtes arménienne ?", "Sí, soy ruso. ¿Y usted es armenia?"],
-     ["Ա", "Այո, ես հայ եմ։ Մենք հարևաններ ենք։", "Да, я армянка. Мы соседи.", "Yes, I'm Armenian. We're neighbours.", "Oui, je suis arménienne. Nous sommes voisins.", "Sí, soy armenia. Somos vecinos."],
-     ["Մ", "Շատ ուրախ եմ։", "Очень рад.", "Very nice to meet you.", "Enchanté.", "Encantado."]
-    ]},
-   "seeds": ["ես", "դու", "նա", "մենք", "դուք", "նրանք", "հայ", "ռուս", "հարևան", "ուրախ", "այո", "ոչ"],
+     [
+      "Ա",
+      "Բարև ձեզ։",
+      "Здравствуйте!",
+      "Hello!",
+      "Bonjour !",
+      "¡Hola!"
+     ],
+     [
+      "Մ",
+      "Բարև ձեզ։ Ես Մարկն եմ։",
+      "Здравствуйте! Я Марк.",
+      "Hello! I'm Mark.",
+      "Bonjour ! Je suis Mark.",
+      "¡Hola! Soy Mark."
+     ],
+     [
+      "Ա",
+      "Իսկ ես Անահիտն եմ։ Դուք ռո՞ւս եք։",
+      "А я Анаит. Вы русский?",
+      "And I'm Anahit. Are you Russian?",
+      "Et moi, je suis Anahit. Vous êtes russe ?",
+      "Y yo soy Anahit. ¿Usted es ruso?"
+     ],
+     [
+      "Մ",
+      "Այո, ես ռուս եմ։ Իսկ դուք հա՞յ եք։",
+      "Да, я русский. А вы армянка?",
+      "Yes, I'm Russian. And are you Armenian?",
+      "Oui, je suis russe. Et vous, vous êtes arménienne ?",
+      "Sí, soy ruso. ¿Y usted es armenia?"
+     ],
+     [
+      "Ա",
+      "Այո, ես հայ եմ։ Մենք հարևաններ ենք։",
+      "Да, я армянка. Мы соседи.",
+      "Yes, I'm Armenian. We're neighbours.",
+      "Oui, je suis arménienne. Nous sommes voisins.",
+      "Sí, soy armenia. Somos vecinos."
+     ],
+     [
+      "Մ",
+      "Շատ ուրախ եմ։",
+      "Очень рад.",
+      "Very nice to meet you.",
+      "Enchanté.",
+      "Encantado."
+     ]
+    ]
+   },
+   "seeds": [
+    "ես",
+    "դու",
+    "նա",
+    "մենք",
+    "դուք",
+    "նրանք",
+    "հայ",
+    "ռուս",
+    "հարևան",
+    "ուրախ",
+    "այո",
+    "ոչ"
+   ],
    "affix": "-երեն",
-   "drills": [{"t": "table", "frame": "{0} ուրախ ___։", "rows": [["Ես", "եմ"], ["Դու", "ես"], ["Նա", "է"], ["Մենք", "ենք"], ["Դուք", "եք"], ["Նրանք", "են"]]}]},
-
-  {"id": "s1u2", "stage": 1, "ic": "🍎",
-   "title": {"ru": "Это …", "en": "This is …", "fr": "C'est …", "es": "Esto es …"},
+   "drills": [
+    {
+     "t": "table",
+     "frame": "{0} ուրախ ___։",
+     "rows": [
+      [
+       "Ես",
+       "եմ"
+      ],
+      [
+       "Դու",
+       "ես"
+      ],
+      [
+       "Նա",
+       "է"
+      ],
+      [
+       "Մենք",
+       "ենք"
+      ],
+      [
+       "Դուք",
+       "եք"
+      ],
+      [
+       "Նրանք",
+       "են"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s1u2",
+   "stage": 1,
+   "ic": "🍎",
+   "title": {
+    "ru": "Это …",
+    "en": "This is …",
+    "fr": "C'est …",
+    "es": "Esto es …"
+   },
    "formula": "Սա [ինչ] է",
    "note": {
     "ru": "Սա — «это» (близко), դա — «это» (у собеседника), դա и այն — «то» (далеко). Սա խնձոր է — «это яблоко». Отрицание: է → չէ: Սա լավաշ չէ. Вопрос «что это?» — Սա ի՞նչ է։ Артиклей «a/un» в армянском нет.",
     "en": "Սա — “this” (near me), դա — “that” (near you), այն — “that” (far away). Սա խնձոր է — “this is an apple”. Negation: է → չէ: Սա լավաշ չէ. “What is this?” — Սա ի՞նչ է։ Armenian has no word for “a”.",
     "fr": "Սա — « ceci » (près de moi), դա — « cela » (près de toi), այն — « cela » (loin). Սա խնձոր է — « c'est une pomme ». Négation : է → չէ : Սա լավաշ չէ. « Qu'est-ce que c'est ? » — Սա ի՞նչ է։ Pas d'article « un, une ».",
-    "es": "Սա — «esto» (cerca de mí), դա — «eso» (cerca de ti), այն — «aquello» (lejos). Սա խնձոր է — «esto es una manzana». Negación: է → չէ: Սա լավաշ չէ. «¿Qué es esto?» — Սա ի՞նչ է։ No hay artículo «un, una»."},
-   "scene": {"title": {"ru": "На рынке", "en": "At the market", "fr": "Au marché", "es": "En el mercado"},
-    "who": {"Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}, "Վ": {"ru": "Продавец", "en": "Seller", "fr": "Vendeur", "es": "Vendedor"}},
+    "es": "Սա — «esto» (cerca de mí), դա — «eso» (cerca de ti), այն — «aquello» (lejos). Սա խնձոր է — «esto es una manzana». Negación: է → չէ: Սա լավաշ չէ. «¿Qué es esto?» — Սա ի՞նչ է։ No hay artículo «un, una»."
+   },
+   "scene": {
+    "title": {
+     "ru": "На рынке",
+     "en": "At the market",
+     "fr": "Au marché",
+     "es": "En el mercado"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Վ": {
+      "ru": "Продавец",
+      "en": "Seller",
+      "fr": "Vendeur",
+      "es": "Vendedor"
+     }
+    },
     "lines": [
-     ["Մ", "Սա ի՞նչ է։", "Что это?", "What is this?", "Qu'est-ce que c'est ?", "¿Qué es esto?"],
-     ["Վ", "Սա նուռ է։", "Это гранат.", "It's a pomegranate.", "C'est une grenade.", "Es una granada."],
-     ["Մ", "Իսկ սա՞։", "А это?", "And this?", "Et ça ?", "¿Y esto?"],
-     ["Վ", "Սա ծիրան է, հայկական ծիրան։", "Это абрикос, армянский абрикос.", "This is an apricot, an Armenian apricot.", "C'est un abricot, un abricot arménien.", "Es un damasco, un damasco armenio."],
-     ["Մ", "Սա լավա՞շ է։", "Это лаваш?", "Is this lavash?", "C'est du lavash ?", "¿Esto es lavash?"],
-     ["Վ", "Ոչ, սա լավաշ չէ, սա հաց է։", "Нет, это не лаваш, это хлеб.", "No, it isn't lavash, it's bread.", "Non, ce n'est pas du lavash, c'est du pain.", "No, no es lavash, es pan."]
-    ]},
-   "seeds": ["սա", "ինչ", "նուռ", "ծիրան", "խնձոր", "տանձ", "լավաշ", "հաց", "պանիր"],
-   "drills": [{"t": "mean", "words": ["նուռ", "ծիրան", "խնձոր", "տանձ", "լավաշ", "հաց", "պանիր"], "frame": "Սա ___ է։"}]},
-
-  {"id": "s1u3", "stage": 1, "ic": "🍑",
-   "title": {"ru": "Какой?", "en": "What is it like?", "fr": "Comment est-il ?", "es": "¿Cómo es?"},
+     [
+      "Մ",
+      "Սա ի՞նչ է։",
+      "Что это?",
+      "What is this?",
+      "Qu'est-ce que c'est ?",
+      "¿Qué es esto?"
+     ],
+     [
+      "Վ",
+      "Սա նուռ է։",
+      "Это гранат.",
+      "It's a pomegranate.",
+      "C'est une grenade.",
+      "Es una granada."
+     ],
+     [
+      "Մ",
+      "Իսկ սա՞։",
+      "А это?",
+      "And this?",
+      "Et ça ?",
+      "¿Y esto?"
+     ],
+     [
+      "Վ",
+      "Սա ծիրան է, հայկական ծիրան։",
+      "Это абрикос, армянский абрикос.",
+      "This is an apricot, an Armenian apricot.",
+      "C'est un abricot, un abricot arménien.",
+      "Es un damasco, un damasco armenio."
+     ],
+     [
+      "Մ",
+      "Սա լավա՞շ է։",
+      "Это лаваш?",
+      "Is this lavash?",
+      "C'est du lavash ?",
+      "¿Esto es lavash?"
+     ],
+     [
+      "Վ",
+      "Ոչ, սա լավաշ չէ, սա հաց է։",
+      "Нет, это не лаваш, это хлеб.",
+      "No, it isn't lavash, it's bread.",
+      "Non, ce n'est pas du lavash, c'est du pain.",
+      "No, no es lavash, es pan."
+     ]
+    ]
+   },
+   "seeds": [
+    "սա",
+    "ինչ",
+    "նուռ",
+    "ծիրան",
+    "խնձոր",
+    "տանձ",
+    "լավաշ",
+    "հաց",
+    "պանիր"
+   ],
+   "drills": [
+    {
+     "t": "mean",
+     "words": [
+      "նուռ",
+      "ծիրան",
+      "խնձոր",
+      "տանձ",
+      "լավաշ",
+      "հաց",
+      "պանիր"
+     ],
+     "frame": "Սա ___ է։"
+    }
+   ]
+  },
+  {
+   "id": "s1u3",
+   "stage": 1,
+   "ic": "🍑",
+   "title": {
+    "ru": "Какой?",
+    "en": "What is it like?",
+    "fr": "Comment est-il ?",
+    "es": "¿Cómo es?"
+   },
    "formula": "[ինչ]-ը [ինչպիսի] է",
    "note": {
     "ru": "Когда вещь уже известна, к ней прирастает артикль: после согласной -ը (խնձորը — «это яблоко», «то самое яблоко»), после гласной -ն (կատուն). Перед словом на гласную -ը тоже становится -ն: խնձորն է. Признак ставится прямо перед է: Խնձորը քաղցր է — «яблоко сладкое».",
     "en": "When a thing is already known, it takes an article: -ը after a consonant (խնձորը — “the apple”), -ն after a vowel (կատուն). Before a word starting with a vowel, -ը also turns into -ն: խնձորն է. The quality comes right before է: Խնձորը քաղցր է — “the apple is sweet”.",
     "fr": "Une chose déjà connue prend l'article : -ը après une consonne (խնձորը — « la pomme »), -ն après une voyelle (կատուն). Devant un mot commençant par une voyelle, -ը devient aussi -ն : խնձորն է. La qualité se place juste avant է : Խնձորը քաղցր է — « la pomme est sucrée ».",
-    "es": "Lo ya conocido lleva artículo: -ը tras consonante (խնձորը — «la manzana»), -ն tras vocal (կատուն). Ante palabra que empieza por vocal, -ը también pasa a -ն: խնձորն է. La cualidad va justo antes de է: Խնձորը քաղցր է — «la manzana es dulce»."},
-   "scene": {"title": {"ru": "Выбираем фрукты", "en": "Choosing fruit", "fr": "On choisit les fruits", "es": "Elegimos fruta"},
-    "who": {"Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}, "Վ": {"ru": "Продавец", "en": "Seller", "fr": "Vendeur", "es": "Vendedor"}},
+    "es": "Lo ya conocido lleva artículo: -ը tras consonante (խնձորը — «la manzana»), -ն tras vocal (կատուն). Ante palabra que empieza por vocal, -ը también pasa a -ն: խնձորն է. La cualidad va justo antes de է: Խնձորը քաղցր է — «la manzana es dulce»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Выбираем фрукты",
+     "en": "Choosing fruit",
+     "fr": "On choisit les fruits",
+     "es": "Elegimos fruta"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Վ": {
+      "ru": "Продавец",
+      "en": "Seller",
+      "fr": "Vendeur",
+      "es": "Vendedor"
+     }
+    },
     "lines": [
-     ["Մ", "Խնձորը թա՞րմ է։", "Яблоко свежее?", "Is the apple fresh?", "La pomme est fraîche ?", "¿La manzana está fresca?"],
-     ["Վ", "Այո, խնձորը թարմ է ու քաղցր։", "Да, яблоко свежее и сладкое.", "Yes, the apple is fresh and sweet.", "Oui, la pomme est fraîche et sucrée.", "Sí, la manzana está fresca y dulce."],
-     ["Մ", "Իսկ նո՞ւռը։", "А гранат?", "And the pomegranate?", "Et la grenade ?", "¿Y la granada?"],
-     ["Վ", "Նուռը շատ լավ է։", "Гранат очень хороший.", "The pomegranate is very good.", "La grenade est très bonne.", "La granada es muy buena."],
-     ["Մ", "Լավաշը տա՞ք է։", "Лаваш тёплый?", "Is the lavash warm?", "Le lavash est chaud ?", "¿El lavash está caliente?"],
-     ["Վ", "Այո, լավաշը թարմ է, դեռ տաք է։", "Да, лаваш свежий, ещё тёплый.", "Yes, the lavash is fresh, still warm.", "Oui, le lavash est frais, encore chaud.", "Sí, el lavash está fresco, todavía caliente."]
-    ]},
-   "seeds": ["թարմ", "քաղցր", "տաք", "լավ", "մեծ", "փոքր", "կարմիր", "կանաչ", "նոր", "հին", "բարի"],
+     [
+      "Մ",
+      "Խնձորը թա՞րմ է։",
+      "Яблоко свежее?",
+      "Is the apple fresh?",
+      "La pomme est fraîche ?",
+      "¿La manzana está fresca?"
+     ],
+     [
+      "Վ",
+      "Այո, խնձորը թարմ է ու քաղցր։",
+      "Да, яблоко свежее и сладкое.",
+      "Yes, the apple is fresh and sweet.",
+      "Oui, la pomme est fraîche et sucrée.",
+      "Sí, la manzana está fresca y dulce."
+     ],
+     [
+      "Մ",
+      "Իսկ նո՞ւռը։",
+      "А гранат?",
+      "And the pomegranate?",
+      "Et la grenade ?",
+      "¿Y la granada?"
+     ],
+     [
+      "Վ",
+      "Նուռը շատ լավ է։",
+      "Гранат очень хороший.",
+      "The pomegranate is very good.",
+      "La grenade est très bonne.",
+      "La granada es muy buena."
+     ],
+     [
+      "Մ",
+      "Լավաշը տա՞ք է։",
+      "Лаваш тёплый?",
+      "Is the lavash warm?",
+      "Le lavash est chaud ?",
+      "¿El lavash está caliente?"
+     ],
+     [
+      "Վ",
+      "Այո, լավաշը թարմ է, դեռ տաք է։",
+      "Да, лаваш свежий, ещё тёплый.",
+      "Yes, the lavash is fresh, still warm.",
+      "Oui, le lavash est frais, encore chaud.",
+      "Sí, el lavash está fresco, todavía caliente."
+     ]
+    ]
+   },
+   "seeds": [
+    "թարմ",
+    "քաղցր",
+    "տաք",
+    "լավ",
+    "մեծ",
+    "փոքր",
+    "կարմիր",
+    "կանաչ",
+    "նոր",
+    "հին",
+    "բարի"
+   ],
    "affix": "-ություն",
-   "drills": [{"t": "form", "kind": "noun", "key": "def", "alt": ["pl", "dat"], "words": ["խնձոր", "տանձ", "ծիրան", "լավաշ", "պանիր", "սեղան", "գիրք", "կատու", "տաքսի", "դպրոց"],
-    "q": {"ru": "«это самое …» (с артиклем)", "en": "“the …” (with the article)", "fr": "« le / la … » (avec l'article)", "es": "«el / la …» (con artículo)"}}]},
-
-  {"id": "s1u4", "stage": 1, "ic": "🛋️",
-   "title": {"ru": "Где что есть", "en": "What is where", "fr": "Il y a … dans …", "es": "Qué hay y dónde"},
+   "drills": [
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "def",
+     "alt": [
+      "pl",
+      "dat"
+     ],
+     "words": [
+      "խնձոր",
+      "տանձ",
+      "ծիրան",
+      "լավաշ",
+      "պանիր",
+      "սեղան",
+      "գիրք",
+      "կատու",
+      "տաքսի",
+      "դպրոց"
+     ],
+     "q": {
+      "ru": "«это самое …» (с артиклем)",
+      "en": "“the …” (with the article)",
+      "fr": "« le / la … » (avec l'article)",
+      "es": "«el / la …» (con artículo)"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s1u4",
+   "stage": 1,
+   "ic": "🛋️",
+   "title": {
+    "ru": "Где что есть",
+    "en": "What is where",
+    "fr": "Il y a … dans …",
+    "es": "Qué hay y dónde"
+   },
    "formula": "[որտեղ]-ում կա [ինչ]",
    "note": {
     "ru": "«В, на» — окончание -ում: խոհանոց → խոհանոցում «на кухне», դպրոց → դպրոցում «в школе». Կա — «есть, имеется», для многих — կան; չկա — «нет». Порядок: где → что → կա: Խոհանոցում սառնարան կա։ У людей и животных -ում не бывает: «у мамы» скажут иначе — позже.",
     "en": "“In, at” is the ending -ում: խոհանոց → խոհանոցում “in the kitchen”, դպրոց → դպրոցում “at school”. Կա — “there is”, for many things կան; չկա — “there isn't”. Order: where → what → կա: Խոհանոցում սառնարան կա։ People and animals don't take -ում — that comes later.",
     "fr": "« Dans, à » : la terminaison -ում : խոհանոց → խոհանոցում « dans la cuisine », դպրոց → դպրոցում « à l'école ». Կա — « il y a », au pluriel կան ; չկա — « il n'y a pas ». Ordre : où → quoi → կա : Խոհանոցում սառնարան կա։ Les personnes et animaux ne prennent pas -ում — on verra plus tard.",
-    "es": "«En» es la terminación -ում: խոհանոց → խոհանոցում «en la cocina», դպրոց → դպրոցում «en la escuela». Կա — «hay», para varias cosas կան; չկա — «no hay». Orden: dónde → qué → կա: Խոհանոցում սառնարան կա։ Las personas y animales no llevan -ում; eso, más adelante."},
-   "scene": {"title": {"ru": "Квартира на съём", "en": "A flat to rent", "fr": "Un appartement à louer", "es": "Un departamento para alquilar"},
-    "who": {"Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}, "Տ": {"ru": "Хозяйка", "en": "Landlady", "fr": "Propriétaire", "es": "Dueña"}},
+    "es": "«En» es la terminación -ում: խոհանոց → խոհանոցում «en la cocina», դպրոց → դպրոցում «en la escuela». Կա — «hay», para varias cosas կան; չկա — «no hay». Orden: dónde → qué → կա: Խոհանոցում սառնարան կա։ Las personas y animales no llevan -ում; eso, más adelante."
+   },
+   "scene": {
+    "title": {
+     "ru": "Квартира на съём",
+     "en": "A flat to rent",
+     "fr": "Un appartement à louer",
+     "es": "Un departamento para alquilar"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Տ": {
+      "ru": "Хозяйка",
+      "en": "Landlady",
+      "fr": "Propriétaire",
+      "es": "Dueña"
+     }
+    },
     "lines": [
-     ["Մ", "Խոհանոցում սառնարան կա՞։", "На кухне есть холодильник?", "Is there a fridge in the kitchen?", "Il y a un frigo dans la cuisine ?", "¿Hay heladera en la cocina?"],
-     ["Տ", "Այո, կա։ Սեղան էլ կա, աթոռներ էլ կան։", "Да, есть. И стол есть, и стулья.", "Yes, there is. There's a table and chairs too.", "Oui. Il y a aussi une table et des chaises.", "Sí, hay. También hay mesa y sillas."],
-     ["Մ", "Իսկ սենյակում մահճակալ կա՞։", "А в комнате есть кровать?", "And is there a bed in the room?", "Et il y a un lit dans la chambre ?", "¿Y hay cama en la habitación?"],
-     ["Տ", "Կա, մեծ մահճակալ։", "Есть, большая кровать.", "Yes, a big bed.", "Oui, un grand lit.", "Sí, una cama grande."],
-     ["Մ", "Լոգարանում լվացքի մեքենա կա՞։", "В ванной есть стиральная машина?", "Is there a washing machine in the bathroom?", "Il y a un lave-linge dans la salle de bain ?", "¿Hay lavarropas en el baño?"],
-     ["Տ", "Ոչ, չկա։ Բայց բակում կա։", "Нет. Но во дворе есть.", "No, there isn't. But there's one in the yard.", "Non. Mais il y en a un dans la cour.", "No, no hay. Pero hay uno en el patio."]
-    ]},
-   "seeds": ["խոհանոց", "սենյակ", "լոգարան", "սառնարան", "սեղան", "աթոռ", "մահճակալ", "տուն", "պատուհան", "դուռ", "բակ"],
+     [
+      "Մ",
+      "Խոհանոցում սառնարան կա՞։",
+      "На кухне есть холодильник?",
+      "Is there a fridge in the kitchen?",
+      "Il y a un frigo dans la cuisine ?",
+      "¿Hay heladera en la cocina?"
+     ],
+     [
+      "Տ",
+      "Այո, կա։ Սեղան էլ կա, աթոռներ էլ կան։",
+      "Да, есть. И стол есть, и стулья.",
+      "Yes, there is. There's a table and chairs too.",
+      "Oui. Il y a aussi une table et des chaises.",
+      "Sí, hay. También hay mesa y sillas."
+     ],
+     [
+      "Մ",
+      "Իսկ սենյակում մահճակալ կա՞։",
+      "А в комнате есть кровать?",
+      "And is there a bed in the room?",
+      "Et il y a un lit dans la chambre ?",
+      "¿Y hay cama en la habitación?"
+     ],
+     [
+      "Տ",
+      "Կա, մեծ մահճակալ։",
+      "Есть, большая кровать.",
+      "Yes, a big bed.",
+      "Oui, un grand lit.",
+      "Sí, una cama grande."
+     ],
+     [
+      "Մ",
+      "Լոգարանում լվացքի մեքենա կա՞։",
+      "В ванной есть стиральная машина?",
+      "Is there a washing machine in the bathroom?",
+      "Il y a un lave-linge dans la salle de bain ?",
+      "¿Hay lavarropas en el baño?"
+     ],
+     [
+      "Տ",
+      "Ոչ, չկա։ Բայց բակում կա։",
+      "Нет. Но во дворе есть.",
+      "No, there isn't. But there's one in the yard.",
+      "Non. Mais il y en a un dans la cour.",
+      "No, no hay. Pero hay uno en el patio."
+     ]
+    ]
+   },
+   "seeds": [
+    "խոհանոց",
+    "սենյակ",
+    "լոգարան",
+    "սառնարան",
+    "սեղան",
+    "աթոռ",
+    "մահճակալ",
+    "տուն",
+    "պատուհան",
+    "դուռ",
+    "բակ"
+   ],
    "affix": "ան-",
-   "drills": [{"t": "form", "kind": "noun", "key": "loc", "alt": ["def", "dat"], "words": ["խոհանոց", "սենյակ", "լոգարան", "դպրոց", "քաղաք", "այգի", "խանութ", "շուկա", "մետրո", "փողոց", "բակ"],
-    "q": {"ru": "где? — «в / на …»", "en": "where? — “in / at …”", "fr": "où ? — « dans / à … »", "es": "¿dónde? — «en …»"}}]},
-
-  {"id": "s1u5", "stage": 1, "ic": "👨‍👩‍👧",
-   "title": {"ru": "У меня есть …", "en": "I have …", "fr": "J'ai …", "es": "Tengo …"},
+   "drills": [
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "loc",
+     "alt": [
+      "def",
+      "dat"
+     ],
+     "words": [
+      "խոհանոց",
+      "սենյակ",
+      "լոգարան",
+      "դպրոց",
+      "քաղաք",
+      "այգի",
+      "խանութ",
+      "շուկա",
+      "մետրո",
+      "փողոց",
+      "բակ"
+     ],
+     "q": {
+      "ru": "где? — «в / на …»",
+      "en": "where? — “in / at …”",
+      "fr": "où ? — « dans / à … »",
+      "es": "¿dónde? — «en …»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s1u5",
+   "stage": 1,
+   "ic": "👨‍👩‍👧",
+   "title": {
+    "ru": "У меня есть …",
+    "en": "I have …",
+    "fr": "J'ai …",
+    "es": "Tengo …"
+   },
    "formula": "Ես ունեմ [ինչ]",
    "note": {
     "ru": "«Иметь» — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Нет — с չ-: չունեմ. После числа слово остаётся в единственном числе: երկու եղբայր — «два брата». «Мой» — իմ (իմ մայրը) или коротко -ս в конце: մայրս.",
     "en": "“To have” — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Not — with չ-: չունեմ. After a number the noun stays singular: երկու եղբայր — “two brothers”. “My” — իմ (իմ մայրը) or the short ending -ս: մայրս.",
     "fr": "« Avoir » — ունեմ : ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. La négation avec չ- : չունեմ. Après un nombre, le nom reste au singulier : երկու եղբայր — « deux frères ». « Mon » — իմ (իմ մայրը) ou la terminaison courte -ս : մայրս.",
-    "es": "«Tener» — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Negación con չ-: չունեմ. Tras un número, el nombre queda en singular: երկու եղբայր — «dos hermanos». «Mi» — իմ (իմ մայրը) o la terminación corta -ս: մայրս."},
-   "scene": {"title": {"ru": "Фотография", "en": "The photo", "fr": "La photo", "es": "La foto"},
-    "who": {"Ա": {"ru": "Анаит", "en": "Anahit", "fr": "Anahit", "es": "Anahit"}, "Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}},
+    "es": "«Tener» — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Negación con չ-: չունեմ. Tras un número, el nombre queda en singular: երկու եղբայր — «dos hermanos». «Mi» — իմ (իմ մայրը) o la terminación corta -ս: մայրս."
+   },
+   "scene": {
+    "title": {
+     "ru": "Фотография",
+     "en": "The photo",
+     "fr": "La photo",
+     "es": "La foto"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
     "lines": [
-     ["Ա", "Սա իմ ընտանիքն է։", "Это моя семья.", "This is my family.", "C'est ma famille.", "Esta es mi familia."],
-     ["Մ", "Դուք եղբայր ունե՞ք։", "У вас есть брат?", "Do you have a brother?", "Vous avez un frère ?", "¿Tiene un hermano?"],
-     ["Ա", "Այո, ես երկու եղբայր ունեմ և մեկ քույր։", "Да, у меня два брата и одна сестра.", "Yes, I have two brothers and one sister.", "Oui, j'ai deux frères et une sœur.", "Sí, tengo dos hermanos y una hermana."],
-     ["Մ", "Իսկ ես եղբայր չունեմ։ Ես մեկ քույր ունեմ։", "А у меня нет брата. У меня одна сестра.", "I don't have a brother. I have one sister.", "Moi, je n'ai pas de frère. J'ai une sœur.", "Yo no tengo hermano. Tengo una hermana."],
-     ["Ա", "Սա իմ մայրիկն է, իսկ սա՝ տատիկս։", "Это моя мама, а это — моя бабушка.", "This is my mum, and this is my grandma.", "Voici ma maman, et voici ma grand-mère.", "Esta es mi mamá, y esta, mi abuela."],
-     ["Մ", "Շատ գեղեցիկ ընտանիք է։", "Очень красивая семья.", "What a beautiful family.", "Quelle belle famille.", "Qué linda familia."]
-    ]},
-   "seeds": ["ընտանիք", "մայր", "հայր", "եղբայր", "քույր", "տատիկ", "պապիկ", "որդի", "դուստր", "գեղեցիկ"],
+     [
+      "Ա",
+      "Սա իմ ընտանիքն է։",
+      "Это моя семья.",
+      "This is my family.",
+      "C'est ma famille.",
+      "Esta es mi familia."
+     ],
+     [
+      "Մ",
+      "Դուք եղբայր ունե՞ք։",
+      "У вас есть брат?",
+      "Do you have a brother?",
+      "Vous avez un frère ?",
+      "¿Tiene un hermano?"
+     ],
+     [
+      "Ա",
+      "Այո, ես երկու եղբայր ունեմ և մեկ քույր։",
+      "Да, у меня два брата и одна сестра.",
+      "Yes, I have two brothers and one sister.",
+      "Oui, j'ai deux frères et une sœur.",
+      "Sí, tengo dos hermanos y una hermana."
+     ],
+     [
+      "Մ",
+      "Իսկ ես եղբայր չունեմ։ Ես մեկ քույր ունեմ։",
+      "А у меня нет брата. У меня одна сестра.",
+      "I don't have a brother. I have one sister.",
+      "Moi, je n'ai pas de frère. J'ai une sœur.",
+      "Yo no tengo hermano. Tengo una hermana."
+     ],
+     [
+      "Ա",
+      "Սա իմ մայրիկն է, իսկ սա՝ տատիկս։",
+      "Это моя мама, а это — моя бабушка.",
+      "This is my mum, and this is my grandma.",
+      "Voici ma maman, et voici ma grand-mère.",
+      "Esta es mi mamá, y esta, mi abuela."
+     ],
+     [
+      "Մ",
+      "Շատ գեղեցիկ ընտանիք է։",
+      "Очень красивая семья.",
+      "What a beautiful family.",
+      "Quelle belle famille.",
+      "Qué linda familia."
+     ]
+    ]
+   },
+   "seeds": [
+    "ընտանիք",
+    "մայր",
+    "հայր",
+    "եղբայր",
+    "քույր",
+    "տատիկ",
+    "պապիկ",
+    "որդի",
+    "դուստր",
+    "գեղեցիկ"
+   ],
    "affix": "-իկ",
-   "drills": [{"t": "table", "frame": "{0} մեկ քույր ___։", "rows": [["Ես", "ունեմ"], ["Դու", "ունես"], ["Նա", "ունի"], ["Մենք", "ունենք"], ["Դուք", "ունեք"], ["Նրանք", "ունեն"]]},
-              {"t": "form", "kind": "noun", "key": "p1", "alt": ["def", "p2"], "words": ["մայր", "հայր", "եղբայր", "քույր", "ընտանիք", "տատիկ", "պապիկ"],
-               "q": {"ru": "«мой / моя …» (коротко)", "en": "“my …” (short form)", "fr": "« mon / ma … » (forme courte)", "es": "«mi …» (forma corta)"}}]},
-
-  {"id": "s1u6", "stage": 1, "ic": "🫓",
-   "title": {"ru": "Сколько стоит?", "en": "How much is it?", "fr": "Combien ça coûte ?", "es": "¿Cuánto cuesta?"},
+   "drills": [
+    {
+     "t": "table",
+     "frame": "{0} մեկ քույր ___։",
+     "rows": [
+      [
+       "Ես",
+       "ունեմ"
+      ],
+      [
+       "Դու",
+       "ունես"
+      ],
+      [
+       "Նա",
+       "ունի"
+      ],
+      [
+       "Մենք",
+       "ունենք"
+      ],
+      [
+       "Դուք",
+       "ունեք"
+      ],
+      [
+       "Նրանք",
+       "ունեն"
+      ]
+     ]
+    },
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "p1",
+     "alt": [
+      "def",
+      "p2"
+     ],
+     "words": [
+      "մայր",
+      "հայր",
+      "եղբայր",
+      "քույր",
+      "ընտանիք",
+      "տատիկ",
+      "պապիկ"
+     ],
+     "q": {
+      "ru": "«мой / моя …» (коротко)",
+      "en": "“my …” (short form)",
+      "fr": "« mon / ma … » (forme courte)",
+      "es": "«mi …» (forma corta)"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s1u6",
+   "stage": 1,
+   "ic": "🫓",
+   "title": {
+    "ru": "Сколько стоит?",
+    "en": "How much is it?",
+    "fr": "Combien ça coûte ?",
+    "es": "¿Cuánto cuesta?"
+   },
    "formula": "[քանի] [ինչ] · Ինչքա՞ն արժե",
    "note": {
     "ru": "Числа ставятся перед словом, а слово — в единственном числе: երեք լավաշ — «три лаваша». Сотни и тысячи — как в русском: երեք հարյուր (300), երկու հազար (2000). Цена: Ինչքա՞ն արժե … — «сколько стоит …», ответ: … դրամ.",
     "en": "Numbers come before the noun, and the noun stays singular: երեք լավաշ — “three lavash”. Hundreds and thousands: երեք հարյուր (300), երկու հազար (2000). Price: Ինչքա՞ն արժե … — “how much is …”, answer: … դրամ.",
     "fr": "Le nombre se place devant le nom, qui reste au singulier : երեք լավաշ — « trois lavash ». Centaines et milliers : երեք հարյուր (300), երկու հազար (2000). Le prix : Ինչքա՞ն արժե … — « combien coûte … », réponse : … դրամ.",
-    "es": "El número va delante y el nombre queda en singular: երեք լավաշ — «tres lavash». Centenas y miles: երեք հարյուր (300), երկու հազար (2000). Precio: Ինչքա՞ն արժե … — «¿cuánto cuesta …?», respuesta: … դրամ."},
-   "scene": {"title": {"ru": "В лавке лаваша", "en": "At the lavash bakery", "fr": "À la boulangerie de lavash", "es": "En la panadería de lavash"},
-    "who": {"Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}, "Վ": {"ru": "Пекарь", "en": "Baker", "fr": "Boulanger", "es": "Panadero"}},
+    "es": "El número va delante y el nombre queda en singular: երեք լավաշ — «tres lavash». Centenas y miles: երեք հարյուր (300), երկու հազար (2000). Precio: Ինչքա՞ն արժե … — «¿cuánto cuesta …?», respuesta: … դրամ."
+   },
+   "scene": {
+    "title": {
+     "ru": "В лавке лаваша",
+     "en": "At the lavash bakery",
+     "fr": "À la boulangerie de lavash",
+     "es": "En la panadería de lavash"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Վ": {
+      "ru": "Пекарь",
+      "en": "Baker",
+      "fr": "Boulanger",
+      "es": "Panadero"
+     }
+    },
     "lines": [
-     ["Մ", "Ինչքա՞ն արժե լավաշը։", "Сколько стоит лаваш?", "How much is the lavash?", "Combien coûte le lavash ?", "¿Cuánto cuesta el lavash?"],
-     ["Վ", "Երեք հարյուր դրամ։", "Триста драмов.", "Three hundred drams.", "Trois cents drams.", "Trescientos drams."],
-     ["Մ", "Երկու լավաշ, խնդրում եմ։", "Два лаваша, пожалуйста.", "Two lavash, please.", "Deux lavash, s'il vous plaît.", "Dos lavash, por favor."],
-     ["Վ", "Վեց հարյուր դրամ։ Ուրիշ ի՞նչ։", "Шестьсот драмов. Что-нибудь ещё?", "Six hundred drams. Anything else?", "Six cents drams. Autre chose ?", "Seiscientos drams. ¿Algo más?"],
-     ["Մ", "Մեկ պանիր էլ։ Ընդամենը ինչքա՞ն է։", "И один сыр. Сколько всего?", "And one cheese. How much altogether?", "Et un fromage. Ça fait combien en tout ?", "Y un queso. ¿Cuánto es en total?"],
-     ["Վ", "Երկու հազար դրամ։", "Две тысячи драмов.", "Two thousand drams.", "Deux mille drams.", "Dos mil drams."]
-    ]},
-   "seeds": ["մեկ", "երկու", "երեք", "չորս", "հինգ", "վեց", "յոթ", "ութ", "ինը", "տասը", "հարյուր", "հազար", "դրամ"],
-   "drills": [{"t": "num", "items": [[1, "մեկ"], [2, "երկու"], [3, "երեք"], [4, "չորս"], [5, "հինգ"], [6, "վեց"], [7, "յոթ"], [8, "ութ"], [9, "ինը"], [10, "տասը"], [300, "երեք հարյուր"], [600, "վեց հարյուր"], [2000, "երկու հազար"], [500, "հինգ հարյուր"]]}]},
-
-  {"id": "s1u7", "stage": 1, "ic": "📚",
-   "title": {"ru": "Много: -եր, -ներ", "en": "Plural: -եր, -ներ", "fr": "Le pluriel : -եր, -ներ", "es": "Plural: -եր, -ներ"},
+     [
+      "Մ",
+      "Ինչքա՞ն արժե լավաշը։",
+      "Сколько стоит лаваш?",
+      "How much is the lavash?",
+      "Combien coûte le lavash ?",
+      "¿Cuánto cuesta el lavash?"
+     ],
+     [
+      "Վ",
+      "Երեք հարյուր դրամ։",
+      "Триста драмов.",
+      "Three hundred drams.",
+      "Trois cents drams.",
+      "Trescientos drams."
+     ],
+     [
+      "Մ",
+      "Երկու լավաշ, խնդրում եմ։",
+      "Два лаваша, пожалуйста.",
+      "Two lavash, please.",
+      "Deux lavash, s'il vous plaît.",
+      "Dos lavash, por favor."
+     ],
+     [
+      "Վ",
+      "Վեց հարյուր դրամ։ Ուրիշ ի՞նչ։",
+      "Шестьсот драмов. Что-нибудь ещё?",
+      "Six hundred drams. Anything else?",
+      "Six cents drams. Autre chose ?",
+      "Seiscientos drams. ¿Algo más?"
+     ],
+     [
+      "Մ",
+      "Մեկ պանիր էլ։ Ընդամենը ինչքա՞ն է։",
+      "И один сыр. Сколько всего?",
+      "And one cheese. How much altogether?",
+      "Et un fromage. Ça fait combien en tout ?",
+      "Y un queso. ¿Cuánto es en total?"
+     ],
+     [
+      "Վ",
+      "Երկու հազար դրամ։",
+      "Две тысячи драмов.",
+      "Two thousand drams.",
+      "Deux mille drams.",
+      "Dos mil drams."
+     ]
+    ]
+   },
+   "seeds": [
+    "մեկ",
+    "երկու",
+    "երեք",
+    "չորս",
+    "հինգ",
+    "վեց",
+    "յոթ",
+    "ութ",
+    "ինը",
+    "տասը",
+    "հարյուր",
+    "հազար",
+    "դրամ"
+   ],
+   "drills": [
+    {
+     "t": "num",
+     "items": [
+      [
+       1,
+       "մեկ"
+      ],
+      [
+       2,
+       "երկու"
+      ],
+      [
+       3,
+       "երեք"
+      ],
+      [
+       4,
+       "չորս"
+      ],
+      [
+       5,
+       "հինգ"
+      ],
+      [
+       6,
+       "վեց"
+      ],
+      [
+       7,
+       "յոթ"
+      ],
+      [
+       8,
+       "ութ"
+      ],
+      [
+       9,
+       "ինը"
+      ],
+      [
+       10,
+       "տասը"
+      ],
+      [
+       300,
+       "երեք հարյուր"
+      ],
+      [
+       600,
+       "վեց հարյուր"
+      ],
+      [
+       2000,
+       "երկու հազար"
+      ],
+      [
+       500,
+       "հինգ հարյուր"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s1u7",
+   "stage": 1,
+   "ic": "📚",
+   "title": {
+    "ru": "Много: -եր, -ներ",
+    "en": "Plural: -եր, -ներ",
+    "fr": "Le pluriel : -եր, -ներ",
+    "es": "Plural: -եր, -ներ"
+   },
    "formula": "[ինչ]-եր · [ինչ]-ներ",
    "note": {
     "ru": "Короткое слово (один слог) берёт -եր: գիրք → գրքեր, տուն → տներ; длинное — -ներ: տետր → տետրեր, но մատիտ → մատիտներ, գրիչ → գրիչներ. В коротких словах ի и ու часто выпадают: գիրք → գրքեր. С артиклем: գրքերը — «эти книги». Есть исключения: մարդ → մարդիկ, կին → կանայք.",
     "en": "A short word (one syllable) takes -եր: գիրք → գրքեր, տուն → տներ; a longer one -ներ: մատիտ → մատիտներ, գրիչ → գրիչներ. In short words ի and ու often drop out: գիրք → գրքեր. With the article: գրքերը — “the books”. Exceptions exist: մարդ → մարդիկ, կին → կանայք.",
     "fr": "Un mot court (une syllabe) prend -եր : գիրք → գրքեր, տուն → տներ ; un mot plus long, -ներ : մատիտ → մատիտներ, գրիչ → գրիչներ. Dans les mots courts, ի et ու tombent souvent : գիրք → գրքեր. Avec l'article : գրքերը — « les livres ». Exceptions : մարդ → մարդիկ, կին → կանայք.",
-    "es": "Una palabra corta (una sílaba) toma -եր: գիրք → գրքեր, տուն → տներ; una más larga, -ներ: մատիտ → մատիտներ, գրիչ → գրիչներ. En las cortas, ի y ու a menudo caen: գիրք → գրքեր. Con artículo: գրքերը — «los libros». Hay excepciones: մարդ → մարդիկ, կին → կանայք."},
-   "scene": {"title": {"ru": "В книжном", "en": "At the bookshop", "fr": "À la librairie", "es": "En la librería"},
-    "who": {"Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}, "Վ": {"ru": "Продавщица", "en": "Shop assistant", "fr": "Vendeuse", "es": "Vendedora"}},
+    "es": "Una palabra corta (una sílaba) toma -եր: գիրք → գրքեր, տուն → տներ; una más larga, -ներ: մատիտ → մատիտներ, գրիչ → գրիչներ. En las cortas, ի y ու a menudo caen: գիրք → գրքեր. Con artículo: գրքերը — «los libros». Hay excepciones: մարդ → մարդիկ, կին → կանայք."
+   },
+   "scene": {
+    "title": {
+     "ru": "В книжном",
+     "en": "At the bookshop",
+     "fr": "À la librairie",
+     "es": "En la librería"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Վ": {
+      "ru": "Продавщица",
+      "en": "Shop assistant",
+      "fr": "Vendeuse",
+      "es": "Vendedora"
+     }
+    },
     "lines": [
-     ["Մ", "Այստեղ հայերեն գրքեր կա՞ն։", "Здесь есть книги на армянском?", "Are there books in Armenian here?", "Il y a des livres en arménien ici ?", "¿Hay libros en armenio aquí?"],
-     ["Վ", "Այո, կան։ Ահա հայերեն գրքերը։", "Да, есть. Вот книги на армянском.", "Yes. Here are the Armenian books.", "Oui. Voici les livres en arménien.", "Sí, hay. Aquí están los libros en armenio."],
-     ["Մ", "Տետրեր և գրիչներ էլ ունե՞ք։", "А тетради и ручки у вас тоже есть?", "Do you also have notebooks and pens?", "Vous avez aussi des cahiers et des stylos ?", "¿También tienen cuadernos y lapiceras?"],
-     ["Վ", "Ունենք։ Գրիչները այստեղ են, տետրերը՝ այնտեղ։", "Есть. Ручки здесь, тетради — там.", "We do. The pens are here, the notebooks over there.", "Oui. Les stylos sont ici, les cahiers là-bas.", "Sí. Las lapiceras están aquí, los cuadernos, allá."],
-     ["Մ", "Երկու տետր և մեկ գրիչ, խնդրում եմ։", "Две тетради и одну ручку, пожалуйста.", "Two notebooks and one pen, please.", "Deux cahiers et un stylo, s'il vous plaît.", "Dos cuadernos y una lapicera, por favor."]
-    ]},
-   "seeds": ["գիրք", "գրել", "տետր", "մատիտ", "խանութ", "այստեղ", "այնտեղ", "ահա"],
-   "drills": [{"t": "form", "kind": "noun", "key": "pl", "alt": ["def", "dat"], "words": ["գիրք", "տետր", "մատիտ", "գրիչ", "խանութ", "տուն", "քաղաք", "սեղան", "աթոռ", "ընկեր", "դպրոց", "կատու", "մարդ"],
-    "q": {"ru": "много: «… (мн. ч.)»", "en": "many: “… (plural)”", "fr": "plusieurs : « … (pluriel) »", "es": "varios: «… (plural)»"}}]},
-
-  {"id": "s1u8", "stage": 1, "ic": "☕",
-   "title": {"ru": "Просьба", "en": "Asking for things", "fr": "Demander", "es": "Pedir"},
+     [
+      "Մ",
+      "Այստեղ հայերեն գրքեր կա՞ն։",
+      "Здесь есть книги на армянском?",
+      "Are there books in Armenian here?",
+      "Il y a des livres en arménien ici ?",
+      "¿Hay libros en armenio aquí?"
+     ],
+     [
+      "Վ",
+      "Այո, կան։ Ահա հայերեն գրքերը։",
+      "Да, есть. Вот книги на армянском.",
+      "Yes. Here are the Armenian books.",
+      "Oui. Voici les livres en arménien.",
+      "Sí, hay. Aquí están los libros en armenio."
+     ],
+     [
+      "Մ",
+      "Տետրեր և գրիչներ էլ ունե՞ք։",
+      "А тетради и ручки у вас тоже есть?",
+      "Do you also have notebooks and pens?",
+      "Vous avez aussi des cahiers et des stylos ?",
+      "¿También tienen cuadernos y lapiceras?"
+     ],
+     [
+      "Վ",
+      "Ունենք։ Գրիչները այստեղ են, տետրերը՝ այնտեղ։",
+      "Есть. Ручки здесь, тетради — там.",
+      "We do. The pens are here, the notebooks over there.",
+      "Oui. Les stylos sont ici, les cahiers là-bas.",
+      "Sí. Las lapiceras están aquí, los cuadernos, allá."
+     ],
+     [
+      "Մ",
+      "Երկու տետր և մեկ գրիչ, խնդրում եմ։",
+      "Две тетради и одну ручку, пожалуйста.",
+      "Two notebooks and one pen, please.",
+      "Deux cahiers et un stylo, s'il vous plaît.",
+      "Dos cuadernos y una lapicera, por favor."
+     ]
+    ]
+   },
+   "seeds": [
+    "գիրք",
+    "գրել",
+    "տետր",
+    "մատիտ",
+    "խանութ",
+    "այստեղ",
+    "այնտեղ",
+    "ահա"
+   ],
+   "drills": [
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "pl",
+     "alt": [
+      "def",
+      "dat"
+     ],
+     "words": [
+      "գիրք",
+      "տետր",
+      "մատիտ",
+      "գրիչ",
+      "խանութ",
+      "տուն",
+      "քաղաք",
+      "սեղան",
+      "աթոռ",
+      "ընկեր",
+      "դպրոց",
+      "կատու",
+      "մարդ"
+     ],
+     "q": {
+      "ru": "много: «… (мн. ч.)»",
+      "en": "many: “… (plural)”",
+      "fr": "plusieurs : « … (pluriel) »",
+      "es": "varios: «… (plural)»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s1u8",
+   "stage": 1,
+   "ic": "☕",
+   "title": {
+    "ru": "Просьба",
+    "en": "Asking for things",
+    "fr": "Demander",
+    "es": "Pedir"
+   },
    "formula": "[արա]-եք, խնդրում եմ",
    "note": {
     "ru": "Вежливая просьба к незнакомому — глагол на -եք: բերել → բերեք «принесите», գրել → գրեք. Глаголы на -ալ: կարդալ → կարդացեք. Другу — коротко: բեր, գրիր, կարդա. Խնդրում եմ — «пожалуйста» (дословно «прошу»). Неправильные: տալ → տվեք / տուր, գալ → եկեք / արի.",
     "en": "A polite request to a stranger: the verb in -եք: բերել → բերեք “bring”, գրել → գրեք. Verbs in -ալ: կարդալ → կարդացեք. To a friend, the short form: բեր, գրիր, կարդա. Խնդրում եմ — “please” (literally “I ask”). Irregular: տալ → տվեք / տուր, գալ → եկեք / արի.",
     "fr": "Demande polie à un inconnu : le verbe en -եք : բերել → բերեք « apportez », գրել → գրեք. Verbes en -ալ : կարդալ → կարդացեք. À un ami, forme courte : բեր, գրիր, կարդա. Խնդրում եմ — « s'il vous plaît » (mot à mot « je demande »). Irréguliers : տալ → տվեք / տուր, գալ → եկեք / արի.",
-    "es": "Pedido cortés a un desconocido: el verbo en -եք: բերել → բերեք «traiga», գրել → գրեք. Verbos en -ալ: կարդալ → կարդացեք. A un amigo, forma corta: բեր, գրիր, կարդա. Խնդրում եմ — «por favor» (literalmente «pido»). Irregulares: տալ → տվեք / տուր, գալ → եկեք / արի."},
-   "scene": {"title": {"ru": "В кафе", "en": "At the café", "fr": "Au café", "es": "En el café"},
-    "who": {"Մտ": {"ru": "Официант", "en": "Waiter", "fr": "Serveur", "es": "Mozo"}, "Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}, "Ա": {"ru": "Анаит", "en": "Anahit", "fr": "Anahit", "es": "Anahit"}},
+    "es": "Pedido cortés a un desconocido: el verbo en -եք: բերել → բերեք «traiga», գրել → գրեք. Verbos en -ալ: կարդալ → կարդացեք. A un amigo, forma corta: բեր, գրիր, կարդա. Խնդրում եմ — «por favor» (literalmente «pido»). Irregulares: տալ → տվեք / տուր, գալ → եկեք / արի."
+   },
+   "scene": {
+    "title": {
+     "ru": "В кафе",
+     "en": "At the café",
+     "fr": "Au café",
+     "es": "En el café"
+    },
+    "who": {
+     "Մտ": {
+      "ru": "Официант",
+      "en": "Waiter",
+      "fr": "Serveur",
+      "es": "Mozo"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
     "lines": [
-     ["Մտ", "Բարի գալուստ։ Ի՞նչ եք ուզում։", "Добро пожаловать! Что желаете?", "Welcome! What would you like?", "Bienvenue ! Que désirez-vous ?", "¡Bienvenidos! ¿Qué desean?"],
-     ["Մ", "Մեկ սուրճ, խնդրում եմ։ Առանց շաքարի։", "Один кофе, пожалуйста. Без сахара.", "One coffee, please. No sugar.", "Un café, s'il vous plaît. Sans sucre.", "Un café, por favor. Sin azúcar."],
-     ["Ա", "Իսկ ինձ թեյ, խնդրում եմ։", "А мне чай, пожалуйста.", "And tea for me, please.", "Et pour moi, un thé, s'il vous plaît.", "Y para mí, un té, por favor."],
-     ["Մտ", "Ջուր էլ բերե՞մ։", "Воды тоже принести?", "Shall I bring water too?", "Je vous apporte aussi de l'eau ?", "¿Les traigo agua también?"],
-     ["Մ", "Այո, բերեք, խնդրում եմ։ Եվ հաշիվը։", "Да, принесите, пожалуйста. И счёт.", "Yes, please. And the bill.", "Oui, s'il vous plaît. Et l'addition.", "Sí, tráigala, por favor. Y la cuenta."],
-     ["Մտ", "Անմիջապես։", "Сейчас же.", "Right away.", "Tout de suite.", "Enseguida."]
-    ]},
-   "seeds": ["սուրճ", "թեյ", "ջուր", "շաքար", "բերել", "տալ", "հաշիվ"],
-   "drills": [{"t": "form", "kind": "verb", "key": "imppl", "alt": ["imp", "inf"], "words": ["բերել", "տալ", "գրել", "խոսել", "նստել", "սպասել", "կարդալ", "ասել", "գալ", "խմել"],
-    "q": {"ru": "вежливо: «…те, пожалуйста»", "en": "politely: “please …”", "fr": "poliment : « …ez, s'il vous plaît »", "es": "con cortesía: «… por favor»"}}]},
-
-  {"id": "s1u9", "stage": 1, "ic": "🚇",
-   "title": {"ru": "Где?", "en": "Where?", "fr": "Où ?", "es": "¿Dónde?"},
+     [
+      "Մտ",
+      "Բարի գալուստ։ Ի՞նչ եք ուզում։",
+      "Добро пожаловать! Что желаете?",
+      "Welcome! What would you like?",
+      "Bienvenue ! Que désirez-vous ?",
+      "¡Bienvenidos! ¿Qué desean?"
+     ],
+     [
+      "Մ",
+      "Մեկ սուրճ, խնդրում եմ։ Առանց շաքարի։",
+      "Один кофе, пожалуйста. Без сахара.",
+      "One coffee, please. No sugar.",
+      "Un café, s'il vous plaît. Sans sucre.",
+      "Un café, por favor. Sin azúcar."
+     ],
+     [
+      "Ա",
+      "Իսկ ինձ թեյ, խնդրում եմ։",
+      "А мне чай, пожалуйста.",
+      "And tea for me, please.",
+      "Et pour moi, un thé, s'il vous plaît.",
+      "Y para mí, un té, por favor."
+     ],
+     [
+      "Մտ",
+      "Ջուր էլ բերե՞մ։",
+      "Воды тоже принести?",
+      "Shall I bring water too?",
+      "Je vous apporte aussi de l'eau ?",
+      "¿Les traigo agua también?"
+     ],
+     [
+      "Մ",
+      "Այո, բերեք, խնդրում եմ։ Եվ հաշիվը։",
+      "Да, принесите, пожалуйста. И счёт.",
+      "Yes, please. And the bill.",
+      "Oui, s'il vous plaît. Et l'addition.",
+      "Sí, tráigala, por favor. Y la cuenta."
+     ],
+     [
+      "Մտ",
+      "Անմիջապես։",
+      "Сейчас же.",
+      "Right away.",
+      "Tout de suite.",
+      "Enseguida."
+     ]
+    ]
+   },
+   "seeds": [
+    "սուրճ",
+    "թեյ",
+    "ջուր",
+    "շաքար",
+    "բերել",
+    "տալ",
+    "հաշիվ"
+   ],
+   "drills": [
+    {
+     "t": "form",
+     "kind": "verb",
+     "key": "imppl",
+     "alt": [
+      "imp",
+      "inf"
+     ],
+     "words": [
+      "բերել",
+      "տալ",
+      "գրել",
+      "խոսել",
+      "նստել",
+      "սպասել",
+      "կարդալ",
+      "ասել",
+      "գալ",
+      "խմել"
+     ],
+     "q": {
+      "ru": "вежливо: «…те, пожалуйста»",
+      "en": "politely: “please …”",
+      "fr": "poliment : « …ez, s'il vous plaît »",
+      "es": "con cortesía: «… por favor»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s1u9",
+   "stage": 1,
+   "ic": "🚇",
+   "title": {
+    "ru": "Где?",
+    "en": "Where?",
+    "fr": "Où ?",
+    "es": "¿Dónde?"
+   },
    "formula": "Որտե՞ղ է [ինչ]-ը",
    "note": {
     "ru": "Вопросительные слова: ո՞վ «кто», ի՞նչ «что», որտե՞ղ «где», ե՞րբ «когда», ինչքա՞ն «сколько». Знак ՞ стоит над ударной гласной. Искомое берёт артикль: Որտե՞ղ է մետրոն։ Ответ: Ուղիղ, աջ, ձախ — «прямо, направо, налево». Ներեցեք — «извините».",
     "en": "Question words: ո՞վ “who”, ի՞նչ “what”, որտե՞ղ “where”, ե՞րբ “when”, ինչքա՞ն “how much”. The ՞ sign sits over the stressed vowel. The thing you look for takes the article: Որտե՞ղ է մետրոն։ Answers: ուղիղ, աջ, ձախ — “straight, right, left”. Ներեցեք — “excuse me”.",
     "fr": "Mots interrogatifs : ո՞վ « qui », ի՞նչ « quoi », որտե՞ղ « où », ե՞րբ « quand », ինչքա՞ն « combien ». Le signe ՞ se met sur la voyelle accentuée. Ce qu'on cherche prend l'article : Որտե՞ղ է մետրոն։ Réponses : ուղիղ, աջ, ձախ — « tout droit, à droite, à gauche ». Ներեցեք — « excusez-moi ».",
-    "es": "Palabras interrogativas: ո՞վ «quién», ի՞նչ «qué», որտե՞ղ «dónde», ե՞րբ «cuándo», ինչքա՞ն «cuánto». El signo ՞ va sobre la vocal acentuada. Lo que se busca lleva artículo: Որտե՞ղ է մետրոն։ Respuestas: ուղիղ, աջ, ձախ — «derecho, a la derecha, a la izquierda». Ներեցեք — «disculpe»."},
-   "scene": {"title": {"ru": "Как пройти к метро", "en": "The way to the metro", "fr": "Le chemin du métro", "es": "Cómo llegar al subte"},
-    "who": {"Մ": {"ru": "Марк", "en": "Mark", "fr": "Mark", "es": "Mark"}, "Ա": {"ru": "Прохожая", "en": "Passer-by", "fr": "Passante", "es": "Transeúnte"}},
+    "es": "Palabras interrogativas: ո՞վ «quién», ի՞նչ «qué», որտե՞ղ «dónde», ե՞րբ «cuándo», ինչքա՞ն «cuánto». El signo ՞ va sobre la vocal acentuada. Lo que se busca lleva artículo: Որտե՞ղ է մետրոն։ Respuestas: ուղիղ, աջ, ձախ — «derecho, a la derecha, a la izquierda». Ներեցեք — «disculpe»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Как пройти к метро",
+     "en": "The way to the metro",
+     "fr": "Le chemin du métro",
+     "es": "Cómo llegar al subte"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Прохожая",
+      "en": "Passer-by",
+      "fr": "Passante",
+      "es": "Transeúnte"
+     }
+    },
     "lines": [
-     ["Մ", "Ներեցեք, որտե՞ղ է մետրոն։", "Извините, где метро?", "Excuse me, where is the metro?", "Excusez-moi, où est le métro ?", "Disculpe, ¿dónde está el subte?"],
-     ["Ա", "Ուղիղ գնացեք, հետո՝ ձախ։", "Идите прямо, потом налево.", "Go straight, then left.", "Allez tout droit, puis à gauche.", "Siga derecho, después a la izquierda."],
-     ["Մ", "Հեռո՞ւ է։", "Далеко?", "Is it far?", "C'est loin ?", "¿Está lejos?"],
-     ["Ա", "Ոչ, մոտ է, հինգ րոպե։", "Нет, близко, пять минут.", "No, it's close, five minutes.", "Non, c'est près, cinq minutes.", "No, está cerca, cinco minutos."],
-     ["Մ", "Իսկ շուկան որտե՞ղ է։", "А где рынок?", "And where is the market?", "Et où est le marché ?", "¿Y dónde está el mercado?"],
-     ["Ա", "Շուկան մետրոյի մոտ է։", "Рынок рядом с метро.", "The market is next to the metro.", "Le marché est à côté du métro.", "El mercado está al lado del subte."],
-     ["Մ", "Շնորհակալություն։", "Спасибо!", "Thank you!", "Merci !", "¡Gracias!"]
-    ]},
-   "seeds": ["որտեղ", "ով", "երբ", "ինչքան", "մետրո", "շուկա", "քաղաք", "փողոց", "աջ", "ձախ", "ուղիղ", "մոտ", "հեռու", "ճանապարհ"],
+     [
+      "Մ",
+      "Ներեցեք, որտե՞ղ է մետրոն։",
+      "Извините, где метро?",
+      "Excuse me, where is the metro?",
+      "Excusez-moi, où est le métro ?",
+      "Disculpe, ¿dónde está el subte?"
+     ],
+     [
+      "Ա",
+      "Ուղիղ գնացեք, հետո՝ ձախ։",
+      "Идите прямо, потом налево.",
+      "Go straight, then left.",
+      "Allez tout droit, puis à gauche.",
+      "Siga derecho, después a la izquierda."
+     ],
+     [
+      "Մ",
+      "Հեռո՞ւ է։",
+      "Далеко?",
+      "Is it far?",
+      "C'est loin ?",
+      "¿Está lejos?"
+     ],
+     [
+      "Ա",
+      "Ոչ, մոտ է, հինգ րոպե։",
+      "Нет, близко, пять минут.",
+      "No, it's close, five minutes.",
+      "Non, c'est près, cinq minutes.",
+      "No, está cerca, cinco minutos."
+     ],
+     [
+      "Մ",
+      "Իսկ շուկան որտե՞ղ է։",
+      "А где рынок?",
+      "And where is the market?",
+      "Et où est le marché ?",
+      "¿Y dónde está el mercado?"
+     ],
+     [
+      "Ա",
+      "Շուկան մետրոյի մոտ է։",
+      "Рынок рядом с метро.",
+      "The market is next to the metro.",
+      "Le marché est à côté du métro.",
+      "El mercado está al lado del subte."
+     ],
+     [
+      "Մ",
+      "Շնորհակալություն։",
+      "Спасибо!",
+      "Thank you!",
+      "Merci !",
+      "¡Gracias!"
+     ]
+    ]
+   },
+   "seeds": [
+    "որտեղ",
+    "ով",
+    "երբ",
+    "ինչքան",
+    "մետրո",
+    "շուկա",
+    "քաղաք",
+    "փողոց",
+    "աջ",
+    "ձախ",
+    "ուղիղ",
+    "մոտ",
+    "հեռու",
+    "ճանապարհ"
+   ],
    "affix": "-ացի",
-   "drills": [{"t": "pick", "items": [
-     [{"ru": "кто?", "en": "who?", "fr": "qui ?", "es": "¿quién?"}, "ո՞վ"],
-     [{"ru": "что?", "en": "what?", "fr": "quoi ?", "es": "¿qué?"}, "ի՞նչ"],
-     [{"ru": "где?", "en": "where?", "fr": "où ?", "es": "¿dónde?"}, "որտե՞ղ"],
-     [{"ru": "когда?", "en": "when?", "fr": "quand ?", "es": "¿cuándo?"}, "ե՞րբ"],
-     [{"ru": "сколько?", "en": "how much?", "fr": "combien ?", "es": "¿cuánto?"}, "ինչքա՞ն"]]},
-     {"t": "form", "kind": "noun", "key": "def", "alt": ["loc", "pl"], "words": ["մետրո", "շուկա", "կանգառ", "խանութ", "դպրոց", "տաքսի", "փողոց"],
-      "q": {"ru": "где … ? — с артиклем", "en": "where is the …? — with the article", "fr": "où est le … ? — avec l'article", "es": "¿dónde está el …? — con artículo"}}]}
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "кто?",
+        "en": "who?",
+        "fr": "qui ?",
+        "es": "¿quién?"
+       },
+       "ո՞վ"
+      ],
+      [
+       {
+        "ru": "что?",
+        "en": "what?",
+        "fr": "quoi ?",
+        "es": "¿qué?"
+       },
+       "ի՞նչ"
+      ],
+      [
+       {
+        "ru": "где?",
+        "en": "where?",
+        "fr": "où ?",
+        "es": "¿dónde?"
+       },
+       "որտե՞ղ"
+      ],
+      [
+       {
+        "ru": "когда?",
+        "en": "when?",
+        "fr": "quand ?",
+        "es": "¿cuándo?"
+       },
+       "ե՞րբ"
+      ],
+      [
+       {
+        "ru": "сколько?",
+        "en": "how much?",
+        "fr": "combien ?",
+        "es": "¿cuánto?"
+       },
+       "ինչքա՞ն"
+      ]
+     ]
+    },
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "def",
+     "alt": [
+      "loc",
+      "pl"
+     ],
+     "words": [
+      "մետրո",
+      "շուկա",
+      "կանգառ",
+      "խանութ",
+      "դպրոց",
+      "տաքսի",
+      "փողոց"
+     ],
+     "q": {
+      "ru": "где … ? — с артиклем",
+      "en": "where is the …? — with the article",
+      "fr": "où est le … ? — avec l'article",
+      "es": "¿dónde está el …? — con artículo"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s2u1",
+   "stage": 2,
+   "ic": "📞",
+   "title": {
+    "ru": "Что ты делаешь?",
+    "en": "What are you doing?",
+    "fr": "Que fais-tu ?",
+    "es": "¿Qué haces?"
+   },
+   "formula": "Ես [բայ]-ում եմ",
+   "note": {
+    "ru": "Настоящее время — из двух частей: глагол без -ել/-ալ плюс -ում (գրել → գրում, կարդալ → կարդում) и знакомое «быть»: գրում եմ «пишу», գրում ես, գրում է, գրում ենք, գրում եք, գրում են. «Быть» любит встать после главного слова: Հայերեն եմ սովորում — «армянский учу» (а не что-то другое). Особые: գալ → գալիս եմ, լինել → լինում եմ.",
+    "en": "The present tense has two parts: the verb without -ել/-ալ plus -ում (գրել → գրում, կարդալ → կարդում) and the familiar “to be”: գրում եմ “I write”, գրում ես, գրում է, գրում ենք, գրում եք, գրում են. “To be” likes to follow the key word: Հայերեն եմ սովորում — “it’s Armenian I’m learning”. Special ones: գալ → գալիս եմ, լինել → լինում եմ.",
+    "fr": "Le présent a deux parties : le verbe sans -ել/-ալ plus -ում (գրել → գրում, կարդալ → կարդում) et le petit « être » : գրում եմ « j’écris », գրում ես, գրում է, գրում ենք, գրում եք, գրում են. « Être » aime suivre le mot important : Հայերեն եմ սովորում — « c’est l’arménien que j’apprends ». Cas à part : գալ → գալիս եմ, լինել → լինում եմ.",
+    "es": "El presente tiene dos partes: el verbo sin -ել/-ալ más -ում (գրել → գրում, կարդալ → կարդում) y el conocido «ser»: գրում եմ «escribo», գրում ես, գրում է, գրում ենք, գրում եք, գրում են. «Ser» suele ir tras la palabra clave: Հայերեն եմ սովորում — «lo que estudio es armenio». Especiales: գալ → գալիս եմ, լինել → լինում եմ."
+   },
+   "scene": {
+    "title": {
+     "ru": "Звонок бабушке",
+     "en": "Calling grandma",
+     "fr": "Appel à mamie",
+     "es": "Llamada a la abuela"
+    },
+    "who": {
+     "Տ": {
+      "ru": "Бабушка",
+      "en": "Grandma",
+      "fr": "Mamie",
+      "es": "Abuela"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Տ",
+      "Ալո, բալես, ի՞նչ ես անում։",
+      "Алло, милый, что делаешь?",
+      "Hello, sweetheart, what are you doing?",
+      "Allô, mon chéri, que fais-tu ?",
+      "Hola, querido, ¿qué haces?"
+     ],
+     [
+      "Մ",
+      "Բարև, տատիկ։ Հայերեն եմ սովորում։",
+      "Привет, бабушка. Учу армянский.",
+      "Hi, grandma. I’m studying Armenian.",
+      "Salut, mamie. J’apprends l’arménien.",
+      "Hola, abuela. Estudio armenio."
+     ],
+     [
+      "Տ",
+      "Ապրես։ Իսկ Աննան ի՞նչ է անում։",
+      "Молодец! А что делает Анна?",
+      "Well done! And what is Anna doing?",
+      "Bravo ! Et Anna, que fait-elle ?",
+      "¡Muy bien! ¿Y qué hace Anna?"
+     ],
+     [
+      "Մ",
+      "Աննան կարդում է, իսկ հայրիկը աշխատում է։",
+      "Анна читает, а папа работает.",
+      "Anna is reading, and dad is working.",
+      "Anna lit, et papa travaille.",
+      "Anna lee y papá trabaja."
+     ],
+     [
+      "Տ",
+      "Դուք լա՞վ եք ուտում։",
+      "Вы хорошо кушаете?",
+      "Are you eating well?",
+      "Vous mangez bien ?",
+      "¿Comen bien?"
+     ],
+     [
+      "Մ",
+      "Այո, տատիկ, մենք շատ լավ ենք ուտում։",
+      "Да, бабушка, мы очень хорошо кушаем.",
+      "Yes, grandma, we eat very well.",
+      "Oui, mamie, nous mangeons très bien.",
+      "Sí, abuela, comemos muy bien."
+     ],
+     [
+      "Տ",
+      "Լավ, պաչում եմ։",
+      "Ну хорошо, целую.",
+      "All right, kisses.",
+      "Bon, je t’embrasse.",
+      "Bueno, un beso."
+     ]
+    ]
+   },
+   "seeds": [
+    "անել",
+    "սովորել",
+    "կարդալ",
+    "աշխատել",
+    "ուտել",
+    "խոսել",
+    "զանգել",
+    "տատիկ"
+   ],
+   "affix": "-իչ",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "pres",
+     "alt": [],
+     "verbs": [
+      "գրել",
+      "կարդալ",
+      "խոսել",
+      "աշխատել",
+      "սովորել",
+      "ապրել",
+      "ուտել",
+      "խմել",
+      "գալ",
+      "նայել"
+     ],
+     "q": {
+      "ru": "сейчас: кто что делает",
+      "en": "now: who does what",
+      "fr": "maintenant : qui fait quoi",
+      "es": "ahora: quién hace qué"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s2u2",
+   "stage": 2,
+   "ic": "🚐",
+   "title": {
+    "ru": "Не …",
+    "en": "Not …",
+    "fr": "Ne … pas",
+    "es": "No …"
+   },
+   "formula": "Ես չեմ [բայ]-ում",
+   "note": {
+    "ru": "Отрицание ставит «не-быть» вперёд: չեմ գրում «не пишу», չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Заметьте: է → չի. Вопрос — интонацией и знаком ՞: Ռուսերեն խոսո՞ւմ եք։ Пригодится: մի քիչ «немного», հասկանում եմ «понимаю», չեմ հասկանում «не понимаю».",
+    "en": "Negation moves a “not-be” to the front: չեմ գրում “I don’t write”, չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Note: է → չի. A question is just intonation and ՞: Ռուսերեն խոսո՞ւմ եք։ Handy: մի քիչ “a little”, հասկանում եմ “I understand”, չեմ հասկանում “I don’t understand”.",
+    "fr": "La négation place un « ne-pas-être » devant : չեմ գրում « je n’écris pas », չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Attention : է → չի. La question, c’est l’intonation et ՞ : Ռուսերեն խոսո՞ւմ եք։ Utile : մի քիչ « un peu », հասկանում եմ « je comprends », չեմ հասկանում « je ne comprends pas ».",
+    "es": "La negación pone un «no-ser» delante: չեմ գրում «no escribo», չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Ojo: է → չի. La pregunta es entonación y ՞: Ռուսերեն խոսո՞ւմ եք։ Útil: մի քիչ «un poco», հասկանում եմ «entiendo», չեմ հասկանում «no entiendo»."
+   },
+   "scene": {
+    "title": {
+     "ru": "В маршрутке",
+     "en": "In the minibus",
+     "fr": "Dans le minibus",
+     "es": "En la combi"
+    },
+    "who": {
+     "Վ": {
+      "ru": "Водитель",
+      "en": "Driver",
+      "fr": "Chauffeur",
+      "es": "Chofer"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Վ",
+      "Ո՞ւր եք գնում։",
+      "Куда едете?",
+      "Where are you going?",
+      "Où allez-vous ?",
+      "¿Adónde va?"
+     ],
+     [
+      "Մ",
+      "Կասկադ։ Ներեցեք, ես լավ չեմ խոսում հայերեն։",
+      "К Каскаду. Извините, я плохо говорю по-армянски.",
+      "To the Cascade. Sorry, I don’t speak Armenian well.",
+      "À la Cascade. Pardon, je ne parle pas bien arménien.",
+      "A la Cascada. Perdón, no hablo bien armenio."
+     ],
+     [
+      "Վ",
+      "Ոչինչ։ Ռուսերեն խոսո՞ւմ եք։",
+      "Ничего. По-русски говорите?",
+      "No problem. Do you speak Russian?",
+      "Pas grave. Vous parlez russe ?",
+      "No pasa nada. ¿Habla ruso?"
+     ],
+     [
+      "Մ",
+      "Այո, բայց հայերեն էլ եմ սովորում։ Մի քիչ հասկանում եմ։",
+      "Да, но армянский тоже учу. Немного понимаю.",
+      "Yes, but I’m learning Armenian too. I understand a little.",
+      "Oui, mais j’apprends aussi l’arménien. Je comprends un peu.",
+      "Sí, pero también estudio armenio. Entiendo un poco."
+     ],
+     [
+      "Վ",
+      "Ապրեք։ Կասկադը հաջորդ կանգառն է։",
+      "Молодец! Каскад — следующая остановка.",
+      "Well done! The Cascade is the next stop.",
+      "Bravo ! La Cascade, c’est le prochain arrêt.",
+      "¡Bien! La Cascada es la próxima parada."
+     ],
+     [
+      "Մ",
+      "Շնորհակալություն։ Այստեղ իջնում եմ։",
+      "Спасибо. Здесь выхожу.",
+      "Thank you. I’m getting off here.",
+      "Merci. Je descends ici.",
+      "Gracias. Me bajo aquí."
+     ]
+    ]
+   },
+   "seeds": [
+    "հասկանալ",
+    "խոսել",
+    "գնալ",
+    "իջնել",
+    "կանգառ",
+    "հաջորդ",
+    "ռուսերեն",
+    "հայերեն"
+   ],
+   "affix": "-ող",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "neg",
+     "alt": [
+      "pres"
+     ],
+     "verbs": [
+      "խոսել",
+      "հասկանալ",
+      "գնալ",
+      "ուտել",
+      "աշխատել",
+      "քնել",
+      "լսել",
+      "տեսնել",
+      "խմել",
+      "սիրել"
+     ],
+     "q": {
+      "ru": "не делает: «не …»",
+      "en": "not doing: “doesn’t …”",
+      "fr": "ne fait pas : « ne … pas »",
+      "es": "no lo hace: «no …»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s2u3",
+   "stage": 2,
+   "ic": "🔑",
+   "title": {
+    "ru": "Чей?",
+    "en": "Whose?",
+    "fr": "À qui ?",
+    "es": "¿De quién?"
+   },
+   "formula": "[ով]-ի [ինչ]ը",
+   "note": {
+    "ru": "«Чей» — окончание -ի у владельца: Արամի բանալին «ключ Арама», քաղաքի կենտրոնը «центр города». Владелец — первым, вещь — после, обычно с артиклем. У родных и близких особые формы: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. Вопрос — ու՞մ: Այս գիրքն ու՞մ է։ «Чья это книга?»",
+    "en": "“Whose” is the ending -ի on the owner: Արամի բանալին “Aram’s key”, քաղաքի կենտրոնը “the city centre”. The owner comes first, the thing after, usually with the article. Family words have special forms: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. The question is ու՞մ: Այս գիրքն ու՞մ է։ “Whose book is this?”",
+    "fr": "« À qui » : la terminaison -ի sur le possesseur : Արամի բանալին « la clé d’Aram », քաղաքի կենտրոնը « le centre-ville ». Le possesseur d’abord, l’objet ensuite, en général avec l’article. Les mots de la famille ont des formes à part : մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. La question : ու՞մ : Այս գիրքն ու՞մ է։ « À qui est ce livre ? »",
+    "es": "«De quién»: la terminación -ի en el dueño: Արամի բանալին «la llave de Aram», քաղաքի կենտրոնը «el centro de la ciudad». Primero el dueño, después la cosa, normalmente con artículo. Los parientes tienen formas propias: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. La pregunta es ու՞մ: Այս գիրքն ու՞մ է։ «¿De quién es este libro?»"
+   },
+   "scene": {
+    "title": {
+     "ru": "После гостей",
+     "en": "After the guests left",
+     "fr": "Après le départ des invités",
+     "es": "Después de las visitas"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Ա",
+      "Մարկ, սա քո՞ բանալին է։",
+      "Марк, это твой ключ?",
+      "Mark, is this your key?",
+      "Mark, c’est ta clé ?",
+      "Mark, ¿esta es tu llave?"
+     ],
+     [
+      "Մ",
+      "Ոչ, իմը չէ։ Սա Արամի բանալին է։",
+      "Нет, не мой. Это ключ Арама.",
+      "No, it’s not mine. It’s Aram’s key.",
+      "Non, ce n’est pas la mienne. C’est la clé d’Aram.",
+      "No, no es mía. Es la llave de Aram."
+     ],
+     [
+      "Ա",
+      "Իսկ այս պայուսակն ու՞մ է։",
+      "А эта сумка чья?",
+      "And whose bag is this?",
+      "Et ce sac, il est à qui ?",
+      "¿Y de quién es este bolso?"
+     ],
+     [
+      "Մ",
+      "Դա իմ քրոջ պայուսակն է։",
+      "Это сумка моей сестры.",
+      "That’s my sister’s bag.",
+      "C’est le sac de ma sœur.",
+      "Es el bolso de mi hermana."
+     ],
+     [
+      "Ա",
+      "Իսկ գի՞րքը։",
+      "А книга?",
+      "And the book?",
+      "Et le livre ?",
+      "¿Y el libro?"
+     ],
+     [
+      "Մ",
+      "Գիրքն իմ ընկերոջն է։ Նա գրող է, իսկ նրա կինը՝ բանաստեղծուհի։",
+      "Книга моего друга. Он писатель, а его жена — поэтесса.",
+      "The book is my friend’s. He’s a writer, and his wife is a poet.",
+      "Le livre est à mon ami. Il est écrivain, et sa femme est poétesse.",
+      "El libro es de mi amigo. Él es escritor y su esposa, poeta."
+     ]
+    ]
+   },
+   "seeds": [
+    "բանալի",
+    "պայուսակ",
+    "գիրք",
+    "ընկեր",
+    "քույր",
+    "կին",
+    "գրող",
+    "բանաստեղծ"
+   ],
+   "affix": "-ուհի",
+   "drills": [
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "dat",
+     "alt": [
+      "def",
+      "abl"
+     ],
+     "words": [
+      "մայր",
+      "հայր",
+      "եղբայր",
+      "քույր",
+      "ընկեր",
+      "կին",
+      "քաղաք",
+      "տուն",
+      "դպրոց",
+      "ուսուցիչ",
+      "գրող"
+     ],
+     "q": {
+      "ru": "чей? — «… (кого / чего)»",
+      "en": "whose? — “of …”",
+      "fr": "à qui ? — « de … »",
+      "es": "¿de quién? — «de …»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s2u4",
+   "stage": 2,
+   "ic": "⏰",
+   "title": {
+    "ru": "Во сколько?",
+    "en": "At what time?",
+    "fr": "À quelle heure ?",
+    "es": "¿A qué hora?"
+   },
+   "formula": "Ժամը [քանի]-ին",
+   "note": {
+    "ru": "Время встречи — ժամը и число с -ին: ժամը հինգին «в пять часов», ժամը յոթին «в семь». Внимание: երկու → երկուսին, ինը → իննին, տասը → տասին. Вопрос: Ժամը քանիսի՞ն։ Та же форма на -ին отвечает «кому»: Զանգում եմ Արամին «звоню Араму». Части дня: առավոտյան «утром», երեկոյան «вечером».",
+    "en": "A meeting time is ժամը plus the number with -ին: ժամը հինգին “at five”, ժամը յոթին “at seven”. Watch out: երկու → երկուսին, ինը → իննին, տասը → տասին. The question: Ժամը քանիսի՞ն։ The same -ին form answers “to whom”: Զանգում եմ Արամին “I’m calling Aram”. Parts of the day: առավոտյան “in the morning”, երեկոյան “in the evening”.",
+    "fr": "L’heure d’un rendez-vous : ժամը et le nombre en -ին : ժամը հինգին « à cinq heures », ժամը յոթին « à sept heures ». Attention : երկու → երկուսին, ինը → իննին, տասը → տասին. La question : Ժամը քանիսի՞ն։ La même forme en -ին répond à « à qui » : Զանգում եմ Արամին « j’appelle Aram ». Moments du jour : առավոտյան « le matin », երեկոյան « le soir ».",
+    "es": "La hora de un encuentro: ժամը y el número con -ին: ժամը հինգին «a las cinco», ժամը յոթին «a las siete». Ojo: երկու → երկուսին, ինը → իննին, տասը → տասին. La pregunta: Ժամը քանիսի՞ն։ La misma forma en -ին responde «a quién»: Զանգում եմ Արամին «llamo a Aram». Partes del día: առավոտյան «por la mañana», երեկոյան «por la tarde, por la noche»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Договариваемся о встрече",
+     "en": "Making plans to meet",
+     "fr": "On fixe un rendez-vous",
+     "es": "Quedamos"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Անահիտ, վաղն ազա՞տ ես։",
+      "Анаит, завтра свободна?",
+      "Anahit, are you free tomorrow?",
+      "Anahit, tu es libre demain ?",
+      "Anahit, ¿estás libre mañana?"
+     ],
+     [
+      "Ա",
+      "Առավոտյան աշխատում եմ, բայց երեկոյան ազատ եմ։",
+      "Утром работаю, но вечером свободна.",
+      "I work in the morning, but I’m free in the evening.",
+      "Je travaille le matin, mais je suis libre le soir.",
+      "Trabajo por la mañana, pero a la tarde estoy libre."
+     ],
+     [
+      "Մ",
+      "Հանդիպենք ճաշարանում։ Ժամը քանիսի՞ն։",
+      "Встретимся в столовой. Во сколько?",
+      "Let’s meet at the canteen. What time?",
+      "Retrouvons-nous à la cantine. À quelle heure ?",
+      "Nos vemos en el comedor. ¿A qué hora?"
+     ],
+     [
+      "Ա",
+      "Ժամը յոթին լա՞վ է։",
+      "В семь нормально?",
+      "Is seven OK?",
+      "Sept heures, ça va ?",
+      "¿A las siete está bien?"
+     ],
+     [
+      "Մ",
+      "Շատ լավ է։ Արամին էլ եմ զանգում, նա էլ է գալիս։",
+      "Отлично. Араму тоже позвоню, он тоже придёт.",
+      "Great. I’m calling Aram too, he’s coming as well.",
+      "Très bien. J’appelle aussi Aram, il vient aussi.",
+      "Perfecto. Llamo también a Aram, él también viene."
+     ],
+     [
+      "Ա",
+      "Լավ, ուրեմն վաղը ժամը յոթին։",
+      "Хорошо, значит, завтра в семь.",
+      "OK, tomorrow at seven then.",
+      "D’accord, donc demain à sept heures.",
+      "Bueno, entonces mañana a las siete."
+     ]
+    ]
+   },
+   "seeds": [
+    "ժամ",
+    "վաղը",
+    "առավոտ",
+    "երեկո",
+    "ազատ",
+    "ճաշարան",
+    "հանդիպել",
+    "զանգել"
+   ],
+   "affix": "-արան",
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "в час",
+        "en": "at one",
+        "fr": "à une heure",
+        "es": "a la una"
+       },
+       "ժամը մեկին"
+      ],
+      [
+       {
+        "ru": "в два",
+        "en": "at two",
+        "fr": "à deux heures",
+        "es": "a las dos"
+       },
+       "ժամը երկուսին"
+      ],
+      [
+       {
+        "ru": "в три",
+        "en": "at three",
+        "fr": "à trois heures",
+        "es": "a las tres"
+       },
+       "ժամը երեքին"
+      ],
+      [
+       {
+        "ru": "в пять",
+        "en": "at five",
+        "fr": "à cinq heures",
+        "es": "a las cinco"
+       },
+       "ժամը հինգին"
+      ],
+      [
+       {
+        "ru": "в семь",
+        "en": "at seven",
+        "fr": "à sept heures",
+        "es": "a las siete"
+       },
+       "ժամը յոթին"
+      ],
+      [
+       {
+        "ru": "в девять",
+        "en": "at nine",
+        "fr": "à neuf heures",
+        "es": "a las nueve"
+       },
+       "ժամը իննին"
+      ],
+      [
+       {
+        "ru": "в десять",
+        "en": "at ten",
+        "fr": "à dix heures",
+        "es": "a las diez"
+       },
+       "ժամը տասին"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s2u5",
+   "stage": 2,
+   "ic": "🚕",
+   "title": {
+    "ru": "Хочу, могу, надо",
+    "en": "I want, I can, I must",
+    "fr": "Je veux, je peux, il faut",
+    "es": "Quiero, puedo, hay que"
+   },
+   "formula": "[ուզում եմ / կարող եմ] + [անել]",
+   "note": {
+    "ru": "После «хочу» и «могу» второй глагол — в начальной форме: ուզում եմ գնալ «хочу поехать», կարող եմ վճարել «могу заплатить». «Надо» — պետք է + начальная форма, без лиц: Պետք է արագ գնալ «надо ехать быстро». Вежливая просьба о возможности: Կարո՞ղ եմ … «можно мне …?»",
+    "en": "After “want” and “can” the second verb stays in its basic form: ուզում եմ գնալ “I want to go”, կարող եմ վճարել “I can pay”. “Must” is պետք է + basic form, with no persons: Պետք է արագ գնալ “we have to go fast”. Asking politely: Կարո՞ղ եմ … “may I …?”",
+    "fr": "Après « vouloir » et « pouvoir », le second verbe reste à l’infinitif : ուզում եմ գնալ « je veux aller », կարող եմ վճարել « je peux payer ». « Il faut » : պետք է + infinitif, sans personne : Պետք է արագ գնալ « il faut aller vite ». Pour demander poliment : Կարո՞ղ եմ … « puis-je … ? »",
+    "es": "Después de «querer» y «poder», el segundo verbo va en infinitivo: ուզում եմ գնալ «quiero ir», կարող եմ վճարել «puedo pagar». «Hay que» es պետք է + infinitivo, sin personas: Պետք է արագ գնալ «hay que ir rápido». Para pedir con cortesía: Կարո՞ղ եմ … «¿puedo …?»"
+   },
+   "scene": {
+    "title": {
+     "ru": "Такси в аэропорт",
+     "en": "Taxi to the airport",
+     "fr": "Taxi pour l’aéroport",
+     "es": "Taxi al aeropuerto"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Վ": {
+      "ru": "Таксист",
+      "en": "Driver",
+      "fr": "Chauffeur",
+      "es": "Taxista"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Բարև ձեզ։ Ուզում եմ գնալ օդանավակայան։",
+      "Здравствуйте. Мне нужно в аэропорт.",
+      "Hello. I want to go to the airport.",
+      "Bonjour. Je veux aller à l’aéroport.",
+      "Hola. Quiero ir al aeropuerto."
+     ],
+     [
+      "Վ",
+      "Լավ։ Ե՞րբ եք ուզում գնալ։",
+      "Хорошо. Когда хотите ехать?",
+      "OK. When do you want to go?",
+      "D’accord. Vous voulez partir quand ?",
+      "Bien. ¿Cuándo quiere ir?"
+     ],
+     [
+      "Մ",
+      "Հիմա։ Ինքնաթիռը ժամը վեցին է։",
+      "Сейчас. Самолёт в шесть.",
+      "Now. The plane is at six.",
+      "Maintenant. L’avion est à six heures.",
+      "Ahora. El avión sale a las seis."
+     ],
+     [
+      "Վ",
+      "Ուրեմն պետք է արագ գնալ։",
+      "Значит, надо ехать быстро.",
+      "Then we have to go fast.",
+      "Alors il faut aller vite.",
+      "Entonces hay que ir rápido."
+     ],
+     [
+      "Մ",
+      "Քարտով կարո՞ղ եմ վճարել։",
+      "Картой можно заплатить?",
+      "Can I pay by card?",
+      "Je peux payer par carte ?",
+      "¿Puedo pagar con tarjeta?"
+     ],
+     [
+      "Վ",
+      "Այո, կարող եք։ Նստեք, խնդրում եմ։",
+      "Да, можно. Садитесь, пожалуйста.",
+      "Yes, you can. Get in, please.",
+      "Oui, vous pouvez. Montez, je vous prie.",
+      "Sí, puede. Suba, por favor."
+     ]
+    ]
+   },
+   "seeds": [
+    "ուզել",
+    "կարող",
+    "պետք",
+    "օդանավակայան",
+    "ինքնաթիռ",
+    "քարտ",
+    "վճարել",
+    "հիմա"
+   ],
+   "affix": "-ական",
+   "drills": [
+    {
+     "t": "table",
+     "frame": "{0} ___ գնալ։",
+     "rows": [
+      [
+       "Ես",
+       "ուզում եմ"
+      ],
+      [
+       "Դու",
+       "ուզում ես"
+      ],
+      [
+       "Նա",
+       "ուզում է"
+      ],
+      [
+       "Մենք",
+       "ուզում ենք"
+      ],
+      [
+       "Դուք",
+       "ուզում եք"
+      ],
+      [
+       "Նրանք",
+       "ուզում են"
+      ]
+     ]
+    },
+    {
+     "t": "table",
+     "frame": "{0} ___ քարտով վճարել։",
+     "rows": [
+      [
+       "Ես",
+       "կարող եմ"
+      ],
+      [
+       "Դու",
+       "կարող ես"
+      ],
+      [
+       "Նա",
+       "կարող է"
+      ],
+      [
+       "Մենք",
+       "կարող ենք"
+      ],
+      [
+       "Դուք",
+       "կարող եք"
+      ],
+      [
+       "Նրանք",
+       "կարող են"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s2u6",
+   "stage": 2,
+   "ic": "☀️",
+   "title": {
+    "ru": "Мой день",
+    "en": "My day",
+    "fr": "Ma journée",
+    "es": "Mi día"
+   },
+   "formula": "[երբ] [բայ]-ում եմ",
+   "note": {
+    "ru": "Части дня: առավոտյան «утром», ցերեկը «днём», երեկոյան «вечером», գիշերը «ночью». Порядок: когда → что → делаю: Առավոտյան սուրճ եմ խմում. Дни недели: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; «в воскресенье» — կիրակի օրը. Из слова получается глагол прививкой -ել: երգ → երգել «петь», ճաշ → ճաշել «обедать».",
+    "en": "Parts of the day: առավոտյան “in the morning”, ցերեկը “in the afternoon”, երեկոյան “in the evening”, գիշերը “at night”. Order: when → what → doing: Առավոտյան սուրճ եմ խմում. Weekdays: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; “on Sunday” is կիրակի օրը. The graft -ել turns a noun into a verb: երգ → երգել “to sing”, ճաշ → ճաշել “to have lunch”.",
+    "fr": "Moments du jour : առավոտյան « le matin », ցերեկը « l’après-midi », երեկոյան « le soir », գիշերը « la nuit ». Ordre : quand → quoi → l’action : Առավոտյան սուրճ եմ խմում. Les jours : երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի ; « le dimanche » : կիրակի օրը. La greffe -ել fait un verbe d’un nom : երգ → երգել « chanter », ճաշ → ճաշել « déjeuner ».",
+    "es": "Partes del día: առավոտյան «por la mañana», ցերեկը «al mediodía, de día», երեկոյան «por la tarde», գիշերը «de noche». Orden: cuándo → qué → acción: Առավոտյան սուրճ եմ խմում. Días: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; «el domingo» es կիրակի օրը. El injerto -ել hace un verbo de un sustantivo: երգ → երգել «cantar», ճաշ → ճաշել «almorzar»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Обычный день",
+     "en": "An ordinary day",
+     "fr": "Une journée ordinaire",
+     "es": "Un día común"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Անահիտ, քո օրն ինչպե՞ս է անցնում։",
+      "Анаит, как проходит твой день?",
+      "Anahit, what’s your day like?",
+      "Anahit, comment se passe ta journée ?",
+      "Anahit, ¿cómo es tu día?"
+     ],
+     [
+      "Ա",
+      "Առավոտյան ժամը յոթին արթնանում եմ և սուրճ եմ խմում։",
+      "Утром в семь просыпаюсь и пью кофе.",
+      "I wake up at seven in the morning and drink coffee.",
+      "Le matin, je me réveille à sept heures et je bois un café.",
+      "Me despierto a las siete y tomo café."
+     ],
+     [
+      "Ա",
+      "Ժամը իննին գնում եմ աշխատանքի։",
+      "В девять иду на работу.",
+      "At nine I go to work.",
+      "À neuf heures, je vais au travail.",
+      "A las nueve voy a trabajar."
+     ],
+     [
+      "Մ",
+      "Որտե՞ղ ես ճաշում։",
+      "Где обедаешь?",
+      "Where do you have lunch?",
+      "Où est-ce que tu déjeunes ?",
+      "¿Dónde almuerzas?"
+     ],
+     [
+      "Ա",
+      "Գրասենյակում եմ ճաշում, իսկ երեկոյան երգչախմբում երգում եմ։",
+      "Обедаю в офисе, а вечером пою в хоре.",
+      "I have lunch at the office, and in the evening I sing in a choir.",
+      "Je déjeune au bureau, et le soir je chante dans une chorale.",
+      "Almuerzo en la oficina y a la noche canto en un coro."
+     ],
+     [
+      "Մ",
+      "Իսկ կիրակի՞։",
+      "А в воскресенье?",
+      "And on Sunday?",
+      "Et le dimanche ?",
+      "¿Y el domingo?"
+     ],
+     [
+      "Ա",
+      "Կիրակի օրը հանգստանում եմ։",
+      "В воскресенье отдыхаю.",
+      "On Sunday I rest.",
+      "Le dimanche, je me repose.",
+      "El domingo descanso."
+     ]
+    ]
+   },
+   "seeds": [
+    "առավոտ",
+    "երեկո",
+    "գիշեր",
+    "կիրակի",
+    "շաբաթ",
+    "երկուշաբթի",
+    "ուրբաթ",
+    "ճաշել",
+    "երգել",
+    "գրասենյակ"
+   ],
+   "affix": "-ել",
+   "drills": [
+    {
+     "t": "mean",
+     "frame": "___",
+     "words": [
+      "առավոտ",
+      "երեկո",
+      "գիշեր",
+      "կիրակի",
+      "շաբաթ",
+      "երկուշաբթի",
+      "ուրբաթ"
+     ]
+    },
+    {
+     "t": "conj",
+     "key": "pres",
+     "alt": [],
+     "verbs": [
+      "արթնանալ",
+      "ճաշել",
+      "երգել",
+      "հանգստանալ",
+      "աշխատել",
+      "խմել",
+      "գնալ"
+     ],
+     "q": {
+      "ru": "сейчас: кто что делает",
+      "en": "now: who does what",
+      "fr": "maintenant : qui fait quoi",
+      "es": "ahora: quién hace qué"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s2u7",
+   "stage": 2,
+   "ic": "🧒",
+   "title": {
+    "ru": "Раньше я …",
+    "en": "I used to …",
+    "fr": "Avant, je …",
+    "es": "Antes yo …"
+   },
+   "formula": "Ես [բայ]-ում էի",
+   "note": {
+    "ru": "Прошедшее «длительное» — то же -ում, но «быть» в прошлом: էի, էիր, էր, էինք, էիք, էին. Ապրում էի «жил (тогда)», երգում էր «пел(а)». Так рассказывают о детстве, привычках и о том, что тянулось долго: Ամեն ամառ գյուղ էի գնում. Отрицание: չէի գնում.",
+    "en": "The “ongoing” past is the same -ում with “to be” in the past: էի, էիր, էր, էինք, էիք, էին. Ապրում էի “I lived (back then)”, երգում էր “he/she used to sing”. This is how you talk about childhood, habits and things that went on: Ամեն ամառ գյուղ էի գնում. Negative: չէի գնում.",
+    "fr": "Le passé « qui dure » : le même -ում, avec « être » au passé : էի, էիր, էր, էինք, էիք, էին. Ապրում էի « je vivais », երգում էր « il / elle chantait ». C’est le temps de l’enfance, des habitudes et de ce qui durait : Ամեն ամառ գյուղ էի գնում. Négation : չէի գնում.",
+    "es": "El pasado «que dura» es el mismo -ում con «ser» en pasado: էի, էիր, էր, էինք, էիք, էին. Ապրում էի «vivía», երգում էր «cantaba». Así se habla de la infancia, de costumbres y de lo que duraba: Ամեն ամառ գյուղ էի գնում. Negación: չէի գնում."
+   },
+   "scene": {
+    "title": {
+     "ru": "Детство",
+     "en": "Childhood",
+     "fr": "L’enfance",
+     "es": "La infancia"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Դու փոքր ժամանակ որտե՞ղ էիր ապրում։",
+      "Где ты жила в детстве?",
+      "Where did you live as a child?",
+      "Où vivais-tu quand tu étais petite ?",
+      "¿Dónde vivías de chica?"
+     ],
+     [
+      "Ա",
+      "Գյումրիում։ Ամեն ամառ տատիկիս մոտ էի գնում գյուղ։",
+      "В Гюмри. Каждое лето ездила к бабушке в деревню.",
+      "In Gyumri. Every summer I went to my grandma’s village.",
+      "À Gumri. Chaque été, j’allais chez ma grand-mère au village.",
+      "En Guiumri. Cada verano iba al pueblo de mi abuela."
+     ],
+     [
+      "Մ",
+      "Ի՞նչ էիք անում գյուղում։",
+      "Что вы делали в деревне?",
+      "What did you do in the village?",
+      "Que faisiez-vous au village ?",
+      "¿Qué hacían en el pueblo?"
+     ],
+     [
+      "Ա",
+      "Խաղում էինք, լողում էինք գետում, իսկ երեկոյան տատիկը հեքիաթներ էր պատմում։",
+      "Играли, купались в реке, а вечером бабушка рассказывала сказки.",
+      "We played, swam in the river, and in the evening grandma told fairy tales.",
+      "On jouait, on nageait dans la rivière, et le soir mamie racontait des contes.",
+      "Jugábamos, nadábamos en el río y a la noche la abuela contaba cuentos."
+     ],
+     [
+      "Մ",
+      "Իսկ դու լա՞վ էիր սովորում։",
+      "А ты хорошо училась?",
+      "And were you a good student?",
+      "Et tu travaillais bien à l’école ?",
+      "¿Y eras buena alumna?"
+     ],
+     [
+      "Ա",
+      "Այո, ես շատ էի կարդում։",
+      "Да, я много читала.",
+      "Yes, I read a lot.",
+      "Oui, je lisais beaucoup.",
+      "Sí, leía mucho."
+     ]
+    ]
+   },
+   "seeds": [
+    "փոքր",
+    "ամառ",
+    "գյուղ",
+    "գետ",
+    "հեքիաթ",
+    "պատմել",
+    "խաղալ",
+    "լողալ"
+   ],
+   "drills": [
+    {
+     "t": "conj",
+     "key": "impf",
+     "alt": [
+      "pres"
+     ],
+     "verbs": [
+      "ապրել",
+      "խաղալ",
+      "լողալ",
+      "կարդալ",
+      "սովորել",
+      "գնալ",
+      "աշխատել",
+      "երգել",
+      "պատմել"
+     ],
+     "q": {
+      "ru": "раньше, обычно: «… -л(а)»",
+      "en": "back then, usually: “used to …”",
+      "fr": "avant, d’habitude : « je …ais »",
+      "es": "antes, por costumbre: «…aba / …ía»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s2u8",
+   "stage": 2,
+   "ic": "💊",
+   "title": {
+    "ru": "Мне нужно …",
+    "en": "I need …",
+    "fr": "J’ai besoin de …",
+    "es": "Necesito …"
+   },
+   "formula": "Ինձ [ինչ] է պետք",
+   "note": {
+    "ru": "«Мне нужно» — Ինձ … է պետք, дословно «мне … есть нужно»: Ինձ դեղ է պետք «мне нужно лекарство». Кому: ինձ «мне», քեզ «тебе», նրան «ему, ей», մեզ «нам», ձեզ «вам», նրանց «им». Если болит — ցավում է: Գլուխս ցավում է «голова болит» (գլուխս — «моя голова»).",
+    "en": "“I need” is Ինձ … է պետք, literally “to me … is needed”: Ինձ դեղ է պետք “I need medicine”. To whom: ինձ “me”, քեզ “you”, նրան “him, her”, մեզ “us”, ձեզ “you (plural, polite)”, նրանց “them”. If something hurts — ցավում է: Գլուխս ցավում է “my head hurts” (գլուխս — “my head”).",
+    "fr": "« J’ai besoin » : Ինձ … է պետք, mot à mot « à moi … est nécessaire » : Ինձ դեղ է պետք « il me faut un médicament ». À qui : ինձ « à moi », քեզ « à toi », նրան « à lui, à elle », մեզ « à nous », ձեզ « à vous », նրանց « à eux ». Pour une douleur : ցավում է : Գլուխս ցավում է « j’ai mal à la tête » (գլուխս — « ma tête »).",
+    "es": "«Necesito» es Ինձ … է պետք, literalmente «a mí … es necesario»: Ինձ դեղ է պետք «necesito un remedio». A quién: ինձ «a mí», քեզ «a ti», նրան «a él, a ella», մեզ «a nosotros», ձեզ «a ustedes», նրանց «a ellos». Si algo duele: ցավում է: Գլուխս ցավում է «me duele la cabeza» (գլուխս — «mi cabeza»)."
+   },
+   "scene": {
+    "title": {
+     "ru": "В аптеке",
+     "en": "At the pharmacy",
+     "fr": "À la pharmacie",
+     "es": "En la farmacia"
+    },
+    "who": {
+     "Դ": {
+      "ru": "Фармацевт",
+      "en": "Pharmacist",
+      "fr": "Pharmacienne",
+      "es": "Farmacéutica"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Դ",
+      "Բարև ձեզ։ Ինչո՞վ կարող եմ օգնել։",
+      "Здравствуйте. Чем могу помочь?",
+      "Hello. How can I help?",
+      "Bonjour. Je peux vous aider ?",
+      "Hola. ¿En qué puedo ayudarlo?"
+     ],
+     [
+      "Մ",
+      "Գլուխս շատ է ցավում։ Ինձ դեղ է պետք։",
+      "У меня сильно болит голова. Мне нужно лекарство.",
+      "I have a bad headache. I need some medicine.",
+      "J’ai très mal à la tête. Il me faut un médicament.",
+      "Me duele mucho la cabeza. Necesito un remedio."
+     ],
+     [
+      "Դ",
+      "Ջերմություն ունե՞ք։",
+      "Температура есть?",
+      "Do you have a temperature?",
+      "Vous avez de la fièvre ?",
+      "¿Tiene fiebre?"
+     ],
+     [
+      "Մ",
+      "Ոչ, ջերմություն չունեմ։",
+      "Нет, температуры нет.",
+      "No, I don’t have a temperature.",
+      "Non, je n’ai pas de fièvre.",
+      "No, no tengo fiebre."
+     ],
+     [
+      "Դ",
+      "Ահա, այս դեղը օրը երեք անգամ խմեք։",
+      "Вот, это лекарство пейте три раза в день.",
+      "Here, take this medicine three times a day.",
+      "Voici, prenez ce médicament trois fois par jour.",
+      "Tome, este remedio tómelo tres veces al día."
+     ],
+     [
+      "Մ",
+      "Շնորհակալություն։ Ինչքա՞ն պետք է վճարել։",
+      "Спасибо. Сколько нужно заплатить?",
+      "Thank you. How much do I need to pay?",
+      "Merci. Combien je vous dois ?",
+      "Gracias. ¿Cuánto hay que pagar?"
+     ],
+     [
+      "Դ",
+      "Երկու հազար դրամ։ Առողջ եղեք։",
+      "Две тысячи драмов. Будьте здоровы.",
+      "Two thousand drams. Get well soon.",
+      "Deux mille drams. Prenez soin de vous.",
+      "Dos mil drams. Que se mejore."
+     ]
+    ]
+   },
+   "seeds": [
+    "դեղ",
+    "դեղատուն",
+    "գլուխ",
+    "ցավել",
+    "ջերմություն",
+    "օգնել",
+    "առողջ",
+    "պետք"
+   ],
+   "drills": [
+    {
+     "t": "table",
+     "hint": true,
+     "frame": "___ ջուր է պետք։",
+     "rows": [
+      [
+       "ես",
+       "Ինձ"
+      ],
+      [
+       "դու",
+       "Քեզ"
+      ],
+      [
+       "նա",
+       "Նրան"
+      ],
+      [
+       "մենք",
+       "Մեզ"
+      ],
+      [
+       "դուք",
+       "Ձեզ"
+      ],
+      [
+       "նրանք",
+       "Նրանց"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s3u1",
+   "stage": 3,
+   "ic": "📅",
+   "title": {
+    "ru": "Вчера я …",
+    "en": "Yesterday I …",
+    "fr": "Hier, j’ai …",
+    "es": "Ayer yo …"
+   },
+   "formula": "Երեկ ես [բայ]-եցի",
+   "note": {
+    "ru": "Законченное прошедшее (аорист) — что случилось и закончилось. Глаголы на -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի «написал»). На -ալ: -ացի (կարդացի). Частые особые: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Отрицание — չ- прямо к глаголу: չգնացի «не пошёл».",
+    "en": "The completed past (aorist) is for what happened and is over. Verbs in -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի “I wrote”). In -ալ: -ացի (կարդացի). Common special ones: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Negation is չ- stuck to the verb: չգնացի “I didn’t go”.",
+    "fr": "Le passé achevé (aoriste) : ce qui est arrivé et terminé. Verbes en -ել : -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի « j’ai écrit »). En -ալ : -ացի (կարդացի). Irréguliers fréquents : գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Négation : չ- collé au verbe : չգնացի « je ne suis pas allé ».",
+    "es": "El pasado terminado (aoristo): lo que pasó y terminó. Verbos en -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի «escribí»). En -ալ: -ացի (կարդացի). Irregulares frecuentes: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Negación: չ- pegado al verbo: չգնացի «no fui»."
+   },
+   "scene": {
+    "title": {
+     "ru": "После выходных",
+     "en": "After the weekend",
+     "fr": "Après le week-end",
+     "es": "Después del fin de semana"
+    },
+    "who": {
+     "Գ": {
+      "ru": "Гор, коллега",
+      "en": "Gor, a colleague",
+      "fr": "Gor, un collègue",
+      "es": "Gor, un colega"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Գ",
+      "Բարև, Մարկ։ Ի՞նչ արեցիր շաբաթ-կիրակի։",
+      "Привет, Марк. Что делал на выходных?",
+      "Hi, Mark. What did you do at the weekend?",
+      "Salut, Mark. Qu’as-tu fait ce week-end ?",
+      "Hola, Mark. ¿Qué hiciste el fin de semana?"
+     ],
+     [
+      "Մ",
+      "Շաբաթ օրը գնացի Գառնի։ Տաճարը շատ գեղեցիկ է։",
+      "В субботу съездил в Гарни. Храм очень красивый.",
+      "On Saturday I went to Garni. The temple is beautiful.",
+      "Samedi, je suis allé à Garni. Le temple est très beau.",
+      "El sábado fui a Garni. El templo es muy lindo."
+     ],
+     [
+      "Գ",
+      "Իսկ Գեղարդ գնացի՞ք։",
+      "А в Гегард заехали?",
+      "And did you go to Geghard?",
+      "Et vous êtes allés à Gueghard ?",
+      "¿Y fueron a Geghard?"
+     ],
+     [
+      "Մ",
+      "Այո, հետո գնացինք Գեղարդ, այնտեղ երգչախումբ լսեցինք։",
+      "Да, потом поехали в Гегард, там слушали хор.",
+      "Yes, then we went to Geghard and heard a choir there.",
+      "Oui, ensuite nous sommes allés à Gueghard, nous y avons écouté un chœur.",
+      "Sí, después fuimos a Geghard y escuchamos un coro."
+     ],
+     [
+      "Գ",
+      "Ճաշեցի՞ք գյուղում։",
+      "Пообедали в деревне?",
+      "Did you have lunch in the village?",
+      "Vous avez déjeuné au village ?",
+      "¿Almorzaron en el pueblo?"
+     ],
+     [
+      "Մ",
+      "Այո, խորոված կերանք։ Շատ համեղ էր։",
+      "Да, ели хоровац. Было очень вкусно.",
+      "Yes, we had khorovats. It was delicious.",
+      "Oui, nous avons mangé du khorovats. C’était délicieux.",
+      "Sí, comimos jorovats. Estaba riquísimo."
+     ]
+    ]
+   },
+   "seeds": [
+    "տաճար",
+    "շաբաթ",
+    "կիրակի",
+    "խորոված",
+    "համեղ",
+    "տեսնել",
+    "գնալ",
+    "ուտել"
+   ],
+   "affix": "-ավոր",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "aor",
+     "alt": [
+      "pres",
+      "impf"
+     ],
+     "verbs": [
+      "գրել",
+      "կարդալ",
+      "գնալ",
+      "գալ",
+      "տեսնել",
+      "ուտել",
+      "անել",
+      "խմել",
+      "լսել",
+      "երգել"
+     ],
+     "q": {
+      "ru": "вчера, один раз: «сделал»",
+      "en": "yesterday, once: “did”",
+      "fr": "hier, une fois : « j’ai fait »",
+      "es": "ayer, una vez: «hice»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s3u2",
+   "stage": 3,
+   "ic": "🗺️",
+   "title": {
+    "ru": "Завтра я …",
+    "en": "Tomorrow I will …",
+    "fr": "Demain, je vais …",
+    "es": "Mañana voy a …"
+   },
+   "formula": "Վաղը [բայ]-ելու եմ",
+   "note": {
+    "ru": "Будущее — начальная форма + -ու и «быть»: գնալու եմ «поеду, собираюсь поехать», գրելու ես, կարդալու է… Отрицание: չեմ գնալու «не поеду». Слова времени: վաղը «завтра», մյուս շաբաթ «на следующей неделе», ամռանը «летом».",
+    "en": "The future is the basic form + -ու and “to be”: գնալու եմ “I’ll go, I’m going to go”, գրելու ես, կարդալու է… Negative: չեմ գնալու “I won’t go”. Time words: վաղը “tomorrow”, մյուս շաբաթ “next week”, ամռանը “in summer”.",
+    "fr": "Le futur : l’infinitif + -ու et « être » : գնալու եմ « j’irai, je vais aller », գրելու ես, կարդալու է… Négation : չեմ գնալու « je n’irai pas ». Mots du temps : վաղը « demain », մյուս շաբաթ « la semaine prochaine », ամռանը « en été ».",
+    "es": "El futuro es el infinitivo + -ու y «ser»: գնալու եմ «voy a ir, iré», գրելու ես, կարդալու է… Negación: չեմ գնալու «no voy a ir». Palabras de tiempo: վաղը «mañana», մյուս շաբաթ «la semana que viene», ամռանը «en verano»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Планы на лето",
+     "en": "Summer plans",
+     "fr": "Projets d’été",
+     "es": "Planes para el verano"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Ա",
+      "Մարկ, ամռանն ի՞նչ ես անելու։",
+      "Марк, что будешь делать летом?",
+      "Mark, what are you going to do in summer?",
+      "Mark, que vas-tu faire cet été ?",
+      "Mark, ¿qué vas a hacer en verano?"
+     ],
+     [
+      "Մ",
+      "Գնալու եմ Սևան։ Ուզում եմ լողալ։",
+      "Поеду на Севан. Хочу поплавать.",
+      "I’m going to Sevan. I want to swim.",
+      "Je vais aller au lac Sevan. Je veux nager.",
+      "Voy a ir al Sevan. Quiero nadar."
+     ],
+     [
+      "Ա",
+      "Իսկ Դիլիջա՞ն։",
+      "А Дилижан?",
+      "And Dilijan?",
+      "Et Dilijan ?",
+      "¿Y Dilijan?"
+     ],
+     [
+      "Մ",
+      "Դիլիջանում երկու օր մնալու ենք։ Ընկերներս էլ են գալու։",
+      "В Дилижане пробудем два дня. Друзья тоже приедут.",
+      "We’ll stay in Dilijan for two days. My friends are coming too.",
+      "Nous resterons deux jours à Dilijan. Mes amis viendront aussi.",
+      "Nos vamos a quedar dos días en Dilijan. También vienen mis amigos."
+     ],
+     [
+      "Ա",
+      "Ինչո՞վ եք գնալու։",
+      "На чём поедете?",
+      "How will you get there?",
+      "Vous y allez comment ?",
+      "¿En qué van a ir?"
+     ],
+     [
+      "Մ",
+      "Ավտոբուսով։ Իսկ դու գալո՞ւ ես մեզ հետ։",
+      "На автобусе. А ты поедешь с нами?",
+      "By bus. Will you come with us?",
+      "En bus. Et toi, tu viens avec nous ?",
+      "En micro. ¿Y tú vienes con nosotros?"
+     ],
+     [
+      "Ա",
+      "Չգիտեմ, երևի գալու եմ։",
+      "Не знаю, наверное, поеду.",
+      "I don’t know, I probably will.",
+      "Je ne sais pas, sans doute que oui.",
+      "No sé, seguramente sí."
+     ]
+    ]
+   },
+   "seeds": [
+    "ամառ",
+    "մնալ",
+    "լողալ",
+    "ավտոբուս",
+    "ընկեր",
+    "երևի",
+    "վաղը"
+   ],
+   "affix": "-ային",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "fut",
+     "alt": [
+      "pres",
+      "aor"
+     ],
+     "verbs": [
+      "գնալ",
+      "գալ",
+      "մնալ",
+      "լողալ",
+      "անել",
+      "գրել",
+      "կարդալ",
+      "սովորել",
+      "ճաշել",
+      "աշխատել"
+     ],
+     "q": {
+      "ru": "завтра, потом: «сделаю»",
+      "en": "tomorrow, later: “will do”",
+      "fr": "demain, plus tard : « je vais faire »",
+      "es": "mañana, después: «voy a hacer»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s3u3",
+   "stage": 3,
+   "ic": "✈️",
+   "title": {
+    "ru": "Откуда?",
+    "en": "Where from?",
+    "fr": "D’où ?",
+    "es": "¿De dónde?"
+   },
+   "formula": "[որտեղ]-ից",
+   "note": {
+    "ru": "«Откуда» — окончание -ից: Մոսկվայից «из Москвы», տնից «из дома», աշխատանքից «с работы». Вопрос — Որտեղի՞ց եք։ «Откуда вы?»; ответ: Ես Մոսկվայից եմ. -ից значит и «через» о времени: մի շաբաթից «через неделю».",
+    "en": "“From” is the ending -ից: Մոսկվայից “from Moscow”, տնից “from home”, աշխատանքից “from work”. The question is Որտեղի՞ց եք։ “Where are you from?”; the answer: Ես Մոսկվայից եմ. With time, -ից means “in”: մի շաբաթից “in a week”.",
+    "fr": "« De » (provenance) : la terminaison -ից : Մոսկվայից « de Moscou », տնից « de la maison », աշխատանքից « du travail ». La question : Որտեղի՞ց եք։ « D’où êtes-vous ? » ; la réponse : Ես Մոսկվայից եմ. Avec le temps, -ից veut dire « dans » : մի շաբաթից « dans une semaine ».",
+    "es": "«De dónde» es la terminación -ից: Մոսկվայից «de Moscú», տնից «de casa», աշխատանքից «del trabajo». La pregunta: Որտեղի՞ց եք։ «¿De dónde es?»; respuesta: Ես Մոսկվայից եմ. Con tiempo, -ից significa «dentro de»: մի շաբաթից «dentro de una semana»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Соседка в самолёте",
+     "en": "The neighbour on the plane",
+     "fr": "La voisine dans l’avion",
+     "es": "La vecina en el avión"
+    },
+    "who": {
+     "Ս": {
+      "ru": "Соседка",
+      "en": "Neighbour",
+      "fr": "Voisine",
+      "es": "Vecina"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Ս",
+      "Դուք որտեղի՞ց եք։",
+      "Вы откуда?",
+      "Where are you from?",
+      "Vous êtes d’où ?",
+      "¿De dónde es usted?"
+     ],
+     [
+      "Մ",
+      "Ես Մոսկվայից եմ, բայց հիմա Երևանում եմ ապրում։",
+      "Я из Москвы, но сейчас живу в Ереване.",
+      "I’m from Moscow, but now I live in Yerevan.",
+      "Je suis de Moscou, mais maintenant je vis à Erevan.",
+      "Soy de Moscú, pero ahora vivo en Ereván."
+     ],
+     [
+      "Ս",
+      "Իսկ ես Լոս Անջելեսից եմ, ծնողներս Բեյրութից են։",
+      "А я из Лос-Анджелеса, мои родители из Бейрута.",
+      "And I’m from Los Angeles, my parents are from Beirut.",
+      "Et moi, je suis de Los Angeles, mes parents sont de Beyrouth.",
+      "Y yo soy de Los Ángeles, mis padres son de Beirut."
+     ],
+     [
+      "Մ",
+      "Ե՞րբ եք վերադառնում Ամերիկա։",
+      "Когда возвращаетесь в Америку?",
+      "When are you going back to America?",
+      "Quand rentrez-vous en Amérique ?",
+      "¿Cuándo vuelve a Estados Unidos?"
+     ],
+     [
+      "Ս",
+      "Մի շաբաթից։ Իսկ դուք հիմա որտեղի՞ց եք գալիս։",
+      "Через неделю. А вы сейчас откуда летите?",
+      "In a week. And where are you coming from now?",
+      "Dans une semaine. Et vous, vous venez d’où, là ?",
+      "Dentro de una semana. ¿Y usted de dónde viene ahora?"
+     ],
+     [
+      "Մ",
+      "Աշխատանքից։ Շատ հոգնած եմ։",
+      "С работы. Очень устал.",
+      "From work. I’m very tired.",
+      "Du travail. Je suis très fatigué.",
+      "Del trabajo. Estoy muy cansado."
+     ]
+    ]
+   },
+   "seeds": [
+    "ծնող",
+    "վերադառնալ",
+    "հոգնած",
+    "աշխատանք",
+    "քաղաք",
+    "շաբաթ"
+   ],
+   "affix": "-անալ",
+   "drills": [
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "abl",
+     "alt": [
+      "loc",
+      "dat"
+     ],
+     "words": [
+      "քաղաք",
+      "տուն",
+      "դպրոց",
+      "աշխատանք",
+      "խանութ",
+      "շուկա",
+      "գյուղ",
+      "ծով",
+      "սար",
+      "մետրո"
+     ],
+     "q": {
+      "ru": "откуда? — «из …»",
+      "en": "where from? — “from …”",
+      "fr": "d’où ? — « de … »",
+      "es": "¿de dónde? — «de …»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s3u4",
+   "stage": 3,
+   "ic": "⛰️",
+   "title": {
+    "ru": "Больше, чем …",
+    "en": "More … than …",
+    "fr": "Plus … que …",
+    "es": "Más … que …"
+   },
+   "formula": "[ինչ]-ից ավելի [ինչպիսի]",
+   "note": {
+    "ru": "Сравнение — тем же -ից: Գյումրին Վանաձորից մեծ է «Гюмри больше Ванадзора». Можно добавить ավելի «более» или сказать через քան: ավելի ցուրտ է, քան Երևանում «холоднее, чем в Ереване». «Самый» — приставка ամենա-: ամենամեծը «самый большой», ամենաբարձրը «самый высокий». Прививка -ացնել делает «сделать таким»: տաք → տաքացնել «подогреть».",
+    "en": "Comparison uses the same -ից: Գյումրին Վանաձորից մեծ է “Gyumri is bigger than Vanadzor”. You can add ավելի “more” or use քան: ավելի ցուրտ է, քան Երևանում “colder than in Yerevan”. “The most” is the prefix ամենա-: ամենամեծը “the biggest”, ամենաբարձրը “the highest”. The graft -ացնել means “make it so”: տաք → տաքացնել “to warm up”.",
+    "fr": "La comparaison utilise le même -ից : Գյումրին Վանաձորից մեծ է « Gumri est plus grande que Vanadzor ». On peut ajouter ավելի « plus » ou passer par քան : ավելի ցուրտ է, քան Երևանում « plus froid qu’à Erevan ». « Le plus » : le préfixe ամենա- : ամենամեծը « le plus grand », ամենաբարձրը « le plus haut ». La greffe -ացնել veut dire « rendre ainsi » : տաք → տաքացնել « réchauffer ».",
+    "es": "La comparación usa el mismo -ից: Գյումրին Վանաձորից մեծ է «Guiumri es más grande que Vanadzor». Se puede agregar ավելի «más» o usar քան: ավելի ցուրտ է, քան Երևանում «más frío que en Ereván». «El más» es el prefijo ամենա-: ամենամեծը «el más grande», ամենաբարձրը «el más alto». El injerto -ացնել significa «volver así»: տաք → տաքացնել «calentar»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Какой город больше?",
+     "en": "Which town is bigger?",
+     "fr": "Quelle ville est la plus grande ?",
+     "es": "¿Qué ciudad es más grande?"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Ո՞րն է ավելի մեծ՝ Գյումրին, թե Վանաձորը։",
+      "Что больше — Гюмри или Ванадзор?",
+      "Which is bigger, Gyumri or Vanadzor?",
+      "Laquelle est la plus grande, Gumri ou Vanadzor ?",
+      "¿Cuál es más grande, Guiumri o Vanadzor?"
+     ],
+     [
+      "Ա",
+      "Գյումրին Վանաձորից մեծ է, բայց Երևանն ամենամեծն է։",
+      "Гюмри больше Ванадзора, но самый большой — Ереван.",
+      "Gyumri is bigger than Vanadzor, but Yerevan is the biggest.",
+      "Gumri est plus grande que Vanadzor, mais c’est Erevan la plus grande.",
+      "Guiumri es más grande que Vanadzor, pero Ereván es la más grande."
+     ],
+     [
+      "Մ",
+      "Իսկ որտե՞ղ է ավելի ցուրտ։",
+      "А где холоднее?",
+      "And where is it colder?",
+      "Et où fait-il plus froid ?",
+      "¿Y dónde hace más frío?"
+     ],
+     [
+      "Ա",
+      "Գյումրիում ձմեռն ավելի ցուրտ է, քան Երևանում։",
+      "В Гюмри зима холоднее, чем в Ереване.",
+      "In Gyumri the winter is colder than in Yerevan.",
+      "À Gumri, l’hiver est plus froid qu’à Erevan.",
+      "En Guiumri el invierno es más frío que en Ereván."
+     ],
+     [
+      "Մ",
+      "Ո՞րն է Հայաստանի ամենաբարձր սարը։",
+      "Какая самая высокая гора Армении?",
+      "What is the highest mountain in Armenia?",
+      "Quelle est la plus haute montagne d’Arménie ?",
+      "¿Cuál es la montaña más alta de Armenia?"
+     ],
+     [
+      "Ա",
+      "Արագածը։ Իսկ Արարատը երևում է Երևանից։",
+      "Арагац. А Арарат видно из Еревана.",
+      "Aragats. And Ararat can be seen from Yerevan.",
+      "L’Aragats. Et l’Ararat se voit depuis Erevan.",
+      "El Aragats. Y el Ararat se ve desde Ereván."
+     ]
+    ]
+   },
+   "seeds": [
+    "բարձր",
+    "մեծ",
+    "ցուրտ",
+    "տաք",
+    "ձմեռ",
+    "սար",
+    "ավելի",
+    "փոքր"
+   ],
+   "affix": "-ացնել",
+   "drills": [
+    {
+     "t": "mean",
+     "frame": "Սա ավելի ___ է։",
+     "words": [
+      "բարձր",
+      "ցածր",
+      "մեծ",
+      "փոքր",
+      "տաք",
+      "երկար",
+      "կարճ",
+      "էժան",
+      "թանկ"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s3u5",
+   "stage": 3,
+   "ic": "🚌",
+   "title": {
+    "ru": "На чём? Чем?",
+    "en": "By what? With what?",
+    "fr": "En quoi ? Avec quoi ?",
+    "es": "¿En qué? ¿Con qué?"
+   },
+   "formula": "[ինչ]-ով",
+   "note": {
+    "ru": "Окончание -ով отвечает «на чём, чем, с чем»: ավտոբուսով «на автобусе», քարտով «картой», դանակով «ножом», կաթով սուրճ «кофе с молоком». После гласной -ա, -ո — с յ: մետրոյով, մեքենայով. Вопрос: Ինչո՞վ։ Тем же -ով: աստիճաններով «по лестнице».",
+    "en": "The ending -ով answers “by what, with what”: ավտոբուսով “by bus”, քարտով “by card”, դանակով “with a knife”, կաթով սուրճ “coffee with milk”. After -ա, -ո it takes յ: մետրոյով, մեքենայով. The question: Ինչո՞վ։ The same -ով: աստիճաններով “by the stairs”.",
+    "fr": "La terminaison -ով répond à « en quoi, avec quoi » : ավտոբուսով « en bus », քարտով « par carte », դանակով « au couteau », կաթով սուրճ « café au lait ». Après -ա, -ո, on ajoute յ : մետրոյով, մեքենայով. La question : Ինչո՞վ։ Même -ով : աստիճաններով « par l’escalier ».",
+    "es": "La terminación -ով responde «en qué, con qué»: ավտոբուսով «en micro, en autobús», քարտով «con tarjeta», դանակով «con cuchillo», կաթով սուրճ «café con leche». Después de -ա, -ո lleva յ: մետրոյով, մեքենայով. La pregunta: Ինչո՞վ։ El mismo -ով: աստիճաններով «por la escalera»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Как доехать до Севана",
+     "en": "Getting to Sevan",
+     "fr": "Aller au lac Sevan",
+     "es": "Cómo llegar al Sevan"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Կ": {
+      "ru": "Прохожий",
+      "en": "Passer-by",
+      "fr": "Passant",
+      "es": "Transeúnte"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Ներեցեք, ինչո՞վ կարելի է գնալ Սևան։",
+      "Извините, на чём можно доехать до Севана?",
+      "Excuse me, how can I get to Sevan?",
+      "Excusez-moi, comment peut-on aller au lac Sevan ?",
+      "Disculpe, ¿en qué se puede ir al Sevan?"
+     ],
+     [
+      "Կ",
+      "Ավտոբուսով կամ տաքսիով։ Ավտոբուսն էժան է, տաքսին՝ արագ։",
+      "На автобусе или на такси. Автобус дешёвый, такси — быстрое.",
+      "By bus or by taxi. The bus is cheap, the taxi is fast.",
+      "En bus ou en taxi. Le bus est bon marché, le taxi est rapide.",
+      "En micro o en taxi. El micro es barato; el taxi, rápido."
+     ],
+     [
+      "Մ",
+      "Ավտոբուսը որտեղի՞ց է գնում։",
+      "Откуда идёт автобус?",
+      "Where does the bus leave from?",
+      "D’où part le bus ?",
+      "¿De dónde sale el micro?"
+     ],
+     [
+      "Կ",
+      "Հյուսիսային ավտոկայանից։ Այնտեղ մետրոյով կարող եք հասնել։",
+      "С Северного автовокзала. Туда можно доехать на метро.",
+      "From the Northern bus station. You can get there by metro.",
+      "De la gare routière Nord. Vous pouvez y aller en métro.",
+      "De la terminal Norte. Puede llegar ahí en subte."
+     ],
+     [
+      "Մ",
+      "Տոմսը կարո՞ղ եմ քարտով վճարել։",
+      "Билет можно оплатить картой?",
+      "Can I pay for the ticket by card?",
+      "Je peux payer le billet par carte ?",
+      "¿Puedo pagar el boleto con tarjeta?"
+     ],
+     [
+      "Կ",
+      "Ոչ, միայն կանխիկով։",
+      "Нет, только наличными.",
+      "No, cash only.",
+      "Non, seulement en espèces.",
+      "No, solo en efectivo."
+     ]
+    ]
+   },
+   "seeds": [
+    "ավտոբուս",
+    "ավտոկայան",
+    "տոմս",
+    "էժան",
+    "թանկ",
+    "կանխիկ",
+    "հասնել",
+    "կարելի"
+   ],
+   "affix": "-ակ",
+   "drills": [
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "ins",
+     "alt": [
+      "abl",
+      "dat"
+     ],
+     "words": [
+      "ավտոբուս",
+      "մետրո",
+      "գնացք",
+      "քարտ",
+      "դանակ",
+      "մեքենա",
+      "ինքնաթիռ",
+      "նավ",
+      "գրիչ",
+      "աստիճան"
+     ],
+     "q": {
+      "ru": "на чём? чем? — «…ом»",
+      "en": "by what? with what?",
+      "fr": "en quoi ? avec quoi ?",
+      "es": "¿en qué? ¿con qué?"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s3u6",
+   "stage": 3,
+   "ic": "🗝️",
+   "title": {
+    "ru": "На, под, в, около",
+    "en": "On, under, in, near",
+    "fr": "Sur, sous, dans, près de",
+    "es": "Sobre, debajo, dentro, cerca"
+   },
+   "formula": "[ինչ]-ի վրա · տակ · մեջ · մոտ",
+   "note": {
+    "ru": "Армянские «предлоги» стоят после слова, а слово берёт -ի: սեղանի վրա «на столе», բազմոցի տակ «под диваном», պայուսակի մեջ «в сумке», պատուհանի մոտ «у окна», ընկերոջ հետ «с другом». Особые формы те же, что у «чей»: դուռ → դռան մոտ «у двери». С людьми մոտ — «у»: տատիկի մոտ «у бабушки».",
+    "en": "Armenian “prepositions” come after the word, and the word takes -ի: սեղանի վրա “on the table”, բազմոցի տակ “under the sofa”, պայուսակի մեջ “in the bag”, պատուհանի մոտ “by the window”, ընկերոջ հետ “with a friend”. Special forms are the same as for “whose”: դուռ → դռան մոտ “by the door”. With people, մոտ means “at someone’s”: տատիկի մոտ “at grandma’s”.",
+    "fr": "Les « prépositions » arméniennes se placent après le mot, qui prend -ի : սեղանի վրա « sur la table », բազմոցի տակ « sous le canapé », պայուսակի մեջ « dans le sac », պատուհանի մոտ « près de la fenêtre », ընկերոջ հետ « avec un ami ». Les formes spéciales sont celles de « à qui » : դուռ → դռան մոտ « près de la porte ». Avec une personne, մոտ veut dire « chez » : տատիկի մոտ « chez mamie ».",
+    "es": "Las «preposiciones» armenias van después de la palabra, que toma -ի: սեղանի վրա «sobre la mesa», բազմոցի տակ «debajo del sillón», պայուսակի մեջ «dentro del bolso», պատուհանի մոտ «junto a la ventana», ընկերոջ հետ «con un amigo». Las formas especiales son las de «de quién»: դուռ → դռան մոտ «junto a la puerta». Con personas, մոտ es «en casa de»: տատիկի մոտ «en lo de la abuela»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Где ключи?",
+     "en": "Where are the keys?",
+     "fr": "Où sont les clés ?",
+     "es": "¿Dónde están las llaves?"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Անահիտ, բանալիներս չեմ գտնում։",
+      "Анаит, не могу найти ключи.",
+      "Anahit, I can’t find my keys.",
+      "Anahit, je ne trouve pas mes clés.",
+      "Anahit, no encuentro mis llaves."
+     ],
+     [
+      "Ա",
+      "Սեղանի վրա նայեցի՞ր։",
+      "На столе смотрел?",
+      "Did you look on the table?",
+      "Tu as regardé sur la table ?",
+      "¿Te fijaste sobre la mesa?"
+     ],
+     [
+      "Մ",
+      "Այո, սեղանի վրա չկան, պայուսակի մեջ էլ չկան։",
+      "Да, на столе нет, и в сумке нет.",
+      "Yes, they’re not on the table, and not in the bag either.",
+      "Oui, elles ne sont pas sur la table, ni dans le sac.",
+      "Sí, no están sobre la mesa ni dentro del bolso."
+     ],
+     [
+      "Ա",
+      "Իսկ բազմոցի տա՞կ։",
+      "А под диваном?",
+      "And under the sofa?",
+      "Et sous le canapé ?",
+      "¿Y debajo del sillón?"
+     ],
+     [
+      "Մ",
+      "Ահա, այստեղ են՝ բազմոցի տակ։",
+      "Вот они — под диваном.",
+      "Here they are, under the sofa.",
+      "Les voilà, sous le canapé.",
+      "Acá están, debajo del sillón."
+     ],
+     [
+      "Ա",
+      "Լավ, արի գնանք։ Արամը դռան մոտ սպասում է։",
+      "Хорошо, пошли. Арам ждёт у двери.",
+      "OK, let’s go. Aram is waiting by the door.",
+      "Bon, on y va. Aram attend près de la porte.",
+      "Bueno, vamos. Aram espera junto a la puerta."
+     ]
+    ]
+   },
+   "seeds": [
+    "բանալի",
+    "բազմոց",
+    "պայուսակ",
+    "դուռ",
+    "սեղան",
+    "գտնել",
+    "սպասել",
+    "վրա",
+    "տակ",
+    "մեջ",
+    "մոտ",
+    "հետ"
+   ],
+   "affix": "-որդ",
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "на столе",
+        "en": "on the table",
+        "fr": "sur la table",
+        "es": "sobre la mesa"
+       },
+       "սեղանի վրա"
+      ],
+      [
+       {
+        "ru": "под стулом",
+        "en": "under the chair",
+        "fr": "sous la chaise",
+        "es": "debajo de la silla"
+       },
+       "աթոռի տակ"
+      ],
+      [
+       {
+        "ru": "в сумке",
+        "en": "in the bag",
+        "fr": "dans le sac",
+        "es": "dentro del bolso"
+       },
+       "պայուսակի մեջ"
+      ],
+      [
+       {
+        "ru": "у двери",
+        "en": "by the door",
+        "fr": "près de la porte",
+        "es": "junto a la puerta"
+       },
+       "դռան մոտ"
+      ],
+      [
+       {
+        "ru": "с другом",
+        "en": "with a friend",
+        "fr": "avec un ami",
+        "es": "con un amigo"
+       },
+       "ընկերոջ հետ"
+      ],
+      [
+       {
+        "ru": "у бабушки",
+        "en": "at grandma’s",
+        "fr": "chez mamie",
+        "es": "en lo de la abuela"
+       },
+       "տատիկի մոտ"
+      ]
+     ]
+    },
+    {
+     "t": "form",
+     "kind": "noun",
+     "key": "dat",
+     "alt": [
+      "def",
+      "loc"
+     ],
+     "words": [
+      "սեղան",
+      "աթոռ",
+      "պայուսակ",
+      "դուռ",
+      "պատուհան",
+      "տուն",
+      "մահճակալ",
+      "բազմոց"
+     ],
+     "q": {
+      "ru": "форма перед վրա / տակ / մեջ / մոտ",
+      "en": "the form before վրա / տակ / մեջ / մոտ",
+      "fr": "la forme devant վրա / տակ / մեջ / մոտ",
+      "es": "la forma antes de վրա / տակ / մեջ / մոտ"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s3u7",
+   "stage": 3,
+   "ic": "🏛️",
+   "title": {
+    "ru": "Я уже бывал",
+    "en": "I have been",
+    "fr": "J’y suis déjà allé",
+    "es": "Ya estuve"
+   },
+   "formula": "Ես [բայ]-ել եմ",
+   "note": {
+    "ru": "Перфект — «уже сделано, есть опыт»: форма на -ել (у -ալ — -ացել) и «быть»: եղել եմ «бывал», կարդացել եմ «читал (уже)», տեսել եմ «видел». Դուք եղե՞լ եք Մատենադարանում։ — «Вы бывали в Матенадаране?» Отрицание: չեմ եղել, դեռ չեմ տեսել «ещё не видел». Аорист рассказывает, что случилось тогда; перфект — что это есть в опыте сейчас.",
+    "en": "The perfect means “already done, I have the experience”: the -ել form (for -ալ verbs, -ացել) plus “to be”: եղել եմ “I have been”, կարդացել եմ “I have read”, տեսել եմ “I have seen”. Դուք եղե՞լ եք Մատենադարանում։ — “Have you been to the Matenadaran?” Negative: չեմ եղել, դեռ չեմ տեսել “I haven’t seen it yet”. The aorist tells what happened then; the perfect, what you have now as experience.",
+    "fr": "Le parfait : « c’est déjà fait, j’en ai l’expérience » : la forme en -ել (pour les verbes en -ալ, -ացել) et « être » : եղել եմ « j’y suis allé », կարդացել եմ « j’ai (déjà) lu », տեսել եմ « j’ai vu ». Դուք եղե՞լ եք Մատենադարանում։ — « Êtes-vous déjà allé au Maténadaran ? » Négation : չեմ եղել, դեռ չեմ տեսել « je ne l’ai pas encore vu ». L’aoriste raconte ce qui s’est passé alors ; le parfait, ce qu’on a vécu.",
+    "es": "El perfecto: «ya está hecho, tengo la experiencia»: la forma en -ել (en los verbos en -ալ, -ացել) y «ser»: եղել եմ «estuve, he estado», կարդացել եմ «he leído», տեսել եմ «he visto». Դուք եղե՞լ եք Մատենադարանում։ — «¿Estuvo en el Matenadarán?» Negación: չեմ եղել, դեռ չեմ տեսել «todavía no lo vi». El aoristo cuenta lo que pasó entonces; el perfecto, lo que uno ya vivió."
+   },
+   "scene": {
+    "title": {
+     "ru": "В Матенадаране",
+     "en": "At the Matenadaran",
+     "fr": "Au Maténadaran",
+     "es": "En el Matenadarán"
+    },
+    "who": {
+     "Գ": {
+      "ru": "Экскурсовод",
+      "en": "Guide",
+      "fr": "Guide",
+      "es": "Guía"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Գ",
+      "Դուք եղե՞լ եք Մատենադարանում։",
+      "Вы бывали в Матенадаране?",
+      "Have you been to the Matenadaran?",
+      "Vous êtes déjà venu au Maténadaran ?",
+      "¿Ya estuvo en el Matenadarán?"
+     ],
+     [
+      "Մ",
+      "Ոչ, դեռ չեմ եղել, բայց շատ եմ լսել։",
+      "Нет, ещё не был, но много слышал.",
+      "No, not yet, but I’ve heard a lot about it.",
+      "Non, pas encore, mais j’en ai beaucoup entendu parler.",
+      "No, todavía no, pero escuché mucho."
+     ],
+     [
+      "Գ",
+      "Այստեղ հին ձեռագրեր են պահվում։ Տեսե՞լ եք հայկական մանրանկարներ։",
+      "Здесь хранятся древние рукописи. Вы видели армянские миниатюры?",
+      "Ancient manuscripts are kept here. Have you seen Armenian miniatures?",
+      "Ici sont conservés des manuscrits anciens. Avez-vous déjà vu des miniatures arméniennes ?",
+      "Acá se guardan manuscritos antiguos. ¿Vio miniaturas armenias?"
+     ],
+     [
+      "Մ",
+      "Գրքում եմ տեսել, բայց իրականում՝ երբեք։",
+      "В книге видел, а вживую — никогда.",
+      "I’ve seen them in a book, but never for real.",
+      "Dans un livre, oui, mais en vrai — jamais.",
+      "En un libro sí, pero en persona, nunca."
+     ],
+     [
+      "Գ",
+      "Ուրեմն համեցեք, ներս մտեք։",
+      "Тогда милости прошу, проходите.",
+      "Then please, come in.",
+      "Alors je vous en prie, entrez.",
+      "Entonces adelante, pase."
+     ],
+     [
+      "Մ",
+      "Մեծ հաճույքով։",
+      "С большим удовольствием.",
+      "With great pleasure.",
+      "Avec grand plaisir.",
+      "Con mucho gusto."
+     ]
+    ]
+   },
+   "seeds": [
+    "ձեռագիր",
+    "պահել",
+    "դեռ",
+    "երբեք",
+    "հաճույք",
+    "տեսնել",
+    "լինել",
+    "հին"
+   ],
+   "affix": "-վել",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "perf",
+     "alt": [
+      "aor",
+      "pres"
+     ],
+     "verbs": [
+      "լինել",
+      "տեսնել",
+      "կարդալ",
+      "գրել",
+      "ուտել",
+      "գնալ",
+      "լսել",
+      "սովորել",
+      "խմել"
+     ],
+     "q": {
+      "ru": "уже, есть опыт: «я уже …»",
+      "en": "already, from experience: “have …”",
+      "fr": "déjà, par expérience : « j’ai déjà … »",
+      "es": "ya, por experiencia: «he …»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s3u8",
+   "stage": 3,
+   "ic": "🧭",
+   "title": {
+    "ru": "Как пройти?",
+    "en": "How do I get there?",
+    "fr": "Comment y aller ?",
+    "es": "¿Cómo llego?"
+   },
+   "formula": "[գնացեք] ուղիղ, [թեքվեք] աջ",
+   "note": {
+    "ru": "Дорогу объясняют вежливым повелительным: գնացեք «идите», թեքվեք «поверните», անցեք «перейдите», իջեք «спуститесь, выйдите», բարձրացեք «поднимитесь». Направления: ուղիղ «прямо», աջ «направо», ձախ «налево», մինչև «до». Шаги: նախ «сначала», հետո «потом». Прививка տ- — «не-»: տգեղ «некрасивый».",
+    "en": "Directions are given with the polite imperative: գնացեք “go”, թեքվեք “turn”, անցեք “cross”, իջեք “go down, get off”, բարձրացեք “go up”. Which way: ուղիղ “straight”, աջ “right”, ձախ “left”, մինչև “as far as”. Steps: նախ “first”, հետո “then”. The graft տ- means “un-”: տգեղ “ugly”.",
+    "fr": "On indique le chemin à l’impératif poli : գնացեք « allez », թեքվեք « tournez », անցեք « traversez », իջեք « descendez », բարձրացեք « montez ». La direction : ուղիղ « tout droit », աջ « à droite », ձախ « à gauche », մինչև « jusqu’à ». Les étapes : նախ « d’abord », հետո « ensuite ». La greffe տ- veut dire « in- » : տգեղ « laid ».",
+    "es": "El camino se explica con el imperativo cortés: գնացեք «vaya», թեքվեք «doble», անցեք «cruce», իջեք «baje», բարձրացեք «suba». La dirección: ուղիղ «derecho», աջ «a la derecha», ձախ «a la izquierda», մինչև «hasta». Los pasos: նախ «primero», հետո «después». El injerto տ- significa «in-, des-»: տգեղ «feo»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Дорога к Каскаду",
+     "en": "The way to the Cascade",
+     "fr": "Le chemin de la Cascade",
+     "es": "Cómo llegar a la Cascada"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Կ": {
+      "ru": "Прохожий",
+      "en": "Passer-by",
+      "fr": "Passant",
+      "es": "Transeúnte"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Ներեցեք, ինչպե՞ս կարող եմ հասնել Կասկադ։",
+      "Извините, как мне дойти до Каскада?",
+      "Excuse me, how can I get to the Cascade?",
+      "Excusez-moi, comment aller à la Cascade ?",
+      "Disculpe, ¿cómo llego a la Cascada?"
+     ],
+     [
+      "Կ",
+      "Նախ ուղիղ գնացեք մինչև լուսացույցը։",
+      "Сначала идите прямо до светофора.",
+      "First go straight as far as the traffic lights.",
+      "D’abord, allez tout droit jusqu’au feu.",
+      "Primero siga derecho hasta el semáforo."
+     ],
+     [
+      "Կ",
+      "Հետո թեքվեք աջ և անցեք փողոցը։",
+      "Потом поверните направо и перейдите улицу.",
+      "Then turn right and cross the street.",
+      "Ensuite, tournez à droite et traversez la rue.",
+      "Después doble a la derecha y cruce la calle."
+     ],
+     [
+      "Մ",
+      "Հետո՞։",
+      "А потом?",
+      "And then?",
+      "Et après ?",
+      "¿Y después?"
+     ],
+     [
+      "Կ",
+      "Հետո բարձրացեք աստիճաններով։ Կասկադը հենց այնտեղ է։",
+      "Потом поднимитесь по лестнице. Каскад прямо там.",
+      "Then go up the stairs. The Cascade is right there.",
+      "Puis montez l’escalier. La Cascade est juste là.",
+      "Después suba la escalera. La Cascada está justo ahí."
+     ],
+     [
+      "Մ",
+      "Շատ շնորհակալ եմ։",
+      "Большое спасибо.",
+      "Thank you very much.",
+      "Merci beaucoup.",
+      "Muchas gracias."
+     ],
+     [
+      "Կ",
+      "Խնդրեմ։ Լավ զբոսանք։",
+      "Пожалуйста. Хорошей прогулки!",
+      "You’re welcome. Enjoy your walk!",
+      "Je vous en prie. Bonne promenade !",
+      "De nada. ¡Buen paseo!"
+     ]
+    ]
+   },
+   "seeds": [
+    "լուսացույց",
+    "խաչմերուկ",
+    "աստիճան",
+    "փողոց",
+    "թեքվել",
+    "անցնել",
+    "բարձրանալ",
+    "զբոսանք"
+   ],
+   "affix": "տ-",
+   "drills": [
+    {
+     "t": "form",
+     "kind": "verb",
+     "key": "imppl",
+     "alt": [
+      "imp",
+      "inf"
+     ],
+     "words": [
+      "գնալ",
+      "թեքվել",
+      "անցնել",
+      "իջնել",
+      "բարձրանալ",
+      "նստել",
+      "սպասել",
+      "նայել"
+     ],
+     "q": {
+      "ru": "вежливо: «…те»",
+      "en": "politely: “please …”",
+      "fr": "poliment : « …ez »",
+      "es": "con cortesía: «…»"
+     }
+    },
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "прямо",
+        "en": "straight on",
+        "fr": "tout droit",
+        "es": "derecho"
+       },
+       "ուղիղ"
+      ],
+      [
+       {
+        "ru": "направо",
+        "en": "to the right",
+        "fr": "à droite",
+        "es": "a la derecha"
+       },
+       "աջ"
+      ],
+      [
+       {
+        "ru": "налево",
+        "en": "to the left",
+        "fr": "à gauche",
+        "es": "a la izquierda"
+       },
+       "ձախ"
+      ],
+      [
+       {
+        "ru": "сначала",
+        "en": "first",
+        "fr": "d’abord",
+        "es": "primero"
+       },
+       "նախ"
+      ],
+      [
+       {
+        "ru": "потом",
+        "en": "then",
+        "fr": "ensuite",
+        "es": "después"
+       },
+       "հետո"
+      ]
+     ]
+    }
+   ]
+  }
  ]
 }

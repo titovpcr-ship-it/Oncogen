@@ -198,8 +198,12 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'путь '+n+': без горизонтальной прокрутки ('+w+')'); };
     await pg.click('[data-act=tab][data-arg=path]');
-    ok(await pg.locator('svg.pom .gr').count()===10&&await pg.locator('.p-units .p-unit').count()===9,'путь: гранат из 10 зёрен и 9 формул ступени 1');
-    ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===4,'путь: 6 ступеней, 2–5 — скоро');
+    const NU=await pg.evaluate(()=>window.__bararan.CRS.units.length);
+    ok(NU>=25&&await pg.locator('svg.pom .gr').count()===NU+1&&await pg.locator('.p-units .p-unit').count()===NU,'путь: гранат из '+(NU+1)+' зёрен, формул '+NU);
+    ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===2,'путь: 6 ступеней, 4–5 — скоро');
+    ok(await pg.locator('.p-unit.locked').count()===NU-9,'ступени 2–3 — под замком Premium');
+    await pg.locator('.p-unit.locked').first().click(); ok(await pg.locator('.pw-hero').count()===1,'формула ступени 2 без подписки — окно подписки');
+    await pg.click('[data-act=tab][data-arg=path]');
     await noH('карта');
     await pg.click('[data-act=pUnit][data-arg=s1u4]');
     ok((await pg.textContent('.u-formula')).includes('կա')&&await pg.locator('.chips .chip').count()>=8,'формула: рамка и зёрна урока');
@@ -239,6 +243,21 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok((await pg.textContent('#tabs')).includes('Path')&&(await pg.textContent('.path')).includes('Pomegranate'),'путь по-английски');
     await pg.click('[data-act=pUnit][data-arg=s1u1]'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
     ok((await pg.textContent('.scene')).includes('neighbours'),'сцена по-английски');
+    // ступени 2–3 с подпиской: спряжение по лицам и подсказка в таблице
+    await pg.evaluate(()=>{ window.BARARAN_CONFIG.FORCE_PREMIUM=true; }); await pg.click('[data-act=lang][data-arg=ru]').catch(()=>{});
+    await pg.click('[data-act=tab][data-arg=path]'); ok(await pg.locator('.p-unit.locked').count()===0,'с подпиской замков нет');
+    for(const id of ['s2u1','s2u8','s3u1']){
+      await pg.click('[data-act=pUnit][data-arg='+id+']'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
+      ok(await pg.locator('.scene .ln').count()>=6,id+': сцена');
+      await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
+      const it=await pg.evaluate(()=>{const P=window.__bararan.PU; return P.q.map(x=>x.k);});
+      if(id!=='s2u8') ok(it.filter(k=>k==='conj').length===4,id+': 4 задания на спряжение');
+      else ok(it.includes('table')&&await pg.locator('.p-hint').count()===1,id+': таблица с подсказкой лица');
+      const q0=await pg.evaluate(()=>{const P=window.__bararan.PU, x=P.q[0]; return {a:x.a,opts:x.opts};});
+      await pg.locator('.opt').nth(q0.opts.indexOf(q0.a)).click(); ok(await pg.locator('.foot.ok').count()===1,id+': верный ответ принят');
+      await noH(id);
+      await pg.click('[data-act=pQuit]'); await pg.click('[data-act=tab][data-arg=path]');
+    }
     ok(errs.length===0,'путь: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
@@ -263,18 +282,26 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     // не читает → ступень 0, ничего не отмечено
     await pg.click('.actions [data-act=pPlace]');
     let k=await run((i,kind)=>kind!=='read');
-    ok(k.filter(x=>x==='read').length===4&&k.length>=15,'входной тест: 4 вопроса на чтение, всего '+k.length);
+    ok(k.filter(x=>x==='read').length===4&&k.length===13,'входной тест: 4 на чтение и 9 на ступень 1, всего '+k.length);
     ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 0')&&await pg.locator('.p-res [data-arg=abc]').count()>=1,'не читает — ступень 0, «Начать с алфавита»');
     ok(await pg.evaluate(()=>Object.keys(window.__bararan.PG.u).length===0&&!window.__bararan.PG.abc),'не читает — формулы не отмечены');
     // всё верно → ступень 2, все формулы отмечены
     await pg.click('[data-act=tab][data-arg=path]'); await pg.click('[data-act=pPlace] >> nth=0');
-    await run(()=>true); await noH('итог теста');
-    ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 2')&&await pg.locator('.pl-rows li').count()===3,'всё верно — ступень 2, три строки итога');
+    k=await run(()=>true); await noH('итог теста');
+    const NU=await pg.evaluate(()=>window.__bararan.CRS.units.length);
+    ok(k.length===4+NU,'всё верно — тест дошёл до ступени 3: '+k.length+' вопросов');
+    ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 4')&&await pg.locator('.pl-rows li').count()===4,'всё верно — ступени 1–3 сданы, четыре строки итога');
     const P=await pg.evaluate(()=>({n:Object.keys(window.__bararan.PG.u).length, abc:window.__bararan.PG.abc, st:window.__bararan.pathStat()}));
-    ok(P.n===9&&P.abc===1&&P.st.open>0,'входной тест отметил 9 формул и чтение, открыто слов: '+P.st.open);
+    ok(P.n===NU&&P.abc===1&&P.st.open>0,'входной тест отметил все '+NU+' формул и чтение, открыто слов: '+P.st.open);
+    // сдал ступень 1, провалил ступень 2 → ступень 2, ступень 3 не спрашивается
+    await pg.evaluate(()=>{ const B=window.__bararan; for(const k of Object.keys(B.PG.u)) delete B.PG.u[k]; });
+    await pg.click('[data-act=tab][data-arg=path]'); await pg.click('[data-act=pPlace] >> nth=0');
+    k=await run(i=>i<13);
+    ok(k.length===4+9+8&&(await pg.textContent('.p-res h1')).includes('Ваша ступень: 2'),'ступень 1 сдана, 2 — нет: ступень 2, вопросов '+k.length);
+    ok(await pg.evaluate(()=>Object.keys(window.__bararan.PG.u).filter(x=>x.startsWith('s1')).length===9&&!Object.keys(window.__bararan.PG.u).some(x=>x.startsWith('s3'))),'отмечены 9 формул ступени 1, ступени 3 — нет');
     // урожай дня
     await pg.click('[data-act=tab][data-arg=path]');
-    ok(await pg.locator('svg.pom .gr.on').count()===10,'гранат налит целиком');
+    ok(await pg.locator('svg.pom .gr.on').count()===10,'гранат: налиты алфавит и 9 формул ступени 1');
     await pg.click('[data-act=pHarvestGo]'); ok(await pg.evaluate(()=>document.body.dataset.view)==='session','урожай дня — на весь экран');
     k=await run(()=>true);
     ok(k.length>=6&&k.length<=9,'урожай дня: '+k.length+' заданий из пройденных формул');

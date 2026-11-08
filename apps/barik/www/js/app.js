@@ -1563,7 +1563,7 @@ function pathStat(){
   return {roots:[...kr].filter(x=>allRoots().has(x)).length, aff:ka.size, open:GR?GR.openWords(kr,ka).length:0,
     done:CRS.units.filter(u=>PG.u[u.id]).length, total:CRS.units.length};
 }
-const nextUnit=()=>CRS.units.find(u=>!PG.u[u.id]);
+const nextUnit=()=>CRS.units.find(u=>!PG.u[u.id]&&unitOpen(u))||CRS.units.find(u=>!PG.u[u.id]);
 /* ступень 0 пройдена: проверка чтения (или входной тест) либо обведено 20+ букв */
 function stage0Done(){ return !!PG.abc||Object.keys(S.pen||{}).length>=20; }
 const harvestedToday=()=>!!(PG.h&&PG.h.last===today());
@@ -1571,16 +1571,23 @@ function sayText(t,btn,slow,done){
   if(REAL_ANY) return playUrl(audioUrl(t),t,slow,btn,true,done);
   return speakTTS(t,slow,btn,true);
 }
+/* зёрна внутри граната: шестиугольная укладка, шаг — самый крупный, при котором влезают все n */
+function grains(n){
+  for(let st=36;st>=8;st--){
+    const pts=[], h=st*.87;
+    for(let r=-9;r<=9;r++) for(let c=-9;c<=9;c++){ const x=100+c*st+(r&1?st/2:0), y=106+r*h; if(Math.hypot(x-100,y-106)<=62-st*.3) pts.push([x,y]); }
+    if(pts.length>=n){ pts.sort((a,b)=>Math.hypot(a[0]-100,a[1]-106)-Math.hypot(b[0]-100,b[1]-106)); return {s:st,pts:pts.slice(0,n).sort((a,b)=>a[1]-b[1]||a[0]-b[0])}; }
+  }
+  return {s:8,pts:[]};
+}
 /* гранат: зерно на формулу (и одно — на алфавит), налитые — пройденные */
 function pomSVG(){
   const n=CRS.units.length+1;
   const done=[stage0Done()].concat(CRS.units.map(u=>!!PG.u[u.id]));
-  const rows=n<=7?[n]:(n<=10?[3,4,n-7]:[3,4,4,n-11]);
-  let g='', k=0;
-  rows.forEach((c,ri)=>{ for(let j=0;j<c;j++,k++){
-    const x=100+(j-(c-1)/2)*30, y=96+(ri-(rows.length-1)/2)*34+(j%2?3:-3), r=(j-(c-1)/2)*9;
-    g+='<ellipse class="gr'+(done[k]?' on':'')+'" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" rx="11.5" ry="14.5" transform="rotate('+r.toFixed(0)+' '+x.toFixed(1)+' '+y.toFixed(1)+')"/>';
-  } });
+  let g='';
+  const G2=grains(n);
+  G2.pts.forEach(([x,y],k)=>{ const r=((x-100)/60*22).toFixed(0);
+    g+='<ellipse class="gr'+(done[k]?' on':'')+'" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" rx="'+(G2.s*.36).toFixed(1)+'" ry="'+(G2.s*.46).toFixed(1)+'" transform="rotate('+r+' '+x.toFixed(1)+' '+y.toFixed(1)+')"/>'; });
   return '<svg class="pom" viewBox="0 0 200 186" role="img" aria-label="'+esc(T('pAria',done.filter(Boolean).length,n))+'">'+
     '<path class="pom-crown" d="M84 30 L80 8 L92 20 L100 4 L108 20 L120 8 L116 30 Z"/>'+
     '<path class="pom-body" d="M100 26 C150 24 184 58 184 102 C184 148 146 182 100 182 C54 182 16 148 16 102 C16 58 50 24 100 26 Z"/>'+
@@ -1595,7 +1602,7 @@ function pathHTML(){
   const nuBtn=(cls,k)=>nu?'<button class="btn '+cls+'" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T(k))+'<span class="cap">'+esc(rdx(nu.title))+' · '+esc(nu.formula)+'</span></button>':'';
   let go='';
   if(!st.done&&!PG.placed) go='<p class="p-sub">'+esc(T('pPlaceOffer'))+'</p>'+nuBtn('primary','pStart')+'<button class="btn secondary" data-act="pPlace">'+emo('🧭','ie')+' '+esc(T('pPlaceGo'))+'</button>';
-  else if(st.done&&!harvestedToday()) go='<button class="btn primary" data-act="pHarvestGo">'+esc(T('pHarvest'))+'<span class="cap">'+esc(T('pHarvestCap',nu?rdx(nu.title):''))+'</span></button>'+nuBtn('ghost','pNextUnit');
+  else if(CRS.units.some(u=>PG.u[u.id]&&unitOpen(u))&&!harvestedToday()) go='<button class="btn primary" data-act="pHarvestGo">'+esc(T('pHarvest'))+'<span class="cap">'+esc(T('pHarvestCap',nu?rdx(nu.title):''))+'</span></button>'+nuBtn('ghost','pNextUnit');
   else{
     const h=PG.h||{};
     if(harvestedToday()) go='<p class="p-gain">✓ '+esc(T('pHarvestToday'))+((h.streak||0)>=2?' · '+emo('🔥','ie')+' '+esc(T('pStreakN',h.streak)):'')+'</p>';
@@ -1611,7 +1618,8 @@ function pathHTML(){
         '<button class="btn '+(stage0Done()?'ghost':'secondary')+' sm p-read" data-act="pRead">'+emo('👀','ie')+' '+esc(T('pReadGo'))+'</button>';
     }else if(us.length){
       body='<ol class="p-units">'+us.map((u,i)=>{ const r=PG.u[u.id];
-        return '<li><button class="topic p-unit'+(r?' done':'')+'" data-act="pUnit" data-arg="'+u.id+'"><span class="t-ic">'+emo(u.ic)+'</span><span class="t-body"><span class="t-name">'+(i+1)+'. '+esc(rdx(u.title))+'</span><span class="t-hy" lang="hy">'+esc(u.formula)+'</span></span><span class="t-cnt">'+(r?'<span class="p-ok" aria-label="'+esc(T('pDoneAria'))+'">✓</span>':'›')+'</span></button></li>'; }).join('')+'</ol>';
+        const lk=!unitOpen(u);
+        return '<li><button class="topic p-unit'+(r?' done':'')+(lk?' locked':'')+'" data-act="pUnit" data-arg="'+u.id+'"><span class="t-ic">'+emo(u.ic)+'</span><span class="t-body"><span class="t-name">'+(i+1)+'. '+esc(rdx(u.title))+'</span><span class="t-hy" lang="hy">'+esc(u.formula)+'</span></span><span class="t-cnt">'+(r?'<span class="p-ok" aria-label="'+esc(T('pDoneAria'))+'">✓</span>':(lk?'<span class="lock" role="img" aria-label="'+esc(T('locked'))+'">'+emo('🔒','ie')+'</span>':'›'))+'</span></button></li>'; }).join('')+'</ol>';
     }else body='<p class="p-sub p-soon">'+emo('🔒','ie')+' '+esc(T('pSoon'))+'</p>';
     return '<section class="p-st'+(us.length||s.id===0?'':' off')+'"><header class="p-sth"><span class="p-lv">'+esc(s.lv)+'</span><span class="p-nm"><b>'+esc(T('pStageN',s.id))+' · '+esc(rdx(s))+'</b><span lang="hy">'+esc(s.hy)+'</span></span></header><p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+body+'</section>';
   }).join('');
@@ -1623,8 +1631,10 @@ function pathHTML(){
 /* формула: [окошко] — выделить */
 const fmlHTML=f=>esc(f).replace(/\[([^\]]+)\]/g,'<span class="slotw">$1</span>');
 let PU=null, seedFrom=null;
+const unitOpen=u=>u.stage<2||premium();     // ступени 0–1 бесплатно, со 2-й — Premium
 function openUnit(id,step){
   const u=unitById(id); if(!u) return;
+  if(!unitOpen(u)){ openPaywall(); return; }
   PU={kind:'unit',u,step:step||0,q:null,i:0,ok:0,end:false,chain:0};
   if(REAL_ANY) u.scene.lines.forEach(l=>getAudio(audioUrl(l[1])).catch(()=>{}));
   go('unit',id);
@@ -1666,7 +1676,10 @@ function pBuild(u){
   u.drills.forEach(d=>{
     if(d.t==='form') shuffle(d.items).slice(0,4).forEach(([w,a,alt])=>items.push({k:'form',w,q:d.q,a,opts:uniq(a,alt)}));
     else if(d.t==='mean') shuffle(d.words).slice(0,3).forEach(w=>items.push({k:'mean',w,frame:d.frame,a:w,opts:uniq(w,shuffle(d.words))}));
-    else if(d.t==='table') shuffle(d.rows).slice(0,3).forEach(r=>items.push({k:'table',txt:d.frame.replace('{0}',r[0]),a:r[1],opts:uniq(r[1],shuffle(d.rows.map(x=>x[1])))}));
+    else if(d.t==='table') shuffle(d.rows).slice(0,3).forEach(r=>items.push({k:'table',txt:d.hint?d.frame:d.frame.replace('{0}',r[0]),hint:d.hint?r[0]:null,a:r[1],opts:uniq(r[1],shuffle(d.rows.map(x=>x[1])))}));
+    else if(d.t==='conj') shuffle(d.items).slice(0,4).forEach(([v,F,alt])=>{ const p=Math.floor(Math.random()*6);
+      // варианты: то же лицо в другом времени, затем другие лица
+      items.push({k:'conj',w:v,p,q:d.q,a:F[p],opts:uniq(F[p],alt.map(x=>x[p]).concat(shuffle(F.filter((x,i)=>i!==p))))}); });
     else if(d.t==='num') shuffle(d.items).slice(0,4).forEach(([n,w])=>items.push({k:'num',n,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
     else if(d.t==='pick') shuffle(d.items).slice(0,3).forEach(([q,w])=>items.push({k:'pick',q,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
   });
@@ -1683,23 +1696,19 @@ function readItems(n){
   return pool.slice(0,n).map(w=>{ const near=pool.slice(n).filter(x=>trn(x)!==trn(w)&&Math.abs(x.a.length-w.a.length)<=1).sort((x,y)=>sim(w,y)-sim(w,x)).slice(0,8);
     return {k:'read',w:w.a,a:trn(w),opts:pUniq(trn(w),shuffle(near).map(trn))}; });
 }
-/* входной тест: чтение ×4, по вопросу на каждую формулу ступени 1, времена глагола ×3 (ступень 2) */
-const VQ=[['pres',{ru:'«я …» — сейчас',en:'“I …” — now',fr:'« je … » — maintenant',es:'«yo …» — ahora'}],
-  ['aor',{ru:'«я …» — вчера, один раз',en:'“I …” — yesterday, once',fr:'« je … » — hier, une fois',es:'«yo …» — ayer, una vez'}],
-  ['fut',{ru:'«я …» — завтра',en:'“I …” — tomorrow',fr:'« je … » — demain',es:'«yo …» — mañana'}]];
-function verbItems(){
-  return shuffle((CRS.place&&CRS.place.verbs)||[]).slice(0,3).map((v,i)=>{
-    const f=k=>GR.verb(v,k)[0], a=f(VQ[i][0]);
-    return {k:'form',w:v,q:VQ[i][1],a,opts:pUniq(a,VQ.map(z=>f(z[0])).concat([GR.verb(v,'pres')[2]])),tag:'s2'}; });
-}
-function placeItems(){
-  const q=readItems(4).map(x=>Object.assign(x,{tag:'abc'}));
-  CRS.units.forEach(u=>{ const c=pBuild(u).filter(x=>x.k!=='tiles'&&x.k!=='hear'); if(c.length) q.push(Object.assign(shuffle(c)[0],{tag:u.id})); });
-  return q.concat(GR?verbItems():[]);
+/* входной тест: чтение ×4 и по вопросу на каждую формулу ступени 1; ступень сдана (70%) — вопросы следующей */
+const PLACE_OK=.7;
+function placeStage(st){ return CRS.units.filter(u=>u.stage===st).map(u=>{ const c=pBuild(u).filter(x=>x.k!=='tiles'&&x.k!=='hear'); return c.length?Object.assign(shuffle(c)[0],{tag:u.id,sec:st}):null; }).filter(Boolean); }
+function placeItems(){ return readItems(4).map(x=>Object.assign(x,{tag:'abc',sec:0})).concat(placeStage(1)); }
+function placeMore(){
+  const last=Math.max(...PU.q.map(x=>x.sec||0)), sec=PU.q.filter(x=>x.sec===last);
+  if(sec.filter(x=>x.ok).length<sec.length*PLACE_OK) return [];
+  if(PU.q.filter(x=>x.sec===0&&x.ok).length<3) return [];   // не читает — дальше ступени 1 не спрашиваем
+  return placeStage(last+1);
 }
 /* урожай дня: повторение пройденных формул (до 3 формул, 9 заданий) */
 function harvestItems(){
-  const done=shuffle(CRS.units.filter(u=>PG.u[u.id])).slice(0,3), per=Math.ceil(9/Math.max(1,done.length));
+  const done=shuffle(CRS.units.filter(u=>PG.u[u.id]&&unitOpen(u))).slice(0,3), per=Math.ceil(9/Math.max(1,done.length));
   let q=[]; done.forEach(u=>{ q=q.concat(shuffle(pBuild(u)).slice(0,per)); });
   return shuffle(q).slice(0,9);
 }
@@ -1715,6 +1724,7 @@ function pOpt(o,i,it,lbl){
   const cls=!it.done?'':(o===it.a?'ok':(i===it.pick?'bad':'dim'));
   return '<button class="opt '+cls+'" data-act="pAns" data-arg="'+i+'"'+(it.done?' disabled':'')+'>'+lbl+'</button>';
 }
+const PRON=['ես','դու','նա','մենք','դուք','նրանք'];
 const hyLbl=o=>'<span class="o-hy" lang="hy">'+esc(o)+'</span>';
 function practiceHTML(){
   if(!PU.q) pStart();
@@ -1727,8 +1737,11 @@ function practiceHTML(){
     body='<p class="q">'+esc(rdx(it.q))+'</p><div class="hyw" lang="hy">'+esc(it.w)+'</div><div class="ruw">'+esc(x?tx(x):'')+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='mean'){
     body='<p class="q">'+esc(T('pMeanQ'))+'</p><div class="hyw phrase" lang="hy">'+esc(it.frame.replace('___',it.w))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(BY[o]?tx(BY[o]):o)+'</span>')).join('')+'</div>';
+  }else if(it.k==='conj'){
+    const x=BY[it.w];
+    body='<p class="q">'+esc(rdx(it.q))+'</p><div class="hyw phrase" lang="hy">'+esc(PRON[it.p]+' '+(it.done?it.a:'___'))+'</div><div class="ruw"><span lang="hy">'+esc(it.w)+'</span>'+(x?' — '+esc(tx(x)):'')+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='table'){
-    body='<p class="q">'+esc(T('pTableQ'))+'</p><div class="hyw phrase" lang="hy">'+esc(it.done?it.txt.replace('___',it.a):it.txt)+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+    body='<p class="q">'+esc(T('pTableQ'))+'</p>'+(it.hint?'<div class="p-hint" lang="hy">('+esc(it.hint)+')</div>':'')+'<div class="hyw phrase" lang="hy">'+esc(it.done?it.txt.replace('___',it.a):it.txt)+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='num'){
     body='<p class="q">'+esc(T('pNumQ'))+'</p><div class="p-num">'+esc(String(it.n))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='pick'){
@@ -1745,7 +1758,7 @@ function practiceHTML(){
     if(!it.done) foot='<div class="row2"><button class="btn secondary" data-act="pTileReset">'+esc(T('erase'))+'</button><button class="btn primary" data-act="pTileCheck"'+(it.ans.length<it.a.length?' disabled':'')+'>'+esc(T('pCheck'))+'</button></div>';
   }
   if(it.done){
-    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:it.a));
+    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:(it.k==='conj'?PRON[it.p]+' '+it.a:it.a)));
     const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
     foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+(tr?esc(tr):'')+'</span></div>')+
       '<button class="btn primary" data-act="pNext">'+esc(T('next'))+'</button>';
@@ -1771,14 +1784,14 @@ function pFinish(){
   pgSave(); PU.after=openCount(); PU.sc=sc;
   render(); window.scrollTo(0,0);
 }
-/* входной тест: читает → ступень 0 пройдена, верно отвеченные формулы отмечены; времена глагола — ступень 2 */
+/* входной тест: читает → ступень 0 пройдена, верно отвеченные формулы отмечены; ступень — первая не сданная */
 function placeApply(){
-  const by={}; PU.q.forEach(x=>{ (by[x.tag]=by[x.tag]||[]).push(!!x.ok); });
-  const cnt=t=>(by[t]||[]).filter(Boolean).length, abc=cnt('abc')>=3;
-  const ids=CRS.units.filter(u=>cnt(u.id)>0).map(u=>u.id), v=cnt('s2');
-  if(abc){ PG.abc=1; ids.forEach(id=>{ if(!PG.u[id]) PG.u[id]={d:Date.now(),b:100,p:1}; }); }
-  const lv=!abc?0:(ids.length>=7&&v>=2?2:1);
-  PG.placed={d:Date.now(),lv,abc:cnt('abc'),an:(by.abc||[]).length,u:abc?ids.length:0,ut:CRS.units.length,v,vn:(by.s2||[]).length};
+  const read=PU.q.filter(x=>x.sec===0), abc=read.filter(x=>x.ok).length>=3, st={};
+  PU.q.filter(x=>x.sec>0).forEach(x=>{ const a=st[x.sec]=st[x.sec]||[0,0]; a[1]++; if(x.ok) a[0]++; });
+  if(abc){ PG.abc=1; PU.q.filter(x=>x.sec>0&&x.ok).forEach(x=>{ if(!PG.u[x.tag]) PG.u[x.tag]={d:Date.now(),b:100,p:1}; }); }
+  let lv=0;
+  if(abc){ lv=1; while(st[lv]&&st[lv][0]>=st[lv][1]*PLACE_OK) lv++; }
+  PG.placed={d:Date.now(),lv,abc:read.filter(x=>x.ok).length,an:read.length,st};
 }
 function drillResultHTML(){
   const nu=nextUnit(), d=PU.after-PU.before, due=counts().due;
@@ -1787,10 +1800,11 @@ function drillResultHTML(){
   const back='<button class="btn ghost" data-act="tab" data-arg="path">'+esc(T('pBackPath'))+'</button>';
   let h='', body='', acts='';
   if(PU.kind==='place'){
-    const P=PG.placed, s=CRS.stages[P.lv]||CRS.stages[0];
-    const row=(k,a,b)=>'<li><span>'+esc(T(k))+'</span><b>'+a+' / '+b+'</b></li>';
+    const P=PG.placed, top=!CRS.units.some(u=>u.stage===P.lv), s=CRS.stages[P.lv]||CRS.stages[CRS.stages.length-1];
+    const row=(l,a,b)=>'<li><span>'+esc(l)+'</span><b>'+a+' / '+b+'</b></li>';
     h=T('pPlTitle',P.lv,rdx(s));
-    body='<p class="summary">'+esc(T('pPlLv'+P.lv))+'</p><ul class="pl-rows">'+row('pPlRead',P.abc,P.an)+row('pPlUnits',P.u,P.ut)+row('pPlVerbs',P.v,P.vn)+'</ul>'+
+    body='<p class="summary">'+esc(P.lv===0?T('pPlLv0'):(top?T('pPlLvTop',P.lv-1):T('pPlLvN',P.lv)))+'</p><ul class="pl-rows">'+row(T('pPlRead'),P.abc,P.an)+
+      Object.keys(P.st).map(k=>row(T('pStageN',k)+' · '+rdx(CRS.stages[k]),P.st[k][0],P.st[k][1])).join('')+'</ul>'+
       '<p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+gain;
     acts=P.lv===0?'<button class="btn primary" data-act="tab" data-arg="abc">'+esc(T('pGoAbcStart'))+'</button>':nuBtn('primary');
   }else if(PU.kind==='read'){
@@ -1850,7 +1864,9 @@ const PH={
   pTileReset:()=>{ const it=pCur(); if(!it||it.done) return; it.ans=[]; it.bank.forEach(b=>b.used=false); render(); },
   pTileCheck:()=>{ const it=pCur(); if(!it||it.done||it.ans.length<it.a.length) return; it.done=true;
     it.ok=it.ans.map(id=>it.bank[id].t).join(' ')===it.a.join(' '); if(it.ok) PU.ok++; else buzz(); render(); pSayIt(it); },
-  pNext:()=>{ if(!PU) return; PU.i++; if(PU.i>=PU.q.length) pFinish(); else { render(); window.scrollTo(0,0); const it=pCur(); if(it&&it.k==='hear') sayText(it.a,document.querySelector('.play-big')); } },
+  pNext:()=>{ if(!PU) return; PU.i++;
+    if(PU.i>=PU.q.length&&PU.kind==='place'){ const more=placeMore(); if(more.length) PU.q=PU.q.concat(more); }
+    if(PU.i>=PU.q.length) pFinish(); else { render(); window.scrollTo(0,0); const it=pCur(); if(it&&it.k==='hear') sayText(it.a,document.querySelector('.play-big')); } },
   pQuit:()=>{ if(!PU) return; if(PU.kind!=='unit'){ PU=null; go('path'); return; } PU.step=1; PU.q=null; render(); },
   pPlace:()=>startDrill('place'),
   pRead:()=>startDrill('read'),
