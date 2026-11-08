@@ -37,6 +37,19 @@
 книги с прописью, Nayiri — не копируем и на сайте не называем. Новое стороннее → сначала лицензия, потом запись в
 `doc_credits` и тест в `test_app.js`.
 
+## САЙТ ВЫЛОЖЕН (08.11.2026, O-150)
+Логин cPanel — **barik** (пароль — `BARIK_HOST_PASSWORD` в .env; 08.11 до активации хостинга вход не пускал). Диск
+20 ГБ, файлов — без предела, PHP 8.3 (ea-php83). Сайт в `/home/barik/public_html` (901 МБ, 105 тыс. файлов),
+база кабинета — `/home/barik/barik-data/barik.sqlite`, `api/config.php` создан (PEPPER случайный, почта — PHP mail).
+Ящик **hello@barik.am** (пароль — `BARIK_MAIL_HELLO_PASSWORD` в .env; веб-почта — host30.name.am:2096 или
+cPanel → Email Accounts). Проверено: `check_live.py --via host30.name.am` — всё, кроме http → https (из облака
+не проверить, пока нет DNS); письмо с кодом входа дошло в hello@. Ловушки выкладки (в `deploy_site.py` учтены):
+кука cpsession с «port=443» — ставить заголовком; архив до ~20 МБ (60 МБ cPanel не принимает); распаковка — по
+абсолютному пути (относительный — от папки архива → public_html/public_html); сессия истекает посреди выкладки —
+войти снова; `save_file_content` с «<?php» сервер режет — файлы класть `upload_files`; наш .htaccess затирает
+блок cPanel (журнал PHP) — `fix_htaccess` возвращает его сверху. Осталось: DNS barik.am (делегирование .am),
+затем AutoSSL (HTTPS), `check_live.py` без `--via`, HSTS.
+
 ## ХОСТИНГ И ВЫКЛАДКА (08.11.2026, O-145)
 Name.am, сервер **host30.name.am** (51.38.26.56), NS ns301/ns302.name.am, домен barik.am (08.11.2026 ещё не в зоне
 .am — NXDOMAIN, ждём делегирования). Доступы — `apps/barik/.env`: `BARIK_HOST_SERVER`, `BARIK_HOST_DOMAIN`,

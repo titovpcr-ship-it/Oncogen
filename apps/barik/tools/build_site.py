@@ -191,11 +191,12 @@ ErrorDocument 404 /404.html
   AddOutputFilterByType DEFLATE text/html text/css text/javascript application/json application/manifest+json image/svg+xml application/xml text/xml text/plain
 </IfModule>
 <IfModule mod_headers.c>
-  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest|404\.html)$">
-    Header set Cache-Control "no-cache"
-  </FilesMatch>
   <FilesMatch "\.(js|css|woff2|png|svg|json|jpg)$">
     Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  # после общего правила: в Apache побеждает последнее совпавшее — sw.js, главная и манифест всегда свежие
+  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest|404\.html)$">
+    Header set Cache-Control "no-cache"
   </FilesMatch>
   # имя записи и картинки — по содержимому: файл не меняется никогда
   <FilesMatch "\.(webp|mp3)$">
