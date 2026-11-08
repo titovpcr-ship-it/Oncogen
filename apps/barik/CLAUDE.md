@@ -24,6 +24,16 @@
 эталон), `table.hint`; ступени 2+ — Premium (`unitOpen`); входной тест ступенчатый (`placeStage`/`placeMore`,
 70%); гранат — `grains(n)`. Проверка подписки в тестах — `BARARAN_CONFIG.FORCE_PREMIUM=true`.
 
+## ХОСТИНГ И ВЫКЛАДКА (08.11.2026, O-145)
+Name.am, сервер **host30.name.am** (51.38.26.56), NS ns301/ns302.name.am, домен barik.am (08.11.2026 ещё не в зоне
+.am — NXDOMAIN, ждём делегирования). Доступы — `apps/barik/.env`: `BARIK_HOST_SERVER`, `BARIK_HOST_DOMAIN`,
+`BARIK_HOST_USER` (логин cPanel), `BARIK_HOST_PASSWORD`. **Из облака открыт только 443**: FTP/SSH/2083 закрыты,
+но cPanel отвечает на 443 по заголовку `Host: cpanel.barik.am` (и без DNS). Выкладка —
+`python3.13 tools/build_site.py && python3.13 tools/deploy_site.py` (zip до 60 МБ → Fileman/upload_files → API2
+fileop extract; только изменённое, отпечатки — `out/deploy/state.json`; `--check` — вход, PHP, место; `--prune` —
+удалить лишнее). `api/config.php` создаётся при первой выкладке (случайный PEPPER, почта хостинга), потом не
+трогается. Подбирать логин нельзя: два неверных входа 08.11 уже были (barikam, barik) — cPHulk блокирует.
+
 ## НАЗВАНИЕ — Barik (02.11.2026)
 Владелец 02.11.2026: «Подумай над названием проекта, проверь barer на свободность» → «Берём Barik,
 переименовывай». **Barik** (Բառիկ — «словечко», ласкательное от բառ «слово»): латиницей и кириллицей
