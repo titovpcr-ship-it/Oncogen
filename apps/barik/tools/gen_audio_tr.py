@@ -17,8 +17,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_audio as G
 
 VOICES = {'ru': 'ru-RU-SvetlanaNeural', 'en': 'en-US-JennyNeural', 'fr': 'fr-FR-DeniseNeural',
-          'es': 'es-AR-ElenaNeural'}
-COL = {'ru': 1, 'en': 2, 'fr': 4, 'es': 5}          # поле строки слова в data.js
+          'es': 'es-AR-ElenaNeural', 'de': 'de-DE-KatjaNeural'}
+COL = {'ru': 1, 'en': 2, 'fr': 4, 'es': 5, 'de': 6}          # поле строки слова в data.js
 SOLO = re.compile(r'[,;:()\[\]/…!?—–]')
 TR_DIR = os.path.join(G.OUT_DIR, 'tr')
 

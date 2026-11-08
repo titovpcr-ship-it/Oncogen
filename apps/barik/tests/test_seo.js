@@ -18,7 +18,7 @@ const srv=http.createServer((q,r)=>{
 });
 let fails=0;
 const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  ',m); };
-const LANGS=['ru','en','fr','es'];
+const LANGS=['ru','en','fr','es','de'];
 (async()=>{
   if(!fs.existsSync(path.join(ROOT,'ru','index.html'))){console.log('нет страниц поиска — python3 tools/build_site.py'); process.exit(1);}
   const words=JSON.parse(fs.readFileSync(path.join(__dirname,'..','dist','words_tr.json'),'utf8'));
@@ -66,7 +66,7 @@ const LANGS=['ru','en','fr','es'];
   ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8')),'robots.txt знает sitemap');
   // 3. Приложение
   const sw=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8');
-  ok(!/"\.\/(ru|en|fr|es)\//.test(sw)&&!sw.includes('sitemap'),'страниц поиска нет в кэше приложения');
+  ok(!/"\.\/(ru|en|fr|es|de)\//.test(sw)&&!sw.includes('sitemap'),'страниц поиска нет в кэше приложения');
   ok(/<noscript>.*href="ru\/".*<\/noscript>/.test(fs.readFileSync(path.join(ROOT,'index.html'),'utf8')),'с главной — ссылки на словари');
   // 4. В браузере
   await new Promise(r=>srv.listen(0,'127.0.0.1',r)); const base='http://127.0.0.1:'+srv.address().port+'/';

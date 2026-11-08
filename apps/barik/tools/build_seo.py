@@ -29,7 +29,7 @@ import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
-LANGS = ("ru", "en", "fr", "es")
+LANGS = ("ru", "en", "fr", "es", "de")
 LV = ("A1", "A2", "B1", "B2", "C1", "C2")
 NEIGHBOURS = 12
 
@@ -146,11 +146,39 @@ TXT = {
                 "con cambios; traducciones propias.",
         "lang_name": "Español",
     },
+    "de": {
+        "title_w": "„{x}“ auf Armenisch — {a} ({tr}) | Barik",
+        "desc_w": "Wie sagt man „{x}“ auf Armenisch: {a}, gesprochen {tr}. Thema: {t}, Stufe {lv}. "
+                  "Lerne armenische Wörter kostenlos mit Barik.",
+        "h_tr": "Aussprache", "listen": "Anhören", "h_tx": "Übersetzung", "lv": "Stufe", "topic": "Thema",
+        "more": "Mehr Wörter zum Thema „{t}“", "all_topic": "Alle {n} {w} des Themas",
+        "cta": "Armenisch lernen mit Barik — kostenlos",
+        "cta_t": "Diese Wörter in Barik lernen", "next_t": "Nächstes Thema",
+        "dict": "Armenisches Wörterbuch", "home": "Barik",
+        "title_t": "{t} auf Armenisch — {n} {w} mit Aussprache | Barik",
+        "desc_t": "{t} auf Armenisch: {n} {w} mit deutscher Übersetzung und Aussprache, Stufe {lv}. "
+                  "Ostarmenisch — lerne mit Barik.",
+        "h_t": "{t} auf Armenisch", "intro_t": "{n} {w}, Stufe {lv}. Ostarmenisch, "
+                                             "Aussprache in lateinischen Buchstaben für Deutschsprachige.",
+        "title_i": "Armenisches Wörterbuch — {n} {w} nach Themen mit Aussprache | Barik",
+        "desc_i": "Wörterbuch des Ostarmenischen: {n} {w} in {k} Themen von A1 bis C2, deutsche "
+                  "Übersetzung und Aussprache. Kostenlos lernen mit Barik.",
+        "h_i": "Armenisches Wörterbuch", "intro_i": "{n} {w} in {k} Themen — von den ersten Wörtern "
+                                                   "(A1) bis zur sicheren Beherrschung (C2). Wähle ein Thema.",
+        "lvname": {"A1": "A1 — Anfänger", "A2": "A2 — Grundkenntnisse", "B1": "B1 — Mittelstufe",
+                   "B2": "B2 — gute Mittelstufe", "C1": "C1 — fortgeschritten", "C2": "C2 — sicher"},
+        "words": "Wörter", "prev": "← Vorheriges", "next": "Nächstes →",
+        "foot": "Barik — Ostarmenisch für Deutsch-, Englisch-, Französisch-, Spanisch- und Russischsprachige. "
+                "Ein Teil des Wortschatzes beruht auf dem <a href=\"https://www.wiktionary.org/\">Wiktionary</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "mit Änderungen; eigene Übersetzungen.",
+        "lang_name": "Deutsch",
+    },
 }
-HL = {"ru": "ru", "en": "en", "fr": "fr", "es": "es"}
-TX = {"ru": "r", "en": "e", "fr": "f", "es": "s"}      # перевод
-TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st"}   # транскрипция
-TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es"}   # название темы
+HL = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de"}
+TX = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de"}      # перевод
+TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st", "de": "dt"}   # транскрипция
+TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de"}   # название темы
 
 CSS = """@font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02B0,U+02C6,U+02DA,U+02DC,U+0259,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -210,9 +238,9 @@ footer{max-width:820px;margin:0 auto;padding:22px 16px 44px;font-size:13px;color
 
 
 def nw(L, n):
-    """«слово / слова / слов» — по числу; в английском и французском тем меньше 6 слов нет."""
+    """«слово / слова / слов» — по числу; в других языках тем меньше 6 слов нет (было «mots» и в испанском — до 08.11.2026)."""
     if L != "ru":
-        return "words" if L == "en" else "mots"
+        return TXT[L]["words"]
     n = abs(int(n)) % 100
     if 11 <= n <= 14:
         return "слов"

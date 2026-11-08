@@ -14,7 +14,7 @@ function saveUI(){try{localStorage.setItem(UIK,JSON.stringify(UI));}catch(e){}}
 const NAV=(navigator.language||'').toLowerCase();
 /* Со страницы поиска (/fr/w/…) — сразу на языке страницы, без выбора языка;
    выбор, сделанный раньше, не трогаем. */
-const QL=(/[?&]lang=(ru|en|fr|es)(?:&|$)/.exec(location.search||'')||[])[1];
+const QL=(/[?&]lang=(ru|en|fr|es|de)(?:&|$)/.exec(location.search||'')||[])[1];
 if(QL&&!UI.lang){UI.lang=QL; saveUI();}
 /* Язык по стране (O-154, владелец 08.11.2026: «человек с какой страны заходил — с такой язык и открывался»):
    страна — по часовому поясу устройства (без IP и внешних сервисов, работает и без сети). Россия и СНГ, Армения —
@@ -25,7 +25,8 @@ const TZ=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'';}
 const TZ_LANG={
   ru:['Europe/Moscow','Europe/Kaliningrad','Europe/Samara','Europe/Volgograd','Europe/Saratov','Europe/Ulyanovsk','Europe/Astrakhan','Europe/Kirov','Europe/Minsk','Asia/Yerevan','Asia/Bishkek','Asia/Dushanbe','Asia/Tashkent','Asia/Samarkand','Asia/Ashgabat','Asia/Almaty','Asia/Qostanay','Asia/Aqtobe','Asia/Aqtau','Asia/Atyrau','Asia/Oral','Asia/Qyzylorda','Asia/Yekaterinburg','Asia/Omsk','Asia/Novosibirsk','Asia/Barnaul','Asia/Tomsk','Asia/Novokuznetsk','Asia/Krasnoyarsk','Asia/Irkutsk','Asia/Chita','Asia/Yakutsk','Asia/Khandyga','Asia/Vladivostok','Asia/Ust-Nera','Asia/Magadan','Asia/Sakhalin','Asia/Srednekolymsk','Asia/Kamchatka','Asia/Anadyr'],
   fr:['Europe/Paris','Europe/Monaco','Europe/Luxembourg','Asia/Beirut','Africa/Algiers','Africa/Tunis','Africa/Casablanca','Indian/Reunion','America/Martinique','America/Guadeloupe','America/Cayenne','Pacific/Noumea','Pacific/Tahiti'],
-  es:['Europe/Madrid','Atlantic/Canary','Africa/Ceuta','America/Buenos_Aires','America/Montevideo','America/Mexico_City','America/Cancun','America/Merida','America/Monterrey','America/Matamoros','America/Chihuahua','America/Ciudad_Juarez','America/Ojinaga','America/Hermosillo','America/Mazatlan','America/Bahia_Banderas','America/Tijuana','America/Santiago','America/Punta_Arenas','America/Bogota','America/Lima','America/Caracas','America/Guayaquil','America/La_Paz','America/Asuncion','America/Havana','America/Santo_Domingo','America/Guatemala','America/El_Salvador','America/Tegucigalpa','America/Managua','America/Costa_Rica','America/Panama','America/Puerto_Rico']
+  es:['Europe/Madrid','Atlantic/Canary','Africa/Ceuta','America/Buenos_Aires','America/Montevideo','America/Mexico_City','America/Cancun','America/Merida','America/Monterrey','America/Matamoros','America/Chihuahua','America/Ciudad_Juarez','America/Ojinaga','America/Hermosillo','America/Mazatlan','America/Bahia_Banderas','America/Tijuana','America/Santiago','America/Punta_Arenas','America/Bogota','America/Lima','America/Caracas','America/Guayaquil','America/La_Paz','America/Asuncion','America/Havana','America/Santo_Domingo','America/Guatemala','America/El_Salvador','America/Tegucigalpa','America/Managua','America/Costa_Rica','America/Panama','America/Puerto_Rico'],
+  de:['Europe/Berlin','Europe/Busingen','Europe/Vienna','Europe/Vaduz']
 };
 function tzLang(tz){
   if(!tz) return '';
@@ -33,7 +34,7 @@ function tzLang(tz){
   for(const l in TZ_LANG) if(TZ_LANG[l].indexOf(tz)>=0) return l;
   return '';
 }
-const NAVL=NAV.indexOf('ru')===0?'ru':(NAV.indexOf('fr')===0?'fr':(NAV.indexOf('es')===0?'es':(NAV.indexOf('en')===0?'en':'')));
+const NAVL=['ru','fr','es','de','en'].find(l=>NAV.indexOf(l)===0)||'';
 let L=UI.lang||UI.ll||tzLang(TZ)||NAVL||'en';
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}
@@ -123,7 +124,26 @@ function trEs(s){
   if(v.length>=2&&o[k]!=='ë'&&('aeiou'.indexOf(end)>=0||end==='n'||end==='s')) o=o.slice(0,k)+ACUTE[o[k]]+o.slice(k+1);
   return o;
 }
-const TRF={ru:y=>trWord(y,false),en:trLat,fr:trFr,es:trEs};
+/* немецкая (08.11.2026): по немецкой транскрипции армянского — խ ch («Bach»), շ sch, ճ tsch, չ tschʰ, ջ dsch,
+   ժ sh (как в Duden: Breshnew), ծ z (немецкое z = ц), ց zʰ, ձ ds, յ j, վ w, ու u, ե/և в начале — je/jew, ո в начале —
+   wo; զ — s (звонкое, как «Sonne»), ս между гласными — ss (глухое); ը — ë; ռ — rr. Ударение не ставим. */
+const DEM={'ա':'a','բ':'b','գ':'g','դ':'d','զ':'s','է':'e','ը':'ë','թ':'tʰ','ժ':'sh','ի':'i','լ':'l','խ':'ch','ծ':'z','կ':'k','հ':'h','ձ':'ds','ղ':'gh','ճ':'tsch','մ':'m','յ':'j','ն':'n','շ':'sch','չ':'tschʰ','պ':'p','ջ':'dsch','ռ':'rr','ս':'s','վ':'w','տ':'t','ր':'r','ց':'zʰ','ւ':'w','փ':'pʰ','ք':'kʰ','օ':'o','ֆ':'f','ա':'a','ո':'o','ե':'e'};
+function trDe(s){
+  s=s.toLowerCase(); let o='';
+  const isV=c=>!!c&&HYV_SET.indexOf(c)>=0;
+  for(let i=0;i<s.length;i++){
+    const c=s[i], nx=s[i+1]||'', pv=s[i-1]||'';
+    if(PUNCT.indexOf(c)>=0) continue;
+    if(c==='ո'&&nx==='ւ'){o+='u';i++;continue;}
+    if(c==='և'){o+=(i===0)?'jew':'ew';continue;}
+    if(c==='ե'){o+=(i===0)?'je':'e';continue;}
+    if(c==='ո'){o+=(i===0&&!s.startsWith('ով'))?'wo':'o';continue;}
+    if(c==='ս'&&isV(pv)&&(isV(nx)||nx==='ո')){o+='ss';continue;}
+    const m=DEM[c]; o+=(m===undefined)?c:m;
+  }
+  return o;
+}
+const TRF={ru:y=>trWord(y,false),en:trLat,fr:trFr,es:trEs,de:trDe};
 function trPhrase(a,mode){const f=TRF[mode]||TRF.ru; return a.split(' ').map(x=>x.split('-').map(f).join('-')).join(' ');}
 const trL=a=>trPhrase(a,L);   // транскрипция на языке интерфейса
 const WORDS=[], BY={};
@@ -132,15 +152,16 @@ TOPICS.forEach((t,ti)=>{
   (t.w||[]).forEach(row=>{
     const a=(row[0]||'').trim(), r=(row[1]||'').trim(), e=(row[2]||'').trim()||r, p=(row[3]||'').trim();
     if(!a||!r||BY[a]) return;
-    const f=(row[4]||'').trim()||e, es=(row[5]||'').trim()||e;
-    const w={a,r,e,f,s:es,p,t:ti,tr:trPhrase(a,'ru'),lt:trPhrase(a,'en'),ft:trPhrase(a,'fr'),st:trPhrase(a,'es')};
+    const f=(row[4]||'').trim()||e, es=(row[5]||'').trim()||e, de=(row[6]||'').trim()||e;
+    const w={a,r,e,f,s:es,de,p,t:ti,tr:trPhrase(a,'ru'),lt:trPhrase(a,'en'),ft:trPhrase(a,'fr'),st:trPhrase(a,'es'),dt:trPhrase(a,'de')};
     BY[a]=w; WORDS.push(w); t.list.push(w);
   });
 });
 const PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
-const tx=w=>L==='es'?w.s:(L==='fr'?w.f:(L==='en'?w.e:w.r));       // перевод на языке интерфейса
-const trn=w=>L==='es'?w.st:(L==='fr'?w.ft:(L==='en'?w.lt:w.tr));   // транскрипция на языке интерфейса
-const tn=t=>(L==='es'&&t.es)?t.es:((L==='fr'&&t.fr)?t.fr:(L==='en'||L==='es'?t.en:t.ru));   // название темы
+const TXK={ru:'r',en:'e',fr:'f',es:'s',de:'de'}, TRK={ru:'tr',en:'lt',fr:'ft',es:'st',de:'dt'};
+const tx=w=>w[TXK[L]||'e'];       // перевод на языке интерфейса
+const trn=w=>w[TRK[L]||'lt'];   // транскрипция на языке интерфейса
+const tn=t=>(L!=='ru'&&L!=='en'&&t[L])?t[L]:(L==='ru'?t.ru:t.en);   // название темы
 
 /* ================= ACCESS ================= */
 const FREE_LV='A1';
@@ -534,7 +555,7 @@ function finish(){
 
 /* ================= ALPHABET QUIZ ================= */
 let aq=null;
-const rd=x=>L==='es'?x.es:(L==='fr'?x.fr:(L==='en'?x.en:x.ru));
+const rd=x=>x[L]||x.en||x.ru;
 function startAbcQuiz(){
   const kinds=hasRealKey('L')?['l2s','s2l','hear']:['l2s','s2l'];
   const items=shuffle(ABC).slice(0,12).map(x=>{
@@ -754,14 +775,14 @@ function ccFlag(cc){ return /^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc
 /* Плашка показывается первому гостю, пока язык выбран за него (не кнопкой) и страна узнана. */
 function geoHTML(D){
   const cc=tzCC(TZ); if(UI.lang||UI.ll||UI.geoX||!cc) return '';
-  const others=['ru','en','fr','es'].filter(l=>l!==L).map(l=>'<button class="lnk" data-act="landLang" data-arg="'+l+'" lang="'+l+'">'+({ru:'Русский',en:'English',fr:'Français',es:'Español'}[l])+'</button>').join('');
+  const others=['ru','en','fr','es','de'].filter(l=>l!==L).map(l=>'<button class="lnk" data-act="landLang" data-arg="'+l+'" lang="'+l+'">'+({ru:'Русский',en:'English',fr:'Français',es:'Español',de:'Deutsch'}[l])+'</button>').join('');
   return '<div class="ld-geo" role="status"><div class="ld-wrap"><span class="geo-f" aria-hidden="true">'+ccFlag(cc)+'</span><span class="geo-t">'+esc(D.geo(ccName(cc),L))+'</span><span class="geo-o">'+esc(D.geoOther)+' '+others+'</span><button class="geo-x" data-act="geoX" aria-label="'+esc(D.geoClose)+'">✕</button></div></div>';
 }
 function onboardHTML(){
   const D=LND(), a1=WORDS.filter(w=>TOPICS[w.t].lv==='A1').length, chk=T('lvCheck'), I=ART.ic;
   const ck='<span class="ck">'+I.check+'</span>';
   const cta=c=>'<button class="btn primary '+(c||'')+'" data-act="pickLang" data-arg="'+L+'">'+esc(D.cta)+'<span class="arr" aria-hidden="true">→</span></button>';
-  const langs=[['ru','RU'],['en','EN'],['fr','FR'],['es','ES']].map(x=>'<button class="lng" data-act="landLang" data-arg="'+x[0]+'" aria-pressed="'+(x[0]===L)+'" lang="'+x[0]+'">'+x[1]+'</button>').join('');
+  const langs=[['ru','RU'],['en','EN'],['fr','FR'],['es','ES'],['de','DE']].map(x=>'<button class="lng" data-act="landLang" data-arg="'+x[0]+'" aria-pressed="'+(x[0]===L)+'" lang="'+x[0]+'">'+x[1]+'</button>').join('');
   const brand='<a class="ld-brand" href="./" aria-label="Barik">'+ART.mark('ld-mk')+'<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a>';
   const byA=a=>BY[a]&&PICS[a]?BY[a]:null;
   const tile=w=>'<li class="ld-tile"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(tx(w))+'</span></li>';
@@ -934,7 +955,7 @@ function dictRows(){
   const q=dq.trim().toLowerCase();
   const qc=q.replace(/h/g,'һ').replace(/ʰ/g,''), ql=q.replace(/ʰ/g,''), qf=fold(ql);
   let list=(dt==='all')?WORDS:(dt.indexOf('lv:')===0?WORDS.filter(w=>TOPICS[w.t].lv===dt.slice(3)):TOPICS[+dt].list);
-  if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0||fold(w.f.toLowerCase()).indexOf(qf)>=0||fold(w.ft.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.s.toLowerCase()).indexOf(qf)>=0||fold(w.st.replace(/ʰ/g,'')).indexOf(qf)>=0);
+  if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0||fold(w.f.toLowerCase()).indexOf(qf)>=0||fold(w.ft.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.s.toLowerCase()).indexOf(qf)>=0||fold(w.st.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.de.toLowerCase()).indexOf(qf)>=0||fold(w.dt.replace(/ʰ/g,'')).indexOf(qf)>=0);
   if(!list.length) return '<li class="empty">'+esc(T('dictEmpty'))+'</li>';
   const more=list.length>dLimit?'<li class="more-li"><button class="btn ghost" data-act="more">'+esc(T('showMore',list.length-dLimit))+'</button></li>':'';
   return list.slice(0,dLimit).map(w=>wordRow(w)).join('')+more;
@@ -1284,7 +1305,7 @@ function letterHTML(i){
     '<div class="l-name" lang="hy">'+esc(x.nm)+'<small>'+esc(T('letterName'))+': '+esc(trL(x.nm))+'</small></div>'+
     '<div class="audio"><button class="aud" data-act="sayLetter" data-arg="'+i+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="sayLetterSlow" data-arg="'+i+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>'+
     '<div class="l-facts"><div><b>'+esc(rd(x))+'</b><span>'+esc(T('reads'))+'</span></div><div><b>['+esc(x.ipa)+']</b><span>'+esc(T('ipa'))+'</span></div><div><b>'+(i+1)+'</b><span>'+esc(T('ofN',n))+'</span></div></div>'+
-    '<p class="l-tip">'+esc(L==='es'?x.tes:(L==='fr'?x.tfr:(L==='en'?x.ten:x.tru)))+'</p></div>'+cursiveHTML(x)+ex+
+    '<p class="l-tip">'+esc(x['t'+({ru:'ru',en:'en',fr:'fr',es:'es',de:'de'}[L]||'en')]||x.ten)+'</p></div>'+cursiveHTML(x)+ex+
     '<div class="l-nav"><button class="btn secondary" data-act="letter" data-arg="'+((i+n-1)%n)+'">‹ '+esc(ABC[(i+n-1)%n].up)+'</button><button class="btn secondary" data-act="letter" data-arg="'+((i+1)%n)+'">'+esc(ABC[(i+1)%n].up)+' ›</button></div>';
 }
 function abcQuizHTML(){
@@ -1389,7 +1410,7 @@ function tquizHTML(){
 }
 function settingsHTML(){
   const sizes=[5,10,15,20].map(n=>'<button data-act="size" data-arg="'+n+'" aria-pressed="'+((S.set.size||10)===n)+'">'+n+'</button>').join('');
-  const langs=[['ru','Русский'],['en','English'],['fr','Français'],['es','Español']].map(x=>'<button data-act="lang" data-arg="'+x[0]+'" aria-pressed="'+(L===x[0])+'">'+x[1]+'</button>').join('');
+  const langs=[['ru','Русский'],['en','English'],['fr','Français'],['es','Español'],['de','Deutsch']].map(x=>'<button data-act="lang" data-arg="'+x[0]+'" aria-pressed="'+(L===x[0])+'">'+x[1]+'</button>').join('');
   const vtext=REAL_ANY?T('audioOn'):(HYV?T('audioSys'):T('audioOff'));
   const prem=premium();
   let sub='<p class="note">'+esc(prem?T('subOn'):T('subOff'))+'</p><div class="actions" style="margin-top:12px">';
@@ -2264,5 +2285,5 @@ render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

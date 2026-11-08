@@ -173,6 +173,19 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('.abc button >> nth=4'); ok((await pg.textContent('.l-facts')).includes('ye / e'),'буква Ե по-испански: ye / e'); ok((await pg.textContent('.l-tip')).includes('principio'),'подсказка к букве по-испански'); await shot('letter-es');
     await pg.click('[data-act=tab][data-arg=pics]'); await pg.click('.pgrid .pcell >> nth=0'); ok((await pg.textContent('.pcard .trn'))==='tsarr','картинка: испанская транскрипция ծառ → tsarr');
     await pg.click('[data-act=tab][data-arg=home]'); await pg.click('[data-act=learnNew]'); await pg.click('.foot [data-act=next]'); ok(await pg.locator('.sess-top').count()===1,'урок на испанском'); await shot('lesson-es'); await pg.click('[data-act=quit]');
+    // немецкая версия (08.11.2026)
+    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg=de]');
+    ok((await pg.textContent('#tabs')).includes('Wörterbuch'),'интерфейс на немецком'); await shot('settings-de'); await noHScroll('settings-de');
+    ok(await pg.evaluate(()=>{const S=window.BARARAN_STR; return Object.keys(S.ru).every(k=>k in S.de)&&Object.keys(S.ru.land).every(k=>k in S.de.land);}),'все тексты интерфейса есть по-немецки');
+    await pg.click('[data-act=tab][data-arg=home]'); ok((await pg.textContent('.today')).includes('Wörter'),'главная по-немецки'); ok((await pg.textContent('.topics')).includes('Grundlagen'),'темы по-немецки'); await shot('home-de'); await noHScroll('home-de');
+    await pg.click('[data-act=tab][data-arg=dict]'); await pg.fill('#dq','hund'); ok((await pg.textContent('#dlist')).includes('շուն'),'поиск по-немецки: Hund → շուն');
+    await pg.fill('#dq','schun'); ok((await pg.textContent('#dlist')).includes('շուն'),'поиск немецкой транскрипцией'); await pg.fill('#dq','');
+    const deRow=await pg.textContent('#dlist .wrow .w-sub'); ok(deRow.includes('hallo')&&deRow.includes('barew'),'словарь: немецкий перевод и транскрипция: '+deRow); await shot('dict-de');
+    const tde=await pg.evaluate(()=>{const B=window.__bararan; return ['Երևան','Հայաստան','խաչքար','ջուր','ծառ','ժամ','զանգ','կասա'].map(B.trDe).join('|');});
+    ok(tde==='jerewan|hajastan|chatschʰkʰar|dschur|zarr|sham|sang|kassa','немецкая транскрипция: '+tde);
+    await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('.abc button >> nth=4'); ok((await pg.textContent('.l-facts')).includes('je / e'),'буква Ե по-немецки: je / e'); ok((await pg.textContent('.l-tip')).includes('Wortanfang'),'подсказка к букве по-немецки'); await shot('letter-de');
+    await pg.click('[data-act=tab][data-arg=pics]'); await pg.click('.pgrid .pcell >> nth=0'); ok((await pg.textContent('.pcard .trn'))==='zarr','картинка: немецкая транскрипция ծառ → zarr');
+    await pg.click('[data-act=tab][data-arg=home]'); await pg.click('[data-act=learnNew]'); await pg.click('.foot [data-act=next]'); ok(await pg.locator('.sess-top').count()===1,'урок на немецком'); await shot('lesson-de'); await pg.click('[data-act=quit]');
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg=en]');
     // перезапуск помнит язык и прогресс
     await pg.reload(); await pg.waitForTimeout(200); ok(await pg.locator('.onb').count()===0&&(await pg.textContent('#tabs')).includes('Learn'),'после перезапуска — английский без выбора языка');
@@ -398,16 +411,16 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   { // язык по стране (O-154): часовой пояс → язык; не из списка — язык браузера; выбор кнопкой главнее
     const cases=[['en-US','America/Argentina/Buenos_Aires','es'],['en-US','America/Mexico_City','es'],['en-GB','Europe/Paris','fr'],
       ['en-US','Europe/Moscow','ru'],['en-US','Asia/Yerevan','ru'],['de-DE','Europe/Madrid','es'],['ru-RU','Europe/Kyiv','ru'],
-      ['fr-FR','America/New_York','fr'],['de-DE','Europe/Berlin','en'],['en-US','America/New_York','en']];
+      ['fr-FR','America/New_York','fr'],['en-US','Europe/Berlin','de'],['en-US','Europe/Vienna','de'],['de-CH','Europe/Zurich','de'],['en-US','Europe/Zurich','en'],['en-US','America/New_York','en']];
     for(const [loc,tz,want] of cases){
       const ctx=await br.newContext({viewport:{width:390,height:780},locale:loc,timezoneId:tz}); const pg=await ctx.newPage();
       await pg.goto(base); await pg.waitForSelector('.lng[aria-pressed=true]');
       const got=await pg.getAttribute('.lng[aria-pressed=true]','data-arg');
       ok(got===want,'язык по стране: '+tz+' + браузер '+loc+' → '+want+' (вышло '+got+')');
-      if(tz==='Europe/Berlin'){ ok((await pg.textContent('.ld-geo')).includes('Germany'),'плашка: Германия — английский, предлагает другие'); await pg.click('[data-act=geoX]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]'); ok(await pg.locator('.ld-geo').count()===0,'плашку закрыли — не возвращается'); }
+      if(tz==='Europe/Berlin'){ ok((await pg.textContent('.ld-geo')).includes('Deutschland — Barik ist auf Deutsch'),'плашка: Германия — немецкий, предлагает другие'); await pg.click('[data-act=geoX]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]'); ok(await pg.locator('.ld-geo').count()===0,'плашку закрыли — не возвращается'); }
       if(tz==='Europe/Paris'){
         ok(await pg.locator('.ld-geo').count()===1&&(await pg.textContent('.ld-geo')).includes('France'),'плашка страны: «France — Barik s’ouvre en français»');
-        ok(await pg.locator('.ld-geo [data-act=landLang]').count()===3,'плашка страны: три других языка');
+        ok(await pg.locator('.ld-geo [data-act=landLang]').count()===4,'плашка страны: четыре других языка');
         ok(await pg.locator('.wy li').count()===3&&await pg.locator('.ld-step').count()===3&&await pg.locator('.ld-stages li').count()===6,'обложка: 3 причины, 3 шага, 6 ступеней пути');
         await pg.click('.lng[data-arg=es]');
         ok(await pg.locator('.ld-geo').count()===0,'выбрал язык сам — плашка страны больше не нужна'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
@@ -423,8 +436,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const man=await pg.evaluate(()=>window.__bararan.MAN);
-    for(const l of ['ru','en','fr','es']){
-      const urls=await pg.evaluate(l=>{const B=window.__bararan; B.setLang(l); const u=[...new Set(B.WORDS.map(w=>B.trUrl(L_tx(w))))]; return u; function L_tx(w){return l==='es'?w.s:(l==='fr'?w.f:(l==='en'?w.e:w.r));}},l);
+    for(const l of ['ru','en','fr','es','de']){
+      const urls=await pg.evaluate(l=>{const B=window.__bararan; B.setLang(l); const u=[...new Set(B.WORDS.map(w=>B.trUrl(L_tx(w))))]; return u; function L_tx(w){return w[{ru:'r',en:'e',fr:'f',es:'s',de:'de'}[l]];}},l);
       const miss=urls.filter(u=>!fs.existsSync(path.join(ROOT,u)));
       ok(man.tr&&man.tr[l]&&man.tr[l].count===man.tr[l].total&&miss.length===0,'перевод озвучен ('+l+'): '+urls.length+' записей, нет: '+miss.length);
     }

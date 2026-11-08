@@ -16,8 +16,8 @@ const srv=http.createServer((q,r)=>{
   await pg.goto('http://127.0.0.1:'+srv.address().port+'/');
   await pg.waitForFunction(()=>window.__bararan&&window.__bararan.WORDS.length>0);
   const d=await pg.evaluate(()=>{const B=window.__bararan;
-    return {topics:B.TOPICS.map(t=>({lv:t.lv,ru:t.ru,en:t.en,fr:t.fr||t.en,es:t.es||t.en,hy:t.hy,ic:t.ic||''})),
-            words:B.WORDS.map(w=>({a:w.a,r:w.r,e:w.e,f:w.f,s:w.s,p:w.p||'',t:w.t,tr:w.tr,lt:w.lt,ft:w.ft,st:w.st}))};});
+    return {topics:B.TOPICS.map(t=>({lv:t.lv,ru:t.ru,en:t.en,fr:t.fr||t.en,es:t.es||t.en,de:t.de||t.en,hy:t.hy,ic:t.ic||''})),
+            words:B.WORDS.map(w=>({a:w.a,r:w.r,e:w.e,f:w.f,s:w.s,de:w.de,p:w.p||'',t:w.t,tr:w.tr,lt:w.lt,ft:w.ft,st:w.st,dt:w.dt}))};});
   fs.mkdirSync(path.dirname(OUT),{recursive:true}); fs.writeFileSync(OUT,JSON.stringify(d));
   console.log('слов',d.words.length,'тем',d.topics.length,'→',OUT);
   await br.close(); srv.close();

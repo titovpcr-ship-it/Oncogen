@@ -6,6 +6,7 @@
   data/fr/*.tsv         — французский к каждому слову, topics.tsv — «русское название<TAB>французское»;
   data/es/*.tsv         — испанский к каждому слову (все 20 тыс., и старые, и новые темы), topics.tsv —
                           «русское название<TAB>испанское» (O-134);
+  data/de/*.tsv         — немецкий (08.11.2026, перевод tools/translate_de.py), topics.tsv — «русское<TAB>немецкое»;
   data/new/*.tsv        — новые темы (заголовок «# lv=…; ru=…; en=…; fr=…; hy=…; ic=…»,
                           строки «армянский<TAB>русский<TAB>английский<TAB>эмодзи[<TAB>французский]»).
 
@@ -52,6 +53,17 @@ def load_fr():
             a, _, b = line.partition("\t")
             (titles if os.path.basename(f) == "topics.tsv" else fr)[a.strip()] = b.strip()
     return fr, titles
+
+
+def load_de():
+    de, titles = {}, {}
+    for f in sorted(glob.glob(p("data", "de", "*.tsv"))):
+        for l in open(f, encoding="utf-8"):
+            if not l.strip() or "\t" not in l:
+                continue
+            a, b = l.rstrip("\n").split("\t", 1)
+            (titles if os.path.basename(f) == "topics.tsv" else de)[a.strip()] = b.strip()
+    return de, titles
 
 
 def load_es():
@@ -146,6 +158,15 @@ def build():
             if w[0] not in es:
                 problems.append("нет испанского: " + w[0])
             w.append(es.get(w[0], ""))
+    de, de_titles = load_de()          # немецкий (08.11.2026): седьмое поле строки слова, t.de у темы
+    for t in topics:
+        t["de"] = de_titles.get(t["ru"], "")
+        if not t["de"]:
+            problems.append("нет немецкого названия темы: " + t["ru"])
+        for w in t["w"]:
+            if w[0] not in de:
+                problems.append("нет немецкого: " + w[0])
+            w.append(de.get(w[0], ""))
     return topics, problems
 
 

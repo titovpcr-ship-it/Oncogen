@@ -55,7 +55,7 @@ if (course) {
   vm.runInContext(fs.readFileSync(path.join(APP, 'www', 'js', 'data.js'), 'utf8'), ctx);
   const dict = new Set();
   for (const t of ctx.BARARAN_DATA.topics) for (const r of t.w) dict.add(r[0]);
-  const errs = [], LG = ['ru', 'en', 'fr', 'es'];
+  const errs = [], LG = ['ru', 'en', 'fr', 'es', 'de'];
   const has4 = (o, where) => { if (!o || LG.some(l => !o[l])) errs.push(where + ': нет перевода на все 4 языка'); };
   for (const s of course.stages) { has4(s, 'ступень ' + s.id); has4(s.can, 'ступень ' + s.id + ' can'); }
   const ids = new Set();

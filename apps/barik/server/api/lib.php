@@ -192,6 +192,7 @@ const MAIL_TEXT = [
     'en' => ['Barik: your sign-in code %s', "Your Barik sign-in code: %s\n\nIt is valid for 15 minutes. If you did not ask for it, just delete this email.\n\n— Barik, Armenian word by word\n%s"],
     'fr' => ['Barik : votre code de connexion %s', "Votre code de connexion Barik : %s\n\nIl est valable 15 minutes. Si vous ne l'avez pas demandé, supprimez simplement ce message.\n\n— Barik, l'arménien mot à mot\n%s"],
     'es' => ['Barik: tu código de acceso %s', "Tu código de acceso a Barik: %s\n\nEs válido durante 15 minutos. Si no lo pediste, simplemente borra este correo.\n\n— Barik, el armenio palabrita a palabrita\n%s"],
+    'de' => ['Barik: dein Anmeldecode %s', "Dein Anmeldecode für Barik: %s\n\nEr gilt 15 Minuten. Wenn du ihn nicht angefordert hast, lösche diese E-Mail einfach.\n\n— Barik, Armenisch Wort für Wort\n%s"],
 ];
 
 function send_code(string $email, string $code, string $lang): bool {
