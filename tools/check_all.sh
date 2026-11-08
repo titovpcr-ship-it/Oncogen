@@ -43,6 +43,7 @@ if [ $FULL -eq 1 ]; then
 elif [ ! -f "$B/dist/site/api/index.php" ]; then
   run barik-build_site "$B" python3.13 tools/build_site.py --no-seo || BUILT=0
 fi
+run barik-test_grammar "$B" node tests/test_grammar.js
 run barik-test_app "$B" node tests/test_app.js
 if [ $BUILT -eq 1 ]; then
   run barik-test_account "$B" node tests/test_account.js
