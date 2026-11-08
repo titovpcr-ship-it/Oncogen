@@ -7,8 +7,11 @@ const http=require('http'), fs=require('fs'), path=require('path');
 const ROOT=path.join(__dirname,'..','dist','site');
 const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json',
   '.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.webmanifest':'application/manifest+json','.mp3':'audio/mpeg'};
+const OVR={};   // подмена ответа сервера по пути — «вышла новая версия» (тест обновления, O-157)
 const srv=http.createServer((q,r)=>{
-  let f=path.join(ROOT,decodeURIComponent(q.url.split('?')[0]));
+  const pn=decodeURIComponent(q.url.split('?')[0]);
+  if(OVR[pn]!==undefined){ r.writeHead(200,{'Content-Type':TYPES[path.extname(pn)||'.html']||'text/html'}); r.end(OVR[pn]); return; }
+  let f=path.join(ROOT,pn);
   if(f.endsWith('/')) f+='index.html';
   if(!f.startsWith(ROOT)||!fs.existsSync(f)){r.writeHead(404);r.end();return;}
   r.writeHead(200,{'Content-Type':TYPES[path.extname(f)]||'application/octet-stream'}); fs.createReadStream(f).pipe(r);
@@ -70,6 +73,30 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   }
   ok(fs.existsSync(path.join(ROOT,'api','index.php'))&&fs.existsSync(path.join(ROOT,'api','.htaccess'))&&!fs.existsSync(path.join(ROOT,'api','config.php')),'api/: index.php и .htaccess на месте, config.php с ключами — нет');
   ok(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').includes("path.includes('/api/')"),'sw.js: запросы кабинета мимо кэша');
+  // обновление (O-157): вернувшийся посетитель видит новую версию с первого захода, а не через неделю.
+  // Главная всегда из сети, скрипты и стили — с версией в адресе; установка офлайн-режима — мимо HTTP-кэша;
+  // список озвучки — из сети. Раньше app.js/app.css хранились неделю и новая версия собиралась из старых файлов.
+  {
+    const swt=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8'), ixt=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
+    ok(swt.includes("cache: 'reload'"),'sw.js: установка мимо HTTP-кэша браузера');
+    ok((ixt.match(/(?:src|href)="(?:js|css)\/[^"]+"/g)||[]).every(x=>/\?v=[0-9a-f]{8}"$/.test(x))&&/app\.js\?v=/.test(ixt),'главная: скрипты и стили с версией в адресе');
+    ok(/js\|css[^"]*">\s*\n\s*Header set Cache-Control "no-cache"/.test(fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8')),'.htaccess: js и css — с проверкой свежести, не «неделю»');
+    const c2=await br.newContext({viewport:{width:390,height:844},locale:'ru-RU'}); const p2=await c2.newPage();
+    await p2.goto(base); await p2.evaluate(()=>navigator.serviceWorker.ready); await p2.reload(); await p2.waitForTimeout(300);
+    const m0=await p2.evaluate(()=>fetch('audio/manifest.json').then(r=>r.json()));
+    OVR['/js/app.js']=fs.readFileSync(path.join(ROOT,'js','app.js'),'utf8')+'\nwindow.__upd=1;';
+    OVR['/index.html']=OVR['/']=ixt.replace(/js\/app\.js\?v=\w+/,'js/app.js?v=feedf00d');
+    OVR['/sw.js']=swt.replace(/const VERSION = '\w+'/,"const VERSION = 'upd'").replace(/\.\/js\/app\.js\?v=\w+/,'./js/app.js?v=feedf00d');
+    OVR['/audio/manifest.json']=JSON.stringify(Object.assign({},m0,{probe:1}));
+    await p2.goto(base); await p2.waitForTimeout(500);
+    ok(await p2.evaluate(()=>window.__upd===1),'обновление: новая версия видна с первого захода после выкладки');
+    ok((await p2.evaluate(()=>fetch('audio/manifest.json').then(r=>r.json()))).probe===1,'обновление: свежий список озвучки (не из вечного кэша)');
+    await p2.evaluate(()=>navigator.serviceWorker.getRegistration().then(r=>r&&r.update()));   // как проверка при заходе
+    let ks=[]; for(let i=0;i<30;i++){ ks=await p2.evaluate(()=>caches.keys()); if(ks.includes('barik-upd')&&ks.filter(k=>/^barik-(?!audio|pics)/.test(k)).length===1) break; await p2.waitForTimeout(500); }
+    ok(ks.includes('barik-upd')&&ks.filter(k=>/^barik-(?!audio|pics)/.test(k)).length===1,'обновление: новый офлайн-кэш встал, старый удалён ('+ks.join(', ')+')');
+    for(const k of Object.keys(OVR)) delete OVR[k];
+    await c2.close();
+  }
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));
   await br.close(); srv.close();

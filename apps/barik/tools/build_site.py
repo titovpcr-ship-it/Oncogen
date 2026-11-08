@@ -79,7 +79,9 @@ const VERSION = '%(version)s';
 const SHELL = %(shell)s;
 const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v1', PICS = 'barik-pics-v1';
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  // cache: 'reload' — мимо HTTP-кэша браузера: иначе новая версия собиралась из старых файлов (O-157)
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL.map(u => new Request(u, {cache: 'reload'}))))
+    .then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('barik-')
@@ -90,6 +92,11 @@ self.addEventListener('fetch', e => {
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
   const path = new URL(r.url).pathname;
   if (path.includes('/api/')) return;         // личный кабинет — всегда сеть, не кэш
+  if (path.endsWith('/audio/manifest.json')) { // список записей меняется с озвучкой: сеть, без сети — кэш (O-157)
+    e.respondWith(caches.open(AUDIO).then(c => fetch(r, {cache: 'no-cache'})
+      .then(res => { if (res.status === 200) c.put(r, res.clone()); return res; }).catch(() => c.match(r))));
+    return;
+  }
   const media = path.includes('/audio/') ? AUDIO : (path.includes('/pics/') ? PICS : '');
   if (media) {                                // озвучка и картинки — по мере показа
     if (r.headers.has('range')) return;       // кусок файла (Range) — прямо в сеть: в кэш кладём только целое
@@ -195,12 +202,13 @@ ErrorDocument 404 /404.html
   AddOutputFilterByType DEFLATE text/html text/css text/javascript application/json application/manifest+json image/svg+xml application/xml text/xml text/plain
 </IfModule>
 <IfModule mod_headers.c>
-  <FilesMatch "\.(js|css|woff2|png|svg|json|jpg)$">
-    Header set Cache-Control "public, max-age=604800"
-  </FilesMatch>
-  # после общего правила: в Apache побеждает последнее совпавшее — sw.js, главная и манифест всегда свежие
-  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest|404\.html)$">
+  # всё, что меняется между сборками, — с проверкой свежести (ответ 304 без тела); раньше js/css хранились неделю,
+  # и офлайн-режим собирал новую версию из старых файлов (O-157). Шрифт меняется только с именем файла.
+  <FilesMatch "\.(html|js|css|png|svg|json|jpg|webmanifest|xml|txt)$">
     Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.woff2$">
+    Header set Cache-Control "public, max-age=2592000"
   </FilesMatch>
   # имя записи и картинки — по содержимому: файл не меняется никогда
   <FilesMatch "\.(webp|mp3)$">
@@ -272,6 +280,17 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     open(os.path.join(out, "404.html"), "w", encoding="utf-8").write(PAGE404)
     if seo and url:
         seo_pages(out, url)
+    # Версия в адресе (?v=отпечаток) у скриптов и стилей главной: новая главная (она всегда из сети) сразу тянет
+    # новые файлы мимо любого кэша, даже пока страницу обслуживает старый офлайн-режим (O-157).
+    ix = os.path.join(out, "index.html")
+    html = open(ix, encoding="utf-8").read()
+    ver = {}
+    def _v(m):
+        rel = m.group(2)
+        ver[rel] = hashlib.sha1(open(os.path.join(out, rel), "rb").read()).hexdigest()[:8]
+        return m.group(1) + rel + "?v=" + ver[rel] + '"'
+    html = re.sub(r'((?:src|href)=")((?:js|css)/[\w./-]+\.(?:js|css))"', _v, html)
+    open(ix, "w", encoding="utf-8").write(html)
     # Приложение не знает о страницах поиска — в его кэш (без интернета) они не идут.
     shell, h = ["./"], hashlib.sha1()
     for root, _, files in os.walk(out):
@@ -280,7 +299,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
             if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es") or rel.startswith("sitemap")):
                 continue
-            shell.append("./" + rel)
+            shell.append("./" + rel + ("?v=" + ver[rel] if rel in ver else ""))
             h.update(rel.encode())
             h.update(open(os.path.join(root, f), "rb").read())
     version = h.hexdigest()[:10]
