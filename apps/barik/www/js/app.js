@@ -702,6 +702,16 @@ let landT=[], landK=0, landIO=null;
 function landStop(){ landT.forEach(clearTimeout); landT=[]; if(landIO){ landIO.disconnect(); landIO=null; } }
 function landLater(f,ms){ landT.push(setTimeout(()=>{ if(view==='onboard') f(); },ms)); }
 function setMeta(){ const D=LND(); document.title=D.title; const m=document.querySelector('meta[name=description]'); if(m) m.setAttribute('content',D.desc); }
+/* Страна посетителя по часовому поясу (tzcc.js, O-156) — для плашки «Франция — открыли Barik на французском». */
+function tzCC(tz){ const T_=window.BARIK_TZ||{}; if(!tz) return ''; const i=tz.lastIndexOf('/')+1; return ((T_[tz.slice(0,i)]||{})[tz.slice(i)])||''; }
+function ccName(cc){ try{ return new Intl.DisplayNames([L],{type:'region'}).of(cc)||cc; }catch(e){ return cc; } }
+function ccFlag(cc){ return /^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc].map(c=>0x1F1E6+c.charCodeAt(0)-65)):''; }
+/* Плашка показывается первому гостю, пока язык выбран за него (не кнопкой) и страна узнана. */
+function geoHTML(D){
+  const cc=tzCC(TZ); if(UI.lang||UI.ll||UI.geoX||!cc) return '';
+  const others=['ru','en','fr','es'].filter(l=>l!==L).map(l=>'<button class="lnk" data-act="landLang" data-arg="'+l+'" lang="'+l+'">'+({ru:'Русский',en:'English',fr:'Français',es:'Español'}[l])+'</button>').join('');
+  return '<div class="ld-geo" role="status"><div class="ld-wrap"><span class="geo-f" aria-hidden="true">'+ccFlag(cc)+'</span><span class="geo-t">'+esc(D.geo(ccName(cc),L))+'</span><span class="geo-o">'+esc(D.geoOther)+' '+others+'</span><button class="geo-x" data-act="geoX" aria-label="'+esc(D.geoClose)+'">✕</button></div></div>';
+}
 function onboardHTML(){
   const D=LND(), a1=WORDS.filter(w=>TOPICS[w.t].lv==='A1').length, chk=T('lvCheck');
   const ok='<svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.6 3.4 7.4-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -710,47 +720,34 @@ function onboardHTML(){
   const byA=a=>BY[a]&&PICS[a]?BY[a]:null;
   const tile=w=>'<li class="ld-tile"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(tx(w))+'</span></li>';
   const tiles=FEAT.map(byA).filter(Boolean).map(tile).join('');
-  const stats=D.stats(WORDS.length,TOPICS.length,ABC.length).map(x=>'<li><b>'+esc(x[0])+'</b><span>'+esc(x[1])+'</span></li>').join('');
-  const days=[1,2,4,7,15,30];
-  const ladder='<ol class="ladder">'+days.map((d,i)=>'<li style="--i:'+i+'"><b>'+d+'</b><span>'+esc(D.ladder[i])+'</span></li>').join('')+'</ol>';
-  const mini=D.mini.map(m=>'<li><span class="mi-ic">'+emo(m[0])+'</span><h3>'+esc(m[1])+'</h3><p>'+esc(m[2])+'</p></li>').join('');
-  const lv=LEVELS.map((v,i)=>{
-    const ts=TOPICS.filter(t=>t.lv===v); if(!ts.length) return '';
-    const n=ts.reduce((k,t)=>k+t.list.length,0);
-    return '<li class="lv-c" style="--k:'+i+'"><span class="lv-b">'+v+'</span><span class="lv-n">'+esc(D.lvName[v]||'')+'</span><span class="lv-w">'+esc(D.lvWords(n))+'</span>'+
-      '<span class="lv-t">'+ts.slice(0,3).map(t=>'<span>'+emo(t.ic)+esc(tn(t))+'</span>').join('')+'</span></li>';
-  }).join('');
+  const why=D.why.map(m=>'<li><span class="wy-ic">'+emo(m[0])+'</span><h3>'+esc(m[1])+'</h3><p>'+esc(m[2])+'</p></li>').join('');
+  const stages=(CRS.stages||[]).map(st=>'<li><span class="st-hy" lang="hy">'+esc(st.hy||'')+'</span><span class="st-b"><b>'+esc(rdx(st))+'</b><span>'+esc(rdx(st.can))+'</span></span><span class="st-lv">'+esc(st.lv||'')+'</span></li>').join('');
   const pr=D.prList(a1,PW.length,premium()).map(x=>'<li>'+ok+'<span>'+esc(x)+'</span></li>').join('');
   const faq=D.faq(chk).map((q,i)=>'<details'+(i===0?' open':'')+'><summary>'+esc(q[0])+'<span class="pm" aria-hidden="true"></span></summary><p>'+esc(q[1])+'</p></details>').join('');
   const micro=D.micro.map(x=>'<li>'+ok+esc(x)+'</li>').join('');
   const keys=CUR_ABC().map((u,i)=>'<button data-act="landLetter" data-arg="'+i+'" aria-pressed="false" lang="hy">'+esc(u)+'</button>').join('');
-  return '<div class="onb ld">'+
+  const step=(n,h,t,vis,id)=>'<li class="ld-step"'+(id?' id="'+id+'"':'')+'><div class="sx"><span class="sn">'+n+'</span><h3>'+esc(h)+'</h3><p>'+esc(t)+'</p></div><div class="sv">'+vis+'</div></li>';
+  return '<div class="onb ld">'+geoHTML(D)+
   '<header class="ld-nav"><div class="ld-wrap"><a class="ld-brand" href="./" aria-label="Barik">'+MARK+'<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a>'+
     '<div class="ld-navr"><div class="lngs" role="group" aria-label="'+esc(D.nav)+'">'+langs+'</div><button class="btn ghost ld-open" data-act="landGo">'+esc(D.open)+'</button></div></div></header>'+
   '<section class="ld-hero"><div class="ld-wrap ld-hero-in">'+
-    '<div class="ld-copy"><p class="ld-eyebrow">'+esc(D.eyebrow)+'</p><h1>'+esc(D.h1)+'</h1>'+
-      '<p class="ld-hy"><span lang="hy">'+esc(D.hy)+'</span> <i>'+esc(D.hyTr)+'</i></p>'+
+    '<div class="ld-copy"><p class="ld-eyebrow">'+esc(D.eyebrow)+'</p><h1>'+esc(D.h1)+'<span class="h1b">'+esc(D.h1b)+'</span></h1>'+
       '<p class="ld-sub">'+esc(D.sub(WORDS.length))+'</p>'+
-      '<div class="ld-ctas">'+cta('xl')+'<button class="btn secondary xl" data-act="landAbc">'+esc(D.cta2)+'</button></div>'+
+      '<div class="ld-ctas">'+cta('xl')+'<a class="ld-how" href="#how" data-act="landHow">'+esc(D.cta2)+' <span aria-hidden="true">↓</span></a></div>'+
       '<ul class="ld-micro">'+micro+'</ul></div>'+
     '<div class="ld-art" aria-hidden="true"><div class="ld-arch"><span class="rose"></span></div>'+
       '<div class="ph"><div class="ph-scr"><div class="ph-top"><span class="ph-x">✕</span><span class="ph-bar"><i></i></span><span class="ph-n">4/10</span></div>'+
         '<p class="ph-k">'+esc(T('qMeaning'))+'</p><div class="ph-card" id="phCard"></div><div class="ph-opts" id="phOpts"></div></div></div>'+
-      '<div class="fl-cb"><span class="fl-k">'+esc(D.write)+'</span><div id="heroCb"></div></div>'+
-      '<div class="fl-chip">'+emo('🔥','ie')+'<span>'+esc(D.streak)+'</span></div>'+
-      '<span class="fl-3d f1">'+emo('🍇')+'</span><span class="fl-3d f2">'+emo('⭐')+'</span><span class="fl-3d f3">'+emo('🍑')+'</span>'+
     '</div></div></section>'+
-  '<section class="ld-stats"><div class="ld-wrap"><ul>'+stats+'</ul></div></section>'+
-  '<section class="ld-sec"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.fTitle)+'</h2><span class="orn ld-orn"></span>'+
-    '<div class="ld-feat"><div class="fx"><h3>'+esc(D.f1)+'</h3><p>'+esc(D.f1t(PW.length))+'</p></div><ul class="ld-tiles">'+tiles+'</ul></div>'+
-    '<div class="ld-feat rev"><div class="fx"><h3>'+esc(D.f2)+'</h3><p>'+esc(D.f2t)+'</p></div><div class="ld-cb" id="featCb"><div class="cbw"></div><div class="ld-abc" role="group" aria-label="'+esc(D.abcPick)+'">'+keys+'</div>'+
-      '<div class="ld-try"><button class="btn primary" data-act="landPen">'+ICON.pen+esc(T('penBtn'))+'</button></div></div></div>'+
-    '<div class="ld-feat"><div class="fx"><h3>'+esc(D.f3)+'</h3><p>'+esc(D.f3t)+'</p></div>'+ladder+'</div>'+
-    '<ul class="ld-mini">'+mini+'</ul></div></section>'+
-  '<section class="ld-sec ld-lv"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.lvTitle)+'</h2><span class="orn ld-orn"></span><p class="ld-lead">'+esc(D.lvSub(TOPICS.length))+'</p><ul class="lv-grid">'+lv+'</ul></div></section>'+
-  '<section class="ld-sec"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.prTitle)+'</h2><span class="orn ld-orn"></span>'+
+  '<section class="ld-sec ld-why"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.whyTitle)+'</h2><p class="ld-lead">'+esc(D.whyLead)+'</p><ul class="wy">'+why+'</ul></div></section>'+
+  '<section class="ld-sec" id="how"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.howTitle)+'</h2><p class="ld-lead">'+esc(D.howLead)+'</p><ol class="ld-steps">'+
+    step(1,D.s1,D.s1t,'<div class="ld-cb" id="featCb"><div class="cbw"></div><div class="ld-abc" role="group" aria-label="'+esc(D.abcPick)+'">'+keys+'</div><div class="ld-try"><button class="btn primary" data-act="landPen">'+ICON.pen+esc(T('penBtn'))+'</button></div></div>')+
+    step(2,D.s2,D.s2t(WORDS.length),'<ul class="ld-tiles">'+tiles+'</ul>')+
+    step(3,D.s3,D.s3t(CRS.units.length),'<ol class="ld-stages">'+stages+'</ol>')+
+  '</ol></div></section>'+
+  '<section class="ld-sec"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.prTitle)+'</h2>'+
     '<div class="ld-price"><span class="rose"></span><p class="pr-big">'+esc(D.prFree)+'</p><p class="pr-note">'+esc(D.prNote)+'</p><ul>'+pr+'</ul>'+cta('xl')+'</div></div></section>'+
-  '<section class="ld-sec"><div class="ld-wrap ld-narrow"><h2 class="ld-h2">'+esc(D.qTitle)+'</h2><span class="orn ld-orn"></span><div class="ld-faq">'+faq+'</div></div></section>'+
+  '<section class="ld-sec"><div class="ld-wrap ld-narrow"><h2 class="ld-h2">'+esc(D.qTitle)+'</h2><div class="ld-faq">'+faq+'</div></div></section>'+
   '<section class="ld-end"><div class="ld-wrap"><span class="rose"></span><p class="end-hy"><span lang="hy">'+esc(D.endHy)+'</span> <i>'+esc(D.endTr)+'</i></p><h2>'+esc(D.endTitle)+'</h2>'+cta('xl')+'<ul class="ld-micro">'+micro+'</ul></div></section>'+
   '<footer class="ld-foot"><div class="ld-wrap"><a class="ld-brand" href="./" aria-label="Barik">'+MARK+'<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a><p>'+esc(D.foot)+'</p>'+
     '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button><button class="lnk" data-act="landDoc" data-arg="credits">'+esc(T('credits'))+'</button></p><p class="cr">© 2026 Barik</p></div></footer>'+
@@ -791,6 +788,8 @@ function landWrite(id,start,seq){
     writeCursive(host.querySelector('.cb'),()=>landLater(()=>{ if(box.__g===g) one(); },1600));
   };
   box.__one=one;
+  // до прокрутки — первая буква уже видна (готовой), перо начнёт писать, когда окно покажется
+  { const x0=ABC.find(a=>a.up===seq[start%seq.length]); if(x0&&!host.querySelector('.cb')) host.innerHTML=cursiveSVG(x0,LND().write); }
   if('IntersectionObserver' in window&&id!=='heroCb'){
     const io=box.__io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); one(); } },{threshold:.35});
     io.observe(box);
@@ -801,12 +800,12 @@ function landWrite(id,start,seq){
 function landReveal(){
   if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   landIO=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); landIO.unobserve(e.target); } }),{rootMargin:'0px 0px -6% 0px',threshold:.1});
-  document.querySelectorAll('.ld-stats ul,.ld-h2,.ld-lead,.ld-feat,.ld-mini li,.lv-c,.ld-price,.ld-faq details,.ld-end h2').forEach(el=>{
+  document.querySelectorAll('.ld-h2,.ld-lead,.wy li,.ld-step,.ld-price,.ld-faq details,.ld-end h2').forEach(el=>{
     if(el.getBoundingClientRect().top<innerHeight) return;
     el.classList.add('rv'); el.style.setProperty('--d',([...el.parentElement.children].indexOf(el)%3)*80+'ms'); landIO.observe(el);
   });
 }
-function landStart(){ landStop(); setMeta(); landDemo(); landWrite('heroCb',0,LETTERS); landWrite('featCb',0,CUR_ABC()); landReveal(); }
+function landStart(){ landStop(); setMeta(); landDemo(); landWrite('featCb',0,CUR_ABC()); landReveal(); }
 function premCTA(){
   if(premium()) return '';
   return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">'+emo('✨')+'</span><span><b>'+esc(T('ctaTitle',WORDS.length))+'</b><span>'+esc(T('ctaSub'))+'</span></span></button>';
@@ -1985,6 +1984,8 @@ const H={
   brand:()=>ACT.tab('home'),
   tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='tquiz') tq=null; if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} if(view==='pquiz'&&pq){clearTimeout(pq.timer); pq=null;} go(a); },
   pickLang:a=>{setLang(a); go('home');},
+  geoX:()=>{ UI.geoX=1; saveUI(); const g=document.querySelector('.ld-geo'); if(g) g.remove(); },
+  landHow:(a,b,e)=>{ const t=document.getElementById('how'); if(t){ if(e) e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } },
   landLang:a=>{ if(a===L) return; L=a; UI.ll=a; saveUI(); document.documentElement.lang=a; renderTabs(); render(); },   // UI.ll — язык обложки, выбранный кнопкой (обложку не пропускает)
   landGo:()=>{setLang(L); go('home');},
   landPen:()=>{ const box=document.getElementById('featCb'), seq=CUR_ABC(), k=box&&box.__k?(box.__k-1+seq.length)%seq.length:0, i=Math.max(0,ABC.findIndex(x=>x.up===seq[k]));

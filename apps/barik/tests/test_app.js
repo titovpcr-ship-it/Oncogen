@@ -29,7 +29,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await shot('onboard'); await noHScroll('onboard');
     if(scheme==='light'){
       // обложка для гостя: живой урок в телефоне, пропись с алфавитом, переключение языка
-      ok(await pg.locator('.ld h1').count()===1&&(await pg.textContent('.ld h1')).includes('словечко'),'обложка: заголовок');
+      ok(await pg.locator('.ld h1').count()===1&&(await pg.textContent('.ld h1')).includes('Заговорите')&&await pg.locator('.ld h1 .h1b').count()===1,'обложка: заголовок «Заговорите по-армянски — по 10 минут в день»');
       await pg.waitForSelector('#phOpts .ph-opt.ok',{timeout:4000}).catch(()=>{});
       ok(await pg.locator('#phOpts .ph-opt.ok').count()===1,'телефон на обложке: верный ответ подсвечен');
       ok(await pg.locator('.ld-abc button').count()===39,'под прописью — все 39 букв');
@@ -37,10 +37,10 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       const lab=await pg.getAttribute('#featCb .cb','aria-label')||'';
       ok(lab.includes('Ղ')&&await pg.getAttribute('.ld-abc button >> nth=17','aria-pressed')==='true','нажатая буква пишется: '+lab);
       await pg.click('[data-act=landLang][data-arg=en]');
-      ok((await pg.textContent('.ld h1')).includes('little word')&&await pg.evaluate(()=>document.documentElement.lang)==='en','обложка по-английски');
+      ok((await pg.textContent('.ld h1')).includes('Start speaking')&&await pg.evaluate(()=>document.documentElement.lang)==='en','обложка по-английски');
       ok(await pg.locator('.ld-price li').count()===4&&(await pg.textContent('.ld-price')).includes('subscription'),'цена: A2–C2 — по подписке, когда не всё открыто');
       await pg.click('[data-act=landLang][data-arg=es]');
-      ok((await pg.textContent('.ld h1')).includes('palabrita')&&await pg.evaluate(()=>document.documentElement.lang)==='es','обложка по-испански');
+      ok((await pg.textContent('.ld h1')).includes('Habla armenio')&&await pg.evaluate(()=>document.documentElement.lang)==='es','обложка по-испански');
       ok((await pg.textContent('.ld-hero')).includes('Empezar gratis'),'обложка: «Empezar gratis»'); await shot('landing-es'); await noHScroll('landing-es');
       await pg.click('[data-act=landLang][data-arg=ru]');
     }
@@ -336,7 +336,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=doc][data-arg=credits]');
     const txt=await pg.textContent('.doc');
-    for(const k of ['Викисловар','CC BY-SA 4.0','с нашими изменениями','Fluent Emoji','MIT','Open Font License','Forum','Туманяна','Терьяна','Чаренца','общественное достояние','Azure','hello@barik.am']) ok(txt.includes(k),'источники и лицензии: «'+k+'»');
+    for(const k of ['Викисловар','CC BY-SA 4.0','с нашими изменениями','Fluent Emoji','MIT','Open Font License','Nunito','Туманяна','Терьяна','Чаренца','общественное достояние','Azure','hello@barik.am']) ok(txt.includes(k),'источники и лицензии: «'+k+'»');
     const hrefs=await pg.evaluate(()=>[...document.querySelectorAll('.doc a[href]')].map(a=>a.getAttribute('href')).filter(h=>!/^(https?:|mailto:)/.test(h)));
     ok(hrefs.length===4&&hrefs.every(h=>fs_exists(h)),'тексты лицензий — настоящие файлы: '+hrefs.join(', '));
     await pg.click('[data-act=docBack]'); await pg.click('[data-act=doc][data-arg=terms]');
@@ -399,7 +399,13 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       await pg.goto(base); await pg.waitForSelector('.lng[aria-pressed=true]');
       const got=await pg.getAttribute('.lng[aria-pressed=true]','data-arg');
       ok(got===want,'язык по стране: '+tz+' + браузер '+loc+' → '+want+' (вышло '+got+')');
-      if(tz==='Europe/Paris'){ await pg.click('.lng[data-arg=es]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
+      if(tz==='Europe/Berlin'){ ok((await pg.textContent('.ld-geo')).includes('Germany'),'плашка: Германия — английский, предлагает другие'); await pg.click('[data-act=geoX]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]'); ok(await pg.locator('.ld-geo').count()===0,'плашку закрыли — не возвращается'); }
+      if(tz==='Europe/Paris'){
+        ok(await pg.locator('.ld-geo').count()===1&&(await pg.textContent('.ld-geo')).includes('France'),'плашка страны: «France — Barik s’ouvre en français»');
+        ok(await pg.locator('.ld-geo [data-act=landLang]').count()===3,'плашка страны: три других языка');
+        ok(await pg.locator('.wy li').count()===3&&await pg.locator('.ld-step').count()===3&&await pg.locator('.ld-stages li').count()===6,'обложка: 3 причины, 3 шага, 6 ступеней пути');
+        await pg.click('.lng[data-arg=es]');
+        ok(await pg.locator('.ld-geo').count()===0,'выбрал язык сам — плашка страны больше не нужна'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
         ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='es','выбор кнопкой главнее страны'); }
       await ctx.close();
     }
