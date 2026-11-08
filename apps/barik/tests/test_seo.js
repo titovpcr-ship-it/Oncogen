@@ -40,7 +40,7 @@ const LANGS=['ru','en','fr','es'];
         const t=(s.match(/<title>([^<]*)<\/title>/)||[])[1]||'';
         if(sub==='w') dupTitle.set(t,(dupTitle.get(t)||0)+1);
         for(const m of s.matchAll(/(?:href|src)="([^"#?]*)/g)){
-          const h=m[1]; if(/^https?:/.test(h)) continue;
+          const h=m[1]; if(/^(https?|mailto):/.test(h)) continue;
           let q=path.join(path.dirname(p),h); if(h===''||h.endsWith('/')) q=path.join(q,'index.html');
           if(!fs.existsSync(q)) broken.push(rel+' → '+h);
         }
@@ -111,8 +111,17 @@ const LANGS=['ru','en','fr','es'];
   ok((await pg.textContent('.tr')).includes(W.st),'слово по-испански: произношение ['+W.st+']');
   await pg.click('.crumbs a >> nth=1'); ok(pg.url().endsWith('es/t/basics.html'),'испанская тема: '+pg.url());
   await pg.evaluate(()=>localStorage.clear());   // язык из ссылки — только если его ещё не выбирали (выше выбран французский)
-  await pg.click('a.cta'); await pg.waitForSelector('.brand');
-  ok(pg.url()===base+'?lang=es'&&await pg.evaluate(()=>document.documentElement.lang)==='es','кнопка ведёт в приложение, сразу на испанском');
+  // со страницы темы кнопка ведёт сразу в эту тему приложения (O-159), на языке страницы
+  const ct=await pg.getAttribute('a.cta','href'), cti=+((/[?&]t=(\d+)/.exec(ct)||[])[1]);
+  await pg.click('a.cta'); await pg.waitForSelector('[data-act=learnTopic],[data-act=paywall]');
+  ok(pg.url()===base+'?lang=es&t='+cti&&await pg.evaluate(()=>document.documentElement.lang)==='es','кнопка темы ведёт в приложение, на испанском: '+pg.url());
+  ok(await pg.evaluate(i=>window.__bararan.TOPICS[i].en,cti)==='Basics'&&await pg.locator('[data-act=learnTopic][data-arg="'+cti+'"]').count()===1,'кнопка темы открывает ту же тему (Basics)');
+  // у слов темы — озвучка, внизу — следующая тема
+  await pg.goto(base+'ru/t/basics.html');
+  const nsay=await pg.locator('ul.ws .say').count(), nli=await pg.locator('ul.ws li').count();
+  ok(nsay===nli&&nli>0,'тема: у каждого слова кнопка озвучки ('+nsay+' из '+nli+')');
+  ok(await pg.locator('.pn a').count()===1,'тема: ссылка «Следующая тема»');
+  ok((await pg.textContent('footer')).includes('hello@barik.am'),'подвал: почта для связи');
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(bad.length===0,'все запросы 200 '+bad.join(' '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));

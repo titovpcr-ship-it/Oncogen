@@ -32,12 +32,17 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       ok(await pg.locator('.ld h1').count()===1&&(await pg.textContent('.ld h1')).includes('Заговорите')&&await pg.locator('.ld h1 .h1b').count()===1,'обложка: заголовок «Заговорите по-армянски — по 10 минут в день»');
       await pg.waitForSelector('#phOpts .ph-opt.ok',{timeout:4000}).catch(()=>{});
       ok(await pg.locator('#phOpts .ph-opt.ok').count()===1,'телефон на обложке: верный ответ подсвечен');
+      // голоса — синтез речи Azure: на обложке не «живые» и не «записаны», рядом с примерами — пометка (O-159, правила Microsoft)
+      { const lt=await pg.textContent('.ld');
+        ok(!/живы[мйх]? голос|живой голос|записаны/i.test(lt)&&(await pg.textContent('.hear-note')).includes('синтезированные голоса Microsoft Azure'),'обложка: голоса не «живые», пометка о синтезе речи');
+        ok((await pg.textContent('.ld-foot')).includes('hello@barik.am')&&await pg.locator('.ld-foot [data-act=landDoc][data-arg=terms]').count()===1,'подвал: почта и условия'); }
       ok(await pg.locator('.ld-abc button').count()===39,'под прописью — все 39 букв');
       await pg.click('.ld-abc button >> nth=17');
       const lab=await pg.getAttribute('#featCb .cb','aria-label')||'';
       ok(lab.includes('Ղ')&&await pg.getAttribute('.ld-abc button >> nth=17','aria-pressed')==='true','нажатая буква пишется: '+lab);
       await pg.click('[data-act=landLang][data-arg=en]');
       ok((await pg.textContent('.ld h1')).includes('Start speaking')&&await pg.evaluate(()=>document.documentElement.lang)==='en','обложка по-английски');
+      ok(!/real voices?|recorded/i.test(await pg.textContent('.ld'))&&(await pg.textContent('.hear-note')).includes('synthetic'),'обложка EN: не «real voices», пометка о синтезе');
       ok(await pg.locator('.ld-price li').count()===4&&(await pg.textContent('.ld-price')).includes('subscription'),'цена: A2–C2 — по подписке, когда не всё открыто');
       await pg.click('[data-act=landLang][data-arg=es]');
       ok((await pg.textContent('.ld h1')).includes('Habla armenio')&&await pg.evaluate(()=>document.documentElement.lang)==='es','обложка по-испански');

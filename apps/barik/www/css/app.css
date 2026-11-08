@@ -964,3 +964,7 @@ details[open] .pm::after{transform:rotate(0)}
 .lvl::before,.p-st::before{height:1px;opacity:1;background:var(--line);-webkit-mask:none;mask:none}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ld-scene{filter:brightness(.8) saturate(1.05)} }
 :root[data-theme="dark"] .ld-scene{filter:brightness(.8) saturate(1.05)}
+/* O-159: голоса — синтез речи, сказано рядом с примерами; почта в подвале */
+.hear-note{margin:18px auto 0;max-width:36em;text-align:center;font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.72)}
+.ld-mail{margin:10px 0 0;text-align:center}
+.ld-mail a{color:var(--L-ink2);text-decoration:underline;text-underline-offset:3px}

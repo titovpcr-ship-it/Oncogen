@@ -41,6 +41,7 @@ TXT = {
         "h_tr": "Произношение", "listen": "Слушать", "h_tx": "Перевод", "lv": "Уровень", "topic": "Тема",
         "more": "Другие слова темы «{t}»", "all_topic": "Все {n} {w} темы",
         "cta": "Учить армянские слова в Barik — бесплатно",
+        "cta_t": "Учить эти слова в Barik", "next_t": "Следующая тема",
         "dict": "Армянский словарь", "home": "Barik",
         "title_t": "{t} по-армянски — {n} {w} с произношением | Barik",
         "desc_t": "{t} на армянском языке: {n} {w} с переводом и произношением, уровень {lv}. "
@@ -68,6 +69,7 @@ TXT = {
         "h_tr": "Pronunciation", "listen": "Listen", "h_tx": "Translation", "lv": "Level", "topic": "Topic",
         "more": "More words: {t}", "all_topic": "All {n} {w} of the topic",
         "cta": "Learn Armenian words with Barik — free",
+        "cta_t": "Learn these words in Barik", "next_t": "Next topic",
         "dict": "Armenian dictionary", "home": "Barik",
         "title_t": "{t} in Armenian — {n} {w} with pronunciation | Barik",
         "desc_t": "{t} in Armenian: {n} {w} with English translation and pronunciation, level {lv}. "
@@ -95,6 +97,7 @@ TXT = {
         "h_tr": "Prononciation", "listen": "Écouter", "h_tx": "Traduction", "lv": "Niveau", "topic": "Thème",
         "more": "Autres mots du thème « {t} »", "all_topic": "Les {n} {w} du thème",
         "cta": "Apprendre l’arménien avec Barik — gratuit",
+        "cta_t": "Apprendre ces mots dans Barik", "next_t": "Thème suivant",
         "dict": "Dictionnaire arménien", "home": "Barik",
         "title_t": "{t} en arménien — {n} {w} avec prononciation | Barik",
         "desc_t": "{t} en arménien : {n} {w} avec traduction française et prononciation, niveau {lv}. "
@@ -122,6 +125,7 @@ TXT = {
         "h_tr": "Pronunciación", "listen": "Escuchar", "h_tx": "Traducción", "lv": "Nivel", "topic": "Tema",
         "more": "Más palabras del tema «{t}»", "all_topic": "Las {n} {w} del tema",
         "cta": "Aprende armenio con Barik — gratis",
+        "cta_t": "Aprender estas palabras en Barik", "next_t": "Siguiente tema",
         "dict": "Diccionario armenio", "home": "Barik",
         "title_t": "{t} en armenio — {n} {w} con pronunciación | Barik",
         "desc_t": "{t} en armenio: {n} {w} con traducción al español y pronunciación, nivel {lv}. "
@@ -187,7 +191,8 @@ h1.pg{font:800 clamp(30px,6.5vw,40px)/1.12 F,system-ui,sans-serif;letter-spacing
 .cta{display:block;text-align:center;margin:20px 0;padding:15px 18px;border-radius:16px;background:var(--acc);color:var(--acc-ink);font-weight:700;text-decoration:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
 h2{font:600 13px/1.3 G,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--pom);margin:30px 0 10px}
 ul.ws{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-ul.ws li{border-bottom:1px solid var(--line)}
+ul.ws li{border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+ul.ws li>a{flex:1;min-width:0}ul.ws .say{width:38px;height:38px}ul.ws .say svg{width:19px;height:19px}
 ul.ws a{display:flex;gap:12px;align-items:center;padding:9px 4px;text-decoration:none;flex-wrap:wrap}
 ul.ws .li-pic{width:34px;height:34px;flex:none}ul.ws .li-pic.no{display:grid;place-items:center;font:700 22px/1 A,serif;color:var(--pom)}
 ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .x{margin-left:auto;text-align:right}
@@ -310,7 +315,7 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
             f'<body><header class="top"><div class="top-in"><a class="brand" href="{up}"><img class="mk" src="{up}mark.svg" alt="" width="32" height="35">'
             f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
             f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
-            f'<footer>{TXT[L]["foot"]}</footer></body></html>')
+            f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a></footer></body></html>')
 
 
 def build(site, base, words_path):
@@ -362,6 +367,7 @@ def build(site, base, words_path):
         open(p, "w", encoding="utf-8").write(content)
         files += 1
 
+    order = [ti for lv in LV for ti, t in enumerate(topics) if t["lv"] == lv and by_topic.get(ti)]
     for L in LANGS:
         T = TXT[L]
         tx, trk, tnk = TX[L], TR[L], TN[L]
@@ -392,7 +398,7 @@ def build(site, base, words_path):
                         f'<p class="tr"><span title="{T["h_tr"]}">[{esc(w[trk])}]</span>{say(w, "../../", T["listen"])}</p>'
                         f'<p class="tx">{esc(x)}</p>'
                         f'<p class="meta">{T["lv"]} {t["lv"]} · {T["topic"]}: <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p></div></div>'
-                        f'<a class="cta" href="../../?lang={L}">{T["cta"]}</a>'
+                        f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>'
                         + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(t=tname))}</h2><ul class="ws">{li}</ul>'
                            f'<p><a href="../t/{tslug[ti]}.html">{T["all_topic"].format(n=len(lst), w=nw(L, len(lst)))}</a></p>' if near else "")
                         + pn)
@@ -416,12 +422,17 @@ def build(site, base, words_path):
             rel = f"{L}/t/{tslug[ti]}.html"
             alts = {l: f"{l}/t/{tslug[ti]}.html" for l in LANGS}
             li = "".join(f'<li><a href="../w/{wslug[v["a"]]}.html">{mini(v, "../../")}<span class="hy" lang="hy">{esc(v["a"])}</span>'
-                         f'<span class="t">{esc(v[trk])}</span><span class="x">{esc(v[tx])}</span></a></li>' for v in lst)
+                         f'<span class="t">{esc(v[trk])}</span><span class="x">{esc(v[tx])}</span></a>'
+                         f'{say(v, "../../", T["listen"] + " — " + v["a"])}</li>' for v in lst)
+            # следующая тема — по порядку оглавления (уровень, потом номер), с переходом на следующий уровень
+            nt = next((j for j in order[order.index(ti) + 1:]), None) if ti in order else None
+            ntl = (f'<p class="pn"><span></span><a href="{tslug[nt]}.html">{T["next_t"]}: {esc(topics[nt][tnk] or topics[nt]["en"])} →</a></p>'
+                   if nt is not None else "")
             body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › {t["lv"]}</p>'
                     f'<div class="thead"><span class="tic">{icon(t["ic"], "../../", 54)}</span><div>'
                     f'<p class="eyebrow" lang="hy">{esc(t["hy"])}</p><h1 class="pg">{esc(T["h_t"].format(t=tname))}</h1></div></div>'
                     f'<p>{T["intro_t"].format(n=len(lst), w=nw(L, len(lst)), lv=t["lv"])}</p>'
-                    f'<a class="cta" href="../../?lang={L}">{T["cta"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>')
+                    f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
             write(rel, page(L, base, rel, T["title_t"].format(t=tname, n=len(lst), w=nw(L, len(lst))),
                             T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]), alts, body))
             urls[L].append(rel)
