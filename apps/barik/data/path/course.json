@@ -9,11 +9,13 @@
    "en": "Alphabet",
    "fr": "Alphabet",
    "es": "Alfabeto",
+   "de": "Alphabet",
    "can": {
     "ru": "читаю и пишу все 39 букв",
     "en": "I can read and write all 39 letters",
     "fr": "je lis et j'écris les 39 lettres",
-    "es": "leo y escribo las 39 letras"
+    "es": "leo y escribo las 39 letras",
+    "de": "Ich kann alle 39 Buchstaben lesen und schreiben."
    }
   },
   {
@@ -24,11 +26,13 @@
    "en": "Seed",
    "fr": "Graine",
    "es": "Semilla",
+   "de": "Samen",
    "can": {
     "ru": "знакомлюсь, называю вещи, считаю, спрашиваю «где» и «сколько»",
     "en": "I can introduce myself, name things, count, ask where and how much",
     "fr": "je me présente, je nomme les choses, je compte, je demande où et combien",
-    "es": "me presento, nombro cosas, cuento, pregunto dónde y cuánto"
+    "es": "me presento, nombro cosas, cuento, pregunto dónde y cuánto",
+    "de": "Ich kann mich vorstellen, Dinge benennen, zählen, fragen wo und wie viel."
    }
   },
   {
@@ -39,11 +43,13 @@
    "en": "Sprout",
    "fr": "Pousse",
    "es": "Brote",
+   "de": "Spross",
    "can": {
     "ru": "рассказываю о себе и своём дне, покупаю, договариваюсь о времени",
     "en": "I can talk about myself and my day, shop, agree on a time",
     "fr": "je parle de moi et de ma journée, j'achète, je fixe un rendez-vous",
-    "es": "hablo de mí y de mi día, compro, quedo a una hora"
+    "es": "hablo de mí y de mi día, compro, quedo a una hora",
+    "de": "Ich kann über mich und meinen Tag sprechen, einkaufen, eine Uhrzeit vereinbaren."
    }
   },
   {
@@ -54,11 +60,13 @@
    "en": "Branch",
    "fr": "Branche",
    "es": "Rama",
+   "de": "Zweig",
    "can": {
     "ru": "рассказываю, что было и будет, сравниваю, объясняю дорогу",
     "en": "I can tell what happened and will happen, compare, give directions",
     "fr": "je raconte le passé et l'avenir, je compare, j'explique un chemin",
-    "es": "cuento lo que pasó y pasará, comparo, explico un camino"
+    "es": "cuento lo que pasó y pasará, comparo, explico un camino",
+    "de": "Ich kann erzählen, was war und was sein wird, vergleichen, Wegbeschreibungen geben."
    }
   },
   {
@@ -69,11 +77,13 @@
    "en": "Blossom",
    "fr": "Fleur",
    "es": "Flor",
+   "de": "Blüte",
    "can": {
     "ru": "рассуждаю, советую, ставлю условия, читаю простые новости",
     "en": "I can reason, advise, set conditions, read simple news",
     "fr": "je raisonne, je conseille, je pose des conditions, je lis des nouvelles simples",
-    "es": "razono, aconsejo, pongo condiciones, leo noticias simples"
+    "es": "razono, aconsejo, pongo condiciones, leo noticias simples",
+    "de": "Ich kann argumentieren, raten, Bedingungen stellen, einfache Nachrichten lesen."
    }
   },
   {
@@ -84,11 +94,13 @@
    "en": "Fruit",
    "fr": "Fruit",
    "es": "Fruto",
+   "de": "Frucht",
    "can": {
     "ru": "читаю подлинные тексты и понимаю живую речь",
     "en": "I can read authentic texts and follow natural speech",
     "fr": "je lis des textes authentiques et je comprends la langue parlée",
-    "es": "leo textos auténticos y entiendo el habla real"
+    "es": "leo textos auténticos y entiendo el habla real",
+    "de": "Ich kann authentische Texte lesen und natürliche Sprache verstehen."
    }
   }
  ],
@@ -101,21 +113,24 @@
     "ru": "Я — …",
     "en": "I am …",
     "fr": "Je suis …",
-    "es": "Yo soy …"
+    "es": "Yo soy …",
+    "de": "Ich bin …"
    },
    "formula": "Ես [ով] եմ",
    "note": {
     "ru": "«Быть» — маленькое слово в конце фразы: Ես հայ եմ — «я армянин», дословно «я армянин есть». Оно меняется по лицам: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. Вопрос — тем же порядком, со знаком ՞ над ударной гласной: Դուք հա՞յ եք։",
     "en": "“To be” is a small word at the end: Ես հայ եմ — “I am Armenian”, literally “I Armenian am”. It changes with the person: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. A question keeps the order and puts ՞ over the stressed vowel: Դուք հա՞յ եք։",
     "fr": "« Être » est un petit mot en fin de phrase : Ես հայ եմ — « je suis arménien », mot à mot « je arménien suis ». Il change selon la personne : ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. La question garde l'ordre, avec ՞ sur la voyelle accentuée : Դուք հա՞յ եք։",
-    "es": "«Ser» es una palabra corta al final: Ես հայ եմ — «soy armenio», literalmente «yo armenio soy». Cambia según la persona: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. La pregunta mantiene el orden y lleva ՞ sobre la vocal acentuada: Դուք հա՞յ եք։"
+    "es": "«Ser» es una palabra corta al final: Ես հայ եմ — «soy armenio», literalmente «yo armenio soy». Cambia según la persona: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. La pregunta mantiene el orden y lleva ՞ sobre la vocal acentuada: Դուք հա՞յ եք։",
+    "de": "„Sein“ ist ein kleines Wort am Ende: Ես հայ եմ — „ich bin Armenier“, wörtlich „ich Armenier bin“. Es ändert sich nach der Person: ես … եմ, դու … ես, նա … է, մենք … ենք, դուք … եք, նրանք … են. Bei einer Frage bleibt die Reihenfolge gleich und man setzt ՞ über den betonten Vokal: Դուք հա՞յ եք։"
    },
    "scene": {
     "title": {
      "ru": "Соседка",
      "en": "The neighbour",
      "fr": "La voisine",
-     "es": "La vecina"
+     "es": "La vecina",
+     "de": "Die Nachbarin"
     },
     "who": {
      "Ա": {
@@ -123,6 +138,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -130,6 +146,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -240,21 +257,24 @@
     "ru": "Это …",
     "en": "This is …",
     "fr": "C'est …",
-    "es": "Esto es …"
+    "es": "Esto es …",
+    "de": "Das ist …"
    },
    "formula": "Սա [ինչ] է",
    "note": {
     "ru": "Սա — «это» (близко), դա — «это» (у собеседника), դա и այն — «то» (далеко). Սա խնձոր է — «это яблоко». Отрицание: է → չէ: Սա լավաշ չէ. Вопрос «что это?» — Սա ի՞նչ է։ Артиклей «a/un» в армянском нет.",
     "en": "Սա — “this” (near me), դա — “that” (near you), այն — “that” (far away). Սա խնձոր է — “this is an apple”. Negation: է → չէ: Սա լավաշ չէ. “What is this?” — Սա ի՞նչ է։ Armenian has no word for “a”.",
     "fr": "Սա — « ceci » (près de moi), դա — « cela » (près de toi), այն — « cela » (loin). Սա խնձոր է — « c'est une pomme ». Négation : է → չէ : Սա լավաշ չէ. « Qu'est-ce que c'est ? » — Սա ի՞նչ է։ Pas d'article « un, une ».",
-    "es": "Սա — «esto» (cerca de mí), դա — «eso» (cerca de ti), այն — «aquello» (lejos). Սա խնձոր է — «esto es una manzana». Negación: է → չէ: Սա լավաշ չէ. «¿Qué es esto?» — Սա ի՞նչ է։ No hay artículo «un, una»."
+    "es": "Սա — «esto» (cerca de mí), դա — «eso» (cerca de ti), այն — «aquello» (lejos). Սա խնձոր է — «esto es una manzana». Negación: է → չէ: Սա լավաշ չէ. «¿Qué es esto?» — Սա ի՞նչ է։ No hay artículo «un, una».",
+    "de": "Սա — „das hier“ (bei mir), դա — „das da“ (bei dir), այն — „das dort“ (weit weg). Սա խնձոր է — „das ist ein Apfel“. Verneinung: է → չէ: Սա լավաշ չէ. „Was ist das?“ — Սա ի՞նչ է։ Im Armenischen gibt es keinen unbestimmten Artikel („ein/eine“)."
    },
    "scene": {
     "title": {
      "ru": "На рынке",
      "en": "At the market",
      "fr": "Au marché",
-     "es": "En el mercado"
+     "es": "En el mercado",
+     "de": "Auf dem Markt"
     },
     "who": {
      "Մ": {
@@ -262,6 +282,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Վ": {
@@ -269,6 +290,7 @@
       "en": "Seller",
       "fr": "Vendeur",
       "es": "Vendedor",
+      "de": "Verkäufer",
       "g": "m"
      }
     },
@@ -358,21 +380,24 @@
     "ru": "Какой?",
     "en": "What is it like?",
     "fr": "Comment est-il ?",
-    "es": "¿Cómo es?"
+    "es": "¿Cómo es?",
+    "de": "Wie ist es?"
    },
    "formula": "[ինչ]-ը [ինչպիսի] է",
    "note": {
     "ru": "Когда вещь уже известна, к ней прирастает артикль: после согласной -ը (խնձորը — «это яблоко», «то самое яблоко»), после гласной -ն (կատուն). Перед словом на гласную -ը тоже становится -ն: խնձորն է. Признак ставится прямо перед է: Խնձորը քաղցր է — «яблоко сладкое».",
     "en": "When a thing is already known, it takes an article: -ը after a consonant (խնձորը — “the apple”), -ն after a vowel (կատուն). Before a word starting with a vowel, -ը also turns into -ն: խնձորն է. The quality comes right before է: Խնձորը քաղցր է — “the apple is sweet”.",
     "fr": "Une chose déjà connue prend l'article : -ը après une consonne (խնձորը — « la pomme »), -ն après une voyelle (կատուն). Devant un mot commençant par une voyelle, -ը devient aussi -ն : խնձորն է. La qualité se place juste avant է : Խնձորը քաղցր է — « la pomme est sucrée ».",
-    "es": "Lo ya conocido lleva artículo: -ը tras consonante (խնձորը — «la manzana»), -ն tras vocal (կատուն). Ante palabra que empieza por vocal, -ը también pasa a -ն: խնձորն է. La cualidad va justo antes de է: Խնձորը քաղցր է — «la manzana es dulce»."
+    "es": "Lo ya conocido lleva artículo: -ը tras consonante (խնձորը — «la manzana»), -ն tras vocal (կատուն). Ante palabra que empieza por vocal, -ը también pasa a -ն: խնձորն է. La cualidad va justo antes de է: Խնձորը քաղցր է — «la manzana es dulce».",
+    "de": "Wenn ein Ding bereits bekannt ist, hängst du den Artikel an: -ը nach einem Konsonanten (խնձորը — „der Apfel“), -ն nach einem Vokal (կատուն). Vor einem Wort, das mit einem Vokal beginnt, wird -ը zu -ն: խնձորն է. Das Adjektiv steht direkt vor է: Խնձորը քաղցր է — „der Apfel ist süß“."
    },
    "scene": {
     "title": {
      "ru": "Выбираем фрукты",
      "en": "Choosing fruit",
      "fr": "On choisit les fruits",
-     "es": "Elegimos fruta"
+     "es": "Elegimos fruta",
+     "de": "Obst auswählen"
     },
     "who": {
      "Մ": {
@@ -380,6 +405,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Վ": {
@@ -387,6 +413,7 @@
       "en": "Seller",
       "fr": "Vendeur",
       "es": "Vendedor",
+      "de": "Verkäufer",
       "g": "m"
      }
     },
@@ -480,7 +507,8 @@
       "ru": "«это самое …» (с артиклем)",
       "en": "“the …” (with the article)",
       "fr": "« le / la … » (avec l'article)",
-      "es": "«el / la …» (con artículo)"
+      "es": "«el / la …» (con artículo)",
+      "de": "„der/die/das …“ (mit Artikel)"
      }
     }
    ]
@@ -493,21 +521,24 @@
     "ru": "Где что есть",
     "en": "What is where",
     "fr": "Il y a … dans …",
-    "es": "Qué hay y dónde"
+    "es": "Qué hay y dónde",
+    "de": "Was ist wo?"
    },
    "formula": "[որտեղ]-ում կա [ինչ]",
    "note": {
     "ru": "«В, на» — окончание -ում: խոհանոց → խոհանոցում «на кухне», դպրոց → դպրոցում «в школе». Կա — «есть, имеется», для многих — կան; չկա — «нет». Порядок: где → что → կա: Խոհանոցում սառնարան կա։ У людей и животных -ում не бывает: «у мамы» скажут иначе — позже.",
     "en": "“In, at” is the ending -ում: խոհանոց → խոհանոցում “in the kitchen”, դպրոց → դպրոցում “at school”. Կա — “there is”, for many things կան; չկա — “there isn't”. Order: where → what → կա: Խոհանոցում սառնարան կա։ People and animals don't take -ում — that comes later.",
     "fr": "« Dans, à » : la terminaison -ում : խոհանոց → խոհանոցում « dans la cuisine », դպրոց → դպրոցում « à l'école ». Կա — « il y a », au pluriel կան ; չկա — « il n'y a pas ». Ordre : où → quoi → կա : Խոհանոցում սառնարան կա։ Les personnes et animaux ne prennent pas -ում — on verra plus tard.",
-    "es": "«En» es la terminación -ում: խոհանոց → խոհանոցում «en la cocina», դպրոց → դպրոցում «en la escuela». Կա — «hay», para varias cosas կան; չկա — «no hay». Orden: dónde → qué → կա: Խոհանոցում սառնարան կա։ Las personas y animales no llevan -ում; eso, más adelante."
+    "es": "«En» es la terminación -ում: խոհանոց → խոհանոցում «en la cocina», դպրոց → դպրոցում «en la escuela». Կա — «hay», para varias cosas կան; չկա — «no hay». Orden: dónde → qué → կա: Խոհանոցում սառնարան կա։ Las personas y animales no llevan -ում; eso, más adelante.",
+    "de": "Du verwendest die Endung -ում für „in, an“: խոհանոց → խոհանոցում „in der Küche“, դպրոց → դպրոցում „in der Schule“. Du sagst կա für „es gibt“ (Singular) und կան für mehrere Dinge. չկա bedeutet „es gibt nicht“. Die Wortstellung: Wo → was → կա: Խոհանոցում սառնարան կա։ Für Personen und Tiere verwendest du nicht -ում — das kommt später."
    },
    "scene": {
     "title": {
      "ru": "Квартира на съём",
      "en": "A flat to rent",
      "fr": "Un appartement à louer",
-     "es": "Un departamento para alquilar"
+     "es": "Un departamento para alquilar",
+     "de": "Eine Wohnung zu vermieten"
     },
     "who": {
      "Մ": {
@@ -515,6 +546,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Տ": {
@@ -522,6 +554,7 @@
       "en": "Landlady",
       "fr": "Propriétaire",
       "es": "Dueña",
+      "de": "Vermieterin",
       "g": "f"
      }
     },
@@ -616,7 +649,8 @@
       "ru": "где? — «в / на …»",
       "en": "where? — “in / at …”",
       "fr": "où ? — « dans / à … »",
-      "es": "¿dónde? — «en …»"
+      "es": "¿dónde? — «en …»",
+      "de": "wo? — „in / an …“"
      }
     }
    ]
@@ -629,21 +663,24 @@
     "ru": "У меня есть …",
     "en": "I have …",
     "fr": "J'ai …",
-    "es": "Tengo …"
+    "es": "Tengo …",
+    "de": "Ich habe …"
    },
    "formula": "Ես ունեմ [ինչ]",
    "note": {
     "ru": "«Иметь» — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Нет — с չ-: չունեմ. После числа слово остаётся в единственном числе: երկու եղբայր — «два брата». «Мой» — իմ (իմ մայրը) или коротко -ս в конце: մայրս.",
     "en": "“To have” — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Not — with չ-: չունեմ. After a number the noun stays singular: երկու եղբայր — “two brothers”. “My” — իմ (իմ մայրը) or the short ending -ս: մայրս.",
     "fr": "« Avoir » — ունեմ : ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. La négation avec չ- : չունեմ. Après un nombre, le nom reste au singulier : երկու եղբայր — « deux frères ». « Mon » — իմ (իմ մայրը) ou la terminaison courte -ս : մայրս.",
-    "es": "«Tener» — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Negación con չ-: չունեմ. Tras un número, el nombre queda en singular: երկու եղբայր — «dos hermanos». «Mi» — իմ (իմ մայրը) o la terminación corta -ս: մայրս."
+    "es": "«Tener» — ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Negación con չ-: չունեմ. Tras un número, el nombre queda en singular: երկու եղբայր — «dos hermanos». «Mi» — իմ (իմ մայրը) o la terminación corta -ս: մայրս.",
+    "de": "„Haben“ – ունեմ: ես ունեմ, դու ունես, նա ունի, մենք ունենք, դուք ունեք, նրանք ունեն. Die Verneinung bildest du mit չ-: չունեմ. Nach einer Zahl bleibt das Substantiv im Singular: երկու եղբայր – „zwei Brüder“. „Mein“ – իմ (իմ մայրը) oder die Kurzform -ս: մայրս."
    },
    "scene": {
     "title": {
      "ru": "Фотография",
      "en": "The photo",
      "fr": "La photo",
-     "es": "La foto"
+     "es": "La foto",
+     "de": "Das Foto"
     },
     "who": {
      "Ա": {
@@ -651,6 +688,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -658,6 +696,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -777,7 +816,8 @@
       "ru": "«мой / моя …» (коротко)",
       "en": "“my …” (short form)",
       "fr": "« mon / ma … » (forme courte)",
-      "es": "«mi …» (forma corta)"
+      "es": "«mi …» (forma corta)",
+      "de": "„mein / meine …“ (Kurzform)"
      }
     }
    ]
@@ -790,21 +830,24 @@
     "ru": "Сколько стоит?",
     "en": "How much is it?",
     "fr": "Combien ça coûte ?",
-    "es": "¿Cuánto cuesta?"
+    "es": "¿Cuánto cuesta?",
+    "de": "Wie viel kostet es?"
    },
    "formula": "[քանի] [ինչ] · Ինչքա՞ն արժե",
    "note": {
     "ru": "Числа ставятся перед словом, а слово — в единственном числе: երեք լավաշ — «три лаваша». Сотни и тысячи — как в русском: երեք հարյուր (300), երկու հազար (2000). Цена: Ինչքա՞ն արժե … — «сколько стоит …», ответ: … դրամ.",
     "en": "Numbers come before the noun, and the noun stays singular: երեք լավաշ — “three lavash”. Hundreds and thousands: երեք հարյուր (300), երկու հազար (2000). Price: Ինչքա՞ն արժե … — “how much is …”, answer: … դրամ.",
     "fr": "Le nombre se place devant le nom, qui reste au singulier : երեք լավաշ — « trois lavash ». Centaines et milliers : երեք հարյուր (300), երկու հազար (2000). Le prix : Ինչքա՞ն արժե … — « combien coûte … », réponse : … դրամ.",
-    "es": "El número va delante y el nombre queda en singular: երեք լավաշ — «tres lavash». Centenas y miles: երեք հարյուր (300), երկու հազար (2000). Precio: Ինչքա՞ն արժե … — «¿cuánto cuesta …?», respuesta: … դրամ."
+    "es": "El número va delante y el nombre queda en singular: երեք լավաշ — «tres lavash». Centenas y miles: երեք հարյուր (300), երկու հազար (2000). Precio: Ինչքա՞ն արժե … — «¿cuánto cuesta …?», respuesta: … դրամ.",
+    "de": "Die Zahl stellst du vor das Substantiv, und das Substantiv bleibt im Singular: երեք լավաշ – „drei Lavash“. Hunderter und Tausender: երեք հարյուր (300), երկու հազար (2000). Preis: Ինչքա՞ն արժե … – „wie viel kostet …“, Antwort: … դրամ."
    },
    "scene": {
     "title": {
      "ru": "В лавке лаваша",
      "en": "At the lavash bakery",
      "fr": "À la boulangerie de lavash",
-     "es": "En la panadería de lavash"
+     "es": "En la panadería de lavash",
+     "de": "In der Lavash-Bäckerei"
     },
     "who": {
      "Մ": {
@@ -812,6 +855,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Վ": {
@@ -819,6 +863,7 @@
       "en": "Baker",
       "fr": "Boulanger",
       "es": "Panadero",
+      "de": "Bäcker",
       "g": "m"
      }
     },
@@ -960,21 +1005,24 @@
     "ru": "Много: -եր, -ներ",
     "en": "Plural: -եր, -ներ",
     "fr": "Le pluriel : -եր, -ներ",
-    "es": "Plural: -եր, -ներ"
+    "es": "Plural: -եր, -ներ",
+    "de": "Plural: -եր, -ներ"
    },
    "formula": "[ինչ]-եր · [ինչ]-ներ",
    "note": {
     "ru": "Короткое слово (один слог) берёт -եր: գիրք → գրքեր, տուն → տներ; длинное — -ներ: տետր → տետրեր, но մատիտ → մատիտներ, գրիչ → գրիչներ. В коротких словах ի и ու часто выпадают: գիրք → գրքեր. С артиклем: գրքերը — «эти книги». Есть исключения: մարդ → մարդիկ, կին → կանայք.",
     "en": "A short word (one syllable) takes -եր: գիրք → գրքեր, տուն → տներ; a longer one -ներ: մատիտ → մատիտներ, գրիչ → գրիչներ. In short words ի and ու often drop out: գիրք → գրքեր. With the article: գրքերը — “the books”. Exceptions exist: մարդ → մարդիկ, կին → կանայք.",
     "fr": "Un mot court (une syllabe) prend -եր : գիրք → գրքեր, տուն → տներ ; un mot plus long, -ներ : մատիտ → մատիտներ, գրիչ → գրիչներ. Dans les mots courts, ի et ու tombent souvent : գիրք → գրքեր. Avec l'article : գրքերը — « les livres ». Exceptions : մարդ → մարդիկ, կին → կանայք.",
-    "es": "Una palabra corta (una sílaba) toma -եր: գիրք → գրքեր, տուն → տներ; una más larga, -ներ: մատիտ → մատիտներ, գրիչ → գրիչներ. En las cortas, ի y ու a menudo caen: գիրք → գրքեր. Con artículo: գրքերը — «los libros». Hay excepciones: մարդ → մարդիկ, կին → կանայք."
+    "es": "Una palabra corta (una sílaba) toma -եր: գիրք → գրքեր, տուն → տներ; una más larga, -ներ: մատիտ → մատիտներ, գրիչ → գրիչներ. En las cortas, ի y ու a menudo caen: գիրք → գրքեր. Con artículo: գրքերը — «los libros». Hay excepciones: մարդ → մարդիկ, կին → կանայք.",
+    "de": "Ein kurzes Wort (eine Silbe) bildest du mit -եր: գիրք → գրքեր, տուն → տներ; ein längeres Wort mit -ներ: մատիտ → մատիտներ, գրիչ → գրիչներ. In kurzen Wörtern lässt du oft ի und ու weg: գիրք → գրքեր. Mit Artikel: գրքերը – „die Bücher“. Es gibt Ausnahmen: մարդ → մարդիկ, կին → կանայք."
    },
    "scene": {
     "title": {
      "ru": "В книжном",
      "en": "At the bookshop",
      "fr": "À la librairie",
-     "es": "En la librería"
+     "es": "En la librería",
+     "de": "In der Buchhandlung"
     },
     "who": {
      "Մ": {
@@ -982,6 +1030,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Վ": {
@@ -989,6 +1038,7 @@
       "en": "Shop assistant",
       "fr": "Vendeuse",
       "es": "Vendedora",
+      "de": "Verkäuferin",
       "g": "f"
      }
     },
@@ -1073,7 +1123,8 @@
       "ru": "много: «… (мн. ч.)»",
       "en": "many: “… (plural)”",
       "fr": "plusieurs : « … (pluriel) »",
-      "es": "varios: «… (plural)»"
+      "es": "varios: «… (plural)»",
+      "de": "viele: „… (Plural)“"
      }
     }
    ]
@@ -1086,21 +1137,24 @@
     "ru": "Просьба",
     "en": "Asking for things",
     "fr": "Demander",
-    "es": "Pedir"
+    "es": "Pedir",
+    "de": "Bitten"
    },
    "formula": "[արա]-եք, խնդրում եմ",
    "note": {
     "ru": "Вежливая просьба к незнакомому — глагол на -եք: բերել → բերեք «принесите», գրել → գրեք. Глаголы на -ալ: կարդալ → կարդացեք. Другу — коротко: բեր, գրիր, կարդա. Խնդրում եմ — «пожалуйста» (дословно «прошу»). Неправильные: տալ → տվեք / տուր, գալ → եկեք / արի.",
     "en": "A polite request to a stranger: the verb in -եք: բերել → բերեք “bring”, գրել → գրեք. Verbs in -ալ: կարդալ → կարդացեք. To a friend, the short form: բեր, գրիր, կարդա. Խնդրում եմ — “please” (literally “I ask”). Irregular: տալ → տվեք / տուր, գալ → եկեք / արի.",
     "fr": "Demande polie à un inconnu : le verbe en -եք : բերել → բերեք « apportez », գրել → գրեք. Verbes en -ալ : կարդալ → կարդացեք. À un ami, forme courte : բեր, գրիր, կարդա. Խնդրում եմ — « s'il vous plaît » (mot à mot « je demande »). Irréguliers : տալ → տվեք / տուր, գալ → եկեք / արի.",
-    "es": "Pedido cortés a un desconocido: el verbo en -եք: բերել → բերեք «traiga», գրել → գրեք. Verbos en -ալ: կարդալ → կարդացեք. A un amigo, forma corta: բեր, գրիր, կարդա. Խնդրում եմ — «por favor» (literalmente «pido»). Irregulares: տալ → տվեք / տուր, գալ → եկեք / արի."
+    "es": "Pedido cortés a un desconocido: el verbo en -եք: բերել → բերեք «traiga», գրել → գրեք. Verbos en -ալ: կարդալ → կարդացեք. A un amigo, forma corta: բեր, գրիր, կարդա. Խնդրում եմ — «por favor» (literalmente «pido»). Irregulares: տալ → տվեք / տուր, գալ → եկեք / արի.",
+    "de": "Für eine höfliche Bitte an eine fremde Person verwendest du die Verbform auf -եք: բերել → բերեք „bringen Sie“, գրել → գրեք. Verben auf -ալ: կարդալ → կարդացեք. Bei Freunden verwendest du die Kurzform: բեր, գրիր, կարդա. Խնդրում եմ — „bitte“ (wörtlich „ich bitte“). Unregelmäßige: տալ → տվեք / տուր, գալ → եկեք / արի."
    },
    "scene": {
     "title": {
      "ru": "В кафе",
      "en": "At the café",
      "fr": "Au café",
-     "es": "En el café"
+     "es": "En el café",
+     "de": "Im Café"
     },
     "who": {
      "Մտ": {
@@ -1108,6 +1162,7 @@
       "en": "Waiter",
       "fr": "Serveur",
       "es": "Mozo",
+      "de": "Kellner",
       "g": "m"
      },
      "Մ": {
@@ -1115,6 +1170,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -1122,6 +1178,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -1210,7 +1267,8 @@
       "ru": "вежливо: «…те, пожалуйста»",
       "en": "politely: “please …”",
       "fr": "poliment : « …ez, s'il vous plaît »",
-      "es": "con cortesía: «… por favor»"
+      "es": "con cortesía: «… por favor»",
+      "de": "höflich: „… Sie, bitte“"
      }
     }
    ]
@@ -1223,21 +1281,24 @@
     "ru": "Где?",
     "en": "Where?",
     "fr": "Où ?",
-    "es": "¿Dónde?"
+    "es": "¿Dónde?",
+    "de": "Wo?"
    },
    "formula": "Որտե՞ղ է [ինչ]-ը",
    "note": {
     "ru": "Вопросительные слова: ո՞վ «кто», ի՞նչ «что», որտե՞ղ «где», ե՞րբ «когда», ինչքա՞ն «сколько». Знак ՞ стоит над ударной гласной. Искомое берёт артикль: Որտե՞ղ է մետրոն։ Ответ: Ուղիղ, աջ, ձախ — «прямо, направо, налево». Ներեցեք — «извините».",
     "en": "Question words: ո՞վ “who”, ի՞նչ “what”, որտե՞ղ “where”, ե՞րբ “when”, ինչքա՞ն “how much”. The ՞ sign sits over the stressed vowel. The thing you look for takes the article: Որտե՞ղ է մետրոն։ Answers: ուղիղ, աջ, ձախ — “straight, right, left”. Ներեցեք — “excuse me”.",
     "fr": "Mots interrogatifs : ո՞վ « qui », ի՞նչ « quoi », որտե՞ղ « où », ե՞րբ « quand », ինչքա՞ն « combien ». Le signe ՞ se met sur la voyelle accentuée. Ce qu'on cherche prend l'article : Որտե՞ղ է մետրոն։ Réponses : ուղիղ, աջ, ձախ — « tout droit, à droite, à gauche ». Ներեցեք — « excusez-moi ».",
-    "es": "Palabras interrogativas: ո՞վ «quién», ի՞նչ «qué», որտե՞ղ «dónde», ե՞րբ «cuándo», ինչքա՞ն «cuánto». El signo ՞ va sobre la vocal acentuada. Lo que se busca lleva artículo: Որտե՞ղ է մետրոն։ Respuestas: ուղիղ, աջ, ձախ — «derecho, a la derecha, a la izquierda». Ներեցեք — «disculpe»."
+    "es": "Palabras interrogativas: ո՞վ «quién», ի՞նչ «qué», որտե՞ղ «dónde», ե՞րբ «cuándo», ինչքա՞ն «cuánto». El signo ՞ va sobre la vocal acentuada. Lo que se busca lleva artículo: Որտե՞ղ է մետրոն։ Respuestas: ուղիղ, աջ, ձախ — «derecho, a la derecha, a la izquierda». Ներեցեք — «disculpe».",
+    "de": "Fragewörter: ո՞վ „wer“, ի՞նչ „was“, որտե՞ղ „wo“, ե՞րբ „wann“, ինչքա՞ն „wie viel“. Das Zeichen ՞ steht über dem betonten Vokal. Das, wonach du fragst, erhält den Artikel: Որտե՞ղ է մետրոն։ Antworten: ուղիղ, աջ, ձախ — „geradeaus, rechts, links“. Ներեցեք — „Entschuldigung“."
    },
    "scene": {
     "title": {
      "ru": "Как пройти к метро",
      "en": "The way to the metro",
      "fr": "Le chemin du métro",
-     "es": "Cómo llegar al subte"
+     "es": "Cómo llegar al subte",
+     "de": "Der Weg zur U-Bahn"
     },
     "who": {
      "Մ": {
@@ -1245,6 +1306,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -1252,6 +1314,7 @@
       "en": "Passer-by",
       "fr": "Passante",
       "es": "Transeúnte",
+      "de": "Passantin",
       "g": "f"
      }
     },
@@ -1340,7 +1403,8 @@
         "ru": "кто?",
         "en": "who?",
         "fr": "qui ?",
-        "es": "¿quién?"
+        "es": "¿quién?",
+        "de": "wer?"
        },
        "ո՞վ"
       ],
@@ -1349,7 +1413,8 @@
         "ru": "что?",
         "en": "what?",
         "fr": "quoi ?",
-        "es": "¿qué?"
+        "es": "¿qué?",
+        "de": "was?"
        },
        "ի՞նչ"
       ],
@@ -1358,7 +1423,8 @@
         "ru": "где?",
         "en": "where?",
         "fr": "où ?",
-        "es": "¿dónde?"
+        "es": "¿dónde?",
+        "de": "wo?"
        },
        "որտե՞ղ"
       ],
@@ -1367,7 +1433,8 @@
         "ru": "когда?",
         "en": "when?",
         "fr": "quand ?",
-        "es": "¿cuándo?"
+        "es": "¿cuándo?",
+        "de": "wann?"
        },
        "ե՞րբ"
       ],
@@ -1376,7 +1443,8 @@
         "ru": "сколько?",
         "en": "how much?",
         "fr": "combien ?",
-        "es": "¿cuánto?"
+        "es": "¿cuánto?",
+        "de": "wie viel?"
        },
        "ինչքա՞ն"
       ]
@@ -1403,7 +1471,8 @@
       "ru": "где … ? — с артиклем",
       "en": "where is the …? — with the article",
       "fr": "où est le … ? — avec l'article",
-      "es": "¿dónde está el …? — con artículo"
+      "es": "¿dónde está el …? — con artículo",
+      "de": "Wo ist der/die/das …? - mit Artikel"
      }
     }
    ]
@@ -1416,21 +1485,24 @@
     "ru": "Что ты делаешь?",
     "en": "What are you doing?",
     "fr": "Que fais-tu ?",
-    "es": "¿Qué haces?"
+    "es": "¿Qué haces?",
+    "de": "Was machst du?"
    },
    "formula": "Ես [բայ]-ում եմ",
    "note": {
     "ru": "Настоящее время — из двух частей: глагол без -ել/-ալ плюс -ում (գրել → գրում, կարդալ → կարդում) и знакомое «быть»: գրում եմ «пишу», գրում ես, գրում է, գրում ենք, գրում եք, գրում են. «Быть» любит встать после главного слова: Հայերեն եմ սովորում — «армянский учу» (а не что-то другое). Особые: գալ → գալիս եմ, լինել → լինում եմ.",
     "en": "The present tense has two parts: the verb without -ել/-ալ plus -ում (գրել → գրում, կարդալ → կարդում) and the familiar “to be”: գրում եմ “I write”, գրում ես, գրում է, գրում ենք, գրում եք, գրում են. “To be” likes to follow the key word: Հայերեն եմ սովորում — “it’s Armenian I’m learning”. Special ones: գալ → գալիս եմ, լինել → լինում եմ.",
     "fr": "Le présent a deux parties : le verbe sans -ել/-ալ plus -ում (գրել → գրում, կարդալ → կարդում) et le petit « être » : գրում եմ « j’écris », գրում ես, գրում է, գրում ենք, գրում եք, գրում են. « Être » aime suivre le mot important : Հայերեն եմ սովորում — « c’est l’arménien que j’apprends ». Cas à part : գալ → գալիս եմ, լինել → լինում եմ.",
-    "es": "El presente tiene dos partes: el verbo sin -ել/-ալ más -ում (գրել → գրում, կարդալ → կարդում) y el conocido «ser»: գրում եմ «escribo», գրում ես, գրում է, գրում ենք, գրում եք, գրում են. «Ser» suele ir tras la palabra clave: Հայերեն եմ սովորում — «lo que estudio es armenio». Especiales: գալ → գալիս եմ, լինել → լինում եմ."
+    "es": "El presente tiene dos partes: el verbo sin -ել/-ալ más -ում (գրել → գրում, կարդալ → կարդում) y el conocido «ser»: գրում եմ «escribo», գրում ես, գրում է, գրում ենք, գրում եք, գրում են. «Ser» suele ir tras la palabra clave: Հայերեն եմ սովորում — «lo que estudio es armenio». Especiales: գալ → գալիս եմ, լինել → լինում եմ.",
+    "de": "Das Präsens besteht aus zwei Teilen: dem Verb ohne -ել/-ալ plus -ում (գրել → գրում, կարդալ → կարդում) und dem bekannten „sein“: գրում եմ „ich schreibe“, գրում ես, գրում է, գրում ենք, գրում եք, գրում են. „Sein“ steht gern hinter dem wichtigsten Wort: Հայերեն եմ սովորում - „es ist Armenisch, das ich lerne“. Besondere: գալ → գալիս եմ, լինել → լինում եմ."
    },
    "scene": {
     "title": {
      "ru": "Звонок бабушке",
      "en": "Calling grandma",
      "fr": "Appel à mamie",
-     "es": "Llamada a la abuela"
+     "es": "Llamada a la abuela",
+     "de": "Oma anrufen"
     },
     "who": {
      "Տ": {
@@ -1438,6 +1510,7 @@
       "en": "Grandma",
       "fr": "Mamie",
       "es": "Abuela",
+      "de": "Oma",
       "g": "f"
      },
      "Մ": {
@@ -1445,6 +1518,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -1539,7 +1613,8 @@
       "ru": "сейчас: кто что делает",
       "en": "now: who does what",
       "fr": "maintenant : qui fait quoi",
-      "es": "ahora: quién hace qué"
+      "es": "ahora: quién hace qué",
+      "de": "jetzt: wer macht was"
      }
     }
    ]
@@ -1552,21 +1627,24 @@
     "ru": "Не …",
     "en": "Not …",
     "fr": "Ne … pas",
-    "es": "No …"
+    "es": "No …",
+    "de": "Nicht …"
    },
    "formula": "Ես չեմ [բայ]-ում",
    "note": {
     "ru": "Отрицание ставит «не-быть» вперёд: չեմ գրում «не пишу», չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Заметьте: է → չի. Вопрос — интонацией и знаком ՞: Ռուսերեն խոսո՞ւմ եք։ Пригодится: մի քիչ «немного», հասկանում եմ «понимаю», չեմ հասկանում «не понимаю».",
     "en": "Negation moves a “not-be” to the front: չեմ գրում “I don’t write”, չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Note: է → չի. A question is just intonation and ՞: Ռուսերեն խոսո՞ւմ եք։ Handy: մի քիչ “a little”, հասկանում եմ “I understand”, չեմ հասկանում “I don’t understand”.",
     "fr": "La négation place un « ne-pas-être » devant : չեմ գրում « je n’écris pas », չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Attention : է → չի. La question, c’est l’intonation et ՞ : Ռուսերեն խոսո՞ւմ եք։ Utile : մի քիչ « un peu », հասկանում եմ « je comprends », չեմ հասկանում « je ne comprends pas ».",
-    "es": "La negación pone un «no-ser» delante: չեմ գրում «no escribo», չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Ojo: է → չի. La pregunta es entonación y ՞: Ռուսերեն խոսո՞ւմ եք։ Útil: մի քիչ «un poco», հասկանում եմ «entiendo», չեմ հասկանում «no entiendo»."
+    "es": "La negación pone un «no-ser» delante: չեմ գրում «no escribo», չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Ojo: է → չի. La pregunta es entonación y ՞: Ռուսերեն խոսո՞ւմ եք։ Útil: մի քիչ «un poco», հասկանում եմ «entiendo», չեմ հասկանում «no entiendo».",
+    "de": "Die Verneinung stellt ein „nicht sein“ voran: չեմ գրում „ich schreibe nicht“, չես գրում, չի գրում, չենք գրում, չեք գրում, չեն գրում. Beachte: է → չի. Eine Frage wird nur durch die Intonation und ՞ gebildet: Ռուսերեն խոսո՞ւմ եք։ Nützlich: մի քիչ „ein bisschen“, հասկանում եմ „ich verstehe“, չեմ հասկանում „ich verstehe nicht“."
    },
    "scene": {
     "title": {
      "ru": "В маршрутке",
      "en": "In the minibus",
      "fr": "Dans le minibus",
-     "es": "En la combi"
+     "es": "En la combi",
+     "de": "Im Minibus"
     },
     "who": {
      "Վ": {
@@ -1574,6 +1652,7 @@
       "en": "Driver",
       "fr": "Chauffeur",
       "es": "Chofer",
+      "de": "Fahrer",
       "g": "m"
      },
      "Մ": {
@@ -1581,6 +1660,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -1669,7 +1749,8 @@
       "ru": "не делает: «не …»",
       "en": "not doing: “doesn’t …”",
       "fr": "ne fait pas : « ne … pas »",
-      "es": "no lo hace: «no …»"
+      "es": "no lo hace: «no …»",
+      "de": "nicht tun: „… nicht“"
      }
     }
    ]
@@ -1682,21 +1763,24 @@
     "ru": "Чей?",
     "en": "Whose?",
     "fr": "À qui ?",
-    "es": "¿De quién?"
+    "es": "¿De quién?",
+    "de": "Wessen?"
    },
    "formula": "[ով]-ի [ինչ]ը",
    "note": {
     "ru": "«Чей» — окончание -ի у владельца: Արամի բանալին «ключ Арама», քաղաքի կենտրոնը «центр города». Владелец — первым, вещь — после, обычно с артиклем. У родных и близких особые формы: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. Вопрос — ու՞մ: Այս գիրքն ու՞մ է։ «Чья это книга?»",
     "en": "“Whose” is the ending -ի on the owner: Արամի բանալին “Aram’s key”, քաղաքի կենտրոնը “the city centre”. The owner comes first, the thing after, usually with the article. Family words have special forms: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. The question is ու՞մ: Այս գիրքն ու՞մ է։ “Whose book is this?”",
     "fr": "« À qui » : la terminaison -ի sur le possesseur : Արամի բանալին « la clé d’Aram », քաղաքի կենտրոնը « le centre-ville ». Le possesseur d’abord, l’objet ensuite, en général avec l’article. Les mots de la famille ont des formes à part : մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. La question : ու՞մ : Այս գիրքն ու՞մ է։ « À qui est ce livre ? »",
-    "es": "«De quién»: la terminación -ի en el dueño: Արամի բանալին «la llave de Aram», քաղաքի կենտրոնը «el centro de la ciudad». Primero el dueño, después la cosa, normalmente con artículo. Los parientes tienen formas propias: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. La pregunta es ու՞մ: Այս գիրքն ու՞մ է։ «¿De quién es este libro?»"
+    "es": "«De quién»: la terminación -ի en el dueño: Արամի բանալին «la llave de Aram», քաղաքի կենտրոնը «el centro de la ciudad». Primero el dueño, después la cosa, normalmente con artículo. Los parientes tienen formas propias: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. La pregunta es ու՞մ: Այս գիրքն ու՞մ է։ «¿De quién es este libro?»",
+    "de": "„Wessen“ wird durch die Endung -ի beim Besitzer ausgedrückt: Արամի բանալին „Arams Schlüssel“, քաղաքի կենտրոնը „das Stadtzentrum“. Der Besitzer steht zuerst, die Sache danach, meist mit Artikel. Familienwörter haben besondere Formen: մայր → մոր, հայր → հոր, եղբայր → եղբոր, քույր → քրոջ, ընկեր → ընկերոջ, կին → կնոջ. Die Frage lautet ու՞մ: Այս գիրքն ու՞մ է։ „Wessen Buch ist das?“"
    },
    "scene": {
     "title": {
      "ru": "После гостей",
      "en": "After the guests left",
      "fr": "Après le départ des invités",
-     "es": "Después de las visitas"
+     "es": "Después de las visitas",
+     "de": "Nach dem Besuch"
     },
     "who": {
      "Ա": {
@@ -1704,6 +1788,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -1711,6 +1796,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -1802,7 +1888,8 @@
       "ru": "чей? — «… (кого / чего)»",
       "en": "whose? — “of …”",
       "fr": "à qui ? — « de … »",
-      "es": "¿de quién? — «de …»"
+      "es": "¿de quién? — «de …»",
+      "de": "wessen? — „von …“"
      }
     }
    ]
@@ -1815,21 +1902,24 @@
     "ru": "Во сколько?",
     "en": "At what time?",
     "fr": "À quelle heure ?",
-    "es": "¿A qué hora?"
+    "es": "¿A qué hora?",
+    "de": "Um wie viel Uhr?"
    },
    "formula": "Ժամը [քանի]-ին",
    "note": {
     "ru": "Время встречи — ժամը и число с -ին: ժամը հինգին «в пять часов», ժամը յոթին «в семь». Внимание: երկու → երկուսին, ինը → իննին, տասը → տասին. Вопрос: Ժամը քանիսի՞ն։ Та же форма на -ին отвечает «кому»: Զանգում եմ Արամին «звоню Араму». Части дня: առավոտյան «утром», երեկոյան «вечером».",
     "en": "A meeting time is ժամը plus the number with -ին: ժամը հինգին “at five”, ժամը յոթին “at seven”. Watch out: երկու → երկուսին, ինը → իննին, տասը → տասին. The question: Ժամը քանիսի՞ն։ The same -ին form answers “to whom”: Զանգում եմ Արամին “I’m calling Aram”. Parts of the day: առավոտյան “in the morning”, երեկոյան “in the evening”.",
     "fr": "L’heure d’un rendez-vous : ժամը et le nombre en -ին : ժամը հինգին « à cinq heures », ժամը յոթին « à sept heures ». Attention : երկու → երկուսին, ինը → իննին, տասը → տասին. La question : Ժամը քանիսի՞ն։ La même forme en -ին répond à « à qui » : Զանգում եմ Արամին « j’appelle Aram ». Moments du jour : առավոտյան « le matin », երեկոյան « le soir ».",
-    "es": "La hora de un encuentro: ժամը y el número con -ին: ժամը հինգին «a las cinco», ժամը յոթին «a las siete». Ojo: երկու → երկուսին, ինը → իննին, տասը → տասին. La pregunta: Ժամը քանիսի՞ն։ La misma forma en -ին responde «a quién»: Զանգում եմ Արամին «llamo a Aram». Partes del día: առավոտյան «por la mañana», երեկոյան «por la tarde, por la noche»."
+    "es": "La hora de un encuentro: ժամը y el número con -ին: ժամը հինգին «a las cinco», ժամը յոթին «a las siete». Ojo: երկու → երկուսին, ինը → իննին, տասը → տասին. La pregunta: Ժամը քանիսի՞ն։ La misma forma en -ին responde «a quién»: Զանգում եմ Արամին «llamo a Aram». Partes del día: առավոտյան «por la mañana», երեկոյան «por la tarde, por la noche».",
+    "de": "Die Uhrzeit einer Verabredung wird mit ժամը und der Zahl mit -ին gebildet: ժամը հինգին „um fünf“, ժամը յոթին „um sieben“. Achtung: երկու → երկուսին, ինը → իննին, տասը → տասին. Die Frage: Ժամը քանիսի՞ն։ Dieselbe -ին-Form antwortet auf „wem?“: Զանգում եմ Արամին „Ich rufe Aram an“. Tageszeiten: առավոտյան „morgens“, երեկոյան „abends“."
    },
    "scene": {
     "title": {
      "ru": "Договариваемся о встрече",
      "en": "Making plans to meet",
      "fr": "On fixe un rendez-vous",
-     "es": "Quedamos"
+     "es": "Quedamos",
+     "de": "Sich verabreden"
     },
     "who": {
      "Մ": {
@@ -1837,6 +1927,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -1844,6 +1935,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -1918,7 +2010,8 @@
         "ru": "в час",
         "en": "at one",
         "fr": "à une heure",
-        "es": "a la una"
+        "es": "a la una",
+        "de": "um eins"
        },
        "ժամը մեկին"
       ],
@@ -1927,7 +2020,8 @@
         "ru": "в два",
         "en": "at two",
         "fr": "à deux heures",
-        "es": "a las dos"
+        "es": "a las dos",
+        "de": "um zwei"
        },
        "ժամը երկուսին"
       ],
@@ -1936,7 +2030,8 @@
         "ru": "в три",
         "en": "at three",
         "fr": "à trois heures",
-        "es": "a las tres"
+        "es": "a las tres",
+        "de": "um drei"
        },
        "ժամը երեքին"
       ],
@@ -1945,7 +2040,8 @@
         "ru": "в пять",
         "en": "at five",
         "fr": "à cinq heures",
-        "es": "a las cinco"
+        "es": "a las cinco",
+        "de": "um fünf"
        },
        "ժամը հինգին"
       ],
@@ -1954,7 +2050,8 @@
         "ru": "в семь",
         "en": "at seven",
         "fr": "à sept heures",
-        "es": "a las siete"
+        "es": "a las siete",
+        "de": "um sieben"
        },
        "ժամը յոթին"
       ],
@@ -1963,7 +2060,8 @@
         "ru": "в девять",
         "en": "at nine",
         "fr": "à neuf heures",
-        "es": "a las nueve"
+        "es": "a las nueve",
+        "de": "um neun"
        },
        "ժամը իննին"
       ],
@@ -1972,7 +2070,8 @@
         "ru": "в десять",
         "en": "at ten",
         "fr": "à dix heures",
-        "es": "a las diez"
+        "es": "a las diez",
+        "de": "um zehn"
        },
        "ժամը տասին"
       ]
@@ -1988,21 +2087,24 @@
     "ru": "Хочу, могу, надо",
     "en": "I want, I can, I must",
     "fr": "Je veux, je peux, il faut",
-    "es": "Quiero, puedo, hay que"
+    "es": "Quiero, puedo, hay que",
+    "de": "Ich will, ich kann, ich muss"
    },
    "formula": "[ուզում եմ / կարող եմ] + [անել]",
    "note": {
     "ru": "После «хочу» и «могу» второй глагол — в начальной форме: ուզում եմ գնալ «хочу поехать», կարող եմ վճարել «могу заплатить». «Надо» — պետք է + начальная форма, без лиц: Պետք է արագ գնալ «надо ехать быстро». Вежливая просьба о возможности: Կարո՞ղ եմ … «можно мне …?»",
     "en": "After “want” and “can” the second verb stays in its basic form: ուզում եմ գնալ “I want to go”, կարող եմ վճարել “I can pay”. “Must” is պետք է + basic form, with no persons: Պետք է արագ գնալ “we have to go fast”. Asking politely: Կարո՞ղ եմ … “may I …?”",
     "fr": "Après « vouloir » et « pouvoir », le second verbe reste à l’infinitif : ուզում եմ գնալ « je veux aller », կարող եմ վճարել « je peux payer ». « Il faut » : պետք է + infinitif, sans personne : Պետք է արագ գնալ « il faut aller vite ». Pour demander poliment : Կարո՞ղ եմ … « puis-je … ? »",
-    "es": "Después de «querer» y «poder», el segundo verbo va en infinitivo: ուզում եմ գնալ «quiero ir», կարող եմ վճարել «puedo pagar». «Hay que» es պետք է + infinitivo, sin personas: Պետք է արագ գնալ «hay que ir rápido». Para pedir con cortesía: Կարո՞ղ եմ … «¿puedo …?»"
+    "es": "Después de «querer» y «poder», el segundo verbo va en infinitivo: ուզում եմ գնալ «quiero ir», կարող եմ վճարել «puedo pagar». «Hay que» es պետք է + infinitivo, sin personas: Պետք է արագ գնալ «hay que ir rápido». Para pedir con cortesía: Կարո՞ղ եմ … «¿puedo …?»",
+    "de": "Wenn du „wollen“ oder „können“ verwendest, bleibt das zweite Verb in der Grundform: ուզում եմ գնալ „ich will gehen“, կարող եմ վճարել „ich kann bezahlen“. „Müssen“ drückst du mit պետք է + Grundform aus, ohne Personalendungen: Պետք է արագ գնալ „man muss schnell gehen“. Um höflich zu fragen: Կարո՞ղ եմ … „Kann ich …?“"
    },
    "scene": {
     "title": {
      "ru": "Такси в аэропорт",
      "en": "Taxi to the airport",
      "fr": "Taxi pour l’aéroport",
-     "es": "Taxi al aeropuerto"
+     "es": "Taxi al aeropuerto",
+     "de": "Taxi zum Flughafen"
     },
     "who": {
      "Մ": {
@@ -2010,6 +2112,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Վ": {
@@ -2017,6 +2120,7 @@
       "en": "Driver",
       "fr": "Chauffeur",
       "es": "Taxista",
+      "de": "Taxifahrer",
       "g": "m"
      }
     },
@@ -2153,21 +2257,24 @@
     "ru": "Мой день",
     "en": "My day",
     "fr": "Ma journée",
-    "es": "Mi día"
+    "es": "Mi día",
+    "de": "Mein Tag"
    },
    "formula": "[երբ] [բայ]-ում եմ",
    "note": {
     "ru": "Части дня: առավոտյան «утром», ցերեկը «днём», երեկոյան «вечером», գիշերը «ночью». Порядок: когда → что → делаю: Առավոտյան սուրճ եմ խմում. Дни недели: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; «в воскресенье» — կիրակի օրը. Из слова получается глагол прививкой -ել: երգ → երգել «петь», ճաշ → ճաշել «обедать».",
     "en": "Parts of the day: առավոտյան “in the morning”, ցերեկը “in the afternoon”, երեկոյան “in the evening”, գիշերը “at night”. Order: when → what → doing: Առավոտյան սուրճ եմ խմում. Weekdays: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; “on Sunday” is կիրակի օրը. The graft -ել turns a noun into a verb: երգ → երգել “to sing”, ճաշ → ճաշել “to have lunch”.",
     "fr": "Moments du jour : առավոտյան « le matin », ցերեկը « l’après-midi », երեկոյան « le soir », գիշերը « la nuit ». Ordre : quand → quoi → l’action : Առավոտյան սուրճ եմ խմում. Les jours : երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի ; « le dimanche » : կիրակի օրը. La greffe -ել fait un verbe d’un nom : երգ → երգել « chanter », ճաշ → ճաշել « déjeuner ».",
-    "es": "Partes del día: առավոտյան «por la mañana», ցերեկը «al mediodía, de día», երեկոյան «por la tarde», գիշերը «de noche». Orden: cuándo → qué → acción: Առավոտյան սուրճ եմ խմում. Días: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; «el domingo» es կիրակի օրը. El injerto -ել hace un verbo de un sustantivo: երգ → երգել «cantar», ճաշ → ճաշել «almorzar»."
+    "es": "Partes del día: առավոտյան «por la mañana», ցերեկը «al mediodía, de día», երեկոյան «por la tarde», գիշերը «de noche». Orden: cuándo → qué → acción: Առավոտյան սուրճ եմ խմում. Días: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; «el domingo» es կիրակի օրը. El injerto -ել hace un verbo de un sustantivo: երգ → երգել «cantar», ճաշ → ճաշել «almorzar».",
+    "de": "Tageszeiten: առավոտյան „morgens“, ցերեկը „nachmittags“, երեկոյան „abends“, գիշերը „nachts“. Du sagst zuerst, wann, dann was, dann die Tätigkeit: Առավոտյան սուրճ եմ խմում. Wochentage: երկուշաբթի, երեքշաբթի, չորեքշաբթի, հինգշաբթի, ուրբաթ, շաբաթ, կիրակի; „am Sonntag“ ist կիրակի օրը. Mit der Endung -ել kannst du aus einem Nomen ein Verb machen: երգ → երգել „singen“, ճաշ → ճաշել „mittagessen“."
    },
    "scene": {
     "title": {
      "ru": "Обычный день",
      "en": "An ordinary day",
      "fr": "Une journée ordinaire",
-     "es": "Un día común"
+     "es": "Un día común",
+     "de": "Ein normaler Tag"
     },
     "who": {
      "Մ": {
@@ -2175,6 +2282,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -2182,6 +2290,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -2288,7 +2397,8 @@
       "ru": "сейчас: кто что делает",
       "en": "now: who does what",
       "fr": "maintenant : qui fait quoi",
-      "es": "ahora: quién hace qué"
+      "es": "ahora: quién hace qué",
+      "de": "jetzt: wer macht was"
      }
     }
    ]
@@ -2301,21 +2411,24 @@
     "ru": "Раньше я …",
     "en": "I used to …",
     "fr": "Avant, je …",
-    "es": "Antes yo …"
+    "es": "Antes yo …",
+    "de": "Früher habe ich …"
    },
    "formula": "Ես [բայ]-ում էի",
    "note": {
     "ru": "Прошедшее «длительное» — то же -ում, но «быть» в прошлом: էի, էիր, էր, էինք, էիք, էին. Ապրում էի «жил (тогда)», երգում էր «пел(а)». Так рассказывают о детстве, привычках и о том, что тянулось долго: Ամեն ամառ գյուղ էի գնում. Отрицание: չէի գնում.",
     "en": "The “ongoing” past is the same -ում with “to be” in the past: էի, էիր, էր, էինք, էիք, էին. Ապրում էի “I lived (back then)”, երգում էր “he/she used to sing”. This is how you talk about childhood, habits and things that went on: Ամեն ամառ գյուղ էի գնում. Negative: չէի գնում.",
     "fr": "Le passé « qui dure » : le même -ում, avec « être » au passé : էի, էիր, էր, էինք, էիք, էին. Ապրում էի « je vivais », երգում էր « il / elle chantait ». C’est le temps de l’enfance, des habitudes et de ce qui durait : Ամեն ամառ գյուղ էի գնում. Négation : չէի գնում.",
-    "es": "El pasado «que dura» es el mismo -ում con «ser» en pasado: էի, էիր, էր, էինք, էիք, էին. Ապրում էի «vivía», երգում էր «cantaba». Así se habla de la infancia, de costumbres y de lo que duraba: Ամեն ամառ գյուղ էի գնում. Negación: չէի գնում."
+    "es": "El pasado «que dura» es el mismo -ում con «ser» en pasado: էի, էիր, էր, էինք, էիք, էին. Ապրում էի «vivía», երգում էր «cantaba». Así se habla de la infancia, de costumbres y de lo que duraba: Ամեն ամառ գյուղ էի գնում. Negación: չէի գնում.",
+    "de": "Die „andauernde“ Vergangenheit ist dasselbe -ում, aber „sein“ steht in der Vergangenheit: էի, էիր, էր, էինք, էիք, էին. Ապրում էի „ich lebte (damals)“, երգում էր „er/sie sang (gewöhnlich)“. So erzählst du von Kindheit, Gewohnheiten und Dingen, die lange andauerten: Ամեն ամառ գյուղ էի գնում. Verneinung: չէի գնում."
    },
    "scene": {
     "title": {
      "ru": "Детство",
      "en": "Childhood",
      "fr": "L’enfance",
-     "es": "La infancia"
+     "es": "La infancia",
+     "de": "Kindheit"
     },
     "who": {
      "Մ": {
@@ -2323,6 +2436,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -2330,6 +2444,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -2416,7 +2531,8 @@
       "ru": "раньше, обычно: «… -л(а)»",
       "en": "back then, usually: “used to …”",
       "fr": "avant, d’habitude : « je …ais »",
-      "es": "antes, por costumbre: «…aba / …ía»"
+      "es": "antes, por costumbre: «…aba / …ía»",
+      "de": "früher, normalerweise: „ich …-te“"
      }
     }
    ]
@@ -2429,21 +2545,24 @@
     "ru": "Мне нужно …",
     "en": "I need …",
     "fr": "J’ai besoin de …",
-    "es": "Necesito …"
+    "es": "Necesito …",
+    "de": "Ich brauche …"
    },
    "formula": "Ինձ [ինչ] է պետք",
    "note": {
     "ru": "«Мне нужно» — Ինձ … է պետք, дословно «мне … есть нужно»: Ինձ դեղ է պետք «мне нужно лекарство». Кому: ինձ «мне», քեզ «тебе», նրան «ему, ей», մեզ «нам», ձեզ «вам», նրանց «им». Если болит — ցավում է: Գլուխս ցավում է «голова болит» (գլուխս — «моя голова»).",
     "en": "“I need” is Ինձ … է պետք, literally “to me … is needed”: Ինձ դեղ է պետք “I need medicine”. To whom: ինձ “me”, քեզ “you”, նրան “him, her”, մեզ “us”, ձեզ “you (plural, polite)”, նրանց “them”. If something hurts — ցավում է: Գլուխս ցավում է “my head hurts” (գլուխս — “my head”).",
     "fr": "« J’ai besoin » : Ինձ … է պետք, mot à mot « à moi … est nécessaire » : Ինձ դեղ է պետք « il me faut un médicament ». À qui : ինձ « à moi », քեզ « à toi », նրան « à lui, à elle », մեզ « à nous », ձեզ « à vous », նրանց « à eux ». Pour une douleur : ցավում է : Գլուխս ցավում է « j’ai mal à la tête » (գլուխս — « ma tête »).",
-    "es": "«Necesito» es Ինձ … է պետք, literalmente «a mí … es necesario»: Ինձ դեղ է պետք «necesito un remedio». A quién: ինձ «a mí», քեզ «a ti», նրան «a él, a ella», մեզ «a nosotros», ձեզ «a ustedes», նրանց «a ellos». Si algo duele: ցավում է: Գլուխս ցավում է «me duele la cabeza» (գլուխս — «mi cabeza»)."
+    "es": "«Necesito» es Ինձ … է պետք, literalmente «a mí … es necesario»: Ինձ դեղ է պետք «necesito un remedio». A quién: ինձ «a mí», քեզ «a ti», նրան «a él, a ella», մեզ «a nosotros», ձեզ «a ustedes», նրանց «a ellos». Si algo duele: ցավում է: Գլուխս ցավում է «me duele la cabeza» (գլուխս — «mi cabeza»).",
+    "de": "„Ich brauche“ ist Ինձ … է պետք, wörtlich „mir … ist nötig“: Ինձ դեղ է պետք „Ich brauche Medizin“. Für wen: ինձ „mir“, քեզ „dir“, նրան „ihm, ihr“, մեզ „uns“, ձեզ „Ihnen (plural, höflich)“, նրանց „ihnen“. Wenn etwas weh tut — ցավում է: Գլուխս ցավում է „Mein Kopf tut weh“ (գլուխս — „mein Kopf“)."
    },
    "scene": {
     "title": {
      "ru": "В аптеке",
      "en": "At the pharmacy",
      "fr": "À la pharmacie",
-     "es": "En la farmacia"
+     "es": "En la farmacia",
+     "de": "In der Apotheke"
     },
     "who": {
      "Դ": {
@@ -2451,6 +2570,7 @@
       "en": "Pharmacist",
       "fr": "Pharmacienne",
       "es": "Farmacéutica",
+      "de": "Apothekerin",
       "g": "m"
      },
      "Մ": {
@@ -2458,6 +2578,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -2572,21 +2693,24 @@
     "ru": "Вчера я …",
     "en": "Yesterday I …",
     "fr": "Hier, j’ai …",
-    "es": "Ayer yo …"
+    "es": "Ayer yo …",
+    "de": "Gestern … ich"
    },
    "formula": "Երեկ ես [բայ]-եցի",
    "note": {
     "ru": "Законченное прошедшее (аорист) — что случилось и закончилось. Глаголы на -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի «написал»). На -ալ: -ացի (կարդացի). Частые особые: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Отрицание — չ- прямо к глаголу: չգնացի «не пошёл».",
     "en": "The completed past (aorist) is for what happened and is over. Verbs in -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի “I wrote”). In -ալ: -ացի (կարդացի). Common special ones: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Negation is չ- stuck to the verb: չգնացի “I didn’t go”.",
     "fr": "Le passé achevé (aoriste) : ce qui est arrivé et terminé. Verbes en -ել : -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի « j’ai écrit »). En -ալ : -ացի (կարդացի). Irréguliers fréquents : գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Négation : չ- collé au verbe : չգնացի « je ne suis pas allé ».",
-    "es": "El pasado terminado (aoristo): lo que pasó y terminó. Verbos en -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի «escribí»). En -ալ: -ացի (կարդացի). Irregulares frecuentes: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Negación: չ- pegado al verbo: չգնացի «no fui»."
+    "es": "El pasado terminado (aoristo): lo que pasó y terminó. Verbos en -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի «escribí»). En -ալ: -ացի (կարդացի). Irregulares frecuentes: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Negación: չ- pegado al verbo: չգնացի «no fui».",
+    "de": "Die abgeschlossene Vergangenheit (Aorist) verwendest du für Dinge, die passiert und abgeschlossen sind. Verben auf -ել: -եցի, -եցիր, -եց, -եցինք, -եցիք, -եցին (գրեցի „ich schrieb“). Auf -ալ: -ացի (կարդացի). Häufige unregelmäßige: գնալ → գնացի, գալ → եկա, տեսնել → տեսա, ուտել → կերա, անել → արեցի, լինել → եղա. Verneinung: Das Präfix չ- setzt du direkt vor das Verb: չգնացի „ich ging nicht“."
    },
    "scene": {
     "title": {
      "ru": "После выходных",
      "en": "After the weekend",
      "fr": "Après le week-end",
-     "es": "Después del fin de semana"
+     "es": "Después del fin de semana",
+     "de": "Nach dem Wochenende"
     },
     "who": {
      "Գ": {
@@ -2594,6 +2718,7 @@
       "en": "Gor, a colleague",
       "fr": "Gor, un collègue",
       "es": "Gor, un colega",
+      "de": "Gor, ein Kollege",
       "g": "m"
      },
      "Մ": {
@@ -2601,6 +2726,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -2690,7 +2816,8 @@
       "ru": "вчера, один раз: «сделал»",
       "en": "yesterday, once: “did”",
       "fr": "hier, une fois : « j’ai fait »",
-      "es": "ayer, una vez: «hice»"
+      "es": "ayer, una vez: «hice»",
+      "de": "gestern, einmal: „habe gemacht“"
      }
     }
    ]
@@ -2703,21 +2830,24 @@
     "ru": "Завтра я …",
     "en": "Tomorrow I will …",
     "fr": "Demain, je vais …",
-    "es": "Mañana voy a …"
+    "es": "Mañana voy a …",
+    "de": "Morgen werde ich …"
    },
    "formula": "Վաղը [բայ]-ելու եմ",
    "note": {
     "ru": "Будущее — начальная форма + -ու и «быть»: գնալու եմ «поеду, собираюсь поехать», գրելու ես, կարդալու է… Отрицание: չեմ գնալու «не поеду». Слова времени: վաղը «завтра», մյուս շաբաթ «на следующей неделе», ամռանը «летом».",
     "en": "The future is the basic form + -ու and “to be”: գնալու եմ “I’ll go, I’m going to go”, գրելու ես, կարդալու է… Negative: չեմ գնալու “I won’t go”. Time words: վաղը “tomorrow”, մյուս շաբաթ “next week”, ամռանը “in summer”.",
     "fr": "Le futur : l’infinitif + -ու et « être » : գնալու եմ « j’irai, je vais aller », գրելու ես, կարդալու է… Négation : չեմ գնալու « je n’irai pas ». Mots du temps : վաղը « demain », մյուս շաբաթ « la semaine prochaine », ամռանը « en été ».",
-    "es": "El futuro es el infinitivo + -ու y «ser»: գնալու եմ «voy a ir, iré», գրելու ես, կարդալու է… Negación: չեմ գնալու «no voy a ir». Palabras de tiempo: վաղը «mañana», մյուս շաբաթ «la semana que viene», ամռանը «en verano»."
+    "es": "El futuro es el infinitivo + -ու y «ser»: գնալու եմ «voy a ir, iré», գրելու ես, կարդալու է… Negación: չեմ գնալու «no voy a ir». Palabras de tiempo: վաղը «mañana», մյուս շաբաթ «la semana que viene», ամռանը «en verano».",
+    "de": "Das Futur bildest du mit der Grundform + -ու und „sein“: գնալու եմ „ich werde gehen“, գրելու ես, կարդալու է … Verneinung: չեմ գնալու „ich werde nicht gehen“. Zeitangaben: վաղը „morgen“, մյուս շաբաթ „nächste Woche“, ամռանը „im Sommer“."
    },
    "scene": {
     "title": {
      "ru": "Планы на лето",
      "en": "Summer plans",
      "fr": "Projets d’été",
-     "es": "Planes para el verano"
+     "es": "Planes para el verano",
+     "de": "Sommerpläne"
     },
     "who": {
      "Ա": {
@@ -2725,6 +2855,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -2732,6 +2863,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -2828,7 +2960,8 @@
       "ru": "завтра, потом: «сделаю»",
       "en": "tomorrow, later: “will do”",
       "fr": "demain, plus tard : « je vais faire »",
-      "es": "mañana, después: «voy a hacer»"
+      "es": "mañana, después: «voy a hacer»",
+      "de": "morgen, später: „werde machen“"
      }
     }
    ]
@@ -2841,21 +2974,24 @@
     "ru": "Откуда?",
     "en": "Where from?",
     "fr": "D’où ?",
-    "es": "¿De dónde?"
+    "es": "¿De dónde?",
+    "de": "Woher?"
    },
    "formula": "[որտեղ]-ից",
    "note": {
     "ru": "«Откуда» — окончание -ից: Մոսկվայից «из Москвы», տնից «из дома», աշխատանքից «с работы». Вопрос — Որտեղի՞ց եք։ «Откуда вы?»; ответ: Ես Մոսկվայից եմ. -ից значит и «через» о времени: մի շաբաթից «через неделю».",
     "en": "“From” is the ending -ից: Մոսկվայից “from Moscow”, տնից “from home”, աշխատանքից “from work”. The question is Որտեղի՞ց եք։ “Where are you from?”; the answer: Ես Մոսկվայից եմ. With time, -ից means “in”: մի շաբաթից “in a week”.",
     "fr": "« De » (provenance) : la terminaison -ից : Մոսկվայից « de Moscou », տնից « de la maison », աշխատանքից « du travail ». La question : Որտեղի՞ց եք։ « D’où êtes-vous ? » ; la réponse : Ես Մոսկվայից եմ. Avec le temps, -ից veut dire « dans » : մի շաբաթից « dans une semaine ».",
-    "es": "«De dónde» es la terminación -ից: Մոսկվայից «de Moscú», տնից «de casa», աշխատանքից «del trabajo». La pregunta: Որտեղի՞ց եք։ «¿De dónde es?»; respuesta: Ես Մոսկվայից եմ. Con tiempo, -ից significa «dentro de»: մի շաբաթից «dentro de una semana»."
+    "es": "«De dónde» es la terminación -ից: Մոսկվայից «de Moscú», տնից «de casa», աշխատանքից «del trabajo». La pregunta: Որտեղի՞ց եք։ «¿De dónde es?»; respuesta: Ես Մոսկվայից եմ. Con tiempo, -ից significa «dentro de»: մի շաբաթից «dentro de una semana».",
+    "de": "Die Endung -ից bedeutet „von“: Մոսկվայից „aus Moskau“, տնից „von zu Hause“, աշխատանքից „von der Arbeit“. Die Frage lautet Որտեղի՞ց եք։ „Woher kommen Sie?“; die Antwort: Ես Մոսկվայից եմ. Bei Zeitangaben bedeutet -ից „in“: մի շաբաթից „in einer Woche“."
    },
    "scene": {
     "title": {
      "ru": "Соседка в самолёте",
      "en": "The neighbour on the plane",
      "fr": "La voisine dans l’avion",
-     "es": "La vecina en el avión"
+     "es": "La vecina en el avión",
+     "de": "Die Nachbarin im Flugzeug"
     },
     "who": {
      "Ս": {
@@ -2863,6 +2999,7 @@
       "en": "Neighbour",
       "fr": "Voisine",
       "es": "Vecina",
+      "de": "Nachbarin",
       "g": "f"
      },
      "Մ": {
@@ -2870,6 +3007,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -2958,7 +3096,8 @@
       "ru": "откуда? — «из …»",
       "en": "where from? — “from …”",
       "fr": "d’où ? — « de … »",
-      "es": "¿de dónde? — «de …»"
+      "es": "¿de dónde? — «de …»",
+      "de": "woher? — „aus …“"
      }
     }
    ]
@@ -2971,21 +3110,24 @@
     "ru": "Больше, чем …",
     "en": "More … than …",
     "fr": "Plus … que …",
-    "es": "Más … que …"
+    "es": "Más … que …",
+    "de": "Mehr … als …"
    },
    "formula": "[ինչ]-ից ավելի [ինչպիսի]",
    "note": {
     "ru": "Сравнение — тем же -ից: Գյումրին Վանաձորից մեծ է «Гюмри больше Ванадзора». Можно добавить ավելի «более» или сказать через քան: ավելի ցուրտ է, քան Երևանում «холоднее, чем в Ереване». «Самый» — приставка ամենա-: ամենամեծը «самый большой», ամենաբարձրը «самый высокий». Прививка -ացնել делает «сделать таким»: տաք → տաքացնել «подогреть».",
     "en": "Comparison uses the same -ից: Գյումրին Վանաձորից մեծ է “Gyumri is bigger than Vanadzor”. You can add ավելի “more” or use քան: ավելի ցուրտ է, քան Երևանում “colder than in Yerevan”. “The most” is the prefix ամենա-: ամենամեծը “the biggest”, ամենաբարձրը “the highest”. The graft -ացնել means “make it so”: տաք → տաքացնել “to warm up”.",
     "fr": "La comparaison utilise le même -ից : Գյումրին Վանաձորից մեծ է « Gumri est plus grande que Vanadzor ». On peut ajouter ավելի « plus » ou passer par քան : ավելի ցուրտ է, քան Երևանում « plus froid qu’à Erevan ». « Le plus » : le préfixe ամենա- : ամենամեծը « le plus grand », ամենաբարձրը « le plus haut ». La greffe -ացնել veut dire « rendre ainsi » : տաք → տաքացնել « réchauffer ».",
-    "es": "La comparación usa el mismo -ից: Գյումրին Վանաձորից մեծ է «Guiumri es más grande que Vanadzor». Se puede agregar ավելի «más» o usar քան: ավելի ցուրտ է, քան Երևանում «más frío que en Ereván». «El más» es el prefijo ամենա-: ամենամեծը «el más grande», ամենաբարձրը «el más alto». El injerto -ացնել significa «volver así»: տաք → տաքացնել «calentar»."
+    "es": "La comparación usa el mismo -ից: Գյումրին Վանաձորից մեծ է «Guiumri es más grande que Vanadzor». Se puede agregar ավելի «más» o usar քան: ավելի ցուրտ է, քան Երևանում «más frío que en Ereván». «El más» es el prefijo ամենա-: ամենամեծը «el más grande», ամենաբարձրը «el más alto». El injerto -ացնել significa «volver así»: տաք → տաքացնել «calentar».",
+    "de": "Zum Vergleich verwendest du dasselbe -ից: Գյումրին Վանաձորից մեծ է „Gyumri ist größer als Vanadzor“. Du kannst ավելի „mehr“ hinzufügen oder քան verwenden: ավելի ցուրտ է, քան Երևանում „kälter als in Eriwan“. Den Superlativ bildest du mit dem Präfix ամենա-: ամենամեծը „der größte“, ամենաբարձրը „der höchste“. Das Suffix -ացնել bedeutet „zum ... machen“: տաք → տաքացնել „aufwärmen“."
    },
    "scene": {
     "title": {
      "ru": "Какой город больше?",
      "en": "Which town is bigger?",
      "fr": "Quelle ville est la plus grande ?",
-     "es": "¿Qué ciudad es más grande?"
+     "es": "¿Qué ciudad es más grande?",
+     "de": "Welche Stadt ist größer?"
     },
     "who": {
      "Մ": {
@@ -2993,6 +3135,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -3000,6 +3143,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -3091,21 +3235,24 @@
     "ru": "На чём? Чем?",
     "en": "By what? With what?",
     "fr": "En quoi ? Avec quoi ?",
-    "es": "¿En qué? ¿Con qué?"
+    "es": "¿En qué? ¿Con qué?",
+    "de": "Worauf? Womit?"
    },
    "formula": "[ինչ]-ով",
    "note": {
     "ru": "Окончание -ով отвечает «на чём, чем, с чем»: ավտոբուսով «на автобусе», քարտով «картой», դանակով «ножом», կաթով սուրճ «кофе с молоком». После гласной -ա, -ո — с յ: մետրոյով, մեքենայով. Вопрос: Ինչո՞վ։ Тем же -ով: աստիճաններով «по лестнице».",
     "en": "The ending -ով answers “by what, with what”: ավտոբուսով “by bus”, քարտով “by card”, դանակով “with a knife”, կաթով սուրճ “coffee with milk”. After -ա, -ո it takes յ: մետրոյով, մեքենայով. The question: Ինչո՞վ։ The same -ով: աստիճաններով “by the stairs”.",
     "fr": "La terminaison -ով répond à « en quoi, avec quoi » : ավտոբուսով « en bus », քարտով « par carte », դանակով « au couteau », կաթով սուրճ « café au lait ». Après -ա, -ո, on ajoute յ : մետրոյով, մեքենայով. La question : Ինչո՞վ։ Même -ով : աստիճաններով « par l’escalier ».",
-    "es": "La terminación -ով responde «en qué, con qué»: ավտոբուսով «en micro, en autobús», քարտով «con tarjeta», դանակով «con cuchillo», կաթով սուրճ «café con leche». Después de -ա, -ո lleva յ: մետրոյով, մեքենայով. La pregunta: Ինչո՞վ։ El mismo -ով: աստիճաններով «por la escalera»."
+    "es": "La terminación -ով responde «en qué, con qué»: ավտոբուսով «en micro, en autobús», քարտով «con tarjeta», դանակով «con cuchillo», կաթով սուրճ «café con leche». Después de -ա, -ո lleva յ: մետրոյով, մեքենայով. La pregunta: Ինչո՞վ։ El mismo -ով: աստիճաններով «por la escalera».",
+    "de": "Mit der Endung -ով antwortest du auf die Frage „Womit?“: ավտոբուսով „mit dem Bus“, քարտով „mit der Karte“, դանակով „mit einem Messer“, կաթով սուրճ „Kaffee mit Milch“. Nach -ա oder -ո fügst du ein յ ein: մետրոյով, մեքենայով. Die Frage lautet: Ինչո՞վ։ Auch sie endet auf -ով: աստիճաններով „mit der Treppe“."
    },
    "scene": {
     "title": {
      "ru": "Как доехать до Севана",
      "en": "Getting to Sevan",
      "fr": "Aller au lac Sevan",
-     "es": "Cómo llegar al Sevan"
+     "es": "Cómo llegar al Sevan",
+     "de": "Wie du zum Sevan kommst"
     },
     "who": {
      "Մ": {
@@ -3113,6 +3260,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Կ": {
@@ -3120,6 +3268,7 @@
       "en": "Passer-by",
       "fr": "Passant",
       "es": "Transeúnte",
+      "de": "der Passant",
       "g": "m"
      }
     },
@@ -3210,7 +3359,8 @@
       "ru": "на чём? чем? — «…ом»",
       "en": "by what? with what?",
       "fr": "en quoi ? avec quoi ?",
-      "es": "¿en qué? ¿con qué?"
+      "es": "¿en qué? ¿con qué?",
+      "de": "Womit? Wie?"
      }
     }
    ]
@@ -3223,21 +3373,24 @@
     "ru": "На, под, в, около",
     "en": "On, under, in, near",
     "fr": "Sur, sous, dans, près de",
-    "es": "Sobre, debajo, dentro, cerca"
+    "es": "Sobre, debajo, dentro, cerca",
+    "de": "Auf, unter, in, bei"
    },
    "formula": "[ինչ]-ի վրա · տակ · մեջ · մոտ",
    "note": {
     "ru": "Армянские «предлоги» стоят после слова, а слово берёт -ի: սեղանի վրա «на столе», բազմոցի տակ «под диваном», պայուսակի մեջ «в сумке», պատուհանի մոտ «у окна», ընկերոջ հետ «с другом». Особые формы те же, что у «чей»: դուռ → դռան մոտ «у двери». С людьми մոտ — «у»: տատիկի մոտ «у бабушки».",
     "en": "Armenian “prepositions” come after the word, and the word takes -ի: սեղանի վրա “on the table”, բազմոցի տակ “under the sofa”, պայուսակի մեջ “in the bag”, պատուհանի մոտ “by the window”, ընկերոջ հետ “with a friend”. Special forms are the same as for “whose”: դուռ → դռան մոտ “by the door”. With people, մոտ means “at someone’s”: տատիկի մոտ “at grandma’s”.",
     "fr": "Les « prépositions » arméniennes se placent après le mot, qui prend -ի : սեղանի վրա « sur la table », բազմոցի տակ « sous le canapé », պայուսակի մեջ « dans le sac », պատուհանի մոտ « près de la fenêtre », ընկերոջ հետ « avec un ami ». Les formes spéciales sont celles de « à qui » : դուռ → դռան մոտ « près de la porte ». Avec une personne, մոտ veut dire « chez » : տատիկի մոտ « chez mamie ».",
-    "es": "Las «preposiciones» armenias van después de la palabra, que toma -ի: սեղանի վրա «sobre la mesa», բազմոցի տակ «debajo del sillón», պայուսակի մեջ «dentro del bolso», պատուհանի մոտ «junto a la ventana», ընկերոջ հետ «con un amigo». Las formas especiales son las de «de quién»: դուռ → դռան մոտ «junto a la puerta». Con personas, մոտ es «en casa de»: տատիկի մոտ «en lo de la abuela»."
+    "es": "Las «preposiciones» armenias van después de la palabra, que toma -ի: սեղանի վրա «sobre la mesa», բազմոցի տակ «debajo del sillón», պայուսակի մեջ «dentro del bolso», պատուհանի մոտ «junto a la ventana», ընկերոջ հետ «con un amigo». Las formas especiales son las de «de quién»: դուռ → դռան մոտ «junto a la puerta». Con personas, մոտ es «en casa de»: տատիկի մոտ «en lo de la abuela».",
+    "de": "Merke: Im Armenischen stehen die „Präpositionen“ nach dem Wort, und das Wort nimmt -ի: սեղանի վրա „auf dem Tisch“, բազմոցի տակ „unter dem Sofa“, պայուսակի մեջ „in der Tasche“, պատուհանի մոտ „am Fenster“, ընկերոջ հետ „mit einem Freund“. Besondere Formen sind dieselben wie bei „wessen“: դուռ → դռան մոտ „an der Tür“. Bei Personen bedeutet մոտ — „bei“: տատիկի մոտ „bei Oma“."
    },
    "scene": {
     "title": {
      "ru": "Где ключи?",
      "en": "Where are the keys?",
      "fr": "Où sont les clés ?",
-     "es": "¿Dónde están las llaves?"
+     "es": "¿Dónde están las llaves?",
+     "de": "Wo sind die Schlüssel?"
     },
     "who": {
      "Մ": {
@@ -3245,6 +3398,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -3252,6 +3406,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -3330,7 +3485,8 @@
         "ru": "на столе",
         "en": "on the table",
         "fr": "sur la table",
-        "es": "sobre la mesa"
+        "es": "sobre la mesa",
+        "de": "auf dem Tisch"
        },
        "սեղանի վրա"
       ],
@@ -3339,7 +3495,8 @@
         "ru": "под стулом",
         "en": "under the chair",
         "fr": "sous la chaise",
-        "es": "debajo de la silla"
+        "es": "debajo de la silla",
+        "de": "unter dem Stuhl"
        },
        "աթոռի տակ"
       ],
@@ -3348,7 +3505,8 @@
         "ru": "в сумке",
         "en": "in the bag",
         "fr": "dans le sac",
-        "es": "dentro del bolso"
+        "es": "dentro del bolso",
+        "de": "in der Tasche"
        },
        "պայուսակի մեջ"
       ],
@@ -3357,7 +3515,8 @@
         "ru": "у двери",
         "en": "by the door",
         "fr": "près de la porte",
-        "es": "junto a la puerta"
+        "es": "junto a la puerta",
+        "de": "an der Tür"
        },
        "դռան մոտ"
       ],
@@ -3366,7 +3525,8 @@
         "ru": "с другом",
         "en": "with a friend",
         "fr": "avec un ami",
-        "es": "con un amigo"
+        "es": "con un amigo",
+        "de": "mit einem Freund"
        },
        "ընկերոջ հետ"
       ],
@@ -3375,7 +3535,8 @@
         "ru": "у бабушки",
         "en": "at grandma’s",
         "fr": "chez mamie",
-        "es": "en lo de la abuela"
+        "es": "en lo de la abuela",
+        "de": "bei Oma"
        },
        "տատիկի մոտ"
       ]
@@ -3403,7 +3564,8 @@
       "ru": "форма перед վրա / տակ / մեջ / մոտ",
       "en": "the form before վրա / տակ / մեջ / մոտ",
       "fr": "la forme devant վրա / տակ / մեջ / մոտ",
-      "es": "la forma antes de վրա / տակ / մեջ / մոտ"
+      "es": "la forma antes de վրա / տակ / մեջ / մոտ",
+      "de": "Die Form vor վրա / տակ / մեջ / մոտ"
      }
     }
    ]
@@ -3416,21 +3578,24 @@
     "ru": "Я уже бывал",
     "en": "I have been",
     "fr": "J’y suis déjà allé",
-    "es": "Ya estuve"
+    "es": "Ya estuve",
+    "de": "Ich war schon"
    },
    "formula": "Ես [բայ]-ել եմ",
    "note": {
     "ru": "Перфект — «уже сделано, есть опыт»: форма на -ել (у -ալ — -ացել) и «быть»: եղել եմ «бывал», կարդացել եմ «читал (уже)», տեսել եմ «видел». Դուք եղե՞լ եք Մատենադարանում։ — «Вы бывали в Матенадаране?» Отрицание: չեմ եղել, դեռ չեմ տեսել «ещё не видел». Аорист рассказывает, что случилось тогда; перфект — что это есть в опыте сейчас.",
     "en": "The perfect means “already done, I have the experience”: the -ել form (for -ալ verbs, -ացել) plus “to be”: եղել եմ “I have been”, կարդացել եմ “I have read”, տեսել եմ “I have seen”. Դուք եղե՞լ եք Մատենադարանում։ — “Have you been to the Matenadaran?” Negative: չեմ եղել, դեռ չեմ տեսել “I haven’t seen it yet”. The aorist tells what happened then; the perfect, what you have now as experience.",
     "fr": "Le parfait : « c’est déjà fait, j’en ai l’expérience » : la forme en -ել (pour les verbes en -ալ, -ացել) et « être » : եղել եմ « j’y suis allé », կարդացել եմ « j’ai (déjà) lu », տեսել եմ « j’ai vu ». Դուք եղե՞լ եք Մատենադարանում։ — « Êtes-vous déjà allé au Maténadaran ? » Négation : չեմ եղել, դեռ չեմ տեսել « je ne l’ai pas encore vu ». L’aoriste raconte ce qui s’est passé alors ; le parfait, ce qu’on a vécu.",
-    "es": "El perfecto: «ya está hecho, tengo la experiencia»: la forma en -ել (en los verbos en -ալ, -ացել) y «ser»: եղել եմ «estuve, he estado», կարդացել եմ «he leído», տեսել եմ «he visto». Դուք եղե՞լ եք Մատենադարանում։ — «¿Estuvo en el Matenadarán?» Negación: չեմ եղել, դեռ չեմ տեսել «todavía no lo vi». El aoristo cuenta lo que pasó entonces; el perfecto, lo que uno ya vivió."
+    "es": "El perfecto: «ya está hecho, tengo la experiencia»: la forma en -ել (en los verbos en -ալ, -ացել) y «ser»: եղել եմ «estuve, he estado», կարդացել եմ «he leído», տեսել եմ «he visto». Դուք եղե՞լ եք Մատենադարանում։ — «¿Estuvo en el Matenadarán?» Negación: չեմ եղել, դեռ չեմ տեսել «todavía no lo vi». El aoristo cuenta lo que pasó entonces; el perfecto, lo que uno ya vivió.",
+    "de": "Das Perfekt bedeutet „schon gemacht, ich habe die Erfahrung“: die Form auf -ել (bei Verben auf -ալ: -ացել) und „sein“: եղել եմ „ich bin gewesen“, կարդացել եմ „ich habe gelesen“, տեսել եմ „ich habe gesehen“. Դուք եղե՞լ եք Մատենադարանում։ — „Warst du schon im Matenadaran?“ Verneinung: չեմ եղել „ich bin nicht gewesen“, դեռ չեմ տեսել „ich habe es noch nicht gesehen“. Der Aorist erzählt, was damals passiert ist; das Perfekt, was du jetzt als Erfahrung hast."
    },
    "scene": {
     "title": {
      "ru": "В Матенадаране",
      "en": "At the Matenadaran",
      "fr": "Au Maténadaran",
-     "es": "En el Matenadarán"
+     "es": "En el Matenadarán",
+     "de": "Im Matenadaran"
     },
     "who": {
      "Գ": {
@@ -3438,6 +3603,7 @@
       "en": "Guide",
       "fr": "Guide",
       "es": "Guía",
+      "de": "Guide",
       "g": "m"
      },
      "Մ": {
@@ -3445,6 +3611,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -3533,7 +3700,8 @@
       "ru": "уже, есть опыт: «я уже …»",
       "en": "already, from experience: “have …”",
       "fr": "déjà, par expérience : « j’ai déjà … »",
-      "es": "ya, por experiencia: «he …»"
+      "es": "ya, por experiencia: «he …»",
+      "de": "schon, aus Erfahrung: „ich habe schon …“"
      }
     }
    ]
@@ -3546,21 +3714,24 @@
     "ru": "Как пройти?",
     "en": "How do I get there?",
     "fr": "Comment y aller ?",
-    "es": "¿Cómo llego?"
+    "es": "¿Cómo llego?",
+    "de": "Wie komme ich dahin?"
    },
    "formula": "[գնացեք] ուղիղ, [թեքվեք] աջ",
    "note": {
     "ru": "Дорогу объясняют вежливым повелительным: գնացեք «идите», թեքվեք «поверните», անցեք «перейдите», իջեք «спуститесь, выйдите», բարձրացեք «поднимитесь». Направления: ուղիղ «прямо», աջ «направо», ձախ «налево», մինչև «до». Шаги: նախ «сначала», հետո «потом». Прививка տ- — «не-»: տգեղ «некрасивый».",
     "en": "Directions are given with the polite imperative: գնացեք “go”, թեքվեք “turn”, անցեք “cross”, իջեք “go down, get off”, բարձրացեք “go up”. Which way: ուղիղ “straight”, աջ “right”, ձախ “left”, մինչև “as far as”. Steps: նախ “first”, հետո “then”. The graft տ- means “un-”: տգեղ “ugly”.",
     "fr": "On indique le chemin à l’impératif poli : գնացեք « allez », թեքվեք « tournez », անցեք « traversez », իջեք « descendez », բարձրացեք « montez ». La direction : ուղիղ « tout droit », աջ « à droite », ձախ « à gauche », մինչև « jusqu’à ». Les étapes : նախ « d’abord », հետո « ensuite ». La greffe տ- veut dire « in- » : տգեղ « laid ».",
-    "es": "El camino se explica con el imperativo cortés: գնացեք «vaya», թեքվեք «doble», անցեք «cruce», իջեք «baje», բարձրացեք «suba». La dirección: ուղիղ «derecho», աջ «a la derecha», ձախ «a la izquierda», մինչև «hasta». Los pasos: նախ «primero», հետո «después». El injerto տ- significa «in-, des-»: տգեղ «feo»."
+    "es": "El camino se explica con el imperativo cortés: գնացեք «vaya», թեքվեք «doble», անցեք «cruce», իջեք «baje», բարձրացեք «suba». La dirección: ուղիղ «derecho», աջ «a la derecha», ձախ «a la izquierda», մինչև «hasta». Los pasos: նախ «primero», հետո «después». El injerto տ- significa «in-, des-»: տգեղ «feo».",
+    "de": "Den Weg erklärt man mit dem höflichen Imperativ: գնացեք „gehen Sie“, թեքվեք „biegen Sie ab“, անցեք „überqueren Sie“, իջեք „steigen Sie aus, gehen Sie hinunter“, բարձրացեք „steigen Sie hinauf“. Richtungsangaben: ուղիղ „geradeaus“, աջ „rechts“, ձախ „links“, մինչև „bis“. Schritte: նախ „zuerst“, հետո „dann“. Das Präfix տ- bedeutet „un-“: տգեղ „hässlich“."
    },
    "scene": {
     "title": {
      "ru": "Дорога к Каскаду",
      "en": "The way to the Cascade",
      "fr": "Le chemin de la Cascade",
-     "es": "Cómo llegar a la Cascada"
+     "es": "Cómo llegar a la Cascada",
+     "de": "Der Weg zur Kaskade"
     },
     "who": {
      "Մ": {
@@ -3568,6 +3739,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Կ": {
@@ -3575,6 +3747,7 @@
       "en": "Passer-by",
       "fr": "Passant",
       "es": "Transeúnte",
+      "de": "der Passant",
       "g": "m"
      }
     },
@@ -3671,7 +3844,8 @@
       "ru": "вежливо: «…те»",
       "en": "politely: “please …”",
       "fr": "poliment : « …ez »",
-      "es": "con cortesía: «…»"
+      "es": "con cortesía: «…»",
+      "de": "höflich: „… Sie“"
      }
     },
     {
@@ -3682,7 +3856,8 @@
         "ru": "прямо",
         "en": "straight on",
         "fr": "tout droit",
-        "es": "derecho"
+        "es": "derecho",
+        "de": "geradeaus"
        },
        "ուղիղ"
       ],
@@ -3691,7 +3866,8 @@
         "ru": "направо",
         "en": "to the right",
         "fr": "à droite",
-        "es": "a la derecha"
+        "es": "a la derecha",
+        "de": "rechts"
        },
        "աջ"
       ],
@@ -3700,7 +3876,8 @@
         "ru": "налево",
         "en": "to the left",
         "fr": "à gauche",
-        "es": "a la izquierda"
+        "es": "a la izquierda",
+        "de": "nach links"
        },
        "ձախ"
       ],
@@ -3709,7 +3886,8 @@
         "ru": "сначала",
         "en": "first",
         "fr": "d’abord",
-        "es": "primero"
+        "es": "primero",
+        "de": "zuerst"
        },
        "նախ"
       ],
@@ -3718,7 +3896,8 @@
         "ru": "потом",
         "en": "then",
         "fr": "ensuite",
-        "es": "después"
+        "es": "después",
+        "de": "dann"
        },
        "հետո"
       ]
@@ -3734,21 +3913,24 @@
     "ru": "Надо, чтобы …",
     "en": "I need to …",
     "fr": "Il faut que …",
-    "es": "Hay que …"
+    "es": "Hay que …",
+    "de": "Ich muss …"
    },
    "formula": "Պետք է [բայ]-եմ",
    "note": {
     "ru": "Сослагательная форма — для того, что нужно, хочется или можно сделать: глагол без -ել и окончания -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); у глаголов на -ալ: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Она идёт после պետք է «надо», ուզում եմ, որ «хочу, чтобы»: Պետք է հաց գնեմ «надо купить хлеб»; Ուզում եմ, որ դու գաս «хочу, чтобы ты пришёл». Предложение: Գնա՞նք «пойдём?», Ի՞նչ անեմ «что мне сделать?».",
     "en": "The subjunctive is for what you need, want or may do: the verb without -ել plus -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); for -ալ verbs: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). It follows պետք է “must”, ուզում եմ, որ “I want … to”: Պետք է հաց գնեմ “I need to buy bread”; Ուզում եմ, որ դու գաս “I want you to come”. Suggestions: Գնա՞նք “shall we go?”, Ի՞նչ անեմ “what shall I do?”.",
     "fr": "Le subjonctif sert à ce qu’il faut, qu’on veut ou qu’on peut faire : le verbe sans -ել plus -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…) ; pour les verbes en -ալ : -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Il suit պետք է « il faut », ուզում եմ, որ « je veux que » : Պետք է հաց գնեմ « il faut que j’achète du pain » ; Ուզում եմ, որ դու գաս « je veux que tu viennes ». Pour proposer : Գնա՞նք « on y va ? », Ի՞նչ անեմ « que dois-je faire ? ».",
-    "es": "El subjuntivo es para lo que hay que, se quiere o se puede hacer: el verbo sin -ել más -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); en los verbos en -ալ: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Va después de պետք է «hay que», ուզում եմ, որ «quiero que»: Պետք է հաց գնեմ «tengo que comprar pan»; Ուզում եմ, որ դու գաս «quiero que vengas». Para proponer: Գնա՞նք «¿vamos?», Ի՞նչ անեմ «¿qué hago?»."
+    "es": "El subjuntivo es para lo que hay que, se quiere o se puede hacer: el verbo sin -ել más -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); en los verbos en -ալ: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Va después de պետք է «hay que», ուզում եմ, որ «quiero que»: Պետք է հաց գնեմ «tengo que comprar pan»; Ուզում եմ, որ դու գաս «quiero que vengas». Para proponer: Գնա՞նք «¿vamos?», Ի՞նչ անեմ «¿qué hago?».",
+    "de": "Der Konjunktiv wird für das verwendet, was du tun musst, möchtest oder kannst: Das Verb ohne -ել plus die Endungen -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); bei Verben auf -ալ: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Er folgt auf պետք է „muss“, ուզում եմ, որ „ich will, dass“: Պետք է հաց գնեմ „ich muss Brot kaufen“; Ուզում եմ, որ դու գաս „ich will, dass du kommst“. Vorschläge: Գնա՞նք „gehen wir?“, Ի՞նչ անեմ „was soll ich tun?“."
    },
    "scene": {
     "title": {
      "ru": "Ждём гостей",
      "en": "Expecting guests",
      "fr": "On attend des invités",
-     "es": "Esperamos visitas"
+     "es": "Esperamos visitas",
+     "de": "Wir erwarten Gäste"
     },
     "who": {
      "Ա": {
@@ -3756,6 +3938,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -3763,6 +3946,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -3852,7 +4036,8 @@
       "ru": "надо, хочу, чтобы: «…»",
       "en": "must, want to: “(that) I …”",
       "fr": "il faut que : « que je … »",
-      "es": "hay que, quiero que: «que yo …»"
+      "es": "hay que, quiero que: «que yo …»",
+      "de": "muss, will, dass: „(dass) ich …“"
      }
     }
    ]
@@ -3865,21 +4050,24 @@
     "ru": "Сделаю!",
     "en": "I’ll do it!",
     "fr": "Je le ferai !",
-    "es": "¡Lo haré!"
+    "es": "¡Lo haré!",
+    "de": "Ich mache es!"
    },
    "formula": "Կ[բայ]-եմ",
    "note": {
     "ru": "Приставка կ- к сослагательной форме даёт «сделаю» — обещание или предположение: կգամ «приду», կզանգեմ «позвоню», կլինի «наверное, будет». В отличие от -ելու եմ (план, решено), կ- мягче: «сделаю, если получится», «пожалуй». Перед гласной — так же: կուտեմ «съем», կանեմ «сделаю». Отрицание — без կ-, с формой на -ի: չեմ գրի «не напишу», չեմ գա «не приду».",
     "en": "The prefix կ- on the subjunctive gives “I will” — a promise or a guess: կգամ “I’ll come”, կզանգեմ “I’ll call”, կլինի “it will probably be”. Unlike -ելու եմ (a fixed plan), կ- is softer: “I will if I can”, “I suppose”. Before a vowel it is the same: կուտեմ “I’ll eat”, կանեմ “I’ll do”. The negative drops կ- and uses the -ի form: չեմ գրի “I won’t write”, չեմ գա “I won’t come”.",
     "fr": "Le préfixe կ- sur le subjonctif donne « je ferai » — une promesse ou une supposition : կգամ « je viendrai », կզանգեմ « j’appellerai », կլինի « ce sera sans doute ». Contrairement à -ելու եմ (projet décidé), կ- est plus souple : « je le ferai si je peux ». Devant une voyelle, pareil : կուտեմ « je mangerai », կանեմ « je ferai ». La négation perd կ- et prend la forme en -ի : չեմ գրի « je n’écrirai pas », չեմ գա « je ne viendrai pas ».",
-    "es": "El prefijo կ- sobre el subjuntivo da «haré»: una promesa o una suposición: կգամ «vendré», կզանգեմ «llamaré», կլինի «seguramente será». A diferencia de -ելու եմ (plan decidido), կ- es más suave: «lo haré si puedo». Ante vocal, igual: կուտեմ «comeré», կանեմ «haré». La negación pierde կ- y usa la forma en -ի: չեմ գրի «no escribiré», չեմ գա «no vendré»."
+    "es": "El prefijo կ- sobre el subjuntivo da «haré»: una promesa o una suposición: կգամ «vendré», կզանգեմ «llamaré», կլինի «seguramente será». A diferencia de -ելու եմ (plan decidido), կ- es más suave: «lo haré si puedo». Ante vocal, igual: կուտեմ «comeré», կանեմ «haré». La negación pierde կ- y usa la forma en -ի: չեմ գրի «no escribiré», չեմ գա «no vendré».",
+    "de": "Das Präfix կ- am Konjunktiv bedeutet „ich werde“ – ein Versprechen oder eine Vermutung: կգամ „ich werde kommen“, կզանգեմ „ich werde anrufen“, կլինի „es wird wahrscheinlich sein“. Im Gegensatz zu -ելու եմ (ein fester Plan) ist կ- weicher: „ich werde, wenn ich kann“, „ich denke mal“. Vor einem Vokal ist es dasselbe: կուտեմ „ich werde essen“, կանեմ „ich werde machen“. Die Verneinung lässt կ- weg und verwendet die -ի-Form: չեմ գրի „ich werde nicht schreiben“, չեմ գա „ich werde nicht kommen“."
    },
    "scene": {
     "title": {
      "ru": "Обещания на прощание",
      "en": "Promises before a trip",
      "fr": "Promesses avant le départ",
-     "es": "Promesas antes del viaje"
+     "es": "Promesas antes del viaje",
+     "de": "Versprechen vor der Abreise"
     },
     "who": {
      "Ա": {
@@ -3887,6 +4075,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -3894,6 +4083,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -3982,7 +4172,8 @@
       "ru": "обещаю, наверное: «сделаю»",
       "en": "a promise, a guess: “will”",
       "fr": "promesse, supposition : « je ferai »",
-      "es": "promesa, suposición: «haré»"
+      "es": "promesa, suposición: «haré»",
+      "de": "Versprechen, Vermutung: „ich werde …“"
      }
     }
    ]
@@ -3995,21 +4186,24 @@
     "ru": "Если …",
     "en": "If …",
     "fr": "Si …",
-    "es": "Si …"
+    "es": "Si …",
+    "de": "Wenn …"
    },
    "formula": "Եթե [բայ]-ի, կ[բայ]-ենք",
    "note": {
     "ru": "Условие: Եթե + сослагательная, потом կ-: Եթե անձրև գա, տանը կմնանք «если пойдёт дождь, останемся дома». Нереальное условие — те же формы в прошедшем (-այի, -եի): Եթե ժամանակ ունենայի, կգայի «если бы у меня было время, я бы пришёл». Можно начать и с главного: Կգամ, եթե կարողանամ «приду, если смогу».",
     "en": "A condition: Եթե + subjunctive, then կ-: Եթե անձրև գա, տանը կմնանք “if it rains, we’ll stay at home”. An unreal condition uses the same forms in the past (-այի, -եի): Եթե ժամանակ ունենայի, կգայի “if I had time, I would come”. You can also start with the main part: Կգամ, եթե կարողանամ “I’ll come if I can”.",
     "fr": "La condition : Եթե + subjonctif, puis կ- : Եթե անձրև գա, տանը կմնանք « s’il pleut, nous resterons à la maison ». L’irréel prend les mêmes formes au passé (-այի, -եի) : Եթե ժամանակ ունենայի, կգայի « si j’avais le temps, je viendrais ». On peut aussi commencer par la principale : Կգամ, եթե կարողանամ « je viendrai si je peux ».",
-    "es": "La condición: Եթե + subjuntivo, después կ-: Եթե անձրև գա, տանը կմնանք «si llueve, nos quedamos en casa». La condición irreal usa las mismas formas en pasado (-այի, -եի): Եթե ժամանակ ունենայի, կգայի «si tuviera tiempo, vendría». También se puede empezar por la principal: Կգամ, եթե կարողանամ «vengo si puedo»."
+    "es": "La condición: Եթե + subjuntivo, después կ-: Եթե անձրև գա, տանը կմնանք «si llueve, nos quedamos en casa». La condición irreal usa las mismas formas en pasado (-այի, -եի): Եթե ժամանակ ունենայի, կգայի «si tuviera tiempo, vendría». También se puede empezar por la principal: Կգամ, եթե կարողանամ «vengo si puedo».",
+    "de": "Eine Bedingung: Եթե + Konjunktiv, dann կ-: Եթե անձրև գա, տանը կմնանք „wenn es regnet, bleiben wir zu Hause“. Eine irreale Bedingung verwendet dieselben Formen im Präteritum (-այի, -եի): Եթե ժամանակ ունենայի, կգայի „wenn ich Zeit hätte, würde ich kommen“. Du kannst auch mit dem Hauptsatz anfangen: Կգամ, եթե կարողանամ „ich komme, wenn ich kann“."
    },
    "scene": {
     "title": {
      "ru": "Поход на Арагац",
      "en": "A hike up Aragats",
      "fr": "Randonnée sur l’Aragats",
-     "es": "Excursión al Aragats"
+     "es": "Excursión al Aragats",
+     "de": "Eine Wanderung auf den Aragats"
     },
     "who": {
      "Մ": {
@@ -4017,6 +4211,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -4024,6 +4219,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -4097,7 +4293,8 @@
         "ru": "если пойдёт дождь",
         "en": "if it rains",
         "fr": "s’il pleut",
-        "es": "si llueve"
+        "es": "si llueve",
+        "de": "wenn es regnet"
        },
        "եթե անձրև գա"
       ],
@@ -4106,7 +4303,8 @@
         "ru": "если погода будет хорошая",
         "en": "if the weather is good",
         "fr": "s’il fait beau",
-        "es": "si hace buen tiempo"
+        "es": "si hace buen tiempo",
+        "de": "wenn das Wetter gut ist"
        },
        "եթե եղանակը լավ լինի"
       ],
@@ -4115,7 +4313,8 @@
         "ru": "если у меня будет время",
         "en": "if I have time",
         "fr": "si j’ai le temps",
-        "es": "si tengo tiempo"
+        "es": "si tengo tiempo",
+        "de": "wenn ich Zeit habe"
        },
        "եթե ժամանակ ունենամ"
       ],
@@ -4124,7 +4323,8 @@
         "ru": "если бы у меня было время",
         "en": "if I had time",
         "fr": "si j’avais le temps",
-        "es": "si tuviera tiempo"
+        "es": "si tuviera tiempo",
+        "de": "wenn ich Zeit hätte"
        },
        "եթե ժամանակ ունենայի"
       ],
@@ -4133,7 +4333,8 @@
         "ru": "мы останемся дома",
         "en": "we’ll stay at home",
         "fr": "nous resterons à la maison",
-        "es": "nos quedaremos en casa"
+        "es": "nos quedaremos en casa",
+        "de": "wir bleiben zu Hause"
        },
        "տանը կմնանք"
       ],
@@ -4142,7 +4343,8 @@
         "ru": "я бы пришёл",
         "en": "I would come",
         "fr": "je viendrais",
-        "es": "vendría"
+        "es": "vendría",
+        "de": "ich würde kommen"
        },
        "կգայի"
       ]
@@ -4158,21 +4360,24 @@
     "ru": "Что, который, чтобы",
     "en": "That, which, so that",
     "fr": "Que, qui, pour que",
-    "es": "Que, el cual, para que"
+    "es": "Que, el cual, para que",
+    "de": "Dass, der/die/das, damit"
    },
    "formula": "…, որ …",
    "note": {
     "ru": "Որ связывает две мысли: «что» — Գիտեմ, որ նա այստեղ է «знаю, что он здесь»; «который» — Այն տորթը, որ գնել էի, … «торт, который я купила, …»; «чтобы» (с сослагательной) — Զանգեցի, որ իմանամ «позвонил, чтобы узнать». Чужие слова передаются через որ: Ասաց, որ կզանգի «сказал, что позвонит». Другие связки: երբ «когда», որովհետև «потому что», բայց «но», եթե «если».",
     "en": "Որ links two ideas: “that” — Գիտեմ, որ նա այստեղ է “I know (that) he’s here”; “which” — Այն տորթը, որ գնել էի, … “the cake (that) I had bought …”; “so that” (with the subjunctive) — Զանգեցի, որ իմանամ “I called to find out”. Reported speech also uses որ: Ասաց, որ կզանգի “he said he would call”. Other linking words: երբ “when”, որովհետև “because”, բայց “but”, եթե “if”.",
     "fr": "Որ relie deux idées : « que » — Գիտեմ, որ նա այստեղ է « je sais qu’il est ici » ; « qui, que » — Այն տորթը, որ գնել էի, … « le gâteau que j’avais acheté … » ; « pour que » (avec le subjonctif) — Զանգեցի, որ իմանամ « j’ai appelé pour savoir ». Le discours rapporté passe aussi par որ : Ասաց, որ կզանգի « il a dit qu’il appellerait ». Autres liens : երբ « quand », որովհետև « parce que », բայց « mais », եթե « si ».",
-    "es": "Որ une dos ideas: «que» — Գիտեմ, որ նա այստեղ է «sé que está aquí»; «el que, la que» — Այն տորթը, որ գնել էի, … «la torta que había comprado …»; «para que» (con subjuntivo) — Զանգեցի, որ իմանամ «llamé para saber». El estilo indirecto también usa որ: Ասաց, որ կզանգի «dijo que llamaría». Otros nexos: երբ «cuando», որովհետև «porque», բայց «pero», եթե «si»."
+    "es": "Որ une dos ideas: «que» — Գիտեմ, որ նա այստեղ է «sé que está aquí»; «el que, la que» — Այն տորթը, որ գնել էի, … «la torta que había comprado …»; «para que» (con subjuntivo) — Զանգեցի, որ իմանամ «llamé para saber». El estilo indirecto también usa որ: Ասաց, որ կզանգի «dijo que llamaría». Otros nexos: երբ «cuando», որովհետև «porque», բայց «pero», եթե «si».",
+    "de": "Որ verbindet zwei Gedanken: „dass“ — Գիտեմ, որ նա այստեղ է „Ich weiß, dass er hier ist“; „der/die/das“ — Այն տորթը, որ գնել էի, … „Der Kuchen, den ich gekauft hatte, …“; „damit“ (mit dem Konjunktiv) — Զանգեցի, որ իմանամ „Ich habe angerufen, damit ich es erfahre“. Die indirekte Rede verwendet ebenfalls որ: Ասաց, որ կզանգի „Er sagte, dass er anrufen würde“. Andere Bindewörter: երբ „wenn“, որովհետև „weil“, բայց „aber“, եթե „wenn“."
    },
    "scene": {
     "title": {
      "ru": "Кто звонил?",
      "en": "Who was on the phone?",
      "fr": "Qui a appelé ?",
-     "es": "¿Quién llamó?"
+     "es": "¿Quién llamó?",
+     "de": "Wer hat angerufen?"
     },
     "who": {
      "Ա": {
@@ -4180,6 +4385,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -4187,6 +4393,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -4261,7 +4468,8 @@
         "ru": "что / который",
         "en": "that / which",
         "fr": "que / qui",
-        "es": "que / el cual"
+        "es": "que / el cual",
+        "de": "dass / der/die/das"
        },
        "որ"
       ],
@@ -4270,7 +4478,8 @@
         "ru": "когда",
         "en": "when",
         "fr": "quand",
-        "es": "cuando"
+        "es": "cuando",
+        "de": "wenn"
        },
        "երբ"
       ],
@@ -4279,7 +4488,8 @@
         "ru": "потому что",
         "en": "because",
         "fr": "parce que",
-        "es": "porque"
+        "es": "porque",
+        "de": "weil"
        },
        "որովհետև"
       ],
@@ -4288,7 +4498,8 @@
         "ru": "но",
         "en": "but",
         "fr": "mais",
-        "es": "pero"
+        "es": "pero",
+        "de": "aber"
        },
        "բայց"
       ],
@@ -4297,7 +4508,8 @@
         "ru": "если",
         "en": "if",
         "fr": "si",
-        "es": "si"
+        "es": "si",
+        "de": "wenn"
        },
        "եթե"
       ]
@@ -4313,21 +4525,24 @@
     "ru": "Сделанный руками",
     "en": "Handmade",
     "fr": "Fait main",
-    "es": "Hecho a mano"
+    "es": "Hecho a mano",
+    "de": "handgemacht"
    },
    "formula": "[բայ]-ած [ինչ]",
    "note": {
     "ru": "Форма на -ած — «сделанный, тот, что сделали»: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Она стоит перед словом: իմ սիրած երգը «моя любимая песня» (дословно «мной любимая»), տատիկի գործած գորգը «ковёр, сотканный бабушкой». С -ված — «сделанный кем-то»: ձեռքով արված «ручной работы». Прививка -վածք даёт изделие: գործվածք «ткань».",
     "en": "The -ած form means “done, the one that was done”: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. It goes before the noun: իմ սիրած երգը “my favourite song” (literally “loved by me”), տատիկի գործած գորգը “the rug woven by grandma”. With -ված it means “made by someone”: ձեռքով արված “handmade”. The graft -վածք gives a product: գործվածք “fabric”.",
     "fr": "La forme en -ած veut dire « fait, ce qu’on a fait » : գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Elle se place avant le nom : իմ սիրած երգը « ma chanson préférée » (mot à mot « aimée par moi »), տատիկի գործած գորգը « le tapis tissé par mamie ». Avec -ված : « fait par quelqu’un » : ձեռքով արված « fait main ». La greffe -վածք donne un produit : գործվածք « tissu ».",
-    "es": "La forma en -ած significa «hecho, lo que se hizo»: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Va delante del sustantivo: իմ սիրած երգը «mi canción favorita» (literalmente «amada por mí»), տատիկի գործած գորգը «la alfombra tejida por la abuela». Con -ված: «hecho por alguien»: ձեռքով արված «hecho a mano». El injerto -վածք da un producto: գործվածք «tela»."
+    "es": "La forma en -ած significa «hecho, lo que se hizo»: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Va delante del sustantivo: իմ սիրած երգը «mi canción favorita» (literalmente «amada por mí»), տատիկի գործած գորգը «la alfombra tejida por la abuela». Con -ված: «hecho por alguien»: ձեռքով արված «hecho a mano». El injerto -վածք da un producto: գործվածք «tela».",
+    "de": "Die -ած-Form bedeutet „gemacht, das, was gemacht wurde“: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Sie steht vor dem Substantiv: իմ սիրած երգը „mein Lieblingslied“ (wörtlich „von mir geliebt“), տատիկի գործած գորգը „der von Oma gewebte Teppich“. Mit -ված bedeutet es „von jemandem gemacht“: ձեռքով արված „handgemacht“. Das Suffix -վածք ergibt ein Produkt: գործվածք „Stoff“."
    },
    "scene": {
     "title": {
      "ru": "На Вернисаже",
      "en": "At the Vernissage market",
      "fr": "Au marché du Vernissage",
-     "es": "En el mercado Vernissage"
+     "es": "En el mercado Vernissage",
+     "de": "Auf dem Vernissage-Markt"
     },
     "who": {
      "Մ": {
@@ -4335,6 +4550,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Վ": {
@@ -4342,6 +4558,7 @@
       "en": "Craftswoman",
       "fr": "Artisane",
       "es": "Artesana",
+      "de": "Handwerkerin",
       "g": "m"
      }
     },
@@ -4432,7 +4649,8 @@
       "ru": "«…нный, сделанный» — форма на -ած",
       "en": "“done, made” — the -ած form",
       "fr": "« fait, …é » — la forme en -ած",
-      "es": "«hecho, …do» — la forma en -ած"
+      "es": "«hecho, …do» — la forma en -ած",
+      "de": "„gemacht, …t“ — die -ած-Form"
      }
     }
    ]
@@ -4445,21 +4663,24 @@
     "ru": "Открывается, построен",
     "en": "It opens, it was built",
     "fr": "Ça ouvre, c’est construit",
-    "es": "Se abre, fue construido"
+    "es": "Se abre, fue construido",
+    "de": "Es öffnet, es wurde gebaut"
    },
    "formula": "[ինչ]-ը [բայ]-վում է",
    "note": {
     "ru": "Вставка -վ- делает глагол страдательным: բացել «открывать» → բացվել «открываться», կառուցել «строить» → կառուցվել «строиться». Խանութը բացվում է ժամը իննին «магазин открывается в девять». Տաճարը կառուցվել է չորրորդ դարում «храм построен в IV веке». В разговоре часто обходятся без страдательного: Այս տաճարը թագավորն է կառուցել «этот храм построил царь».",
     "en": "The insert -վ- makes a verb passive: բացել “to open” → բացվել “to be opened, to open”, կառուցել “to build” → կառուցվել “to be built”. Խանութը բացվում է ժամը իննին “the shop opens at nine”. Տաճարը կառուցվել է չորրորդ դարում “the cathedral was built in the 4th century”. In speech people often avoid the passive: Այս տաճարը թագավորն է կառուցել “the king built this cathedral”.",
     "fr": "L’ajout -վ- rend le verbe passif : բացել « ouvrir » → բացվել « s’ouvrir », կառուցել « construire » → կառուցվել « être construit ». Խանութը բացվում է ժամը իննին « le magasin ouvre à neuf heures ». Տաճարը կառուցվել է չորրորդ դարում « la cathédrale a été construite au IVᵉ siècle ». À l’oral, on évite souvent le passif : Այս տաճարը թագավորն է կառուցել « c’est le roi qui a construit cette cathédrale ».",
-    "es": "El agregado -վ- vuelve pasivo el verbo: բացել «abrir» → բացվել «abrirse», կառուցել «construir» → կառուցվել «ser construido». Խանութը բացվում է ժամը իննին «el negocio abre a las nueve». Տաճարը կառուցվել է չորրորդ դարում «la catedral fue construida en el siglo IV». Al hablar se evita a menudo la pasiva: Այս տաճարը թագավորն է կառուցել «el rey construyó esta catedral»."
+    "es": "El agregado -վ- vuelve pasivo el verbo: բացել «abrir» → բացվել «abrirse», կառուցել «construir» → կառուցվել «ser construido». Խանութը բացվում է ժամը իննին «el negocio abre a las nueve». Տաճարը կառուցվել է չորրորդ դարում «la catedral fue construida en el siglo IV». Al hablar se evita a menudo la pasiva: Այս տաճարը թագավորն է կառուցել «el rey construyó esta catedral».",
+    "de": "Das Einfügen von -վ- macht ein Verb passiv: բացել „öffnen“ → բացվել „geöffnet werden, sich öffnen“, կառուցել „bauen“ → կառուցվել „gebaut werden“. Խանութը բացվում է ժամը իննին „Der Laden öffnet um neun“. Տաճարը կառուցվել է չորրորդ դարում „Die Kathedrale wurde im 4. Jahrhundert gebaut“. In der Umgangssprache vermeidet man oft das Passiv: Այս տաճարը թագավորն է կառուցել „Der König hat diese Kathedrale gebaut“."
    },
    "scene": {
     "title": {
      "ru": "В Эчмиадзине",
      "en": "At Etchmiadzin",
      "fr": "À Etchmiadzine",
-     "es": "En Echmiadzín"
+     "es": "En Echmiadzín",
+     "de": "In Etschmiadzin"
     },
     "who": {
      "Գ": {
@@ -4467,6 +4688,7 @@
       "en": "Guide",
       "fr": "Guide",
       "es": "Guía",
+      "de": "Guide",
       "g": "m"
      },
      "Մ": {
@@ -4474,6 +4696,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -4556,7 +4779,8 @@
         "ru": "открывается",
         "en": "opens",
         "fr": "ouvre",
-        "es": "abre"
+        "es": "abre",
+        "de": "öffnet"
        },
        "բացվում է"
       ],
@@ -4565,7 +4789,8 @@
         "ru": "закрывается",
         "en": "closes",
         "fr": "ferme",
-        "es": "cierra"
+        "es": "cierra",
+        "de": "schließt"
        },
        "փակվում է"
       ],
@@ -4574,7 +4799,8 @@
         "ru": "построен",
         "en": "was built",
         "fr": "a été construit",
-        "es": "fue construido"
+        "es": "fue construido",
+        "de": "gebaut"
        },
        "կառուցվել է"
       ],
@@ -4583,7 +4809,8 @@
         "ru": "написан",
         "en": "was written",
         "fr": "a été écrit",
-        "es": "fue escrito"
+        "es": "fue escrito",
+        "de": "geschrieben"
        },
        "գրվել է"
       ],
@@ -4592,7 +4819,8 @@
         "ru": "продаётся",
         "en": "is sold",
         "fr": "se vend",
-        "es": "se vende"
+        "es": "se vende",
+        "de": "wird verkauft"
        },
        "վաճառվում է"
       ],
@@ -4601,7 +4829,8 @@
         "ru": "восстановлен",
         "en": "was restored",
         "fr": "a été restauré",
-        "es": "fue restaurado"
+        "es": "fue restaurado",
+        "de": "wurde restauriert"
        },
        "վերանորոգվել է"
       ]
@@ -4617,21 +4846,24 @@
     "ru": "Заставить, сделать так, чтобы",
     "en": "Make someone do it",
     "fr": "Faire faire",
-    "es": "Hacer que"
+    "es": "Hacer que",
+    "de": "Jemanden etwas tun lassen"
    },
    "formula": "[բայ]-ացնել · [բայ]-եցնել",
    "note": {
     "ru": "Прививка -ացնել / -եցնել значит «сделать так, чтобы»: քնել «спать» → քնեցնել «укладывать спать», ուրախ «радостный» → ուրախացնել «радовать», տաք → տաքացնել «греть», սովորել «учиться» → սովորեցնել «учить кого-то», զարմանալ → զարմացնել «удивлять». Прошедшее у них на -րի: տաքացրի «я подогрел», սովորեցրի «научил». Запрет: մի՛ ծիծաղեցրու «не смеши».",
     "en": "The graft -ացնել / -եցնել means “make it happen”: քնել “to sleep” → քնեցնել “to put to sleep”, ուրախ “happy” → ուրախացնել “to make happy”, տաք → տաքացնել “to warm up”, սովորել “to learn” → սովորեցնել “to teach”, զարմանալ → զարմացնել “to surprise”. Their past is in -րի: տաքացրի “I warmed it up”, սովորեցրի “I taught”. Don’t: մի՛ ծիծաղեցրու “don’t make (him) laugh”.",
     "fr": "La greffe -ացնել / -եցնել veut dire « faire en sorte que » : քնել « dormir » → քնեցնել « endormir », ուրախ « joyeux » → ուրախացնել « réjouir », տաք → տաքացնել « réchauffer », սովորել « apprendre » → սովորեցնել « enseigner », զարմանալ → զարմացնել « étonner ». Leur passé est en -րի : տաքացրի « j’ai réchauffé », սովորեցրի « j’ai appris (à qqn) ». Défense : մի՛ ծիծաղեցրու « ne le fais pas rire ».",
-    "es": "El injerto -ացնել / -եցնել significa «hacer que»: քնել «dormir» → քնեցնել «hacer dormir», ուրախ «contento» → ուրախացնել «alegrar», տաք → տաքացնել «calentar», սովորել «aprender» → սովորեցնել «enseñar», զարմանալ → զարմացնել «sorprender». Su pasado va en -րի: տաքացրի «calenté», սովորեցրի «enseñé». Prohibición: մի՛ ծիծաղեցրու «no lo hagas reír»."
+    "es": "El injerto -ացնել / -եցնել significa «hacer que»: քնել «dormir» → քնեցնել «hacer dormir», ուրախ «contento» → ուրախացնել «alegrar», տաք → տաքացնել «calentar», սովորել «aprender» → սովորեցնել «enseñar», զարմանալ → զարմացնել «sorprender». Su pasado va en -րի: տաքացրի «calenté», սովորեցրի «enseñé». Prohibición: մի՛ ծիծաղեցրու «no lo hagas reír».",
+    "de": "Das Suffix -ացնել / -եցնել bedeutet „etwas bewirken“: քնել „schlafen“ → քնեցնել „zum Schlafen bringen“, ուրախ „glücklich“ → ուրախացնել „glücklich machen“, տաք → տաքացնել „erwärmen“, սովորել „lernen“ → սովորեցնել „lehren“, զարմանալ → զարմացնել „überraschen“. Ihre Vergangenheitsform endet auf -րի: տաքացրի „ich erwärmte es“, սովորեցրի „ich lehrte“. Nicht: մի՛ ծիծաղեցրու „Bringe (ihn) nicht zum Lachen!“."
    },
    "scene": {
     "title": {
      "ru": "Вечер с малышом",
      "en": "An evening with a toddler",
      "fr": "Une soirée avec un petit",
-     "es": "Una noche con un nene"
+     "es": "Una noche con un nene",
+     "de": "Ein Abend mit einem Kleinkind"
     },
     "who": {
      "Ա": {
@@ -4639,6 +4871,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      },
      "Մ": {
@@ -4646,6 +4879,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      }
     },
@@ -4729,7 +4963,8 @@
       "ru": "уже сделал: «…ացրի / …եցրի»",
       "en": "done: “…ացրի / …եցրի”",
       "fr": "c’est fait : « …ացրի / …եցրի »",
-      "es": "ya lo hice: «…ացրի / …եցրի»"
+      "es": "ya lo hice: «…ացրի / …եցրի»",
+      "de": "schon gemacht: „…ացրի / …եցրի“"
      }
     }
    ]
@@ -4742,21 +4977,24 @@
     "ru": "Совет: стоит, лучше",
     "en": "Advice: worth it, better",
     "fr": "Conseil : ça vaut la peine, mieux vaut",
-    "es": "Consejo: vale la pena, mejor"
+    "es": "Consejo: vale la pena, mejor",
+    "de": "Tipp: es lohnt sich, besser"
    },
    "formula": "Ավելի լավ է [բայ]-ես",
    "note": {
     "ru": "Совет: Ավելի լավ է + сослагательная: Ավելի լավ է հանգստանաս «тебе лучше отдохнуть». Արժե «стоит (того)»: Արժե գնալ Տաթև «стоит съездить в Татев». Պիտի — «должен, обязательно» (крепче, чем պետք է): Պիտի գնամ «я должен идти»; Պիտի որ … — «наверняка»: Պիտի որ դուր գա «наверняка понравится». Не нужно: Պետք չէ անհանգստանալ «не надо беспокоиться».",
     "en": "Advice: Ավելի լավ է + subjunctive: Ավելի լավ է հանգստանաս “you’d better rest”. Արժե “it’s worth it”: Արժե գնալ Տաթև “Tatev is worth a visit”. Պիտի — “must, definitely” (stronger than պետք է): Պիտի գնամ “I have to go”; Պիտի որ … — “surely”: Պիտի որ դուր գա “they’re sure to like it”. No need: Պետք չէ անհանգստանալ “no need to worry”.",
     "fr": "Le conseil : Ավելի լավ է + subjonctif : Ավելի լավ է հանգստանաս « tu ferais mieux de te reposer ». Արժե « ça vaut la peine » : Արժե գնալ Տաթև « Tatev vaut le détour ». Պիտի — « devoir, absolument » (plus fort que պետք է) : Պիտի գնամ « je dois partir » ; Պիտի որ … — « sûrement » : Պիտի որ դուր գա « ça va sûrement plaire ». Pas besoin : Պետք չէ անհանգստանալ « pas la peine de s’inquiéter ».",
-    "es": "El consejo: Ավելի լավ է + subjuntivo: Ավելի լավ է հանգստանաս «mejor descansa». Արժե «vale la pena»: Արժե գնալ Տաթև «vale la pena ir a Tatev». Պիտի — «tener que, sí o sí» (más fuerte que պետք է): Պիտի գնամ «me tengo que ir»; Պիտի որ … — «seguro que»: Պիտի որ դուր գա «seguro que les gusta». No hace falta: Պետք չէ անհանգստանալ «no hace falta preocuparse»."
+    "es": "El consejo: Ավելի լավ է + subjuntivo: Ավելի լավ է հանգստանաս «mejor descansa». Արժե «vale la pena»: Արժե գնալ Տաթև «vale la pena ir a Tatev». Պիտի — «tener que, sí o sí» (más fuerte que պետք է): Պիտի գնամ «me tengo que ir»; Պիտի որ … — «seguro que»: Պիտի որ դուր գա «seguro que les gusta». No hace falta: Պետք չէ անհանգստանալ «no hace falta preocuparse».",
+    "de": "Tipp: Ավելի լավ է + Konjunktiv: Ավելի լավ է հանգստանաս „Du solltest dich ausruhen“. Արժե „es lohnt sich“: Արժե գնալ Տաթև „Tatev ist einen Besuch wert“. Պիտի — „müssen, unbedingt“ (stärker als պետք է): Պիտի գնամ „Ich muss gehen“; Պիտի որ … — „sicher“: Պիտի որ դուր գա „Es wird ihnen sicher gefallen“. Nicht nötig: Պետք չէ անհանգստանալ „Du brauchst dir keine Sorgen zu machen“."
    },
    "scene": {
     "title": {
      "ru": "Что показать родителям",
      "en": "What to show the parents",
      "fr": "Que montrer aux parents",
-     "es": "Qué mostrarles a los padres"
+     "es": "Qué mostrarles a los padres",
+     "de": "Was du deinen Eltern zeigen kannst"
     },
     "who": {
      "Մ": {
@@ -4764,6 +5002,7 @@
       "en": "Mark",
       "fr": "Mark",
       "es": "Mark",
+      "de": "Mark",
       "g": "m"
      },
      "Ա": {
@@ -4771,6 +5010,7 @@
       "en": "Anahit",
       "fr": "Anahit",
       "es": "Anahit",
+      "de": "Anahit",
       "g": "f"
      }
     },
@@ -4857,7 +5097,8 @@
       "ru": "лучше, стоит: «(чтобы) …»",
       "en": "you’d better: “(that) you …”",
       "fr": "mieux vaut : « que tu … »",
-      "es": "mejor: «que …»"
+      "es": "mejor: «que …»",
+      "de": "Es ist besser: „dass du …“"
      }
     }
    ]
@@ -4871,7 +5112,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1907",
    "src": "https://hy.wikisource.org/wiki/Ծիտը_(բանաստեղծություն)",
@@ -4879,21 +5121,24 @@
     "ru": "Птичка",
     "en": "The little bird",
     "fr": "Le petit oiseau",
-    "es": "El pajarito"
+    "es": "El pajarito",
+    "de": "Das Vögelchen"
    },
    "formula": "Ծիտը",
    "note": {
     "ru": "Ованес Туманян (1869–1923) — главный детский поэт Армении; его стихи знают с пелёнок. «Птичка» (1907) написана в народном духе. Слова: ծիտ «птичка», բանջար «съедобная зелень», գերան «балка, бревно». Ծըլվըլալեն — народная форма «щебеча». Ը внутри слова (Ծըլվըլալեն) в стихах пишут, как слышат. -ին в գերանին, բերանին — «на балку», «во рту».",
     "en": "Hovhannes Tumanyan (1869–1923) is Armenia’s best-loved poet for children. “The little bird” (1907) is written in folk style. Words: ծիտ “little bird”, բանջար “edible greens”, գերան “beam, log”. Ծըլվըլալեն is a folk form meaning “chirping”. The ը inside a word (Ծըլվըլալեն) is written as heard, as poems often do. -ին in գերանին, բերանին means “onto the beam”, “in its beak”.",
     "fr": "Hovhannès Toumanian (1869–1923) est le grand poète arménien de l’enfance. « Le petit oiseau » (1907) est écrit dans l’esprit populaire. Mots : ծիտ « petit oiseau », բանջար « herbes comestibles », գերան « poutre ». Ծըլվըլալեն, forme populaire, veut dire « en gazouillant ». Le ը à l’intérieur du mot s’écrit comme on l’entend, à la manière des poèmes. -ին dans գերանին, բերանին : « sur la poutre », « au bec ».",
-    "es": "Hovhannés Tumanián (1869–1923) es el gran poeta armenio de la infancia. «El pajarito» (1907) está escrito al estilo popular. Palabras: ծիտ «pajarito», բանջար «verdura silvestre», գերան «viga». Ծըլվըլալեն es una forma popular: «piando». La ը dentro de la palabra se escribe como se oye, como en los poemas. -ին en գերանին, բերանին: «a la viga», «en el pico»."
+    "es": "Hovhannés Tumanián (1869–1923) es el gran poeta armenio de la infancia. «El pajarito» (1907) está escrito al estilo popular. Palabras: ծիտ «pajarito», բանջար «verdura silvestre», գերան «viga». Ծըլվըլալեն es una forma popular: «piando». La ը dentro de la palabra se escribe como se oye, como en los poemas. -ին en գերանին, բերանին: «a la viga», «en el pico».",
+    "de": "Howhannes Tumanjan (1869–1923) ist Armeniens beliebtester Kinderdichter. Sein Gedicht „Das Vögelchen“ (1907) ist im Volksstil geschrieben. Du lernst die Wörter: ծիտ „Vögelchen“, բանջար „essbares Grünzeug“, գերան „Balken, Stamm“. Ծըլվըլալեն ist eine volkstümliche Form und bedeutet „zwitschern“. Das ը im Wort (Ծըլվըլալեն) schreibt man so, wie man es hört, wie es in Gedichten oft gemacht wird. Die Endung -ին in գերանին und բերանին bedeutet „auf den Balken“ bzw. „im Schnabel“."
    },
    "scene": {
     "title": {
      "ru": "Птичка",
      "en": "The little bird",
      "fr": "Le petit oiseau",
-     "es": "El pajarito"
+     "es": "El pajarito",
+     "de": "Das Vögelchen"
     },
     "who": {
      "Թ": {
@@ -4901,6 +5146,7 @@
       "en": "Hovhannes Tumanyan",
       "fr": "Hovhannès Toumanian",
       "es": "Hovhannés Tumanián",
+      "de": "Howhannes Tumanjan",
       "g": "m"
      }
     },
@@ -4973,7 +5219,8 @@
         "ru": "птичка",
         "en": "little bird",
         "fr": "petit oiseau",
-        "es": "pajarito"
+        "es": "pajarito",
+        "de": "Vögelchen"
        },
        "ծիտ"
       ],
@@ -4982,7 +5229,8 @@
         "ru": "трава",
         "en": "grass",
         "fr": "herbe",
-        "es": "pasto"
+        "es": "pasto",
+        "de": "Gras"
        },
        "խոտ"
       ],
@@ -4991,7 +5239,8 @@
         "ru": "улетел(а)",
         "en": "flew",
         "fr": "s’est envolé",
-        "es": "voló"
+        "es": "voló",
+        "de": "flog weg"
        },
        "թռավ"
       ],
@@ -5000,7 +5249,8 @@
         "ru": "зелёный",
         "en": "green",
         "fr": "vert",
-        "es": "verde"
+        "es": "verde",
+        "de": "grün"
        },
        "կանաչ"
       ],
@@ -5009,7 +5259,8 @@
         "ru": "рот, клюв",
         "en": "mouth, beak",
         "fr": "bouche, bec",
-        "es": "boca, pico"
+        "es": "boca, pico",
+        "de": "Mund, Schnabel"
        },
        "բերան"
       ]
@@ -5029,7 +5280,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1907",
    "src": "https://hy.wikisource.org/wiki/Լուսաբացին",
@@ -5037,21 +5289,24 @@
     "ru": "На рассвете",
     "en": "At dawn",
     "fr": "À l’aube",
-    "es": "Al amanecer"
+    "es": "Al amanecer",
+    "de": "Bei Tagesanbruch"
    },
    "formula": "Լուսաբացին",
    "note": {
     "ru": "Туманян переложил народную песенку (1907). Звукоподражания: ծուղրուղու «кукареку», ճիկ-ճիկ «чик-чик», վույ «ой». Деревенские слова: թառ «насест», ծեգ «заря», նախիր «стадо», հանդ «пастбище», նան «мама, бабушка» (диалект). Порядковые: երկրորդ «второй», երրորդ «третий». Глаголы — в аористе: կանչեց, զարթնեց, տարան, բացվեց, նստեց (ступень 3).",
     "en": "Tumanyan reworked a folk rhyme (1907). Sound words: ծուղրուղու “cock-a-doodle-doo”, ճիկ-ճիկ “cheep-cheep”, վույ “oh”. Village words: թառ “perch”, ծեգ “daybreak”, նախիր “herd”, հանդ “pasture”, նան “mum, granny” (dialect). Ordinals: երկրորդ “second”, երրորդ “third”. The verbs are aorist: կանչեց, զարթնեց, տարան, բացվեց, նստեց (stage 3).",
     "fr": "Toumanian a repris une comptine populaire (1907). Onomatopées : ծուղրուղու « cocorico », ճիկ-ճիկ « cui-cui », վույ « oh ». Mots du village : թառ « perchoir », ծեգ « aube », նախիր « troupeau », հանդ « pâturage », նան « maman, mamie » (dialecte). Ordinaux : երկրորդ « deuxième », երրորդ « troisième ». Les verbes sont à l’aoriste : կանչեց, զարթնեց, տարան, բացվեց, նստեց (étape 3).",
-    "es": "Tumanián reescribió una copla popular (1907). Onomatopeyas: ծուղրուղու «quiquiriquí», ճիկ-ճիկ «pío-pío», վույ «ay». Palabras del pueblo: թառ «palo del gallinero», ծեգ «alba», նախիր «rebaño», հանդ «pastizal», նան «mamá, abuela» (dialecto). Ordinales: երկրորդ «segundo», երրորդ «tercero». Los verbos van en aoristo: կանչեց, զարթնեց, տարան, բացվեց, նստեց (etapa 3)."
+    "es": "Tumanián reescribió una copla popular (1907). Onomatopeyas: ծուղրուղու «quiquiriquí», ճիկ-ճիկ «pío-pío», վույ «ay». Palabras del pueblo: թառ «palo del gallinero», ծեգ «alba», նախիր «rebaño», հանդ «pastizal», նան «mamá, abuela» (dialecto). Ordinales: երկրորդ «segundo», երրորդ «tercero». Los verbos van en aoristo: կանչեց, զարթնեց, տարան, բացվեց, նստեց (etapa 3).",
+    "de": "Tumanjan hat einen Volksreim (1907) bearbeitet. In dem Reim lernst du Lautmalerei: ծուղրուղու „Kikeriki“, ճիկ-ճիկ „Piep-piep“, վույ „oh“. Außerdem findest du Dorfwörter: թառ „Sitzstange“, ծեգ „Tagesanbruch“, նախիր „Herde“, հանդ „Weide“, նան „Mama, Oma“ (Dialekt). Die Ordnungszahlen sind երկրորդ „zweite“ und երրորդ „dritte“. Die Verben stehen im Aorist: կանչեց, զարթնեց, տարան, բացվեց, նստեց (Stufe 3)."
    },
    "scene": {
     "title": {
      "ru": "На рассвете",
      "en": "At dawn",
      "fr": "À l’aube",
-     "es": "Al amanecer"
+     "es": "Al amanecer",
+     "de": "Bei Tagesanbruch"
     },
     "who": {
      "Թ": {
@@ -5059,6 +5314,7 @@
       "en": "Hovhannes Tumanyan",
       "fr": "Hovhannès Toumanian",
       "es": "Hovhannés Tumanián",
+      "de": "Howhannes Tumanjan",
       "g": "m"
      }
     },
@@ -5179,7 +5435,8 @@
         "ru": "петух",
         "en": "rooster",
         "fr": "coq",
-        "es": "gallo"
+        "es": "gallo",
+        "de": "Hahn"
        },
        "աքլոր"
       ],
@@ -5188,7 +5445,8 @@
         "ru": "дерево",
         "en": "tree",
         "fr": "arbre",
-        "es": "árbol"
+        "es": "árbol",
+        "de": "Baum"
        },
        "ծառ"
       ],
@@ -5197,7 +5455,8 @@
         "ru": "стадо",
         "en": "herd",
         "fr": "troupeau",
-        "es": "rebaño"
+        "es": "rebaño",
+        "de": "Herde"
        },
        "նախիր"
       ],
@@ -5206,7 +5465,8 @@
         "ru": "второй",
         "en": "second",
         "fr": "deuxième",
-        "es": "segundo"
+        "es": "segundo",
+        "de": "zweite"
        },
        "երկրորդ"
       ],
@@ -5215,7 +5475,8 @@
         "ru": "третий",
         "en": "third",
         "fr": "troisième",
-        "es": "tercero"
+        "es": "tercero",
+        "de": "dritte"
        },
        "երրորդ"
       ],
@@ -5224,7 +5485,8 @@
         "ru": "свет",
         "en": "light",
         "fr": "lumière",
-        "es": "luz"
+        "es": "luz",
+        "de": "Licht"
        },
        "լույս"
       ]
@@ -5241,7 +5503,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1907",
    "src": "https://hy.wikisource.org/wiki/Ուլունք",
@@ -5249,21 +5512,24 @@
     "ru": "Бусинка",
     "en": "The bead",
     "fr": "La perle",
-    "es": "La cuenta de collar"
+    "es": "La cuenta de collar",
+    "de": "Die Perle"
    },
    "formula": "Ուլունք",
    "note": {
     "ru": "«Бусинка» (1907) — цепочка в народном духе: каждое звено отдаёт одно и получает другое. Она вся на сослагательном (ступень 4): տանեմ «отнесу-ка», տամ «отдам», տա «пусть даст». Слова старого быта: ջաղաց «мельница», տաշտ «квашня», խմոր «тесто», թոնիր «тонир — печь в земле, где пекут лаваш», ուլունք «бусина». Նան, նանս «мама, моя мама» — диалект. Боша — армянская кочевая община, бродячие торговцы и мастера.",
     "en": "“The bead” (1907) is a folk-style chain: each link gives one thing and gets another. It is all in the subjunctive (stage 4): տանեմ “let me take”, տամ “I’ll give”, տա “let it give”. Words of old village life: ջաղաց “mill”, տաշտ “kneading trough”, խմոր “dough”, թոնիր “tonir, the clay oven in the ground for lavash”, ուլունք “bead”. Նան, նանս “mum, my mum” — dialect. The Bosha were an Armenian nomadic community of wandering traders and craftsmen.",
     "fr": "« La perle » (1907) est une chaîne de style populaire : chaque maillon donne une chose et en reçoit une autre. Tout est au subjonctif (étape 4) : տանեմ « que j’emporte », տամ « que je donne », տա « qu’il donne ». Mots de la vie d’autrefois : ջաղաց « moulin », տաշտ « pétrin », խմոր « pâte », թոնիր « tonir, four enterré pour le lavash », ուլունք « perle ». Նան, նանս « maman, ma maman » — dialecte. Les Bocha étaient une communauté arménienne nomade de marchands et d’artisans ambulants.",
-    "es": "«La cuenta de collar» (1907) es una cadena al estilo popular: cada eslabón da algo y recibe otra cosa. Está toda en subjuntivo (etapa 4): տանեմ «que lleve», տամ «que dé», տա «que dé». Palabras de la vida de antes: ջաղաց «molino», տաշտ «artesa», խմոր «masa», թոնիր «tonir, horno enterrado para el lavash», ուլունք «cuenta de collar». Նան, նանս «mamá, mi mamá» — dialecto. Los bosha eran una comunidad armenia nómada de vendedores y artesanos ambulantes."
+    "es": "«La cuenta de collar» (1907) es una cadena al estilo popular: cada eslabón da algo y recibe otra cosa. Está toda en subjuntivo (etapa 4): տանեմ «que lleve», տամ «que dé», տա «que dé». Palabras de la vida de antes: ջաղաց «molino», տաշտ «artesa», խմոր «masa», թոնիր «tonir, horno enterrado para el lavash», ուլունք «cuenta de collar». Նան, նանս «mamá, mi mamá» — dialecto. Los bosha eran una comunidad armenia nómada de vendedores y artesanos ambulantes.",
+    "de": "„Die Perle“ (1907) ist eine Kette im Volksstil: Jedes Glied gibt etwas und erhält etwas anderes. Alles steht im Konjunktiv (Stufe 4): տանեմ „ich bringe“, տամ „ich gebe“, տա „er gebe“. Wörter aus dem alten Dorfleben: ջաղաց „Mühle“, տաշտ „Backtrog“, խմոր „Teig“, թոնիր „Tonir, der in die Erde eingelassene Lehmofen für Lavash“, ուլունք „Perle“. Նան, նանս „Mama, meine Mama“ – Dialekt. Die Bosha waren eine nomadische armenische Gemeinschaft von wandernden Händlern und Handwerkern."
    },
    "scene": {
     "title": {
      "ru": "Бусинка",
      "en": "The bead",
      "fr": "La perle",
-     "es": "La cuenta de collar"
+     "es": "La cuenta de collar",
+     "de": "Die Perle"
     },
     "who": {
      "Թ": {
@@ -5271,6 +5537,7 @@
       "en": "Hovhannes Tumanyan",
       "fr": "Hovhannès Toumanian",
       "es": "Hovhannés Tumanián",
+      "de": "Howhannes Tumanjan",
       "g": "m"
      }
     },
@@ -5416,7 +5683,8 @@
         "ru": "весна",
         "en": "spring",
         "fr": "printemps",
-        "es": "primavera"
+        "es": "primavera",
+        "de": "Frühling"
        },
        "գարուն"
       ],
@@ -5425,7 +5693,8 @@
         "ru": "туча",
         "en": "cloud",
         "fr": "nuage",
-        "es": "nube"
+        "es": "nube",
+        "de": "Wolke"
        },
        "ամպ"
       ],
@@ -5434,7 +5703,8 @@
         "ru": "пшеница",
         "en": "wheat",
         "fr": "blé",
-        "es": "trigo"
+        "es": "trigo",
+        "de": "Weizen"
        },
        "ցորեն"
       ],
@@ -5443,7 +5713,8 @@
         "ru": "мука",
         "en": "flour",
         "fr": "farine",
-        "es": "harina"
+        "es": "harina",
+        "de": "Mehl"
        },
        "ալյուր"
       ],
@@ -5452,7 +5723,8 @@
         "ru": "тесто",
         "en": "dough",
         "fr": "pâte",
-        "es": "masa"
+        "es": "masa",
+        "de": "Teig"
        },
        "խմոր"
       ],
@@ -5461,7 +5733,8 @@
         "ru": "мельница",
         "en": "mill",
         "fr": "moulin",
-        "es": "molino"
+        "es": "molino",
+        "de": "Mühle"
        },
        "ջաղաց"
       ]
@@ -5478,7 +5751,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1907",
    "src": "https://hy.wikisource.org/wiki/Գութան",
@@ -5486,21 +5760,24 @@
     "ru": "Плуг",
     "en": "The plough",
     "fr": "La charrue",
-    "es": "El arado"
+    "es": "El arado",
+    "de": "Der Pflug"
    },
    "formula": "Գութան",
    "note": {
     "ru": "«Плуг» (1907) — по мотивам хоровела, песни армянских пахарей, которую поют, погоняя волов; припев Հորովել հո՜. Дружеский императив: վարի՛ «паши», շարի՛ «ровняй», թափ տուր «размахнись», շուռ տուր «переверни». «Давайте» — сослагательное (ступень 4): ցանենք «посеем», հնձենք «сожнём», տանենք «унесём», ունենանք «будем иметь». Слова пахоты: հոտաղ «погонщик волов», մաճկալ «пахарь», մաճ «рукоять плуга», ակոս «борозда». Լուսը = լույսը, լըծեցին = լծեցին — народное произношение.",
     "en": "“The plough” (1907) is based on the horovel, the song Armenian ploughmen sing while driving their oxen; the refrain is Հորովել հո՜. Friendly imperatives: վարի՛ “plough!”, շարի՛ “line them up!”, թափ տուր “swing!”, շուռ տուր “turn it over!”. “Let us” is the subjunctive (stage 4): ցանենք “let’s sow”, հնձենք “let’s reap”, տանենք “let’s take”, ունենանք “let’s have”. Ploughing words: հոտաղ “ox driver”, մաճկալ “ploughman”, մաճ “plough handle”, ակոս “furrow”. Լուսը = լույսը, լըծեցին = լծեցին — folk pronunciation.",
     "fr": "« La charrue » (1907) s’inspire du horovel, le chant des laboureurs arméniens qui mènent leurs bœufs ; refrain : Հորովել հո՜. Impératif amical : վարի՛ « laboure ! », շարի՛ « aligne ! », թափ տուր « prends ton élan ! », շուռ տուր « retourne ! ». « Faisons » : le subjonctif (étape 4) : ցանենք « semons », հնձենք « moissonnons », տանենք « emportons », ունենանք « ayons ». Mots du labour : հոտաղ « bouvier », մաճկալ « laboureur », մաճ « mancheron », ակոս « sillon ». Լուսը = լույսը, լըծեցին = լծեցին — prononciation populaire.",
-    "es": "«El arado» (1907) se basa en el horovel, el canto de los labradores armenios que guían a los bueyes; estribillo: Հորովել հո՜. Imperativo amistoso: վարի՛ «¡ara!», շարի՛ «¡alinea!», թափ տուր «¡toma impulso!», շուռ տուր «¡dala vuelta!». «Hagamos» es subjuntivo (etapa 4): ցանենք «sembremos», հնձենք «cosechemos», տանենք «llevemos», ունենանք «tengamos». Palabras del arado: հոտաղ «boyero», մաճկալ «labrador», մաճ «mancera», ակոս «surco». Լուսը = լույսը, լըծեցին = լծեցին — pronunciación popular."
+    "es": "«El arado» (1907) se basa en el horovel, el canto de los labradores armenios que guían a los bueyes; estribillo: Հորովել հո՜. Imperativo amistoso: վարի՛ «¡ara!», շարի՛ «¡alinea!», թափ տուր «¡toma impulso!», շուռ տուր «¡dala vuelta!». «Hagamos» es subjuntivo (etapa 4): ցանենք «sembremos», հնձենք «cosechemos», տանենք «llevemos», ունենանք «tengamos». Palabras del arado: հոտաղ «boyero», մաճկալ «labrador», մաճ «mancera», ակոս «surco». Լուսը = լույսը, լըծեցին = լծեցին — pronunciación popular.",
+    "de": "„Der Pflug“ (1907) basiert auf dem Horovel, dem Lied, das armenische Pflüger singen, während sie ihre Ochsen antreiben; der Refrain ist Հորովել հո՜. Freundliche Imperative: վարի՛ „pflüge!“, շարի՛ „reihe sie auf!“, թափ տուր „hol Schwung!“, շուռ տուր „wende um!“. „Lass uns“ ist der Konjunktiv (Stufe 4): ցանենք „lass uns säen“, հնձենք „lass uns ernten“, տանենք „lass uns tragen“, ունենանք „lass uns haben“. Wörter zum Pflügen: հոտաղ „Ochsentreiber“, մաճկալ „Pflüger“, մաճ „Pflugstiel“, ակոս „Furche“. Լուսը = լույսը, լըծեցին = լծեցին — volkstümliche Aussprache."
    },
    "scene": {
     "title": {
      "ru": "Плуг",
      "en": "The plough",
      "fr": "La charrue",
-     "es": "El arado"
+     "es": "El arado",
+     "de": "Der Pflug"
     },
     "who": {
      "Թ": {
@@ -5508,6 +5785,7 @@
       "en": "Hovhannes Tumanyan",
       "fr": "Hovhannès Toumanian",
       "es": "Hovhannés Tumanián",
+      "de": "Howhannes Tumanjan",
       "g": "m"
      }
     },
@@ -5692,7 +5970,8 @@
         "ru": "плуг",
         "en": "plough",
         "fr": "charrue",
-        "es": "arado"
+        "es": "arado",
+        "de": "Pflug"
        },
        "գութան"
       ],
@@ -5701,7 +5980,8 @@
         "ru": "борозда",
         "en": "furrow",
         "fr": "sillon",
-        "es": "surco"
+        "es": "surco",
+        "de": "Furche"
        },
        "ակոս"
       ],
@@ -5710,7 +5990,8 @@
         "ru": "посеем",
         "en": "let’s sow",
         "fr": "semons",
-        "es": "sembremos"
+        "es": "sembremos",
+        "de": "Lass uns säen"
        },
        "ցանենք"
       ],
@@ -5719,7 +6000,8 @@
         "ru": "сожнём",
         "en": "let’s reap",
         "fr": "moissonnons",
-        "es": "cosechemos"
+        "es": "cosechemos",
+        "de": "Lass uns ernten"
        },
        "հնձենք"
       ],
@@ -5728,7 +6010,8 @@
         "ru": "хлеб",
         "en": "bread",
         "fr": "pain",
-        "es": "pan"
+        "es": "pan",
+        "de": "Brot"
        },
        "հաց"
       ],
@@ -5737,7 +6020,8 @@
         "ru": "нива, поле",
         "en": "field",
         "fr": "champ",
-        "es": "campo"
+        "es": "campo",
+        "de": "Feld"
        },
        "արտ"
       ]
@@ -5754,7 +6038,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1917",
    "src": "https://hy.wikisource.org/wiki/Քառյակներ_(Հովհաննես_Թումանյան)",
@@ -5762,21 +6047,24 @@
     "ru": "Три четверостишия",
     "en": "Three quatrains",
     "fr": "Trois quatrains",
-    "es": "Tres cuartetas"
+    "es": "Tres cuartetas",
+    "de": "Drei Vierzeiler"
    },
    "formula": "Քառյակներ",
    "note": {
     "ru": "Четверостишия (քառյակներ) Туманян писал в последние годы жизни, 1917–1922: короткие философские стихи. Старые и разговорные формы: աշխարհք = աշխարհ «мир», տարվան = տարվա «года», Ըսկսում = սկսում (ը пишется, как слышится), լիքն = լիքը «полный». Արանքում — «между» (разговорное, литературно միջև). Хазар («тысяча») — и число, и «очень много».",
     "en": "Tumanyan wrote his quatrains (քառյակներ) in his last years, 1917–1922: short philosophical poems. Old and colloquial forms: աշխարհք = աշխարհ “world”, տարվան = տարվա “of a year”, Ըսկսում = սկսում (ը written as heard), լիքն = լիքը “full”. Արանքում means “between” (colloquial; literary միջև). Հազար (“thousand”) is both a number and “very many”.",
     "fr": "Toumanian a écrit ses quatrains (քառյակներ) dans ses dernières années, 1917–1922 : de courts poèmes philosophiques. Formes anciennes et parlées : աշխարհք = աշխարհ « monde », տարվան = տարվա « d’une année », Ըսկսում = սկսում (ը écrit comme on l’entend), լիքն = լիքը « plein ». Արանքում : « entre » (familier ; littéraire միջև). Հազար (« mille ») est un nombre et aussi « une multitude ».",
-    "es": "Tumanián escribió sus cuartetas (քառյակներ) en sus últimos años, 1917–1922: poemas filosóficos breves. Formas antiguas y coloquiales: աշխարհք = աշխարհ «mundo», տարվան = տարվա «de un año», Ըսկսում = սկսում (la ը se escribe como se oye), լիքն = լիքը «lleno». Արանքում es «entre» (coloquial; literario միջև). Հազար («mil») es número y también «muchísimos»."
+    "es": "Tumanián escribió sus cuartetas (քառյակներ) en sus últimos años, 1917–1922: poemas filosóficos breves. Formas antiguas y coloquiales: աշխարհք = աշխարհ «mundo», տարվան = տարվա «de un año», Ըսկսում = սկսում (la ը se escribe como se oye), լիքն = լիքը «lleno». Արանքում es «entre» (coloquial; literario միջև). Հազար («mil») es número y también «muchísimos».",
+    "de": "Tumanjan schrieb seine Vierzeiler (քառյակներ) in seinen letzten Lebensjahren, 1917–1922: kurze philosophische Gedichte. Du findest alte und umgangssprachliche Formen: աշխարհք = աշխարհ „Welt“, տարվան = տարվա „eines Jahres“, Ըսկսում = սկսում (das ը wird so geschrieben, wie man es hört), լիքն = լիքը „voll“. Արանքում bedeutet „zwischen“ (umgangssprachlich; literarisch միջև). Հազար („tausend“) ist sowohl eine Zahl als auch „sehr viele“."
    },
    "scene": {
     "title": {
      "ru": "Три четверостишия",
      "en": "Three quatrains",
      "fr": "Trois quatrains",
-     "es": "Tres cuartetas"
+     "es": "Tres cuartetas",
+     "de": "Drei Vierzeiler"
     },
     "who": {
      "Թ": {
@@ -5784,6 +6072,7 @@
       "en": "Hovhannes Tumanyan",
       "fr": "Hovhannès Toumanian",
       "es": "Hovhannés Tumanián",
+      "de": "Howhannes Tumanjan",
       "g": "m"
      }
     },
@@ -5906,7 +6195,8 @@
         "ru": "век",
         "en": "century",
         "fr": "siècle",
-        "es": "siglo"
+        "es": "siglo",
+        "de": "Jahrhundert"
        },
        "դար"
       ],
@@ -5915,7 +6205,8 @@
         "ru": "камень",
         "en": "stone",
         "fr": "pierre",
-        "es": "piedra"
+        "es": "piedra",
+        "de": "Stein"
        },
        "քար"
       ],
@@ -5924,7 +6215,8 @@
         "ru": "боль",
         "en": "pain",
         "fr": "douleur",
-        "es": "dolor"
+        "es": "dolor",
+        "de": "Schmerz"
        },
        "ցավ"
       ],
@@ -5933,7 +6225,8 @@
         "ru": "море",
         "en": "sea",
         "fr": "mer",
-        "es": "mar"
+        "es": "mar",
+        "de": "Meer"
        },
        "ծով"
       ],
@@ -5942,7 +6235,8 @@
         "ru": "печаль",
         "en": "sorrow",
         "fr": "peine",
-        "es": "pena"
+        "es": "pena",
+        "de": "Trauer"
        },
        "վիշտ"
       ],
@@ -5951,7 +6245,8 @@
         "ru": "звезда",
         "en": "star",
         "fr": "étoile",
-        "es": "estrella"
+        "es": "estrella",
+        "de": "Stern"
        },
        "աստղ"
       ]
@@ -5968,7 +6263,8 @@
     "ru": "Ваан Терьян",
     "en": "Vahan Teryan",
     "fr": "Vahan Térian",
-    "es": "Vahán Terián"
+    "es": "Vahán Terián",
+    "de": "Wahan Terjan"
    },
    "year": "1906–1907",
    "src": "https://hy.wikisource.org/wiki/Աշուն_(Վահան_Տերյան)",
@@ -5976,21 +6272,24 @@
     "ru": "Осень",
     "en": "Autumn",
     "fr": "L’automne",
-    "es": "Otoño"
+    "es": "Otoño",
+    "de": "Herbst"
    },
    "formula": "Աշուն",
    "note": {
     "ru": "Ваан Терьян (1885–1920) — поэт тихой грусти и музыки слова. «Осень» почти без глаголов: картина из коротких назывных фраз. Приставка ան- «без-» (прививка ступени 1): անզոր «бессильный», անուժ «без сил», անմխիթար «безутешный», անըսպառ (= անսպառ) «неисчерпаемый». Մահացող — «умирающий» (форма на -ող, ступень 2). Տըխուր = տխուր — ը для ритма.",
     "en": "Vahan Teryan (1885–1920) is the poet of quiet sadness and verbal music. “Autumn” has almost no verbs: a picture made of short nominal phrases. The prefix ան- “un-, -less” (a stage 1 graft): անզոր “powerless”, անուժ “strengthless”, անմխիթար “inconsolable”, անըսպառ (= անսպառ) “inexhaustible”. Մահացող means “dying” (the -ող form, stage 2). Տըխուր = տխուր, with ը for the rhythm.",
     "fr": "Vahan Térian (1885–1920) est le poète de la tristesse douce et de la musique des mots. « L’automne » n’a presque pas de verbes : un tableau fait de courtes phrases nominales. Le préfixe ան- « sans, in- » (greffe de l’étape 1) : անզոր « impuissant », անուժ « sans force », անմխիթար « inconsolable », անըսպառ (= անսպառ) « inépuisable ». Մահացող : « mourant » (forme en -ող, étape 2). Տըխուր = տխուր, ը pour le rythme.",
-    "es": "Vahán Terián (1885–1920) es el poeta de la tristeza serena y de la música de las palabras. «Otoño» casi no tiene verbos: un cuadro hecho de frases nominales cortas. El prefijo ան- «sin, in-» (injerto de la etapa 1): անզոր «impotente», անուժ «sin fuerzas», անմխիթար «inconsolable», անըսպառ (= անսպառ) «inagotable». Մահացող es «el que muere» (forma en -ող, etapa 2). Տըխուր = տխուր, con ը por el ritmo."
+    "es": "Vahán Terián (1885–1920) es el poeta de la tristeza serena y de la música de las palabras. «Otoño» casi no tiene verbos: un cuadro hecho de frases nominales cortas. El prefijo ան- «sin, in-» (injerto de la etapa 1): անզոր «impotente», անուժ «sin fuerzas», անմխիթար «inconsolable», անըսպառ (= անսպառ) «inagotable». Մահացող es «el que muere» (forma en -ող, etapa 2). Տըխուր = տխուր, con ը por el ritmo.",
+    "de": "Wahan Terjan (1885–1920) ist der Dichter der stillen Trauer und der Wortmusik. In „Herbst“ findest du fast keine Verben: ein Bild aus kurzen Nominalphrasen. Das Präfix ան- (ein Stufe-1-Graft) bedeutet „un-“, „-los“: անզոր „machtlos“, անուժ „kraftlos“, անմխիթար „untröstlich“, անըսպառ (= անսպառ) „unerschöpflich“. Մահացող bedeutet „sterbend“ (die -ող-Form, Stufe 2). Տըխուր = տխուր, das ը für den Rhythmus."
    },
    "scene": {
     "title": {
      "ru": "Осень",
      "en": "Autumn",
      "fr": "L’automne",
-     "es": "Otoño"
+     "es": "Otoño",
+     "de": "Herbst"
     },
     "who": {
      "Տ": {
@@ -5998,6 +6297,7 @@
       "en": "Vahan Teryan",
       "fr": "Vahan Térian",
       "es": "Vahán Terián",
+      "de": "Wahan Terjan",
       "g": "m"
      }
     },
@@ -6119,7 +6419,8 @@
         "ru": "поле",
         "en": "field",
         "fr": "champ",
-        "es": "campo"
+        "es": "campo",
+        "de": "Feld"
        },
        "դաշտ"
       ],
@@ -6128,7 +6429,8 @@
         "ru": "лес",
         "en": "forest",
         "fr": "forêt",
-        "es": "bosque"
+        "es": "bosque",
+        "de": "Wald"
        },
        "անտառ"
       ],
@@ -6137,7 +6439,8 @@
         "ru": "ветер",
         "en": "wind",
         "fr": "vent",
-        "es": "viento"
+        "es": "viento",
+        "de": "Wind"
        },
        "քամի"
       ],
@@ -6146,7 +6449,8 @@
         "ru": "свет",
         "en": "light",
         "fr": "lumière",
-        "es": "luz"
+        "es": "luz",
+        "de": "Licht"
        },
        "լույս"
       ],
@@ -6155,7 +6459,8 @@
         "ru": "надежда",
         "en": "hope",
         "fr": "espoir",
-        "es": "esperanza"
+        "es": "esperanza",
+        "de": "Hoffnung"
        },
        "հույս"
       ],
@@ -6164,7 +6469,8 @@
         "ru": "вопрос",
         "en": "question",
         "fr": "question",
-        "es": "pregunta"
+        "es": "pregunta",
+        "de": "Frage"
        },
        "հարց"
       ]
@@ -6181,7 +6487,8 @@
     "ru": "Ваан Терьян",
     "en": "Vahan Teryan",
     "fr": "Vahan Térian",
-    "es": "Vahán Terián"
+    "es": "Vahán Terián",
+    "de": "Wahan Terjan"
    },
    "year": "1905",
    "src": "https://hy.wikisource.org/wiki/Կարոտ_(Վահան_Տերյան)",
@@ -6189,21 +6496,24 @@
     "ru": "Тоска",
     "en": "Longing",
     "fr": "Nostalgie",
-    "es": "Añoranza"
+    "es": "Añoranza",
+    "de": "Sehnsucht"
    },
    "formula": "Կարոտ",
    "note": {
     "ru": "«Тоска» (1905) — сон и пробуждение. Давнопрошедшее ննջել էի «я задремал (ещё до того)» задаёт фон, длительные կանչում է, լալիս էր — то, что тянется. Поэтические формы: ճամփա = ճանապարհ «путь», սիրտըս = սիրտս «моё сердце», անկարծ «внезапно», տրտում «печально», հով «ветерок». Порядок как в разговоре: Գիշերվա հովն էր լալիս — «это ночной ветер плакал» (է после главного слова — ступень 2).",
     "en": "“Longing” (1905) is about a dream and waking. The pluperfect ննջել էի “I had dozed off” sets the background; the ongoing forms կանչում է, լալիս էր show what goes on. Poetic forms: ճամփա = ճանապարհ “road”, սիրտըս = սիրտս “my heart”, անկարծ “suddenly”, տրտում “sadly”, հով “breeze”. Word order as in speech: Գիշերվա հովն էր լալիս — “it was the night breeze that wept” (է after the key word, stage 2).",
     "fr": "« Nostalgie » (1905) : un rêve et un réveil. Le plus-que-parfait ննջել էի « je m’étais assoupi » pose le décor ; les formes de durée կանչում է, լալիս էր disent ce qui se prolonge. Formes poétiques : ճամփա = ճանապարհ « chemin », սիրտըս = սիրտս « mon cœur », անկարծ « soudain », տրտում « tristement », հով « brise ». L’ordre est celui de l’oral : Գիշերվա հովն էր լալիս — « c’était la brise nocturne qui pleurait » (է après le mot important, étape 2).",
-    "es": "«Añoranza» (1905): un sueño y un despertar. El pluscuamperfecto ննջել էի «me había dormido» pone el fondo; las formas durativas կանչում է, լալիս էր muestran lo que se prolonga. Formas poéticas: ճամփա = ճանապարհ «camino», սիրտըս = սիրտս «mi corazón», անկարծ «de repente», տրտում «con tristeza», հով «brisa». El orden es el del habla: Գիշերվա հովն էր լալիս — «era la brisa de la noche la que lloraba» (է tras la palabra clave, etapa 2)."
+    "es": "«Añoranza» (1905): un sueño y un despertar. El pluscuamperfecto ննջել էի «me había dormido» pone el fondo; las formas durativas կանչում է, լալիս էր muestran lo que se prolonga. Formas poéticas: ճամփա = ճանապարհ «camino», սիրտըս = սիրտս «mi corazón», անկարծ «de repente», տրտում «con tristeza», հով «brisa». El orden es el del habla: Գիշերվա հովն էր լալիս — «era la brisa de la noche la que lloraba» (է tras la palabra clave, etapa 2).",
+    "de": "„Sehnsucht“ (1905) handelt von einem Traum und dem Erwachen. Mit dem Plusquamperfekt ննջել էի „ich war eingenickt“ wird der Hintergrund gesetzt; die Verlaufsformen կանչում է, լալիս էր zeigen, was vor sich geht. Du findest poetische Formen: ճամփա = ճանապարհ „Weg“, սիրտըս = սիրտս „mein Herz“, անկարծ „plötzlich“, տրտում „traurig“, հով „Brise“. Die Wortstellung ist wie in der gesprochenen Sprache: Գիշերվա հովն էր լալիս — „es war die Nachtbrise, die weinte“ (է nach dem Schlüsselwort, Stufe 2)."
    },
    "scene": {
     "title": {
      "ru": "Тоска",
      "en": "Longing",
      "fr": "Nostalgie",
-     "es": "Añoranza"
+     "es": "Añoranza",
+     "de": "Sehnsucht"
     },
     "who": {
      "Տ": {
@@ -6211,6 +6521,7 @@
       "en": "Vahan Teryan",
       "fr": "Vahan Térian",
       "es": "Vahán Terián",
+      "de": "Wahan Terjan",
       "g": "m"
      }
     },
@@ -6300,7 +6611,8 @@
         "ru": "путь",
         "en": "road",
         "fr": "chemin",
-        "es": "camino"
+        "es": "camino",
+        "de": "Weg"
        },
        "ճամփա"
       ],
@@ -6309,7 +6621,8 @@
         "ru": "сердце",
         "en": "heart",
         "fr": "cœur",
-        "es": "corazón"
+        "es": "corazón",
+        "de": "Herz"
        },
        "սիրտ"
       ],
@@ -6318,7 +6631,8 @@
         "ru": "ветерок",
         "en": "breeze",
         "fr": "brise",
-        "es": "brisa"
+        "es": "brisa",
+        "de": "Brise"
        },
        "հով"
       ],
@@ -6327,7 +6641,8 @@
         "ru": "тёмный",
         "en": "dark",
         "fr": "sombre",
-        "es": "oscuro"
+        "es": "oscuro",
+        "de": "dunkel"
        },
        "մութ"
       ],
@@ -6336,7 +6651,8 @@
         "ru": "одиночество",
         "en": "loneliness",
         "fr": "solitude",
-        "es": "soledad"
+        "es": "soledad",
+        "de": "Einsamkeit"
        },
        "մենակություն"
       ],
@@ -6345,7 +6661,8 @@
         "ru": "тоска",
         "en": "longing",
         "fr": "nostalgie",
-        "es": "añoranza"
+        "es": "añoranza",
+        "de": "Sehnsucht"
        },
        "կարոտ"
       ]
@@ -6362,7 +6679,8 @@
     "ru": "Ваан Терьян",
     "en": "Vahan Teryan",
     "fr": "Vahan Térian",
-    "es": "Vahán Terián"
+    "es": "Vahán Terián",
+    "de": "Wahan Terjan"
    },
    "year": "1905",
    "src": "https://hy.wikisource.org/wiki/Աղբյուր_(Վահան_Տերյան)",
@@ -6370,21 +6688,24 @@
     "ru": "Родник",
     "en": "The spring",
     "fr": "La source",
-    "es": "La fuente"
+    "es": "La fuente",
+    "de": "Die Quelle"
    },
    "formula": "Աղբյուր",
    "note": {
     "ru": "«Родник» (Ширак, 1905; посвящено Ал. Цатуряну): зима и смерть против живого родника — образ надежды и свободы. Перфект է իջել, մարել են, մեռել — итог: зима уже пришла (ступень 3). Старые и книжные формы: մահու = մահվան «смерти», ի երեսն — древний предлог ի «в, на» («снегу в лицо»), չըմարող = չմարող «неугасающий» (-ող с отрицанием, ступень 2), գալիք «грядущий», հավետ «вечно», կարկաչուն «журчащий».",
     "en": "“The spring” (Shirak, 1905; dedicated to Al. Tsaturyan): winter and death against a living spring — an image of hope and freedom. The perfect է իջել, մարել են, մեռել gives the result: winter has come (stage 3). Old and bookish forms: մահու = մահվան “of death”, ի երեսն — the old preposition ի “in, on” (“in the face of the snow”), չըմարող = չմարող “never fading” (-ող with negation, stage 2), գալիք “coming”, հավետ “forever”, կարկաչուն “babbling”.",
     "fr": "« La source » (Chirak, 1905 ; dédié à Al. Tsatourian) : l’hiver et la mort contre une source vivante — image d’espoir et de liberté. Le parfait է իջել, մարել են, մեռել donne le résultat : l’hiver est là (étape 3). Formes anciennes et littéraires : մահու = մահվան « de la mort », ի երեսն — l’ancienne préposition ի « dans, sur » (« au visage de la neige »), չըմարող = չմարող « qui ne s’éteint pas » (-ող avec négation, étape 2), գալիք « à venir », հավետ « à jamais », կարկաչուն « gazouillante ».",
-    "es": "«La fuente» (Shirak, 1905; dedicado a Al. Tsaturián): el invierno y la muerte frente a una fuente viva, imagen de esperanza y libertad. El perfecto է իջել, մարել են, մեռել da el resultado: el invierno ya llegó (etapa 3). Formas antiguas y cultas: մահու = մահվան «de la muerte», ի երեսն — la antigua preposición ի «en, sobre» («en la cara de la nieve»), չըմարող = չմարող «que no se apaga» (-ող con negación, etapa 2), գալիք «venidero», հավետ «por siempre», կարկաչուն «que murmura»."
+    "es": "«La fuente» (Shirak, 1905; dedicado a Al. Tsaturián): el invierno y la muerte frente a una fuente viva, imagen de esperanza y libertad. El perfecto է իջել, մարել են, մեռել da el resultado: el invierno ya llegó (etapa 3). Formas antiguas y cultas: մահու = մահվան «de la muerte», ի երեսն — la antigua preposición ի «en, sobre» («en la cara de la nieve»), չըմարող = չմարող «que no se apaga» (-ող con negación, etapa 2), գալիք «venidero», հավետ «por siempre», կարկաչուն «que murmura».",
+    "de": "Das Gedicht „Die Quelle“ (Shirak, 1905; gewidmet Al. Tsaturyan) zeigt dir, wie Winter und Tod gegen eine lebendige Quelle kämpfen – ein Bild von Hoffnung und Freiheit. Im Perfekt է իջել, մարել են, մեռել siehst du das Ergebnis: Der Winter ist schon da (Stufe 3). Hier sind alte und literarische Formen: մահու = մահվան „des Todes“, ի երեսն – die alte Präposition ի „in, auf“ („dem Schnee ins Gesicht“), չըմարող = չմարող „nicht verlöschend“ (-ող mit Verneinung, Stufe 2), գալիք „kommend“, հավետ „für immer“, կարկաչուն „plätschernd“."
    },
    "scene": {
     "title": {
      "ru": "Родник",
      "en": "The spring",
      "fr": "La source",
-     "es": "La fuente"
+     "es": "La fuente",
+     "de": "Die Quelle"
     },
     "who": {
      "Տ": {
@@ -6392,6 +6713,7 @@
       "en": "Vahan Teryan",
       "fr": "Vahan Térian",
       "es": "Vahán Terián",
+      "de": "Wahan Terjan",
       "g": "m"
      }
     },
@@ -6513,7 +6835,8 @@
         "ru": "зима",
         "en": "winter",
         "fr": "hiver",
-        "es": "invierno"
+        "es": "invierno",
+        "de": "Winter"
        },
        "ձմեռ"
       ],
@@ -6522,7 +6845,8 @@
         "ru": "снег",
         "en": "snow",
         "fr": "neige",
-        "es": "nieve"
+        "es": "nieve",
+        "de": "Schnee"
        },
        "ձյուն"
       ],
@@ -6531,7 +6855,8 @@
         "ru": "лёд",
         "en": "ice",
         "fr": "glace",
-        "es": "hielo"
+        "es": "hielo",
+        "de": "Eis"
        },
        "սառույց"
       ],
@@ -6540,7 +6865,8 @@
         "ru": "родник",
         "en": "spring (water)",
         "fr": "source",
-        "es": "fuente"
+        "es": "fuente",
+        "de": "Quelle"
        },
        "աղբյուր"
       ],
@@ -6549,7 +6875,8 @@
         "ru": "свобода",
         "en": "freedom",
         "fr": "liberté",
-        "es": "libertad"
+        "es": "libertad",
+        "de": "Freiheit"
        },
        "ազատություն"
       ],
@@ -6558,7 +6885,8 @@
         "ru": "весна",
         "en": "spring (season)",
         "fr": "printemps",
-        "es": "primavera"
+        "es": "primavera",
+        "de": "Frühling"
        },
        "գարուն"
       ]
@@ -6575,7 +6903,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1908",
    "src": "https://hy.wikisource.org/wiki/Շունն_ու_Կատուն",
@@ -6583,7 +6912,8 @@
     "ru": "Пёс и Кот (начало)",
     "en": "The Dog and the Cat (beginning)",
     "fr": "Le Chien et le Chat (début)",
-    "es": "El Perro y el Gato (comienzo)"
+    "es": "El Perro y el Gato (comienzo)",
+    "de": "Der Hund und die Katze (Anfang)"
    },
    "formula": "Շունն ու Կատուն",
    "names": [
@@ -6594,14 +6924,16 @@
     "ru": "«Пёс и Кот» (окончательная редакция 1908) — сказка в стихах о том, почему кошки и собаки враждуют: Кот взялся сшить Псу шапку… Речь — разговорная: ա = է (Մի գըդակ ա «это шапка»), չի = չէ, համա «только», ուստա «мастер», քեռի «дядя», խաթեր «уважение». Ճոն — «шапочник», գդակ — «папаха». Աչքիս վրա — «с радостью», дословно «на мои глаза»; ի սեր Աստծո — «ради Бога»; Բար' աջողում — «Бог в помощь». Здесь — начало: заказ шапки.",
     "en": "“The Dog and the Cat” (final version 1908) is a tale in verse about why cats and dogs are enemies: the Cat agreed to sew the Dog a cap… The speech is colloquial: ա = է (Մի գըդակ ա “it’s a cap”), չի = չէ, համա “but, only”, ուստա “master craftsman”, քեռի “uncle”, խաթեր “respect, sake”. Ճոն means “hatter”, գդակ “fur cap”. Աչքիս վրա — “with pleasure”, literally “on my eyes”; ի սեր Աստծո — “for God’s sake”; Բար' աջողում — “good luck with your work”. Here: the beginning, ordering the cap.",
     "fr": "« Le Chien et le Chat » (version finale de 1908) est un conte en vers sur l’origine de la brouille entre chats et chiens : le Chat a promis de coudre un bonnet au Chien… La langue est parlée : ա = է (Մի գըդակ ա « c’est un bonnet »), չի = չէ, համա « mais », ուստա « maître artisan », քեռի « oncle », խաթեր « égard ». Ճոն : « chapelier », գդակ : « bonnet de fourrure ». Աչքիս վրա — « avec plaisir », mot à mot « sur mes yeux » ; ի սեր Աստծո — « pour l’amour de Dieu » ; Բար' աջողում — « bon travail ». Ici : le début, la commande du bonnet.",
-    "es": "«El Perro y el Gato» (versión final de 1908) es un cuento en verso sobre por qué gatos y perros se pelean: el Gato aceptó coserle un gorro al Perro… El habla es coloquial: ա = է (Մի գըդակ ա «es un gorro»), չի = չէ, համա «pero», ուստա «maestro artesano», քեռի «tío», խաթեր «aprecio». Ճոն es «sombrerero» y գդակ «gorro de piel». Աչքիս վրա — «con gusto», literalmente «sobre mis ojos»; ի սեր Աստծո — «por Dios»; Բար' աջողում — «buen trabajo». Aquí: el comienzo, el encargo del gorro."
+    "es": "«El Perro y el Gato» (versión final de 1908) es un cuento en verso sobre por qué gatos y perros se pelean: el Gato aceptó coserle un gorro al Perro… El habla es coloquial: ա = է (Մի գըդակ ա «es un gorro»), չի = չէ, համա «pero», ուստա «maestro artesano», քեռի «tío», խաթեր «aprecio». Ճոն es «sombrerero» y գդակ «gorro de piel». Աչքիս վրա — «con gusto», literalmente «sobre mis ojos»; ի սեր Աստծո — «por Dios»; Բար' աջողում — «buen trabajo». Aquí: el comienzo, el encargo del gorro.",
+    "de": "Die Verserzählung „Der Hund und die Katze“ (endgültige Fassung 1908) erzählt dir, warum Katzen und Hunde sich streiten: Die Katze hat sich bereit erklärt, dem Hund eine Mütze zu nähen… Die Sprache ist umgangssprachlich: Du findest ա = է (Մի գըդակ ա „das ist eine Mütze“), չի = չէ, համա „aber, nur“, ուստա „Meister“, քեռի „Onkel“, խաթեր „Respekt, wegen“. Ճոն bedeutet „Hutmacher“, գդակ „Pelzmütze“. Աչքիս վրա — „mit Freude“, wörtlich „auf meine Augen“; ի սեր Աստծո — „um Gottes willen“; Բար' աջողում — „viel Erfolg bei der Arbeit“. Hier siehst du den Anfang: die Bestellung der Mütze."
    },
    "scene": {
     "title": {
      "ru": "Пёс и Кот",
      "en": "The Dog and the Cat",
      "fr": "Le Chien et le Chat",
-     "es": "El Perro y el Gato"
+     "es": "El Perro y el Gato",
+     "de": "Der Hund und die Katze"
     },
     "who": {
      "Թ": {
@@ -6609,6 +6941,7 @@
       "en": "Hovhannes Tumanyan",
       "fr": "Hovhannès Toumanian",
       "es": "Hovhannés Tumanián",
+      "de": "Howhannes Tumanjan",
       "g": "m"
      },
      "Շ": {
@@ -6616,6 +6949,7 @@
       "en": "Kuchi the Dog",
       "fr": "Koutchi le Chien",
       "es": "Kuchi el Perro",
+      "de": "Kuchi der Hund",
       "g": "m"
      },
      "Կ": {
@@ -6623,6 +6957,7 @@
       "en": "Piso the Cat",
       "fr": "Piso le Chat",
       "es": "Piso el Gato",
+      "de": "Piso die Katze",
       "g": "m"
      }
     },
@@ -6808,7 +7143,8 @@
         "ru": "шкура",
         "en": "skin, fur",
         "fr": "peau",
-        "es": "piel"
+        "es": "piel",
+        "de": "Fell"
        },
        "մորթի"
       ],
@@ -6817,7 +7153,8 @@
         "ru": "шапка",
         "en": "cap",
         "fr": "bonnet",
-        "es": "gorro"
+        "es": "gorro",
+        "de": "die Mütze"
        },
        "գդակ"
       ],
@@ -6826,7 +7163,8 @@
         "ru": "деньги",
         "en": "money",
         "fr": "argent",
-        "es": "plata, dinero"
+        "es": "plata, dinero",
+        "de": "das Geld"
        },
        "փող"
       ],
@@ -6835,7 +7173,8 @@
         "ru": "пятница",
         "en": "Friday",
         "fr": "vendredi",
-        "es": "viernes"
+        "es": "viernes",
+        "de": "der Freitag"
        },
        "ուրբաթ"
       ],
@@ -6844,7 +7183,8 @@
         "ru": "стыд",
         "en": "shame",
         "fr": "honte",
-        "es": "vergüenza"
+        "es": "vergüenza",
+        "de": "die Scham"
        },
        "ամոթ"
       ],
@@ -6853,7 +7193,8 @@
         "ru": "голова",
         "en": "head",
         "fr": "tête",
-        "es": "cabeza"
+        "es": "cabeza",
+        "de": "der Kopf"
        },
        "գլուխ"
       ]
@@ -6870,7 +7211,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1909",
    "src": "https://hy.wikisource.org/wiki/Մի_կաթիլ_մեղրը",
@@ -6878,21 +7220,24 @@
     "ru": "Капля мёда (начало)",
     "en": "A drop of honey (beginning)",
     "fr": "Une goutte de miel (début)",
-    "es": "Una gota de miel (comienzo)"
+    "es": "Una gota de miel (comienzo)",
+    "de": "Ein Tropfen Honig (Anfang)"
    },
    "formula": "Մի կաթիլ մեղրը",
    "note": {
     "ru": "«Капля мёда» (1909) — баллада о том, как из-за одной капли мёда дерутся кошка и собака, потом хозяева, потом деревни и, наконец, две страны. Здесь начало — до первого удара лапой. Язык живой, лорийский: ծախել = վաճառել «продавать», չոբան «пастух», ախպեր = եղբայր «брат», էս = այս, էսպես = այսպես, սըհաթ «час, миг», մին = մեկ, գալի = գալիս է, զըռ «здоровенный», կուզես «захочешь».",
     "en": "“A drop of honey” (1909) is a ballad about how one drop of honey sets off a fight — first a cat and a dog, then their owners, then villages and finally two countries. Here is the beginning, up to the first swipe of a paw. The language is lively Lori speech: ծախել = վաճառել “to sell”, չոբան “shepherd”, ախպեր = եղբայր “brother”, էս = այս, էսպես = այսպես, սըհաթ “hour, moment”, մին = մեկ, գալի = գալիս է, զըռ “hulking”, կուզես “you’ll want”.",
     "fr": "« Une goutte de miel » (1909) est une ballade : à cause d’une seule goutte de miel se battent un chat et un chien, puis leurs maîtres, puis des villages et enfin deux pays. Voici le début, jusqu’au premier coup de patte. Langue vivante du Lori : ծախել = վաճառել « vendre », չոբան « berger », ախպեր = եղբայր « frère », էս = այս, էսպես = այսպես, սըհաթ « heure, instant », մին = մեկ, գալի = գալիս է, զըռ « costaud », կուզես « tu voudras ».",
-    "es": "«Una gota de miel» (1909) es una balada: por una sola gota de miel se pelean un gato y un perro, luego sus dueños, luego las aldeas y al final dos países. Aquí está el comienzo, hasta el primer zarpazo. Lengua viva de Lori: ծախել = վաճառել «vender», չոբան «pastor», ախպեր = եղբայր «hermano», էս = այս, էսպես = այսպես, սըհաթ «hora, momento», մին = մեկ, գալի = գալիս է, զըռ «grandote», կուզես «querrás»."
+    "es": "«Una gota de miel» (1909) es una balada: por una sola gota de miel se pelean un gato y un perro, luego sus dueños, luego las aldeas y al final dos países. Aquí está el comienzo, hasta el primer zarpazo. Lengua viva de Lori: ծախել = վաճառել «vender», չոբան «pastor», ախպեր = եղբայր «hermano», էս = այս, էսպես = այսպես, սըհաթ «hora, momento», մին = մեկ, գալի = գալիս է, զըռ «grandote», կուզես «querrás».",
+    "de": "„Ein Tropfen Honig“ (1909) ist eine Ballade darüber, wie ein einziger Tropfen Honig einen Streit auslöst — erst eine Katze und ein Hund, dann deren Besitzer, dann Dörfer und schließlich zwei Länder. Hier siehst du den Anfang, bis zum ersten Pfotenschlag. Die Sprache ist lebendiges Lori: ծախել = վաճառել „verkaufen“, չոբան „Hirte“, ախպեր = եղբայր „Bruder“, էս = այս, էսպես = այսպես, սըհաթ „Stunde, Augenblick“, մին = մեկ, գալի = գալիս է, զըռ „riesig“, կուզես „du wirst wollen“."
    },
    "scene": {
     "title": {
      "ru": "Капля мёда",
      "en": "A drop of honey",
      "fr": "Une goutte de miel",
-     "es": "Una gota de miel"
+     "es": "Una gota de miel",
+     "de": "Ein Tropfen Honig"
     },
     "who": {
      "Թ": {
@@ -6900,6 +7245,7 @@
       "en": "Hovhannes Tumanyan",
       "fr": "Hovhannès Toumanian",
       "es": "Hovhannés Tumanián",
+      "de": "Howhannes Tumanjan",
       "g": "m"
      },
      "Չ": {
@@ -6907,6 +7253,7 @@
       "en": "Shepherd",
       "fr": "Berger",
       "es": "Pastor",
+      "de": "der Hirte",
       "g": "m"
      },
      "Խ": {
@@ -6914,6 +7261,7 @@
       "en": "Shopkeeper",
       "fr": "Boutiquier",
       "es": "Almacenero",
+      "de": "der Ladenbesitzer",
       "g": "m"
      }
     },
@@ -7115,7 +7463,8 @@
         "ru": "мёд",
         "en": "honey",
         "fr": "miel",
-        "es": "miel"
+        "es": "miel",
+        "de": "der Honig"
        },
        "մեղր"
       ],
@@ -7124,7 +7473,8 @@
         "ru": "лавка",
         "en": "shop",
         "fr": "boutique",
-        "es": "almacén"
+        "es": "almacén",
+        "de": "der Laden"
        },
        "խանութ"
       ],
@@ -7133,7 +7483,8 @@
         "ru": "муха",
         "en": "fly",
         "fr": "mouche",
-        "es": "mosca"
+        "es": "mosca",
+        "de": "die Fliege"
        },
        "ճանճ"
       ],
@@ -7142,7 +7493,8 @@
         "ru": "капля",
         "en": "drop",
         "fr": "goutte",
-        "es": "gota"
+        "es": "gota",
+        "de": "der Tropfen"
        },
        "կաթիլ"
       ],
@@ -7151,7 +7503,8 @@
         "ru": "вдруг",
         "en": "suddenly",
         "fr": "soudain",
-        "es": "de repente"
+        "es": "de repente",
+        "de": "plötzlich"
        },
        "հանկարծ"
       ],
@@ -7160,7 +7513,8 @@
         "ru": "кошка",
         "en": "cat",
         "fr": "chat",
-        "es": "gato"
+        "es": "gato",
+        "de": "die Katze"
        },
        "կատու"
       ]
@@ -7177,7 +7531,8 @@
     "ru": "Ованес Туманян",
     "en": "Hovhannes Tumanyan",
     "fr": "Hovhannès Toumanian",
-    "es": "Hovhannés Tumanián"
+    "es": "Hovhannés Tumanián",
+    "de": "Howhannes Tumanjan"
    },
    "year": "1913",
    "src": "https://hy.wikisource.org/wiki/Կիկոսի_մահը",
@@ -7185,21 +7540,24 @@
     "ru": "Смерть Кикоса (начало и конец)",
     "en": "The death of Kikos (beginning and end)",
     "fr": "La mort de Kikos (début et fin)",
-    "es": "La muerte de Kikos (principio y final)"
+    "es": "La muerte de Kikos (principio y final)",
+    "de": "Der Tod von Kikos (Anfang und Ende)"
    },
    "formula": "Կիկոսի մահը",
    "note": {
     "ru": "«Смерть Кикоса» (1913) — сказка Туманяна, над которой смеётся вся Армения: семья оплакивает мальчика, который ещё не родился. Язык — разговорный, лорийский: հեր = հայր «отец», մեր = մայր «мать», կնիկ = կին «жена», էս = այս «этот», հիմի = հիմա «сейчас», ղրկել = ուղարկել «послать», ըլել = լինել «быть», աղբրի = աղբյուրի «родника». Сказочное «жили-были» — в настоящем времени: լինում են, ունենում են. Здесь — начало и конец сказки.",
     "en": "“The death of Kikos” (1913) is a Tumanyan tale all of Armenia laughs at: a family mourns a boy who hasn’t even been born. The language is colloquial, from Lori: հեր = հայր “father”, մեր = մայր “mother”, կնիկ = կին “wife”, էս = այս “this”, հիմի = հիմա “now”, ղրկել = ուղարկել “to send”, ըլել = լինել “to be”, աղբրի = աղբյուրի “of the spring”. The fairy-tale “once upon a time” is told in the present: լինում են, ունենում են. Here: the beginning and the end of the tale.",
     "fr": "« La mort de Kikos » (1913) est un conte de Toumanian qui fait rire toute l’Arménie : une famille pleure un garçon qui n’est même pas né. La langue est parlée, du Lori : հեր = հայր « père », մեր = մայր « mère », կնիկ = կին « épouse », էս = այս « ce », հիմի = հիմա « maintenant », ղրկել = ուղարկել « envoyer », ըլել = լինել « être », աղբրի = աղբյուրի « de la source ». Le « il était une fois » est au présent : լինում են, ունենում են. Ici : le début et la fin du conte.",
-    "es": "«La muerte de Kikos» (1913) es un cuento de Tumanián del que se ríe toda Armenia: una familia llora a un niño que ni siquiera nació. La lengua es coloquial, de Lori: հեր = հայր «padre», մեր = մայր «madre», կնիկ = կին «esposa», էս = այս «este», հիմի = հիմա «ahora», ղրկել = ուղարկել «mandar», ըլել = լինել «ser», աղբրի = աղբյուրի «de la fuente». El «había una vez» va en presente: լինում են, ունենում են. Aquí: el principio y el final del cuento."
+    "es": "«La muerte de Kikos» (1913) es un cuento de Tumanián del que se ríe toda Armenia: una familia llora a un niño que ni siquiera nació. La lengua es coloquial, de Lori: հեր = հայր «padre», մեր = մայր «madre», կնիկ = կին «esposa», էս = այս «este», հիմի = հիմա «ahora», ղրկել = ուղարկել «mandar», ըլել = լինել «ser», աղբրի = աղբյուրի «de la fuente». El «había una vez» va en presente: լինում են, ունենում են. Aquí: el principio y el final del cuento.",
+    "de": "„Der Tod von Kikos“ (1913) ist ein Märchen von Tumanyan, über das ganz Armenien lacht: Eine Familie trauert um einen Jungen, der noch nicht einmal geboren ist. Die Sprache ist umgangssprachlich, aus Lori: հեր = հայր „Vater“, մեր = մայր „Mutter“, կնիկ = կին „Frau“, էս = այս „dies“, հիմի = հիմա „jetzt“, ղրկել = ուղարկել „schicken“, ըլել = լինել „sein“, աղբրի = աղբյուրի „der Quelle“. Die Märchenformel „Es war einmal“ wird im Präsens erzählt: լինում են, ունենում են. Hier: Anfang und Ende des Märchens."
    },
    "scene": {
     "title": {
      "ru": "Смерть Кикоса",
      "en": "The death of Kikos",
      "fr": "La mort de Kikos",
-     "es": "La muerte de Kikos"
+     "es": "La muerte de Kikos",
+     "de": "Der Tod von Kikos"
     },
     "who": {
      "Պ": {
@@ -7207,6 +7565,7 @@
       "en": "Narrator",
       "fr": "Narrateur",
       "es": "Narrador",
+      "de": "der Erzähler",
       "g": "m"
      },
      "Ա": {
@@ -7214,6 +7573,7 @@
       "en": "Eldest daughter",
       "fr": "La fille aînée",
       "es": "La hija mayor",
+      "de": "die älteste Tochter",
       "g": "f"
      },
      "Հ": {
@@ -7221,6 +7581,7 @@
       "en": "Father",
       "fr": "Le père",
       "es": "El padre",
+      "de": "der Vater",
       "g": "m"
      }
     },
@@ -7358,7 +7719,8 @@
         "ru": "бедный",
         "en": "poor",
         "fr": "pauvre",
-        "es": "pobre"
+        "es": "pobre",
+        "de": "arm"
        },
        "աղքատ"
       ],
@@ -7367,7 +7729,8 @@
         "ru": "родник",
         "en": "spring (water)",
         "fr": "source",
-        "es": "fuente"
+        "es": "fuente",
+        "de": "Quelle"
        },
        "աղբյուր"
       ],
@@ -7376,7 +7739,8 @@
         "ru": "дерево",
         "en": "tree",
         "fr": "arbre",
-        "es": "árbol"
+        "es": "árbol",
+        "de": "Baum"
        },
        "ծառ"
       ],
@@ -7385,7 +7749,8 @@
         "ru": "кувшин",
         "en": "jug",
         "fr": "cruche",
-        "es": "cántaro"
+        "es": "cántaro",
+        "de": "der Krug"
        },
        "կուժ"
       ],
@@ -7394,7 +7759,8 @@
         "ru": "глупый",
         "en": "foolish",
         "fr": "sot",
-        "es": "tonto"
+        "es": "tonto",
+        "de": "dumm"
        },
        "հիմար"
       ],
@@ -7403,7 +7769,8 @@
         "ru": "умный",
         "en": "clever",
         "fr": "sensé",
-        "es": "sensato"
+        "es": "sensato",
+        "de": "klug"
        },
        "խելոք"
       ]
@@ -7423,7 +7790,8 @@
     "ru": "Егише Чаренц",
     "en": "Yeghishe Charents",
     "fr": "Yéghiché Tcharents",
-    "es": "Yeghishé Charents"
+    "es": "Yeghishé Charents",
+    "de": "Jeghische Tscharenz"
    },
    "year": "1920–1921",
    "src": "https://hy.wikisource.org/wiki/Ես_իմ_անուշ_Հայաստանի",
@@ -7431,21 +7799,24 @@
     "ru": "Я люблю мою милую Армению",
     "en": "I love my sweet Armenia",
     "fr": "J’aime ma douce Arménie",
-    "es": "Amo a mi dulce Armenia"
+    "es": "Amo a mi dulce Armenia",
+    "de": "Ich liebe mein süßes Armenien"
    },
    "formula": "Ես իմ անուշ Հայաստանի",
    "note": {
     "ru": "Егише Чаренц (1897–1937) написал это стихотворение в 1920–1921 годах; его знает наизусть вся Армения. Каждая строфа кончается «… -ն եմ սիրում» — «… люблю»: ударное слово стоит перед եմ (ступень 2). Много сложных слов из двух корней: արևահամ «со вкусом солнца», ողբաձայն «со скорбным голосом», հազարամյա «тысячелетний», լուսապսակ «в венце света». Մասիս — армянское имя Арарата; յար — «любимая» (из народной песни); Нарекаци и Кучак — средневековые поэты.",
     "en": "Yeghishe Charents (1897–1937) wrote this poem in 1920–1921; all of Armenia knows it by heart. Every stanza ends “… -ն եմ սիրում” — “… I love”: the stressed word stands before եմ (stage 2). There are many compounds of two roots: արևահամ “sun-flavoured”, ողբաձայն “mournful-voiced”, հազարամյա “thousand-year-old”, լուսապսակ “crowned with light”. Մասիս is the Armenian name of Ararat; յար means “beloved” (from folk song); Narekatsi and Kuchak are medieval poets.",
     "fr": "Yéghiché Tcharents (1897–1937) a écrit ce poème en 1920–1921 ; toute l’Arménie le connaît par cœur. Chaque strophe finit par « … -ն եմ սիրում » — « … j’aime » : le mot accentué se place devant եմ (étape 2). Beaucoup de mots composés de deux racines : արևահամ « au goût de soleil », ողբաձայն « à la voix plaintive », հազարամյա « millénaire », լուսապսակ « couronné de lumière ». Մասիս est le nom arménien de l’Ararat ; յար veut dire « bien-aimée » (chanson populaire) ; Narekatsi et Koutchak sont des poètes médiévaux.",
-    "es": "Yeghishé Charents (1897–1937) escribió este poema en 1920–1921; toda Armenia lo sabe de memoria. Cada estrofa termina en «… -ն եմ սիրում» — «… amo»: la palabra acentuada va antes de եմ (etapa 2). Hay muchos compuestos de dos raíces: արևահամ «con sabor a sol», ողբաձայն «de voz doliente», հազարամյա «milenario», լուսապսակ «coronado de luz». Մասիս es el nombre armenio del Ararat; յար significa «amada» (de la canción popular); Narekatsí y Kuchak son poetas medievales."
+    "es": "Yeghishé Charents (1897–1937) escribió este poema en 1920–1921; toda Armenia lo sabe de memoria. Cada estrofa termina en «… -ն եմ սիրում» — «… amo»: la palabra acentuada va antes de եմ (etapa 2). Hay muchos compuestos de dos raíces: արևահամ «con sabor a sol», ողբաձայն «de voz doliente», հազարամյա «milenario», լուսապսակ «coronado de luz». Մասիս es el nombre armenio del Ararat; յար significa «amada» (de la canción popular); Narekatsí y Kuchak son poetas medievales.",
+    "de": "Jeghische Tscharenz (1897–1937) schrieb dieses Gedicht in den Jahren 1920–1921; ganz Armenien kennt es auswendig. Jede Strophe endet mit „… -ն եմ սիրում“ — „… ich liebe“: das betonte Wort steht vor եմ (Stufe 2). Es gibt viele zusammengesetzte Wörter aus zwei Wurzeln: արևահամ „mit Sonnengeschmack“, ողբաձայն „mit klagender Stimme“, հազարամյա „tausendjährig“, լուսապսակ „lichtgekrönt“. Մասիս ist der armenische Name des Ararat; յար bedeutet „die Geliebte“ (aus dem Volkslied); Narekatsi und Kuchak sind mittelalterliche Dichter."
    },
    "scene": {
     "title": {
      "ru": "Я люблю мою милую Армению",
      "en": "I love my sweet Armenia",
      "fr": "J’aime ma douce Arménie",
-     "es": "Amo a mi dulce Armenia"
+     "es": "Amo a mi dulce Armenia",
+     "de": "Ich liebe mein süßes Armenien"
     },
     "who": {
      "Չ": {
@@ -7453,6 +7824,7 @@
       "en": "Yeghishe Charents",
       "fr": "Yéghiché Tcharents",
       "es": "Yeghishé Charents",
+      "de": "Jeghische Tscharenz",
       "g": "m"
      }
     },
@@ -7609,7 +7981,8 @@
         "ru": "солнце",
         "en": "sun",
         "fr": "soleil",
-        "es": "sol"
+        "es": "sol",
+        "de": "die Sonne"
        },
        "արև"
       ],
@@ -7618,7 +7991,8 @@
         "ru": "роза",
         "en": "rose",
         "fr": "rose",
-        "es": "rosa"
+        "es": "rosa",
+        "de": "die Rose"
        },
        "վարդ"
       ],
@@ -7627,7 +8001,8 @@
         "ru": "небо",
         "en": "sky",
         "fr": "ciel",
-        "es": "cielo"
+        "es": "cielo",
+        "de": "der Himmel"
        },
        "երկինք"
       ],
@@ -7636,7 +8011,8 @@
         "ru": "озеро",
         "en": "lake",
         "fr": "lac",
-        "es": "lago"
+        "es": "lago",
+        "de": "der See"
        },
        "լիճ"
       ],
@@ -7645,7 +8021,8 @@
         "ru": "песня",
         "en": "song",
         "fr": "chant",
-        "es": "canción"
+        "es": "canción",
+        "de": "das Lied"
        },
        "երգ"
       ],
@@ -7654,7 +8031,8 @@
         "ru": "вершина",
         "en": "summit",
         "fr": "sommet",
-        "es": "cumbre"
+        "es": "cumbre",
+        "de": "der Gipfel"
        },
        "գագաթ"
       ]
