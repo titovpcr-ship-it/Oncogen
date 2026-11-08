@@ -145,8 +145,8 @@ fileop extract; только изменённое, отпечатки — `out/d
 Whois Privacy, Transfer Lock. NS были park1/park2.name.am (заглушка Name.am с рекламой) — сменены на
 ns301/ns302.name.am. AutoSSL выпустил Let's Encrypt (barik.am + *.barik.am) за минуту после переключения DNS
 (`SSL/start_autossl_check`). `check_live.py` по https — всё зелёное. HSTS включён: 30 дней, без поддоменов и preload
-(увеличить до года после первого продления AutoSSL). Из облака plain http ещё долго ходит на старую заглушку
-(кэш прокси, nginx/1.22.1) — пункты «http → https» и «/.well-known/» проверять с компьютера или позже.
+(увеличить до года после первого продления AutoSSL). С 08.11 вечера из облака по http отвечает уже
+LiteSpeed: `check_live.py` зелёный целиком (подставленная 404.html исключена из перенаправления — O-157).
 Временный адрес без домена: https://host30.name.am/~barik/.
 
 ## ЯЗЫК ПО СТРАНЕ (08.11.2026, O-154)

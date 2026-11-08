@@ -183,6 +183,8 @@ ErrorDocument 404 /404.html
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   # своя 404 при запросе в /.well-known/ по http — не уводить на https (её отдаёт ErrorDocument)
   RewriteCond %{ENV:REDIRECT_STATUS} !=404
+  # LiteSpeed REDIRECT_STATUS не ставит: подставленная 404.html шла на https (O-157) — её не уводить
+  RewriteCond %{REQUEST_URI} !^/404\.html$
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 # служебное наружу не отдаётся: архивы выкладки, базы, журналы, скрытые файлы
