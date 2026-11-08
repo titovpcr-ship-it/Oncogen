@@ -29,6 +29,17 @@ python3.13 tools/gen_audio.py --redo 'և'      # переозвучить зап
 python3.13 tools/gen_audio.py --reserve       # запас: tools/audio_reserve/words.txt → tools/audio_reserve/anahit/
 python3.13 tools/gen_audio.py --voice hy-AM-HaykNeural   # мужской голос — в свою папку audio/hayk/
 ```
+
+## Два голоса (08.11.2026, O-151)
+Всё озвучено двумя голосами: `www/audio/anahit/` (женский, основной) и `www/audio/hayk/` (мужской), запас —
+тоже обоими. `manifest.json`: основной голос — как раньше (`voice`, `dir`, `count`, `total`), все голоса —
+`voices: {папка: {voice, count, total, made}}` (пересчитывается любым запуском). Приложение: слова — голосом из
+настроек («Голос: женский / мужской», `UI.rv` в `bararan-ui-v1`), реплики сцен курса — по полу говорящего
+(`who.g` = `m` | `f` в `data/path/course.json`, `pack_path.js` без него падает); нет записи второго голоса —
+играет основной. **Новое слово или фраза — озвучить обоими:**
+```
+python3.13 tools/gen_audio.py && python3.13 tools/gen_audio.py --voice hy-AM-HaykNeural
+```
 Новое слово в словаре → `build_data.py` → `gen_audio.py` (возьмёт из запаса копией, если слово там есть, иначе
 озвучит только новое) → `node tests/test_app.js`
 (тест падает, если у слова нет записи).

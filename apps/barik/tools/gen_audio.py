@@ -227,6 +227,28 @@ def encode(samples, dst):
     os.replace(tmp, dst)
 
 
+def write_manifest(allitems, voice, tier):
+    """manifest.json: основной голос (anahit) — dir/voice/count/total, как раньше; все голоса с записями —
+    voices: {папка: {voice, count, total, made}} — по нему приложение даёт выбрать голос и озвучивает
+    мужские роли сцен (O-151)."""
+    mp = os.path.join(OUT_DIR, 'manifest.json')
+    old = json.load(open(mp, encoding='utf-8')) if os.path.exists(mp) else {}
+    voices = {}
+    for v, d in sorted(VOICES.items()):
+        n = sum(os.path.exists(path_of(t, d)) for _, t in allitems)
+        if n:
+            prev = (old.get('voices') or {}).get(d, {})
+            same = prev.get('count') == n and prev.get('total') == len(allitems)
+            voices[d] = {'voice': v, 'count': n, 'total': len(allitems),
+                         'made': prev.get('made') if same and v != voice else time.strftime('%Y-%m-%d')}
+    main_d = VOICES['hy-AM-AnahitNeural'] if 'anahit' in voices else (next(iter(voices)) if voices else VOICES[voice])
+    m = voices.get(main_d, {'voice': voice, 'count': 0, 'total': len(allitems), 'made': time.strftime('%Y-%m-%d')})
+    os.makedirs(OUT_DIR, exist_ok=True)
+    with open(mp, 'w', encoding='utf-8') as f:
+        json.dump({'voice': m['voice'], 'dir': main_d, 'count': m['count'], 'total': m['total'],
+                   'tier': tier, 'made': m['made'], 'voices': voices}, f, ensure_ascii=False)
+
+
 def main():
     ap = argparse.ArgumentParser(description='Озвучка словаря Barik через Azure Speech (файл на слово)')
     ap.add_argument('--voice', default='hy-AM-AnahitNeural', choices=sorted(VOICES))
@@ -369,10 +391,7 @@ def main():
     have = sum(os.path.exists(path_of(t, vdir, base)) for _, t in allitems)
     missing = [t for _, t in allitems if not os.path.exists(path_of(t, vdir, base))]
     if not args.reserve:
-        os.makedirs(OUT_DIR, exist_ok=True)
-        with open(os.path.join(OUT_DIR, 'manifest.json'), 'w', encoding='utf-8') as f:
-            json.dump({'voice': args.voice, 'dir': vdir, 'count': have, 'total': len(allitems),
-                       'tier': args.tier, 'made': time.strftime('%Y-%m-%d')}, f, ensure_ascii=False)
+        write_manifest(allitems, args.voice, args.tier)
     size = sum(os.path.getsize(os.path.join(dp, x)) for dp, _, fs in os.walk(os.path.join(base, vdir))
                for x in fs) if os.path.isdir(os.path.join(base, vdir)) else 0
     print('Записей готово: %d из %d, %.1f МБ. Нет: %d%s' % (have, len(allitems), size / 1e6, len(missing),

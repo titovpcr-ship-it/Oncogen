@@ -64,7 +64,7 @@ if (course) {
     if (ids.has(at)) errs.push(at + ': повтор id'); ids.add(at);
     has4(u.title, at + ' title');
     if (u.kind === 'read') { has4(u.author, at + ' author'); if (!/^https:\/\/hy\.wikisource\.org\//.test(u.src || '')) errs.push(at + ': у текста нет источника (src)'); } has4(u.note, at + ' note'); has4(u.scene && u.scene.title, at + ' scene.title');
-    for (const [k, v] of Object.entries(u.scene.who)) has4(v, at + ' who ' + k);
+    for (const [k, v] of Object.entries(u.scene.who)) { has4(v, at + ' who ' + k); if (v.g !== 'm' && v.g !== 'f') errs.push(at + ': у говорящего ' + k + ' нет пола g (m/f) — голос записи'); }
     for (const ln of u.scene.lines) {
       if (ln.length !== 6 || ln.some(x => !x)) errs.push(at + ': реплика без 4 переводов — ' + ln[1]);
       if (!u.scene.who[ln[0]]) errs.push(at + ': неизвестный говорящий ' + ln[0]);

@@ -159,7 +159,7 @@ function touchStreak(){const td=today(); if(S.st.day===td) return; S.st.streak=(
 /* Записи нейроголоса Azure (O-135): файл на слово — audio/<голос>/<ab>/<aid>.mp3, имя — хэш текста aid()
    (тот же считает tools/gen_audio.py); голос и число записей — audio/manifest.json. Файл берётся, когда
    слово звучит (на сайте service worker хранит его без интернета); нет файла — системный армянский голос. */
-let MAN={};                       // {voice, dir, count, total}
+let MAN={};                       // {voice, dir, count, total, voices:{папка:{voice,count,total}}}
 let REAL_ANY=false;
 const SPEECH=('speechSynthesis' in window)&&(typeof window.SpeechSynthesisUtterance!=='undefined');
 let HYV=null;
@@ -172,7 +172,13 @@ function utf8(s){ if(ENC) return ENC.encode(s); const u=unescape(encodeURICompon
 function fnv(b,h){ for(let i=0;i<b.length;i++) h=Math.imul(h^b[i],0x01000193); return h>>>0; }
 function hex8(n){return ('0000000'+n.toString(16)).slice(-8);}
 function aid(s){const b=utf8(s); return hex8(fnv(b,0x811c9dc5))+hex8(fnv(b,0x050c5d1f));}
-function audioUrl(text){const h=aid(text); return 'audio/'+MAN.dir+'/'+h.slice(0,2)+'/'+h+'.mp3';}
+/* голоса записей (O-151): f — Анаит (основной), m — Айк; слова звучат выбранным в настройках (UI.rv),
+   реплики сцен — голосом по полу говорящего (who.g в course.json) */
+const VDIR={f:'anahit',m:'hayk'};
+function hasVoice(d){return !!d&&(d===MAN.dir||!!(MAN.voices&&MAN.voices[d]&&MAN.voices[d].count>0));}
+function bothVoices(){return REAL_ANY&&hasVoice(VDIR.f)&&hasVoice(VDIR.m);}
+function vdir(g){const d=VDIR[g||UI.rv||'f']; return hasVoice(d)?d:MAN.dir;}
+function audioUrl(text,g){const h=aid(text); return 'audio/'+vdir(g)+'/'+h.slice(0,2)+'/'+h+'.mp3';}
 function hasRealKey(){return REAL_ANY;}
 function hasReal(w){return !!(w&&REAL_ANY);}
 function loadManifest(){
@@ -206,7 +212,10 @@ function playUrl(url,text,slow,btn,loud,done){
   try{el.pause();}catch(e){}
   const off=()=>{if(btn) btn.classList.remove('on');};
   if(btn) btn.classList.add('on');
-  const fail=()=>{ off(); if(tok!==playTok) return; if(!speakTTS(text,slow,btn,false)&&loud) toast(T(navigator.onLine===false?'audioLoadFail':'noAudio')); };
+  const fail=()=>{ off(); if(tok!==playTok) return;
+    // у второго голоса нет записи (новое слово) — основным голосом
+    const main='audio/'+MAN.dir+'/'; if(MAN.dir&&/^audio\//.test(url)&&url.indexOf(main)!==0) return playUrl(url.replace(/^audio\/[^/]+\//,main),text,slow,btn,loud,done);
+    if(!speakTTS(text,slow,btn,false)&&loud) toast(T(navigator.onLine===false?'audioLoadFail':'noAudio')); };
   getAudio(url).then(src=>{
     if(tok!==playTok) return;
     el.onended=()=>{off(); if(done&&tok===playTok) done();}; el.onerror=fail;
@@ -1265,6 +1274,7 @@ function settingsHTML(){
   '</section>'+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setSound'))+'</h2>'+
     '<div class="set-row col"><p class="note" style="margin:0">'+esc(vtext)+'</p><div class="audio" style="justify-content:flex-start"><button class="aud" data-act="say" data-arg="բարև ձեզ">'+ICON.spk+'<span>'+esc(T('testSound'))+'</span></button></div></div>'+
+    (bothVoices()?'<div class="set-row"><div class="lbl"><b>'+esc(T('setVoice'))+'</b><span>'+esc(T('setVoiceSub'))+'</span></div><div class="seg" role="group" aria-label="'+esc(T('setVoice'))+'"><button data-act="rv" data-arg="f" aria-pressed="'+(UI.rv!=='m')+'">'+esc(T('voiceF'))+'</button><button data-act="rv" data-arg="m" aria-pressed="'+(UI.rv==='m')+'">'+esc(T('voiceM'))+'</button></div></div>':'')+
     '<div class="set-row"><div class="lbl"><b>'+esc(T('autoplay'))+'</b><span>'+esc(T('autoplaySub'))+'</span></div><button class="switch" data-act="tog" data-arg="auto" aria-pressed="'+!!S.set.auto+'" aria-label="'+esc(T('autoplay'))+'"></button></div>'+
   '</section>'+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setLessons'))+'</h2>'+
@@ -1567,8 +1577,8 @@ const nextUnit=()=>CRS.units.find(u=>!PG.u[u.id]&&unitOpen(u))||CRS.units.find(u
 /* ступень 0 пройдена: проверка чтения (или входной тест) либо обведено 20+ букв */
 function stage0Done(){ return !!PG.abc||Object.keys(S.pen||{}).length>=20; }
 const harvestedToday=()=>!!(PG.h&&PG.h.last===today());
-function sayText(t,btn,slow,done){
-  if(REAL_ANY) return playUrl(audioUrl(t),t,slow,btn,true,done);
+function sayText(t,btn,slow,done,g){
+  if(REAL_ANY) return playUrl(audioUrl(t,g),t,slow,btn,true,done);
   return speakTTS(t,slow,btn,true);
 }
 /* зёрна внутри граната: шестиугольная укладка, шаг — самый крупный, при котором влезают все n */
@@ -1636,7 +1646,7 @@ function openUnit(id,step){
   const u=unitById(id); if(!u) return;
   if(!unitOpen(u)){ openPaywall(); return; }
   PU={kind:'unit',u,step:step||0,q:null,i:0,ok:0,end:false,chain:0};
-  if(REAL_ANY) u.scene.lines.forEach(l=>getAudio(audioUrl(l[1])).catch(()=>{}));
+  if(REAL_ANY) u.scene.lines.forEach(l=>getAudio(audioUrl(l[1],(u.scene.who[l[0]]||{}).g||'f')).catch(()=>{}));
   go('unit',id);
 }
 function unitSteps(){
@@ -1771,9 +1781,11 @@ function practiceHTML(){
   }
   return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
 }
+/* пол говорящего реплики: who.g ('m' | 'f') */
+function lnG(l){const u=(PU&&PU.u)||CRS.units.find(x=>x.scene.lines.includes(l)), w=u&&u.scene.who[l[0]]; return w&&w.g||'f';}
 function pSayIt(it){
-  const t=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:it.a));
-  sayText(t,null,false);
+  const ln=it.k==='tiles'||it.k==='hear', t=ln?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:it.a));
+  sayText(t,null,false,null,ln?lnG(it.ln):null);
 }
 function pAnswer(i){
   const it=pCur(); if(!it||it.done||!it.opts||i>=it.opts.length) return;
@@ -1856,11 +1868,11 @@ const PH={
   pStep:a=>{ if(!PU) return; PU.step=+a; if(PU.step===2){ PU.q=null; } render(); window.scrollTo(0,0); },
   pSeed:a=>{ seedFrom={v:view,a:viewArg}; go('seed',a); },
   pBackSeed:()=>{ if(seedFrom&&seedFrom.v==='unit'&&PU) go('unit',PU.u.id); else go('path'); },
-  pSayLn:(a,b)=>{ if(PU) sayText(PU.u.scene.lines[+a][1],b); },
+  pSayLn:(a,b)=>{ if(PU){ const l=PU.u.scene.lines[+a]; sayText(l[1],b,false,null,lnG(l)); } },
   pPlayAll:()=>{ if(!PU) return; const ls=PU.u.scene.lines, tok=++PU.chain;
     const step=i=>{ if(!PU||PU.chain!==tok||i>=ls.length||view!=='unit'||PU.step!==1){ document.querySelectorAll('.ln.on').forEach(e=>e.classList.remove('on')); return; }
       document.querySelectorAll('.ln.on').forEach(e=>e.classList.remove('on')); const el=document.getElementById('ln'+i); if(el){ el.classList.add('on'); el.scrollIntoView({block:'nearest',behavior:'smooth'}); }
-      const b=el&&el.querySelector('.say'); if(!sayText(ls[i][1],b,false,()=>setTimeout(()=>step(i+1),350))) return; if(!REAL_ANY) setTimeout(()=>step(i+1),2600); };
+      const b=el&&el.querySelector('.say'); if(!sayText(ls[i][1],b,false,()=>setTimeout(()=>step(i+1),350),lnG(ls[i]))) return; if(!REAL_ANY) setTimeout(()=>step(i+1),2600); };
     step(0); },
   pTr:()=>{ PG.tr=!PG.tr; pgSave(); render(); },
   pAns:a=>pAnswer(+a),
@@ -1946,6 +1958,7 @@ const H={
   tback:()=>{const it=tcur(); if(!it||it.done) return; it.val=[...it.val].slice(0,-1).join(''); tfield();},
   tcheck:()=>tcheck(), thint:()=>thint(), tgive:()=>tgive(),
   kbOwn:()=>{UI.kb='own'; saveUI(); render();},
+  rv:a=>{UI.rv=a==='m'?'m':'f'; saveUI(); render(); sayText('բարև ձեզ',null,false);},
   kbSys:()=>{UI.kb='sys'; saveUI(); render(); if(view==='tquiz') onTypeFocus();},
   picQuiz:()=>startPicQuiz(),
   picOpt:a=>picAnswer(+a),

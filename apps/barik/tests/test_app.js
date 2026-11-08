@@ -359,6 +359,35 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('.abc button >> nth=0'); got.length=0;
     await pg.click('[data-act=sayLetter]'); await pg.waitForTimeout(500);
     ok(got.some(x=>x.startsWith('200')),'буква Ա: «Слушать» берёт запись названия «այբ»');
+    // второй голос (O-151): мужской — у всех слов и букв, выбор в настройках, герои сцен — голосом по полу
+    if(A.man.voices&&A.man.voices.hayk){
+      const H=await pg.evaluate(()=>{const B=window.__bararan; return B.WORDS.map(w=>B.audioUrl(w.a,'m')).concat(B.ABC.map(x=>B.audioUrl(x.nm,'m')));});
+      const hm=H.filter(u=>!u.includes('/hayk/')||!fs.existsSync(path.join(ROOT,u)));
+      ok(hm.length===0&&A.man.voices.hayk.count===A.man.total,'мужской голос: запись у всех '+H.length+', нет: '+hm.length);
+      await pg.click('[data-act=tab][data-arg=settings]');
+      ok(await pg.locator('[data-act=rv]').count()===2&&await pg.locator('[data-act=rv][data-arg=f][aria-pressed=true]').count()===1,'настройки: выбор голоса, по умолчанию женский');
+      got.length=0; await pg.click('[data-act=rv][data-arg=m]'); await pg.waitForTimeout(700);
+      ok(got.some(x=>x.startsWith('200')&&x.includes('/hayk/')&&x.includes(A.hi)),'выбран мужской — звучит запись Айка: '+got.join(' '));
+      ok((await pg.evaluate(()=>window.__bararan.audioUrl('բարև ձեզ'))).includes('/hayk/'),'слова — выбранным голосом (Айк)');
+      // нет записи у второго голоса (новое слово) — основной голос, а не системный синтез
+      await pg.route(/\/audio\/hayk\/.+\.mp3$/,r=>r.fulfill({status:404,body:''}));
+      const fw=await pg.evaluate(()=>{const B=window.__bararan; return B.WORDS.filter(w=>B.TOPICS[w.t].lv==='A1')[50].a;});
+      got.length=0; await pg.evaluate(w=>{window.__bararan.H.say(w,document.querySelector('[data-act=say]'));},fw); await pg.waitForTimeout(900);
+      ok(got.some(x=>x.startsWith('404')&&x.includes('/hayk/'))&&got.some(x=>x.startsWith('200')&&x.includes('/anahit/')),'нет записи Айка — запись Анаит: '+got.join(' '));
+      await pg.unroute(/\/audio\/hayk\/.+\.mp3$/);
+      await pg.click('[data-act=rv][data-arg=f]');
+      ok(await pg.evaluate(()=>JSON.parse(localStorage.getItem('bararan-ui-v1')).rv)==='f','выбор голоса — в настройках интерфейса');
+      // сцена s1u4: Анаит — женским, Марк — мужским, при любом выбранном голосе
+      // выбран мужской: женские реплики всё равно — Анаит (сцена подгружает реплики заранее, голосом героя)
+      await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=rv][data-arg=m]');
+      await pg.click('[data-act=tab][data-arg=path]'); got.length=0; await pg.click('[data-act=pUnit][data-arg=s1u4]');
+      await pg.click('.page-actions [data-act=pStep][data-arg="1"]'); await pg.waitForTimeout(1200);
+      const L=await pg.evaluate(()=>{const u=window.__bararan.CRS.units.find(x=>x.id==='s1u4'); return u.scene.lines.map(l=>[u.scene.who[l[0]].g,window.__bararan.aid(l[1])]);});
+      const vOk=L.every(([g,h])=>got.some(x=>x.startsWith('200')&&x.includes((g==='m'?'/hayk/':'/anahit/')+h.slice(0,2)+'/'+h))&&!got.some(x=>x.includes((g==='m'?'/anahit/':'/hayk/')+h.slice(0,2)+'/'+h)));
+      ok(vOk,'сцена: Марк — голосом Айка, Анаит — голосом Анаит ('+got.length+' записей)');
+      const fi=L.findIndex(x=>x[0]==='f'); got.length=0; await pg.click('[data-act=pSayLn][data-arg="'+fi+'"]'); await pg.waitForTimeout(500);
+      ok(!got.some(x=>x.includes('/hayk/')),'реплика Анаит при мужском голосе — не Айком');
+    }
     await ctx.close();
   }
   await br.close(); srv.close();

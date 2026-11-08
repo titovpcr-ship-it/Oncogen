@@ -103,12 +103,15 @@ const DICT = new Set();
 const MAN = JSON.parse(fs.readFileSync(path.join(APP, 'www/audio/manifest.json'), 'utf8'));
 function fnv(b, h) { for (const x of b) h = Math.imul(h ^ x, 0x01000193); return h >>> 0; }
 const aid = t => { const b = Buffer.from(t, 'utf8'); return [fnv(b, 0x811c9dc5), fnv(b, 0x050c5d1f)].map(n => n.toString(16).padStart(8, '0')).join(''); };
-const voiced = t => fs.existsSync(path.join(APP, 'www/audio', MAN.dir, aid(t).slice(0, 2), aid(t) + '.mp3'));
+// запись — у каждого голоса манифеста (O-151: anahit и hayk)
+const VD = Object.keys(MAN.voices || {}).length ? Object.keys(MAN.voices) : [MAN.dir];
+const voiced = t => VD.every(d => fs.existsSync(path.join(APP, 'www/audio', d, aid(t).slice(0, 2), aid(t) + '.mp3')));
 let noVoice = [];
 for (const u of C.units) {
   ok(u.scene.lines.length >= 5 && u.drills.length >= 1, `${u.id}: сцена из 5+ реплик и упражнения`);
   ok(u.scene.lines.every(l => l.length === 6 && l.every(Boolean)), `${u.id}: у реплик 4 перевода`);
   ok(u.seeds.every(w => DICT.has(w)), `${u.id}: все зёрна есть в словаре`);
+  ok(Object.values(u.scene.who).every(w => w.g === 'm' || w.g === 'f'), `${u.id}: у говорящих указан пол — голос записи`);
   noVoice = noVoice.concat(u.scene.lines.map(l => l[1]).filter(t => !voiced(t)));
   for (const d of u.drills.filter(d => d.t === 'form')) {
     for (const [w, a, alt] of d.items) {
