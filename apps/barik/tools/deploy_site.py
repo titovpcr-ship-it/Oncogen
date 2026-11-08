@@ -13,6 +13,7 @@ cPanel отвечает и на 443, если спросить его по им�
   BARIK_HOST_DOMAIN=barik.am         домен сайта
   BARIK_HOST_USER=…                  логин cPanel
   BARIK_HOST_PASSWORD=…              пароль cPanel
+  BARIK_HOST_TOKEN=…                 или ключ API cPanel (Безопасность → Manage API Tokens) — тогда пароль не нужен
 Личный кабинет (api/) читает public_html/api/config.php: при первой выкладке он создаётся из
 server/config.example.php со случайным PEPPER и почтой хостинга (MAIL_DRIVER mail); дальше не трогается.
 
@@ -47,7 +48,7 @@ def load_env():
 
 
 class CPanel:
-    def __init__(self, server, domain, user, password):
+    def __init__(self, server, domain, user, password, api_token=''):
         self.base = 'https://' + server
         self.host = 'cpanel.' + domain
         self.user, self.password = user, password
@@ -56,8 +57,16 @@ class CPanel:
         self.s.verify = ca
         self.s.headers['Host'] = self.host
         self.token = None
+        self.api_token = api_token
 
     def login(self):
+        if self.api_token:                       # ключ API: без сессии, адреса без /cpsess…
+            self.s.headers['Authorization'] = 'cpanel %s:%s' % (self.user, self.api_token)
+            self.token = ''
+            j = self.uapi('Quota', 'get_quota_info')
+            if j.get('status') != 1:
+                sys.exit('cPanel не принял ключ API: %s' % json.dumps(j, ensure_ascii=False)[:300])
+            return
         r = self.s.post(self.base + '/login/?login_only=1', data={'user': self.user, 'pass': self.password}, timeout=60)
         j = r.json()
         if j.get('status') != 1:
@@ -144,12 +153,12 @@ def main():
     ap.add_argument('--prune', action='store_true', help='удалить на хостинге файлы, которых нет в сборке')
     a = ap.parse_args()
     load_env()
-    need = ['BARIK_HOST_SERVER', 'BARIK_HOST_DOMAIN', 'BARIK_HOST_USER', 'BARIK_HOST_PASSWORD']
+    need = ['BARIK_HOST_SERVER', 'BARIK_HOST_DOMAIN', 'BARIK_HOST_USER'] + ([] if os.environ.get('BARIK_HOST_TOKEN') else ['BARIK_HOST_PASSWORD'])
     miss = [k for k in need if not os.environ.get(k)]
     if miss:
         sys.exit('В apps/barik/.env нет: ' + ', '.join(miss))
     cp = CPanel(os.environ['BARIK_HOST_SERVER'], os.environ['BARIK_HOST_DOMAIN'],
-                os.environ['BARIK_HOST_USER'], os.environ['BARIK_HOST_PASSWORD'])
+                os.environ['BARIK_HOST_USER'], os.environ.get('BARIK_HOST_PASSWORD', ''), os.environ.get('BARIK_HOST_TOKEN', ''))
     cp.login()
     print('cPanel: вход выполнен (%s)' % cp.user)
     q = cp.uapi('Quota', 'get_quota_info')

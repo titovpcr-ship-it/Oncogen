@@ -32,7 +32,8 @@ Name.am, сервер **host30.name.am** (51.38.26.56), NS ns301/ns302.name.am, 
 `python3.13 tools/build_site.py && python3.13 tools/deploy_site.py` (zip до 60 МБ → Fileman/upload_files → API2
 fileop extract; только изменённое, отпечатки — `out/deploy/state.json`; `--check` — вход, PHP, место; `--prune` —
 удалить лишнее). `api/config.php` создаётся при первой выкладке (случайный PEPPER, почта хостинга), потом не
-трогается. Подбирать логин нельзя: два неверных входа 08.11 уже были (barikam, barik) — cPHulk блокирует.
+трогается. Подбирать логин нельзя: три неверных входа 08.11 уже были (barikam, barik, Barik с паролем владельца —
+видимо, это пароль кабинета Name.am, не cPanel) — cPHulk блокирует. Можно ключом API: `BARIK_HOST_TOKEN`.
 
 ## НАЗВАНИЕ — Barik (02.11.2026)
 Владелец 02.11.2026: «Подумай над названием проекта, проверь barer на свободность» → «Берём Barik,
