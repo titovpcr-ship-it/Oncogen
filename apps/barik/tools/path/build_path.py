@@ -52,6 +52,8 @@ TENSES = {
     "perf": {"indicative", "perfect", "present"},
     "aor": {"aorist", "indicative"},
 }
+# ступень 4: сослагательное (գրեմ) и условное будущее (կգրեմ) — без отрицания и прошедшего
+MOODS = {"subj": {"present", "subjunctive"}, "cond": {"conditional", "future"}}
 
 
 def load_dict():
@@ -99,6 +101,13 @@ def verb_gold(forms):
             g["imp"] = v
         if "imperative" in tags and "plural" in tags and "imppl" not in g:
             g["imppl"] = v
+        for tn, need in MOODS.items():
+            if need <= tags and not ({"negative", "past"} & tags):
+                for pk, i in PERS.items():
+                    if set(pk) <= tags:
+                        g.setdefault(tn, [None] * 6)
+                        if g[tn][i] is None:          # первая — восточная форма (западная — ниже)
+                            g[tn][i] = v
         for tn, need in TENSES.items():
             if not need <= tags or "subjunctive" in tags or "conditional" in tags:
                 continue

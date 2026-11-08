@@ -29,7 +29,7 @@ for (const [w, g] of Object.entries(gold.nouns)) {
   }
 }
 for (const [w, g] of Object.entries(gold.verbs)) {
-  for (const k of ['pres', 'impf', 'fut', 'perf', 'aor', 'imp', 'imppl']) {
+  for (const k of ['pres', 'impf', 'fut', 'perf', 'aor', 'imp', 'imppl', 'subj', 'cond']) {
     if (!g[k]) continue;
     const want = Array.isArray(g[k]) ? g[k].map(clean) : clean(g[k]);
     if (JSON.stringify(G.verb(w, k)) !== JSON.stringify(want)) { if (vb++ < 5) console.log('гл.', w, k); }

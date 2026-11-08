@@ -12,7 +12,7 @@ const roots = rd('roots.json'), gold = rd('gold.json');
 const affixes = fs.existsSync(path.join(APP, 'data', 'path', 'affixes.json')) ? rd('affixes.json') : {};
 const clean = s => s.replace(/[՛՜՞]/g, '').trim();
 const NK = ['pl', 'dat', 'abl', 'ins', 'loc', 'def', 'p1', 'p2', 'datpl'];
-const VK = ['pres', 'impf', 'fut', 'perf', 'aor', 'imp', 'imppl'];
+const VK = ['pres', 'impf', 'fut', 'perf', 'aor', 'imp', 'imppl', 'subj', 'cond'];
 
 const xn = {}, xv = {};
 let nf = 0, nbad = 0, vf = 0, vbad = 0;

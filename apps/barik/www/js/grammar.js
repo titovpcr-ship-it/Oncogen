@@ -112,8 +112,16 @@
       case 'imp': return imp;
       case 'imppl': return imppl;
       case 'conv': return ipfF;
+      case 'subj': return SUBJ(c, st, inf);
+      case 'cond': return SUBJ(c, st, inf).map(f => 'կ' + f);
     }
     return inf;
+  }
+
+  /* Сослагательное (ступень 4): գրել → գրեմ, գրես, գրի…; կարդալ → կարդամ, կարդաս, կարդա… */
+  function SUBJ(c, st, inf) {
+    if (c === 'a' || c === 'anal') return ['ամ', 'աս', 'ա', 'անք', 'աք', 'ան'].map(e => st + e);
+    return ['եմ', 'ես', 'ի', 'ենք', 'եք', 'են'].map(e => st + e);
   }
 
   /* Определённый артикль перед словом на гласную: -ն (տունն է) */
