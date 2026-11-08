@@ -390,6 +390,20 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     }
     await ctx.close();
   }
+  { // язык по стране (O-154): часовой пояс → язык; не из списка — язык браузера; выбор кнопкой главнее
+    const cases=[['en-US','America/Argentina/Buenos_Aires','es'],['en-US','America/Mexico_City','es'],['en-GB','Europe/Paris','fr'],
+      ['en-US','Europe/Moscow','ru'],['en-US','Asia/Yerevan','ru'],['de-DE','Europe/Madrid','es'],['ru-RU','Europe/Kyiv','ru'],
+      ['fr-FR','America/New_York','fr'],['de-DE','Europe/Berlin','en'],['en-US','America/New_York','en']];
+    for(const [loc,tz,want] of cases){
+      const ctx=await br.newContext({viewport:{width:390,height:780},locale:loc,timezoneId:tz}); const pg=await ctx.newPage();
+      await pg.goto(base); await pg.waitForSelector('.lng[aria-pressed=true]');
+      const got=await pg.getAttribute('.lng[aria-pressed=true]','data-arg');
+      ok(got===want,'язык по стране: '+tz+' + браузер '+loc+' → '+want+' (вышло '+got+')');
+      if(tz==='Europe/Paris'){ await pg.click('.lng[data-arg=es]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
+        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='es','выбор кнопкой главнее страны'); }
+      await ctx.close();
+    }
+  }
   { // «Слушать» (O-152): переводы озвучены на 4 языках, тема подряд: армянское → перевод, «Вспомнить», пауза, назад
     const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), got=[], errs=[];

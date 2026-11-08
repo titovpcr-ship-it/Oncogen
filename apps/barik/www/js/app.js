@@ -16,7 +16,25 @@ const NAV=(navigator.language||'').toLowerCase();
    выбор, сделанный раньше, не трогаем. */
 const QL=(/[?&]lang=(ru|en|fr|es)(?:&|$)/.exec(location.search||'')||[])[1];
 if(QL&&!UI.lang){UI.lang=QL; saveUI();}
-let L=UI.lang||(NAV.indexOf('ru')===0?'ru':(NAV.indexOf('fr')===0?'fr':(NAV.indexOf('es')===0?'es':'en')));
+/* Язык по стране (O-154, владелец 08.11.2026: «человек с какой страны заходил — с такой язык и открывался»):
+   страна — по часовому поясу устройства (без IP и внешних сервисов, работает и без сети). Россия и СНГ, Армения —
+   русский; Франция, Монако, Люксембург, Магриб, Ливан — французский; Испания и испаноязычная Америка — испанский.
+   Страна не из списка (Украина, Балтия, Грузия, Бельгия, Швейцария, Канада, Израиль…) — язык браузера; иначе
+   английский. Выбор кнопкой RU/EN/FR/ES и ?lang= со страниц поиска — главнее. */
+const TZ=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){return '';}})();
+const TZ_LANG={
+  ru:['Europe/Moscow','Europe/Kaliningrad','Europe/Samara','Europe/Volgograd','Europe/Saratov','Europe/Ulyanovsk','Europe/Astrakhan','Europe/Kirov','Europe/Minsk','Asia/Yerevan','Asia/Bishkek','Asia/Dushanbe','Asia/Tashkent','Asia/Samarkand','Asia/Ashgabat','Asia/Almaty','Asia/Qostanay','Asia/Aqtobe','Asia/Aqtau','Asia/Atyrau','Asia/Oral','Asia/Qyzylorda','Asia/Yekaterinburg','Asia/Omsk','Asia/Novosibirsk','Asia/Barnaul','Asia/Tomsk','Asia/Novokuznetsk','Asia/Krasnoyarsk','Asia/Irkutsk','Asia/Chita','Asia/Yakutsk','Asia/Khandyga','Asia/Vladivostok','Asia/Ust-Nera','Asia/Magadan','Asia/Sakhalin','Asia/Srednekolymsk','Asia/Kamchatka','Asia/Anadyr'],
+  fr:['Europe/Paris','Europe/Monaco','Europe/Luxembourg','Asia/Beirut','Africa/Algiers','Africa/Tunis','Africa/Casablanca','Indian/Reunion','America/Martinique','America/Guadeloupe','America/Cayenne','Pacific/Noumea','Pacific/Tahiti'],
+  es:['Europe/Madrid','Atlantic/Canary','Africa/Ceuta','America/Buenos_Aires','America/Montevideo','America/Mexico_City','America/Cancun','America/Merida','America/Monterrey','America/Matamoros','America/Chihuahua','America/Ciudad_Juarez','America/Ojinaga','America/Hermosillo','America/Mazatlan','America/Bahia_Banderas','America/Tijuana','America/Santiago','America/Punta_Arenas','America/Bogota','America/Lima','America/Caracas','America/Guayaquil','America/La_Paz','America/Asuncion','America/Havana','America/Santo_Domingo','America/Guatemala','America/El_Salvador','America/Tegucigalpa','America/Managua','America/Costa_Rica','America/Panama','America/Puerto_Rico']
+};
+function tzLang(tz){
+  if(!tz) return '';
+  if(tz.indexOf('America/Argentina/')===0) return 'es';
+  for(const l in TZ_LANG) if(TZ_LANG[l].indexOf(tz)>=0) return l;
+  return '';
+}
+const NAVL=NAV.indexOf('ru')===0?'ru':(NAV.indexOf('fr')===0?'fr':(NAV.indexOf('es')===0?'es':(NAV.indexOf('en')===0?'en':'')));
+let L=UI.lang||UI.ll||tzLang(TZ)||NAVL||'en';
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}
 
@@ -1967,7 +1985,7 @@ const H={
   brand:()=>ACT.tab('home'),
   tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='tquiz') tq=null; if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} if(view==='pquiz'&&pq){clearTimeout(pq.timer); pq=null;} go(a); },
   pickLang:a=>{setLang(a); go('home');},
-  landLang:a=>{ if(a===L) return; L=a; document.documentElement.lang=a; renderTabs(); render(); },
+  landLang:a=>{ if(a===L) return; L=a; UI.ll=a; saveUI(); document.documentElement.lang=a; renderTabs(); render(); },   // UI.ll — язык обложки, выбранный кнопкой (обложку не пропускает)
   landGo:()=>{setLang(L); go('home');},
   landPen:()=>{ const box=document.getElementById('featCb'), seq=CUR_ABC(), k=box&&box.__k?(box.__k-1+seq.length)%seq.length:0, i=Math.max(0,ABC.findIndex(x=>x.up===seq[k]));
     setLang(L); penNew(i); go('pen',i); },
