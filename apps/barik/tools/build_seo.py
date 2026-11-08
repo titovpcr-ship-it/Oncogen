@@ -58,7 +58,7 @@ TXT = {
         "foot": "Barik — восточноармянский язык для русскоязычных, англоязычных, франкоязычных и испаноязычных. "
                 "Часть словника — по <a href=\"https://www.wiktionary.org/\">Викисловарю</a> "
                 "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
-                "переводы — свои.",
+                "с изменениями; переводы — свои.",
         "lang_name": "Русский",
     },
     "en": {
@@ -85,7 +85,7 @@ TXT = {
         "foot": "Barik — Eastern Armenian for English, Russian, French and Spanish speakers. Part of the word "
                 "list is based on <a href=\"https://www.wiktionary.org/\">Wiktionary</a> "
                 "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>); "
-                "translations are our own.",
+                "with changes; translations are our own.",
         "lang_name": "English",
     },
     "fr": {
@@ -112,7 +112,7 @@ TXT = {
         "foot": "Barik — l’arménien oriental pour francophones, anglophones, russophones et hispanophones. Une partie "
                 "du lexique s’appuie sur le <a href=\"https://www.wiktionary.org/\">Wiktionnaire</a> "
                 "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
-                "traductions originales.",
+                "avec modifications ; traductions originales.",
         "lang_name": "Français",
     },
     "es": {
@@ -139,7 +139,7 @@ TXT = {
         "foot": "Barik — armenio oriental para hispanohablantes, anglófonos, francófonos y rusohablantes. "
                 "Parte del léxico se basa en el <a href=\"https://www.wiktionary.org/\">Wikcionario</a> "
                 "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
-                "traducciones propias.",
+                "con cambios; traducciones propias.",
         "lang_name": "Español",
     },
 }

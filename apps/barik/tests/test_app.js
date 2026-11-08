@@ -12,6 +12,7 @@ const srv=http.createServer((q,r)=>{
   r.writeHead(200,{'Content-Type':TYPES[path.extname(f)]||'application/octet-stream'}); fs.createReadStream(f).pipe(r);
 });
 let fails=0;
+const fs_exists=h=>fs.existsSync(path.join(ROOT,h));
 const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  ',m); };
 (async()=>{
   await new Promise(r=>srv.listen(0,r)); const base='http://127.0.0.1:'+srv.address().port+'/';
@@ -327,6 +328,19 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('.p-res [data-act=pAgain]'); await run(()=>true);
     ok((await pg.textContent('.p-res h1')).includes('ступень 0 пройдена')&&await pg.evaluate(()=>window.__bararan.PG.abc===1),'8 из 8 — ступень 0 пройдена');
     ok(errs.length===0,'этап C: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
+  { // источники и лицензии (O-149): всё стороннее названо, ссылки на тексты лицензий ведут на настоящие файлы
+    const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
+    const pg=await ctx.newPage();
+    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=doc][data-arg=credits]');
+    const txt=await pg.textContent('.doc');
+    for(const k of ['Викисловар','CC BY-SA 4.0','с нашими изменениями','Fluent Emoji','MIT','Open Font License','Forum','Туманяна','Терьяна','Чаренца','общественное достояние','Azure','hello@barik.am']) ok(txt.includes(k),'источники и лицензии: «'+k+'»');
+    const hrefs=await pg.evaluate(()=>[...document.querySelectorAll('.doc a[href]')].map(a=>a.getAttribute('href')).filter(h=>!/^(https?:|mailto:)/.test(h)));
+    ok(hrefs.length===4&&hrefs.every(h=>fs_exists(h)),'тексты лицензий — настоящие файлы: '+hrefs.join(', '));
+    await pg.click('[data-act=docBack]'); await pg.click('[data-act=doc][data-arg=terms]');
+    ok((await pg.textContent('.doc')).includes('© Barik'),'условия: раздел «Права»');
     await ctx.close();
   }
   { // озвучка (O-135): запись у каждого слова и буквы, «Проверить звук» берёт файл слова, mp3 читается

@@ -667,7 +667,7 @@ function onboardHTML(){
   '<section class="ld-sec"><div class="ld-wrap ld-narrow"><h2 class="ld-h2">'+esc(D.qTitle)+'</h2><span class="orn ld-orn"></span><div class="ld-faq">'+faq+'</div></div></section>'+
   '<section class="ld-end"><div class="ld-wrap"><span class="rose"></span><p class="end-hy"><span lang="hy">'+esc(D.endHy)+'</span> <i>'+esc(D.endTr)+'</i></p><h2>'+esc(D.endTitle)+'</h2>'+cta('xl')+'<ul class="ld-micro">'+micro+'</ul></div></section>'+
   '<footer class="ld-foot"><div class="ld-wrap"><a class="ld-brand" href="./" aria-label="Barik">'+MARK+'<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a><p>'+esc(D.foot)+'</p>'+
-    '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button></p><p class="cr">© 2026 Barik</p></div></footer>'+
+    '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button><button class="lnk" data-act="landDoc" data-arg="credits">'+esc(T('credits'))+'</button></p><p class="cr">© 2026 Barik</p></div></footer>'+
   '</div>';
 }
 /* Телефон на обложке: картинка и слово, через миг загорается верный ответ, потом следующее слово. */
@@ -1276,7 +1276,7 @@ function settingsHTML(){
   '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
   flagsHTML()+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setProgress'))+'</h2><p class="note">'+esc(LSOK?T('progLocal'):T('progNoSave'))+'</p><div class="actions" style="margin-top:14px"><button class="btn danger" data-act="reset">'+esc(resetArm?T('resetArm'):T('reset'))+'</button></div></section>'+
-  '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button></div></section>';
+  '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="credits">'+esc(T('credits'))+'</button><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button></div></section>';
 }
 function flagsHTML(){
   const fl=Object.keys(S.flag||{}).filter(a=>BY[a]);
@@ -1473,7 +1473,7 @@ async function webPaid(){   // вебхук Paddle доходит не сраз�
 }
 function docHTML(k){
   const web=!BILL.native&&STR.ru['doc_'+k+'_web'];
-  return '<button class="back" data-act="docBack">‹ '+esc(T('back'))+'</button><article class="doc">'+T('doc_'+k+(web?'_web':''))+'</article>';
+  return '<button class="back" data-act="docBack">‹ '+esc(T('back'))+'</button><article class="doc">'+T('doc_'+k+(web?'_web':''),CFG.CONTACT||'hello@barik.am')+'</article>';
 }
 function resultHTML(){
   const r=sess.res, c=counts(), ti=sess.meta.ti, lv=sess.meta.lv;
