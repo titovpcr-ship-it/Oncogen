@@ -336,7 +336,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=doc][data-arg=credits]');
     const txt=await pg.textContent('.doc');
-    for(const k of ['Викисловар','CC BY-SA 4.0','с нашими изменениями','Fluent Emoji','MIT','Open Font License','Nunito','Туманяна','Терьяна','Чаренца','общественное достояние','Azure','hello@barik.am']) ok(txt.includes(k),'источники и лицензии: «'+k+'»');
+    for(const k of ['Викисловар','CC BY-SA 4.0','с нашими изменениями','Fluent Emoji','MIT','Open Font License','Manrope','Туманяна','Терьяна','Чаренца','общественное достояние','Azure','hello@barik.am']) ok(txt.includes(k),'источники и лицензии: «'+k+'»');
     const hrefs=await pg.evaluate(()=>[...document.querySelectorAll('.doc a[href]')].map(a=>a.getAttribute('href')).filter(h=>!/^(https?:|mailto:)/.test(h)));
     ok(hrefs.length===4&&hrefs.every(h=>fs_exists(h)),'тексты лицензий — настоящие файлы: '+hrefs.join(', '));
     await pg.click('[data-act=docBack]'); await pg.click('[data-act=doc][data-arg=terms]');

@@ -64,7 +64,7 @@ def icons(out):
 MANIFEST = {
     "name": NAME["ru"], "short_name": "Barik", "lang": "ru", "dir": "ltr",
     "description": DESC, "start_url": "./", "scope": "./", "display": "standalone",
-    "background_color": "#F4ECE7", "theme_color": "#1E2A66", "orientation": "portrait",
+    "background_color": "#FBF6F1", "theme_color": "#FBF6F1", "orientation": "portrait",
     "categories": ["education", "books"],
     "icons": [
         {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
@@ -218,7 +218,7 @@ ErrorDocument 404 /404.html
 PAGE404 = """<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Barik — 404</title><meta name="robots" content="noindex"><link rel="icon" href="/favicon.png">
 <style>
-:root{--bg:#F4ECE7;--ink:#1C2045;--ink2:#4C4F6E;--acc:#EF8B2C;--pom:#A8173A;--card:#FFFBF8;--line:#E4D5CC}
+:root{--bg:#FBF6F1;--ink:#1C2045;--ink2:#4C4F6E;--acc:#EF8B2C;--pom:#A8173A;--card:#FFFFFF;--line:#EBE1D9}
 @media (prefers-color-scheme:dark){:root{--bg:#10122A;--ink:#F4EEE8;--ink2:#BDB8D0;--acc:#FFA03F;--pom:#FF8FA6;--card:#1A1E40;--line:#2E3462}}
 body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 main{max-width:520px;padding:32px 16px;text-align:center}

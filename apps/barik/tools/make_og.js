@@ -1,5 +1,5 @@
 /* Картинка-превью ссылки (Open Graph, 1200×630 в двойной плотности) из настоящей обложки сайта:
-   бренд, заголовок с цветной второй строкой, три обещания и телефон с уроком в арке (O-156). Режим «без
+   бренд, заголовок с цветной второй строкой, три обещания и сад с телефоном и «облачками» голоса (O-157). Режим «без
    движения» (prefers-reduced-motion) даёт неподвижный кадр: верный ответ подсвечен.
 
      node tools/make_og.js            # → assets/og/og-ru.jpg, og-en.jpg, og-fr.jpg, og-es.jpg
@@ -11,19 +11,21 @@ const T={'.html':'text/html','.js':'text/javascript','.css':'text/css','.woff2':
 const srv=http.createServer((q,r)=>{let f=path.join(ROOT,decodeURIComponent(q.url.split('?')[0])); if(f.endsWith('/')) f+='index.html';
   if(!f.startsWith(ROOT)||!fs.existsSync(f)){r.writeHead(404);r.end();return;} r.writeHead(200,{'Content-Type':T[path.extname(f)]||'application/octet-stream'}); fs.createReadStream(f).pipe(r);});
 const CSS=`html,body{overflow:hidden!important}
-.ld-geo,.ld-nav,.ld-sec,.ld-end,.ld-foot,.ld-eyebrow,.ld-sub,.ld-ctas{display:none!important}
+.ld-geo,.ld-nav,.ld-sec,.ld-proof,.ld-end,.ld-foot,.ld-eyebrow,.ld-sub,.ld-ctas{display:none!important}
 .ld-hero{padding:0!important;height:630px}
-.ld-hero-in{height:630px;max-width:1120px;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)!important;gap:16px!important;align-items:center}
-.ld-copy .ld-brand{margin:0 0 30px}
-.ld-copy .ld-brand .mark{width:46px;height:52px;font-size:30px;border-radius:23px 23px 10px 10px/21px 21px 10px 10px}
-.ld-copy .ld-brand b{font-size:32px}
-.ld-copy .ld-brand .hyn{font-size:19px}
-.ld h1{font-size:66px!important}
-.ld-micro{font-size:20px;margin-top:34px;gap:10px 26px}
-.ld-micro .ck{width:22px;height:22px}
-.ld-art{--pw:226px!important;--aw:calc(var(--pw) + 104px)!important;--top:40px!important;--ov:20px!important}
-.ph-scr{padding:46px 13px 14px!important;gap:10px!important}
-.ph-opt{min-height:34px!important}`;
+.ld-hero::before{left:-8%!important;top:-40%!important}
+.ld-hero-in{height:630px;max-width:1140px;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;gap:30px!important;align-items:center}
+.ld-copy .ld-brand{margin:0 0 34px}
+.ld-copy .ld-mk{width:50px;height:54px}
+.ld-copy .ld-brand b{font-size:36px}
+.ld-copy .ld-brand .hyn{display:inline!important;font-size:21px}
+.ld h1{font-size:78px!important}
+.ld-micro{font-size:20px;margin-top:38px;gap:12px 26px}
+.ld-micro .ck{width:24px;height:24px}
+.ld-art{height:560px!important;width:100%!important}
+.ph{width:212px!important}
+.ph-scr{padding:44px 11px 12px!important;gap:8px!important}
+.ph-opt{min-height:32px!important}`;
 (async()=>{
   await new Promise(r=>srv.listen(0,r)); const base='http://127.0.0.1:'+srv.address().port+'/';
   fs.mkdirSync(OUT,{recursive:true});
@@ -35,7 +37,7 @@ const CSS=`html,body{overflow:hidden!important}
     await pg.goto(base,{waitUntil:'networkidle'});
     await pg.waitForSelector('.ld .ph-opt.ok');
     await pg.addStyleTag({content:CSS});
-    await pg.evaluate(()=>{ const b=document.querySelector('.ld-nav .ld-brand'); document.querySelector('.ld-copy').prepend(b.cloneNode(true)); });
+    await pg.evaluate(()=>{ const b=document.querySelector('.ld-nav .ld-brand'); document.querySelector('.ld-copy').prepend(b); });
     await pg.evaluate(()=>document.fonts.ready);
     await pg.waitForTimeout(250);
     const f=path.join(OUT,'og-'+L+'.jpg');
