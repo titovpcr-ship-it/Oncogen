@@ -181,6 +181,8 @@ ErrorDocument 404 /404.html
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  # своя 404 при запросе в /.well-known/ по http — не уводить на https (её отдаёт ErrorDocument)
+  RewriteCond %{ENV:REDIRECT_STATUS} !=404
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 # служебное наружу не отдаётся: архивы выкладки, базы, журналы, скрытые файлы
@@ -206,8 +208,10 @@ ErrorDocument 404 /404.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  # HSTS — только когда сертификат работает (иначе браузеры запрут сайт на месяцы): после запуска
-  # Header always set Strict-Transport-Security "max-age=31536000"
+  # HSTS (O-155): включён 08.11.2026, когда AutoSSL выпустил сертификат Let's Encrypt и check_live прошёл по https.
+  # 30 дней, без includeSubDomains/preload — поддомены cPanel и почта живут сами; увеличить до года — когда AutoSSL
+  # переживёт первое продление (~январь 2027).
+  Header always set Strict-Transport-Security "max-age=2592000"
 </IfModule>
 """
 

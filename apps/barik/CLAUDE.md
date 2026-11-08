@@ -47,8 +47,7 @@ cPanel → Email Accounts). Проверено: `check_live.py --via host30.name
 кука cpsession с «port=443» — ставить заголовком; архив до ~20 МБ (60 МБ cPanel не принимает); распаковка — по
 абсолютному пути (относительный — от папки архива → public_html/public_html); сессия истекает посреди выкладки —
 войти снова; `save_file_content` с «<?php» сервер режет — файлы класть `upload_files`; наш .htaccess затирает
-блок cPanel (журнал PHP) — `fix_htaccess` возвращает его сверху. Осталось: DNS barik.am (делегирование .am),
-затем AutoSSL (HTTPS), `check_live.py` без `--via`, HSTS.
+блок cPanel (журнал PHP) — `fix_htaccess` возвращает его сверху. Домен и HTTPS — O-155.
 
 ## ХОСТИНГ И ВЫКЛАДКА (08.11.2026, O-145)
 Name.am, сервер **host30.name.am** (51.38.26.56), NS ns301/ns302.name.am, домен barik.am (08.11.2026 ещё не в зоне
@@ -102,6 +101,16 @@ fileop extract; только изменённое, отпечатки — `out/d
   (Google Play, RevenueCat). Включить оплату на сайте — `build_site.py --paid` (WEB_ALL_FREE false).
 - Проверка: `node tests/test_account.js [снимки]` — встроенный сервер PHP + `tests/php_router.php`, база и журнал
   писем (`MAIL_DRIVER=log`) во временной папке, заглушка Paddle.js, подписанные вебхуки.
+
+## BARIK.AM РАБОТАЕТ (08.11.2026, O-155)
+Регистрацию barik.am сначала отклонили (ISOC.am: неполный адрес владельца — без дома и квартиры; адрес организации
+для физлица нельзя), владелец исправил контакты и перерегистрировал; домен оплачен до 08.11.2027, автопродление,
+Whois Privacy, Transfer Lock. NS были park1/park2.name.am (заглушка Name.am с рекламой) — сменены на
+ns301/ns302.name.am. AutoSSL выпустил Let's Encrypt (barik.am + *.barik.am) за минуту после переключения DNS
+(`SSL/start_autossl_check`). `check_live.py` по https — всё зелёное. HSTS включён: 30 дней, без поддоменов и preload
+(увеличить до года после первого продления AutoSSL). Из облака plain http ещё долго ходит на старую заглушку
+(кэш прокси, nginx/1.22.1) — пункты «http → https» и «/.well-known/» проверять с компьютера или позже.
+Временный адрес без домена: https://host30.name.am/~barik/.
 
 ## ЯЗЫК ПО СТРАНЕ (08.11.2026, O-154)
 Владелец: «Сделай так, чтобы человек с какой страны заходил с такой язык и открывался». Порядок (app.js, начало):

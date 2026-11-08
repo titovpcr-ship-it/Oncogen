@@ -63,7 +63,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(/RewriteCond %\{REQUEST_URI\} \^\/\\\.well-known\/[^\n]*\n\s*RewriteRule \^ - \[L\]/.test(ht)&&ht.indexOf('well-known')<ht.indexOf('%{HTTPS}'),'.htaccess: /.well-known/ — до перенаправления на https');
     ok(/HTTP_HOST\} \^www\\\./.test(ht)&&/ErrorDocument 404 \/404\.html/.test(ht)&&/Options -Indexes/.test(ht),'.htaccess: www → домен, своя 404, без списков папок');
     ok(/Require all denied/.test(ht)&&/zip\|sqlite/.test(ht)&&/webp\|mp3\)\$"[^<]*immutable/.test(ht),'.htaccess: архивы и базы закрыты, записи и картинки — кэш навсегда');
-    ok(!/^\s*Header always set Strict-Transport-Security/m.test(ht),'.htaccess: HSTS не включён до проверки сертификата');
+    { const hs=(ht.match(/^\s*Header always set Strict-Transport-Security.*$/m)||[''])[0];
+      ok(/"max-age=2592000"/.test(hs)&&!/includeSubDomains|preload/.test(hs),'.htaccess: HSTS на 30 дней, без поддоменов и preload (O-155)'); }
     const nf=fs.readFileSync(path.join(ROOT,'404.html'),'utf8');
     ok(/Բառիկ/.test(nf)&&/noindex/.test(nf)&&/href="\/ru\/"/.test(nf)&&!/https?:\/\//.test(nf),'404.html: своя, на 4 языках, без внешних ссылок');
   }
