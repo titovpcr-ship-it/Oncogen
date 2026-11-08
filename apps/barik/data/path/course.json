@@ -4953,6 +4953,728 @@
    ]
   },
   {
+   "id": "s5u7",
+   "stage": 5,
+   "ic": "🐓",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1907",
+   "src": "https://hy.wikisource.org/wiki/Լուսաբացին",
+   "title": {
+    "ru": "На рассвете",
+    "en": "At dawn",
+    "fr": "À l’aube",
+    "es": "Al amanecer"
+   },
+   "formula": "Լուսաբացին",
+   "note": {
+    "ru": "Туманян переложил народную песенку (1907). Звукоподражания: ծուղրուղու «кукареку», ճիկ-ճիկ «чик-чик», վույ «ой». Деревенские слова: թառ «насест», ծեգ «заря», նախիր «стадо», հանդ «пастбище», նան «мама, бабушка» (диалект). Порядковые: երկրորդ «второй», երրորդ «третий». Глаголы — в аористе: կանչեց, զարթնեց, տարան, բացվեց, նստեց (ступень 3).",
+    "en": "Tumanyan reworked a folk rhyme (1907). Sound words: ծուղրուղու “cock-a-doodle-doo”, ճիկ-ճիկ “cheep-cheep”, վույ “oh”. Village words: թառ “perch”, ծեգ “daybreak”, նախիր “herd”, հանդ “pasture”, նան “mum, granny” (dialect). Ordinals: երկրորդ “second”, երրորդ “third”. The verbs are aorist: կանչեց, զարթնեց, տարան, բացվեց, նստեց (stage 3).",
+    "fr": "Toumanian a repris une comptine populaire (1907). Onomatopées : ծուղրուղու « cocorico », ճիկ-ճիկ « cui-cui », վույ « oh ». Mots du village : թառ « perchoir », ծեգ « aube », նախիր « troupeau », հանդ « pâturage », նան « maman, mamie » (dialecte). Ordinaux : երկրորդ « deuxième », երրորդ « troisième ». Les verbes sont à l’aoriste : կանչեց, զարթնեց, տարան, բացվեց, նստեց (étape 3).",
+    "es": "Tumanián reescribió una copla popular (1907). Onomatopeyas: ծուղրուղու «quiquiriquí», ճիկ-ճիկ «pío-pío», վույ «ay». Palabras del pueblo: թառ «palo del gallinero», ծեգ «alba», նախիր «rebaño», հանդ «pastizal», նան «mamá, abuela» (dialecto). Ordinales: երկրորդ «segundo», երրորդ «tercero». Los verbos van en aoristo: կանչեց, զարթնեց, տարան, բացվեց, նստեց (etapa 3)."
+   },
+   "scene": {
+    "title": {
+     "ru": "На рассвете",
+     "en": "At dawn",
+     "fr": "À l’aube",
+     "es": "Al amanecer"
+    },
+    "who": {
+     "Թ": {
+      "ru": "Ованес Туманян",
+      "en": "Hovhannes Tumanyan",
+      "fr": "Hovhannès Toumanian",
+      "es": "Hovhannés Tumanián"
+     }
+    },
+    "lines": [
+     [
+      "Թ",
+      "— Ծուղրուղո՜ւ.",
+      "— Кукареку!",
+      "— Cock-a-doodle-doo!",
+      "— Cocorico !",
+      "— ¡Quiquiriquí!"
+     ],
+     [
+      "Թ",
+      "Աքլորը զիլ կանչեց թառին.",
+      "Звонко крикнул петух на насесте.",
+      "The rooster crowed loud on his perch.",
+      "Le coq a chanté haut sur son perchoir.",
+      "El gallo cantó fuerte en su palo."
+     ],
+     [
+      "Թ",
+      "— Ճի՛կ-ճի՛կ, ճի՛կ-ճի՛կ,",
+      "— Чик-чик, чик-чик,",
+      "— Cheep-cheep, cheep-cheep,",
+      "— Cui-cui, cui-cui,",
+      "— Pío-pío, pío-pío,"
+     ],
+     [
+      "Թ",
+      "Զարթնեց մթնում ծիտը ծառին։",
+      "Проснулась в темноте птичка на дереве.",
+      "the little bird woke in the dark in the tree.",
+      "le petit oiseau s’est réveillé dans le noir, sur l’arbre.",
+      "se despertó en lo oscuro el pajarito en el árbol."
+     ],
+     [
+      "Թ",
+      "Ծուղրուղո՜ւ.",
+      "Кукареку!",
+      "Cock-a-doodle-doo!",
+      "Cocorico !",
+      "¡Quiquiriquí!"
+     ],
+     [
+      "Թ",
+      "Խոսեց ծեգին երկրորդ բերան.",
+      "На заре он прокричал второй раз.",
+      "At daybreak he called a second time.",
+      "À l’aube, il a chanté une deuxième fois.",
+      "Al alba cantó por segunda vez."
+     ],
+     [
+      "Թ",
+      "— Հո-հո՜, հո-հո՜,",
+      "— Хо-хо, хо-хо,",
+      "— Ho-ho, ho-ho,",
+      "— Ho-ho, ho-ho,",
+      "— Jo-jo, jo-jo,"
+     ],
+     [
+      "Թ",
+      "Նախիրն արդեն հանդը տարան։",
+      "Стадо уже погнали на пастбище.",
+      "the herd has already been driven to pasture.",
+      "on a déjà mené le troupeau au pâturage.",
+      "ya llevaron el rebaño al campo."
+     ],
+     [
+      "Թ",
+      "— Ծուղրուղո՜ւ.",
+      "— Кукареку!",
+      "— Cock-a-doodle-doo!",
+      "— Cocorico !",
+      "— ¡Quiquiriquí!"
+     ],
+     [
+      "Թ",
+      "Լույսը բացվեց երրորդ կանչին.",
+      "С третьим криком рассвело.",
+      "Day broke at the third call.",
+      "Le jour s’est levé au troisième chant.",
+      "Amaneció con el tercer canto."
+     ],
+     [
+      "Թ",
+      "— Վո՛ւյ-վո՛ւյ-վո՛ւյ-վո՛ւյ,",
+      "— Ой-ой-ой-ой,",
+      "— Oh my, oh my,",
+      "— Oh là là là,",
+      "— Ay, ay, ay, ay,"
+     ],
+     [
+      "Թ",
+      "Նստեց նանը տեղի միջին։",
+      "И нани села посреди постели.",
+      "and Nana sat up in the middle of the bed.",
+      "et Nana s’est assise au milieu du lit.",
+      "y la nana se sentó en medio de la cama."
+     ]
+    ]
+   },
+   "seeds": [
+    "աքլոր",
+    "ծիտ",
+    "ծառ",
+    "լույս",
+    "նախիր",
+    "երկրորդ",
+    "երրորդ"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "петух",
+        "en": "rooster",
+        "fr": "coq",
+        "es": "gallo"
+       },
+       "աքլոր"
+      ],
+      [
+       {
+        "ru": "дерево",
+        "en": "tree",
+        "fr": "arbre",
+        "es": "árbol"
+       },
+       "ծառ"
+      ],
+      [
+       {
+        "ru": "стадо",
+        "en": "herd",
+        "fr": "troupeau",
+        "es": "rebaño"
+       },
+       "նախիր"
+      ],
+      [
+       {
+        "ru": "второй",
+        "en": "second",
+        "fr": "deuxième",
+        "es": "segundo"
+       },
+       "երկրորդ"
+      ],
+      [
+       {
+        "ru": "третий",
+        "en": "third",
+        "fr": "troisième",
+        "es": "tercero"
+       },
+       "երրորդ"
+      ],
+      [
+       {
+        "ru": "свет",
+        "en": "light",
+        "fr": "lumière",
+        "es": "luz"
+       },
+       "լույս"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u8",
+   "stage": 5,
+   "ic": "📿",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1907",
+   "src": "https://hy.wikisource.org/wiki/Ուլունք",
+   "title": {
+    "ru": "Бусинка",
+    "en": "The bead",
+    "fr": "La perle",
+    "es": "La cuenta de collar"
+   },
+   "formula": "Ուլունք",
+   "note": {
+    "ru": "«Бусинка» (1907) — цепочка в народном духе: каждое звено отдаёт одно и получает другое. Она вся на сослагательном (ступень 4): տանեմ «отнесу-ка», տամ «отдам», տա «пусть даст». Слова старого быта: ջաղաց «мельница», տաշտ «квашня», խմոր «тесто», թոնիր «тонир — печь в земле, где пекут лаваш», ուլունք «бусина». Նան, նանս «мама, моя мама» — диалект. Боша — армянская кочевая община, бродячие торговцы и мастера.",
+    "en": "“The bead” (1907) is a folk-style chain: each link gives one thing and gets another. It is all in the subjunctive (stage 4): տանեմ “let me take”, տամ “I’ll give”, տա “let it give”. Words of old village life: ջաղաց “mill”, տաշտ “kneading trough”, խմոր “dough”, թոնիր “tonir, the clay oven in the ground for lavash”, ուլունք “bead”. Նան, նանս “mum, my mum” — dialect. The Bosha were an Armenian nomadic community of wandering traders and craftsmen.",
+    "fr": "« La perle » (1907) est une chaîne de style populaire : chaque maillon donne une chose et en reçoit une autre. Tout est au subjonctif (étape 4) : տանեմ « que j’emporte », տամ « que je donne », տա « qu’il donne ». Mots de la vie d’autrefois : ջաղաց « moulin », տաշտ « pétrin », խմոր « pâte », թոնիր « tonir, four enterré pour le lavash », ուլունք « perle ». Նան, նանս « maman, ma maman » — dialecte. Les Bocha étaient une communauté arménienne nomade de marchands et d’artisans ambulants.",
+    "es": "«La cuenta de collar» (1907) es una cadena al estilo popular: cada eslabón da algo y recibe otra cosa. Está toda en subjuntivo (etapa 4): տանեմ «que lleve», տամ «que dé», տա «que dé». Palabras de la vida de antes: ջաղաց «molino», տաշտ «artesa», խմոր «masa», թոնիր «tonir, horno enterrado para el lavash», ուլունք «cuenta de collar». Նան, նանս «mamá, mi mamá» — dialecto. Los bosha eran una comunidad armenia nómada de vendedores y artesanos ambulantes."
+   },
+   "scene": {
+    "title": {
+     "ru": "Бусинка",
+     "en": "The bead",
+     "fr": "La perle",
+     "es": "La cuenta de collar"
+    },
+    "who": {
+     "Թ": {
+      "ru": "Ованес Туманян",
+      "en": "Hovhannes Tumanyan",
+      "fr": "Hovhannès Toumanian",
+      "es": "Hovhannés Tumanián"
+     }
+    },
+    "lines": [
+     [
+      "Թ",
+      "Գարունը եկավ ամպերով,",
+      "Пришла весна с тучами,",
+      "Spring came with clouds,",
+      "Le printemps est venu avec les nuages,",
+      "Llegó la primavera con nubes,"
+     ],
+     [
+      "Թ",
+      "Ամպերը եկան անձրևով.",
+      "Тучи пришли с дождём.",
+      "the clouds came with rain.",
+      "les nuages sont venus avec la pluie.",
+      "las nubes vinieron con lluvia."
+     ],
+     [
+      "Թ",
+      "Անձրևը տանեմ արտին տամ,",
+      "Отнесу-ка дождь, отдам полю,",
+      "I’ll take the rain and give it to the field,",
+      "je porterai la pluie, je la donnerai au champ,",
+      "llevaré la lluvia y se la daré al campo,"
+     ],
+     [
+      "Թ",
+      "Արտը ինձ ցորեն տա.",
+      "Пусть поле даст мне пшеницу.",
+      "and the field will give me wheat.",
+      "que le champ me donne du blé.",
+      "que el campo me dé trigo."
+     ],
+     [
+      "Թ",
+      "Ցորենը տանեմ ջաղացին տամ,",
+      "Пшеницу отнесу, отдам мельнице,",
+      "I’ll take the wheat and give it to the mill,",
+      "je porterai le blé, je le donnerai au moulin,",
+      "llevaré el trigo y se lo daré al molino,"
+     ],
+     [
+      "Թ",
+      "Ջաղացը ինձ ալյուր տա․",
+      "Пусть мельница даст мне муку.",
+      "and the mill will give me flour.",
+      "que le moulin me donne de la farine.",
+      "que el molino me dé harina."
+     ],
+     [
+      "Թ",
+      "Ալյուրը տանեմ տաշտին տամ,",
+      "Муку отнесу, отдам квашне,",
+      "I’ll take the flour and give it to the trough,",
+      "je porterai la farine, je la donnerai au pétrin,",
+      "llevaré la harina y se la daré a la artesa,"
+     ],
+     [
+      "Թ",
+      "Տաշտը ինձ խմոր տա.",
+      "Пусть квашня даст мне тесто.",
+      "and the trough will give me dough.",
+      "que le pétrin me donne de la pâte.",
+      "que la artesa me dé masa."
+     ],
+     [
+      "Թ",
+      "Խմորը տանեմ թոնրին տամ,",
+      "Тесто отнесу, отдам тониру,",
+      "I’ll take the dough and give it to the tonir,",
+      "je porterai la pâte, je la donnerai au tonir,",
+      "llevaré la masa y se la daré al tonir,"
+     ],
+     [
+      "Թ",
+      "Թոնիրը ինձ հաց տա.",
+      "Пусть тонир даст мне хлеб.",
+      "and the tonir will give me bread.",
+      "que le tonir me donne du pain.",
+      "que el tonir me dé pan."
+     ],
+     [
+      "Թ",
+      "Հացը տանեմ բոշին տամ,",
+      "Хлеб отнесу, отдам бродячей торговке,",
+      "I’ll take the bread and give it to the wandering trader,",
+      "je porterai le pain, je le donnerai à la marchande ambulante,",
+      "llevaré el pan y se lo daré a la vendedora ambulante,"
+     ],
+     [
+      "Թ",
+      "Բոշեն ինձ ուլունք տա.",
+      "Пусть торговка даст мне бусинку.",
+      "and the trader will give me a bead.",
+      "que la marchande me donne une perle.",
+      "que la vendedora me dé una cuenta."
+     ],
+     [
+      "Թ",
+      "Ուլունքը տանեմ նանիս տամ,",
+      "Бусинку отнесу, отдам маме,",
+      "I’ll take the bead and give it to my mum,",
+      "je porterai la perle, je la donnerai à ma maman,",
+      "llevaré la cuenta y se la daré a mi mamá,"
+     ],
+     [
+      "Թ",
+      "Նանս ինձ ծեծի՜, ծեծի՜,",
+      "А мама меня отшлёпает, отшлёпает,",
+      "and my mum will spank me, spank me,",
+      "et ma maman me donnera la fessée, la fessée,",
+      "y mi mamá me va a pegar, a pegar,"
+     ],
+     [
+      "Թ",
+      "Տանից քշի, դուրս անի։",
+      "Прогонит из дома, выставит вон.",
+      "chase me from the house and throw me out.",
+      "me chassera de la maison, me mettra dehors.",
+      "me va a echar de la casa, me va a sacar afuera."
+     ]
+    ]
+   },
+   "seeds": [
+    "գարուն",
+    "ամպ",
+    "անձրև",
+    "արտ",
+    "ցորեն",
+    "ալյուր",
+    "խմոր",
+    "թոնիր"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "весна",
+        "en": "spring",
+        "fr": "printemps",
+        "es": "primavera"
+       },
+       "գարուն"
+      ],
+      [
+       {
+        "ru": "туча",
+        "en": "cloud",
+        "fr": "nuage",
+        "es": "nube"
+       },
+       "ամպ"
+      ],
+      [
+       {
+        "ru": "пшеница",
+        "en": "wheat",
+        "fr": "blé",
+        "es": "trigo"
+       },
+       "ցորեն"
+      ],
+      [
+       {
+        "ru": "мука",
+        "en": "flour",
+        "fr": "farine",
+        "es": "harina"
+       },
+       "ալյուր"
+      ],
+      [
+       {
+        "ru": "тесто",
+        "en": "dough",
+        "fr": "pâte",
+        "es": "masa"
+       },
+       "խմոր"
+      ],
+      [
+       {
+        "ru": "мельница",
+        "en": "mill",
+        "fr": "moulin",
+        "es": "molino"
+       },
+       "ջաղաց"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u9",
+   "stage": 5,
+   "ic": "🌾",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1907",
+   "src": "https://hy.wikisource.org/wiki/Գութան",
+   "title": {
+    "ru": "Плуг",
+    "en": "The plough",
+    "fr": "La charrue",
+    "es": "El arado"
+   },
+   "formula": "Գութան",
+   "note": {
+    "ru": "«Плуг» (1907) — по мотивам хоровела, песни армянских пахарей, которую поют, погоняя волов; припев Հորովել հո՜. Дружеский императив: վարի՛ «паши», շարի՛ «ровняй», թափ տուր «размахнись», շուռ տուր «переверни». «Давайте» — сослагательное (ступень 4): ցանենք «посеем», հնձենք «сожнём», տանենք «унесём», ունենանք «будем иметь». Слова пахоты: հոտաղ «погонщик волов», մաճկալ «пахарь», մաճ «рукоять плуга», ակոս «борозда». Լուսը = լույսը, լըծեցին = լծեցին — народное произношение.",
+    "en": "“The plough” (1907) is based on the horovel, the song Armenian ploughmen sing while driving their oxen; the refrain is Հորովել հո՜. Friendly imperatives: վարի՛ “plough!”, շարի՛ “line them up!”, թափ տուր “swing!”, շուռ տուր “turn it over!”. “Let us” is the subjunctive (stage 4): ցանենք “let’s sow”, հնձենք “let’s reap”, տանենք “let’s take”, ունենանք “let’s have”. Ploughing words: հոտաղ “ox driver”, մաճկալ “ploughman”, մաճ “plough handle”, ակոս “furrow”. Լուսը = լույսը, լըծեցին = լծեցին — folk pronunciation.",
+    "fr": "« La charrue » (1907) s’inspire du horovel, le chant des laboureurs arméniens qui mènent leurs bœufs ; refrain : Հորովել հո՜. Impératif amical : վարի՛ « laboure ! », շարի՛ « aligne ! », թափ տուր « prends ton élan ! », շուռ տուր « retourne ! ». « Faisons » : le subjonctif (étape 4) : ցանենք « semons », հնձենք « moissonnons », տանենք « emportons », ունենանք « ayons ». Mots du labour : հոտաղ « bouvier », մաճկալ « laboureur », մաճ « mancheron », ակոս « sillon ». Լուսը = լույսը, լըծեցին = լծեցին — prononciation populaire.",
+    "es": "«El arado» (1907) se basa en el horovel, el canto de los labradores armenios que guían a los bueyes; estribillo: Հորովել հո՜. Imperativo amistoso: վարի՛ «¡ara!», շարի՛ «¡alinea!», թափ տուր «¡toma impulso!», շուռ տուր «¡dala vuelta!». «Hagamos» es subjuntivo (etapa 4): ցանենք «sembremos», հնձենք «cosechemos», տանենք «llevemos», ունենանք «tengamos». Palabras del arado: հոտաղ «boyero», մաճկալ «labrador», մաճ «mancera», ակոս «surco». Լուսը = լույսը, լըծեցին = լծեցին — pronunciación popular."
+   },
+   "scene": {
+    "title": {
+     "ru": "Плуг",
+     "en": "The plough",
+     "fr": "La charrue",
+     "es": "El arado"
+    },
+    "who": {
+     "Թ": {
+      "ru": "Ованес Туманян",
+      "en": "Hovhannes Tumanyan",
+      "fr": "Hovhannès Toumanian",
+      "es": "Hovhannés Tumanián"
+     }
+    },
+    "lines": [
+     [
+      "Թ",
+      "Լուսը լուսացավ,",
+      "Рассвело,",
+      "Dawn has broken,",
+      "Le jour s’est levé,",
+      "Ya amaneció,"
+     ],
+     [
+      "Թ",
+      "Բարին շատացավ.",
+      "Добра прибавилось.",
+      "and good things have multiplied.",
+      "le bien s’est accru.",
+      "y el bien creció."
+     ],
+     [
+      "Թ",
+      "Վաղ լուսաբացին",
+      "Ранним утром, на рассвете",
+      "Early at dawn",
+      "Tôt, à l’aube,",
+      "Temprano, al alba,"
+     ],
+     [
+      "Թ",
+      "Գութան լըծեցին.",
+      "Запрягли плуг.",
+      "they yoked the plough.",
+      "on a attelé la charrue.",
+      "uncieron el arado."
+     ],
+     [
+      "Թ",
+      "Հորովել հո՜...",
+      "Хоровел, хо!..",
+      "Horovel, ho!..",
+      "Horovel, ho !..",
+      "¡Horovel, jo!.."
+     ],
+     [
+      "Թ",
+      "Գութանը լարած,",
+      "Плуг налажен,",
+      "The plough is ready,",
+      "La charrue est prête,",
+      "El arado listo,"
+     ],
+     [
+      "Թ",
+      "Հոտաղը շարած,",
+      "Погонщики в ряд,",
+      "the drivers in a row,",
+      "les bouviers en rang,",
+      "los boyeros en fila,"
+     ],
+     [
+      "Թ",
+      "Մաճկալը մաճին,",
+      "Пахарь у рукояти,",
+      "the ploughman at the handle,",
+      "le laboureur au mancheron,",
+      "el labrador en la mancera,"
+     ],
+     [
+      "Թ",
+      "Ձեռը ականջին.",
+      "Ладонь у уха — поёт.",
+      "his hand to his ear as he sings.",
+      "la main à l’oreille, il chante.",
+      "la mano en la oreja, cantando."
+     ],
+     [
+      "Թ",
+      "Հորովել հո՜...",
+      "Хоровел, хо!..",
+      "Horovel, ho!..",
+      "Horovel, ho !..",
+      "¡Horovel, jo!.."
+     ],
+     [
+      "Թ",
+      "Գութան ջան, վարի՛,",
+      "Плуг родной, паши,",
+      "Dear plough, plough on,",
+      "Charrue chérie, laboure,",
+      "Querido arado, ara,"
+     ],
+     [
+      "Թ",
+      "Ակոսը շարի՛.",
+      "Борозду к борозде клади.",
+      "lay furrow after furrow.",
+      "aligne les sillons.",
+      "alinea los surcos."
+     ],
+     [
+      "Թ",
+      "Թափ տուր, թև արա,",
+      "Размахнись, расправь крылья,",
+      "Swing out, spread your wings,",
+      "Prends ton élan, déploie tes ailes,",
+      "Toma impulso, abre las alas,"
+     ],
+     [
+      "Թ",
+      "Շուռ տուր, սև արա.",
+      "Переворачивай, делай землю чёрной.",
+      "turn the earth and make it black.",
+      "retourne la terre, rends-la noire.",
+      "dala vuelta, vuélvela negra."
+     ],
+     [
+      "Թ",
+      "Հորովել հո՜...",
+      "Хоровел, хо!..",
+      "Horovel, ho!..",
+      "Horovel, ho !..",
+      "¡Horovel, jo!.."
+     ],
+     [
+      "Թ",
+      "Ցանենք, արտ անենք,",
+      "Посеем, вырастим ниву,",
+      "Let us sow and make a field,",
+      "Semons, faisons un champ,",
+      "Sembremos, hagamos un campo,"
+     ],
+     [
+      "Թ",
+      "Հնձենք, տուն տանենք,",
+      "Сожнём, домой унесём,",
+      "let us reap and bring it home,",
+      "moissonnons, rapportons à la maison,",
+      "cosechemos, llevémoslo a casa,"
+     ],
+     [
+      "Թ",
+      "Ունենանք շատ հաց.",
+      "Пусть будет у нас много хлеба.",
+      "let us have plenty of bread.",
+      "ayons beaucoup de pain.",
+      "tengamos mucho pan."
+     ],
+     [
+      "Թ",
+      "Օրհնյալ է աստված.",
+      "Благословен Бог.",
+      "Blessed be God.",
+      "Béni soit Dieu.",
+      "Bendito sea Dios."
+     ],
+     [
+      "Թ",
+      "Հորովել հո՜...",
+      "Хоровел, хо!..",
+      "Horovel, ho!..",
+      "Horovel, ho !..",
+      "¡Horovel, jo!.."
+     ]
+    ]
+   },
+   "seeds": [
+    "գութան",
+    "արտ",
+    "հաց",
+    "ակոս",
+    "ցանել",
+    "հնձել",
+    "լույս"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "плуг",
+        "en": "plough",
+        "fr": "charrue",
+        "es": "arado"
+       },
+       "գութան"
+      ],
+      [
+       {
+        "ru": "борозда",
+        "en": "furrow",
+        "fr": "sillon",
+        "es": "surco"
+       },
+       "ակոս"
+      ],
+      [
+       {
+        "ru": "посеем",
+        "en": "let’s sow",
+        "fr": "semons",
+        "es": "sembremos"
+       },
+       "ցանենք"
+      ],
+      [
+       {
+        "ru": "сожнём",
+        "en": "let’s reap",
+        "fr": "moissonnons",
+        "es": "cosechemos"
+       },
+       "հնձենք"
+      ],
+      [
+       {
+        "ru": "хлеб",
+        "en": "bread",
+        "fr": "pain",
+        "es": "pan"
+       },
+       "հաց"
+      ],
+      [
+       {
+        "ru": "нива, поле",
+        "en": "field",
+        "fr": "champ",
+        "es": "campo"
+       },
+       "արտ"
+      ]
+     ]
+    }
+   ]
+  },
+  {
    "id": "s5u2",
    "stage": 5,
    "ic": "💭",
@@ -5558,189 +6280,154 @@
    ]
   },
   {
-   "id": "s5u5",
+   "id": "s5u10",
    "stage": 5,
-   "ic": "⛰️",
+   "ic": "💧",
    "kind": "read",
    "author": {
-    "ru": "Егише Чаренц",
-    "en": "Yeghishe Charents",
-    "fr": "Yéghiché Tcharents",
-    "es": "Yeghishé Charents"
+    "ru": "Ваан Терьян",
+    "en": "Vahan Teryan",
+    "fr": "Vahan Térian",
+    "es": "Vahán Terián"
    },
-   "year": "1920–1921",
-   "src": "https://hy.wikisource.org/wiki/Ես_իմ_անուշ_Հայաստանի",
+   "year": "1905",
+   "src": "https://hy.wikisource.org/wiki/Աղբյուր_(Վահան_Տերյան)",
    "title": {
-    "ru": "Я люблю мою милую Армению",
-    "en": "I love my sweet Armenia",
-    "fr": "J’aime ma douce Arménie",
-    "es": "Amo a mi dulce Armenia"
+    "ru": "Родник",
+    "en": "The spring",
+    "fr": "La source",
+    "es": "La fuente"
    },
-   "formula": "Ես իմ անուշ Հայաստանի",
+   "formula": "Աղբյուր",
    "note": {
-    "ru": "Егише Чаренц (1897–1937) написал это стихотворение в 1920–1921 годах; его знает наизусть вся Армения. Каждая строфа кончается «… -ն եմ սիրում» — «… люблю»: ударное слово стоит перед եմ (ступень 2). Много сложных слов из двух корней: արևահամ «со вкусом солнца», ողբաձայն «со скорбным голосом», հազարամյա «тысячелетний», լուսապսակ «в венце света». Մասիս — армянское имя Арарата; յար — «любимая» (из народной песни); Нарекаци и Кучак — средневековые поэты.",
-    "en": "Yeghishe Charents (1897–1937) wrote this poem in 1920–1921; all of Armenia knows it by heart. Every stanza ends “… -ն եմ սիրում” — “… I love”: the stressed word stands before եմ (stage 2). There are many compounds of two roots: արևահամ “sun-flavoured”, ողբաձայն “mournful-voiced”, հազարամյա “thousand-year-old”, լուսապսակ “crowned with light”. Մասիս is the Armenian name of Ararat; յար means “beloved” (from folk song); Narekatsi and Kuchak are medieval poets.",
-    "fr": "Yéghiché Tcharents (1897–1937) a écrit ce poème en 1920–1921 ; toute l’Arménie le connaît par cœur. Chaque strophe finit par « … -ն եմ սիրում » — « … j’aime » : le mot accentué se place devant եմ (étape 2). Beaucoup de mots composés de deux racines : արևահամ « au goût de soleil », ողբաձայն « à la voix plaintive », հազարամյա « millénaire », լուսապսակ « couronné de lumière ». Մասիս est le nom arménien de l’Ararat ; յար veut dire « bien-aimée » (chanson populaire) ; Narekatsi et Koutchak sont des poètes médiévaux.",
-    "es": "Yeghishé Charents (1897–1937) escribió este poema en 1920–1921; toda Armenia lo sabe de memoria. Cada estrofa termina en «… -ն եմ սիրում» — «… amo»: la palabra acentuada va antes de եմ (etapa 2). Hay muchos compuestos de dos raíces: արևահամ «con sabor a sol», ողբաձայն «de voz doliente», հազարամյա «milenario», լուսապսակ «coronado de luz». Մասիս es el nombre armenio del Ararat; յար significa «amada» (de la canción popular); Narekatsí y Kuchak son poetas medievales."
+    "ru": "«Родник» (Ширак, 1905; посвящено Ал. Цатуряну): зима и смерть против живого родника — образ надежды и свободы. Перфект է իջել, մարել են, մեռել — итог: зима уже пришла (ступень 3). Старые и книжные формы: մահու = մահվան «смерти», ի երեսն — древний предлог ի «в, на» («снегу в лицо»), չըմարող = չմարող «неугасающий» (-ող с отрицанием, ступень 2), գալիք «грядущий», հավետ «вечно», կարկաչուն «журчащий».",
+    "en": "“The spring” (Shirak, 1905; dedicated to Al. Tsaturyan): winter and death against a living spring — an image of hope and freedom. The perfect է իջել, մարել են, մեռել gives the result: winter has come (stage 3). Old and bookish forms: մահու = մահվան “of death”, ի երեսն — the old preposition ի “in, on” (“in the face of the snow”), չըմարող = չմարող “never fading” (-ող with negation, stage 2), գալիք “coming”, հավետ “forever”, կարկաչուն “babbling”.",
+    "fr": "« La source » (Chirak, 1905 ; dédié à Al. Tsatourian) : l’hiver et la mort contre une source vivante — image d’espoir et de liberté. Le parfait է իջել, մարել են, մեռել donne le résultat : l’hiver est là (étape 3). Formes anciennes et littéraires : մահու = մահվան « de la mort », ի երեսն — l’ancienne préposition ի « dans, sur » (« au visage de la neige »), չըմարող = չմարող « qui ne s’éteint pas » (-ող avec négation, étape 2), գալիք « à venir », հավետ « à jamais », կարկաչուն « gazouillante ».",
+    "es": "«La fuente» (Shirak, 1905; dedicado a Al. Tsaturián): el invierno y la muerte frente a una fuente viva, imagen de esperanza y libertad. El perfecto է իջել, մարել են, մեռել da el resultado: el invierno ya llegó (etapa 3). Formas antiguas y cultas: մահու = մահվան «de la muerte», ի երեսն — la antigua preposición ի «en, sobre» («en la cara de la nieve»), չըմարող = չմարող «que no se apaga» (-ող con negación, etapa 2), գալիք «venidero», հավետ «por siempre», կարկաչուն «que murmura»."
    },
    "scene": {
     "title": {
-     "ru": "Я люблю мою милую Армению",
-     "en": "I love my sweet Armenia",
-     "fr": "J’aime ma douce Arménie",
-     "es": "Amo a mi dulce Armenia"
+     "ru": "Родник",
+     "en": "The spring",
+     "fr": "La source",
+     "es": "La fuente"
     },
     "who": {
-     "Չ": {
-      "ru": "Егише Чаренц",
-      "en": "Yeghishe Charents",
-      "fr": "Yéghiché Tcharents",
-      "es": "Yeghishé Charents"
+     "Տ": {
+      "ru": "Ваан Терьян",
+      "en": "Vahan Teryan",
+      "fr": "Vahan Térian",
+      "es": "Vahán Terián"
      }
     },
     "lines": [
      [
-      "Չ",
-      "Ես իմ անուշ Հայաստանի արևահամ բարն եմ սիրում,",
-      "Я люблю солнцем напоённое слово моей милой Армении,",
-      "I love the sun-flavoured word of my sweet Armenia,",
-      "J’aime le mot au goût de soleil de ma douce Arménie,",
-      "Amo la palabra con sabor a sol de mi dulce Armenia,"
+      "Տ",
+      "Մահու պես դաժան ձմեռն է իջել,",
+      "Сошла зима, жестокая, как смерть,",
+      "Winter has come down, cruel as death,",
+      "L’hiver est descendu, cruel comme la mort,",
+      "Bajó el invierno, cruel como la muerte,"
      ],
      [
-      "Չ",
-      "Մեր հին սազի ողբանվագ, լացակումած լարն եմ սիրում,",
-      "Люблю плачущую, полную слёз струну нашего старого саза,",
-      "I love the mournful, tearful string of our old saz,",
-      "j’aime la corde plaintive et en larmes de notre vieux saz,",
-      "amo la cuerda quejumbrosa y llorosa de nuestro viejo saz,"
+      "Տ",
+      "Մարել են, մեռել — երգ, ծաղիկ ու բույր.",
+      "Угасли, умерли — песня, цветок и аромат.",
+      "song, flower and scent have faded and died.",
+      "chant, fleur et parfum se sont éteints, sont morts.",
+      "se apagaron y murieron canción, flor y aroma."
      ],
      [
-      "Չ",
-      "Արնանման ծաղիկների ու վարդերի բույրը վառման,",
-      "Жгучий аромат алых, как кровь, цветов и роз,",
-      "the burning scent of blood-red flowers and roses,",
-      "le parfum brûlant des fleurs couleur de sang et des roses,",
-      "el perfume ardiente de flores color sangre y de rosas,"
+      "Տ",
+      "— Դու քար ցրտում էլ, ձյուների մեջ էլ —",
+      "А ты — и в каменный холод, и среди снегов —",
+      "But you, in the stone-cold frost, among the snows,",
+      "Mais toi, dans le froid de pierre, au milieu des neiges,",
+      "Pero tú, en el frío de piedra, entre las nieves,"
      ],
      [
-      "Չ",
-      "Ու նաիրյան աղջիկների հեզաճկուն պա՛րն եմ սիրում։",
-      "И кроткий, гибкий танец девушек Наири люблю.",
-      "and the gentle, supple dance of the girls of Nairi I love.",
-      "et la danse douce et souple des filles de Naïri, je l’aime.",
-      "y la danza dulce y flexible de las muchachas de Nairi amo."
+      "Տ",
+      "— Հավետ կենդանի՜, կարկաչո՜ւն աղբյուր...",
+      "Вечно живой, журчащий родник…",
+      "are forever alive, babbling spring…",
+      "tu restes vive à jamais, source qui gazouille…",
+      "sigues viva para siempre, fuente que murmura…"
      ],
      [
-      "Չ",
-      "Սիրում եմ մեր երկինքը մուգ, ջրերը ջինջ, լիճը լուսե,",
-      "Люблю наше тёмное небо, чистые воды, светлое озеро,",
-      "I love our deep sky, our clear waters, the shining lake,",
-      "J’aime notre ciel profond, nos eaux limpides, le lac lumineux,",
-      "Amo nuestro cielo hondo, las aguas claras, el lago luminoso,"
+      "Տ",
+      "Ժեռ սարի կրծքից դու դուրս ես թռչում,",
+      "Ты вырываешься из груди скалистой горы,",
+      "You burst from the breast of the rocky mountain,",
+      "Tu jaillis du sein de la montagne rocheuse,",
+      "Brotas del pecho de la montaña rocosa,"
      ],
      [
-      "Չ",
-      "Արևն ամռան ու ձմեռվա վիշապաձայն բուքը վսեմ,",
-      "Летнее солнце и величавую вьюгу зимы с голосом дракона,",
-      "the summer sun and the sublime, dragon-voiced blizzard of winter,",
-      "le soleil d’été et le sublime blizzard d’hiver à la voix de dragon,",
-      "el sol del verano y la sublime ventisca del invierno con voz de dragón,"
+      "Տ",
+      "Սառույցը ճեղքում — գոհարներ ցողում,",
+      "Раскалываешь лёд, рассыпаешь самоцветы,",
+      "you split the ice and scatter jewels,",
+      "tu fends la glace et sèmes des joyaux,",
+      "partes el hielo y esparces joyas,"
      ],
      [
-      "Չ",
-      "Մթում կորած խրճիթների անհյուրընկալ պատերը սև,",
-      "Негостеприимные чёрные стены затерянных во мраке лачуг,",
-      "the black, unwelcoming walls of huts lost in the dark,",
-      "les murs noirs, inhospitaliers, des masures perdues dans l’ombre,",
-      "las negras paredes inhóspitas de chozas perdidas en la oscuridad,"
+      "Տ",
+      "Ծաղրանքով ձյուն ի երեսն ես թրջում,",
+      "С насмешкой брызжешь снегу в лицо,",
+      "mockingly you splash the snow in its face,",
+      "moqueuse, tu éclabousses le visage de la neige,",
+      "burlona, le salpicas la cara a la nieve,"
      ],
      [
-      "Չ",
-      "Ու հնամյա քաղաքների հազարամյա քա՛րն եմ սիրում։",
-      "И тысячелетний камень древних городов люблю.",
-      "and the thousand-year-old stone of ancient cities I love.",
-      "et la pierre millénaire des cités anciennes, je l’aime.",
-      "y la piedra milenaria de las ciudades antiguas amo."
+      "Տ",
+      "Մռայլ երկնի դեմ պայծառ ծիծաղում։",
+      "Светло смеёшься в лицо хмурому небу.",
+      "and laugh brightly at the gloomy sky.",
+      "et tu ris clair face au ciel morose.",
+      "y ríes clara frente al cielo sombrío."
      ],
      [
-      "Չ",
-      "Ո՛ւր էլ լինեմ — չե՛մ մոռանա ես ողբաձայն երգերը մեր,",
-      "Где бы я ни был — не забуду наших скорбных песен,",
-      "Wherever I may be, I will not forget our mournful songs,",
-      "Où que je sois, je n’oublierai pas nos chants plaintifs,",
-      "Dondequiera que esté, no olvidaré nuestros cantos dolientes,"
+      "Տ",
+      "Քո մեջ ապրում է հույսը չըմարող...",
+      "В тебе живёт неугасимая надежда…",
+      "In you lives a hope that never fades…",
+      "En toi vit l’espoir qui ne s’éteint pas…",
+      "En ti vive la esperanza que no se apaga…"
      ],
      [
-      "Չ",
-      "Չե՜մ մոռանա աղոթք դարձած երկաթագիր գրքերը մեր,",
-      "Не забуду наших древних книг, ставших молитвой,",
-      "I will not forget our ancient books that became prayer,",
-      "je n’oublierai pas nos livres anciens devenus prière,",
-      "no olvidaré nuestros libros antiguos convertidos en oración,"
+      "Տ",
+      "Դո՜ւ, որպես գալիք գարունների լուր,",
+      "Ты — как весть о грядущих вёснах,",
+      "You, like news of springs to come,",
+      "Toi, comme l’annonce des printemps à venir,",
+      "Tú, como noticia de primaveras por venir,"
      ],
      [
-      "Չ",
-      "Ինչքան էլ սո՜ւր սիրտս խոցեն արյունաքամ վերքերը մեր —",
-      "Как бы остро ни ранили сердце наши кровоточащие раны —",
-      "however sharply our bleeding wounds may pierce my heart —",
-      "si cruellement que nos plaies sanglantes me percent le cœur —",
-      "por mucho que hieran mi corazón nuestras heridas sangrantes,"
+      "Տ",
+      "Դո՜ւ, որպես սերը՝ մահու դեմ՝ կարող —",
+      "Ты, как любовь, сильнее смерти —",
+      "you, like love, strong against death —",
+      "toi, comme l’amour, plus fort que la mort —",
+      "tú, como el amor, fuerte frente a la muerte:"
      ],
      [
-      "Չ",
-      "Էլի՛ ես որբ ու արնավառ իմ Հայաստան — յա՛րն եմ սիրում։",
-      "Всё равно я люблю мою осиротевшую, пылающую Армению — любимую.",
-      "still I love my orphaned, blood-lit Armenia, my beloved.",
-      "j’aime encore mon Arménie orpheline et embrasée, ma bien-aimée.",
-      "aún amo a mi Armenia huérfana y encendida, mi amada."
-     ],
-     [
-      "Չ",
-      "Իմ կարոտած սրտի համար ո՛չ մի ուրիշ հեքիաթ չկա․",
-      "Для моего тоскующего сердца нет другой сказки;",
-      "For my longing heart there is no other fairy tale;",
-      "Pour mon cœur nostalgique, il n’est pas d’autre conte ;",
-      "Para mi corazón nostálgico no hay otro cuento;"
-     ],
-     [
-      "Չ",
-      "Նարեկացու, Քուչակի պես լուսապսակ ճակատ չկա․",
-      "Нет чела в таком сиянии, как у Нарекаци и Кучака;",
-      "there is no brow crowned with light like Narekatsi’s and Kuchak’s;",
-      "pas de front auréolé comme ceux de Narekatsi et de Koutchak ;",
-      "no hay frente coronada de luz como la de Narekatsí y Kuchak;"
-     ],
-     [
-      "Չ",
-      "Աշխա՛րհ անցի՛ր, Արարատի նման ճերմակ գագաթ չկա․",
-      "Обойди весь мир — нет белой вершины, как Арарат;",
-      "cross the whole world: there is no white summit like Ararat;",
-      "parcours le monde : il n’est pas de sommet blanc comme l’Ararat ;",
-      "recorre el mundo: no hay cumbre blanca como el Ararat;"
-     ],
-     [
-      "Չ",
-      "Ինչպես անհաս փառքի ճամփա՝ ես իմ Մասիս սա՛րն եմ սիրում։",
-      "Как путь к недостижимой славе, я люблю мою гору Масис.",
-      "like a road to unreachable glory, I love my mountain Masis.",
-      "comme le chemin d’une gloire inaccessible, j’aime ma montagne Massis.",
-      "como el camino a una gloria inalcanzable, amo mi monte Masis."
+      "Տ",
+      "Ազատության ե՜րգ, կարկաչո՜ւն աղբյուր...",
+      "Песнь свободы, журчащий родник…",
+      "song of freedom, babbling spring…",
+      "chant de liberté, source qui gazouille…",
+      "canción de libertad, fuente que murmura…"
      ]
     ]
    },
    "seeds": [
-    "արև",
-    "ծաղիկ",
-    "վարդ",
+    "ձմեռ",
+    "աղբյուր",
+    "ձյուն",
+    "սառույց",
     "երկինք",
-    "լիճ",
-    "քար",
-    "երգ",
-    "գիրք",
-    "վերք",
-    "ճակատ",
-    "գագաթ"
+    "գարուն",
+    "ազատություն",
+    "հույս"
    ],
    "drills": [
     {
@@ -5748,57 +6435,653 @@
      "items": [
       [
        {
-        "ru": "солнце",
-        "en": "sun",
-        "fr": "soleil",
-        "es": "sol"
+        "ru": "зима",
+        "en": "winter",
+        "fr": "hiver",
+        "es": "invierno"
        },
-       "արև"
+       "ձմեռ"
       ],
       [
        {
-        "ru": "роза",
-        "en": "rose",
-        "fr": "rose",
-        "es": "rosa"
+        "ru": "снег",
+        "en": "snow",
+        "fr": "neige",
+        "es": "nieve"
        },
-       "վարդ"
+       "ձյուն"
       ],
       [
        {
-        "ru": "небо",
-        "en": "sky",
-        "fr": "ciel",
-        "es": "cielo"
+        "ru": "лёд",
+        "en": "ice",
+        "fr": "glace",
+        "es": "hielo"
        },
-       "երկինք"
+       "սառույց"
       ],
       [
        {
-        "ru": "озеро",
-        "en": "lake",
-        "fr": "lac",
-        "es": "lago"
+        "ru": "родник",
+        "en": "spring (water)",
+        "fr": "source",
+        "es": "fuente"
        },
-       "լիճ"
+       "աղբյուր"
       ],
       [
        {
-        "ru": "песня",
-        "en": "song",
-        "fr": "chant",
-        "es": "canción"
+        "ru": "свобода",
+        "en": "freedom",
+        "fr": "liberté",
+        "es": "libertad"
        },
-       "երգ"
+       "ազատություն"
       ],
       [
        {
-        "ru": "вершина",
-        "en": "summit",
-        "fr": "sommet",
-        "es": "cumbre"
+        "ru": "весна",
+        "en": "spring (season)",
+        "fr": "printemps",
+        "es": "primavera"
        },
-       "գագաթ"
+       "գարուն"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u12",
+   "stage": 5,
+   "ic": "🐈",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1908",
+   "src": "https://hy.wikisource.org/wiki/Շունն_ու_Կատուն",
+   "title": {
+    "ru": "Пёс и Кот (начало)",
+    "en": "The Dog and the Cat (beginning)",
+    "fr": "Le Chien et le Chat (début)",
+    "es": "El Perro y el Gato (comienzo)"
+   },
+   "formula": "Շունն ու Կատուն",
+   "names": [
+    "Շունն",
+    "Կատվի"
+   ],
+   "note": {
+    "ru": "«Пёс и Кот» (окончательная редакция 1908) — сказка в стихах о том, почему кошки и собаки враждуют: Кот взялся сшить Псу шапку… Речь — разговорная: ա = է (Մի գըդակ ա «это шапка»), չի = չէ, համա «только», ուստա «мастер», քեռի «дядя», խաթեր «уважение». Ճոն — «шапочник», գդակ — «папаха». Աչքիս վրա — «с радостью», дословно «на мои глаза»; ի սեր Աստծո — «ради Бога»; Բար' աջողում — «Бог в помощь». Здесь — начало: заказ шапки.",
+    "en": "“The Dog and the Cat” (final version 1908) is a tale in verse about why cats and dogs are enemies: the Cat agreed to sew the Dog a cap… The speech is colloquial: ա = է (Մի գըդակ ա “it’s a cap”), չի = չէ, համա “but, only”, ուստա “master craftsman”, քեռի “uncle”, խաթեր “respect, sake”. Ճոն means “hatter”, գդակ “fur cap”. Աչքիս վրա — “with pleasure”, literally “on my eyes”; ի սեր Աստծո — “for God’s sake”; Բար' աջողում — “good luck with your work”. Here: the beginning, ordering the cap.",
+    "fr": "« Le Chien et le Chat » (version finale de 1908) est un conte en vers sur l’origine de la brouille entre chats et chiens : le Chat a promis de coudre un bonnet au Chien… La langue est parlée : ա = է (Մի գըդակ ա « c’est un bonnet »), չի = չէ, համա « mais », ուստա « maître artisan », քեռի « oncle », խաթեր « égard ». Ճոն : « chapelier », գդակ : « bonnet de fourrure ». Աչքիս վրա — « avec plaisir », mot à mot « sur mes yeux » ; ի սեր Աստծո — « pour l’amour de Dieu » ; Բար' աջողում — « bon travail ». Ici : le début, la commande du bonnet.",
+    "es": "«El Perro y el Gato» (versión final de 1908) es un cuento en verso sobre por qué gatos y perros se pelean: el Gato aceptó coserle un gorro al Perro… El habla es coloquial: ա = է (Մի գըդակ ա «es un gorro»), չի = չէ, համա «pero», ուստա «maestro artesano», քեռի «tío», խաթեր «aprecio». Ճոն es «sombrerero» y գդակ «gorro de piel». Աչքիս վրա — «con gusto», literalmente «sobre mis ojos»; ի սեր Աստծո — «por Dios»; Բար' աջողում — «buen trabajo». Aquí: el comienzo, el encargo del gorro."
+   },
+   "scene": {
+    "title": {
+     "ru": "Пёс и Кот",
+     "en": "The Dog and the Cat",
+     "fr": "Le Chien et le Chat",
+     "es": "El Perro y el Gato"
+    },
+    "who": {
+     "Թ": {
+      "ru": "Ованес Туманян",
+      "en": "Hovhannes Tumanyan",
+      "fr": "Hovhannès Toumanian",
+      "es": "Hovhannés Tumanián"
+     },
+     "Շ": {
+      "ru": "Пёс Кучи",
+      "en": "Kuchi the Dog",
+      "fr": "Koutchi le Chien",
+      "es": "Kuchi el Perro"
+     },
+     "Կ": {
+      "ru": "Кот Писо",
+      "en": "Piso the Cat",
+      "fr": "Piso le Chat",
+      "es": "Piso el Gato"
+     }
+    },
+    "lines": [
+     [
+      "Թ",
+      "Ժամանակով Կատուն ճոն էր,",
+      "Когда-то Кот был шапочником,",
+      "Once upon a time the Cat was a hatter,",
+      "Jadis, le Chat était chapelier,",
+      "Hace tiempo el Gato era sombrerero,"
+     ],
+     [
+      "Թ",
+      "Շունն էլ գըլխին գըդակ չուներ,",
+      "А у Пса на голове шапки не было.",
+      "and the Dog had no cap on his head.",
+      "et le Chien n’avait pas de bonnet sur la tête.",
+      "y el Perro no tenía gorro en la cabeza."
+     ],
+     [
+      "Թ",
+      "Միայն, գիտեմ ոչ՝ որդիանց որդի,",
+      "Но, уж не знаю откуда,",
+      "But — from where, I cannot say —",
+      "Mais, je ne sais d’où,",
+      "Pero, no sé de dónde,"
+     ],
+     [
+      "Թ",
+      "Ճանկել էր մի գառան մորթի։",
+      "Раздобыл он шкурку ягнёнка.",
+      "he had got hold of a lambskin.",
+      "il avait mis la patte sur une peau d’agneau.",
+      "había conseguido una piel de cordero."
+     ],
+     [
+      "Թ",
+      "Եկավ մի օր, ձմեռվան մըտին,",
+      "Пришёл он однажды в самую зиму,",
+      "One day, in the depth of winter,",
+      "Un jour, au cœur de l’hiver,",
+      "Un día, en pleno invierno,"
+     ],
+     [
+      "Թ",
+      "Կատվի կուշտը տարավ մորթին։",
+      "Принёс шкурку к Коту.",
+      "he brought the skin to the Cat.",
+      "il apporta la peau chez le Chat.",
+      "le llevó la piel al Gato."
+     ],
+     [
+      "Շ",
+      "— Բար' աջողում, ուստա Փիսո,",
+      "— Бог в помощь, мастер Писо,",
+      "— Good luck with your work, master Piso,",
+      "— Bon travail, maître Piso,",
+      "— Buen trabajo, maestro Piso,"
+     ],
+     [
+      "Շ",
+      "Գլուխըս մըրսեց, ի սեր Աստծո,",
+      "Голова у меня мёрзнет, ради Бога,",
+      "my head is freezing, for God’s sake,",
+      "j’ai froid à la tête, pour l’amour de Dieu,",
+      "se me hiela la cabeza, por Dios,"
+     ],
+     [
+      "Շ",
+      "Ա՛ռ էս մորթին ու ինձ համար",
+      "Возьми эту шкурку и мне",
+      "take this skin and for me",
+      "prends cette peau et pour moi",
+      "toma esta piel y para mí"
+     ],
+     [
+      "Շ",
+      "Մի գդակ կարի գըլխիս հարմար։",
+      "Сшей шапку, чтоб была впору.",
+      "sew a cap that fits my head.",
+      "couds un bonnet à ma taille.",
+      "cose un gorro a la medida de mi cabeza."
+     ],
+     [
+      "Շ",
+      "Վարձիդ համար միամիտ մընա՛,",
+      "За плату не беспокойся,",
+      "Don’t worry about your fee,",
+      "Pour ton salaire, sois tranquille,",
+      "Por tu paga, quédate tranquilo,"
+     ],
+     [
+      "Շ",
+      "Համա-համա շատ չուշանա։",
+      "Только смотри, не затягивай.",
+      "just don’t take too long.",
+      "mais surtout ne traîne pas.",
+      "pero eso sí, no tardes mucho."
+     ],
+     [
+      "Կ",
+      "— Աչքիս վըրա, քեռի Քուչի,",
+      "— С радостью, дядюшка Кучи,",
+      "— With pleasure, uncle Kuchi,",
+      "— Avec plaisir, oncle Koutchi,",
+      "— Con mucho gusto, tío Kuchi,"
+     ],
+     [
+      "Կ",
+      "Մի գըդակ ա, հո մի քուրք չի․",
+      "Это ж шапка, а не шуба.",
+      "it’s only a cap, not a fur coat.",
+      "ce n’est qu’un bonnet, pas une pelisse.",
+      "es un gorro, no un tapado de piel."
+     ],
+     [
+      "Կ",
+      "Քու թանկագին խաթեր համար",
+      "Ради твоего дорогого уважения",
+      "For the sake of your precious friendship,",
+      "Pour ta précieuse amitié,",
+      "Por tu preciada amistad,"
+     ],
+     [
+      "Կ",
+      "Ուրբաթ օրը համեցեք տար։",
+      "В пятницу милости прошу — заберёшь.",
+      "come on Friday and take it.",
+      "viens vendredi le chercher.",
+      "ven el viernes a buscarlo."
+     ],
+     [
+      "Կ",
+      "Փողի մասին ավելորդ ա,",
+      "О деньгах и говорить лишнее,",
+      "No need to talk about money,",
+      "Parler d’argent est inutile,",
+      "De plata ni hablar,"
+     ],
+     [
+      "Կ",
+      "Մեր մեջ խոսելն էլ ամոթ ա,",
+      "Между нами о таком и говорить стыдно,",
+      "between us it’s a shame even to mention it,",
+      "entre nous, c’est même honteux d’en parler,",
+      "entre nosotros hasta da vergüenza hablarlo,"
+     ],
+     [
+      "Կ",
+      "Ի՜նչ մեծ բան ա, տո՜, հե՛ր օրհնած,",
+      "Велика ли важность, эх, дорогой мой,",
+      "what a big deal it is, my blessed fellow,",
+      "quelle affaire, voyons, mon brave,",
+      "qué gran cosa, vamos, bendito,"
+     ],
+     [
+      "Կ",
+      "Միա՜յն, միա՜յն մի գդակի վարձ։",
+      "Всего-то плата за одну шапку.",
+      "only, only the price of one cap.",
+      "seulement le prix d’un bonnet.",
+      "nada más el precio de un gorro."
+     ]
+    ]
+   },
+   "seeds": [
+    "շուն",
+    "կատու",
+    "մորթի",
+    "ձմեռ",
+    "գլուխ",
+    "ուրբաթ",
+    "փող",
+    "ամոթ"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "шкура",
+        "en": "skin, fur",
+        "fr": "peau",
+        "es": "piel"
+       },
+       "մորթի"
+      ],
+      [
+       {
+        "ru": "шапка",
+        "en": "cap",
+        "fr": "bonnet",
+        "es": "gorro"
+       },
+       "գդակ"
+      ],
+      [
+       {
+        "ru": "деньги",
+        "en": "money",
+        "fr": "argent",
+        "es": "plata, dinero"
+       },
+       "փող"
+      ],
+      [
+       {
+        "ru": "пятница",
+        "en": "Friday",
+        "fr": "vendredi",
+        "es": "viernes"
+       },
+       "ուրբաթ"
+      ],
+      [
+       {
+        "ru": "стыд",
+        "en": "shame",
+        "fr": "honte",
+        "es": "vergüenza"
+       },
+       "ամոթ"
+      ],
+      [
+       {
+        "ru": "голова",
+        "en": "head",
+        "fr": "tête",
+        "es": "cabeza"
+       },
+       "գլուխ"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u11",
+   "stage": 5,
+   "ic": "🍯",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1909",
+   "src": "https://hy.wikisource.org/wiki/Մի_կաթիլ_մեղրը",
+   "title": {
+    "ru": "Капля мёда (начало)",
+    "en": "A drop of honey (beginning)",
+    "fr": "Une goutte de miel (début)",
+    "es": "Una gota de miel (comienzo)"
+   },
+   "formula": "Մի կաթիլ մեղրը",
+   "note": {
+    "ru": "«Капля мёда» (1909) — баллада о том, как из-за одной капли мёда дерутся кошка и собака, потом хозяева, потом деревни и, наконец, две страны. Здесь начало — до первого удара лапой. Язык живой, лорийский: ծախել = վաճառել «продавать», չոբան «пастух», ախպեր = եղբայր «брат», էս = այս, էսպես = այսպես, սըհաթ «час, миг», մին = մեկ, գալի = գալիս է, զըռ «здоровенный», կուզես «захочешь».",
+    "en": "“A drop of honey” (1909) is a ballad about how one drop of honey sets off a fight — first a cat and a dog, then their owners, then villages and finally two countries. Here is the beginning, up to the first swipe of a paw. The language is lively Lori speech: ծախել = վաճառել “to sell”, չոբան “shepherd”, ախպեր = եղբայր “brother”, էս = այս, էսպես = այսպես, սըհաթ “hour, moment”, մին = մեկ, գալի = գալիս է, զըռ “hulking”, կուզես “you’ll want”.",
+    "fr": "« Une goutte de miel » (1909) est une ballade : à cause d’une seule goutte de miel se battent un chat et un chien, puis leurs maîtres, puis des villages et enfin deux pays. Voici le début, jusqu’au premier coup de patte. Langue vivante du Lori : ծախել = վաճառել « vendre », չոբան « berger », ախպեր = եղբայր « frère », էս = այս, էսպես = այսպես, սըհաթ « heure, instant », մին = մեկ, գալի = գալիս է, զըռ « costaud », կուզես « tu voudras ».",
+    "es": "«Una gota de miel» (1909) es una balada: por una sola gota de miel se pelean un gato y un perro, luego sus dueños, luego las aldeas y al final dos países. Aquí está el comienzo, hasta el primer zarpazo. Lengua viva de Lori: ծախել = վաճառել «vender», չոբան «pastor», ախպեր = եղբայր «hermano», էս = այս, էսպես = այսպես, սըհաթ «hora, momento», մին = մեկ, գալի = գալիս է, զըռ «grandote», կուզես «querrás»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Капля мёда",
+     "en": "A drop of honey",
+     "fr": "Une goutte de miel",
+     "es": "Una gota de miel"
+    },
+    "who": {
+     "Թ": {
+      "ru": "Ованес Туманян",
+      "en": "Hovhannes Tumanyan",
+      "fr": "Hovhannès Toumanian",
+      "es": "Hovhannés Tumanián"
+     },
+     "Չ": {
+      "ru": "Пастух",
+      "en": "Shepherd",
+      "fr": "Berger",
+      "es": "Pastor"
+     },
+     "Խ": {
+      "ru": "Лавочник",
+      "en": "Shopkeeper",
+      "fr": "Boutiquier",
+      "es": "Almacenero"
+     }
+    },
+    "lines": [
+     [
+      "Թ",
+      "Մի գյուղացի իրենց գյուղում",
+      "Один крестьянин в своей деревне",
+      "A villager in his own village",
+      "Un villageois, dans son village,",
+      "Un aldeano, en su aldea,"
+     ],
+     [
+      "Թ",
+      "Խանութ սարքել, բան էր ծախում։",
+      "Открыл лавку и торговал всякой всячиной.",
+      "had set up a shop and sold this and that.",
+      "avait monté une boutique et vendait de tout.",
+      "había armado un almacén y vendía de todo."
+     ],
+     [
+      "Թ",
+      "Օրվան մի օր մոտիկ գյուղից,",
+      "Однажды из соседней деревни,",
+      "One fine day, from a nearby village,",
+      "Un beau jour, d’un village voisin,",
+      "Un buen día, de una aldea vecina,"
+     ],
+     [
+      "Թ",
+      "Մահակն ուսին, շունն ետևից",
+      "С дубиной на плече, с собакой позади,",
+      "club on his shoulder, dog at his heels,",
+      "gourdin sur l’épaule, son chien derrière,",
+      "con el garrote al hombro y el perro detrás,"
+     ],
+     [
+      "Թ",
+      "Ներս է մտնում մի զըռ չոբան.",
+      "Входит здоровенный пастух.",
+      "in walks a hulking shepherd.",
+      "entre un berger costaud.",
+      "entra un pastor grandote."
+     ],
+     [
+      "Չ",
+      "— Բարի օր քեզ, ա՛յ խանութպան,",
+      "— Добрый день тебе, лавочник,",
+      "— Good day to you, shopkeeper,",
+      "— Bonjour à toi, boutiquier,",
+      "— Buen día, almacenero,"
+     ],
+     [
+      "Չ",
+      "Մեղրը չունե՞ս,",
+      "Мёду не найдётся?",
+      "haven’t you got honey?",
+      "tu n’as pas de miel ?",
+      "¿no tienes miel?"
+     ],
+     [
+      "Չ",
+      "Մի քիչ տաս մեզ։",
+      "Дал бы нам немножко.",
+      "Give us a little.",
+      "Donne-nous-en un peu.",
+      "Danos un poco."
+     ],
+     [
+      "Խ",
+      "— Ունեմ, ունեմ, չոբան ախպեր.",
+      "— Есть, есть, брат-пастух.",
+      "— I have, I have, brother shepherd.",
+      "— J’en ai, j’en ai, frère berger.",
+      "— Tengo, tengo, hermano pastor."
+     ],
+     [
+      "Խ",
+      "Ամանդ ո՞ւր է, ամանըդ բեր,",
+      "Где твоя посуда? Неси посуду,",
+      "Where’s your pot? Bring your pot,",
+      "Où est ton pot ? Apporte ton pot,",
+      "¿Dónde está tu vasija? Trae tu vasija,"
+     ],
+     [
+      "Խ",
+      "Ինչ տեղից որ ինքդ կուզես,",
+      "Откуда сам захочешь,",
+      "from wherever you like,",
+      "d’où tu voudras toi-même,",
+      "de donde tú quieras,"
+     ],
+     [
+      "Խ",
+      "Էս սըհաթին քաշեմ տամ քեզ։",
+      "Сию минуту взвешу тебе.",
+      "I’ll weigh it out for you this minute.",
+      "je te le pèse tout de suite.",
+      "te lo peso en este momento."
+     ],
+     [
+      "Թ",
+      "Էսպես հանգիստ, էսպես սիրով,",
+      "Вот так спокойно, так душевно,",
+      "So calmly, so warmly,",
+      "Ainsi, tranquillement, avec bonté,",
+      "Así, tranquilos, con cariño,"
+     ],
+     [
+      "Թ",
+      "Մեղրից անուշ լավ խոսքերով",
+      "Добрыми словами, слаще мёда,",
+      "with kind words sweeter than honey,",
+      "avec de bons mots plus doux que le miel,",
+      "con buenas palabras más dulces que la miel,"
+     ],
+     [
+      "Թ",
+      "Մեղր են քաշում. մին էլ հանկարծ",
+      "Вешают мёд. И вдруг",
+      "they weigh the honey. And suddenly",
+      "ils pèsent le miel. Et soudain",
+      "pesan la miel. Y de repente"
+     ],
+     [
+      "Թ",
+      "Մի կաթ մեղրը ծորում է ցած։",
+      "Капля мёда стекает вниз.",
+      "a drop of honey drips down.",
+      "une goutte de miel tombe par terre.",
+      "una gota de miel cae al piso."
+     ],
+     [
+      "Թ",
+      "— Տը՛զզ, էն կողմից մի ճանճ գալի,",
+      "Жжж — летит оттуда муха,",
+      "Bzzz — over comes a fly,",
+      "Bzzz — une mouche arrive de là-bas,",
+      "Bzzz, de por allá viene una mosca,"
+     ],
+     [
+      "Թ",
+      "Էս կաթիլին վեր է գալի։",
+      "Садится на эту каплю.",
+      "and lands on the drop.",
+      "et se pose sur la goutte.",
+      "y se posa en la gota."
+     ],
+     [
+      "Թ",
+      "Ճանճի վըրա, թաքուն-թաքուն,",
+      "На муху, тихо-тихо, крадучись,",
+      "At the fly, stealthily, stealthily,",
+      "Sur la mouche, en cachette,",
+      "Sobre la mosca, a escondidas,"
+     ],
+     [
+      "Թ",
+      "Էս խանութի տիրոջ կատուն",
+      "Кошка хозяина лавки",
+      "the shopkeeper’s cat",
+      "le chat du patron de la boutique",
+      "el gato del dueño del almacén"
+     ],
+     [
+      "Թ",
+      "Դուրս է ցատկում,",
+      "Выпрыгивает,",
+      "leaps out,",
+      "bondit,",
+      "salta afuera,"
+     ],
+     [
+      "Թ",
+      "Թաթով զարկում...",
+      "Бьёт лапой…",
+      "strikes with its paw…",
+      "frappe de la patte…",
+      "le da con la pata…"
+     ]
+    ]
+   },
+   "seeds": [
+    "մեղր",
+    "խանութ",
+    "գյուղացի",
+    "շուն",
+    "կատու",
+    "ճանճ",
+    "կաթիլ",
+    "հանկարծ"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "мёд",
+        "en": "honey",
+        "fr": "miel",
+        "es": "miel"
+       },
+       "մեղր"
+      ],
+      [
+       {
+        "ru": "лавка",
+        "en": "shop",
+        "fr": "boutique",
+        "es": "almacén"
+       },
+       "խանութ"
+      ],
+      [
+       {
+        "ru": "муха",
+        "en": "fly",
+        "fr": "mouche",
+        "es": "mosca"
+       },
+       "ճանճ"
+      ],
+      [
+       {
+        "ru": "капля",
+        "en": "drop",
+        "fr": "goutte",
+        "es": "gota"
+       },
+       "կաթիլ"
+      ],
+      [
+       {
+        "ru": "вдруг",
+        "en": "suddenly",
+        "fr": "soudain",
+        "es": "de repente"
+       },
+       "հանկարծ"
+      ],
+      [
+       {
+        "ru": "кошка",
+        "en": "cat",
+        "fr": "chat",
+        "es": "gato"
+       },
+       "կատու"
       ]
      ]
     }
@@ -6045,6 +7328,253 @@
    ],
    "names": [
     "Կիկոսը"
+   ]
+  },
+  {
+   "id": "s5u5",
+   "stage": 5,
+   "ic": "⛰️",
+   "kind": "read",
+   "author": {
+    "ru": "Егише Чаренц",
+    "en": "Yeghishe Charents",
+    "fr": "Yéghiché Tcharents",
+    "es": "Yeghishé Charents"
+   },
+   "year": "1920–1921",
+   "src": "https://hy.wikisource.org/wiki/Ես_իմ_անուշ_Հայաստանի",
+   "title": {
+    "ru": "Я люблю мою милую Армению",
+    "en": "I love my sweet Armenia",
+    "fr": "J’aime ma douce Arménie",
+    "es": "Amo a mi dulce Armenia"
+   },
+   "formula": "Ես իմ անուշ Հայաստանի",
+   "note": {
+    "ru": "Егише Чаренц (1897–1937) написал это стихотворение в 1920–1921 годах; его знает наизусть вся Армения. Каждая строфа кончается «… -ն եմ սիրում» — «… люблю»: ударное слово стоит перед եմ (ступень 2). Много сложных слов из двух корней: արևահամ «со вкусом солнца», ողբաձայն «со скорбным голосом», հազարամյա «тысячелетний», լուսապսակ «в венце света». Մասիս — армянское имя Арарата; յար — «любимая» (из народной песни); Нарекаци и Кучак — средневековые поэты.",
+    "en": "Yeghishe Charents (1897–1937) wrote this poem in 1920–1921; all of Armenia knows it by heart. Every stanza ends “… -ն եմ սիրում” — “… I love”: the stressed word stands before եմ (stage 2). There are many compounds of two roots: արևահամ “sun-flavoured”, ողբաձայն “mournful-voiced”, հազարամյա “thousand-year-old”, լուսապսակ “crowned with light”. Մասիս is the Armenian name of Ararat; յար means “beloved” (from folk song); Narekatsi and Kuchak are medieval poets.",
+    "fr": "Yéghiché Tcharents (1897–1937) a écrit ce poème en 1920–1921 ; toute l’Arménie le connaît par cœur. Chaque strophe finit par « … -ն եմ սիրում » — « … j’aime » : le mot accentué se place devant եմ (étape 2). Beaucoup de mots composés de deux racines : արևահամ « au goût de soleil », ողբաձայն « à la voix plaintive », հազարամյա « millénaire », լուսապսակ « couronné de lumière ». Մասիս est le nom arménien de l’Ararat ; յար veut dire « bien-aimée » (chanson populaire) ; Narekatsi et Koutchak sont des poètes médiévaux.",
+    "es": "Yeghishé Charents (1897–1937) escribió este poema en 1920–1921; toda Armenia lo sabe de memoria. Cada estrofa termina en «… -ն եմ սիրում» — «… amo»: la palabra acentuada va antes de եմ (etapa 2). Hay muchos compuestos de dos raíces: արևահամ «con sabor a sol», ողբաձայն «de voz doliente», հազարամյա «milenario», լուսապսակ «coronado de luz». Մասիս es el nombre armenio del Ararat; յար significa «amada» (de la canción popular); Narekatsí y Kuchak son poetas medievales."
+   },
+   "scene": {
+    "title": {
+     "ru": "Я люблю мою милую Армению",
+     "en": "I love my sweet Armenia",
+     "fr": "J’aime ma douce Arménie",
+     "es": "Amo a mi dulce Armenia"
+    },
+    "who": {
+     "Չ": {
+      "ru": "Егише Чаренц",
+      "en": "Yeghishe Charents",
+      "fr": "Yéghiché Tcharents",
+      "es": "Yeghishé Charents"
+     }
+    },
+    "lines": [
+     [
+      "Չ",
+      "Ես իմ անուշ Հայաստանի արևահամ բարն եմ սիրում,",
+      "Я люблю солнцем напоённое слово моей милой Армении,",
+      "I love the sun-flavoured word of my sweet Armenia,",
+      "J’aime le mot au goût de soleil de ma douce Arménie,",
+      "Amo la palabra con sabor a sol de mi dulce Armenia,"
+     ],
+     [
+      "Չ",
+      "Մեր հին սազի ողբանվագ, լացակումած լարն եմ սիրում,",
+      "Люблю плачущую, полную слёз струну нашего старого саза,",
+      "I love the mournful, tearful string of our old saz,",
+      "j’aime la corde plaintive et en larmes de notre vieux saz,",
+      "amo la cuerda quejumbrosa y llorosa de nuestro viejo saz,"
+     ],
+     [
+      "Չ",
+      "Արնանման ծաղիկների ու վարդերի բույրը վառման,",
+      "Жгучий аромат алых, как кровь, цветов и роз,",
+      "the burning scent of blood-red flowers and roses,",
+      "le parfum brûlant des fleurs couleur de sang et des roses,",
+      "el perfume ardiente de flores color sangre y de rosas,"
+     ],
+     [
+      "Չ",
+      "Ու նաիրյան աղջիկների հեզաճկուն պա՛րն եմ սիրում։",
+      "И кроткий, гибкий танец девушек Наири люблю.",
+      "and the gentle, supple dance of the girls of Nairi I love.",
+      "et la danse douce et souple des filles de Naïri, je l’aime.",
+      "y la danza dulce y flexible de las muchachas de Nairi amo."
+     ],
+     [
+      "Չ",
+      "Սիրում եմ մեր երկինքը մուգ, ջրերը ջինջ, լիճը լուսե,",
+      "Люблю наше тёмное небо, чистые воды, светлое озеро,",
+      "I love our deep sky, our clear waters, the shining lake,",
+      "J’aime notre ciel profond, nos eaux limpides, le lac lumineux,",
+      "Amo nuestro cielo hondo, las aguas claras, el lago luminoso,"
+     ],
+     [
+      "Չ",
+      "Արևն ամռան ու ձմեռվա վիշապաձայն բուքը վսեմ,",
+      "Летнее солнце и величавую вьюгу зимы с голосом дракона,",
+      "the summer sun and the sublime, dragon-voiced blizzard of winter,",
+      "le soleil d’été et le sublime blizzard d’hiver à la voix de dragon,",
+      "el sol del verano y la sublime ventisca del invierno con voz de dragón,"
+     ],
+     [
+      "Չ",
+      "Մթում կորած խրճիթների անհյուրընկալ պատերը սև,",
+      "Негостеприимные чёрные стены затерянных во мраке лачуг,",
+      "the black, unwelcoming walls of huts lost in the dark,",
+      "les murs noirs, inhospitaliers, des masures perdues dans l’ombre,",
+      "las negras paredes inhóspitas de chozas perdidas en la oscuridad,"
+     ],
+     [
+      "Չ",
+      "Ու հնամյա քաղաքների հազարամյա քա՛րն եմ սիրում։",
+      "И тысячелетний камень древних городов люблю.",
+      "and the thousand-year-old stone of ancient cities I love.",
+      "et la pierre millénaire des cités anciennes, je l’aime.",
+      "y la piedra milenaria de las ciudades antiguas amo."
+     ],
+     [
+      "Չ",
+      "Ո՛ւր էլ լինեմ — չե՛մ մոռանա ես ողբաձայն երգերը մեր,",
+      "Где бы я ни был — не забуду наших скорбных песен,",
+      "Wherever I may be, I will not forget our mournful songs,",
+      "Où que je sois, je n’oublierai pas nos chants plaintifs,",
+      "Dondequiera que esté, no olvidaré nuestros cantos dolientes,"
+     ],
+     [
+      "Չ",
+      "Չե՜մ մոռանա աղոթք դարձած երկաթագիր գրքերը մեր,",
+      "Не забуду наших древних книг, ставших молитвой,",
+      "I will not forget our ancient books that became prayer,",
+      "je n’oublierai pas nos livres anciens devenus prière,",
+      "no olvidaré nuestros libros antiguos convertidos en oración,"
+     ],
+     [
+      "Չ",
+      "Ինչքան էլ սո՜ւր սիրտս խոցեն արյունաքամ վերքերը մեր —",
+      "Как бы остро ни ранили сердце наши кровоточащие раны —",
+      "however sharply our bleeding wounds may pierce my heart —",
+      "si cruellement que nos plaies sanglantes me percent le cœur —",
+      "por mucho que hieran mi corazón nuestras heridas sangrantes,"
+     ],
+     [
+      "Չ",
+      "Էլի՛ ես որբ ու արնավառ իմ Հայաստան — յա՛րն եմ սիրում։",
+      "Всё равно я люблю мою осиротевшую, пылающую Армению — любимую.",
+      "still I love my orphaned, blood-lit Armenia, my beloved.",
+      "j’aime encore mon Arménie orpheline et embrasée, ma bien-aimée.",
+      "aún amo a mi Armenia huérfana y encendida, mi amada."
+     ],
+     [
+      "Չ",
+      "Իմ կարոտած սրտի համար ո՛չ մի ուրիշ հեքիաթ չկա․",
+      "Для моего тоскующего сердца нет другой сказки;",
+      "For my longing heart there is no other fairy tale;",
+      "Pour mon cœur nostalgique, il n’est pas d’autre conte ;",
+      "Para mi corazón nostálgico no hay otro cuento;"
+     ],
+     [
+      "Չ",
+      "Նարեկացու, Քուչակի պես լուսապսակ ճակատ չկա․",
+      "Нет чела в таком сиянии, как у Нарекаци и Кучака;",
+      "there is no brow crowned with light like Narekatsi’s and Kuchak’s;",
+      "pas de front auréolé comme ceux de Narekatsi et de Koutchak ;",
+      "no hay frente coronada de luz como la de Narekatsí y Kuchak;"
+     ],
+     [
+      "Չ",
+      "Աշխա՛րհ անցի՛ր, Արարատի նման ճերմակ գագաթ չկա․",
+      "Обойди весь мир — нет белой вершины, как Арарат;",
+      "cross the whole world: there is no white summit like Ararat;",
+      "parcours le monde : il n’est pas de sommet blanc comme l’Ararat ;",
+      "recorre el mundo: no hay cumbre blanca como el Ararat;"
+     ],
+     [
+      "Չ",
+      "Ինչպես անհաս փառքի ճամփա՝ ես իմ Մասիս սա՛րն եմ սիրում։",
+      "Как путь к недостижимой славе, я люблю мою гору Масис.",
+      "like a road to unreachable glory, I love my mountain Masis.",
+      "comme le chemin d’une gloire inaccessible, j’aime ma montagne Massis.",
+      "como el camino a una gloria inalcanzable, amo mi monte Masis."
+     ]
+    ]
+   },
+   "seeds": [
+    "արև",
+    "ծաղիկ",
+    "վարդ",
+    "երկինք",
+    "լիճ",
+    "քար",
+    "երգ",
+    "գիրք",
+    "վերք",
+    "ճակատ",
+    "գագաթ"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "солнце",
+        "en": "sun",
+        "fr": "soleil",
+        "es": "sol"
+       },
+       "արև"
+      ],
+      [
+       {
+        "ru": "роза",
+        "en": "rose",
+        "fr": "rose",
+        "es": "rosa"
+       },
+       "վարդ"
+      ],
+      [
+       {
+        "ru": "небо",
+        "en": "sky",
+        "fr": "ciel",
+        "es": "cielo"
+       },
+       "երկինք"
+      ],
+      [
+       {
+        "ru": "озеро",
+        "en": "lake",
+        "fr": "lac",
+        "es": "lago"
+       },
+       "լիճ"
+      ],
+      [
+       {
+        "ru": "песня",
+        "en": "song",
+        "fr": "chant",
+        "es": "canción"
+       },
+       "երգ"
+      ],
+      [
+       {
+        "ru": "вершина",
+        "en": "summit",
+        "fr": "sommet",
+        "es": "cumbre"
+       },
+       "գագաթ"
+      ]
+     ]
+    }
    ]
   }
  ]
