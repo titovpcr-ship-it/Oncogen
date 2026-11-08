@@ -381,8 +381,20 @@ def send(a):
         msg += "\n\n" + e(a.note)
     msg += "\n\nРоссия — витрина магазина или скриншот, не сделка."
     print(msg)
-    ok = TelegramNotifier().send(msg)
-    print(f"Telegram: {'отправлено' if ok else 'НЕ отправлено'}")
+    # лимит Telegram — 4096 знаков; режем по целым блокам, иначе разрыв посреди
+    # <b>…</b> — «can't parse entities» (O-139)
+    msgs, cur = [], ""
+    for part in msg.split("\n\n"):
+        if cur and len(cur) + len(part) + 2 > 3800:
+            msgs.append(cur)
+            cur = part
+        else:
+            cur = cur + "\n\n" + part if cur else part
+    msgs.append(cur)
+    tn = TelegramNotifier()
+    sent = sum(1 for m in msgs if tn.send(m))
+    ok = sent == len(msgs)
+    print(f"Telegram: {'отправлено' if ok else 'НЕ отправлено'} ({sent} из {len(msgs)})")
     return 0 if ok else 1
 
 

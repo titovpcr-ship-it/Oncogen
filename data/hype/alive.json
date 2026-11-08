@@ -1474,6 +1474,17 @@
 "type": "Group",
 "v": 3
 },
+"curreny": {
+"alive": true,
+"gender": "male",
+"mb": "4ce1c576-305a-4b82-82fa-5e5359056219",
+"mb_name": "Curren$y",
+"name": "Curren$y",
+"note": "",
+"t": 1794114220,
+"type": "Person",
+"v": 3
+},
 "cyndilauper": {
 "alive": true,
 "gender": "female",
@@ -1508,6 +1519,17 @@
 "name": "Cyndi Lauper",
 "note": "",
 "t": 1793788838,
+"type": "Person",
+"v": 3
+},
+"daboii": {
+"alive": true,
+"gender": "male",
+"mb": "c2c3bf32-6118-4aac-85d9-862601a7f60d",
+"mb_name": "DaBoii",
+"name": "DaBoii",
+"note": "",
+"t": 1794114250,
 "type": "Person",
 "v": 3
 },
@@ -2477,6 +2499,17 @@
 "type": "Person",
 "v": 3
 },
+"harryfraud": {
+"alive": true,
+"gender": "male",
+"mb": "6c7bea28-c146-4c1d-bda3-bbbb0e18e76b",
+"mb_name": "Harry Fraud",
+"name": "Harry Fraud",
+"note": "",
+"t": 1794114226,
+"type": "Person",
+"v": 3
+},
 "harrystyles": {
 "alive": true,
 "gender": "male",
@@ -2566,6 +2599,17 @@
 "note": "",
 "t": 1793022440,
 "type": "Group",
+"v": 3
+},
+"hudsonwestbrook": {
+"alive": true,
+"gender": "male",
+"mb": "5b511be8-fd02-4de2-a017-7f5d06db53e4",
+"mb_name": "Hudson Westbrook",
+"name": "Hudson Westbrook",
+"note": "",
+"t": 1794114237,
+"type": "Person",
 "v": 3
 },
 "hugel": {
@@ -2678,6 +2722,17 @@
 "name": "Indila",
 "note": "",
 "t": 1793160822,
+"type": "Person",
+"v": 3
+},
+"jackharlow": {
+"alive": true,
+"gender": "male",
+"mb": "134cb0bc-06fa-42f7-8078-b0c858349975",
+"mb_name": "Jack Harlow",
+"name": "Jack Harlow",
+"note": "",
+"t": 1794114217,
 "type": "Person",
 "v": 3
 },
@@ -3333,6 +3388,17 @@
 "type": "Group",
 "v": 3
 },
+"kddyg": {
+"alive": true,
+"gender": "male",
+"mb": "85c62c13-9784-4592-88bf-52b184cce36b",
+"mb_name": "Køddy G",
+"name": "Køddy G",
+"note": "",
+"t": 1794114229,
+"type": "Person",
+"v": 3
+},
 "kehlani": {
 "alive": true,
 "gender": "non-binary",
@@ -3524,6 +3590,17 @@
 "name": "King Gizzard",
 "note": "",
 "t": 1793160862,
+"type": "Group",
+"v": 3
+},
+"kingsofleon": {
+"alive": true,
+"gender": "male",
+"mb": "6ffb8ea9-2370-44d8-b678-e9237bbd347b",
+"mb_name": "Kings of Leon",
+"name": "Kings of Leon",
+"note": "",
+"t": 1794114216,
 "type": "Group",
 "v": 3
 },
@@ -3740,6 +3817,28 @@
 "name": "Lights",
 "note": "",
 "t": 1793787695,
+"type": "Person",
+"v": 3
+},
+"lilbaby": {
+"alive": true,
+"gender": "male",
+"mb": "d42a5768-ada1-4fb6-85fd-f61aba6264e0",
+"mb_name": "Lil Baby",
+"name": "Lil Baby",
+"note": "",
+"t": 1794114202,
+"type": "Person",
+"v": 3
+},
+"lilpoppa": {
+"alive": false,
+"gender": "male",
+"mb": "fa2ec5be-9216-4649-bf60-2cc96e5da7a5",
+"mb_name": "Lil Poppa",
+"name": "Lil Poppa",
+"note": "умер(ла) 2026-02-18",
+"t": 1794114229,
 "type": "Person",
 "v": 3
 },
@@ -4030,6 +4129,17 @@
 "note": "",
 "t": 1793021931,
 "type": "Other",
+"v": 3
+},
+"mackgeiger": {
+"alive": true,
+"gender": "male",
+"mb": "e07e1915-2fe7-4ffb-acd8-8ae47ce58207",
+"mb_name": "Mack Geiger",
+"name": "Mack Geiger",
+"note": "",
+"t": 1794114218,
+"type": "Person",
 "v": 3
 },
 "madness": {
@@ -4500,6 +4610,43 @@
 "type": "Person",
 "v": 3
 },
+"nellyfurtado": {
+"alive": true,
+"gender": "female",
+"genres": [
+[
+"pop",
+9
+],
+[
+"folk",
+3
+],
+[
+"singer-songwriter",
+2
+],
+[
+"alternative rock",
+1
+],
+[
+"dance",
+1
+],
+[
+"eurodance",
+1
+]
+],
+"mb": "13655113-cd16-4b43-9dca-cadbbf26ee05",
+"mb_name": "Nelly Furtado",
+"name": "Nelly Furtado",
+"note": "",
+"t": 1794114231,
+"type": "Person",
+"v": 3
+},
 "nelson": {
 "alive": true,
 "gender": "male",
@@ -4595,6 +4742,17 @@
 "name": "Nina Simone",
 "note": "умер(ла) 2003-04-21",
 "t": 1793788382,
+"type": "Person",
+"v": 3
+},
+"ninho": {
+"alive": true,
+"gender": "male",
+"mb": "41fe37a6-f4bb-4340-9c14-e2c8e5d854f1",
+"mb_name": "Ninho",
+"name": "Ninho",
+"note": "",
+"t": 1794114230,
 "type": "Person",
 "v": 3
 },
@@ -5024,6 +5182,17 @@
 "type": "Person",
 "v": 3
 },
+"rbe": {
+"alive": true,
+"gender": null,
+"mb": "aed99456-a9d2-4128-b553-5c5273577162",
+"mb_name": "Rbe",
+"name": "RBE",
+"note": "",
+"t": 1794114245,
+"type": null,
+"v": 3
+},
 "redhotchilipeppers": {
 "alive": true,
 "gender": "male",
@@ -5053,6 +5222,17 @@
 "name": "Remi Wolf",
 "note": "",
 "t": 1793022411,
+"type": "Person",
+"v": 3
+},
+"rexorangecounty": {
+"alive": true,
+"gender": "male",
+"mb": "883cbf1f-dcaa-4d17-b9ed-394e1fdabc87",
+"mb_name": "Rex Orange County",
+"name": "Rex Orange County",
+"note": "",
+"t": 1794114234,
 "type": "Person",
 "v": 3
 },
@@ -5240,6 +5420,28 @@
 "type": "Group",
 "v": 3
 },
+"sambarber": {
+"alive": true,
+"gender": "male",
+"mb": "be7c80ee-1b03-4088-b20b-5915c7c5ad45",
+"mb_name": "Sam Barber",
+"name": "Sam Barber",
+"note": "",
+"t": 1794114219,
+"type": "Person",
+"v": 3
+},
+"scottyoth": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "Scotty OTH",
+"note": "нет в MusicBrainz",
+"t": 1794114227,
+"type": null,
+"v": 3
+},
 "seal": {
 "alive": true,
 "gender": "male",
@@ -5341,6 +5543,17 @@
 "note": "",
 "t": 1793788126,
 "type": "Person",
+"v": 3
+},
+"shean": {
+"alive": null,
+"gender": null,
+"mb": null,
+"mb_name": null,
+"name": "SHEAN",
+"note": "нет в MusicBrainz",
+"t": 1794114239,
+"type": null,
 "v": 3
 },
 "sherylcrow": {
@@ -5464,6 +5677,17 @@
 "type": "Group",
 "v": 3
 },
+"slimmyb": {
+"alive": true,
+"gender": "male",
+"mb": "50adf4cc-3d54-4f5b-8e6d-e16c6aaae862",
+"mb_name": "Slimmy B",
+"name": "Slimmy B",
+"note": "",
+"t": 1794114250,
+"type": "Person",
+"v": 3
+},
 "slxughter": {
 "alive": true,
 "gender": "male",
@@ -5543,6 +5767,17 @@
 "note": "умер(ла) 2025-07-04",
 "t": 1793787898,
 "type": "Person",
+"v": 3
+},
+"sob": {
+"alive": true,
+"gender": null,
+"mb": "4d4159b8-19b5-4337-9d07-4eb0100fe630",
+"mb_name": "S.O.B.",
+"name": "SOB",
+"note": "",
+"t": 1794114244,
+"type": "Group",
 "v": 3
 },
 "sombr": {
@@ -6320,6 +6555,17 @@
 "name": "Yeat",
 "note": "",
 "t": 1793021909,
+"type": "Person",
+"v": 3
+},
+"yhungto": {
+"alive": true,
+"gender": "male",
+"mb": "566e6b9f-1097-4e04-8284-40a034a62a49",
+"mb_name": "Yhung T.O.",
+"name": "Yhung T.O.",
+"note": "",
+"t": 1794114248,
 "type": "Person",
 "v": 3
 },
