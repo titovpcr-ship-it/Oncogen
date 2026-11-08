@@ -12,7 +12,7 @@ const roots = rd('roots.json'), gold = rd('gold.json');
 const affixes = fs.existsSync(path.join(APP, 'data', 'path', 'affixes.json')) ? rd('affixes.json') : {};
 const clean = s => s.replace(/[՛՜՞]/g, '').trim();
 const NK = ['pl', 'dat', 'abl', 'ins', 'loc', 'def', 'p1', 'p2', 'datpl'];
-const VK = ['pres', 'impf', 'fut', 'perf', 'aor', 'imp', 'imppl', 'subj', 'cond'];
+const VK = ['pres', 'impf', 'fut', 'perf', 'aor', 'imp', 'imppl', 'subj', 'cond', 'part'];
 
 const xn = {}, xv = {};
 let nf = 0, nbad = 0, vf = 0, vbad = 0;
@@ -62,7 +62,8 @@ if (course) {
   for (const u of course.units) {
     const at = u.id;
     if (ids.has(at)) errs.push(at + ': повтор id'); ids.add(at);
-    has4(u.title, at + ' title'); has4(u.note, at + ' note'); has4(u.scene && u.scene.title, at + ' scene.title');
+    has4(u.title, at + ' title');
+    if (u.kind === 'read') { has4(u.author, at + ' author'); if (!/^https:\/\/hy\.wikisource\.org\//.test(u.src || '')) errs.push(at + ': у текста нет источника (src)'); } has4(u.note, at + ' note'); has4(u.scene && u.scene.title, at + ' scene.title');
     for (const [k, v] of Object.entries(u.scene.who)) has4(v, at + ' who ' + k);
     for (const ln of u.scene.lines) {
       if (ln.length !== 6 || ln.some(x => !x)) errs.push(at + ': реплика без 4 переводов — ' + ln[1]);
@@ -115,7 +116,7 @@ if (course) {
   }
   // слово из армянских и латинских/кириллических букв вперемешку — опечатка («вրա»)
   const mixed = o => typeof o === 'string' ? o.split(/\s+/).filter(w => /[\u0531-\u058F]/.test(w) && /[A-Za-zА-Яа-яЁё]/.test(w))
-    : (o && typeof o === 'object' ? Object.values(o).flatMap(mixed) : []);
+    : (o && typeof o === 'object' ? Object.entries(o).filter(([k]) => k !== 'src').flatMap(([, v]) => mixed(v)) : []);
   for (const w of mixed(course)) errs.push('слово вперемешку армянскими и другими буквами: ' + w);
   if (errs.length) { console.error('Курс сломан:\n  ' + errs.join('\n  ')); process.exit(1); }
   // что озвучить (tools/gen_audio.py): реплики сцен и ответы упражнений, кроме уже озвученных слов словаря

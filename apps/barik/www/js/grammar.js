@@ -113,6 +113,7 @@
       case 'imppl': return imppl;
       case 'conv': return ipfF;
       case 'subj': return SUBJ(c, st, inf);
+      case 'part': return verb(inf, 'perf')[0].split(' ')[0].replace(/ել$/, 'ած');   // կարդացել → կարդացած
       case 'cond': return SUBJ(c, st, inf).map(f => 'կ' + f);
     }
     return inf;

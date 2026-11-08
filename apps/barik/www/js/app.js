@@ -1640,7 +1640,7 @@ function openUnit(id,step){
   go('unit',id);
 }
 function unitSteps(){
-  const names=['pFormula','pScene','pPractice'];
+  const names=PU.u.kind==='read'?['pAbout','pText','pPractice']:['pFormula','pScene','pPractice'];
   return '<div class="u-steps" role="tablist">'+names.map((k,i)=>'<button role="tab" aria-selected="'+(PU.step===i)+'" class="u-step'+(PU.step===i?' on':'')+'" data-act="pStep" data-arg="'+i+'">'+(i+1)+'. '+esc(T(k))+'</button>').join('')+'</div>';
 }
 function unitHTML(){
@@ -1648,28 +1648,33 @@ function unitHTML(){
   if(PU.step===2) return practiceHTML();
   const idx=CRS.units.filter(x=>x.stage===u.stage).indexOf(u)+1;
   const head='<button class="back" data-act="tab" data-arg="path">‹ '+esc(T('pathTitle'))+'</button>'+
-    '<header class="thead"><span class="t-ic">'+emo(u.ic)+'</span><div><h1 class="pg">'+esc(T('pFormulaN',idx))+'</h1><p class="u-title">'+esc(rdx(u.title))+'</p></div></header>'+unitSteps();
+    '<header class="thead"><span class="t-ic">'+emo(u.ic)+'</span><div><h1 class="pg">'+esc(T(u.kind==='read'?'pTextN':'pFormulaN',idx))+'</h1><p class="u-title">'+esc(rdx(u.title))+'</p></div></header>'+unitSteps();
   if(PU.step===0){
     const seeds=u.seeds.map(w=>{ const x=BY[w], fam=GR?GR.family(w).length:0;
       return '<button class="chip" data-act="pSeed" data-arg="'+esc(w)+'"><b lang="hy">'+esc(w)+'</b><span>'+esc(x?tx(x):'')+'</span>'+(fam?'<i class="fam" title="'+esc(T('pFamily'))+'">'+emo('🌱','ie')+fam+'</i>':'')+'</button>'; }).join('');
     let aff='';
     const A=u.affix&&BP.af&&BP.af[u.affix];
     if(A) aff='<section class="u-aff"><h2 class="u-h">'+esc(T('pGraft'))+'</h2><p><b lang="hy" class="af">'+esc(u.affix)+'</b> — '+esc(rdx(A))+'</p><ul class="af-ex">'+A.ex.map(([d,r])=>'<li><span lang="hy">'+esc(r)+'</span> → <b lang="hy">'+esc(d)+'</b>'+(BY[d]?' <span class="af-tr">'+esc(tx(BY[d]))+'</span>':'')+'</li>').join('')+'</ul></section>';
-    return head+'<div class="u-formula" lang="hy">'+fmlHTML(u.formula)+'</div><p class="u-note">'+esc(rdx(u.note))+'</p>'+
+    const src=u.kind==='read'?'<p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+' · '+esc(T('pPD'))+' · <a href="'+esc(u.src)+'" target="_blank" rel="noopener">'+esc(T('pSource'))+'</a></p>':'';
+    return head+'<div class="u-formula'+(u.kind==='read'?' read':'')+'" lang="hy">'+fmlHTML(u.formula)+'</div>'+src+'<p class="u-note">'+esc(rdx(u.note))+'</p>'+
       '<h2 class="u-h">'+esc(T('pSeeds'))+'</h2><div class="chips">'+seeds+'</div>'+aff+
-      '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T('pToScene'))+'</button></div>';
+      '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T(u.kind==='read'?'pToText':'pToScene'))+'</button></div>';
   }
   const who=Object.keys(u.scene.who);
   const lines=u.scene.lines.map((l,i)=>'<div class="ln'+(l[0]===who[0]?'':' r')+'" id="ln'+i+'"><span class="ln-who">'+esc(rdx(u.scene.who[l[0]]))+'</span><div class="ln-b"><button class="say sm" data-act="pSayLn" data-arg="'+i+'" aria-label="'+esc(T('pListen'))+'">'+ICON.spk+'</button><span class="ln-t"><span class="ln-hy" lang="hy">'+esc(l[1])+'</span>'+(PG.tr?'<span class="ln-tr">'+esc(lnTr(l))+'</span>':'')+'</span></div></div>').join('');
-  return head+'<h2 class="u-scene">'+esc(rdx(u.scene.title))+'</h2><div class="u-tools"><button class="btn secondary sm" data-act="pPlayAll">'+ICON.play+' '+esc(T('pPlayAll'))+'</button><button class="btn ghost sm" data-act="pTr">'+esc(T(PG.tr?'pTrHide':'pTrShow'))+'</button></div>'+
+  return head+'<h2 class="u-scene">'+esc(rdx(u.scene.title))+'</h2>'+(u.kind==='read'?'<p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+'</p>':'')+'<div class="u-tools"><button class="btn secondary sm" data-act="pPlayAll">'+ICON.play+' '+esc(T('pPlayAll'))+'</button><button class="btn ghost sm" data-act="pTr">'+esc(T(PG.tr?'pTrHide':'pTrShow'))+'</button></div>'+
     '<div class="scene">'+lines+'</div><div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="2">'+esc(T('pToPractice'))+'</button></div>';
 }
 /* практика: упражнения формулы + собрать фразу сцены + на слух */
 /* слова фразы для плиток: без знаков препинания; начало предложения — строчной (иначе заглавная
    подсказывает порядок), кроме имён */
-const pWords=s=>{ const raw=s.split(/\s+/).filter(Boolean), out=[]; let start=true;
-  raw.forEach(t=>{ const end=/[։.!?]$/.test(t); let w=t.replace(/[։,՝.!?]/g,''); if(w){ if(start&&!/^(Մարկ|Անահիտ)/.test(w)) w=w.toLowerCase(); out.push(w); } start=end; });
+const PUNCT_SP=/[։,՝.!?․…—–«»():;"]/g, EMPH=/[՛՜]/g;
+const pWords=(s,keep)=>{ const raw=s.replace(EMPH,'').split(/\s+/).filter(Boolean), out=[]; let start=true;
+  raw.forEach(t=>{ const end=/[։.!?․…]$/.test(t); t.replace(PUNCT_SP,' ').split(' ').filter(Boolean).forEach((w,k)=>{
+    if(start&&k===0&&!/^(Մարկ|Անահիտ)/.test(w)&&!(keep&&keep.has(w))) w=w.toLowerCase(); out.push(w); }); start=end; });
   return out; };
+/* имена собственные текста: слова с заглавной не в начале фразы (Կիկոս, Արարատ) — их не опускаем в строчные */
+function properOf(lines){ const k=new Set(); lines.forEach(l=>{ let start=true; l[1].replace(EMPH,'').split(/\s+/).filter(Boolean).forEach(t=>{ const w=t.replace(PUNCT_SP,''); if(!start&&w&&w[0]!==w[0].toLowerCase()) k.add(w); start=/[։.!?․…]$/.test(t)||/^[—–]$/.test(t)&&start; }); }); return k; }
 const pUniq=(a,arr,n)=>{ const o=[a]; arr.forEach(x=>{ if(o.length<(n||4)&&o.indexOf(x)<0) o.push(x); }); return shuffle(o); };
 function pBuild(u){
   const items=[], uniq=pUniq;
@@ -1683,8 +1688,9 @@ function pBuild(u){
     else if(d.t==='num') shuffle(d.items).slice(0,4).forEach(([n,w])=>items.push({k:'num',n,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
     else if(d.t==='pick') shuffle(d.items).slice(0,3).forEach(([q,w])=>items.push({k:'pick',q,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
   });
-  const ls=u.scene.lines, short=shuffle(ls.filter(l=>{ const n=pWords(l[1]).length; return n>=3&&n<=7; }));
-  short.slice(0,2).forEach(l=>items.push({k:'tiles',ln:l,a:pWords(l[1]),bank:shuffle(pWords(l[1])).map((t,id)=>({id,t,used:false})),ans:[]}));
+  const ls=u.scene.lines, keep=properOf(ls); (u.names||[]).forEach(n=>keep.add(n));
+  const short=shuffle(ls.filter(l=>{ const n=pWords(l[1],keep).length; return n>=3&&n<=7; }));
+  short.slice(0,2).forEach(l=>{ const a=pWords(l[1],keep); items.push({k:'tiles',ln:l,a,bank:shuffle(a).map((t,id)=>({id,t,used:false})),ans:[]}); });
   if(audioOK()){ const l=shuffle(ls)[0]; items.push({k:'hear',ln:l,a:l[1],opts:uniq(l[1],shuffle(ls.map(x=>x[1])),3)}); }
   return items;
 }
@@ -1800,9 +1806,9 @@ function drillResultHTML(){
   const back='<button class="btn ghost" data-act="tab" data-arg="path">'+esc(T('pBackPath'))+'</button>';
   let h='', body='', acts='';
   if(PU.kind==='place'){
-    const P=PG.placed, top=!CRS.units.some(u=>u.stage===P.lv), s=CRS.stages[P.lv]||CRS.stages[CRS.stages.length-1];
+    const P=PG.placed, top=P.lv>0&&!CRS.units.some(u=>u.stage===P.lv), s=CRS.stages[P.lv]||CRS.stages[CRS.stages.length-1];
     const row=(l,a,b)=>'<li><span>'+esc(l)+'</span><b>'+a+' / '+b+'</b></li>';
-    h=T('pPlTitle',P.lv,rdx(s));
+    h=top?T('pPlTitle',P.lv-1,rdx(CRS.stages[P.lv-1]||s)):T('pPlTitle',P.lv,rdx(s));
     body='<p class="summary">'+esc(P.lv===0?T('pPlLv0'):(top?T('pPlLvTop',P.lv-1):T('pPlLvN',P.lv)))+'</p><ul class="pl-rows">'+row(T('pPlRead'),P.abc,P.an)+
       Object.keys(P.st).map(k=>row(T('pStageN',k)+' · '+rdx(CRS.stages[k]),P.st[k][0],P.st[k][1])).join('')+'</ul>'+
       '<p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+gain;

@@ -101,6 +101,8 @@ def verb_gold(forms):
             g["imp"] = v
         if "imperative" in tags and "plural" in tags and "imppl" not in g:
             g["imppl"] = v
+        if {"participle", "resultative"} <= tags and "negative" not in tags and "part" not in g:
+            g["part"] = v                             # причастие на -ած: գրած
         for tn, need in MOODS.items():
             if need <= tags and not ({"negative", "past"} & tags):
                 for pk, i in PERS.items():

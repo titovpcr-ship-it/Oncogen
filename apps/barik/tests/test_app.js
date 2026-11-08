@@ -200,7 +200,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=tab][data-arg=path]');
     const NU=await pg.evaluate(()=>window.__bararan.CRS.units.length);
     ok(NU>=25&&await pg.locator('svg.pom .gr').count()===NU+1&&await pg.locator('.p-units .p-unit').count()===NU,'путь: гранат из '+(NU+1)+' зёрен, формул '+NU);
-    ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===2,'путь: 6 ступеней, 4–5 — скоро');
+    ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===0,'путь: 6 ступеней, во всех есть формулы');
     ok(await pg.locator('.p-unit.locked').count()===NU-9,'ступени 2–3 — под замком Premium');
     await pg.locator('.p-unit.locked').first().click(); ok(await pg.locator('.pw-hero').count()===1,'формула ступени 2 без подписки — окно подписки');
     await pg.click('[data-act=pwClose]'); ok(await pg.locator('.path').count()===1,'окно подписки закрывается обратно на путь');
@@ -246,18 +246,29 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     // ступени 2–3 с подпиской: спряжение по лицам и подсказка в таблице
     await pg.evaluate(()=>{ window.BARARAN_CONFIG.FORCE_PREMIUM=true; }); await pg.click('[data-act=lang][data-arg=ru]').catch(()=>{});
     await pg.click('[data-act=tab][data-arg=path]'); ok(await pg.locator('.p-unit.locked').count()===0,'с подпиской замков нет');
-    for(const id of ['s2u1','s2u8','s3u1']){
+    for(const id of ['s2u1','s2u8','s3u1','s4u1','s4u5']){
       await pg.click('[data-act=pUnit][data-arg='+id+']'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
       ok(await pg.locator('.scene .ln').count()>=6,id+': сцена');
       await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
       const it=await pg.evaluate(()=>{const P=window.__bararan.PU; return P.q.map(x=>x.k);});
-      if(id!=='s2u8') ok(it.filter(k=>k==='conj').length===4,id+': 4 задания на спряжение');
+      if(id==='s4u5') ok(it.filter(k=>k==='form').length===4,id+': 4 задания на причастие');
+      else if(id!=='s2u8') ok(it.filter(k=>k==='conj').length===4,id+': 4 задания на спряжение');
       else ok(it.includes('table')&&await pg.locator('.p-hint').count()===1,id+': таблица с подсказкой лица');
       const q0=await pg.evaluate(()=>{const P=window.__bararan.PU, x=P.q[0]; return {a:x.a,opts:x.opts};});
       await pg.locator('.opt').nth(q0.opts.indexOf(q0.a)).click(); ok(await pg.locator('.foot.ok').count()===1,id+': верный ответ принят');
       await noH(id);
       await pg.click('[data-act=pQuit]'); await pg.click('[data-act=tab][data-arg=path]');
     }
+    // ступень 5: чтение подлинника — источник, текст построчно, плитки с именем собственным
+    await pg.click('[data-act=pUnit][data-arg=s5u6]');
+    ok(/Текст|Text/.test(await pg.textContent('h1.pg'))&&await pg.locator('.u-src a[href^="https://hy.wikisource.org/"]').count()===1,'текст: заголовок «Текст N» и ссылка на источник');
+    await pg.click('.page-actions [data-act=pStep][data-arg="1"]'); ok(await pg.locator('.scene .ln').count()===14,'текст: 14 строк с переводом');
+    await noH('текст');
+    await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
+    const rd=await pg.evaluate(()=>window.__bararan.PU.q.map(x=>({k:x.k,a:x.a})));
+    ok(rd.some(x=>x.k==='pick')&&rd.some(x=>x.k==='tiles'),'текст: словарик и сборка строки');
+    ok(rd.filter(x=>x.k==='tiles').every(x=>x.a.every(w=>!/[։,․—]/.test(w))&&!x.a.includes('կիկոսը')),'плитки: без знаков препинания, имя Կիկոս с заглавной');
+    await pg.click('[data-act=pQuit]'); await pg.click('[data-act=tab][data-arg=path]');
     ok(errs.length===0,'путь: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
@@ -269,7 +280,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'этап C '+n+': без горизонтальной прокрутки ('+w+')'); };
     // right(i, kind) — отвечать ли верно
     const run=async right=>{ const kinds=[];
-      for(let i=0;i<40;i++){
+      for(let i=0;i<90;i++){
         if(await pg.locator('.p-res').count()) break;
         const it=await pg.evaluate(()=>{const P=window.__bararan.PU, x=P.q[P.i]; return {k:x.k,a:x.a,opts:x.opts||null};}); kinds.push(it.k);
         const good=right(i,it.k);
@@ -289,8 +300,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=tab][data-arg=path]'); await pg.click('[data-act=pPlace] >> nth=0');
     k=await run(()=>true); await noH('итог теста');
     const NU=await pg.evaluate(()=>window.__bararan.CRS.units.length);
-    ok(k.length===4+NU,'всё верно — тест дошёл до ступени 3: '+k.length+' вопросов');
-    ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 4')&&await pg.locator('.pl-rows li').count()===4,'всё верно — ступени 1–3 сданы, четыре строки итога');
+    ok(k.length===4+NU,'всё верно — тест дошёл до ступени 5: '+k.length+' вопросов');
+    ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 5')&&await pg.locator('.pl-rows li').count()===6,'всё верно — сданы ступени 1–5, шесть строк итога');
     const P=await pg.evaluate(()=>({n:Object.keys(window.__bararan.PG.u).length, abc:window.__bararan.PG.abc, st:window.__bararan.pathStat()}));
     ok(P.n===NU&&P.abc===1&&P.st.open>0,'входной тест отметил все '+NU+' формул и чтение, открыто слов: '+P.st.open);
     // сдал ступень 1, провалил ступень 2 → ступень 2, ступень 3 не спрашивается

@@ -879,3 +879,7 @@ details[open] .pm::after{transform:rotate(0)}
 .p-hint{font:600 18px/1.2 var(--hy);color:var(--ink-3);margin-bottom:2px}
 .p-unit.locked{background:transparent}
 .p-unit.locked .t-name,.p-unit.locked .t-hy,.p-unit.locked .t-ic{opacity:.7}
+/* этап E: чтение подлинников */
+.u-formula.read{font-family:var(--disp),var(--hy);font-weight:600;letter-spacing:.01em}
+.u-src{margin:-6px 0 12px;color:var(--ink-3);font-size:13.5px;text-align:center}
+.u-src a{color:var(--ink-2)}

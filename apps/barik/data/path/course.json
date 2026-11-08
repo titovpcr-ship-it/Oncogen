@@ -3674,6 +3674,2378 @@
      ]
     }
    ]
+  },
+  {
+   "id": "s4u1",
+   "stage": 4,
+   "ic": "🍽️",
+   "title": {
+    "ru": "Надо, чтобы …",
+    "en": "I need to …",
+    "fr": "Il faut que …",
+    "es": "Hay que …"
+   },
+   "formula": "Պետք է [բայ]-եմ",
+   "note": {
+    "ru": "Сослагательная форма — для того, что нужно, хочется или можно сделать: глагол без -ել и окончания -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); у глаголов на -ալ: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Она идёт после պետք է «надо», ուզում եմ, որ «хочу, чтобы»: Պետք է հաց գնեմ «надо купить хлеб»; Ուզում եմ, որ դու գաս «хочу, чтобы ты пришёл». Предложение: Գնա՞նք «пойдём?», Ի՞նչ անեմ «что мне сделать?».",
+    "en": "The subjunctive is for what you need, want or may do: the verb without -ել plus -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); for -ալ verbs: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). It follows պետք է “must”, ուզում եմ, որ “I want … to”: Պետք է հաց գնեմ “I need to buy bread”; Ուզում եմ, որ դու գաս “I want you to come”. Suggestions: Գնա՞նք “shall we go?”, Ի՞նչ անեմ “what shall I do?”.",
+    "fr": "Le subjonctif sert à ce qu’il faut, qu’on veut ou qu’on peut faire : le verbe sans -ել plus -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…) ; pour les verbes en -ալ : -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Il suit պետք է « il faut », ուզում եմ, որ « je veux que » : Պետք է հաց գնեմ « il faut que j’achète du pain » ; Ուզում եմ, որ դու գաս « je veux que tu viennes ». Pour proposer : Գնա՞նք « on y va ? », Ի՞նչ անեմ « que dois-je faire ? ».",
+    "es": "El subjuntivo es para lo que hay que, se quiere o se puede hacer: el verbo sin -ել más -եմ, -ես, -ի, -ենք, -եք, -են (գրեմ, գրես, գրի…); en los verbos en -ալ: -ամ, -աս, -ա, -անք, -աք, -ան (կարդամ). Va después de պետք է «hay que», ուզում եմ, որ «quiero que»: Պետք է հաց գնեմ «tengo que comprar pan»; Ուզում եմ, որ դու գաս «quiero que vengas». Para proponer: Գնա՞նք «¿vamos?», Ի՞նչ անեմ «¿qué hago?»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Ждём гостей",
+     "en": "Expecting guests",
+     "fr": "On attend des invités",
+     "es": "Esperamos visitas"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Ա",
+      "Ժամը յոթին հյուրերը գալու են։ Պետք է արագ ամեն ինչ պատրաստենք։",
+      "Гости придут в семь. Надо быстро всё приготовить.",
+      "The guests are coming at seven. We need to get everything ready fast.",
+      "Les invités arrivent à sept heures. Il faut tout préparer vite.",
+      "Las visitas llegan a las siete. Tenemos que preparar todo rápido."
+     ],
+     [
+      "Մ",
+      "Ի՞նչ անեմ։ Հաց գնե՞մ։",
+      "Что мне сделать? Хлеба купить?",
+      "What shall I do? Should I buy bread?",
+      "Je fais quoi ? J’achète du pain ?",
+      "¿Qué hago? ¿Compro pan?"
+     ],
+     [
+      "Ա",
+      "Այո, լավաշ և պանիր գնիր։ Ուզում եմ, որ սեղանը գեղեցիկ լինի։",
+      "Да, купи лаваш и сыр. Хочу, чтобы стол был красивым.",
+      "Yes, buy lavash and cheese. I want the table to look nice.",
+      "Oui, achète du lavash et du fromage. Je veux que la table soit belle.",
+      "Sí, compra lavash y queso. Quiero que la mesa quede linda."
+     ],
+     [
+      "Մ",
+      "Ծաղիկներ էլ բերե՞մ։",
+      "Цветы тоже принести?",
+      "Shall I bring flowers too?",
+      "J’apporte aussi des fleurs ?",
+      "¿Traigo flores también?"
+     ],
+     [
+      "Ա",
+      "Լավ միտք է։ Միայն պետք է շուտ վերադառնաս։",
+      "Хорошая мысль. Только надо вернуться пораньше.",
+      "Good idea. Just be back early.",
+      "Bonne idée. Mais il faut que tu rentres tôt.",
+      "Buena idea. Solo tienes que volver temprano."
+     ],
+     [
+      "Մ",
+      "Կես ժամից այստեղ եմ։",
+      "Через полчаса я здесь.",
+      "I’ll be back in half an hour.",
+      "Je suis là dans une demi-heure.",
+      "En media hora estoy acá."
+     ]
+    ]
+   },
+   "seeds": [
+    "հյուր",
+    "պատրաստել",
+    "գնել",
+    "ծաղիկ",
+    "միտք",
+    "շուտ",
+    "սեղան",
+    "լավաշ"
+   ],
+   "affix": "համա-",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "subj",
+     "alt": [
+      "pres",
+      "cond"
+     ],
+     "verbs": [
+      "գնել",
+      "պատրաստել",
+      "գնալ",
+      "գալ",
+      "բերել",
+      "զանգել",
+      "կարդալ",
+      "սովորել",
+      "օգնել",
+      "վերադառնալ"
+     ],
+     "q": {
+      "ru": "надо, хочу, чтобы: «…»",
+      "en": "must, want to: “(that) I …”",
+      "fr": "il faut que : « que je … »",
+      "es": "hay que, quiero que: «que yo …»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s4u2",
+   "stage": 4,
+   "ic": "🤝",
+   "title": {
+    "ru": "Сделаю!",
+    "en": "I’ll do it!",
+    "fr": "Je le ferai !",
+    "es": "¡Lo haré!"
+   },
+   "formula": "Կ[բայ]-եմ",
+   "note": {
+    "ru": "Приставка կ- к сослагательной форме даёт «сделаю» — обещание или предположение: կգամ «приду», կզանգեմ «позвоню», կլինի «наверное, будет». В отличие от -ելու եմ (план, решено), կ- мягче: «сделаю, если получится», «пожалуй». Перед гласной — так же: կուտեմ «съем», կանեմ «сделаю». Отрицание — без կ-, с формой на -ի: չեմ գրի «не напишу», չեմ գա «не приду».",
+    "en": "The prefix կ- on the subjunctive gives “I will” — a promise or a guess: կգամ “I’ll come”, կզանգեմ “I’ll call”, կլինի “it will probably be”. Unlike -ելու եմ (a fixed plan), կ- is softer: “I will if I can”, “I suppose”. Before a vowel it is the same: կուտեմ “I’ll eat”, կանեմ “I’ll do”. The negative drops կ- and uses the -ի form: չեմ գրի “I won’t write”, չեմ գա “I won’t come”.",
+    "fr": "Le préfixe կ- sur le subjonctif donne « je ferai » — une promesse ou une supposition : կգամ « je viendrai », կզանգեմ « j’appellerai », կլինի « ce sera sans doute ». Contrairement à -ելու եմ (projet décidé), կ- est plus souple : « je le ferai si je peux ». Devant une voyelle, pareil : կուտեմ « je mangerai », կանեմ « je ferai ». La négation perd կ- et prend la forme en -ի : չեմ գրի « je n’écrirai pas », չեմ գա « je ne viendrai pas ».",
+    "es": "El prefijo կ- sobre el subjuntivo da «haré»: una promesa o una suposición: կգամ «vendré», կզանգեմ «llamaré», կլինի «seguramente será». A diferencia de -ելու եմ (plan decidido), կ- es más suave: «lo haré si puedo». Ante vocal, igual: կուտեմ «comeré», կանեմ «haré». La negación pierde կ- y usa la forma en -ի: չեմ գրի «no escribiré», չեմ գա «no vendré»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Обещания на прощание",
+     "en": "Promises before a trip",
+     "fr": "Promesses avant le départ",
+     "es": "Promesas antes del viaje"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Ա",
+      "Ուրեմն վաղը թռչում ես Մոսկվա։",
+      "Значит, завтра летишь в Москву.",
+      "So you’re flying to Moscow tomorrow.",
+      "Donc, demain tu t’envoles pour Moscou.",
+      "Entonces mañana vuelas a Moscú."
+     ],
+     [
+      "Մ",
+      "Այո, բայց մի շաբաթից կվերադառնամ։",
+      "Да, но через неделю вернусь.",
+      "Yes, but I’ll be back in a week.",
+      "Oui, mais je reviendrai dans une semaine.",
+      "Sí, pero vuelvo dentro de una semana."
+     ],
+     [
+      "Ա",
+      "Կզանգե՞ս, երբ հասնես։",
+      "Позвонишь, когда долетишь?",
+      "Will you call when you arrive?",
+      "Tu m’appelleras en arrivant ?",
+      "¿Me llamas cuando llegues?"
+     ],
+     [
+      "Մ",
+      "Իհարկե կզանգեմ։ Եվ քեզ համար մի նվեր կբերեմ։",
+      "Конечно, позвоню. И привезу тебе подарок.",
+      "Of course I’ll call. And I’ll bring you a present.",
+      "Bien sûr que j’appellerai. Et je te rapporterai un cadeau.",
+      "Claro que te llamo. Y te traigo un regalo."
+     ],
+     [
+      "Ա",
+      "Ես քեզ կկարոտեմ։",
+      "Я буду скучать.",
+      "I’ll miss you.",
+      "Tu vas me manquer.",
+      "Te voy a extrañar."
+     ],
+     [
+      "Մ",
+      "Ես էլ։ Մի շաբաթն արագ կանցնի։",
+      "Я тоже. Неделя быстро пройдёт.",
+      "Me too. The week will go by fast.",
+      "Moi aussi. La semaine passera vite.",
+      "Yo también. La semana va a pasar rápido."
+     ]
+    ]
+   },
+   "seeds": [
+    "թռչել",
+    "վերադառնալ",
+    "հասնել",
+    "նվեր",
+    "կարոտել",
+    "իհարկե",
+    "անցնել"
+   ],
+   "affix": "նախա-",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "cond",
+     "alt": [
+      "fut",
+      "subj"
+     ],
+     "verbs": [
+      "գալ",
+      "զանգել",
+      "բերել",
+      "վերադառնալ",
+      "գրել",
+      "ուտել",
+      "անել",
+      "տեսնել",
+      "օգնել",
+      "հասկանալ"
+     ],
+     "q": {
+      "ru": "обещаю, наверное: «сделаю»",
+      "en": "a promise, a guess: “will”",
+      "fr": "promesse, supposition : « je ferai »",
+      "es": "promesa, suposición: «haré»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s4u3",
+   "stage": 4,
+   "ic": "🌦️",
+   "title": {
+    "ru": "Если …",
+    "en": "If …",
+    "fr": "Si …",
+    "es": "Si …"
+   },
+   "formula": "Եթե [բայ]-ի, կ[բայ]-ենք",
+   "note": {
+    "ru": "Условие: Եթե + сослагательная, потом կ-: Եթե անձրև գա, տանը կմնանք «если пойдёт дождь, останемся дома». Нереальное условие — те же формы в прошедшем (-այի, -եի): Եթե ժամանակ ունենայի, կգայի «если бы у меня было время, я бы пришёл». Можно начать и с главного: Կգամ, եթե կարողանամ «приду, если смогу».",
+    "en": "A condition: Եթե + subjunctive, then կ-: Եթե անձրև գա, տանը կմնանք “if it rains, we’ll stay at home”. An unreal condition uses the same forms in the past (-այի, -եի): Եթե ժամանակ ունենայի, կգայի “if I had time, I would come”. You can also start with the main part: Կգամ, եթե կարողանամ “I’ll come if I can”.",
+    "fr": "La condition : Եթե + subjonctif, puis կ- : Եթե անձրև գա, տանը կմնանք « s’il pleut, nous resterons à la maison ». L’irréel prend les mêmes formes au passé (-այի, -եի) : Եթե ժամանակ ունենայի, կգայի « si j’avais le temps, je viendrais ». On peut aussi commencer par la principale : Կգամ, եթե կարողանամ « je viendrai si je peux ».",
+    "es": "La condición: Եթե + subjuntivo, después կ-: Եթե անձրև գա, տանը կմնանք «si llueve, nos quedamos en casa». La condición irreal usa las mismas formas en pasado (-այի, -եի): Եթե ժամանակ ունենայի, կգայի «si tuviera tiempo, vendría». También se puede empezar por la principal: Կգամ, եթե կարողանամ «vengo si puedo»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Поход на Арагац",
+     "en": "A hike up Aragats",
+     "fr": "Randonnée sur l’Aragats",
+     "es": "Excursión al Aragats"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Շաբաթ օրը Արագած բարձրանա՞նք։",
+      "В субботу поднимемся на Арагац?",
+      "Shall we climb Aragats on Saturday?",
+      "On monte sur l’Aragats samedi ?",
+      "¿Subimos al Aragats el sábado?"
+     ],
+     [
+      "Ա",
+      "Եթե եղանակը լավ լինի, կգնանք։",
+      "Если погода будет хорошая, пойдём.",
+      "If the weather is good, we’ll go.",
+      "S’il fait beau, on ira.",
+      "Si hace buen tiempo, vamos."
+     ],
+     [
+      "Մ",
+      "Իսկ եթե անձրև գա՞։",
+      "А если пойдёт дождь?",
+      "And if it rains?",
+      "Et s’il pleut ?",
+      "¿Y si llueve?"
+     ],
+     [
+      "Ա",
+      "Եթե անձրև գա, տանը կմնանք և ֆիլմ կնայենք։",
+      "Если пойдёт дождь, останемся дома и посмотрим фильм.",
+      "If it rains, we’ll stay at home and watch a film.",
+      "S’il pleut, on restera à la maison et on regardera un film.",
+      "Si llueve, nos quedamos en casa y miramos una película."
+     ],
+     [
+      "Մ",
+      "Եթե ժամանակ ունենայի, ամեն շաբաթ սար կբարձրանայի։",
+      "Если бы у меня было время, я бы каждую неделю ходил в горы.",
+      "If I had time, I’d climb a mountain every week.",
+      "Si j’avais le temps, je monterais en montagne chaque semaine.",
+      "Si tuviera tiempo, subiría a una montaña cada semana."
+     ],
+     [
+      "Ա",
+      "Ես էլ։ Ուրեմն շաբաթ օրը, եթե ամեն ինչ լավ լինի։",
+      "Я тоже. Значит, в субботу, если всё будет хорошо.",
+      "Me too. Saturday then, if all goes well.",
+      "Moi aussi. Donc samedi, si tout va bien.",
+      "Yo también. Entonces el sábado, si todo sale bien."
+     ]
+    ]
+   },
+   "seeds": [
+    "եղանակ",
+    "անձրև",
+    "ֆիլմ",
+    "ժամանակ",
+    "բարձրանալ",
+    "սար",
+    "եթե"
+   ],
+   "affix": "վերա-",
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "если пойдёт дождь",
+        "en": "if it rains",
+        "fr": "s’il pleut",
+        "es": "si llueve"
+       },
+       "եթե անձրև գա"
+      ],
+      [
+       {
+        "ru": "если погода будет хорошая",
+        "en": "if the weather is good",
+        "fr": "s’il fait beau",
+        "es": "si hace buen tiempo"
+       },
+       "եթե եղանակը լավ լինի"
+      ],
+      [
+       {
+        "ru": "если у меня будет время",
+        "en": "if I have time",
+        "fr": "si j’ai le temps",
+        "es": "si tengo tiempo"
+       },
+       "եթե ժամանակ ունենամ"
+      ],
+      [
+       {
+        "ru": "если бы у меня было время",
+        "en": "if I had time",
+        "fr": "si j’avais le temps",
+        "es": "si tuviera tiempo"
+       },
+       "եթե ժամանակ ունենայի"
+      ],
+      [
+       {
+        "ru": "мы останемся дома",
+        "en": "we’ll stay at home",
+        "fr": "nous resterons à la maison",
+        "es": "nos quedaremos en casa"
+       },
+       "տանը կմնանք"
+      ],
+      [
+       {
+        "ru": "я бы пришёл",
+        "en": "I would come",
+        "fr": "je viendrais",
+        "es": "vendría"
+       },
+       "կգայի"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s4u4",
+   "stage": 4,
+   "ic": "💬",
+   "title": {
+    "ru": "Что, который, чтобы",
+    "en": "That, which, so that",
+    "fr": "Que, qui, pour que",
+    "es": "Que, el cual, para que"
+   },
+   "formula": "…, որ …",
+   "note": {
+    "ru": "Որ связывает две мысли: «что» — Գիտեմ, որ նա այստեղ է «знаю, что он здесь»; «который» — Այն տորթը, որ գնել էի, … «торт, который я купила, …»; «чтобы» (с сослагательной) — Զանգեցի, որ իմանամ «позвонил, чтобы узнать». Чужие слова передаются через որ: Ասաց, որ կզանգի «сказал, что позвонит». Другие связки: երբ «когда», որովհետև «потому что», բայց «но», եթե «если».",
+    "en": "Որ links two ideas: “that” — Գիտեմ, որ նա այստեղ է “I know (that) he’s here”; “which” — Այն տորթը, որ գնել էի, … “the cake (that) I had bought …”; “so that” (with the subjunctive) — Զանգեցի, որ իմանամ “I called to find out”. Reported speech also uses որ: Ասաց, որ կզանգի “he said he would call”. Other linking words: երբ “when”, որովհետև “because”, բայց “but”, եթե “if”.",
+    "fr": "Որ relie deux idées : « que » — Գիտեմ, որ նա այստեղ է « je sais qu’il est ici » ; « qui, que » — Այն տորթը, որ գնել էի, … « le gâteau que j’avais acheté … » ; « pour que » (avec le subjonctif) — Զանգեցի, որ իմանամ « j’ai appelé pour savoir ». Le discours rapporté passe aussi par որ : Ասաց, որ կզանգի « il a dit qu’il appellerait ». Autres liens : երբ « quand », որովհետև « parce que », բայց « mais », եթե « si ».",
+    "es": "Որ une dos ideas: «que» — Գիտեմ, որ նա այստեղ է «sé que está aquí»; «el que, la que» — Այն տորթը, որ գնել էի, … «la torta que había comprado …»; «para que» (con subjuntivo) — Զանգեցի, որ իմանամ «llamé para saber». El estilo indirecto también usa որ: Ասաց, որ կզանգի «dijo que llamaría». Otros nexos: երբ «cuando», որովհետև «porque», բայց «pero», եթե «si»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Кто звонил?",
+     "en": "Who was on the phone?",
+     "fr": "Qui a appelé ?",
+     "es": "¿Quién llamó?"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Ա",
+      "Ո՞վ էր զանգողը։",
+      "Кто звонил?",
+      "Who was that on the phone?",
+      "Qui c’était, au téléphone ?",
+      "¿Quién llamó?"
+     ],
+     [
+      "Մ",
+      "Արամն էր։ Ասաց, որ այսօր չի կարող գալ։",
+      "Арам. Сказал, что сегодня не сможет прийти.",
+      "It was Aram. He said he can’t come today.",
+      "C’était Aram. Il a dit qu’il ne pouvait pas venir aujourd’hui.",
+      "Era Aram. Dijo que hoy no puede venir."
+     ],
+     [
+      "Ա",
+      "Ինչո՞ւ։",
+      "Почему?",
+      "Why?",
+      "Pourquoi ?",
+      "¿Por qué?"
+     ],
+     [
+      "Մ",
+      "Որովհետև մայրը հիվանդ է։ Ասաց, որ վաղը կզանգի։",
+      "Потому что его мама болеет. Сказал, что завтра позвонит.",
+      "Because his mother is ill. He said he’ll call tomorrow.",
+      "Parce que sa mère est malade. Il a dit qu’il appellerait demain.",
+      "Porque su mamá está enferma. Dijo que mañana llama."
+     ],
+     [
+      "Ա",
+      "Ափսոս։ Այն տորթը, որ գնել էի, մենք կուտենք։",
+      "Жаль. Торт, который я купила, съедим мы.",
+      "What a pity. We’ll eat the cake I bought then.",
+      "Dommage. Le gâteau que j’avais acheté, c’est nous qui le mangerons.",
+      "Qué pena. La torta que compré nos la comemos nosotros."
+     ],
+     [
+      "Մ",
+      "Կարող ենք նրան մի կտոր թողնել, որ վաղը փորձի։",
+      "Можем оставить ему кусочек, чтобы завтра попробовал.",
+      "We can leave him a piece so he can try it tomorrow.",
+      "On peut lui en garder une part pour qu’il y goûte demain.",
+      "Podemos dejarle un pedazo para que la pruebe mañana."
+     ]
+    ]
+   },
+   "seeds": [
+    "հիվանդ",
+    "տորթ",
+    "կտոր",
+    "թողնել",
+    "ափսոս",
+    "որովհետև",
+    "ասել",
+    "փորձել"
+   ],
+   "affix": "-ելի",
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "что / который",
+        "en": "that / which",
+        "fr": "que / qui",
+        "es": "que / el cual"
+       },
+       "որ"
+      ],
+      [
+       {
+        "ru": "когда",
+        "en": "when",
+        "fr": "quand",
+        "es": "cuando"
+       },
+       "երբ"
+      ],
+      [
+       {
+        "ru": "потому что",
+        "en": "because",
+        "fr": "parce que",
+        "es": "porque"
+       },
+       "որովհետև"
+      ],
+      [
+       {
+        "ru": "но",
+        "en": "but",
+        "fr": "mais",
+        "es": "pero"
+       },
+       "բայց"
+      ],
+      [
+       {
+        "ru": "если",
+        "en": "if",
+        "fr": "si",
+        "es": "si"
+       },
+       "եթե"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s4u5",
+   "stage": 4,
+   "ic": "🎨",
+   "title": {
+    "ru": "Сделанный руками",
+    "en": "Handmade",
+    "fr": "Fait main",
+    "es": "Hecho a mano"
+   },
+   "formula": "[բայ]-ած [ինչ]",
+   "note": {
+    "ru": "Форма на -ած — «сделанный, тот, что сделали»: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Она стоит перед словом: իմ սիրած երգը «моя любимая песня» (дословно «мной любимая»), տատիկի գործած գորգը «ковёр, сотканный бабушкой». С -ված — «сделанный кем-то»: ձեռքով արված «ручной работы». Прививка -վածք даёт изделие: գործվածք «ткань».",
+    "en": "The -ած form means “done, the one that was done”: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. It goes before the noun: իմ սիրած երգը “my favourite song” (literally “loved by me”), տատիկի գործած գորգը “the rug woven by grandma”. With -ված it means “made by someone”: ձեռքով արված “handmade”. The graft -վածք gives a product: գործվածք “fabric”.",
+    "fr": "La forme en -ած veut dire « fait, ce qu’on a fait » : գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Elle se place avant le nom : իմ սիրած երգը « ma chanson préférée » (mot à mot « aimée par moi »), տատիկի գործած գորգը « le tapis tissé par mamie ». Avec -ված : « fait par quelqu’un » : ձեռքով արված « fait main ». La greffe -վածք donne un produit : գործվածք « tissu ».",
+    "es": "La forma en -ած significa «hecho, lo que se hizo»: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Va delante del sustantivo: իմ սիրած երգը «mi canción favorita» (literalmente «amada por mí»), տատիկի գործած գորգը «la alfombra tejida por la abuela». Con -ված: «hecho por alguien»: ձեռքով արված «hecho a mano». El injerto -վածք da un producto: գործվածք «tela»."
+   },
+   "scene": {
+    "title": {
+     "ru": "На Вернисаже",
+     "en": "At the Vernissage market",
+     "fr": "Au marché du Vernissage",
+     "es": "En el mercado Vernissage"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Վ": {
+      "ru": "Мастер",
+      "en": "Craftswoman",
+      "fr": "Artisane",
+      "es": "Artesana"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Այս գորգը ձեռքո՞վ է արված։",
+      "Этот ковёр ручной работы?",
+      "Is this rug handmade?",
+      "Ce tapis est fait main ?",
+      "¿Esta alfombra está hecha a mano?"
+     ],
+     [
+      "Վ",
+      "Այո, իմ տատիկի գործած գորգն է, հարյուր տարեկան։",
+      "Да, его соткала моя бабушка, ему сто лет.",
+      "Yes, my grandmother wove it, it’s a hundred years old.",
+      "Oui, c’est ma grand-mère qui l’a tissé, il a cent ans.",
+      "Sí, la tejió mi abuela, tiene cien años."
+     ],
+     [
+      "Մ",
+      "Իսկ այս նկարն ո՞վ է նկարել։",
+      "А эту картину кто нарисовал?",
+      "And who painted this picture?",
+      "Et ce tableau, qui l’a peint ?",
+      "¿Y quién pintó este cuadro?"
+     ],
+     [
+      "Վ",
+      "Իմ որդու նկարած նկարն է։ Նա Արարատն է նկարել։",
+      "Это картина моего сына. Он нарисовал Арарат.",
+      "It’s a painting by my son. He painted Ararat.",
+      "C’est un tableau de mon fils. Il a peint l’Ararat.",
+      "Es un cuadro de mi hijo. Pintó el Ararat."
+     ],
+     [
+      "Մ",
+      "Շատ գեղեցիկ է։ Կփաթաթե՞ք, խնդրում եմ։",
+      "Очень красиво. Завернёте, пожалуйста?",
+      "It’s beautiful. Could you wrap it, please?",
+      "C’est très beau. Vous pouvez l’emballer, s’il vous plaît ?",
+      "Es muy lindo. ¿Me lo envuelve, por favor?"
+     ],
+     [
+      "Վ",
+      "Իհարկե։ Թող ձեր գնած նկարը ձեզ ուրախություն բերի։",
+      "Конечно. Пусть купленная картина приносит вам радость.",
+      "Of course. May the painting you bought bring you joy.",
+      "Bien sûr. Que ce tableau vous apporte de la joie.",
+      "Claro. Que el cuadro que compró le traiga alegría."
+     ]
+    ]
+   },
+   "seeds": [
+    "գորգ",
+    "նկար",
+    "նկարել",
+    "գործել",
+    "տարեկան",
+    "ուրախություն",
+    "գնել",
+    "որդի"
+   ],
+   "affix": "-վածք",
+   "drills": [
+    {
+     "t": "form",
+     "kind": "verb",
+     "key": "part",
+     "alt": [
+      "inf",
+      "imp"
+     ],
+     "words": [
+      "գրել",
+      "կարդալ",
+      "ուտել",
+      "տեսնել",
+      "սիրել",
+      "նկարել",
+      "պատրաստել",
+      "կառուցել",
+      "բերել",
+      "գնել"
+     ],
+     "q": {
+      "ru": "«…нный, сделанный» — форма на -ած",
+      "en": "“done, made” — the -ած form",
+      "fr": "« fait, …é » — la forme en -ած",
+      "es": "«hecho, …do» — la forma en -ած"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s4u6",
+   "stage": 4,
+   "ic": "⛪",
+   "title": {
+    "ru": "Открывается, построен",
+    "en": "It opens, it was built",
+    "fr": "Ça ouvre, c’est construit",
+    "es": "Se abre, fue construido"
+   },
+   "formula": "[ինչ]-ը [բայ]-վում է",
+   "note": {
+    "ru": "Вставка -վ- делает глагол страдательным: բացել «открывать» → բացվել «открываться», կառուցել «строить» → կառուցվել «строиться». Խանութը բացվում է ժամը իննին «магазин открывается в девять». Տաճարը կառուցվել է չորրորդ դարում «храм построен в IV веке». В разговоре часто обходятся без страдательного: Այս տաճարը թագավորն է կառուցել «этот храм построил царь».",
+    "en": "The insert -վ- makes a verb passive: բացել “to open” → բացվել “to be opened, to open”, կառուցել “to build” → կառուցվել “to be built”. Խանութը բացվում է ժամը իննին “the shop opens at nine”. Տաճարը կառուցվել է չորրորդ դարում “the cathedral was built in the 4th century”. In speech people often avoid the passive: Այս տաճարը թագավորն է կառուցել “the king built this cathedral”.",
+    "fr": "L’ajout -վ- rend le verbe passif : բացել « ouvrir » → բացվել « s’ouvrir », կառուցել « construire » → կառուցվել « être construit ». Խանութը բացվում է ժամը իննին « le magasin ouvre à neuf heures ». Տաճարը կառուցվել է չորրորդ դարում « la cathédrale a été construite au IVᵉ siècle ». À l’oral, on évite souvent le passif : Այս տաճարը թագավորն է կառուցել « c’est le roi qui a construit cette cathédrale ».",
+    "es": "El agregado -վ- vuelve pasivo el verbo: բացել «abrir» → բացվել «abrirse», կառուցել «construir» → կառուցվել «ser construido». Խանութը բացվում է ժամը իննին «el negocio abre a las nueve». Տաճարը կառուցվել է չորրորդ դարում «la catedral fue construida en el siglo IV». Al hablar se evita a menudo la pasiva: Այս տաճարը թագավորն է կառուցել «el rey construyó esta catedral»."
+   },
+   "scene": {
+    "title": {
+     "ru": "В Эчмиадзине",
+     "en": "At Etchmiadzin",
+     "fr": "À Etchmiadzine",
+     "es": "En Echmiadzín"
+    },
+    "who": {
+     "Գ": {
+      "ru": "Экскурсовод",
+      "en": "Guide",
+      "fr": "Guide",
+      "es": "Guía"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Գ",
+      "Սա Էջմիածնի Մայր տաճարն է։",
+      "Это Кафедральный собор Эчмиадзина.",
+      "This is the Mother Cathedral of Etchmiadzin.",
+      "Voici la cathédrale mère d’Etchmiadzine.",
+      "Esta es la Catedral Madre de Echmiadzín."
+     ],
+     [
+      "Մ",
+      "Ե՞րբ է այն կառուցվել։",
+      "Когда он построен?",
+      "When was it built?",
+      "Quand a-t-elle été construite ?",
+      "¿Cuándo fue construida?"
+     ],
+     [
+      "Գ",
+      "Չորրորդ դարի սկզբին։ Հետո շատ անգամ վերանորոգվել է։",
+      "В начале IV века. Потом много раз восстанавливался.",
+      "At the beginning of the 4th century. It has been restored many times since.",
+      "Au début du IVᵉ siècle. Elle a été restaurée de nombreuses fois depuis.",
+      "A comienzos del siglo IV. Después fue restaurada muchas veces."
+     ],
+     [
+      "Մ",
+      "Թանգարանը բա՞ց է։",
+      "Музей открыт?",
+      "Is the museum open?",
+      "Le musée est ouvert ?",
+      "¿El museo está abierto?"
+     ],
+     [
+      "Գ",
+      "Թանգարանը բացվում է ժամը տասին և փակվում է ժամը հինգին։",
+      "Музей открывается в десять и закрывается в пять.",
+      "The museum opens at ten and closes at five.",
+      "Le musée ouvre à dix heures et ferme à cinq heures.",
+      "El museo abre a las diez y cierra a las cinco."
+     ],
+     [
+      "Մ",
+      "Ուրեմն ժամանակ ունենք։ Լուսանկարել կարելի՞ է։",
+      "Значит, время есть. Фотографировать можно?",
+      "So we have time. Can I take photos?",
+      "On a donc le temps. On peut prendre des photos ?",
+      "Entonces tenemos tiempo. ¿Se pueden sacar fotos?"
+     ],
+     [
+      "Գ",
+      "Ներսում՝ ոչ, իսկ բակում՝ այո։",
+      "Внутри нет, а во дворе можно.",
+      "Not inside, but in the courtyard, yes.",
+      "Pas à l’intérieur, mais dans la cour, oui.",
+      "Adentro no, en el patio sí."
+     ]
+    ]
+   },
+   "seeds": [
+    "տաճար",
+    "դար",
+    "կառուցել",
+    "բացել",
+    "փակել",
+    "թանգարան",
+    "լուսանկարել",
+    "անգամ"
+   ],
+   "affix": "-անոց",
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "открывается",
+        "en": "opens",
+        "fr": "ouvre",
+        "es": "abre"
+       },
+       "բացվում է"
+      ],
+      [
+       {
+        "ru": "закрывается",
+        "en": "closes",
+        "fr": "ferme",
+        "es": "cierra"
+       },
+       "փակվում է"
+      ],
+      [
+       {
+        "ru": "построен",
+        "en": "was built",
+        "fr": "a été construit",
+        "es": "fue construido"
+       },
+       "կառուցվել է"
+      ],
+      [
+       {
+        "ru": "написан",
+        "en": "was written",
+        "fr": "a été écrit",
+        "es": "fue escrito"
+       },
+       "գրվել է"
+      ],
+      [
+       {
+        "ru": "продаётся",
+        "en": "is sold",
+        "fr": "se vend",
+        "es": "se vende"
+       },
+       "վաճառվում է"
+      ],
+      [
+       {
+        "ru": "восстановлен",
+        "en": "was restored",
+        "fr": "a été restauré",
+        "es": "fue restaurado"
+       },
+       "վերանորոգվել է"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s4u7",
+   "stage": 4,
+   "ic": "👶",
+   "title": {
+    "ru": "Заставить, сделать так, чтобы",
+    "en": "Make someone do it",
+    "fr": "Faire faire",
+    "es": "Hacer que"
+   },
+   "formula": "[բայ]-ացնել · [բայ]-եցնել",
+   "note": {
+    "ru": "Прививка -ացնել / -եցնել значит «сделать так, чтобы»: քնել «спать» → քնեցնել «укладывать спать», ուրախ «радостный» → ուրախացնել «радовать», տաք → տաքացնել «греть», սովորել «учиться» → սովորեցնել «учить кого-то», զարմանալ → զարմացնել «удивлять». Прошедшее у них на -րի: տաքացրի «я подогрел», սովորեցրի «научил». Запрет: մի՛ ծիծաղեցրու «не смеши».",
+    "en": "The graft -ացնել / -եցնել means “make it happen”: քնել “to sleep” → քնեցնել “to put to sleep”, ուրախ “happy” → ուրախացնել “to make happy”, տաք → տաքացնել “to warm up”, սովորել “to learn” → սովորեցնել “to teach”, զարմանալ → զարմացնել “to surprise”. Their past is in -րի: տաքացրի “I warmed it up”, սովորեցրի “I taught”. Don’t: մի՛ ծիծաղեցրու “don’t make (him) laugh”.",
+    "fr": "La greffe -ացնել / -եցնել veut dire « faire en sorte que » : քնել « dormir » → քնեցնել « endormir », ուրախ « joyeux » → ուրախացնել « réjouir », տաք → տաքացնել « réchauffer », սովորել « apprendre » → սովորեցնել « enseigner », զարմանալ → զարմացնել « étonner ». Leur passé est en -րի : տաքացրի « j’ai réchauffé », սովորեցրի « j’ai appris (à qqn) ». Défense : մի՛ ծիծաղեցրու « ne le fais pas rire ».",
+    "es": "El injerto -ացնել / -եցնել significa «hacer que»: քնել «dormir» → քնեցնել «hacer dormir», ուրախ «contento» → ուրախացնել «alegrar», տաք → տաքացնել «calentar», սովորել «aprender» → սովորեցնել «enseñar», զարմանալ → զարմացնել «sorprender». Su pasado va en -րի: տաքացրի «calenté», սովորեցրի «enseñé». Prohibición: մի՛ ծիծաղեցրու «no lo hagas reír»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Вечер с малышом",
+     "en": "An evening with a toddler",
+     "fr": "Une soirée avec un petit",
+     "es": "Una noche con un nene"
+    },
+    "who": {
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     },
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     }
+    },
+    "lines": [
+     [
+      "Ա",
+      "Մարկ, կտաքացնե՞ս կաթը։ Պետք է Դավիթին քնեցնեմ։",
+      "Марк, подогреешь молоко? Надо уложить Давида.",
+      "Mark, will you warm up the milk? I need to put Davit to bed.",
+      "Mark, tu peux réchauffer le lait ? Je dois coucher Davit.",
+      "Mark, ¿calientas la leche? Tengo que hacer dormir a Davit."
+     ],
+     [
+      "Մ",
+      "Արդեն տաքացրի։ Իսկ նա ինչո՞ւ չի քնում։",
+      "Уже подогрел. А почему он не спит?",
+      "Already done. Why isn’t he sleeping?",
+      "C’est déjà fait. Et pourquoi il ne dort pas ?",
+      "Ya la calenté. ¿Y por qué no duerme?"
+     ],
+     [
+      "Ա",
+      "Ուզում է, որ հեքիաթ պատմեմ։",
+      "Хочет, чтобы я рассказала сказку.",
+      "He wants me to tell him a story.",
+      "Il veut que je lui raconte une histoire.",
+      "Quiere que le cuente un cuento."
+     ],
+     [
+      "Մ",
+      "Թող ես պատմեմ։ Գիտեմ մի հեքիաթ, որ նրան կզարմացնի։",
+      "Давай я расскажу. Знаю одну сказку, которая его удивит.",
+      "Let me tell it. I know a story that will surprise him.",
+      "Laisse-moi faire. Je connais une histoire qui va l’étonner.",
+      "Déjame a mí. Sé un cuento que lo va a sorprender."
+     ],
+     [
+      "Ա",
+      "Լավ։ Միայն շատ մի՛ ծիծաղեցրու, թե չէ չի քնի։",
+      "Ладно. Только не смеши его сильно, а то не уснёт.",
+      "OK. Just don’t make him laugh too much, or he won’t sleep.",
+      "D’accord. Mais ne le fais pas trop rire, sinon il ne dormira pas.",
+      "Bueno. Pero no lo hagas reír mucho, que si no, no se duerme."
+     ],
+     [
+      "Մ",
+      "Խոստանում եմ։",
+      "Обещаю.",
+      "I promise.",
+      "Promis.",
+      "Te lo prometo."
+     ]
+    ]
+   },
+   "seeds": [
+    "կաթ",
+    "հեքիաթ",
+    "երեխա",
+    "քնել",
+    "ծիծաղել",
+    "խոստանալ",
+    "արդեն",
+    "պատմել"
+   ],
+   "affix": "-ոտ",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "aor",
+     "alt": [
+      "pres",
+      "fut"
+     ],
+     "verbs": [
+      "տաքացնել",
+      "ուրախացնել",
+      "զարմացնել",
+      "սովորեցնել"
+     ],
+     "q": {
+      "ru": "уже сделал: «…ացրի / …եցրի»",
+      "en": "done: “…ացրի / …եցրի”",
+      "fr": "c’est fait : « …ացրի / …եցրի »",
+      "es": "ya lo hice: «…ացրի / …եցրի»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s4u8",
+   "stage": 4,
+   "ic": "🧳",
+   "title": {
+    "ru": "Совет: стоит, лучше",
+    "en": "Advice: worth it, better",
+    "fr": "Conseil : ça vaut la peine, mieux vaut",
+    "es": "Consejo: vale la pena, mejor"
+   },
+   "formula": "Ավելի լավ է [բայ]-ես",
+   "note": {
+    "ru": "Совет: Ավելի լավ է + сослагательная: Ավելի լավ է հանգստանաս «тебе лучше отдохнуть». Արժե «стоит (того)»: Արժե գնալ Տաթև «стоит съездить в Татев». Պիտի — «должен, обязательно» (крепче, чем պետք է): Պիտի գնամ «я должен идти»; Պիտի որ … — «наверняка»: Պիտի որ դուր գա «наверняка понравится». Не нужно: Պետք չէ անհանգստանալ «не надо беспокоиться».",
+    "en": "Advice: Ավելի լավ է + subjunctive: Ավելի լավ է հանգստանաս “you’d better rest”. Արժե “it’s worth it”: Արժե գնալ Տաթև “Tatev is worth a visit”. Պիտի — “must, definitely” (stronger than պետք է): Պիտի գնամ “I have to go”; Պիտի որ … — “surely”: Պիտի որ դուր գա “they’re sure to like it”. No need: Պետք չէ անհանգստանալ “no need to worry”.",
+    "fr": "Le conseil : Ավելի լավ է + subjonctif : Ավելի լավ է հանգստանաս « tu ferais mieux de te reposer ». Արժե « ça vaut la peine » : Արժե գնալ Տաթև « Tatev vaut le détour ». Պիտի — « devoir, absolument » (plus fort que պետք է) : Պիտի գնամ « je dois partir » ; Պիտի որ … — « sûrement » : Պիտի որ դուր գա « ça va sûrement plaire ». Pas besoin : Պետք չէ անհանգստանալ « pas la peine de s’inquiéter ».",
+    "es": "El consejo: Ավելի լավ է + subjuntivo: Ավելի լավ է հանգստանաս «mejor descansa». Արժե «vale la pena»: Արժե գնալ Տաթև «vale la pena ir a Tatev». Պիտի — «tener que, sí o sí» (más fuerte que պետք է): Պիտի գնամ «me tengo que ir»; Պիտի որ … — «seguro que»: Պիտի որ դուր գա «seguro que les gusta». No hace falta: Պետք չէ անհանգստանալ «no hace falta preocuparse»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Что показать родителям",
+     "en": "What to show the parents",
+     "fr": "Que montrer aux parents",
+     "es": "Qué mostrarles a los padres"
+    },
+    "who": {
+     "Մ": {
+      "ru": "Марк",
+      "en": "Mark",
+      "fr": "Mark",
+      "es": "Mark"
+     },
+     "Ա": {
+      "ru": "Анаит",
+      "en": "Anahit",
+      "fr": "Anahit",
+      "es": "Anahit"
+     }
+    },
+    "lines": [
+     [
+      "Մ",
+      "Ծնողներս գալիս են։ Ի՞նչ արժե տեսնել։",
+      "Мои родители приезжают. Что стоит посмотреть?",
+      "My parents are coming. What is worth seeing?",
+      "Mes parents arrivent. Qu’est-ce qui vaut la peine d’être vu ?",
+      "Vienen mis padres. ¿Qué vale la pena ver?"
+     ],
+     [
+      "Ա",
+      "Անպայման արժե գնալ Տաթև։ Ճոպանուղին շատ տպավորիչ է։",
+      "Обязательно стоит съездить в Татев. Канатная дорога очень впечатляет.",
+      "Tatev is a must. The cable car is very impressive.",
+      "Il faut absolument aller à Tatev. Le téléphérique est impressionnant.",
+      "Hay que ir sí o sí a Tatev. El teleférico impresiona mucho."
+     ],
+     [
+      "Մ",
+      "Իսկ Դիլիջա՞ն։",
+      "А Дилижан?",
+      "And Dilijan?",
+      "Et Dilijan ?",
+      "¿Y Dilijan?"
+     ],
+     [
+      "Ա",
+      "Եթե ժամանակ ունեք, արժե։ Բայց ավելի լավ է ամռանը գնաք, ոչ թե ձմռանը։",
+      "Если есть время, стоит. Но лучше ехать летом, а не зимой.",
+      "If you have time, yes. But you’d better go in summer, not in winter.",
+      "Si vous avez le temps, oui. Mais mieux vaut y aller l’été, pas l’hiver.",
+      "Si tienen tiempo, vale la pena. Pero mejor vayan en verano, no en invierno."
+     ],
+     [
+      "Մ",
+      "Պիտի որ նրանց դուր գա։",
+      "Им наверняка понравится.",
+      "They’re sure to like it.",
+      "Ça va sûrement leur plaire.",
+      "Seguro que les va a gustar."
+     ],
+     [
+      "Ա",
+      "Իհարկե դուր կգա։ Պետք չէ անհանգստանալ։",
+      "Конечно, понравится. Не надо беспокоиться.",
+      "Of course they will. No need to worry.",
+      "Bien sûr que ça leur plaira. Pas la peine de t’inquiéter.",
+      "Claro que les va a gustar. No hace falta preocuparse."
+     ]
+    ]
+   },
+   "seeds": [
+    "ճոպանուղի",
+    "ծնող",
+    "ամառ",
+    "ձմեռ",
+    "անպայման",
+    "տպավորիչ",
+    "անհանգստանալ"
+   ],
+   "affix": "-որեն",
+   "drills": [
+    {
+     "t": "conj",
+     "key": "subj",
+     "alt": [
+      "pres",
+      "cond"
+     ],
+     "verbs": [
+      "հանգստանալ",
+      "գնալ",
+      "մնալ",
+      "զանգել",
+      "խմել",
+      "քնել",
+      "ուտել",
+      "սպասել"
+     ],
+     "q": {
+      "ru": "лучше, стоит: «(чтобы) …»",
+      "en": "you’d better: “(that) you …”",
+      "fr": "mieux vaut : « que tu … »",
+      "es": "mejor: «que …»"
+     }
+    }
+   ]
+  },
+  {
+   "id": "s5u1",
+   "stage": 5,
+   "ic": "🐦",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1907",
+   "src": "https://hy.wikisource.org/wiki/Ծիտը_(բանաստեղծություն)",
+   "title": {
+    "ru": "Птичка",
+    "en": "The little bird",
+    "fr": "Le petit oiseau",
+    "es": "El pajarito"
+   },
+   "formula": "Ծիտը",
+   "note": {
+    "ru": "Ованес Туманян (1869–1923) — главный детский поэт Армении; его стихи знают с пелёнок. «Птичка» (1907) написана в народном духе. Слова: ծիտ «птичка», բանջար «съедобная зелень», գերան «балка, бревно». Ծըլվըլալեն — народная форма «щебеча». Ը внутри слова (Ծըլվըլալեն) в стихах пишут, как слышат. -ին в գերանին, բերանին — «на балку», «во рту».",
+    "en": "Hovhannes Tumanyan (1869–1923) is Armenia’s best-loved poet for children. “The little bird” (1907) is written in folk style. Words: ծիտ “little bird”, բանջար “edible greens”, գերան “beam, log”. Ծըլվըլալեն is a folk form meaning “chirping”. The ը inside a word (Ծըլվըլալեն) is written as heard, as poems often do. -ին in գերանին, բերանին means “onto the beam”, “in its beak”.",
+    "fr": "Hovhannès Toumanian (1869–1923) est le grand poète arménien de l’enfance. « Le petit oiseau » (1907) est écrit dans l’esprit populaire. Mots : ծիտ « petit oiseau », բանջար « herbes comestibles », գերան « poutre ». Ծըլվըլալեն, forme populaire, veut dire « en gazouillant ». Le ը à l’intérieur du mot s’écrit comme on l’entend, à la manière des poèmes. -ին dans գերանին, բերանին : « sur la poutre », « au bec ».",
+    "es": "Hovhannés Tumanián (1869–1923) es el gran poeta armenio de la infancia. «El pajarito» (1907) está escrito al estilo popular. Palabras: ծիտ «pajarito», բանջար «verdura silvestre», գերան «viga». Ծըլվըլալեն es una forma popular: «piando». La ը dentro de la palabra se escribe como se oye, como en los poemas. -ին en գերանին, բերանին: «a la viga», «en el pico»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Птичка",
+     "en": "The little bird",
+     "fr": "Le petit oiseau",
+     "es": "El pajarito"
+    },
+    "who": {
+     "Թ": {
+      "ru": "Ованес Туманян",
+      "en": "Hovhannes Tumanyan",
+      "fr": "Hovhannès Toumanian",
+      "es": "Hovhannés Tumanián"
+     }
+    },
+    "lines": [
+     [
+      "Թ",
+      "Հուռին գնաց բանջարի,",
+      "Хури пошла за зеленью,",
+      "Huri went to gather greens,",
+      "Houri est allée cueillir des herbes,",
+      "Huri fue a juntar verdura,"
+     ],
+     [
+      "Թ",
+      "Բանջար չեղավ՝ խոտ եղավ,",
+      "Зелени не нашлось — нашлась трава,",
+      "there were no greens, only grass,",
+      "pas d’herbes à cueillir, rien que de l’herbe,",
+      "no había verdura, había pasto,"
+     ],
+     [
+      "Թ",
+      "Խոտի տակին ծիտ եղավ,",
+      "Под травой была птичка,",
+      "under the grass there was a little bird,",
+      "sous l’herbe il y avait un petit oiseau,",
+      "debajo del pasto había un pajarito,"
+     ],
+     [
+      "Թ",
+      "Ծըլվըլալեն դուրս թռավ։",
+      "С щебетом вылетела наружу.",
+      "and out it flew, chirping.",
+      "il s’est envolé en gazouillant.",
+      "que salió volando, piando."
+     ],
+     [
+      "Թ",
+      "Ծիտը թռավ գերանին,",
+      "Птичка взлетела на балку,",
+      "The bird flew up onto the beam,",
+      "L’oiseau s’est posé sur la poutre,",
+      "El pajarito voló a la viga,"
+     ],
+     [
+      "Թ",
+      "Կանաչ խոտը բերանին։",
+      "С зелёной травинкой в клюве.",
+      "with green grass in its beak.",
+      "l’herbe verte au bec.",
+      "con el pasto verde en el pico."
+     ]
+    ]
+   },
+   "seeds": [
+    "ծիտ",
+    "խոտ",
+    "թռչել",
+    "կանաչ",
+    "բերան",
+    "գերան",
+    "բանջար"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "птичка",
+        "en": "little bird",
+        "fr": "petit oiseau",
+        "es": "pajarito"
+       },
+       "ծիտ"
+      ],
+      [
+       {
+        "ru": "трава",
+        "en": "grass",
+        "fr": "herbe",
+        "es": "pasto"
+       },
+       "խոտ"
+      ],
+      [
+       {
+        "ru": "улетел(а)",
+        "en": "flew",
+        "fr": "s’est envolé",
+        "es": "voló"
+       },
+       "թռավ"
+      ],
+      [
+       {
+        "ru": "зелёный",
+        "en": "green",
+        "fr": "vert",
+        "es": "verde"
+       },
+       "կանաչ"
+      ],
+      [
+       {
+        "ru": "рот, клюв",
+        "en": "mouth, beak",
+        "fr": "bouche, bec",
+        "es": "boca, pico"
+       },
+       "բերան"
+      ]
+     ]
+    }
+   ],
+   "names": [
+    "Հուռին"
+   ]
+  },
+  {
+   "id": "s5u2",
+   "stage": 5,
+   "ic": "💭",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1917",
+   "src": "https://hy.wikisource.org/wiki/Քառյակներ_(Հովհաննես_Թումանյան)",
+   "title": {
+    "ru": "Три четверостишия",
+    "en": "Three quatrains",
+    "fr": "Trois quatrains",
+    "es": "Tres cuartetas"
+   },
+   "formula": "Քառյակներ",
+   "note": {
+    "ru": "Четверостишия (քառյակներ) Туманян писал в последние годы жизни, 1917–1922: короткие философские стихи. Старые и разговорные формы: աշխարհք = աշխարհ «мир», տարվան = տարվա «года», Ըսկսում = սկսում (ը пишется, как слышится), լիքն = լիքը «полный». Արանքում — «между» (разговорное, литературно միջև). Хазар («тысяча») — и число, и «очень много».",
+    "en": "Tumanyan wrote his quatrains (քառյակներ) in his last years, 1917–1922: short philosophical poems. Old and colloquial forms: աշխարհք = աշխարհ “world”, տարվան = տարվա “of a year”, Ըսկսում = սկսում (ը written as heard), լիքն = լիքը “full”. Արանքում means “between” (colloquial; literary միջև). Հազար (“thousand”) is both a number and “very many”.",
+    "fr": "Toumanian a écrit ses quatrains (քառյակներ) dans ses dernières années, 1917–1922 : de courts poèmes philosophiques. Formes anciennes et parlées : աշխարհք = աշխարհ « monde », տարվան = տարվա « d’une année », Ըսկսում = սկսում (ը écrit comme on l’entend), լիքն = լիքը « plein ». Արանքում : « entre » (familier ; littéraire միջև). Հազար (« mille ») est un nombre et aussi « une multitude ».",
+    "es": "Tumanián escribió sus cuartetas (քառյակներ) en sus últimos años, 1917–1922: poemas filosóficos breves. Formas antiguas y coloquiales: աշխարհք = աշխարհ «mundo», տարվան = տարվա «de un año», Ըսկսում = սկսում (la ը se escribe como se oye), լիքն = լիքը «lleno». Արանքում es «entre» (coloquial; literario միջև). Հազար («mil») es número y también «muchísimos»."
+   },
+   "scene": {
+    "title": {
+     "ru": "Три четверостишия",
+     "en": "Three quatrains",
+     "fr": "Trois quatrains",
+     "es": "Tres cuartetas"
+    },
+    "who": {
+     "Թ": {
+      "ru": "Ованес Туманян",
+      "en": "Hovhannes Tumanyan",
+      "fr": "Hovhannès Toumanian",
+      "es": "Hovhannés Tumanián"
+     }
+    },
+    "lines": [
+     [
+      "Թ",
+      "Երկու դարի արանքում,",
+      "Меж двух веков,",
+      "Between two centuries,",
+      "Entre deux siècles,",
+      "Entre dos siglos,"
+     ],
+     [
+      "Թ",
+      "Երկու քարի արանքում,",
+      "Меж двух камней,",
+      "between two stones,",
+      "entre deux pierres,",
+      "entre dos piedras,"
+     ],
+     [
+      "Թ",
+      "Հոգնել եմ նոր ընկերի",
+      "Я устал — меж новым другом",
+      "I have grown weary — between a new friend",
+      "je suis las — entre un ami nouveau",
+      "estoy cansado: entre un amigo nuevo"
+     ],
+     [
+      "Թ",
+      "Ու հին ցավի արանքում։",
+      "И старой болью.",
+      "and an old pain.",
+      "et une vieille douleur.",
+      "y un viejo dolor."
+     ],
+     [
+      "Թ",
+      "Հին աշխարհքը ամեն օր",
+      "В старый мир каждый день",
+      "Into the old world every day",
+      "Dans le vieux monde, chaque jour,",
+      "Al viejo mundo, cada día,"
+     ],
+     [
+      "Թ",
+      "Հազար մարդ է մտնում նոր,",
+      "Входят тысячи новых людей,",
+      "a thousand new people come,",
+      "entrent mille hommes nouveaux,",
+      "entran mil personas nuevas,"
+     ],
+     [
+      "Թ",
+      "Հազար տարվան փորձն ու գործ",
+      "И тысячелетний опыт и труд",
+      "and a thousand years of experience and work",
+      "et l’expérience et l’œuvre de mille ans",
+      "y la experiencia y la obra de mil años"
+     ],
+     [
+      "Թ",
+      "Ըսկսում է ամեն օր։",
+      "Начинаются заново каждый день.",
+      "begin anew every day.",
+      "recommencent chaque jour.",
+      "empiezan de nuevo cada día."
+     ],
+     [
+      "Թ",
+      "Ծով է իմ վիշտն, անափ ու խոր,",
+      "Море — моя печаль, без берегов и глубока,",
+      "My sorrow is a sea, shoreless and deep,",
+      "Ma peine est une mer, sans rives et profonde,",
+      "Mi pena es un mar, sin orillas y profundo,"
+     ],
+     [
+      "Թ",
+      "Լիքն ակունքով հազարավոր.",
+      "Полна тысячей родников.",
+      "full of a thousand springs.",
+      "pleine de mille sources.",
+      "lleno de miles de manantiales."
+     ],
+     [
+      "Թ",
+      "Իմ զայրույթը լիքն է սիրով,",
+      "Мой гнев полон любви,",
+      "My anger is full of love,",
+      "Ma colère est pleine d’amour,",
+      "Mi enojo está lleno de amor,"
+     ],
+     [
+      "Թ",
+      "Իմ գիշերը՝ լիքն աստղերով։",
+      "Моя ночь — полна звёзд.",
+      "my night is full of stars.",
+      "ma nuit, pleine d’étoiles.",
+      "mi noche, llena de estrellas."
+     ]
+    ]
+   },
+   "seeds": [
+    "դար",
+    "քար",
+    "ցավ",
+    "աշխարհ",
+    "փորձ",
+    "ծով",
+    "վիշտ",
+    "աստղ",
+    "զայրույթ"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "век",
+        "en": "century",
+        "fr": "siècle",
+        "es": "siglo"
+       },
+       "դար"
+      ],
+      [
+       {
+        "ru": "камень",
+        "en": "stone",
+        "fr": "pierre",
+        "es": "piedra"
+       },
+       "քար"
+      ],
+      [
+       {
+        "ru": "боль",
+        "en": "pain",
+        "fr": "douleur",
+        "es": "dolor"
+       },
+       "ցավ"
+      ],
+      [
+       {
+        "ru": "море",
+        "en": "sea",
+        "fr": "mer",
+        "es": "mar"
+       },
+       "ծով"
+      ],
+      [
+       {
+        "ru": "печаль",
+        "en": "sorrow",
+        "fr": "peine",
+        "es": "pena"
+       },
+       "վիշտ"
+      ],
+      [
+       {
+        "ru": "звезда",
+        "en": "star",
+        "fr": "étoile",
+        "es": "estrella"
+       },
+       "աստղ"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u3",
+   "stage": 5,
+   "ic": "🍂",
+   "kind": "read",
+   "author": {
+    "ru": "Ваан Терьян",
+    "en": "Vahan Teryan",
+    "fr": "Vahan Térian",
+    "es": "Vahán Terián"
+   },
+   "year": "1906–1907",
+   "src": "https://hy.wikisource.org/wiki/Աշուն_(Վահան_Տերյան)",
+   "title": {
+    "ru": "Осень",
+    "en": "Autumn",
+    "fr": "L’automne",
+    "es": "Otoño"
+   },
+   "formula": "Աշուն",
+   "note": {
+    "ru": "Ваан Терьян (1885–1920) — поэт тихой грусти и музыки слова. «Осень» почти без глаголов: картина из коротких назывных фраз. Приставка ան- «без-» (прививка ступени 1): անզոր «бессильный», անուժ «без сил», անմխիթար «безутешный», անըսպառ (= անսպառ) «неисчерпаемый». Մահացող — «умирающий» (форма на -ող, ступень 2). Տըխուր = տխուր — ը для ритма.",
+    "en": "Vahan Teryan (1885–1920) is the poet of quiet sadness and verbal music. “Autumn” has almost no verbs: a picture made of short nominal phrases. The prefix ան- “un-, -less” (a stage 1 graft): անզոր “powerless”, անուժ “strengthless”, անմխիթար “inconsolable”, անըսպառ (= անսպառ) “inexhaustible”. Մահացող means “dying” (the -ող form, stage 2). Տըխուր = տխուր, with ը for the rhythm.",
+    "fr": "Vahan Térian (1885–1920) est le poète de la tristesse douce et de la musique des mots. « L’automne » n’a presque pas de verbes : un tableau fait de courtes phrases nominales. Le préfixe ան- « sans, in- » (greffe de l’étape 1) : անզոր « impuissant », անուժ « sans force », անմխիթար « inconsolable », անըսպառ (= անսպառ) « inépuisable ». Մահացող : « mourant » (forme en -ող, étape 2). Տըխուր = տխուր, ը pour le rythme.",
+    "es": "Vahán Terián (1885–1920) es el poeta de la tristeza serena y de la música de las palabras. «Otoño» casi no tiene verbos: un cuadro hecho de frases nominales cortas. El prefijo ան- «sin, in-» (injerto de la etapa 1): անզոր «impotente», անուժ «sin fuerzas», անմխիթար «inconsolable», անըսպառ (= անսպառ) «inagotable». Մահացող es «el que muere» (forma en -ող, etapa 2). Տըխուր = տխուր, con ը por el ritmo."
+   },
+   "scene": {
+    "title": {
+     "ru": "Осень",
+     "en": "Autumn",
+     "fr": "L’automne",
+     "es": "Otoño"
+    },
+    "who": {
+     "Տ": {
+      "ru": "Ваан Терьян",
+      "en": "Vahan Teryan",
+      "fr": "Vahan Térian",
+      "es": "Vahán Terián"
+     }
+    },
+    "lines": [
+     [
+      "Տ",
+      "Դալուկ դաշտեր, մերկ անտառ...",
+      "Бледные поля, голый лес…",
+      "Pale fields, a bare forest…",
+      "Champs blêmes, forêt nue…",
+      "Campos pálidos, bosque desnudo…"
+     ],
+     [
+      "Տ",
+      "— Մահացողի տըխո՜ւր կյանք...",
+      "— Печальная жизнь умирающего…",
+      "— the sad life of one who is dying…",
+      "— triste vie de celui qui meurt…",
+      "— triste vida del que muere…"
+     ],
+     [
+      "Տ",
+      "Անձրև, քամի, սև կամար...",
+      "Дождь, ветер, чёрный свод…",
+      "Rain, wind, a black vault…",
+      "Pluie, vent, voûte noire…",
+      "Lluvia, viento, bóveda negra…"
+     ],
+     [
+      "Տ",
+      "— Սրտակտուր հեկեկանք։",
+      "— Рыдание, рвущее сердце.",
+      "— heartbreaking sobbing.",
+      "— sanglots à fendre le cœur.",
+      "— un sollozo desgarrador."
+     ],
+     [
+      "Տ",
+      "Միգում շողաց մի ցուրտ լույս.",
+      "В тумане блеснул холодный свет.",
+      "A cold light gleamed in the mist.",
+      "Dans la brume a lui une froide lumière.",
+      "En la niebla brilló una luz fría."
+     ],
+     [
+      "Տ",
+      "— Օ՜, արդյոք կա՞ վերադարձ.—",
+      "— О, есть ли возврат?",
+      "— Oh, is there a way back?",
+      "— Oh, y a-t-il un retour ?",
+      "— Oh, ¿habrá regreso?"
+     ],
+     [
+      "Տ",
+      "Մահացողի անզոր հույս,",
+      "Бессильная надежда умирающего,",
+      "The powerless hope of the dying,",
+      "Espoir impuissant du mourant,",
+      "Esperanza impotente del que muere,"
+     ],
+     [
+      "Տ",
+      "Վհատ սրտի տխուր հարց...",
+      "Грустный вопрос поникшего сердца…",
+      "the sad question of a despondent heart…",
+      "triste question d’un cœur abattu…",
+      "triste pregunta de un corazón abatido…"
+     ],
+     [
+      "Տ",
+      "Անուժ ցավի ցուրտ կապար...",
+      "Холодный свинец бессильной боли…",
+      "The cold lead of a helpless pain…",
+      "Plomb froid d’une douleur sans force…",
+      "Plomo frío de un dolor sin fuerzas…"
+     ],
+     [
+      "Տ",
+      "Մահացողի տխուր կյանք.",
+      "Печальная жизнь умирающего.",
+      "The sad life of the dying.",
+      "Triste vie du mourant.",
+      "Triste vida del que muere."
+     ],
+     [
+      "Տ",
+      "— Անմխիթա՜ր, անըսպա՜ռ",
+      "— Безутешное, нескончаемое",
+      "— Inconsolable, endless",
+      "— Inconsolable, sans fin,",
+      "— Inconsolable, interminable"
+     ],
+     [
+      "Տ",
+      "Վհատության հեկեկանք...",
+      "Рыдание уныния…",
+      "sobbing of despair…",
+      "sanglot du découragement…",
+      "sollozo del desaliento…"
+     ]
+    ]
+   },
+   "seeds": [
+    "դաշտ",
+    "անտառ",
+    "անձրև",
+    "քամի",
+    "լույս",
+    "հույս",
+    "հարց",
+    "աշուն"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "поле",
+        "en": "field",
+        "fr": "champ",
+        "es": "campo"
+       },
+       "դաշտ"
+      ],
+      [
+       {
+        "ru": "лес",
+        "en": "forest",
+        "fr": "forêt",
+        "es": "bosque"
+       },
+       "անտառ"
+      ],
+      [
+       {
+        "ru": "ветер",
+        "en": "wind",
+        "fr": "vent",
+        "es": "viento"
+       },
+       "քամի"
+      ],
+      [
+       {
+        "ru": "свет",
+        "en": "light",
+        "fr": "lumière",
+        "es": "luz"
+       },
+       "լույս"
+      ],
+      [
+       {
+        "ru": "надежда",
+        "en": "hope",
+        "fr": "espoir",
+        "es": "esperanza"
+       },
+       "հույս"
+      ],
+      [
+       {
+        "ru": "вопрос",
+        "en": "question",
+        "fr": "question",
+        "es": "pregunta"
+       },
+       "հարց"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u4",
+   "stage": 5,
+   "ic": "🌾",
+   "kind": "read",
+   "author": {
+    "ru": "Ваан Терьян",
+    "en": "Vahan Teryan",
+    "fr": "Vahan Térian",
+    "es": "Vahán Terián"
+   },
+   "year": "1905",
+   "src": "https://hy.wikisource.org/wiki/Կարոտ_(Վահան_Տերյան)",
+   "title": {
+    "ru": "Тоска",
+    "en": "Longing",
+    "fr": "Nostalgie",
+    "es": "Añoranza"
+   },
+   "formula": "Կարոտ",
+   "note": {
+    "ru": "«Тоска» (1905) — сон и пробуждение. Давнопрошедшее ննջել էի «я задремал (ещё до того)» задаёт фон, длительные կանչում է, լալիս էր — то, что тянется. Поэтические формы: ճամփա = ճանապարհ «путь», սիրտըս = սիրտս «моё сердце», անկարծ «внезапно», տրտում «печально», հով «ветерок». Порядок как в разговоре: Գիշերվա հովն էր լալիս — «это ночной ветер плакал» (է после главного слова — ступень 2).",
+    "en": "“Longing” (1905) is about a dream and waking. The pluperfect ննջել էի “I had dozed off” sets the background; the ongoing forms կանչում է, լալիս էր show what goes on. Poetic forms: ճամփա = ճանապարհ “road”, սիրտըս = սիրտս “my heart”, անկարծ “suddenly”, տրտում “sadly”, հով “breeze”. Word order as in speech: Գիշերվա հովն էր լալիս — “it was the night breeze that wept” (է after the key word, stage 2).",
+    "fr": "« Nostalgie » (1905) : un rêve et un réveil. Le plus-que-parfait ննջել էի « je m’étais assoupi » pose le décor ; les formes de durée կանչում է, լալիս էր disent ce qui se prolonge. Formes poétiques : ճամփա = ճանապարհ « chemin », սիրտըս = սիրտս « mon cœur », անկարծ « soudain », տրտում « tristement », հով « brise ». L’ordre est celui de l’oral : Գիշերվա հովն էր լալիս — « c’était la brise nocturne qui pleurait » (է après le mot important, étape 2).",
+    "es": "«Añoranza» (1905): un sueño y un despertar. El pluscuamperfecto ննջել էի «me había dormido» pone el fondo; las formas durativas կանչում է, լալիս էր muestran lo que se prolonga. Formas poéticas: ճամփա = ճանապարհ «camino», սիրտըս = սիրտս «mi corazón», անկարծ «de repente», տրտում «con tristeza», հով «brisa». El orden es el del habla: Գիշերվա հովն էր լալիս — «era la brisa de la noche la que lloraba» (է tras la palabra clave, etapa 2)."
+   },
+   "scene": {
+    "title": {
+     "ru": "Тоска",
+     "en": "Longing",
+     "fr": "Nostalgie",
+     "es": "Añoranza"
+    },
+    "who": {
+     "Տ": {
+      "ru": "Ваан Терьян",
+      "en": "Vahan Teryan",
+      "fr": "Vahan Térian",
+      "es": "Vahán Terián"
+     }
+    },
+    "lines": [
+     [
+      "Տ",
+      "Իմ անվերջ ճամփի տանջանքից հոգնած՝",
+      "Устав от мук своего бесконечного пути,",
+      "Tired from the torment of my endless road,",
+      "Las du tourment de mon chemin sans fin,",
+      "Cansado del tormento de mi camino sin fin,"
+     ],
+     [
+      "Տ",
+      "Ես ննջել էի ոսկեղեն արտում.",
+      "Я задремал в золотой ниве.",
+      "I had dozed off in a golden field.",
+      "je m’étais assoupi dans un champ doré.",
+      "me había dormido en un campo dorado."
+     ],
+     [
+      "Տ",
+      "Ու ճչաց սիրտըս վայելքից անկարծ",
+      "И вдруг вскрикнуло сердце от блаженства —",
+      "And suddenly my heart cried out with delight —",
+      "Et soudain mon cœur a crié de délice —",
+      "Y de pronto mi corazón gritó de dicha:"
+     ],
+     [
+      "Տ",
+      "— Թվաց որ մեկը կանչում է տրտում...",
+      "Показалось, что кто-то печально зовёт…",
+      "it seemed someone was calling sadly…",
+      "il m’a semblé que quelqu’un appelait tristement…",
+      "me pareció que alguien llamaba con tristeza…"
+     ],
+     [
+      "Տ",
+      "Եվ ես արթնացա խնդության ցավից.—",
+      "И я проснулся от боли радости.",
+      "And I woke from the pain of joy.",
+      "Et je me suis éveillé de la douleur de la joie.",
+      "Y desperté del dolor de la alegría."
+     ],
+     [
+      "Տ",
+      "Գիշերվա հովն էր լալիս դաշտերում,",
+      "Это ночной ветерок плакал в полях,",
+      "It was the night breeze weeping in the fields,",
+      "C’était la brise nocturne qui pleurait dans les champs,",
+      "Era la brisa de la noche que lloraba en los campos,"
+     ],
+     [
+      "Տ",
+      "Մութ հեռաստանն էր դժկամ նայում ինձ,",
+      "Тёмная даль неохотно глядела на меня,",
+      "the dark distance looked at me reluctantly,",
+      "le lointain obscur me regardait à contrecœur,",
+      "la oscura lejanía me miraba de mala gana,"
+     ],
+     [
+      "Տ",
+      "Մենակությունն էր քարի պես լռում...",
+      "Одиночество молчало, как камень…",
+      "loneliness was silent as a stone…",
+      "la solitude se taisait comme une pierre…",
+      "la soledad callaba como una piedra…"
+     ]
+    ]
+   },
+   "seeds": [
+    "ճանապարհ",
+    "արտ",
+    "սիրտ",
+    "հով",
+    "մութ",
+    "մենակություն",
+    "կարոտ",
+    "ոսկեղեն"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "путь",
+        "en": "road",
+        "fr": "chemin",
+        "es": "camino"
+       },
+       "ճամփա"
+      ],
+      [
+       {
+        "ru": "сердце",
+        "en": "heart",
+        "fr": "cœur",
+        "es": "corazón"
+       },
+       "սիրտ"
+      ],
+      [
+       {
+        "ru": "ветерок",
+        "en": "breeze",
+        "fr": "brise",
+        "es": "brisa"
+       },
+       "հով"
+      ],
+      [
+       {
+        "ru": "тёмный",
+        "en": "dark",
+        "fr": "sombre",
+        "es": "oscuro"
+       },
+       "մութ"
+      ],
+      [
+       {
+        "ru": "одиночество",
+        "en": "loneliness",
+        "fr": "solitude",
+        "es": "soledad"
+       },
+       "մենակություն"
+      ],
+      [
+       {
+        "ru": "тоска",
+        "en": "longing",
+        "fr": "nostalgie",
+        "es": "añoranza"
+       },
+       "կարոտ"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u5",
+   "stage": 5,
+   "ic": "⛰️",
+   "kind": "read",
+   "author": {
+    "ru": "Егише Чаренц",
+    "en": "Yeghishe Charents",
+    "fr": "Yéghiché Tcharents",
+    "es": "Yeghishé Charents"
+   },
+   "year": "1920–1921",
+   "src": "https://hy.wikisource.org/wiki/Ես_իմ_անուշ_Հայաստանի",
+   "title": {
+    "ru": "Я люблю мою милую Армению",
+    "en": "I love my sweet Armenia",
+    "fr": "J’aime ma douce Arménie",
+    "es": "Amo a mi dulce Armenia"
+   },
+   "formula": "Ես իմ անուշ Հայաստանի",
+   "note": {
+    "ru": "Егише Чаренц (1897–1937) написал это стихотворение в 1920–1921 годах; его знает наизусть вся Армения. Каждая строфа кончается «… -ն եմ սիրում» — «… люблю»: ударное слово стоит перед եմ (ступень 2). Много сложных слов из двух корней: արևահամ «со вкусом солнца», ողբաձայն «со скорбным голосом», հազարամյա «тысячелетний», լուսապսակ «в венце света». Մասիս — армянское имя Арарата; յար — «любимая» (из народной песни); Нарекаци и Кучак — средневековые поэты.",
+    "en": "Yeghishe Charents (1897–1937) wrote this poem in 1920–1921; all of Armenia knows it by heart. Every stanza ends “… -ն եմ սիրում” — “… I love”: the stressed word stands before եմ (stage 2). There are many compounds of two roots: արևահամ “sun-flavoured”, ողբաձայն “mournful-voiced”, հազարամյա “thousand-year-old”, լուսապսակ “crowned with light”. Մասիս is the Armenian name of Ararat; յար means “beloved” (from folk song); Narekatsi and Kuchak are medieval poets.",
+    "fr": "Yéghiché Tcharents (1897–1937) a écrit ce poème en 1920–1921 ; toute l’Arménie le connaît par cœur. Chaque strophe finit par « … -ն եմ սիրում » — « … j’aime » : le mot accentué se place devant եմ (étape 2). Beaucoup de mots composés de deux racines : արևահամ « au goût de soleil », ողբաձայն « à la voix plaintive », հազարամյա « millénaire », լուսապսակ « couronné de lumière ». Մասիս est le nom arménien de l’Ararat ; յար veut dire « bien-aimée » (chanson populaire) ; Narekatsi et Koutchak sont des poètes médiévaux.",
+    "es": "Yeghishé Charents (1897–1937) escribió este poema en 1920–1921; toda Armenia lo sabe de memoria. Cada estrofa termina en «… -ն եմ սիրում» — «… amo»: la palabra acentuada va antes de եմ (etapa 2). Hay muchos compuestos de dos raíces: արևահամ «con sabor a sol», ողբաձայն «de voz doliente», հազարամյա «milenario», լուսապսակ «coronado de luz». Մասիս es el nombre armenio del Ararat; յար significa «amada» (de la canción popular); Narekatsí y Kuchak son poetas medievales."
+   },
+   "scene": {
+    "title": {
+     "ru": "Я люблю мою милую Армению",
+     "en": "I love my sweet Armenia",
+     "fr": "J’aime ma douce Arménie",
+     "es": "Amo a mi dulce Armenia"
+    },
+    "who": {
+     "Չ": {
+      "ru": "Егише Чаренц",
+      "en": "Yeghishe Charents",
+      "fr": "Yéghiché Tcharents",
+      "es": "Yeghishé Charents"
+     }
+    },
+    "lines": [
+     [
+      "Չ",
+      "Ես իմ անուշ Հայաստանի արևահամ բարն եմ սիրում,",
+      "Я люблю солнцем напоённое слово моей милой Армении,",
+      "I love the sun-flavoured word of my sweet Armenia,",
+      "J’aime le mot au goût de soleil de ma douce Arménie,",
+      "Amo la palabra con sabor a sol de mi dulce Armenia,"
+     ],
+     [
+      "Չ",
+      "Մեր հին սազի ողբանվագ, լացակումած լարն եմ սիրում,",
+      "Люблю плачущую, полную слёз струну нашего старого саза,",
+      "I love the mournful, tearful string of our old saz,",
+      "j’aime la corde plaintive et en larmes de notre vieux saz,",
+      "amo la cuerda quejumbrosa y llorosa de nuestro viejo saz,"
+     ],
+     [
+      "Չ",
+      "Արնանման ծաղիկների ու վարդերի բույրը վառման,",
+      "Жгучий аромат алых, как кровь, цветов и роз,",
+      "the burning scent of blood-red flowers and roses,",
+      "le parfum brûlant des fleurs couleur de sang et des roses,",
+      "el perfume ardiente de flores color sangre y de rosas,"
+     ],
+     [
+      "Չ",
+      "Ու նաիրյան աղջիկների հեզաճկուն պա՛րն եմ սիրում։",
+      "И кроткий, гибкий танец девушек Наири люблю.",
+      "and the gentle, supple dance of the girls of Nairi I love.",
+      "et la danse douce et souple des filles de Naïri, je l’aime.",
+      "y la danza dulce y flexible de las muchachas de Nairi amo."
+     ],
+     [
+      "Չ",
+      "Սիրում եմ մեր երկինքը մուգ, ջրերը ջինջ, լիճը լուսե,",
+      "Люблю наше тёмное небо, чистые воды, светлое озеро,",
+      "I love our deep sky, our clear waters, the shining lake,",
+      "J’aime notre ciel profond, nos eaux limpides, le lac lumineux,",
+      "Amo nuestro cielo hondo, las aguas claras, el lago luminoso,"
+     ],
+     [
+      "Չ",
+      "Արևն ամռան ու ձմեռվա վիշապաձայն բուքը վսեմ,",
+      "Летнее солнце и величавую вьюгу зимы с голосом дракона,",
+      "the summer sun and the sublime, dragon-voiced blizzard of winter,",
+      "le soleil d’été et le sublime blizzard d’hiver à la voix de dragon,",
+      "el sol del verano y la sublime ventisca del invierno con voz de dragón,"
+     ],
+     [
+      "Չ",
+      "Մթում կորած խրճիթների անհյուրընկալ պատերը սև,",
+      "Негостеприимные чёрные стены затерянных во мраке лачуг,",
+      "the black, unwelcoming walls of huts lost in the dark,",
+      "les murs noirs, inhospitaliers, des masures perdues dans l’ombre,",
+      "las negras paredes inhóspitas de chozas perdidas en la oscuridad,"
+     ],
+     [
+      "Չ",
+      "Ու հնամյա քաղաքների հազարամյա քա՛րն եմ սիրում։",
+      "И тысячелетний камень древних городов люблю.",
+      "and the thousand-year-old stone of ancient cities I love.",
+      "et la pierre millénaire des cités anciennes, je l’aime.",
+      "y la piedra milenaria de las ciudades antiguas amo."
+     ],
+     [
+      "Չ",
+      "Ո՛ւր էլ լինեմ — չե՛մ մոռանա ես ողբաձայն երգերը մեր,",
+      "Где бы я ни был — не забуду наших скорбных песен,",
+      "Wherever I may be, I will not forget our mournful songs,",
+      "Où que je sois, je n’oublierai pas nos chants plaintifs,",
+      "Dondequiera que esté, no olvidaré nuestros cantos dolientes,"
+     ],
+     [
+      "Չ",
+      "Չե՜մ մոռանա աղոթք դարձած երկաթագիր գրքերը մեր,",
+      "Не забуду наших древних книг, ставших молитвой,",
+      "I will not forget our ancient books that became prayer,",
+      "je n’oublierai pas nos livres anciens devenus prière,",
+      "no olvidaré nuestros libros antiguos convertidos en oración,"
+     ],
+     [
+      "Չ",
+      "Ինչքան էլ սո՜ւր սիրտս խոցեն արյունաքամ վերքերը մեր —",
+      "Как бы остро ни ранили сердце наши кровоточащие раны —",
+      "however sharply our bleeding wounds may pierce my heart —",
+      "si cruellement que nos plaies sanglantes me percent le cœur —",
+      "por mucho que hieran mi corazón nuestras heridas sangrantes,"
+     ],
+     [
+      "Չ",
+      "Էլի՛ ես որբ ու արնավառ իմ Հայաստան — յա՛րն եմ սիրում։",
+      "Всё равно я люблю мою осиротевшую, пылающую Армению — любимую.",
+      "still I love my orphaned, blood-lit Armenia, my beloved.",
+      "j’aime encore mon Arménie orpheline et embrasée, ma bien-aimée.",
+      "aún amo a mi Armenia huérfana y encendida, mi amada."
+     ],
+     [
+      "Չ",
+      "Իմ կարոտած սրտի համար ո՛չ մի ուրիշ հեքիաթ չկա․",
+      "Для моего тоскующего сердца нет другой сказки;",
+      "For my longing heart there is no other fairy tale;",
+      "Pour mon cœur nostalgique, il n’est pas d’autre conte ;",
+      "Para mi corazón nostálgico no hay otro cuento;"
+     ],
+     [
+      "Չ",
+      "Նարեկացու, Քուչակի պես լուսապսակ ճակատ չկա․",
+      "Нет чела в таком сиянии, как у Нарекаци и Кучака;",
+      "there is no brow crowned with light like Narekatsi’s and Kuchak’s;",
+      "pas de front auréolé comme ceux de Narekatsi et de Koutchak ;",
+      "no hay frente coronada de luz como la de Narekatsí y Kuchak;"
+     ],
+     [
+      "Չ",
+      "Աշխա՛րհ անցի՛ր, Արարատի նման ճերմակ գագաթ չկա․",
+      "Обойди весь мир — нет белой вершины, как Арарат;",
+      "cross the whole world: there is no white summit like Ararat;",
+      "parcours le monde : il n’est pas de sommet blanc comme l’Ararat ;",
+      "recorre el mundo: no hay cumbre blanca como el Ararat;"
+     ],
+     [
+      "Չ",
+      "Ինչպես անհաս փառքի ճամփա՝ ես իմ Մասիս սա՛րն եմ սիրում։",
+      "Как путь к недостижимой славе, я люблю мою гору Масис.",
+      "like a road to unreachable glory, I love my mountain Masis.",
+      "comme le chemin d’une gloire inaccessible, j’aime ma montagne Massis.",
+      "como el camino a una gloria inalcanzable, amo mi monte Masis."
+     ]
+    ]
+   },
+   "seeds": [
+    "արև",
+    "ծաղիկ",
+    "վարդ",
+    "երկինք",
+    "լիճ",
+    "քար",
+    "երգ",
+    "գիրք",
+    "վերք",
+    "ճակատ",
+    "գագաթ"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "солнце",
+        "en": "sun",
+        "fr": "soleil",
+        "es": "sol"
+       },
+       "արև"
+      ],
+      [
+       {
+        "ru": "роза",
+        "en": "rose",
+        "fr": "rose",
+        "es": "rosa"
+       },
+       "վարդ"
+      ],
+      [
+       {
+        "ru": "небо",
+        "en": "sky",
+        "fr": "ciel",
+        "es": "cielo"
+       },
+       "երկինք"
+      ],
+      [
+       {
+        "ru": "озеро",
+        "en": "lake",
+        "fr": "lac",
+        "es": "lago"
+       },
+       "լիճ"
+      ],
+      [
+       {
+        "ru": "песня",
+        "en": "song",
+        "fr": "chant",
+        "es": "canción"
+       },
+       "երգ"
+      ],
+      [
+       {
+        "ru": "вершина",
+        "en": "summit",
+        "fr": "sommet",
+        "es": "cumbre"
+       },
+       "գագաթ"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s5u6",
+   "stage": 5,
+   "ic": "🌳",
+   "kind": "read",
+   "author": {
+    "ru": "Ованес Туманян",
+    "en": "Hovhannes Tumanyan",
+    "fr": "Hovhannès Toumanian",
+    "es": "Hovhannés Tumanián"
+   },
+   "year": "1913",
+   "src": "https://hy.wikisource.org/wiki/Կիկոսի_մահը",
+   "title": {
+    "ru": "Смерть Кикоса (начало и конец)",
+    "en": "The death of Kikos (beginning and end)",
+    "fr": "La mort de Kikos (début et fin)",
+    "es": "La muerte de Kikos (principio y final)"
+   },
+   "formula": "Կիկոսի մահը",
+   "note": {
+    "ru": "«Смерть Кикоса» (1913) — сказка Туманяна, над которой смеётся вся Армения: семья оплакивает мальчика, который ещё не родился. Язык — разговорный, лорийский: հեր = հայր «отец», մեր = մայր «мать», կնիկ = կին «жена», էս = այս «этот», հիմի = հիմա «сейчас», ղրկել = ուղարկել «послать», ըլել = լինել «быть», աղբրի = աղբյուրի «родника». Сказочное «жили-были» — в настоящем времени: լինում են, ունենում են. Здесь — начало и конец сказки.",
+    "en": "“The death of Kikos” (1913) is a Tumanyan tale all of Armenia laughs at: a family mourns a boy who hasn’t even been born. The language is colloquial, from Lori: հեր = հայր “father”, մեր = մայր “mother”, կնիկ = կին “wife”, էս = այս “this”, հիմի = հիմա “now”, ղրկել = ուղարկել “to send”, ըլել = լինել “to be”, աղբրի = աղբյուրի “of the spring”. The fairy-tale “once upon a time” is told in the present: լինում են, ունենում են. Here: the beginning and the end of the tale.",
+    "fr": "« La mort de Kikos » (1913) est un conte de Toumanian qui fait rire toute l’Arménie : une famille pleure un garçon qui n’est même pas né. La langue est parlée, du Lori : հեր = հայր « père », մեր = մայր « mère », կնիկ = կին « épouse », էս = այս « ce », հիմի = հիմա « maintenant », ղրկել = ուղարկել « envoyer », ըլել = լինել « être », աղբրի = աղբյուրի « de la source ». Le « il était une fois » est au présent : լինում են, ունենում են. Ici : le début et la fin du conte.",
+    "es": "«La muerte de Kikos» (1913) es un cuento de Tumanián del que se ríe toda Armenia: una familia llora a un niño que ni siquiera nació. La lengua es coloquial, de Lori: հեր = հայր «padre», մեր = մայր «madre», կնիկ = կին «esposa», էս = այս «este», հիմի = հիմա «ahora», ղրկել = ուղարկել «mandar», ըլել = լինել «ser», աղբրի = աղբյուրի «de la fuente». El «había una vez» va en presente: լինում են, ունենում են. Aquí: el principio y el final del cuento."
+   },
+   "scene": {
+    "title": {
+     "ru": "Смерть Кикоса",
+     "en": "The death of Kikos",
+     "fr": "La mort de Kikos",
+     "es": "La muerte de Kikos"
+    },
+    "who": {
+     "Պ": {
+      "ru": "Рассказчик",
+      "en": "Narrator",
+      "fr": "Narrateur",
+      "es": "Narrador"
+     },
+     "Ա": {
+      "ru": "Старшая дочь",
+      "en": "Eldest daughter",
+      "fr": "La fille aînée",
+      "es": "La hija mayor"
+     },
+     "Հ": {
+      "ru": "Отец",
+      "en": "Father",
+      "fr": "Le père",
+      "es": "El padre"
+     }
+    },
+    "lines": [
+     [
+      "Պ",
+      "Մի աղքատ մարդ ու կնիկ են լինում, ունենում են երեք աղջիկ։",
+      "Жили-были бедные муж с женой, и было у них три дочери.",
+      "Once there lived a poor man and his wife, and they had three daughters.",
+      "Il était une fois un homme pauvre et sa femme, qui avaient trois filles.",
+      "Había una vez un hombre pobre y su mujer, que tenían tres hijas."
+     ],
+     [
+      "Պ",
+      "Մի օր հերը աշխատելիս է լինում, ծարավում է, մեծ աղջկանը ջուրն է ղրկում։",
+      "Однажды отец работал, захотел пить и послал старшую дочь за водой.",
+      "One day the father was working, got thirsty and sent the eldest daughter for water.",
+      "Un jour, le père travaillait ; il eut soif et envoya l’aînée chercher de l’eau.",
+      "Un día el padre estaba trabajando, tuvo sed y mandó a la hija mayor a buscar agua."
+     ],
+     [
+      "Պ",
+      "Էս աղջիկը կուժն առնում է գնում աղբյուրը։",
+      "Девушка взяла кувшин и пошла к роднику.",
+      "The girl took the jug and went to the spring.",
+      "La jeune fille prit la cruche et alla à la source.",
+      "La muchacha tomó el cántaro y fue a la fuente."
+     ],
+     [
+      "Պ",
+      "Աղբրի գլխին մի բարձր ծառ է լինում։",
+      "У родника стояло высокое дерево.",
+      "By the spring there stood a tall tree.",
+      "Au-dessus de la source se dressait un grand arbre.",
+      "Junto a la fuente había un árbol alto."
+     ],
+     [
+      "Պ",
+      "Էս ծառը որ տեսնում է՝ իրեն—իրեն միտք է անում․",
+      "Увидела она дерево и задумалась про себя:",
+      "When she saw the tree, she began to think to herself:",
+      "En voyant cet arbre, elle se mit à songer :",
+      "Al ver el árbol, se puso a pensar para sí:"
+     ],
+     [
+      "Ա",
+      "— Հիմի որ ես մարդի գնամ ու մի որդի ունենամ, անունն էլ դնենք Կիկոս։",
+      "— Вот выйду я замуж, рожу сына и назовём его Кикос.",
+      "— Now, if I get married and have a son, we’ll call him Kikos.",
+      "— Si je me marie et que j’ai un fils, nous l’appellerons Kikos.",
+      "— Si me caso y tengo un hijo, le pondremos Kikos."
+     ],
+     [
+      "Ա",
+      "Կիկոսը գա էս ծառին բարձրանա ու վեր ընկնի, քարովը դիպչի մեռնի․․․",
+      "Придёт Кикос, залезет на это дерево, упадёт, ударится о камень и умрёт…",
+      "Kikos will come, climb this tree, fall down, hit a stone and die…",
+      "Kikos viendra, grimpera à cet arbre, tombera, heurtera une pierre et mourra…",
+      "Kikos vendrá, se subirá a este árbol, se caerá, se golpeará con una piedra y se morirá…"
+     ],
+     [
+      "Ա",
+      "— Վա՜յ, Կիկոս ջան, վա՜յ․․․",
+      "— Ой, Кикос, родненький, ой…",
+      "— Alas, dear Kikos, alas…",
+      "— Hélas, mon Kikos chéri, hélas…",
+      "— ¡Ay, Kikos querido, ay…"
+     ],
+     [
+      "Պ",
+      "Տեղնուտեղը ծառի տակին նստում է, սկսում է սուգ անել։",
+      "Тут же села под деревом и принялась его оплакивать.",
+      "She sat right down under the tree and began to mourn.",
+      "Elle s’assit sur-le-champ sous l’arbre et se mit à le pleurer.",
+      "Ahí mismo se sentó bajo el árbol y empezó a llorarlo."
+     ],
+     [
+      "Պ",
+      "Սրանց միջի խելոքը հերն է լինում։",
+      "Самым умным из них оказался отец.",
+      "The wisest of them turned out to be the father.",
+      "Le plus sensé d’entre eux, c’était le père.",
+      "El más sensato de todos resultó ser el padre."
+     ],
+     [
+      "Հ",
+      "— Ա՛յ հիմարներ, ի՞նչ եք նստել էստեղ ու սուգ եք անում։",
+      "— Эй, глупые, что вы тут расселись и голосите?",
+      "— Hey, you fools, why are you sitting here mourning?",
+      "— Eh, les sottes, qu’avez-vous à rester assises ici à vous lamenter ?",
+      "— ¡Eh, tontas! ¿Qué hacen sentadas aquí de luto?"
+     ],
+     [
+      "Հ",
+      "Ինչքան էլ սուգ անեք, ինչքան էլ լաց ըլեք, հո Կիկոսն էլ կենդանանալու չի։",
+      "Сколько ни горюйте, сколько ни плачьте — Кикос ведь не оживёт.",
+      "However much you mourn and weep, Kikos won’t come back to life.",
+      "Vous aurez beau vous lamenter et pleurer, Kikos ne ressuscitera pas.",
+      "Por más que lloren y se lamenten, Kikos no va a revivir."
+     ],
+     [
+      "Հ",
+      "Վեր կացեք, եկեք գնանք մեր տունը, մարդ կանչենք, ժամ ու պատարագ անենք, Կիկոսի քելեխը տանք, լացով ի՞նչ պետք է անենք։",
+      "Вставайте, пойдём домой, позовём людей, закажем службу, справим Кикосу поминки — что толку от слёз?",
+      "Get up, let’s go home, invite people, have a service said and hold Kikos’s wake — what good will crying do?",
+      "Levez-vous, rentrons, appelons du monde, faisons dire la messe et offrons le repas des funérailles de Kikos — à quoi bon pleurer ?",
+      "Levántense, vamos a casa, llamemos a la gente, hagamos misa y el velorio de Kikos: ¿de qué sirve llorar?"
+     ],
+     [
+      "Հ",
+      "Աշխարհքի կարգ է, ինչպես եկել է, էնպես էլ պետք է գնա։",
+      "Таков порядок мира: как пришёл, так и уйти должен.",
+      "That’s the way of the world: as he came, so he must go.",
+      "C’est l’ordre du monde : comme il est venu, il doit s’en aller.",
+      "Es la ley del mundo: así como vino, así se tiene que ir."
+     ]
+    ]
+   },
+   "seeds": [
+    "աղքատ",
+    "աղբյուր",
+    "ծառ",
+    "կուժ",
+    "սուգ",
+    "հիմար",
+    "խելոք",
+    "աշխարհ"
+   ],
+   "drills": [
+    {
+     "t": "pick",
+     "items": [
+      [
+       {
+        "ru": "бедный",
+        "en": "poor",
+        "fr": "pauvre",
+        "es": "pobre"
+       },
+       "աղքատ"
+      ],
+      [
+       {
+        "ru": "родник",
+        "en": "spring (water)",
+        "fr": "source",
+        "es": "fuente"
+       },
+       "աղբյուր"
+      ],
+      [
+       {
+        "ru": "дерево",
+        "en": "tree",
+        "fr": "arbre",
+        "es": "árbol"
+       },
+       "ծառ"
+      ],
+      [
+       {
+        "ru": "кувшин",
+        "en": "jug",
+        "fr": "cruche",
+        "es": "cántaro"
+       },
+       "կուժ"
+      ],
+      [
+       {
+        "ru": "глупый",
+        "en": "foolish",
+        "fr": "sot",
+        "es": "tonto"
+       },
+       "հիմար"
+      ],
+      [
+       {
+        "ru": "умный",
+        "en": "clever",
+        "fr": "sensé",
+        "es": "sensato"
+       },
+       "խելոք"
+      ]
+     ]
+    }
+   ],
+   "names": [
+    "Կիկոսը"
+   ]
   }
  ]
 }

@@ -8,6 +8,7 @@ const words=n=>n===1?'word':'words';
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 
 const ru={
+  pTextN:n=>'Текст '+n, pAbout:'О тексте', pText:'Текст', pToText:'К тексту', pSource:'источник', pPD:'общественное достояние',
   pStart:'Начать путь', pPlaceOffer:'Уже немного знаете армянский? Входной тест за 5 минут поставит на вашу ступень и отметит знакомые формулы.',
   pPlaceGo:'Входной тест · 5 минут', pPlaceAgain:'Пройти входной тест заново', pReadQ:'Как это читается?', pReadGo:'Проверка чтения',
   pReadPass:'Читаете по-армянски — ступень 0 пройдена', pReadFail:'Пока трудно — загляните в алфавит и попробуйте снова', pStage0Done:'пройдено',
@@ -154,6 +155,7 @@ const ru={
 };
 
 const en={
+  pTextN:n=>'Text '+n, pAbout:'About', pText:'Text', pToText:'To the text', pSource:'source', pPD:'public domain',
   pStart:'Start the path', pPlaceOffer:'Know some Armenian already? A 5-minute placement test puts you on your stage and marks the formulas you know.',
   pPlaceGo:'Placement test · 5 min', pPlaceAgain:'Retake the placement test', pReadQ:'How is it read?', pReadGo:'Reading check',
   pReadPass:'You read Armenian — stage 0 complete', pReadFail:'Not yet — visit the alphabet and try again', pStage0Done:'done',
@@ -300,6 +302,7 @@ const en={
 };
 const mots=n=>n<2?'mot':'mots';
 const fr={
+  pTextN:n=>'Texte '+n, pAbout:'À propos', pText:'Texte', pToText:'Vers le texte', pSource:'source', pPD:'domaine public',
   pStart:'Commencer le parcours', pPlaceOffer:'Vous connaissez déjà un peu l’arménien ? Un test de 5 minutes vous place à votre étape et coche les formules connues.',
   pPlaceGo:'Test de niveau · 5 min', pPlaceAgain:'Refaire le test de niveau', pReadQ:'Comment ça se lit ?', pReadGo:'Test de lecture',
   pReadPass:'Vous lisez l’arménien — étape 0 terminée', pReadFail:'Pas encore — passez par l’alphabet et réessayez', pStage0Done:'terminé',
@@ -447,6 +450,7 @@ const fr={
 const pals=n=>n===1?'palabra':'palabras';
 const apr=n=>n===1?'aprendida':'aprendidas';
 const es={
+  pTextN:n=>'Texto '+n, pAbout:'Sobre el texto', pText:'Texto', pToText:'Al texto', pSource:'fuente', pPD:'dominio público',
   pStart:'Empezar el camino', pPlaceOffer:'¿Ya sabes algo de armenio? Un test de 5 minutos te ubica en tu etapa y marca las fórmulas que conoces.',
   pPlaceGo:'Test de nivel · 5 min', pPlaceAgain:'Repetir el test de nivel', pReadQ:'¿Cómo se lee?', pReadGo:'Prueba de lectura',
   pReadPass:'Lees armenio: etapa 0 completa', pReadFail:'Todavía no: pasa por el alfabeto y vuelve a intentarlo', pStage0Done:'hecho',
