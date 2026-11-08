@@ -697,7 +697,7 @@ const de={
     open:'Öffnen', nav:'Sprache der Website', abcPick:'Wähle einen Buchstaben', write:'Schreibschrift',
     eyebrow:'Ostarmenisch — von null an',
     h1:'Sprich\nArmenisch', h1b:'10 Minuten am Tag',
-    sub:n=>'Wörter mit Bildern und Ton, Buchstaben, die du mit dem Finger nachfährst, und ein Weg vom ersten «Բարև» bis zu Tumanjans Märchen. Direkt im Browser — ohne Anmeldung.',
+    sub:n=>'Wörter mit Bildern und Ton, Buchstaben, die du mit dem Finger nachfährst, und ein Weg vom ersten „Բարև“ bis zu Tumanjans Märchen. Direkt im Browser — ohne Anmeldung.',
     cta:'Kostenlos starten', cta2:'So funktioniert es',
     micro:['Kostenlos','Ohne Anmeldung','Funktioniert offline'],
     geo:(c,l)=>c+' — Barik ist auf '+({ru:'Russisch',en:'Englisch',fr:'Französisch',es:'Spanisch',de:'Deutsch'}[l])+' geöffnet.', geoOther:'Andere Sprache:', geoClose:'Schließen',
