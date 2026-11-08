@@ -203,7 +203,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===2,'путь: 6 ступеней, 4–5 — скоро');
     ok(await pg.locator('.p-unit.locked').count()===NU-9,'ступени 2–3 — под замком Premium');
     await pg.locator('.p-unit.locked').first().click(); ok(await pg.locator('.pw-hero').count()===1,'формула ступени 2 без подписки — окно подписки');
-    await pg.click('[data-act=tab][data-arg=path]');
+    await pg.click('[data-act=pwClose]'); ok(await pg.locator('.path').count()===1,'окно подписки закрывается обратно на путь');
     await noH('карта');
     await pg.click('[data-act=pUnit][data-arg=s1u4]');
     ok((await pg.textContent('.u-formula')).includes('կա')&&await pg.locator('.chips .chip').count()>=8,'формула: рамка и зёрна урока');
