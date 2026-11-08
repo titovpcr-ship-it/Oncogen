@@ -51,7 +51,7 @@ function subEvent(id,type,status,custom,custId,days){
   const ctx=await br.newContext({viewport:{width:360,height:780},deviceScaleFactor:2,locale:'ru-RU',serviceWorkers:'block'});
   const ext=[], errs=[];
   await ctx.route('https://cdn.paddle.com/**',rt=>rt.fulfill({contentType:'text/javascript',body:PADDLE_STUB}));
-  await ctx.route('**/js/config.js',async rt=>{ const res=await rt.fetch(); const b=(await res.text()).replace(/WEB_ALL_FREE:\s*true/,'WEB_ALL_FREE:false'); rt.fulfill({response:res,body:b}); });
+  await ctx.route(/\/js\/config\.js(\?|$)/,async rt=>{ const res=await rt.fetch(); const b=(await res.text()).replace(/WEB_ALL_FREE:\s*true/,'WEB_ALL_FREE:false'); rt.fulfill({response:res,body:b}); });
   const pg=await ctx.newPage();
   pg.on('pageerror',e=>errs.push(String(e)));
   pg.on('request',q=>{ const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')&&!u.startsWith('blob:')) ext.push(u); });
