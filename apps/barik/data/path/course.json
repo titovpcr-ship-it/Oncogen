@@ -1911,7 +1911,7 @@
     "en": "A meeting time is ժամը plus the number with -ին: ժամը հինգին “at five”, ժամը յոթին “at seven”. Watch out: երկու → երկուսին, ինը → իննին, տասը → տասին. The question: Ժամը քանիսի՞ն։ The same -ին form answers “to whom”: Զանգում եմ Արամին “I’m calling Aram”. Parts of the day: առավոտյան “in the morning”, երեկոյան “in the evening”.",
     "fr": "L’heure d’un rendez-vous : ժամը et le nombre en -ին : ժամը հինգին « à cinq heures », ժամը յոթին « à sept heures ». Attention : երկու → երկուսին, ինը → իննին, տասը → տասին. La question : Ժամը քանիսի՞ն։ La même forme en -ին répond à « à qui » : Զանգում եմ Արամին « j’appelle Aram ». Moments du jour : առավոտյան « le matin », երեկոյան « le soir ».",
     "es": "La hora de un encuentro: ժամը y el número con -ին: ժամը հինգին «a las cinco», ժամը յոթին «a las siete». Ojo: երկու → երկուսին, ինը → իննին, տասը → տասին. La pregunta: Ժամը քանիսի՞ն։ La misma forma en -ին responde «a quién»: Զանգում եմ Արամին «llamo a Aram». Partes del día: առավոտյան «por la mañana», երեկոյան «por la tarde, por la noche».",
-    "de": "Die Uhrzeit einer Verabredung wird mit ժամը und der Zahl mit -ին gebildet: ժամը հինգին „um fünf“, ժամը յոթին „um sieben“. Achtung: երկու → երկուսին, ինը → իննին, տասը → տասին. Die Frage: Ժամը քանիսի՞ն։ Dieselbe -ին-Form antwortet auf „wem?“: Զանգում եմ Արամին „Ich rufe Aram an“. Tageszeiten: առավոտյան „morgens“, երեկոյան „abends“."
+    "de": "Die Uhrzeit einer Verabredung wird mit ժամը und der Zahl mit -ին gebildet: ժամը հինգին „um fünf“, ժամը յոթին „um sieben“. Achtung: երկու → երկուսին, ինը → իննին, տասը → տասին. Die Frage: Ժամը քանիսի՞ն։ Dieselbe Form auf -ին antwortet auf „wem?“: Զանգում եմ Արամին „Ich rufe Aram an“. Tageszeiten: առավոտյան „morgens“, երեկոյան „abends“."
    },
    "scene": {
     "title": {
@@ -4059,7 +4059,7 @@
     "en": "The prefix կ- on the subjunctive gives “I will” — a promise or a guess: կգամ “I’ll come”, կզանգեմ “I’ll call”, կլինի “it will probably be”. Unlike -ելու եմ (a fixed plan), կ- is softer: “I will if I can”, “I suppose”. Before a vowel it is the same: կուտեմ “I’ll eat”, կանեմ “I’ll do”. The negative drops կ- and uses the -ի form: չեմ գրի “I won’t write”, չեմ գա “I won’t come”.",
     "fr": "Le préfixe կ- sur le subjonctif donne « je ferai » — une promesse ou une supposition : կգամ « je viendrai », կզանգեմ « j’appellerai », կլինի « ce sera sans doute ». Contrairement à -ելու եմ (projet décidé), կ- est plus souple : « je le ferai si je peux ». Devant une voyelle, pareil : կուտեմ « je mangerai », կանեմ « je ferai ». La négation perd կ- et prend la forme en -ի : չեմ գրի « je n’écrirai pas », չեմ գա « je ne viendrai pas ».",
     "es": "El prefijo կ- sobre el subjuntivo da «haré»: una promesa o una suposición: կգամ «vendré», կզանգեմ «llamaré», կլինի «seguramente será». A diferencia de -ելու եմ (plan decidido), կ- es más suave: «lo haré si puedo». Ante vocal, igual: կուտեմ «comeré», կանեմ «haré». La negación pierde կ- y usa la forma en -ի: չեմ գրի «no escribiré», չեմ գա «no vendré».",
-    "de": "Das Präfix կ- am Konjunktiv bedeutet „ich werde“ – ein Versprechen oder eine Vermutung: կգամ „ich werde kommen“, կզանգեմ „ich werde anrufen“, կլինի „es wird wahrscheinlich sein“. Im Gegensatz zu -ելու եմ (ein fester Plan) ist կ- weicher: „ich werde, wenn ich kann“, „ich denke mal“. Vor einem Vokal ist es dasselbe: կուտեմ „ich werde essen“, կանեմ „ich werde machen“. Die Verneinung lässt կ- weg und verwendet die -ի-Form: չեմ գրի „ich werde nicht schreiben“, չեմ գա „ich werde nicht kommen“."
+    "de": "Das Präfix կ- am Konjunktiv bedeutet „ich werde“ – ein Versprechen oder eine Vermutung: կգամ „ich werde kommen“, կզանգեմ „ich werde anrufen“, կլինի „es wird wahrscheinlich sein“. Im Gegensatz zu -ելու եմ (ein fester Plan) ist կ- weicher: „ich werde, wenn ich kann“, „ich denke mal“. Vor einem Vokal ist es dasselbe: կուտեմ „ich werde essen“, կանեմ „ich werde machen“. Die Verneinung lässt կ- weg und verwendet die Form auf -ի: չեմ գրի „ich werde nicht schreiben“, չեմ գա „ich werde nicht kommen“."
    },
    "scene": {
     "title": {
@@ -4534,7 +4534,7 @@
     "en": "The -ած form means “done, the one that was done”: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. It goes before the noun: իմ սիրած երգը “my favourite song” (literally “loved by me”), տատիկի գործած գորգը “the rug woven by grandma”. With -ված it means “made by someone”: ձեռքով արված “handmade”. The graft -վածք gives a product: գործվածք “fabric”.",
     "fr": "La forme en -ած veut dire « fait, ce qu’on a fait » : գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Elle se place avant le nom : իմ սիրած երգը « ma chanson préférée » (mot à mot « aimée par moi »), տատիկի գործած գորգը « le tapis tissé par mamie ». Avec -ված : « fait par quelqu’un » : ձեռքով արված « fait main ». La greffe -վածք donne un produit : գործվածք « tissu ».",
     "es": "La forma en -ած significa «hecho, lo que se hizo»: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Va delante del sustantivo: իմ սիրած երգը «mi canción favorita» (literalmente «amada por mí»), տատիկի գործած գորգը «la alfombra tejida por la abuela». Con -ված: «hecho por alguien»: ձեռքով արված «hecho a mano». El injerto -վածք da un producto: գործվածք «tela».",
-    "de": "Die -ած-Form bedeutet „gemacht, das, was gemacht wurde“: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Sie steht vor dem Substantiv: իմ սիրած երգը „mein Lieblingslied“ (wörtlich „von mir geliebt“), տատիկի գործած գորգը „der von Oma gewebte Teppich“. Mit -ված bedeutet es „von jemandem gemacht“: ձեռքով արված „handgemacht“. Das Suffix -վածք ergibt ein Produkt: գործվածք „Stoff“."
+    "de": "Die Form auf -ած bedeutet „gemacht, das, was gemacht wurde“: գրել → գրած, կարդալ → կարդացած, ուտել → կերած. Sie steht vor dem Substantiv: իմ սիրած երգը „mein Lieblingslied“ (wörtlich „von mir geliebt“), տատիկի գործած գորգը „der von Oma gewebte Teppich“. Mit -ված bedeutet es „von jemandem gemacht“: ձեռքով արված „handgemacht“. Das Suffix -վածք ergibt ein Produkt: գործվածք „Stoff“."
    },
    "scene": {
     "title": {
@@ -4650,7 +4650,7 @@
       "en": "“done, made” — the -ած form",
       "fr": "« fait, …é » — la forme en -ած",
       "es": "«hecho, …do» — la forma en -ած",
-      "de": "„gemacht, …t“ — die -ած-Form"
+      "de": "„gemacht, …t“ — die Form auf -ած"
      }
     }
    ]
@@ -6281,7 +6281,7 @@
     "en": "Vahan Teryan (1885–1920) is the poet of quiet sadness and verbal music. “Autumn” has almost no verbs: a picture made of short nominal phrases. The prefix ան- “un-, -less” (a stage 1 graft): անզոր “powerless”, անուժ “strengthless”, անմխիթար “inconsolable”, անըսպառ (= անսպառ) “inexhaustible”. Մահացող means “dying” (the -ող form, stage 2). Տըխուր = տխուր, with ը for the rhythm.",
     "fr": "Vahan Térian (1885–1920) est le poète de la tristesse douce et de la musique des mots. « L’automne » n’a presque pas de verbes : un tableau fait de courtes phrases nominales. Le préfixe ան- « sans, in- » (greffe de l’étape 1) : անզոր « impuissant », անուժ « sans force », անմխիթար « inconsolable », անըսպառ (= անսպառ) « inépuisable ». Մահացող : « mourant » (forme en -ող, étape 2). Տըխուր = տխուր, ը pour le rythme.",
     "es": "Vahán Terián (1885–1920) es el poeta de la tristeza serena y de la música de las palabras. «Otoño» casi no tiene verbos: un cuadro hecho de frases nominales cortas. El prefijo ան- «sin, in-» (injerto de la etapa 1): անզոր «impotente», անուժ «sin fuerzas», անմխիթար «inconsolable», անըսպառ (= անսպառ) «inagotable». Մահացող es «el que muere» (forma en -ող, etapa 2). Տըխուր = տխուր, con ը por el ritmo.",
-    "de": "Wahan Terjan (1885–1920) ist der Dichter der stillen Trauer und der Wortmusik. In „Herbst“ findest du fast keine Verben: ein Bild aus kurzen Nominalphrasen. Das Präfix ան- (ein Stufe-1-Graft) bedeutet „un-“, „-los“: անզոր „machtlos“, անուժ „kraftlos“, անմխիթար „untröstlich“, անըսպառ (= անսպառ) „unerschöpflich“. Մահացող bedeutet „sterbend“ (die -ող-Form, Stufe 2). Տըխուր = տխուր, das ը für den Rhythmus."
+    "de": "Wahan Terjan (1885–1920) ist der Dichter der stillen Trauer und der Wortmusik. In „Herbst“ findest du fast keine Verben: ein Bild aus kurzen Nominalphrasen. Das Präfix ան- (ein Stufe-1-Graft) bedeutet „un-“, „-los“: անզոր „machtlos“, անուժ „kraftlos“, անմխիթար „untröstlich“, անըսպառ (= անսպառ) „unerschöpflich“. Մահացող bedeutet „sterbend“ (die Form auf -ող, Stufe 2). Տըխուր = տխուր, das ը für den Rhythmus."
    },
    "scene": {
     "title": {

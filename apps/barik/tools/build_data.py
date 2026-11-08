@@ -57,7 +57,9 @@ def load_fr():
 
 def load_de():
     de, titles = {}, {}
-    for f in sorted(glob.glob(p("data", "de", "*.tsv"))):
+    # manual.tsv (свой перевод, O-160) — последним: правка в нём главнее sNN.tsv и без translate_de.py --write
+    files = sorted(glob.glob(p("data", "de", "*.tsv")), key=lambda f: (os.path.basename(f) == "manual.tsv", f))
+    for f in files:
         for l in open(f, encoding="utf-8"):
             if not l.strip() or "\t" not in l:
                 continue
