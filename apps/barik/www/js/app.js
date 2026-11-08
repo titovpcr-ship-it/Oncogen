@@ -695,8 +695,8 @@ function onShow(){
    вверху; выбор сохраняется, только когда человек нажал «Начать» (pickLang). Живые вставки:
    телефон с уроком (картинка → слово → верный ответ) и пропись, которую пишет перо. */
 const LND=()=>(STR[L]&&STR[L].land)||STR.ru.land;
-const DEMO=['ծիրան','նուռ','խաղող','սար','արև','կատու','սուրճ','հաց'];
-const FEAT=['ծիրան','նուռ','խաղող','սար','ծով','լուսին'];
+const DEMO=['ծիրան','նուռ','խաղող','տուն','արև','կատու','սուրճ','հաց'];
+const FEAT=['ծիրան','նուռ','խաղող','կատու','ծով','լուսին'];
 const LETTERS=['Ա','Բ','Գ','Դ','Ե','Զ','Է','Թ','Ժ','Ի','Լ','Խ'];
 let landT=[], landK=0, landIO=null;
 function landStop(){ landT.forEach(clearTimeout); landT=[]; if(landIO){ landIO.disconnect(); landIO=null; } }
@@ -719,8 +719,10 @@ const ART={
     '<linearGradient id="scF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3D3F2"/><stop offset="1" stop-color="#D2BFEA"/></linearGradient>'+
     '<linearGradient id="scM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD6B8"/><stop offset="1" stop-color="#FFC59F"/></linearGradient>'+
     '<linearGradient id="scN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB98A"/><stop offset="1" stop-color="#FBA26E"/></linearGradient>'+
-    '<linearGradient id="scB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F59A62"/><stop offset="1" stop-color="#EC8650"/></linearGradient></defs>'+
+    '<linearGradient id="scB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F59A62"/><stop offset="1" stop-color="#EC8650"/></linearGradient>'+
+    '<linearGradient id="scAr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B2E2"/><stop offset="1" stop-color="#E7DCF3"/></linearGradient></defs>'+
     '<circle cx="300" cy="196" r="205" fill="url(#scGlow)"/><circle cx="300" cy="204" r="84" fill="url(#scSun)"/>'+
+    '<g class="aragats"><path d="M-20 342C34 330 76 300 110 274Q128 258 146 240L154 234 160 228 167 233 177 226 185 228 196 214 204 220 213 226 222 216 232 203 242 213 251 221 261 215 271 209 281 218 292 226C320 237 352 248 392 263 452 286 532 310 620 330V372H-20Z" fill="url(#scAr)"/>'+'<path d="M232 203 242 213 251 221 261 215 271 209 281 218 292 226C320 237 352 248 392 263 452 286 532 310 620 330V372H284C274 318 252 262 226 224Z" fill="#9C86C8" opacity=".15"/>'+'<path d="M150 237 160 228 167 233 177 226 185 228 196 214 204 220 213 226 222 216 232 203 242 213 251 221 261 215 271 209 281 218 288 224 281 228 276 222 271 231 264 222 257 230 251 226 245 234 238 220 232 230 226 222 219 236 212 231 205 239 199 226 191 237 184 232 177 240 170 236 162 242Z" fill="#FFF8F3"/>'+'<path d="M134 254 141 249 138 266ZM176 244 182 242 178 258ZM212 238 218 236 215 252ZM299 232 307 236 302 249ZM318 241 324 244 321 254Z" fill="#FFF8F3" opacity=".7"/></g>'+
     '<path d="M196 128q7-6 13 0 6-6 13 0M392 104q6-5 11 0 5-5 11 0" fill="none" stroke="#B0809A" stroke-width="3" stroke-linecap="round"/>'+
     '<path d="M0 352c90-34 170-24 250-6 80 18 170-30 250-20 50 6 80 14 100 20v214H0z" fill="url(#scF)"/>'+
     '<path d="M0 404c110-40 210-20 300-4 100 16 180-26 300-10v170H0z" fill="url(#scM)"/>'+
