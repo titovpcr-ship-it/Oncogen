@@ -189,6 +189,59 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(r.n===1&&r.y===y0,'тренажёр: палец (касания) — штрих принят, страница стоит');
     await ctx.close();
   }
+  { // путь «Гранат» (O-140, этап B): гранат, формула, сцена со звуком, практика, итог, множитель, карточка зерна
+    const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
+    const pg=await ctx.newPage(), errs=[], got=[];
+    pg.on('pageerror',e=>errs.push(String(e)));
+    pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+r.url()); });
+    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
+    const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'путь '+n+': без горизонтальной прокрутки ('+w+')'); };
+    await pg.click('[data-act=tab][data-arg=path]');
+    ok(await pg.locator('svg.pom .gr').count()===10&&await pg.locator('.p-units .p-unit').count()===9,'путь: гранат из 10 зёрен и 9 формул ступени 1');
+    ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===4,'путь: 6 ступеней, 2–5 — скоро');
+    await noH('карта');
+    await pg.click('[data-act=pUnit][data-arg=s1u4]');
+    ok((await pg.textContent('.u-formula')).includes('կա')&&await pg.locator('.chips .chip').count()>=8,'формула: рамка и зёрна урока');
+    ok((await pg.textContent('.u-aff')).includes('անտուն'),'формула: прививка ան- с примером անտուն');
+    await noH('формула');
+    await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
+    ok(await pg.locator('.scene .ln').count()===6&&(await pg.textContent('.scene')).includes('холодильник'),'сцена: 6 реплик с переводом');
+    await pg.click('[data-act=pTr]'); ok(await pg.locator('.ln-tr').count()===0,'сцена: перевод скрывается');
+    await pg.click('[data-act=pTr]'); await noH('сцена');
+    await pg.click('[data-act=pSayLn][data-arg="0"]'); await pg.waitForTimeout(600);
+    const h0=await pg.evaluate(()=>window.__bararan.aid(window.__bararan.CRS.units[3].scene.lines[0][1]));
+    ok(got.some(x=>x.startsWith('200')&&x.includes(h0)),'сцена: реплика звучит своей записью');
+    const before=await pg.evaluate(()=>window.__bararan.pathStat());
+    await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
+    ok(await pg.evaluate(()=>document.body.dataset.view)==='session','практика: на весь экран, без вкладок');
+    const kinds=new Set();
+    for(let i=0;i<20;i++){
+      if(await pg.locator('.p-res').count()) break;
+      const it=await pg.evaluate(()=>{const P=window.__bararan.PU, x=P.q[P.i]; return {k:x.k,a:x.a,opts:x.opts||null};}); kinds.add(it.k);
+      if(it.k==='tiles'){ for(const t of it.a){ const id=await pg.evaluate(t=>{const P=window.__bararan.PU, x=P.q[P.i]; return x.bank.find(b=>!b.used&&b.t===t).id;},t); await pg.click('[data-act=pTile][data-arg="'+id+'"]'); } if(i<8) await noH('плитки'); await pg.click('[data-act=pTileCheck]'); }
+      else await pg.locator('.opt').nth(it.opts.indexOf(it.a)).click();
+      ok(await pg.locator('.foot.ok').count()===1,'практика: верный ответ «'+it.k+'» принят');
+      await pg.click('[data-act=pNext]');
+    }
+    ok(kinds.has('form')&&kinds.has('tiles'),'практика: формы и сборка фразы ('+[...kinds]+')');
+    ok(await pg.locator('.p-res').count()===1&&(await pg.textContent('.p-res')).includes('Формула освоена'),'итог формулы');
+    const after=await pg.evaluate(()=>window.__bararan.pathStat());
+    ok(after.done===before.done+1&&after.aff===before.aff+1&&after.open>before.open,'множитель: прививка ան- открыла слова ('+before.open+' → '+after.open+')');
+    ok(await pg.evaluate(()=>{ const j=JSON.parse(localStorage.getItem('barik-path-v1')); return !!(j&&j.u&&j.u.s1u4); }),'прогресс пути — в своём ключе barik-path-v1');
+    await pg.click('[data-act=tab][data-arg=path]'); ok(await pg.locator('svg.pom .gr.on').count()===1&&await pg.locator('.p-unit.done').count()===1,'на карте налилось зерно');
+    await pg.click('[data-act=pUnit][data-arg=s1u4]'); await pg.locator('.chip',{hasText:/^տուն/}).first().click();
+    const fam=await pg.evaluate(()=>[...document.querySelectorAll('.frow')].map(r=>[r.querySelector('b').textContent,r.classList.contains('lock')]));
+    ok(fam.some(([w,l])=>w==='անտուն'&&!l)&&fam.some(([,l])=>l),'зерно տուն: անտուն открыто, другие прививки — под замком');
+    await noH('зерно');
+    await pg.click('[data-act=pBackSeed]'); ok(await pg.locator('.u-formula').count()===1,'из зерна — назад к формуле');
+    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg=en]'); await pg.click('[data-act=tab][data-arg=path]');
+    ok((await pg.textContent('#tabs')).includes('Path')&&(await pg.textContent('.path')).includes('Pomegranate'),'путь по-английски');
+    await pg.click('[data-act=pUnit][data-arg=s1u1]'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
+    ok((await pg.textContent('.scene')).includes('neighbours'),'сцена по-английски');
+    ok(errs.length===0,'путь: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   { // озвучка (O-135): запись у каждого слова и буквы, «Проверить звук» берёт файл слова, mp3 читается
     const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), got=[];

@@ -79,6 +79,10 @@ def items():
     out = [(w['lv'], w['a']) for w in words]
     abc = open(os.path.join(ROOT, 'www', 'js', 'alphabet.js'), encoding='utf-8').read()
     out += [('L', nm) for nm in re.findall(r"nm:'([^']+)'", abc)]
+    # P — фразы курса «Гранат» (реплики сцен, ответы упражнений): data/path/say.txt пишет tools/path/pack_path.js
+    say = os.path.join(ROOT, 'data', 'path', 'say.txt')
+    if os.path.exists(say):
+        out += [('P', t.strip()) for t in open(say, encoding='utf-8') if t.strip() and not t.startswith('#')]
     seen, uniq = set(), []
     for g, t in out:
         if t not in seen:
@@ -234,7 +238,7 @@ def main():
     ap.add_argument('--tier', default='S0', help='ценовая категория службы — пишется в manifest.json; права на '
                     'коммерческое использование звука — только у платной (S0), O-135')
     ap.add_argument('--reserve', action='store_true', help='озвучить запас tools/audio_reserve/words.txt')
-    ap.add_argument('--only', default='', help='группы через запятую: A1,A2,…,C2,L (L — буквы)')
+    ap.add_argument('--only', default='', help='группы через запятую: A1,A2,…,C2,L (L — буквы), P (фразы курса)')
     ap.add_argument('--limit', type=int, default=0, help='озвучить не больше N (проба)')
     ap.add_argument('--check', action='store_true', help='без запросов: чего не хватает, манифест')
     ap.add_argument('--redo', default='', help='переозвучить записи, где текст подходит под регулярное выражение')
@@ -349,7 +353,7 @@ def main():
             run(texts[:m], tag + 'a')
             run(texts[m:], tag + 'b')
 
-        solo = [t for t in todo if SOLO.search(t) or len(t) > 45]
+        solo = [t for t in todo if SOLO.search(t) or len(t) > 45 or '։' in t.rstrip('։')]
         rest = [t for t in todo if t not in set(solo)]
         jobs = [[t] for t in solo] + [rest[i:i + args.batch] for i in range(0, len(rest), args.batch)]
         os.makedirs(os.path.dirname(META), exist_ok=True)

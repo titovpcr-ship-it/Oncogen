@@ -200,7 +200,7 @@ function unlockAudio(){
 document.addEventListener('pointerdown',unlockAudio,{capture:true});
 document.addEventListener('keydown',unlockAudio,{capture:true});
 let playTok=0;
-function playUrl(url,text,slow,btn,loud){
+function playUrl(url,text,slow,btn,loud,done){
   const tok=++playTok;
   const el=AUD.el||(AUD.el=new Audio());
   try{el.pause();}catch(e){}
@@ -209,7 +209,7 @@ function playUrl(url,text,slow,btn,loud){
   const fail=()=>{ off(); if(tok!==playTok) return; if(!speakTTS(text,slow,btn,false)&&loud) toast(T(navigator.onLine===false?'audioLoadFail':'noAudio')); };
   getAudio(url).then(src=>{
     if(tok!==playTok) return;
-    el.onended=off; el.onerror=fail;
+    el.onended=()=>{off(); if(done&&tok===playTok) done();}; el.onerror=fail;
     el.src=src;
     el.preservesPitch=true; el.webkitPreservesPitch=true;
     el.defaultPlaybackRate=slow?0.7:1; el.playbackRate=slow?0.7:1;
@@ -267,6 +267,7 @@ const ICON={
   abc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 16.5V9.8a2.8 2.8 0 0 1 5.6 0v6.7"/><path d="M13.6 12.5H16"/></svg>',
   dict:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 19.5V5.5"/></svg>',
   pic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>',
+  path:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M9.2 5.6 8.6 2.8l2 1.4L12 2l1.4 2.2 2-1.4-.6 2.8"/><path d="M12 5.4c4.8 0 8 3.4 8 7.8S16.6 21 12 21s-8-3.4-8-7.8 3.2-7.8 8-7.8z"/><path d="M9.5 12h.01M14.5 12h.01M12 15.5h.01M9.5 17h.01M14.5 17h.01"/></svg>',
   set:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>'
 };
 function firstLetter(a){const m=a.match(/[ա-ֆԱ-Ֆև]/);return m?m[0].toUpperCase():'?';}
@@ -561,19 +562,22 @@ document.addEventListener('touchend',e=>{
 /* ================= RENDER ================= */
 function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
-  const tabs=[['home',ICON.home,T('tabLearn')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
+  const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
   nav.innerHTML='<button class="tbrand" data-act="brand" aria-label="Barik">'+MARK+'<b>Barik</b><span lang="hy">Բառիկ</span></button>'+tabs.map(t=>'<button class="tab" data-act="tab" data-arg="'+t[0]+'">'+t[1]+'<span>'+esc(t[2])+'</span></button>').join('');
 }
 function render(auto){
   const el=$('#view');
-  document.body.dataset.view=(view==='session'||(view==='abcquiz'&&aq&&aq.i<aq.items.length)||(view==='pquiz'&&pq&&pq.i<pq.items.length)||(view==='tquiz'&&tq&&tq.i<tq.items.length))?'session':view;
+  document.body.dataset.view=(view==='session'||(view==='unit'&&PU&&PU.step===2&&!PU.end)||(view==='abcquiz'&&aq&&aq.i<aq.items.length)||(view==='pquiz'&&pq&&pq.i<pq.items.length)||(view==='tquiz'&&tq&&tq.i<tq.items.length))?'session':view;
   const tk=tcur(); document.body.classList.toggle('kbon',view==='tquiz'&&!!tk&&!tk.done&&kbOwn());
   if(view!=='onboard') landStop();
   if(view==='onboard'){ el.innerHTML=onboardHTML(); landStart(); }
   else if(view==='home') el.innerHTML=homeHTML();
+  else if(view==='path') el.innerHTML=pathHTML();
+  else if(view==='unit') el.innerHTML=PU?unitHTML():pathHTML();
+  else if(view==='seed') el.innerHTML=seedHTML(viewArg);
   else if(view==='topic') el.innerHTML=topicHTML(viewArg);
   else if(view==='dict'){ el.innerHTML=dictHTML(); bindDict(); }
   else if(view==='abc') el.innerHTML=abcHTML();
@@ -1537,6 +1541,238 @@ function sessionHTML(){
   return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
 }
 
+/* ================= ПУТЬ «ГРАНАТ» (O-140, этап B) =================
+   Ступени и формулы — window.BARIK_PATH.course (data/path/course.json → tools/path/pack_path.js),
+   формы и семьи слов — www/js/grammar.js. Прогресс пути — отдельный ключ barik-path-v1 (S не трогаем). */
+const GR=window.BARIK_GRAMMAR, BP=window.BARIK_PATH||{}, CRS=BP.course||{stages:[],units:[]};
+const PGK='barik-path-v1';
+let PG={u:{},tr:true};
+try{ const j=JSON.parse(localStorage.getItem(PGK)||'null'); if(j&&j.u) PG=Object.assign(PG,j); }catch(e){}
+function pgSave(){ try{localStorage.setItem(PGK,JSON.stringify(PG));}catch(e){} }
+const unitById=id=>CRS.units.find(u=>u.id===id);
+const rdx=o=>o?(o[L]||o.en||o.ru):'';
+const LNI={ru:2,en:3,fr:4,es:5};
+const lnTr=ln=>ln[LNI[L]||3];
+let ROOTS=null;
+function allRoots(){ if(!ROOTS){ ROOTS=new Set(); Object.values(BP.w||{}).forEach(p=>p[0].forEach(r=>ROOTS.add(r))); } return ROOTS; }
+function knownAff(extra){ const s=new Set(); CRS.units.forEach(u=>{ if(u.affix&&(PG.u[u.id]||u===extra)) s.add(u.affix); }); return s; }
+function knownRoots(extra){ const s=new Set(Object.keys(S.w)); CRS.units.forEach(u=>{ if(PG.u[u.id]||u===extra) u.seeds.forEach(x=>s.add(x)); }); return s; }
+function openCount(extra){ return GR?GR.openWords(knownRoots(extra),knownAff(extra)).length:0; }
+function pathStat(){
+  const kr=knownRoots(), ka=knownAff();
+  return {roots:[...kr].filter(x=>allRoots().has(x)).length, aff:ka.size, open:GR?GR.openWords(kr,ka).length:0,
+    done:CRS.units.filter(u=>PG.u[u.id]).length, total:CRS.units.length};
+}
+const nextUnit=()=>CRS.units.find(u=>!PG.u[u.id]);
+function sayText(t,btn,slow,done){
+  if(REAL_ANY) return playUrl(audioUrl(t),t,slow,btn,true,done);
+  return speakTTS(t,slow,btn,true);
+}
+/* гранат: зерно на формулу (и одно — на алфавит), налитые — пройденные */
+function pomSVG(){
+  const n=CRS.units.length+1, pen=Object.keys(S.pen||{}).length;
+  const done=[pen>=20].concat(CRS.units.map(u=>!!PG.u[u.id]));
+  const rows=n<=7?[n]:(n<=10?[3,4,n-7]:[3,4,4,n-11]);
+  let g='', k=0;
+  rows.forEach((c,ri)=>{ for(let j=0;j<c;j++,k++){
+    const x=100+(j-(c-1)/2)*30, y=96+(ri-(rows.length-1)/2)*34+(j%2?3:-3), r=(j-(c-1)/2)*9;
+    g+='<ellipse class="gr'+(done[k]?' on':'')+'" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" rx="11.5" ry="14.5" transform="rotate('+r.toFixed(0)+' '+x.toFixed(1)+' '+y.toFixed(1)+')"/>';
+  } });
+  return '<svg class="pom" viewBox="0 0 200 186" role="img" aria-label="'+esc(T('pAria',done.filter(Boolean).length,n))+'">'+
+    '<path class="pom-crown" d="M84 30 L80 8 L92 20 L100 4 L108 20 L120 8 L116 30 Z"/>'+
+    '<path class="pom-body" d="M100 26 C150 24 184 58 184 102 C184 148 146 182 100 182 C54 182 16 148 16 102 C16 58 50 24 100 26 Z"/>'+
+    '<path class="pom-in" d="M100 42 C140 42 166 70 166 102 C166 140 136 166 100 166 C64 166 34 140 34 102 C34 70 60 42 100 42 Z"/>'+g+'</svg>';
+}
+function pathHTML(){
+  const st=pathStat(), nu=nextUnit();
+  let gain='';
+  if(nu&&nu.affix){ const d=openCount(nu)-st.open; if(d>0) gain='<p class="p-gain">'+emo('🌱','ie')+' '+esc(T('pGain',nu.affix,d))+'</p>'; }
+  const go=nu?'<button class="btn primary" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T('pHarvest'))+'<span class="cap">'+esc(rdx(nu.title))+' · '+esc(nu.formula)+'</span></button>'
+    :'<p class="summary">'+esc(T('pAllDone'))+'</p>';
+  const tile=(n,k)=>'<div class="p-stat"><b>'+n+'</b><span>'+esc(T(k))+'</span></div>';
+  const stages=CRS.stages.map(s=>{
+    const us=CRS.units.filter(u=>u.stage===s.id);
+    let body='';
+    if(s.id===0){
+      const pen=Object.keys(S.pen||{}).length;
+      body='<p class="p-sub">'+esc(T('pStage0',pen,ABC.length))+'</p><div class="row2"><button class="btn secondary sm" data-act="tab" data-arg="abc">'+esc(T('tabAbc'))+'</button><button class="btn ghost sm" data-act="penGo">'+emo('✍️','ie')+' '+esc(T('pPen'))+'</button></div>';
+    }else if(us.length){
+      body='<ol class="p-units">'+us.map((u,i)=>{ const r=PG.u[u.id];
+        return '<li><button class="topic p-unit'+(r?' done':'')+'" data-act="pUnit" data-arg="'+u.id+'"><span class="t-ic">'+emo(u.ic)+'</span><span class="t-body"><span class="t-name">'+(i+1)+'. '+esc(rdx(u.title))+'</span><span class="t-hy" lang="hy">'+esc(u.formula)+'</span></span><span class="t-cnt">'+(r?'<span class="p-ok" aria-label="'+esc(T('pDoneAria'))+'">✓</span>':'›')+'</span></button></li>'; }).join('')+'</ol>';
+    }else body='<p class="p-sub p-soon">'+emo('🔒','ie')+' '+esc(T('pSoon'))+'</p>';
+    return '<section class="p-st'+(us.length||s.id===0?'':' off')+'"><header class="p-sth"><span class="p-lv">'+esc(s.lv)+'</span><span class="p-nm"><b>'+esc(T('pStageN',s.id))+' · '+esc(rdx(s))+'</b><span lang="hy">'+esc(s.hy)+'</span></span></header><p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+body+'</section>';
+  }).join('');
+  return '<div class="path"><header class="p-head">'+pomSVG()+'<div><h1 class="p-title">'+esc(T('pathTitle'))+'</h1><p class="p-lead">'+esc(T('pathLead'))+'</p></div></header>'+
+    '<div class="p-stats">'+tile(st.roots,'pcRoots')+tile(st.aff,'pcAff')+tile(st.open,'pcOpen')+tile(st.done+'/'+st.total,'pcUnits')+'</div>'+gain+
+    '<div class="actions">'+go+'</div>'+stages+'</div>';
+}
+/* формула: [окошко] — выделить */
+const fmlHTML=f=>esc(f).replace(/\[([^\]]+)\]/g,'<span class="slotw">$1</span>');
+let PU=null, seedFrom=null;
+function openUnit(id,step){
+  const u=unitById(id); if(!u) return;
+  PU={u,step:step||0,q:null,i:0,ok:0,end:false,chain:0};
+  if(REAL_ANY) u.scene.lines.forEach(l=>getAudio(audioUrl(l[1])).catch(()=>{}));
+  go('unit',id);
+}
+function unitSteps(){
+  const names=['pFormula','pScene','pPractice'];
+  return '<div class="u-steps" role="tablist">'+names.map((k,i)=>'<button role="tab" aria-selected="'+(PU.step===i)+'" class="u-step'+(PU.step===i?' on':'')+'" data-act="pStep" data-arg="'+i+'">'+(i+1)+'. '+esc(T(k))+'</button>').join('')+'</div>';
+}
+function unitHTML(){
+  const u=PU.u;
+  if(PU.step===2) return practiceHTML();
+  const idx=CRS.units.filter(x=>x.stage===u.stage).indexOf(u)+1;
+  const head='<button class="back" data-act="tab" data-arg="path">‹ '+esc(T('pathTitle'))+'</button>'+
+    '<header class="thead"><span class="t-ic">'+emo(u.ic)+'</span><div><h1 class="pg">'+esc(T('pFormulaN',idx))+'</h1><p class="u-title">'+esc(rdx(u.title))+'</p></div></header>'+unitSteps();
+  if(PU.step===0){
+    const seeds=u.seeds.map(w=>{ const x=BY[w], fam=GR?GR.family(w).length:0;
+      return '<button class="chip" data-act="pSeed" data-arg="'+esc(w)+'"><b lang="hy">'+esc(w)+'</b><span>'+esc(x?tx(x):'')+'</span>'+(fam?'<i class="fam" title="'+esc(T('pFamily'))+'">'+emo('🌱','ie')+fam+'</i>':'')+'</button>'; }).join('');
+    let aff='';
+    const A=u.affix&&BP.af&&BP.af[u.affix];
+    if(A) aff='<section class="u-aff"><h2 class="u-h">'+esc(T('pGraft'))+'</h2><p><b lang="hy" class="af">'+esc(u.affix)+'</b> — '+esc(rdx(A))+'</p><ul class="af-ex">'+A.ex.map(([d,r])=>'<li><span lang="hy">'+esc(r)+'</span> → <b lang="hy">'+esc(d)+'</b>'+(BY[d]?' <span class="af-tr">'+esc(tx(BY[d]))+'</span>':'')+'</li>').join('')+'</ul></section>';
+    return head+'<div class="u-formula" lang="hy">'+fmlHTML(u.formula)+'</div><p class="u-note">'+esc(rdx(u.note))+'</p>'+
+      '<h2 class="u-h">'+esc(T('pSeeds'))+'</h2><div class="chips">'+seeds+'</div>'+aff+
+      '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T('pToScene'))+'</button></div>';
+  }
+  const who=Object.keys(u.scene.who);
+  const lines=u.scene.lines.map((l,i)=>'<div class="ln'+(l[0]===who[0]?'':' r')+'" id="ln'+i+'"><span class="ln-who">'+esc(rdx(u.scene.who[l[0]]))+'</span><div class="ln-b"><button class="say sm" data-act="pSayLn" data-arg="'+i+'" aria-label="'+esc(T('pListen'))+'">'+ICON.spk+'</button><span class="ln-t"><span class="ln-hy" lang="hy">'+esc(l[1])+'</span>'+(PG.tr?'<span class="ln-tr">'+esc(lnTr(l))+'</span>':'')+'</span></div></div>').join('');
+  return head+'<h2 class="u-scene">'+esc(rdx(u.scene.title))+'</h2><div class="u-tools"><button class="btn secondary sm" data-act="pPlayAll">'+ICON.play+' '+esc(T('pPlayAll'))+'</button><button class="btn ghost sm" data-act="pTr">'+esc(T(PG.tr?'pTrHide':'pTrShow'))+'</button></div>'+
+    '<div class="scene">'+lines+'</div><div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="2">'+esc(T('pToPractice'))+'</button></div>';
+}
+/* практика: упражнения формулы + собрать фразу сцены + на слух */
+/* слова фразы для плиток: без знаков препинания; начало предложения — строчной (иначе заглавная
+   подсказывает порядок), кроме имён */
+const pWords=s=>{ const raw=s.split(/\s+/).filter(Boolean), out=[]; let start=true;
+  raw.forEach(t=>{ const end=/[։.!?]$/.test(t); let w=t.replace(/[։,՝.!?]/g,''); if(w){ if(start&&!/^(Մարկ|Անահիտ)/.test(w)) w=w.toLowerCase(); out.push(w); } start=end; });
+  return out; };
+function pBuild(u){
+  const items=[], uniq=(a,arr,n)=>{ const o=[a]; arr.forEach(x=>{ if(o.length<(n||4)&&o.indexOf(x)<0) o.push(x); }); return shuffle(o); };
+  u.drills.forEach(d=>{
+    if(d.t==='form') shuffle(d.items).slice(0,4).forEach(([w,a,alt])=>items.push({k:'form',w,q:d.q,a,opts:uniq(a,alt)}));
+    else if(d.t==='mean') shuffle(d.words).slice(0,3).forEach(w=>items.push({k:'mean',w,frame:d.frame,a:w,opts:uniq(w,shuffle(d.words))}));
+    else if(d.t==='table') shuffle(d.rows).slice(0,3).forEach(r=>items.push({k:'table',txt:d.frame.replace('{0}',r[0]),a:r[1],opts:uniq(r[1],shuffle(d.rows.map(x=>x[1])))}));
+    else if(d.t==='num') shuffle(d.items).slice(0,4).forEach(([n,w])=>items.push({k:'num',n,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
+    else if(d.t==='pick') shuffle(d.items).slice(0,3).forEach(([q,w])=>items.push({k:'pick',q,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
+  });
+  const ls=u.scene.lines, short=shuffle(ls.filter(l=>{ const n=pWords(l[1]).length; return n>=3&&n<=7; }));
+  short.slice(0,2).forEach(l=>items.push({k:'tiles',ln:l,a:pWords(l[1]),bank:shuffle(pWords(l[1])).map((t,id)=>({id,t,used:false})),ans:[]}));
+  if(audioOK()){ const l=shuffle(ls)[0]; items.push({k:'hear',ln:l,a:l[1],opts:uniq(l[1],shuffle(ls.map(x=>x[1])),3)}); }
+  return items;
+}
+function pStart(){ PU.q=pBuild(PU.u); PU.i=0; PU.ok=0; PU.end=false; PU.before=openCount(); PU.wasDone=!!PG.u[PU.u.id]; }
+const pCur=()=>PU&&PU.q&&PU.q[PU.i];
+function pOpt(o,i,it,lbl){
+  const cls=!it.done?'':(o===it.a?'ok':(i===it.pick?'bad':'dim'));
+  return '<button class="opt '+cls+'" data-act="pAns" data-arg="'+i+'"'+(it.done?' disabled':'')+'>'+lbl+'</button>';
+}
+const hyLbl=o=>'<span class="o-hy" lang="hy">'+esc(o)+'</span>';
+function practiceHTML(){
+  if(!PU.q) pStart();
+  if(PU.end) return pResultHTML();
+  const it=pCur(), n=PU.q.length;
+  const top='<div class="sess-top"><button class="x" data-act="pQuit" aria-label="'+esc(T('quit'))+'">✕</button><div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="'+n+'" aria-valuenow="'+PU.i+'"><i style="width:'+Math.round(100*PU.i/n)+'%"></i></div><span class="pcount">'+(PU.i+1)+' / '+n+'</span></div>';
+  let body='', foot='';
+  if(it.k==='form'){
+    const x=BY[it.w];
+    body='<p class="q">'+esc(rdx(it.q))+'</p><div class="hyw" lang="hy">'+esc(it.w)+'</div><div class="ruw">'+esc(x?tx(x):'')+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='mean'){
+    body='<p class="q">'+esc(T('pMeanQ'))+'</p><div class="hyw phrase" lang="hy">'+esc(it.frame.replace('___',it.w))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(BY[o]?tx(BY[o]):o)+'</span>')).join('')+'</div>';
+  }else if(it.k==='table'){
+    body='<p class="q">'+esc(T('pTableQ'))+'</p><div class="hyw phrase" lang="hy">'+esc(it.done?it.txt.replace('___',it.a):it.txt)+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='num'){
+    body='<p class="q">'+esc(T('pNumQ'))+'</p><div class="p-num">'+esc(String(it.n))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='pick'){
+    body='<p class="q">'+esc(T('pPickQ'))+'</p><div class="ruw big">'+esc(rdx(it.q))+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='hear'){
+    body='<p class="q">'+esc(T('pHearQ'))+'</p><button class="play-big" data-act="pHear" aria-label="'+esc(T('listenAgain'))+'">'+ICON.spk+'</button><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='tiles'){
+    const slots=it.done?it.a.map((t,p)=>'<span class="ptile '+(it.ok||(it.ans[p]!=null&&it.bank[it.ans[p]].t===t)?'ok':'bad')+'" lang="hy">'+esc(t)+'</span>').join('')
+      :it.ans.map((id,p)=>'<button class="ptile fill" data-act="pUntile" data-arg="'+p+'" lang="hy">'+esc(it.bank[id].t)+'</button>').join('');
+    body='<p class="q">'+esc(T('pTilesQ'))+'</p><div class="ruw">'+esc(lnTr(it.ln))+'</div><div class="ptiles ans" aria-live="polite">'+(slots||'<span class="ptile-ph">…</span>')+'</div>'+
+      (it.done?'':'<div class="ptiles">'+it.bank.map(b=>'<button class="ptile'+(b.used?' used':'')+'" data-act="pTile" data-arg="'+b.id+'" lang="hy"'+(b.used?' disabled':'')+'>'+esc(b.t)+'</button>').join('')+'</div>');
+    if(!it.done) foot='<div class="row2"><button class="btn secondary" data-act="pTileReset">'+esc(T('erase'))+'</button><button class="btn primary" data-act="pTileCheck"'+(it.ans.length<it.a.length?' disabled':'')+'>'+esc(T('pCheck'))+'</button></div>';
+  }
+  if(it.done){
+    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'?it.w:it.a));
+    const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):(it.k==='mean'&&BY[it.w]?tx(BY[it.w]):'');
+    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+(tr?esc(tr):'')+'</span></div>')+
+      '<button class="btn primary" data-act="pNext">'+esc(T('next'))+'</button>';
+  }
+  return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
+}
+function pSayIt(it){
+  const t=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'?it.w:it.a));
+  sayText(t,null,false);
+}
+function pAnswer(i){
+  const it=pCur(); if(!it||it.done||!it.opts||i>=it.opts.length) return;
+  it.done=true; it.pick=i; it.ok=it.opts[i]===it.a; if(it.ok) PU.ok++; else buzz();
+  render(); pSayIt(it);
+}
+function pFinish(){
+  PU.end=true;
+  const sc=Math.round(100*PU.ok/PU.q.length), r=PG.u[PU.u.id];
+  PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; pgSave();
+  PU.after=openCount(); PU.sc=sc;
+  render(); window.scrollTo(0,0);
+}
+function pResultHTML(){
+  const u=PU.u, nu=nextUnit(), d=PU.after-PU.before;
+  const A=u.affix&&BP.af&&BP.af[u.affix];
+  return '<div class="result p-res"><div class="pom-sm">'+pomSVG()+'</div><h1 class="pg">'+esc(T('pUnitDone'))+'</h1><p class="u-formula sm" lang="hy">'+fmlHTML(u.formula)+'</p>'+
+    '<p class="summary">'+esc(T('pScore',PU.ok,PU.q.length))+'</p>'+
+    (d>0?'<p class="p-gain big">'+emo('🌱','ie')+' '+esc(T('pOpened',d))+(A?' — '+esc(T('pThanks',u.affix)):'')+'</p>':'')+
+    '<div class="actions">'+(nu?'<button class="btn primary" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T('pNextUnit'))+'<span class="cap">'+esc(rdx(nu.title))+'</span></button>':'')+
+    '<button class="btn secondary" data-act="pAgain">'+esc(T('pRepeat'))+'</button><button class="btn ghost" data-act="tab" data-arg="path">'+esc(T('pBackPath'))+'</button></div></div>';
+}
+/* карточка зерна: корень и его семья; закрытые прививки — с их ступенью */
+function seedHTML(w){
+  const x=BY[w], ka=knownAff(), fam=GR?GR.family(w):[];
+  const back=seedFrom&&seedFrom.v==='unit'?'<button class="back" data-act="pBackSeed">‹ '+esc(rdx(PU&&PU.u.title))+'</button>':'<button class="back" data-act="tab" data-arg="path">‹ '+esc(T('pathTitle'))+'</button>';
+  const rows=fam.map(([d,as])=>{
+    const af=as.filter(a=>a!=='+').map(a=>GR.affixKey(a)), miss=af.filter(a=>!ka.has(a)), lv=Math.max(0,...miss.map(a=>(BP.af[a]&&BP.af[a].lv)||5));
+    return {d,af,miss,lv};
+  }).sort((a,b)=>(a.miss.length?1:0)-(b.miss.length?1:0)||a.lv-b.lv||a.d.length-b.d.length);
+  const li=rows.map(r=>{ const y=BY[r.d];
+    return '<li class="frow'+(r.miss.length?' lock':'')+'"><span class="f-main"><b lang="hy">'+esc(r.d)+'</b><span class="f-tr">'+esc(y?tx(y):'')+'</span>'+
+      (r.miss.length?'<span class="f-lock">'+emo('🔒','ie')+' '+esc(T('pLocked',r.miss.join(' '),r.lv))+'</span>':'')+'</span>'+
+      '<span class="f-af">'+r.af.map(a=>'<i lang="hy" title="'+esc(BP.af[a]?rdx(BP.af[a]):'')+'">'+esc(a)+'</i>').join('')+'</span>'+
+      (y?'<button class="say" data-act="sayFree" data-arg="'+esc(r.d)+'" aria-label="'+esc(T('sayAria',tx(y)))+'">'+ICON.spk+'</button>':'<span></span>')+'</li>'; }).join('');
+  return back+'<header class="seed-h"><div class="seed-w" lang="hy">'+esc(w)+'</div>'+(x?'<div class="trn">'+esc(trn(x))+'</div><div class="ruw">'+esc(tx(x))+'</div><button class="say" data-act="sayFree" data-arg="'+esc(w)+'" aria-label="'+esc(T('sayAria',tx(x)))+'">'+ICON.spk+'</button>':'')+'</header>'+
+    '<h2 class="u-h">'+esc(T('pFamily'))+' · '+fam.length+'</h2>'+(fam.length?'<ul class="fam-list">'+li+'</ul>':'<p class="p-sub">'+esc(T('pFamNone'))+'</p>');
+}
+const PH={
+  pUnit:a=>openUnit(a,0),
+  pStep:a=>{ if(!PU) return; PU.step=+a; if(PU.step===2){ PU.q=null; } render(); window.scrollTo(0,0); },
+  pSeed:a=>{ seedFrom={v:view,a:viewArg}; go('seed',a); },
+  pBackSeed:()=>{ if(seedFrom&&seedFrom.v==='unit'&&PU) go('unit',PU.u.id); else go('path'); },
+  pSayLn:(a,b)=>{ if(PU) sayText(PU.u.scene.lines[+a][1],b); },
+  pPlayAll:()=>{ if(!PU) return; const ls=PU.u.scene.lines, tok=++PU.chain;
+    const step=i=>{ if(!PU||PU.chain!==tok||i>=ls.length||view!=='unit'||PU.step!==1){ document.querySelectorAll('.ln.on').forEach(e=>e.classList.remove('on')); return; }
+      document.querySelectorAll('.ln.on').forEach(e=>e.classList.remove('on')); const el=document.getElementById('ln'+i); if(el){ el.classList.add('on'); el.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+      const b=el&&el.querySelector('.say'); if(!sayText(ls[i][1],b,false,()=>setTimeout(()=>step(i+1),350))) return; if(!REAL_ANY) setTimeout(()=>step(i+1),2600); };
+    step(0); },
+  pTr:()=>{ PG.tr=!PG.tr; pgSave(); render(); },
+  pAns:a=>pAnswer(+a),
+  pHear:(a,b)=>{ const it=pCur(); if(it) sayText(it.a,b); },
+  pTile:a=>{ const it=pCur(); if(!it||it.done) return; const b=it.bank[+a]; if(!b||b.used) return; b.used=true; it.ans.push(b.id); render(); },
+  pUntile:a=>{ const it=pCur(); if(!it||it.done) return; const id=it.ans.splice(+a,1)[0]; if(id!=null) it.bank[id].used=false; render(); },
+  pTileReset:()=>{ const it=pCur(); if(!it||it.done) return; it.ans=[]; it.bank.forEach(b=>b.used=false); render(); },
+  pTileCheck:()=>{ const it=pCur(); if(!it||it.done||it.ans.length<it.a.length) return; it.done=true;
+    it.ok=it.ans.map(id=>it.bank[id].t).join(' ')===it.a.join(' '); if(it.ok) PU.ok++; else buzz(); render(); pSayIt(it); },
+  pNext:()=>{ if(!PU) return; PU.i++; if(PU.i>=PU.q.length) pFinish(); else { render(); window.scrollTo(0,0); const it=pCur(); if(it&&it.k==='hear') sayText(it.a,document.querySelector('.play-big')); } },
+  pQuit:()=>{ if(!PU) return; PU.step=1; PU.q=null; render(); },
+  pAgain:()=>{ if(!PU) return; PU.q=null; PU.step=2; render(); window.scrollTo(0,0); }
+};
+document.addEventListener('keydown',e=>{
+  if(view!=='unit'||!PU||PU.step!==2||!PU.q||PU.end) return;
+  const it=pCur(); if(!it) return;
+  if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
+  if(/^[1-4]$/.test(e.key)&&it.opts&&!it.done){ pAnswer(+e.key-1); return; }
+  if(e.key==='Enter'){ e.preventDefault(); if(it.done) PH.pNext(); else if(it.k==='tiles') PH.pTileCheck(); }
+});
+
 /* ================= EVENTS ================= */
 let docFrom='settings';
 const H={
@@ -1687,6 +1923,7 @@ const H={
     S.w={}; S.st={day:0,streak:0}; S.pen={}; S.reset=Date.now(); resetArm=0; save(); render(); toast(T('resetDone'));
   }
 };
+Object.assign(H,PH);
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]'); if(!b||b.disabled||b.tagName==='FORM') return;
   const f=H[b.dataset.act]; if(f) f(b.dataset.arg,b,e);
@@ -1728,6 +1965,8 @@ function onBack(){
   if(view==='doc'){H.docBack(); return true;}
   if(view==='paywall'){H.pwClose(); return true;}
   if(view==='account'){H.accBack(); return true;}
+  if(view==='unit'){ if(PU&&PU.step===2&&!PU.end) H.pQuit(); else go('path'); return true; }
+  if(view==='seed'){H.pBackSeed(); return true;}
   if(view==='onboard'||view==='home') return false;
   go('home'); return true;
 }
@@ -1747,5 +1986,5 @@ render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

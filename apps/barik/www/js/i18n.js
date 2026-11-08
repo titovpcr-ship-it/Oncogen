@@ -8,6 +8,18 @@ const words=n=>n===1?'word':'words';
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 
 const ru={
+  tabPath:'Путь', pathTitle:'Путь «Гранат»', pAria:(a,b)=>'Гранат: налито зёрен '+a+' из '+b,
+  pathLead:'Армянский растёт из зёрен: корень и прививка дают десятки слов, формула — сотни фраз.',
+  pcRoots:'корней знаю', pcAff:'прививок', pcOpen:'слов могу образовать', pcUnits:'формул',
+  pGain:(a,n)=>'Прививка '+a+' в следующей формуле откроет ещё '+fmt(n)+' '+slov(n),
+  pHarvest:'Собрать урожай', pAllDone:'Ступень пройдена — следующая уже растёт.',
+  pStage0:(n,t)=>'Прописано букв: '+n+' из '+t, pPen:'Пропись', pSoon:'скоро · Premium', pStageN:n=>'Ступень '+n, pCan:'Я могу:',
+  pDoneAria:'пройдено', pFormula:'Формула', pScene:'Сцена', pPractice:'Практика', pFormulaN:n=>'Формула '+n,
+  pSeeds:'Зёрна урока', pGraft:'Прививка урока', pFamily:'Семья слова', pFamNone:'В словаре у этого слова нет семьи — оно само по себе зерно.',
+  pToScene:'К сцене', pToPractice:'К практике', pListen:'Слушать', pPlayAll:'Слушать сцену', pTrShow:'Показать перевод', pTrHide:'Скрыть перевод',
+  pMeanQ:'Что это значит?', pTableQ:'Вставьте слово', pNumQ:'Как сказать число?', pPickQ:'Как спросить?', pHearQ:'Что прозвучало?', pTilesQ:'Соберите фразу', pCheck:'Проверить',
+  pUnitDone:'Формула освоена', pScore:(a,b)=>'Верно '+a+' из '+b, pOpened:n=>'Вы открыли '+fmt(n)+' '+pl(n,'новое слово','новых слова','новых слов'), pThanks:a=>'спасибо прививке '+a,
+  pNextUnit:'Следующая формула', pRepeat:'Ещё раз', pBackPath:'К пути', pLocked:(a,n)=>'откроется с прививкой '+a+' · ступень '+n,
   tabsAria:'Разделы', tabLearn:'Учить', tabPics:'Картинки', tabAbc:'Алфавит', tabDict:'Словарь', tabSet:'Настройки',
   wotd:'Слово дня', tagline:'Восточноармянский: слова с картинкой, звуком и повторением по дням',
   sumFirst:(n,t,s)=>'В словаре <b>'+fmt(n)+' '+slov(n)+'</b> в '+t+' темах, от A1 до C2. Урок — '+s+' новых слов: карточка, потом упражнения.',
@@ -134,6 +146,18 @@ const ru={
 };
 
 const en={
+  tabPath:'Path', pathTitle:'The Pomegranate path', pAria:(a,b)=>'Pomegranate: '+a+' of '+b+' seeds filled',
+  pathLead:'Armenian grows from seeds: a root plus a graft gives dozens of words, a formula gives hundreds of phrases.',
+  pcRoots:'roots known', pcAff:'grafts', pcOpen:'words you can build', pcUnits:'formulas',
+  pGain:(a,n)=>'The graft '+a+' in the next formula opens '+fmt(n)+' more '+words(n),
+  pHarvest:'Gather today’s harvest', pAllDone:'Stage complete — the next one is growing.',
+  pStage0:(n,t)=>'Letters written: '+n+' of '+t, pPen:'Handwriting', pSoon:'coming soon · Premium', pStageN:n=>'Stage '+n, pCan:'I can:',
+  pDoneAria:'done', pFormula:'Formula', pScene:'Scene', pPractice:'Practice', pFormulaN:n=>'Formula '+n,
+  pSeeds:'Seeds of this lesson', pGraft:'Graft of this lesson', pFamily:'Word family', pFamNone:'This word has no family in the dictionary — it is a seed of its own.',
+  pToScene:'To the scene', pToPractice:'To practice', pListen:'Listen', pPlayAll:'Play the scene', pTrShow:'Show translation', pTrHide:'Hide translation',
+  pMeanQ:'What does it mean?', pTableQ:'Fill in the word', pNumQ:'How do you say the number?', pPickQ:'How do you ask?', pHearQ:'What did you hear?', pTilesQ:'Build the phrase', pCheck:'Check',
+  pUnitDone:'Formula mastered', pScore:(a,b)=>a+' of '+b+' correct', pOpened:n=>'You unlocked '+fmt(n)+' new '+words(n), pThanks:a=>'thanks to the graft '+a,
+  pNextUnit:'Next formula', pRepeat:'Again', pBackPath:'Back to the path', pLocked:(a,n)=>'opens with the graft '+a+' · stage '+n,
   tabsAria:'Sections', tabLearn:'Learn', tabPics:'Pictures', tabAbc:'Alphabet', tabDict:'Dictionary', tabSet:'Settings',
   wotd:'Word of the day', tagline:'Eastern Armenian words with pictures, audio and spaced repetition',
   sumFirst:(n,t,s)=>'The dictionary has <b>'+fmt(n)+' words</b> in '+t+' topics, from A1 to C2. A lesson is '+s+' new words: a card, then exercises.',
@@ -260,6 +284,18 @@ const en={
 };
 const mots=n=>n<2?'mot':'mots';
 const fr={
+  tabPath:'Parcours', pathTitle:'Le parcours Grenade', pAria:(a,b)=>'Grenade : '+a+' graines sur '+b,
+  pathLead:'L’arménien pousse à partir de graines : une racine et une greffe donnent des dizaines de mots, une formule des centaines de phrases.',
+  pcRoots:'racines connues', pcAff:'greffes', pcOpen:'mots à former', pcUnits:'formules',
+  pGain:(a,n)=>'La greffe '+a+' de la prochaine formule ouvre encore '+fmt(n)+' '+mots(n),
+  pHarvest:'Faire la récolte du jour', pAllDone:'Étape terminée — la suivante est en train de pousser.',
+  pStage0:(n,t)=>'Lettres écrites : '+n+' sur '+t, pPen:'Écriture', pSoon:'bientôt · Premium', pStageN:n=>'Étape '+n, pCan:'Je sais :',
+  pDoneAria:'terminé', pFormula:'Formule', pScene:'Scène', pPractice:'Pratique', pFormulaN:n=>'Formule '+n,
+  pSeeds:'Graines de la leçon', pGraft:'Greffe de la leçon', pFamily:'Famille du mot', pFamNone:'Ce mot n’a pas de famille dans le dictionnaire — c’est une graine à lui seul.',
+  pToScene:'Vers la scène', pToPractice:'Vers la pratique', pListen:'Écouter', pPlayAll:'Écouter la scène', pTrShow:'Afficher la traduction', pTrHide:'Masquer la traduction',
+  pMeanQ:'Qu’est-ce que ça veut dire ?', pTableQ:'Complétez', pNumQ:'Comment dire ce nombre ?', pPickQ:'Comment demander ?', pHearQ:'Qu’avez-vous entendu ?', pTilesQ:'Reconstituez la phrase', pCheck:'Vérifier',
+  pUnitDone:'Formule acquise', pScore:(a,b)=>a+' sur '+b+' justes', pOpened:n=>'Vous avez ouvert '+fmt(n)+' '+(n<2?'nouveau mot':'nouveaux mots'), pThanks:a=>'grâce à la greffe '+a,
+  pNextUnit:'Formule suivante', pRepeat:'Encore', pBackPath:'Retour au parcours', pLocked:(a,n)=>'s’ouvre avec la greffe '+a+' · étape '+n,
   tabsAria:'Sections', tabLearn:'Apprendre', tabPics:'Images', tabAbc:'Alphabet', tabDict:'Dictionnaire', tabSet:'Réglages',
   wotd:'Mot du jour', tagline:'L\'arménien oriental : des mots avec images, son et répétition espacée',
   sumFirst:(n,t,s)=>'Le dictionnaire compte <b>'+fmt(n)+' mots</b> en '+t+' thèmes, du niveau A1 au C2. Une leçon, c\'est '+s+' nouveaux mots : une carte, puis des exercices.',
@@ -387,6 +423,18 @@ const fr={
 const pals=n=>n===1?'palabra':'palabras';
 const apr=n=>n===1?'aprendida':'aprendidas';
 const es={
+  tabPath:'Camino', pathTitle:'El camino Granada', pAria:(a,b)=>'Granada: '+a+' de '+b+' semillas',
+  pathLead:'El armenio crece de semillas: una raíz y un injerto dan decenas de palabras; una fórmula, cientos de frases.',
+  pcRoots:'raíces conocidas', pcAff:'injertos', pcOpen:'palabras que puedes formar', pcUnits:'fórmulas',
+  pGain:(a,n)=>'El injerto '+a+' de la próxima fórmula abre '+fmt(n)+' '+pals(n)+' más',
+  pHarvest:'Recoger la cosecha de hoy', pAllDone:'Etapa completa: la siguiente ya está creciendo.',
+  pStage0:(n,t)=>'Letras escritas: '+n+' de '+t, pPen:'Caligrafía', pSoon:'pronto · Premium', pStageN:n=>'Etapa '+n, pCan:'Puedo:',
+  pDoneAria:'hecho', pFormula:'Fórmula', pScene:'Escena', pPractice:'Práctica', pFormulaN:n=>'Fórmula '+n,
+  pSeeds:'Semillas de la lección', pGraft:'Injerto de la lección', pFamily:'Familia de la palabra', pFamNone:'Esta palabra no tiene familia en el diccionario: es una semilla por sí sola.',
+  pToScene:'A la escena', pToPractice:'A la práctica', pListen:'Escuchar', pPlayAll:'Escuchar la escena', pTrShow:'Mostrar traducción', pTrHide:'Ocultar traducción',
+  pMeanQ:'¿Qué significa?', pTableQ:'Completa la palabra', pNumQ:'¿Cómo se dice el número?', pPickQ:'¿Cómo se pregunta?', pHearQ:'¿Qué escuchaste?', pTilesQ:'Arma la frase', pCheck:'Comprobar',
+  pUnitDone:'Fórmula dominada', pScore:(a,b)=>a+' de '+b+' correctas', pOpened:n=>'Desbloqueaste '+fmt(n)+' '+(n===1?'palabra nueva':'palabras nuevas'), pThanks:a=>'gracias al injerto '+a,
+  pNextUnit:'Siguiente fórmula', pRepeat:'Otra vez', pBackPath:'Volver al camino', pLocked:(a,n)=>'se abre con el injerto '+a+' · etapa '+n,
   tabsAria:'Secciones', tabLearn:'Aprender', tabPics:'Imágenes', tabAbc:'Alfabeto', tabDict:'Diccionario', tabSet:'Ajustes',
   wotd:'Palabra del día', tagline:'Armenio oriental: palabras con imagen, sonido y repaso espaciado',
   sumFirst:(n,t,s)=>'El diccionario tiene <b>'+fmt(n)+' palabras</b> en '+t+' temas, del nivel A1 al C2. Una lección son '+s+' palabras nuevas: una tarjeta y luego ejercicios.',

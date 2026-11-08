@@ -93,5 +93,31 @@ for (const [a, v] of Object.entries(ctx.BARIK_PATH.af)) {
     ok(p && p[0].includes(r) && p[1].some(x => G.affixKey(x) === a), `прививка ${a}: пример ${d} ← ${r}`);
   }
 }
+// 5. курс этапа B (data/path/course.json, упакован в path_data.js): формы упражнений — эталонные,
+//    у каждой формулы сцена и упражнения, переводы на 4 языка, фразы озвучены
+const C = ctx.BARIK_PATH.course;
+ok(C && C.units.length >= 9 && C.stages.length === 6, 'курс: 6 ступеней и не меньше 9 формул');
+const DICT = new Set();
+{ const c2 = {}; c2.window = c2; vm.createContext(c2); vm.runInContext(fs.readFileSync(path.join(APP, 'www/js/data.js'), 'utf8'), c2);
+  for (const t of c2.BARARAN_DATA.topics) for (const r of t.w) DICT.add(r[0]); }
+const MAN = JSON.parse(fs.readFileSync(path.join(APP, 'www/audio/manifest.json'), 'utf8'));
+function fnv(b, h) { for (const x of b) h = Math.imul(h ^ x, 0x01000193); return h >>> 0; }
+const aid = t => { const b = Buffer.from(t, 'utf8'); return [fnv(b, 0x811c9dc5), fnv(b, 0x050c5d1f)].map(n => n.toString(16).padStart(8, '0')).join(''); };
+const voiced = t => fs.existsSync(path.join(APP, 'www/audio', MAN.dir, aid(t).slice(0, 2), aid(t) + '.mp3'));
+let noVoice = [];
+for (const u of C.units) {
+  ok(u.scene.lines.length >= 5 && u.drills.length >= 1, `${u.id}: сцена из 5+ реплик и упражнения`);
+  ok(u.scene.lines.every(l => l.length === 6 && l.every(Boolean)), `${u.id}: у реплик 4 перевода`);
+  ok(u.seeds.every(w => DICT.has(w)), `${u.id}: все зёрна есть в словаре`);
+  noVoice = noVoice.concat(u.scene.lines.map(l => l[1]).filter(t => !voiced(t)));
+  for (const d of u.drills.filter(d => d.t === 'form')) {
+    for (const [w, a, alt] of d.items) {
+      const g = (d.kind === 'noun' ? gold.nouns : gold.verbs)[w];
+      ok(g && clean(String(g[d.key])) === a, `${u.id}: ${w} ${d.key} = ${a} — как в эталоне`);
+      ok(alt.length >= 1 && !alt.includes(a), `${u.id}: у ${w} есть другие формы для выбора`);
+    }
+  }
+}
+ok(noVoice.length === 0, 'реплики сцен озвучены, нет: ' + noVoice.slice(0, 3).join(' | '));
 console.log(`проверок ${checks}, ` + (fails ? 'ПРОВАЛОВ: ' + fails : 'ВСЁ ЗЕЛЁНОЕ'));
 process.exit(fails ? 1 : 0);
