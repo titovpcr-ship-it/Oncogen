@@ -14,6 +14,7 @@
   {"id": 5, "hy": "Պտուղ", "lv": "B2", "ru": "Плод", "en": "Fruit", "fr": "Fruit", "es": "Fruto",
    "can": {"ru": "читаю подлинные тексты и понимаю живую речь", "en": "I can read authentic texts and follow natural speech", "fr": "je lis des textes authentiques et je comprends la langue parlée", "es": "leo textos auténticos y entiendo el habla real"}}
  ],
+ "place": {"_": "Входной тест: глаголы для вопроса о временах (ступень 2) — настоящее, аорист, будущее 1-го лица.", "verbs": ["գրել", "կարդալ", "խոսել", "խմել", "աշխատել"]},
  "units": [
   {"id": "s1u1", "stage": 1, "ic": "🤝",
    "title": {"ru": "Я — …", "en": "I am …", "fr": "Je suis …", "es": "Yo soy …"},

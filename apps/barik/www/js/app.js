@@ -1564,14 +1564,17 @@ function pathStat(){
     done:CRS.units.filter(u=>PG.u[u.id]).length, total:CRS.units.length};
 }
 const nextUnit=()=>CRS.units.find(u=>!PG.u[u.id]);
+/* ступень 0 пройдена: проверка чтения (или входной тест) либо обведено 20+ букв */
+function stage0Done(){ return !!PG.abc||Object.keys(S.pen||{}).length>=20; }
+const harvestedToday=()=>!!(PG.h&&PG.h.last===today());
 function sayText(t,btn,slow,done){
   if(REAL_ANY) return playUrl(audioUrl(t),t,slow,btn,true,done);
   return speakTTS(t,slow,btn,true);
 }
 /* гранат: зерно на формулу (и одно — на алфавит), налитые — пройденные */
 function pomSVG(){
-  const n=CRS.units.length+1, pen=Object.keys(S.pen||{}).length;
-  const done=[pen>=20].concat(CRS.units.map(u=>!!PG.u[u.id]));
+  const n=CRS.units.length+1;
+  const done=[stage0Done()].concat(CRS.units.map(u=>!!PG.u[u.id]));
   const rows=n<=7?[n]:(n<=10?[3,4,n-7]:[3,4,4,n-11]);
   let g='', k=0;
   rows.forEach((c,ri)=>{ for(let j=0;j<c;j++,k++){
@@ -1587,15 +1590,25 @@ function pathHTML(){
   const st=pathStat(), nu=nextUnit();
   let gain='';
   if(nu&&nu.affix){ const d=openCount(nu)-st.open; if(d>0) gain='<p class="p-gain">'+emo('🌱','ie')+' '+esc(T('pGain',nu.affix,d))+'</p>'; }
-  const go=nu?'<button class="btn primary" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T('pHarvest'))+'<span class="cap">'+esc(rdx(nu.title))+' · '+esc(nu.formula)+'</span></button>'
-    :'<p class="summary">'+esc(T('pAllDone'))+'</p>';
+  /* что делать сегодня: новичку — первая формула или входной тест; дальше — «урожай дня» (повторение
+     пройденных формул), после него — следующая формула */
+  const nuBtn=(cls,k)=>nu?'<button class="btn '+cls+'" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T(k))+'<span class="cap">'+esc(rdx(nu.title))+' · '+esc(nu.formula)+'</span></button>':'';
+  let go='';
+  if(!st.done&&!PG.placed) go='<p class="p-sub">'+esc(T('pPlaceOffer'))+'</p>'+nuBtn('primary','pStart')+'<button class="btn secondary" data-act="pPlace">'+emo('🧭','ie')+' '+esc(T('pPlaceGo'))+'</button>';
+  else if(st.done&&!harvestedToday()) go='<button class="btn primary" data-act="pHarvestGo">'+esc(T('pHarvest'))+'<span class="cap">'+esc(T('pHarvestCap',nu?rdx(nu.title):''))+'</span></button>'+nuBtn('ghost','pNextUnit');
+  else{
+    const h=PG.h||{};
+    if(harvestedToday()) go='<p class="p-gain">✓ '+esc(T('pHarvestToday'))+((h.streak||0)>=2?' · '+emo('🔥','ie')+' '+esc(T('pStreakN',h.streak)):'')+'</p>';
+    go+=nu?nuBtn('primary','pNextUnit'):'<p class="summary">'+esc(T('pAllDone'))+'</p>';
+  }
   const tile=(n,k)=>'<div class="p-stat"><b>'+n+'</b><span>'+esc(T(k))+'</span></div>';
   const stages=CRS.stages.map(s=>{
     const us=CRS.units.filter(u=>u.stage===s.id);
     let body='';
     if(s.id===0){
       const pen=Object.keys(S.pen||{}).length;
-      body='<p class="p-sub">'+esc(T('pStage0',pen,ABC.length))+'</p><div class="row2"><button class="btn secondary sm" data-act="tab" data-arg="abc">'+esc(T('tabAbc'))+'</button><button class="btn ghost sm" data-act="penGo">'+emo('✍️','ie')+' '+esc(T('pPen'))+'</button></div>';
+      body='<p class="p-sub">'+(stage0Done()?'<span class="p-ok sm">✓</span> '+esc(T('pStage0Done'))+' · ':'')+esc(T('pStage0',pen,ABC.length))+'</p><div class="row2"><button class="btn secondary sm" data-act="tab" data-arg="abc">'+esc(T('tabAbc'))+'</button><button class="btn ghost sm" data-act="penGo">'+emo('✍️','ie')+' '+esc(T('pPen'))+'</button></div>'+
+        '<button class="btn '+(stage0Done()?'ghost':'secondary')+' sm p-read" data-act="pRead">'+emo('👀','ie')+' '+esc(T('pReadGo'))+'</button>';
     }else if(us.length){
       body='<ol class="p-units">'+us.map((u,i)=>{ const r=PG.u[u.id];
         return '<li><button class="topic p-unit'+(r?' done':'')+'" data-act="pUnit" data-arg="'+u.id+'"><span class="t-ic">'+emo(u.ic)+'</span><span class="t-body"><span class="t-name">'+(i+1)+'. '+esc(rdx(u.title))+'</span><span class="t-hy" lang="hy">'+esc(u.formula)+'</span></span><span class="t-cnt">'+(r?'<span class="p-ok" aria-label="'+esc(T('pDoneAria'))+'">✓</span>':'›')+'</span></button></li>'; }).join('')+'</ol>';
@@ -1604,14 +1617,15 @@ function pathHTML(){
   }).join('');
   return '<div class="path"><header class="p-head">'+pomSVG()+'<div><h1 class="p-title">'+esc(T('pathTitle'))+'</h1><p class="p-lead">'+esc(T('pathLead'))+'</p></div></header>'+
     '<div class="p-stats">'+tile(st.roots,'pcRoots')+tile(st.aff,'pcAff')+tile(st.open,'pcOpen')+tile(st.done+'/'+st.total,'pcUnits')+'</div>'+gain+
-    '<div class="actions">'+go+'</div>'+stages+'</div>';
+    '<div class="actions">'+go+'</div>'+stages+
+    ((PG.placed||st.done)?'<div class="actions page-actions"><button class="btn ghost sm" data-act="pPlace">'+emo('🧭','ie')+' '+esc(T('pPlaceAgain'))+'</button></div>':'')+'</div>';
 }
 /* формула: [окошко] — выделить */
 const fmlHTML=f=>esc(f).replace(/\[([^\]]+)\]/g,'<span class="slotw">$1</span>');
 let PU=null, seedFrom=null;
 function openUnit(id,step){
   const u=unitById(id); if(!u) return;
-  PU={u,step:step||0,q:null,i:0,ok:0,end:false,chain:0};
+  PU={kind:'unit',u,step:step||0,q:null,i:0,ok:0,end:false,chain:0};
   if(REAL_ANY) u.scene.lines.forEach(l=>getAudio(audioUrl(l[1])).catch(()=>{}));
   go('unit',id);
 }
@@ -1646,8 +1660,9 @@ function unitHTML(){
 const pWords=s=>{ const raw=s.split(/\s+/).filter(Boolean), out=[]; let start=true;
   raw.forEach(t=>{ const end=/[։.!?]$/.test(t); let w=t.replace(/[։,՝.!?]/g,''); if(w){ if(start&&!/^(Մարկ|Անահիտ)/.test(w)) w=w.toLowerCase(); out.push(w); } start=end; });
   return out; };
+const pUniq=(a,arr,n)=>{ const o=[a]; arr.forEach(x=>{ if(o.length<(n||4)&&o.indexOf(x)<0) o.push(x); }); return shuffle(o); };
 function pBuild(u){
-  const items=[], uniq=(a,arr,n)=>{ const o=[a]; arr.forEach(x=>{ if(o.length<(n||4)&&o.indexOf(x)<0) o.push(x); }); return shuffle(o); };
+  const items=[], uniq=pUniq;
   u.drills.forEach(d=>{
     if(d.t==='form') shuffle(d.items).slice(0,4).forEach(([w,a,alt])=>items.push({k:'form',w,q:d.q,a,opts:uniq(a,alt)}));
     else if(d.t==='mean') shuffle(d.words).slice(0,3).forEach(w=>items.push({k:'mean',w,frame:d.frame,a:w,opts:uniq(w,shuffle(d.words))}));
@@ -1659,6 +1674,40 @@ function pBuild(u){
   short.slice(0,2).forEach(l=>items.push({k:'tiles',ln:l,a:pWords(l[1]),bank:shuffle(pWords(l[1])).map((t,id)=>({id,t,used:false})),ans:[]}));
   if(audioOK()){ const l=shuffle(ls)[0]; items.push({k:'hear',ln:l,a:l[1],opts:uniq(l[1],shuffle(ls.map(x=>x[1])),3)}); }
   return items;
+}
+/* чтение (ступень 0): армянское слово A1 → транскрипция на языке интерфейса */
+function readItems(n){
+  const pool=shuffle(WORDS.filter(w=>TOPICS[w.t].lv==='A1'&&/^[ա-ֆ]{3,7}$/.test(w.a)));
+  // похожие слова: та же первая буква, та же длина, общие буквы — чтобы угадать по одной букве было нельзя
+  const sim=(w,x)=>(x.a[0]===w.a[0]?3:0)+(x.a.length===w.a.length?1:0)+[...new Set(x.a)].filter(c=>w.a.indexOf(c)>=0).length/w.a.length;
+  return pool.slice(0,n).map(w=>{ const near=pool.slice(n).filter(x=>trn(x)!==trn(w)&&Math.abs(x.a.length-w.a.length)<=1).sort((x,y)=>sim(w,y)-sim(w,x)).slice(0,8);
+    return {k:'read',w:w.a,a:trn(w),opts:pUniq(trn(w),shuffle(near).map(trn))}; });
+}
+/* входной тест: чтение ×4, по вопросу на каждую формулу ступени 1, времена глагола ×3 (ступень 2) */
+const VQ=[['pres',{ru:'«я …» — сейчас',en:'“I …” — now',fr:'« je … » — maintenant',es:'«yo …» — ahora'}],
+  ['aor',{ru:'«я …» — вчера, один раз',en:'“I …” — yesterday, once',fr:'« je … » — hier, une fois',es:'«yo …» — ayer, una vez'}],
+  ['fut',{ru:'«я …» — завтра',en:'“I …” — tomorrow',fr:'« je … » — demain',es:'«yo …» — mañana'}]];
+function verbItems(){
+  return shuffle((CRS.place&&CRS.place.verbs)||[]).slice(0,3).map((v,i)=>{
+    const f=k=>GR.verb(v,k)[0], a=f(VQ[i][0]);
+    return {k:'form',w:v,q:VQ[i][1],a,opts:pUniq(a,VQ.map(z=>f(z[0])).concat([GR.verb(v,'pres')[2]])),tag:'s2'}; });
+}
+function placeItems(){
+  const q=readItems(4).map(x=>Object.assign(x,{tag:'abc'}));
+  CRS.units.forEach(u=>{ const c=pBuild(u).filter(x=>x.k!=='tiles'&&x.k!=='hear'); if(c.length) q.push(Object.assign(shuffle(c)[0],{tag:u.id})); });
+  return q.concat(GR?verbItems():[]);
+}
+/* урожай дня: повторение пройденных формул (до 3 формул, 9 заданий) */
+function harvestItems(){
+  const done=shuffle(CRS.units.filter(u=>PG.u[u.id])).slice(0,3), per=Math.ceil(9/Math.max(1,done.length));
+  let q=[]; done.forEach(u=>{ q=q.concat(shuffle(pBuild(u)).slice(0,per)); });
+  return shuffle(q).slice(0,9);
+}
+function startDrill(kind){
+  const q=kind==='place'?placeItems():(kind==='read'?readItems(8):harvestItems());
+  if(!q.length) return;
+  PU={kind,u:null,step:2,q,i:0,ok:0,end:false,chain:0,before:openCount()};
+  go('unit',kind);
 }
 function pStart(){ PU.q=pBuild(PU.u); PU.i=0; PU.ok=0; PU.end=false; PU.before=openCount(); PU.wasDone=!!PG.u[PU.u.id]; }
 const pCur=()=>PU&&PU.q&&PU.q[PU.i];
@@ -1684,6 +1733,8 @@ function practiceHTML(){
     body='<p class="q">'+esc(T('pNumQ'))+'</p><div class="p-num">'+esc(String(it.n))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='pick'){
     body='<p class="q">'+esc(T('pPickQ'))+'</p><div class="ruw big">'+esc(rdx(it.q))+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='read'){
+    body='<p class="q">'+esc(T('pReadQ'))+'</p><div class="hyw" lang="hy">'+esc(it.w)+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(o)+'</span>')).join('')+'</div>';
   }else if(it.k==='hear'){
     body='<p class="q">'+esc(T('pHearQ'))+'</p><button class="play-big" data-act="pHear" aria-label="'+esc(T('listenAgain'))+'">'+ICON.spk+'</button><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='tiles'){
@@ -1694,15 +1745,15 @@ function practiceHTML(){
     if(!it.done) foot='<div class="row2"><button class="btn secondary" data-act="pTileReset">'+esc(T('erase'))+'</button><button class="btn primary" data-act="pTileCheck"'+(it.ans.length<it.a.length?' disabled':'')+'>'+esc(T('pCheck'))+'</button></div>';
   }
   if(it.done){
-    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'?it.w:it.a));
-    const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):(it.k==='mean'&&BY[it.w]?tx(BY[it.w]):'');
+    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:it.a));
+    const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
     foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+(tr?esc(tr):'')+'</span></div>')+
       '<button class="btn primary" data-act="pNext">'+esc(T('next'))+'</button>';
   }
   return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
 }
 function pSayIt(it){
-  const t=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'?it.w:it.a));
+  const t=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:it.a));
   sayText(t,null,false);
 }
 function pAnswer(i){
@@ -1712,12 +1763,50 @@ function pAnswer(i){
 }
 function pFinish(){
   PU.end=true;
-  const sc=Math.round(100*PU.ok/PU.q.length), r=PG.u[PU.u.id];
-  PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; pgSave();
-  PU.after=openCount(); PU.sc=sc;
+  const sc=Math.round(100*PU.ok/PU.q.length);
+  if(PU.kind==='unit'){ const r=PG.u[PU.u.id]; PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; }
+  else if(PU.kind==='read'){ PU.pass=PU.ok>=Math.ceil(PU.q.length*0.75); if(PU.pass) PG.abc=1; }
+  else if(PU.kind==='place') placeApply();
+  else if(PU.kind==='harvest'){ const td=today(), h=PG.h||{}; if(h.last!==td){ h.streak=h.last===td-1?(h.streak||0)+1:1; h.last=td; } PG.h=h; touchStreak(); save(); }
+  pgSave(); PU.after=openCount(); PU.sc=sc;
   render(); window.scrollTo(0,0);
 }
+/* входной тест: читает → ступень 0 пройдена, верно отвеченные формулы отмечены; времена глагола — ступень 2 */
+function placeApply(){
+  const by={}; PU.q.forEach(x=>{ (by[x.tag]=by[x.tag]||[]).push(!!x.ok); });
+  const cnt=t=>(by[t]||[]).filter(Boolean).length, abc=cnt('abc')>=3;
+  const ids=CRS.units.filter(u=>cnt(u.id)>0).map(u=>u.id), v=cnt('s2');
+  if(abc){ PG.abc=1; ids.forEach(id=>{ if(!PG.u[id]) PG.u[id]={d:Date.now(),b:100,p:1}; }); }
+  const lv=!abc?0:(ids.length>=7&&v>=2?2:1);
+  PG.placed={d:Date.now(),lv,abc:cnt('abc'),an:(by.abc||[]).length,u:abc?ids.length:0,ut:CRS.units.length,v,vn:(by.s2||[]).length};
+}
+function drillResultHTML(){
+  const nu=nextUnit(), d=PU.after-PU.before, due=counts().due;
+  const gain=d>0?'<p class="p-gain big">'+emo('🌱','ie')+' '+esc(T('pOpened',d))+'</p>':'';
+  const nuBtn=cls=>nu?'<button class="btn '+cls+'" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T('pNextUnit'))+'<span class="cap">'+esc(rdx(nu.title))+'</span></button>':'';
+  const back='<button class="btn ghost" data-act="tab" data-arg="path">'+esc(T('pBackPath'))+'</button>';
+  let h='', body='', acts='';
+  if(PU.kind==='place'){
+    const P=PG.placed, s=CRS.stages[P.lv]||CRS.stages[0];
+    const row=(k,a,b)=>'<li><span>'+esc(T(k))+'</span><b>'+a+' / '+b+'</b></li>';
+    h=T('pPlTitle',P.lv,rdx(s));
+    body='<p class="summary">'+esc(T('pPlLv'+P.lv))+'</p><ul class="pl-rows">'+row('pPlRead',P.abc,P.an)+row('pPlUnits',P.u,P.ut)+row('pPlVerbs',P.v,P.vn)+'</ul>'+
+      '<p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+gain;
+    acts=P.lv===0?'<button class="btn primary" data-act="tab" data-arg="abc">'+esc(T('pGoAbcStart'))+'</button>':nuBtn('primary');
+  }else if(PU.kind==='read'){
+    h=T(PU.pass?'pReadPass':'pReadFail');
+    body='<p class="summary">'+esc(T('pScore',PU.ok,PU.q.length))+'</p>';
+    acts=PU.pass?nuBtn('primary'):'<button class="btn primary" data-act="tab" data-arg="abc">'+esc(T('tabAbc'))+'</button><button class="btn secondary" data-act="pAgain">'+esc(T('pRepeat'))+'</button>';
+  }else{
+    const st=(PG.h&&PG.h.streak)||1;
+    h=T('pHarvestDone');
+    body='<p class="summary">'+esc(T('pScore',PU.ok,PU.q.length))+'</p><p class="p-gain big">'+emo('🔥','ie')+' '+esc(T('pStreakN',st))+'</p>';
+    acts=nuBtn('primary')+(due?'<button class="btn secondary" data-act="review">'+esc(T('pReviewWords',due))+'</button>':'');
+  }
+  return '<div class="result p-res"><div class="pom-sm">'+pomSVG()+'</div><h1 class="pg">'+esc(h)+'</h1>'+body+'<div class="actions">'+acts+back+'</div></div>';
+}
 function pResultHTML(){
+  if(PU.kind!=='unit') return drillResultHTML();
   const u=PU.u, nu=nextUnit(), d=PU.after-PU.before;
   const A=u.affix&&BP.af&&BP.af[u.affix];
   return '<div class="result p-res"><div class="pom-sm">'+pomSVG()+'</div><h1 class="pg">'+esc(T('pUnitDone'))+'</h1><p class="u-formula sm" lang="hy">'+fmlHTML(u.formula)+'</p>'+
@@ -1762,8 +1851,11 @@ const PH={
   pTileCheck:()=>{ const it=pCur(); if(!it||it.done||it.ans.length<it.a.length) return; it.done=true;
     it.ok=it.ans.map(id=>it.bank[id].t).join(' ')===it.a.join(' '); if(it.ok) PU.ok++; else buzz(); render(); pSayIt(it); },
   pNext:()=>{ if(!PU) return; PU.i++; if(PU.i>=PU.q.length) pFinish(); else { render(); window.scrollTo(0,0); const it=pCur(); if(it&&it.k==='hear') sayText(it.a,document.querySelector('.play-big')); } },
-  pQuit:()=>{ if(!PU) return; PU.step=1; PU.q=null; render(); },
-  pAgain:()=>{ if(!PU) return; PU.q=null; PU.step=2; render(); window.scrollTo(0,0); }
+  pQuit:()=>{ if(!PU) return; if(PU.kind!=='unit'){ PU=null; go('path'); return; } PU.step=1; PU.q=null; render(); },
+  pPlace:()=>startDrill('place'),
+  pRead:()=>startDrill('read'),
+  pHarvestGo:()=>startDrill('harvest'),
+  pAgain:()=>{ if(!PU) return; if(PU.kind!=='unit'){ startDrill(PU.kind); return; } PU.q=null; PU.step=2; render(); window.scrollTo(0,0); }
 };
 document.addEventListener('keydown',e=>{
   if(view!=='unit'||!PU||PU.step!==2||!PU.q||PU.end) return;

@@ -8,6 +8,15 @@ const words=n=>n===1?'word':'words';
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 
 const ru={
+  pStart:'Начать путь', pPlaceOffer:'Уже немного знаете армянский? Входной тест за 5 минут поставит на вашу ступень и отметит знакомые формулы.',
+  pPlaceGo:'Входной тест · 5 минут', pPlaceAgain:'Пройти входной тест заново', pReadQ:'Как это читается?', pReadGo:'Проверка чтения',
+  pReadPass:'Читаете по-армянски — ступень 0 пройдена', pReadFail:'Пока трудно — загляните в алфавит и попробуйте снова', pStage0Done:'пройдено',
+  pPlTitle:(n,s)=>'Ваша ступень: '+n+' · '+s, pPlRead:'Чтение', pPlUnits:'Формулы ступени 1', pPlVerbs:'Времена глагола (ступень 2)',
+  pPlLv0:'Начните с алфавита: 39 букв — и армянский откроется. Ступень 1 ждёт сразу после.',
+  pPlLv1:'Вы на ступени 1. Знакомые формулы отмечены, остальные — по одной в день.',
+  pPlLv2:'Ступень 1 вам по силам — она отмечена. Ступень 2 скоро; пока закрепите формулы урожаем дня.',
+  pGoAbcStart:'Начать с алфавита', pHarvestCap:t=>'повторение пройденного'+(t?' · затем: '+t:''), pHarvestDone:'Урожай собран',
+  pHarvestToday:'урожай сегодня собран', pStreakN:n=>n+' '+pl(n,'день','дня','дней')+' подряд', pReviewWords:n=>'Повторить слова словаря: '+n,
   tabPath:'Путь', pathTitle:'Путь «Гранат»', pAria:(a,b)=>'Гранат: налито зёрен '+a+' из '+b,
   pathLead:'Армянский растёт из зёрен: корень и прививка дают десятки слов, формула — сотни фраз.',
   pcRoots:'корней знаю', pcAff:'прививок', pcOpen:'слов могу образовать', pcUnits:'формул',
@@ -146,6 +155,15 @@ const ru={
 };
 
 const en={
+  pStart:'Start the path', pPlaceOffer:'Know some Armenian already? A 5-minute placement test puts you on your stage and marks the formulas you know.',
+  pPlaceGo:'Placement test · 5 min', pPlaceAgain:'Retake the placement test', pReadQ:'How is it read?', pReadGo:'Reading check',
+  pReadPass:'You read Armenian — stage 0 complete', pReadFail:'Not yet — visit the alphabet and try again', pStage0Done:'done',
+  pPlTitle:(n,s)=>'Your stage: '+n+' · '+s, pPlRead:'Reading', pPlUnits:'Stage 1 formulas', pPlVerbs:'Verb tenses (stage 2)',
+  pPlLv0:'Start with the alphabet: 39 letters and Armenian opens up. Stage 1 comes right after.',
+  pPlLv1:'You are on stage 1. Formulas you know are marked; the rest, one a day.',
+  pPlLv2:'Stage 1 is within your reach — it is marked. Stage 2 is coming; meanwhile keep the formulas fresh with the daily harvest.',
+  pGoAbcStart:'Start with the alphabet', pHarvestCap:t=>'review what you learned'+(t?' · then: '+t:''), pHarvestDone:'Harvest gathered',
+  pHarvestToday:'today’s harvest is in', pStreakN:n=>n+' '+(n===1?'day':'days')+' in a row', pReviewWords:n=>'Review dictionary words: '+n,
   tabPath:'Path', pathTitle:'The Pomegranate path', pAria:(a,b)=>'Pomegranate: '+a+' of '+b+' seeds filled',
   pathLead:'Armenian grows from seeds: a root plus a graft gives dozens of words, a formula gives hundreds of phrases.',
   pcRoots:'roots known', pcAff:'grafts', pcOpen:'words you can build', pcUnits:'formulas',
@@ -284,6 +302,15 @@ const en={
 };
 const mots=n=>n<2?'mot':'mots';
 const fr={
+  pStart:'Commencer le parcours', pPlaceOffer:'Vous connaissez déjà un peu l’arménien ? Un test de 5 minutes vous place à votre étape et coche les formules connues.',
+  pPlaceGo:'Test de niveau · 5 min', pPlaceAgain:'Refaire le test de niveau', pReadQ:'Comment ça se lit ?', pReadGo:'Test de lecture',
+  pReadPass:'Vous lisez l’arménien — étape 0 terminée', pReadFail:'Pas encore — passez par l’alphabet et réessayez', pStage0Done:'terminé',
+  pPlTitle:(n,s)=>'Votre étape : '+n+' · '+s, pPlRead:'Lecture', pPlUnits:'Formules de l’étape 1', pPlVerbs:'Temps du verbe (étape 2)',
+  pPlLv0:'Commencez par l’alphabet : 39 lettres, et l’arménien s’ouvre. L’étape 1 suit aussitôt.',
+  pPlLv1:'Vous êtes à l’étape 1. Les formules connues sont cochées ; les autres, une par jour.',
+  pPlLv2:'L’étape 1 est à votre portée — elle est cochée. L’étape 2 arrive ; d’ici là, entretenez les formules avec la récolte du jour.',
+  pGoAbcStart:'Commencer par l’alphabet', pHarvestCap:t=>'révision de l’acquis'+(t?' · ensuite : '+t:''), pHarvestDone:'Récolte faite',
+  pHarvestToday:'récolte du jour faite', pStreakN:n=>n+' '+(n<2?'jour':'jours')+' d’affilée', pReviewWords:n=>'Réviser les mots du dictionnaire : '+n,
   tabPath:'Parcours', pathTitle:'Le parcours Grenade', pAria:(a,b)=>'Grenade : '+a+' graines sur '+b,
   pathLead:'L’arménien pousse à partir de graines : une racine et une greffe donnent des dizaines de mots, une formule des centaines de phrases.',
   pcRoots:'racines connues', pcAff:'greffes', pcOpen:'mots à former', pcUnits:'formules',
@@ -423,6 +450,15 @@ const fr={
 const pals=n=>n===1?'palabra':'palabras';
 const apr=n=>n===1?'aprendida':'aprendidas';
 const es={
+  pStart:'Empezar el camino', pPlaceOffer:'¿Ya sabes algo de armenio? Un test de 5 minutos te ubica en tu etapa y marca las fórmulas que conoces.',
+  pPlaceGo:'Test de nivel · 5 min', pPlaceAgain:'Repetir el test de nivel', pReadQ:'¿Cómo se lee?', pReadGo:'Prueba de lectura',
+  pReadPass:'Lees armenio: etapa 0 completa', pReadFail:'Todavía no: pasa por el alfabeto y vuelve a intentarlo', pStage0Done:'hecho',
+  pPlTitle:(n,s)=>'Tu etapa: '+n+' · '+s, pPlRead:'Lectura', pPlUnits:'Fórmulas de la etapa 1', pPlVerbs:'Tiempos del verbo (etapa 2)',
+  pPlLv0:'Empieza por el alfabeto: 39 letras y el armenio se abre. La etapa 1 viene justo después.',
+  pPlLv1:'Estás en la etapa 1. Las fórmulas que conoces están marcadas; las demás, una por día.',
+  pPlLv2:'La etapa 1 está a tu alcance: quedó marcada. La etapa 2 llega pronto; mientras, repasa las fórmulas con la cosecha del día.',
+  pGoAbcStart:'Empezar por el alfabeto', pHarvestCap:t=>'repaso de lo aprendido'+(t?' · después: '+t:''), pHarvestDone:'Cosecha recogida',
+  pHarvestToday:'cosecha de hoy recogida', pStreakN:n=>n+' '+(n===1?'día':'días')+' seguidos', pReviewWords:n=>'Repasar palabras del diccionario: '+n,
   tabPath:'Camino', pathTitle:'El camino Granada', pAria:(a,b)=>'Granada: '+a+' de '+b+' semillas',
   pathLead:'El armenio crece de semillas: una raíz y un injerto dan decenas de palabras; una fórmula, cientos de frases.',
   pcRoots:'raíces conocidas', pcAff:'injertos', pcOpen:'palabras que puedes formar', pcUnits:'fórmulas',

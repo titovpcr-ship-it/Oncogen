@@ -17,6 +17,9 @@
 его (зёрна в словаре, эталон форм, 4 перевода — иначе падает), разворачивает упражнения «form» генератором и пишет
 `data/path/say.txt` — фразы для озвучки: `python3.13 tools/gen_audio.py --only P`. Прогресс пути — ключ
 `barik-path-v1` (S и `hy-vocab-v1` не трогаем). Новую формулу — в course.json, затем pack_path.js и озвучка.
+**Этап C сделан (O-143):** входной тест (`placeItems`/`placeApply`, глаголы — `course.json` → `place.verbs`),
+урожай дня (`harvestItems`, `PG.h`), проверка чтения ступени 0 (`readItems`, `PG.abc`) — режимы `startDrill(kind)`
+поверх той же практики (`PU.kind`: unit | place | harvest | read).
 
 ## НАЗВАНИЕ — Barik (02.11.2026)
 Владелец 02.11.2026: «Подумай над названием проекта, проверь barer на свободность» → «Берём Barik,

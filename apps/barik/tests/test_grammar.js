@@ -118,6 +118,15 @@ for (const u of C.units) {
     }
   }
 }
+// входной тест: формы глаголов — эталонные и озвучены
+for (const v of C.place.verbs) {
+  const g = gold.verbs[v];
+  for (const k of ['pres', 'aor', 'fut']) {
+    const f = G.verb(v, k)[0];
+    ok(g && clean(g[k][0]) === f, `входной тест: ${v} ${k} = ${f} — как в эталоне`);
+    if (!voiced(f)) noVoice.push(f);
+  }
+}
 ok(noVoice.length === 0, 'реплики сцен озвучены, нет: ' + noVoice.slice(0, 3).join(' | '));
 console.log(`проверок ${checks}, ` + (fails ? 'ПРОВАЛОВ: ' + fails : 'ВСЁ ЗЕЛЁНОЕ'));
 process.exit(fails ? 1 : 0);

@@ -99,6 +99,13 @@ if (course) {
       } else errs.push(at + ': неизвестное упражнение ' + d.t);
     }
   }
+  // входной тест: формы глаголов (настоящее, аорист, будущее — 1-е лицо; настоящее 3-е — для выбора)
+  for (const v of (course.place && course.place.verbs) || []) {
+    if (!gold.verbs[v]) { errs.push('place: у глагола «' + v + '» нет эталона'); continue; }
+    if (!dict.has(v)) errs.push('place: «' + v + '» нет в словаре');
+    for (const k of ['pres', 'aor', 'fut']) say.add(G.verb(v, k)[0]);
+    say.add(G.verb(v, 'pres')[2]);
+  }
   if (errs.length) { console.error('Курс сломан:\n  ' + errs.join('\n  ')); process.exit(1); }
   // что озвучить (tools/gen_audio.py): реплики сцен и ответы упражнений, кроме уже озвученных слов словаря
   const txt = [...say].filter(t => !dict.has(t)).sort();

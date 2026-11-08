@@ -242,6 +242,55 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'путь: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // этап C: входной тест, урожай дня, проверка чтения
+    const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
+    const pg=await ctx.newPage(), errs=[];
+    pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'этап C '+n+': без горизонтальной прокрутки ('+w+')'); };
+    // right(i, kind) — отвечать ли верно
+    const run=async right=>{ const kinds=[];
+      for(let i=0;i<40;i++){
+        if(await pg.locator('.p-res').count()) break;
+        const it=await pg.evaluate(()=>{const P=window.__bararan.PU, x=P.q[P.i]; return {k:x.k,a:x.a,opts:x.opts||null};}); kinds.push(it.k);
+        const good=right(i,it.k);
+        if(it.k==='tiles'){ for(const t of it.a){ const id=await pg.evaluate(t=>{const P=window.__bararan.PU, x=P.q[P.i]; return x.bank.find(b=>!b.used&&b.t===t).id;},t); await pg.click('[data-act=pTile][data-arg="'+id+'"]'); } await pg.click('[data-act=pTileCheck]'); }
+        else{ const k=it.opts.indexOf(it.a); await pg.locator('.opt').nth(good?k:(k+1)%it.opts.length).click(); }
+        await pg.click('[data-act=pNext]');
+      } return kinds; };
+    await pg.click('[data-act=tab][data-arg=path]');
+    ok(await pg.locator('.actions [data-act=pPlace]').count()===1&&(await pg.textContent('.path')).includes('Входной тест'),'новичку — входной тест рядом с первой формулой');
+    // не читает → ступень 0, ничего не отмечено
+    await pg.click('.actions [data-act=pPlace]');
+    let k=await run((i,kind)=>kind!=='read');
+    ok(k.filter(x=>x==='read').length===4&&k.length>=15,'входной тест: 4 вопроса на чтение, всего '+k.length);
+    ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 0')&&await pg.locator('.p-res [data-arg=abc]').count()>=1,'не читает — ступень 0, «Начать с алфавита»');
+    ok(await pg.evaluate(()=>Object.keys(window.__bararan.PG.u).length===0&&!window.__bararan.PG.abc),'не читает — формулы не отмечены');
+    // всё верно → ступень 2, все формулы отмечены
+    await pg.click('[data-act=tab][data-arg=path]'); await pg.click('[data-act=pPlace] >> nth=0');
+    await run(()=>true); await noH('итог теста');
+    ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 2')&&await pg.locator('.pl-rows li').count()===3,'всё верно — ступень 2, три строки итога');
+    const P=await pg.evaluate(()=>({n:Object.keys(window.__bararan.PG.u).length, abc:window.__bararan.PG.abc, st:window.__bararan.pathStat()}));
+    ok(P.n===9&&P.abc===1&&P.st.open>0,'входной тест отметил 9 формул и чтение, открыто слов: '+P.st.open);
+    // урожай дня
+    await pg.click('[data-act=tab][data-arg=path]');
+    ok(await pg.locator('svg.pom .gr.on').count()===10,'гранат налит целиком');
+    await pg.click('[data-act=pHarvestGo]'); ok(await pg.evaluate(()=>document.body.dataset.view)==='session','урожай дня — на весь экран');
+    k=await run(()=>true);
+    ok(k.length>=6&&k.length<=9,'урожай дня: '+k.length+' заданий из пройденных формул');
+    ok((await pg.textContent('.p-res')).includes('Урожай собран')&&(await pg.textContent('.p-res')).includes('1 день подряд'),'урожай собран, 1 день подряд');
+    await pg.click('[data-act=tab][data-arg=path]');
+    ok((await pg.textContent('.path')).includes('урожай сегодня собран')&&await pg.locator('[data-act=pHarvestGo]').count()===0,'второй раз за день урожай не предлагается');
+    // проверка чтения: провал не снимает, повтор есть
+    await pg.evaluate(()=>{ const B=window.__bararan; delete B.PG.abc; }); await pg.click('[data-act=tab][data-arg=path]');
+    await pg.click('[data-act=pRead]'); k=await run(i=>i<4);
+    ok(k.length===8&&k.every(x=>x==='read'),'проверка чтения: 8 слов');
+    ok((await pg.textContent('.p-res h1')).includes('Пока трудно')&&await pg.locator('.p-res [data-act=pAgain]').count()===1,'4 из 8 — не пройдено, «Ещё раз»');
+    await pg.click('.p-res [data-act=pAgain]'); await run(()=>true);
+    ok((await pg.textContent('.p-res h1')).includes('ступень 0 пройдена')&&await pg.evaluate(()=>window.__bararan.PG.abc===1),'8 из 8 — ступень 0 пройдена');
+    ok(errs.length===0,'этап C: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   { // озвучка (O-135): запись у каждого слова и буквы, «Проверить звук» берёт файл слова, mp3 читается
     const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), got=[];
