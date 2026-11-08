@@ -206,13 +206,14 @@ function unlockAudio(){
 document.addEventListener('pointerdown',unlockAudio,{capture:true});
 document.addEventListener('keydown',unlockAudio,{capture:true});
 let playTok=0;
-function playUrl(url,text,slow,btn,loud,done){
+function playUrl(url,text,slow,btn,loud,done,tr){
   const tok=++playTok;
   const el=AUD.el||(AUD.el=new Audio());
   try{el.pause();}catch(e){}
   const off=()=>{if(btn) btn.classList.remove('on');};
   if(btn) btn.classList.add('on');
   const fail=()=>{ off(); if(tok!==playTok) return;
+    if(tr){ if(done) setTimeout(done,200); return; }     // нет записи перевода — дальше молча
     // у второго голоса нет записи (новое слово) — основным голосом
     const main='audio/'+MAN.dir+'/'; if(MAN.dir&&/^audio\//.test(url)&&url.indexOf(main)!==0) return playUrl(url.replace(/^audio\/[^/]+\//,main),text,slow,btn,loud,done);
     if(!speakTTS(text,slow,btn,false)&&loud) toast(T(navigator.onLine===false?'audioLoadFail':'noAudio')); };
@@ -258,6 +259,63 @@ function speakTTS(text,slow,btn,loud){
 function speakLetter(x,slow,btn,quiet){
   if(REAL_ANY){playUrl(audioUrl(x.nm),x.nm,slow,btn,!quiet); return;}
   speakTTS(x.nm,slow,btn,!quiet);
+}
+
+/* ================= СЛУШАТЬ (O-152) ================= */
+/* Слова подряд без экрана: «Запомнить» — армянское, пауза, перевод на языке интерфейса; «Вспомнить» — перевод,
+   пауза подумать, армянское. Переводы озвучены (tools/gen_audio_tr.py → audio/tr/<язык>/, manifest.tr). */
+let LP=null;      // {list, i, mode:'learn'|'recall', on, shown, title, back:{v,a}, wd}
+function hasTr(){ return REAL_ANY&&!!(MAN.tr&&MAN.tr[L]&&MAN.tr[L].count>0); }
+function trUrl(text){ const h=aid(text); return 'audio/tr/'+L+'/'+h.slice(0,2)+'/'+h+'.mp3'; }
+const LPT={gap:700,think:2600,next:1500,dog:9000};   // паузы, мс; dog — сторож, если звук не закончился сам
+function listenStart(list,title,back){
+  list=(list||[]).filter(w=>w&&canUse(w)); if(!list.length) return;
+  LP={list,i:0,mode:(UI.lpm==='recall'?'recall':'learn'),on:true,shown:false,title,back:back||{v:'home'},seq:0,wd:null};
+  go('listen'); lpRun();
+}
+function lpStop(){ if(!LP) return; LP.on=false; LP.seq++; clearTimeout(LP.wd); playTok++; try{ if(AUD.el) AUD.el.pause(); }catch(e){} lpMedia(); }
+function lpLater(fn,ms){ const q=LP.seq; clearTimeout(LP.wd); LP.wd=setTimeout(()=>{ if(LP&&LP.on&&LP.seq===q) fn(); },ms); }
+/* один звук: дождаться конца (done) или сторожа */
+function lpSay(url,text,tr,then){
+  const q=LP.seq; let fired=false; const go2=()=>{ if(fired||!LP||!LP.on||LP.seq!==q) return; fired=true; then(); };
+  lpLater(go2,LPT.dog);
+  if(REAL_ANY) playUrl(url,text,false,null,false,go2,tr); else { speakTTS(text,false,null,false); lpLater(go2,1800); }
+}
+function lpRun(){
+  if(!LP||!LP.on) return;
+  if(LP.i>=LP.list.length){ LP.on=false; LP.i=LP.list.length-1; LP.end=true; lpMedia(); if(view==='listen') render(); return; }
+  const w=LP.list[LP.i], q=++LP.seq; LP.end=false; LP.shown=LP.mode==='learn';
+  if(view==='listen') render(); lpMedia();
+  const nx=LP.list[LP.i+1]; if(nx&&REAL_ANY){ getAudio(audioUrl(nx.a)).catch(()=>{}); getAudio(trUrl(tx(nx))).catch(()=>{}); }
+  const hy=done=>lpSay(audioUrl(w.a),w.a,false,done), tr=done=>lpSay(trUrl(tx(w)),tx(w),true,done);
+  const next=()=>lpLater(()=>{ LP.i++; lpRun(); },LPT.next);
+  if(LP.mode==='learn') hy(()=>lpLater(()=>tr(next),LPT.gap));
+  else tr(()=>lpLater(()=>{ if(LP.seq!==q) return; LP.shown=true; if(view==='listen') render(); hy(next); },LPT.think));
+}
+function lpMedia(){
+  const ms=navigator.mediaSession; if(!ms) return;
+  try{
+    const w=LP&&LP.list[LP.i];
+    ms.metadata=w&&typeof MediaMetadata!=='undefined'?new MediaMetadata({title:w.a,artist:tx(w),album:'Barik · '+(LP.title||'')}):null;
+    ms.playbackState=LP&&LP.on?'playing':'paused';
+    ms.setActionHandler('play',()=>H.lpToggle()); ms.setActionHandler('pause',()=>H.lpToggle());
+    ms.setActionHandler('nexttrack',()=>H.lpNext()); ms.setActionHandler('previoustrack',()=>H.lpPrev());
+  }catch(e){}
+}
+function listenHTML(){
+  if(!LP) return homeHTML();
+  const w=LP.list[LP.i], n=LP.list.length, pct=100*(LP.i+1)/n;
+  const hyv=LP.shown?'<div class="lp-hy" lang="hy">'+esc(w.a)+'</div><div class="lp-trn">'+esc(trn(w))+'</div>':'<div class="lp-hy lp-q" aria-label="'+esc(T('lpThink'))+'">?</div><div class="lp-trn">'+esc(T('lpThink'))+'</div>';
+  const modes=['learn','recall'].map(m=>'<button data-act="lpMode" data-arg="'+m+'" aria-pressed="'+(LP.mode===m)+'">'+esc(T(m==='learn'?'lpLearn':'lpRecall'))+'</button>').join('');
+  return '<button class="back" data-act="lpQuit">‹ '+esc(T('back'))+'</button>'+
+    '<header class="head"><h1 class="pg">'+esc(T('lpTitle'))+'</h1><p class="t-hy2" lang="hy">Լսել</p><p class="tag">'+esc(LP.title)+' · '+esc(T('nWords',n))+'</p></header>'+
+    '<section class="lp"><div class="lp-card'+(LP.on?' on':'')+'"><span class="lp-pic">'+pic(w)+'</span>'+hyv+'<div class="lp-tx">'+esc(tx(w))+'</div></div>'+
+    '<div class="lp-prog"><span>'+(LP.i+1)+' / '+n+'</span><span class="bar"><i style="width:'+pct+'%"></i></span></div>'+
+    '<div class="lp-ctl"><button class="lp-b" data-act="lpPrev" aria-label="'+esc(T('lpPrev'))+'">⏮</button>'+
+    '<button class="lp-play" data-act="lpToggle" aria-label="'+esc(T(LP.on?'lpPause':'lpPlay'))+'">'+(LP.on?'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>':(LP.end?ICON.again:ICON.play))+'</button>'+
+    '<button class="lp-b" data-act="lpNext" aria-label="'+esc(T('lpNext'))+'">⏭</button></div>'+
+    '<div class="set-row lp-mode"><div class="seg" role="group" aria-label="'+esc(T('lpTitle'))+'">'+modes+'</div></div>'+
+    '<p class="note">'+esc(T(LP.mode==='learn'?'lpNoteLearn':'lpNoteRecall'))+'</p></section>';
 }
 
 /* ================= HELPERS ================= */
@@ -569,9 +627,9 @@ document.addEventListener('touchend',e=>{
 },{passive:true});
 
 /* ================= RENDER ================= */
-function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
+function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -597,6 +655,7 @@ function render(auto){
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
   else if(view==='pquiz') el.innerHTML=pquizHTML();
   else if(view==='tquiz') el.innerHTML=tquizHTML();
+  else if(view==='listen') el.innerHTML=listenHTML();
   else if(view==='settings') el.innerHTML=settingsHTML();
   else if(view==='paywall') el.innerHTML=paywallHTML();
   else if(view==='account') el.innerHTML=accountHTML();
@@ -749,6 +808,8 @@ function homeHTML(){
   }else if(!premium()) acts+='<button class="btn primary" data-act="paywall">'+esc(T('unlockAll'))+'</button>';
   const hard=hardWords().length;
   if(hard) acts+='<button class="btn ghost" data-act="hard">'+esc(T('btnHard',hard))+'</button>';
+  const mine=hasTr()?WORDS.filter(w=>S.w[w.a]&&canUse(w)).length:0;
+  if(mine>=5) acts+='<button class="btn ghost" data-act="lpMine">'+emo('🎧','ie')+' '+esc(T('lpMine',mine))+'</button>';
   const topicRow=(t,i)=>{
     const tc=counts(t.list), pl=100*tc.learned/tc.total, pg=100*tc.learning/tc.total, op=lvOpen(t.lv);
     return '<li><button class="topic'+(op?'':' locked')+'" data-act="topic" data-arg="'+i+'"><span class="t-ic">'+emo(t.ic)+'</span><span class="t-body"><span class="t-name">'+esc(tn(t))+'</span><span class="t-hy" lang="hy">'+esc(t.hy)+'</span><span class="bar"><i style="width:'+pl+'%"></i><i class="l" style="width:'+pg+'%"></i></span></span><span class="t-cnt">'+(op?tc.learned+'/'+tc.total:'<span class="lock" role="img" aria-label="'+esc(T('locked'))+'">'+emo('🔒','ie')+'</span>')+'</span></button></li>';
@@ -786,6 +847,7 @@ function topicHTML(ti){
     if(tc.seen) acts+='<button class="btn secondary" data-act="practice" data-arg="'+ti+'">'+esc(T('practice'))+'</button>';
     if(tc.seen) acts+='<button class="btn ghost" data-act="typeTopic" data-arg="'+ti+'">'+emo('⌨️','ie')+' '+esc(T('typeTopic'))+'</button>';
     if(nn) acts+='<button class="btn ghost" data-act="checkTopic" data-arg="'+ti+'">'+esc(T('checkTopic'))+'</button>';
+    if(hasTr()) acts+='<button class="btn ghost" data-act="lpTopic" data-arg="'+ti+'">'+emo('🎧','ie')+' '+esc(T('lpTopic'))+'</button>';
   }
   return '<button class="back" data-act="tab" data-arg="home">‹ '+esc(T('allTopics'))+'</button>'+
     '<header class="thead"><span class="t-ic">'+emo(t.ic)+'</span><div><h1 class="pg">'+esc(tn(t))+'</h1><p class="t-hy2" lang="hy">'+esc(t.hy)+'</p></div></header>'+
@@ -1958,6 +2020,13 @@ const H={
   tback:()=>{const it=tcur(); if(!it||it.done) return; it.val=[...it.val].slice(0,-1).join(''); tfield();},
   tcheck:()=>tcheck(), thint:()=>thint(), tgive:()=>tgive(),
   kbOwn:()=>{UI.kb='own'; saveUI(); render();},
+  lpTopic:a=>{ const t=TOPICS[+a]; listenStart(t.list,tn(t),{v:'topic',a:+a}); },
+  lpMine:()=>{ listenStart(shuffle(WORDS.filter(w=>S.w[w.a])),T('lpMineTitle'),{v:'home'}); },
+  lpToggle:()=>{ if(!LP) return; if(LP.on){ lpStop(); render(); return; } if(LP.end){ LP.i=0; LP.end=false; } LP.on=true; lpRun(); },
+  lpNext:()=>{ if(!LP) return; lpStop(); LP.i=Math.min(LP.i+1,LP.list.length-1); LP.end=false; LP.on=true; lpRun(); },
+  lpPrev:()=>{ if(!LP) return; lpStop(); LP.i=Math.max(LP.i-1,0); LP.end=false; LP.on=true; lpRun(); },
+  lpMode:a=>{ if(!LP) return; UI.lpm=a==='recall'?'recall':'learn'; saveUI(); LP.mode=UI.lpm; lpStop(); LP.end=false; LP.on=true; lpRun(); },
+  lpQuit:()=>{ const b=LP?LP.back:{v:'home'}; lpStop(); LP=null; go(b.v,b.a); },
   rv:a=>{UI.rv=a==='m'?'m':'f'; saveUI(); render(); sayText('բարև ձեզ',null,false);},
   kbSys:()=>{UI.kb='sys'; saveUI(); render(); if(view==='tquiz') onTypeFocus();},
   picQuiz:()=>startPicQuiz(),
@@ -2094,6 +2163,7 @@ function onBack(){
   if(view==='account'){H.accBack(); return true;}
   if(view==='unit'){ if(PU&&PU.step===2&&!PU.end) H.pQuit(); else go('path'); return true; }
   if(view==='seed'){H.pBackSeed(); return true;}
+  if(view==='listen'){H.lpQuit(); return true;}
   if(view==='onboard'||view==='home') return false;
   go('home'); return true;
 }
@@ -2113,5 +2183,5 @@ render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

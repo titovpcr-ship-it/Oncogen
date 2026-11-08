@@ -390,6 +390,41 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     }
     await ctx.close();
   }
+  { // «Слушать» (O-152): переводы озвучены на 4 языках, тема подряд: армянское → перевод, «Вспомнить», пауза, назад
+    const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
+    const pg=await ctx.newPage(), got=[], errs=[];
+    pg.on('pageerror',e=>errs.push(String(e)));
+    pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+r.url()); });
+    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
+    const man=await pg.evaluate(()=>window.__bararan.MAN);
+    for(const l of ['ru','en','fr','es']){
+      const urls=await pg.evaluate(l=>{const B=window.__bararan; B.setLang(l); const u=[...new Set(B.WORDS.map(w=>B.trUrl(L_tx(w))))]; return u; function L_tx(w){return l==='es'?w.s:(l==='fr'?w.f:(l==='en'?w.e:w.r));}},l);
+      const miss=urls.filter(u=>!fs.existsSync(path.join(ROOT,u)));
+      ok(man.tr&&man.tr[l]&&man.tr[l].count===man.tr[l].total&&miss.length===0,'перевод озвучен ('+l+'): '+urls.length+' записей, нет: '+miss.length);
+    }
+    await pg.evaluate(()=>{const B=window.__bararan; B.setLang('ru'); Object.assign(B.LPT,{gap:100,think:300,next:150}); B.go('topic',0);});
+    ok(await pg.locator('[data-act=lpTopic]').count()===1,'тема: кнопка «Слушать тему»');
+    const W=await pg.evaluate(()=>{const B=window.__bararan; return B.TOPICS[0].list.slice(0,3).map(w=>[B.aid(w.a),B.aid(w.r)]);});
+    got.length=0; await pg.click('[data-act=lpTopic]');
+    ok(await pg.evaluate(()=>window.__bararan.view)==='listen'&&await pg.locator('.lp-card .lp-hy').count()===1,'«Слушать»: экран со словом');
+    await pg.waitForFunction(()=>window.__bararan.LP&&window.__bararan.LP.i>=2,null,{timeout:15000}).catch(()=>{});
+    const iHy=got.findIndex(x=>x.startsWith('200')&&x.includes('/anahit/')&&x.includes(W[0][0])), iTr=got.findIndex(x=>x.startsWith('200')&&x.includes('/tr/ru/')&&x.includes(W[0][1]));
+    ok(iHy>=0&&iTr>=0,'«Запомнить»: армянское слово, затем перевод своей записью ('+got.slice(0,4).join(' ')+')');
+    ok(await pg.evaluate(()=>window.__bararan.LP.i)>=2,'слова идут сами одно за другим');
+    await pg.click('[data-act=lpToggle]'); const i0=await pg.evaluate(()=>window.__bararan.LP.i); await pg.waitForTimeout(1500);
+    ok(await pg.evaluate(()=>!window.__bararan.LP.on)&&await pg.evaluate(()=>window.__bararan.LP.i)===i0,'пауза — стоит на месте');
+    await pg.click('[data-act=lpMode][data-arg=recall]');
+    ok(await pg.locator('.lp-q').count()===1,'«Вспомнить»: сначала перевод, армянское скрыто');
+    await pg.waitForSelector('.lp-card .lp-hy:not(.lp-q)',{timeout:8000}).catch(()=>{});
+    ok(await pg.locator('.lp-card .lp-hy:not(.lp-q)').count()===1,'«Вспомнить»: после паузы — ответ');
+    ok(await pg.evaluate(()=>JSON.parse(localStorage.getItem('bararan-ui-v1')).lpm)==='recall','режим запоминается');
+    const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'«Слушать»: без горизонтальной прокрутки');
+    await pg.click('[data-act=lpQuit]');
+    ok(await pg.evaluate(()=>window.__bararan.view)==='topic'&&await pg.evaluate(()=>window.__bararan.LP)===null,'назад — в тему, звук остановлен');
+    ok(errs.length===0,'«Слушать»: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});

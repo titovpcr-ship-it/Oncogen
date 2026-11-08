@@ -142,7 +142,7 @@ def ssml_body(texts, rate):
 
 
 def synth(body, key, region, voice):
-    ssml = "<speak version='1.0' xml:lang='hy-AM'><voice name='%s'>%s</voice></speak>" % (voice, body)
+    ssml = "<speak version='1.0' xml:lang='%s'><voice name='%s'>%s</voice></speak>" % ('-'.join(voice.split('-')[:2]), voice, body)
     req = urllib.request.Request(
         'https://%s.tts.speech.microsoft.com/cognitiveservices/v1' % region,
         data=ssml.encode('utf-8'), method='POST',
@@ -227,6 +227,100 @@ def encode(samples, dst):
     os.replace(tmp, dst)
 
 
+def synth_all(todo, voice, dst, rate='-5%', batch=50, workers=3, per_min=18, max_chars=1000000, solo=None, say=None):
+    """Озвучить тексты todo голосом voice; dst(текст) — путь mp3. Пачками через перевод строки, разрез по паузам,
+    сверка числа кусков и длины; не сошлось — пачка пополам (O-135). solo — тексты, которые идут по одному
+    (пауза внутри: запятая и т. п.); say(текст) — что произнести (по умолчанию сам текст). Общая для словаря (main) и переводов (gen_audio_tr.py, O-152)."""
+    solo_rx = solo or SOLO
+    load_env()
+    key = os.environ.get('AZURE_SPEECH_KEY', '').strip()
+    region = os.environ.get('AZURE_SPEECH_REGION', '').strip()
+    if not key or not region:
+        sys.exit('Нет ключа: впишите AZURE_SPEECH_KEY и AZURE_SPEECH_REGION в .env (шаблон — .env.example).')
+    limiter, usage = Limiter(per_min, 60.0), Usage(max_chars)
+    meta = json.load(open(META, encoding='utf-8')) if os.path.exists(META) else {}
+    lock, stat = threading.Lock(), {'done': 0, 'req': 0, 'split': 0, 'fail': []}
+
+    def request(texts):
+        body = ssml_body([say(t) for t in texts] if say else texts, rate)
+        if not usage.take(len(body)):
+            raise SystemExit('Потолок знаков за месяц (%d) — остановка. Израсходовано: %d.'
+                             % (max_chars, usage.used()))
+        delay = 5
+        for _ in range(8):
+            limiter.wait()
+            try:
+                with lock:
+                    stat['req'] += 1
+                return pcm(synth(body, key, region, voice))
+            except urllib.error.HTTPError as e:
+                if e.code in (401, 403):
+                    raise SystemExit('Azure отклонил запрос (HTTP %d): ключ, регион или исчерпан месячный '
+                                     'лимит F0.' % e.code)
+                if e.code == 400:
+                    return None
+                ra = e.headers.get('Retry-After') if e.headers else None
+                time.sleep(float(ra) if ra and ra.isdigit() else delay)
+                delay = min(delay * 2, 60)
+            except Exception:
+                time.sleep(delay)
+                delay = min(delay * 2, 60)
+        return None
+
+    def run(texts, tag):
+        a = request(texts)
+        if a is None:
+            if len(texts) == 1:
+                with lock:
+                    stat['fail'].append(texts[0])
+                return
+            return halve(texts, tag)
+        e = energy(a)
+        reg = regions(e)
+        if len(texts) == 1:
+            reg = [[reg[0][0], reg[-1][1]]] if reg else []
+        if len(reg) != len(texts):
+            if len(texts) == 1:
+                with lock:
+                    stat['fail'].append(texts[0])
+                return
+            return halve(texts, tag)
+        pieces = cut(a, e, reg)
+        if len(texts) > 1 and not plausible(texts, [d for _, d in pieces]):
+            return halve(texts, tag)
+        for t, (s, d) in zip(texts, pieces):
+            encode(s, dst(t))
+            with lock:
+                meta[t] = {'d': round(d, 2), 'n': len(texts), 'b': tag}
+        with lock:
+            stat['done'] += len(texts)
+            if stat['done'] % 500 < len(texts) or stat['done'] == len(todo):
+                print('  готово %d из %d (запросов %d, делений %d, знаков за месяц %d)'
+                      % (stat['done'], len(todo), stat['req'], stat['split'], usage.used()), flush=True)
+                json.dump(meta, open(META, 'w', encoding='utf-8'), ensure_ascii=False)
+
+    def halve(texts, tag):
+        with lock:
+            stat['split'] += 1
+        m = len(texts) // 2
+        run(texts[:m], tag + 'a')
+        run(texts[m:], tag + 'b')
+
+    solo = [t for t in todo if solo_rx.search(t) or len(t) > 45 or '։' in t.rstrip('։')]
+    rest = [t for t in todo if t not in set(solo)]
+    jobs = [[t] for t in solo] + [rest[i:i + batch] for i in range(0, len(rest), batch)]
+    os.makedirs(os.path.dirname(META), exist_ok=True)
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as ex:
+        futs = [ex.submit(run, texts, 'p%d' % i) for i, texts in enumerate(jobs)]
+        for f in futs:
+            f.result()
+    json.dump(meta, open(META, 'w', encoding='utf-8'), ensure_ascii=False)
+    print('Запросов: %d, делений пачек: %d, знаков за месяц: %d' % (stat['req'], stat['split'], usage.used()))
+    if stat['fail']:
+        print('Не озвучено %d — запустите ещё раз: %s' % (len(stat['fail']), ', '.join(stat['fail'][:20])))
+    return stat
+
+
 def write_manifest(allitems, voice, tier):
     """manifest.json: основной голос (anahit) — dir/voice/count/total, как раньше; все голоса с записями —
     voices: {папка: {voice, count, total, made}} — по нему приложение даёт выбрать голос и озвучивает
@@ -245,8 +339,11 @@ def write_manifest(allitems, voice, tier):
     m = voices.get(main_d, {'voice': voice, 'count': 0, 'total': len(allitems), 'made': time.strftime('%Y-%m-%d')})
     os.makedirs(OUT_DIR, exist_ok=True)
     with open(mp, 'w', encoding='utf-8') as f:
-        json.dump({'voice': m['voice'], 'dir': main_d, 'count': m['count'], 'total': m['total'],
-                   'tier': tier, 'made': m['made'], 'voices': voices}, f, ensure_ascii=False)
+        out = {'voice': m['voice'], 'dir': main_d, 'count': m['count'], 'total': m['total'],
+               'tier': tier, 'made': m['made'], 'voices': voices}
+        if old.get('tr'):
+            out['tr'] = old['tr']          # переводы — gen_audio_tr.py (O-152)
+        json.dump(out, f, ensure_ascii=False)
 
 
 def main():
@@ -301,92 +398,8 @@ def main():
         todo = []
 
     if todo and not args.check:
-        load_env()
-        key = os.environ.get('AZURE_SPEECH_KEY', '').strip()
-        region = os.environ.get('AZURE_SPEECH_REGION', '').strip()
-        if not key or not region:
-            sys.exit('Нет ключа: впишите AZURE_SPEECH_KEY и AZURE_SPEECH_REGION в .env (шаблон — .env.example).')
-        limiter, usage = Limiter(args.per_min, 60.0), Usage(args.max_chars)
-        meta = json.load(open(META, encoding='utf-8')) if os.path.exists(META) else {}
-        lock, stat = threading.Lock(), {'done': 0, 'req': 0, 'split': 0, 'fail': []}
-
-        def request(texts):
-            body = ssml_body(texts, args.rate)
-            if not usage.take(len(body)):
-                raise SystemExit('Потолок знаков за месяц (%d) — остановка. Израсходовано: %d.'
-                                 % (args.max_chars, usage.used()))
-            delay = 5
-            for _ in range(8):
-                limiter.wait()
-                try:
-                    with lock:
-                        stat['req'] += 1
-                    return pcm(synth(body, key, region, args.voice))
-                except urllib.error.HTTPError as e:
-                    if e.code in (401, 403):
-                        raise SystemExit('Azure отклонил запрос (HTTP %d): ключ, регион или исчерпан месячный '
-                                         'лимит F0.' % e.code)
-                    if e.code == 400:
-                        return None
-                    ra = e.headers.get('Retry-After') if e.headers else None
-                    time.sleep(float(ra) if ra and ra.isdigit() else delay)
-                    delay = min(delay * 2, 60)
-                except Exception:
-                    time.sleep(delay)
-                    delay = min(delay * 2, 60)
-            return None
-
-        def run(texts, tag):
-            a = request(texts)
-            if a is None:
-                if len(texts) == 1:
-                    with lock:
-                        stat['fail'].append(texts[0])
-                    return
-                return halve(texts, tag)
-            e = energy(a)
-            reg = regions(e)
-            if len(texts) == 1:
-                reg = [[reg[0][0], reg[-1][1]]] if reg else []
-            if len(reg) != len(texts):
-                if len(texts) == 1:
-                    with lock:
-                        stat['fail'].append(texts[0])
-                    return
-                return halve(texts, tag)
-            pieces = cut(a, e, reg)
-            if len(texts) > 1 and not plausible(texts, [d for _, d in pieces]):
-                return halve(texts, tag)
-            for t, (s, d) in zip(texts, pieces):
-                encode(s, path_of(t, vdir, base))
-                with lock:
-                    meta[t] = {'d': round(d, 2), 'n': len(texts), 'b': tag}
-            with lock:
-                stat['done'] += len(texts)
-                if stat['done'] % 500 < len(texts) or stat['done'] == len(todo):
-                    print('  готово %d из %d (запросов %d, делений %d, знаков за месяц %d)'
-                          % (stat['done'], len(todo), stat['req'], stat['split'], usage.used()), flush=True)
-                    json.dump(meta, open(META, 'w', encoding='utf-8'), ensure_ascii=False)
-
-        def halve(texts, tag):
-            with lock:
-                stat['split'] += 1
-            m = len(texts) // 2
-            run(texts[:m], tag + 'a')
-            run(texts[m:], tag + 'b')
-
-        solo = [t for t in todo if SOLO.search(t) or len(t) > 45 or '։' in t.rstrip('։')]
-        rest = [t for t in todo if t not in set(solo)]
-        jobs = [[t] for t in solo] + [rest[i:i + args.batch] for i in range(0, len(rest), args.batch)]
-        os.makedirs(os.path.dirname(META), exist_ok=True)
-        with ThreadPoolExecutor(max_workers=max(1, args.workers)) as ex:
-            futs = [ex.submit(run, texts, 'p%d' % i) for i, texts in enumerate(jobs)]
-            for f in futs:
-                f.result()
-        json.dump(meta, open(META, 'w', encoding='utf-8'), ensure_ascii=False)
-        print('Запросов: %d, делений пачек: %d, знаков за месяц: %d' % (stat['req'], stat['split'], usage.used()))
-        if stat['fail']:
-            print('Не озвучено %d — запустите ещё раз: %s' % (len(stat['fail']), ', '.join(stat['fail'][:20])))
+        synth_all(todo, args.voice, lambda t: path_of(t, vdir, base), args.rate, args.batch, args.workers,
+                  args.per_min, args.max_chars)
 
     have = sum(os.path.exists(path_of(t, vdir, base)) for _, t in allitems)
     missing = [t for _, t in allitems if not os.path.exists(path_of(t, vdir, base))]
