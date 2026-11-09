@@ -51,7 +51,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       ok((await pg.textContent('.ld-hero')).includes('Empezar gratis'),'обложка: «Empezar gratis»'); await shot('landing-es'); await noHScroll('landing-es');
       await pg.click('[data-act=landLang][data-arg=ru]');
     }
-    await pg.click('[data-act=pickLang][data-arg=ru]');
+    if(scheme==='light'){ // «О проекте» (O-167): в подвале обложки, факты без имени автора, цена и продавец
+      await pg.click('.ld-foot [data-act=landDoc][data-arg=project]'); const t=await pg.textContent('.doc');
+      ok(t.includes('независимый проект из Еревана')&&t.includes('4,99 $ в месяц')&&t.includes('Dodo Payments')&&t.includes('hello@barik.am')&&/синтезированными голосами/.test(t),'«О проекте»: что это, цена, продавец, почта, голоса — синтез');
+      await noHScroll('project'); await shot('project'); await pg.click('[data-act=docBack]'); }   // документ с обложки открывает приложение на выбранном языке
+    else await pg.click('[data-act=pickLang][data-arg=ru]');
     ok((await pg.textContent('.brand')).includes('Barik'),'главная: бренд Barik');
     ok((await pg.textContent('#tabs')).includes('Алфавит'),'вкладка «Алфавит»');
     await shot('home-ru'); await noHScroll('home');
