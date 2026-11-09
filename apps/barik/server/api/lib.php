@@ -208,12 +208,23 @@ function crypto_live(): bool {
     return $v === true || $v === 1 || $v === '1' || $v === 'true';
 }
 
-function crypto_allowed(?array $u): bool {
-    if ((string)cfg('PAYMENTO_API_KEY', '') === '' || !function_exists('curl_init')) return false;
-    if (crypto_live()) return true;
+function crypto_tester(?array $u): bool {
     if (!$u) return false;
     $t = array_filter(array_map('trim', explode(',', strtolower((string)cfg('CRYPTO_TESTERS', '')))));
     return in_array(strtolower((string)$u['email']), $t, true);
+}
+
+function crypto_allowed(?array $u): bool {
+    if ((string)cfg('PAYMENTO_API_KEY', '') === '' || !function_exists('curl_init')) return false;
+    return crypto_live() || crypto_tester($u);
+}
+
+/* монета из ответа verify (settlement.asset / network): тестовая (tBTC, SepETH, NileTRX, …Testnet) — ничего не стоит,
+   доступ за неё — только тестировщику; магазин принимает и настоящие, и тестовые монеты одновременно (O-162) */
+function crypto_test_asset(array $settle): ?bool {
+    $a = trim((string)($settle['asset'] ?? '') . ' ' . (string)($settle['network'] ?? ''));
+    if ($a === '') return null;                                     // неизвестно
+    return (bool)preg_match('/^(tbtc|sepeth|niletrx)\b|testnet|sepolia|holesky|\bnile\b|shasta|devnet/i', $a);
 }
 
 function paymento(string $path, ?array $payload): ?array {
@@ -261,6 +272,14 @@ function crypto_settle(array $row): bool {
     q('UPDATE crypto SET status = ? WHERE token = ?', [$st, $row['token']]);
     // success — только когда Paymento перевёл счёт в Approve (8) по нашему запросу; 7 Paid — на случай снимка до перевода
     if (!(($j['success'] ?? false) === true && in_array($st, [7, 8], true))) return false;
+    $test = crypto_test_asset(is_array($b['settlement'] ?? null) ? $b['settlement'] : []);
+    if ($test !== false) {                                          // тестовая или непонятная монета
+        $u = q('SELECT * FROM users WHERE id = ?', [(int)$row['uid']])->fetch() ?: null;
+        if (!crypto_tester($u)) {
+            error_log('barik crypto: ' . $row['token'] . ' оплачен ' . ($test === null ? 'неизвестной' : 'тестовой') . ' монетой — доступ не начислен');
+            return false;
+        }
+    }
     $n = q('UPDATE crypto SET done = ? WHERE token = ? AND done IS NULL', [now(), $row['token']])->rowCount();
     if ($n === 1) crypto_grant((int)$row['uid'], (string)$row['plan']);
     return true;

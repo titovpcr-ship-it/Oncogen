@@ -24,14 +24,14 @@ const ipn=(base,tok,opt)=>{ const raw=JSON.stringify({Token:tok,PaymentId:'1',Or
   fs.symlinkSync(path.join(APP,'server','api'),path.join(SITE,'api'));
 
   // заглушка Paymento: request → токен, verify → статус из ST (8 Approve — success)
-  const ST={}, seen=[]; let n=0;
+  const ST={}, AS={}, seen=[]; let n=0;
   const stub=http.createServer((q,r)=>{ let b=''; q.on('data',x=>b+=x); q.on('end',()=>{
     const j=b?JSON.parse(b):{}; seen.push({url:q.url,key:q.headers['api-key'],body:j});
     const send=o=>{ r.writeHead(200,{'Content-Type':'application/json'}); r.end(JSON.stringify(o)); };
     if(q.headers['api-key']!==KEY){ r.writeHead(401,{'Content-Type':'application/json'}); r.end('{"success":false,"code":"API_KEY_INVALID"}'); return; }
     if(q.url==='/v1/payment/request'){ const t=('T'+(++n)).padEnd(32,'0'); ST[t]=0; return send({success:true,message:'',body:t}); }
     if(q.url==='/v1/payment/verify'){ const s=ST[j.token]; if(s===undefined) return send({success:false,message:'Invalid Token',body:{token:'',orderStatus:0,settlement:null}});
-      return send({success:s===8,message:'',body:{token:j.token,orderId:'o',orderStatus:s,additionalData:[],settlement:{}}}); }
+      return send({success:s===8,message:'',body:{token:j.token,orderId:'o',orderStatus:s,additionalData:[],settlement:AS[j.token]||{asset:'USDT',network:'Tron',standard:'TRC20'}}}); }
     r.writeHead(404); r.end(); }); });
   await new Promise(r=>stub.listen(0,'127.0.0.1',r));
   const PORT=18000+Math.floor(Math.random()*2000), base='http://127.0.0.1:'+PORT+'/';
@@ -123,6 +123,13 @@ const ipn=(base,tok,opt)=>{ const raw=JSON.stringify({Token:tok,PaymentId:'1',Or
   r=await api('crypto',{plan:'year'}); const t3=(/token=([A-Za-z0-9]+)/.exec(r.j.url||'')||[])[1];
   ST[t3]=8; await ipn(base,t3); j=await me();
   ok(Math.abs(j.user.until-y1-365*86400000)<120000,'второй год — к сроку первого');
+  // тестовая монета: не тестировщику доступ не даёт (магазин принимает и настоящие, и тестовые)
+  const plainId=JSON.parse(require('child_process').execFileSync('php',['-r',"$p=new PDO('sqlite:'.$argv[1].'/barik.sqlite');echo json_encode($p->query(\"SELECT id FROM users WHERE email='plain@example.com'\")->fetchColumn());",DATA]).toString());
+  const tt='TESTNETPAID'.padEnd(32,'0'), tr='REALPAID'.padEnd(32,'0'); ST[tt]=8; AS[tt]={asset:'tBTC',network:'Bitcoin Testnet'}; ST[tr]=8; AS[tr]={asset:'BTC',network:'Bitcoin'};
+  require('child_process').execFileSync('php',['-r',"$p=new PDO('sqlite:'.$argv[1].'/barik.sqlite');$p->exec(\"INSERT INTO crypto(token,uid,plan,usd,status,created) VALUES('\".$argv[2].\"',\".$argv[4].\",'life','49.00',0,\".time().\"),('\".$argv[3].\"',\".$argv[4].\",'year','24.00',0,\".time().\")\");",DATA,tt,tr,String(plainId)]);
+  await ipn(base,tt); await api('logout'); r=await login('plain@example.com','Обычный'); j=await me();
+  ok(!j.user.premium,'оплата тестовой монетой (tBTC) не тестировщиком — доступа нет');
+  await ipn(base,tr); j=await me(); ok(j.user.premium&&j.user.plan==='year','настоящая монета (BTC) — доступ есть');
   ok(errs.length===0,'ошибок JS нет '+errs.join(' | '));
   ok(ext.every(u=>u.startsWith('https://app.paymento.io/')),'внешние запросы — только страница Paymento '+ext.join(' '));
   ok(!phpErr,'PHP без предупреждений '+phpErr.slice(0,300));
