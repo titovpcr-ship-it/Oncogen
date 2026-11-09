@@ -1443,10 +1443,11 @@ function settingsHTML(){
   const sizes=[5,10,15,20].map(n=>'<button data-act="size" data-arg="'+n+'" aria-pressed="'+((S.set.size||10)===n)+'">'+n+'</button>').join('');
   const langs=[['ru','Русский'],['en','English'],['fr','Français'],['es','Español'],['de','Deutsch'],['pt','Português']].map(x=>'<button data-act="lang" data-arg="'+x[0]+'" aria-pressed="'+(L===x[0])+'">'+x[1]+'</button>').join('');
   const vtext=REAL_ANY?T('audioOn'):(HYV?T('audioSys'):T('audioOff'));
-  const prem=premium();
-  let sub='<p class="note">'+esc(prem?T('subOn'):T('subOff'))+'</p><div class="actions" style="margin-top:12px">';
+  // сайт (O-164): подписка — у аккаунта; пока сайт открыт всем, «Бесплатная версия: A1» не пишем, кнопка оформления есть
+  const web=!BILL.native, prem=web?!!(ACC.me&&ACC.me.premium):premium();
+  let sub=(prem||!web?'<p class="note">'+esc(prem?T('subOn'):T('subOff'))+'</p>':'')+'<div class="actions" style="margin-top:12px">';
   if(!prem) sub+='<button class="btn primary" data-act="paywall">'+esc(T('subGet'))+'</button>';
-  sub+='<button class="btn secondary" data-act="restore">'+esc(T('restore'))+'</button>';
+  if(!web) sub+='<button class="btn secondary" data-act="restore">'+esc(T('restore'))+'</button>';
   if(prem&&BILL.available()) sub+='<button class="btn ghost" data-act="manageSub">'+esc(T('subManage'))+'</button>';
   else if(prem&&ACC.me&&ACC.me.portal) sub+='<button class="btn ghost" data-act="accPortal">'+esc(T('subManage'))+'</button>';
   sub+='</div>';
@@ -1500,7 +1501,10 @@ function paywallHTML(){
   const lvls=LEVELS.filter(l=>l!==FREE_LV).join(', ');
   const ben=[['📚',T('ben1',WORDS.length,TOPICS.length)],['🔓',T('ben2',lvls)],['🔊',T('ben3')],['✈️',T('ben4')],['🚫',T('ben5')]];
   let plans='';
-  if(premium()) plans='<p class="summary" style="text-align:center">✓ '+esc(T('subOn'))+'</p>';
+  // на сайте Premium — подписка аккаунта (O-164): пока сайт открыт всем (WEB_ALL_FREE), оформить её всё равно можно
+  const have=BILL.native?premium():!!(ACC.me&&ACC.me.premium);
+  if(have) plans='<p class="summary" style="text-align:center">✓ '+esc(T('subOn'))+'</p>'+
+    (!BILL.native&&ACC.me.portal?'<div class="actions"><button class="btn secondary" data-act="accPortal">'+esc(T('accManage'))+'</button></div>':'');
   else if(!BILL.native) plans=webPlansHTML();
   else if(!BILL.available()) plans='<p class="note" style="text-align:center">'+esc(T('pwUnavailable'))+'</p>';
   else if(pwState.plans===null) plans='<p class="note" style="text-align:center">'+esc(T('pwLoading'))+'</p>';
@@ -1517,10 +1521,10 @@ function paywallHTML(){
     plans+='<div class="actions"><button class="btn primary" data-act="buy"'+(pwState.busy?' disabled':'')+'>'+esc(pwState.busy?T('pwBusy'):(tr?T('startTrial'):T('subscribe')))+'</button></div>';
   }
   return '<div class="pw"><div class="sess-top" style="grid-template-columns:44px 1fr"><button class="x" data-act="pwClose" aria-label="'+esc(T('close'))+'">✕</button><span></span></div>'+
-    '<div class="pw-hero"><span class="mark" aria-hidden="true" lang="hy">Ա</span><h1>'+esc(T('pwTitle'))+'</h1><p>'+esc(T('pwSub'))+'</p></div>'+
+    '<div class="pw-hero">'+(BILL.native?'<span class="mark" aria-hidden="true" lang="hy">Ա</span>':ART.mark('pw-mk'))+'<h1>'+esc(T('pwTitle'))+'</h1><p>'+esc(T('pwSub'))+'</p></div>'+
     '<ul class="pw-list">'+ben.map(b=>'<li><span aria-hidden="true">'+emo(b[0])+'</span><span>'+esc(b[1])+'</span></li>').join('')+'</ul>'+
     plans+
-    '<div class="actions" style="margin-top:10px"><button class="btn ghost" data-act="restore">'+esc(T('restore'))+'</button></div>'+
+    (BILL.native?'<div class="actions" style="margin-top:10px"><button class="btn ghost" data-act="restore">'+esc(T('restore'))+'</button></div>':'')+
     '<p class="pw-legal">'+esc(T(BILL.native?'pwLegal':'pwLegalWeb'))+'</p>'+
     '<div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button></div></div>';
 }

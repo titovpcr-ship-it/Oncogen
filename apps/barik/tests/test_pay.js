@@ -60,6 +60,9 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   const ctx=await br.newContext({viewport:{width:360,height:780},deviceScaleFactor:2,locale:'ru-RU',serviceWorkers:'block'});
   const errs=[];
   await ctx.route('https://test.checkout.dodopayments.com/**',rt=>rt.fulfill({contentType:'text/html',body:'<title>Dodo</title><p>checkout</p>'}));
+  // как на barik.am: сайт открыт всем (WEB_ALL_FREE true) — оформить подписку всё равно можно (было: «Premium активна» у всех)
+  await ctx.route('**/js/config.js*',async rt=>{ const t=fs.readFileSync(path.join(APP,'www','js','config.js'),'utf8').replace(/WEB_ALL_FREE:\s*false/,'WEB_ALL_FREE:true');
+    rt.fulfill({contentType:'application/javascript',body:t}); });
   const pg=await ctx.newPage();
   pg.on('pageerror',e=>errs.push(String(e)));
   const shot=async n=>{ if(SHOTS) await pg.screenshot({path:path.join(SHOTS,n+'.png')}); };
@@ -79,6 +82,7 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   await pg.evaluate(()=>window.__bararan.H.paywall());
   await pg.waitForSelector('[data-act=webBuy]',{timeout:5000}).catch(()=>{});
   const pw=await pg.textContent('.pw').catch(()=>'');
+  ok(!pw.includes('Premium активна')&&!pw.includes('Восстановить покупки'),'сайт открыт всем, но без подписки окно не пишет «Premium активна», «Восстановить покупки» нет');
   ok(pw.includes('$4.99')&&pw.includes('Dodo Payments')&&pw.includes('Apple Pay')&&!pw.includes('Год'),'окно подписки: месяц $4.99, «карта, Apple Pay… Dodo Payments», без года');
   await shot('pay-paywall');
   await Promise.all([pg.waitForURL(/test\.checkout\.dodopayments\.com/,{timeout:8000}).catch(()=>{}),pg.click('[data-act=webBuy]')]);
@@ -96,6 +100,9 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   r=await hook(base,'subscription.active','sub_A',{id:'msg_A1'}); ok(r.status===200&&JSON.parse(r.body).user===true,'вебхук subscription.active принят, подписка найдена по uid из metadata '+r.status+' '+r.body);
   j=await me(); ok(j.user.premium&&j.user.plan==='month'&&Math.abs(j.user.until-Date.parse(SUBS.sub_A.next_billing_date))<2000&&j.user.portal,'Анна: Premium до next_billing_date, «Управлять подпиской»');
   r=await hook(base,'subscription.active','sub_A',{id:'msg_A1'}); ok(JSON.parse(r.body).dup===true,'повтор того же webhook-id — пропущен');
+  await pg.goto(base); await pg.waitForFunction(()=>window.__bararan.ACC.me&&window.__bararan.ACC.me.premium,null,{timeout:5000}).catch(()=>{});
+  await pg.evaluate(()=>window.__bararan.H.paywall()); await pg.waitForTimeout(300);
+  { const t=await pg.textContent('.pw').catch(()=>''); ok(t.includes('Premium активна')&&await pg.locator('.pw [data-act=accPortal]').count()===1&&await pg.locator('.pw [data-act=webBuy]').count()===0,'с подпиской: «Premium активна» и «Управлять подпиской» в окне'); }
   r=await api('checkout',{plan:'month'}); ok(r.status===409&&r.j.err==='active','второй раз оформить нельзя — «Подписка уже оформлена»');
   r=await api('portal'); ok(r.j.ok&&r.j.url==='https://test.customer.dodopayments.com/portal/cus_A','портал покупателя Dodo');
   r=await api('delete'); ok(r.status===409&&r.j.err==='sub','удалить аккаунт с идущей подпиской нельзя');
