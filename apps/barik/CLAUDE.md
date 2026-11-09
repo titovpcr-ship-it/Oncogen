@@ -119,8 +119,11 @@ Stripe, PayPal, у Patreon Payoneer закрыт новым). Выбрано (08
   На хостинг — `python3.13 tools/dodo_setup.py` (`--check` — ключ, тариф, вебхуки; `--off` — выключить). Вебхук в
   кабинете Dodo: `https://barik.am/api/?r=dodo`, все события. Тариф создаётся через API (`POST /products`, price в
   центах, `recurring_price`, Month, `subscription_period_count` 20 Year, tax_inclusive).
-- **Боевой режим:** после одобрения магазина — в Dodo переключиться из Test Mode, создать ключ, тариф и вебхук заново
-  (тестовые в live не переносятся), `.env` → `DODO_MODE=live` и новые значения, `dodo_setup.py`, проверка покупкой.
+- **Боевой режим (готов 09.11.2026, ждёт одобрения магазина):** в `.env` — `DODO_LIVE_API_KEY` (от владельца),
+  `DODO_LIVE_PRODUCT_MONTH` (pdt_0NrZaaOeLYqqEGyLtcapY, создан через API), `DODO_LIVE_WEBHOOK_SECRET` (вебхук
+  ep_3Ls03kHWVU0f7lvXqvHoQjHlUK9 создал владелец; секрет взят через API — `GET /webhooks/{id}/secret`).
+  Переключить сайт: `python3.13 tools/dodo_setup.py --live` — только после одобрения и по слову владельца;
+  затем покупка $0 (промокод 100%) — пункт «Make a $0 payment» в Setup guide Dodo.
 - Сервер: `checkout` / `pay_check` / `portal` / вебхук `dodo` — статус подписки только из `GET /subscriptions/{id}`
   (`dodo_sync` в lib.php). Тест — `node tests/test_pay.js`. Подробно — ISSUES O-164.
 - Замок (`build_site.py --paid`, что платное) — только по слову владельца.

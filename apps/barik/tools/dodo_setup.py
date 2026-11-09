@@ -4,6 +4,8 @@
   python3.13 tools/dodo_setup.py           ключ, режим, тариф, секрет вебхука, подпись цены → public_html/api/config.php;
                                            перед этим — проверка ключа и тарифа у Dodo
   python3.13 tools/dodo_setup.py --check   только спросить Dodo: ключ, тариф, адреса вебхуков
+  python3.13 tools/dodo_setup.py --live    боевой режим: DODO_LIVE_API_KEY, DODO_LIVE_PRODUCT_MONTH, DODO_LIVE_WEBHOOK_SECRET
+                                           (включать только после одобрения магазина в Dodo — до него платежи не пройдут)
   python3.13 tools/dodo_setup.py --off     выключить оплату картой: ключ из config.php убрать
 
 Из apps/barik/.env (в git не попадает): DODO_API_KEY (dodo_test_… / боевой), DODO_MODE (test | live),
@@ -69,8 +71,13 @@ def main():
     ap = argparse.ArgumentParser(description='Dodo Payments для Barik: ключи в config.php на хостинге')
     ap.add_argument('--check', action='store_true', help='только проверить ключ, тариф и вебхуки')
     ap.add_argument('--off', action='store_true', help='выключить: убрать ключ Dodo из config.php')
+    ap.add_argument('--live', action='store_true', help='боевой режим: ключ, тариф и секрет DODO_LIVE_* из .env')
     a = ap.parse_args()
     D.load_env()
+    if a.live:   # боевые значения хранятся рядом с тестовыми под своими именами (живой вебхук создан через API)
+        for k in ('API_KEY', 'PRODUCT_MONTH', 'WEBHOOK_SECRET'):
+            os.environ['DODO_' + k] = os.environ.get('DODO_LIVE_' + k, '')
+        os.environ['DODO_MODE'] = 'live'
     if a.off:
         cp, text = cpanel()
         save(cp, set_key(text, 'DODO_API_KEY', ''))
