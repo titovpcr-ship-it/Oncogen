@@ -18,6 +18,13 @@ return [
     'SMTP_USER' => 'no-reply@barik.am',
     'SMTP_PASS' => '',
 
+    // Dodo Payments (O-164) — оплата картой, подписка $4.99 в месяц; включена, когда заданы ключ и тариф (тогда Paddle
+    // не используется). Ставит tools/dodo_setup.py из apps/barik/.env. Вебхук в Dodo: https://barik.am/api/?r=dodo
+    'DODO_API_KEY' => '',            // ключ API (test- или live-режима — тот же, что DODO_MODE)
+    'DODO_MODE' => 'test',           // 'live' — после одобрения магазина и нового ключа live-режима
+    'DODO_PRODUCT_MONTH' => '',      // pdt_… — тариф «Barik Premium», $4.99 в месяц
+    'DODO_WEBHOOK_SECRET' => '',     // whsec_… — подпись вебхуков (без него статус всё равно берётся запросом к Dodo)
+
     // Paddle Billing: Developer tools → Authentication (client-side token, API key), Catalog → Prices,
     // Notifications → новый адрес https://barik.am/api/?r=paddle (события subscription.*) → секрет
     'PADDLE_ENV' => 'sandbox',       // 'production' — после проверки в песочнице

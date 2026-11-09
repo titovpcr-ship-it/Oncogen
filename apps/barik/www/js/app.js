@@ -1634,7 +1634,7 @@ function webPlansHTML(){
   return '<p class="note" style="text-align:center">'+esc(T('accAs',ACC.me.nick))+'</p><div class="plans" role="radiogroup">'+ks.map(k=>{
       const lab=k==='yearly'?P.yLabel:P.mLabel;
       return '<button class="plan" role="radio" data-act="plan" data-arg="'+k+'" aria-pressed="'+(k===pwState.sel)+'" aria-checked="'+(k===pwState.sel)+'"><span class="rd" aria-hidden="true"></span><span><b>'+esc(T(k==='yearly'?'planYear':'planMonth'))+(k==='yearly'?'<span class="badge">'+esc(T('best'))+'</span>':'')+'</b></span><span class="pr">'+esc(lab||'')+'</span></button>';
-    }).join('')+'</div>'+
+    }).join('')+'</div>'+(P.card?'<p class="note cry-note">'+esc(T('cardNote'))+'</p>':'')+
     '<div class="actions"><button class="btn primary" data-act="webBuy"'+(pwState.busy?' disabled':'')+'>'+esc(pwState.busy?T('pwBusy'):T('subscribe'))+'</button></div>';
 }
 /* крипта через Paymento (O-162): разовый платёж — год или навсегда; страница оплаты — у Paymento, доступ начисляет сервер */
@@ -1668,6 +1668,22 @@ async function cryReturn(){
   }
   toast(T('cryPending'));
 }
+/* вернулись со страницы Dodo (?pay=card&subscription_id=…&status=…): сервер сам спрашивает Dodo о подписке */
+async function cardReturn(){
+  const sp=new URLSearchParams(location.search||''), sub=sp.get('subscription_id')||'';
+  try{ ['pay','subscription_id','status','email','payment_id','license_key'].forEach(k=>sp.delete(k));
+    const qs=sp.toString(); history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+location.hash); }catch(e){}
+  if(!ACC.me) return;
+  toast(T('cardWait'));
+  for(let i=0;i<8;i++){
+    const j=await api('pay_check',{sub});
+    if(!j.ok) return;
+    accApply(j); render();
+    if(j.user&&j.user.premium){ toast(T('thanks')); return; }
+    await new Promise(r=>setTimeout(r,4000));
+  }
+  toast(T('cardPending'));
+}
 let PADDLE=null, paddleInit=false;
 function loadPaddle(){
   if(window.Paddle) return Promise.resolve(window.Paddle);
@@ -1682,7 +1698,8 @@ function loadPaddle(){
 async function webBuy(plan){
   if(!ACC.me){ openAccount('paywall'); return; }
   pwState.busy=true; render();
-  const j=await api('checkout',{plan});
+  const j=await api('checkout',{plan,lang:L});
+  if(j.ok&&j.url){ location.assign(j.url); return; }   // Dodo (O-164): страница оплаты Dodo, назад — ?pay=card
   if(!j.ok){ pwState.busy=false; render(); toast(T('accErr_'+(j.err||'server'))); if(j.err==='auth'){ accApply({user:null}); render(); } return; }
   try{
     const P=await loadPaddle();
@@ -2352,7 +2369,8 @@ view=UI.lang&&!WELCOME?'home':'onboard';
 render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
-  if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn(); });
+  if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
+  if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
 window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

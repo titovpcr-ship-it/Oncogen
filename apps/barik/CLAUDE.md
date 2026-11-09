@@ -111,6 +111,20 @@ Stripe, PayPal, у Patreon Payoneer закрыт новым). Выбрано (08
 подписчиков с кодом; код меняется раз в месяц). Страница владельца — **https://boosty.to/barik_armenia** (`CFG.BOOSTY`);
 проверка Boosty — «Стандарт» (до $1 000 в год), для PRO нужна ссылка на Boosty на barik.am (подвал).
 
+## ОПЛАТА КАРТОЙ — DODO PAYMENTS (09.11.2026, O-164) — основной способ оплаты
+Владелец: «найди приём карт и США… со слабым KYC» → Dodo Payments (merchant of record: налоги, чеки, возвраты — на нём;
+выплаты владельцу на армянский счёт; KYC — паспорт и банк, пройдены 09.11). **Один тариф: $4.99 в месяц** («только
+один режим вводи — ежемесячная 4.99$»). Paddle и крипту не предлагать.
+- `.env`: `DODO_API_KEY`, `DODO_MODE` (test | live), `DODO_PRODUCT_MONTH` (pdt_…), `DODO_WEBHOOK_SECRET` (whsec_…).
+  На хостинг — `python3.13 tools/dodo_setup.py` (`--check` — ключ, тариф, вебхуки; `--off` — выключить). Вебхук в
+  кабинете Dodo: `https://barik.am/api/?r=dodo`, все события. Тариф создаётся через API (`POST /products`, price в
+  центах, `recurring_price`, Month, `subscription_period_count` 20 Year, tax_inclusive).
+- **Боевой режим:** после одобрения магазина — в Dodo переключиться из Test Mode, создать ключ, тариф и вебхук заново
+  (тестовые в live не переносятся), `.env` → `DODO_MODE=live` и новые значения, `dodo_setup.py`, проверка покупкой.
+- Сервер: `checkout` / `pay_check` / `portal` / вебхук `dodo` — статус подписки только из `GET /subscriptions/{id}`
+  (`dodo_sync` в lib.php). Тест — `node tests/test_pay.js`. Подробно — ISSUES O-164.
+- Замок (`build_site.py --paid`, что платное) — только по слову владельца.
+
 ## ОПЛАТА КРИПТОЙ — PAYMENTO (09.11.2026, O-162)
 **ВЫКЛЮЧЕНО 09.11.2026** по слову владельца («отключай вообще крипту»): ключа в config.php на хостинге нет (`paymento_setup.py --off`). Не предлагать, вернуть — только по просьбе.
 Владелец: «Подключаем оплату криптой» + ключ магазина «barik» в app.paymento.io. **Год — $24, навсегда — $49**

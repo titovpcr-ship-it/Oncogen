@@ -174,7 +174,8 @@ function premium(array $u): bool {
 function user_out(array $u): array {
     return ['nick' => $u['nick'], 'email' => mask_email($u['email']), 'premium' => premium($u),
             'until' => $u['sub_until'] ? (int)$u['sub_until'] * 1000 : 0, 'plan' => $u['sub_plan'] ?: '',
-            'status' => $u['sub_status'] ?: '', 'portal' => (bool)$u['pd_customer'] && (bool)cfg('PADDLE_API_KEY')];
+            'status' => $u['sub_status'] ?: '',
+            'portal' => (bool)$u['pd_customer'] && (dodo_on() || (bool)cfg('PADDLE_API_KEY'))];
 }
 
 function uid_sig(int $uid): string {
@@ -182,11 +183,14 @@ function uid_sig(int $uid): string {
 }
 
 function pay_info(): array {
+    if (dodo_on()) return ['ready' => true, 'month' => true, 'year' => false, 'card' => true,
+                           'mLabel' => (string)cfg('PRICE_MONTH_LABEL', '$4.99'), 'yLabel' => ''];
     return ['ready' => pay_ready(), 'month' => (bool)cfg('PADDLE_PRICE_MONTH'), 'year' => (bool)cfg('PADDLE_PRICE_YEAR'),
             'mLabel' => (string)cfg('PRICE_MONTH_LABEL', ''), 'yLabel' => (string)cfg('PRICE_YEAR_LABEL', '')];
 }
 
 function pay_ready(): bool {
+    if (dodo_on()) return true;
     return (bool)cfg('PADDLE_CLIENT_TOKEN') && (bool)(cfg('PADDLE_PRICE_MONTH') || cfg('PADDLE_PRICE_YEAR'));
 }
 
@@ -403,3 +407,92 @@ function paddle_post(string $path, array $payload): ?array {
     $j = is_string($r) ? json_decode($r, true) : null;
     return ($code >= 200 && $code < 300 && is_array($j)) ? $j : null;
 }
+
+/* ---------- Dodo Payments (O-164): подписка по карте, $4.99 в месяц ----------
+   Продавец — Dodo (merchant of record): налоги и чеки на нём, выплаты владельцу на счёт. Окно оплаты — страница Dodo
+   (api checkout → checkout_url), после оплаты Dodo возвращает на сайт с ?subscription_id=…; доступ даёт только
+   состояние подписки, которое сервер сам спросил у Dodo по ключу (GET /subscriptions/{id}): по вебхуку
+   (api dodo) и по возвращении человека (api pay_check). Тело вебхука не доверяем — из него берётся только id.
+   Колонки users.pd_customer / pd_sub (были у Paddle) хранят id покупателя и подписки Dodo. */
+function dodo_on(): bool {
+    return (string)cfg('DODO_API_KEY', '') !== '' && (string)cfg('DODO_PRODUCT_MONTH', '') !== '';
+}
+
+function dodo_base(): string {
+    $b = (string)cfg('DODO_API', '');
+    if ($b !== '') return rtrim($b, '/');
+    return cfg('DODO_MODE', 'test') === 'live' ? 'https://live.dodopayments.com' : 'https://test.dodopayments.com';
+}
+
+function dodo(string $method, string $path, ?array $payload = null): ?array {
+    $key = (string)cfg('DODO_API_KEY', '');
+    if ($key === '' || !function_exists('curl_init')) return null;
+    $ch = curl_init(dodo_base() . $path);
+    $opt = [CURLOPT_CUSTOMREQUEST => $method, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 20,
+            CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $key, 'Content-Type: application/json', 'Accept: application/json']];
+    if ($payload !== null) $opt[CURLOPT_POSTFIELDS] = json_encode($payload);
+    curl_setopt_array($ch, $opt);
+    $r = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+    curl_close($ch);
+    $j = is_string($r) ? json_decode($r, true) : null;
+    if ($code < 200 || $code >= 300) error_log('barik dodo ' . $method . ' ' . $path . ': HTTP ' . $code . ' ' . substr((string)$r, 0, 300));
+    return ($code >= 200 && $code < 300 && is_array($j)) ? $j : null;
+}
+
+/* Подпись Standard Webhooks: webhook-signature «v1,<base64>» (через пробел может быть несколько),
+   HMAC-SHA256(base64-декод секрета без «whsec_», "id.timestamp.тело"). */
+function dodo_signed(string $raw, string $id, string $ts, string $sig, string $secret, int $tolerance = 300): bool {
+    if ($secret === '' || $id === '' || !ctype_digit($ts) || $sig === '') return false;
+    if (abs(now() - (int)$ts) > $tolerance) return false;
+    $key = base64_decode(preg_replace('/^whsec_/', '', $secret), true);
+    if ($key === false) return false;
+    $calc = base64_encode(hash_hmac('sha256', $id . '.' . $ts . '.' . $raw, $key, true));
+    foreach (preg_split('/\s+/', trim($sig)) as $part) {
+        [$v, $h] = explode(',', $part, 2) + ['', ''];
+        if ($v === 'v1' && hash_equals($calc, $h)) return true;
+    }
+    return false;
+}
+
+/* Состояние подписки Dodo → users. Чья подписка: подписанный uid из metadata окна оплаты, иначе id подписки
+   или покупателя в базе, иначе почта покупателя (вход у нас по почте, окно оплаты получает ту же почту).
+   $want — uid, которому подписка должна принадлежать (pay_check): чужую не привязываем. */
+function dodo_sync(string $sid, ?int $want = null): ?array {
+    if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $sid)) return null;
+    $s = dodo('GET', '/subscriptions/' . rawurlencode($sid));
+    if (!$s || ($s['subscription_id'] ?? '') !== $sid) return null;
+    if ((string)($s['product_id'] ?? '') !== (string)cfg('DODO_PRODUCT_MONTH', '')) return null;
+    $md = is_array($s['metadata'] ?? null) ? $s['metadata'] : [];
+    $cust = is_array($s['customer'] ?? null) ? $s['customer'] : [];
+    $u = null;
+    $uid = (int)($md['uid'] ?? 0);
+    if ($uid > 0 && hash_equals(uid_sig($uid), (string)($md['sig'] ?? ''))) $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch() ?: null;
+    if (!$u) $u = q('SELECT * FROM users WHERE pd_sub = ?', [$sid])->fetch() ?: null;
+    if (!$u && !empty($cust['customer_id'])) $u = q('SELECT * FROM users WHERE pd_customer = ?', [(string)$cust['customer_id']])->fetch() ?: null;
+    if (!$u && ($e = norm_email($cust['email'] ?? null))) $u = q('SELECT * FROM users WHERE email = ?', [$e])->fetch() ?: null;
+    if (!$u || ($want !== null && (int)$u['id'] !== $want)) return null;
+    // другая подписка того же человека уже идёт — эту (старую, отменённую) не даём ей затереть
+    if ($u['pd_sub'] && $u['pd_sub'] !== $sid && premium($u) && ($s['status'] ?? '') !== 'active') return $u;
+    $st = (string)($s['status'] ?? '');
+    $next = strtotime((string)($s['next_billing_date'] ?? '')) ?: null;
+    $status = $st;
+    $until = $next;
+    if ($st === 'active') {
+        $status = 'active';                         // оплачено до next_billing_date (+3 дня запаса в premium())
+        if (!$until) $until = now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
+    } elseif ($st === 'past_due') {
+        $status = 'past_due';                       // льготный срок Dodo: доступ пока остаётся
+    } elseif ($st === 'cancelled' || $st === 'expired') {
+        // отменена: оплаченный срок дослуживает, если он ещё не кончился
+        $paid = $next && $next > now() ? $next : now();
+        $status = $paid > now() ? 'active' : $st;
+        $until = $paid;
+    } else {                                        // pending, on_hold, paused, failed — без доступа
+        $until = now();
+    }
+    q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = ?, sub_at = ? WHERE id = ?',
+      [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, 'month', $until, now(), $u['id']]);
+    return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
+}
+

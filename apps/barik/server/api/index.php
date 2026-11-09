@@ -5,8 +5,10 @@
    POST verify  {email, code, nick?} — вход (новичку нужен никнейм: ответ need_nick)
    POST nick    {nick}         — сменить никнейм
    POST logout / delete        — выйти / удалить аккаунт
-   POST checkout {plan}        — данные для окна оплаты Paddle (month | year)
-   POST portal                 — ссылка на кабинет покупателя Paddle (отмена, карта)
+   POST checkout {plan, lang}  — Dodo: адрес страницы оплаты ($4.99/мес, O-164); без Dodo — окно Paddle (month | year)
+   POST pay_check {sub}        — вернулись со страницы Dodo (?subscription_id=…): сверить подписку по API
+   POST portal                 — ссылка на кабинет покупателя Dodo / Paddle (отмена, карта)
+   POST dodo                   — вебхук Dodo (подпись Standard Webhooks; статус — своим запросом по id)
    POST paddle                 — вебхук Paddle (подпись Paddle-Signature)
    POST crypto {plan}          — счёт Paymento (year | life) → адрес страницы оплаты (O-162)
    POST crypto_check           — после возврата со страницы оплаты: спросить Paymento о своих счетах
@@ -26,6 +28,11 @@ $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 if ($r === 'paddle') {
     if ($method !== 'POST') fail('method', 405);
     paddle_webhook();
+}
+
+if ($r === 'dodo') {
+    if ($method !== 'POST') fail('method', 405);
+    dodo_webhook();
 }
 
 if ($r === 'paymento') {
@@ -133,6 +140,20 @@ switch ($r) {
         need_post($method);
         $u = session_user() ?? fail('auth', 401);
         if (!pay_ready()) fail('pay', 503);
+        if (dodo_on()) {
+            if (premium($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
+            if (limited('u:' . $u['id'] . ':checkout', 10, 3600)) fail('wait', 429, ['retry' => 600]);
+            $lang = in_array(body()['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? body()['lang'] : 'en';
+            $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
+            $j = dodo('POST', '/checkouts', [
+                'product_cart' => [['product_id' => (string)cfg('DODO_PRODUCT_MONTH'), 'quantity' => 1]],
+                'customer' => ['email' => $u['email'], 'name' => $u['nick']],
+                'return_url' => $site . '/?lang=' . $lang . '&pay=card',
+                'metadata' => ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]]);
+            $url = is_array($j) ? (string)($j['checkout_url'] ?? '') : '';
+            if (!preg_match('~^https://~', $url)) fail('pay', 502);
+            out(['ok' => true, 'url' => $url]);
+        }
         $plan = (body()['plan'] ?? '') === 'month' ? 'month' : 'year';
         $price = (string)cfg($plan === 'month' ? 'PADDLE_PRICE_MONTH' : 'PADDLE_PRICE_YEAR', '');
         if ($price === '') fail('pay', 503);
@@ -144,11 +165,29 @@ switch ($r) {
         need_post($method);
         $u = session_user() ?? fail('auth', 401);
         if (!$u['pd_customer']) fail('nosub', 404);
+        if (dodo_on()) {
+            $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
+            $j = dodo('POST', '/customers/' . rawurlencode((string)$u['pd_customer']) . '/customer-portal/session?return_url='
+                      . rawurlencode($site . '/'));
+            $url = is_array($j) ? (string)($j['link'] ?? '') : '';
+            if (!preg_match('~^https://~', $url)) fail('pay', 503);
+            out(['ok' => true, 'url' => $url]);
+        }
         $j = paddle_post('/customers/' . rawurlencode((string)$u['pd_customer']) . '/portal-sessions',
                          $u['pd_sub'] ? ['subscription_ids' => [(string)$u['pd_sub']]] : []);
         $url = $j['data']['urls']['general']['overview'] ?? '';
         if ($url === '') fail('pay', 503);
         out(['ok' => true, 'url' => $url]);
+
+    case 'pay_check':
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        if (!dodo_on()) fail('pay', 503);
+        if (limited('u:' . $u['id'] . ':pcheck', 60, 3600)) fail('wait', 429, ['retry' => 60]);
+        $sid = (string)(body()['sub'] ?? '');
+        if ($sid === '' && $u['pd_sub']) $sid = (string)$u['pd_sub'];
+        if ($sid !== '') $u = dodo_sync($sid, (int)$u['id']) ?? q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        out(['ok' => true, 'user' => user_out($u), 'pay' => pay_info()]);
 
     case 'crypto':
         need_post($method);
@@ -234,6 +273,28 @@ function paddle_webhook(): never {
         }
     }
     out(['ok' => true]);
+}
+
+/* Вебхук Dodo: подпись проверяется, если задан DODO_WEBHOOK_SECRET; повтор — по webhook-id; состояние
+   подписки — только своим запросом к Dodo по её id (dodo_sync), тело события дальше не используется. */
+function dodo_webhook(): never {
+    $raw = file_get_contents('php://input') ?: '';
+    $id = (string)($_SERVER['HTTP_WEBHOOK_ID'] ?? '');
+    $secret = (string)cfg('DODO_WEBHOOK_SECRET', '');
+    if ($secret !== '' && !dodo_signed($raw, $id, (string)($_SERVER['HTTP_WEBHOOK_TIMESTAMP'] ?? ''),
+                                       (string)($_SERVER['HTTP_WEBHOOK_SIGNATURE'] ?? ''), $secret)) fail('sig', 401);
+    $ev = json_decode($raw, true);
+    if (!is_array($ev)) fail('bad', 400);
+    $d = is_array($ev['data'] ?? null) ? $ev['data'] : [];
+    $sid = (string)($d['subscription_id'] ?? '');
+    if ($sid === '' || !dodo_on()) out(['ok' => true, 'skip' => true]);   // платежи без подписки, возвраты и пр.
+    if ($id !== '') {
+        try { q('INSERT INTO events(id, t) VALUES(?, ?)', ['dodo:' . $id, now()]); }
+        catch (PDOException $e) { out(['ok' => true, 'dup' => true]); }
+    }
+    $u = dodo_sync($sid);
+    if (!$u && $id !== '') q('DELETE FROM events WHERE id = ?', ['dodo:' . $id]);   // Dodo не ответил — пусть повторит
+    out(['ok' => true, 'user' => (bool)$u]);
 }
 
 /* Уведомление Paymento: подпись X-HMAC-SHA256-Signature проверяется, если задан PAYMENTO_SECRET (LiteSpeed может

@@ -149,7 +149,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=tab][data-arg=home]'); ok((await pg.textContent('.today')).includes('word'),'главная на английском'); await shot('home-en'); await noHScroll('home-en');
     await pg.click('[data-act=tab][data-arg=dict]'); await pg.fill('#dq',''); const first=await pg.textContent('#dlist .wrow .w-sub'); ok(/[a-z]/.test(first),'словарь: английский перевод и латиница: '+first); await shot('dict-en');
     await pg.click('[data-act=tab][data-arg=abc]'); await pg.click('.abc button >> nth=4'); ok((await pg.textContent('.l-facts')).includes('ye'),'буква Ե по-английски: ye'); await shot('letter-en');
-    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=doc][data-arg=privacy]'); ok(/Paddle/.test(await pg.textContent('.doc'))&&/nickname/.test(await pg.textContent('.doc')),'политика конфиденциальности сайта: почта, никнейм, Paddle'); await shot('privacy-en'); await noHScroll('privacy');
+    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=doc][data-arg=privacy]'); ok(/Dodo Payments/.test(await pg.textContent('.doc'))&&!/Paddle/.test(await pg.textContent('.doc'))&&/nickname/.test(await pg.textContent('.doc')),'политика конфиденциальности сайта: почта, никнейм, Dodo Payments (не Paddle)'); await shot('privacy-en'); await noHScroll('privacy');
     // французская версия
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg=fr]');
     ok((await pg.textContent('#tabs')).includes('Dictionnaire'),'интерфейс на французском');
