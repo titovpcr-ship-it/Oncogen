@@ -1535,6 +1535,7 @@ function api(r,body){
 function accApply(j){
   if(j&&'user' in j) ACC.me=j.user;
   if(j&&j.pay) ACC.pay=j.pay;
+  if(j&&j.crypto) ACC.crypto=j.crypto;
   BILL.setWeb(!!(ACC.me&&ACC.me.premium),(ACC.me&&ACC.me.until)||0);
 }
 function accInit(){
@@ -1601,8 +1602,10 @@ function accountHTML(){
 }
 function accProfileHTML(){
   const u=ACC.me, first=(u.nick||'?').trim().charAt(0).toUpperCase();
-  let sub='<div class="acc-sub'+(u.premium?' on':'')+'"><b>'+esc(u.premium?T('accPremium',u.until?fmtDate(u.until):''):T('accFree'))+'</b>'+
-    (u.premium&&u.plan?'<span>'+esc(T(u.plan==='month'?'planMonth':'planYear'))+'</span>':'')+'</div><div class="actions">';
+  const life=u.premium&&u.plan==='life';
+  let sub='<div class="acc-sub'+(u.premium?' on':'')+'"><b>'+esc(life?T('accLife'):u.premium?T('accPremium',u.until?fmtDate(u.until):''):T('accFree'))+'</b>'+
+    (u.premium&&u.plan&&!life?'<span>'+esc(T(u.plan==='month'?'planMonth':'planYear'))+'</span>':'')+'</div><div class="actions">';
+  if(u.premium&&!life&&ACC.crypto&&ACC.crypto.ready) sub+='<button class="btn secondary" data-act="paywall">'+esc(T('cryPay'))+'</button>';
   if(!u.premium) sub+='<button class="btn primary" data-act="paywall">'+esc(T('accBuy'))+'</button>';
   if(u.portal) sub+='<button class="btn secondary" data-act="accPortal">'+esc(T('accManage'))+'</button>';
   sub+='</div>';
@@ -1619,6 +1622,7 @@ function webPlansHTML(){
   if(ACC.srv===false) return '<p class="note" style="text-align:center">'+esc(T('accNoServer'))+'</p>';
   if(!ACC.me) return '<p class="note" style="text-align:center">'+esc(T('accLoginToPay'))+'</p><div class="actions"><button class="btn primary" data-act="accGo" data-arg="paywall">'+esc(T('accEnter'))+'</button></div>';
   const P=ACC.pay||{};
+  if(ACC.crypto&&ACC.crypto.ready) return cryPlansHTML();
   if(!P.ready) return '<p class="note" style="text-align:center">'+esc(T('accPaySoon'))+'</p>';
   const ks=[]; if(P.year) ks.push('yearly'); if(P.month) ks.push('monthly');
   if(ks.indexOf(pwState.sel)<0) pwState.sel=ks[0];
@@ -1627,6 +1631,37 @@ function webPlansHTML(){
       return '<button class="plan" role="radio" data-act="plan" data-arg="'+k+'" aria-pressed="'+(k===pwState.sel)+'" aria-checked="'+(k===pwState.sel)+'"><span class="rd" aria-hidden="true"></span><span><b>'+esc(T(k==='yearly'?'planYear':'planMonth'))+(k==='yearly'?'<span class="badge">'+esc(T('best'))+'</span>':'')+'</b></span><span class="pr">'+esc(lab||'')+'</span></button>';
     }).join('')+'</div>'+
     '<div class="actions"><button class="btn primary" data-act="webBuy"'+(pwState.busy?' disabled':'')+'>'+esc(pwState.busy?T('pwBusy'):T('subscribe'))+'</button></div>';
+}
+/* крипта через Paymento (O-162): разовый платёж — год или навсегда; страница оплаты — у Paymento, доступ начисляет сервер */
+function cryPlansHTML(){
+  const C=ACC.crypto, ks=['year','life'];
+  if(ks.indexOf(pwState.csel)<0) pwState.csel='life';
+  return '<p class="note" style="text-align:center">'+esc(T('accAs',ACC.me.nick))+'</p><div class="plans" role="radiogroup">'+ks.map(k=>
+      '<button class="plan" role="radio" data-act="cplan" data-arg="'+k+'" aria-pressed="'+(k===pwState.csel)+'" aria-checked="'+(k===pwState.csel)+'"><span class="rd" aria-hidden="true"></span><span><b>'+esc(T(k==='life'?'planLife':'planYear'))+(k==='life'?'<span class="badge">'+esc(T('best'))+'</span>':'')+'</b><small>'+esc(T('cryOnce'))+'</small></span><span class="pr">'+esc(C[k]||'')+'</span></button>'
+    ).join('')+'</div><p class="note cry-note">'+esc(T('cryNote'))+(C.live?'':' '+esc(T('cryTest')))+'</p>'+
+    '<div class="actions"><button class="btn primary" data-act="cryBuy"'+(pwState.busy?' disabled':'')+'>'+esc(pwState.busy?T('pwBusy'):T('cryPay'))+'</button></div>';
+}
+async function cryBuy(plan){
+  if(!ACC.me){ openAccount('paywall'); return; }
+  pwState.busy=true; render();
+  const j=await api('crypto',{plan,lang:L});
+  if(j.ok&&j.url){ location.assign(j.url); return; }
+  pwState.busy=false; render(); toast(T('accErr_'+(j.err||'server'))); if(j.err==='auth'){ accApply({user:null}); render(); }
+}
+/* вернулись со страницы Paymento (?pay=crypto): спросить сервер — он сам переспросит Paymento; сеть подтверждает не сразу */
+async function cryReturn(){
+  try{ history.replaceState(null,'',location.pathname+location.search.replace(/([?&])pay=crypto(&|$)/,(m,a,b)=>b?a:'').replace(/[?&]$/,'')+location.hash); }catch(e){}
+  if(!ACC.me) return;
+  toast(T('cryWait'));
+  for(let i=0;i<10;i++){
+    const j=await api('crypto_check',{});
+    if(!j.ok) return;
+    accApply(j); render();
+    if(j.paid){ toast(T('thanks')); return; }
+    if(!j.pending&&i>=1){ toast(T('cryNone')); return; }   // ни одного счёта, по которому что-то пришло
+    await new Promise(r=>setTimeout(r,6000));
+  }
+  toast(T('cryPending'));
 }
 let PADDLE=null, paddleInit=false;
 function loadPaddle(){
@@ -2218,6 +2253,8 @@ const H={
   },
   accPortal:async()=>{ const j=await api('portal',{}); if(j.ok&&j.url) location.assign(j.url); else toast(T('accErr_'+(j.err==='nosub'?'nosub':'pay'))); },
   webBuy:()=>webBuy(pwState.sel==='monthly'?'month':'year'),
+  cryBuy:()=>cryBuy(pwState.csel==='year'?'year':'life'),
+  cplan:a=>{pwState.csel=a; render();},
   pwClose:()=>go(backTo.v,backTo.a),
   plan:a=>{pwState.sel=a; render();},
   buy:async()=>{
@@ -2309,7 +2346,8 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   if(QL&&qt!==undefined&&TOPICS[+qt]){ view='topic'; viewArg=+qt; if(lvOpen(TOPICS[+qt].lv)) preloadAudio(TOPICS[+qt].list); } }
 render();
 BILL.hideSplash();
-Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
+Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
+  if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
 window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

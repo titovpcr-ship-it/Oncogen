@@ -7,7 +7,10 @@
    POST logout / delete        — выйти / удалить аккаунт
    POST checkout {plan}        — данные для окна оплаты Paddle (month | year)
    POST portal                 — ссылка на кабинет покупателя Paddle (отмена, карта)
-   POST paddle                 — вебхук Paddle (подпись Paddle-Signature) */
+   POST paddle                 — вебхук Paddle (подпись Paddle-Signature)
+   POST crypto {plan}          — счёт Paymento (year | life) → адрес страницы оплаты (O-162)
+   POST crypto_check           — после возврата со страницы оплаты: спросить Paymento о своих счетах
+   POST|PUT paymento           — уведомление Paymento (из тела берётся только токен, статус — своим запросом) */
 
 declare(strict_types=1);
 require __DIR__ . '/lib.php';
@@ -25,6 +28,11 @@ if ($r === 'paddle') {
     paddle_webhook();
 }
 
+if ($r === 'paymento') {
+    if ($method !== 'POST' && $method !== 'PUT') fail('method', 405);
+    paymento_ipn();
+}
+
 if ($method === 'POST') {
     // запросы только со своей страницы: свой заголовок (форма с чужого сайта его не пошлёт) и Origin
     if (($_SERVER['HTTP_X_BARIK'] ?? '') !== '1') fail('csrf', 403);
@@ -37,7 +45,7 @@ if ($method === 'POST') {
 switch ($r) {
     case 'me':
         $u = session_user();
-        out(['ok' => true, 'user' => $u ? user_out($u) : null, 'pay' => pay_info()]);
+        out(['ok' => true, 'user' => $u ? user_out($u) : null, 'pay' => pay_info(), 'crypto' => crypto_info($u)]);
 
     case 'start':
         need_post($method);
@@ -92,7 +100,7 @@ switch ($r) {
         }
         q('DELETE FROM codes WHERE email = ?', [$email]);
         start_session((int)$u['id']);
-        out(['ok' => true, 'user' => user_out($u), 'pay' => pay_info()]);
+        out(['ok' => true, 'user' => user_out($u), 'pay' => pay_info(), 'crypto' => crypto_info($u)]);
 
     case 'nick':
         need_post($method);
@@ -114,7 +122,8 @@ switch ($r) {
         need_post($method);
         $u = session_user() ?? fail('auth', 401);
         // идущая подписка продолжала бы списываться: сначала её отменить (кабинет покупателя Paddle)
-        if (in_array((string)$u['sub_status'], ['active', 'trialing', 'past_due'], true)) fail('sub', 409);
+        // (разовая оплата криптой не списывается сама — ей это не мешает)
+        if ($u['pd_sub'] && in_array((string)$u['sub_status'], ['active', 'trialing', 'past_due'], true)) fail('sub', 409);
         q('DELETE FROM codes WHERE email = ?', [$u['email']]);
         q('DELETE FROM users WHERE id = ?', [$u['id']]);
         end_session();
@@ -140,6 +149,41 @@ switch ($r) {
         $url = $j['data']['urls']['general']['overview'] ?? '';
         if ($url === '') fail('pay', 503);
         out(['ok' => true, 'url' => $url]);
+
+    case 'crypto':
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        if (!crypto_allowed($u)) fail('pay', 503);
+        $plan = (body()['plan'] ?? '') === 'life' ? 'life' : 'year';
+        if ($plan === 'year' && (string)$u['sub_plan'] === 'life' && premium($u)) fail('have', 409);
+        if (limited('u:' . $u['id'] . ':crypto', 10, 3600)) fail('wait', 429, ['retry' => 600]);
+        $usd = number_format((float)crypto_price($plan), 2, '.', '');
+        $lang = in_array(body()['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? body()['lang'] : 'en';
+        $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
+        $order = 'brk-' . $u['id'] . '-' . $plan . '-' . bin2hex(random_bytes(4));
+        $j = paymento('/payment/request', ['fiatAmount' => $usd, 'fiatCurrency' => 'USD', 'orderId' => $order,
+            'returnUrl' => $site . '/?lang=' . $lang . '&pay=crypto', 'riskSpeed' => 0,
+            'additionalData' => [['key' => 'plan', 'value' => $plan]]]);
+        $tok = is_array($j) && ($j['success'] ?? false) === true ? (string)($j['body'] ?? '') : '';
+        if (!preg_match('/^[A-Za-z0-9]{16,64}$/', $tok)) fail('pay', 502);
+        q('INSERT OR IGNORE INTO crypto(token, uid, plan, usd, status, created) VALUES(?, ?, ?, ?, 0, ?)',
+          [$tok, $u['id'], $plan, $usd, now()]);
+        out(['ok' => true, 'url' => 'https://app.paymento.io/gateway?token=' . rawurlencode($tok)]);
+
+    case 'crypto_check':
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        if (limited('u:' . $u['id'] . ':ccheck', 60, 3600)) fail('wait', 429, ['retry' => 60]);
+        foreach (q('SELECT * FROM crypto WHERE uid = ? AND done IS NULL AND created > ? AND status NOT IN (4, 5, 9, 10)
+                    ORDER BY created DESC LIMIT 5', [$u['id'], now() - 3 * 86400])->fetchAll() as $row) {
+            crypto_settle($row);
+        }
+        // «оплачено» — счёт закрыт за последние 2 часа: этим запросом или раньше уведомлением Paymento
+        $paid = (bool)q('SELECT 1 FROM crypto WHERE uid = ? AND done > ?', [$u['id'], now() - 7200])->fetchColumn();
+        $u = q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        $pending = (int)q('SELECT COUNT(*) FROM crypto WHERE uid = ? AND done IS NULL AND created > ? AND status IN (1, 2, 3, 7)',
+                          [$u['id'], now() - 3 * 86400])->fetchColumn();
+        out(['ok' => true, 'paid' => $paid, 'pending' => $pending, 'user' => user_out($u), 'crypto' => crypto_info($u)]);
 
     default:
         fail('route', 404);
@@ -191,3 +235,23 @@ function paddle_webhook(): never {
     }
     out(['ok' => true]);
 }
+
+/* Уведомление Paymento: подпись X-HMAC-SHA256-Signature проверяется, если задан PAYMENTO_SECRET (LiteSpeed может
+   срезать заголовок — тогда без секрета); в любом случае статус берётся только своим запросом verify по API-ключу,
+   так что подделка тела ничего не даст. Ответ 200 на всё разобранное — иначе Paymento будет повторять. */
+function paymento_ipn(): never {
+    $raw = file_get_contents('php://input') ?: '';
+    $secret = (string)cfg('PAYMENTO_SECRET', '');
+    if ($secret !== '') {
+        $got = strtoupper((string)($_SERVER['HTTP_X_HMAC_SHA256_SIGNATURE'] ?? ''));
+        if ($got === '' || !hash_equals(strtoupper(hash_hmac('sha256', $raw, $secret)), $got)) fail('sig', 401);
+    }
+    $j = json_decode($raw, true);
+    $tok = is_array($j) ? (string)($j['Token'] ?? $j['token'] ?? '') : '';
+    if (!preg_match('/^[A-Za-z0-9]{16,64}$/', $tok)) fail('bad', 400);
+    $row = q('SELECT * FROM crypto WHERE token = ?', [$tok])->fetch();
+    if (!$row) out(['ok' => true, 'unknown' => true]);
+    crypto_settle($row);
+    out(['ok' => true]);
+}
+

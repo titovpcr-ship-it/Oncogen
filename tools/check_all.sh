@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Все тесты репозитория одной командой — Oncogen и Barik. Итог — таблица; код выхода 1, если что-то упало.
-#   bash tools/check_all.sh          — python-тесты Oncogen, test_app и test_account Barik
+#   bash tools/check_all.sh          — python-тесты Oncogen, test_app, test_crypto и test_account Barik
 #                                      (нет собранного сайта — сначала быстрая сборка без страниц поиска)
 #   bash tools/check_all.sh --full   — сборка сайта Barik целиком, затем ещё test_site и test_seo (82 тыс. страниц)
 # Журнал каждого теста — out/check/<тест>.log (out/ в .gitignore); у упавших в итоге — хвост журнала.
@@ -45,6 +45,7 @@ elif [ ! -f "$B/dist/site/api/index.php" ]; then
 fi
 run barik-test_grammar "$B" node tests/test_grammar.js
 run barik-test_app "$B" node tests/test_app.js
+run barik-test_crypto "$B" node tests/test_crypto.js   # оплата криптой (O-162): www + server/api, сборка не нужна
 if [ $BUILT -eq 1 ]; then
   run barik-test_account "$B" node tests/test_account.js
   if [ $FULL -eq 1 ]; then

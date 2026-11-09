@@ -111,6 +111,17 @@ Stripe, PayPal, у Patreon Payoneer закрыт новым). Выбрано (08
 подписчиков с кодом; код меняется раз в месяц). Страница владельца — **https://boosty.to/barik_armenia** (`CFG.BOOSTY`);
 проверка Boosty — «Стандарт» (до $1 000 в год), для PRO нужна ссылка на Boosty на barik.am (подвал).
 
+## ОПЛАТА КРИПТОЙ — PAYMENTO (09.11.2026, O-162)
+Владелец: «Подключаем оплату криптой» + ключ магазина «barik» в app.paymento.io. **Год — $24, навсегда — $49**
+(разовые платежи; месяц за крипту не продаём), **замок не включать**, пока владелец не скажет (сайт открыт).
+- Ключ — `PAYMENTO_API_KEY` в `.env` и в `public_html/api/config.php` (`tools/paymento_setup.py`); секрет магазина
+  (`PAYMENTO_SECRET`, подпись уведомлений) — по желанию: защита держится на нашем запросе verify по ключу.
+- Сервер: `api/?r=crypto {plan:year|life}` → счёт → `app.paymento.io/gateway?token=…`; уведомление `api/?r=paymento`
+  (адрес ставит `paymento_setup.py`); после возврата (`?pay=crypto`) — `crypto_check`. Таблица `crypto` в SQLite.
+- **Testnet:** пока магазин в Testnet — `PAYMENTO_LIVE false`, оплату видят только `CRYPTO_TESTERS` (почты из `.env`).
+  Магазин в боевом режиме → `python3.13 tools/paymento_setup.py --live`. Цены — `CRYPTO_PRICE_YEAR/LIFE` в `.env`.
+- Тест — `node tests/test_crypto.js` (заглушка Paymento, сборка не нужна).
+
 ## НЕМЕЦКАЯ ВЕРСИЯ (08.11.2026, O-160)
 Владелец: «Добавить ещё язык сможешь?» → выбрал «Немецкий». Пятый язык интерфейса и перевода: `L='de'`.
 - **Слова** — `data/de/manual.tsv` (свой перевод, 18 662 слова: по армянскому слову, ru/en — подсказка) и

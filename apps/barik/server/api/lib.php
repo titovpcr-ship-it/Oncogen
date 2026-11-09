@@ -76,6 +76,10 @@ function db(): PDO {
     $pdo->exec('CREATE TABLE IF NOT EXISTS hits(k TEXT NOT NULL, t INTEGER NOT NULL)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS hits_k ON hits(k, t)');
     $pdo->exec('CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY, t INTEGER NOT NULL)');
+    // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
+    $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
+        usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
+    $pdo->exec('CREATE INDEX IF NOT EXISTS crypto_uid ON crypto(uid, created)');
     return $pdo;
 }
 
@@ -184,6 +188,87 @@ function pay_info(): array {
 
 function pay_ready(): bool {
     return (bool)cfg('PADDLE_CLIENT_TOKEN') && (bool)(cfg('PADDLE_PRICE_MONTH') || cfg('PADDLE_PRICE_YEAR'));
+}
+
+/* ---------- крипта: Paymento (O-162) ----------
+   Разовые платежи: год (+365 дней к сроку) и «навсегда» (без срока). Счёт создаёт сервер (api crypto), человек платит
+   на странице Paymento, доступ начисляется только после нашей проверки по API-ключу (payment/verify → Approve) —
+   по уведомлению Paymento (api paymento) или по возвращении человека (api crypto_check). Тело уведомления
+   не доверяем: из него берётся только токен. Пока магазин Paymento в Testnet (PAYMENTO_LIVE не включён),
+   оплату видят только почты из CRYPTO_TESTERS — иначе тестовые монеты открыли бы доступ кому угодно. */
+const CRYPTO_PLANS = ['year' => 365, 'life' => 0];
+const PAYMENTO_API = 'https://api.paymento.io/v1';
+
+function crypto_price(string $plan): string {
+    return (string)cfg($plan === 'life' ? 'CRYPTO_PRICE_LIFE' : 'CRYPTO_PRICE_YEAR', $plan === 'life' ? '49' : '24');
+}
+
+function crypto_live(): bool {
+    $v = cfg('PAYMENTO_LIVE', false);
+    return $v === true || $v === 1 || $v === '1' || $v === 'true';
+}
+
+function crypto_allowed(?array $u): bool {
+    if ((string)cfg('PAYMENTO_API_KEY', '') === '' || !function_exists('curl_init')) return false;
+    if (crypto_live()) return true;
+    if (!$u) return false;
+    $t = array_filter(array_map('trim', explode(',', strtolower((string)cfg('CRYPTO_TESTERS', '')))));
+    return in_array(strtolower((string)$u['email']), $t, true);
+}
+
+function paymento(string $path, ?array $payload): ?array {
+    $key = (string)cfg('PAYMENTO_API_KEY', '');
+    if ($key === '' || !function_exists('curl_init')) return null;
+    $ch = curl_init((string)cfg('PAYMENTO_API', PAYMENTO_API) . $path);
+    $h = ['Api-Key: ' . $key, 'Accept: application/json'];
+    $o = [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 25];
+    if ($payload !== null) {
+        $h[] = 'Content-Type: application/json';
+        $o[CURLOPT_POST] = true;
+        $o[CURLOPT_POSTFIELDS] = json_encode($payload, JSON_UNESCAPED_SLASHES);
+    }
+    $o[CURLOPT_HTTPHEADER] = $h;
+    curl_setopt_array($ch, $o);
+    $r = curl_exec($ch);
+    curl_close($ch);
+    $j = is_string($r) ? json_decode($r, true) : null;
+    return is_array($j) ? $j : null;
+}
+
+/* доступ: год — к сроку (если он ещё идёт) или от сегодня; «навсегда» — без срока */
+function crypto_grant(int $uid, string $plan): void {
+    $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch();
+    if (!$u) return;
+    if ($plan === 'life') {
+        q('UPDATE users SET sub_status = ?, sub_plan = ?, sub_until = NULL, sub_at = ? WHERE id = ?',
+          ['active', 'life', now(), $uid]);
+        return;
+    }
+    if ((string)$u['sub_plan'] === 'life' && premium($u)) return;          // уже навсегда — год не нужен
+    $from = max(now(), premium($u) ? (int)$u['sub_until'] : 0);
+    q('UPDATE users SET sub_status = ?, sub_plan = ?, sub_until = ?, sub_at = ? WHERE id = ?',
+      ['active', 'year', $from + CRYPTO_PLANS['year'] * 86400, now(), $uid]);
+}
+
+/* спросить Paymento о счёте и, если оплачен и подтверждён, начислить доступ — ровно один раз */
+function crypto_settle(array $row): bool {
+    if ($row['done']) return true;
+    $j = paymento('/payment/verify', ['token' => (string)$row['token']]);
+    if (!$j) return false;
+    $b = is_array($j['body'] ?? null) ? $j['body'] : [];
+    $st = (int)($b['orderStatus'] ?? 0);
+    if ((string)($b['token'] ?? '') !== '' && strcasecmp((string)$b['token'], (string)$row['token']) !== 0) return false;
+    q('UPDATE crypto SET status = ? WHERE token = ?', [$st, $row['token']]);
+    // success — только когда Paymento перевёл счёт в Approve (8) по нашему запросу; 7 Paid — на случай снимка до перевода
+    if (!(($j['success'] ?? false) === true && in_array($st, [7, 8], true))) return false;
+    $n = q('UPDATE crypto SET done = ? WHERE token = ? AND done IS NULL', [now(), $row['token']])->rowCount();
+    if ($n === 1) crypto_grant((int)$row['uid'], (string)$row['plan']);
+    return true;
+}
+
+function crypto_info(?array $u): array {
+    return ['ready' => crypto_allowed($u), 'live' => crypto_live(),
+            'year' => '$' . crypto_price('year'), 'life' => '$' . crypto_price('life')];
 }
 
 /* ---------- письмо с кодом: mail() хостинга, SMTP или журнал (проверка) ---------- */
