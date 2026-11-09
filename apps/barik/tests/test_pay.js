@@ -139,6 +139,28 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   r=await hook(base,'payment.succeeded','');   ok(r.status===200&&JSON.parse(r.body).skip===true,'событие без подписки — пропущено, 200');
   r=await hook(base,'subscription.active','sub_none'); ok(r.status===200&&JSON.parse(r.body).user===false,'неизвестная подписка — 200, без привязки');
 
+  // замок (O-165): сайт с оплатой (WEB_ALL_FREE false, как после build_site.py --paid) — бесплатно алфавит, A1, путь 0–1,
+  // словарь и произношение; A2–C2 и ступени 2+ — по подписке; начатые слова повторяются и без подписки
+  { const c2=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU',serviceWorkers:'block'}); const p2=await c2.newPage();
+    p2.on('pageerror',e=>errs.push(String(e)));
+    await p2.goto(base); await p2.click('[data-act=landLang][data-arg=ru]'); await p2.click('[data-act=pickLang][data-arg=ru]');
+    const a2=await p2.evaluate(()=>{ const B=window.__bararan; const w=B.WORDS.find(x=>B.TOPICS[x.t].lv==='A2'); return w.a; });
+    ok(await p2.evaluate(()=>!window.__bararan.ACC.me),'гость на сайте с оплатой');
+    ok(await p2.locator('.lvh .lock').count()>=5,'уровни A2–C2 под замком');
+    // словарь: все слова видны, произношение без замка
+    await p2.click('[data-act=tab][data-arg=dict]'); await p2.fill('#dq',a2); await p2.waitForTimeout(300);
+    ok(await p2.locator('#dlist .wrow').count()>=1&&await p2.locator('#dlist .wrow .say .e3d, #dlist .wrow .say img[alt="🔒"]').count()===0&&await p2.locator('#dlist [data-act=sayFree]').count()>=1,'словарь: слово A2 найдено, произношение бесплатно');
+    // путь: ступени 0–1 открыты, 2+ под замком
+    const lk=await p2.evaluate(()=>{ const C=window.__bararan.CRS; return {free:C.units.filter(u=>u.stage<2).length,paid:C.units.filter(u=>u.stage>=2).length}; });
+    await p2.click('[data-act=tab][data-arg=path]'); await p2.waitForTimeout(300);
+    ok(lk.free>0&&lk.paid>0,'путь: есть бесплатные (0–1) и платные (2+) уроки ('+lk.free+' / '+lk.paid+')');
+    // начатое слово A2 (была подписка — кончилась) повторяется без подписки
+    await p2.evaluate(a=>{ const k='hy-vocab-v1'; const S=JSON.parse(localStorage.getItem(k)||'{}'); S.w=S.w||{}; S.w[a]={b:2,d:0,e:0}; localStorage.setItem(k,JSON.stringify(S)); },a2);
+    await p2.reload(); await p2.waitForSelector('[data-act=review]',{timeout:5000}).catch(()=>{});
+    ok(await p2.locator('[data-act=review]').count()>=1,'начатое слово A2 — в повторении на главной');
+    await p2.click('[data-act=review]'); await p2.waitForTimeout(500);
+    ok(await p2.locator('.pw').count()===0&&await p2.evaluate(()=>!!document.querySelector('.sess-top')),'повторение слова A2 без подписки — урок, не окно оплаты');
+    await c2.close(); }
   ok(!errs.length,'ошибок JS нет'+(errs.length?': '+errs.join(' | '):''));
   ok(!phpErr,'PHP без ошибок и предупреждений'+(phpErr?': '+phpErr.slice(0,400):''));
   await br.close(); php.kill(); stub.close();

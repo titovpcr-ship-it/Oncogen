@@ -252,6 +252,19 @@ nav{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 
 
 
+def env_flag(name):
+    """Флаг из окружения или из apps/barik/.env (строка NAME=1)."""
+    if os.environ.get(name) == "1":
+        return True
+    try:
+        for line in open(os.path.join(APP, ".env"), encoding="utf-8"):
+            if line.strip() == name + "=1":
+                return True
+    except OSError:
+        pass
+    return False
+
+
 def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     if os.path.isdir(out):
         shutil.rmtree(out)
@@ -342,7 +355,10 @@ def main():
     ap.add_argument("--paid", action="store_true", help="оплата включена: A2–C2 по подписке (WEB_ALL_FREE false)")
     ap.add_argument("--serve", action="store_true")
     a = ap.parse_args()
-    out = build(a.out, a.url if not a.url or a.url.endswith("/") else a.url + "/", not a.no_seo, a.paid)
+    # замок (O-165): --paid или BARIK_WEB_PAID=1 в apps/barik/.env — чтобы следующая сборка его не сняла
+    paid = a.paid or env_flag("BARIK_WEB_PAID")
+    print("замок:", "включён — A2–C2 и ступени 2+ по подписке" if paid else "нет — сайт открыт целиком")
+    out = build(a.out, a.url if not a.url or a.url.endswith("/") else a.url + "/", not a.no_seo, paid)
     if a.serve:
         import functools
         import http.server

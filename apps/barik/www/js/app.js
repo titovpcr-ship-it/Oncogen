@@ -198,6 +198,9 @@ const FREE_LV='A1';
 function premium(){return BILL.isPremium();}
 function lvOpen(lv){return lv===FREE_LV||premium();}
 function canUse(w){return lvOpen(TOPICS[w.t].lv);}
+/* выученное не отбираем (O-165): слово, которое человек уже начал учить, повторяется и без подписки
+   (кончилась подписка — повторение идёт, новые слова A2–C2 — по подписке) */
+function canReview(w){return canUse(w)||!!S.w[w.a];}
 
 /* ================= STATE ================= */
 const LS='hy-vocab-v1';
@@ -218,7 +221,7 @@ function status(w){const s=S.w[w.a]; if(!s) return 'new'; return s.b>=4?'learned
 const LEVELS=['A1','A2','B1','B2','C1','C2'];
 function counts(list){
   const td=today(); let learned=0,learning=0,due=0;
-  for(const w of (list||WORDS)){const s=S.w[w.a]; if(!s) continue; if(s.b>=4) learned++; else learning++; if(s.d<=td&&canUse(w)) due++;}
+  for(const w of (list||WORDS)){const s=S.w[w.a]; if(!s) continue; if(s.b>=4) learned++; else learning++; if(s.d<=td&&canReview(w)) due++;}
   return {learned,learning,due,seen:learned+learning,total:(list||WORDS).length};
 }
 function nextNew(ti,n){const pool=(ti==null)?WORDS:TOPICS[ti].list; return pool.filter(w=>!S.w[w.a]&&canUse(w)).slice(0,n);}
@@ -338,7 +341,7 @@ function hasTr(){ return REAL_ANY&&!!(MAN.tr&&MAN.tr[L]&&MAN.tr[L].count>0); }
 function trUrl(text){ const h=aid(text); return 'audio/tr/'+L+'/'+h.slice(0,2)+'/'+h+'.mp3'; }
 const LPT={gap:700,think:2600,next:1500,dog:9000};   // паузы, мс; dog — сторож, если звук не закончился сам
 function listenStart(list,title,back){
-  list=(list||[]).filter(w=>w&&canUse(w)); if(!list.length) return;
+  list=(list||[]).filter(w=>w&&canReview(w)); if(!list.length) return;
   LP={list,i:0,mode:(UI.lpm==='recall'?'recall':'learn'),on:true,shown:false,title,back:back||{v:'home'},seq:0,wd:null};
   go('listen'); lpRun();
 }
@@ -488,7 +491,7 @@ function startLearn(ti,lv){
 }
 function startReview(){
   const td=today();
-  const due=WORDS.filter(w=>{const s=S.w[w.a];return s&&s.d<=td&&canUse(w);}).sort((x,y)=>S.w[x.a].d-S.w[y.a].d).slice(0,30);
+  const due=WORDS.filter(w=>{const s=S.w[w.a];return s&&s.d<=td&&canReview(w);}).sort((x,y)=>S.w[x.a].d-S.w[y.a].d).slice(0,30);
   if(!due.length){toast(T('noDue'));return;}
   newSess('review',spread(due.map(w=>mk(kindFor(w),w))),{ti:null});
 }
@@ -505,7 +508,7 @@ function startCheck(list,meta){
   if(!pool.length){toast(T('noUnseen'));return;}
   newSess('check',pool.map(w=>mk('a2r',w)),meta);
 }
-function hardWords(){return WORDS.filter(w=>{const s=S.w[w.a];return s&&(s.e||0)>=2&&s.b<4&&canUse(w);});}
+function hardWords(){return WORDS.filter(w=>{const s=S.w[w.a];return s&&(s.e||0)>=2&&s.b<4&&canReview(w);});}
 function startHard(){
   const list=shuffle(hardWords()).slice(0,20);
   if(!list.length){toast(T('noHard'));return;}
@@ -935,7 +938,7 @@ function homeHTML(){
   }else if(!premium()) acts+='<button class="btn primary" data-act="paywall">'+esc(T('unlockAll'))+'</button>';
   const hard=hardWords().length;
   if(hard) acts+='<button class="btn ghost" data-act="hard">'+esc(T('btnHard',hard))+'</button>';
-  const mine=hasTr()?WORDS.filter(w=>S.w[w.a]&&canUse(w)).length:0;
+  const mine=hasTr()?WORDS.filter(w=>S.w[w.a]).length:0;
   if(mine>=5) acts+='<button class="btn ghost" data-act="lpMine">'+emo('🎧','ie')+' '+esc(T('lpMine',mine))+'</button>';
   const topicRow=(t,i)=>{
     const tc=counts(t.list), pl=100*tc.learned/tc.total, pg=100*tc.learning/tc.total, op=lvOpen(t.lv);
@@ -979,7 +982,7 @@ function topicHTML(ti){
   return '<button class="back" data-act="tab" data-arg="home">‹ '+esc(T('allTopics'))+'</button>'+
     '<header class="thead"><span class="t-ic">'+emo(t.ic)+'</span><div><h1 class="pg">'+esc(tn(t))+'</h1><p class="t-hy2" lang="hy">'+esc(t.hy)+'</p></div></header>'+
     '<p class="summary">'+esc(T('topicSum',tc.total,tc.learned,tc.learning,nn))+'</p>'+
-    '<div class="actions page-actions">'+acts+'</div><ul class="words">'+t.list.map(w=>wordRow(w)).join('')+'</ul>';
+    '<div class="actions page-actions">'+acts+'</div><ul class="words">'+t.list.map(w=>wordRow(w,true)).join('')+'</ul>';
 }
 const fold=x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'');   // без ударений и точек: é → e, ë → e
 function dictRows(){
@@ -989,7 +992,7 @@ function dictRows(){
   if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0||fold(w.f.toLowerCase()).indexOf(qf)>=0||fold(w.ft.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.s.toLowerCase()).indexOf(qf)>=0||fold(w.st.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.de.toLowerCase()).indexOf(qf)>=0||fold(w.dt.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.pt.toLowerCase()).indexOf(qf)>=0||fold(w.ptr.replace(/ʰ/g,'')).indexOf(qf)>=0);
   if(!list.length) return '<li class="empty">'+esc(T('dictEmpty'))+'</li>';
   const more=list.length>dLimit?'<li class="more-li"><button class="btn ghost" data-act="more">'+esc(T('showMore',list.length-dLimit))+'</button></li>':'';
-  return list.slice(0,dLimit).map(w=>wordRow(w)).join('')+more;
+  return list.slice(0,dLimit).map(w=>wordRow(w,true)).join('')+more;
 }
 function dictHTML(){
   return '<header class="head"><h1 class="pg">'+esc(T('dictTitle'))+'</h1><p class="t-hy2" lang="hy">Բառարան</p></header>'+
@@ -1743,7 +1746,7 @@ function resultHTML(){
   }
   const kn=sess.known?'<p class="note">'+esc(T('knownNote',sess.known))+'</p>':'';
   if(!r.n) return '<div class="result"><div class="apres" lang="hy">Լավ է</div>'+kn+'<div class="actions">'+acts+'</div></div>';
-  const missed=r.missed.length?'<p class="miss-h">'+esc(T('repeatHdr'))+'</p><ul class="words">'+r.missed.map(w=>wordRow(w)).join('')+'</ul>':'';
+  const missed=r.missed.length?'<p class="miss-h">'+esc(T('repeatHdr'))+'</p><ul class="words">'+r.missed.map(w=>wordRow(w,true)).join('')+'</ul>':'';
   const good=r.firstOk/r.n>=0.6;
   return '<div class="result"><div class="apres" lang="hy">'+(good?'Ապրե՛ս':'Լավ է')+'</div><p class="sub">'+esc(good?T('wellDone'):T('goodTry'))+'</p>'+
     '<p class="score">'+T('firstTry',r.firstOk,r.n)+'</p>'+kn+missed+'<div class="actions">'+acts+'</div></div>';
@@ -2193,7 +2196,7 @@ const H={
   clearFlags:()=>{S.flag={}; save(); render();},
   review:()=>startReview(),
   practice:a=>startPractice(+a),
-  say:(a,b)=>{const w=BY[a]; if(w&&!canUse(w)){openPaywall(); return;} speak(w,false,b,true);},
+  say:(a,b)=>{const w=BY[a]; if(w&&!canReview(w)){openPaywall(); return;} speak(w,false,b,true);},
   sayFree:(a,b)=>speak(BY[a],false,b,true),
   saySlowFree:(a,b)=>speak(BY[a],true,b,true),
   pcard:a=>go('pcard',+a),

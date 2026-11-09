@@ -67,7 +67,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.locator('.topic.locked').count()>10,'темы A2 под замком');
     await pg.locator('.topic.locked').first().click();
     ok(await pg.locator('.page-actions [data-act=paywall]').count()===1,'закрытая тема ведёт к подписке');
-    ok(await pg.locator('.words .say svg').count()===0,'в закрытой теме звук у всех слов под замком'); await shot('topic-locked'); await noHScroll('topic-locked');
+    ok(await pg.locator('.words .say svg').count()>0&&await pg.locator('.words [data-act=say]').count()===0,'в закрытой теме произношение бесплатно (O-165), учить — по подписке'); await shot('topic-locked'); await noHScroll('topic-locked');
     await pg.click('.page-actions [data-act=paywall]'); ok(await pg.locator('.pw-hero').count()===1,'экран подписки'); await shot('paywall'); await noHScroll('paywall');
     ok((await pg.textContent('.pw')).includes('barik.am'),'в браузере без сервера — оплата через кабинет на barik.am (O-136)');
     await pg.evaluate(()=>window.__bararan.onBack()); ok(await pg.evaluate(()=>window.__bararan.view)==='topic','«Назад» с подписки — на тему');

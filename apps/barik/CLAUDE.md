@@ -126,7 +126,10 @@ Stripe, PayPal, у Patreon Payoneer закрыт новым). Выбрано (08
   затем покупка $0 (промокод 100%) — пункт «Make a $0 payment» в Setup guide Dodo.
 - Сервер: `checkout` / `pay_check` / `portal` / вебхук `dodo` — статус подписки только из `GET /subscriptions/{id}`
   (`dodo_sync` в lib.php). Тест — `node tests/test_pay.js`. Подробно — ISSUES O-164.
-- Замок (`build_site.py --paid`, что платное) — только по слову владельца.
+- **Что платное (владелец «Делай так», O-165):** бесплатно — алфавит, A1, путь 0–1, словарь и произношение; по
+  подписке — слова A2–C2 и путь 2–5; начатые слова повторяются без подписки (`canReview`). Замок — `BARIK_WEB_PAID=1`
+  в `.env` (читает `build_site.py`), **включать вместе с боевым Dodo**: `dodo_setup.py --live` → `.env` BARIK_WEB_PAID=1
+  → `build_site.py` → `deploy_site.py` → покупка $0 промокодом 100%.
 
 ## ОПЛАТА КРИПТОЙ — PAYMENTO (09.11.2026, O-162)
 **ВЫКЛЮЧЕНО 09.11.2026** по слову владельца («отключай вообще крипту»): ключа в config.php на хостинге нет (`paymento_setup.py --off`). Не предлагать, вернуть — только по просьбе.
