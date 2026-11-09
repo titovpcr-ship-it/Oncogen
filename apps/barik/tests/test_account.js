@@ -57,7 +57,7 @@ function subEvent(id,type,status,custom,custId,days){
   pg.on('request',q=>{ const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')&&!u.startsWith('blob:')) ext.push(u); });
   const shot=async n=>{ if(SHOTS) await pg.screenshot({path:path.join(SHOTS,n+'.png')}); };
   const noH=async m=>ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'без прокрутки вбок: '+m);
-  await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+  await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
   await pg.waitForFunction(()=>window.__bararan.ACC.srv===true,null,{timeout:5000}).catch(()=>{});
   await pg.click('[data-act=tab][data-arg=settings]');
   ok(await pg.locator('.acc-set [data-act=accGo]').count()===1,'настройки: раздел «Личный кабинет», кнопка входа');

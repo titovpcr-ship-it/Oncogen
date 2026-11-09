@@ -38,8 +38,10 @@ SITE_URL = "https://barik.am/"   # адрес сайта (O-125); --url "" — �
 
 NAME = {"ru": "Barik — армянские слова", "en": "Barik — Armenian words",
         "fr": "Barik — mots arméniens", "es": "Barik — palabras armenias"}
-DESC = ("Восточноармянский язык: 20 000 слов с русским, английским и французским "
-        "переводом, транскрипция, алфавит, упражнения и интервальное повторение.")
+# Главная — на английском для всех (владелец 09.11.2026: «главная страница проекта на английском»), O-163.
+ROOT_L = "en"
+DESC = ("Eastern Armenian from scratch: 20,000+ words with translations into English, Russian, French, Spanish, "
+        "German and Portuguese, audio, transcription, the alphabet, exercises and spaced repetition.")
 
 
 def icons(out):
@@ -62,7 +64,7 @@ def icons(out):
 
 
 MANIFEST = {
-    "name": NAME["ru"], "short_name": "Barik", "lang": "ru", "dir": "ltr",
+    "name": NAME[ROOT_L], "short_name": "Barik", "lang": ROOT_L, "dir": "ltr",
     "description": DESC, "start_url": "./", "scope": "./", "display": "standalone",
     "background_color": "#FBF6F1", "theme_color": "#FBF6F1", "orientation": "portrait",
     "categories": ["education", "books"],
@@ -257,10 +259,11 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     # Capacitor на сайте не нужен: billing.js сам видит, что он не в приложении.
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     html = re.sub(r'\s*<script src="js/vendor/capacitor\.js"></script>', "", html)
-    title, desc = land_meta()["ru"]
+    title, desc = land_meta()[ROOT_L]
+    html = html.replace('<html lang="ru">', '<html lang="%s">' % ROOT_L, 1)
     html = html.replace("<title>Barik</title>",
                         f"<title>{esc(title)}</title>\n" + HEAD % {"desc": esc(desc)}
-                        + og_tags("ru", url, title, desc) + (CANON % {"url": url} if url else ""))
+                        + og_tags(ROOT_L, url, title, desc) + (CANON % {"url": url} if url else ""))
     html = html.replace("</body>", REGISTER + "</body>")
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
     cfg = os.path.join(out, "js", "config.js")
@@ -325,7 +328,7 @@ def seo_pages(out, url):
     build_seo.build(out, url, words)
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     links = " · ".join(f'<a href="{L}/">{n}</a>' for L, n in
-                       (("ru", "Армянский словарь"), ("en", "Armenian dictionary"),
+                       (("en", "Armenian dictionary"), ("ru", "Армянский словарь"),
                         ("fr", "Dictionnaire arménien"), ("es", "Diccionario armenio")))
     html = html.replace("</body>", f"<noscript><p>{links}</p></noscript>\n</body>", 1)
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)

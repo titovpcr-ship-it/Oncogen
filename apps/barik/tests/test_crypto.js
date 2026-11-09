@@ -60,7 +60,7 @@ const ipn=(base,tok,opt)=>{ const raw=JSON.stringify({Token:tok,PaymentId:'1',Or
   };
   const me=async()=>(await pg.request.get(base+'api/?r=me')).json();
 
-  await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+  await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
   // гость и обычный человек: оплаты криптой нет, пока магазин в Testnet
   let j=await me(); ok(j.crypto&&j.crypto.ready===false&&j.crypto.live===false,'гость: крипта не показана (Testnet)');
   let r=await login('plain@example.com','Обычный'); ok(r.j.ok&&r.j.crypto&&r.j.crypto.ready===false,'не тестировщик: крипта не показана');

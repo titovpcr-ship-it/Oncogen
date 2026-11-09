@@ -26,6 +26,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const shot=async n=>{ if(SHOTS&&scheme==='light'||SHOTS&&n==='home-ru') await pg.screenshot({path:path.join(SHOTS,scheme+'-'+n+'.png'),fullPage:false}); };
     const noHScroll=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,window.innerWidth]); ok(w[0]<=w[1],scheme+' '+n+': без горизонтальной прокрутки ('+w+')'); };
     ok(await pg.locator('.onb').count()===1,'первый запуск — выбор языка');
+    ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='en','русский браузер — обложка всё равно на английском (O-163)');
+    await pg.click('.lng[data-arg=ru]');
     await shot('onboard'); await noHScroll('onboard');
     if(scheme==='light'){
       // обложка для гостя: живой урок в телефоне, пропись с алфавитом, переключение языка
@@ -209,7 +211,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   }
   { // палец на телефоне: касания идут в штрих, страница не прокручивается
     const ctx=await br.newContext({viewport:{width:360,height:640},deviceScaleFactor:3,isMobile:true,hasTouch:true,locale:'ru-RU'});
-    const pg=await ctx.newPage(); await pg.goto(base); await pg.tap('[data-act=pickLang][data-arg=ru]');
+    const pg=await ctx.newPage(); await pg.goto(base); await pg.tap('[data-act=landLang][data-arg=ru]'); await pg.tap('[data-act=pickLang][data-arg=ru]');
     await pg.evaluate(()=>window.__bararan.H.pen('1')); await pg.waitForTimeout(400);
     const P=await pg.evaluate(()=>{ const svg=document.getElementById('penSvg'), p=svg.querySelector('.pen-ghost path'), L=p.getTotalLength(), m=svg.getScreenCTM(), out=[];
       for(let i=0;i<=50;i++){ const q=p.getPointAtLength(L*i/50), s=svg.createSVGPoint(); s.x=q.x; s.y=q.y; const c=s.matrixTransform(m); out.push([c.x,c.y]); } return out; });
@@ -226,7 +228,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const pg=await ctx.newPage(), errs=[], got=[];
     pg.on('pageerror',e=>errs.push(String(e)));
     pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+r.url()); });
-    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'путь '+n+': без горизонтальной прокрутки ('+w+')'); };
     await pg.click('[data-act=tab][data-arg=path]');
@@ -308,7 +310,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), errs=[];
     pg.on('pageerror',e=>errs.push(String(e)));
-    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'этап C '+n+': без горизонтальной прокрутки ('+w+')'); };
     // right(i, kind) — отвечать ли верно
     const run=async right=>{ const kinds=[];
@@ -364,7 +366,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   { // источники и лицензии (O-149): всё стороннее названо, ссылки на тексты лицензий ведут на настоящие файлы
     const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage();
-    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=doc][data-arg=credits]');
     const txt=await pg.textContent('.doc');
     for(const k of ['Викисловар','CC BY-SA 4.0','с нашими изменениями','Fluent Emoji','MIT','Open Font License','Manrope','Туманяна','Терьяна','Чаренца','общественное достояние','Azure','hello@barik.am']) ok(txt.includes(k),'источники и лицензии: «'+k+'»');
@@ -378,7 +380,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), got=[];
     pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+(r.headers()['content-type']||'')+' '+r.url()); });
-    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const A=await pg.evaluate(()=>{const B=window.__bararan; return {man:B.MAN, urls:[...new Set(B.WORDS.map(w=>B.audioUrl(w.a)).concat(B.ABC.map(x=>B.audioUrl(x.nm))))], hi:B.aid('բարև ձեզ')};});
     const miss=A.urls.filter(u=>!fs.existsSync(path.join(ROOT,u)));
@@ -421,25 +423,29 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     }
     await ctx.close();
   }
-  { // язык по стране (O-154): часовой пояс → язык; не из списка — язык браузера; выбор кнопкой главнее
-    const cases=[['en-US','America/Argentina/Buenos_Aires','es'],['en-US','America/Mexico_City','es'],['en-GB','Europe/Paris','fr'],
-      ['en-US','Europe/Moscow','ru'],['en-US','Asia/Yerevan','ru'],['de-DE','Europe/Madrid','es'],['ru-RU','Europe/Kyiv','ru'],
-      ['fr-FR','America/New_York','fr'],['en-US','Europe/Berlin','de'],['en-US','Europe/Vienna','de'],['de-CH','Europe/Zurich','de'],['en-US','Europe/Zurich','en'],['en-US','America/New_York','en'],
-      ['en-US','America/Sao_Paulo','pt'],['en-US','America/Manaus','pt'],['en-US','Europe/Lisbon','pt'],['pt-BR','America/New_York','pt']];
-    for(const [loc,tz,want] of cases){
+  { // главная — на английском для всех (O-163, было O-154 «язык по стране»): страна/браузер только предлагаются плашкой
+    const cases=[['en-US','America/Argentina/Buenos_Aires','es'],['en-GB','Europe/Paris','fr'],['en-US','Asia/Yerevan','ru'],
+      ['ru-RU','Europe/Kyiv','ru'],['en-US','Europe/Berlin','de'],['en-US','America/Sao_Paulo','pt'],['pt-BR','America/New_York','pt'],
+      ['en-US','America/New_York',''],['en-US','Europe/Zurich','']];
+    for(const [loc,tz,sug] of cases){
       const ctx=await br.newContext({viewport:{width:390,height:780},locale:loc,timezoneId:tz}); const pg=await ctx.newPage();
       await pg.goto(base); await pg.waitForSelector('.lng[aria-pressed=true]');
       const got=await pg.getAttribute('.lng[aria-pressed=true]','data-arg');
-      ok(got===want,'язык по стране: '+tz+' + браузер '+loc+' → '+want+' (вышло '+got+')');
-      if(tz==='America/Sao_Paulo') ok((await pg.textContent('.ld-geo')).includes('Brasil — o Barik abriu em português'),'плашка: Бразилия — португальский');
-      if(tz==='Europe/Berlin'){ ok((await pg.textContent('.ld-geo')).includes('Deutschland — Barik ist auf Deutsch'),'плашка: Германия — немецкий, предлагает другие'); await pg.click('[data-act=geoX]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]'); ok(await pg.locator('.ld-geo').count()===0,'плашку закрыли — не возвращается'); }
+      ok(got==='en','главная на английском: '+tz+' + браузер '+loc+' (вышло '+got+')');
+      ok(await pg.getAttribute('html','lang')==='en','html lang=en: '+tz);
+      const n=await pg.locator('.ld-geo').count();
+      ok(sug? n===1 : n===0, 'плашка '+(sug?'предлагает '+sug:'не нужна')+': '+tz+' + '+loc);
+      if(sug) ok(await pg.getAttribute('.ld-geo [data-act=landLang]','data-arg')===sug,'первая кнопка плашки — '+sug);
+      if(tz==='America/Sao_Paulo') ok((await pg.textContent('.ld-geo')).includes('Brasil — O Barik também está em português'),'плашка: Бразилия — по-португальски');
+      if(tz==='Asia/Yerevan') ok((await pg.textContent('.ld-geo')).includes('Barik есть и на русском'),'плашка: Армения — по-русски');
+      if(tz==='Europe/Berlin'){ await pg.click('[data-act=geoX]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]'); ok(await pg.locator('.ld-geo').count()===0,'плашку закрыли — не возвращается'); }
       if(tz==='Europe/Paris'){
-        ok(await pg.locator('.ld-geo').count()===1&&(await pg.textContent('.ld-geo')).includes('France'),'плашка страны: «France — Barik s’ouvre en français»');
         ok(await pg.locator('.ld-geo [data-act=landLang]').count()===5,'плашка страны: пять других языков');
         ok(await pg.locator('.wy li').count()===3&&await pg.locator('.ld-step').count()===3&&await pg.locator('.ld-stages li').count()===6,'обложка: 3 причины, 3 шага, 6 ступеней пути');
-        await pg.click('.lng[data-arg=es]');
-        ok(await pg.locator('.ld-geo').count()===0,'выбрал язык сам — плашка страны больше не нужна'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
-        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='es','выбор кнопкой главнее страны'); }
+        await pg.click('.ld-geo [data-act=landLang][data-arg=fr]');
+        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='fr'&&await pg.locator('.ld-geo').count()===0,'кнопка плашки включает французский, плашка уходит');
+        await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
+        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='fr','выбор кнопкой запоминается'); }
       await ctx.close();
     }
   }
@@ -465,7 +471,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const pg=await ctx.newPage(), got=[], errs=[];
     pg.on('pageerror',e=>errs.push(String(e)));
     pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+r.url()); });
-    await pg.goto(base); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const man=await pg.evaluate(()=>window.__bararan.MAN);
     for(const l of ['ru','en','fr','es','de','pt']){

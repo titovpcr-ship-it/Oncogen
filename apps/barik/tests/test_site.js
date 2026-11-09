@@ -38,8 +38,9 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   // превью ссылки (Open Graph / Twitter): картинка из обложки, заголовок и описание — из её текстов
   const og=await pg.evaluate(()=>{const m=n=>{const e=document.querySelector('meta[property="'+n+'"],meta[name="'+n+'"]'); return e?e.content:'';};
     return {img:m('og:image'), w:m('og:image:width'), card:m('twitter:card'), title:m('og:title'), desc:m('description')};});
-  ok(/og\/og-ru\.jpg$/.test(og.img)&&og.w==='2400'&&og.card==='summary_large_image','превью ссылки: '+og.img+' '+og.w+' '+og.card);
-  ok(og.title.startsWith('Barik — заговорите по-армянски')&&og.desc.includes('пропись'),'превью: заголовок и описание обложки');
+  ok(/og\/og-en\.jpg$/.test(og.img)&&og.w==='2400'&&og.card==='summary_large_image','превью ссылки: '+og.img+' '+og.w+' '+og.card);
+  ok(og.title.startsWith('Barik — start speaking Armenian')&&og.desc.includes('handwriting')&&await pg.evaluate(()=>document.documentElement.lang)==='en','превью и главная — на английском (O-163)');
+  await pg.click('[data-act=landLang][data-arg=ru]');
   for(const L of ['ru','en','fr','es','de','pt']){ const r=await pg.request.get(base+'og/og-'+L+'.jpg'); ok(r.ok()&&(await r.body()).length>50000,'картинка превью og-'+L+'.jpg'); }
   ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\/og\//.test(q.url))))),'картинки превью не лежат в кэше приложения');
   await pg.click('[data-act=pickLang][data-arg=ru]');

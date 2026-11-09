@@ -37,7 +37,10 @@ function tzLang(tz){
   return '';
 }
 const NAVL=['ru','fr','es','de','pt','en'].find(l=>NAV.indexOf(l)===0)||'';
-let L=UI.lang||UI.ll||tzLang(TZ)||NAVL||'en';
+/* С 09.11.2026 главная — на английском для всех (владелец: «главная страница проекта на английском», O-163):
+   язык страны/браузера только предлагается плашкой (SUG), сам не включается. */
+const SUG=tzLang(TZ)||NAVL||'';
+let L=UI.lang||UI.ll||'en';
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}
 
@@ -796,13 +799,14 @@ const capHy=t=>t?t.charAt(0).toUpperCase()+t.slice(1):t;
 const HEAR=['բարև ձեզ','շնորհակալություն','ինչպե՞ս ես','բարի լույս','ես հայերեն եմ սովորում','ես քեզ սիրում եմ'];
 /* Страна посетителя по часовому поясу (tzcc.js, O-156) — для плашки «Франция — открыли Barik на французском». */
 function tzCC(tz){ const T_=window.BARIK_TZ||{}; if(!tz) return ''; const i=tz.lastIndexOf('/')+1; return ((T_[tz.slice(0,i)]||{})[tz.slice(i)])||''; }
-function ccName(cc){ try{ return new Intl.DisplayNames([L],{type:'region'}).of(cc)||cc; }catch(e){ return cc; } }
+function ccName(cc,l){ try{ return new Intl.DisplayNames([l||L],{type:'region'}).of(cc)||cc; }catch(e){ return cc; } }
 function ccFlag(cc){ return /^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc].map(c=>0x1F1E6+c.charCodeAt(0)-65)):''; }
 /* Плашка показывается первому гостю, пока язык выбран за него (не кнопкой) и страна узнана. */
 function geoHTML(D){
-  const cc=tzCC(TZ); if(UI.lang||UI.ll||UI.geoX||!cc) return '';
-  const others=['ru','en','fr','es','de','pt'].filter(l=>l!==L).map(l=>'<button class="lnk" data-act="landLang" data-arg="'+l+'" lang="'+l+'">'+({ru:'Русский',en:'English',fr:'Français',es:'Español',de:'Deutsch',pt:'Português'}[l])+'</button>').join('');
-  return '<div class="ld-geo" role="status"><div class="ld-wrap"><span class="geo-f" aria-hidden="true">'+ccFlag(cc)+'</span><span class="geo-t">'+esc(D.geo(ccName(cc),L))+'</span><span class="geo-o">'+esc(D.geoOther)+' '+others+'</span><button class="geo-x" data-act="geoX" aria-label="'+esc(D.geoClose)+'">✕</button></div></div>';
+  const cc=tzCC(TZ); if(UI.lang||UI.ll||UI.geoX||!SUG||SUG===L) return '';
+  const G=(STR[SUG]&&STR[SUG].land)||D;   // плашка — на языке, который предлагаем
+  const others=[SUG].concat(['ru','en','fr','es','de','pt'].filter(l=>l!==L&&l!==SUG)).map(l=>'<button class="lnk" data-act="landLang" data-arg="'+l+'" lang="'+l+'">'+({ru:'Русский',en:'English',fr:'Français',es:'Español',de:'Deutsch',pt:'Português'}[l])+'</button>').join('');
+  return '<div class="ld-geo" role="status"><div class="ld-wrap"><span class="geo-f" aria-hidden="true">'+ccFlag(cc)+'</span><span class="geo-t" lang="'+SUG+'">'+esc(G.geo(cc?ccName(cc,SUG):'',SUG))+'</span><span class="geo-o" lang="'+SUG+'">'+esc(G.geoOther)+' '+others+'</span><button class="geo-x" data-act="geoX" aria-label="'+esc(G.geoClose)+'">✕</button></div></div>';
 }
 function onboardHTML(){
   const D=LND(), a1=WORDS.filter(w=>TOPICS[w.t].lv==='A1').length, chk=T('lvCheck'), I=ART.ic;
