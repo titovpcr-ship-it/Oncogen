@@ -424,8 +424,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await ctx.close();
   }
   { // O-163: страна точно ясна по часовому поясу — её язык; иначе английский, язык браузера/Армении — плашкой
-    const cases=[['en-US','America/Argentina/Buenos_Aires','es',''],['en-GB','Europe/Paris','fr',''],['en-US','Europe/Moscow','ru',''],
-      ['en-US','Europe/Berlin','de',''],['en-US','Europe/Lisbon','pt',''],['en-US','America/Sao_Paulo','pt',''],
+    const cases=[['en-US','America/Argentina/Buenos_Aires','es','en'],['en-GB','Europe/Paris','fr','en'],['en-US','Europe/Moscow','ru','en'],['ru-RU','Europe/Moscow','ru',''],
+      ['en-US','Europe/Berlin','de','en'],['pt-PT','Europe/Lisbon','pt',''],['en-US','America/Sao_Paulo','pt','en'],
       ['en-US','Asia/Yerevan','en','ru'],['ru-RU','Asia/Yerevan','en','ru'],['ru-RU','Europe/Kyiv','en','ru'],['pt-BR','America/New_York','en','pt'],
       ['de-CH','Europe/Zurich','en','de'],['en-US','America/New_York','en',''],['en-US','Europe/Zurich','en','']];
     for(const [loc,tz,want,sug] of cases){
