@@ -73,7 +73,8 @@ def load_de():
 
 def load_pt():
     pt, titles = {}, {}
-    for f in sorted(glob.glob(p("data", "pt", "*.tsv"))):
+    # manual.tsv (свой перевод) — последним, как у немецкого: правка в нём главнее sNN.tsv (кэш DeepSeek)
+    for f in sorted(glob.glob(p("data", "pt", "*.tsv")), key=lambda f: (os.path.basename(f) == "manual.tsv", f)):
         for l in open(f, encoding="utf-8"):
             if not l.strip() or "\t" not in l or l.startswith("#"):
                 continue
