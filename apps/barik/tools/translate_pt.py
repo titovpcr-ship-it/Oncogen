@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Португальский (Бразилия) перевод словаря Barik — DeepSeek в Azure Foundry, по образцу tools/translate_pt.py (O-161).
+"""Португальский (Бразилия) перевод словаря Barik — DeepSeek в Azure Foundry, по образцу tools/translate_de.py (O-161).
+НЕ ИСПОЛЬЗОВАН для словаря: при лимите 20 тыс. токенов в минуту модель давала ~2 слова в минуту — все 20 121 слово
+переведены вручную (data/pt/manual.tsv); скрипт оставлен на случай, если лимит Foundry поднимут.
 
   python3.13 -u tools/translate_pt.py               все слова (кэш — dist/pt_cache.json, прерванный прогон продолжается)
   python3.13 -u tools/translate_pt.py --limit 100   проба

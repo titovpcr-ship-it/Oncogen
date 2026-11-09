@@ -443,6 +443,23 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       await ctx.close();
     }
   }
+  { // шесть языков в шапке обложки (O-161): ни на одной ширине и ни на одном языке нет прокрутки вбок,
+    // подзаголовок «10 minutos por dia» — всегда своей строкой (на планшете прилипал к «armênio» / «Armenisch»)
+    const bad=[], glued=[];
+    for(const w of [320,360,480,560,768]){
+      const ctx=await br.newContext({viewport:{width:w,height:780},locale:'ru-RU'}); const pg=await ctx.newPage();
+      await pg.goto(base); await pg.waitForSelector('.lngs .lng');
+      for(const l of ['ru','en','fr','es','de','pt']){
+        await pg.click('.lngs .lng[data-arg='+l+']'); await pg.waitForTimeout(80);
+        const r=await pg.evaluate(()=>{const h=document.querySelector('.ld h1'),b=h.querySelector('.h1b');
+          return [document.documentElement.scrollWidth,Math.round(b.getBoundingClientRect().left-h.getBoundingClientRect().left)];});
+        if(r[0]>w) bad.push(w+' '+l+' '+r[0]); if(r[1]!==0) glued.push(w+' '+l);
+      }
+      await ctx.close();
+    }
+    ok(!bad.length,'шапка с шестью языками: без прокрутки вбок на 320–768 px '+bad.join(', '));
+    ok(!glued.length,'подзаголовок обложки — своей строкой на всех языках '+glued.join(', '));
+  }
   { // «Слушать» (O-152): переводы озвучены на 4 языках, тема подряд: армянское → перевод, «Вспомнить», пауза, назад
     const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), got=[], errs=[];

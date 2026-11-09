@@ -554,7 +554,10 @@ body[data-view="onboard"]{background:#FFFAF5}
 .lng[aria-pressed="true"]{background:var(--L-card);color:var(--L-ink);box-shadow:0 1px 3px rgba(25,25,51,.14)}
 .ld-open{height:42px;min-height:0;padding:0 20px;font:700 15px/1 var(--ui);border-radius:999px;width:auto;background:var(--L-ink);color:var(--L-bg);border:0}
 .ld-open:hover{opacity:.9}
-@media (max-width:440px){ .ld-brand .hyn{display:none} .ld-open{display:none} }
+@media (max-width:600px){ .ld-open{display:none} }
+@media (max-width:440px){ .ld-brand .hyn{display:none} .lng{padding:8px 7px;letter-spacing:0} }
+/* шесть языков (O-161): на самых узких экранах кнопки RU…PT ещё плотнее, чтобы шапка не давала прокрутку вбок */
+@media (max-width:350px){ .lng{padding:7px 5px;font-size:12px} .ld-nav .ld-wrap{gap:8px} }
 /* первый экран */
 .ld-hero{position:relative;padding:36px 0 30px;isolation:isolate;overflow:hidden}
 .ld-hero::before{content:"";position:absolute;z-index:-1;left:-15%;top:-30%;width:70%;aspect-ratio:1;background:radial-gradient(closest-side,color-mix(in srgb,#FFB37A 30%,transparent),transparent 72%)}
@@ -563,7 +566,7 @@ body[data-view="onboard"]{background:#FFFAF5}
 .fl{display:inline-flex;flex-direction:column;width:20px;height:14px;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
 .fl i{flex:1;background:#D90012}.fl i+i{background:#0033A0}.fl i+i+i{background:#F2A800}
 .ld h1{font:800 clamp(44px,8.8vw,82px)/1 var(--disp);letter-spacing:-.045em;margin:0;white-space:pre-line;text-wrap:balance;color:var(--L-ink)}
-.ld h1 .h1b{position:relative;display:inline-block;margin-top:.16em;font-size:.6em;letter-spacing:-.035em;line-height:1.1;isolation:isolate}
+.ld h1 .h1b{position:relative;display:table;margin-top:.16em;font-size:.6em;letter-spacing:-.035em;line-height:1.1;isolation:isolate}
 .ld h1 .h1b>span{background:linear-gradient(95deg,var(--L-a1),var(--L-a2) 55%,var(--L-pom));-webkit-background-clip:text;background-clip:text;color:transparent}
 .ld h1 .brush{position:absolute;z-index:-1;left:-2%;right:-3%;bottom:-.1em;width:105%;height:.42em;color:color-mix(in srgb,var(--L-a1) 24%,transparent)}
 .ld-sub{font-size:clamp(17px,2.1vw,20px);line-height:1.6;color:var(--L-ink2);margin:22px 0 0;max-width:31em}

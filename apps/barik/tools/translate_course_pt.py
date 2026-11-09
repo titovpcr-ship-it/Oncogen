@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Португальский (Бразилия) в курсе «Гранат» (data/path/course.json): к каждому месту с ru/en/fr/es/de добавляется pt.
-DeepSeek в Azure Foundry, как tools/translate_course_pt.py; кэш — dist/pt_course_cache.json (ключ — английский + русский).
+DeepSeek в Azure Foundry, как tools/translate_course_de.py; кэш — dist/pt_course_cache.json (ключ — английский + русский).
 
   python3.13 -u tools/translate_course_pt.py          перевести недостающее и записать в course.json
   python3.13 -u tools/translate_course_pt.py --write  только записать из кэша
