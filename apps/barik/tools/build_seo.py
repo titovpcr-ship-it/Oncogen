@@ -29,7 +29,7 @@ import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
-LANGS = ("ru", "en", "fr", "es", "de")
+LANGS = ("ru", "en", "fr", "es", "de", "pt")
 LV = ("A1", "A2", "B1", "B2", "C1", "C2")
 NEIGHBOURS = 12
 
@@ -174,11 +174,39 @@ TXT = {
                 "mit Änderungen; eigene Übersetzungen.",
         "lang_name": "Deutsch",
     },
+    "pt": {
+        "title_w": "“{x}” em armênio — {a} ({tr}) | Barik",
+        "desc_w": "Como se diz “{x}” em armênio: {a}, pronuncia-se {tr}. Tema: {t}, nível {lv}. "
+                  "Aprenda palavras armênias grátis com o Barik.",
+        "h_tr": "Pronúncia", "listen": "Ouvir", "h_tx": "Tradução", "lv": "Nível", "topic": "Tema",
+        "more": "Mais palavras do tema “{t}”", "all_topic": "As {n} {w} do tema",
+        "cta": "Aprenda armênio com o Barik — grátis",
+        "cta_t": "Aprender estas palavras no Barik", "next_t": "Próximo tema",
+        "dict": "Dicionário de armênio", "home": "Barik",
+        "title_t": "{t} em armênio — {n} {w} com pronúncia | Barik",
+        "desc_t": "{t} em armênio: {n} {w} com tradução para o português e pronúncia, nível {lv}. "
+                  "Armênio oriental — aprenda com o Barik.",
+        "h_t": "{t} em armênio", "intro_t": "{n} {w}, nível {lv}. Armênio oriental, "
+                                            "pronúncia em letras latinas para falantes de português.",
+        "title_i": "Dicionário de armênio — {n} {w} por tema com pronúncia | Barik",
+        "desc_i": "Dicionário de armênio oriental: {n} {w} em {k} temas do A1 ao C2, tradução "
+                  "para o português e pronúncia. Aprenda grátis com o Barik.",
+        "h_i": "Dicionário de armênio", "intro_i": "{n} {w} em {k} temas — das primeiras palavras "
+                                                  "(A1) ao domínio (C2). Escolha um tema.",
+        "lvname": {"A1": "A1 — iniciante", "A2": "A2 — básico", "B1": "B1 — intermediário",
+                   "B2": "B2 — intermediário avançado", "C1": "C1 — avançado", "C2": "C2 — domínio"},
+        "words": "palavras", "prev": "← Anterior", "next": "Próxima →",
+        "foot": "Barik — armênio oriental para falantes de português, espanhol, inglês, francês, alemão e russo. "
+                "Parte do vocabulário vem do <a href=\"https://www.wiktionary.org/\">Wikcionário</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "com alterações; traduções próprias.",
+        "lang_name": "Português",
+    },
 }
-HL = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de"}
-TX = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de"}      # перевод
-TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st", "de": "dt"}   # транскрипция
-TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de"}   # название темы
+HL = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de", "pt": "pt"}
+TX = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de", "pt": "pt"}      # перевод
+TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st", "de": "dt", "pt": "ptr"}   # транскрипция
+TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de", "pt": "pt"}   # название темы
 
 CSS = """@font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02B0,U+02C6,U+02DA,U+02DC,U+0259,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}

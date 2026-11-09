@@ -43,7 +43,7 @@ switch ($r) {
         need_post($method);
         $b = body();
         $email = norm_email($b['email'] ?? null) ?? fail('email');
-        $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de'], true) ? $b['lang'] : 'en';
+        $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
         if (limited(ip_key() . ':start', 20, 3600)) fail('wait', 429, ['retry' => 600]);
         $row = q('SELECT sent FROM codes WHERE email = ?', [$email])->fetch();
         if ($row && now() - (int)$row['sent'] < CODE_GAP) {

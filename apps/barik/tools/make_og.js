@@ -30,7 +30,7 @@ const CSS=`html,body{overflow:hidden!important}
   await new Promise(r=>srv.listen(0,r)); const base='http://127.0.0.1:'+srv.address().port+'/';
   fs.mkdirSync(OUT,{recursive:true});
   const br=await chromium.launch();
-  for(const [L,loc] of [['ru','ru-RU'],['en','en-US'],['fr','fr-FR'],['es','es-AR'],['de','de-DE']]){
+  for(const [L,loc] of [['ru','ru-RU'],['en','en-US'],['fr','fr-FR'],['es','es-AR'],['de','de-DE'],['pt','pt-BR']]){
     const ctx=await br.newContext({viewport:{width:1200,height:630},deviceScaleFactor:2,locale:loc,reducedMotion:'reduce',colorScheme:'light'});
     const pg=await ctx.newPage(); const errs=[];
     pg.on('pageerror',e=>errs.push(e.message));

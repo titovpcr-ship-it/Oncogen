@@ -7,11 +7,14 @@
   data/es/*.tsv         — испанский к каждому слову (все 20 тыс., и старые, и новые темы), topics.tsv —
                           «русское название<TAB>испанское» (O-134);
   data/de/*.tsv         — немецкий (08.11.2026, перевод tools/translate_de.py), topics.tsv — «русское<TAB>немецкое»;
+  data/pt/*.tsv         — португальский (Бразилия, 09.11.2026, O-161): manual.tsv «армянский<TAB>португальский»,
+                          topics.tsv — «русское<TAB>португальское»;
   data/new/*.tsv        — новые темы (заголовок «# lv=…; ru=…; en=…; fr=…; hy=…; ic=…»,
                           строки «армянский<TAB>русский<TAB>английский<TAB>эмодзи[<TAB>французский]»).
 
 Пишет:
-  data/words.json  — словарь целиком: строка слова [армянский, русский, английский, эмодзи, французский, испанский];
+  data/words.json  — словарь целиком: строка слова [армянский, русский, английский, эмодзи, французский, испанский,
+                   немецкий, португальский];
   www/js/data.js   — тот же словарь для приложения (window.BARARAN_DATA);
   tools/words.json — список для озвучки gen_audio.py: {a, lv, ru, en, fr}.
 
@@ -66,6 +69,17 @@ def load_de():
             a, b = l.rstrip("\n").split("\t", 1)
             (titles if os.path.basename(f) == "topics.tsv" else de)[a.strip()] = b.strip()
     return de, titles
+
+
+def load_pt():
+    pt, titles = {}, {}
+    for f in sorted(glob.glob(p("data", "pt", "*.tsv"))):
+        for l in open(f, encoding="utf-8"):
+            if not l.strip() or "\t" not in l or l.startswith("#"):
+                continue
+            a, b = l.rstrip("\n").split("\t", 1)
+            (titles if os.path.basename(f) == "topics.tsv" else pt)[a.strip()] = b.strip()
+    return pt, titles
 
 
 def load_es():
@@ -169,6 +183,15 @@ def build():
             if w[0] not in de:
                 problems.append("нет немецкого: " + w[0])
             w.append(de.get(w[0], ""))
+    pt, pt_titles = load_pt()          # португальский (09.11.2026, O-161): восьмое поле строки слова, t.pt у темы
+    for t in topics:
+        t["pt"] = pt_titles.get(t["ru"], "")
+        if not t["pt"]:
+            problems.append("нет португальского названия темы: " + t["ru"])
+        for w in t["w"]:
+            if w[0] not in pt:
+                problems.append("нет португальского: " + w[0])
+            w.append(pt.get(w[0], ""))
     return topics, problems
 
 

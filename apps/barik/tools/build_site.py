@@ -120,9 +120,9 @@ def land_meta():
     s = open(os.path.join(SRC, "js", "i18n.js"), encoding="utf-8").read()
     q = r"'((?:\\.|[^'\\])*)'"
     found = re.findall(r"land:\{\s*title:" + q + r",\s*desc:" + q, s)
-    assert len(found) == 5, "в i18n.js не пять разделов land"
+    assert len(found) == 6, "в i18n.js не шесть разделов land"
     un = lambda x: x.replace("\\'", "'")
-    return {L: (un(t), un(d)) for L, (t, d) in zip(("ru", "en", "fr", "es", "de"), found)}
+    return {L: (un(t), un(d)) for L, (t, d) in zip(("ru", "en", "fr", "es", "de", "pt"), found)}
 
 
 def esc(x):
@@ -135,8 +135,9 @@ OG_ALT = {"ru": "Barik: телефон с уроком армянского на
           "en": "Barik: a phone with an Armenian lesson in front of an orchard and Mount Aragats, speech bubbles with Armenian phrases",
           "fr": "Barik : un téléphone avec une leçon d'arménien devant un verger et le mont Aragats, bulles avec des phrases arméniennes",
           "es": "Barik: un teléfono con una lección de armenio ante un huerto y el monte Aragats, globos con frases en armenio",
-          "de": "Barik: ein Handy mit einer Armenisch-Lektion vor einem Obstgarten und dem Berg Aragaz, Sprechblasen mit armenischen Sätzen"}
-OG_LOC = {"ru": "ru_RU", "en": "en_US", "fr": "fr_FR", "es": "es_ES", "de": "de_DE"}
+          "de": "Barik: ein Handy mit einer Armenisch-Lektion vor einem Obstgarten und dem Berg Aragaz, Sprechblasen mit armenischen Sätzen",
+          "pt": "Barik: um celular com uma lição de armênio diante de um pomar e do monte Aragats, balões com frases em armênio"}
+OG_LOC = {"ru": "ru_RU", "en": "en_US", "fr": "fr_FR", "es": "es_ES", "de": "de_DE", "pt": "pt_BR"}
 
 
 def og_tags(L, url, title, desc):
@@ -298,7 +299,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
             if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/"))
-                    or rel.split("/")[0] in ("ru", "en", "fr", "es", "de") or rel.startswith("sitemap")):
+                    or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel + ("?v=" + ver[rel] if rel in ver else ""))
             h.update(rel.encode())

@@ -18,7 +18,7 @@ const srv=http.createServer((q,r)=>{
 });
 let fails=0;
 const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  ',m); };
-const LANGS=['ru','en','fr','es','de'];
+const LANGS=['ru','en','fr','es','de','pt'];
 (async()=>{
   if(!fs.existsSync(path.join(ROOT,'ru','index.html'))){console.log('нет страниц поиска — python3 tools/build_site.py'); process.exit(1);}
   const words=JSON.parse(fs.readFileSync(path.join(__dirname,'..','dist','words_tr.json'),'utf8'));
