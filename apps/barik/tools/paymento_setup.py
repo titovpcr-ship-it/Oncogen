@@ -6,6 +6,7 @@
   python3.13 tools/paymento_setup.py --live     то же + открыть оплату всем (магазин Paymento — уже не Testnet!)
   python3.13 tools/paymento_setup.py --test     обратно: оплата только для CRYPTO_TESTERS
   python3.13 tools/paymento_setup.py --check    только спросить Paymento: ключ, адрес уведомлений
+  python3.13 tools/paymento_setup.py --off      выключить крипту на сайте: ключ из config.php убрать (владелец 09.11.2026)
 
 Из apps/barik/.env (в git не попадает): PAYMENTO_API_KEY (обязательно), PAYMENTO_SECRET (секретный ключ магазина —
 подпись уведомлений; без него уведомление всё равно проверяется запросом verify), CRYPTO_TESTERS (почты через
@@ -56,8 +57,22 @@ def main():
     g.add_argument('--live', action='store_true', help='открыть оплату всем (магазин Paymento в боевом режиме)')
     g.add_argument('--test', action='store_true', help='оплата только для CRYPTO_TESTERS')
     ap.add_argument('--check', action='store_true', help='только проверить ключ и адрес уведомлений')
+    ap.add_argument('--off', action='store_true', help='выключить: убрать ключ из config.php, PAYMENTO_LIVE false')
     a = ap.parse_args()
     D.load_env()
+    if a.off:
+        cp = D.CPanel(os.environ['BARIK_HOST_SERVER'], os.environ.get('BARIK_HOST_DOMAIN', 'barik.am'), os.environ['BARIK_HOST_USER'],
+                      os.environ.get('BARIK_HOST_PASSWORD', ''), os.environ.get('BARIK_HOST_TOKEN', ''))
+        cp.login()
+        got = cp.uapi('Fileman', 'get_file_content', dir='public_html/api', file='config.php')
+        text = (got.get('data') or {}).get('content') or ''
+        if got.get('status') != 1 or 'return [' not in text:
+            sys.exit('config.php на хостинге не найден')
+        text = set_key(set_key(text, 'PAYMENTO_API_KEY', ''), 'PAYMENTO_LIVE', False)
+        cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': ('config.php', text.encode('utf-8'), 'text/plain')},
+                      dir='public_html/api', overwrite='1'), 'config.php')
+        print('крипта выключена: ключа Paymento в config.php нет — окно оплаты её не показывает, счета не создаются')
+        return
     key = os.environ.get('PAYMENTO_API_KEY', '').strip()
     if not key:
         sys.exit('В apps/barik/.env нет PAYMENTO_API_KEY')
