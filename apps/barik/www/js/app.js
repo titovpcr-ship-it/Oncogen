@@ -24,7 +24,7 @@ if(QL&&!UI.lang){UI.lang=QL; saveUI();}
    английский. Выбор кнопкой RU/EN/FR/ES/DE/PT и ?lang= со страниц поиска — главнее. */
 const TZ=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){return '';}})();
 const TZ_LANG={
-  ru:['Europe/Moscow','Europe/Kaliningrad','Europe/Samara','Europe/Volgograd','Europe/Saratov','Europe/Ulyanovsk','Europe/Astrakhan','Europe/Kirov','Europe/Minsk','Asia/Yerevan','Asia/Bishkek','Asia/Dushanbe','Asia/Tashkent','Asia/Samarkand','Asia/Ashgabat','Asia/Almaty','Asia/Qostanay','Asia/Aqtobe','Asia/Aqtau','Asia/Atyrau','Asia/Oral','Asia/Qyzylorda','Asia/Yekaterinburg','Asia/Omsk','Asia/Novosibirsk','Asia/Barnaul','Asia/Tomsk','Asia/Novokuznetsk','Asia/Krasnoyarsk','Asia/Irkutsk','Asia/Chita','Asia/Yakutsk','Asia/Khandyga','Asia/Vladivostok','Asia/Ust-Nera','Asia/Magadan','Asia/Sakhalin','Asia/Srednekolymsk','Asia/Kamchatka','Asia/Anadyr'],
+  ru:['Europe/Moscow','Europe/Kaliningrad','Europe/Samara','Europe/Volgograd','Europe/Saratov','Europe/Ulyanovsk','Europe/Astrakhan','Europe/Kirov','Europe/Minsk','Asia/Bishkek','Asia/Dushanbe','Asia/Tashkent','Asia/Samarkand','Asia/Ashgabat','Asia/Almaty','Asia/Qostanay','Asia/Aqtobe','Asia/Aqtau','Asia/Atyrau','Asia/Oral','Asia/Qyzylorda','Asia/Yekaterinburg','Asia/Omsk','Asia/Novosibirsk','Asia/Barnaul','Asia/Tomsk','Asia/Novokuznetsk','Asia/Krasnoyarsk','Asia/Irkutsk','Asia/Chita','Asia/Yakutsk','Asia/Khandyga','Asia/Vladivostok','Asia/Ust-Nera','Asia/Magadan','Asia/Sakhalin','Asia/Srednekolymsk','Asia/Kamchatka','Asia/Anadyr'],
   fr:['Europe/Paris','Europe/Monaco','Europe/Luxembourg','Asia/Beirut','Africa/Algiers','Africa/Tunis','Africa/Casablanca','Indian/Reunion','America/Martinique','America/Guadeloupe','America/Cayenne','Pacific/Noumea','Pacific/Tahiti'],
   es:['Europe/Madrid','Atlantic/Canary','Africa/Ceuta','America/Buenos_Aires','America/Montevideo','America/Mexico_City','America/Cancun','America/Merida','America/Monterrey','America/Matamoros','America/Chihuahua','America/Ciudad_Juarez','America/Ojinaga','America/Hermosillo','America/Mazatlan','America/Bahia_Banderas','America/Tijuana','America/Santiago','America/Punta_Arenas','America/Bogota','America/Lima','America/Caracas','America/Guayaquil','America/La_Paz','America/Asuncion','America/Havana','America/Santo_Domingo','America/Guatemala','America/El_Salvador','America/Tegucigalpa','America/Managua','America/Costa_Rica','America/Panama','America/Puerto_Rico'],
   de:['Europe/Berlin','Europe/Busingen','Europe/Vienna','Europe/Vaduz'],
@@ -37,10 +37,11 @@ function tzLang(tz){
   return '';
 }
 const NAVL=['ru','fr','es','de','pt','en'].find(l=>NAV.indexOf(l)===0)||'';
-/* С 09.11.2026 главная — на английском для всех (владелец: «главная страница проекта на английском», O-163):
-   язык страны/браузера только предлагается плашкой (SUG), сам не включается. */
-const SUG=tzLang(TZ)||NAVL||'';
-let L=UI.lang||UI.ll||'en';
+/* O-163 (владелец 09.11.2026): «главная на английском по умолчанию, но если точно ясно, из какой страны человек —
+   почему бы и нет». Страна точно ясна по часовому поясу (TZ_LANG) — сразу её язык; иначе английский, а язык
+   браузера и Армении (русский) — только предложением в плашке (SUG). */
+const SUG=(TZ==='Asia/Yerevan'?'ru':'')||NAVL||'';
+let L=UI.lang||UI.ll||tzLang(TZ)||'en';
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}
 

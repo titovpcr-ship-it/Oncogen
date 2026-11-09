@@ -423,29 +423,29 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     }
     await ctx.close();
   }
-  { // главная — на английском для всех (O-163, было O-154 «язык по стране»): страна/браузер только предлагаются плашкой
-    const cases=[['en-US','America/Argentina/Buenos_Aires','es'],['en-GB','Europe/Paris','fr'],['en-US','Asia/Yerevan','ru'],
-      ['ru-RU','Europe/Kyiv','ru'],['en-US','Europe/Berlin','de'],['en-US','America/Sao_Paulo','pt'],['pt-BR','America/New_York','pt'],
-      ['en-US','America/New_York',''],['en-US','Europe/Zurich','']];
-    for(const [loc,tz,sug] of cases){
+  { // O-163: страна точно ясна по часовому поясу — её язык; иначе английский, язык браузера/Армении — плашкой
+    const cases=[['en-US','America/Argentina/Buenos_Aires','es',''],['en-GB','Europe/Paris','fr',''],['en-US','Europe/Moscow','ru',''],
+      ['en-US','Europe/Berlin','de',''],['en-US','Europe/Lisbon','pt',''],['en-US','America/Sao_Paulo','pt',''],
+      ['en-US','Asia/Yerevan','en','ru'],['ru-RU','Asia/Yerevan','en','ru'],['ru-RU','Europe/Kyiv','en','ru'],['pt-BR','America/New_York','en','pt'],
+      ['de-CH','Europe/Zurich','en','de'],['en-US','America/New_York','en',''],['en-US','Europe/Zurich','en','']];
+    for(const [loc,tz,want,sug] of cases){
       const ctx=await br.newContext({viewport:{width:390,height:780},locale:loc,timezoneId:tz}); const pg=await ctx.newPage();
       await pg.goto(base); await pg.waitForSelector('.lng[aria-pressed=true]');
       const got=await pg.getAttribute('.lng[aria-pressed=true]','data-arg');
-      ok(got==='en','главная на английском: '+tz+' + браузер '+loc+' (вышло '+got+')');
-      ok(await pg.getAttribute('html','lang')==='en','html lang=en: '+tz);
+      ok(got===want,'язык обложки: '+tz+' + браузер '+loc+' → '+want+' (вышло '+got+')');
       const n=await pg.locator('.ld-geo').count();
       ok(sug? n===1 : n===0, 'плашка '+(sug?'предлагает '+sug:'не нужна')+': '+tz+' + '+loc);
       if(sug) ok(await pg.getAttribute('.ld-geo [data-act=landLang]','data-arg')===sug,'первая кнопка плашки — '+sug);
-      if(tz==='America/Sao_Paulo') ok((await pg.textContent('.ld-geo')).includes('Brasil — O Barik também está em português'),'плашка: Бразилия — по-португальски');
-      if(tz==='Asia/Yerevan') ok((await pg.textContent('.ld-geo')).includes('Barik есть и на русском'),'плашка: Армения — по-русски');
-      if(tz==='Europe/Berlin'){ await pg.click('[data-act=geoX]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]'); ok(await pg.locator('.ld-geo').count()===0,'плашку закрыли — не возвращается'); }
-      if(tz==='Europe/Paris'){
-        ok(await pg.locator('.ld-geo [data-act=landLang]').count()===5,'плашка страны: пять других языков');
+      if(tz==='Asia/Yerevan'&&loc==='en-US'){
+        ok((await pg.textContent('.ld-geo')).includes('Barik есть и на русском'),'плашка: Армения — по-русски');
         ok(await pg.locator('.wy li').count()===3&&await pg.locator('.ld-step').count()===3&&await pg.locator('.ld-stages li').count()===6,'обложка: 3 причины, 3 шага, 6 ступеней пути');
-        await pg.click('.ld-geo [data-act=landLang][data-arg=fr]');
-        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='fr'&&await pg.locator('.ld-geo').count()===0,'кнопка плашки включает французский, плашка уходит');
+        await pg.click('.ld-geo [data-act=landLang][data-arg=ru]');
+        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='ru'&&await pg.locator('.ld-geo').count()===0,'кнопка плашки включает русский, плашка уходит');
         await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
-        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='fr','выбор кнопкой запоминается'); }
+        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='ru','выбор запоминается'); }
+      if(tz==='Europe/Zurich'&&loc==='de-CH'){ await pg.click('[data-act=geoX]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]'); ok(await pg.locator('.ld-geo').count()===0,'плашку закрыли — не возвращается'); }
+      if(tz==='Europe/Paris'){ await pg.click('.lng[data-arg=es]'); await pg.reload(); await pg.waitForSelector('.lng[aria-pressed=true]');
+        ok(await pg.getAttribute('.lng[aria-pressed=true]','data-arg')==='es','выбор кнопкой главнее страны'); }
       await ctx.close();
     }
   }
