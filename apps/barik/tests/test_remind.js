@@ -68,6 +68,19 @@ let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else cons
   ok((await pg.textContent('.rm')).includes('Включить'),'кнопка в кабинете выключает');
   ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'кабинет: без прокрутки вбок');
   await pg.click('.rm [data-act=rmTog]');
+  // счётчик посещений (O-174): открытие сайта — один посетитель в день, события, боты не считаются, сводка по ключу
+  { const pepKey=require('crypto').createHmac('sha256','test-pepper').update('stats').digest('hex').slice(0,32);
+    const st=async()=>{ const r=await fetch(base+'api/?r=stats&key='+pepKey); const j=await r.json(); const m={}; (j.rows||[]).forEach(x=>{ m[x.k]=(m[x.k]||0)+x.n; }); return m; };
+    ok((await fetch(base+'api/?r=stats&key=00')).status===401,'сводка без ключа — 401');
+    const g=await br.newContext({viewport:{width:390,height:800},locale:'fr-FR',timezoneId:'Europe/Paris',serviceWorkers:'block',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'}); const gp=await g.newPage();
+    await gp.goto(base); await gp.waitForTimeout(800); await gp.reload(); await gp.waitForTimeout(800);
+    let m=await st(); ok(m.open>=2&&m.u>=1&&m['c:FR']===1&&m['l:fr']===1&&m['e:guest_new']===1,'гость из Франции: 2 открытия, 1 человек, страна и язык ('+JSON.stringify(m)+')');
+    ok(!(await g.cookies()).length,'счётчик не ставит cookie');
+    await gp.evaluate(()=>{ window.__bararan.H.pickLang('fr'); window.__bararan.go('name'); window.__bararan.go('name'); }); await gp.waitForTimeout(500);
+    m=await st(); ok(m['e:start']===1&&m['e:v_name']===1,'события: «начать», «имя» (один раз за сеанс)');
+    await fetch(base+'api/?r=hit',{method:'POST',headers:{'User-Agent':'Googlebot/2.1'},body:JSON.stringify({l:'en'})});
+    m=await st(); ok(!m['l:en'],'боты не считаются');
+    await g.close(); }
   // удаление аккаунта стирает настройку
   r=await call('delete',{},ca); ok(r.j.ok,'аккаунт удалён'); const n0=rem().length; cron(at(DAY+12,10,240)); ok(rem().length===n0,'после удаления писем нет');
   ok(!errs.length,'без ошибок страницы '+errs.join(' | ')); ok(!phpErr,'без ошибок PHP '+phpErr.slice(0,300));

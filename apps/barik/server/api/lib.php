@@ -82,6 +82,10 @@ function db(): PDO {
     // последнего письма, n — писем подряд без занятий (после 5 — пауза до новых занятий)
     $pdo->exec('CREATE TABLE IF NOT EXISTS remind(uid INTEGER PRIMARY KEY, on_ INTEGER NOT NULL DEFAULT 0, tz INTEGER NOT NULL DEFAULT 0,
         lang TEXT NOT NULL DEFAULT \'en\', day INTEGER NOT NULL DEFAULT 0, n INTEGER NOT NULL DEFAULT 0, seen INTEGER NOT NULL DEFAULT 0)');
+    // счётчик посещений (O-174): только общие числа по дням, без cookie и без IP; v — суточные отпечатки посетителей
+    // (хэш IP + браузер + день + PEPPER), живут двое суток — для числа уникальных за день
+    $pdo->exec('CREATE TABLE IF NOT EXISTS stats(day INTEGER NOT NULL, k TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY(day, k))');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS stat_v(day INTEGER NOT NULL, h TEXT NOT NULL, PRIMARY KEY(day, h))');
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
@@ -567,4 +571,37 @@ function remind_run(?int $now = null): array {
         q('UPDATE remind SET day = ?, n = ?, seen = ? WHERE uid = ?', [$day, $n + 1, $last, $r['uid']]);
     }
     return [$sent, $seen];
+}
+
+
+/* ---------- счётчик посещений (O-174) ---------- */
+function stat_add(int $day, string $k, int $n = 1): void {
+    q('INSERT INTO stats(day, k, n) VALUES(?, ?, ?) ON CONFLICT(day, k) DO UPDATE SET n = n + excluded.n', [$day, mb_substr($k, 0, 80), $n]);
+}
+
+function stat_hit(array $b): void {
+    $ua = (string)($_SERVER['HTTP_USER_AGENT'] ?? '');
+    if ($ua === '' || preg_match('/bot|crawl|spider|slurp|preview|headless|lighthouse|monitor|curl|wget|python|facebookexternalhit/i', $ua)) return;
+    $day = intdiv(time(), 86400);
+    $clean = fn($x, $re) => preg_match($re, (string)$x) ? (string)$x : '';
+    $ev = $clean($b['e'] ?? '', '/^[a-z][a-z0-9_]{0,23}$/');
+    if ($ev !== '' && $ev !== 'open') { stat_add($day, 'e:' . $ev); return; }
+    // открытие сайта: посетитель за день, язык, страна по поясу, источник, телефон/компьютер
+    $h = substr(hash_hmac('sha256', ip_key() . '|' . $ua . '|' . $day, (string)cfg('PEPPER', 'barik')), 0, 20);
+    q('DELETE FROM stat_v WHERE day < ?', [$day - 1]);
+    $new = q('INSERT OR IGNORE INTO stat_v(day, h) VALUES(?, ?)', [$day, $h])->rowCount() > 0;
+    stat_add($day, 'open');
+    if (!$new) return;
+    stat_add($day, 'u');
+    $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'l:' . $l);
+    $c = $clean($b['c'] ?? '', '/^[A-Z]{2}$/'); stat_add($day, 'c:' . ($c ?: '??'));
+    $r = strtolower($clean($b['r'] ?? '', '/^[A-Za-z0-9.\-]{1,60}$/'));
+    $r = preg_replace('/^(www\.|m\.|l\.|lm\.)/', '', $r);
+    stat_add($day, 'r:' . ($r ?: '-'));
+    stat_add($day, 'd:' . (preg_match('/Mobi|Android|iPhone|iPad/i', $ua) ? 'phone' : 'desk'));
+    if (!empty($b['g'])) stat_add($day, 'e:guest_new');
+}
+
+function stats_key(): string {
+    return substr(hash_hmac('sha256', 'stats', (string)cfg('PEPPER', 'barik')), 0, 32);
 }

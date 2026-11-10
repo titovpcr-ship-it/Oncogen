@@ -40,6 +40,26 @@ if ($r === 'paymento') {
     paymento_ipn();
 }
 
+if ($r === 'hit') {
+    // счётчик (O-174): sendBeacon шлёт без нашего заголовка — поэтому до проверки X-Barik; пишет только общие числа
+    if ($method === 'POST' && !limited(ip_key() . ':hit', 300, 3600)) {
+        $b = json_decode(substr((string)file_get_contents('php://input'), 0, 2000), true);
+        if (is_array($b)) stat_hit($b);
+    }
+    http_response_code(204);
+    exit;
+}
+
+if ($r === 'stats') {
+    // сводка для владельца: ключ — от PEPPER (tools/stats.py берёт его из config.php хостинга)
+    if (!hash_equals(stats_key(), (string)($_GET['key'] ?? ''))) fail('auth', 401);
+    $days = max(1, min(400, (int)($_GET['days'] ?? 30)));
+    $from = intdiv(time(), 86400) - $days + 1;
+    out(['ok' => true, 'from' => $from, 'rows' => q('SELECT day, k, n FROM stats WHERE day >= ? ORDER BY day, k', [$from])->fetchAll(),
+         'users' => (int)q('SELECT COUNT(*) FROM users')->fetchColumn(), 'remind' => (int)q('SELECT COUNT(*) FROM remind WHERE on_ = 1')->fetchColumn(),
+         'premium' => (int)q("SELECT COUNT(*) FROM users WHERE sub_status IN ('active','trialing')")->fetchColumn()]);
+}
+
 if ($r === 'unsub') {
     // отписка от напоминаний по ссылке из письма (и One-Click POST почтовика): без входа, подпись — unsub_sig
     $uid = (int)($_GET['u'] ?? 0);

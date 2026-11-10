@@ -629,7 +629,7 @@ function nextItem(){
   if(sess.i>=sess.items.length){finish();return;}
   render(true); window.scrollTo(0,0);
 }
-function finish(){
+function finish(){ hit('lesson_done');
   clearTimeout(sess.timer);
   if(!sess.first.size&&!sess.known){ sess=null; go('home'); return; }
   const firstOk=[...sess.first.values()].filter(Boolean).length;
@@ -751,7 +751,12 @@ document.addEventListener('touchend',e=>{
 },{passive:true});
 
 /* ================= RENDER ================= */
-function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
+/* ---------- счётчик (O-174): без cookie, без IP — открытие сайта и несколько событий; сервер хранит только суммы по дням ---------- */
+const HITS=new Set();
+function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; if(e&&HITS.has(e)) return; if(e) HITS.add(e);
+  let r=''; try{ r=document.referrer?new URL(document.referrer).hostname:''; }catch(x){} if(r===location.hostname) r='';
+  navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
+function go(v,arg){ if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
 function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
@@ -2383,7 +2388,7 @@ let docFrom='settings';
 const H={
   brand:()=>ACT.tab('home'),
   tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='tquiz') tq=null; if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} if(view==='pquiz'&&pq){clearTimeout(pq.timer); pq=null;} go(a); },
-  pickLang:a=>{setLang(a); go('home');},
+  pickLang:a=>{setLang(a); hit('start'); go('home');},
   landSay:(a,b)=>{ const k=String(a||'').split('|'); sayText(k[0],b,false,null,k[1]==='m'?'m':'f'); },
   geoX:()=>{ UI.geoX=1; saveUI(); const g=document.querySelector('.ld-geo'); if(g) g.remove(); },
   landHow:(a,b,e)=>{ const t=document.getElementById('how'); if(t){ if(e) e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } },
@@ -2400,7 +2405,7 @@ const H={
   nmEdit:()=>{ NM.ed=true; render(); const i=$('#nmHy'); if(i) i.focus(); },
   nmFix:()=>{ const i=$('#nmHy'), v=(i?i.value:'').replace(/[^\u0531-\u0556\u0561-\u0587\s\-]/g,'').replace(/\s+/g,' ').trim().slice(0,40); if(!v) return; NM.hy=v.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' '); NM.fix=true; NM.ed=false; render(); },
   nmKey:a=>{ const i=$('#nmHy'); if(!i) return; i.value=a==='<'?i.value.slice(0,-1):(i.value+a).slice(0,40); },
-  nmSave:()=>nmSave(), nmShare:()=>nmShare(), nmLink:()=>nmCopy(),
+  nmSave:()=>{ hit('name_save'); nmSave(); }, nmShare:()=>{ hit('name_share'); nmShare(); }, nmLink:()=>{ hit('name_link'); nmCopy(); },
   penGo:()=>{ const i=ABC.findIndex(x=>CUR[x.up]&&!S.pen[x.up]); penNew(i<0?0:i); go('pen',penT.i); },
   penPart:a=>{ const st=penT; if(!st||st.wait||+a===st.part) return; if(st.demo) penDemoStop(); st.part=+a; st.miss=0; render(); },
   penClear:()=>{ const st=penT; if(!st||st.wait) return; if(st.demo) penDemoStop(); st.ink[st.part]=[]; st.sc[st.part]=[]; st.miss=0; render(); },
@@ -2498,7 +2503,7 @@ const H={
     const body={email:ACC.email,code:ACC.code}; if(ACC.needNick) body.nick=ACC.nick;
     const j=await api('verify',body);
     if(j.ok){
-      accApply(j); Object.assign(ACC,{busy:false,step:'email',code:'',needNick:false,nick:''}); clearInterval(ACC.timer);
+      hit('login'); accApply(j); Object.assign(ACC,{busy:false,step:'email',code:'',needNick:false,nick:''}); clearInterval(ACC.timer);
       toast(T('accHello',j.user.nick));
       if(ACC.next==='paywall'){ ACC.next=null; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); } else render();   // backTo — прежний: после оплаты туда же
       return;
@@ -2521,7 +2526,7 @@ const H={
     else accSet({err:j.err||'server'});
   },
   accPortal:async()=>{ const j=await api('portal',{}); if(j.ok&&j.url) location.assign(j.url); else toast(T('accErr_'+(j.err==='nosub'?'nosub':'pay'))); },
-  webBuy:()=>webBuy(pwState.sel==='monthly'?'month':'year'),
+  webBuy:()=>{ hit('checkout'); return webBuy(pwState.sel==='monthly'?'month':'year'); },
   cryBuy:()=>cryBuy(pwState.csel==='year'?'year':'life'),
   cplan:a=>{pwState.csel=a; render();},
   pwClose:()=>go(backTo.v,backTo.a),
@@ -2626,6 +2631,7 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();
+hit();
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn(); });
