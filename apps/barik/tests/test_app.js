@@ -16,7 +16,7 @@ const fs_exists=h=>fs.existsSync(path.join(ROOT,h));
 const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  ',m); };
 (async()=>{
   await new Promise(r=>srv.listen(0,r)); const base='http://127.0.0.1:'+srv.address().port+'/';
-  const br=await chromium.launch();
+  const br=await chromium.launch({args:['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream']});
   for(const scheme of ['light','dark']){
     const ctx=await br.newContext({viewport:{width:360,height:780},deviceScaleFactor:2,colorScheme:scheme,locale:'ru-RU'});
     const pg=await ctx.newPage(); const errs=[], ext=[];
@@ -572,6 +572,15 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(r.n.ru>=410&&new Set(Object.values(r.n)).size===1&&!r.miss.length,'примеры: '+r.n.ru+' слов, одинаково на шести языках, все слова из словаря '+r.miss.slice(0,3).join(','));
     ok(r.aud===6,'примеры озвучены обоими голосами ('+r.aud+' из 6 проб)');
     await pg.click('[data-act=exSay]'); await pg.waitForTimeout(300);
+    // O-175: «Скажи сам» — запись (поддельный микрофон Chromium), затем «Моя запись»; ничего не уходит на сервер
+    const up=[]; pg.on('request',q=>{ if(q.method()==='POST'&&!/r=hit/.test(q.url())) up.push(q.url()); });
+    ok(await pg.locator('[data-act=recSay]').count()===1,'на карточке — «Скажи сам»');
+    await ctx.grantPermissions(['microphone']); await pg.click('[data-act=recSay]');
+    await pg.waitForSelector('.rec-b.on',{timeout:5000}).catch(()=>{}); ok(await pg.locator('.rec-b.on').count()===1,'идёт запись — кнопка «Стоп»');
+    await pg.click('[data-act=recSay]'); await pg.waitForSelector('[data-act=recMine]',{timeout:6000}).catch(()=>{});
+    ok(await pg.locator('[data-act=recMine]').count()===1&&(await pg.textContent('.rec-n')).includes('только в браузере'),'после записи — «Моя запись» и пояснение');
+    ok(!up.length,'запись не отправляется на сервер '+up.join(','));
+    await pg.click('[data-act=next]'); ok(await pg.locator('[data-act=recMine]').count()===0,'следующее слово — запись сброшена');
     await pg.evaluate(()=>window.__bararan.setLang('de')); 
     ok(errs.length===0,'примеры: без ошибок страницы '+errs.join(' | '));
     await ctx.close();

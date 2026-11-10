@@ -1047,3 +1047,8 @@ details[open] .pm::after{transform:rotate(0)}
 .ex-hy{margin:2px 0 0;font-family:var(--hy,inherit);font-size:20px;line-height:1.35;overflow-wrap:anywhere}
 .ex-tr{margin:3px 0 0;font-size:14px;opacity:.7}
 .ex-tx{margin:5px 0 0;font-size:16px;font-weight:600}
+
+/* O-175: «Скажи сам» — запись своего голоса на карточке нового слова */
+.rec{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:10px 0 0}
+.rec-b.on{background:var(--pom);color:#fff;border-color:var(--pom)}
+.rec-n{margin:6px auto 0;max-width:360px;font-size:13px;opacity:.7}

@@ -623,7 +623,7 @@ function checkSpell(it){
   render(false); speak(it.w,false);
   if(ok) sess.timer=setTimeout(()=>{if(cur()===it) nextItem();},1300);
 }
-function nextItem(){
+function nextItem(){ if(REC.on||REC.url) recReset();
   if(!sess) return; clearTimeout(sess.timer);
   sess.i++;
   if(sess.i>=sess.items.length){finish();return;}
@@ -756,7 +756,7 @@ const HITS=new Set();
 function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; if(e&&HITS.has(e)) return; if(e) HITS.add(e);
   let r=''; try{ r=document.referrer?new URL(document.referrer).hostname:''; }catch(x){} if(r===location.hostname) r='';
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
-function go(v,arg){ if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
+function go(v,arg){ if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
 function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
@@ -1986,6 +1986,30 @@ function exTr(hy){ try{ return trL(hy.replace(/[։՞՛՜]/g,'').replace(/,/g,' ,
 function exHTML(w){ exLoad(); const e=EX&&EX[w.a]; if(!e) return '';
   return '<div class="ex"><div class="ex-top"><span class="ex-k">'+esc(T('exLabel'))+'</span>'+(audioOK()?'<button class="ex-say" data-act="exSay" data-arg="'+esc(e[0])+'" aria-label="'+esc(T('listen'))+'">'+ICON.spk+'</button>':'')+'</div>'+
     '<p class="ex-hy" lang="hy">'+esc(e[0])+'</p><p class="ex-tr">'+esc(exTr(e[0]))+'</p><p class="ex-tx">'+esc(e[1])+'</p></div>'; }
+/* ---------- «Скажи и сравни» (O-175): запись своего голоса в браузере и сравнение с образцом; запись никуда не уходит ---------- */
+const REC={on:false,a:'',url:'',mr:null,st:null,timer:0};
+const recOK=()=>!BILL.native&&!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
+function recHTML(w){ if(!recOK()||!audioOK()) return '';
+  const mine=REC.url&&REC.a===w.a, on=REC.on&&REC.a===w.a;
+  return '<div class="rec"><button class="aud rec-b'+(on?' on':'')+'" data-act="recSay" data-arg="'+esc(w.a)+'">'+(on?'⏹':'🎙')+'<span>'+esc(on?T('recStop'):T('recSay'))+'</span></button>'+
+    (mine?'<button class="aud" data-act="recMine">▶<span>'+esc(T('recMine'))+'</span></button>':'')+'</div>'+(mine?'<p class="rec-n">'+esc(T('recHint'))+'</p>':''); }
+function recReset(){ try{ if(REC.mr&&REC.mr.state!=='inactive') REC.mr.stop(); }catch(e){} try{ REC.st&&REC.st.getTracks().forEach(t=>t.stop()); }catch(e){}
+  clearTimeout(REC.timer); if(REC.url) URL.revokeObjectURL(REC.url); Object.assign(REC,{on:false,a:'',url:'',mr:null,st:null}); }
+async function recStart(a){
+  if(REC.on){ try{ REC.mr.stop(); }catch(e){} return; }
+  recReset();
+  let st; try{ st=await navigator.mediaDevices.getUserMedia({audio:true}); }catch(e){ toast(T('recNo')); return; }
+  const ch=[], mr=new MediaRecorder(st);
+  Object.assign(REC,{on:true,a,mr,st});
+  mr.ondataavailable=e=>{ if(e.data&&e.data.size) ch.push(e.data); };
+  mr.onstop=()=>{ clearTimeout(REC.timer); try{ st.getTracks().forEach(t=>t.stop()); }catch(e){}
+    REC.on=false; if(REC.a!==a) return;
+    REC.url=ch.length?URL.createObjectURL(new Blob(ch,{type:mr.mimeType||'audio/mp4'})):''; render(false);
+    if(REC.url) recPlay(()=>{ const w=BY[a]; if(w) setTimeout(()=>speak(w,false,null,true),350); }); };
+  mr.start(); hit('rec'); render(false);
+  REC.timer=setTimeout(()=>{ try{ if(mr.state==='recording') mr.stop(); }catch(e){} },4000);
+}
+function recPlay(done){ if(!REC.url) return; try{ const el=AUD.el||(AUD.el=new Audio()); el.pause(); el.src=REC.url; el.onended=()=>{ el.onended=null; if(done) done(); }; el.play().catch(()=>{}); }catch(e){} }
 function audioRow(w){
   if(!audioOK()) return '';
   return '<div class="audio"><button class="aud" data-act="say" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlow" data-arg="'+esc(w.a)+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>';
@@ -2005,7 +2029,7 @@ function sessionHTML(){
   const ph=w.a.indexOf(' ')>=0?' phrase':'';
   let body='', foot='';
   if(it.k==='intro'){
-    body='<p class="q">'+esc(T('qNew'))+'</p><div class="pic-xl">'+pic(w)+'</div><div class="hyw'+ph+'" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div><div class="ruw">'+esc(tx(w))+'</div>'+audioRow(w)+exHTML(w)+'<button class="flag" data-act="flag" data-arg="'+esc(w.a)+'">'+esc(S.flag&&S.flag[w.a]?T('flagged'):T('flagAsk'))+'</button>';
+    body='<p class="q">'+esc(T('qNew'))+'</p><div class="pic-xl">'+pic(w)+'</div><div class="hyw'+ph+'" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div><div class="ruw">'+esc(tx(w))+'</div>'+audioRow(w)+recHTML(w)+exHTML(w)+'<button class="flag" data-act="flag" data-arg="'+esc(w.a)+'">'+esc(S.flag&&S.flag[w.a]?T('flagged'):T('flagAsk'))+'</button>';
     foot='<div class="row2"><button class="btn secondary" data-act="know">'+esc(T('know'))+'</button><button class="btn primary" data-act="next">'+esc(T('next'))+'</button></div>';
   }else if(it.k==='a2r'){
     body='<p class="q">'+esc(T('qMeaning'))+'</p><div class="hyw'+ph+'" lang="hy">'+esc(w.a)+'</div>'+((S.set.tr||it.done)?'<div class="trn">'+esc(trn(w))+'</div>':'')+audioRow(w)+optsPic(it);
@@ -2550,6 +2574,8 @@ const H={
   manageSub:()=>BILL.openStoreSubs(),
   doc:a=>{ docFrom=view; go('doc',a); },
   exSay:(a,b)=>{ sayText(a,b); },
+  recSay:a=>recStart(a),
+  recMine:()=>recPlay(),
   rmX:()=>{ UI.rmX=1; saveUI(); render(); },
   rmTog:async()=>{ if(!ACC.me) return; const on=!ACC.me.remind; const j=await api('remind',{on,tz:-new Date().getTimezoneOffset(),lang:L});
     if(j.ok){ accApply(j); toast(on?T('rmOnT'):T('rmOffT')); render(); } else toast(T('buyFail')); },
