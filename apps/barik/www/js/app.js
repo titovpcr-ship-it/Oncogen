@@ -1030,7 +1030,7 @@ const CUR=window.BARARAN_CURSIVE||{};
 /* ---- перо с нажимом (O-170): штрих рисуется не линией одной толщины, а короткими отрезками разной ширины —
    нажим на ходе вниз, волосная на ходе вверх и вбок, концы сходят на нет (как в школьной прописи пером).
    Осевая линия штриха остаётся в разметке невидимой (path.cl): по ней считаются длина, ход пера и тренажёр. */
-const CAL={step:1.6,min:2.1,max:5.6,sig:5,t0:5,t1:9,k0:.62,k1:.42};
+const CAL={step:1.6,min:2.1,max:5.6,sig:5,t0:9,t1:9,k0:.4,k1:.42,c0:.06,c1:.17,c2:.2};
 let calM=null; const calMemo=new Map(), calEnds=new Map();
 function calMeas(){ if(calM&&calM.isConnected) return calM; const NS='http://www.w3.org/2000/svg', sv=document.createElementNS(NS,'svg');
   sv.setAttribute('width','0'); sv.setAttribute('height','0'); sv.setAttribute('aria-hidden','true'); sv.style.cssText='position:absolute;left:-9999px;top:0;visibility:hidden';
@@ -1040,6 +1040,9 @@ function calSample(d,hair){
   const m=calMeas(); m.setAttribute('d',d); const L=m.getTotalLength(), n=Math.max(2,Math.round(L/CAL.step)), h=L/n, X=[],Y=[],P=[],W=[];
   for(let i=0;i<=n;i++){ const q=m.getPointAtLength(i*h); X.push(q.x); Y.push(q.y); }
   for(let i=0;i<=n;i++){ const a=Math.max(0,i-1), b=Math.min(n,i+1), dy=Y[b]-Y[a], l=Math.hypot(X[b]-X[a],dy)||1; P.push(hair?0:Math.max(0,dy/l)); }
+  if(!hair) for(let i=0;i<=n;i++){ const a=Math.max(0,i-2), b=Math.min(n,i+2), c=Math.min(n,Math.max(1,i)); if(b-a<2) continue;
+    let t=Math.atan2(Y[b]-Y[c],X[b]-X[c])-Math.atan2(Y[c]-Y[a],X[c]-X[a]); while(t>Math.PI) t-=2*Math.PI; while(t<-Math.PI) t+=2*Math.PI;
+    const k=Math.abs(t)/((b-a)*h/2); P[i]*=Math.min(1,Math.max(CAL.c2,1-(k-CAL.c0)/CAL.c1)); }
   const r=Math.ceil(CAL.sig*2/h);
   for(let i=0;i<=n;i++){ let sm=0,w=0; for(let j=-r;j<=r;j++){ const q=Math.min(n,Math.max(0,i+j)), g=Math.exp(-(j*h)*(j*h)/(2*CAL.sig*CAL.sig)); sm+=P[q]*g; w+=g; }
     let pr=sm/w; pr=pr*pr*(3-2*pr);
