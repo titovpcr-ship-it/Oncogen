@@ -76,6 +76,8 @@ function db(): PDO {
     $pdo->exec('CREATE TABLE IF NOT EXISTS hits(k TEXT NOT NULL, t INTEGER NOT NULL)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS hits_k ON hits(k, t)');
     $pdo->exec('CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY, t INTEGER NOT NULL)');
+    // прогресс ученика (O-171): один JSON на человека, rev — номер записи (несовпал — клиент сливает и шлёт снова)
+    $pdo->exec('CREATE TABLE IF NOT EXISTS progress(uid INTEGER PRIMARY KEY, rev INTEGER NOT NULL, data TEXT NOT NULL, t INTEGER NOT NULL)');
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');

@@ -132,9 +132,29 @@ switch ($r) {
         // (разовая оплата криптой не списывается сама — ей это не мешает)
         if ($u['pd_sub'] && in_array((string)$u['sub_status'], ['active', 'trialing', 'past_due'], true)) fail('sub', 409);
         q('DELETE FROM codes WHERE email = ?', [$u['email']]);
+        q('DELETE FROM progress WHERE uid = ?', [$u['id']]);
         q('DELETE FROM users WHERE id = ?', [$u['id']]);
         end_session();
         out(['ok' => true]);
+
+    case 'sync':
+        // прогресс в аккаунте (O-171): GET — что лежит, POST {rev, data} — записать, если rev тот же
+        $u = session_user() ?? fail('auth', 401);
+        $row = q('SELECT rev, data FROM progress WHERE uid = ?', [$u['id']])->fetch(PDO::FETCH_ASSOC);
+        $rev = $row ? (int)$row['rev'] : 0;
+        $cur = $row ? (string)$row['data'] : null;     // JSON строкой: PHP не перекодирует ({} не станет [])
+        if ($method !== 'POST') out(['ok' => true, 'u' => (int)$u['id'], 'rev' => $rev, 'data' => $cur]);
+        if (limited('sync:' . $u['id'], 600, 3600)) fail('wait', 429, ['retry' => 600]);
+        $b = body();
+        $data = $b['data'] ?? null;
+        if (!is_string($data) || strlen($data) > 3000000) fail('big', 413);
+        $chk = json_decode($data, true);
+        if (!is_array($chk) || !array_key_exists('s', $chk)) fail('data');
+        if ((int)($b['rev'] ?? -1) !== $rev) fail('rev', 409, ['u' => (int)$u['id'], 'rev' => $rev, 'data' => $cur]);
+        q('INSERT INTO progress(uid, rev, data, t) VALUES(?, ?, ?, ?)
+           ON CONFLICT(uid) DO UPDATE SET rev = excluded.rev, data = excluded.data, t = excluded.t',
+            [$u['id'], $rev + 1, $data, time()]);
+        out(['ok' => true, 'u' => (int)$u['id'], 'rev' => $rev + 1]);
 
     case 'checkout':
         need_post($method);

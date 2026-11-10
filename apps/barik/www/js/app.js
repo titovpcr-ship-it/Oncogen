@@ -215,7 +215,59 @@ function loadLocal(){
   }catch(e){LSOK=false;}
 }
 function writeLocal(){try{localStorage.setItem(LS,JSON.stringify(S));LSOK=true;}catch(e){LSOK=false;}}
-function save(){S.u=Date.now();writeLocal();}
+function save(){S.u=Date.now();writeLocal();syncTouch();}
+/* ---------- прогресс в аккаунте (O-171): у вошедшего S и путь лежат и на сервере ----------
+   Сервер хранит один JSON и номер записи; сливает клиент: слово — у кого позже ответ (t), сброс — у кого позже,
+   серия — у кого позже день, тренажёр — больше звёзд, путь — лучший результат. Настройки и отметки — у устройства. */
+const SYK='barik-sync-v1';
+const SY={u:0,at:0,busy:false,dirty:false,again:false,seen:false,err:false,timer:0};
+try{ const j=JSON.parse(localStorage.getItem(SYK)||'null'); if(j){ SY.u=j.u||0; SY.at=j.at||0; } }catch(e){}
+const syObj=x=>(x&&typeof x==='object'&&!Array.isArray(x))?x:{};
+function syncPack(){ return {v:1,s:{w:S.w,st:S.st,reset:S.reset||0,pen:S.pen||{}},p:{u:PG.u||{},abc:PG.abc?1:0,h:PG.h||null,placed:PG.placed||null}}; }
+function syncMerge(R,replace){
+  const rs=syObj(R.s), rp=syObj(R.p), rr=rs.reset||0, mr=S.reset||0;
+  if(replace||rr>mr){ S.w=syObj(rs.w); S.st=Object.assign({day:0,streak:0},syObj(rs.st)); S.pen=syObj(rs.pen); S.reset=rr; }
+  else if(rr===mr){
+    const rw=syObj(rs.w); for(const a in rw){ const m=S.w[a], r=rw[a]; if(!r||typeof r!=='object') continue;
+      if(!m||(r.t||0)>(m.t||0)||((r.t||0)===(m.t||0)&&(r.b||0)>(m.b||0))) S.w[a]=r; }
+    const st=syObj(rs.st); if((st.day||0)>(S.st.day||0)||((st.day||0)===(S.st.day||0)&&(st.streak||0)>(S.st.streak||0))) S.st={day:st.day||0,streak:st.streak||0};
+    const pn=syObj(rs.pen); for(const k in pn) if((pn[k]||0)>(S.pen[k]||0)) S.pen[k]=pn[k];
+  }
+  if(replace){ PG.u=syObj(rp.u); PG.abc=rp.abc?1:0; PG.h=rp.h||null; PG.placed=rp.placed||null; return; }
+  const ru=syObj(rp.u); for(const id in ru){ const m=PG.u[id], r=ru[id]; if(!r||typeof r!=='object') continue;
+    PG.u[id]=m?Object.assign({},r,m,{d:Math.max(m.d||0,r.d||0),b:Math.max(m.b||0,r.b||0)}):r; }
+  if(rp.abc) PG.abc=1;
+  if(rp.h&&(!PG.h||(rp.h.last||0)>(PG.h.last||0))) PG.h=rp.h;
+  if(rp.placed&&(!PG.placed||(rp.placed.d||0)>(PG.placed.d||0))) PG.placed=rp.placed;
+}
+async function syncNow(){
+  if(!ACC.me||ACC.srv!==true) return;
+  if(SY.busy){ SY.again=true; return; }
+  SY.busy=true; SY.dirty=false; clearTimeout(SY.timer);
+  let ok=false, changed=false;
+  try{
+    let j=await api('sync');
+    for(let i=0;i<3&&j&&(j.ok||j.err==='rev');i++){
+      let rem=null; try{ rem=j.data?JSON.parse(j.data):null; }catch(e){}
+      const before=JSON.stringify(syncPack()), other=!!(SY.u&&j.u&&SY.u!==j.u);   // на устройстве прогресс другого аккаунта — не смешиваем
+      if(rem) syncMerge(rem,other); else if(other) syncMerge({},true);
+      if(j.u) SY.u=j.u;
+      const now=JSON.stringify(syncPack());
+      if(now!==before){ changed=true; writeLocal(); pgWrite(); }
+      if(now===j.data){ ok=true; break; }
+      const r=await api('sync',{rev:j.rev,data:now});
+      if(r.ok){ ok=true; break; }
+      j=r;
+    }
+  }catch(e){}
+  SY.busy=false; SY.err=!ok;
+  if(ok){ SY.at=Date.now(); try{localStorage.setItem(SYK,JSON.stringify({u:SY.u,at:SY.at}));}catch(e){} }
+  if(changed&&view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen'&&view!=='unit'&&view!=='name') render();
+  if(SY.again||SY.dirty){ SY.again=false; syncTouch(); }
+}
+function syncTouch(){ try{ if(!ACC.me) return; }catch(e){ return; } SY.dirty=true; clearTimeout(SY.timer); SY.timer=setTimeout(syncNow,4000); }
+document.addEventListener('visibilitychange',()=>{ try{ if(!ACC.me) return; }catch(e){ return; }
+  if(document.visibilityState==='hidden'){ if(SY.dirty) syncNow(); } else if(Date.now()-SY.at>60000) syncNow(); });
 function today(){const d=new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000);}
 function status(w){const s=S.w[w.a]; if(!s) return 'new'; return s.b>=4?'learned':'learning';}
 const LEVELS=['A1','A2','B1','B2','C1','C2'];
@@ -1711,6 +1763,7 @@ function accApply(j){
   if(j&&j.pay) ACC.pay=j.pay;
   if(j&&j.crypto) ACC.crypto=j.crypto;
   BILL.setWeb(!!(ACC.me&&ACC.me.premium),(ACC.me&&ACC.me.until)||0);
+  if(!ACC.me) SY.seen=false; else if(!SY.seen){ SY.seen=true; setTimeout(syncNow,0); }
 }
 function accInit(){
   if(BILL.native){ ACC.srv=false; return Promise.resolve(); }
@@ -1968,7 +2021,8 @@ const GR=window.BARIK_GRAMMAR, BP=window.BARIK_PATH||{}, CRS=BP.course||{stages:
 const PGK='barik-path-v1';
 let PG={u:{},tr:true};
 try{ const j=JSON.parse(localStorage.getItem(PGK)||'null'); if(j&&j.u) PG=Object.assign(PG,j); }catch(e){}
-function pgSave(){ try{localStorage.setItem(PGK,JSON.stringify(PG));}catch(e){} }
+function pgWrite(){ try{localStorage.setItem(PGK,JSON.stringify(PG));}catch(e){} }
+function pgSave(){ pgWrite(); syncTouch(); }
 const unitById=id=>CRS.units.find(u=>u.id===id);
 const rdx=o=>o?(o[L]||o.en||o.ru):'';
 const LNI={ru:2,en:3,fr:4,es:5};
@@ -2554,5 +2608,5 @@ Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='sessio
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();
