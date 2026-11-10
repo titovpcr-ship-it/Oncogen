@@ -984,7 +984,9 @@ function premCTA(){
   if(premium()) return '';
   return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">'+emo('✨')+'</span><span><b>'+esc(T('ctaTitle',WORDS.length))+'</b><span>'+esc(T('ctaSub'))+'</span></span></button>';
 }
-function syncNudgeHTML(c){ if(ACC.srv!==true||ACC.me||UI.syX||c.seen<10) return '';
+function syncNudgeHTML(c){
+  if(ACC.srv===true&&ACC.me&&!ACC.me.remind&&!UI.rmX&&c.seen>=10) return '<div class="sy-nudge"><div><b>'+esc(T('rmAsk'))+'</b><span>'+esc(T('rmAskT'))+'</span></div><button class="btn sm" data-act="rmTog">'+esc(T('rmOn'))+'</button><button class="sy-x" data-act="rmX" aria-label="'+esc(T('close'))+'">✕</button></div>';
+  if(ACC.srv!==true||ACC.me||UI.syX||c.seen<10) return '';
   return '<div class="sy-nudge"><div><b>'+esc(T('syncNudge'))+'</b><span>'+esc(T('syncNudgeT'))+'</span></div><button class="btn sm" data-act="syncLogin">'+esc(T('accLogin'))+'</button><button class="sy-x" data-act="syncX" aria-label="'+esc(T('close'))+'">✕</button></div>'; }
 function homeHTML(){
   const c=counts(), td=today();
@@ -1844,6 +1846,7 @@ function accProfileHTML(){
   return '<section class="set-sec acc"><div class="acc-card"><span class="acc-av" aria-hidden="true">'+esc(first)+'</span><div class="acc-who"><b class="acc-nick">'+esc(u.nick)+'</b><span class="acc-mail">'+esc(u.email)+'</span></div>'+
       (ACC.edit?'':'<button class="linkbtn" data-act="accNickEdit">'+esc(T('accNickChange'))+'</button>')+'</div>'+edit+'</section>'+
     '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
+    '<section class="set-sec rm"><h2 class="sec">'+esc(T('rmTitle'))+'</h2><p class="note">'+esc(T('rmText'))+'</p><div class="actions"><button class="btn '+(u.remind?'secondary':'primary')+'" data-act="rmTog">'+esc(u.remind?T('rmOff'):T('rmOn'))+'</button></div></section>'+
     '<section class="set-sec"><div class="actions"><button class="btn secondary" data-act="accLogout">'+esc(T('accLogout'))+'</button><button class="btn danger" data-act="accDel">'+esc(ACC.del?T('accDeleteArm'):T('accDelete'))+'</button></div>'+
       (ACC.edit?'':accErrHTML())+'<p class="note">'+esc(T('accSync'))+' '+esc(T('accData'))+'</p></section>';
 }
@@ -2542,6 +2545,9 @@ const H={
   manageSub:()=>BILL.openStoreSubs(),
   doc:a=>{ docFrom=view; go('doc',a); },
   exSay:(a,b)=>{ sayText(a,b); },
+  rmX:()=>{ UI.rmX=1; saveUI(); render(); },
+  rmTog:async()=>{ if(!ACC.me) return; const on=!ACC.me.remind; const j=await api('remind',{on,tz:-new Date().getTimezoneOffset(),lang:L});
+    if(j.ok){ accApply(j); toast(on?T('rmOnT'):T('rmOffT')); render(); } else toast(T('buyFail')); },
   syncX:()=>{ UI.syX=1; saveUI(); render(); },
   syncLogin:()=>openAccount(),
   docBack:()=>go(docFrom==='paywall'?'paywall':(docFrom||'settings')),

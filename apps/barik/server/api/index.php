@@ -40,6 +40,26 @@ if ($r === 'paymento') {
     paymento_ipn();
 }
 
+if ($r === 'unsub') {
+    // отписка от напоминаний по ссылке из письма (и One-Click POST почтовика): без входа, подпись — unsub_sig
+    $uid = (int)($_GET['u'] ?? 0);
+    $ok = $uid > 0 && hash_equals(unsub_sig($uid), (string)($_GET['s'] ?? ''));
+    $lang = 'en';
+    if ($ok) {
+        $lang = (string)(q('SELECT lang FROM remind WHERE uid = ?', [$uid])->fetchColumn() ?: 'en');
+        q('UPDATE remind SET on_ = 0 WHERE uid = ?', [$uid]);
+    }
+    $t = REMIND_TEXT[$lang] ?? REMIND_TEXT['en'];
+    http_response_code($ok ? 200 : 400);
+    header('Content-Type: text/html; charset=utf-8');
+    $site = htmlspecialchars(rtrim((string)cfg('SITE_URL', 'https://barik.am/'), '/') . '/');
+    echo '<!doctype html><html lang="' . htmlspecialchars($lang) . '"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+       . '<title>Barik</title><body style="font:17px/1.5 system-ui,sans-serif;max-width:520px;margin:12vh auto;padding:0 20px;color:#1C2045;background:#F4ECE7">'
+       . '<h1 style="font-size:24px">' . ($ok ? htmlspecialchars($t[2]) : 'Link is not valid') . '</h1><p>' . ($ok ? htmlspecialchars($t[3]) : '')
+       . '</p><p><a href="' . $site . '" style="color:#C2410C">barik.am</a></p></body></html>';
+    exit;
+}
+
 if ($method === 'POST') {
     // запросы только со своей страницы: свой заголовок (форма с чужого сайта его не пошлёт) и Origin
     if (($_SERVER['HTTP_X_BARIK'] ?? '') !== '1') fail('csrf', 403);
@@ -133,6 +153,7 @@ switch ($r) {
         if ($u['pd_sub'] && in_array((string)$u['sub_status'], ['active', 'trialing', 'past_due'], true)) fail('sub', 409);
         q('DELETE FROM codes WHERE email = ?', [$u['email']]);
         q('DELETE FROM progress WHERE uid = ?', [$u['id']]);
+        q('DELETE FROM remind WHERE uid = ?', [$u['id']]);
         q('DELETE FROM users WHERE id = ?', [$u['id']]);
         end_session();
         out(['ok' => true]);
@@ -155,6 +176,18 @@ switch ($r) {
            ON CONFLICT(uid) DO UPDATE SET rev = excluded.rev, data = excluded.data, t = excluded.t',
             [$u['id'], $rev + 1, $data, time()]);
         out(['ok' => true, 'u' => (int)$u['id'], 'rev' => $rev + 1]);
+
+    case 'remind':
+        // напоминания о повторении (O-173): {on, tz, lang} — включить/выключить, пояс и язык письма
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        $b = body();
+        $on = !empty($b['on']) ? 1 : 0;
+        $tz = max(-720, min(840, (int)($b['tz'] ?? 0)));
+        $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
+        q('INSERT INTO remind(uid, on_, tz, lang) VALUES(?, ?, ?, ?)
+           ON CONFLICT(uid) DO UPDATE SET on_ = excluded.on_, tz = excluded.tz, lang = excluded.lang', [$u['id'], $on, $tz, $lang]);
+        out(['ok' => true, 'user' => user_out($u)]);
 
     case 'checkout':
         need_post($method);

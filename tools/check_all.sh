@@ -48,6 +48,7 @@ run barik-test_app "$B" node tests/test_app.js
 run barik-test_crypto "$B" node tests/test_crypto.js   # оплата криптой (O-162): www + server/api, сборка не нужна
 run barik-test_pay "$B" node tests/test_pay.js   # оплата картой Dodo (O-164): www + server/api, сборка не нужна
 run barik-test_sync "$B" node tests/test_sync.js   # прогресс в аккаунте (O-171): www + server/api, сборка не нужна
+run barik-test_remind "$B" node tests/test_remind.js   # напоминания на почту (O-173): www + server/api + cron.php
 if [ $BUILT -eq 1 ]; then
   run barik-test_account "$B" node tests/test_account.js
   if [ $FULL -eq 1 ]; then

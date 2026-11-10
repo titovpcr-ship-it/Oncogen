@@ -78,6 +78,10 @@ function db(): PDO {
     $pdo->exec('CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY, t INTEGER NOT NULL)');
     // прогресс ученика (O-171): один JSON на человека, rev — номер записи (несовпал — клиент сливает и шлёт снова)
     $pdo->exec('CREATE TABLE IF NOT EXISTS progress(uid INTEGER PRIMARY KEY, rev INTEGER NOT NULL, data TEXT NOT NULL, t INTEGER NOT NULL)');
+    // напоминания о повторении (O-173): только по согласию; tz — смещение пояса в минутах (восток +), day — местный день
+    // последнего письма, n — писем подряд без занятий (после 5 — пауза до новых занятий)
+    $pdo->exec('CREATE TABLE IF NOT EXISTS remind(uid INTEGER PRIMARY KEY, on_ INTEGER NOT NULL DEFAULT 0, tz INTEGER NOT NULL DEFAULT 0,
+        lang TEXT NOT NULL DEFAULT \'en\', day INTEGER NOT NULL DEFAULT 0, n INTEGER NOT NULL DEFAULT 0, seen INTEGER NOT NULL DEFAULT 0)');
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
@@ -177,7 +181,8 @@ function user_out(array $u): array {
     return ['nick' => $u['nick'], 'email' => mask_email($u['email']), 'premium' => premium($u),
             'until' => $u['sub_until'] ? (int)$u['sub_until'] * 1000 : 0, 'plan' => $u['sub_plan'] ?: '',
             'status' => $u['sub_status'] ?: '',
-            'portal' => (bool)$u['pd_customer'] && (dodo_on() || (bool)cfg('PADDLE_API_KEY'))];
+            'portal' => (bool)$u['pd_customer'] && (dodo_on() || (bool)cfg('PADDLE_API_KEY')),
+            'remind' => (bool)q('SELECT on_ FROM remind WHERE uid = ?', [$u['id']])->fetchColumn()];
 }
 
 function uid_sig(int $uid): string {
@@ -310,16 +315,22 @@ function send_code(string $email, string $code, string $lang): bool {
     $t = MAIL_TEXT[$lang] ?? MAIL_TEXT['en'];
     $subject = sprintf($t[0], $code);
     $text = sprintf($t[1], $code, (string)cfg('SITE_URL', 'https://barik.am/'));
+    return mail_out($email, $subject, $text, ['code' => $code]);
+}
+
+/* письмо простым текстом: mail() хостинга, SMTP или журнал (тесты); $extra — в журнал, $unsub — ссылка отписки (List-Unsubscribe) */
+function mail_out(string $email, string $subject, string $text, array $extra = [], string $unsub = ''): bool {
     $from = (string)cfg('MAIL_FROM', 'Barik <no-reply@barik.am>');
     $driver = (string)cfg('MAIL_DRIVER', 'mail');
     if ($driver === 'log') {
         $dir = (string)cfg('DATA_DIR', dirname(__DIR__, 2) . '/barik-data');
-        return file_put_contents($dir . '/mail.log', json_encode(['to' => $email, 'subject' => $subject, 'code' => $code,
+        return file_put_contents($dir . '/mail.log', json_encode(['to' => $email, 'subject' => $subject] + $extra + ['unsub' => $unsub,
             'text' => $text], JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND | LOCK_EX) !== false;
     }
     $subj = '=?UTF-8?B?' . base64_encode($subject) . '?=';
     $headers = "From: " . enc_from($from) . "\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\n"
-             . "Content-Transfer-Encoding: base64\r\nAuto-Submitted: auto-generated";
+             . "Content-Transfer-Encoding: base64\r\nAuto-Submitted: auto-generated"
+             . ($unsub !== '' ? "\r\nList-Unsubscribe: <" . $unsub . ">\r\nList-Unsubscribe-Post: List-Unsubscribe=One-Click" : '');
     $b64 = chunk_split(base64_encode($text));
     if ($driver === 'smtp') return smtp_send($from, $email, $subj, $headers, $b64);
     return @mail($email, $subj, $b64, $headers);
@@ -498,3 +509,62 @@ function dodo_sync(string $sid, ?int $want = null): ?array {
     return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
 }
 
+
+
+/* ---------- напоминания о повторении (O-173) ----------
+   Раз в сутки (cron.php, по часам) — тем, кто включил: после 9 утра по их поясу, если есть слова на повторение
+   и сегодня ещё не занимались. Подряд без занятий — не больше 5 писем (дальше молчим, пока человек не вернётся);
+   кто не занимался 30 дней — не пишем. Число слов — из прогресса в аккаунте (O-171): слово ждёт, если d ≤ сегодня. */
+const REMIND_TEXT = [
+    'ru' => ['Barik: %d слов ждут повторения', "Здравствуйте, %s!\n\nСегодня на повторение — %d слов. Пять минут — и они останутся в памяти надолго.\n\nПовторить: %s\n\nОтписаться от напоминаний: %s\n\n— Barik, армянский слово за словом", 'Напоминания выключены', 'Больше не будем присылать напоминания. Включить их снова можно в личном кабинете.'],
+    'en' => ['Barik: %d words are waiting for review', "Hello, %s!\n\nYou have %d words to review today. Five minutes, and they will stay with you for a long time.\n\nReview now: %s\n\nUnsubscribe from reminders: %s\n\n— Barik, Armenian word by word", 'Reminders are off', 'We will not send you reminders any more. You can turn them on again in your account.'],
+    'fr' => ['Barik : %d mots à réviser', "Bonjour %s !\n\nAujourd’hui, %d mots attendent d’être révisés. Cinq minutes, et ils resteront longtemps en mémoire.\n\nRéviser : %s\n\nSe désabonner des rappels : %s\n\n— Barik, l’arménien mot à mot", 'Rappels désactivés', 'Nous ne vous enverrons plus de rappels. Vous pouvez les réactiver dans votre compte.'],
+    'es' => ['Barik: %d palabras esperan repaso', "¡Hola, %s!\n\nHoy tienes %d palabras para repasar. Cinco minutos y se te quedarán por mucho tiempo.\n\nRepasar: %s\n\nDarse de baja de los recordatorios: %s\n\n— Barik, el armenio palabra a palabra", 'Recordatorios desactivados', 'Ya no te enviaremos recordatorios. Puedes volver a activarlos en tu cuenta.'],
+    'de' => ['Barik: %d Wörter warten auf Wiederholung', "Hallo %s!\n\nHeute warten %d Wörter auf Wiederholung. Fünf Minuten — und sie bleiben lange im Gedächtnis.\n\nJetzt wiederholen: %s\n\nErinnerungen abbestellen: %s\n\n— Barik, Armenisch Wort für Wort", 'Erinnerungen ausgeschaltet', 'Wir schicken dir keine Erinnerungen mehr. Du kannst sie in deinem Konto wieder einschalten.'],
+    'pt' => ['Barik: %d palavras esperam revisão', "Olá, %s!\n\nHoje há %d palavras para revisar. Cinco minutos e elas ficam na memória por muito tempo.\n\nRevisar agora: %s\n\nCancelar os lembretes: %s\n\n— Barik, armênio palavra por palavra", 'Lembretes desativados', 'Não vamos mais enviar lembretes. Você pode ativá-los de novo na sua conta.'],
+];
+
+function unsub_sig(int $uid): string {
+    return substr(hash_hmac('sha256', 'unsub:' . $uid, (string)cfg('PEPPER', 'barik')), 0, 24);
+}
+
+function unsub_url(int $uid): string {
+    return rtrim((string)cfg('SITE_URL', 'https://barik.am/'), '/') . '/api/?r=unsub&u=' . $uid . '&s=' . unsub_sig($uid);
+}
+
+/* слова на повторение и день последних занятий — из прогресса в аккаунте */
+function remind_due(int $uid, int $day): array {
+    $raw = q('SELECT data FROM progress WHERE uid = ?', [$uid])->fetchColumn();
+    $p = $raw ? json_decode((string)$raw, true) : null;
+    $w = is_array($p['s']['w'] ?? null) ? $p['s']['w'] : [];
+    $due = 0;
+    foreach ($w as $s) if (is_array($s) && (int)($s['d'] ?? PHP_INT_MAX) <= $day) $due++;
+    return [$due, (int)($p['s']['st']['day'] ?? 0)];
+}
+
+/* один проход: кому пора — письмо; $now — для тестов. Возвращает [отправлено, проверено] */
+function remind_run(?int $now = null): array {
+    $now = $now ?? time();
+    $hour = (int)cfg('REMIND_HOUR', 9);
+    $sent = 0; $seen = 0;
+    $rows = q('SELECT r.*, u.email, u.nick FROM remind r JOIN users u ON u.id = r.uid WHERE r.on_ = 1')->fetchAll();
+    foreach ($rows as $r) {
+        $seen++;
+        $local = $now + (int)$r['tz'] * 60;
+        $day = intdiv($local, 86400);
+        if ((int)gmdate('G', $local) < $hour || (int)$r['day'] >= $day) continue;
+        [$due, $last] = remind_due((int)$r['uid'], $day);
+        $n = (int)$r['n'];
+        if ($last > (int)$r['seen']) $n = 0;                       // занимался после прошлого письма — счёт заново
+        if ($due < 1 || $last >= $day || $day - $last > 30 || $n >= 5) {
+            q('UPDATE remind SET day = ?, n = ?, seen = ? WHERE uid = ?', [$day, $n, $last, $r['uid']]);
+            continue;
+        }
+        $t = REMIND_TEXT[$r['lang']] ?? REMIND_TEXT['en'];
+        $site = rtrim((string)cfg('SITE_URL', 'https://barik.am/'), '/') . '/?lang=' . $r['lang'];
+        $un = unsub_url((int)$r['uid']);
+        if (mail_out($r['email'], sprintf($t[0], $due), sprintf($t[1], $r['nick'], $due, $site, $un), ['due' => $due], $un)) $sent++;
+        q('UPDATE remind SET day = ?, n = ?, seen = ? WHERE uid = ?', [$day, $n + 1, $last, $r['uid']]);
+    }
+    return [$sent, $seen];
+}
