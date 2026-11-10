@@ -1,0 +1,42 @@
+# Основы, местоимения и вопросы, числа — первые уроки A1
+բարև | Բարև, Արամ։ | Привет, Арам! | Hi, Aram! | Salut, Aram ! | ¡Hola, Aram! | Hallo, Aram! | Oi, Aram!
+բարև ձեզ | Բարև ձեզ, ես Անին եմ։ | Здравствуйте, я Ани. | Hello, I am Ani. | Bonjour, je suis Ani. | Hola, soy Ani. | Guten Tag, ich bin Ani. | Olá, eu sou a Ani.
+բարի լույս | Բարի լույս, մայրիկ։ | Доброе утро, мама. | Good morning, Mum. | Bonjour, maman. | Buenos días, mamá. | Guten Morgen, Mama. | Bom dia, mamãe.
+բարի երեկո | Բարի երեկո բոլորին։ | Всем добрый вечер. | Good evening, everyone. | Bonsoir à tous. | Buenas tardes a todos. | Guten Abend allerseits. | Boa noite a todos.
+բարի գիշեր | Բարի գիշեր, քաղցր երազներ։ | Спокойной ночи, сладких снов. | Good night, sweet dreams. | Bonne nuit, fais de beaux rêves. | Buenas noches, dulces sueños. | Gute Nacht, träum süß. | Boa noite, bons sonhos.
+ցտեսություն | Ցտեսություն, մինչև վաղը։ | До свидания, до завтра. | Goodbye, see you tomorrow. | Au revoir, à demain. | Adiós, hasta mañana. | Auf Wiedersehen, bis morgen. | Tchau, até amanhã.
+շնորհակալություն | Շատ շնորհակալություն։ | Большое спасибо. | Thank you very much. | Merci beaucoup. | Muchas gracias. | Vielen Dank. | Muito obrigado.
+խնդրում եմ | Մի սուրճ, խնդրում եմ։ | Один кофе, пожалуйста. | One coffee, please. | Un café, s’il vous plaît. | Un café, por favor. | Einen Kaffee, bitte. | Um café, por favor.
+այո | Այո, ես հայ եմ։ | Да, я армянин. | Yes, I am Armenian. | Oui, je suis arménien. | Sí, soy armenio. | Ja, ich bin Armenier. | Sim, eu sou armênio.
+ոչ | Ոչ, շնորհակալություն։ | Нет, спасибо. | No, thank you. | Non, merci. | No, gracias. | Nein, danke. | Não, obrigado.
+ներողություն | Ներողություն, որտե՞ղ է մետրոն։ | Извините, где метро? | Excuse me, where is the metro? | Excusez-moi, où est le métro ? | Disculpe, ¿dónde está el metro? | Entschuldigung, wo ist die U-Bahn? | Com licença, onde fica o metrô?
+լավ | Ես լավ եմ։ | У меня всё хорошо. | I am fine. | Je vais bien. | Estoy bien. | Mir geht es gut. | Eu estou bem.
+վատ | Այսօր եղանակը վատ է։ | Сегодня погода плохая. | The weather is bad today. | Aujourd’hui, il fait mauvais. | Hoy hace mal tiempo. | Heute ist das Wetter schlecht. | Hoje o tempo está ruim.
+ես | Ես Հայաստանից եմ։ | Я из Армении. | I am from Armenia. | Je viens d’Arménie. | Soy de Armenia. | Ich komme aus Armenien. | Eu sou da Armênia.
+դու | Դու որտեղի՞ց ես։ | Ты откуда? | Where are you from? | D’où viens-tu ? | ¿De dónde eres? | Woher kommst du? | De onde você é?
+նա | Նա իմ եղբայրն է։ | Он мой брат. | He is my brother. | C’est mon frère. | Él es mi hermano. | Er ist mein Bruder. | Ele é meu irmão.
+մենք | Մենք Երևանում ենք ապրում։ | Мы живём в Ереване. | We live in Yerevan. | Nous vivons à Erevan. | Vivimos en Ereván. | Wir wohnen in Jerewan. | Nós moramos em Yerevan.
+դուք | Դուք հայերեն խոսո՞ւմ եք։ | Вы говорите по-армянски? | Do you speak Armenian? | Parlez-vous arménien ? | ¿Habla usted armenio? | Sprechen Sie Armenisch? | Você fala armênio?
+նրանք | Նրանք ուսանողներ են։ | Они студенты. | They are students. | Ils sont étudiants. | Ellos son estudiantes. | Sie sind Studenten. | Eles são estudantes.
+ինչ | Ի՞նչ է սա։ | Что это? | What is this? | Qu’est-ce que c’est ? | ¿Qué es esto? | Was ist das? | O que é isto?
+ով | Ո՞վ է այնտեղ։ | Кто там? | Who is there? | Qui est là ? | ¿Quién está ahí? | Wer ist da? | Quem está aí?
+որտեղ | Որտե՞ղ ես ապրում։ | Где ты живёшь? | Where do you live? | Où habites-tu ? | ¿Dónde vives? | Wo wohnst du? | Onde você mora?
+երբ | Ե՞րբ ես գալիս։ | Когда ты придёшь? | When are you coming? | Quand viens-tu ? | ¿Cuándo vienes? | Wann kommst du? | Quando você vem?
+ինչու | Ինչո՞ւ ես տխուր։ | Почему ты грустный? | Why are you sad? | Pourquoi es-tu triste ? | ¿Por qué estás triste? | Warum bist du traurig? | Por que você está triste?
+ինչպես | Ինչպե՞ս ես։ | Как ты? | How are you? | Comment vas-tu ? | ¿Cómo estás? | Wie geht es dir? | Como você está?
+քանի | Քանի՞ տարեկան ես։ | Сколько тебе лет? | How old are you? | Quel âge as-tu ? | ¿Cuántos años tienes? | Wie alt bist du? | Quantos anos você tem?
+զրո | Դրսում զրո աստիճան է։ | На улице ноль градусов. | It is zero degrees outside. | Il fait zéro degré dehors. | Afuera hace cero grados. | Draußen sind es null Grad. | Lá fora está zero grau.
+մեկ | Ես մեկ քույր ունեմ։ | У меня одна сестра. | I have one sister. | J’ai une sœur. | Tengo una hermana. | Ich habe eine Schwester. | Eu tenho uma irmã.
+երկու | Երկու թեյ, խնդրում եմ։ | Два чая, пожалуйста. | Two teas, please. | Deux thés, s’il vous plaît. | Dos tés, por favor. | Zwei Tee, bitte. | Dois chás, por favor.
+երեք | Ես երեք երեխա ունեմ։ | У меня трое детей. | I have three children. | J’ai trois enfants. | Tengo tres hijos. | Ich habe drei Kinder. | Eu tenho três filhos.
+չորս | Սեղանի շուրջ չորս աթոռ կա։ | Вокруг стола четыре стула. | There are four chairs around the table. | Il y a quatre chaises autour de la table. | Hay cuatro sillas alrededor de la mesa. | Um den Tisch stehen vier Stühle. | Há quatro cadeiras em volta da mesa.
+հինգ | Հինգ րոպե սպասիր։ | Подожди пять минут. | Wait five minutes. | Attends cinq minutes. | Espera cinco minutos. | Warte fünf Minuten. | Espere cinco minutos.
+վեց | Ես արթնանում եմ ժամը վեցին։ | Я просыпаюсь в шесть часов. | I wake up at six. | Je me réveille à six heures. | Me despierto a las seis. | Ich wache um sechs Uhr auf. | Eu acordo às seis.
+յոթ | Շաբաթը յոթ օր ունի։ | В неделе семь дней. | A week has seven days. | La semaine a sept jours. | La semana tiene siete días. | Die Woche hat sieben Tage. | A semana tem sete dias.
+ութ | Դասը սկսվում է ժամը ութին։ | Урок начинается в восемь часов. | The lesson starts at eight. | Le cours commence à huit heures. | La clase empieza a las ocho. | Der Unterricht beginnt um acht Uhr. | A aula começa às oito.
+ինը | Որդիս ինը տարեկան է։ | Моему сыну девять лет. | My son is nine years old. | Mon fils a neuf ans. | Mi hijo tiene nueve años. | Mein Sohn ist neun Jahre alt. | Meu filho tem nove anos.
+տասը | Ես տասը րոպեից կգամ։ | Я приду через десять минут. | I will come in ten minutes. | J’arrive dans dix minutes. | Llego en diez minutos. | Ich komme in zehn Minuten. | Eu chego em dez minutos.
+քսան | Ես քսան տարեկան եմ։ | Мне двадцать лет. | I am twenty years old. | J’ai vingt ans. | Tengo veinte años. | Ich bin zwanzig Jahre alt. | Eu tenho vinte anos.
+երեսուն | Ամիսը երեսուն օր ունի։ | В месяце тридцать дней. | A month has thirty days. | Le mois a trente jours. | El mes tiene treinta días. | Der Monat hat dreißig Tage. | O mês tem trinta dias.
+հարյուր | Սա հարյուր դրամ արժե։ | Это стоит сто драмов. | This costs a hundred drams. | Cela coûte cent drams. | Esto cuesta cien drams. | Das kostet hundert Dram. | Isto custa cem drams.
+հազար | Հազար շնորհակալություն։ | Тысяча благодарностей. | A thousand thanks. | Mille mercis. | Mil gracias. | Tausend Dank. | Mil vezes obrigado.

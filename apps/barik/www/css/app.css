@@ -1037,3 +1037,13 @@ details[open] .pm::after{transform:rotate(0)}
 .sy-nudge span{display:block;margin-top:2px;font-size:13px;line-height:1.35;opacity:.86}
 .sy-nudge .btn.sm{min-height:38px;padding:0 14px;background:#fff;color:var(--lapis);box-shadow:none;white-space:nowrap}
 .sy-x{width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:inherit;opacity:.7;font-size:14px;cursor:pointer}
+
+/* O-172: пример к слову на карточке нового слова */
+.ex{width:100%;box-sizing:border-box;margin:14px auto 4px;max-width:420px;padding:12px 14px 13px;border-radius:18px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);text-align:left}
+.ex-top{display:flex;align-items:center;justify-content:space-between;min-height:30px}
+.ex-k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pom)}
+.ex-say{width:36px;height:36px;border:0;border-radius:50%;background:rgba(236,139,46,.14);color:var(--accent);display:grid;place-items:center;cursor:pointer}
+.ex-say svg{width:20px;height:20px}
+.ex-hy{margin:2px 0 0;font-family:var(--hy,inherit);font-size:20px;line-height:1.35;overflow-wrap:anywhere}
+.ex-tr{margin:3px 0 0;font-size:14px;opacity:.7}
+.ex-tx{margin:5px 0 0;font-size:16px;font-weight:600}

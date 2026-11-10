@@ -556,6 +556,26 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'документы: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // O-172: пример к слову на карточке нового слова — фраза, транскрипция, перевод, запись обоими голосами
+    const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.click('[data-act=learnNew]'); await pg.waitForSelector('.ex',{timeout:8000}).catch(()=>{});
+    const t=await pg.textContent('.ex').catch(()=>'');
+    ok(t.includes('Пример')&&t.includes('Բարև, Արամ։')&&t.includes('Привет, Арам!')&&/барев/i.test(t),'карточка нового слова: пример с транскрипцией и переводом ('+t.slice(0,60)+')');
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'пример: без прокрутки вбок');
+    if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'example.png')});
+    const r=await pg.evaluate(async()=>{ const b=window.__bararan, out={n:{},aud:0,miss:[]}; let keys=null;
+      for(const l of ['ru','en','fr','es','de','pt']){ const j=await (await fetch('ex/'+l+'.json')).json(); out.n[l]=Object.keys(j).length; if(!keys) keys=j; for(const k in j){ if(!b.BY[k]) out.miss.push(k); if(j[k][0]!==keys[k][0]||!j[k][1]) out.miss.push(l+':'+k); } }
+      const ph=Object.values(keys).map(x=>x[0]); for(const g of ['f','m']) for(const p of [ph[0],ph[50],ph[ph.length-1]]){ const q=await fetch(b.audioUrl(p,g)); if(q.ok&&(await q.arrayBuffer()).byteLength>2000) out.aud++; }
+      return out; });
+    ok(r.n.ru>=170&&new Set(Object.values(r.n)).size===1&&!r.miss.length,'примеры: '+r.n.ru+' слов, одинаково на шести языках, все слова из словаря '+r.miss.slice(0,3).join(','));
+    ok(r.aud===6,'примеры озвучены обоими голосами ('+r.aud+' из 6 проб)');
+    await pg.click('[data-act=exSay]'); await pg.waitForTimeout(300);
+    await pg.evaluate(()=>window.__bararan.setLang('de')); 
+    ok(errs.length===0,'примеры: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});

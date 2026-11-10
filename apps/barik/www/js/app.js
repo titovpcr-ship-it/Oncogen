@@ -1969,6 +1969,15 @@ function resultHTML(){
   return '<div class="result"><div class="apres" lang="hy">'+(good?'Ապրե՛ս':'Լավ է')+'</div><p class="sub">'+esc(good?T('wellDone'):T('goodTry'))+'</p>'+
     '<p class="score">'+T('firstTry',r.firstOk,r.n)+'</p>'+kn+missed+'<div class="actions">'+acts+'</div></div>';
 }
+/* ---------- примеры к словам (O-172): ex/<язык>.json — слово → [фраза, перевод]; файл берётся при первой нужде ---------- */
+let EX=null, EXL='';
+function exLoad(){ if(EXL===L) return; const l=L; EXL=l; EX=null;
+  fetch('ex/'+l+'.json').then(r=>r.ok?r.json():null).then(j=>{ if(EXL!==l||!j) return; EX=j;
+    const it=sess&&!sess.ended&&cur(); if(view==='session'&&it&&it.k==='intro'&&EX[it.w.a]&&!document.querySelector('.ex')) render(false); }).catch(()=>{}); }
+function exTr(hy){ try{ return trL(hy.replace(/[։՞՛՜]/g,'').replace(/,/g,' ,').toLowerCase()).replace(/ ,/g,','); }catch(e){ return ''; } }
+function exHTML(w){ exLoad(); const e=EX&&EX[w.a]; if(!e) return '';
+  return '<div class="ex"><div class="ex-top"><span class="ex-k">'+esc(T('exLabel'))+'</span>'+(audioOK()?'<button class="ex-say" data-act="exSay" data-arg="'+esc(e[0])+'" aria-label="'+esc(T('listen'))+'">'+ICON.spk+'</button>':'')+'</div>'+
+    '<p class="ex-hy" lang="hy">'+esc(e[0])+'</p><p class="ex-tr">'+esc(exTr(e[0]))+'</p><p class="ex-tx">'+esc(e[1])+'</p></div>'; }
 function audioRow(w){
   if(!audioOK()) return '';
   return '<div class="audio"><button class="aud" data-act="say" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlow" data-arg="'+esc(w.a)+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>';
@@ -1988,7 +1997,7 @@ function sessionHTML(){
   const ph=w.a.indexOf(' ')>=0?' phrase':'';
   let body='', foot='';
   if(it.k==='intro'){
-    body='<p class="q">'+esc(T('qNew'))+'</p><div class="pic-xl">'+pic(w)+'</div><div class="hyw'+ph+'" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div><div class="ruw">'+esc(tx(w))+'</div>'+audioRow(w)+'<button class="flag" data-act="flag" data-arg="'+esc(w.a)+'">'+esc(S.flag&&S.flag[w.a]?T('flagged'):T('flagAsk'))+'</button>';
+    body='<p class="q">'+esc(T('qNew'))+'</p><div class="pic-xl">'+pic(w)+'</div><div class="hyw'+ph+'" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div><div class="ruw">'+esc(tx(w))+'</div>'+audioRow(w)+exHTML(w)+'<button class="flag" data-act="flag" data-arg="'+esc(w.a)+'">'+esc(S.flag&&S.flag[w.a]?T('flagged'):T('flagAsk'))+'</button>';
     foot='<div class="row2"><button class="btn secondary" data-act="know">'+esc(T('know'))+'</button><button class="btn primary" data-act="next">'+esc(T('next'))+'</button></div>';
   }else if(it.k==='a2r'){
     body='<p class="q">'+esc(T('qMeaning'))+'</p><div class="hyw'+ph+'" lang="hy">'+esc(w.a)+'</div>'+((S.set.tr||it.done)?'<div class="trn">'+esc(trn(w))+'</div>':'')+audioRow(w)+optsPic(it);
@@ -2532,6 +2541,7 @@ const H={
   },
   manageSub:()=>BILL.openStoreSubs(),
   doc:a=>{ docFrom=view; go('doc',a); },
+  exSay:(a,b)=>{ sayText(a,b); },
   syncX:()=>{ UI.syX=1; saveUI(); render(); },
   syncLogin:()=>openAccount(),
   docBack:()=>go(docFrom==='paywall'?'paywall':(docFrom||'settings')),
@@ -2614,5 +2624,5 @@ Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='sessio
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

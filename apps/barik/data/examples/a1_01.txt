@@ -1,0 +1,137 @@
+# Примеры к словам (O-172). Строка: слово | фраза | ru | en | fr | es | de | pt. Свой текст, проверка — tools/build_examples.py
+ընտանիք | Իմ ընտանիքը մեծ է։ | Моя семья большая. | My family is big. | Ma famille est grande. | Mi familia es grande. | Meine Familie ist groß. | Minha família é grande.
+մայր | Իմ մայրը բժիշկ է։ | Моя мать — врач. | My mother is a doctor. | Ma mère est médecin. | Mi madre es médica. | Meine Mutter ist Ärztin. | Minha mãe é médica.
+հայր | Հայրս տանն է։ | Мой отец дома. | My father is at home. | Mon père est à la maison. | Mi padre está en casa. | Mein Vater ist zu Hause. | Meu pai está em casa.
+տատիկ | Տատիկը հաց է թխում։ | Бабушка печёт хлеб. | Grandma is baking bread. | Grand-mère fait du pain. | La abuela hornea pan. | Oma backt Brot. | A vovó está assando pão.
+պապիկ | Պապիկը այգում է։ | Дедушка в саду. | Grandpa is in the garden. | Grand-père est au jardin. | El abuelo está en el jardín. | Opa ist im Garten. | O vovô está no jardim.
+եղբայր | Ես մեկ եղբայր ունեմ։ | У меня один брат. | I have one brother. | J’ai un frère. | Tengo un hermano. | Ich habe einen Bruder. | Eu tenho um irmão.
+քույր | Քույրս ուսանող է։ | Моя сестра — студентка. | My sister is a student. | Ma sœur est étudiante. | Mi hermana es estudiante. | Meine Schwester ist Studentin. | Minha irmã é estudante.
+որդի | Նրանց որդին փոքր է։ | Их сын маленький. | Their son is little. | Leur fils est petit. | Su hijo es pequeño. | Ihr Sohn ist klein. | O filho deles é pequeno.
+դուստր | Նա երկու դուստր ունի։ | У неё две дочери. | She has two daughters. | Elle a deux filles. | Ella tiene dos hijas. | Sie hat zwei Töchter. | Ela tem duas filhas.
+երեխա | Երեխան քնած է։ | Ребёнок спит. | The child is asleep. | L’enfant dort. | El niño está dormido. | Das Kind schläft. | A criança está dormindo.
+տղա | Տղան գնդակ է խաղում։ | Мальчик играет в мяч. | The boy is playing ball. | Le garçon joue au ballon. | El niño juega a la pelota. | Der Junge spielt Ball. | O menino está jogando bola.
+աղջիկ | Աղջիկը գիրք է կարդում։ | Девочка читает книгу. | The girl is reading a book. | La fille lit un livre. | La niña lee un libro. | Das Mädchen liest ein Buch. | A menina está lendo um livro.
+տղամարդ | Այս տղամարդը վարորդ է։ | Этот мужчина — водитель. | This man is a driver. | Cet homme est chauffeur. | Este hombre es conductor. | Dieser Mann ist Fahrer. | Este homem é motorista.
+կին | Այդ կինը իմ ուսուցչուհին է։ | Эта женщина — моя учительница. | That woman is my teacher. | Cette femme est ma professeure. | Esa mujer es mi profesora. | Diese Frau ist meine Lehrerin. | Essa mulher é minha professora.
+ամուսին | Իմ ամուսինը հայ է։ | Мой муж — армянин. | My husband is Armenian. | Mon mari est arménien. | Mi marido es armenio. | Mein Mann ist Armenier. | Meu marido é armênio.
+ընկեր | Սա իմ ընկերն է։ | Это мой друг. | This is my friend. | C’est mon ami. | Este es mi amigo. | Das ist mein Freund. | Este é meu amigo.
+մարդ | Նա լավ մարդ է։ | Он хороший человек. | He is a good person. | C’est une bonne personne. | Es una buena persona. | Er ist ein guter Mensch. | Ele é uma boa pessoa.
+անուն | Իմ անունը Անի է։ | Меня зовут Ани. | My name is Ani. | Je m’appelle Ani. | Me llamo Ani. | Ich heiße Ani. | Meu nome é Ani.
+հաց | Ես հաց եմ ուտում։ | Я ем хлеб. | I am eating bread. | Je mange du pain. | Como pan. | Ich esse Brot. | Eu como pão.
+լավաշ | Լավաշը թարմ է։ | Лаваш свежий. | The lavash is fresh. | Le lavash est frais. | El lavash está fresco. | Der Lawasch ist frisch. | O lavash está fresco.
+ջուր | Մի բաժակ ջուր, խնդրում եմ։ | Стакан воды, пожалуйста. | A glass of water, please. | Un verre d’eau, s’il vous plaît. | Un vaso de agua, por favor. | Ein Glas Wasser, bitte. | Um copo de água, por favor.
+կաթ | Երեխան կաթ է խմում։ | Ребёнок пьёт молоко. | The child is drinking milk. | L’enfant boit du lait. | El niño bebe leche. | Das Kind trinkt Milch. | A criança bebe leite.
+սուրճ | Առավոտյան սուրճ եմ խմում։ | Утром я пью кофе. | I drink coffee in the morning. | Le matin, je bois du café. | Por la mañana tomo café. | Morgens trinke ich Kaffee. | De manhã eu tomo café.
+թեյ | Թեյը տաք է։ | Чай горячий. | The tea is hot. | Le thé est chaud. | El té está caliente. | Der Tee ist heiß. | O chá está quente.
+հյութ | Ես նռան հյութ եմ ուզում։ | Я хочу гранатовый сок. | I want pomegranate juice. | Je veux du jus de grenade. | Quiero jugo de granada. | Ich möchte Granatapfelsaft. | Eu quero suco de romã.
+գինի | Հայկական գինին համեղ է։ | Армянское вино вкусное. | Armenian wine is delicious. | Le vin arménien est délicieux. | El vino armenio es delicioso. | Armenischer Wein ist köstlich. | O vinho armênio é delicioso.
+գարեջուր | Գարեջուրը սառն է։ | Пиво холодное. | The beer is cold. | La bière est fraîche. | La cerveza está fría. | Das Bier ist kalt. | A cerveja está gelada.
+միս | Ես միս չեմ ուտում։ | Я не ем мясо. | I don’t eat meat. | Je ne mange pas de viande. | No como carne. | Ich esse kein Fleisch. | Eu não como carne.
+խորոված | Կիրակի օրը խորոված ենք անում։ | В воскресенье мы делаем шашлык. | On Sunday we make khorovats. | Le dimanche, nous faisons des khorovats. | El domingo hacemos jorovats. | Am Sonntag machen wir Chorowaz. | No domingo fazemos khorovats.
+ձուկ | Սևանի ձուկը համեղ է։ | Севанская рыба вкусная. | Fish from Lake Sevan is delicious. | Le poisson du lac Sevan est délicieux. | El pescado del lago Seván es delicioso. | Der Fisch aus dem Sewansee ist köstlich. | O peixe do lago Sevan é delicioso.
+ձու | Նախաճաշին ձու եմ ուտում։ | На завтрак я ем яйцо. | I eat an egg for breakfast. | Au petit-déjeuner, je mange un œuf. | En el desayuno como un huevo. | Zum Frühstück esse ich ein Ei. | No café da manhã eu como ovo.
+պանիր | Հաց ու պանիր, խնդրում եմ։ | Хлеб и сыр, пожалуйста. | Bread and cheese, please. | Du pain et du fromage, s’il vous plaît. | Pan y queso, por favor. | Brot und Käse, bitte. | Pão e queijo, por favor.
+կարագ | Կարագը սառնարանում է։ | Масло в холодильнике. | The butter is in the fridge. | Le beurre est au réfrigérateur. | La mantequilla está en el refrigerador. | Die Butter ist im Kühlschrank. | A manteiga está na geladeira.
+աղ | Աղը սեղանին է։ | Соль на столе. | The salt is on the table. | Le sel est sur la table. | La sal está en la mesa. | Das Salz steht auf dem Tisch. | O sal está na mesa.
+շաքար | Սուրճը առանց շաքարի, խնդրում եմ։ | Кофе без сахара, пожалуйста. | Coffee without sugar, please. | Un café sans sucre, s’il vous plaît. | Café sin azúcar, por favor. | Kaffee ohne Zucker, bitte. | Café sem açúcar, por favor.
+մեղր | Մեղրը քաղցր է։ | Мёд сладкий. | Honey is sweet. | Le miel est sucré. | La miel es dulce. | Honig ist süß. | O mel é doce.
+բրինձ | Այսօր բրինձ եմ եփում։ | Сегодня я варю рис. | Today I am cooking rice. | Aujourd’hui, je cuisine du riz. | Hoy cocino arroz. | Heute koche ich Reis. | Hoje eu cozinho arroz.
+ապուր | Ապուրը պատրաստ է։ | Суп готов. | The soup is ready. | La soupe est prête. | La sopa está lista. | Die Suppe ist fertig. | A sopa está pronta.
+աղցան | Ես աղցան եմ պատվիրում։ | Я заказываю салат. | I am ordering a salad. | Je commande une salade. | Pido una ensalada. | Ich bestelle einen Salat. | Eu peço uma salada.
+տորթ | Տորթը շատ համեղ է։ | Торт очень вкусный. | The cake is very tasty. | Le gâteau est très bon. | La torta está muy rica. | Die Torte ist sehr lecker. | O bolo está muito gostoso.
+պաղպաղակ | Երեխաները պաղպաղակ են սիրում։ | Дети любят мороженое. | Children love ice cream. | Les enfants aiment la glace. | A los niños les gusta el helado. | Kinder lieben Eis. | As crianças adoram sorvete.
+շոկոլադ | Ես շոկոլադ եմ սիրում։ | Я люблю шоколад. | I love chocolate. | J’aime le chocolat. | Me gusta el chocolate. | Ich liebe Schokolade. | Eu adoro chocolate.
+լինել | Ես ուզում եմ բժիշկ լինել։ | Я хочу быть врачом. | I want to be a doctor. | Je veux être médecin. | Quiero ser médico. | Ich möchte Arzt sein. | Eu quero ser médico.
+ունենալ | Ես ուզում եմ շուն ունենալ։ | Я хочу иметь собаку. | I want to have a dog. | Je veux avoir un chien. | Quiero tener un perro. | Ich möchte einen Hund haben. | Eu quero ter um cachorro.
+գնալ | Ես տուն եմ գնում։ | Я иду домой. | I am going home. | Je rentre à la maison. | Me voy a casa. | Ich gehe nach Hause. | Eu vou para casa.
+գալ | Ես հիմա գալիս եմ։ | Я сейчас приду. | I’m coming now. | J’arrive tout de suite. | Ya voy. | Ich komme gleich. | Já estou indo.
+ուտել | Ի՞նչ ես ուզում ուտել։ | Что ты хочешь съесть? | What do you want to eat? | Que veux-tu manger ? | ¿Qué quieres comer? | Was möchtest du essen? | O que você quer comer?
+խմել | Ես ուզում եմ ջուր խմել։ | Я хочу попить воды. | I want to drink water. | Je veux boire de l’eau. | Quiero beber agua. | Ich möchte Wasser trinken. | Eu quero beber água.
+քնել | Երեխան ուզում է քնել։ | Ребёнок хочет спать. | The child wants to sleep. | L’enfant veut dormir. | El niño quiere dormir. | Das Kind will schlafen. | A criança quer dormir.
+արթնանալ | Ես արթնանում եմ ժամը յոթին։ | Я просыпаюсь в семь часов. | I wake up at seven. | Je me réveille à sept heures. | Me despierto a las siete. | Ich wache um sieben Uhr auf. | Eu acordo às sete.
+խոսել | Ես մի քիչ հայերեն եմ խոսում։ | Я немного говорю по-армянски. | I speak a little Armenian. | Je parle un peu arménien. | Hablo un poco de armenio. | Ich spreche ein bisschen Armenisch. | Eu falo um pouco de armênio.
+ասել | Ի՞նչ ասացիր։ | Что ты сказал? | What did you say? | Qu’as-tu dit ? | ¿Qué dijiste? | Was hast du gesagt? | O que você disse?
+լսել | Ես երաժշտություն եմ լսում։ | Я слушаю музыку. | I am listening to music. | J’écoute de la musique. | Escucho música. | Ich höre Musik. | Eu escuto música.
+տեսնել | Ես քեզ չեմ տեսնում։ | Я тебя не вижу. | I can’t see you. | Je ne te vois pas. | No te veo. | Ich sehe dich nicht. | Eu não vejo você.
+նայել | Մենք ֆիլմ ենք նայում։ | Мы смотрим фильм. | We are watching a film. | Nous regardons un film. | Vemos una película. | Wir schauen einen Film. | Nós assistimos a um filme.
+կարդալ | Ես սիրում եմ կարդալ։ | Я люблю читать. | I like to read. | J’aime lire. | Me gusta leer. | Ich lese gern. | Eu gosto de ler.
+գրել | Նա նամակ է գրում։ | Она пишет письмо. | She is writing a letter. | Elle écrit une lettre. | Ella escribe una carta. | Sie schreibt einen Brief. | Ela escreve uma carta.
+սովորել | Ես հայերեն եմ սովորում։ | Я учу армянский. | I am learning Armenian. | J’apprends l’arménien. | Aprendo armenio. | Ich lerne Armenisch. | Eu estou aprendendo armênio.
+աշխատել | Որտե՞ղ ես աշխատում։ | Где ты работаешь? | Where do you work? | Où travailles-tu ? | ¿Dónde trabajas? | Wo arbeitest du? | Onde você trabalha?
+սիրել | Ես քեզ սիրում եմ։ | Я тебя люблю. | I love you. | Je t’aime. | Te quiero. | Ich liebe dich. | Eu te amo.
+ուզել | Ի՞նչ ես ուզում։ | Что ты хочешь? | What do you want? | Que veux-tu ? | ¿Qué quieres? | Was möchtest du? | O que você quer?
+գիտենալ | Ես չգիտեմ։ | Я не знаю. | I don’t know. | Je ne sais pas. | No sé. | Ich weiß nicht. | Eu não sei.
+հասկանալ | Ես չեմ հասկանում։ | Я не понимаю. | I don’t understand. | Je ne comprends pas. | No entiendo. | Ich verstehe nicht. | Eu não entendo.
+անել | Ի՞նչ ես անում։ | Что ты делаешь? | What are you doing? | Que fais-tu ? | ¿Qué haces? | Was machst du? | O que você está fazendo?
+տալ | Տուր ինձ գիրքը, խնդրում եմ։ | Дай мне книгу, пожалуйста. | Give me the book, please. | Donne-moi le livre, s’il te plaît. | Dame el libro, por favor. | Gib mir bitte das Buch. | Me dê o livro, por favor.
+վերցնել | Ես պայուսակս եմ վերցնում։ | Я беру свою сумку. | I’m taking my bag. | Je prends mon sac. | Tomo mi bolso. | Ich nehme meine Tasche. | Eu pego minha bolsa.
+գնել | Ես ուզում եմ տոմս գնել։ | Я хочу купить билет. | I want to buy a ticket. | Je veux acheter un billet. | Quiero comprar un boleto. | Ich möchte eine Fahrkarte kaufen. | Eu quero comprar uma passagem.
+վաճառել | Նա շուկայում միրգ է վաճառում։ | Он продаёт фрукты на рынке. | He sells fruit at the market. | Il vend des fruits au marché. | Vende fruta en el mercado. | Er verkauft Obst auf dem Markt. | Ele vende frutas no mercado.
+կարմիր | Խնձորը կարմիր է։ | Яблоко красное. | The apple is red. | La pomme est rouge. | La manzana es roja. | Der Apfel ist rot. | A maçã é vermelha.
+կապույտ | Սևանա լիճը կապույտ է։ | Озеро Севан синее. | Lake Sevan is blue. | Le lac Sevan est bleu. | El lago Seván es azul. | Der Sewansee ist blau. | O lago Sevan é azul.
+երկնագույն | Երկինքը երկնագույն է։ | Небо голубое. | The sky is light blue. | Le ciel est bleu clair. | El cielo es celeste. | Der Himmel ist hellblau. | O céu é azul-claro.
+կանաչ | Խոտը կանաչ է։ | Трава зелёная. | The grass is green. | L’herbe est verte. | La hierba es verde. | Das Gras ist grün. | A grama é verde.
+դեղին | Արևը դեղին է։ | Солнце жёлтое. | The sun is yellow. | Le soleil est jaune. | El sol es amarillo. | Die Sonne ist gelb. | O sol é amarelo.
+նարնջագույն | Ծիրանը նարնջագույն է։ | Абрикос оранжевый. | The apricot is orange. | L’abricot est orange. | El damasco es anaranjado. | Die Aprikose ist orange. | O damasco é laranja.
+մանուշակագույն | Իմ պայուսակը մանուշակագույն է։ | Моя сумка фиолетовая. | My bag is purple. | Mon sac est violet. | Mi bolso es violeta. | Meine Tasche ist lila. | Minha bolsa é roxa.
+վարդագույն | Նրա զգեստը վարդագույն է։ | Её платье розовое. | Her dress is pink. | Sa robe est rose. | Su vestido es rosa. | Ihr Kleid ist rosa. | O vestido dela é rosa.
+շագանակագույն | Արջը շագանակագույն է։ | Медведь коричневый. | The bear is brown. | L’ours est brun. | El oso es marrón. | Der Bär ist braun. | O urso é marrom.
+սև | Իմ կատուն սև է։ | Мой кот чёрный. | My cat is black. | Mon chat est noir. | Mi gato es negro. | Meine Katze ist schwarz. | Meu gato é preto.
+սպիտակ | Ձյունը սպիտակ է։ | Снег белый. | Snow is white. | La neige est blanche. | La nieve es blanca. | Schnee ist weiß. | A neve é branca.
+մոխրագույն | Այսօր երկինքը մոխրագույն է։ | Сегодня небо серое. | Today the sky is grey. | Aujourd’hui, le ciel est gris. | Hoy el cielo está gris. | Heute ist der Himmel grau. | Hoje o céu está cinza.
+տուն | Մեր տունը մեծ է։ | Наш дом большой. | Our house is big. | Notre maison est grande. | Nuestra casa es grande. | Unser Haus ist groß. | Nossa casa é grande.
+սենյակ | Իմ սենյակը փոքր է։ | Моя комната маленькая. | My room is small. | Ma chambre est petite. | Mi habitación es pequeña. | Mein Zimmer ist klein. | Meu quarto é pequeno.
+խոհանոց | Մայրիկը խոհանոցում է։ | Мама на кухне. | Mum is in the kitchen. | Maman est dans la cuisine. | Mamá está en la cocina. | Mama ist in der Küche. | A mamãe está na cozinha.
+լոգարան | Լոգարանը այնտեղ է։ | Ванная там. | The bathroom is over there. | La salle de bain est là-bas. | El baño está allí. | Das Badezimmer ist dort. | O banheiro fica ali.
+զուգարան | Որտե՞ղ է զուգարանը։ | Где туалет? | Where is the toilet? | Où sont les toilettes ? | ¿Dónde está el baño? | Wo ist die Toilette? | Onde fica o banheiro?
+դուռ | Դուռը բաց է։ | Дверь открыта. | The door is open. | La porte est ouverte. | La puerta está abierta. | Die Tür ist offen. | A porta está aberta.
+պատուհան | Պատուհանը փակ է։ | Окно закрыто. | The window is closed. | La fenêtre est fermée. | La ventana está cerrada. | Das Fenster ist geschlossen. | A janela está fechada.
+սեղան | Գիրքը սեղանին է։ | Книга на столе. | The book is on the table. | Le livre est sur la table. | El libro está en la mesa. | Das Buch liegt auf dem Tisch. | O livro está na mesa.
+աթոռ | Այս աթոռը ազատ է։ | Этот стул свободен. | This chair is free. | Cette chaise est libre. | Esta silla está libre. | Dieser Stuhl ist frei. | Esta cadeira está livre.
+մահճակալ | Մահճակալը հարմարավետ է։ | Кровать удобная. | The bed is comfortable. | Le lit est confortable. | La cama es cómoda. | Das Bett ist bequem. | A cama é confortável.
+լամպ | Սեղանին լամպ կա։ | На столе есть лампа. | There is a lamp on the table. | Il y a une lampe sur la table. | Hay una lámpara en la mesa. | Auf dem Tisch steht eine Lampe. | Tem um abajur na mesa.
+բանալի | Որտե՞ղ է իմ բանալին։ | Где мой ключ? | Where is my key? | Où est ma clé ? | ¿Dónde está mi llave? | Wo ist mein Schlüssel? | Onde está minha chave?
+հայելի | Հայելին պատին է։ | Зеркало на стене. | The mirror is on the wall. | Le miroir est au mur. | El espejo está en la pared. | Der Spiegel hängt an der Wand. | O espelho está na parede.
+ժամացույց | Իմ ժամացույցը նոր է։ | Мои часы новые. | My watch is new. | Ma montre est neuve. | Mi reloj es nuevo. | Meine Uhr ist neu. | Meu relógio é novo.
+հեռախոս | Իմ հեռախոսը չի աշխատում։ | Мой телефон не работает. | My phone isn’t working. | Mon téléphone ne marche pas. | Mi teléfono no funciona. | Mein Telefon funktioniert nicht. | Meu telefone não funciona.
+համակարգիչ | Նա աշխատում է համակարգչով։ | Он работает на компьютере. | He works on a computer. | Il travaille sur ordinateur. | Trabaja con la computadora. | Er arbeitet am Computer. | Ele trabalha no computador.
+հեռուստացույց | Մենք հեռուստացույց ենք նայում։ | Мы смотрим телевизор. | We are watching TV. | Nous regardons la télévision. | Vemos la televisión. | Wir sehen fern. | Nós assistimos à televisão.
+սառնարան | Կաթը սառնարանում է։ | Молоко в холодильнике. | The milk is in the fridge. | Le lait est au réfrigérateur. | La leche está en el refrigerador. | Die Milch ist im Kühlschrank. | O leite está na geladeira.
+գիրք | Սա հետաքրքիր գիրք է։ | Это интересная книга. | This is an interesting book. | C’est un livre intéressant. | Es un libro interesante. | Das ist ein interessantes Buch. | Este é um livro interessante.
+գրիչ | Գրիչ ունե՞ս։ | У тебя есть ручка? | Do you have a pen? | As-tu un stylo ? | ¿Tienes un bolígrafo? | Hast du einen Stift? | Você tem uma caneta?
+մատիտ | Երեխան մատիտով է նկարում։ | Ребёнок рисует карандашом. | The child is drawing with a pencil. | L’enfant dessine au crayon. | El niño dibuja con lápiz. | Das Kind malt mit einem Bleistift. | A criança desenha com lápis.
+թուղթ | Ինձ մի թուղթ տուր։ | Дай мне лист бумаги. | Give me a sheet of paper. | Donne-moi une feuille de papier. | Dame una hoja de papel. | Gib mir ein Blatt Papier. | Me dê uma folha de papel.
+պայուսակ | Պայուսակս ծանր է։ | Моя сумка тяжёлая. | My bag is heavy. | Mon sac est lourd. | Mi bolso pesa mucho. | Meine Tasche ist schwer. | Minha bolsa está pesada.
+բաժակ | Բաժակը դատարկ է։ | Стакан пустой. | The glass is empty. | Le verre est vide. | El vaso está vacío. | Das Glas ist leer. | O copo está vazio.
+ափսե | Ափսեն մաքուր է։ | Тарелка чистая. | The plate is clean. | L’assiette est propre. | El plato está limpio. | Der Teller ist sauber. | O prato está limpo.
+դանակ | Դանակը սուր է։ | Нож острый. | The knife is sharp. | Le couteau est tranchant. | El cuchillo está afilado. | Das Messer ist scharf. | A faca está afiada.
+պատառաքաղ | Պատառաքաղ, խնդրում եմ։ | Вилку, пожалуйста. | A fork, please. | Une fourchette, s’il vous plaît. | Un tenedor, por favor. | Eine Gabel, bitte. | Um garfo, por favor.
+գդալ | Ապուրը գդալով են ուտում։ | Суп едят ложкой. | Soup is eaten with a spoon. | La soupe se mange à la cuillère. | La sopa se come con cuchara. | Suppe isst man mit dem Löffel. | Sopa se come com colher.
+օճառ | Ձեռքերդ օճառով լվա։ | Вымой руки с мылом. | Wash your hands with soap. | Lave-toi les mains au savon. | Lávate las manos con jabón. | Wasch dir die Hände mit Seife. | Lave as mãos com sabonete.
+քաղաք | Երևանը մեծ քաղաք է։ | Ереван — большой город. | Yerevan is a big city. | Erevan est une grande ville. | Ereván es una ciudad grande. | Jerewan ist eine große Stadt. | Yerevan é uma cidade grande.
+գյուղ | Տատիկս գյուղում է ապրում։ | Моя бабушка живёт в деревне. | My grandmother lives in a village. | Ma grand-mère vit au village. | Mi abuela vive en un pueblo. | Meine Oma wohnt im Dorf. | Minha avó mora numa aldeia.
+փողոց | Այս փողոցը երկար է։ | Эта улица длинная. | This street is long. | Cette rue est longue. | Esta calle es larga. | Diese Straße ist lang. | Esta rua é comprida.
+հրապարակ | Հրապարակը կենտրոնում է։ | Площадь в центре. | The square is in the centre. | La place est au centre. | La plaza está en el centro. | Der Platz ist im Zentrum. | A praça fica no centro.
+այգի | Երեխաները այգում են խաղում։ | Дети играют в парке. | The children are playing in the park. | Les enfants jouent au parc. | Los niños juegan en el parque. | Die Kinder spielen im Park. | As crianças brincam no parque.
+խանութ | Խանութը բաց է։ | Магазин открыт. | The shop is open. | Le magasin est ouvert. | La tienda está abierta. | Das Geschäft ist geöffnet. | A loja está aberta.
+շուկա | Ես շուկա եմ գնում։ | Я иду на рынок. | I am going to the market. | Je vais au marché. | Voy al mercado. | Ich gehe auf den Markt. | Eu vou ao mercado.
+դպրոց | Երեխաները դպրոց են գնում։ | Дети идут в школу. | The children go to school. | Les enfants vont à l’école. | Los niños van a la escuela. | Die Kinder gehen zur Schule. | As crianças vão para a escola.
+համալսարան | Նա սովորում է համալսարանում։ | Он учится в университете. | He studies at university. | Il étudie à l’université. | Estudia en la universidad. | Er studiert an der Universität. | Ele estuda na universidade.
+եկեղեցի | Այս եկեղեցին շատ հին է։ | Эта церковь очень старая. | This church is very old. | Cette église est très ancienne. | Esta iglesia es muy antigua. | Diese Kirche ist sehr alt. | Esta igreja é muito antiga.
+բանկ | Բանկը փակ է։ | Банк закрыт. | The bank is closed. | La banque est fermée. | El banco está cerrado. | Die Bank ist geschlossen. | O banco está fechado.
+հյուրանոց | Որտե՞ղ է հյուրանոցը։ | Где гостиница? | Where is the hotel? | Où est l’hôtel ? | ¿Dónde está el hotel? | Wo ist das Hotel? | Onde fica o hotel?
+ռեստորան | Այս ռեստորանը լավն է։ | Этот ресторан хороший. | This restaurant is good. | Ce restaurant est bon. | Este restaurante es bueno. | Dieses Restaurant ist gut. | Este restaurante é bom.
+սրճարան | Հանդիպենք սրճարանում։ | Встретимся в кафе. | Let’s meet at the café. | Retrouvons-nous au café. | Nos vemos en el café. | Treffen wir uns im Café. | Vamos nos encontrar no café.
+թանգարան | Թանգարանը բաց է մինչև վեցը։ | Музей открыт до шести. | The museum is open until six. | Le musée est ouvert jusqu’à six heures. | El museo abre hasta las seis. | Das Museum ist bis sechs geöffnet. | O museu fica aberto até as seis.
+կայարան | Կայարանը հեռու չէ։ | Вокзал недалеко. | The station is not far. | La gare n’est pas loin. | La estación no está lejos. | Der Bahnhof ist nicht weit. | A estação não é longe.
+օդանավակայան | Տաքսի դեպի օդանավակայան, խնդրում եմ։ | Такси в аэропорт, пожалуйста. | A taxi to the airport, please. | Un taxi pour l’aéroport, s’il vous plaît. | Un taxi al aeropuerto, por favor. | Ein Taxi zum Flughafen, bitte. | Um táxi para o aeroporto, por favor.
+մեքենա | Իմ մեքենան սպիտակ է։ | Моя машина белая. | My car is white. | Ma voiture est blanche. | Mi auto es blanco. | Mein Auto ist weiß. | Meu carro é branco.
+ավտոբուս | Ավտոբուսը գալիս է։ | Автобус идёт. | The bus is coming. | Le bus arrive. | Ya viene el autobús. | Der Bus kommt. | O ônibus está chegando.
+տաքսի | Տաքսին սպասում է։ | Такси ждёт. | The taxi is waiting. | Le taxi attend. | El taxi está esperando. | Das Taxi wartet. | O táxi está esperando.
+գնացք | Գնացքը մեկնում է ժամը հինգին։ | Поезд отправляется в пять часов. | The train leaves at five. | Le train part à cinq heures. | El tren sale a las cinco. | Der Zug fährt um fünf Uhr ab. | O trem parte às cinco.
+ինքնաթիռ | Ինքնաթիռը թռչում է Երևան։ | Самолёт летит в Ереван. | The plane is flying to Yerevan. | L’avion vole vers Erevan. | El avión vuela a Ereván. | Das Flugzeug fliegt nach Jerewan. | O avião voa para Yerevan.
+մետրո | Ես մետրոյով եմ գնում։ | Я еду на метро. | I go by metro. | Je prends le métro. | Voy en metro. | Ich fahre mit der U-Bahn. | Eu vou de metrô.
+կամուրջ | Կամուրջը երկար է։ | Мост длинный. | The bridge is long. | Le pont est long. | El puente es largo. | Die Brücke ist lang. | A ponte é comprida.
+տոմս | Մեկ տոմս, խնդրում եմ։ | Один билет, пожалуйста. | One ticket, please. | Un billet, s’il vous plaît. | Un boleto, por favor. | Eine Fahrkarte, bitte. | Uma passagem, por favor.
+փող | Ես փող չունեմ։ | У меня нет денег. | I have no money. | Je n’ai pas d’argent. | No tengo dinero. | Ich habe kein Geld. | Eu não tenho dinheiro.
+դրամ | Սա հազար դրամ արժե։ | Это стоит тысячу драмов. | This costs a thousand drams. | Cela coûte mille drams. | Esto cuesta mil drams. | Das kostet tausend Dram. | Isto custa mil drams.

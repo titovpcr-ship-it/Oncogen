@@ -94,7 +94,7 @@ self.addEventListener('fetch', e => {
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
   const path = new URL(r.url).pathname;
   if (path.includes('/api/')) return;         // личный кабинет — всегда сеть, не кэш
-  if (path.endsWith('/audio/manifest.json')) { // список записей меняется с озвучкой: сеть, без сети — кэш (O-157)
+  if (path.endsWith('/audio/manifest.json') || path.includes('/ex/')) { // список записей меняется с озвучкой: сеть, без сети — кэш (O-157)
     e.respondWith(caches.open(AUDIO).then(c => fetch(r, {cache: 'no-cache'})
       .then(res => { if (res.status === 200) c.put(r, res.clone()); return res; }).catch(() => c.match(r))));
     return;
@@ -314,7 +314,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/"))
+            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/", "ex/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel + ("?v=" + ver[rel] if rel in ver else ""))

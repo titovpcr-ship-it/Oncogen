@@ -83,6 +83,10 @@ def items():
     say = os.path.join(ROOT, 'data', 'path', 'say.txt')
     if os.path.exists(say):
         out += [('P', t.strip()) for t in open(say, encoding='utf-8') if t.strip() and not t.startswith('#')]
+    # E — примеры к словам (O-172): data/examples/say.txt пишет tools/build_examples.py
+    ex = os.path.join(ROOT, 'data', 'examples', 'say.txt')
+    if os.path.exists(ex):
+        out += [('E', t.strip()) for t in open(ex, encoding='utf-8') if t.strip() and not t.startswith('#')]
     seen, uniq = set(), []
     for g, t in out:
         if t not in seen:
@@ -357,7 +361,7 @@ def main():
     ap.add_argument('--tier', default='S0', help='ценовая категория службы — пишется в manifest.json; права на '
                     'коммерческое использование звука — только у платной (S0), O-135')
     ap.add_argument('--reserve', action='store_true', help='озвучить запас tools/audio_reserve/words.txt')
-    ap.add_argument('--only', default='', help='группы через запятую: A1,A2,…,C2,L (L — буквы), P (фразы курса)')
+    ap.add_argument('--only', default='', help='группы через запятую: A1,A2,…,C2,L (L — буквы), P (фразы курса), E (примеры к словам)')
     ap.add_argument('--limit', type=int, default=0, help='озвучить не больше N (проба)')
     ap.add_argument('--check', action='store_true', help='без запросов: чего не хватает, манифест')
     ap.add_argument('--redo', default='', help='переозвучить записи, где текст подходит под регулярное выражение')
