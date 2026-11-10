@@ -1,0 +1,123 @@
+# Тело, медицина и лаборатория, природа и погода, глаголы-действия, одежда, профессии
+գլուխ | Գլուխս ցավում է։ | У меня болит голова. | My head hurts. | J’ai mal à la tête. | Me duele la cabeza. | Mein Kopf tut weh. | Minha cabeça dói.
+դեմք | Նա գեղեցիկ դեմք ունի։ | У неё красивое лицо. | She has a beautiful face. | Elle a un beau visage. | Tiene una cara bonita. | Sie hat ein schönes Gesicht. | Ela tem um rosto bonito.
+աչք | Նրա աչքերը կապույտ են։ | У него голубые глаза. | His eyes are blue. | Il a les yeux bleus. | Sus ojos son azules. | Seine Augen sind blau. | Os olhos dele são azuis.
+ականջ | Ականջս ցավում է։ | У меня болит ухо. | My ear hurts. | J’ai mal à l’oreille. | Me duele el oído. | Mein Ohr tut weh. | Meu ouvido dói.
+քիթ | Քիթս սառել է։ | У меня замёрз нос. | My nose is frozen. | J’ai le nez gelé. | Tengo la nariz helada. | Meine Nase ist kalt. | Meu nariz está gelado.
+բերան | Բացիր բերանդ։ | Открой рот. | Open your mouth. | Ouvre la bouche. | Abre la boca. | Mach den Mund auf. | Abra a boca.
+ատամ | Ատամս ցավում է։ | У меня болит зуб. | My tooth hurts. | J’ai mal à une dent. | Me duele una muela. | Mein Zahn tut weh. | Meu dente dói.
+լեզու | Հայոց լեզուն հին լեզու է։ | Армянский язык — древний язык. | Armenian is an ancient language. | L’arménien est une langue ancienne. | El armenio es una lengua antigua. | Armenisch ist eine alte Sprache. | O armênio é uma língua antiga.
+մազ | Նա երկար մազեր ունի։ | У неё длинные волосы. | She has long hair. | Elle a les cheveux longs. | Tiene el pelo largo. | Sie hat lange Haare. | Ela tem cabelo comprido.
+ձեռք | Ձեռքերս սառն են։ | У меня холодные руки. | My hands are cold. | J’ai les mains froides. | Tengo las manos frías. | Meine Hände sind kalt. | Minhas mãos estão frias.
+մատ | Մատս կտրել եմ։ | Я порезал палец. | I have cut my finger. | Je me suis coupé le doigt. | Me corté el dedo. | Ich habe mir in den Finger geschnitten. | Eu cortei o dedo.
+ոտք | Ոտքս ցավում է։ | У меня болит нога. | My leg hurts. | J’ai mal à la jambe. | Me duele la pierna. | Mein Bein tut weh. | Minha perna dói.
+սիրտ | Նա բարի սիրտ ունի։ | У него доброе сердце. | He has a kind heart. | Il a bon cœur. | Tiene buen corazón. | Er hat ein gutes Herz. | Ele tem um bom coração.
+ուղեղ | Ուղեղը գլխի մեջ է։ | Мозг находится в голове. | The brain is inside the head. | Le cerveau est dans la tête. | El cerebro está en la cabeza. | Das Gehirn ist im Kopf. | O cérebro fica na cabeça.
+ոսկոր | Շունը ոսկոր է կրծում։ | Собака грызёт кость. | The dog is gnawing a bone. | Le chien ronge un os. | El perro roe un hueso. | Der Hund nagt an einem Knochen. | O cachorro rói um osso.
+բժիշկ | Ես բժիշկ եմ։ | Я врач. | I am a doctor. | Je suis médecin. | Soy médico. | Ich bin Arzt. | Eu sou médico.
+բուժքույր | Բուժքույրը ներարկում է անում։ | Медсестра делает укол. | The nurse is giving an injection. | L’infirmière fait une piqûre. | La enfermera pone una inyección. | Die Krankenschwester gibt eine Spritze. | A enfermeira aplica uma injeção.
+հիվանդ | Ես հիվանդ եմ։ | Я болен. | I am ill. | Je suis malade. | Estoy enfermo. | Ich bin krank. | Eu estou doente.
+հիվանդանոց | Հիվանդանոցը մոտ է։ | Больница рядом. | The hospital is near. | L’hôpital est tout près. | El hospital está cerca. | Das Krankenhaus ist in der Nähe. | O hospital fica perto.
+դեղ | Այս դեղը օգնում է։ | Это лекарство помогает. | This medicine helps. | Ce médicament aide. | Este medicamento ayuda. | Dieses Medikament hilft. | Este remédio ajuda.
+դեղատուն | Որտե՞ղ է դեղատունը։ | Где аптека? | Where is the pharmacy? | Où est la pharmacie ? | ¿Dónde está la farmacia? | Wo ist die Apotheke? | Onde fica a farmácia?
+շտապ օգնություն | Շտապ օգնություն կանչեք։ | Вызовите скорую помощь. | Call an ambulance. | Appelez une ambulance. | Llamen a una ambulancia. | Rufen Sie einen Krankenwagen. | Chamem uma ambulância.
+ցավ | Ես ցավ եմ զգում։ | Я чувствую боль. | I feel pain. | Je ressens une douleur. | Siento dolor. | Ich spüre Schmerzen. | Eu sinto dor.
+ջերմություն | Երեխան ջերմություն ունի։ | У ребёнка температура. | The child has a fever. | L’enfant a de la fièvre. | El niño tiene fiebre. | Das Kind hat Fieber. | A criança está com febre.
+ճնշում | Նա բարձր ճնշում ունի։ | У него высокое давление. | He has high blood pressure. | Il a de la tension. | Tiene la presión alta. | Er hat hohen Blutdruck. | Ele tem pressão alta.
+ներարկում | Ես ներարկումից չեմ վախենում։ | Я не боюсь уколов. | I am not afraid of injections. | Je n’ai pas peur des piqûres. | No les tengo miedo a las inyecciones. | Ich habe keine Angst vor Spritzen. | Eu não tenho medo de injeção.
+արյուն | Արյունը կարմիր է։ | Кровь красная. | Blood is red. | Le sang est rouge. | La sangre es roja. | Blut ist rot. | O sangue é vermelho.
+արյան խումբ | Ի՞նչ արյան խումբ ունես։ | Какая у тебя группа крови? | What is your blood type? | Quel est ton groupe sanguin ? | ¿Qué grupo sanguíneo tienes? | Welche Blutgruppe hast du? | Qual é o seu tipo sanguíneo?
+վիրահատություն | Վիրահատությունը վաղն է։ | Операция завтра. | The operation is tomorrow. | L’opération est demain. | La operación es mañana. | Die Operation ist morgen. | A cirurgia é amanhã.
+ախտորոշում | Բժիշկը ախտորոշում է դնում։ | Врач ставит диагноз. | The doctor is making a diagnosis. | Le médecin pose un diagnostic. | El médico hace un diagnóstico. | Der Arzt stellt eine Diagnose. | O médico faz um diagnóstico.
+առողջ | Երեխան առողջ է։ | Ребёнок здоров. | The child is healthy. | L’enfant est en bonne santé. | El niño está sano. | Das Kind ist gesund. | A criança está saudável.
+առողջություն | Առողջությունը ամենակարևորն է։ | Здоровье важнее всего. | Health is the most important thing. | La santé est le plus important. | La salud es lo más importante. | Gesundheit ist das Wichtigste. | A saúde é o mais importante.
+լաբորատորիա | Ես աշխատում եմ լաբորատորիայում։ | Я работаю в лаборатории. | I work in a laboratory. | Je travaille dans un laboratoire. | Trabajo en un laboratorio. | Ich arbeite in einem Labor. | Eu trabalho em um laboratório.
+մանրադիտակ | Նա նայում է մանրադիտակով։ | Он смотрит в микроскоп. | He is looking through a microscope. | Il regarde au microscope. | Mira por el microscopio. | Er schaut durch das Mikroskop. | Ele olha pelo microscópio.
+հետազոտություն | Հետազոտությունը սկսվում է վաղը։ | Исследование начинается завтра. | The study starts tomorrow. | L’étude commence demain. | El estudio empieza mañana. | Die Untersuchung beginnt morgen. | O estudo começa amanhã.
+վերլուծություն | Վերլուծությունը պատրաստ է։ | Анализ готов. | The analysis is ready. | L’analyse est prête. | El análisis está listo. | Die Analyse ist fertig. | A análise está pronta.
+նմուշ | Մենք նմուշ ենք վերցնում։ | Мы берём образец. | We are taking a sample. | Nous prélevons un échantillon. | Tomamos una muestra. | Wir nehmen eine Probe. | Nós coletamos uma amostra.
+փորձանոթ | Փորձանոթը դատարկ է։ | Пробирка пустая. | The test tube is empty. | Le tube à essai est vide. | El tubo de ensayo está vacío. | Das Reagenzglas ist leer. | O tubo de ensaio está vazio.
+արդյունք | Արդյունքը լավ է։ | Результат хороший. | The result is good. | Le résultat est bon. | El resultado es bueno. | Das Ergebnis ist gut. | O resultado é bom.
+բջիջ | Բջիջը շատ փոքր է։ | Клетка очень маленькая. | A cell is very small. | La cellule est très petite. | La célula es muy pequeña. | Die Zelle ist sehr klein. | A célula é muito pequena.
+մանրէ | Մանրէները ամենուր են։ | Микробы повсюду. | Microbes are everywhere. | Les microbes sont partout. | Los microbios están en todas partes. | Mikroben sind überall. | Os micróbios estão em toda parte.
+վիրուս | Այս վիրուսը վտանգավոր է։ | Этот вирус опасен. | This virus is dangerous. | Ce virus est dangereux. | Este virus es peligroso. | Dieses Virus ist gefährlich. | Este vírus é perigoso.
+ուռուցք | Ուռուցքը փոքր է։ | Опухоль маленькая. | The tumour is small. | La tumeur est petite. | El tumor es pequeño. | Der Tumor ist klein. | O tumor é pequeno.
+քաղցկեղ | Քաղցկեղը բուժվում է։ | Рак лечится. | Cancer can be treated. | Le cancer se soigne. | El cáncer se trata. | Krebs ist behandelbar. | O câncer tem tratamento.
+գեն | Այս գենը կարևոր է։ | Этот ген важен. | This gene is important. | Ce gène est important. | Este gen es importante. | Dieses Gen ist wichtig. | Este gene é importante.
+մուտացիա | Մուտացիան հազվադեպ է։ | Мутация редкая. | The mutation is rare. | La mutation est rare. | La mutación es rara. | Die Mutation ist selten. | A mutação é rara.
+ժառանգական | Այս հիվանդությունը ժառանգական է։ | Эта болезнь наследственная. | This disease is hereditary. | Cette maladie est héréditaire. | Esta enfermedad es hereditaria. | Diese Krankheit ist erblich. | Esta doença é hereditária.
+արև | Արևը շողում է։ | Солнце светит. | The sun is shining. | Le soleil brille. | El sol brilla. | Die Sonne scheint. | O sol está brilhando.
+լուսին | Լուսինը գիշերն է երևում։ | Луну видно ночью. | The moon is visible at night. | La lune se voit la nuit. | La luna se ve de noche. | Den Mond sieht man nachts. | A lua aparece à noite.
+աստղ | Երկնքում շատ աստղեր կան։ | На небе много звёзд. | There are many stars in the sky. | Il y a beaucoup d’étoiles dans le ciel. | En el cielo hay muchas estrellas. | Am Himmel sind viele Sterne. | Há muitas estrelas no céu.
+երկինք | Երկինքը պարզ է։ | Небо ясное. | The sky is clear. | Le ciel est dégagé. | El cielo está despejado. | Der Himmel ist klar. | O céu está limpo.
+ամպ | Երկնքում ամպ չկա։ | На небе нет облаков. | There are no clouds in the sky. | Il n’y a pas de nuages dans le ciel. | No hay nubes en el cielo. | Am Himmel ist keine Wolke. | Não há nuvens no céu.
+անձրև | Անձրև է գալիս։ | Идёт дождь. | It is raining. | Il pleut. | Está lloviendo. | Es regnet. | Está chovendo.
+ձյուն | Ձյուն է գալիս։ | Идёт снег. | It is snowing. | Il neige. | Está nevando. | Es schneit. | Está nevando.
+քամի | Քամին ուժեղ է։ | Ветер сильный. | The wind is strong. | Le vent est fort. | El viento es fuerte. | Der Wind ist stark. | O vento está forte.
+եղանակ | Այսօր եղանակը լավն է։ | Сегодня хорошая погода. | The weather is nice today. | Aujourd’hui, il fait beau. | Hoy hace buen tiempo. | Heute ist das Wetter schön. | Hoje o tempo está bom.
+սար | Հայաստանում շատ սարեր կան։ | В Армении много гор. | There are many mountains in Armenia. | Il y a beaucoup de montagnes en Arménie. | En Armenia hay muchas montañas. | In Armenien gibt es viele Berge. | Na Armênia há muitas montanhas.
+ծով | Հայաստանը ծով չունի։ | У Армении нет моря. | Armenia has no sea. | L’Arménie n’a pas de mer. | Armenia no tiene mar. | Armenien hat kein Meer. | A Armênia não tem mar.
+լիճ | Սևանը մեծ լիճ է։ | Севан — большое озеро. | Sevan is a big lake. | Le Sevan est un grand lac. | El Seván es un lago grande. | Der Sewan ist ein großer See. | O Sevan é um lago grande.
+գետ | Գետը սառն է։ | Река холодная. | The river is cold. | La rivière est froide. | El río está frío. | Der Fluss ist kalt. | O rio está frio.
+ծառ | Այգում մեծ ծառ կա։ | В саду большое дерево. | There is a big tree in the garden. | Il y a un grand arbre dans le jardin. | En el jardín hay un árbol grande. | Im Garten steht ein großer Baum. | Há uma árvore grande no jardim.
+անտառ | Մենք անտառ ենք գնում։ | Мы идём в лес. | We are going to the forest. | Nous allons dans la forêt. | Vamos al bosque. | Wir gehen in den Wald. | Nós vamos à floresta.
+ծաղիկ | Այս ծաղիկը քեզ համար է։ | Этот цветок для тебя. | This flower is for you. | Cette fleur est pour toi. | Esta flor es para ti. | Diese Blume ist für dich. | Esta flor é para você.
+վարդ | Վարդը կարմիր է։ | Роза красная. | The rose is red. | La rose est rouge. | La rosa es roja. | Die Rose ist rot. | A rosa é vermelha.
+խոտ | Կովը խոտ է ուտում։ | Корова ест траву. | The cow is eating grass. | La vache mange de l’herbe. | La vaca come hierba. | Die Kuh frisst Gras. | A vaca come capim.
+քար | Այս քարը ծանր է։ | Этот камень тяжёлый. | This stone is heavy. | Cette pierre est lourde. | Esta piedra es pesada. | Dieser Stein ist schwer. | Esta pedra é pesada.
+կրակ | Կրակը տաք է։ | Огонь горячий. | Fire is hot. | Le feu est chaud. | El fuego es caliente. | Feuer ist heiß. | O fogo é quente.
+օդ | Սարերում օդը մաքուր է։ | В горах воздух чистый. | The air is clean in the mountains. | En montagne, l’air est pur. | En las montañas el aire es limpio. | In den Bergen ist die Luft sauber. | Nas montanhas o ar é limpo.
+երկիր | Հայաստանը փոքր երկիր է։ | Армения — маленькая страна. | Armenia is a small country. | L’Arménie est un petit pays. | Armenia es un país pequeño. | Armenien ist ein kleines Land. | A Armênia é um país pequeno.
+բացել | Բացիր դուռը, խնդրում եմ։ | Открой дверь, пожалуйста. | Open the door, please. | Ouvre la porte, s’il te plaît. | Abre la puerta, por favor. | Mach bitte die Tür auf. | Abra a porta, por favor.
+փակել | Փակիր պատուհանը։ | Закрой окно. | Close the window. | Ferme la fenêtre. | Cierra la ventana. | Mach das Fenster zu. | Feche a janela.
+նստել | Նստիր այստեղ։ | Садись сюда. | Sit here. | Assieds-toi ici. | Siéntate aquí. | Setz dich hierher. | Sente-se aqui.
+կանգնել | Նա կանգնած է դռան մոտ։ | Он стоит у двери. | He is standing by the door. | Il est debout près de la porte. | Está de pie junto a la puerta. | Er steht an der Tür. | Ele está em pé perto da porta.
+վազել | Երեխաները վազում են այգում։ | Дети бегают в парке. | The children are running in the park. | Les enfants courent dans le parc. | Los niños corren en el parque. | Die Kinder rennen im Park. | As crianças correm no parque.
+լողալ | Ես սիրում եմ լողալ։ | Я люблю плавать. | I like swimming. | J’aime nager. | Me gusta nadar. | Ich schwimme gern. | Eu gosto de nadar.
+պարել | Եկ պարենք։ | Давай потанцуем. | Let’s dance. | Dansons. | Bailemos. | Lass uns tanzen. | Vamos dançar.
+երգել | Նա լավ է երգում։ | Она хорошо поёт. | She sings well. | Elle chante bien. | Canta bien. | Sie singt gut. | Ela canta bem.
+խաղալ | Երեխաները խաղում են բակում։ | Дети играют во дворе. | The children are playing in the yard. | Les enfants jouent dans la cour. | Los niños juegan en el patio. | Die Kinder spielen im Hof. | As crianças brincam no quintal.
+ծիծաղել | Ինչո՞ւ ես ծիծաղում։ | Почему ты смеёшься? | Why are you laughing? | Pourquoi ris-tu ? | ¿Por qué te ríes? | Warum lachst du? | Por que você está rindo?
+լացել | Երեխան լացում է։ | Ребёнок плачет. | The child is crying. | L’enfant pleure. | El niño está llorando. | Das Kind weint. | A criança está chorando.
+սպասել | Ես քեզ սպասում եմ։ | Я тебя жду. | I am waiting for you. | Je t’attends. | Te estoy esperando. | Ich warte auf dich. | Eu estou esperando você.
+օգնել | Կարո՞ղ ես ինձ օգնել։ | Ты можешь мне помочь? | Can you help me? | Peux-tu m’aider ? | ¿Puedes ayudarme? | Kannst du mir helfen? | Você pode me ajudar?
+ապրել | Ես ապրում եմ Երևանում։ | Я живу в Ереване. | I live in Yerevan. | J’habite à Erevan. | Vivo en Ereván. | Ich wohne in Jerewan. | Eu moro em Yerevan.
+մտածել | Ես քո մասին եմ մտածում։ | Я думаю о тебе. | I am thinking about you. | Je pense à toi. | Pienso en ti. | Ich denke an dich. | Eu penso em você.
+սկսել | Դասը սկսում ենք հիմա։ | Мы начинаем урок сейчас. | We are starting the lesson now. | Nous commençons le cours maintenant. | Empezamos la clase ahora. | Wir beginnen jetzt mit dem Unterricht. | Começamos a aula agora.
+վերջացնել | Ես վերջացնում եմ աշխատանքը վեցին։ | Я заканчиваю работу в шесть. | I finish work at six. | Je termine le travail à six heures. | Termino el trabajo a las seis. | Ich beende die Arbeit um sechs. | Eu termino o trabalho às seis.
+եփել | Մայրիկը ճաշ է եփում։ | Мама готовит обед. | Mum is cooking lunch. | Maman prépare le déjeuner. | Mamá cocina el almuerzo. | Mama kocht das Mittagessen. | A mamãe cozinha o almoço.
+լվանալ | Ես լվանում եմ ափսեները։ | Я мою тарелки. | I am washing the plates. | Je lave les assiettes. | Lavo los platos. | Ich spüle die Teller. | Eu lavo os pratos.
+հագնել | Ես վերարկու եմ հագնում։ | Я надеваю пальто. | I am putting on a coat. | Je mets un manteau. | Me pongo el abrigo. | Ich ziehe einen Mantel an. | Eu visto um casaco.
+զանգել | Ես քեզ վաղը կզանգեմ։ | Я позвоню тебе завтра. | I will call you tomorrow. | Je t’appellerai demain. | Te llamo mañana. | Ich rufe dich morgen an. | Eu ligo para você amanhã.
+ճանապարհորդել | Ես սիրում եմ ճանապարհորդել։ | Я люблю путешествовать. | I love travelling. | J’aime voyager. | Me gusta viajar. | Ich reise gern. | Eu gosto de viajar.
+բերել | Ջուր բեր, խնդրում եմ։ | Принеси воды, пожалуйста. | Bring some water, please. | Apporte de l’eau, s’il te plaît. | Trae agua, por favor. | Bring bitte Wasser. | Traga água, por favor.
+հարցնել | Կարո՞ղ եմ մի բան հարցնել։ | Можно кое-что спросить? | May I ask something? | Puis-je demander quelque chose ? | ¿Puedo preguntar algo? | Darf ich etwas fragen? | Posso perguntar uma coisa?
+պատասխանել | Նա չի պատասխանում։ | Он не отвечает. | He is not answering. | Il ne répond pas. | No contesta. | Er antwortet nicht. | Ele não responde.
+շապիկ | Այս շապիկը նոր է։ | Эта рубашка новая. | This shirt is new. | Cette chemise est neuve. | Esta camisa es nueva. | Dieses Hemd ist neu. | Esta camisa é nova.
+տաբատ | Տաբատս երկար է։ | Мои брюки длинные. | My trousers are long. | Mon pantalon est long. | Mi pantalón es largo. | Meine Hose ist lang. | Minha calça é comprida.
+զգեստ | Նա կարմիր զգեստ է հագել։ | Она надела красное платье. | She is wearing a red dress. | Elle porte une robe rouge. | Lleva un vestido rojo. | Sie trägt ein rotes Kleid. | Ela está de vestido vermelho.
+կոշիկ | Կոշիկներս նոր են։ | Мои ботинки новые. | My shoes are new. | Mes chaussures sont neuves. | Mis zapatos son nuevos. | Meine Schuhe sind neu. | Meus sapatos são novos.
+գլխարկ | Գլխարկդ հագիր, ցուրտ է։ | Надень шапку, холодно. | Put on your hat, it’s cold. | Mets ton bonnet, il fait froid. | Ponte el gorro, hace frío. | Setz deine Mütze auf, es ist kalt. | Ponha o gorro, está frio.
+վերարկու | Վերարկուս տաք է։ | Моё пальто тёплое. | My coat is warm. | Mon manteau est chaud. | Mi abrigo es calentito. | Mein Mantel ist warm. | Meu casaco é quente.
+գուլպա | Որտե՞ղ են իմ գուլպաները։ | Где мои носки? | Where are my socks? | Où sont mes chaussettes ? | ¿Dónde están mis medias? | Wo sind meine Socken? | Onde estão minhas meias?
+ձեռնոց | Ձմռանը ձեռնոց եմ հագնում։ | Зимой я ношу перчатки. | In winter I wear gloves. | En hiver, je porte des gants. | En invierno uso guantes. | Im Winter trage ich Handschuhe. | No inverno eu uso luvas.
+շարֆ | Այս շարֆը փափուկ է։ | Этот шарф мягкий. | This scarf is soft. | Cette écharpe est douce. | Esta bufanda es suave. | Dieser Schal ist weich. | Este cachecol é macio.
+ակնոց | Ես ակնոց եմ կրում։ | Я ношу очки. | I wear glasses. | Je porte des lunettes. | Uso anteojos. | Ich trage eine Brille. | Eu uso óculos.
+հովանոց | Վերցրու հովանոցը։ | Возьми зонт. | Take the umbrella. | Prends le parapluie. | Llévate el paraguas. | Nimm den Regenschirm mit. | Leve o guarda-chuva.
+մատանի | Նա ոսկե մատանի ունի։ | У неё золотое кольцо. | She has a gold ring. | Elle a une bague en or. | Tiene un anillo de oro. | Sie hat einen goldenen Ring. | Ela tem um anel de ouro.
+աշխատանք | Ես շատ աշխատանք ունեմ։ | У меня много работы. | I have a lot of work. | J’ai beaucoup de travail. | Tengo mucho trabajo. | Ich habe viel Arbeit. | Eu tenho muito trabalho.
+ուսուցիչ | Մեր ուսուցիչը բարի է։ | Наш учитель добрый. | Our teacher is kind. | Notre professeur est gentil. | Nuestro profesor es amable. | Unser Lehrer ist nett. | Nosso professor é gentil.
+ուսանող | Ես ուսանող եմ։ | Я студент. | I am a student. | Je suis étudiant. | Soy estudiante. | Ich bin Student. | Eu sou estudante.
+աշակերտ | Աշակերտը դաս է սովորում։ | Ученик учит урок. | The pupil is learning the lesson. | L’élève apprend sa leçon. | El alumno estudia la lección. | Der Schüler lernt die Lektion. | O aluno estuda a lição.
+վարորդ | Վարորդը զգույշ է վարում։ | Водитель едет осторожно. | The driver drives carefully. | Le chauffeur conduit prudemment. | El conductor maneja con cuidado. | Der Fahrer fährt vorsichtig. | O motorista dirige com cuidado.
+խոհարար | Խոհարարը համեղ ճաշ է պատրաստում։ | Повар готовит вкусный обед. | The cook is making a tasty meal. | Le cuisinier prépare un bon repas. | El cocinero prepara una comida rica. | Der Koch bereitet ein leckeres Essen zu. | O cozinheiro prepara uma comida gostosa.
+ոստիկան | Ոստիկանը օգնում է մարդկանց։ | Полицейский помогает людям. | The policeman helps people. | Le policier aide les gens. | El policía ayuda a la gente. | Der Polizist hilft den Menschen. | O policial ajuda as pessoas.
+ինժեներ | Հայրս ինժեներ է։ | Мой отец — инженер. | My father is an engineer. | Mon père est ingénieur. | Mi padre es ingeniero. | Mein Vater ist Ingenieur. | Meu pai é engenheiro.
+ծրագրավորող | Եղբայրս ծրագրավորող է։ | Мой брат — программист. | My brother is a programmer. | Mon frère est programmeur. | Mi hermano es programador. | Mein Bruder ist Programmierer. | Meu irmão é programador.
+իրավաբան | Նա լավ իրավաբան է։ | Он хороший юрист. | He is a good lawyer. | C’est un bon juriste. | Es un buen abogado. | Er ist ein guter Jurist. | Ele é um bom advogado.
+վաճառող | Վաճառողը շատ քաղաքավարի է։ | Продавец очень вежливый. | The shop assistant is very polite. | Le vendeur est très poli. | El vendedor es muy amable. | Der Verkäufer ist sehr höflich. | O vendedor é muito educado.
+գյուղացի | Գյուղացին աշխատում է դաշտում։ | Крестьянин работает в поле. | The farmer works in the field. | Le paysan travaille aux champs. | El campesino trabaja en el campo. | Der Bauer arbeitet auf dem Feld. | O camponês trabalha no campo.
+դերասան | Նա հայտնի դերասան է։ | Он известный актёр. | He is a famous actor. | C’est un acteur célèbre. | Es un actor famoso. | Er ist ein berühmter Schauspieler. | Ele é um ator famoso.
+նկարիչ | Նկարիչը նկար է նկարում։ | Художник пишет картину. | The artist is painting a picture. | Le peintre peint un tableau. | El pintor pinta un cuadro. | Der Maler malt ein Bild. | O pintor pinta um quadro.
+երաժիշտ | Երաժիշտը դուդուկ է նվագում։ | Музыкант играет на дудуке. | The musician plays the duduk. | Le musicien joue du doudouk. | El músico toca el duduk. | Der Musiker spielt Duduk. | O músico toca duduk.
+լրագրող | Լրագրողը հարցեր է տալիս։ | Журналист задаёт вопросы. | The journalist asks questions. | Le journaliste pose des questions. | El periodista hace preguntas. | Der Journalist stellt Fragen. | O jornalista faz perguntas.
