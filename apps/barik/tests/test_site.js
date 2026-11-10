@@ -101,5 +101,6 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));
   await br.close(); srv.close();
+  ok(fs.existsSync(path.join(ROOT,'api','cron.php'))&&/cron/.test(fs.readFileSync(path.join(ROOT,'api','.htaccess'),'utf8')),'сервер: cron.php в сборке и закрыт снаружи (O-173)');
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();

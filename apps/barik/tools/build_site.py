@@ -287,7 +287,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     # личный кабинет (O-136): сервер PHP в api/ (config.php с ключами — только на хостинге)
     api = os.path.join(out, "api")
     os.makedirs(api, exist_ok=True)
-    for f in ("index.php", "lib.php", ".htaccess"):
+    for f in ("index.php", "lib.php", "cron.php", ".htaccess"):
         shutil.copy(os.path.join(APP, "server", "api", f), os.path.join(api, f))
     icons(out)
     shutil.copytree(os.path.join(APP, "assets", "og"), os.path.join(out, "og"))
