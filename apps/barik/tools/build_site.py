@@ -229,7 +229,7 @@ ErrorDocument 404 /404.html
 </IfModule>
 """
 
-PAGE404 = """<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+PAGE404 = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Barik — 404</title><meta name="robots" content="noindex"><link rel="icon" href="/favicon.png">
 <style>
 :root{--bg:#FBF6F1;--ink:#1C2045;--ink2:#4C4F6E;--acc:#EF8B2C;--pom:#A8173A;--card:#FFFFFF;--line:#EBE1D9}
@@ -293,7 +293,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     shutil.copytree(os.path.join(APP, "assets", "og"), os.path.join(out, "og"))
     json.dump(MANIFEST, open(os.path.join(out, "manifest.webmanifest"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
-    open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n")
+    open(os.path.join(out, "robots.txt"), "w").write("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /*?*name=\n")
     open(os.path.join(out, ".htaccess"), "w").write(HTACCESS)
     open(os.path.join(out, "404.html"), "w", encoding="utf-8").write(PAGE404)
     if seo and url:
@@ -314,7 +314,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if (rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/", "ex/"))
+            if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/", "ex/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel + ("?v=" + ver[rel] if rel in ver else ""))
@@ -340,10 +340,24 @@ def seo_pages(out, url):
     import build_seo
     build_seo.build(out, url, words)
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
-    links = " · ".join(f'<a href="{L}/">{n}</a>' for L, n in
-                       (("en", "Armenian dictionary"), ("ru", "Армянский словарь"),
-                        ("fr", "Dictionnaire arménien"), ("es", "Diccionario armenio")))
-    html = html.replace("</body>", f"<noscript><p>{links}</p></noscript>\n</body>", 1)
+    D = (("en", "Armenian dictionary", "Your name in Armenian"), ("ru", "Армянский словарь", "Ваше имя по-армянски"),
+         ("fr", "Dictionnaire arménien", "Votre prénom en arménien"), ("es", "Diccionario armenio", "Tu nombre en armenio"),
+         ("de", "Armenisches Wörterbuch", "Dein Name auf Armenisch"), ("pt", "Dicionário armênio", "Seu nome em armênio"))
+    links = "".join(f'<li lang="{L}"><a href="{L}/">{d}</a> · <a href="{L}/n/">{n}</a></li>' for L, d, n in D)
+    docs = " · ".join(f'<a href="?doc={k}">{t}</a>' for k, t in (("project", "About"), ("terms", "Terms"), ("privacy", "Privacy"), ("refund", "Refunds")))
+    html = html.replace("</body>", f'<noscript><h1>Barik — Eastern Armenian word by word</h1><p>20,121 Armenian words with pictures, audio and '
+                        f'transcription in six languages, handwriting for all 39 letters and a learning path up to reading Tumanyan.</p>'
+                        f'<ul>{links}</ul><p>{docs}</p></noscript>\n</body>', 1)
+    # структура для поисковиков (O-177): сайт, издатель, учебное приложение
+    ld = [{"@context": "https://schema.org", "@type": "WebSite", "name": "Barik", "alternateName": "Բառիկ", "url": url,
+           "inLanguage": ["en", "ru", "fr", "es", "de", "pt", "hy"]},
+          {"@context": "https://schema.org", "@type": "Organization", "name": "Barik", "url": url, "logo": url + "icons/icon-512.png",
+           "email": "hello@barik.am"},
+          {"@context": "https://schema.org", "@type": "WebApplication", "name": "Barik", "url": url, "applicationCategory": "EducationalApplication",
+           "operatingSystem": "Any", "inLanguage": "hy", "isAccessibleForFree": True,
+           "offers": [{"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+                      {"@type": "Offer", "price": "4.99", "priceCurrency": "USD", "name": "Barik Premium (monthly)"}]}]
+    html = html.replace("</head>", "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>' for j in ld) + "\n</head>", 1)
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
 
 

@@ -352,6 +352,12 @@ def aid(text):
     return "%08x%08x" % (fnv(b, 0x811C9DC5), fnv(b, 0x050C5D1F))
 
 
+def crumbs_ld(items):
+    """BreadcrumbList для поисковиков (O-177): [(название, полный адрес), …]"""
+    return {"@context": "https://schema.org", "@type": "BreadcrumbList",
+            "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(items)]}
+
+
 def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
     up = "../" * depth
     alt = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{base}{p}">' for l, p in alts.items())
@@ -359,8 +365,8 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
     langs = "".join(
         f'<a href="{up}{alts[l]}" hreflang="{l}"{" aria-current=page" if l == L else ""}>{l.upper()}</a>'
         for l in LANGS)
-    ld = (f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>'
-          if jsonld else "")
+    ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>'
+                 for j in (jsonld if isinstance(jsonld, list) else [jsonld] if jsonld else []))
     return (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)}</title><meta name="description" content="{esc(desc)}">'
@@ -469,6 +475,7 @@ def build(site, base, words_path):
                                            "url": f"{base}{L}/t/{tslug[ti]}.html"}}
                 if w.get("p") in EMO:
                     ld["image"] = f"{base}pics/{EMO[w['p']]}.webp"
+                ld = [ld, crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, f"{base}{L}/t/{tslug[ti]}.html"), (w["a"], base + rel)])]
                 write(rel, page(L, base, rel, T["title_w"].format(x=x, a=w["a"], tr=w[trk]),
                                 T["desc_w"].format(x=x, a=w["a"], tr=w[trk], t=tname, lv=t["lv"]),
                                 alts, body, ld))
@@ -494,7 +501,9 @@ def build(site, base, words_path):
                     f'<p>{T["intro_t"].format(n=len(lst), w=nw(L, len(lst)), lv=t["lv"])}</p>'
                     f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
             write(rel, page(L, base, rel, T["title_t"].format(t=tname, n=len(lst), w=nw(L, len(lst))),
-                            T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]), alts, body))
+                            T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]), alts, body,
+                            [{"@context": "https://schema.org", "@type": "DefinedTermSet", "name": tname, "url": base + rel, "inLanguage": "hy"},
+                             crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, base + rel)])]))
             urls[L].append(rel)
         # оглавление
         rel = f"{L}/index.html"
@@ -613,6 +622,7 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
                     f'<a class="cta" href="../../?lang={L}&amp;name={q}">{T["cta"]}</a><p class="note">{T["note"]}</p>')
             ld = {"@context": "https://schema.org", "@type": "DefinedTerm", "name": it["h"], "alternateName": it["n"],
                   "inLanguage": "hy", "url": base + rel}
+            ld = [ld, crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/n/index.html"), (it["n"], base + rel)])]
             pg = page(L, base, rel, T["title"].format(n=it["n"], h=it["h"]), T["desc"].format(n=it["n"], h=it["h"]),
                       idx_alts, body, ld)
             p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -625,6 +635,7 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
         pg = page(L, base, rel, T["idx_t"].format(k=len(rows)), T["idx_d"].format(k=len(rows)), idx_alts, body)
         open(os.path.join(site, rel), "w", encoding="utf-8").write(pg); files += 1
         sm.insert(0, base + rel)
+    sm.insert(0, base)
     open(os.path.join(site, "sitemap-names.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
