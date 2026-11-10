@@ -295,7 +295,7 @@
 բենզալցակայան | Ես գնում եմ բենզալցակայան։ | Я иду на заправку. | I am going to the gas station. | Je vais à la station-service. | Voy a la gasolinera. | Ich fahre zur Tankstelle. | Estou indo ao posto de gasolina.
 ճանապարհ | Ճանապարհը երկար է։ | Дорога длинная. | The road is long. | La route est longue. | El camino es largo. | Die Straße ist lang. | A estrada é longa.
 թունել | Թունելը մութ է։ | Тоннель тёмный. | The tunnel is dark. | Le tunnel est sombre. | El túnel está oscuro. | Der Tunnel ist dunkel. | O túnel está escuro.
-նավահանգիստ | Նավահանգիստում շատ նավեր կան։ | В порту много кораблей. | There are many ships in the port. | Il y a beaucoup de navires dans le port. | Hay muchos barcos en el puerto. | Es gibt viele Schiffe im Hafen. | Há muitos navios no porto.
+նավահանգիստ | Նավահանգստում շատ նավեր կան։ | В порту много кораблей. | There are many ships in the port. | Il y a beaucoup de navires dans le port. | Hay muchos barcos en el puerto. | Es gibt viele Schiffe im Hafen. | Há muitos navios no porto.
 բնակիչ | Բնակիչները երջանիկ են։ | Жители счастливы. | The residents are happy. | Les habitants sont heureux. | Los habitantes están felices. | Die Einwohner sind glücklich. | Os moradores estão felizes.
 մայրաքաղաք | Երևանը Հայաստանի մայրաքաղաքն է։ | Ереван — столица Армении. | Yerevan is the capital of Armenia. | Erevan est la capitale de l'Arménie. | Ereván es la capital de Armenia. | Eriwan ist die Hauptstadt Armeniens. | Yerevan é a capital da Armênia.
 շրջան | Նա ապրում է կենտրոնական շրջանում։ | Он живет в центральном районе. | He lives in the central district. | Il habite dans le quartier central. | Él vive en el distrito central. | Er wohnt im zentralen Viertel. | Ele mora no distrito central.
@@ -2081,7 +2081,6 @@
 մազկապ | Մազկապը կորել է։ | Резинка для волос потерялась. | The hair tie got lost. | L'élastique à cheveux s'est perdu. | La goma para el pelo se perdió. | Das Haargummi ist verloren gegangen. | O elástico de cabelo sumiu.
 սափրել | Նա սափրվում է։ | Он бреется. | He shaves. | Il se rase. | Él se afeita. | Er rasiert sich. | Ele se barbeia.
 վարսահարդարիչ | Նա վարսահարդարիչ գնեց։ | Он купил фен. | He bought a hairdryer. | Il a acheté un sèche-cheveux. | Él compró un secador de pelo. | Er hat einen Haartrockner gekauft. | Ele comprou um secador de cabelo.
-քաչալություն | Նա քաչալություն ունի։ | Он лысый. | He is bald. | Il est chauve. | Él es calvo. | Er ist kahl. | Ele é careca.
 կոշկատակ | Կոշկիս կոշկատակը պատռվեց։ | Подошва моей обуви порвалась. | The sole of my shoe tore. | La semelle de ma chaussure s'est déchirée. | La suela de mi zapato se rompió. | Die Sohle meines Schuhs ist gerissen. | A sola do meu sapato rasgou.
 մաշիկ | Նրա մաշիկները գեղեցիկ են։ | Ее балетки красивые. | Her ballet shoes are beautiful. | Ses chaussons de ballet sont beaux. | Sus zapatillas de ballet son bonitas. | Ihre Ballettschuhe sind schön. | As sapatilhas de ballet dela são bonitas.
 մույկ | Մույկերը տաք են։ | Сапоги теплые. | Boots are warm. | Les bottes sont chaudes. | Las botas son cálidas. | Die Stiefel sind warm. | As botas são quentes.
@@ -2142,7 +2141,7 @@
 բահակ | Բժիշկը բահակով նայեց կոկորդը։ | Врач осмотрел горло шпателем. | The doctor examined the throat with a tongue depressor. | Le médecin a examiné la gorge avec un abaisse-langue. | El médico examinó la garganta con un depresor lingual. | Der Arzt untersuchte den Hals mit einem Zungenspatel. | O médico examinou a garganta com um abaixador de língua.
 բինտ | Դուք ունե՞ք բինտ։ | У вас есть бинт? | Do you have a bandage? | Avez-vous un bandage ? | ¿Tiene usted una venda? | Haben Sie einen Verband? | Você tem uma atadura?
 ջեռակ | Ես ջեռակ եմ ուզում։ | Я хочу грелку. | I want a hot water bottle. | Je veux une bouillotte. | Quiero una bolsa de agua caliente. | Ich möchte eine Wärmflasche. | Eu quero uma bolsa de água quente.
-հարբուխ | Ինձ հարբուխ է։ | У меня насморк. | I have a runny nose. | J'ai le nez qui coule. | Tengo mocos. | Ich habe eine laufende Nase. | Estou com o nariz escorrendo.
+հարբուխ | Ես հարբուխ ունեմ։ | У меня насморк. | I have a runny nose. | J'ai le nez qui coule. | Tengo mocos. | Ich habe eine laufende Nase. | Estou com o nariz escorrendo.
 շնչարգելություն | Ինձ շնչարգելություն է։ | У меня одышка. | I have shortness of breath. | J'ai un essoufflement. | Tengo falta de aliento. | Ich habe Atemnot. | Estou com falta de ar.
 սրտխառնուք | Ինձ սրտխառնուք է։ | У меня тошнота. | I have nausea. | J'ai des nausées. | Tengo náuseas. | Ich habe Übelkeit. | Estou com náuseas.
 ահ | Ես ահ եմ զգում։ | Я чувствую страх. | I feel fear. | Je ressens de la peur. | Siento miedo. | Ich spüre Angst. | Eu sinto medo.
@@ -2310,7 +2309,6 @@
 այստեղ-այնտեղ | Նա այստեղ-այնտեղ ճամփորդեց։ | Он путешествовал тут и там. | He traveled here and there. | Il a voyagé ici et là. | Viajó aquí y allá. | Er reiste hier und da. | Ele viajou por aqui e por ali.
 այդքան | Ես այդքան գիրք չունեմ։ | У меня нет столько книг. | I don't have that many books. | Je n'ai pas autant de livres. | No tengo tantos libros. | Ich habe nicht so viele Bücher. | Eu não tenho tantos livros.
 այսքան | Ես այսքան բարձր եմ։ | Я такой высокий. | I am this tall. | Je suis grand comme ça. | Soy así de alto. | Ich bin so groß. | Eu sou alto assim.
-անմիջականորեն | Ես անմիջականորեն պատասխանեցի։ | Я немедленно ответил. | I answered immediately. | J'ai répondu immédiatement. | Respondí inmediatamente. | Ich antwortete sofort. | Eu respondi imediatamente.
 անսպասելիորեն | Նա անսպասելիորեն եկավ։ | Он неожиданно пришёл. | He came unexpectedly. | Il est arrivé à l'improviste. | Él llegó inesperadamente. | Er kam unerwartet. | Ele chegou inesperadamente.
 նախօրոք | Գնիր տոմսերը նախօրոք։ | Купи билеты заранее. | Buy the tickets in advance. | Achète les billets à l'avance. | Compra los boletos con anticipación. | Kauf die Tickets im Voraus. | Compre os ingressos com antecedência.
 նամանավանդ | Սա նամանավանդ կարևոր է։ | Это особенно важно. | This is especially important. | C'est particulièrement important. | Esto es especialmente importante. | Das ist besonders wichtig. | Isso é especialmente importante.
