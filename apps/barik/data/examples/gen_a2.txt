@@ -554,3 +554,403 @@
 ութսուն | Նա ութսուն կիլոգրամ է կշռում։ | Он весит восемьдесят килограммов. | He weighs eighty kilograms. | Il pèse quatre-vingts kilogrammes. | Él pesa ochenta kilogramos. | Er wiegt achtzig Kilogramm. | Ele pesa oitenta quilogramas.
 իննսուն | Իննսուն տոկոսը համաձայն է։ | Девяносто процентов согласны. | Ninety percent agree. | Quatre-vingt-dix pour cent sont d'accord. | El noventa por ciento está de acuerdo. | Neunzig Prozent sind einverstanden. | Noventa por cento concordam.
 միլիոն | Միլիոն դոլար շատ գումար է։ | Миллион долларов - это много денег. | A million dollars is a lot of money. | Un million de dollars, c'est beaucoup d'argent. | Un millón de dólares es mucho dinero. | Eine Million Dollar ist viel Geld. | Um milhão de dólares é muito dinheiro.
+միլիարդ | Միլիարդը մեծ թիվ է։ | Миллиард — большое число. | A billion is a large number. | Un milliard est un grand nombre. | Mil millones es un número grande. | Eine Milliarde ist eine große Zahl. | Um bilhão é um número grande.
+առաջին | Այս իմ առաջին գիրքն է։ | Это моя первая книга. | This is my first book. | C'est mon premier livre. | Este es mi primer libro. | Das ist mein erstes Buch. | Este é o meu primeiro livro.
+երկրորդ | Երկրորդ օրն ավելի լավ էր։ | Второй день был лучше. | The second day was better. | Le deuxième jour était meilleur. | El segundo día fue mejor. | Der zweite Tag war besser. | O segundo dia foi melhor.
+երրորդ | Նա երրորդ դասարանում է։ | Он в третьем классе. | He is in third grade. | Il est en troisième année. | Está en tercero. | Er ist in der dritten Klasse. | Ele está no terceiro ano.
+չորրորդ | Նա չորրորդ հարկում է։ | Он на четвёртом этаже. | He is on the fourth floor. | Il est au quatrième étage. | Él está en el cuarto piso. | Er ist im vierten Stock. | Ele está no quarto andar.
+հինգերորդ | Հինգերորդ օրը գնացինք տուն։ | На пятый день мы пошли домой. | On the fifth day we went home. | Le cinquième jour, nous sommes rentrés à la maison. | El quinto día fuimos a casa. | Am fünften Tag gingen wir nach Hause. | No quinto dia fomos para casa.
+վեցերորդ | Ես վեցերորդ հարկում եմ աշխատում։ | Я работаю на шестом этаже. | I work on the sixth floor. | Je travaille au sixième étage. | Yo trabajo en el sexto piso. | Ich arbeite im sechsten Stock. | Eu trabalho no sexto andar.
+յոթերորդ | Յոթերորդ օրը վերադարձանք։ | На седьмой день мы вернулись. | On the seventh day we returned. | Le septième jour, nous sommes revenus. | El séptimo día volvimos. | Am siebten Tag kehrten wir zurück. | No sétimo dia voltamos.
+կրկնակի | Նա կրկնակի սենյակ է վերցրել։ | Он взял двухместный номер. | He took a double room. | Il a pris une chambre double. | Él tomó una habitación doble. | Er nahm ein Doppelzimmer. | Ele pegou um quarto duplo.
+գումարել | Ես գումարում եմ հինգ և երեք։ | Я складываю пять и три. | I add five and three. | J'additionne cinq et trois. | Yo sumo cinco y tres. | Ich addiere fünf und drei. | Eu adiciono cinco e três.
+բաժանել | Մենք տորթը բաժանում ենք։ | Мы делим торт. | We divide the cake. | Nous divisons le gâteau. | Dividimos el pastel. | Wir teilen den Kuchen. | Nós dividimos o bolo.
+հաշվել | Երեխան հաշվում է մինչև տասը։ | Ребенок считает до десяти. | The child counts to ten. | L'enfant compte jusqu'à dix. | El niño cuenta hasta diez. | Das Kind zählt bis zehn. | A criança conta até dez.
+ժպտալ | Ես ժպտում եմ։ | Я улыбаюсь. | I smile. | Je souris. | Yo sonrío. | Ich lächle. | Eu sorrio.
+փնտրել | Ես գիրք եմ փնտրում։ | Я ищу книгу. | I am looking for a book. | Je cherche un livre. | Estoy buscando un libro. | Ich suche ein Buch. | Estou procurando um livro.
+ուղարկել | Ես նամակ եմ ուղարկում։ | Я отправляю письмо. | I am sending a letter. | J'envoie une lettre. | Estoy enviando una carta. | Ich sende einen Brief. | Estou enviando uma carta.
+պահել | Ես բանալին գրպանում եմ պահում։ | Я храню ключ в кармане. | I keep the key in my pocket. | Je garde la clé dans ma poche. | Guardo la llave en mi bolsillo. | Ich bewahre den Schlüssel in meiner Tasche auf. | Guardo a chave no bolso.
+բռնել | Ես գնդակը բռնեցի։ | Я поймал мяч. | I caught the ball. | J'ai attrapé le ballon. | Atrapé la pelota. | Ich habe den Ball gefangen. | Peguei a bola.
+գցել | Ես գիրքը գցեցի։ | Я уронил книгу. | I dropped the book. | J'ai fait tomber le livre. | Dejé caer el libro. | Ich habe das Buch fallen lassen. | Deixei o livro cair.
+նետել | Նա քարը նետեց։ | Он бросил камень. | He threw the stone. | Il a jeté la pierre. | Lanzó la piedra. | Er warf den Stein. | Ele jogou a pedra.
+քաշել | Նա քաշեց դուռը։ | Он потянул дверь. | He pulled the door. | Il a tiré la porte. | Él tiró de la puerta. | Er zog an der Tür. | Ele puxou a porta.
+հրել | Երեխան հրեց գնդակը։ | Ребёнок толкнул мяч. | The child pushed the ball. | L'enfant a poussé le ballon. | El niño empujó la pelota. | Das Kind schob den Ball. | A criança empurrou a bola.
+կոտրել | Նա կոտրեց բաժակը։ | Он разбил стакан. | He broke the glass. | Il a cassé le verre. | Él rompió el vaso. | Er zerbrach das Glas. | Ele quebrou o copo.
+նորոգել | Հայրիկը նորոգում է մեքենան։ | Папа чинит машину. | Dad is fixing the car. | Papa répare la voiture. | Papá está arreglando el coche. | Papa repariert das Auto. | Papai está consertando o carro.
+կառուցել | Նրանք կառուցում են տուն։ | Они строят дом. | They are building a house. | Ils construisent une maison. | Ellos construyen una casa. | Sie bauen ein Haus. | Eles estão construindo uma casa.
+քայլել | Նա քայլում է փողոցում։ | Он идёт по улице. | He is walking on the street. | Il marche dans la rue. | Él camina por la calle. | Er geht auf der Straße. | Ele está caminhando na rua.
+բարձրանալ | Նրանք բարձրանում են լեռ։ | Они поднимаются на гору. | They are climbing the mountain. | Ils grimpent la montagne. | Ellos suben la montaña. | Sie besteigen den Berg. | Eles estão subindo a montanha.
+մտնել | Ես մտնում եմ տուն։ | Я вхожу в дом. | I enter the house. | J'entre dans la maison. | Entro en la casa. | Ich betrete das Haus. | Eu entro na casa.
+վերադառնալ | Ես վերադառնում եմ տուն։ | Я возвращаюсь домой. | I am returning home. | Je rentre à la maison. | Vuelvo a casa. | Ich kehre nach Hause zurück. | Eu volto para casa.
+մնալ | Ես մնում եմ տանը։ | Я остаюсь дома. | I stay at home. | Je reste à la maison. | Me quedo en casa. | Ich bleibe zu Hause. | Eu fico em casa.
+թողնել | Ես թողնում եմ բանալին այստեղ։ | Я оставляю ключ здесь. | I leave the key here. | Je laisse la clé ici. | Dejo la llave aquí. | Ich lasse den Schlüssel hier. | Eu deixo a chave aqui.
+հեռանալ | Նա հեռանում է քաղաքից։ | Он уезжает из города. | He is leaving the city. | Il quitte la ville. | Él se va de la ciudad. | Er verlässt die Stadt. | Ele está saindo da cidade.
+մոտենալ | Նա մոտենում է ինձ։ | Он приближается ко мне. | He approaches me. | Il s'approche de moi. | Él se acerca a mí. | Er nähert sich mir. | Ele se aproxima de mim.
+հետևել | Ես հետևում եմ նրան։ | Я следую за ним. | I follow him. | Je le suis. | Lo sigo. | Ich folge ihm. | Eu o sigo.
+թեքվել | Մեքենան թեքվեց ձախ։ | Машина повернула налево. | The car turned left. | La voiture a tourné à gauche. | El coche giró a la izquierda. | Das Auto bog links ab. | O carro virou à esquerda.
+առաջարկել | Նա ինձ թեյ առաջարկեց։ | Он предложил мне чай. | He offered me tea. | Il m'a proposé du thé. | Él me ofreció té. | Er bot mir Tee an. | Ele me ofereceu chá.
+պատմել | Պատմիր ինձ մի հեքիաթ։ | Расскажи мне сказку. | Tell me a fairy tale. | Raconte-moi un conte. | Cuéntame un cuento. | Erzähl mir ein Märchen. | Conte-me um conto de fadas.
+բղավել | Խնդրում եմ, մի բղավիր։ | Пожалуйста, не кричи. | Please, don't shout. | S'il te plaît, ne crie pas. | Por favor, no grites. | Bitte schrei nicht. | Por favor, não grite.
+շշնջալ | Նրանք շշնջում էին մութում։ | Они шептались в темноте. | They were whispering in the dark. | Ils chuchotaient dans le noir. | Ellos susurraban en la oscuridad. | Sie flüsterten im Dunkeln. | Eles sussurravam no escuro.
+լռել | Խնդրում եմ, լռիր։ | Пожалуйста, молчи. | Please be quiet. | S'il te plaît, tais-toi. | Por favor, calla. | Bitte sei ruhig. | Por favor, fique em silêncio.
+ծխել | Ծխելը վնասակար է։ | Курение вредно. | Smoking is harmful. | Fumer est nocif. | Fumar es perjudicial. | Rauchen ist schädlich. | Fumar é prejudicial.
+պառկել | Ես պառկեցի գետին։ | Я лег на землю. | I lay down on the ground. | Je me suis allongé par terre. | Me acosté en el suelo. | Ich habe mich auf den Boden gelegt. | Deitei-me no chão.
+լողանալ | Ես ամեն օր լողանում եմ։ | Я купаюсь каждый день. | I bathe every day. | Je me lave tous les jours. | Me baño todos los días. | Ich bade jeden Tag. | Eu tomo banho todos os dias.
+սափրվել | Նա ամեն առավոտ սափրվում է։ | Он бреется каждое утро. | He shaves every morning. | Il se rase tous les matins. | Él se afeita todas las mañanas. | Er rasiert sich jeden Morgen. | Ele se barbeia todas as manhãs.
+սանրել | Նա սանրում է մազերը։ | Она расчёсывает волосы. | She combs her hair. | Elle peigne ses cheveux. | Ella se peina el pelo. | Sie kämmt sich die Haare. | Ela penteia o cabelo.
+ծամել | Երեխան ծամում է կոնֆետը։ | Ребёнок жуёт конфету. | The child is chewing candy. | L'enfant mâche un bonbon. | El niño mastica un caramelo. | Das Kind kaut einen Bonbon. | A criança está mastigando um doce.
+շնչել | Մենք օդ ենք շնչում։ | Мы дышим воздухом. | We breathe air. | Nous respirons l'air. | Nosotros respiramos aire. | Wir atmen Luft. | Nós respiramos ar.
+համբուրել | Նա համբուրեց նրան։ | Он поцеловал её. | He kissed her. | Il l'a embrassée. | Él la besó. | Er küsste sie. | Ele a beijou.
+գրկել | Նրանք գրկեցին միմյանց։ | Они обняли друг друга. | They hugged each other. | Ils se sont fait un câlin. | Se abrazaron. | Sie umarmten sich. | Eles se abraçaram.
+օգտագործել | Ես օգտագործում եմ համակարգիչ։ | Я использую компьютер. | I use a computer. | J'utilise un ordinateur. | Yo uso un ordenador. | Ich benutze einen Computer. | Eu uso um computador.
+լցնել | Ես ջուր եմ լցնում բաժակի մեջ։ | Я наливаю воду в стакан. | I'm pouring water into the glass. | Je verse de l'eau dans le verre. | Estoy vertiendo agua en el vaso. | Ich gieße Wasser ins Glas. | Estou enchendo o copo com água.
+դատարկել | Նա դատարկեց աղբարկղը։ | Он опустошил мусорное ведро. | He emptied the trash can. | Il a vidé la poubelle. | Él vació el cubo de basura. | Er leerte den Mülleimer. | Ele esvaziou a lixeira.
+ջրել | Ամեն օր ես ծաղիկներն եմ ջրում։ | Каждый день я поливаю цветы. | Every day I water the flowers. | Chaque jour j'arrose les fleurs. | Todos los días riego las flores. | Jeden Tag gieße ich die Blumen. | Todos os dias eu rego as flores.
+տնկել | Մենք ծառ ենք տնկում այգում։ | Мы сажаем дерево в саду. | We are planting a tree in the garden. | Nous plantons un arbre dans le jardin. | Estamos plantando un árbol en el jardín. | Wir pflanzen einen Baum im Garten. | Estamos plantando uma árvore no jardim.
+կերակրել | Մայրը երեխային կերակրում է։ | Мать кормит ребенка. | The mother feeds the child. | La mère nourrit l'enfant. | La madre alimenta al niño. | Die Mutter füttert das Kind. | A mãe alimenta a criança.
+կանչել | Ես ընկերոջս եմ կանչում։ | Я зову своего друга. | I am calling my friend. | J'appelle mon ami. | Llamo a mi amigo. | Ich rufe meinen Freund an. | Eu estou chamando meu amigo.
+հանդիպել | Մենք հանդիպում ենք կենտրոնում։ | Мы встречаемся в центре. | We meet in the center. | Nous nous rencontrons au centre. | Nos encontramos en el centro. | Wir treffen uns im Zentrum. | Nós nos encontramos no centro.
+բաժանվել | Նրանք իրարից բաժանվեցին։ | Они расстались. | They broke up. | Ils se sont séparés. | Ellos se separaron. | Sie haben sich getrennt. | Eles terminaram.
+վիճել | Նրանք վիճում են։ | Они спорят. | They are arguing. | Ils se disputent. | Ellos discuten. | Sie streiten. | Eles estão discutindo.
+կռվել | Եղբայրները կռվում են։ | Братья дерутся. | The brothers are fighting. | Les frères se battent. | Los hermanos se pelean. | Die Brüder streiten sich. | Os irmãos estão brigando.
+հաշտվել | Նրանք վերջապես հաշտվեցին։ | Они наконец помирились. | They finally made peace. | Ils se sont enfin réconciliés. | Finalmente se reconciliaron. | Sie haben sich endlich versöhnt. | Eles finalmente fizeram as pazes.
+շնորհավորել | Ես քեզ շնորհավորում եմ։ | Я поздравляю тебя. | I congratulate you. | Je te félicite. | Te felicito. | Ich gratuliere dir. | Eu te parabenizo.
+նվիրել | Նա ինձ գիրք նվիրեց։ | Он подарил мне книгу. | He gave me a book as a gift. | Il m'a offert un livre. | Él me regaló un libro. | Er hat mir ein Buch geschenkt. | Ele me deu um livro de presente.
+տոնել | Նրանք տոնում են Նոր տարին։ | Они празднуют Новый год. | They celebrate New Year. | Ils fêtent le Nouvel An. | Ellos celebran el Año Nuevo. | Sie feiern das Neujahr. | Eles comemoram o Ano Novo.
+հրաժարվել | Ես չեմ հրաժարվի։ | Я не сдамся. | I will not give up. | Je n'abandonnerai pas. | No me rendiré. | Ich werde nicht aufgeben. | Eu não vou desistir.
+դասավորել | Ես սենյակը դասավորում եմ։ | Я прибираю комнату. | I am tidying up the room. | Je range la chambre. | Estoy ordenando la habitación. | Ich räume das Zimmer auf. | Estou arrumando o quarto.
+քննարկել | Նրանք քննարկում են ֆիլմը։ | Они обсуждают фильм. | They are discussing the movie. | Ils discutent du film. | Están discutiendo la película. | Sie diskutieren den Film. | Eles estão discutindo o filme.
+կարծել | Ես կարծում եմ, որ ճիշտ է։ | Я думаю, что это правильно. | I think it's correct. | Je pense que c'est correct. | Creo que es correcto. | Ich denke, dass es richtig ist. | Eu acho que está correto.
+հավատալ | Նա հավատում է ինձ։ | Он верит мне. | He believes me. | Il me croit. | Él me cree. | Er glaubt mir. | Ele acredita em mim.
+կասկածել | Ես դրա մասին չեմ կասկածում։ | Я не сомневаюсь в этом. | I don't doubt it. | Je n'en doute pas. | No lo dudo. | Ich zweifle nicht daran. | Eu não duvido disso.
+ենթադրել | Ես ենթադրում եմ, որ նա կգա։ | Я предполагаю, что он придет. | I assume that he will come. | Je suppose qu'il viendra. | Supongo que vendrá. | Ich nehme an, dass er kommt. | Eu suponho que ele virá.
+ճանաչել | Ես նրան ճանաչում եմ։ | Я его знаю. | I know him. | Je le connais. | Lo conozco. | Ich kenne ihn. | Eu o conheço.
+նկարել | Ես նկարում եմ մի ծառ։ | Я рисую дерево. | I am drawing a tree. | Je dessine un arbre. | Estoy dibujando un árbol. | Ich zeichne einen Baum. | Estou desenhando uma árvore.
+լուսանկարել | Ես լուսանկարում եմ ընկերոջս։ | Я фотографирую своего друга. | I am photographing my friend. | Je photographie mon ami. | Estoy fotografiando a mi amigo. | Ich fotografiere meinen Freund. | Estou fotografando meu amigo.
+հավանել | Ես հավանում եմ այս ֆիլմը։ | Мне нравится этот фильм. | I like this movie. | J'aime ce film. | Me gusta esta película. | Ich mag diesen Film. | Eu gosto deste filme.
+ատել | Ես ատում եմ ստերը։ | Я ненавижу ложь. | I hate lies. | Je déteste les mensonges. | Odio las mentiras. | Ich hasse Lügen. | Eu odeio mentiras.
+ցանկանալ | Ես ցանկանում եմ տուն գնալ։ | Я хочу пойти домой. | I want to go home. | Je veux rentrer à la maison. | Quiero ir a casa. | Ich möchte nach Hause gehen. | Eu quero ir para casa.
+կարողանալ | Ես կարողանում եմ լողալ։ | Я умею плавать. | I can swim. | Je sais nager. | Puedo nadar. | Ich kann schwimmen. | Eu sei nadar.
+ուսումնասիրել | Ես ուսումնասիրում եմ պատմություն։ | Я изучаю историю. | I study history. | J'étudie l'histoire. | Estudio historia. | Ich studiere Geschichte. | Eu estudo história.
+շարունակել | Մենք շարունակում ենք աշխատել։ | Мы продолжаем работать. | We continue to work. | Nous continuons à travailler. | Seguimos trabajando. | Wir arbeiten weiter. | Nós continuamos a trabalhar.
+դադարեցնել | Ես դադարեցնում եմ մեքենան։ | Я останавливаю машину. | I stop the car. | J'arrête la voiture. | Detengo el coche. | Ich halte das Auto an. | Eu paro o carro.
+փոխվել | Եղանակը փոխվում է։ | Погода меняется. | The weather changes. | Le temps change. | El tiempo cambia. | Das Wetter ändert sich. | O tempo muda.
+աճել | Ծաղիկները աճում են։ | Цветы растут. | The flowers are growing. | Les fleurs poussent. | Las flores crecen. | Die Blumen wachsen. | As flores crescem.
+մեծանալ | Ես մեծանում եմ։ | Я расту. | I am growing up. | Je grandis. | Yo crezco. | Ich wachse. | Eu cresço.
+ծերանալ | Մարդիկ ծերանում են։ | Люди стареют. | People grow old. | Les gens vieillissent. | Las personas envejecen. | Die Menschen werden alt. | As pessoas envelhecem.
+մեռնել | Նա չի ուզում մեռնել։ | Он не хочет умирать. | He doesn't want to die. | Il ne veut pas mourir. | Él no quiere morir. | Er will nicht sterben. | Ele não quer morrer.
+ծնել | Կինը երեխա է ծնել։ | Женщина родила ребёнка. | The woman gave birth to a child. | La femme a donné naissance à un enfant. | La mujer dio a luz a un bebé. | Die Frau hat ein Kind zur Welt gebracht. | A mulher deu à luz uma criança.
+թաքնվել | Նա թաքնվեց պահարանում։ | Он спрятался в шкафу. | He hid in the closet. | Il s'est caché dans le placard. | Él se escondió en el armario. | Er versteckte sich im Schrank. | Ele se escondeu no armário.
+պաշտպանել | Նա պաշտպանում է իր ընտանիքը։ | Он защищает свою семью. | He protects his family. | Il protège sa famille. | Él protege a su familia. | Er beschützt seine Familie. | Ele protege sua família.
+խորը | Լիճը խոր է։ | Озеро глубокое. | The lake is deep. | Le lac est profond. | El lago es profundo. | Der See ist tief. | O lago é profundo.
+ծանծաղ | Գետը ծանծաղ է։ | Река мелкая. | The river is shallow. | La rivière est peu profonde. | El río es poco profundo. | Der Fluss ist seicht. | O rio é raso.
+կլոր | Սեղանը կլոր է։ | Стол круглый. | The table is round. | La table est ronde. | La mesa es redonda. | Der Tisch ist rund. | A mesa é redonda.
+քառակուսի | Պատուհանը քառակուսի է։ | Окно квадратное. | The window is square. | La fenêtre est carrée. | La ventana es cuadrada. | Das Fenster ist quadratisch. | A janela é quadrada.
+սուր | Դանակը սուր է։ | Нож острый. | The knife is sharp. | Le couteau est tranchant. | El cuchillo es afilado. | Das Messer ist scharf. | A faca é afiada.
+բութ | Մկրատը բութ է։ | Ножницы тупые. | The scissors are blunt. | Les ciseaux sont émoussés. | Las tijeras están desafiladas. | Die Schere ist stumpf. | A tesoura está cega.
+փափուկ | Բարձը փափուկ է։ | Подушка мягкая. | The pillow is soft. | L'oreiller est doux. | La almohada es suave. | Das Kissen ist weich. | O travesseiro é macio.
+կոշտ | Քարը կոշտ է։ | Камень твёрдый. | The stone is hard. | La pierre est dure. | La piedra es dura. | Der Stein ist hart. | A pedra é dura.
+հարթ | Թուղթը հարթ է։ | Бумага гладкая. | The paper is smooth. | Le papier est lisse. | El papel es liso. | Das Papier ist glatt. | O papel é liso.
+չոր | Սրբիչը չոր է։ | Полотенце сухое. | The towel is dry. | La serviette est sèche. | La toalla está seca. | Das Handtuch ist trocken. | A toalha está seca.
+թաց | Կոշիկները թաց են։ | Туфли мокрые. | The shoes are wet. | Les chaussures sont mouillées. | Los zapatos están mojados. | Die Schuhe sind nass. | Os sapatos estão molhados.
+լիքը | Բաժակը լիք է։ | Стакан полный. | The glass is full. | Le verre est plein. | El vaso está lleno. | Das Glas ist voll. | O copo está cheio.
+դատարկ | Տուփը դատարկ է։ | Коробка пустая. | The box is empty. | La boîte est vide. | La caja está vacía. | Die Kiste ist leer. | A caixa está vazia.
+բաց | Դուռը բաց է։ | Дверь открыта. | The door is open. | La porte est ouverte. | La puerta está abierta. | Die Tür ist offen. | A porta está aberta.
+փակ | Պատուհանը փակ է։ | Окно закрыто. | The window is closed. | La fenêtre est fermée. | La ventana está cerrada. | Das Fenster ist geschlossen. | A janela está fechada.
+մութ | Սենյակը մութ է։ | Комната темная. | The room is dark. | La pièce est sombre. | La habitación está oscura. | Das Zimmer ist dunkel. | O quarto está escuro.
+լուսավոր | Սենյակը լուսավոր է։ | Комната светлая. | The room is bright. | La pièce est lumineuse. | La habitación está luminosa. | Das Zimmer ist hell. | O quarto é claro.
+բարձրաձայն | Երաժշտությունը բարձրաձայն է։ | Музыка громкая. | The music is loud. | La musique est forte. | La música está alta. | Die Musik ist laut. | A música está alta.
+աղմկոտ | Դասարանը աղմկոտ է։ | Класс шумный. | The classroom is noisy. | La salle de classe est bruyante. | El aula es ruidosa. | Das Klassenzimmer ist laut. | A sala de aula está barulhenta.
+լուռ | Գրադարանը լուռ է։ | Библиотека тихая. | The library is quiet. | La bibliothèque est silencieuse. | La biblioteca está silenciosa. | Die Bibliothek ist ruhig. | A biblioteca está silenciosa.
+ամուր | Այս դուռը ամուր է։ | Эта дверь крепкая. | This door is strong. | Cette porte est solide. | Esta puerta es fuerte. | Diese Tür ist stabil. | Esta porta é forte.
+փխրուն | Այս բաժակը փխրուն է։ | Эта чашка хрупкая. | This cup is fragile. | Cette tasse est fragile. | Esta taza es frágil. | Diese Tasse ist zerbrechlich. | Este copo é frágil.
+անվտանգ | Մեր տունը անվտանգ է։ | Наш дом безопасный. | Our house is safe. | Notre maison est sûre. | Nuestra casa es segura. | Unser Haus ist sicher. | Nossa casa é segura.
+վտանգավոր | Այս փողոցը վտանգավոր է։ | Эта улица опасная. | This street is dangerous. | Cette rue est dangereuse. | Esta calle es peligrosa. | Diese Straße ist gefährlich. | Esta rua é perigosa.
+կարևոր | Սա կարևոր է։ | Это важно. | This is important. | C'est important. | Esto es importante. | Das ist wichtig. | Isso é importante.
+անհրաժեշտ | Ջուրը անհրաժեշտ է։ | Вода необходима. | Water is necessary. | L'eau est nécessaire. | El agua es necesaria. | Wasser ist notwendig. | A água é necessária.
+հնարավոր | Դա հնարավոր է։ | Это возможно. | That is possible. | C'est possible. | Eso es posible. | Das ist möglich. | Isso é possível.
+անհնար | Դա անհնար է։ | Это невозможно. | That is impossible. | C'est impossible. | Eso es imposible. | Das ist unmöglich. | Isso é impossível.
+պատրաստ | Ես պատրաստ եմ։ | Я готов. | I am ready. | Je suis prêt. | Estoy listo. | Ich bin bereit. | Estou pronto.
+զբաղված | Նա զբաղված է։ | Он занят. | He is busy. | Il est occupé. | Él está ocupado. | Er ist beschäftigt. | Ele está ocupado.
+ազատ | Այստեղ ազատ է։ | Здесь свободно. | It's free here. | Ici, c'est libre. | Aquí está libre. | Hier ist frei. | Aqui está livre.
+հայտնի | Նա հայտնի է։ | Он известен. | He is famous. | Il est célèbre. | Él es famoso. | Er ist berühmt. | Ele é famoso.
+սովորական | Սա սովորական օր է։ | Это обычный день. | This is an ordinary day. | C'est un jour ordinaire. | Es un día ordinario. | Das ist ein gewöhnlicher Tag. | Este é um dia comum.
+տարօրինակ | Դա տարօրինակ է։ | Это странно. | That is strange. | C'est étrange. | Eso es extraño. | Das ist seltsam. | Isso é estranho.
+հարմար | Այս աթոռը հարմար է։ | Этот стул удобный. | This chair is comfortable. | Cette chaise est confortable. | Esta silla es cómoda. | Dieser Stuhl ist bequem. | Esta cadeira é confortável.
+անհարմար | Այս սեղանը անհարմար է։ | Этот стол неудобный. | This table is uncomfortable. | Cette table est inconfortable. | Esta mesa es incómoda. | Dieser Tisch ist unbequem. | Esta mesa é desconfortável.
+օգտակար | Այս գործիքը օգտակար է։ | Этот инструмент полезен. | This tool is useful. | Cet outil est utile. | Esta herramienta es útil. | Dieses Werkzeug ist nützlich. | Esta ferramenta é útil.
+վնասակար | Ծխելը վնասակար է։ | Курение вредно. | Smoking is harmful. | Fumer est nocif. | Fumar es perjudicial. | Rauchen ist schädlich. | Fumar é prejudicial.
+հաճելի | Երաժշտությունը հաճելի է։ | Музыка приятна. | The music is pleasant. | La musique est agréable. | La música es agradable. | Die Musik ist angenehm. | A música é agradável.
+տհաճ | Հոտը տհաճ է։ | Запах неприятный. | The smell is unpleasant. | L'odeur est désagréable. | El olor es desagradable. | Der Geruch ist unangenehm. | O cheiro é desagradável.
+լավագույն | Այսօր լավագույն օրն է։ | Сегодня лучший день. | Today is the best day. | Aujourd'hui est le meilleur jour. | Hoy es el mejor día. | Heute ist der beste Tag. | Hoje é o melhor dia.
+վատագույն | Նա վատագույն ուսուցիչն է։ | Он худший учитель. | He is the worst teacher. | Il est le pire professeur. | Él es el peor profesor. | Er ist der schlechteste Lehrer. | Ele é o pior professor.
+ամբողջ | Ամբողջ օրը անձրևում է։ | Весь день идёт дождь. | It rains all day. | Il pleut toute la journée. | Llueve todo el día. | Es regnet den ganzen Tag. | Chove o dia todo.
+միակ | Նա իմ միակ եղբայրն է։ | Он мой единственный брат. | He is my only brother. | Il est mon seul frère. | Él es mi único hermano. | Er ist mein einziger Bruder. | Ele é meu único irmão.
+իսկական | Սա իսկական ոսկի է։ | Это настоящее золото. | This is real gold. | C'est de l'or véritable. | Esto es oro auténtico. | Das ist echtes Gold. | Isso é ouro verdadeiro.
+կեղծ | Այս նկարը կեղծ է։ | Эта картина поддельная. | This painting is fake. | Ce tableau est faux. | Este cuadro es falso. | Dieses Gemälde ist gefälscht. | Esta pintura é falsa.
+պարզ | Պատասխանը պարզ է։ | Ответ прост. | The answer is simple. | La réponse est simple. | La respuesta es simple. | Die Antwort ist einfach. | A resposta é simples.
+բարդ | Խնդիրը բարդ է։ | Проблема сложная. | The problem is complicated. | Le problème est compliqué. | El problema es complicado. | Das Problem ist kompliziert. | O problema é complicado.
+նույն | Նա ունի նույն մեքենան։ | У него та же машина. | He has the same car. | Il a la même voiture. | Él tiene el mismo coche. | Er hat das gleiche Auto. | Ele tem o mesmo carro.
+ուրիշ | Նա ուրիշ քաղաքում է։ | Он в другом городе. | He is in another city. | Il est dans une autre ville. | Él está en otra ciudad. | Er ist in einer anderen Stadt. | Ele está em outra cidade.
+հաջող | Դա հաջող նախագիծ է։ | Это успешный проект. | That is a successful project. | C'est un projet réussi. | Ese es un proyecto exitoso. | Das ist ein erfolgreiches Projekt. | Esse é um projeto bem-sucedido.
+բախտավոր | Նա բախտավոր է։ | Он везучий. | He is lucky. | Il est chanceux. | Él es afortunado. | Er hat Glück. | Ele tem sorte.
+օտար | Ես սովորում եմ օտար լեզուներ։ | Я изучаю иностранные языки. | I study foreign languages. | J'étudie des langues étrangères. | Estudio idiomas extranjeros. | Ich lerne Fremdsprachen. | Eu estudo línguas estrangeiras.
+տեղական | Տեղական սնունդը համեղ է։ | Местная еда вкусная. | Local food is delicious. | La nourriture locale est délicieuse. | La comida local es deliciosa. | Das lokale Essen ist lecker. | A comida local é deliciosa.
+միջազգային | Նա աշխատում է միջազգային կազմակերպությունում։ | Он работает в международной организации. | He works in an international organization. | Il travaille dans une organisation internationale. | Él trabaja en una organización internacional. | Er arbeitet in einer internationalen Organisation. | Ele trabalha em uma organização internacional.
+ազգային | Սա ազգային թանգարան է։ | Это национальный музей. | This is a national museum. | C'est un musée national. | Este es un museo nacional. | Das ist ein Nationalmuseum. | Este é um museu nacional.
+պետական | Սա պետական գրադարան է։ | Это государственная библиотека. | This is a public library. | C'est une bibliothèque publique. | Es una biblioteca pública. | Das ist eine öffentliche Bibliothek. | Esta é uma biblioteca pública.
+մասնավոր | Սա մասնավոր դպրոց է։ | Это частная школа. | This is a private school. | C'est une école privée. | Es una escuela privada. | Das ist eine private Schule. | Esta é uma escola particular.
+հանրային | Հանրային տրանսպորտը հարմար է։ | Общественный транспорт удобен. | Public transport is convenient. | Les transports en commun sont pratiques. | El transporte público es conveniente. | Der öffentliche Verkehr ist praktisch. | O transporte público é conveniente.
+գլխավոր | Սա գլխավոր մուտքն է։ | Это главный вход. | This is the main entrance. | C'est l'entrée principale. | Es la entrada principal. | Das ist der Haupteingang. | Esta é a entrada principal.
+հիմնական | Սա հիմնական կանոնն է։ | Это основное правило. | This is the basic rule. | C'est la règle de base. | Es la regla básica. | Das ist die Grundregel. | Esta é a regra básica.
+վերջնական | Սա վերջնական պատասխանն է։ | Это окончательный ответ. | This is the final answer. | C'est la réponse finale. | Es la respuesta final. | Das ist die endgültige Antwort. | Esta é a resposta final.
+լրիվ | Դա լրիվ ճիշտ է։ | Это совершенно правильно. | That is completely correct. | C'est tout à fait correct. | Eso es completamente correcto. | Das ist völlig richtig. | Isso está completamente correto.
+կիսատ | Աշխատանքը կիսատ է։ | Работа не закончена. | The work is unfinished. | Le travail est inachevé. | El trabajo está incompleto. | Die Arbeit ist unvollendet. | O trabalho está incompleto.
+բայց | Նա փոքր է, բայց ուժեղ է։ | Он маленький, но сильный. | He is small but strong. | Il est petit mais fort. | Es pequeño pero fuerte. | Er ist klein, aber stark. | Ele é pequeno, mas forte.
+կամ | Ուզո՞ւմ ես սուրճ կամ թեյ։ | Ты хочешь кофе или чай? | Do you want coffee or tea? | Veux-tu du café ou du thé ? | ¿Quieres café o té? | Möchtest du Kaffee oder Tee? | Você quer café ou chá?
+որովհետև | Ես ուշացա, որովհետև ավտոբուսը չեկավ։ | Я опоздал, потому что автобус не пришел. | I was late because the bus didn't come. | J'étais en retard parce que le bus n'est pas venu. | Llegué tarde porque el autobús no vino. | Ich war zu spät, weil der Bus nicht kam. | Eu me atrasei porque o ônibus não veio.
+եթե | Եթե ցուրտ է, գնա ներս։ | Если холодно, заходи внутрь. | If it's cold, go inside. | S'il fait froid, rentre à l'intérieur. | Si hace frío, entra adentro. | Wenn es kalt ist, geh rein. | Se estiver frio, vai para dentro.
+որ | Ես կարծում եմ, որ նա կգա։ | Я думаю, что он придет. | I think (that) he will come. | Je pense qu'il viendra. | Creo que él vendrá. | Ich denke, dass er kommen wird. | Eu acho que ele virá.
+նաև | Ես նաև սուրճ եմ խմում։ | Я также пью кофе. | I also drink coffee. | Je bois aussi du café. | Yo también tomo café. | Ich trinke auch Kaffee. | Eu também bebo café.
+էլ | Մի քիչ էլ տուր։ | Дай ещё немного. | Give a little more. | Donne un peu plus. | Da un poco más. | Gib noch ein bisschen. | Dá mais um pouco.
+նույնպես | Նա նույնպես ուսանող է։ | Он также студент. | He is also a student. | Il est aussi étudiant. | Él también es estudiante. | Er ist auch Student. | Ele também é estudante.
+միայն | Ես միայն ջուր եմ խմում։ | Я пью только воду. | I only drink water. | Je ne bois que de l'eau. | Solo bebo agua. | Ich trinke nur Wasser. | Eu só bebo água.
+հենց | Ես հենց հիմա գնում եմ։ | Я иду прямо сейчас. | I am going right now. | Je pars tout de suite. | Me voy ahora mismo. | Ich gehe sofort. | Eu vou agora mesmo.
+գուցե | Գուցե նա ուշանա։ | Может быть, он опоздает. | Maybe he will be late. | Peut-être qu'il sera en retard. | Tal vez él llegue tarde. | Vielleicht kommt er zu spät. | Talvez ele se atrase.
+երևի | Երևի անձրև կգա։ | Наверное, пойдет дождь. | Probably it will rain. | Il va probablement pleuvoir. | Probablemente lloverá. | Wahrscheinlich wird es regnen. | Provavelmente vai chover.
+անշուշտ | Անշուշտ դա ճիշտ է։ | Несомненно, это правильно. | Undoubtedly that is correct. | Indubitablement, c'est correct. | Sin duda, eso es correcto. | Zweifellos ist das richtig. | Sem dúvida, isso está correto.
+իհարկե | Իհարկե, ես կգամ։ | Конечно, я приду. | Of course, I will come. | Bien sûr, je viendrai. | Por supuesto, iré. | Natürlich komme ich. | Claro que eu vou.
+իսկապես | Նա իսկապես բարի է։ | Она действительно добрая. | She is really kind. | Elle est vraiment gentille. | Ella es realmente amable. | Sie ist wirklich nett. | Ela é realmente gentil.
+բավական | Դա բավական մեծ է։ | Это довольно большое. | It is quite big. | C'est assez grand. | Es bastante grande. | Es ist ziemlich groß. | É bastante grande.
+չափազանց | Այս բաժակը չափազանց մեծ է։ | Эта чашка слишком большая. | This cup is too big. | Cette tasse est trop grande. | Esta taza es demasiado grande. | Diese Tasse ist zu groß. | Esta xícara é muito grande.
+գրեթե | Գրեթե պատրաստ եմ։ | Я почти готов. | I am almost ready. | Je suis presque prêt. | Estoy casi listo. | Ich bin fast fertig. | Estou quase pronto.
+միասին | Մենք միասին ենք։ | Мы вместе. | We are together. | Nous sommes ensemble. | Estamos juntos. | Wir sind zusammen. | Estamos juntos.
+առանձին | Նրանք առանձին են ապրում։ | Они живут отдельно. | They live separately. | Ils vivent séparément. | Viven separados. | Sie leben getrennt. | Eles vivem separados.
+այստեղ | Այստեղ շատ լուռ է։ | Здесь очень тихо. | It is very quiet here. | Ici, c'est très calme. | Aquí está muy tranquilo. | Hier ist es sehr ruhig. | Aqui está muito tranquilo.
+այնտեղ | Այնտեղ շատ ցուրտ է։ | Там очень холодно. | It is very cold there. | Là-bas, il fait très froid. | Allí hace mucho frío. | Dort ist es sehr kalt. | Lá está muito frio.
+այդտեղ | Դու այդտեղ ես։ | Ты там. | You are there. | Tu es là. | Tú estás ahí. | Du bist da. | Você está aí.
+ամենուր | Ամենուր ձյուն է։ | Везде снег. | There is snow everywhere. | Il y a de la neige partout. | Hay nieve por todas partes. | Überall liegt Schnee. | Tem neve em todo lugar.
+ներս | Ես ներս եմ։ | Я внутри. | I'm inside. | Je suis à l'intérieur. | Estoy dentro. | Ich bin drinnen. | Estou dentro.
+դուրս | Ես դուրս եմ։ | Я на улице. | I'm outside. | Je suis dehors. | Estoy afuera. | Ich bin draußen. | Estou fora.
+վերև | Ես վերև եմ։ | Я наверху. | I'm upstairs. | Je suis en haut. | Estoy arriba. | Ich bin oben. | Estou lá em cima.
+ներքև | Ես ներքև եմ։ | Я внизу. | I'm downstairs. | Je suis en bas. | Estoy abajo. | Ich bin unten. | Estou lá embaixo.
+այսպես | Դա այսպես է։ | Это так. | It is like this. | C'est comme ça. | Es así. | Es ist so. | É assim.
+այդպես | Մի՛ այդպես արա։ | Не делай так. | Don't do it like that. | Ne fais pas comme ça. | No hagas así. | Mach das nicht so. | Não faça assim.
+այնպես | Նա այնպես սիրուն է։ | Она так красива. | She is so beautiful. | Elle est si belle. | Ella es tan hermosa. | Sie ist so schön. | Ela é tão bonita.
+որքան | Սա որքա՞ն արժե։ | Сколько это стоит? | How much does this cost? | Combien ça coûte ? | ¿Cuánto cuesta esto? | Wie viel kostet das? | Quanto custa isso?
+այնքան | Նա այնքան բարի է։ | Он такой добрый. | He is so kind. | Il est si gentil. | Él es tan amable. | Er ist so nett. | Ele é tão bondoso.
+նորից | Նա նորից եկավ։ | Он снова пришёл. | He came again. | Il est venu de nouveau. | Él vino otra vez. | Er kam wieder. | Ele veio novamente.
+կրկին | Ես կրկին կգամ։ | Я снова приду. | I will come again. | Je reviendrai. | Vendré otra vez. | Ich komme wieder. | Eu virei novamente.
+հանկարծ | Հանկարծ անձրև եկավ։ | Вдруг пошёл дождь. | Suddenly it rained. | Soudain, il a plu. | De repente, llovió. | Plötzlich regnete es. | De repente, choveu.
+հատկապես | Ես հատկապես սիրում եմ երգել։ | Я особенно люблю петь. | I especially like singing. | J'aime particulièrement chanter. | Me gusta especialmente cantar. | Ich singe besonders gern. | Eu gosto especialmente de cantar.
+օրինակ | Օրինակ, նա բժիշկ է։ | Например, он врач. | For example, he is a doctor. | Par exemple, il est médecin. | Por ejemplo, él es médico. | Zum Beispiel ist er Arzt. | Por exemplo, ele é médico.
+այսինքն | Այսինքն, դու ճիշտ ես։ | То есть, ты прав. | That is, you are right. | C'est-à-dire, tu as raison. | Es decir, tienes razón. | Das heißt, du hast recht. | Ou seja, você tem razão.
+սակայն | Նա ուզում էր գնալ, սակայն ուշացավ։ | Он хотел пойти, однако опоздал. | He wanted to go, however he was late. | Il voulait partir, cependant il était en retard. | Él quería ir, sin embargo llegó tarde. | Er wollte gehen, jedoch kam er zu spät. | Ele queria ir, porém atrasou-se.
+աթոռակ | Ես նստում եմ աթոռակի վրա։ | Я сижу на табурете. | I sit on the stool. | Je m'assois sur le tabouret. | Me siento en el taburete. | Ich sitze auf dem Hocker. | Eu sento no banquinho.
+գրասեղան | Գրասեղանը մեծ է։ | Письменный стол большой. | The desk is big. | Le bureau est grand. | El escritorio es grande. | Der Schreibtisch ist groß. | A escrivaninha é grande.
+գրապահարան | Գրապահարանում շատ գրքեր կան։ | В книжном шкафу много книг. | There are many books in the bookcase. | Il y a beaucoup de livres dans la bibliothèque. | Hay muchos libros en la estantería. | Im Bücherregal sind viele Bücher. | Há muitos livros na estante.
+զգեստապահարան | Զգեստապահարանում շատ զգեստներ կան։ | В платяном шкафу много одежды. | There are many clothes in the wardrobe. | Il y a beaucoup de vêtements dans l'armoire. | Hay mucha ropa en el armario. | Im Kleiderschrank ist viel Kleidung. | Há muitas roupas no guarda-roupa.
+կոմոդ | Կոմոդի ներսում գուլպաներ կան։ | В комоде носки. | There are socks inside the chest of drawers. | Il y a des chaussettes dans la commode. | Hay calcetines dentro de la cómoda. | In der Kommode sind Socken. | Há meias dentro da cômoda.
+ներքնակ | Ներքնակը հարմար է։ | Матрас удобный. | The mattress is comfortable. | Le matelas est confortable. | El colchón es cómodo. | Die Matratze ist bequem. | O colchão é confortável.
+ծածկոց | Ծածկոցը գունավոր է։ | Покрывало разноцветное. | The bedspread is colorful. | Le couvre-lit est coloré. | El cubrecama es colorido. | Die Tagesdecke ist bunt. | A colcha é colorida.
+սփռոց | Սփռոցը սեղանի վրա է։ | Скатерть на столе. | The tablecloth is on the table. | La nappe est sur la table. | El mantel está sobre la mesa. | Die Tischdecke ist auf dem Tisch. | A toalha de mesa está sobre a mesa.
+անձեռոցիկ | Տուր ինձ մի անձեռոցիկ։ | Дай мне салфетку. | Give me a napkin. | Donne-moi une serviette. | Dame una servilleta. | Gib mir eine Serviette. | Me dê um guardanapo.
+կախիչ | Ինձ պետք է մի կախիչ։ | Мне нужна вешалка. | I need a hanger. | J'ai besoin d'un cintre. | Necesito una percha. | Ich brauche einen Kleiderbügel. | Preciso de um cabide.
+ջահ | Ջահը շատ գեղեցիկ է։ | Люстра очень красивая. | The chandelier is very beautiful. | Le lustre est très beau. | La araña es muy bonita. | Der Kronleuchter ist sehr schön. | O lustre é muito bonito.
+լուսամփոփ | Լուսամփոփը գեղեցիկ է։ | Абажур красивый. | The lampshade is beautiful. | L'abat-jour est beau. | La pantalla es bonita. | Der Lampenschirm ist schön. | O abajur é bonito.
+վարդակ | Վարդակը պատին է։ | Розетка на стене. | The socket is on the wall. | La prise est sur le mur. | El enchufe está en la pared. | Die Steckdose ist an der Wand. | A tomada está na parede.
+անջատիչ | Անջատիչը կոտրված է։ | Выключатель сломан. | The switch is broken. | L'interrupteur est cassé. | El interruptor está roto. | Der Schalter ist kaputt. | O interruptor está quebrado.
+թեյնիկ | Թեյնիկը եռում է։ | Чайник кипит. | The kettle is boiling. | La bouilloire bout. | La tetera está hirviendo. | Der Wasserkocher kocht. | A chaleira está fervendo.
+սրճեփ | Սրճեփը սեղանի վրա է։ | Кофеварка на столе. | The coffee maker is on the table. | La cafetière est sur la table. | La cafetera está en la mesa. | Die Kaffeemaschine ist auf dem Tisch. | A cafeteira está sobre a mesa.
+ջեռոց | Ես հաց եմ թխում ջեռոցում։ | Я пеку хлеб в духовке. | I am baking bread in the oven. | Je fais cuire du pain dans le four. | Estoy horneando pan en el horno. | Ich backe Brot im Ofen. | Estou assando pão no forno.
+սալօջախ | Ես սալօջախի վրա ձու եմ տապակում։ | Я жарю яйца на плите. | I am frying eggs on the stove. | Je fais frire des œufs sur la cuisinière. | Estoy friendo huevos en la estufa. | Ich brate Eier auf dem Herd. | Estou fritando ovos no fogão.
+խառնիչ | Խառնիչով կրեմ ենք պատրաստում։ | Мы готовим крем миксером. | We make cream with a mixer. | Nous préparons de la crème avec un batteur. | Preparamos crema con una batidora. | Wir machen Sahne mit einem Mixer. | Preparamos creme com uma batedeira.
+բլենդեր | Բլենդերը հարմար է սմուզի պատրաստելու համար։ | Блендер удобен для приготовления смузи. | The blender is convenient for making smoothies. | Le blender est pratique pour faire des smoothies. | La licuadora es práctica para hacer batidos. | Der Mixer ist praktisch zum Zubereiten von Smoothies. | O liquidificador é prático para fazer smoothies.
+տոստեր | Տոստերը տաքացնում է հացը։ | Тостер поджаривает хлеб. | The toaster toasts the bread. | Le grille-pain grille le pain. | La tostadora tuesta el pan. | Der Toaster röstet das Brot. | A torradeira torra o pão.
+մսաղաց | Մսաղացով միս ենք աղում։ | Мы перемалываем мясо мясорубкой. | We grind meat with a mincer. | Nous hachons de la viande avec un hachoir. | Picamos carne con una picadora. | Wir zerkleinern Fleisch mit einem Fleischwolf. | Moemos carne com um moedor de carne.
+սառցախցիկ | Սառցախցիկում միշտ պաղպաղակ կա։ | В морозилке всегда есть мороженое. | There is always ice cream in the freezer. | Il y a toujours de la glace dans le congélateur. | Siempre hay helado en el congelador. | Im Gefrierschrank gibt es immer Eiscreme. | Sempre tem sorvete no freezer.
+չորանոց | Չորանոցը արագ չորացնում է հագուստը։ | Сушилка быстро сушит одежду. | The dryer dries clothes quickly. | Le sèche-linge sèche rapidement les vêtements. | La secadora seca la ropa rápidamente. | Der Trockner trocknet die Wäsche schnell. | A secadora seca roupas rapidamente.
+աման | Ամանը լի է ապուրով։ | Миска полна супа. | The bowl is full of soup. | Le bol est plein de soupe. | El bol está lleno de sopa. | Die Schüssel ist voll Suppe. | A tigela está cheia de sopa.
+թաս | Թասում ջուր կա։ | В чаше есть вода. | There is water in the bowl. | Il y a de l'eau dans le bol. | Hay agua en el cuenco. | In der Schüssel ist Wasser. | Há água na tigela.
+կափարիչ | Կաթսան կափարիչ ունի։ | У кастрюли есть крышка. | The pot has a lid. | La casserole a un couvercle. | La olla tiene una tapa. | Der Topf hat einen Deckel. | A panela tem uma tampa.
+շերեփ | Շերեփը խոհանոցում է։ | Половник на кухне. | The ladle is in the kitchen. | La louche est dans la cuisine. | El cucharón está en la cocina. | Der Schöpflöffel ist in der Küche. | A concha está na cozinha.
+քերիչ | Ես պանիրը քերիչով եմ քերում։ | Я натираю сыр на тёрке. | I grate cheese with a grater. | Je râpe le fromage avec une râpe. | Rallo queso con un rallador. | Ich reibe Käse mit einer Reibe. | Eu ralo queijo com um ralador.
+քամիչ | Ես մակարոնը քամիչով եմ քամում։ | Я сливаю макароны через дуршлаг. | I strain pasta with a colander. | J'égoutte les pâtes avec une passoire. | Escurro la pasta con un colador. | Ich gieße die Nudeln durch ein Sieb. | Eu escorro o macarrão com um escorredor.
+բացիչ | Ես շիշը բացիչով եմ բացում։ | Я открываю бутылку открывалкой. | I open the bottle with an opener. | J'ouvre la bouteille avec un ouvre-bouteille. | Abro la botella con un abridor. | Ich öffne die Flasche mit einem Flaschenöffner. | Eu abro a garrafa com um abridor.
+խցան | Շիշը խցան ունի։ | У бутылки есть пробка. | The bottle has a cork. | La bouteille a un bouchon. | La botella tiene un corcho. | Die Flasche hat einen Korken. | A garrafa tem uma rolha.
+բանկա | Բանկան լի է մեղրով։ | Банка полна мёда. | The jar is full of honey. | Le pot est plein de miel. | El tarro está lleno de miel. | Das Glas ist voll mit Honig. | O pote está cheio de mel.
+բաժակակալ | Բաժակակալի վրա դրեցի բաժակը։ | Я поставил стакан на подстаканник. | I put the cup on the cup holder. | J'ai mis la tasse sur le porte-gobelet. | Puse la taza en el portavasos. | Ich habe die Tasse auf den Untersetzer gestellt. | Coloquei o copo no porta-copos.
+սկուտեղ | Սկուտեղը դրեցի սեղանին։ | Я поставил поднос на стол. | I put the tray on the table. | J'ai posé le plateau sur la table. | Puse la bandeja sobre la mesa. | Ich habe das Tablett auf den Tisch gestellt. | Coloquei a bandeja sobre a mesa.
+տաքդեղ | Տաքդեղը շատ կծու է։ | Перец очень острый. | The chilli pepper is very spicy. | Le piment est très épicé. | El chile es muy picante. | Die Chilischote ist sehr scharf. | A pimenta é muito picante.
+քացախ | Քացախը թթու է։ | Уксус кислый. | Vinegar is sour. | Le vinaigre est acide. | El vinagre es agrio. | Essig ist sauer. | O vinagre é azedo.
+մայոնեզ | Մայոնեզը վերջացել է։ | Майонез закончился. | The mayonnaise is finished. | La mayonnaise est finie. | La mayonesa se acabó. | Die Mayonnaise ist alle. | A maionese acabou.
+կետչուպ | Կետչուպը գցեցի հավի վրա։ | Я полил курицу кетчупом. | I poured ketchup on the chicken. | J'ai versé du ketchup sur le poulet. | Eché ketchup sobre el pollo. | Ich habe Ketchup auf das Hähnchen gegeben. | Despejei ketchup sobre o frango.
+մանանեխ | Մանանեխը դեղին է։ | Горчица жёлтая. | Mustard is yellow. | La moutarde est jaune. | La mostaza es amarilla. | Senf ist gelb. | A mostarda é amarela.
+յոգուրտ | Ես սիրում եմ յոգուրտ։ | Я люблю йогурт. | I like yogurt. | J'aime le yaourt. | Me gusta el yogur. | Ich mag Joghurt. | Eu gosto de iogurte.
+կաթնամթերք | Կաթնամթերքը առողջարար է։ | Молочные продукты полезны. | Dairy products are healthy. | Les produits laitiers sont sains. | Los productos lácteos son saludables. | Milchprodukte sind gesund. | Os produtos lácteos são saudáveis.
+պահածո | Պահածոները հարմար են։ | Консервы удобны. | Canned foods are convenient. | Les conserves sont pratiques. | Las conservas son convenientes. | Konserven sind praktisch. | As conservas são convenientes.
+ալյուրեղեն | Ալյուրեղենը համեղ է։ | Мучные изделия вкусные. | Flour products are tasty. | Les produits à base de farine sont savoureux. | Los productos de harina son sabrosos. | Mehlprodukte sind lecker. | Os produtos de farinha são saborosos.
+հացաբուլկեղեն | Հացաբուլկեղենը թարմ է։ | Хлебобулочные изделия свежие. | Bakery products are fresh. | Les produits de boulangerie sont frais. | Los productos de panadería son frescos. | Backwaren sind frisch. | Os produtos de padaria são frescos.
+սառեցված | Սառեցված սնունդը հարմար է։ | Замороженная еда удобна. | Frozen food is convenient. | La nourriture congelée est pratique. | La comida congelada es práctica. | Tiefkühlkost ist praktisch. | A comida congelada é prática.
+ցորեն | Ցորենից հաց են թխում։ | Из пшеницы пекут хлеб. | They bake bread from wheat. | On fait du pain avec du blé. | Se hace pan con trigo. | Aus Weizen backt man Brot. | Faz-se pão com trigo.
+գարի | Գարին հացահատիկ է։ | Ячмень - это зерно. | Barley is a grain. | L'orge est une céréale. | La cebada es un cereal. | Gerste ist ein Getreide. | A cevada é um cereal.
+գործիք | Իմ նոր գործիքը շատ օգտակար է։ | Мой новый инструмент очень полезен. | My new tool is very useful. | Mon nouvel outil est très utile. | Mi nueva herramienta es muy útil. | Mein neues Werkzeug ist sehr nützlich. | Minha nova ferramenta é muito útil.
+մուրճ | Նա մուրճով խփում է մեխը։ | Он забивает гвоздь молотком. | He is hitting the nail with a hammer. | Il enfonce le clou avec un marteau. | Él está clavando el clavo con un martillo. | Er hämmert den Nagel mit einem Hammer. | Ele está martelando o prego com um martelo.
+մեխ | Այս մեխը շատ երկար է։ | Этот гвоздь очень длинный. | This nail is very long. | Ce clou est très long. | Este clavo es muy largo. | Dieser Nagel ist sehr lang. | Este prego é muito comprido.
+պտուտակ | Պտուտակը պտուտակահանով պտտում են։ | Винт закручивают отвёрткой. | They are turning the screw with a screwdriver. | Ils tournent la vis avec un tournevis. | Ellos atornillan el tornillo con un destornillador. | Sie drehen die Schraube mit einem Schraubenzieher. | Eles estão girando o parafuso com uma chave de fenda.
+պտուտակահան | Այս պտուտակահանը նոր է։ | Эта отвёртка новая. | This screwdriver is new. | Ce tournevis est neuf. | Este destornillador es nuevo. | Dieser Schraubenzieher ist neu. | Esta chave de fenda é nova.
+աքցան | Աքցանը մեծ է։ | Плоскогубцы большие. | The pliers are big. | Les pinces sont grandes. | Los alicates son grandes. | Die Zange ist groß. | O alicate é grande.
+սղոց | Այս սղոցը սուր է։ | Эта пила острая. | This saw is sharp. | Cette scie est tranchante. | Esta sierra es afilada. | Diese Säge ist scharf. | Esta serra é afiada.
+կացին | Կացինը ծանր է։ | Топор тяжелый. | The axe is heavy. | La hache est lourde. | El hacha es pesada. | Die Axt ist schwer. | O machado é pesado.
+գայլիկոն | Ես գայլիկոն ունեմ։ | У меня есть дрель. | I have a drill. | J'ai une perceuse. | Tengo un taladro. | Ich habe eine Bohrmaschine. | Eu tenho uma furadeira.
+ժապավեն | Ժապավենը սեղանի վրա է։ | Лента на столе. | The tape is on the table. | Le ruban est sur la table. | La cinta está en la mesa. | Das Klebeband liegt auf dem Tisch. | A fita está sobre a mesa.
+սոսինձ | Ես սոսինձ եմ գնել։ | Я купил клей. | I bought glue. | J'ai acheté de la colle. | Compré pegamento. | Ich habe Klebstoff gekauft. | Eu comprei cola.
+ներկ | Այս ներկը կապույտ է։ | Эта краска синяя. | This paint is blue. | Cette peinture est bleue. | Esta pintura es azul. | Diese Farbe ist blau. | Esta tinta é azul.
+վրձին | Վրձինը կարմիր է։ | Кисть красная. | The brush is red. | Le pinceau est rouge. | El pincel es rojo. | Der Pinsel ist rot. | O pincel é vermelho.
+սանդուղք | Սանդուղքը պատի մոտ է։ | Лестница около стены. | The ladder is near the wall. | L'échelle est près du mur. | La escalera está cerca de la pared. | Die Leiter steht an der Wand. | A escada está perto da parede.
+բահ | Բահը հողի մեջ է։ | Лопата в земле. | The shovel is in the soil. | La pelle est dans la terre. | La pala está en la tierra. | Die Schaufel ist in der Erde. | A pá está na terra.
+փոցխ | Փոցխը պարտեզում է։ | Грабли в саду. | The rake is in the garden. | Le râteau est dans le jardin. | El rastrillo está en el jardín. | Der Rechen ist im Garten. | O rastelo está no jardim.
+թիակ | Ես թիակով ավազ եմ փորում։ | Я копаю песок совком. | I am digging sand with a scoop. | Je creuse le sable avec une pelle. | Estoy cavando arena con una pala. | Ich grabe Sand mit einer Schaufel. | Estou cavando areia com uma pá.
+դույլ | Դույլը լի է ջրով։ | Ведро полно воды. | The bucket is full of water. | Le seau est plein d'eau. | El cubo está lleno de agua. | Der Eimer ist mit Wasser gefüllt. | O balde está cheio de água.
+ճոպան | Ճոպանը կտրվել է։ | Канат порвался. | The rope broke. | La corde s'est cassée. | La cuerda se rompió. | Das Seil ist gerissen. | A corda quebrou.
+պարան | Այս պարանը շատ ամուր է։ | Эта верёвка очень прочная. | This string is very strong. | Cette corde est très solide. | Esta cuerda es muy resistente. | Diese Schnur ist sehr stark. | Esta corda é muito resistente.
+շղթա | Դուռը շղթայով է փակված։ | Дверь закрыта цепью. | The door is locked with a chain. | La porte est fermée avec une chaîne. | La puerta está cerrada con una cadena. | Die Tür ist mit einer Kette verschlossen. | A porta está trancada com uma corrente.
+աղյուս | Այս աղյուսը ծանր է։ | Этот кирпич тяжелый. | This brick is heavy. | Cette brique est lourde. | Este ladrillo es pesado. | Dieser Ziegel ist schwer. | Este tijolo é pesado.
+ցեմենտ | Ես ցեմենտ եմ խառնում։ | Я замешиваю цемент. | I am mixing cement. | Je mélange du ciment. | Estoy mezclando cemento. | Ich mische Zement. | Estou misturando cimento.
+տախտակ | Նա տախտակ է սղոցում։ | Он пилит доску. | He is sawing a board. | Il scie une planche. | Él está aserrando una tabla. | Er sägt ein Brett. | Ele está serrando uma tábua.
+խողովակ | Խողովակը վերանորոգում են։ | Трубу ремонтируют. | They are repairing the pipe. | Ils réparent le tuyau. | Están arreglando la tubería. | Sie reparieren die Rohrleitung. | Eles estão consertando o cano.
+կաթսայատուն | Կաթսայատուն շատ տաք է։ | Котельная очень горячая. | The boiler room is very hot. | La chaufferie est très chaude. | La sala de calderas está muy caliente. | Der Heizungsraum ist sehr heiß. | A sala das caldeiras está muito quente.
+էլեկտրիկ | Էլեկտրիկը գալիս է վաղը։ | Электрик придет завтра. | The electrician is coming tomorrow. | L'électricien vient demain. | El electricista viene mañana. | Der Elektriker kommt morgen. | O eletricista vem amanhã.
+սանտեխնիկ | Սանտեխնիկը խողովակը վերանորոգեց։ | Сантехник починил трубу. | The plumber repaired the pipe. | Le plombier a réparé le tuyau. | El fontanero arregló la tubería. | Der Klempner reparierte das Rohr. | O encanador consertou o cano.
+ատաղձագործ | Ատաղձագործը սեղան պատրաստեց։ | Плотник сделал стол. | The carpenter made a table. | Le menuisier a fabriqué une table. | El carpintero hizo una mesa. | Der Schreiner hat einen Tisch gebaut. | O carpinteiro fez uma mesa.
+որմնադիր | Որմնադիրը աղյուս է դնում։ | Каменщик кладет кирпичи. | The bricklayer is laying bricks. | Le maçon pose des briques. | El albañil está poniendo ladrillos. | Der Maurer legt Ziegelsteine. | O pedreiro está assentando tijolos.
+շինարար | Շինարարը տուն է կառուցում։ | Строитель строит дом. | The builder is building a house. | Le constructeur construit une maison. | El constructor está construyendo una casa. | Der Bauarbeiter baut ein Haus. | O construtor está construindo uma casa.
+շինարարություն | Այստեղ շինարարություն է ընթանում։ | Здесь идет строительство. | Construction is underway here. | Il y a des travaux ici. | Aquí hay obras. | Hier wird gebaut. | Aqui está em construção.
+ներկել | Ես ներկում եմ պատը։ | Я крашу стену. | I am painting the wall. | Je peins le mur. | Estoy pintando la pared. | Ich streiche die Wand. | Eu estou pintando a parede.
+փորել | Նա փորում է փոս։ | Он копает яму. | He is digging a hole. | Il creuse un trou. | Él está cavando un hoyo. | Er gräbt ein Loch. | Ele está cavando um buraco.
+սղոցել | Ես սղոցում եմ փայտ։ | Я пилю дрова. | I am sawing wood. | Je scie du bois. | Estoy serrando madera. | Ich säge Holz. | Estou serrando madeira.
+մեխել | Նա նկարը մեխում է պատին։ | Он прибивает картину к стене. | He is nailing the picture to the wall. | Il cloue le tableau au mur. | Él está clavando el cuadro a la pared. | Er nagelt das Bild an die Wand. | Ele está pregando o quadro na parede.
+պտուտակել | Նա դարակը պտուտակում է պատին։ | Он прикручивает полку к стене. | He is screwing the shelf to the wall. | Il visse l'étagère au mur. | Él está atornillando el estante a la pared. | Er schraubt das Regal an die Wand. | Ele está aparafusando a prateleira na parede.
+մկրատ | Մկրատը սեղանին է։ | Ножницы на столе. | The scissors are on the table. | Les ciseaux sont sur la table. | Las tijeras están en la mesa. | Die Schere liegt auf dem Tisch. | A tesoura está na mesa.
+սոսնձամատիտ | Սոսնձամատիտը դատարկ է։ | Клей-карандаш пустой. | The glue stick is empty. | Le bâton de colle est vide. | La barra de pegamento está vacía. | Der Klebestift ist leer. | O bastão de cola está vazio.
+կարիչ | Կարիչը կոտրված է։ | Степлер сломан. | The stapler is broken. | L'agrafeuse est cassée. | La grapadora está rota. | Der Tacker ist kaputt. | O grampeador está quebrado.
+ամրակ | Ամրակը սեղանի վրա է։ | Скрепка на столе. | The paper clip is on the table. | Le trombone est sur la table. | El clip está en la mesa. | Die Büroklammer ist auf dem Tisch. | O clipe de papel está na mesa.
+կնիք | Կնիքը կարմիր է։ | Печать красная. | The stamp is red. | Le tampon est rouge. | El sello es rojo. | Der Stempel ist rot. | O carimbo é vermelho.
+նշիչ | Նշիչով գրում են։ | Пишут маркером. | They write with a marker. | On écrit avec un marqueur. | Escriben con un marcador. | Man schreibt mit einem Marker. | Eles escrevem com um marcador.
+մատիտասրիչ | Մատիտասրիչը մատիտ է սրում։ | Точилка точит карандаш. | The pencil sharpener sharpens a pencil. | Le taille-crayon taille un crayon. | El sacapuntas afila un lápiz. | Der Anspitzer spitzt einen Bleistift an. | O apontador afia um lápis.
+գրչատուփ | Իմ գրչատուփը կապույտ է։ | Мой пенал синий. | My pencil case is blue. | Ma trousse est bleue. | Mi estuche es azul. | Mein Federmäppchen ist blau. | Meu estojo é azul.
+ալբոմ | Ես ալբոմում նկարում եմ։ | Я рисую в альбоме. | I am drawing in the album. | Je dessine dans l'album. | Estoy dibujando en el álbum. | Ich zeichne im Album. | Estou desenhando no álbum.
+ծոցատետր | Ես ծոցատետրում գրում եմ։ | Я пишу в блокноте. | I am writing in the notepad. | J'écris dans le bloc-notes. | Escribo en el bloc de notas. | Ich schreibe im Notizbuch. | Estou escrevendo no bloco de notas.
+ջրաներկ | Ջրաներկով նկարում են։ | Рисуют акварелью. | They paint with watercolour. | On peint à l'aquarelle. | Pintan con acuarela. | Man malt mit Aquarell. | Pintam com aquarela.
+ուսուցչուհի | Ուսուցչուհին դաս է տալիս։ | Учительница ведет урок. | The teacher is giving a lesson. | La professeure donne un cours. | La profesora da una clase. | Die Lehrerin gibt Unterricht. | A professora está dando uma aula.
+դասղեկ | Դասղեկը խորհուրդ տվեց ինձ։ | Классный руководитель дал мне совет. | The form teacher gave me advice. | Le professeur principal m'a donné un conseil. | El tutor me dio un consejo. | Der Klassenlehrer gab mir einen Rat. | O professor conselheiro me deu um conselho.
+տնօրենուհի | Տնօրենուհին ժողով է գումարում։ | Директриса созывает собрание. | The headmistress is calling a meeting. | La directrice convoque une réunion. | La directora convoca una reunión. | Die Direktorin beruft eine Versammlung ein. | A diretora está convocando uma reunião.
+ուսանողուհի | Ուսանողուհին սովորում է համալսարանում։ | Студентка учится в университете. | The student is studying at the university. | L'étudiante étudie à l'université. | La estudiante estudia en la universidad. | Die Studentin studiert an der Universität. | A estudante estuda na universidade.
+աշակերտուհի | Աշակերտուհին գիրք է կարդում։ | Ученица читает книгу. | The schoolgirl is reading a book. | L'élève lit un livre. | La alumna lee un libro. | Die Schülerin liest ein Buch. | A aluna está lendo um livro.
+գերազանցիկ | Գերազանցիկը լավ է սովորում։ | Отличник хорошо учится. | The top student studies well. | Le premier de la classe étudie bien. | El mejor alumno estudia bien. | Der beste Schüler lernt gut. | O melhor aluno estuda bem.
+ավարտական | Ավարտական երեկոն գեղեցիկ էր։ | Выпускной вечер был красивым. | The graduation evening was beautiful. | La soirée de remise des diplômes était belle. | La noche de graduación fue hermosa. | Der Abschlussabend war schön. | A noite de formatura foi linda.
+արձակուրդներ | Արձակուրդներն սկսվում են հունիսին։ | Каникулы начинаются в июне. | The holidays start in June. | Les vacances commencent en juin. | Las vacaciones empiezan en junio. | Die Ferien beginnen im Juni. | As férias começam em junho.
+վարսավիր | Վարսավիրը մազեր է կտրում։ | Парикмахер стрижёт волосы. | The hairdresser cuts hair. | Le coiffeur coupe les cheveux. | El peluquero corta el pelo. | Der Friseur schneidet Haare. | O cabeleireiro corta cabelo.
+հացթուխ | Հացթուխը հաց է թխում։ | Пекарь печёт хлеб. | The baker bakes bread. | Le boulanger fait du pain. | El panadero hornea pan. | Der Bäcker backt Brot. | O padeiro assa pão.
+մսավաճառ | Մսավաճառը միս է վաճառում։ | Мясник продаёт мясо. | The butcher sells meat. | Le boucher vend de la viande. | El carnicero vende carne. | Der Metzger verkauft Fleisch. | O açougueiro vende carne.
+ֆերմեր | Ֆերմերը կովեր է պահում։ | Фермер держит коров. | The farmer keeps cows. | Le fermier élève des vaches. | El granjero cría vacas. | Der Bauer hält Kühe. | O fazendeiro cria vacas.
+ձկնորս | Ձկնորսը ձուկ է բռնում։ | Рыбак ловит рыбу. | The fisherman catches fish. | Le pêcheur pêche du poisson. | El pescador pesca peces. | Der Fischer fängt Fisch. | O pescador pesca peixe.
+օդաչու | Օդաչուն ինքնաթիռ է վարում։ | Пилот управляет самолётом. | The pilot flies a plane. | Le pilote pilote un avion. | El piloto pilota un avión. | Der Pilot fliegt ein Flugzeug. | O piloto pilota um avião.
+ուղեկցորդուհի | Ուղեկցորդուհին օգնում է ուղևորներին։ | Стюардесса помогает пассажирам. | The flight attendant helps passengers. | L'hôtesse de l'air aide les passagers. | La azafata ayuda a los pasajeros. | Die Flugbegleiterin hilft den Passagieren. | A comissária de bordo ajuda os passageiros.
+քարտուղար | Քարտուղարը նամակներ է գրում։ | Секретарь пишет письма. | The secretary writes letters. | Le secrétaire écrit des lettres. | El secretario escribe cartas. | Der Sekretär schreibt Briefe. | O secretário escreve cartas.
+մենեջեր | Մենեջերը ղեկավարում է թիմ։ | Менеджер руководит командой. | The manager leads a team. | Le manager dirige une équipe. | El gerente dirige un equipo. | Der Manager leitet ein Team. | O gerente lidera uma equipe.
+դիզայներ | Դիզայները նախագծում է հագուստ։ | Дизайнер проектирует одежду. | The designer designs clothes. | Le designer conçoit des vêtements. | El diseñador diseña ropa. | Der Designer entwirft Kleidung. | O designer projeta roupas.
+լուսանկարիչ | Լուսանկարիչը լուսանկարում է բնություն։ | Фотограф фотографирует природу. | The photographer photographs nature. | Le photographe photographie la nature. | El fotógrafo fotografía la naturaleza. | Der Fotograf fotografiert die Natur. | O fotógrafo fotografa a natureza.
+ճարտարապետ | Ճարտարապետը նախագծում է շենքեր։ | Архитектор проектирует здания. | The architect designs buildings. | L'architecte conçoit des bâtiments. | El arquitecto diseña edificios. | Der Architekt entwirft Gebäude. | O arquiteto projeta edifícios.
+մեխանիկ | Մեխանիկը նորոգում է մեքենաներ։ | Механик ремонтирует автомобили. | The mechanic repairs cars. | Le mécanicien répare des voitures. | El mecánico repara coches. | Der Mechaniker repariert Autos. | O mecânico conserta carros.
+դերձակ | Դերձակը կարում է հագուստ։ | Портной шьёт одежду. | The tailor sews clothes. | Le tailleur coud des vêtements. | El sastre cose ropa. | Der Schneider näht Kleidung. | O alfaiate cose roupas.
+կոշկակար | Կոշկակարը նորոգում է կոշիկներ։ | Сапожник чинит обувь. | The shoemaker repairs shoes. | Le cordonnier répare des chaussures. | El zapatero repara zapatos. | Der Schuster repariert Schuhe. | O sapateiro conserta sapatos.
+ոսկերիչ | Ոսկերիչը պատրաստում է ոսկերչական իրեր։ | Ювелир изготавливает ювелирные изделия. | The jeweller makes jewellery. | Le joaillier fabrique des bijoux. | El joyero fabrica joyas. | Der Juwelier stellt Schmuck her. | O joalheiro faz joias.
+տնտեսուհի | Նա տնտեսուհի է։ | Она домохозяйка. | She is a housewife. | Elle est femme au foyer. | Ella es ama de casa. | Sie ist Hausfrau. | Ela é dona de casa.
+գիտաշխատող | Իմ հայրը գիտաշխատող է։ | Мой отец научный сотрудник. | My father is a research scientist. | Mon père est chercheur scientifique. | Mi padre es científico investigador. | Mein Vater ist Forscher. | Meu pai é pesquisador.
+կենսաբան | Կենսաբանները ուսումնասիրում են կյանքը։ | Биологи изучают жизнь. | Biologists study life. | Les biologistes étudient la vie. | Los biólogos estudian la vida. | Biologen erforschen das Leben. | Os biólogos estudam a vida.
+քիմիկոս | Քիմիկոսները լաբորատորիայում են աշխատում։ | Химики работают в лаборатории. | Chemists work in a laboratory. | Les chimistes travaillent dans un laboratoire. | Los químicos trabajan en un laboratorio. | Chemiker arbeiten in einem Labor. | Os químicos trabalham em um laboratório.
+ֆիզիկոս | Ֆիզիկոսները ուսումնասիրում են տիեզերքը։ | Физики изучают вселенную. | Physicists study the universe. | Les physiciens étudient l'univers. | Los físicos estudian el universo. | Physiker erforschen das Universum. | Os físicos estudam o universo.
+մաթեմատիկոս | Մաթեմատիկոսները լուծում են խնդիրներ։ | Математики решают задачи. | Mathematicians solve problems. | Les mathématiciens résolvent des problèmes. | Los matemáticos resuelven problemas. | Mathematiker lösen Probleme. | Os matemáticos resolvem problemas.
+պատմաբան | Պատմաբանները ուսումնասիրում են անցյալը։ | Историки изучают прошлое. | Historians study the past. | Les historiens étudient le passé. | Los historiadores estudian el pasado. | Historiker erforschen die Vergangenheit. | Os historiadores estudam o passado.
+բանասեր | Բանասերները ուսումնասիրում են լեզուներ։ | Филологи изучают языки. | Philologists study languages. | Les philologues étudient les langues. | Los filólogos estudian idiomas. | Philologen erforschen Sprachen. | Os filólogos estudam línguas.
+մանկավարժ | Մանկավարժը սիրում է երեխաներին։ | Педагог любит детей. | The educator loves children. | L'éducateur aime les enfants. | El educador ama a los niños. | Der Pädagoge liebt Kinder. | O educador ama as crianças.
+դեղագործ | Դեղագործն աշխատում է դեղատանը։ | Фармацевт работает в аптеке. | The pharmacist works at the pharmacy. | Le pharmacien travaille à la pharmacie. | El farmacéutico trabaja en la farmacia. | Der Apotheker arbeitet in der Apotheke. | O farmacêutico trabalha na farmácia.
+անասնաբույժ | Անասնաբույժը բուժում է կատուներին։ | Ветеринар лечит кошек. | The vet treats cats. | Le vétérinaire soigne les chats. | El veterinario trata a los gatos. | Der Tierarzt behandelt Katzen. | O veterinário trata gatos.
+ատամնատեխնիկ | Ատամնատեխնիկը պատրաստում է ատամներ։ | Зубной техник изготавливает зубы. | The dental technician makes teeth. | Le prothésiste dentaire fabrique des dents. | El técnico dental hace dientes. | Der Zahntechniker stellt Zähne her. | O técnico dental faz dentes.
+մարզպետ | Մարզպետը հանդիպման է եկել։ | Губернатор пришёл на встречу. | The governor came to a meeting. | Le gouverneur est venu à une réunion. | El gobernador vino a una reunión. | Der Gouverneur kam zu einem Treffen. | O governador veio a uma reunião.
+զինծառայող | Զինծառայողը հերոս է։ | Военнослужащий — герой. | The serviceman is a hero. | Le militaire est un héros. | El militar es un héroe. | Der Soldat ist ein Held. | O militar é um herói.
+սպա | Սպան հրաման է տալիս։ | Офицер отдаёт приказ. | The officer gives an order. | L'officier donne un ordre. | El oficial da una orden. | Der Offizier erteilt einen Befehl. | O oficial dá uma ordem.
+նավաստի | Նավաստին աշխատում է նավում։ | Моряк работает на корабле. | The sailor works on a ship. | Le marin travaille sur un bateau. | El marinero trabaja en un barco. | Der Matrose arbeitet auf einem Schiff. | O marinheiro trabalha em um navio.
+նավապետ | Նավապետը նավը վարում է։ | Капитан управляет кораблём. | The captain steers the ship. | Le capitaine dirige le navire. | El capitán pilota el barco. | Der Kapitän steuert das Schiff. | O capitão pilota o navio.
+փոստատար | Փոստատարը նամակներ է բերում։ | Почтальон приносит письма. | The postman brings letters. | Le facteur apporte des lettres. | El cartero trae cartas. | Der Briefträger bringt Briefe. | O carteiro traz cartas.
+առաքիչ | Առաքիչը փաթեթ է հասցնում։ | Курьер доставляет посылку. | The courier delivers a package. | Le coursier livre un colis. | El mensajero entrega un paquete. | Der Kurier liefert ein Paket. | O mensageiro entrega um pacote.
+բեռնակիր | Բեռնակիրը բեռ է տանում։ | Грузчик несёт груз. | The porter carries a load. | Le porteur porte une charge. | El cargador lleva una carga. | Der Träger trägt eine Last. | O carregador carrega uma carga.
+հրուշակագործ | Հրուշակագործը տորթ է թխում։ | Кондитер печёт торт. | The confectioner bakes a cake. | Le pâtissier cuit un gâteau. | El pastelero hornea un pastel. | Der Konditor backt einen Kuchen. | O confeiteiro assa um bolo.
+կոսմետոլոգ | Կոսմետոլոգը դեմքը խնամում է։ | Косметолог ухаживает за лицом. | The beautician cares for the face. | L'esthéticien soigne le visage. | El esteticista cuida el rostro. | Der Kosmetiker pflegt das Gesicht. | O esteticista cuida do rosto.
+ավտոմեքենա | Ավտոմեքենան կարմիր է։ | Автомобиль красный. | The car is red. | La voiture est rouge. | El coche es rojo. | Das Auto ist rot. | O carro é vermelho.
+անիվ | Անիվը պտտվում է։ | Колесо вращается. | The wheel turns. | La roue tourne. | La rueda gira. | Das Rad dreht sich. | A roda gira.
+անվադող | Անվադողը փչած է։ | Шина спущена. | The tyre is flat. | Le pneu est à plat. | El neumático está desinflado. | Der Reifen ist platt. | O pneu está murcho.
+ղեկ | Նա ղեկը պտտեց։ | Он повернул руль. | He turned the steering wheel. | Il a tourné le volant. | Él giró el volante. | Er drehte das Lenkrad. | Ele girou o volante.
+արգելակ | Ես արգելակը սեղմեցի։ | Я нажал на тормоз. | I pressed the brake. | J'ai appuyé sur le frein. | Presioné el freno. | Ich trat auf die Bremse. | Eu pisei no freio.
+արագացուցիչ | Նա արագացուցիչը սեղմեց։ | Он нажал на педаль газа. | He pressed the accelerator. | Il a appuyé sur l'accélérateur. | Él pisó el acelerador. | Er trat auf das Gaspedal. | Ele pisou no acelerador.
+բեռնախցիկ | Բեռնախցիկը բաց է։ | Багажник открыт. | The trunk is open. | Le coffre est ouvert. | El maletero está abierto. | Der Kofferraum ist offen. | O porta-malas está aberto.
+լուսարձակ | Լուսարձակները վառ են։ | Фары горят. | The headlights are on. | Les phares sont allumés. | Los faros están encendidos. | Die Scheinwerfer sind an. | Os faróis estão acesos.
+ապակեմաքրիչ | Ապակեմաքրիչները աշխատում են։ | Дворники работают. | The windscreen wipers are working. | Les essuie-glaces fonctionnent. | Los limpiaparabrisas funcionan. | Die Scheibenwischer funktionieren. | Os limpadores de para-brisa funcionam.
+ամրագոտի | Խնդրեմ ամրագոտին կապիր։ | Пожалуйста, пристегните ремень безопасности. | Please fasten your seat belt. | S'il vous plaît, attachez votre ceinture de sécurité. | Por favor, abróchese el cinturón de seguridad. | Bitte legen Sie den Sicherheitsgurt an. | Por favor, aperte o cinto de segurança.
+վառելիք | Մեքենան վառելիք է պահանջում։ | Машине нужно топливо. | The car needs fuel. | La voiture a besoin de carburant. | El coche necesita combustible. | Das Auto braucht Kraftstoff. | O carro precisa de combustível.
+բենզին | Բենզին թանկ է։ | Бензин дорогой. | Petrol is expensive. | L'essence est chère. | La gasolina es cara. | Benzin ist teuer. | A gasolina é cara.
+դիզել | Դիզելը ավելի էժան է։ | Дизель дешевле. | Diesel is cheaper. | Le diesel est moins cher. | El diésel es más barato. | Diesel ist billiger. | O diesel é mais barato.
+յուղափոխություն | Իմ մեքենային յուղափոխություն է պետք։ | Моей машине нужна замена масла. | My car needs an oil change. | Ma voiture a besoin d'une vidange. | Mi coche necesita un cambio de aceite. | Mein Auto braucht einen Ölwechsel. | Meu carro precisa de uma troca de óleo.
+ավտոտնակ | Մեքենան ավտոտնակում է։ | Машина в гараже. | The car is in the garage. | La voiture est dans le garage. | El coche está en el garaje. | Das Auto ist in der Garage. | O carro está na garagem.
+ավտոլվացում | Ավտոլվացումը թանկ է։ | Автомойка дорогая. | Car wash is expensive. | Le lavage auto est cher. | El lavado de coches es caro. | Die Autowäsche ist teuer. | A lavagem de carros é cara.
+ավտոսպասարկում | Ավտոսպասարկումը անհրաժեշտ է։ | Автосервис необходим. | Car service is necessary. | L'entretien de la voiture est nécessaire. | El mantenimiento del coche es necesario. | Die Autowartung ist notwendig. | A manutenção do carro é necessária.
+կամրջակ | Կամրջակը գեղեցիկ է։ | Мостик красивый. | The footbridge is beautiful. | La passerelle est belle. | El puente peatonal es bonito. | Die Fußgängerbrücke ist schön. | A passarela é bonita.
+անցակետ | Անցակետում պահակներ կան։ | На контрольно-пропускном пункте есть охранники. | There are guards at the checkpoint. | Il y a des gardes au point de contrôle. | Hay guardias en el punto de control. | Es gibt Wachen am Kontrollpunkt. | Há guardas no ponto de controle.
+ավտոկայան | Ես գնում եմ ավտոկայան։ | Я иду на автовокзал. | I am going to the bus station. | Je vais à la gare routière. | Voy a la estación de autobuses. | Ich gehe zum Busbahnhof. | Estou indo para a rodoviária.
+ուղեվճար | Այս ճանապարհին ուղեվճար կա։ | На этой дороге есть плата за проезд. | There is a toll on this road. | Il y a un péage sur cette route. | Hay un peaje en esta carretera. | Auf dieser Straße gibt es eine Maut. | Há um pedágio nesta estrada.
+տեխզննում | Մեքենան անցավ տեխզննում։ | Машина прошла техосмотр. | The car passed the vehicle inspection. | La voiture a passé le contrôle technique. | El coche pasó la inspección técnica. | Das Auto hat die Fahrzeuguntersuchung bestanden. | O carro passou na inspeção veicular.
+ուղևորափոխադրում | Ուղևորափոխադրումը կարևոր է։ | Пассажирские перевозки важны. | Passenger transport is important. | Le transport de passagers est important. | El transporte de pasajeros es importante. | Der Personentransport ist wichtig. | O transporte de passageiros é importante.
+մոտոցիկլավար | Ես մոտոցիկլավար եմ։ | Я мотоциклист. | I am a motorcyclist. | Je suis motocycliste. | Soy motociclista. | Ich bin Motorradfahrer. | Sou motociclista.
+հեծանվորդ | Հեծանվորդը ճանապարհին է։ | Велосипедист на дороге. | The cyclist is on the road. | Le cycliste est sur la route. | El ciclista está en la carretera. | Der Radfahrer ist auf der Straße. | O ciclista está na estrada.
+սկուտեր | Այս սկուտերը նոր է։ | Этот скутер новый. | This scooter is new. | Ce scooter est neuf. | Este scooter es nuevo. | Dieser Roller ist neu. | Esta scooter é nova.
+նավիգատոր | Նավիգատորը մեզ տանում է տուն։ | Навигатор ведет нас домой. | The sat nav is taking us home. | Le GPS nous emmène à la maison. | El navegador nos lleva a casa. | Das Navigationsgerät bringt uns nach Hause. | O GPS está nos levando para casa.
+ազդր | Ազդրս ցավում է։ | У меня болит бедро. | My thigh hurts. | J'ai mal à la cuisse. | Me duele el muslo. | Mein Oberschenkel tut weh. | Minha coxa dói.
+սրունք | Սրունքս կապտել է։ | У меня посинела голень. | My shin is bruised. | J'ai un bleu au tibia. | Tengo un moretón en la espinilla. | Ich habe einen blauen Fleck am Schienbein. | Minha canela está roxa.
+կոճ | Ես կոճս ոլորել եմ։ | Я подвернул лодыжку. | I twisted my ankle. | Je me suis tordu la cheville. | Me torcí el tobillo. | Ich habe mir den Knöchel verstaucht. | Eu torci o tornozelo.
+դաստակ | Դաստակս ցավում է։ | У меня болит запястье. | My wrist hurts. | J'ai mal au poignet. | Me duele la muñeca. | Mein Handgelenk tut weh. | Meu pulso dói.
+ճկույթ | Ճկույթս փոքր է։ | Мой мизинец маленький. | My little finger is small. | Mon petit doigt est petit. | Mi dedo meñique es pequeño. | Mein kleiner Finger ist klein. | Meu dedo mindinho é pequeno.
+կրունկ | Կրունկս ցավում է։ | У меня болит пятка. | My heel hurts. | J'ai mal au talon. | Me duele el talón. | Meine Ferse tut weh. | Meu calcanhar dói.
+գոտկատեղ | Գոտկատեղս բարակ է։ | Моя талия тонкая. | My waist is slim. | Ma taille est fine. | Mi cintura es delgada. | Meine Taille ist schlank. | Minha cintura é fina.
+ազդրոսկր | Ազդրոսկրը երկար է։ | Бедренная кость длинная. | The femur is long. | Le fémur est long. | El fémur es largo. | Der Oberschenkelknochen ist lang. | O fêmur é longo.
+կող | Իմ կողը կոտրվել է։ | Моё ребро сломано. | My rib is broken. | Ma côte est cassée. | Mi costilla está rota. | Meine Rippe ist gebrochen. | Minha costela está quebrada.
+գանգ | Գանգը պաշտպանում է ուղեղը։ | Череп защищает мозг. | The skull protects the brain. | Le crâne protège le cerveau. | El cráneo protege el cerebro. | Der Schädel schützt das Gehirn. | O crânio protege o cérebro.
+ուղեղիկ | Ուղեղիկը ուղեղի մաս է։ | Мозжечок - часть мозга. | The cerebellum is part of the brain. | Le cervelet est une partie du cerveau. | El cerebelo es parte del cerebro. | Das Kleinhirn ist ein Teil des Gehirns. | O cerebelo é parte do cérebro.
+աղիքներ | Աղիքները շատ երկար են։ | Кишечник очень длинный. | The intestines are very long. | Les intestins sont très longs. | Los intestinos son muy largos. | Der Darm ist sehr lang. | Os intestinos são muito longos.
+լեղապարկ | Լեղապարկը լեղի է պահում։ | Желчный пузырь хранит желчь. | The gall bladder stores bile. | La vésicule biliaire stocke la bile. | La vesícula biliar almacena bilis. | Die Gallenblase speichert Galle. | A vesícula biliar armazena bile.
+փայծաղ | Փայծաղը արյուն է մաքրում։ | Селезёнка очищает кровь. | The spleen cleans the blood. | La rate nettoie le sang. | El bazo limpia la sangre. | Die Milz reinigt das Blut. | O baço limpa o sangue.
+միզապարկ | Միզապարկը մեզ է պահում։ | Мочевой пузырь удерживает мочу. | The bladder holds urine. | La vessie retient l'urine. | La vejiga contiene la orina. | Die Blase speichert den Urin. | A bexiga armazena a urina.
+շնչափող | Օդը անցնում է շնչափողով։ | Воздух проходит через трахею. | Air passes through the trachea. | L'air passe par la trachée. | El aire pasa por la tráquea. | Luft strömt durch die Luftröhre. | O ar passa pela traqueia.
+կերակրափող | Սնունդը անցնում է կերակրափողով։ | Еда проходит через пищевод. | Food passes through the oesophagus. | La nourriture passe par l'œsophage. | La comida pasa por el esófago. | Essen gelangt durch die Speiseröhre. | A comida passa pelo esôfago.
+ջիղ | Իմ ջիղը ցավում է։ | Мой нерв болит. | My nerve hurts. | Mon nerf me fait mal. | Mi nervio duele. | Mein Nerv schmerzt. | Meu nervo dói.
+հոդ | Հոդերը շարժվում են։ | Суставы двигаются. | Joints move. | Les articulations bougent. | Las articulaciones se mueven. | Gelenke bewegen sich. | As articulações se movem.
+մազարմատ | Մազարմատը մաշկի տակ է։ | Корень волоса находится под кожей. | The hair root is under the skin. | La racine du cheveu est sous la peau. | La raíz del pelo está debajo de la piel. | Die Haarwurzel ist unter der Haut. | A raiz do cabelo fica sob a pele.
+այտոսկր | Այտոսկրերը բարձր են։ | Скулы высокие. | Cheekbones are high. | Les pommettes sont hautes. | Los pómulos son altos. | Die Wangenknochen sind hoch. | Os pômulos são altos.
+կոպ | Կոպերը պաշտպանում են աչքերը։ | Веки защищают глаза. | Eyelids protect the eyes. | Les paupières protègent les yeux. | Los párpados protegen los ojos. | Die Augenlider schützen die Augen. | As pálpebras protegem os olhos.
+բիբ | Բիբը սև է։ | Зрачок чёрный. | The pupil is black. | La pupille est noire. | La pupila es negra. | Die Pupille ist schwarz. | A pupila é preta.
+ականջաբլթակ | Ականջաբլթակս ցավում է։ | У меня болит мочка уха. | My earlobe hurts. | J'ai mal au lobe de l'oreille. | Me duele el lóbulo de la oreja. | Mein Ohrläppchen tut weh. | Meu lóbulo da orelha dói.
+ռունգ | Նա շնչում է ռունգներով։ | Он дышит через ноздри. | He breathes through his nostrils. | Il respire par les narines. | Él respira por las fosas nasales. | Er atmet durch die Nasenlöcher. | Ele respira pelas narinas.
+լինդ | Լինդս ցավում է։ | У меня болит десна. | My gum hurts. | J'ai mal à la gencive. | Me duele la encía. | Mein Zahnfleisch tut weh. | Minha gengiva dói.
+քունք | Քունքս ցավում է։ | У меня болит висок. | My temple hurts. | J'ai mal à la tempe. | Me duele la sien. | Meine Schläfe tut weh. | Minha têmpora dói.
+ծոծրակ | Ծոծրակս ցավում է։ | У меня болит затылок. | The back of my head hurts. | J'ai mal à l'arrière de la tête. | Me duele la parte posterior de la cabeza. | Mein Hinterkopf tut weh. | A parte de trás da minha cabeça dói.
+ծնոտ | Ծնոտս ցավում է։ | У меня болит челюсть. | My jaw hurts. | J'ai mal à la mâchoire. | Me duele la mandíbula. | Mein Kiefer tut weh. | Minha mandíbula dói.
+թիկունք | Նա կանգնած է իմ թիկունքում։ | Он стоит позади меня. | He is standing behind me. | Il se tient derrière moi. | Él está parado detrás de mí. | Er steht hinter mir. | Ele está atrás de mim.
+կոնք | Կոնքս ցավում է։ | У меня болит таз. | My pelvis hurts. | J'ai mal au bassin. | Me duele la pelvis. | Mein Becken tut weh. | Minha pelve dói.
+խոռոչ | Իմ ատամում խոռոչ կա։ | В моем зубе полость. | There is a cavity in my tooth. | Il y a une carie dans ma dent. | Hay una caries en mi diente. | Ich habe ein Loch im Zahn. | Há uma cárie no meu dente.
+կաթնատամ | Իմ կաթնատամը դուրս ընկավ։ | Мой молочный зуб выпал. | My baby tooth fell out. | Ma dent de lait est tombée. | Mi diente de leche se cayó. | Mein Milchzahn ist ausgefallen. | Meu dente de leite caiu.
+կաղնի | Կաղնին բարձր ծառ է։ | Дуб — высокое дерево. | The oak is a tall tree. | Le chêne est un grand arbre. | El roble es un árbol alto. | Die Eiche ist ein hoher Baum. | O carvalho é uma árvore alta.
+սոճի | Մենք սոճի ունենք այգում։ | У нас есть сосна в саду. | We have a pine tree in the garden. | Nous avons un pin dans le jardin. | Tenemos un pino en el jardín. | Wir haben eine Kiefer im Garten. | Nós temos um pinheiro no jardim.
+եղևնի | Եղևնին կանաչ է։ | Ель зелёная. | The fir tree is green. | Le sapin est vert. | El abeto es verde. | Die Tanne ist grün. | O abeto é verde.
+կեչի | Կեչին սպիտակ կեղև ունի։ | У берёзы белая кора. | The birch has white bark. | Le bouleau a une écorce blanche. | El abedul tiene corteza blanca. | Die Birke hat weiße Rinde. | A bétula tem casca branca.
+ուռենի | Ուռենին ջրի մոտ է աճում։ | Ива растёт у воды. | The willow grows near water. | Le saule pousse près de l'eau. | El sauce crece cerca del agua. | Die Weide wächst am Wasser. | O salgueiro cresce perto da água.
+բարդի | Բարդին արագ է աճում։ | Тополь быстро растёт. | The poplar grows fast. | Le peuplier pousse vite. | El álamo crece rápido. | Die Pappel wächst schnell. | O álamo cresce rápido.
