@@ -15,3 +15,43 @@
 յուրաքանչյուր | Յուրաքանչյուր տուն ունի դուռ։ | У каждого дома есть дверь. | Every house has a door. | Chaque maison a une porte. | Cada casa tiene una puerta. | Jedes Haus hat eine Tür. | Cada casa tem uma porta.
 ամեն | Ամեն օր նոր է։ | Каждый день новый. | Every day is new. | Chaque jour est nouveau. | Cada día es nuevo. | Jeder Tag ist neu. | Cada dia é novo.
 բոլոր | Բոլոր երեխաները խաղում են։ | Все дети играют. | All children are playing. | Tous les enfants jouent. | Todos los niños juegan. | Alle Kinder spielen. | Todas as crianças estão brincando.
+որոշ | Որոշ գրքեր շատ հետաքրքիր են։ | Некоторые книги очень интересны. | Some books are very interesting. | Certains livres sont très intéressants. | Algunos libros son muy interesantes. | Einige Bücher sind sehr interessant. | Alguns livros são muito interessantes.
+մյուս | Դա մյուս գիրքն է։ | Это другая книга. | That is the other book. | C'est l'autre livre. | Ese es el otro libro. | Das ist das andere Buch. | Esse é o outro livro.
+ոչինչ | Նա ոչինչ չգիտի։ | Он ничего не знает. | He knows nothing. | Il ne sait rien. | Él no sabe nada. | Er weiß nichts. | Ele não sabe nada.
+բան | Դա լավ բան է։ | Это хорошая вещь. | That is a good thing. | C'est une bonne chose. | Eso es una buena cosa. | Das ist eine gute Sache. | Isso é uma coisa boa.
+որը | Այն մեքենան, որը տեսա, կարմիր էր։ | Та машина, которую я видел, была красной. | The car which I saw was red. | La voiture que j'ai vue était rouge. | El coche que vi era rojo. | Das Auto, das ich sah, war rot. | O carro que vi era vermelho.
+ուր | Ո՞ւր ես գնում։ | Куда ты идешь? | Where are you going? | Où vas-tu ? | ¿Adónde vas? | Wohin gehst du? | Para onde você vai?
+որտեղից | Որտեղի՞ց ես եկել։ | Откуда ты приехал? | Where did you come from? | D'où viens-tu ? | ¿De dónde vienes? | Woher kommst du? | De onde você veio?
+ինչքան | Ինչքա՞ն է գինը։ | Сколько это стоит? | How much does it cost? | Combien ça coûte ? | ¿Cuánto cuesta? | Was kostet das? | Quanto custa?
+բարի | Նա բարի է։ | Он добрый. | He is kind. | Il est gentil. | Él es amable. | Er ist nett. | Ele é gentil.
+չար | Նա չար է։ | Он злой. | He is evil. | Il est méchant. | Él es malvado. | Er ist böse. | Ele é mau.
+խելացի | Նա խելացի է։ | Он умный. | He is clever. | Il est intelligent. | Él es inteligente. | Er ist klug. | Ele é inteligente.
+հիմար | Նա հիմար է։ | Он глупый. | He is stupid. | Il est stupide. | Él es estúpido. | Er ist dumm. | Ele é estúpido.
+ազնիվ | Նա ազնիվ է։ | Он честный. | He is honest. | Il est honnête. | Él es honesto. | Er ist ehrlich. | Ele é honesto.
+ստախոս | Նա ստախոս է։ | Он лжец. | He is a liar. | Il est menteur. | Él es mentiroso. | Er ist ein Lügner. | Ele é mentiroso.
+քաղաքավարի | Նա քաղաքավարի է։ | Он вежливый. | He is polite. | Il est poli. | Él es educado. | Er ist höflich. | Ele é educado.
+կոպիտ | Նա կոպիտ է։ | Он грубый. | He is rude. | Il est grossier. | Él es grosero. | Er ist unhöflich. | Ele é grosseiro.
+համբերատար | Իմ հայրը շատ համբերատար է։ | Мой отец очень терпелив. | My father is very patient. | Mon père est très patient. | Mi padre es muy paciente. | Mein Vater ist sehr geduldig. | Meu pai é muito paciente.
+հանգիստ | Այսօր ծովը հանգիստ է։ | Сегодня море спокойное. | Today the sea is calm. | Aujourd'hui la mer est calme. | Hoy el mar está tranquilo. | Heute ist das Meer ruhig. | Hoje o mar está calmo.
+նյարդային | Նա նյարդային է։ | Он нервный. | He is nervous. | Il est nerveux. | Él es nervioso. | Er ist nervös. | Ele é nervoso.
+ամաչկոտ | Իմ քույրիկը ամաչկոտ է։ | Моя сестрёнка застенчивая. | My little sister is shy. | Ma petite sœur est timide. | Mi hermanita es tímida. | Meine kleine Schwester ist schüchtern. | Minha irmãzinha é tímida.
+համարձակ | Նա համարձակ է։ | Он смелый. | He is brave. | Il est courageux. | Él es valiente. | Er ist mutig. | Ele é corajoso.
+վախկոտ | Իմ շունը վախկոտ է։ | Моя собака трусливая. | My dog is cowardly. | Mon chien est lâche. | Mi perro es cobarde. | Mein Hund ist feige. | Meu cachorro é covarde.
+ծույլ | Նա ծույլ աշակերտ է։ | Он ленивый ученик. | He is a lazy student. | Il est un élève paresseux. | Él es un estudiante perezoso. | Er ist ein fauler Schüler. | Ele é um aluno preguiçoso.
+աշխատասեր | Նա աշխատասեր է։ | Он трудолюбивый. | He is hard-working. | Il est travailleur. | Él es trabajador. | Er ist fleißig. | Ele é trabalhador.
+լուրջ | Նա լուրջ մարդ է։ | Он серьёзный человек. | He is a serious person. | C'est un homme sérieux. | Él es una persona seria. | Er ist ein ernster Mensch. | Ele é uma pessoa séria.
+զվարճալի | Այս ֆիլմը զվարճալի է։ | Этот фильм забавный. | This movie is funny. | Ce film est amusant. | Esta película es divertida. | Dieser Film ist lustig. | Este filme é engraçado.
+հետաքրքիր | Գիրքը հետաքրքիր է։ | Книга интересная. | The book is interesting. | Le livre est intéressant. | El libro es interesante. | Das Buch ist interessant. | O livro é interessante.
+ձանձրալի | Դասը ձանձրալի է։ | Урок скучный. | The lesson is boring. | Le cours est ennuyeux. | La clase es aburrida. | Der Unterricht ist langweilig. | A aula é chata.
+ընկերասեր | Իմ ուսուցիչը ընկերասեր է։ | Мой учитель дружелюбный. | My teacher is friendly. | Mon professeur est amical. | Mi profesor es amigable. | Mein Lehrer ist freundlich. | Meu professor é amigável.
+բարեհամբույր | Նա բարեհամբույր մարդ է։ | Он приветливый человек. | He is an affable person. | C'est une personne affable. | Es una persona afable. | Er ist ein liebenswürdiger Mensch. | Ele é uma pessoa afável.
+եսասեր | Նա եսասեր է։ | Он эгоистичен. | He is selfish. | Il est égoïste. | Él es egoísta. | Er ist egoistisch. | Ele é egoísta.
+առատաձեռն | Իմ տատիկը առատաձեռն է։ | Моя бабушка щедрая. | My grandmother is generous. | Ma grand-mère est généreuse. | Mi abuela es generosa. | Meine Großmutter ist großzügig. | Minha avó é generosa.
+ագահ | Նա շատ ագահ է։ | Он очень жадный. | He is very greedy. | Il est très avide. | Él es muy codicioso. | Er ist sehr gierig. | Ele é muito ganancioso.
+խորամանկ | Աղվեսը խորամանկ է։ | Лиса хитрая. | The fox is cunning. | Le renard est rusé. | El zorro es astuto. | Der Fuchs ist listig. | A raposa é astuta.
+գեր | Իմ կատուն գեր է։ | Мой кот толстый. | My cat is fat. | Mon chat est gros. | Mi gato es gordo. | Meine Katze ist dick. | Meu gato é gordo.
+նիհար | Նա նիհար է։ | Он худой. | He is thin. | Il est mince. | Él es delgado. | Er ist dünn. | Ele é magro.
+բարձրահասակ | Նա բարձրահասակ է։ | Он высокий. | He is tall. | Il est grand. | Él es alto. | Er ist groß. | Ele é alto.
+կարճահասակ | Իմ քույրը կարճահասակ է։ | Моя сестра невысокая. | My sister is short. | Ma sœur est petite. | Mi hermana es baja. | Meine Schwester ist klein. | Minha irmã é baixa.
+սիրուն | Այս ծաղիկը շատ սիրուն է։ | Этот цветок очень красивый. | This flower is very pretty. | Cette fleur est très jolie. | Esta flor es muy bonita. | Diese Blume ist sehr hübsch. | Esta flor é muito bonita.
+տգեղ | Այդ պատկերը տգեղ է։ | Та картина некрасивая. | That picture is ugly. | Ce tableau est laid. | Esa pintura es fea. | Dieses Bild ist hässlich. | Essa pintura é feia.
