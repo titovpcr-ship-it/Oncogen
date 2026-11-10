@@ -9,7 +9,7 @@
 որդի | Նրանց որդին փոքր է։ | Их сын маленький. | Their son is little. | Leur fils est petit. | Su hijo es pequeño. | Ihr Sohn ist klein. | O filho deles é pequeno.
 դուստր | Նա երկու դուստր ունի։ | У неё две дочери. | She has two daughters. | Elle a deux filles. | Ella tiene dos hijas. | Sie hat zwei Töchter. | Ela tem duas filhas.
 երեխա | Երեխան քնած է։ | Ребёнок спит. | The child is asleep. | L’enfant dort. | El niño está dormido. | Das Kind schläft. | A criança está dormindo.
-տղա | Տղան գնդակ է խաղում։ | Мальчик играет в мяч. | The boy is playing ball. | Le garçon joue au ballon. | El niño juega a la pelota. | Der Junge spielt Ball. | O menino está jogando bola.
+տղա | Տղան գնդակով է խաղում։ | Мальчик играет в мяч. | The boy is playing ball. | Le garçon joue au ballon. | El niño juega a la pelota. | Der Junge spielt Ball. | O menino está jogando bola.
 աղջիկ | Աղջիկը գիրք է կարդում։ | Девочка читает книгу. | The girl is reading a book. | La fille lit un livre. | La niña lee un libro. | Das Mädchen liest ein Buch. | A menina está lendo um livro.
 տղամարդ | Այս տղամարդը վարորդ է։ | Этот мужчина — водитель. | This man is a driver. | Cet homme est chauffeur. | Este hombre es conductor. | Dieser Mann ist Fahrer. | Este homem é motorista.
 կին | Այդ կինը իմ ուսուցչուհին է։ | Эта женщина — моя учительница. | That woman is my teacher. | Cette femme est ma professeure. | Esa mujer es mi profesora. | Diese Frau ist meine Lehrerin. | Essa mulher é minha professora.

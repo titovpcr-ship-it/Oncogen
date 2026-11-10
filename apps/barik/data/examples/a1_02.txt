@@ -80,7 +80,7 @@
 եգիպտացորեն | Դաշտում եգիպտացորեն է աճում։ | В поле растёт кукуруза. | Corn grows in the field. | Du maïs pousse dans le champ. | En el campo crece maíz. | Auf dem Feld wächst Mais. | No campo cresce milho.
 սունկ | Անտառում սունկ ենք հավաքում։ | В лесу мы собираем грибы. | We pick mushrooms in the forest. | Nous cueillons des champignons dans la forêt. | Recogemos hongos en el bosque. | Im Wald sammeln wir Pilze. | Colhemos cogumelos na floresta.
 շուն | Իմ շունը խելացի է։ | Моя собака умная. | My dog is clever. | Mon chien est intelligent. | Mi perro es inteligente. | Mein Hund ist klug. | Meu cachorro é inteligente.
-կատու | Կատուն քնած է բազմոցին։ | Кошка спит на диване. | The cat is asleep on the sofa. | Le chat dort sur le canapé. | El gato duerme en el sofá. | Die Katze schläft auf dem Sofa. | O gato está dormindo no sofá.
+կատու | Կատուն քնած է բազմոցի վրա։ | Кошка спит на диване. | The cat is asleep on the sofa. | Le chat dort sur le canapé. | El gato duerme en el sofá. | Die Katze schläft auf dem Sofa. | O gato está dormindo no sofá.
 ձի | Ձին արագ է վազում։ | Лошадь быстро бежит. | The horse runs fast. | Le cheval court vite. | El caballo corre rápido. | Das Pferd läuft schnell. | O cavalo corre rápido.
 կով | Կովը կաթ է տալիս։ | Корова даёт молоко. | The cow gives milk. | La vache donne du lait. | La vaca da leche. | Die Kuh gibt Milch. | A vaca dá leite.
 ոչխար | Սարում ոչխարներ են արածում։ | В горах пасутся овцы. | Sheep graze in the mountains. | Des moutons paissent dans la montagne. | En la montaña pastan ovejas. | In den Bergen weiden Schafe. | Ovelhas pastam na montanha.
@@ -89,7 +89,7 @@
 հավ | Հավը ձու է ածում։ | Курица несёт яйца. | The hen lays eggs. | La poule pond des œufs. | La gallina pone huevos. | Die Henne legt Eier. | A galinha bota ovos.
 աքաղաղ | Աքաղաղը առավոտյան կանչում է։ | Петух кричит по утрам. | The rooster crows in the morning. | Le coq chante le matin. | El gallo canta por la mañana. | Der Hahn kräht am Morgen. | O galo canta de manhã.
 բադ | Բադը լողում է լճում։ | Утка плавает в озере. | The duck is swimming in the lake. | Le canard nage dans le lac. | El pato nada en el lago. | Die Ente schwimmt im See. | O pato nada no lago.
-թռչուն | Թռչունը երգում է ծառին։ | Птица поёт на дереве. | The bird is singing in the tree. | L’oiseau chante sur l’arbre. | El pájaro canta en el árbol. | Der Vogel singt auf dem Baum. | O pássaro canta na árvore.
+թռչուն | Թռչունը երգում է ծառի վրա։ | Птица поёт на дереве. | The bird is singing in the tree. | L’oiseau chante sur l’arbre. | El pájaro canta en el árbol. | Der Vogel singt auf dem Baum. | O pássaro canta na árvore.
 աղավնի | Հրապարակում շատ աղավնիներ կան։ | На площади много голубей. | There are many pigeons in the square. | Il y a beaucoup de pigeons sur la place. | En la plaza hay muchas palomas. | Auf dem Platz sind viele Tauben. | Há muitos pombos na praça.
 արծիվ | Արծիվը բարձր է թռչում։ | Орёл летает высоко. | The eagle flies high. | L’aigle vole haut. | El águila vuela alto. | Der Adler fliegt hoch. | A águia voa alto.
 բու | Բուն գիշերը չի քնում։ | Сова ночью не спит. | The owl doesn’t sleep at night. | Le hibou ne dort pas la nuit. | El búho no duerme de noche. | Die Eule schläft nachts nicht. | A coruja não dorme à noite.
@@ -103,7 +103,7 @@
 առյուծ | Առյուծը ուժեղ կենդանի է։ | Лев — сильное животное. | The lion is a strong animal. | Le lion est un animal fort. | El león es un animal fuerte. | Der Löwe ist ein starkes Tier. | O leão é um animal forte.
 վագր | Վագրը մեծ կատու է։ | Тигр — большая кошка. | The tiger is a big cat. | Le tigre est un grand félin. | El tigre es un gato grande. | Der Tiger ist eine große Katze. | O tigre é um gato grande.
 փիղ | Փիղը շատ մեծ է։ | Слон очень большой. | The elephant is very big. | L’éléphant est très grand. | El elefante es muy grande. | Der Elefant ist sehr groß. | O elefante é muito grande.
-կապիկ | Կապիկը ծառին է նստած։ | Обезьяна сидит на дереве. | The monkey is sitting in the tree. | Le singe est assis sur l’arbre. | El mono está sentado en el árbol. | Der Affe sitzt auf dem Baum. | O macaco está sentado na árvore.
+կապիկ | Կապիկը նստած է ծառի վրա։ | Обезьяна сидит на дереве. | The monkey is sitting in the tree. | Le singe est assis sur l’arbre. | El mono está sentado en el árbol. | Der Affe sitzt auf dem Baum. | O macaco está sentado na árvore.
 ուղտ | Ուղտը քիչ ջուր է խմում։ | Верблюд пьёт мало воды. | The camel drinks little water. | Le chameau boit peu d’eau. | El camello bebe poca agua. | Das Kamel trinkt wenig Wasser. | O camelo bebe pouca água.
 օձ | Ես օձից վախենում եմ։ | Я боюсь змей. | I am afraid of snakes. | J’ai peur des serpents. | Les tengo miedo a las serpientes. | Ich habe Angst vor Schlangen. | Eu tenho medo de cobra.
 գորտ | Գորտը կանաչ է։ | Лягушка зелёная. | The frog is green. | La grenouille est verte. | La rana es verde. | Der Frosch ist grün. | O sapo é verde.
