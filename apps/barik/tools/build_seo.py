@@ -18,7 +18,7 @@
 
     python3 tools/build_seo.py --site dist/site --url https://barik.am/
 """
-import argparse
+import argparse, urllib.parse
 import hashlib
 import html
 import json
@@ -208,7 +208,11 @@ TX = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de", "pt": "pt"}      #
 TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st", "de": "dt", "pt": "ptr"}   # транскрипция
 TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de", "pt": "pt"}   # название темы
 
-CSS = """@font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+CSS = """.nm-big{font-family:"Noto Serif Armenian",serif;font-size:56px;font-weight:700;margin:6px 0 18px;line-height:1.2}
+.nm-l{list-style:none;display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:8px 0 22px}.nm-l li{display:grid;justify-items:center;min-width:54px;padding:8px 10px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9}.nm-l b{font-family:"Noto Serif Armenian",serif;font-size:26px}.nm-l small{opacity:.7}
+.nm-i{list-style:none;padding:0;margin:20px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.nm-i a{display:flex;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9;text-decoration:none;color:inherit}.nm-i .hy{font-family:"Noto Serif Armenian",serif;color:#9F1D35}
+.note{font-size:14px;opacity:.75}
+@font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02B0,U+02C6,U+02DA,U+02DC,U+0259,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:A;font-display:swap;font-weight:100 900;font-stretch:62.5% 100%;src:url(fonts/noto-serif-armenian-armenian-wdth-normal.woff2) format("woff2");unicode-range:U+0308,U+0530-058F,U+2010,U+2024,U+25CC,U+FB13-FB17}
 @font-face{font-family:F;font-display:swap;font-weight:200 800;src:url(fonts/manrope-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
@@ -507,7 +511,7 @@ def build(site, base, words_path):
         n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
         fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
-                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a>{secs}')
+                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p>{secs}')
         write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
                         alts, body, depth=1).replace('href="../../', 'href="../'))
         urls[L].insert(0, rel)
@@ -523,10 +527,11 @@ def build(site, base, words_path):
                                 for l, p in alt_rel.items()) + "</url>")
         sm.append("</urlset>")
         open(os.path.join(site, f"sitemap-{L}.xml"), "w", encoding="utf-8").write("\n".join(sm))
+    files += build_names(site, base)
     open(os.path.join(site, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
-        + "</sitemapindex>")
+        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap></sitemapindex>")
     rb = os.path.join(site, "robots.txt")
     txt = open(rb).read() if os.path.exists(rb) else "User-agent: *\nAllow: /\n"
     if "Sitemap:" not in txt:
@@ -537,6 +542,101 @@ def build(site, base, words_path):
     print(f"страницы поиска: {files} ({', '.join(f'{L} {len(urls[L])}' for L in LANGS)}), "
           f"{size / 1e6:.0f} МБ")
     return files
+
+
+# ---------- страницы имён (O-176): «Анна по-армянски — Աննա» ----------
+NM_TXT = {
+    "ru": dict(title="{n} по-армянски — {h} | Barik", desc="Как пишется имя {n} по-армянски: {h}. Буквы по отдельности, пропись пером и открытка с вашим именем — бесплатно на Barik.",
+               h1="{n} по-армянски", lead="Имя {n} армянскими буквами пишется так:", letters="Буквы", cta="Написать прописью и сделать открытку",
+               note="Армянские имена записывают по звучанию; у некоторых имён есть и другие привычные написания.",
+               idx_t="Ваше имя по-армянски — {k} имён | Barik", idx_d="Как написать имя армянскими буквами: {k} имён, буквы, пропись и открытка.", idx_h="Ваше имя по-армянски",
+               idx_l="Выберите имя — или впишите любое на сайте: перо напишет его прописью.", other="Любое имя — на сайте"),
+    "en": dict(title="{n} in Armenian — {h} | Barik", desc="How to write the name {n} in Armenian: {h}. Letter by letter, written in cursive by a pen, with a card to share — free on Barik.",
+               h1="{n} in Armenian", lead="In Armenian letters, {n} is written:", letters="Letters", cta="Write it in cursive and make a card",
+               note="Names are written in Armenian by how they sound; some names have other common spellings too.",
+               idx_t="Your name in Armenian — {k} names | Barik", idx_d="How to write a name in Armenian letters: {k} names, letters, cursive and a card.", idx_h="Your name in Armenian",
+               idx_l="Pick a name — or type any name on the site and the pen will write it in cursive.", other="Any name — on the site"),
+    "fr": dict(title="{n} en arménien — {h} | Barik", desc="Comment écrire le prénom {n} en arménien : {h}. Lettre par lettre, en cursive à la plume, avec une carte à partager — gratuit sur Barik.",
+               h1="{n} en arménien", lead="En lettres arméniennes, {n} s’écrit :", letters="Lettres", cta="L’écrire en cursive et créer une carte",
+               note="Les prénoms s’écrivent en arménien selon leur prononciation ; certains ont d’autres graphies courantes.",
+               idx_t="Votre prénom en arménien — {k} prénoms | Barik", idx_d="Comment écrire un prénom en lettres arméniennes : {k} prénoms, lettres, cursive et carte.", idx_h="Votre prénom en arménien",
+               idx_l="Choisissez un prénom — ou tapez-en un sur le site : la plume l’écrira en cursive.", other="N’importe quel prénom — sur le site"),
+    "es": dict(title="{n} en armenio — {h} | Barik", desc="Cómo se escribe el nombre {n} en armenio: {h}. Letra por letra, en cursiva con pluma y con una tarjeta para compartir — gratis en Barik.",
+               h1="{n} en armenio", lead="Con letras armenias, {n} se escribe así:", letters="Letras", cta="Escribirlo en cursiva y hacer una tarjeta",
+               note="Los nombres se escriben en armenio según cómo suenan; algunos tienen otras grafías habituales.",
+               idx_t="Tu nombre en armenio — {k} nombres | Barik", idx_d="Cómo escribir un nombre con letras armenias: {k} nombres, letras, cursiva y tarjeta.", idx_h="Tu nombre en armenio",
+               idx_l="Elige un nombre — o escribe cualquiera en el sitio: la pluma lo escribirá en cursiva.", other="Cualquier nombre — en el sitio"),
+    "de": dict(title="{n} auf Armenisch — {h} | Barik", desc="Wie man den Namen {n} auf Armenisch schreibt: {h}. Buchstabe für Buchstabe, in Schreibschrift mit der Feder und als Karte zum Teilen — kostenlos bei Barik.",
+               h1="{n} auf Armenisch", lead="In armenischen Buchstaben schreibt man {n} so:", letters="Buchstaben", cta="In Schreibschrift schreiben und Karte erstellen",
+               note="Namen werden im Armenischen nach dem Klang geschrieben; manche haben weitere übliche Schreibweisen.",
+               idx_t="Dein Name auf Armenisch — {k} Namen | Barik", idx_d="Wie man einen Namen in armenischen Buchstaben schreibt: {k} Namen, Buchstaben, Schreibschrift und Karte.", idx_h="Dein Name auf Armenisch",
+               idx_l="Wähle einen Namen — oder gib auf der Website einen beliebigen ein: Die Feder schreibt ihn in Schreibschrift.", other="Jeder Name — auf der Website"),
+    "pt": dict(title="{n} em armênio — {h} | Barik", desc="Como se escreve o nome {n} em armênio: {h}. Letra por letra, em letra cursiva com a pena e com um cartão para compartilhar — grátis no Barik.",
+               h1="{n} em armênio", lead="Em letras armênias, {n} se escreve assim:", letters="Letras", cta="Escrever em cursiva e criar um cartão",
+               note="Os nomes são escritos em armênio pelo som; alguns têm outras grafias comuns.",
+               idx_t="Seu nome em armênio — {k} nomes | Barik", idx_d="Como escrever um nome em letras armênias: {k} nomes, letras, cursiva e cartão.", idx_h="Seu nome em armênio",
+               idx_l="Escolha um nome — ou digite qualquer um no site: a pena vai escrevê-lo em cursiva.", other="Qualquer nome — no site"),
+}
+
+
+def build_names(site, base):
+    """Имена из словаря names.js → /<язык>/n/<имя>.html и /<язык>/n/ — ru: кириллические, остальные: латинские."""
+    import subprocess
+    js = os.path.join(APP, "www", "js")
+    out = subprocess.run(["node", "-e", """
+global.window={};require(process.argv[1]+'/names.js');const N=window.BARARAN_NAMES;
+const ab=require('fs').readFileSync(process.argv[1]+'/alphabet.js','utf8');const nm={};for(const m of ab.matchAll(/up:'([^']+)',lo:'([^']+)',nm:'([^']+)'/g)){nm[m[1]]=m[3];nm[m[2]]=m[3];}
+const r={};for(const k of Object.keys(N.DICT)){ for(const L of ['ru','en','fr','es','de','pt']){ const cyr=/[а-яё]/.test(k); if((L==='ru')!==cyr) continue;
+  const n=k.split(/([ -])/).map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(''); const h=N.toHy(n,L); if(!h) continue;
+  (r[L]=r[L]||[]).push({n,h,g:N.glyphs(h).filter(g=>!g.sp).map(g=>{const c=g.up?g.k.toUpperCase():g.k; return [g.k==='ու'&&g.up?'Ու':c,nm[g.k]||'']; })}); } }
+process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True, check=True).stdout
+    data = json.loads(out)
+    files, sm = 0, []
+    alt_re = re.compile(r'<link rel="alternate"[^>]*>')
+    for L in LANGS:
+        T = NM_TXT[L]
+        items = sorted(data.get(L, []), key=lambda x: x["n"].lower())
+        seen, rows = set(), []
+        idx_alts = {l: f"{l}/n/index.html" for l in LANGS}
+        for it in items:
+            slug = ascii_slug(it["n"]) if L != "ru" else ascii_slug(translit_ru(it["n"]))
+            if slug in seen:
+                continue
+            seen.add(slug)
+            rel = f"{L}/n/{slug}.html"
+            letters = "".join(f'<li><b lang="hy">{esc(c)}</b><small lang="hy">{esc(n)}</small></li>' for c, n in it["g"])
+            q = urllib.parse.quote(it["n"])
+            body = (f'<p class="crumbs"><a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<h1 class="pg">{esc(T["h1"].format(n=it["n"]))}</h1><i class="orn" aria-hidden="true"></i>'
+                    f'<p>{esc(T["lead"].format(n=it["n"]))}</p><p class="nm-big" lang="hy">{esc(it["h"])}</p>'
+                    f'<h2>{T["letters"]}</h2><ul class="nm-l">{letters}</ul>'
+                    f'<a class="cta" href="../../?lang={L}&amp;name={q}">{T["cta"]}</a><p class="note">{T["note"]}</p>')
+            ld = {"@context": "https://schema.org", "@type": "DefinedTerm", "name": it["h"], "alternateName": it["n"],
+                  "inLanguage": "hy", "url": base + rel}
+            pg = page(L, base, rel, T["title"].format(n=it["n"], h=it["h"]), T["desc"].format(n=it["n"], h=it["h"]),
+                      idx_alts, body, ld)
+            p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+            open(p, "w", encoding="utf-8").write(alt_re.sub("", pg)); files += 1
+            sm.append(base + rel); rows.append((it["n"], it["h"], slug))
+        lst = "".join(f'<li><a href="{s_}.html"><span>{esc(n)}</span><span class="hy" lang="hy">{esc(h)}</span></a></li>' for n, h, s_ in rows)
+        rel = f"{L}/n/index.html"
+        body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Անուն</p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
+                f'<p>{T["idx_l"]}</p><a class="cta" href="../../?lang={L}&amp;name=">{T["other"]}</a><ul class="nm-i">{lst}</ul>')
+        pg = page(L, base, rel, T["idx_t"].format(k=len(rows)), T["idx_d"].format(k=len(rows)), idx_alts, body)
+        open(os.path.join(site, rel), "w", encoding="utf-8").write(pg); files += 1
+        sm.insert(0, base + rel)
+    open(os.path.join(site, "sitemap-names.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"страницы имён: {files}")
+    return files
+
+
+RU_LAT = dict(zip("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", ["a","b","v","g","d","e","yo","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"]))
+
+
+def translit_ru(s):
+    return "".join(RU_LAT.get(c, RU_LAT.get(c.lower(), c)) for c in s)
 
 
 def main():

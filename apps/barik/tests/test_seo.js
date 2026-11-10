@@ -126,5 +126,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
   ok(bad.length===0,'все запросы 200 '+bad.join(' '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));
   await br.close(); srv.close();
+  { const a=fs.readFileSync(path.join(ROOT,'ru','n','anna.html'),'utf8'), e=fs.readFileSync(path.join(ROOT,'en','n','emma.html'),'utf8'), sm=fs.readFileSync(path.join(ROOT,'sitemap-names.xml'),'utf8');
+    ok(a.includes('Анна по-армянски')&&a.includes('Աննա')&&a.includes('name=%D0%90%D0%BD%D0%BD%D0%B0')&&e.includes('Էմմա')&&(sm.match(/<loc>/g)||[]).length>1000&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-names.xml'),'страницы имён (O-176): Анна, Emma, ссылка в приложение, sitemap-names'); }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();
