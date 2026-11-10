@@ -990,5 +990,39 @@ details[open] .pm::after{transform:rotate(0)}
 .nm-note{margin-top:16px}
 .nm-kb{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin:10px 0 0}
 .nm-kb button{height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 18px/1 var(--hy);cursor:pointer;padding:0}
-.ld-nm .nm-form{max-width:520px;margin:18px auto 0}
-.ld-nm{text-align:center}
+/* блок имени на обложке (O-169): пример пишется пером, рядом поле */
+.ld-nm{padding-top:8px}
+.nm-box{display:grid;gap:22px;align-items:center;background:var(--L-card);border-radius:34px;padding:22px 20px 26px;box-shadow:var(--L-sh)}
+.nm-demo{border-radius:24px;background:var(--bg);padding:10px 12px 12px;overflow:hidden}
+.nm-demo .nm-cb{max-height:170px}
+.nm-cap{margin:4px 0 0;text-align:center;font-size:15px;color:var(--L-ink2);display:flex;gap:10px;justify-content:center;align-items:baseline}
+.nm-cap b{font:700 22px/1.2 var(--hy);color:var(--L-ink)}
+.nm-cap i{font-style:normal;opacity:.5}
+.nm-side{text-align:center}
+.nm-side .ld-h2{font-size:clamp(26px,5vw,36px)}
+.nm-side .ld-lead{margin-top:10px}
+.nm-side .nm-form{max-width:520px;margin:18px auto 0}
+@media (min-width:860px){ .nm-box{grid-template-columns:1fr 1fr;padding:30px 34px} .nm-side{text-align:left} .nm-side .nm-form{margin-left:0} }
+/* цена Premium в блоке «Сколько стоит» (O-169) */
+.pr-prem{max-width:410px;margin:0 auto 26px;padding:16px 18px;border-radius:20px;text-align:left;background:color-mix(in srgb,var(--L-a1) 9%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--L-a1) 26%,transparent)}
+.pp-t{margin:0;display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;font:800 18px/1.25 var(--disp)}
+.pp-t span{color:var(--L-a2);white-space:nowrap}
+.pp-d{margin:7px 0 0;font-size:14.5px;line-height:1.5;color:var(--L-ink2)}
+/* главная короче на телефоне (O-169): причины — строкой с иконкой слева, фраз для прослушивания — три */
+@media (max-width:759px){
+  .ld-sec.ld-why{padding-top:28px}
+  .wy{margin-top:26px;gap:12px}
+  .wy li{display:grid;grid-template-columns:52px 1fr;column-gap:14px;align-items:start;padding:18px 18px 18px 16px;border-radius:24px}
+  .wy-ic{width:52px;height:52px;border-radius:16px;grid-row:1 / span 2}
+  .wy-ic svg{width:32px;height:32px}
+  .wy h3{margin:2px 0 0;font-size:18px}
+  .wy p{margin:5px 0 0;font-size:15px;line-height:1.5}
+  .hear-list li:nth-child(n+4){display:none}
+  .ld-sec{padding-top:52px}
+  .hear{padding:34px 18px 28px}
+  .hear-cta{display:none}
+  .ld-tiles li:nth-child(n+4){display:none}
+  .ld-stages li{padding-top:9px;padding-bottom:9px}
+  .st-b span{display:none}
+  .nm-form .btn{flex:1 1 100%}
+}

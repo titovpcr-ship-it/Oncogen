@@ -836,6 +836,11 @@ function onboardHTML(){
   const keys=CUR_ABC().map((u,i)=>'<button data-act="landLetter" data-arg="'+i+'" aria-pressed="false" lang="hy">'+esc(u)+'</button>').join('');
   const step=(n,h,t,vis,id)=>'<li class="ld-step"'+(id?' id="'+id+'"':'')+'><div class="sx"><span class="sn">'+n+'</span><h3>'+esc(h)+'</h3><p>'+esc(t)+'</p></div><div class="sv">'+vis+'</div></li>';
   const flag='<span class="fl" aria-hidden="true"><i></i><i></i><i></i></span>';
+  // «Ваше имя по-армянски» (O-168, поднято под первый экран — O-169): перо пишет имя-пример, рядом поле для своего
+  const exHy=NAMES?NAMES.toHy(T('nmEx'),L):'';
+  const nmLand=NAMES&&exHy?'<section class="ld-sec ld-nm"><div class="ld-wrap"><div class="nm-box"><div class="nm-demo" aria-hidden="true">'+nmSVG(exHy)+'<p class="nm-cap"><span>'+esc(T('nmEx'))+'</span><i>→</i><b lang="hy">'+esc(exHy)+'</b></p></div>'+
+    '<div class="nm-side"><h2 class="ld-h2">'+esc(T('nmTitle'))+'</h2><p class="ld-lead">'+esc(T('nmLead'))+'</p>'+
+    '<form class="nm-form" data-act="nmLand"><input class="search" id="ldName" type="text" maxlength="40" autocomplete="given-name" autocapitalize="words" spellcheck="false" placeholder="'+esc(T('nmPh'))+'" aria-label="'+esc(T('nmPh'))+'"><button class="btn primary" type="submit">'+esc(T('nmBtn'))+'</button></form></div></div></div></section>':'';
   return '<div class="onb ld">'+geoHTML(D)+
   '<header class="ld-nav"><div class="ld-wrap">'+brand+
     '<div class="ld-navr"><div class="lngs" role="group" aria-label="'+esc(D.nav)+'">'+langs+'</div><button class="btn ghost ld-open" data-act="landGo">'+esc(D.open)+'</button></div></div></header>'+
@@ -850,6 +855,7 @@ function onboardHTML(){
       bub(D.bubA.toLowerCase(),'f','b1')+bub(D.bubB.toLowerCase(),'m','b2')+
     '</div></div></section>'+
   '<section class="ld-proof"><div class="ld-wrap"><ul>'+proof+'</ul></div></section>'+
+  nmLand+
   '<section class="ld-sec ld-why"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.whyTitle)+'</h2><p class="ld-lead">'+esc(D.whyLead)+'</p><ul class="wy">'+why+'</ul></div></section>'+
   '<section class="ld-sec ld-hear"><div class="ld-wrap"><div class="hear"><div class="hear-hd"><h2 class="ld-h2">'+esc(D.hearTitle)+'</h2><p class="ld-lead">'+esc(D.hearLead)+'</p></div><ul class="hear-list">'+hear+'</ul><p class="hear-note">'+esc(D.hearNote)+'</p><div class="hear-cta">'+cta('xl inv')+'</div></div></div></section>'+
   '<section class="ld-sec" id="how"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.howTitle)+'</h2><p class="ld-lead">'+esc(D.howLead)+'</p><ol class="ld-steps">'+
@@ -857,10 +863,9 @@ function onboardHTML(){
     step(2,D.s2,D.s2t(WORDS.length),'<ul class="ld-tiles">'+tiles+'</ul>')+
     step(3,D.s3,D.s3t(CRS.units.length),'<ol class="ld-stages">'+stages+'</ol>')+
   '</ol></div></section>'+
-  (NAMES?'<section class="ld-sec ld-nm"><div class="ld-wrap"><h2 class="ld-h2">'+esc(T('nmTitle'))+'</h2><p class="ld-lead">'+esc(T('nmLead'))+'</p>'+
-    '<form class="nm-form" data-act="nmLand"><input class="search" id="ldName" type="text" maxlength="40" autocomplete="given-name" autocapitalize="words" spellcheck="false" placeholder="'+esc(T('nmPh'))+'" aria-label="'+esc(T('nmPh'))+'"><button class="btn primary" type="submit">'+esc(T('nmBtn'))+'</button></form></div></section>':'')+
   '<section class="ld-sec ld-pr"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.prTitle)+'</h2>'+
-    '<div class="ld-price"><p class="pr-big">'+esc(D.prFree)+'</p><p class="pr-note">'+esc(D.prNote)+'</p><ul>'+pr+'</ul>'+cta('xl')+'</div></div></section>'+
+    '<div class="ld-price"><p class="pr-big">'+esc(D.prFree)+'</p><p class="pr-note">'+esc(D.prNote)+'</p><ul>'+pr+'</ul>'+
+      (BILL.native?'':'<div class="pr-prem"><p class="pp-t"><b>Barik Premium</b><span>'+esc(T('prPrem'))+'</span></p><p class="pp-d">'+esc(T('prPremT'))+'</p></div>')+cta('xl')+'</div></div></section>'+
   '<section class="ld-sec"><div class="ld-wrap ld-narrow"><h2 class="ld-h2">'+esc(D.qTitle)+'</h2><div class="ld-faq">'+faq+'</div></div></section>'+
   '<section class="ld-end"><div class="ld-wrap"><p class="end-hy"><span lang="hy">'+esc(D.endHy)+'</span> <i>'+esc(D.endTr)+'</i></p><h2>'+esc(D.endTitle)+'</h2>'+cta('xl inv')+'<ul class="ld-micro">'+micro+'</ul></div>'+
     '<svg class="end-hills" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V86c160-50 320-40 480-10s320 34 460-6c100-28 190-24 260-8v78z" fill="currentColor" opacity=".55"/><path d="M0 140v-30c200-40 380-10 560 4 180 14 380-26 640-10v36z" fill="currentColor"/></svg></section>'+
@@ -921,7 +926,8 @@ function landReveal(){
     el.classList.add('rv'); el.style.setProperty('--d',([...el.parentElement.children].indexOf(el)%3)*80+'ms'); landIO.observe(el);
   });
 }
-function landStart(){ landStop(); setMeta(); landDemo(); landWrite('featCb',0,CUR_ABC()); landReveal(); }
+function landStart(){ landStop(); setMeta(); landDemo(); landWrite('featCb',0,CUR_ABC()); landReveal();
+  const nm=()=>{ if(view==='onboard'&&document.querySelector('.ld-nm .nm-cb')){ nmWrite(); landLater(nm,9000); } }; landLater(nm,700); }
 function premCTA(){
   if(premium()) return '';
   return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">'+emo('✨')+'</span><span><b>'+esc(T('ctaTitle',WORDS.length))+'</b><span>'+esc(T('ctaSub'))+'</span></span></button>';

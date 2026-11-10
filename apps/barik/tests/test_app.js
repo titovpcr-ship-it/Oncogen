@@ -474,6 +474,10 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.fill('#nmIn','Julia'); await pg.click('.nm-form button[type=submit]'); ok((await pg.textContent('.nm-hy'))==='Յուլիա','новое имя с того же экрана');
     await pg.click('[data-act=nmBack]'); ok(await pg.locator('[data-act=nmOpen]').count()===1,'«назад» — в алфавит, там вход «Твоё имя по-армянски»');
     await pg.goto(base+'#welcome'); await pg.waitForSelector('.ld h1');
+    // обложка (O-169): блок имени — сразу под первым экраном, с примером прописью; цена Premium видна гостю
+    ok(await pg.evaluate(()=>{ const a=document.querySelector('.ld-nm'), b=document.querySelector('.ld-why'); return !!a&&!!b&&a.getBoundingClientRect().top<b.getBoundingClientRect().top; })&&await pg.locator('.ld-nm .nm-cb .cb-ink path').count()>=3&&(await pg.textContent('.nm-cap')).includes('Մարիա'),'обложка: «Ваше имя по-армянски» выше причин, пример Мария → Մարիա прописью');
+    ok((await pg.textContent('.pr-prem')).includes('4,99 $ в месяц')&&(await pg.textContent('.pr-prem')).includes('отмена в любой момент'),'обложка: цена Barik Premium — 4,99 $ в месяц, отмена в любой момент');
+    { const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'обложка с блоком имени: без прокрутки вбок'); }
     await pg.fill('#ldName','Tom'); await pg.click('.ld-nm button[type=submit]'); await pg.waitForSelector('.nm-cb');
     ok((await pg.textContent('.nm-hy'))==='Թոմ','с обложки: поле имени ведёт к написанному имени');
     ok(!errs.length,'имя: ошибок JS нет '+errs.join(' | ')); await ctx.close();
