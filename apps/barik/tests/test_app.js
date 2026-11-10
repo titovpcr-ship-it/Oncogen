@@ -538,6 +538,24 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'«Слушать»: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // O-171: «Возврат и отмена» — своя ссылка, прямая ссылка ?doc=, условия и ЧаВо под платный режим
+    const ctx=await br.newContext({viewport:{width:390,height:800},locale:'en-US',timezoneId:'America/New_York'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base+'?doc=refund'); await pg.waitForSelector('.doc');
+    let t=await pg.textContent('.doc');
+    ok(t.includes('Refunds and cancellation')&&t.includes('$4.99 per month')&&t.includes('within 14 days')&&t.includes('Dodo Payments')&&t.includes('hello@barik.am'),'прямая ссылка ?doc=refund: цена, отмена, 14 дней, продавец, почта');
+    await pg.click('[data-act=docBack]'); ok(await pg.locator('.ld h1').count()===1,'назад из документа — обложка (гость остаётся гостем)');
+    ok(await pg.locator('.ld-foot [data-act=landDoc][data-arg=refund]').count()===1,'в подвале обложки — «Refunds and cancellation»');
+    const faq=await pg.evaluate(()=>window.__bararan.T('land').faq(false)); 
+    ok(faq.length===6&&faq[4][1].includes('$4.99')&&faq[5][1].includes('14 days'),'ЧаВо: сколько стоит и как отменить');
+    await pg.goto(base+'?doc=terms'); t=await pg.textContent('.doc');
+    ok(t.includes('first two stages')&&t.includes('within 14 days')&&!t.includes('Until payments are connected'),'условия: что бесплатно, что по подписке, возврат');
+    await pg.goto(base+'?doc=privacy'); t=await pg.textContent('.doc');
+    ok(t.includes('also saved on our server')&&t.includes('deleted together with the account'),'конфиденциальность: прогресс вошедшего хранится на сервере');
+    for(const l of ['ru','en','fr','es','de','pt']){ const r=await pg.evaluate(l=>{ const b=window.__bararan; b.setLang(l); const d=b.T('doc_refund'); return [d.includes('14')&&d.includes('hello@barik.am')&&d.includes('Dodo Payments'),b.T('progSync').length>20&&b.T('syncNudgeT').length>20&&b.T('benPath').length>10]; },l); ok(r[0]&&r[1],'возврат и тексты прогресса: '+l); }
+    ok(errs.length===0,'документы: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});

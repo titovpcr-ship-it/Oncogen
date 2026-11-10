@@ -65,6 +65,19 @@ let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else cons
   await B.evaluate(t=>{ const b=window.__bararan; b.S.w['ջուր']={b:1,d:1,t:Date.now(),n:1,e:0}; b.save(); }); await sync(B); await sync(A);
   ok(await A.evaluate(()=>!!window.__bararan.S.w['ջուր']&&Object.keys(window.__bararan.S.w).length===1),'после сброса новое слово снова сходится');
 
+  // гость: подсказка «Сохраните прогресс» после 10 слов, кнопка в настройках; у вошедшего — «сохраняется в аккаунте»
+  { const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU',serviceWorkers:'block'});
+    await ctx.addInitScript(()=>{ if(!localStorage.getItem('bararan-ui-v1')) localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'ru'})); });
+    const G=await ctx.newPage(); G.on('pageerror',e=>errs.push(String(e))); await G.goto(base); await G.waitForFunction(()=>window.__bararan&&window.__bararan.ACC.srv===true);
+    ok(await G.locator('.sy-nudge').count()===0,'гостю без слов подсказки нет');
+    await G.evaluate(()=>{ const b=window.__bararan; b.WORDS.slice(0,12).forEach(w=>{ b.S.w[w.a]={b:1,d:1,t:Date.now(),n:1,e:0}; }); b.save(); b.go('home'); });
+    ok((await G.textContent('.today')).includes('Сохраните прогресс'),'гостю с 12 словами — подсказка «Сохраните прогресс»');
+    ok(await G.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'подсказка: без прокрутки вбок');
+    await G.click('.sy-nudge [data-act=syncLogin]'); ok(await G.evaluate(()=>window.__bararan.view)==='account','кнопка ведёт ко входу');
+    await G.evaluate(()=>window.__bararan.go('home')); await G.click('[data-act=syncX]'); ok(await G.locator('.sy-nudge').count()===0,'✕ убирает подсказку');
+    await G.evaluate(()=>window.__bararan.go('settings')); ok((await G.textContent('body')).includes('Войти, чтобы сохранить прогресс'),'настройки гостя: «Войти, чтобы сохранить прогресс»');
+    await ctx.close();
+    await A.evaluate(()=>window.__bararan.go('settings')); ok((await A.textContent('body')).includes('Прогресс сохраняется в вашем аккаунте')&&await A.locator('.sy-nudge').count()===0,'настройки вошедшего: «Прогресс сохраняется в вашем аккаунте»'); }
   // другой аккаунт на том же устройстве — прогресс не смешивается
   const cb=await login('boris@example.com','Boris');
   const ctxB=B.context(); await ctxB.clearCookies(); await ctxB.addCookies([{name:'barik_s',value:cb.split('=')[1],url:base}]);

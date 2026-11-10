@@ -1030,3 +1030,10 @@ details[open] .pm::after{transform:rotate(0)}
   .st-b span{display:none}
   .nm-form .btn{flex:1 1 100%}
 }
+
+/* O-171: подсказка гостю «Сохраните прогресс» на главной (внутри плашки «сегодня») */
+.sy-nudge{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;margin:0 0 14px;padding:12px 8px 12px 14px;border-radius:18px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);color:var(--on-lapis)}
+.sy-nudge b{display:block;font-size:15px;font-weight:700}
+.sy-nudge span{display:block;margin-top:2px;font-size:13px;line-height:1.35;opacity:.86}
+.sy-nudge .btn.sm{min-height:38px;padding:0 14px;background:#fff;color:var(--lapis);box-shadow:none;white-space:nowrap}
+.sy-x{width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:inherit;opacity:.7;font-size:14px;cursor:pointer}

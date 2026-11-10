@@ -922,7 +922,7 @@ function onboardHTML(){
   '<section class="ld-end"><div class="ld-wrap"><p class="end-hy"><span lang="hy">'+esc(D.endHy)+'</span> <i>'+esc(D.endTr)+'</i></p><h2>'+esc(D.endTitle)+'</h2>'+cta('xl inv')+'<ul class="ld-micro">'+micro+'</ul></div>'+
     '<svg class="end-hills" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V86c160-50 320-40 480-10s320 34 460-6c100-28 190-24 260-8v78z" fill="currentColor" opacity=".55"/><path d="M0 140v-30c200-40 380-10 560 4 180 14 380-26 640-10v36z" fill="currentColor"/></svg></section>'+
   '<footer class="ld-foot"><div class="ld-wrap">'+brand+'<p>'+esc(D.foot)+'</p>'+
-    '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="project">'+esc(T('project'))+'</button><button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button><button class="lnk" data-act="landDoc" data-arg="terms">'+esc(T('terms'))+'</button><button class="lnk" data-act="landDoc" data-arg="credits">'+esc(T('credits'))+'</button></p>'+
+    '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="project">'+esc(T('project'))+'</button><button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button><button class="lnk" data-act="landDoc" data-arg="terms">'+esc(T('terms'))+'</button><button class="lnk" data-act="landDoc" data-arg="refund">'+esc(T('refund'))+'</button><button class="lnk" data-act="landDoc" data-arg="credits">'+esc(T('credits'))+'</button></p>'+
     '<p class="ld-mail"><a href="mailto:'+esc(CFG.CONTACT||'hello@barik.am')+'">'+esc(CFG.CONTACT||'hello@barik.am')+'</a></p><p class="cr">© 2026 Barik</p></div></footer>'+
   '</div>';
 }
@@ -984,6 +984,8 @@ function premCTA(){
   if(premium()) return '';
   return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">'+emo('✨')+'</span><span><b>'+esc(T('ctaTitle',WORDS.length))+'</b><span>'+esc(T('ctaSub'))+'</span></span></button>';
 }
+function syncNudgeHTML(c){ if(ACC.srv!==true||ACC.me||UI.syX||c.seen<10) return '';
+  return '<div class="sy-nudge"><div><b>'+esc(T('syncNudge'))+'</b><span>'+esc(T('syncNudgeT'))+'</span></div><button class="btn sm" data-act="syncLogin">'+esc(T('accLogin'))+'</button><button class="sy-x" data-act="syncX" aria-label="'+esc(T('close'))+'">✕</button></div>'; }
 function homeHTML(){
   const c=counts(), td=today();
   const nw=nextNew(null,S.set.size||10);
@@ -1014,7 +1016,7 @@ function homeHTML(){
     return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+(free?'':' <span class="lock">'+emo('🔒','ie')+'</span>')+'</span><span class="lvc">'+esc(T('lvCount',lc.learned,lc.total))+'</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+esc(T('lvd_'+lv))+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
   }).join('');
   return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">'+MARK()+'<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">'+esc(T('tagline'))+'</p></header>'+
-    '<section class="today">'+streak+wotdHTML()+'<p class="summary">'+sum+'</p>'+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
+    '<section class="today">'+streak+wotdHTML()+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
     '<div class="home-main">'+rows+'</div></div>';
 }
 /* Слово дня: каждый день другое, с объёмной картинкой, из открытых уровней. */
@@ -1692,8 +1694,8 @@ function settingsHTML(){
   '<section class="set-sec"><h2 class="sec">'+esc(T('legendTitle'))+'</h2><ul class="legend">'+T('legend')+'</ul></section>'+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
   flagsHTML()+
-  '<section class="set-sec"><h2 class="sec">'+esc(T('setProgress'))+'</h2><p class="note">'+esc(LSOK?T('progLocal'):T('progNoSave'))+'</p><div class="actions" style="margin-top:14px"><button class="btn danger" data-act="reset">'+esc(resetArm?T('resetArm'):T('reset'))+'</button></div></section>'+
-  '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="project">'+esc(T('project'))+'</button><button class="linkbtn" data-act="doc" data-arg="credits">'+esc(T('credits'))+'</button><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button></div></section>';
+  '<section class="set-sec"><h2 class="sec">'+esc(T('setProgress'))+'</h2><p class="note">'+esc(!LSOK?T('progNoSave'):ACC.me?T('progSync'):T('progLocal'))+'</p><div class="actions" style="margin-top:14px">'+(ACC.srv===true&&!ACC.me?'<button class="btn secondary" data-act="syncLogin">'+esc(T('progLogin'))+'</button>':'')+'<button class="btn danger" data-act="reset">'+esc(resetArm?T('resetArm'):T('reset'))+'</button></div></section>'+
+  '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="project">'+esc(T('project'))+'</button><button class="linkbtn" data-act="doc" data-arg="credits">'+esc(T('credits'))+'</button><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button>'+(BILL.native?'':'<button class="linkbtn" data-act="doc" data-arg="refund">'+esc(T('refund'))+'</button>')+'</div></section>';
 }
 function flagsHTML(){
   const fl=Object.keys(S.flag||{}).filter(a=>BY[a]);
@@ -1717,6 +1719,7 @@ function trialText(iso){
 function paywallHTML(){
   const lvls=LEVELS.filter(l=>l!==FREE_LV).join(', ');
   const ben=[['📚',T('ben1',WORDS.length,TOPICS.length)],['🔓',T('ben2',lvls)],['🔊',T('ben3')],['✈️',T('ben4')],['🚫',T('ben5')]];
+  if(!BILL.native) ben.splice(2,3,['🌱',T('benPath')],['↩️',T('benRefund')]);
   let plans='';
   // на сайте Premium — подписка аккаунта (O-164): пока сайт открыт всем (WEB_ALL_FREE), оформить её всё равно можно
   const have=BILL.native?premium():!!(ACC.me&&ACC.me.premium);
@@ -1743,7 +1746,7 @@ function paywallHTML(){
     plans+
     (BILL.native?'<div class="actions" style="margin-top:10px"><button class="btn ghost" data-act="restore">'+esc(T('restore'))+'</button></div>':'')+
     '<p class="pw-legal">'+esc(T(BILL.native?'pwLegal':'pwLegalWeb'))+'</p>'+
-    '<div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button></div></div>';
+    '<div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button>'+(BILL.native?'':'<button class="linkbtn" data-act="doc" data-arg="refund">'+esc(T('refund'))+'</button>')+'</div></div>';
 }
 /* ---- личный кабинет (O-136): почта + никнейм, вход по коду из письма; сервер — api/ (PHP, tools/../server) ----
    Только сайт (в приложении Android — Google Play). Нет сервера (показ, файл) — кабинета не видно. */
@@ -1842,7 +1845,7 @@ function accProfileHTML(){
       (ACC.edit?'':'<button class="linkbtn" data-act="accNickEdit">'+esc(T('accNickChange'))+'</button>')+'</div>'+edit+'</section>'+
     '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
     '<section class="set-sec"><div class="actions"><button class="btn secondary" data-act="accLogout">'+esc(T('accLogout'))+'</button><button class="btn danger" data-act="accDel">'+esc(ACC.del?T('accDeleteArm'):T('accDelete'))+'</button></div>'+
-      (ACC.edit?'':accErrHTML())+'<p class="note">'+esc(T('accData'))+'</p></section>';
+      (ACC.edit?'':accErrHTML())+'<p class="note">'+esc(T('accSync'))+' '+esc(T('accData'))+'</p></section>';
 }
 /* на сайте: оплата Paddle из кабинета (без входа — сначала войти) */
 function webPlansHTML(){
@@ -2529,6 +2532,8 @@ const H={
   },
   manageSub:()=>BILL.openStoreSubs(),
   doc:a=>{ docFrom=view; go('doc',a); },
+  syncX:()=>{ UI.syX=1; saveUI(); render(); },
+  syncLogin:()=>openAccount(),
   docBack:()=>go(docFrom==='paywall'?'paywall':(docFrom||'settings')),
   reset:()=>{
     if(!resetArm){resetArm=Date.now(); render(); setTimeout(()=>{if(resetArm&&Date.now()-resetArm>=4900&&view==='settings'){resetArm=0;render();}},5000); return;}
@@ -2601,6 +2606,7 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   if(QL&&qt!==undefined&&TOPICS[+qt]){ view='topic'; viewArg=+qt; if(lvOpen(TOPICS[+qt].lv)) preloadAudio(TOPICS[+qt].list); } }
 // ссылка «имя по-армянски» (O-168): ?name=Anna[&hy=Աննա] — сразу к написанному имени, и гостю тоже
 { const sp=new URLSearchParams(location.search||''), nm=sp.get('name'), hy=sp.get('hy');
+  const dk=sp.get('doc'); if(dk&&/^(refund|terms|privacy|project|credits)$/.test(dk)&&nm===null){ docFrom=(UI.lang?'settings':'onboard'); view='doc'; viewArg=dk; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();
