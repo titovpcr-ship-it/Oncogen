@@ -453,6 +453,31 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       await ctx.close();
     }
   }
+  { // «Твоё имя по-армянски» (O-168): ссылка ?name=, словарь и правила, правка букв, открытка, вход с обложки и из алфавита
+    const N=require(path.join(__dirname,'..','www','js','names.js'));
+    const want=[['Анна','ru','Աննա'],['Илья','ru','Իլյա'],['Александр','ru','Ալեքսանդր'],['Геннадий','ru','Գեննադի'],['Фёдор','ru','Ֆյոդոր'],['Ольга Петрова','ru','Օլգա Պետրովա'],
+      ['Michael','en','Մայքլ'],['Brandon','en','Բրանդոն'],['Guillaume','fr','Գիյոմ'],['Jorge','es','Խորխե'],['Jürgen','de','Յուրգեն'],['Guilherme','pt','Գիլյերմե'],['Արմեն','en','Արմեն'],['123','en','']];
+    const bad=want.filter(w=>N.toHy(w[0],w[1])!==w[2]).map(w=>w[0]+'→'+N.toHy(w[0],w[1]));
+    ok(!bad.length,'имена → армянские буквы: словарь и правила шести языков'+(bad.length?' — '+bad.join(', '):''));
+    ok(N.glyphs('Ուլյանա Լև').map(g=>g.sp?'_':g.k+(g.up?'^':'')).join(' ')==='Ու^ Լ Յ Ա Ն Ա _ Լ^ և','буквы прописи: «ու» — одна буква, заглавная только первая, «և» строчная');
+    const ctx=await br.newContext({viewport:{width:390,height:800},locale:'en-US',timezoneId:'America/New_York',acceptDownloads:true}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base+'?lang=ru&name='+encodeURIComponent('Анна')); await pg.waitForSelector('.nm-cb');
+    ok((await pg.textContent('.nm-hy'))==='Աննա'&&await pg.locator('.nm-cb .cb-ink g').count()===4&&await pg.locator('.nm-chip').count()===4,'ссылка ?name=Анна: гость сразу видит имя прописью, 4 буквы');
+    const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'имя: без прокрутки вбок');
+    await pg.waitForFunction(()=>[...document.querySelectorAll('.nm-cb .cb-ink path')].every(p=>parseFloat(p.style.strokeDashoffset)===0),null,{timeout:20000}).catch(()=>{});
+    ok(await pg.evaluate(()=>[...document.querySelectorAll('.nm-cb .cb-ink path')].every(p=>parseFloat(p.style.strokeDashoffset)===0)),'перо дописало имя');
+    const [dl]=await Promise.all([pg.waitForEvent('download'),pg.click('[data-act=nmSave]')]); const f=await dl.path();
+    ok(dl.suggestedFilename()==='barik-anna.png'&&fs.statSync(f).size>20000,'открытка сохраняется: '+dl.suggestedFilename());
+    await pg.click('[data-act=nmEdit]'); await pg.fill('#nmHy','Անա'); await pg.click('.nm-fix button[type=submit]');
+    ok((await pg.textContent('.nm-hy'))==='Անա'&&await pg.evaluate(()=>window.__bararan.H&&true),'буквы поправлены вручную');
+    await pg.fill('#nmIn','Julia'); await pg.click('.nm-form button[type=submit]'); ok((await pg.textContent('.nm-hy'))==='Յուլիա','новое имя с того же экрана');
+    await pg.click('[data-act=nmBack]'); ok(await pg.locator('[data-act=nmOpen]').count()===1,'«назад» — в алфавит, там вход «Твоё имя по-армянски»');
+    await pg.goto(base+'#welcome'); await pg.waitForSelector('.ld h1');
+    await pg.fill('#ldName','Tom'); await pg.click('.ld-nm button[type=submit]'); await pg.waitForSelector('.nm-cb');
+    ok((await pg.textContent('.nm-hy'))==='Թոմ','с обложки: поле имени ведёт к написанному имени');
+    ok(!errs.length,'имя: ошибок JS нет '+errs.join(' | ')); await ctx.close();
+  }
   { // шесть языков в шапке обложки (O-161): ни на одной ширине и ни на одном языке нет прокрутки вбок,
     // подзаголовок «10 minutos por dia» — всегда своей строкой (на планшете прилипал к «armênio» / «Armenisch»)
     const bad=[], glued=[];

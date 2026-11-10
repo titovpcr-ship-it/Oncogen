@@ -701,7 +701,7 @@ document.addEventListener('touchend',e=>{
 /* ================= RENDER ================= */
 function go(v,arg){ if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -722,6 +722,7 @@ function render(auto){
   else if(view==='abc') el.innerHTML=abcHTML();
   else if(view==='letter'){ el.innerHTML=letterHTML(viewArg); writeCursive(); }
   else if(view==='pen'){ el.innerHTML=penHTML(); penMount(); }
+  else if(view==='name'){ el.innerHTML=nameHTML(); nmWrite(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -856,6 +857,8 @@ function onboardHTML(){
     step(2,D.s2,D.s2t(WORDS.length),'<ul class="ld-tiles">'+tiles+'</ul>')+
     step(3,D.s3,D.s3t(CRS.units.length),'<ol class="ld-stages">'+stages+'</ol>')+
   '</ol></div></section>'+
+  (NAMES?'<section class="ld-sec ld-nm"><div class="ld-wrap"><h2 class="ld-h2">'+esc(T('nmTitle'))+'</h2><p class="ld-lead">'+esc(T('nmLead'))+'</p>'+
+    '<form class="nm-form" data-act="nmLand"><input class="search" id="ldName" type="text" maxlength="40" autocomplete="given-name" autocapitalize="words" spellcheck="false" placeholder="'+esc(T('nmPh'))+'" aria-label="'+esc(T('nmPh'))+'"><button class="btn primary" type="submit">'+esc(T('nmBtn'))+'</button></form></div></section>':'')+
   '<section class="ld-sec ld-pr"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.prTitle)+'</h2>'+
     '<div class="ld-price"><p class="pr-big">'+esc(D.prFree)+'</p><p class="pr-note">'+esc(D.prNote)+'</p><ul>'+pr+'</ul>'+cta('xl')+'</div></div></section>'+
   '<section class="ld-sec"><div class="ld-wrap ld-narrow"><h2 class="ld-h2">'+esc(D.qTitle)+'</h2><div class="ld-faq">'+faq+'</div></div></section>'+
@@ -1010,7 +1013,7 @@ function abcHTML(){
   return '<header class="head"><h1 class="pg">'+esc(T('abcTitle'))+'</h1><p class="t-hy2" lang="hy">Այբուբեն</p></header>'+
     '<p class="note">'+esc(T('abcNote'))+'</p>'+
     '<div class="actions abc-acts"><button class="btn primary" data-act="abcQuiz">'+esc(T('abcTrain'))+'</button>'+
-    '<button class="btn secondary" data-act="penGo">'+esc(T('penAbc'))+'<span class="cap">'+esc(T('penCount',penN,ABC.length))+'</span></button></div>'+
+    '<button class="btn secondary" data-act="penGo">'+esc(T('penAbc'))+'<span class="cap">'+esc(T('penCount',penN,ABC.length))+'</span></button>'+(NAMES?'<button class="btn secondary" data-act="nmOpen">'+esc(T('nmTitle'))+'<span class="cap">'+esc(T('nmCap'))+'</span></button>':'')+'</div>'+
     '<ul class="abc">'+tiles+'</ul>';
 }
 /* ================= ПРОПИСЬ ================= */
@@ -1109,6 +1112,101 @@ function writeCursive(svgArg,onDone){
   };
   requestAnimationFrame(frame);
 }
+/* ================= ТВОЁ ИМЯ ПО-АРМЯНСКИ (O-168) =================
+   Имя (латиницей, кириллицей или сразу армянскими буквами) → армянское написание (js/names.js: словарь привычных
+   написаний, иначе правила по языку) → перо пишет его прописью из тех же штрихов, что и алфавит → открытка
+   (PNG на canvas, без сервера) и ссылка ?name=…, которой можно поделиться. Буквы можно поправить самому. */
+const NAMES=window.BARARAN_NAMES||null;
+let NM={src:'',hy:'',fix:false,ed:false};
+const NM_GAP=-9, NM_SP=46;                       // буквы прописи стоят с наклоном — рамки слегка заходят друг на друга
+function nmSet(src,hy){ src=String(src||'').replace(/\s+/g,' ').trim().slice(0,40);
+  NM={src,hy:hy!=null?hy:(NAMES?NAMES.toHy(src,L):''),fix:hy!=null,ed:false}; }
+function nmLayout(hy){
+  const out=[]; let x=0;
+  (NAMES?NAMES.glyphs(hy):[]).forEach(g=>{
+    if(g.sp){ x+=NM_SP; return; }
+    const c=CUR[g.k]; if(!c) return; const p=g.up?c.U:c.l;
+    out.push({k:g.k,up:g.up,d:p.d,dx:x-p.x0,w:p.w}); x+=p.w+NM_GAP;
+  });
+  return {gl:out,w:Math.max(60,x-NM_GAP)};
+}
+function nmSVG(hy){
+  const lay=nmLayout(hy); if(!lay.gl.length) return '';
+  const line=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
+  return '<svg class="cb nm-cb" viewBox="-26 -30 '+(lay.w+52).toFixed(1)+' 206" role="img" aria-label="'+esc(T('cursive')+': '+hy)+'">'+
+    '<g class="cb-lines">'+line(0,'t')+line(64,'x')+line(100,'b')+line(152,'t')+'</g><g class="cb-ink">'+
+    lay.gl.map(g=>'<g transform="translate('+g.dx.toFixed(1)+',0)">'+g.d.map(d=>'<path d="'+d+'"/>').join('')+'</g>').join('')+
+    '</g><g class="nib"><circle class="halo" r="8.5"/><circle r="4.1"/></g></svg>';
+}
+function nmWrite(){   // имя пишется быстрее буквы алфавита: план движения считается сразу, затем скорости возвращаются
+  const svg=document.querySelector('.nm-cb'); if(!svg) return;
+  const o={V:CB.V,A:CB.A,gap:CB.gap,lift:CB.lift};
+  CB.V*=1.7; CB.A*=2.6; CB.gap=70; CB.lift=60;
+  try{ writeCursive(svg); } finally { CB.V=o.V; CB.A=o.A; CB.gap=o.gap; CB.lift=o.lift; }
+}
+const nmTr=hy=>{ try{ return trPhrase(hy.toLowerCase(),L); }catch(e){ return ''; } };
+function nmURL(){ return (location.origin&&location.origin!=='null'?location.origin:'https://barik.am')+'/?lang='+L+'&name='+encodeURIComponent(NM.src||NM.hy)+(NM.fix?'&hy='+encodeURIComponent(NM.hy):''); }
+function nameHTML(){
+  const guest=!UI.lang, has=!!NM.hy&&!!nmLayout(NM.hy).gl.length;
+  let h='<button class="back" data-act="nmBack">‹ '+esc(guest?'Barik':T('abcTitle'))+'</button>'+
+    '<header class="head"><h1 class="pg">'+esc(T('nmTitle'))+'</h1><p class="t-hy2" lang="hy">Քո անունը</p></header>'+
+    '<p class="note">'+esc(T('nmLead'))+'</p>'+
+    '<form class="nm-form" data-act="nmGo"><input class="search" id="nmIn" type="text" maxlength="40" autocomplete="given-name" autocapitalize="words" spellcheck="false" placeholder="'+esc(T('nmPh'))+'" value="'+esc(NM.src)+'" aria-label="'+esc(T('nmPh'))+'"><button class="btn primary" type="submit">'+esc(T('nmBtn'))+'</button></form>';
+  if(NM.src&&!has) h+='<p class="note nm-empty">'+esc(T('nmEmpty'))+'</p>';
+  if(has){
+    const lay=nmLayout(NM.hy), first=lay.gl[0], fi=ABC.findIndex(x=>x.up===first.k||(first.k==='և'&&x.lo==='և'));
+    const chips=lay.gl.map(g=>{ const i=ABC.findIndex(x=>x.up===g.k||(g.k==='և'&&x.lo==='և')), x=ABC[i]; if(!x) return '';
+      return '<button class="nm-chip" data-act="letter" data-arg="'+i+'"><b lang="hy">'+esc(g.up?x.up:x.lo)+'</b><span>'+esc(rd(x))+'</span></button>'; }).join('');
+    h+='<section class="copybook nm-card"><div class="cb-head"><h2 class="sec">'+esc(T('cursive'))+'</h2><button class="aud" data-act="nmWrite">'+ICON.again+'<span>'+esc(T('cursiveAgain'))+'</span></button></div>'+
+      nmSVG(NM.hy)+'<p class="nm-hy" lang="hy">'+esc(NM.hy)+'</p><p class="nm-tr">'+esc(NM.src&&NM.src!==NM.hy?NM.src+' · ':'')+'['+esc(nmTr(NM.hy))+']</p></section>'+
+      '<div class="actions nm-acts"><button class="btn primary" data-act="nmShare">'+esc(T('nmShare'))+'</button><button class="btn secondary" data-act="nmSave">'+esc(T('nmSave'))+'</button><button class="btn ghost" data-act="nmLink">'+esc(T('nmLink'))+'</button></div>'+
+      '<h2 class="sec nm-h">'+esc(T('nmLetters'))+'</h2><div class="nm-chips">'+chips+'</div>'+
+      (NM.ed?'<form class="nm-form nm-fix" data-act="nmFix"><input class="search" id="nmHy" type="text" lang="hy" maxlength="40" autocomplete="off" spellcheck="false" value="'+esc(NM.hy)+'" aria-label="'+esc(T('nmEdit'))+'"><button class="btn secondary" type="submit">'+esc(T('nmFixBtn'))+'</button></form>'+
+        '<div class="nm-kb">'+ABC.map(x=>'<button type="button" data-act="nmKey" data-arg="'+esc(x.lo)+'" lang="hy">'+esc(x.lo)+'</button>').join('')+'<button type="button" data-act="nmKey" data-arg=" " aria-label="space">␣</button><button type="button" data-act="nmKey" data-arg="<" aria-label="backspace">⌫</button></div>'
+        :'<p class="note nm-note">'+esc(T('nmNote'))+' <button class="linkbtn" data-act="nmEdit">'+esc(T('nmEdit'))+'</button></p>')+
+      (fi>=0?'<div class="actions"><button class="btn primary pen-cta" data-act="pen" data-arg="'+fi+'">'+ICON.pen+esc(T('nmLearn',first.up?ABC[fi].up:ABC[fi].lo))+'</button>'+(guest?'<button class="btn secondary" data-act="pickLang" data-arg="'+L+'">'+esc(LND().cta)+'</button>':'')+'</div>':'');
+  }
+  return h;
+}
+/* открытка 1080×1350: тетрадные линейки, имя прописью, печатное написание, исходное имя, адрес сайта */
+function nmCanvas(){
+  const lay=nmLayout(NM.hy), W=1080, Hh=1350, c=document.createElement('canvas'); c.width=W; c.height=Hh;
+  const g=c.getContext('2d'), bg=g.createLinearGradient(0,0,W,Hh); bg.addColorStop(0,'#FFFAF4'); bg.addColorStop(1,'#F8E1CF');
+  g.fillStyle=bg; g.fillRect(0,0,W,Hh);
+  g.fillStyle='#fff'; const rr=(x,y,w,h,r)=>{ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); };
+  rr(70,250,W-140,560,48); g.shadowColor='rgba(120,50,30,.16)'; g.shadowBlur=50; g.shadowOffsetY=18; g.fill(); g.shadowColor='transparent';
+  const sc=Math.min((W-260)/lay.w,2.6), ox=(W-lay.w*sc)/2, oy=250+280-76*sc;        // середина листа — между верхом заглавных и низом выносных
+  g.save(); rr(70,250,W-140,560,48); g.clip();
+  [[0,'#EBE1D9',2,[]],[64,'#D9B26A',2,[12,14]],[100,'#C8193C',3,[]],[152,'#EBE1D9',2,[]]].forEach(l=>{ g.beginPath(); g.setLineDash(l[3]); g.strokeStyle=l[1]; g.globalAlpha=l[0]===100?.45:1; g.lineWidth=l[2]; g.moveTo(70,oy+l[0]*sc); g.lineTo(W-70,oy+l[0]*sc); g.stroke(); });
+  g.globalAlpha=1; g.setLineDash([]); g.strokeStyle='#1C2045'; g.lineCap='round'; g.lineJoin='round'; g.lineWidth=4.6;
+  lay.gl.forEach(q=>{ g.save(); g.translate(ox+q.dx*sc,oy); g.scale(sc,sc); q.d.forEach(d=>g.stroke(new Path2D(d))); g.restore(); });
+  g.restore();
+  g.textAlign='center'; g.fillStyle='#A8173A'; g.font='800 40px Manrope, system-ui, sans-serif'; g.fillText('Barik · Բառիկ',W/2,150);
+  g.fillStyle='#1C2045'; let fs=120; g.font='700 '+fs+'px "Noto Serif Armenian", serif'; while(g.measureText(NM.hy).width>W-160&&fs>48){ fs-=6; g.font='700 '+fs+'px "Noto Serif Armenian", serif'; }
+  g.fillText(NM.hy,W/2,960);
+  g.fillStyle='#4C4F6E'; g.font='600 46px Manrope, system-ui, sans-serif'; const sub=(NM.src&&NM.src!==NM.hy?NM.src+' · ':'')+'['+nmTr(NM.hy)+']'; let f2=46; while(g.measureText(sub).width>W-140&&f2>26){ f2-=2; g.font='600 '+f2+'px Manrope, system-ui, sans-serif'; }
+  g.fillText(sub,W/2,1040);
+  g.fillStyle='#EF8B2C'; g.font='800 44px Manrope, system-ui, sans-serif'; g.fillText('barik.am',W/2,1215);
+  g.fillStyle='#4C4F6E'; g.font='500 32px Manrope, system-ui, sans-serif'; g.fillText(T('nmCardFoot'),W/2,1268);
+  return c;
+}
+function nmBlob(){ return new Promise(res=>{ try{ nmCanvas().toBlob(b=>res(b),'image/png'); }catch(e){ res(null); } }); }
+const nmFile=()=>{ let t=''; try{ t=trPhrase(NM.hy.toLowerCase(),'en'); }catch(e){} return 'barik-'+(t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'name')+'.png'; };   // имя файла — латиницей: не все браузеры берут кириллицу
+async function nmSave(){
+  const b=await nmBlob(); if(!b){ toast(T('accErr_server')); return; }
+  const a=document.createElement('a'), u=URL.createObjectURL(b); a.href=u; a.download=nmFile(); document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000);
+}
+async function nmShare(){
+  const url=nmURL(), text=T('nmShareText',NM.src||NM.hy,NM.hy);
+  try{
+    const b=await nmBlob(), f=b&&window.File?new File([b],nmFile(),{type:'image/png'}):null;
+    if(f&&navigator.canShare&&navigator.canShare({files:[f]})){ await navigator.share({files:[f],text:text+' '+url}); return; }
+    if(navigator.share){ await navigator.share({title:'Barik',text,url}); return; }
+  }catch(e){ if(e&&e.name==='AbortError') return; }
+  nmCopy();
+}
+function nmCopy(){ const u=nmURL(); const done=()=>toast(T('nmCopied'));
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(u).then(done,()=>toast(u)); else toast(u); }
 /* ================= ТРЕНАЖЁР ПРОПИСИ (O-133) =================
    Букву обводят пальцем (мышью, стилусом) по образцу — штрих за штрихом, с оранжевой точки, в ту
    сторону, куда ведёт перо. Каждый штрих сверяется с эталоном из cursive.js: обе линии делятся на
@@ -2161,6 +2259,15 @@ const H={
   landPen:()=>{ const box=document.getElementById('featCb'), seq=CUR_ABC(), k=box&&box.__k?(box.__k-1+seq.length)%seq.length:0, i=Math.max(0,ABC.findIndex(x=>x.up===seq[k]));
     setLang(L); penNew(i); go('pen',i); },
   pen:a=>{ penNew(+a); go('pen',+a); },
+  nmOpen:()=>{ go('name'); },
+  nmBack:()=>go(UI.lang?'abc':'onboard'),
+  nmGo:()=>{ const i=$('#nmIn'); nmSet(i?i.value:''); render(); },
+  nmLand:()=>{ const i=$('#ldName'); nmSet(i?i.value:''); go('name'); },
+  nmWrite:()=>nmWrite(),
+  nmEdit:()=>{ NM.ed=true; render(); const i=$('#nmHy'); if(i) i.focus(); },
+  nmFix:()=>{ const i=$('#nmHy'), v=(i?i.value:'').replace(/[^\u0531-\u0556\u0561-\u0587\s\-]/g,'').replace(/\s+/g,' ').trim().slice(0,40); if(!v) return; NM.hy=v.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' '); NM.fix=true; NM.ed=false; render(); },
+  nmKey:a=>{ const i=$('#nmHy'); if(!i) return; i.value=a==='<'?i.value.slice(0,-1):(i.value+a).slice(0,40); },
+  nmSave:()=>nmSave(), nmShare:()=>nmShare(), nmLink:()=>nmCopy(),
   penGo:()=>{ const i=ABC.findIndex(x=>CUR[x.up]&&!S.pen[x.up]); penNew(i<0?0:i); go('pen',penT.i); },
   penPart:a=>{ const st=penT; if(!st||st.wait||+a===st.part) return; if(st.demo) penDemoStop(); st.part=+a; st.miss=0; render(); },
   penClear:()=>{ const st=penT; if(!st||st.wait) return; if(st.demo) penDemoStop(); st.ink[st.part]=[]; st.sc[st.part]=[]; st.miss=0; render(); },
@@ -2346,6 +2453,7 @@ function onBack(){
   if(view==='abcquiz'){H.abcQuit(); return true;}
   if(view==='letter'){go('abc'); return true;}
   if(view==='pen'){go('letter',penT?penT.i:0); return true;}
+  if(view==='name'){go(UI.lang?'abc':'onboard'); return true;}
   if(view==='pquiz'){H.picQuit(); return true;}
   if(view==='tquiz'){H.typeQuit(); return true;}
   if(view==='pcard'){go('pics'); return true;}
@@ -2373,6 +2481,9 @@ view=UI.lang&&!WELCOME?'home':'onboard';
 // Со страницы темы (/ru/t/…, кнопка «Учить эти слова») — сразу в эту тему (?lang=ru&t=<номер>, O-159)
 { const qt=(/[?&]t=(\d+)(?:&|$)/.exec(location.search||'')||[])[1];
   if(QL&&qt!==undefined&&TOPICS[+qt]){ view='topic'; viewArg=+qt; if(lvOpen(TOPICS[+qt].lv)) preloadAudio(TOPICS[+qt].list); } }
+// ссылка «имя по-армянски» (O-168): ?name=Anna[&hy=Աննա] — сразу к написанному имени, и гостю тоже
+{ const sp=new URLSearchParams(location.search||''), nm=sp.get('name'), hy=sp.get('hy');
+  if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
