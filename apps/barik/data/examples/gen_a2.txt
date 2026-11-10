@@ -1,0 +1,17 @@
+# Примеры A2 — DeepSeek (Azure Foundry), проверены правилами build_examples.py; носителем не вычитаны
+իմ | Իմ գիրքը սեղանի վրա է։ | Моя книга на столе. | My book is on the table. | Mon livre est sur la table. | Mi libro está en la mesa. | Mein Buch liegt auf dem Tisch. | Meu livro está na mesa.
+քո | Քո կատուն շատ գեղեցիկ է։ | Твоя кошка очень красивая. | Your cat is very beautiful. | Ton chat est très beau. | Tu gato es muy bonito. | Deine Katze ist sehr schön. | Teu gato é muito bonito.
+նրա | Նրա աշխատասենյակը մեծ է։ | Его офис большой. | His office is big. | Son bureau est grand. | Su oficina es grande. | Sein Büro ist groß. | O escritório dele é grande.
+մեր | Մեր ընտանիքը մեծ է։ | Наша семья большая. | Our family is big. | Notre famille est grande. | Nuestra família es grande. | Unsere Familie ist groß. | Nossa família é grande.
+ձեր | Ձեր բաժակը դատարկ է։ | Ваш стакан пуст. | Your glass is empty. | Votre verre est vide. | Su vaso está vacío. | Ihr Glas ist leer. | Seu copo está vazio.
+նրանց | Նրանց տունը հին է։ | Их дом старый. | Their house is old. | Leur maison est vieille. | Su casa es vieja. | Ihr Haus ist alt. | A casa deles é velha.
+ինքը | Նա ինքը եկավ։ | Он сам пришёл. | He himself came. | Il est venu lui-même. | Él mismo vino. | Er selbst kam. | Ele mesmo veio.
+իրար | Նրանք իրար սիրում են։ | Они любят друг друга. | They love each other. | Ils s'aiment. | Se aman. | Sie lieben sich. | Eles se amam.
+այս | Այս իմ տունն է։ | Это мой дом. | This is my house. | C'est ma maison. | Esta es mi casa. | Das ist mein Haus. | Esta é minha casa.
+այդ | Այդ քո գիրքն է։ | Это твоя книга. | That is your book. | C'est ton livre. | Ese es tu libro. | Das ist dein Buch. | Esse é o seu livro.
+այն | Այն կատու է։ | Это кот. | That is a cat. | C'est un chat. | Eso es un gato. | Das ist eine Katze. | Aquilo é um gato.
+այսպիսի | Ես ունեմ այսպիսի գիրք։ | У меня есть такая книга. | I have such a book. | J'ai un tel livre. | Tengo un libro así. | Ich habe so ein Buch. | Eu tenho um livro assim.
+որևէ | Որևէ հարց ունե՞ք։ | У вас есть какие-нибудь вопросы? | Do you have any questions? | Avez-vous des questions ? | ¿Tienen alguna pregunta? | Haben Sie irgendwelche Fragen? | Vocês têm alguma pergunta?
+յուրաքանչյուր | Յուրաքանչյուր տուն ունի դուռ։ | У каждого дома есть дверь. | Every house has a door. | Chaque maison a une porte. | Cada casa tiene una puerta. | Jedes Haus hat eine Tür. | Cada casa tem uma porta.
+ամեն | Ամեն օր նոր է։ | Каждый день новый. | Every day is new. | Chaque jour est nouveau. | Cada día es nuevo. | Jeder Tag ist neu. | Cada dia é novo.
+բոլոր | Բոլոր երեխաները խաղում են։ | Все дети играют. | All children are playing. | Tous les enfants jouent. | Todos los niños juegan. | Alle Kinder spielen. | Todas as crianças estão brincando.
