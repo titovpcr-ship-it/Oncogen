@@ -1027,11 +1027,44 @@ function abcHTML(){
    (www/js/cursive.js — свои штрихи, tools/cursive.py). Координаты уже с наклоном прописи; заглавная
    и строчная стоят в общих координатах — на том расстоянии, что в образце. */
 const CUR=window.BARARAN_CURSIVE||{};
+/* ---- перо с нажимом (O-170): штрих рисуется не линией одной толщины, а короткими отрезками разной ширины —
+   нажим на ходе вниз, волосная на ходе вверх и вбок, концы сходят на нет (как в школьной прописи пером).
+   Осевая линия штриха остаётся в разметке невидимой (path.cl): по ней считаются длина, ход пера и тренажёр. */
+const CAL={step:1.6,min:2.1,max:5.6,sig:5,t0:5,t1:9,k0:.62,k1:.42};
+let calM=null; const calMemo=new Map(), calEnds=new Map();
+function calMeas(){ if(calM&&calM.isConnected) return calM; const NS='http://www.w3.org/2000/svg', sv=document.createElementNS(NS,'svg');
+  sv.setAttribute('width','0'); sv.setAttribute('height','0'); sv.setAttribute('aria-hidden','true'); sv.style.cssText='position:absolute;left:-9999px;top:0;visibility:hidden';
+  calM=document.createElementNS(NS,'path'); sv.appendChild(calM); document.body.appendChild(sv); return calM; }
+function calSample(d,hair){
+  const key=(hair?'h':'')+d; if(calMemo.has(key)) return calMemo.get(key);
+  const m=calMeas(); m.setAttribute('d',d); const L=m.getTotalLength(), n=Math.max(2,Math.round(L/CAL.step)), h=L/n, X=[],Y=[],P=[],W=[];
+  for(let i=0;i<=n;i++){ const q=m.getPointAtLength(i*h); X.push(q.x); Y.push(q.y); }
+  for(let i=0;i<=n;i++){ const a=Math.max(0,i-1), b=Math.min(n,i+1), dy=Y[b]-Y[a], l=Math.hypot(X[b]-X[a],dy)||1; P.push(hair?0:Math.max(0,dy/l)); }
+  const r=Math.ceil(CAL.sig*2/h);
+  for(let i=0;i<=n;i++){ let sm=0,w=0; for(let j=-r;j<=r;j++){ const q=Math.min(n,Math.max(0,i+j)), g=Math.exp(-(j*h)*(j*h)/(2*CAL.sig*CAL.sig)); sm+=P[q]*g; w+=g; }
+    let pr=sm/w; pr=pr*pr*(3-2*pr);
+    let wd=CAL.min+(CAL.max-CAL.min)*pr; const a=i*h, z=L-a;
+    if(a<CAL.t0) wd*=CAL.k0+(1-CAL.k0)*(a/CAL.t0); if(z<CAL.t1) wd*=CAL.k1+(1-CAL.k1)*(z/CAL.t1);
+    W.push(wd); }
+  const o={L,n,h,X,Y,W}; calMemo.set(key,o); return o;
+}
+function calSegs(d,hair){ const o=calSample(d,hair); let t='';
+  for(let i=0;i<o.n;i++) t+='<path d="M'+o.X[i].toFixed(1)+' '+o.Y[i].toFixed(1)+'L'+o.X[i+1].toFixed(1)+' '+o.Y[i+1].toFixed(1)+'" stroke-width="'+((o.W[i]+o.W[i+1])/2).toFixed(2)+'"/>';
+  return t; }
+const calInk=(d,hair)=>'<path class="cl" d="'+d+'"/><g class="cal">'+calSegs(d,hair===true)+'</g>';
+/* вход и выход буквы (для связок в имени): начало первого штриха, «хвостик» вправо у строки, края тела буквы в полосе строки */
+function calIO(g){ if(calEnds.has(g)) return calEnds.get(g); const m=calMeas();
+  const st=g.d.map(d=>{ m.setAttribute('d',d); const L=m.getTotalLength(), a=m.getPointAtLength(0), a2=m.getPointAtLength(Math.min(4,L)), z=m.getPointAtLength(L), z2=m.getPointAtLength(Math.max(0,L-4));
+    return {s:[a.x-g.x0,a.y],sd:[a2.x-a.x,a2.y-a.y],e:[z.x-g.x0,z.y],ed:[z.x-z2.x,z.y-z2.y]}; });
+  let out=null; for(let i=st.length-1;i>=0;i--){ const q=st[i]; if(q.e[0]>=g.w-7&&q.e[1]>=74&&q.e[1]<=104&&q.ed[0]>1.5&&q.ed[1]<.6){ out=q; break; } }
+  let bl=1e9, br=-1e9; g.d.forEach(d=>{ const o=calSample(d); for(let i=0;i<=o.n;i++) if(o.Y[i]>=56&&o.Y[i]<=103){ bl=Math.min(bl,o.X[i]-g.x0); br=Math.max(br,o.X[i]-g.x0); } });
+  if(bl>br){ bl=0; br=g.w; }
+  const r={in:st[0],out,bl,br}; calEnds.set(g,r); return r; }
 function cursiveSVG(x,label){
   const g=CUR[x.up]; if(!g) return '';
   const parts=x.lo===x.up?[g.l]:[g.U,g.l], base=parts[0].x0;
   let ink='', right=0;
-  parts.forEach(p=>{ ink+='<g transform="translate('+(-base).toFixed(1)+',0)">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g>'; right=Math.max(right,p.x0+p.w-base); });
+  parts.forEach(p=>{ ink+='<g transform="translate('+(-base).toFixed(1)+',0)">'+p.d.map(d=>calInk(d)).join('')+'</g>'; right=Math.max(right,p.x0+p.w-base); });
   // линии тетради — во всю ширину карточки: за пределами viewBox они тоже видны
   const x0=-30, w=right+60, line=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
   return '<svg class="cb" viewBox="'+x0+' -24 '+w+' 200" role="img" aria-label="'+esc((label||T('cursive'))+': '+x.up+(x.lo!==x.up?' '+x.lo:''))+'">'+
@@ -1083,10 +1116,15 @@ function cbPlan(paths){
 function writeCursive(svgArg,onDone){
   const svg=svgArg||document.querySelector('.copybook .cb'); if(!svg) return;
   const my=svg.__a=(svg.__a||0)+1, alive=()=>my===svg.__a&&svg.isConnected;
-  const paths=[...svg.querySelectorAll('.cb-ink path')], nib=svg.querySelector('.nib');
+  const paths=[...svg.querySelectorAll('.cb-ink path.cl')], nib=svg.querySelector('.nib');
+  // чернила — отрезки рядом с осевой линией: показываются по мере хода пера
+  const calTo=(p,fr)=>{ if(!p.__sg){ const g=p.nextElementSibling; p.__sg=g&&g.classList.contains('cal')?[...g.children]:[]; p.__n=p.__sg.length; }
+    const sg=p.__sg, k=fr>=1?sg.length:Math.min(sg.length,Math.max(0,Math.ceil(fr*sg.length)));
+    if(k>p.__n) for(let i=p.__n;i<k;i++) sg[i].style.visibility=''; else for(let i=k;i<p.__n;i++) sg[i].style.visibility='hidden';
+    p.__n=k; };
   const lens=paths.map(p=>p.getTotalLength());
   const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  paths.forEach((p,k)=>{ p.style.strokeDasharray=lens[k]+' '+(lens[k]+2); p.style.strokeDashoffset=still?0:lens[k]+1; });
+  paths.forEach((p,k)=>{ p.style.strokeDasharray=lens[k]+' '+(lens[k]+2); p.style.strokeDashoffset=still?0:lens[k]+1; calTo(p,still?1:0); });
   if(still||!paths.length){ nib.style.opacity=0; if(onDone) onDone(); return; }
   const {st,T}=cbPlan(paths), f0=st[0].f;
   const put=(x,y,o,sc)=>{ nib.setAttribute('transform','translate('+x.toFixed(2)+' '+y.toFixed(2)+') scale('+sc.toFixed(3)+')'); nib.style.opacity=o.toFixed(3); };
@@ -1097,10 +1135,10 @@ function writeCursive(svgArg,onDone){
     if(t0===null) t0=now;
     const t=now-t0;
     if(t<CB.lead){ const e=sm(t/CB.lead); put(f0.X[0],f0.Y[0],e,.55+.45*e); requestAnimationFrame(frame); return; }
-    while(j<st.length-1&&t>=st[j].t1){ if(!st[j].air) st[j].p.style.strokeDashoffset=0; j++; }
+    while(j<st.length-1&&t>=st[j].t1){ if(!st[j].air){ st[j].p.style.strokeDashoffset=0; calTo(st[j].p,1); } j++; }
     const q=st[j];
     if(t>=T){                                   // дописано: перо поднимается и гаснет
-      q.p.style.strokeDashoffset=0;
+      q.p.style.strokeDashoffset=0; calTo(q.p,1);
       const e=sm((t-T)/CB.tail), f=q.f; put(f.X[f.n],f.Y[f.n],1-e,1-.35*e);
       if(e<1) requestAnimationFrame(frame); else if(onDone) onDone(); return;
     }
@@ -1111,7 +1149,7 @@ function writeCursive(svgArg,onDone){
       const f=q.f, tt=t-q.t0;
       let a=0, b=f.n; while(b-a>1){ const m=(a+b)>>1; if(f.T[m]<=tt) a=m; else b=m; }
       const fr=Math.min(1,Math.max(0,(tt-f.T[a])/((f.T[b]-f.T[a])||1))), s=(a+fr)*f.h;
-      q.p.style.strokeDashoffset=Math.max(0,f.L-s);
+      q.p.style.strokeDashoffset=Math.max(0,f.L-s); calTo(q.p,s/f.L);
       put(f.X[a]+(f.X[b]-f.X[a])*fr, f.Y[a]+(f.Y[b]-f.Y[a])*fr, 1, 1);
     }
     requestAnimationFrame(frame);
@@ -1124,24 +1162,39 @@ function writeCursive(svgArg,onDone){
    (PNG на canvas, без сервера) и ссылка ?name=…, которой можно поделиться. Буквы можно поправить самому. */
 const NAMES=window.BARARAN_NAMES||null;
 let NM={src:'',hy:'',fix:false,ed:false};
-const NM_GAP=-9, NM_SP=46;                       // буквы прописи стоят с наклоном — рамки слегка заходят друг на друга
+const NM_SP=50;
 function nmSet(src,hy){ src=String(src||'').replace(/\s+/g,' ').trim().slice(0,40);
   NM={src,hy:hy!=null?hy:(NAMES?NAMES.toHy(src,L):''),fix:hy!=null,ed:false}; }
+/* буквы имени в строку (O-170): где у буквы есть выходной хвостик, а следующая начинается у линии строчных, хвостик
+   ведётся к ней волосной связкой; иначе буквы стоят рядом — расстояние по телам букв, выносные заходят под соседа */
+const nmShift=(d,by)=>{ let i=0; return d.replace(/-?\d+(\.\d+)?/g,m=>((i++)%2===0?(+m+by).toFixed(1):m)); };
 function nmLayout(hy){
-  const out=[]; let x=0;
+  const out=[]; let prev=null, right=0, first=true;
   (NAMES?NAMES.glyphs(hy):[]).forEach(g=>{
-    if(g.sp){ x+=NM_SP; return; }
-    const c=CUR[g.k]; if(!c) return; const p=g.up?c.U:c.l;
-    out.push({k:g.k,up:g.up,d:p.d,dx:x-p.x0,w:p.w}); x+=p.w+NM_GAP;
+    if(g.sp){ right+=NM_SP; prev=null; return; }
+    const c=CUR[g.k]; if(!c) return; const p=g.up?c.U:c.l, e=calIO(p), S=e.in.s; let dx=null, join=null;
+    if(prev&&prev.io.out&&S[1]>=52&&S[1]<=82){
+      const E=[prev.dx+prev.p.x0+prev.io.out.e[0],prev.io.out.e[1]], rise=E[1]-S[1];
+      const gap=e.in.sd[1]>1.2?Math.max(12,rise*.8):Math.max(8,6+Math.max(0,rise)*.55);
+      const d2=E[0]+gap-S[0]-p.x0, lead=d2+p.x0+e.bl-(prev.dx+prev.p.x0+prev.io.br);
+      if(lead>=-3&&lead<=30){ dx=d2;
+        const Sx=dx+p.x0+S[0], len=Math.hypot(Sx-E[0],S[1]-E[1])||1, u=prev.io.out.ed, ul=Math.hypot(u[0],u[1])||1, v=[(Sx-E[0])/len,(S[1]-E[1])/len];
+        join='M'+E[0].toFixed(1)+' '+E[1].toFixed(1)+'C'+(E[0]+u[0]/ul*len*.38).toFixed(1)+' '+(E[1]+u[1]/ul*len*.38).toFixed(1)+' '+(Sx-v[0]*len*.3).toFixed(1)+' '+(S[1]-v[1]*len*.3).toFixed(1)+' '+Sx.toFixed(1)+' '+S[1].toFixed(1); }
+    }
+    if(dx===null){ if(!prev) dx=right-p.x0-(first?0:e.bl);
+      else dx=Math.max(prev.dx+prev.p.x0+prev.io.br+9-e.bl, prev.dx+prev.p.x0+prev.p.w-26)-p.x0; }
+    const it={k:g.k,up:g.up,p,io:e,dx,join}; out.push(it); prev=it; first=false; right=Math.max(right,dx+p.x0+p.w);
   });
-  return {gl:out,w:Math.max(60,x-NM_GAP)};
+  const left=out.length?Math.min(0,...out.map(o=>o.dx+o.p.x0)):0;
+  if(left<0) out.forEach(o=>{ o.dx-=left; if(o.join) o.join=nmShift(o.join,-left); });
+  return {gl:out,w:Math.max(60,right-left)};
 }
 function nmSVG(hy){
   const lay=nmLayout(hy); if(!lay.gl.length) return '';
   const line=(y,c)=>'<line class="'+c+'" x1="-4000" x2="4000" y1="'+y+'" y2="'+y+'"/>';
   return '<svg class="cb nm-cb" viewBox="-26 -30 '+(lay.w+52).toFixed(1)+' 206" role="img" aria-label="'+esc(T('cursive')+': '+hy)+'">'+
     '<g class="cb-lines">'+line(0,'t')+line(64,'x')+line(100,'b')+line(152,'t')+'</g><g class="cb-ink">'+
-    lay.gl.map(g=>'<g transform="translate('+g.dx.toFixed(1)+',0)">'+g.d.map(d=>'<path d="'+d+'"/>').join('')+'</g>').join('')+
+    lay.gl.map(g=>(g.join?'<g class="jn">'+calInk(g.join,true)+'</g>':'')+'<g transform="translate('+g.dx.toFixed(1)+',0)">'+g.p.d.map(d=>calInk(d)).join('')+'</g>').join('')+
     '</g><g class="nib"><circle class="halo" r="8.5"/><circle r="4.1"/></g></svg>';
 }
 function nmWrite(){   // имя пишется быстрее буквы алфавита: план движения считается сразу, затем скорости возвращаются
@@ -1184,8 +1237,10 @@ function nmCanvas(){
   const sc=Math.min((W-260)/lay.w,2.6), ox=(W-lay.w*sc)/2, oy=250+280-76*sc;        // середина листа — между верхом заглавных и низом выносных
   g.save(); rr(70,250,W-140,560,48); g.clip();
   [[0,'#EBE1D9',2,[]],[64,'#D9B26A',2,[12,14]],[100,'#C8193C',3,[]],[152,'#EBE1D9',2,[]]].forEach(l=>{ g.beginPath(); g.setLineDash(l[3]); g.strokeStyle=l[1]; g.globalAlpha=l[0]===100?.45:1; g.lineWidth=l[2]; g.moveTo(70,oy+l[0]*sc); g.lineTo(W-70,oy+l[0]*sc); g.stroke(); });
-  g.globalAlpha=1; g.setLineDash([]); g.strokeStyle='#1C2045'; g.lineCap='round'; g.lineJoin='round'; g.lineWidth=4.6;
-  lay.gl.forEach(q=>{ g.save(); g.translate(ox+q.dx*sc,oy); g.scale(sc,sc); q.d.forEach(d=>g.stroke(new Path2D(d))); g.restore(); });
+  g.globalAlpha=1; g.setLineDash([]); g.strokeStyle='#1C2045'; g.lineCap='round'; g.lineJoin='round';
+  const pen=(d,dx,hair)=>{ const o=calSample(d,hair); g.save(); g.translate(ox+dx*sc,oy); g.scale(sc,sc);
+    for(let i=0;i<o.n;i++){ g.beginPath(); g.lineWidth=(o.W[i]+o.W[i+1])/2*1.12; g.moveTo(o.X[i],o.Y[i]); g.lineTo(o.X[i+1],o.Y[i+1]); g.stroke(); } g.restore(); };
+  lay.gl.forEach(q=>{ if(q.join) pen(q.join,0,true); q.p.d.forEach(d=>pen(d,q.dx,false)); });
   g.restore();
   g.textAlign='center'; g.fillStyle='#A8173A'; g.font='800 40px Manrope, system-ui, sans-serif'; g.fillText('Barik · Բառիկ',W/2,150);
   g.fillStyle='#1C2045'; let fs=120; g.font='700 '+fs+'px "Noto Serif Armenian", serif'; while(g.measureText(NM.hy).width>W-160&&fs>48){ fs-=6; g.font='700 '+fs+'px "Noto Serif Armenian", serif'; }
@@ -1242,7 +1297,7 @@ function penHTML(){
   const tabs=st.parts.length<2?'':'<div class="pen-parts">'+st.parts.map((q,j)=>'<button data-act="penPart" data-arg="'+j+'" aria-pressed="'+(j===st.part)+'"><b lang="hy">'+esc(j?x.lo:x.up)+'</b><span>'+esc(T(j?'penSmall':'penCap'))+'</span>'+
     (st.ink[j].length===q.d.length?'<i class="pen-tick" aria-hidden="true">✓</i>':'')+'</button>').join('')+'</div>';
   const svg='<svg class="cb pen-svg" id="penSvg" preserveAspectRatio="xMidYMid meet" aria-label="'+esc(T('penTitle')+': '+(st.part?x.lo:x.up))+'">'+PEN_LINES+
-    '<g class="pen-ghost'+(st.ghost?'':' off')+'">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g><path class="pen-cur"/><g class="pen-ok"></g>'+
+    '<g class="pen-ghost'+(st.ghost?'':' off')+'">'+p.d.map(d=>'<path d="'+d+'"/>').join('')+'</g><g class="pen-cal'+(st.ghost?'':' off')+'">'+p.d.map(d=>calSegs(d)).join('')+'</g><path class="pen-cur"/><g class="pen-ok"></g>'+
     '<path class="pen-live"/><path class="pen-halo"/><path class="pen-start"/><path class="pen-comet"/>'+
     '<g class="cb-ink pen-demo gone"></g><g class="nib"><circle class="halo" r="8.5"/><circle r="4.1"/></g></svg>';
   return head+tabs+'<div class="pen-card">'+svg+'</div>'+
@@ -1280,7 +1335,7 @@ function penWidths(){
   const m=svg.getScreenCTM(); if(!m||!m.a) return;
   const u=st.u=1/m.a, set=(s,w)=>svg.querySelectorAll(s).forEach(e=>{ e.style.strokeWidth=(w*u).toFixed(3); });
   set('.pen-ghost path',20); set('.pen-cur',20); set('.pen-ok path',7); set('.pen-live',7); set('.pen-start',18); set('.pen-halo',36); set('.pen-comet',13);
-  set('.pen-demo path',6.5); set('.cb-lines line',1.4);
+  set('.cb-lines line',1.4);
   const xl=svg.querySelector('.cb-lines .x'); if(xl) xl.style.strokeDasharray=(7*u).toFixed(2)+' '+(8*u).toFixed(2);
   svg.querySelectorAll('.nib circle').forEach((c,j)=>c.setAttribute('r',((j?5.5:11)*u).toFixed(2)));
 }
@@ -1423,7 +1478,7 @@ function penFinish(){
 function penDemo(k){
   const st=penT, svg=document.getElementById('penSvg'); if(!st||!svg||st.fin) return;
   const g=svg.querySelector('.pen-demo'), ds=st.parts[st.part].d;
-  g.innerHTML=(k==null?ds:[ds[k]]).map(d=>'<path d="'+d+'"/>').join(''); g.classList.remove('gone');
+  g.innerHTML=(k==null?ds:[ds[k]]).map(d=>calInk(d)).join(''); g.classList.remove('gone');
   penWidths(); st.demo=true; st.cm=(st.cm||0)+1;
   const c=svg.querySelector('.pen-comet'); if(c) c.removeAttribute('d');
   writeCursive(svg,()=>{ if(penT!==st) return; setTimeout(()=>{ if(penT!==st||!st.demo) return; st.demo=false; g.classList.add('gone'); penComet(); },still()?1600:350); });

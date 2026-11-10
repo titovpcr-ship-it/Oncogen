@@ -92,8 +92,12 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.locator('.l-ex [data-act=sayFree]').count()===1,'пример у буквы озвучивается без подписки');
     ok(await pg.locator('.copybook .cb-ink path').count()>=2,'пропись буквы: штрихи на месте');
     await pg.waitForTimeout(7000);
-    const ink=await pg.evaluate(()=>[...document.querySelectorAll('.cb-ink path')].map(p=>parseFloat(getComputedStyle(p).strokeDashoffset)||0));
+    const ink=await pg.evaluate(()=>[...document.querySelectorAll('.cb-ink path.cl')].map(p=>parseFloat(getComputedStyle(p).strokeDashoffset)||0));
     ok(ink.length&&ink.every(v=>Math.abs(v)<0.5),'пропись: перо дописало букву '+ink.map(v=>v.toFixed(0)).join(','));
+    { // перо с нажимом (O-170): чернила — отрезки разной толщины, все видны после письма
+      const c=await pg.evaluate(()=>{ const e=[...document.querySelectorAll('.copybook .cal path')], w=e.map(x=>+x.getAttribute('stroke-width'));
+        return {n:e.length,min:Math.min(...w),max:Math.max(...w),hid:e.filter(x=>x.style.visibility==='hidden').length,cl:getComputedStyle(document.querySelector('.copybook path.cl')).stroke}; });
+      ok(c.n>100&&c.max>4.5&&c.min<2.4&&c.hid===0&&c.cl==='none','пропись пером с нажимом: '+c.n+' отрезков, толщина '+c.min.toFixed(1)+'–'+c.max.toFixed(1)+', осевая линия скрыта'); }
     if(scheme==='light'){
       // тренажёр прописи: обвести Ղ ղ по образцу — задом наперёд не принимается, по эталону — три звезды
       const pens=async k=>pg.evaluate(k=>{ const svg=document.getElementById('penSvg'), p=svg.querySelectorAll('.pen-ghost path')[k]; if(!p) return null;
@@ -463,10 +467,10 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:390,height:800},locale:'en-US',timezoneId:'America/New_York',acceptDownloads:true}); const pg=await ctx.newPage();
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base+'?lang=ru&name='+encodeURIComponent('Анна')); await pg.waitForSelector('.nm-cb');
-    ok((await pg.textContent('.nm-hy'))==='Աննա'&&await pg.locator('.nm-cb .cb-ink g').count()===4&&await pg.locator('.nm-chip').count()===4,'ссылка ?name=Анна: гость сразу видит имя прописью, 4 буквы');
+    ok((await pg.textContent('.nm-hy'))==='Աննա'&&await pg.locator('.nm-cb .cb-ink g[transform]').count()===4&&await pg.locator('.nm-cb .cb-ink .jn').count()>=1&&await pg.locator('.nm-chip').count()===4,'ссылка ?name=Анна (есть связка между буквами): гость сразу видит имя прописью, 4 буквы');
     const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'имя: без прокрутки вбок');
-    await pg.waitForFunction(()=>[...document.querySelectorAll('.nm-cb .cb-ink path')].every(p=>parseFloat(p.style.strokeDashoffset)===0),null,{timeout:20000}).catch(()=>{});
-    ok(await pg.evaluate(()=>[...document.querySelectorAll('.nm-cb .cb-ink path')].every(p=>parseFloat(p.style.strokeDashoffset)===0)),'перо дописало имя');
+    await pg.waitForFunction(()=>[...document.querySelectorAll('.nm-cb .cb-ink path.cl')].every(p=>parseFloat(p.style.strokeDashoffset)===0),null,{timeout:20000}).catch(()=>{});
+    ok(await pg.evaluate(()=>[...document.querySelectorAll('.nm-cb .cb-ink path.cl')].every(p=>parseFloat(p.style.strokeDashoffset)===0)&&[...document.querySelectorAll('.nm-cb .cal path')].every(e=>e.style.visibility!=='hidden')),'перо дописало имя: все чернила видны');
     const [dl]=await Promise.all([pg.waitForEvent('download'),pg.click('[data-act=nmSave]')]); const f=await dl.path();
     ok(dl.suggestedFilename()==='barik-anna.png'&&fs.statSync(f).size>20000,'открытка сохраняется: '+dl.suggestedFilename());
     await pg.click('[data-act=nmEdit]'); await pg.fill('#nmHy','Անա'); await pg.click('.nm-fix button[type=submit]');
