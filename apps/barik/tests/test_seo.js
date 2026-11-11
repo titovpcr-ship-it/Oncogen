@@ -146,6 +146,18 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы фраз: записи на месте ('+srcs.length+')');
     const sm=fs.readFileSync(path.join(ROOT,'sitemap-phrases.xml'),'utf8');
     ok((sm.match(/<loc>/g)||[]).length===n.reduce((a,x)=>a+x,0)&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-phrases.xml')&&fs.readFileSync(path.join(ROOT,'ru','index.html'),'utf8').includes('href="p/index.html"'),'sitemap-phrases, ссылка из оглавления словаря'); }
+  { // справочник (O-194) и битые ссылки на новых страницах: разговорник, алфавит, справочник
+    const gs=['ru','en'].map(l=>fs.readdirSync(path.join(ROOT,l,'g')).filter(f=>f.endsWith('.html')).length);
+    ok(gs.every(x=>x===11),'справочник: 10 статей + оглавление на ru и en ('+gs.join('/')+')');
+    const c=fs.readFileSync(path.join(ROOT,'ru','g','cases.html'),'utf8');
+    ok(c.includes('"@type": "Article"')&&c.includes('տան')&&c.includes('hreflang="en"')&&!c.includes('hreflang="fr"'),'статья: Article, таблица падежей, hreflang только ru/en');
+    const bad=[];
+    for(const L of ['ru','en','fr','es','de','pt']) for(const sub of ['p','a','g']){ const dir=path.join(ROOT,L,sub); if(!fs.existsSync(dir)) continue;
+      for(const f of fs.readdirSync(dir)){ if(!f.endsWith('.html')) continue; const s=fs.readFileSync(path.join(dir,f),'utf8');
+        for(const m of s.matchAll(/(?:href|src|data-src)="([^"#?]*)/g)){ const h=m[1]; if(!h||/^(https?|mailto):/.test(h)) continue;
+          let q=path.join(dir,h); if(h.endsWith('/')) q=path.join(q,'index.html'); if(!fs.existsSync(q)) bad.push(L+'/'+sub+'/'+f+' → '+h); } } }
+    ok(bad.length===0,'разговорник, алфавит, справочник: битых ссылок и записей нет '+bad.slice(0,4).join('; '));
+    ok(fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-guides.xml'),'sitemap-guides в указателе'); }
   { // алфавит для поиска (O-192): 39 букв, числа, пропись, звук, вход в приложение на букву
     const L6=['ru','en','fr','es','de','pt'], n=L6.map(l=>fs.readdirSync(path.join(ROOT,l,'a')).filter(f=>f.endsWith('.html')).length);
     ok(n.every(x=>x===41),'алфавит: 41 страница на язык ('+n.join('/')+')');

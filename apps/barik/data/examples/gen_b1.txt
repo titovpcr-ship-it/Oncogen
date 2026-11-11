@@ -2141,3 +2141,43 @@
 հյուս | Նրա հյուսերը գեղեցիկ են։ | Её косы красивые. | Her braids are beautiful. | Ses tresses sont belles. | Sus trenzas son bonitas. | Ihre Zöpfe sind schön. | Suas tranças são bonitas.
 մազափունջ | Նա տվեց ինձ իր մազափունջը։ | Она дала мне свою прядь волос. | She gave me a lock of her hair. | Elle m'a donné une mèche de ses cheveux. | Ella me dio un mechón de su cabello. | Sie gab mir eine Haarlocke. | Ela me deu uma mecha de seu cabelo.
 խոպոպ | Նա ունի գեղեցիկ խոպոպներ։ | У неё красивые кудри. | She has beautiful curls. | Elle a de belles boucles. | Ella tiene hermosos rizos. | Sie hat schöne Locken. | Ela tem belos cachos.
+գանգուր | Նրա մազերը գանգուր են։ | Его волосы кудрявые. | His hair is curly. | Ses cheveux sont bouclés. | Su pelo es rizado. | Seine Haare sind lockig. | O cabelo dele é cacheado.
+ալիքավոր | Իմ մազերը ալիքավոր են։ | Мои волосы волнистые. | My hair is wavy. | Mes cheveux sont ondulés. | Mi pelo es ondulado. | Meine Haare sind wellig. | Meu cabelo é ondulado.
+ճաղատություն | Նրա ճաղատությունը նկատելի է։ | Его облысение заметно. | His baldness is noticeable. | Sa calvitie est visible. | Su calvicie es visible. | Seine Glatze ist sichtbar. | A calvície dele é visível.
+ալեհեր | Նա ալեհեր է։ | У него седые волосы. | He has grey hair. | Il a les cheveux gris. | Él tiene el pelo gris. | Er hat graue Haare. | Ele tem cabelos grisalhos.
+շեկ | Նա շեկ է։ | Он светловолосый. | He is blond. | Il est blond. | Él es rubio. | Er ist blond. | Ele é loiro.
+սևահեր | Նա սևահեր է։ | Он черноволосый. | He has black hair. | Il a les cheveux noirs. | Él tiene el pelo negro. | Er hat schwarze Haare. | Ele tem cabelos pretos.
+կարմրահեր | Նա կարմրահեր է։ | Он рыжий. | He has red hair. | Il a les cheveux roux. | Él tiene el pelo rojo. | Er hat rote Haare. | Ele tem cabelos ruivos.
+սափրված | Նա սափրված է։ | Он побрит. | He is clean-shaven. | Il est rasé. | Está afeitado. | Er ist rasiert. | Ele está barbeado.
+պեպեն | Նրա երեսին շատ պեպեններ կան։ | На его лице много веснушек. | He has many freckles on his face. | Il a beaucoup de taches de rousseur sur le visage. | Tiene muchas pecas en la cara. | Er hat viele Sommersprossen im Gesicht. | Ele tem muitas sardas no rosto.
+փոսիկ | Ես փոսիկներ ունեմ։ | У меня есть ямочки. | I have dimples. | J'ai des fossettes. | Tengo hoyuelos. | Ich habe Grübchen. | Eu tenho covinhas.
+կուզ | Ուղտն ունի մեծ կուզ։ | Верблюд имеет большой горб. | The camel has a big hump. | Le chameau a une grande bosse. | El camello tiene una gran joroba. | Das Kamel hat einen großen Höcker. | O camelo tem uma corcova grande.
+մարմնակազմություն | Նա ունի ատլետիկ մարմնակազմություն։ | У него атлетическое телосложение. | He has an athletic physique. | Il a une constitution athlétique. | Tiene una complexión atlética. | Er hat einen athletischen Körperbau. | Ele tem um físico atlético.
+կազմվածք | Նա նիհար կազմվածք ունի։ | У неё стройная фигура. | She has a slim figure. | Elle a une silhouette mince. | Ella tiene una figura delgada. | Sie hat eine schlanke Figur. | Ela tem uma figura esbelta.
+ցածրահասակ | Նա ցածրահասակ է։ | Он низкорослый. | He is short. | Il est de petite taille. | Él es bajo. | Er ist klein. | Ele é baixo.
+միջահասակ | Նա միջահասակ է։ | Она среднего роста. | She is of medium height. | Elle est de taille moyenne. | Ella es de estatura media. | Sie ist mittelgroß. | Ela é de altura média.
+մարմնեղ | Նա մարմնեղ է։ | Он плотный. | He is heavyset. | Il est robuste. | Él es robusto. | Er ist kräftig gebaut. | Ele é robusto.
+սլացիկ | Նրա կազմվածքը սլացիկ է։ | Её фигура стройная. | Her figure is slender. | Sa silhouette est élancée. | Su figura es esbelta. | Ihre Figur ist schlank. | A figura dela é esbelta.
+բարեկազմ | Իմ եղբայրը բարեկազմ է։ | Мой брат хорошо сложён. | My brother is well-built. | Mon frère est bien bâti. | Mi hermano es bien formado. | Mein Bruder ist gut gebaut. | Meu irmão é bem-construído.
+մկանուտ | Մարզիկը շատ մկանուտ է։ | Спортсмен очень мускулистый. | The athlete is very muscular. | Le sportif est très musclé. | El deportista es muy musculoso. | Der Sportler ist sehr muskulös. | O atleta é muito musculoso.
+թիկնեղ | Նա թիկնեղ է ու ուժեղ։ | Он широкоплечий и сильный. | He is broad-shouldered and strong. | Il est large d'épaules et fort. | Él tiene los hombros anchos y es fuerte. | Er hat breite Schultern und ist stark. | Ele tem ombros largos e é forte.
+նրբակազմ | Նրբակազմ աղջիկը ծաղիկներ էր քաղում։ | Хрупкая девушка собирала цветы. | The delicate girl was picking flowers. | La jeune fille délicate cueillait des fleurs. | La delicada chica recogía flores. | Das zarte Mädchen pflückte Blumen. | A menina delicada colhia flores.
+սիրունիկ | Սիրունիկ կատուն խաղում էր։ | Милый котик играл. | The cute cat was playing. | Le joli chat jouait. | El lindo gato jugaba. | Die süße Katze spielte. | O gato fofo estava brincando.
+գեղեցկադեմ | Գեղեցկադեմ երիտասարդը մտավ սենյակ։ | Красивый молодой человек вошёл в комнату. | The good-looking young man entered the room. | Le beau jeune homme est entré dans la pièce. | El joven guapo entró en la habitación. | Der gutaussehende junge Mann betrat das Zimmer. | O jovem bonito entrou na sala.
+հմայիչ | Նրա ժպիտը հմայիչ էր։ | Её улыбка была очаровательной. | Her smile was charming. | Son sourire était charmant. | Su sonrisa era encantadora. | Ihr Lächeln war charmant. | Seu sorriso era encantador.
+խնամված | Այգին խնամված է։ | Сад ухожен. | The garden is well-groomed. | Le jardin est bien entretenu. | El jardín está bien cuidado. | Der Garten ist gepflegt. | O jardim está bem cuidado.
+անխնամ | Նրա մազերը անխնամ են։ | Его волосы неухожены. | His hair is unkempt. | Ses cheveux sont mal soignés. | Su pelo está descuidado. | Seine Haare sind ungepflegt. | Seu cabelo está descuidado.
+կոկիկ | Սենյակը կոկիկ է։ | Комната опрятная. | The room is tidy. | La pièce est bien rangée. | La habitación está ordenada. | Das Zimmer ist aufgeräumt. | O quarto está arrumado.
+թափթփված | Նրա աշխատանքը թափթփված է։ | Его работа неряшливая. | His work is sloppy. | Son travail est bâclé. | Su trabajo es descuidado. | Seine Arbeit ist schlampig. | Seu trabalho é desleixado.
+էլեգանտ | Կինը էլեգանտ է։ | Женщина элегантна. | The woman is elegant. | La femme est élégante. | La mujer es elegante. | Die Frau ist elegant. | A mulher é elegante.
+ճաշակով | Հագուստը ճաշակով է։ | Одежда со вкусом. | The clothes are tasteful. | Les vêtements sont de bon goût. | La ropa es de buen gusto. | Die Kleidung ist geschmackvoll. | A roupa é de bom gosto.
+հայացք | Նրա հայացքը սուր էր։ | Его взгляд был острым. | His gaze was sharp. | Son regard était perçant. | Su mirada era penetrante. | Sein Blick war scharf. | Seu olhar era penetrante.
+քմծիծաղ | Նա քմծիծաղ տվեց։ | Он усмехнулся. | He smirked. | Il a eu un sourire narquois. | Él sonrió con sorna. | Er lächelte spöttisch. | Ele sorriu com ar de deboche.
+դիմագծեր | Նրա դիմագծերը նուրբ են։ | Её черты лица нежные. | Her features are delicate. | Ses traits sont délicats. | Sus rasgos son delicados. | Ihre Gesichtszüge sind zart. | Os traços dela são delicados.
+կապուտաչյա | Իմ քույրը կապուտաչյա է։ | Моя сестра голубоглазая. | My sister is blue-eyed. | Ma sœur a les yeux bleus. | Mi hermana tiene los ojos azules. | Meine Schwester ist blauäugig. | Minha irmã tem olhos azuis.
+սևաչյա | Նա սևաչյա ու գեղեցիկ է։ | Она черноглазая и красивая. | She is dark-eyed and beautiful. | Elle a les yeux noirs et elle est belle. | Ella tiene los ojos negros y es hermosa. | Sie ist schwarzäugig und schön. | Ela tem olhos escuros e é bonita.
+կանաչաչյա | Կանաչաչյա աղջիկը իմ դասընկերն է։ | Зеленоглазая девочка – моя одноклассница. | The green-eyed girl is my classmate. | La fille aux yeux verts est ma camarade de classe. | La chica de ojos verdes es mi compañera de clase. | Das grünäugige Mädchen ist meine Klassenkameradin. | A garota de olhos verdes é minha colega de classe.
+թուխ | Նա թուխ է ամռանը։ | Он смуглый летом. | He is swarthy in summer. | Il est bronzé en été. | Él está moreno en verano. | Er ist im Sommer gebräunt. | Ele fica moreno no verão.
+սպիտակամաշկ | Նա սպիտակամաշկ է։ | Она светлокожая. | She is fair-skinned. | Elle a la peau claire. | Ella tiene la piel clara. | Sie ist hellhäutig. | Ela tem a pele clara.
+թխամորթ | Ես թխամորթ եմ։ | Я темнокожий. | I am dark-skinned. | J'ai la peau mate. | Yo tengo la piel morena. | Ich bin dunkelhäutig. | Eu tenho a pele morena.
+կարմրած | Նրա երեսը կարմրած էր։ | Его лицо покраснело. | His face was red. | Son visage était rouge. | Su cara estaba roja. | Sein Gesicht war rot. | O rosto dele estava vermelho.

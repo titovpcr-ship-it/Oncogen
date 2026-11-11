@@ -262,6 +262,11 @@ ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .
 .pb-n{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .pb-n small{color:var(--mut)}
 .nm-big.ph{font-size:clamp(30px,8vw,46px)}
+.art p,.art li{font-size:17px;line-height:1.6}.art h2{margin-top:26px}.art [lang=hy]{font-family:"Noto Serif Armenian",serif;font-weight:600}
+.art .ws,.art .ftw{margin:10px 0 16px}
+.gl{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px}
+.gl a{display:block;padding:14px 16px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9;text-decoration:none;color:inherit}
+.gl b{display:block;font-size:18px;margin-bottom:4px}.gl span{color:var(--mut);font-size:15px}
 .exs{font:600 21px/1.4 A,serif;margin:6px 0 2px;display:flex;align-items:center;gap:10px}.ex-tx{margin:0 0 8px;color:var(--mut)}
 .ftw{overflow-x:auto;margin:6px 0}.ft{border-collapse:collapse;width:100%;font-size:15px}
 .ft th,.ft td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
@@ -381,10 +386,10 @@ def crumbs_ld(items):
 def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=None):
     up = "../" * depth
     alt = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{base}{p}">' for l, p in alts.items())
-    alt += f'<link rel="alternate" hreflang="x-default" href="{base}{alts["en"]}">'
+    alt += f'<link rel="alternate" hreflang="x-default" href="{base}{alts.get("en", alts[L])}">'
     langs = "".join(
         f'<a href="{up}{alts[l]}" hreflang="{l}"{" aria-current=page" if l == L else ""}>{l.upper()}</a>'
-        for l in LANGS)
+        for l in LANGS if l in alts)
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>'
                  for j in (jsonld if isinstance(jsonld, list) else [jsonld] if jsonld else []))
     return (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8">'
@@ -588,7 +593,7 @@ def build(site, base, words_path):
         n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
         fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
-                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>{secs}')
+                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
         write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
                         alts, body, depth=1).replace('href="../../', 'href="../'))
         urls[L].insert(0, rel)
@@ -607,10 +612,11 @@ def build(site, base, words_path):
     files += build_names(site, base)
     files += build_phrases(site, base, d, wslug)
     files += build_alphabet(site, base, d, wslug)
+    files += build_guides(site, base, d, wslug)
     open(os.path.join(site, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
-        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap></sitemapindex>")
+        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap><sitemap><loc>{base}sitemap-guides.xml</loc></sitemap></sitemapindex>")
     rb = os.path.join(site, "robots.txt")
     txt = open(rb).read() if os.path.exists(rb) else "User-agent: *\nAllow: /\n"
     if "Sitemap:" not in txt:
@@ -1034,6 +1040,129 @@ def build_alphabet(site, base, d, wslug):
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
     print(f"страницы алфавита: {files}")
+    return files
+
+
+GD_TXT = {
+    "ru": {"idx_h": "Справочник: армянский простыми словами", "idx_d": "Короткие статьи об армянском языке: алфавит, чтение, падежи, глаголы, числа, имена, поздравления — с озвучкой и примерами.",
+           "idx_l": "Короткие статьи для тех, кто начинает армянский: как читать, как устроены слова, что говорить в жизни. В каждой — живые примеры со звуком.",
+           "cta": "Учить армянский в Barik — бесплатно", "all": "Все статьи", "listen": "Послушать"},
+    "en": {"idx_h": "Guide: Armenian made simple", "idx_d": "Short articles about the Armenian language: alphabet, reading, cases, verbs, numbers, names, wishes — with audio and examples.",
+           "idx_l": "Short articles for Armenian beginners: how to read, how words work, what to say in real life. Each one has examples you can listen to.",
+           "cta": "Learn Armenian in Barik — free", "all": "All articles", "listen": "Listen"},
+}
+
+
+def build_guides(site, base, d, wslug):
+    """Справочник (O-194): data/guides/<язык>/<адрес>.md → /<язык>/g/<адрес>.html и /<язык>/g/index.html.
+    Разметка: «# Заголовок», строка «> описание», «## подзаголовок», абзацы, списки «- », **жирный**, [текст](/ru/a/) (адрес от корня
+    сайта), и вставки из данных: {{words: слово, слово…}} — таблица слов (ссылка, транскрипция, перевод, звук), {{phrase: фраза}} —
+    фраза разговорника со звуком, {{noun: слово}} — падежи, {{verb: слово}} — спряжение (эталон gold.json)."""
+    root = os.path.join(APP, "data", "guides")
+    langs = [l for l in LANGS if os.path.isdir(os.path.join(root, l))]
+    if not langs:
+        return 0
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None
+    inw = {w["a"]: w for w in d["words"]}
+    phr = {it["hy"]: it for s_ in d.get("phrases") or [] for it in s_["items"]}
+    gold = json.load(open(os.path.join(APP, "data", "path", "gold.json"), encoding="utf-8"))
+    slugs = sorted({f[:-3] for l in langs for f in os.listdir(os.path.join(root, l)) if f.endswith(".md")})
+
+    def say(a, label):
+        if not vdir:
+            return ""
+        h = aid(a); rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return f'<button class="say" type="button" data-src="../../{rel}" aria-label="{esc(label)}" title="{esc(label)}">{SPK}</button>'
+
+    def inline(t):
+        t = esc(t)
+        t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
+        t = re.sub(r"\[([^\]]+)\]\(/([^)]*)\)", lambda m: f'<a href="../../{m.group(2)}">{m.group(1)}</a>', t)
+        return re.sub(r"([\u0531-\u0587\uFB13-\uFB17][\u0531-\u0587\uFB13-\uFB17\u055B-\u055F\u0589 \-]*)", r'<span lang="hy">\1</span>', t)
+
+    def block(kind, arg, L, T):
+        if kind == "words":
+            rows = []
+            for a in [x.strip() for x in arg.split(",") if x.strip()]:
+                w = inw.get(a)
+                if not w:
+                    sys.exit(f"справочник: слова «{a}» нет в словаре")
+                rows.append(f'<li><a href="../w/{wslug[a]}.html"><span class="hy" lang="hy">{esc(a)}</span><span class="t">{esc(w[TR[L]])}</span>'
+                            f'<span class="x">{esc(w[TX[L]])}</span></a>{say(a, T["listen"] + " — " + a)}</li>')
+            return f'<ul class="ws">{"".join(rows)}</ul>'
+        if kind == "phrase":
+            it = phr.get(arg)
+            if not it:
+                sys.exit(f"справочник: фразы «{arg}» нет в разговорнике")
+            return (f'<ul class="ws pb"><li><span class="pa"><span class="hy" lang="hy">{esc(arg)}</span><span class="t">{esc(it["tr"][L])}</span>'
+                    f'<span class="x">{esc(it["tx"][L])}</span></span>{say(arg, T["listen"])}</li></ul>')
+        if kind == "noun":
+            nf = gold["nouns"][arg]; F = FT[L]
+            rows = "".join(f'<tr><th>{F["n"][k]}</th><td lang="hy">{esc(nf[k])}</td></tr>' for k in NK if nf.get(k) and nf[k] != "-")
+            return f'<div class="ftw"><table class="ft"><tr><th>{F["n"]["base"]}</th><td lang="hy">{esc(arg)}</td></tr>{rows}</table></div>'
+        if kind == "verb":
+            vf = gold["verbs"][arg]; F = FT[L]
+            hd = "".join(f'<th>{F["v"][k]}</th>' for k in VK)
+            rows = "".join(f'<tr><th lang="hy">{pn}</th>' + "".join(f'<td lang="hy">{esc(vf[k][i])}</td>' for k in VK) + '</tr>' for i, pn in enumerate(PRON))
+            return f'<div class="ftw"><table class="ft fv"><tr><th></th>{hd}</tr>{rows}</table></div>'
+        sys.exit(f"справочник: неизвестная вставка {kind}")
+
+    def render(md, L, T):
+        lines = md.strip().split("\n")
+        title = lines[0].lstrip("# ").strip(); desc = lines[1].lstrip("> ").strip()
+        out, lst = [], []
+
+        def flush():
+            if lst:
+                out.append("<ul>" + "".join(f"<li>{inline(x)}</li>" for x in lst) + "</ul>"); lst.clear()
+        for ln in lines[2:]:
+            ln = ln.rstrip()
+            m = re.fullmatch(r"\{\{(\w+):\s*(.+?)\}\}", ln.strip())
+            if not ln.strip():
+                flush(); continue
+            if m:
+                flush(); out.append(block(m.group(1), m.group(2).strip(), L, T)); continue
+            if ln.startswith("## "):
+                flush(); out.append(f"<h2>{inline(ln[3:])}</h2>"); continue
+            if ln.startswith("- "):
+                lst.append(ln[2:]); continue
+            flush(); out.append(f"<p>{inline(ln)}</p>")
+        flush()
+        return title, desc, "".join(out)
+    files, sm = 0, []
+    for L in langs:
+        T = GD_TXT[L]; items = []
+        for sl in slugs:
+            f = os.path.join(root, L, sl + ".md")
+            if not os.path.exists(f):
+                continue
+            title, desc, html = render(open(f, encoding="utf-8").read(), L, T)
+            items.append((sl, title, desc))
+            rel = f"{L}/g/{sl}.html"
+            alts = {l: f"{l}/g/{sl}.html" for l in langs if os.path.exists(os.path.join(root, l, sl + ".md"))}
+            body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<h1 class="pg">{esc(title)}</h1><i class="orn" aria-hidden="true"></i><div class="art">{html}</div>'
+                    f'<a class="cta" href="../../?lang={L}">{T["cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+            ld = [{"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc, "inLanguage": L,
+                   "url": base + rel, "publisher": {"@type": "Organization", "name": "Barik", "url": base}},
+                  crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/g/index.html"), (title, base + rel)])]
+            p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+            open(p, "w", encoding="utf-8").write(page(L, base, rel, f"{title} — Barik", desc, alts, body, ld)); files += 1; sm.append(base + rel)
+        lst = "".join(f'<li><a href="{sl}.html"><b>{esc(t)}</b><span>{esc(dd)}</span></a></li>' for sl, t, dd in items)
+        rel = f"{L}/g/index.html"
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
+                f'<p>{T["idx_l"]}</p><ul class="gl">{lst}</ul><a class="cta" href="../../?lang={L}">{T["cta"]}</a>')
+        p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(page(L, base, rel, T["idx_h"] + " — Barik", T["idx_d"], {l: f"{l}/g/index.html" for l in langs}, body,
+                                                  crumbs_ld([("Barik", base), (T["idx_h"], base + rel)])))
+        files += 1; sm.insert(0, base + rel)
+    open(os.path.join(site, "sitemap-guides.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"справочник: {files} страниц ({', '.join(langs)})")
     return files
 
 
