@@ -29,7 +29,7 @@ const srv=http.createServer((q,r)=>{
       svg:B.cursiveSVG(x,'Cursive')})); });
   // обложка на языках (O-201) — для статичных страниц /<язык>/learn.html: та же разметка, что видит гость, без движения
   d.covers={};
-  for(const L of ['ru','fr','es','de','pt']){
+  for(const L of ['en','ru','fr','es','de','pt']){   // en — в саму главную (O-202), остальные — learn.html
     const c=await br.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'});
     await c.addInitScript(l=>localStorage.setItem('bararan-ui-v1',JSON.stringify({ll:l,geoX:1})),L);
     const p=await c.newPage(); await p.goto('http://127.0.0.1:'+srv.address().port+'/');

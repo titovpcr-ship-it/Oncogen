@@ -413,6 +413,20 @@ def tg_words(out):
     return len(rows)
 
 
+def prerender(cover):
+    """Главная быстрее (O-202): английская обложка уже в HTML — видна до загрузки скриптов (раньше ждала ~860 КБ JS).
+    Вернувшемуся (язык выбран), гостю из страны со своим языком (тот же расчёт, что lang0.js) и ссылкам с параметрами —
+    не показывается: класс nopre прячет её до первого кадра, приложение рисует своё. Скрипт затем рисует ту же разметку поверх."""
+    lang0 = open(os.path.join(SRC, "js", "lang0.js"), encoding="utf-8").read()
+    m = re.search(r"var TZ_LANG=(\{.*?\n\});", lang0, re.S)
+    assert m, "lang0.js: нет TZ_LANG"
+    js = ("(function(){try{var u=JSON.parse(localStorage.getItem('bararan-ui-v1')||'null')||{},T=" + m.group(1).replace("\n", "") +
+          ",z='';try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var l=u.ll||'';if(!l){if(z.indexOf('America/Argentina/')===0)l='es';"
+          "else for(var k in T)if(T[k].indexOf(z)>=0)l=k;}if(u.lang||(l&&l!=='en')||/[?&#]/.test(location.search+location.hash))"
+          "document.documentElement.className+=' nopre'}catch(e){document.documentElement.className+=' nopre'}})();")
+    return f'<script>{js}</script><style>.nopre #view>.ld{{display:none}}</style><main id="view">{cover}</main>'
+
+
 def seo_pages(out, url):
     """Страницы поиска: слова с транскрипцией берутся из настоящего приложения
     в браузере (dump_words.js), чтобы произношение совпало с тем, что в нём видно."""
@@ -426,6 +440,8 @@ def seo_pages(out, url):
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     if n and 'hreflang="ru"' not in html:              # главная — английская обложка; её языковые пары (O-201)
         html = html.replace("</head>", hl + "\n</head>", 1)
+    if covers.get("en") and '<main id="view"></main>' in html:
+        html = html.replace('<main id="view"></main>', prerender(covers["en"]["html"]), 1)
     D = (("en", "Armenian dictionary", "Your name in Armenian"), ("ru", "Армянский словарь", "Ваше имя по-армянски"),
          ("fr", "Dictionnaire arménien", "Votre prénom en arménien"), ("es", "Diccionario armenio", "Tu nombre en armenio"),
          ("de", "Armenisches Wörterbuch", "Dein Name auf Armenisch"), ("pt", "Dicionário armênio", "Seu nome em armênio"))

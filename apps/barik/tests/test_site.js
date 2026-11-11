@@ -40,6 +40,19 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     return {img:m('og:image'), w:m('og:image:width'), card:m('twitter:card'), title:m('og:title'), desc:m('description')};});
   ok(/og\/og-en\.jpg$/.test(og.img)&&og.w==='2400'&&og.card==='summary_large_image','превью ссылки: '+og.img+' '+og.w+' '+og.card);
   ok(og.title.startsWith('Barik — start speaking Armenian')&&og.desc.includes('handwriting')&&await pg.evaluate(()=>document.documentElement.lang)==='en','превью и главная — на английском (O-163)');
+  { // O-202: английская обложка уже в HTML главной (видна до скриптов); вернувшемуся и гостю со своим языком — спрятана до первого кадра
+    const raw=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
+    ok(/<main id="view"><div class="[^"]*\bld\b/.test(raw)&&raw.includes('Start speaking'),'главная: обложка в HTML (до загрузки скриптов)');
+    const c2=await br.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block'}); const p2=await c2.newPage();
+    await p2.route('**/js/**',rt=>rt.abort()); await p2.goto(base); const ru=await p2.evaluate(()=>document.documentElement.className.includes('nopre'));
+    const c3=await br.newContext({timezoneId:'America/New_York',serviceWorkers:'block'}); const p3=await c3.newPage();
+    await p3.route('**/js/**',rt=>rt.abort()); await p3.goto(base); const us=await p3.evaluate(()=>!document.documentElement.className.includes('nopre')&&getComputedStyle(document.querySelector('#view .ld')).display!=='none');
+    await p3.addInitScript(()=>localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'en'}))); await p3.goto(base); const back=await p3.evaluate(()=>document.documentElement.className.includes('nopre'));
+    ok(ru&&us&&back,'обложка в HTML: гостю из США видна без скриптов, из Москвы и вернувшемуся — спрятана ('+[ru,us,back]+')');
+    // со скриптами: гость из Москвы видит русскую обложку приложения (класс nopre снят первым кадром)
+    await p2.unroute('**/js/**'); await p2.goto(base); await p2.waitForSelector('#view .ld h1',{state:'visible',timeout:15000}).catch(()=>{});
+    const vis=await p2.evaluate(()=>{ const h=document.querySelector('#view .ld h1'); return !!h&&h.offsetHeight>0&&!document.documentElement.className.includes('nopre')&&document.documentElement.lang; });
+    ok(vis==='ru','гость из Москвы: обложка приложения видна, по-русски ('+vis+')'); await c2.close(); await c3.close(); }
   await pg.click('[data-act=landLang][data-arg=ru]');
   for(const L of ['ru','en','fr','es','de','pt']){ const r=await pg.request.get(base+'og/og-'+L+'.jpg'); ok(r.ok()&&(await r.body()).length>50000,'картинка превью og-'+L+'.jpg'); }
   ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\/og\//.test(q.url))))),'картинки превью не лежат в кэше приложения');
