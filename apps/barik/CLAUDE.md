@@ -5,6 +5,7 @@
 `build_site.py` → `deploy_site.py` → `check_live.py`, затем сказать владельцу, что выложено. Оплата, DNS, cron, ключи, удаление
 данных — по-прежнему только по его слову. Роботов ИИ (ClaudeBot, GPTBot) в robots.txt не закрывать — владелец: «Роботы ИИ оставь».
 Telegram-канал «слово дня» — **@armenian_word_daily** (английский, 13:00 UTC; `BARIK_TG_CHANNELS` в .env → `tg_setup.py`).
+Instagram — **@barik_armenian** (завёл владелец 11.11.2026; ссылка в профиле — `https://barik.am/?from=reels`, ролики — `out/reels/`).
 
 ## ОБЛОЖКА В HTML И НА ЯЗЫКАХ (11.11.2026, O-201, O-202)
 `dump_words.js` снимает обложку приложения на 6 языках (`covers`): английская кладётся в `<main id="view">` главной (видна до
