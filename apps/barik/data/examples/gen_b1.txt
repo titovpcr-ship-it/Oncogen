@@ -855,3 +855,11 @@
 հաջողվել | Ամեն ինչ հաջողվեց։ | Все удалось. | Everything succeeded. | Tout a réussi. | Todo salió bien. | Alles ist gelungen. | Tudo deu certo.
 պակասեցնել | Պետք է պակասեցնել ծախսերը։ | Нужно сократить расходы. | It is necessary to reduce expenses. | Il faut réduire les dépenses. | Hay que reducir los gastos. | Man muss die Ausgaben reduzieren. | É preciso reduzir as despesas.
 նվազել | Աշակերտների թիվը նվազեց։ | Число учеников уменьшилось. | The number of students decreased. | Le nombre d'élèves a diminué. | El número de alumnos disminuyó. | Die Anzahl der Schüler ist gesunken. | O número de alunos diminuiu.
+քանդել | Նրանք հին շենքը քանդեցին։ | Они разрушили старое здание. | They demolished the old building. | Ils ont démoli le vieux bâtiment. | Ellos demolieron el viejo edificio. | Sie haben das alte Gebäude abgerissen. | Eles demoliram o prédio antigo.
+խանգարել | Նա ինձ խանգարում է։ | Он мне мешает. | He is disturbing me. | Il me dérange. | Él me molesta. | Er stört mich. | Ele me atrapalha.
+դոլմա | Դոլման համեղ է։ | Долма вкусная. | Dolma is delicious. | La dolma est délicieuse. | La dolma es deliciosa. | Dolma ist lecker. | A dolma é deliciosa.
+հարիսա | Ես սիրում եմ հարիսա։ | Я люблю арису. | I like harissa. | J'aime le harissa. | Me gusta el harissa. | Ich mag Harissa. | Eu gosto de harissa.
+բորանի | Բորանին պատրաստ է։ | Борани готово. | Borani is ready. | Le borani est prêt. | El borani está listo. | Borani ist fertig. | O borani está pronto.
+ալանի | Ալանին շատ համեղ է։ | Алани очень вкусные. | Alani is very tasty. | L'alani est très délicieux. | El alani es muy delicioso. | Alani ist sehr lecker. | O alani é muito delicioso.
+քյուֆթա | Քյուֆթան հայտնի ուտեստ է։ | Кюфта — известное блюдо. | Kyufta is a famous dish. | Le kyufta est un plat célèbre. | El kyufta es un plato famoso. | Kyufta ist ein bekanntes Gericht. | O kyufta é um prato famoso.
+խաշլամա | Ես պատրաստում եմ խաշլամա։ | Я готовлю хашламу. | I am making khashlama. | Je prépare le khashlama. | Estoy preparando el khashlama. | Ich mache Khashlama. | Estou preparando o khashlama.
