@@ -61,6 +61,18 @@ if ($r === 'jserr') {
     exit;
 }
 
+if ($r === 'csp') {
+    // отчёт о нарушении правил безопасности браузера (O-203, режим «только наблюдать»): в тот же журнал, что ошибки JS
+    if ($method === 'POST' && !limited(ip_key() . ':csp', 20, 3600)) {
+        $b = json_decode(substr((string)file_get_contents('php://input'), 0, 4000), true);
+        $c = is_array($b) ? ($b['csp-report'] ?? $b) : null;
+        if (is_array($c)) js_err_add(['m' => 'CSP ' . ($c['violated-directive'] ?? $c['effective-directive'] ?? '?') . ': ' . ($c['blocked-uri'] ?? '?'),
+                                      's' => (string)($c['source-file'] ?? $c['document-uri'] ?? '') . ':' . (string)($c['line-number'] ?? '')]);
+    }
+    http_response_code(204);
+    exit;
+}
+
 if ($r === 'tg') {
     // вебхук Telegram-бота (O-186): только с секретом, который мы сами задали в setWebhook (tools/tg_setup.py)
     if ($method !== 'POST') fail('method', 405);

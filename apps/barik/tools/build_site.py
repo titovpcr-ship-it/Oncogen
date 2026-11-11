@@ -228,6 +228,9 @@ ErrorDocument 404 /404.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # правила безопасности браузера (O-203) — пока «только наблюдать»: ничего не блокируют, нарушения уходят в api/?r=csp (видны в stats.py);
+  # через неделю без лишних отчётов — включить боевой Content-Security-Policy
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri /api/?r=csp"
   # HSTS (O-155): включён 08.11.2026, когда AutoSSL выпустил сертификат Let's Encrypt и check_live прошёл по https.
   # 30 дней, без includeSubDomains/preload — поддомены cPanel и почта живут сами; увеличить до года — когда AutoSSL
   # переживёт первое продление (~январь 2027).
