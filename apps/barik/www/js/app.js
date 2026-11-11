@@ -482,7 +482,7 @@ function pic(w){
 function letters(a){return [...a].map((ch,i)=>ch===' '?' ':'<span class="lt" style="animation-delay:'+(i*45)+'ms">'+esc(ch)+'</span>').join('');}
 function fitWords(){
   document.querySelectorAll('.hyw:not(.phrase)').forEach(el=>{
-    el.style.fontSize=''; let s=parseFloat(getComputedStyle(el).fontSize)||58; let g=0;
+    el.style.fontSize=''; let s=parseFloat(getComputedStyle(el).fontSize)||52; let g=0;
     while(el.scrollWidth>el.clientWidth+1&&s>20&&g++<40){s-=2;el.style.fontSize=s+'px';}
   });
 }
