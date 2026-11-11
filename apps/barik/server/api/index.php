@@ -111,6 +111,7 @@ if ($method === 'POST') {
 switch ($r) {
     case 'me':
         $u = session_user();
+        if ($u) $u = sub_recheck($u);
         out(['ok' => true, 'user' => $u ? user_out($u) : null, 'pay' => pay_info(), 'crypto' => crypto_info($u),
              'tg' => tg_on() ? (string)cfg('TG_BOT', '') : '']);
 
@@ -242,7 +243,7 @@ switch ($r) {
         $u = session_user() ?? fail('auth', 401);
         if (!pay_ready()) fail('pay', 503);
         if (dodo_on()) {
-            if (premium($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
+            if (premium($u) && sub_here($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
             if (limited('u:' . $u['id'] . ':checkout', 10, 3600)) fail('wait', 429, ['retry' => 600]);
             $lang = in_array(body()['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? body()['lang'] : 'en';
             $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
@@ -434,8 +435,13 @@ function dodo_webhook(): never {
         try { q('INSERT INTO events(id, t) VALUES(?, ?)', ['dodo:' . $id, now()]); }
         catch (PDOException $e) { out(['ok' => true, 'dup' => true]); }
     }
+    $GLOBALS['DODO_CODE'] = -1;
     $u = dodo_sync($sid);
-    if (!$u && $id !== '') q('DELETE FROM events WHERE id = ?', ['dodo:' . $id]);   // Dodo не ответил — пусть повторит
+    $code = (int)$GLOBALS['DODO_CODE'];
+    if (!$u && ($code === 0 || $code === 429 || $code >= 500)) {   // Dodo не ответил — событие не помним, отвечаем 503: Dodo повторит (O-195)
+        if ($id !== '') q('DELETE FROM events WHERE id = ?', ['dodo:' . $id]);
+        fail('retry', 503);
+    }
     out(['ok' => true, 'user' => (bool)$u]);
 }
 

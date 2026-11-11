@@ -90,6 +90,8 @@ function db(): PDO {
     $pdo->exec('CREATE TABLE IF NOT EXISTS gifts(code TEXT PRIMARY KEY, pay_id TEXT NOT NULL UNIQUE, buyer INTEGER NOT NULL, months INTEGER NOT NULL,
         created INTEGER NOT NULL, used_by INTEGER, used_at INTEGER)');
     try { $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER'); } catch (PDOException $e) { /* уже есть */ }
+    // режим Dodo, в котором оформлена подписка (O-195): test | live; NULL — заведена до O-195, значит тестовая
+    try { $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT'); } catch (PDOException $e) { /* уже есть */ }
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
@@ -179,14 +181,23 @@ function end_session(): void {
     set_cookie('', now() - 3600);
 }
 
+/* подписка из другого режима Dodo не считается (O-195): после перехода на боевой ключ тестовые подписки — как не было */
+function dodo_mode(): string { return cfg('DODO_MODE', 'test') === 'live' ? 'live' : 'test'; }
+function sub_here(array $u): bool {
+    if (!dodo_on() || (string)($u['pd_sub'] ?? '') === '') return true;
+    return ((string)($u['sub_mode'] ?? '') ?: 'test') === dodo_mode();
+}
+
 function premium(array $u): bool {
     if ((int)($u['gift_until'] ?? 0) > now()) return true;
+    if (!sub_here($u)) return false;
     if (!in_array((string)$u['sub_status'], PREMIUM_STATUSES, true)) return false;
     $until = (int)($u['sub_until'] ?? 0);
     return $until === 0 || $until + 3 * 86400 > now();
 }
 
 function user_out(array $u): array {
+    if (!sub_here($u)) { $u['sub_status'] = ''; $u['sub_plan'] = ''; $u['sub_until'] = 0; $u['pd_customer'] = ''; }   // чужой режим — как без подписки
     $gift = (int)($u['gift_until'] ?? 0) > now() && !(in_array((string)$u['sub_status'], PREMIUM_STATUSES, true) && (int)$u['sub_until'] > (int)$u['gift_until']);
     return ['nick' => $u['nick'], 'email' => mask_email($u['email']), 'premium' => premium($u),
             'until' => $gift ? (int)$u['gift_until'] * 1000 : ($u['sub_until'] ? (int)$u['sub_until'] * 1000 : 0), 'plan' => $gift ? 'gift' : ($u['sub_plan'] ?: ''),
@@ -458,6 +469,7 @@ function dodo(string $method, string $path, ?array $payload = null): ?array {
     $r = curl_exec($ch);
     $code = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
     curl_close($ch);
+    $GLOBALS['DODO_CODE'] = $code;                  // 0 — нет связи; вебхук по нему решает, просить ли повтор (O-195)
     $j = is_string($r) ? json_decode($r, true) : null;
     if ($code < 200 || $code >= 300) error_log('barik dodo ' . $method . ' ' . $path . ': HTTP ' . $code . ' ' . substr((string)$r, 0, 300));
     return ($code >= 200 && $code < 300 && is_array($j)) ? $j : null;
@@ -514,8 +526,8 @@ function dodo_sync(string $sid, ?int $want = null): ?array {
     } else {                                        // pending, on_hold, paused, failed — без доступа
         $until = now();
     }
-    q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = ?, sub_at = ? WHERE id = ?',
-      [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, 'month', $until, now(), $u['id']]);
+    q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = ?, sub_at = ?, sub_mode = ? WHERE id = ?',
+      [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, 'month', $until, now(), dodo_mode(), $u['id']]);
     return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
 }
 
@@ -948,3 +960,15 @@ function backup_offsite(string $snap, string $pw, string $owner, string $day): b
     if (empty($r['ok'])) error_log('barik backup tg: ' . json_encode($r));
     return !empty($r['ok']);
 }
+
+
+/* самопроверка подписки (O-195): если по нашей записи срок вышел, а продление могло потеряться — спросить Dodo сам,
+   не чаще раза в час на человека */
+function sub_recheck(array $u): array {
+    if (!dodo_on() || (string)($u['pd_sub'] ?? '') === '' || !sub_here($u)) return $u;
+    if (!in_array((string)$u['sub_status'], PREMIUM_STATUSES, true)) return $u;
+    if ((int)($u['sub_until'] ?? 0) > now() || (int)($u['sub_at'] ?? 0) > now() - 3600) return $u;
+    q('UPDATE users SET sub_at = ? WHERE id = ?', [now(), $u['id']]);
+    return dodo_sync((string)$u['pd_sub'], (int)$u['id']) ?? (q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: $u);
+}
+

@@ -32,14 +32,14 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   fs.symlinkSync(path.join(APP,'server','api'),path.join(SITE,'api'));
 
   // заглушка Dodo: checkouts → адрес страницы оплаты, subscriptions/{id} → из SUBS, портал покупателя
-  const SUBS={}, seen=[]; let n=0;
+  const SUBS={}, seen=[]; let n=0, FAIL=false;
   const stub=http.createServer((q,r)=>{ let b=''; q.on('data',x=>b+=x); q.on('end',()=>{
     const j=b?JSON.parse(b):{}; seen.push({method:q.method,url:q.url,auth:q.headers.authorization,body:j});
     const send=(o,c)=>{ r.writeHead(c||200,{'Content-Type':'application/json'}); r.end(JSON.stringify(o)); };
     if(q.headers.authorization!=='Bearer '+KEY) return send({code:'UNAUTHORIZED'},401);
     if(q.method==='POST'&&q.url==='/checkouts'){ n++; return send({session_id:'cks_'+n,checkout_url:'https://test.checkout.dodopayments.com/session/cks_'+n}); }
     let m=/^\/subscriptions\/([A-Za-z0-9_]+)$/.exec(q.url);
-    if(q.method==='GET'&&m){ const s=SUBS[m[1]]; return s?send(s):send({code:'NOT_FOUND'},404); }
+    if(q.method==='GET'&&m){ if(FAIL) return send({code:'INTERNAL'},500); const s=SUBS[m[1]]; return s?send(s):send({code:'NOT_FOUND'},404); }
     m=/^\/customers\/([A-Za-z0-9_]+)\/customer-portal\/session/.exec(q.url);
     if(q.method==='POST'&&m) return send({link:'https://test.customer.dodopayments.com/portal/'+m[1]});
     send({code:'NOT_FOUND'},404); }); });
@@ -105,6 +105,26 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   { const t=await pg.textContent('.pw').catch(()=>''); ok(t.includes('Premium активна')&&await pg.locator('.pw [data-act=accPortal]').count()===1&&await pg.locator('.pw [data-act=webBuy]').count()===0,'с подпиской: «Premium активна» и «Управлять подпиской» в окне'); }
   r=await api('checkout',{plan:'month'}); ok(r.status===409&&r.j.err==='active','второй раз оформить нельзя — «Подписка уже оформлена»');
   r=await api('portal'); ok(r.j.ok&&r.j.url==='https://test.customer.dodopayments.com/portal/cus_A','портал покупателя Dodo');
+  { // O-195: Dodo не ответил — 503, Dodo повторит; повтор того же события проходит
+    FAIL=true; r=await hook(base,'subscription.renewed','sub_A',{id:'msg_R1'}); FAIL=false;
+    ok(r.status===503,'вебхук, когда наш запрос к Dodo упал, — 503 (Dodo повторит): '+r.status);
+    r=await hook(base,'subscription.renewed','sub_A',{id:'msg_R1'}); ok(r.status===200&&JSON.parse(r.body).user===true&&!JSON.parse(r.body).dup,'повтор того же события после сбоя — принят');
+    // самопроверка: по нашей записи срок вышел (продление потерялось) — me сам спрашивает Dodo
+    const db=path.join(DATA,'barik.sqlite'), past=Math.floor(Date.now()/1000)-5*86400;
+    require('child_process').execFileSync('python3.13',['-c','import sqlite3,sys;c=sqlite3.connect(sys.argv[1]);c.execute("UPDATE users SET sub_until=?, sub_at=? WHERE pd_sub=?",(int(sys.argv[2]),int(sys.argv[2]),"sub_A"));c.commit()',db,String(past)]);
+    const before=seen.filter(x=>x.url==='/subscriptions/sub_A').length; j=await me();
+    ok(j.user.premium&&Math.abs(j.user.until-Date.parse(SUBS.sub_A.next_billing_date))<2000&&seen.filter(x=>x.url==='/subscriptions/sub_A').length===before+1,'самопроверка: срок вышел по нашей записи → me спросил Dodo, Premium до новой даты');
+    j=await me(); ok(seen.filter(x=>x.url==='/subscriptions/sub_A').length===before+1,'самопроверка не чаще раза в час (срок в порядке — Dodo не спрашиваем)');
+    // переход на боевой ключ: тестовая подписка не считается, можно оформить заново
+    const PORT2=PORT+1, base2='http://127.0.0.1:'+PORT2+'/';
+    const php2=spawn('php',['-S','127.0.0.1:'+PORT2,'-t',SITE,path.join(__dirname,'php_router.php')],{env:Object.assign({},env,{BARIK_DODO_MODE:'live'}),stdio:['ignore','ignore','pipe']});
+    for(let i=0;i<50;i++){ const t=await req(base2+'api/?r=me','GET'); if(t.status===200) break; await new Promise(r=>setTimeout(r,100)); }
+    const jl=await (await pg.request.get(base2+'api/?r=me')).json();
+    ok(jl.user&&!jl.user.premium&&jl.user.plan===''&&!jl.user.portal,'боевой режим: тестовая подписка Анны не считается — без Premium и портала');
+    const cl=await pg.request.post(base2+'api/?r=checkout',{data:{plan:'month'},headers:H});
+    ok(cl.status()===200&&/checkout/.test((await cl.json()).url||''),'боевой режим: оформить подписку снова можно (контрольная покупка)');
+    php2.kill();
+    j=await me(); ok(j.user.premium,'в тестовом режиме та же подписка по-прежнему действует'); }
   r=await api('delete'); ok(r.status===409&&r.j.err==='sub','удалить аккаунт с идущей подпиской нельзя');
 
   // продление, неуплата, отмена — всё по ответу API, тело события не важно
