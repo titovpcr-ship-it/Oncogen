@@ -1026,3 +1026,16 @@
 մշակել | Նրանք մշակեցին ծրագիրը։ | Они разработали программу. | They developed the program. | Ils ont développé le programme. | Ellos desarrollaron el programa. | Sie haben das Programm entwickelt. | Eles desenvolveram o programa.
 գրավել | Նրա ժպիտը գրավում է բոլորին։ | Его улыбка привлекает всех. | His smile attracts everyone. | Son sourire attire tout le monde. | Su sonrisa atrae a todos. | Sein Lächeln zieht alle an. | Seu sorriso atrai todos.
 գրանցել | Նա գրանցեց հյուրերին։ | Он зарегистрировал гостей. | He registered the guests. | Il a enregistré les invités. | Él registró a los invitados. | Er hat die Gäste registriert. | Ele registrou os convidados.
+հետազոտել | Գիտնականը հետազոտեց այդ երևույթը։ | Ученый исследовал это явление. | The scientist researched that phenomenon. | Le scientifique a étudié ce phénomène. | El científico investigó ese fenómeno. | Der Wissenschaftler untersuchte dieses Phänomen. | O cientista investigou aquele fenômeno.
+հեշտացնել | Դա կհեշտացնի քո կյանքը։ | Это облегчит твою жизнь. | That will make your life easier. | Cela rendra ta vie plus facile. | Eso facilitará tu vida. | Das wird dein Leben erleichtern. | Isso vai facilitar a sua vida.
+բարդացնել | Դա կբարդացնի իրավիճակը։ | Это осложнит ситуацию. | That will complicate the situation. | Cela compliquera la situation. | Eso complicará la situación. | Das wird die Situation komplizieren. | Isso vai complicar a situação.
+խախտել | Նա խախտել է օրենքը։ | Он нарушил закон. | He has broken the law. | Il a enfreint la loi. | Él ha violado la ley. | Er hat das Gesetz gebrochen. | Ele violou a lei.
+հետապնդել | Նրանք հետապնդում են հանցագործին։ | Они преследуют преступника. | They are pursuing the criminal. | Ils poursuivent le criminel. | Ellos persiguen al criminal. | Sie verfolgen den Verbrecher. | Eles estão perseguindo o criminoso.
+վարվել | Նա լավ է վարվում։ | Он хорошо себя ведёт. | He behaves well. | Il se comporte bien. | Él se porta bien. | Er benimmt sich gut. | Ele se comporta bem.
+նեղանալ | Ես չեմ նեղանում։ | Я не обижаюсь. | I don't take offence. | Je ne m'offense pas. | Yo no me ofendo. | Ich bin nicht beleidigt. | Eu não me ofendo.
+երդվել | Նա երդվեց լռել։ | Он поклялся молчать. | He swore to keep silent. | Il a juré de se taire. | Él juró guardar silencio. | Er schwor zu schweigen. | Ele jurou guardar silêncio.
+արտագրել | Աշակերտը արտագրեց տեքստը։ | Ученик переписал текст. | The student copied out the text. | L'élève a recopié le texte. | El alumno copió el texto. | Der Schüler schrieb den Text ab. | O aluno copiou o texto.
+շրջանցել | Նա շրջանցեց խոչընդոտը։ | Он обошёл препятствие. | He bypassed the obstacle. | Il a contourné l'obstacle. | Él sorteó el obstáculo. | Er umging das Hindernis. | Ele contornou o obstáculo.
+հատել | Նրանք հատեցին գետը։ | Они пересекли реку. | They crossed the river. | Ils ont traversé la rivière. | Ellos cruzaron el río. | Sie überquerten den Fluss. | Eles atravessaram o rio.
+լքել | Նա լքեց ընտանիքը։ | Он покинул семью. | He abandoned his family. | Il a abandonné sa famille. | Él abandonó a su familia. | Er verließ seine Familie. | Ele abandonou sua família.
+օգտվել | Օգտվեք ձեր ժամանակից։ | Пользуйтесь своим временем. | Make use of your time. | Profitez de votre temps. | Aprovechen su tiempo. | Nutzen Sie Ihre Zeit. | Aproveitem seu tempo.
