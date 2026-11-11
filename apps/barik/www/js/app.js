@@ -23,19 +23,7 @@ if(QL&&!UI.lang){UI.lang=QL; saveUI();}
    Страна не из списка (Украина, Балтия, Грузия, Бельгия, Швейцария, Канада, Израиль…) — язык браузера; иначе
    английский. Выбор кнопкой RU/EN/FR/ES/DE/PT и ?lang= со страниц поиска — главнее. */
 const TZ=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){return '';}})();
-const TZ_LANG={
-  ru:['Europe/Moscow','Europe/Kaliningrad','Europe/Samara','Europe/Volgograd','Europe/Saratov','Europe/Ulyanovsk','Europe/Astrakhan','Europe/Kirov','Europe/Minsk','Asia/Bishkek','Asia/Dushanbe','Asia/Tashkent','Asia/Samarkand','Asia/Ashgabat','Asia/Almaty','Asia/Qostanay','Asia/Aqtobe','Asia/Aqtau','Asia/Atyrau','Asia/Oral','Asia/Qyzylorda','Asia/Yekaterinburg','Asia/Omsk','Asia/Novosibirsk','Asia/Barnaul','Asia/Tomsk','Asia/Novokuznetsk','Asia/Krasnoyarsk','Asia/Irkutsk','Asia/Chita','Asia/Yakutsk','Asia/Khandyga','Asia/Vladivostok','Asia/Ust-Nera','Asia/Magadan','Asia/Sakhalin','Asia/Srednekolymsk','Asia/Kamchatka','Asia/Anadyr'],
-  fr:['Europe/Paris','Europe/Monaco','Europe/Luxembourg','Asia/Beirut','Africa/Algiers','Africa/Tunis','Africa/Casablanca','Indian/Reunion','America/Martinique','America/Guadeloupe','America/Cayenne','Pacific/Noumea','Pacific/Tahiti'],
-  es:['Europe/Madrid','Atlantic/Canary','Africa/Ceuta','America/Buenos_Aires','America/Montevideo','America/Mexico_City','America/Cancun','America/Merida','America/Monterrey','America/Matamoros','America/Chihuahua','America/Ciudad_Juarez','America/Ojinaga','America/Hermosillo','America/Mazatlan','America/Bahia_Banderas','America/Tijuana','America/Santiago','America/Punta_Arenas','America/Bogota','America/Lima','America/Caracas','America/Guayaquil','America/La_Paz','America/Asuncion','America/Havana','America/Santo_Domingo','America/Guatemala','America/El_Salvador','America/Tegucigalpa','America/Managua','America/Costa_Rica','America/Panama','America/Puerto_Rico'],
-  de:['Europe/Berlin','Europe/Busingen','Europe/Vienna','Europe/Vaduz'],
-  pt:['America/Sao_Paulo','America/Rio_Branco','America/Manaus','America/Porto_Velho','America/Boa_Vista','America/Eirunepe','America/Cuiaba','America/Campo_Grande','America/Belem','America/Santarem','America/Araguaina','America/Fortaleza','America/Recife','America/Maceio','America/Bahia','America/Noronha','Europe/Lisbon','Atlantic/Azores','Atlantic/Madeira','Africa/Luanda']
-};
-function tzLang(tz){
-  if(!tz) return '';
-  if(tz.indexOf('America/Argentina/')===0) return 'es';
-  for(const l in TZ_LANG) if(TZ_LANG[l].indexOf(tz)>=0) return l;
-  return '';
-}
+const TZ_LANG=window.BARIK_TZLANG||{}, tzLang=window.BARIK_tzLang||(()=>'');
 const NAVL=['ru','fr','es','de','pt','en'].find(l=>NAV.indexOf(l)===0)||'';
 /* O-163 (владелец 09.11.2026): «главная на английском по умолчанию, но если точно ясно, из какой страны человек —
    почему бы и нет». Страна точно ясна по часовому поясу (TZ_LANG) — сразу её язык; иначе английский, а язык
@@ -43,7 +31,7 @@ const NAVL=['ru','fr','es','de','pt','en'].find(l=>NAV.indexOf(l)===0)||'';
 const SUG=(TZ==='Asia/Yerevan'?'ru':'')||NAVL||'';
 let L=UI.lang||UI.ll||tzLang(TZ)||'en';
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
-function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs();}
+function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs(); trLoad(l);}
 
 /* ================= TRANSCRIPTION ================= */
 const MAP={'ա':'а','բ':'б','գ':'г','դ':'д','զ':'з','է':'э','ը':'ы','թ':'тʰ','ժ':'ж','ի':'и','լ':'л','խ':'х','ծ':'ц','կ':'к','հ':'һ','ձ':'дз','ղ':'гх','ճ':'ч','մ':'м','ն':'н','շ':'ш','չ':'чʰ','պ':'п','ջ':'дж','ռ':'р','ս':'с','վ':'в','տ':'т','ր':'р','ց':'цʰ','փ':'пʰ','ք':'кʰ','օ':'о','ֆ':'ф'};
@@ -177,16 +165,30 @@ const TRF={ru:y=>trWord(y,false),en:trLat,fr:trFr,es:trEs,de:trDe,pt:trPt};
 function trPhrase(a,mode){const f=TRF[mode]||TRF.ru; return a.split(' ').map(x=>x.split('-').map(f).join('-')).join(' ');}
 const trL=a=>trPhrase(a,L);   // транскрипция на языке интерфейса
 const WORDS=[], BY={};
+/* Слово (O-185): переводы и транскрипции — ленивыми свойствами. В www/ строка словаря полная [hy, ru, en, emoji, fr, es, de, pt];
+   в собранном сайте — [hy, emoji], а переводы в window.BARARAN_TR[язык][k] (js/tr-<язык>.js, подгружает lang0.js / trLoad). */
+const ROWS=[], TRC={ru:1,en:2,fr:4,es:5,de:6,pt:7};
+function trv(l,k){ const R=ROWS[k]; if(R.length>2) return (R[TRC[l]]||'').trim(); const a=window.BARARAN_TR&&window.BARARAN_TR[l]; return a?((a[k]||'')+'').trim():''; }
+const lazy=(o,k,f)=>Object.defineProperty(o,k,{get(){ const v=f.call(this); if(v!=='') Object.defineProperty(this,k,{value:v,writable:true,configurable:true}); return v; },configurable:true});
+const WP={};
+lazy(WP,'e',function(){ return trv('en',this.k)||trv('ru',this.k); });
+lazy(WP,'r',function(){ return trv('ru',this.k)||this.e; });
+[['f','fr'],['s','es'],['de','de'],['pt','pt']].forEach(([f,l])=>lazy(WP,f,function(){ return trv(l,this.k)||this.e; }));
+[['tr','ru'],['lt','en'],['ft','fr'],['st','es'],['dt','de'],['ptr','pt']].forEach(([f,l])=>lazy(WP,f,function(){ return trPhrase(this.a,l); }));
 TOPICS.forEach((t,ti)=>{
   t.list=[];
   (t.w||[]).forEach(row=>{
-    const a=(row[0]||'').trim(), r=(row[1]||'').trim(), e=(row[2]||'').trim()||r, p=(row[3]||'').trim();
-    if(!a||!r||BY[a]) return;
-    const f=(row[4]||'').trim()||e, es=(row[5]||'').trim()||e, de=(row[6]||'').trim()||e, pt=(row[7]||'').trim()||e;
-    const w={a,r,e,f,s:es,de,p,t:ti,tr:trPhrase(a,'ru'),lt:trPhrase(a,'en'),ft:trPhrase(a,'fr'),st:trPhrase(a,'es'),dt:trPhrase(a,'de'),pt,ptr:trPhrase(a,'pt')};
+    const k=ROWS.length; ROWS.push(row);
+    const a=(row[0]||'').trim(), full=row.length>2;
+    if(!a||BY[a]||(full&&!(row[1]||'').trim())) return;
+    const w=Object.create(WP); w.a=a; w.k=k; w.p=((full?row[3]:row[1])||'').trim(); w.t=ti;
     BY[a]=w; WORDS.push(w); t.list.push(w);
   });
 });
+/* язык без загруженных переводов (собранный сайт) — догрузить js/tr-<язык>.js и перерисовать */
+function trLoad(l){ if(!window.BARARAN_SPLIT||(window.BARARAN_TR&&window.BARARAN_TR[l])) return;
+  const sc=document.createElement('script'); sc.src='js/tr-'+l+'.js?v='+window.BARARAN_SPLIT;
+  sc.onload=()=>{ WORDS.forEach(w=>{ ['r','e','f','s','de','pt'].forEach(f=>{ if(Object.prototype.hasOwnProperty.call(w,f)) delete w[f]; }); }); render(false); }; document.head.appendChild(sc); }
 const PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
 const TXK={ru:'r',en:'e',fr:'f',es:'s',de:'de',pt:'pt'}, TRK={ru:'tr',en:'lt',fr:'ft',es:'st',de:'dt',pt:'ptr'};
 const tx=w=>w[TXK[L]||'e'];       // перевод на языке интерфейса
@@ -2536,7 +2538,7 @@ const H={
   landSay:(a,b)=>{ const k=String(a||'').split('|'); sayText(k[0],b,false,null,k[1]==='m'?'m':'f'); },
   geoX:()=>{ UI.geoX=1; saveUI(); const g=document.querySelector('.ld-geo'); if(g) g.remove(); },
   landHow:(a,b,e)=>{ const t=document.getElementById('how'); if(t){ if(e) e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } },
-  landLang:a=>{ if(a===L) return; L=a; UI.ll=a; saveUI(); document.documentElement.lang=a; renderTabs(); render(); },   // UI.ll — язык обложки, выбранный кнопкой (обложку не пропускает)
+  landLang:a=>{ if(a===L) return; L=a; UI.ll=a; saveUI(); document.documentElement.lang=a; renderTabs(); render(); trLoad(a); },   // UI.ll — язык обложки, выбранный кнопкой (обложку не пропускает)
   landGo:()=>{setLang(L); go('home');},
   landPen:()=>{ const box=document.getElementById('featCb'), seq=CUR_ABC(), k=box&&box.__k?(box.__k-1+seq.length)%seq.length:0, i=Math.max(0,ABC.findIndex(x=>x.up===seq[k]));
     setLang(L); penNew(i); go('pen',i); },

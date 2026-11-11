@@ -3,7 +3,7 @@
    работа без интернета после первого захода, нет внешних запросов.
    Запуск: python3 tools/build_site.py && node tests/test_site.js */
 const {chromium}=require('playwright');
-const http=require('http'), fs=require('fs'), path=require('path');
+const http=require('http'), fs=require('fs'), path=require('path'), zlib=require('zlib');
 const ROOT=path.join(__dirname,'..','dist','site');
 const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json',
   '.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.webmanifest':'application/manifest+json','.mp3':'audio/mpeg'};
@@ -97,6 +97,19 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(ks.includes('barik-upd')&&ks.filter(k=>/^barik-(?!audio|pics)/.test(k)).length===1,'обновление: новый офлайн-кэш встал, старый удалён ('+ks.join(', ')+')');
     for(const k of Object.keys(OVR)) delete OVR[k];
     await c2.close();
+  }
+  { // быстрая первая загрузка (O-185): словарь разделён, гость качает армянский + английский + язык своей страны
+    const dj=fs.readFileSync(path.join(ROOT,'js','data.js'),'utf8'), gz=f=>zlib.gzipSync(fs.readFileSync(path.join(ROOT,'js',f))).length;
+    ok(/window\.BARARAN_SPLIT=/.test(dj)&&gz('data.js')<260000&&['ru','en','fr','es','de','pt'].every(l=>fs.existsSync(path.join(ROOT,'js','tr-'+l+'.js'))),'словарь разделён: data.js '+Math.round(gz('data.js')/1024)+' КБ сжатым, переводы — tr-<язык>.js');
+    const c3=await br.newContext({viewport:{width:390,height:844},locale:'en-US',timezoneId:'Europe/Paris',serviceWorkers:'block'}); const p3=await c3.newPage(), got=[];
+    p3.on('pageerror',e=>errs.push('fr: '+e)); p3.on('request',q=>{ const m=/js\/tr-(\w+)\.js/.exec(q.url()); if(m) got.push(m[1]); });
+    await p3.goto(base); await p3.waitForTimeout(800);
+    const w=await p3.evaluate(()=>{ const B=window.__bararan, x=B.BY['բարև']; return {f:x.f, e:x.e, n:B.WORDS.length}; });
+    ok(got.sort().join()==='en,fr'&&w.f.includes('salut')&&w.e.includes('hello')&&w.n>=20000,'Париж: грузятся только en и fr, слова по-французски ('+got.join()+'; '+w.f+'; '+w.n+' слов)');
+    await p3.evaluate(()=>window.__bararan.setLang('ru')); await p3.waitForTimeout(800);
+    const r=await p3.evaluate(()=>window.__bararan.BY['բարև'].r);
+    ok(got.includes('ru')&&r==='привет','смена языка догружает переводы: '+r);
+    await c3.close();
   }
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));

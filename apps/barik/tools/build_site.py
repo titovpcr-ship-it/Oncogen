@@ -265,6 +265,42 @@ def env_flag(name):
     return False
 
 
+TR_COL = {"ru": 1, "en": 2, "fr": 4, "es": 5, "de": 6, "pt": 7}   # поле строки слова в data.js
+
+
+def split_data(out):
+    """Быстрая первая загрузка (O-185): словарь со всеми шестью переводами — ~1 МБ в сжатом виде. В сайте js/data.js
+    оставляет у слова армянское написание и эмодзи, переводы — в js/tr-<язык>.js (массив по номеру строки среди всех
+    строк тем по порядку). Строки без русского перевода приложение и так пропускает — их нет и здесь.
+    Возвращает отпечаток переводов (window.BARARAN_SPLIT, он же ?v= у файлов переводов)."""
+    p = os.path.join(out, "js", "data.js")
+    s = open(p, encoding="utf-8").read()
+    m = re.search(r"window\.BARARAN_DATA=(\{.*\});?\s*$", s, re.S)
+    assert m, "data.js: нет window.BARARAN_DATA"
+    d = json.loads(m.group(1))
+    tr = {l: [] for l in TR_COL}
+    for t in d["topics"]:
+        rows = []
+        for r in t["w"]:
+            if not (r[0] or "").strip() or not (r[1] or "").strip():
+                continue
+            rows.append([r[0], r[3] if len(r) > 3 else ""])
+            for l, c in TR_COL.items():
+                tr[l].append(r[c] if len(r) > c else "")
+        t["w"] = rows
+    body = {l: json.dumps(v, ensure_ascii=False, separators=(",", ":")) for l, v in tr.items()}
+    h = hashlib.sha1("".join(body[l] for l in TR_COL).encode()).hexdigest()[:8]
+    for l in TR_COL:
+        open(os.path.join(out, "js", "tr-%s.js" % l), "w", encoding="utf-8").write(
+            "/* Переводы слов (%s) — собрано build_site.py из data.js (O-185). */\n"
+            "window.BARARAN_TR=window.BARARAN_TR||{};window.BARARAN_TR[%s]=%s;\n" % (l, json.dumps(l), body[l]))
+    open(p, "w", encoding="utf-8").write(
+        "/* Собрано build_site.py (O-185): армянское слово и эмодзи; переводы — js/tr-<язык>.js. */\n"
+        "window.BARARAN_SPLIT=%s;\nwindow.BARARAN_DATA=%s;\n"
+        % (json.dumps(h), json.dumps(d, ensure_ascii=False, separators=(",", ":"))))
+    return h
+
+
 def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     if os.path.isdir(out):
         shutil.rmtree(out)
@@ -289,6 +325,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     os.makedirs(api, exist_ok=True)
     for f in ("index.php", "lib.php", "cron.php", ".htaccess"):
         shutil.copy(os.path.join(APP, "server", "api", f), os.path.join(api, f))
+    split = split_data(out)
     icons(out)
     shutil.copytree(os.path.join(APP, "assets", "og"), os.path.join(out, "og"))
     json.dump(MANIFEST, open(os.path.join(out, "manifest.webmanifest"), "w", encoding="utf-8"),
@@ -309,6 +346,8 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
         return m.group(1) + rel + "?v=" + ver[rel] + '"'
     html = re.sub(r'((?:src|href)=")((?:js|css)/[\w./-]+\.(?:js|css))"', _v, html)
     open(ix, "w", encoding="utf-8").write(html)
+    for l in TR_COL:                      # переводы грузит lang0.js / trLoad с ?v=<отпечаток всех переводов> (O-185)
+        ver["js/tr-%s.js" % l] = split
     # Приложение не знает о страницах поиска — в его кэш (без интернета) они не идут.
     shell, h = ["./"], hashlib.sha1()
     for root, _, files in os.walk(out):
