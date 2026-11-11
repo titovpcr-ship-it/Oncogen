@@ -67,8 +67,15 @@ class CPanel:
             if j.get('status') != 1:
                 sys.exit('cPanel не принял ключ API: %s' % json.dumps(j, ensure_ascii=False)[:300])
             return
-        r = self.s.post(self.base + '/login/?login_only=1', data={'user': self.user, 'pass': self.password}, timeout=60)
-        j = r.json()
+        for att in range(4):                     # посреди долгой выкладки cPanel иногда отвечает страницей ошибки, не JSON — подождать и снова
+            r = self.s.post(self.base + '/login/?login_only=1', data={'user': self.user, 'pass': self.password}, timeout=60)
+            try:
+                j = r.json(); break
+            except ValueError:
+                print('  cPanel ответил не JSON (HTTP %s) — жду %d с' % (r.status_code, 30 * (att + 1)), flush=True)
+                time.sleep(30 * (att + 1))
+        else:
+            sys.exit('cPanel не отвечает на вход — повторите выкладку позже')
         if j.get('status') != 1:
             sys.exit('cPanel не пустил: %s (логин %s). Проверьте BARIK_HOST_USER и пароль в .env.' % (j.get('message'), self.user))
         self.token = j['security_token']
