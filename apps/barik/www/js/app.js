@@ -785,7 +785,7 @@ function renderTabs(){
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
   nav.innerHTML='<button class="tbrand" data-act="brand" aria-label="Barik">'+MARK()+'<b>Barik</b><span lang="hy">Բառիկ</span></button>'+tabs.map(t=>'<button class="tab" data-act="tab" data-arg="'+t[0]+'">'+t[1]+'<span>'+esc(t[2])+'</span></button>').join('');
 }
-function render(auto){ document.documentElement.classList.remove('nopre');   // обложка из HTML спрятана до первого кадра приложения (O-202) — дальше рисует оно
+function render(auto){ document.documentElement.classList.remove('nopre'); if(!window.__barikOk){ window.__barikOk=1; try{ sessionStorage.removeItem('barik-rl'); }catch(e){} }   // обложка из HTML спрятана до первого кадра приложения (O-202) — дальше рисует оно
   const el=$('#view');
   document.body.dataset.view=(view==='session'||(view==='unit'&&PU&&PU.step===2&&!PU.end)||(view==='abcquiz'&&aq&&aq.i<aq.items.length)||(view==='pquiz'&&pq&&pq.i<pq.items.length)||(view==='tquiz'&&tq&&tq.i<tq.items.length))?'session':view;
   const tk=tcur(); document.body.classList.toggle('kbon',view==='tquiz'&&!!tk&&!tk.done&&kbOwn());

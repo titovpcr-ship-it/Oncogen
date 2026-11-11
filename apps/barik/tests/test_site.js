@@ -53,6 +53,13 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await p2.unroute('**/js/**'); await p2.goto(base); await p2.waitForSelector('#view .ld h1',{state:'visible',timeout:15000}).catch(()=>{});
     const vis=await p2.evaluate(()=>{ const h=document.querySelector('#view .ld h1'); return !!h&&h.offsetHeight>0&&!document.documentElement.className.includes('nopre')&&document.documentElement.lang; });
     ok(vis==='ru','гость из Москвы: обложка приложения видна, по-русски ('+vis+')'); await c2.close(); await c3.close(); }
+  { // O-205: вместо скрипта пришла заглушка хостинга (200, text/html) — страница один раз перезагружается и приложение работает
+    const c4=await br.newContext({serviceWorkers:'block'}); const p4=await c4.newPage(); let stub=0, loads=0;
+    p4.on('load',()=>loads++);
+    await p4.route('**/js/billing.js*',rt=>{ if(!stub){ stub++; return rt.fulfill({status:200,contentType:'text/html',headers:{'X-Content-Type-Options':'nosniff'},body:'<title>One moment, please...</title>'}); } return rt.continue(); });
+    await p4.goto(base); await p4.waitForTimeout(3500);
+    const ok4=await p4.evaluate(()=>!!window.__barikOk&&!!document.querySelector('#view h1')&&document.querySelector('#view h1').offsetHeight>0);
+    ok(stub===1&&loads>=2&&ok4,'заглушка вместо скрипта — одна перезагрузка, приложение работает (загрузок '+loads+')'); await c4.close(); }
   await pg.click('[data-act=landLang][data-arg=ru]');
   for(const L of ['ru','en','fr','es','de','pt']){ const r=await pg.request.get(base+'og/og-'+L+'.jpg'); ok(r.ok()&&(await r.body()).length>50000,'картинка превью og-'+L+'.jpg'); }
   ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\/og\//.test(q.url))))),'картинки превью не лежат в кэше приложения');
