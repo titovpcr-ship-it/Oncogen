@@ -799,6 +799,7 @@ details[open] .pm::after{transform:rotate(0)}
 .pen-score{margin:8px 0 18px;font:600 17px/1.4 var(--ui)}
 .pen-cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0 4px}
 .pen-cta svg{width:20px;height:20px;flex:none}
+.copybook .pen-cta{margin-left:18px;max-width:calc(100% - 18px);position:relative;z-index:1}   /* за линией полей тетради, вровень с подписью */
 .pen-have{color:var(--on-accent);opacity:.75;letter-spacing:1px;font-size:14px}
 .abc .pen-mark{position:absolute;top:7px;right:9px;font-size:12px;line-height:1;color:var(--gold)}
 @media (prefers-reduced-motion: reduce){ .pen-halo{animation:none;opacity:.22} }
