@@ -758,7 +758,7 @@ function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.se
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
 function go(v,arg){ if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='cert') return 'path'; if(v==='teach') return 'settings'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='gift') return 'settings'; if(v==='cert') return 'path'; if(v==='teach') return 'settings'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -784,6 +784,7 @@ function render(auto){
   else if(view==='phrases'){ el.innerHTML=phrasesHTML(); }
   else if(view==='teach'){ el.innerHTML=teachHTML(); }
   else if(view==='cert'){ el.innerHTML=certHTML(); ctDraw(); }
+  else if(view==='gift'){ el.innerHTML=giftHTML(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -1808,6 +1809,7 @@ function paywallHTML(){
     '<ul class="pw-list">'+ben.map(b=>'<li><span aria-hidden="true">'+emo(b[0])+'</span><span>'+esc(b[1])+'</span></li>').join('')+'</ul>'+
     plans+
     (BILL.native?'<div class="actions" style="margin-top:10px"><button class="btn ghost" data-act="restore">'+esc(T('restore'))+'</button></div>':'')+
+    (BILL.native?'':'<div class="actions"><button class="btn ghost" data-act="gfOpen">🎁 '+esc(T('gfTitle'))+'</button></div>')+
     '<p class="pw-legal">'+esc(T(BILL.native?'pwLegal':'pwLegalWeb'))+'</p>'+
     '<div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button>'+(BILL.native?'':'<button class="linkbtn" data-act="doc" data-arg="refund">'+esc(T('refund'))+'</button>')+'</div></div>';
 }
@@ -1907,6 +1909,7 @@ function accProfileHTML(){
   return '<section class="set-sec acc"><div class="acc-card"><span class="acc-av" aria-hidden="true">'+esc(first)+'</span><div class="acc-who"><b class="acc-nick">'+esc(u.nick)+'</b><span class="acc-mail">'+esc(u.email)+'</span></div>'+
       (ACC.edit?'':'<button class="linkbtn" data-act="accNickEdit">'+esc(T('accNickChange'))+'</button>')+'</div>'+edit+'</section>'+
     '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
+    '<section class="set-sec gf"><h2 class="sec">🎁 '+esc(T('gfCodeT'))+'</h2><form class="nm-form" data-act="gfRedeem"><input class="search" id="gfIn" type="text" maxlength="20" autocapitalize="characters" placeholder="BARIK-XXXX-XXXX"><button class="btn secondary" type="submit">'+esc(T('gfApply'))+'</button></form></section>'+
     '<section class="set-sec rm"><h2 class="sec">'+esc(T('rmTitle'))+'</h2><p class="note">'+esc(T('rmText'))+'</p><div class="actions"><button class="btn '+(u.remind?'secondary':'primary')+'" data-act="rmTog">'+esc(u.remind?T('rmOff'):T('rmOn'))+'</button></div></section>'+
     '<section class="set-sec"><div class="actions"><button class="btn secondary" data-act="accLogout">'+esc(T('accLogout'))+'</button><button class="btn danger" data-act="accDel">'+esc(ACC.del?T('accDeleteArm'):T('accDelete'))+'</button></div>'+
       (ACC.edit?'':accErrHTML())+'<p class="note">'+esc(T('accSync'))+' '+esc(T('accData'))+'</p></section>';
@@ -1956,6 +1959,33 @@ async function cryReturn(){
     await new Promise(r=>setTimeout(r,6000));
   }
   toast(T('cryPending'));
+}
+/* ---------- подарочная подписка (O-184): купить код на 3 или 12 месяцев, получатель вводит его в кабинете ---------- */
+let GF={m:12,code:'',busy:false,err:''};
+function giftHTML(){
+  const g=(ACC.pay&&ACC.pay.gift)||{}, ms=Object.keys(g).map(Number).sort((a,b)=>a-b);
+  const head='<button class="back" data-act="dgBack">‹ '+esc(T('back'))+'</button><div class="pb-head"><p class="pb-hy-t" lang="hy">Նվեր</p><h1 class="pg">🎁 '+esc(T('gfTitle'))+'</h1><p class="note">'+esc(T('gfLead'))+'</p></div>';
+  if(GF.code) return head+'<section class="set-sec gf-done"><p class="sec">'+esc(T('gfReady'))+'</p><p class="gf-code">'+esc(GF.code)+'</p><div class="actions"><button class="btn primary" data-act="gfShareCode">'+esc(T('dgShare'))+'</button></div><p class="note">'+esc(T('gfHow'))+'</p></section>';
+  if(!ms.length) return head+'<p class="note">'+esc(T('gfSoon'))+'</p>';
+  if(!GF.m||!g[GF.m]) GF.m=ms[ms.length-1];
+  return head+'<div class="opts list">'+ms.map(m=>'<button class="opt'+(GF.m===m?' sel':'')+'" data-act="gfPick" data-arg="'+m+'"><span>'+esc(T('gfMonths',m))+'</span><b>'+esc(g[m]||'')+'</b></button>').join('')+'</div>'+
+    (GF.err?'<p class="err">'+esc(T('buyFail'))+'</p>':'')+
+    '<div class="actions"><button class="btn primary" data-act="gfBuy"'+(GF.busy?' disabled':'')+'>'+esc(ACC.me?T('gfBuy'):T('accLogin'))+'</button></div><p class="note">'+esc(T('gfHow'))+'</p><p class="pw-legal">'+esc(T('pwLegalWeb'))+'</p>';
+}
+async function gfBuy(){
+  if(!ACC.me){ openAccount('gift'); return; }
+  GF.busy=true; GF.err=''; render(false); hit('gift_checkout');
+  const j=await api('gift_checkout',{months:GF.m,lang:L});
+  if(j.ok&&j.url){ location.assign(j.url); return; }
+  GF.busy=false; GF.err=j.err||'pay'; render(false);
+}
+async function giftReturn(){
+  const sp=new URLSearchParams(location.search||''), pid=sp.get('payment_id')||'';
+  try{ ['pay','payment_id','status','email','license_key'].forEach(k=>sp.delete(k)); const qs=sp.toString(); history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+location.hash); }catch(e){}
+  if(!ACC.me||!pid) return;
+  go('gift'); toast(T('cardWait'));
+  for(let i=0;i<8;i++){ const j=await api('gift_check',{payment_id:pid,lang:L}); if(j.ok&&j.code){ GF.code=j.code; if(view==='gift') render(false); toast(T('thanks')); return; } await new Promise(r=>setTimeout(r,4000)); }
+  toast(T('cardPending'));
 }
 /* вернулись со страницы Dodo (?pay=card&subscription_id=…&status=…): сервер сам спрашивает Dodo о подписке */
 async function cardReturn(){
@@ -2515,6 +2545,12 @@ const H={
   dgOpen:()=>{ hit('v_daily'); go('daily'); },
   pbOpen:()=>{ hit('v_phrases'); go('phrases'); },
   tcOpen:()=>{ hit('v_teach'); go('teach'); },
+  gfOpen:()=>{ hit('v_gift'); GF.code=''; go('gift'); if(ACC.srv!==true) accInit().then(()=>{ if(view==='gift') render(false); }); },
+  gfPick:a=>{ GF.m=+a; render(false); },
+  gfBuy:()=>gfBuy(),
+  gfShareCode:async()=>{ const t=T('gfShare',GF.code)+' '+location.origin+'/?lang='+L; try{ if(navigator.share){ await navigator.share({text:t}); return; } }catch(e){ if(e&&e.name==='AbortError') return; } try{ await navigator.clipboard.writeText(t); toast(T('dgCopied')); }catch(e){ toast(t); } },
+  gfRedeem:async()=>{ const i=$('#gfIn'), c=i?i.value.trim():''; if(!c) return; const j=await api('gift_redeem',{code:c});
+    if(j.ok){ accApply(j); hit('gift_redeem'); toast(T('gfOk')); render(); } else toast(T(j.err==='used'?'gfUsed':'gfBad')); },
   ctOpen:a=>{ CT.st=+a; if(!CT.name&&ACC.me&&ACC.me.nick) CT.name=ACC.me.nick; hit('v_cert'); go('cert'); },
   ctName:()=>{ const i=$('#ctIn'); CT.name=i?i.value:''; ctDraw(); },
   ctSave:async()=>{ const i=$('#ctIn'); if(i) CT.name=i.value; const b=await ctBlob(); if(!b) return; hit('cert_save'); const a=document.createElement('a'), u=URL.createObjectURL(b); a.href=u; a.download='barik-stage-'+CT.st+'.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000); },
@@ -2643,7 +2679,7 @@ const H={
     if(j.ok){
       hit('login'); accApply(j); Object.assign(ACC,{busy:false,step:'email',code:'',needNick:false,nick:''}); clearInterval(ACC.timer);
       toast(T('accHello',j.user.nick));
-      if(ACC.next==='paywall'){ ACC.next=null; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); } else render();   // backTo — прежний: после оплаты туда же
+      if(ACC.next==='paywall'){ ACC.next=null; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); } else if(ACC.next==='gift'){ ACC.next=null; go('gift'); } else render();   // backTo — прежний: после оплаты туда же
       return;
     }
     if(j.err==='need_nick'){ accSet({busy:false,needNick:true,err:''}); setTimeout(()=>{ const i=$('#accNick'); if(i) i.focus(); },30); return; }
@@ -2771,13 +2807,15 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   if(sp.has('daily')&&nm===null){ view='daily'; }
   if(sp.has('phrases')&&nm===null){ view='phrases'; }
   if(sp.has('teach')&&nm===null){ view='teach'; }
+  if(sp.has('gift')&&nm===null){ view='gift'; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();
 hit();
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
-  if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn(); });
+  if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();
+  if(/[?&]pay=gift(?:&|$)/.test(location.search||'')) giftReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
 window.__bararan={get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

@@ -234,6 +234,42 @@ switch ($r) {
              'token' => (string)cfg('PADDLE_CLIENT_TOKEN'), 'price' => $price, 'email' => $u['email'],
              'custom' => ['uid' => (int)$u['id'], 'sig' => uid_sig((int)$u['id'])]]);
 
+    case 'gift_checkout':
+        // подарок (O-184): разовая оплата {months: 3|12}; код выпускается после оплаты (вебхук или gift_check)
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        $b = body(); $months = (int)($b['months'] ?? 0);
+        $prod = in_array($months, [3, 12], true) ? (string)cfg('DODO_PRODUCT_GIFT' . $months, '') : '';
+        if (!dodo_on() || $prod === '') fail('pay', 503);
+        if (limited('u:' . $u['id'] . ':gift', 10, 3600)) fail('wait', 429, ['retry' => 600]);
+        $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
+        $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
+        $j = dodo('POST', '/checkouts', [
+            'product_cart' => [['product_id' => $prod, 'quantity' => 1]],
+            'customer' => ['email' => $u['email'], 'name' => $u['nick']],
+            'return_url' => $site . '/?lang=' . $lang . '&pay=gift',
+            'metadata' => ['gift' => '1', 'months' => (string)$months, 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]]);
+        $url = is_array($j) ? (string)($j['checkout_url'] ?? '') : '';
+        if (!preg_match('~^https://~', $url)) fail('pay', 502);
+        out(['ok' => true, 'url' => $url]);
+
+    case 'gift_check':
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        $b = body();
+        $g = gift_settle((string)($b['payment_id'] ?? ''), in_array($b['lang'] ?? '', ['ru', 'en'], true) ? $b['lang'] : 'en');
+        if (!$g || (int)$g['buyer'] !== (int)$u['id']) fail('pending', 404);
+        out(['ok' => true, 'code' => $g['code'], 'months' => (int)$g['months']]);
+
+    case 'gift_redeem':
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        if (limited('u:' . $u['id'] . ':redeem', 20, 3600)) fail('wait', 429, ['retry' => 600]);
+        $r = gift_redeem($u, (string)(body()['code'] ?? ''));
+        if ($r !== 'ok') fail($r, 400);
+        $u = q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        out(['ok' => true, 'user' => user_out($u)]);
+
     case 'portal':
         need_post($method);
         $u = session_user() ?? fail('auth', 401);
@@ -360,6 +396,11 @@ function dodo_webhook(): never {
     if (!is_array($ev)) fail('bad', 400);
     $d = is_array($ev['data'] ?? null) ? $ev['data'] : [];
     $sid = (string)($d['subscription_id'] ?? '');
+    $meta = is_array($d['metadata'] ?? null) ? $d['metadata'] : [];
+    if ($sid === '' && dodo_on() && ($meta['gift'] ?? '') === '1' && (string)($d['payment_id'] ?? '') !== '') {   // подарок (O-184)
+        $g = gift_settle((string)$d['payment_id'], in_array($meta['lang'] ?? '', ['ru', 'en'], true) ? $meta['lang'] : 'en');
+        out(['ok' => true, 'gift' => (bool)$g]);
+    }
     if ($sid === '' || !dodo_on()) out(['ok' => true, 'skip' => true]);   // платежи без подписки, возвраты и пр.
     if ($id !== '') {
         try { q('INSERT INTO events(id, t) VALUES(?, ?)', ['dodo:' . $id, now()]); }

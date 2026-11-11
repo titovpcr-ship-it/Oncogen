@@ -86,6 +86,10 @@ function db(): PDO {
     // (хэш IP + браузер + день + PEPPER), живут двое суток — для числа уникальных за день
     $pdo->exec('CREATE TABLE IF NOT EXISTS stats(day INTEGER NOT NULL, k TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY(day, k))');
     $pdo->exec('CREATE TABLE IF NOT EXISTS stat_v(day INTEGER NOT NULL, h TEXT NOT NULL, PRIMARY KEY(day, h))');
+    // подарочная подписка (O-184): код покупает один, вводит другой; доступ — users.gift_until, отдельно от подписки Dodo
+    $pdo->exec('CREATE TABLE IF NOT EXISTS gifts(code TEXT PRIMARY KEY, pay_id TEXT NOT NULL UNIQUE, buyer INTEGER NOT NULL, months INTEGER NOT NULL,
+        created INTEGER NOT NULL, used_by INTEGER, used_at INTEGER)');
+    try { $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER'); } catch (PDOException $e) { /* уже есть */ }
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
@@ -176,14 +180,16 @@ function end_session(): void {
 }
 
 function premium(array $u): bool {
+    if ((int)($u['gift_until'] ?? 0) > now()) return true;
     if (!in_array((string)$u['sub_status'], PREMIUM_STATUSES, true)) return false;
     $until = (int)($u['sub_until'] ?? 0);
     return $until === 0 || $until + 3 * 86400 > now();
 }
 
 function user_out(array $u): array {
+    $gift = (int)($u['gift_until'] ?? 0) > now() && !(in_array((string)$u['sub_status'], PREMIUM_STATUSES, true) && (int)$u['sub_until'] > (int)$u['gift_until']);
     return ['nick' => $u['nick'], 'email' => mask_email($u['email']), 'premium' => premium($u),
-            'until' => $u['sub_until'] ? (int)$u['sub_until'] * 1000 : 0, 'plan' => $u['sub_plan'] ?: '',
+            'until' => $gift ? (int)$u['gift_until'] * 1000 : ($u['sub_until'] ? (int)$u['sub_until'] * 1000 : 0), 'plan' => $gift ? 'gift' : ($u['sub_plan'] ?: ''),
             'status' => $u['sub_status'] ?: '',
             'portal' => (bool)$u['pd_customer'] && (dodo_on() || (bool)cfg('PADDLE_API_KEY')),
             'remind' => (bool)q('SELECT on_ FROM remind WHERE uid = ?', [$u['id']])->fetchColumn()];
@@ -195,7 +201,7 @@ function uid_sig(int $uid): string {
 
 function pay_info(): array {
     if (dodo_on()) return ['ready' => true, 'month' => true, 'year' => false, 'card' => true,
-                           'mLabel' => (string)cfg('PRICE_MONTH_LABEL', '$4.99'), 'yLabel' => ''];
+                           'mLabel' => (string)cfg('PRICE_MONTH_LABEL', '$4.99'), 'yLabel' => '', 'gift' => gift_info()];
     return ['ready' => pay_ready(), 'month' => (bool)cfg('PADDLE_PRICE_MONTH'), 'year' => (bool)cfg('PADDLE_PRICE_YEAR'),
             'mLabel' => (string)cfg('PRICE_MONTH_LABEL', ''), 'yLabel' => (string)cfg('PRICE_YEAR_LABEL', '')];
 }
@@ -604,4 +610,56 @@ function stat_hit(array $b): void {
 
 function stats_key(): string {
     return substr(hash_hmac('sha256', 'stats', (string)cfg('PEPPER', 'barik')), 0, 32);
+}
+
+
+/* ---------- подарочная подписка (O-184) ---------- */
+const GIFT_TEXT = [
+    'ru' => ['Barik: подарочный код Premium', "Спасибо за подарок!\n\nКод: %s\nСрок: %d мес. Barik Premium.\n\nПередайте код тому, кому дарите: он входит на barik.am по почте и вводит код в личном кабинете — «Подарочный код».\n\n— Barik, армянский слово за словом\n%s"],
+    'en' => ['Barik: your Premium gift code', "Thank you for your gift!\n\nCode: %s\nTerm: %d months of Barik Premium.\n\nGive the code to the person you are gifting: they sign in at barik.am with their email and enter it in their account under “Gift code”.\n\n— Barik, Armenian word by word\n%s"],
+];
+
+function gift_info(): array {
+    $o = [];
+    foreach ([3, 12] as $m) if ((string)cfg('DODO_PRODUCT_GIFT' . $m, '') !== '') $o[(string)$m] = (string)cfg('GIFT' . $m . '_LABEL', '');
+    return $o;
+}
+
+function gift_code(): string {
+    $a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    $c = '';
+    for ($i = 0; $i < 8; $i++) $c .= $a[random_int(0, strlen($a) - 1)];
+    return 'BARIK-' . substr($c, 0, 4) . '-' . substr($c, 4);
+}
+
+/* спросить Dodo о платеже и, если он оплачен и это наш подарок, выпустить код — ровно один раз; вернуть строку gifts */
+function gift_settle(string $pid, string $lang = 'en'): ?array {
+    if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) return null;
+    $row = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch();
+    if ($row) return $row;
+    $p = dodo('GET', '/payments/' . rawurlencode($pid));
+    if (!is_array($p) || (string)($p['status'] ?? '') !== 'succeeded') return null;
+    $m = is_array($p['metadata'] ?? null) ? $p['metadata'] : [];
+    $uid = (int)($m['uid'] ?? 0); $months = (int)($m['months'] ?? 0);
+    if (($m['gift'] ?? '') !== '1' || !in_array($months, [3, 12], true) || !hash_equals(uid_sig($uid), (string)($m['sig'] ?? ''))) return null;
+    $code = gift_code();
+    try { q('INSERT INTO gifts(code, pay_id, buyer, months, created) VALUES(?, ?, ?, ?, ?)', [$code, $pid, $uid, $months, now()]); }
+    catch (PDOException $e) { return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null; }
+    $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch();
+    if ($u) {
+        $t = GIFT_TEXT[$lang] ?? GIFT_TEXT['en'];
+        mail_out($u['email'], $t[0], sprintf($t[1], $code, $months, (string)cfg('SITE_URL', 'https://barik.am/')), ['gift' => $code]);
+    }
+    return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null;
+}
+
+function gift_redeem(array $u, string $code): string {
+    $code = strtoupper(preg_replace('/[^A-Za-z0-9-]/', '', $code));
+    $g = q('SELECT * FROM gifts WHERE code = ?', [$code])->fetch();
+    if (!$g) return 'nocode';
+    if ($g['used_by']) return (int)$g['used_by'] === (int)$u['id'] ? 'ok' : 'used';
+    $from = max(now(), (int)($u['gift_until'] ?? 0));
+    q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
+    q('UPDATE users SET gift_until = ? WHERE id = ?', [$from + (int)$g['months'] * 30 * 86400, $u['id']]);
+    return 'ok';
 }
