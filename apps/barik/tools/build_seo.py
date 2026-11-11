@@ -256,6 +256,12 @@ ul.ws li>a{flex:1;min-width:0}ul.ws .say{width:38px;height:38px}ul.ws .say svg{w
 ul.ws a{display:flex;gap:12px;align-items:center;padding:9px 4px;text-decoration:none;flex-wrap:wrap}
 ul.ws .li-pic{width:34px;height:34px;flex:none}ul.ws .li-pic.no{display:grid;place-items:center;font:700 22px/1 A,serif;color:var(--pom)}
 ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .x{margin-left:auto;text-align:right}
+.ws .pa{display:flex;gap:12px;align-items:center;padding:9px 4px;flex-wrap:wrap;flex:1;min-width:0}
+.ws.pb .hy{font-size:19px}
+.ws.pb .x{margin-left:0;text-align:left;width:100%}
+.pb-n{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.pb-n small{color:var(--mut)}
+.nm-big.ph{font-size:clamp(30px,8vw,46px)}
 .thead{display:flex;align-items:center;gap:16px}
 .thead .tic{display:grid;place-items:center;flex:none;width:76px;height:86px;border-radius:38px 38px 16px 16px/34px 34px 16px 16px;background:var(--acc-soft)}
 .thead .tic img{width:54px;height:54px}
@@ -526,7 +532,7 @@ def build(site, base, words_path):
         n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
         fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
-                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p>{secs}')
+                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p>{secs}')
         write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
                         alts, body, depth=1).replace('href="../../', 'href="../'))
         urls[L].insert(0, rel)
@@ -543,10 +549,11 @@ def build(site, base, words_path):
         sm.append("</urlset>")
         open(os.path.join(site, f"sitemap-{L}.xml"), "w", encoding="utf-8").write("\n".join(sm))
     files += build_names(site, base)
+    files += build_phrases(site, base, d, wslug)
     open(os.path.join(site, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
-        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap></sitemapindex>")
+        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap></sitemapindex>")
     rb = os.path.join(site, "robots.txt")
     txt = open(rb).read() if os.path.exists(rb) else "User-agent: *\nAllow: /\n"
     if "Sitemap:" not in txt:
@@ -646,6 +653,150 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
     print(f"страницы имён: {files}")
+    return files
+
+
+PB_TXT = {
+    "ru": {"idx_h": "Армянский разговорник", "idx_t": "Армянский разговорник: {n} фраз с произношением и озвучкой",
+           "idx_d": "{n} готовых фраз по-армянски: знакомство, чувства, поздравления и тосты, такси, кафе, врач, жильё — с транскрипцией и записью голоса.",
+           "idx_l": "Готовые фразы на восточноармянском: армянская запись, произношение русскими буквами, перевод и голос. Нажмите на фразу — услышите её.",
+           "sec_t": "{s} по-армянски — {n} фраз с произношением", "sec_d": "{s}: {n} фраз по-армянски с транскрипцией, переводом и озвучкой. Например: {x}",
+           "how_t": "Как сказать «{x}» по-армянски — {hy}", "how_d": "«{x}» по-армянски — {hy}, произносится [{tr}]. Послушайте запись и посмотрите, из каких слов состоит фраза.",
+           "how_h": "Как сказать «{x}» по-армянски", "say": "Произносится", "words": "Из каких слов", "more": "Ещё фразы: {s}", "top": "Частые фразы",
+           "listen": "Послушать", "cta": "Открыть разговорник в Barik", "all": "Весь разговорник", "sections": "Разделы"},
+    "en": {"idx_h": "Armenian phrasebook", "idx_t": "Armenian phrasebook: {n} phrases with pronunciation and audio",
+           "idx_d": "{n} ready-made Armenian phrases: meeting people, love, wishes and toasts, taxi, café, doctor, renting — with pronunciation and audio.",
+           "idx_l": "Ready-made phrases in Eastern Armenian: Armenian script, pronunciation in Latin letters, translation and audio. Tap a phrase to hear it.",
+           "sec_t": "{s} in Armenian — {n} phrases with pronunciation", "sec_d": "{s}: {n} Armenian phrases with pronunciation, translation and audio. For example: {x}",
+           "how_t": "How to say \"{x}\" in Armenian — {hy}", "how_d": "\"{x}\" in Armenian is {hy}, pronounced [{tr}]. Listen to the recording and see which words the phrase is made of.",
+           "how_h": "How to say \"{x}\" in Armenian", "say": "Pronounced", "words": "Word by word", "more": "More phrases: {s}", "top": "Popular phrases",
+           "listen": "Listen", "cta": "Open the phrasebook in Barik", "all": "Whole phrasebook", "sections": "Sections"},
+    "fr": {"idx_h": "Guide de conversation arménien", "idx_t": "Guide de conversation arménien : {n} phrases avec prononciation et audio",
+           "idx_d": "{n} phrases arméniennes toutes faites : rencontres, sentiments, vœux et toasts, taxi, café, médecin, logement — avec prononciation et audio.",
+           "idx_l": "Des phrases toutes faites en arménien oriental : écriture arménienne, prononciation, traduction et voix. Touchez une phrase pour l’entendre.",
+           "sec_t": "{s} en arménien — {n} phrases avec prononciation", "sec_d": "{s} : {n} phrases arméniennes avec prononciation, traduction et audio. Par exemple : {x}",
+           "how_t": "Comment dire « {x} » en arménien — {hy}", "how_d": "« {x} » en arménien se dit {hy}, prononcé [{tr}]. Écoutez l’enregistrement et voyez de quels mots se compose la phrase.",
+           "how_h": "Comment dire « {x} » en arménien", "say": "Prononciation", "words": "Mot à mot", "more": "Autres phrases : {s}", "top": "Phrases courantes",
+           "listen": "Écouter", "cta": "Ouvrir le guide dans Barik", "all": "Tout le guide", "sections": "Rubriques"},
+    "es": {"idx_h": "Guía de conversación en armenio", "idx_t": "Guía de conversación en armenio: {n} frases con pronunciación y audio",
+           "idx_d": "{n} frases hechas en armenio: conocer gente, amor, felicitaciones y brindis, taxi, café, médico, alquiler — con pronunciación y audio.",
+           "idx_l": "Frases hechas en armenio oriental: escritura armenia, pronunciación, traducción y voz. Toca una frase para escucharla.",
+           "sec_t": "{s} en armenio — {n} frases con pronunciación", "sec_d": "{s}: {n} frases en armenio con pronunciación, traducción y audio. Por ejemplo: {x}",
+           "how_t": "Cómo se dice «{x}» en armenio — {hy}", "how_d": "«{x}» en armenio se dice {hy}, se pronuncia [{tr}]. Escucha la grabación y mira de qué palabras se compone la frase.",
+           "how_h": "Cómo se dice «{x}» en armenio", "say": "Se pronuncia", "words": "Palabra por palabra", "more": "Más frases: {s}", "top": "Frases frecuentes",
+           "listen": "Escuchar", "cta": "Abrir la guía en Barik", "all": "Toda la guía", "sections": "Secciones"},
+    "de": {"idx_h": "Armenischer Sprachführer", "idx_t": "Armenischer Sprachführer: {n} Sätze mit Aussprache und Audio",
+           "idx_d": "{n} fertige armenische Sätze: Kennenlernen, Liebe, Glückwünsche und Trinksprüche, Taxi, Café, Arzt, Wohnung — mit Aussprache und Audio.",
+           "idx_l": "Fertige Sätze auf Ostarmenisch: armenische Schrift, Aussprache, Übersetzung und Stimme. Tippe auf einen Satz, um ihn zu hören.",
+           "sec_t": "{s} auf Armenisch — {n} Sätze mit Aussprache", "sec_d": "{s}: {n} armenische Sätze mit Aussprache, Übersetzung und Audio. Zum Beispiel: {x}",
+           "how_t": "Wie sagt man „{x}“ auf Armenisch — {hy}", "how_d": "„{x}“ heißt auf Armenisch {hy}, gesprochen [{tr}]. Hör dir die Aufnahme an und sieh, aus welchen Wörtern der Satz besteht.",
+           "how_h": "Wie sagt man „{x}“ auf Armenisch", "say": "Aussprache", "words": "Wort für Wort", "more": "Weitere Sätze: {s}", "top": "Häufige Sätze",
+           "listen": "Anhören", "cta": "Sprachführer in Barik öffnen", "all": "Ganzer Sprachführer", "sections": "Bereiche"},
+    "pt": {"idx_h": "Guia de conversação em armênio", "idx_t": "Guia de conversação em armênio: {n} frases com pronúncia e áudio",
+           "idx_d": "{n} frases prontas em armênio: conhecer pessoas, amor, felicitações e brindes, táxi, café, médico, aluguel — com pronúncia e áudio.",
+           "idx_l": "Frases prontas em armênio oriental: escrita armênia, pronúncia, tradução e voz. Toque numa frase para ouvi-la.",
+           "sec_t": "{s} em armênio — {n} frases com pronúncia", "sec_d": "{s}: {n} frases em armênio com pronúncia, tradução e áudio. Por exemplo: {x}",
+           "how_t": "Como dizer “{x}” em armênio — {hy}", "how_d": "“{x}” em armênio é {hy}, pronuncia-se [{tr}]. Ouça a gravação e veja de quais palavras a frase é feita.",
+           "how_h": "Como dizer “{x}” em armênio", "say": "Pronúncia", "words": "Palavra por palavra", "more": "Mais frases: {s}", "top": "Frases frequentes",
+           "listen": "Ouvir", "cta": "Abrir o guia no Barik", "all": "Guia completo", "sections": "Seções"},
+}
+TX_KEY = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de", "pt": "pt"}
+
+
+def build_phrases(site, base, d, wslug):
+    """Разговорник для поиска (O-191): /<язык>/p/ — оглавление, /<язык>/p/<раздел>.html — фразы раздела со звуком,
+    /<язык>/p/<фраза>.html — «Как сказать … по-армянски» для фраз из data/phrasebook/featured.txt (разбор по словам)."""
+    secs = d.get("phrases") or []
+    if not secs:
+        return 0
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None
+    feat = [l.strip() for l in open(os.path.join(APP, "data", "phrasebook", "featured.txt"), encoding="utf-8")
+            if l.strip() and not l.startswith("#")]
+    allp = {it["hy"]: (sec, it) for sec in secs for it in sec["items"]}
+    missing = [f for f in feat if f not in allp]
+    if missing:
+        sys.exit("featured.txt: нет в разговорнике: " + ", ".join(missing))
+    words = {w["a"]: w for w in d["words"]}
+    clean = lambda x: re.sub(r"\s*\([^)]*\)", "", x).strip().rstrip(".!?…").strip()
+    fslug, used = {}, set()
+    for hy in feat:
+        en = re.sub(r"[’']", "", clean(allp[hy][1]["tx"]["en"]))
+        sl = "how-to-say-" + (ascii_slug(en, 50) or ascii_slug(allp[hy][1]["tr"]["en"], 50))
+        if sl in used:
+            sl = sl + "-" + hashlib.sha1(hy.encode()).hexdigest()[:4]
+        used.add(sl); fslug[hy] = sl
+
+    def say(hy, label):
+        if not vdir:
+            return ""
+        h = aid(hy); rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return f'<button class="say" type="button" data-src="../../{rel}" aria-label="{esc(label)}" title="{esc(label)}">{SPK}</button>'
+
+    def row(it, L, T):
+        hy = it["hy"]; link = f'{fslug[hy]}.html' if hy in fslug else None
+        a = f'<a href="{link}">' if link else '<span class="pa">'
+        return (f'<li>{a}<span class="hy" lang="hy">{esc(hy)}</span><span class="t">{esc(it["tr"][L])}</span>'
+                f'<span class="x">{esc(it["tx"][L])}</span>{"</a>" if link else "</span>"}{say(hy, T["listen"] + " — " + hy)}</li>')
+
+    files, sm = 0, []
+    total = sum(len(s_["items"]) for s_ in secs)
+
+    def put(rel, html):
+        nonlocal files
+        p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(html); files += 1; sm.append(base + rel)
+    for L in LANGS:
+        T = PB_TXT[L]
+        nav = "".join(f'<li><a href="{s_["k"]}.html">{s_["e"]} {esc(s_["t"][L])} <small>{len(s_["items"])}</small></a></li>' for s_ in secs)
+        top = "".join(row(allp[hy][1], L, T) for hy in feat[:12])
+        rel = f"{L}/p/index.html"
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><p class="eyebrow" lang="hy">Զրուցարան</p><h1 class="pg">{T["idx_h"]}</h1>'
+                f'<i class="orn" aria-hidden="true"></i><p>{T["idx_l"]}</p><a class="cta" href="../../?phrases&amp;lang={L}">{T["cta"]}</a>'
+                f'<h2>{T["sections"]}</h2><ul class="nm-i pb-n">{nav}</ul><h2>{T["top"]}</h2><ul class="ws pb">{top}</ul>')
+        put(rel, page(L, base, rel, T["idx_t"].format(n=total), T["idx_d"].format(n=total), {l: f"{l}/p/index.html" for l in LANGS}, body,
+                      crumbs_ld([("Barik", base), (TXT[L]["dict"], f"{base}{L}/"), (T["idx_h"], base + rel)])))
+        for i, sec in enumerate(secs):
+            name = sec["t"][L]; rel = f"{L}/p/{sec['k']}.html"
+            nxt = secs[(i + 1) % len(secs)]
+            li = "".join(row(it, L, T) for it in sec["items"])
+            body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<p class="eyebrow">{sec["e"]} {T["idx_h"]}</p><h1 class="pg">{esc(name)}</h1><i class="orn" aria-hidden="true"></i>'
+                    f'<ul class="ws pb">{li}</ul><a class="cta" href="../../?phrases&amp;lang={L}">{T["cta"]}</a>'
+                    f'<p class="pn"><a href="index.html">{T["all"]}</a><a href="{nxt["k"]}.html">{nxt["e"]} {esc(nxt["t"][L])} →</a></p>')
+            ex = clean(sec["items"][0]["tx"][L])
+            put(rel, page(L, base, rel, T["sec_t"].format(s=name, n=len(sec["items"])), T["sec_d"].format(s=name, n=len(sec["items"]), x=ex),
+                          {l: f"{l}/p/{sec['k']}.html" for l in LANGS}, body,
+                          crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/p/index.html"), (name, base + rel)])))
+        for hy in feat:
+            sec, it = allp[hy]; x = clean(it["tx"][L]); rel = f"{L}/p/{fslug[hy]}.html"
+            toks = [re.sub(r"[։՞՛՜,]", "", t_).lower() for t_ in hy.split()]
+            wl = []
+            for t_ in dict.fromkeys(toks):
+                w = words.get(t_)
+                if w and t_ in wslug:
+                    wl.append(f'<li><a href="../w/{wslug[t_]}.html"><span class="hy" lang="hy">{esc(t_)}</span>'
+                              f'<span class="t">{esc(w[TR[L]])}</span><span class="x">{esc(w[TX_KEY[L]])}</span></a></li>')
+            more = [o for o in sec["items"] if o["hy"] != hy][:8]
+            body = (f'<p class="crumbs"><a href="index.html">{T["idx_h"]}</a> › <a href="{sec["k"]}.html">{esc(sec["t"][L])}</a></p>'
+                    f'<p class="eyebrow">{sec["e"]} {esc(sec["t"][L])}</p><h1 class="pg">{esc(T["how_h"].format(x=x))}</h1>'
+                    f'<p class="nm-big ph" lang="hy">{esc(hy)}</p>'
+                    f'<p class="tr">{T["say"]}: <span>[{esc(it["tr"][L])}]</span>{say(hy, T["listen"])}</p><p class="tx">{esc(it["tx"][L])}</p>'
+                    + (f'<h2>{T["words"]}</h2><ul class="ws">{"".join(wl)}</ul>' if wl else "")
+                    + f'<a class="cta" href="../../?phrases&amp;lang={L}">{T["cta"]}</a>'
+                    f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(s=sec["t"][L]))}</h2><ul class="ws pb">{"".join(row(o, L, T) for o in more)}</ul>'
+                    f'<p class="pn"><a href="{sec["k"]}.html">{esc(sec["t"][L])}</a><a href="index.html">{T["all"]} →</a></p>')
+            ld = [{"@context": "https://schema.org", "@type": "DefinedTerm", "name": hy, "inLanguage": "hy", "description": it["tx"][L],
+                   "termCode": it["tr"][L], "url": base + rel},
+                  crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/p/index.html"), (sec["t"][L], f"{base}{L}/p/{sec['k']}.html"), (x, base + rel)])]
+            put(rel, page(L, base, rel, T["how_t"].format(x=x, hy=hy), T["how_d"].format(x=x, hy=hy, tr=it["tr"][L]),
+                          {l: f"{l}/p/{fslug[hy]}.html" for l in LANGS}, body, ld))
+    open(os.path.join(site, "sitemap-phrases.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"страницы разговорника: {files}")
     return files
 
 

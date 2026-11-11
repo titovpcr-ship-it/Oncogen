@@ -128,5 +128,15 @@ const LANGS=['ru','en','fr','es','de','pt'];
   await br.close(); srv.close();
   { const a=fs.readFileSync(path.join(ROOT,'ru','n','anna.html'),'utf8'), e=fs.readFileSync(path.join(ROOT,'en','n','emma.html'),'utf8'), sm=fs.readFileSync(path.join(ROOT,'sitemap-names.xml'),'utf8');
     ok(a.includes('Анна по-армянски')&&a.includes('Աննա')&&a.includes('name=%D0%90%D0%BD%D0%BD%D0%B0')&&e.includes('Էմմա')&&(sm.match(/<loc>/g)||[]).length>1000&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-names.xml'),'страницы имён (O-176): Анна, Emma, ссылка в приложение, sitemap-names'); }
+  { // разговорник для поиска (O-191): оглавление, 20 разделов и ~40 «Как сказать …» на каждом языке, звук, hreflang, sitemap
+    const L6=['ru','en','fr','es','de','pt'], n=L6.map(l=>fs.readdirSync(path.join(ROOT,l,'p')).filter(f=>f.endsWith('.html')).length);
+    ok(n.every(x=>x===n[0]&&x>=55),'разговорник: страниц на язык '+n.join('/'));
+    const h=fs.readFileSync(path.join(ROOT,'ru','p','how-to-say-i-love-you.html'),'utf8'), e=fs.readFileSync(path.join(ROOT,'en','p','how-to-say-i-love-you.html'),'utf8');
+    ok(/<title>Как сказать «Я тебя люблю» по-армянски — Ես քեզ սիրում եմ։<\/title>/.test(h)&&e.includes('How to say &quot;I love you&quot; in Armenian'),'«Как сказать …»: заголовок под запрос (ru, en)');
+    ok(h.includes('../w/')&&h.includes('Из каких слов')&&h.includes('hreflang="pt"')&&h.includes('?phrases&amp;lang=ru'),'«Как сказать …»: слова фразы со ссылками, hreflang, вход в приложение');
+    const srcs=[...h.matchAll(/data-src="\.\.\/\.\.\/([^"]+)"/g)].map(m=>m[1]);
+    ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы фраз: записи на месте ('+srcs.length+')');
+    const sm=fs.readFileSync(path.join(ROOT,'sitemap-phrases.xml'),'utf8');
+    ok((sm.match(/<loc>/g)||[]).length===n.reduce((a,x)=>a+x,0)&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-phrases.xml')&&fs.readFileSync(path.join(ROOT,'ru','index.html'),'utf8').includes('href="p/index.html"'),'sitemap-phrases, ссылка из оглавления словаря'); }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();
