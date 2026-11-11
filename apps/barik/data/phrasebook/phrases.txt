@@ -1,0 +1,98 @@
+# Разговорник для поездки (O-181). Раздел: «## ключ | ru | en | fr | es | de | pt | эмодзи». Фраза: армянский | ru | en | fr | es | de | pt
+## hello | Знакомство | Meeting people | Faire connaissance | Conocer gente | Kennenlernen | Conhecer pessoas | 👋
+Բարև ձեզ։ | Здравствуйте. | Hello. | Bonjour. | Hola. | Guten Tag. | Olá.
+Ինչպե՞ս եք։ | Как вы? | How are you? | Comment allez-vous ? | ¿Cómo está? | Wie geht es Ihnen? | Como vai?
+Լավ եմ, շնորհակալություն։ | Хорошо, спасибо. | I’m fine, thank you. | Je vais bien, merci. | Bien, gracias. | Gut, danke. | Bem, obrigado.
+Իմ անունը Աննա է։ | Меня зовут Анна. | My name is Anna. | Je m’appelle Anna. | Me llamo Anna. | Ich heiße Anna. | Meu nome é Anna.
+Ձեր անունն ի՞նչ է։ | Как вас зовут? | What is your name? | Comment vous appelez-vous ? | ¿Cómo se llama? | Wie heißen Sie? | Qual é o seu nome?
+Շատ ուրախ եմ։ | Очень приятно. | Nice to meet you. | Enchanté. | Mucho gusto. | Freut mich. | Muito prazer.
+Ես Ռուսաստանից եմ։ | Я из России. | I’m from Russia. | Je viens de Russie. | Soy de Rusia. | Ich komme aus Russland. | Eu sou da Rússia.
+Ես մի քիչ հայերեն եմ խոսում։ | Я немного говорю по-армянски. | I speak a little Armenian. | Je parle un peu arménien. | Hablo un poco de armenio. | Ich spreche ein bisschen Armenisch. | Eu falo um pouco de armênio.
+Դուք ռուսերեն խոսո՞ւմ եք։ | Вы говорите по-русски? | Do you speak Russian? | Parlez-vous russe ? | ¿Habla ruso? | Sprechen Sie Russisch? | Você fala russo?
+Դուք անգլերեն խոսո՞ւմ եք։ | Вы говорите по-английски? | Do you speak English? | Parlez-vous anglais ? | ¿Habla inglés? | Sprechen Sie Englisch? | Você fala inglês?
+Ցտեսություն։ | До свидания. | Goodbye. | Au revoir. | Adiós. | Auf Wiedersehen. | Tchau.
+## polite | Вежливость | Politeness | Politesse | Cortesía | Höflichkeit | Cortesia | 🙏
+Խնդրում եմ։ | Пожалуйста. | Please. | S’il vous plaît. | Por favor. | Bitte. | Por favor.
+Շնորհակալություն։ | Спасибо. | Thank you. | Merci. | Gracias. | Danke. | Obrigado.
+Շատ շնորհակալություն։ | Большое спасибо. | Thank you very much. | Merci beaucoup. | Muchas gracias. | Vielen Dank. | Muito obrigado.
+Ներեցեք։ | Извините. | Excuse me. | Excusez-moi. | Disculpe. | Entschuldigung. | Com licença.
+Ոչինչ։ | Ничего страшного. | It’s okay. | Ce n’est rien. | No pasa nada. | Macht nichts. | Não tem problema.
+Այո։ | Да. | Yes. | Oui. | Sí. | Ja. | Sim.
+Ոչ։ | Нет. | No. | Non. | No. | Nein. | Não.
+Ես չեմ հասկանում։ | Я не понимаю. | I don’t understand. | Je ne comprends pas. | No entiendo. | Ich verstehe nicht. | Eu não entendo.
+Կրկնեք, խնդրում եմ։ | Повторите, пожалуйста. | Could you repeat, please? | Répétez, s’il vous plaît. | Repita, por favor. | Wiederholen Sie bitte. | Repita, por favor.
+Ավելի դանդաղ, խնդրում եմ։ | Медленнее, пожалуйста. | Slower, please. | Plus lentement, s’il vous plaît. | Más despacio, por favor. | Langsamer, bitte. | Mais devagar, por favor.
+Կարո՞ղ եք գրել։ | Можете написать? | Can you write it down? | Pouvez-vous l’écrire ? | ¿Puede escribirlo? | Können Sie es aufschreiben? | Pode escrever?
+## taxi | Такси и дорога | Taxi and directions | Taxi et itinéraire | Taxi y direcciones | Taxi und Weg | Táxi e direções | 🚕
+Տաքսի կանչեք, խնդրում եմ։ | Вызовите такси, пожалуйста. | Please call a taxi. | Appelez un taxi, s’il vous plaît. | Llame un taxi, por favor. | Rufen Sie bitte ein Taxi. | Chame um táxi, por favor.
+Ինձ տարեք այս հասցեով։ | Отвезите меня по этому адресу. | Take me to this address. | Emmenez-moi à cette adresse. | Lléveme a esta dirección. | Bringen Sie mich zu dieser Adresse. | Leve-me a este endereço.
+Օդանավակայան, խնդրում եմ։ | В аэропорт, пожалуйста. | To the airport, please. | À l’aéroport, s’il vous plaît. | Al aeropuerto, por favor. | Zum Flughafen, bitte. | Para o aeroporto, por favor.
+Կենտրոն, խնդրում եմ։ | В центр, пожалуйста. | To the centre, please. | Au centre, s’il vous plaît. | Al centro, por favor. | Ins Zentrum, bitte. | Para o centro, por favor.
+Որքա՞ն արժե։ | Сколько стоит? | How much is it? | Combien ça coûte ? | ¿Cuánto cuesta? | Wie viel kostet das? | Quanto custa?
+Կանգնեք այստեղ, խնդրում եմ։ | Остановите здесь, пожалуйста. | Stop here, please. | Arrêtez-vous ici, s’il vous plaît. | Pare aquí, por favor. | Halten Sie bitte hier. | Pare aqui, por favor.
+Որտե՞ղ է մետրոն։ | Где метро? | Where is the metro? | Où est le métro ? | ¿Dónde está el metro? | Wo ist die U-Bahn? | Onde fica o metrô?
+Որտե՞ղ է կանգառը։ | Где остановка? | Where is the stop? | Où est l’arrêt ? | ¿Dónde está la parada? | Wo ist die Haltestelle? | Onde fica a parada?
+Այս ավտոբուսը գնո՞ւմ է կենտրոն։ | Этот автобус идёт в центр? | Does this bus go to the centre? | Ce bus va-t-il au centre ? | ¿Este autobús va al centro? | Fährt dieser Bus ins Zentrum? | Este ônibus vai para o centro?
+Հեռո՞ւ է։ | Это далеко? | Is it far? | C’est loin ? | ¿Está lejos? | Ist es weit? | É longe?
+Ուղիղ գնացեք։ | Идите прямо. | Go straight. | Allez tout droit. | Siga recto. | Gehen Sie geradeaus. | Siga em frente.
+Աջ թեքվեք։ | Поверните направо. | Turn right. | Tournez à droite. | Gire a la derecha. | Biegen Sie rechts ab. | Vire à direita.
+Ձախ թեքվեք։ | Поверните налево. | Turn left. | Tournez à gauche. | Gire a la izquierda. | Biegen Sie links ab. | Vire à esquerda.
+Ես մոլորվել եմ։ | Я заблудился. | I’m lost. | Je suis perdu. | Me he perdido. | Ich habe mich verlaufen. | Eu me perdi.
+## cafe | Кафе и ресторан | Café and restaurant | Café et restaurant | Café y restaurante | Café und Restaurant | Café e restaurante | ☕
+Ճաշացանկը, խնդրում եմ։ | Меню, пожалуйста. | The menu, please. | Le menu, s’il vous plaît. | La carta, por favor. | Die Speisekarte, bitte. | O cardápio, por favor.
+Ազատ սեղան ունե՞ք։ | У вас есть свободный столик? | Do you have a free table? | Avez-vous une table libre ? | ¿Tienen una mesa libre? | Haben Sie einen freien Tisch? | Vocês têm uma mesa livre?
+Ի՞նչ կխորհուրդ տաք։ | Что вы посоветуете? | What do you recommend? | Que me conseillez-vous ? | ¿Qué me recomienda? | Was empfehlen Sie? | O que você recomenda?
+Մեկ սուրճ, խնդրում եմ։ | Один кофе, пожалуйста. | One coffee, please. | Un café, s’il vous plaît. | Un café, por favor. | Einen Kaffee, bitte. | Um café, por favor.
+Հայկական սուրճ, խնդրում եմ։ | Армянский кофе, пожалуйста. | Armenian coffee, please. | Un café arménien, s’il vous plaît. | Un café armenio, por favor. | Einen armenischen Kaffee, bitte. | Um café armênio, por favor.
+Մի բաժակ ջուր, խնդրում եմ։ | Стакан воды, пожалуйста. | A glass of water, please. | Un verre d’eau, s’il vous plaît. | Un vaso de agua, por favor. | Ein Glas Wasser, bitte. | Um copo de água, por favor.
+Ես միս չեմ ուտում։ | Я не ем мясо. | I don’t eat meat. | Je ne mange pas de viande. | No como carne. | Ich esse kein Fleisch. | Eu não como carne.
+Շատ համեղ է։ | Очень вкусно. | It’s very tasty. | C’est très bon. | Está muy rico. | Es ist sehr lecker. | Está muito gostoso.
+Հաշիվը, խնդրում եմ։ | Счёт, пожалуйста. | The bill, please. | L’addition, s’il vous plaît. | La cuenta, por favor. | Die Rechnung, bitte. | A conta, por favor.
+Քարտով կարելի՞ է վճարել։ | Можно оплатить картой? | Can I pay by card? | Puis-je payer par carte ? | ¿Puedo pagar con tarjeta? | Kann ich mit Karte zahlen? | Posso pagar com cartão?
+Կենացդ։ | За твоё здоровье! | Cheers! | Santé ! | ¡Salud! | Prost! | Saúde!
+## market | Рынок и магазин | Market and shop | Marché et magasin | Mercado y tienda | Markt und Laden | Mercado e loja | 🛒
+Սա ի՞նչ արժե։ | Сколько это стоит? | How much does this cost? | Combien coûte ceci ? | ¿Cuánto cuesta esto? | Was kostet das? | Quanto custa isto?
+Շատ թանկ է։ | Очень дорого. | It’s too expensive. | C’est trop cher. | Es muy caro. | Das ist zu teuer. | Está muito caro.
+Կարո՞ղ եք զիջել։ | Можете уступить? | Can you give a discount? | Pouvez-vous baisser le prix ? | ¿Me hace un descuento? | Können Sie mit dem Preis runtergehen? | Pode fazer um desconto?
+Մեկ կիլոգրամ, խնդրում եմ։ | Один килограмм, пожалуйста. | One kilogram, please. | Un kilo, s’il vous plaît. | Un kilo, por favor. | Ein Kilo, bitte. | Um quilo, por favor.
+Կես կիլո, խնդրում եմ։ | Полкило, пожалуйста. | Half a kilo, please. | Un demi-kilo, s’il vous plaît. | Medio kilo, por favor. | Ein halbes Kilo, bitte. | Meio quilo, por favor.
+Ես սա կվերցնեմ։ | Я возьму это. | I’ll take this. | Je prends ceci. | Me llevo esto. | Ich nehme das. | Vou levar isto.
+Ուրիշ գույն ունե՞ք։ | У вас есть другой цвет? | Do you have another colour? | Avez-vous une autre couleur ? | ¿Tiene otro color? | Haben Sie eine andere Farbe? | Vocês têm outra cor?
+Կարո՞ղ եմ փորձել։ | Можно примерить? | Can I try it on? | Puis-je l’essayer ? | ¿Me lo puedo probar? | Kann ich es anprobieren? | Posso experimentar?
+Տոպրակ տվեք, խնդրում եմ։ | Дайте пакет, пожалуйста. | A bag, please. | Un sac, s’il vous plaît. | Una bolsa, por favor. | Eine Tüte, bitte. | Uma sacola, por favor.
+Որտե՞ղ է մոտակա խանութը։ | Где ближайший магазин? | Where is the nearest shop? | Où est le magasin le plus proche ? | ¿Dónde está la tienda más cercana? | Wo ist der nächste Laden? | Onde fica a loja mais próxima?
+## hotel | Жильё | Accommodation | Logement | Alojamiento | Unterkunft | Hospedagem | 🏨
+Ես սենյակ եմ ամրագրել։ | Я забронировал номер. | I have booked a room. | J’ai réservé une chambre. | He reservado una habitación. | Ich habe ein Zimmer gebucht. | Eu reservei um quarto.
+Ազատ սենյակ ունե՞ք։ | У вас есть свободный номер? | Do you have a free room? | Avez-vous une chambre libre ? | ¿Tienen una habitación libre? | Haben Sie ein freies Zimmer? | Vocês têm um quarto livre?
+Նախաճաշը ներառվա՞ծ է։ | Завтрак включён? | Is breakfast included? | Le petit-déjeuner est-il compris ? | ¿El desayuno está incluido? | Ist das Frühstück inbegriffen? | O café da manhã está incluído?
+Ո՞րն է վայֆայի գաղտնաբառը։ | Какой пароль от вайфая? | What is the Wi-Fi password? | Quel est le mot de passe du wifi ? | ¿Cuál es la contraseña del wifi? | Wie lautet das WLAN-Passwort? | Qual é a senha do wi-fi?
+Տաք ջուր չկա։ | Нет горячей воды. | There is no hot water. | Il n’y a pas d’eau chaude. | No hay agua caliente. | Es gibt kein warmes Wasser. | Não tem água quente.
+Ժամը քանիսի՞ն պետք է դուրս գալ։ | Во сколько нужно выехать? | What time is check-out? | À quelle heure faut-il partir ? | ¿A qué hora hay que dejar la habitación? | Wann muss ich auschecken? | A que horas é o check-out?
+Կարո՞ղ եմ պայուսակս թողնել։ | Можно оставить сумку? | Can I leave my bag? | Puis-je laisser mon sac ? | ¿Puedo dejar mi bolso? | Kann ich meine Tasche hierlassen? | Posso deixar minha bolsa?
+## time | Время и числа | Time and numbers | Heure et nombres | Hora y números | Zeit und Zahlen | Hora e números | 🕐
+Ժամը քանի՞սն է։ | Который час? | What time is it? | Quelle heure est-il ? | ¿Qué hora es? | Wie spät ist es? | Que horas são?
+Ե՞րբ է բացվում։ | Когда открывается? | When does it open? | Quand est-ce que ça ouvre ? | ¿Cuándo abre? | Wann öffnet es? | Quando abre?
+Ե՞րբ է փակվում։ | Когда закрывается? | When does it close? | Quand est-ce que ça ferme ? | ¿Cuándo cierra? | Wann schließt es? | Quando fecha?
+Այսօր։ | Сегодня. | Today. | Aujourd’hui. | Hoy. | Heute. | Hoje.
+Վաղը։ | Завтра. | Tomorrow. | Demain. | Mañana. | Morgen. | Amanhã.
+Մեկ րոպե։ | Одну минуту. | One minute. | Une minute. | Un minuto. | Eine Minute. | Um minuto.
+Հազար դրամ։ | Тысяча драмов. | A thousand drams. | Mille drams. | Mil drams. | Tausend Dram. | Mil drams.
+## help | Помощь и здоровье | Help and health | Aide et santé | Ayuda y salud | Hilfe und Gesundheit | Ajuda e saúde | 🆘
+Օգնեցե՛ք։ | Помогите! | Help! | Au secours ! | ¡Ayuda! | Hilfe! | Socorro!
+Շտապ օգնություն կանչեք։ | Вызовите скорую помощь. | Call an ambulance. | Appelez une ambulance. | Llame a una ambulancia. | Rufen Sie einen Krankenwagen. | Chame uma ambulância.
+Ոստիկանություն կանչեք։ | Вызовите полицию. | Call the police. | Appelez la police. | Llame a la policía. | Rufen Sie die Polizei. | Chame a polícia.
+Ես վատ եմ զգում։ | Мне плохо. | I feel unwell. | Je ne me sens pas bien. | Me encuentro mal. | Mir geht es nicht gut. | Eu estou passando mal.
+Որտե՞ղ է դեղատունը։ | Где аптека? | Where is the pharmacy? | Où est la pharmacie ? | ¿Dónde está la farmacia? | Wo ist die Apotheke? | Onde fica a farmácia?
+Որտե՞ղ է զուգարանը։ | Где туалет? | Where is the toilet? | Où sont les toilettes ? | ¿Dónde está el baño? | Wo ist die Toilette? | Onde fica o banheiro?
+Ես կորցրել եմ իմ անձնագիրը։ | Я потерял паспорт. | I have lost my passport. | J’ai perdu mon passeport. | He perdido mi pasaporte. | Ich habe meinen Pass verloren. | Eu perdi meu passaporte.
+Ինձ բժիշկ է պետք։ | Мне нужен врач. | I need a doctor. | J’ai besoin d’un médecin. | Necesito un médico. | Ich brauche einen Arzt. | Eu preciso de um médico.
+Ալերգիա ունեմ։ | У меня аллергия. | I have an allergy. | J’ai une allergie. | Tengo alergia. | Ich habe eine Allergie. | Eu tenho alergia.
+## visit | В гостях | Visiting | En visite | De visita | Zu Besuch | Visitando | 🏡
+Բարի գալուստ։ | Добро пожаловать. | Welcome. | Bienvenue. | Bienvenido. | Willkommen. | Bem-vindo.
+Համեցեք։ | Проходите, угощайтесь. | Come in, help yourself. | Entrez, servez-vous. | Pase, sírvase. | Kommen Sie herein, greifen Sie zu. | Entre, sirva-se.
+Ես կուշտ եմ, շնորհակալություն։ | Я сыт, спасибо. | I’m full, thank you. | Je n’ai plus faim, merci. | Estoy lleno, gracias. | Ich bin satt, danke. | Estou satisfeito, obrigado.
+Ձեր տունը շատ գեղեցիկ է։ | У вас очень красивый дом. | Your home is very beautiful. | Votre maison est très belle. | Su casa es muy bonita. | Ihr Haus ist sehr schön. | Sua casa é muito bonita.
+Շնորհակալություն հյուրասիրության համար։ | Спасибо за гостеприимство. | Thank you for your hospitality. | Merci pour votre hospitalité. | Gracias por su hospitalidad. | Danke für Ihre Gastfreundschaft. | Obrigado pela hospitalidade.
+Շնորհավորում եմ։ | Поздравляю! | Congratulations! | Félicitations ! | ¡Felicidades! | Herzlichen Glückwunsch! | Parabéns!
+Ծնունդդ շնորհավոր։ | С днём рождения! | Happy birthday! | Joyeux anniversaire ! | ¡Feliz cumpleaños! | Alles Gute zum Geburtstag! | Feliz aniversário!
+Շնորհավոր Նոր տարի։ | С Новым годом! | Happy New Year! | Bonne année ! | ¡Feliz Año Nuevo! | Frohes neues Jahr! | Feliz Ano Novo!

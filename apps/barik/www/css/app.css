@@ -1067,3 +1067,13 @@ details[open] .pm::after{transform:rotate(0)}
 .dg-land .ld-h2{margin:0 0 4px;font-size:24px}.dg-land .ld-lead{margin:0}
 .dg-land-e{font-size:42px}
 @media (max-width:759px){.dg-land{grid-template-columns:auto 1fr}.dg-land .btn{grid-column:1/-1}}
+
+/* O-181: разговорник */
+.pb{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
+.pb-row{display:grid;gap:2px;width:100%;text-align:left;padding:12px 14px;border:0;border-radius:16px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);font:inherit;cursor:pointer}
+.pb-row.on{box-shadow:inset 0 0 0 2px var(--accent)}
+.pb-hy{font-family:var(--hy);font-size:19px;font-weight:600}
+.pb-tr{font-size:13px;opacity:.65}
+.pb-tx{font-size:15px}
+.pb-head{margin:6px 0 14px}.pb-head .pg{margin:2px 0 6px}
+.pb-hy-t{margin:0;font-family:var(--hy);color:var(--pom);font-size:18px}

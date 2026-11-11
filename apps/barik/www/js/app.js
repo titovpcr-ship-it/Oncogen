@@ -758,7 +758,7 @@ function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.se
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
 function go(v,arg){ if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily') return 'home'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -781,6 +781,7 @@ function render(auto){
   else if(view==='pen'){ el.innerHTML=penHTML(); penMount(); }
   else if(view==='name'){ el.innerHTML=nameHTML(); nmWrite(); }
   else if(view==='daily'){ el.innerHTML=dailyHTML(); }
+  else if(view==='phrases'){ el.innerHTML=phrasesHTML(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -914,7 +915,7 @@ function onboardHTML(){
     '</div></div></section>'+
   '<section class="ld-proof"><div class="ld-wrap"><ul>'+proof+'</ul></div></section>'+
   nmLand+
-  '<section class="ld-sec ld-dg"><div class="ld-wrap"><div class="dg-land"><span class="dg-land-e" aria-hidden="true">🎯</span><div><h2 class="ld-h2">'+esc(T('dgBtn'))+'</h2><p class="ld-lead">'+esc(T('dgLand'))+'</p></div><button class="btn primary" data-act="dgOpen">'+esc(T('dgTitle'))+' →</button></div></div></section>'+
+  '<section class="ld-sec ld-dg"><div class="ld-wrap"><div class="dg-land"><span class="dg-land-e" aria-hidden="true">🎯</span><div><h2 class="ld-h2">'+esc(T('dgBtn'))+'</h2><p class="ld-lead">'+esc(T('dgLand'))+'</p></div><button class="btn primary" data-act="dgOpen">'+esc(T('dgTitle'))+' →</button></div><div class="dg-land" style="margin-top:14px"><span class="dg-land-e" aria-hidden="true">🧳</span><div><h2 class="ld-h2">'+esc(T('pbTitle'))+'</h2><p class="ld-lead">'+esc(T('pbLead'))+'</p></div><button class="btn secondary" data-act="pbOpen">'+esc(T('pbOpen'))+' →</button></div></div></section>'+
   '<section class="ld-sec ld-why"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.whyTitle)+'</h2><p class="ld-lead">'+esc(D.whyLead)+'</p><ul class="wy">'+why+'</ul></div></section>'+
   '<section class="ld-sec ld-hear"><div class="ld-wrap"><div class="hear"><div class="hear-hd"><h2 class="ld-h2">'+esc(D.hearTitle)+'</h2><p class="ld-lead">'+esc(D.hearLead)+'</p></div><ul class="hear-list">'+hear+'</ul><p class="hear-note">'+esc(D.hearNote)+'</p><div class="hear-cta">'+cta('xl inv')+'</div></div></div></section>'+
   '<section class="ld-sec" id="how"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.howTitle)+'</h2><p class="ld-lead">'+esc(D.howLead)+'</p><ol class="ld-steps">'+
@@ -1025,7 +1026,7 @@ function homeHTML(){
     return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+(free?'':' <span class="lock">'+emo('🔒','ie')+'</span>')+'</span><span class="lvc">'+esc(T('lvCount',lc.learned,lc.total))+'</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+esc(T('lvd_'+lv))+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
   }).join('');
   return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">'+MARK()+'<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">'+esc(T('tagline'))+'</p></header>'+
-    '<section class="today">'+streak+wotdHTML()+'<button class="dg-go" data-act="dgOpen">🎯 <span>'+esc(T('dgBtn'))+'</span>'+(UI.dg&&UI.dg.td===today()&&UI.dg.done?' ✓':'')+'</button>'+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
+    '<section class="today">'+streak+wotdHTML()+'<button class="dg-go" data-act="dgOpen">🎯 <span>'+esc(T('dgBtn'))+'</span>'+(UI.dg&&UI.dg.td===today()&&UI.dg.done?' ✓':'')+'</button><button class="dg-go" data-act="pbOpen">🧳 <span>'+esc(T('pbTitle'))+'</span></button>'+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
     '<div class="home-main">'+rows+'</div></div>';
 }
 /* Слово дня: каждый день другое, с объёмной картинкой, из открытых уровней. */
@@ -1061,6 +1062,21 @@ function dailyHTML(){
 }
 function dgText(){ const d=dgDay(), g=dgState(d.td);
   return 'Barik · '+T('dgTitle')+' № '+d.n+'\n'+g.tries.map(()=>'🟥').join('')+'🟩 '+(g.tries.length+1)+'/4\n🔥 '+T('dgStreak',g.streak)+'\n'+location.origin+'/?daily&lang='+L; }
+/* ---------- разговорник для поездки (O-181): ex/phrases.json, озвучка группы F; «Сохранить без интернета» кладёт записи в кэш ---------- */
+let PB=null, PBL=false, PBS=null;
+function pbLoad(){ if(PB||PBL) return; PBL=true; fetch('ex/phrases.json').then(r=>r.ok?r.json():null).then(j=>{ PB=j; PBL=false; if(view==='phrases') render(false); }).catch(()=>{ PBL=false; }); }
+function phrasesHTML(){
+  pbLoad();
+  const head='<button class="back" data-act="dgBack">‹ '+esc(T('back'))+'</button><div class="pb-head"><p class="pb-hy-t" lang="hy">Զրուցարան</p><h1 class="pg">'+esc(T('pbTitle'))+'</h1><p class="note">'+esc(T('pbLead'))+'</p></div>';
+  if(!PB) return head+'<p class="note">…</p>';
+  const off=audioOK()?'<div class="actions"><button class="btn secondary" data-act="pbOffline">'+esc(PBS==='ok'?T('pbSaved'):PBS==='run'?T('pbSaving'):T('pbSave'))+'</button></div>':'';
+  return head+off+PB.map(sec=>'<section class="set-sec pb-sec"><h2 class="sec">'+sec.e+' '+esc(sec.t[L]||sec.t.en)+'</h2><ul class="pb">'+
+    sec.items.map(it=>'<li><button class="pb-row" data-act="pbSay" data-arg="'+esc(it[0])+'"><span class="pb-hy" lang="hy">'+esc(it[0])+'</span><span class="pb-tr">'+esc(exTr(it[0]))+'</span><span class="pb-tx">'+esc(it[1][L]||it[1].en)+'</span></button></li>').join('')+'</ul></section>').join('');
+}
+async function pbOffline(){ if(!PB||PBS==='run') return; PBS='run'; render(false); hit('pb_offline');
+  const all=[].concat(...PB.map(s=>s.items.map(i=>i[0])));
+  for(let i=0;i<all.length;i+=6) await Promise.all(all.slice(i,i+6).map(t=>fetch(audioUrl(t,UI.rv==='m'?'m':'f')).catch(()=>null)));
+  PBS='ok'; if(view==='phrases') render(false); }
 function wordRow(w,free){
   const st=status(w), op=free||canUse(w);
   return '<li class="wrow"><span class="w-pic">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+esc(T('st_'+st))+'"></i>'+esc(tx(w))+'<span class="w-tr">'+esc(trn(w))+'</span></span></span><button class="say" data-act="'+(free?'sayFree':'say')+'" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+(op?ICON.spk:emo('🔒','ie'))+'</button></li>';
@@ -2450,6 +2466,9 @@ const H={
   pen:a=>{ penNew(+a); go('pen',+a); },
   nmOpen:()=>{ go('name'); },
   dgOpen:()=>{ hit('v_daily'); go('daily'); },
+  pbOpen:()=>{ hit('v_phrases'); go('phrases'); },
+  pbSay:(a,b)=>{ sayText(a,b); },
+  pbOffline:()=>pbOffline(),
   dgBack:()=>go(UI.lang?'home':'onboard'),
   dgPick:a=>{ const d=dgDay(), g=dgState(d.td); if(g.done) return; const i=+a, o=d.opts[i];
     if(o===d.w){ g.done=true; g.streak=(g.last===d.td-1?(g.streak||0)+1:1); g.last=d.td; hit('daily_done'); } else if(!g.tries.includes(i)) g.tries.push(i);
@@ -2691,6 +2710,7 @@ view=UI.lang&&!WELCOME?'home':'onboard';
 { const sp=new URLSearchParams(location.search||''), nm=sp.get('name'), hy=sp.get('hy');
   const dk=sp.get('doc'); if(dk&&/^(refund|terms|privacy|project|credits)$/.test(dk)&&nm===null){ docFrom=(UI.lang?'settings':'onboard'); view='doc'; viewArg=dk; }
   if(sp.has('daily')&&nm===null){ view='daily'; }
+  if(sp.has('phrases')&&nm===null){ view='phrases'; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();

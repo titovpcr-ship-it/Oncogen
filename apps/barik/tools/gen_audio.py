@@ -83,6 +83,10 @@ def items():
     say = os.path.join(ROOT, 'data', 'path', 'say.txt')
     if os.path.exists(say):
         out += [('P', t.strip()) for t in open(say, encoding='utf-8') if t.strip() and not t.startswith('#')]
+    # F — разговорник (O-181): data/phrasebook/say.txt пишет tools/build_phrasebook.py
+    pb = os.path.join(ROOT, 'data', 'phrasebook', 'say.txt')
+    if os.path.exists(pb):
+        out += [('F', t.strip()) for t in open(pb, encoding='utf-8') if t.strip() and not t.startswith('#')]
     # E — примеры к словам (O-172): data/examples/say.txt пишет tools/build_examples.py
     ex = os.path.join(ROOT, 'data', 'examples', 'say.txt')
     if os.path.exists(ex):
