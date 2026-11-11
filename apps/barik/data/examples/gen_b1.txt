@@ -2514,3 +2514,19 @@
 խոտհարք | Խոտհարքում խոտ են հավաքում։ | На сенокосе собирают сено. | They collect hay in the hayfield. | Ils ramassent du foin dans le pré. | Recogen heno en el prado. | Sie sammeln Heu auf der Heuwiese. | Eles colhem feno no campo de feno.
 բանջարանոց | Բանջարանոցում լոլիկ են աճեցնում։ | На огороде выращивают помидоры. | They grow tomatoes in the vegetable garden. | Ils cultivent des tomates dans le potager. | Cultivan tomates en la huerta. | Sie bauen Tomaten im Gemüsegarten an. | Eles cultivam tomates na horta.
 ոռոգում | Ոռոգումը անհրաժեշտ է բույսերի համար։ | Орошение необходимо для растений. | Irrigation is necessary for plants. | L'irrigation est nécessaire pour les plantes. | El riego es necesario para las plantas. | Bewässerung ist für Pflanzen notwendig. | A irrigação é necessária para as plantas.
+հորատանցք | Գյուղում խոշոր հորատանցք կա։ | В деревне есть большая скважина. | There is a large borehole in the village. | Il y a un grand puits de forage dans le village. | Hay un gran pozo de perforación en el pueblo. | Im Dorf gibt es ein großes Bohrloch. | Há um grande poço de perfuração na aldeia.
+հնձել | Նրանք ցորեն են հնձում։ | Они жнут пшеницу. | They are reaping wheat. | Ils moissonnent le blé. | Ellos siegan trigo. | Sie ernten Weizen. | Eles estão colhendo trigo.
+հունձ | Հունձը սկսվեց։ | Жатва началась. | The harvest has begun. | La moisson a commencé. | La cosecha ha comenzado. | Die Ernte hat begonnen. | A colheita começou.
+բերքահավաք | Այս տարի բերքահավաքը վաղ է։ | В этом году сбор урожая ранний. | This year the harvest is early. | Cette année, la récolte est précoce. | Este año la cosecha es temprana. | In diesem Jahr ist die Ernte früh. | Este ano a colheita está adiantada.
+ծխախոտ | Ծխախոտը վնասակար է։ | Табак вреден. | Tobacco is harmful. | Le tabac est nocif. | El tabaco es perjudicial. | Tabak ist schädlich. | O tabaco é prejudicial.
+ծղոտ | Ծղոտը շատ թեթև է։ | Солома очень лёгкая. | Straw is very light. | La paille est très légère. | La paja es muy ligera. | Stroh ist sehr leicht. | A palha é muito leve.
+ձիգ | Այս կոշիկները ձիգ են։ | Эти туфли тесные. | These shoes are tight. | Ces chaussures sont serrées. | Estos zapatos están apretados. | Diese Schuhe sind eng. | Estes sapatos estão apertados.
+ձվադրել | Հավերը ձվադրում են։ | Куры несут яйца. | Hens lay eggs. | Les poules pondent des œufs. | Las gallinas ponen huevos. | Hühner legen Eier. | As galinhas botam ovos.
+թխսել | Հավը թխսում է ձվերը։ | Курица высиживает яйца. | The hen is incubating the eggs. | La poule couve les œufs. | La gallina está incubando los huevos. | Die Henne brütet die Eier. | A galinha choca os ovos.
+ճռվողել | Ծիտիկը ճռվողում է։ | Воробей чирикает. | The sparrow is chirping. | Le moineau pépie. | El gorrión está piando. | Der Spatz zwitschert. | O pardal está piando.
+ծլվլալ | Թռչունը ծլվլում է։ | Птица щебечет. | The bird is twittering. | L'oiseau gazouille. | El pájaro trina. | Der Vogel zwitschert. | O pássaro está chilreando.
+կռկռալ | Գորտը կռկռում է։ | Лягушка квакает. | The frog is croaking. | La grenouille coasse. | La rana está croando. | Der Frosch quakt. | A rã está coaxando.
+կչկչալ | Հավը կչկչում է։ | Курица кудахчет. | The hen is cackling. | La poule caquète. | La gallina cacarea. | Die Henne gackert. | A galinha está cacarejando.
+ծղրտալ | Խոզը ծղրտում է։ | Свинья визжит. | The pig is squealing. | Le cochon couine. | El cerdo está chillando. | Das Schwein quiekt. | O porco está guinchando.
+մռնչալ | Առյուծը մռնչում է։ | Лев рычит. | The lion is roaring. | Le lion rugit. | El león está rugiendo. | Der Löwe brüllt. | O leão está rugindo.
+շնագայլ | Շնագայլը ոռնում է։ | Шакал воет. | The jackal is howling. | Le chacal hurle. | El chacal está aullando. | Der Schakal heult. | O chacal está uivando.
