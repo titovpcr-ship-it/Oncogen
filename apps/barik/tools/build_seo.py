@@ -262,6 +262,10 @@ ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .
 .pb-n{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .pb-n small{color:var(--mut)}
 .nm-big.ph{font-size:clamp(30px,8vw,46px)}
+.exs{font:600 21px/1.4 A,serif;margin:6px 0 2px;display:flex;align-items:center;gap:10px}.ex-tx{margin:0 0 8px;color:var(--mut)}
+.ftw{overflow-x:auto;margin:6px 0}.ft{border-collapse:collapse;width:100%;font-size:15px}
+.ft th,.ft td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ft th{font-weight:600;color:var(--mut)}.ft td[lang=hy],.ft th[lang=hy]{font:600 18px A,serif;color:var(--ink,#1C2045);white-space:nowrap}
 .cbx{background:#fff;border-radius:18px;box-shadow:inset 0 0 0 1px #EBE1D9;padding:6px 8px;margin:12px 0 18px}
 .cbx svg{display:block;width:100%;height:auto;max-height:230px}
 .cb-lines line{stroke:#E8DDD4;stroke-width:1.3}.cb-lines .x{stroke:#C9A23A;stroke-dasharray:6 7;opacity:.6}.cb-lines .b{stroke:#9F1D35;opacity:.4;stroke-width:1.6}
@@ -374,7 +378,7 @@ def crumbs_ld(items):
             "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(items)]}
 
 
-def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
+def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=None):
     up = "../" * depth
     alt = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{base}{p}">' for l, p in alts.items())
     alt += f'<link rel="alternate" hreflang="x-default" href="{base}{alts["en"]}">'
@@ -386,6 +390,7 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
     return (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)}</title><meta name="description" content="{esc(desc)}">'
+            + (f'<meta name="robots" content="{robots}">' if robots else '') +
             f'<link rel="canonical" href="{base}{path}">{alt}'
             f'<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">'
             f'<meta property="og:url" content="{base}{path}"><meta property="og:type" content="website"><meta property="og:site_name" content="Barik">'
@@ -432,6 +437,19 @@ def build(site, base, words_path):
     for w in words:
         by_topic.setdefault(w["t"], []).append(w)
     files, urls = 0, {l: [] for l in LANGS}
+    # обогащение страницы слова (O-193): пример, формы (эталон Викисловаря), однокоренные; без них — noindex и не в sitemap
+    EXL = {l: json.load(open(os.path.join(APP, "www", "ex", l + ".json"), encoding="utf-8")) for l in LANGS}
+    GOLD = json.load(open(os.path.join(APP, "data", "path", "gold.json"), encoding="utf-8"))
+    RT = json.load(open(os.path.join(APP, "data", "path", "roots.json"), encoding="utf-8"))
+    inw = {w["a"]: w for w in words}
+
+    def family(a):
+        rs = (RT["words"].get(a) or {}).get("r") or []
+        out = [r for r in rs if r != a and r in inw]
+        for r in rs + [a]:
+            out += [x for x in RT["roots"].get(r, {}) if x != a and x in inw]
+        return list(dict.fromkeys(out))[:12]
+    thin = {L: 0 for L in LANGS}
     os.makedirs(site, exist_ok=True)
     open(os.path.join(site, "seo.css"), "w", encoding="utf-8").write(CSS)
     open(os.path.join(site, "seo.js"), "w", encoding="utf-8").write(SEO_JS)
@@ -480,13 +498,38 @@ def build(site, base, words_path):
                       + (f'<a href="{wslug[prev["a"]]}.html">{T["prev"]}: <span lang="hy">{esc(prev["a"])}</span></a>' if prev else "<span></span>")
                       + (f'<a href="{wslug[nxt["a"]]}.html"><span lang="hy">{esc(nxt["a"])}</span> — {T["next"]}</a>' if nxt else "")
                       + "</p>")
+                F = FT[L]; xb = ""
+                e = EXL[L].get(w["a"])
+                if e:
+                    xb += (f'<h2>{F["ex"]}</h2><p class="exs"><span lang="hy">{esc(e[0])}</span>{say({"a": e[0]}, "../../", T["listen"])}</p>'
+                           f'<p class="ex-tx">{esc(e[1])}</p>')
+                nf = GOLD["nouns"].get(w["a"])
+                if nf:
+                    rows = "".join(f'<tr><th>{F["n"][k]}</th><td lang="hy">{esc(nf[k])}</td></tr>' for k in NK if nf.get(k) and nf[k] != "-")
+                    xb += f'<h2>{F["forms"]}</h2><div class="ftw"><table class="ft"><tr><th>{F["n"]["base"]}</th><td lang="hy">{esc(w["a"])}</td></tr>{rows}</table></div>'
+                vf = GOLD["verbs"].get(w["a"])
+                if vf:
+                    hd = "".join(f'<th>{F["v"][k]}</th>' for k in VK)
+                    rows = "".join(f'<tr><th lang="hy">{pn}</th>' + "".join(f'<td lang="hy">{esc(vf[k][i])}</td>' for k in VK) + '</tr>'
+                                   for i, pn in enumerate(PRON))
+                    tail = (f'<p class="meta">{F["v"]["imp"]}: <span lang="hy">{esc(vf.get("imp", ""))}, {esc(vf.get("imppl", ""))}</span> · '
+                            f'{F["v"]["part"]}: <span lang="hy">{esc(vf.get("part", ""))}</span></p>')
+                    xb += f'<h2>{F["conj"]}</h2><div class="ftw"><table class="ft fv"><tr><th></th>{hd}</tr>{rows}</table></div>{tail}'
+                if nf or vf:
+                    xb += f'<p class="note">{F["src"]}</p>'
+                fam = family(w["a"])
+                if fam:
+                    xb += (f'<h2>{F["fam"]}</h2><ul class="ws">' + "".join(
+                        f'<li><a href="{wslug[v]}.html"><span class="hy" lang="hy">{esc(v)}</span><span class="t">{esc(inw[v][trk])}</span>'
+                        f'<span class="x">{esc(inw[v][tx])}</span></a></li>' for v in fam) + '</ul>')
+                rich = bool(xb)
                 body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p>'
                         f'<div class="word"><div class="win" aria-hidden="true">{picture(w, "../../")}</div><div>'
                         f'<p class="eyebrow">{esc(tname)} · {t["lv"]}</p><h1 lang="hy">{esc(w["a"])}</h1>'
                         f'<p class="tr"><span title="{T["h_tr"]}">[{esc(w[trk])}]</span>{say(w, "../../", T["listen"])}</p>'
                         f'<p class="tx">{esc(x)}</p>'
                         f'<p class="meta">{T["lv"]} {t["lv"]} · {T["topic"]}: <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p></div></div>'
-                        f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>'
+                        + xb + f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>'
                         + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(t=tname))}</h2><ul class="ws">{li}</ul>'
                            f'<p><a href="../t/{tslug[ti]}.html">{T["all_topic"].format(n=len(lst), w=nw(L, len(lst)))}</a></p>' if near else "")
                         + pn)
@@ -500,8 +543,11 @@ def build(site, base, words_path):
                 ld = [ld, crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, f"{base}{L}/t/{tslug[ti]}.html"), (w["a"], base + rel)])]
                 write(rel, page(L, base, rel, T["title_w"].format(x=x, a=w["a"], tr=w[trk]),
                                 T["desc_w"].format(x=x, a=w["a"], tr=w[trk], t=tname, lv=t["lv"]),
-                                alts, body, ld))
-                urls[L].append(rel)
+                                alts, body, ld, robots=None if rich else "noindex,follow"))
+                if rich:
+                    urls[L].append(rel)
+                else:
+                    thin[L] += 1
         # темы
         for ti, t in enumerate(topics):
             lst = by_topic.get(ti) or []
@@ -572,6 +618,7 @@ def build(site, base, words_path):
     open(rb, "w").write(txt)
     size = sum(os.path.getsize(os.path.join(r, f)) for L in LANGS
                for r, _, fs in os.walk(os.path.join(site, L)) for f in fs)
+    print(f"страницы слов без содержимого (noindex, не в sitemap): {', '.join(f'{L} {thin[L]}' for L in LANGS)}")
     print(f"страницы поиска: {files} ({', '.join(f'{L} {len(urls[L])}' for L in LANGS)}), "
           f"{size / 1e6:.0f} МБ")
     return files
@@ -667,6 +714,42 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
     return files
 
 
+NK = ("def", "pl", "dat", "datpl", "abl", "ins", "loc", "p1", "p2")
+VK = ("pres", "aor", "fut")
+PRON = ("ես", "դու", "նա", "մենք", "դուք", "նրանք")
+FT = {
+    "ru": {"ex": "Пример", "forms": "Формы слова", "conj": "Спряжение", "fam": "Однокоренные слова",
+           "src": "Формы — по таблицам Викисловаря (CC BY-SA 4.0).",
+           "n": {"base": "Основная форма", "def": "С определённым артиклем", "pl": "Множественное число", "dat": "Родительный и дательный",
+                 "datpl": "Родительный и дательный, мн. ч.", "abl": "Исходный (от, из)", "ins": "Творительный (чем, с чем)", "loc": "Местный (в чём)",
+                 "p1": "Мой, моя", "p2": "Твой, твоя"},
+           "v": {"pres": "Настоящее", "aor": "Прошедшее", "fut": "Будущее", "imp": "Повелительное", "part": "Причастие"}},
+    "en": {"ex": "Example", "forms": "Word forms", "conj": "Conjugation", "fam": "Words with the same root",
+           "src": "Forms follow Wiktionary tables (CC BY-SA 4.0).",
+           "n": {"base": "Basic form", "def": "Definite", "pl": "Plural", "dat": "Genitive and dative", "datpl": "Genitive and dative plural",
+                 "abl": "Ablative (from)", "ins": "Instrumental (with)", "loc": "Locative (in)", "p1": "My", "p2": "Your"},
+           "v": {"pres": "Present", "aor": "Past", "fut": "Future", "imp": "Imperative", "part": "Participle"}},
+    "fr": {"ex": "Exemple", "forms": "Formes du mot", "conj": "Conjugaison", "fam": "Mots de la même racine",
+           "src": "Formes d’après les tableaux du Wiktionnaire (CC BY-SA 4.0).",
+           "n": {"base": "Forme de base", "def": "Défini", "pl": "Pluriel", "dat": "Génitif et datif", "datpl": "Génitif et datif pluriel",
+                 "abl": "Ablatif (de)", "ins": "Instrumental (avec)", "loc": "Locatif (dans)", "p1": "Mon, ma", "p2": "Ton, ta"},
+           "v": {"pres": "Présent", "aor": "Passé", "fut": "Futur", "imp": "Impératif", "part": "Participe"}},
+    "es": {"ex": "Ejemplo", "forms": "Formas de la palabra", "conj": "Conjugación", "fam": "Palabras de la misma raíz",
+           "src": "Formas según las tablas de Wikcionario (CC BY-SA 4.0).",
+           "n": {"base": "Forma básica", "def": "Definido", "pl": "Plural", "dat": "Genitivo y dativo", "datpl": "Genitivo y dativo plural",
+                 "abl": "Ablativo (de)", "ins": "Instrumental (con)", "loc": "Locativo (en)", "p1": "Mi", "p2": "Tu"},
+           "v": {"pres": "Presente", "aor": "Pasado", "fut": "Futuro", "imp": "Imperativo", "part": "Participio"}},
+    "de": {"ex": "Beispiel", "forms": "Wortformen", "conj": "Konjugation", "fam": "Wörter mit derselben Wurzel",
+           "src": "Formen nach den Tabellen von Wiktionary (CC BY-SA 4.0).",
+           "n": {"base": "Grundform", "def": "Bestimmt", "pl": "Plural", "dat": "Genitiv und Dativ", "datpl": "Genitiv und Dativ Plural",
+                 "abl": "Ablativ (von, aus)", "ins": "Instrumental (mit)", "loc": "Lokativ (in)", "p1": "Mein", "p2": "Dein"},
+           "v": {"pres": "Präsens", "aor": "Vergangenheit", "fut": "Futur", "imp": "Imperativ", "part": "Partizip"}},
+    "pt": {"ex": "Exemplo", "forms": "Formas da palavra", "conj": "Conjugação", "fam": "Palavras da mesma raiz",
+           "src": "Formas segundo as tabelas do Wikcionário (CC BY-SA 4.0).",
+           "n": {"base": "Forma básica", "def": "Definido", "pl": "Plural", "dat": "Genitivo e dativo", "datpl": "Genitivo e dativo plural",
+                 "abl": "Ablativo (de)", "ins": "Instrumental (com)", "loc": "Locativo (em)", "p1": "Meu, minha", "p2": "Seu, sua"},
+           "v": {"pres": "Presente", "aor": "Passado", "fut": "Futuro", "imp": "Imperativo", "part": "Particípio"}},
+}
 PB_TXT = {
     "ru": {"idx_h": "Армянский разговорник", "idx_t": "Армянский разговорник: {n} фраз с произношением и озвучкой",
            "idx_d": "{n} готовых фраз по-армянски: знакомство, чувства, поздравления и тосты, такси, кафе, врач, жильё — с транскрипцией и записью голоса.",

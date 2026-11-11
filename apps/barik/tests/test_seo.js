@@ -24,7 +24,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
   const words=JSON.parse(fs.readFileSync(path.join(__dirname,'..','dist','words_tr.json'),'utf8'));
   const nw=words.words.length;
   // 1. Файлы, заголовки, ссылки — на всех страницах
-  let pages=0, broken=[], nohead=[], dupTitle=new Map();
+  let pages=0, broken=[], nohead=[], dupTitle=new Map(), noidx=new Set();
   for(const L of LANGS){
     const nW=fs.readdirSync(path.join(ROOT,L,'w')).length;
     ok(nW===nw, L+': страница на каждое слово ('+nW+' из '+nw+')');
@@ -34,6 +34,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
         if(!f.endsWith('.html')) continue;
         const p=path.join(dir,f), s=fs.readFileSync(p,'utf8'); pages++;
         const rel=path.relative(ROOT,p).split(path.sep).join('/');
+        if(s.includes('<meta name="robots" content="noindex')) noidx.add(rel);
         const need=[`<html lang="${L}">`,`<link rel="canonical" href="${BASE}${rel}">`,'hreflang="x-default"',
           ...LANGS.map(l=>`hreflang="${l}" href="${BASE}${rel.replace(L+'/',l+'/')}"`),'<meta name="description" content="'];
         if(need.some(x=>!s.includes(x))) nohead.push(rel);
@@ -54,14 +55,21 @@ const LANGS=['ru','en','fr','es','de','pt'];
   // 2. sitemap
   const idx=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
   ok(LANGS.every(L=>idx.includes(BASE+'sitemap-'+L+'.xml')),'sitemap.xml — указатель на все языки ('+LANGS.length+')');
-  let locs=0, miss=[];
+  let locs=0, miss=[], inNo=[];
   for(const L of LANGS){
     const sm=fs.readFileSync(path.join(ROOT,'sitemap-'+L+'.xml'),'utf8');
     for(const m of sm.matchAll(/<loc>([^<]+)<\/loc>/g)){ locs++; const r=m[1].slice(BASE.length);
-      if(!fs.existsSync(path.join(ROOT,r))) miss.push(r); }
+      if(!fs.existsSync(path.join(ROOT,r))) miss.push(r); if(noidx.has(r)) inNo.push(r); }
     ok(fs.statSync(path.join(ROOT,'sitemap-'+L+'.xml')).size<50e6,'sitemap-'+L+' меньше 50 МБ (предел поисковиков)');
   }
-  ok(locs===pages&&miss.length===0,'в sitemap все страницы: '+locs+' из '+pages+' '+miss.slice(0,3).join(' '));
+  ok(locs===pages-noidx.size&&miss.length===0&&inNo.length===0,'в sitemap все страницы, кроме закрытых noindex: '+locs+' из '+pages+' (noindex '+noidx.size+') '+miss.slice(0,3).join(' ')+inNo.slice(0,3).join(' '));
+  ok(noidx.size>0&&[...noidx].every(r=>/^[a-z]{2}\/w\//.test(r))&&noidx.size<pages*0.5,'noindex — только пустые страницы слов ('+noidx.size+')');
+  { // O-193: богатая страница слова — пример, падежи, спряжение, однокоренные
+    const pick=f=>fs.readdirSync(path.join(ROOT,'ru','w')).map(x=>fs.readFileSync(path.join(ROOT,'ru','w',x),'utf8')).find(f);
+    const n=pick(s=>s.includes('<h1 lang="hy">տուն</h1>')), v=pick(s=>s.includes('<h1 lang="hy">գրել</h1>'));
+    ok(n&&n.includes('Формы слова')&&n.includes('Множественное число')&&n.includes('տներ')&&!n.includes('noindex'),'«տուն»: падежи (мн. ч. տներ), страница в индексе');
+    ok(v&&v.includes('Спряжение')&&v.includes('գրում եմ')&&v.includes('գրեցի')&&v.includes('Однокоренные'),'«գրել»: спряжение и однокоренные');
+    ok(pick(s=>s.includes('<h2>Пример</h2>')&&s.includes('class="exs"'))!==undefined,'пример на странице слова'); }
   ok(locs/LANGS.length<=50000,'в одном sitemap не больше 50 000 адресов');
   ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8')),'robots.txt знает sitemap');
   // 3. Приложение
