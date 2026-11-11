@@ -758,7 +758,7 @@ function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.se
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
 function go(v,arg){ if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily') return 'home'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -780,6 +780,7 @@ function render(auto){
   else if(view==='letter'){ el.innerHTML=letterHTML(viewArg); writeCursive(); }
   else if(view==='pen'){ el.innerHTML=penHTML(); penMount(); }
   else if(view==='name'){ el.innerHTML=nameHTML(); nmWrite(); }
+  else if(view==='daily'){ el.innerHTML=dailyHTML(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -913,6 +914,7 @@ function onboardHTML(){
     '</div></div></section>'+
   '<section class="ld-proof"><div class="ld-wrap"><ul>'+proof+'</ul></div></section>'+
   nmLand+
+  '<section class="ld-sec ld-dg"><div class="ld-wrap"><div class="dg-land"><span class="dg-land-e" aria-hidden="true">🎯</span><div><h2 class="ld-h2">'+esc(T('dgBtn'))+'</h2><p class="ld-lead">'+esc(T('dgLand'))+'</p></div><button class="btn primary" data-act="dgOpen">'+esc(T('dgTitle'))+' →</button></div></div></section>'+
   '<section class="ld-sec ld-why"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.whyTitle)+'</h2><p class="ld-lead">'+esc(D.whyLead)+'</p><ul class="wy">'+why+'</ul></div></section>'+
   '<section class="ld-sec ld-hear"><div class="ld-wrap"><div class="hear"><div class="hear-hd"><h2 class="ld-h2">'+esc(D.hearTitle)+'</h2><p class="ld-lead">'+esc(D.hearLead)+'</p></div><ul class="hear-list">'+hear+'</ul><p class="hear-note">'+esc(D.hearNote)+'</p><div class="hear-cta">'+cta('xl inv')+'</div></div></div></section>'+
   '<section class="ld-sec" id="how"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.howTitle)+'</h2><p class="ld-lead">'+esc(D.howLead)+'</p><ol class="ld-steps">'+
@@ -1023,7 +1025,7 @@ function homeHTML(){
     return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+(free?'':' <span class="lock">'+emo('🔒','ie')+'</span>')+'</span><span class="lvc">'+esc(T('lvCount',lc.learned,lc.total))+'</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+esc(T('lvd_'+lv))+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
   }).join('');
   return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">'+MARK()+'<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">'+esc(T('tagline'))+'</p></header>'+
-    '<section class="today">'+streak+wotdHTML()+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
+    '<section class="today">'+streak+wotdHTML()+'<button class="dg-go" data-act="dgOpen">🎯 <span>'+esc(T('dgBtn'))+'</span>'+(UI.dg&&UI.dg.td===today()&&UI.dg.done?' ✓':'')+'</button>'+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
     '<div class="home-main">'+rows+'</div></div>';
 }
 /* Слово дня: каждый день другое, с объёмной картинкой, из открытых уровней. */
@@ -1034,6 +1036,31 @@ function wotdHTML(){
   const w=pool[(Math.imul(today()+7,2654435761)>>>0)%pool.length];
   return '<div class="wotd"><span class="wd-pic">'+pic(w)+'</span><span class="wd-main"><span class="wd-k">'+esc(T('wotd'))+'</span><span class="wd-hy" lang="hy">'+esc(w.a)+'</span><span class="wd-sub">'+esc(trn(w))+' — '+esc(tx(w))+'</span></span><button class="say" data-act="sayFree" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+ICON.spk+'</button></div>';
 }
+/* ---------- «Слово дня» — игра (O-180): одно слово на всех в этот день, 4 варианта значения, результат — строка для друзей ---------- */
+const DG0=20768;                                   // 11.11.2026 — игра №1
+function dgRng(seed){ let x=seed>>>0||1; return ()=>{ x^=x<<13; x>>>=0; x^=x>>17; x^=x<<5; x>>>=0; return x/4294967296; }; }
+function dgDay(){ const td=today(); const pool=PW.filter(w=>w.p&&EMO[w.p]); if(pool.length<4) return null;
+  const r=dgRng(Math.imul(td+101,2654435761)); const wd=pool[(Math.imul(td+7,2654435761)>>>0)%pool.length];   // не слово с главной
+  let w; do{ w=pool[Math.floor(r()*pool.length)]; }while(w===wd);
+  const opts=[w]; while(opts.length<4){ const o=pool[Math.floor(r()*pool.length)]; if(!opts.includes(o)&&tx(o)!==tx(w)) opts.push(o); }
+  for(let i=3;i>0;i--){ const j=Math.floor(r()*(i+1)); [opts[i],opts[j]]=[opts[j],opts[i]]; }
+  return {td,n:td-DG0+1,w,opts}; }
+function dgState(td){ const g=UI.dg||{}; return g.td===td?g:{td,tries:[],done:false,streak:g.streak||0,last:g.last||0}; }
+function dailyHTML(){
+  const d=dgDay(); if(!d) return '';
+  const g=dgState(d.td), w=d.w;
+  const opts=d.opts.map((o,i)=>{ const tried=g.tries.includes(i), right=o===w;
+    const cls=g.done&&right?'ok':tried?'bad':''; return '<button class="opt dg-o '+cls+'" data-act="dgPick" data-arg="'+i+'"'+(g.done||tried?' disabled':'')+'>'+(g.done&&right?'<span class="dg-pic">'+pic(o)+'</span>':'')+'<span>'+esc(tx(o))+'</span></button>'; }).join('');
+  const sq=g.done?g.tries.map(()=>'🟥').join('')+'🟩':'';
+  return '<button class="back" data-act="dgBack">‹ '+esc(T('back'))+'</button><section class="dg"><p class="eyebrow">'+esc(T('dgTitle'))+' № '+d.n+'</p>'+
+    '<div class="hyw" lang="hy">'+esc(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div>'+
+    (audioOK()?'<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button></div>':'')+
+    '<p class="q">'+esc(g.done?T('dgWin'):T('dgQ'))+'</p><div class="opts list dg-opts">'+opts+'</div>'+
+    (g.done?'<div class="dg-res"><p class="dg-sq">'+sq+'</p><p>'+esc(T('dgStreak',g.streak))+'</p><div class="actions"><button class="btn primary" data-act="dgShare">'+esc(T('dgShare'))+'</button>'+
+      '<button class="btn secondary" data-act="dgLearn">'+esc(T('dgLearn'))+'</button></div><p class="note">'+esc(T('dgNext'))+'</p></div>':'')+'</section>';
+}
+function dgText(){ const d=dgDay(), g=dgState(d.td);
+  return 'Barik · '+T('dgTitle')+' № '+d.n+'\n'+g.tries.map(()=>'🟥').join('')+'🟩 '+(g.tries.length+1)+'/4\n🔥 '+T('dgStreak',g.streak)+'\n'+location.origin+'/?daily&lang='+L; }
 function wordRow(w,free){
   const st=status(w), op=free||canUse(w);
   return '<li class="wrow"><span class="w-pic">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+esc(T('st_'+st))+'"></i>'+esc(tx(w))+'<span class="w-tr">'+esc(trn(w))+'</span></span></span><button class="say" data-act="'+(free?'sayFree':'say')+'" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+(op?ICON.spk:emo('🔒','ie'))+'</button></li>';
@@ -2422,6 +2449,15 @@ const H={
     setLang(L); penNew(i); go('pen',i); },
   pen:a=>{ penNew(+a); go('pen',+a); },
   nmOpen:()=>{ go('name'); },
+  dgOpen:()=>{ hit('v_daily'); go('daily'); },
+  dgBack:()=>go(UI.lang?'home':'onboard'),
+  dgPick:a=>{ const d=dgDay(), g=dgState(d.td); if(g.done) return; const i=+a, o=d.opts[i];
+    if(o===d.w){ g.done=true; g.streak=(g.last===d.td-1?(g.streak||0)+1:1); g.last=d.td; hit('daily_done'); } else if(!g.tries.includes(i)) g.tries.push(i);
+    UI.dg=g; saveUI(); render(false); if(o===d.w) speak(d.w,false,null,false); },
+  dgShare:async()=>{ const t=dgText(); hit('daily_share');
+    try{ if(navigator.share){ await navigator.share({text:t}); return; } }catch(e){ if(e&&e.name==='AbortError') return; }
+    try{ await navigator.clipboard.writeText(t); toast(T('dgCopied')); }catch(e){ toast(t); } },
+  dgLearn:()=>{ const d=dgDay(); const ti=d.w.t; if(UI.lang&&TOPICS[ti]) go('topic',ti); else go(UI.lang?'home':'onboard'); },
   nmBack:()=>go(UI.lang?'abc':'onboard'),
   nmGo:()=>{ const i=$('#nmIn'); nmSet(i?i.value:''); render(); },
   nmLand:()=>{ const i=$('#ldName'); nmSet(i?i.value:''); go('name'); },
@@ -2654,6 +2690,7 @@ view=UI.lang&&!WELCOME?'home':'onboard';
 // ссылка «имя по-армянски» (O-168): ?name=Anna[&hy=Աննա] — сразу к написанному имени, и гостю тоже
 { const sp=new URLSearchParams(location.search||''), nm=sp.get('name'), hy=sp.get('hy');
   const dk=sp.get('doc'); if(dk&&/^(refund|terms|privacy|project|credits)$/.test(dk)&&nm===null){ docFrom=(UI.lang?'settings':'onboard'); view='doc'; viewArg=dk; }
+  if(sp.has('daily')&&nm===null){ view='daily'; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();

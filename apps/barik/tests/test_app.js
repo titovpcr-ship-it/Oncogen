@@ -585,6 +585,33 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'примеры: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // O-180: «Слово дня» — одно слово на день, 4 варианта, результат для друзей, серия
+    const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]');
+    ok(await pg.locator('.ld-dg [data-act=dgOpen]').count()===1,'обложка: блок «Слово дня»');
+    await pg.click('.ld-dg [data-act=dgOpen]'); await pg.waitForSelector('.dg');
+    ok(await pg.locator('.dg-o').count()===4&&/Слово дня № \d{1,3}\b/.test(await pg.textContent('.dg'))&&await pg.evaluate(()=>{ const d=new Date(); return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000)-20768+1; })<1000,'игра: слово, номер с 11.11.2026, 4 варианта');
+    const right=await pg.evaluate(()=>{ const b=window.__bararan; const btns=[...document.querySelectorAll('.dg-o')]; return btns.length; });
+    // сначала неверный, потом верный
+    const ans=await pg.evaluate(()=>{ const b=window.__bararan; const d=b.H&&null; return null; });
+    const idx=await pg.evaluate(()=>{ const t=[...document.querySelectorAll('.dg-o')].map(x=>x.textContent); return t; });
+    let wrongClicked=false;
+    for(let i=0;i<4;i++){ const done=await pg.locator('.dg-res').count(); if(done) break; const b=pg.locator('.dg-o').nth(i); if(await b.isDisabled()) continue; await b.click(); if(!(await pg.locator('.dg-res').count())) wrongClicked=true; }
+    ok(await pg.locator('.dg-res').count()===1&&/🟩/.test(await pg.textContent('.dg-sq')),'игра пройдена — квадратики результата');
+    ok((await pg.textContent('.dg-res')).includes('Серия: 1 день подряд'),'серия: 1 день');
+    const t=await pg.evaluate(()=>{ let r=''; navigator.clipboard.writeText=x=>{ r=x; window.__dgT=x; return Promise.resolve(); }; delete navigator.share; return 1; });
+    await pg.evaluate(()=>{ navigator.share=undefined; }); await pg.click('[data-act=dgShare]'); await pg.waitForTimeout(200);
+    const sh=await pg.evaluate(()=>window.__dgT||'');
+    ok(/Barik · Слово дня № \d+/.test(sh)&&/\/\?daily&lang=ru/.test(sh),'«Поделиться» — текст с номером и ссылкой');
+    await pg.reload(); await pg.waitForTimeout(400);
+    await pg.goto(base+'?daily'); await pg.waitForSelector('.dg');
+    ok(await pg.locator('.dg-res').count()===1,'ссылка ?daily открывает игру, результат дня сохранён');
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'игра: без прокрутки вбок');
+    if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'daily.png')});
+    ok(errs.length===0,'игра: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});
