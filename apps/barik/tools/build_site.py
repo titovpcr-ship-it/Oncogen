@@ -79,7 +79,7 @@ SW = r"""/* Barik — работа без интернета. Версия ме�
    новый кэш ставится, старый удаляется. */
 const VERSION = '%(version)s';
 const SHELL = %(shell)s;
-const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v1', PICS = 'barik-pics-v1';
+const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v2', PICS = 'barik-pics-v2';   // v2 (O-199): в v1 могла попасть заглушка хостинга
 self.addEventListener('install', e => {
   // cache: 'reload' — мимо HTTP-кэша браузера: иначе новая версия собиралась из старых файлов (O-157)
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL.map(u => new Request(u, {cache: 'reload'}))))
@@ -103,7 +103,10 @@ self.addEventListener('fetch', e => {
   if (media) {                                // озвучка и картинки — по мере показа
     if (r.headers.has('range')) return;       // кусок файла (Range) — прямо в сеть: в кэш кладём только целое
     e.respondWith(caches.open(media).then(c => c.match(r).then(hit => hit ||
-      fetch(r).then(res => { if (res.status === 200) c.put(r, res.clone()); return res; }))));
+      fetch(r).then(res => {                  // в кэш — только настоящий файл: страницу-заглушку хостинга (тоже 200) не кладём
+        const ct = res.headers.get('content-type') || '';
+        if (res.status === 200 && (media === AUDIO ? /^audio\//.test(ct) : /^image\//.test(ct))) c.put(r, res.clone());
+        return res; }))));
     return;
   }
   if (r.mode === 'navigate') {                // страница: сеть, без сети — из кэша

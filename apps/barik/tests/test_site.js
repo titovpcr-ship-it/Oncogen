@@ -1,5 +1,5 @@
 /* Проверка сайта dist/site/ (сборка tools/build_site.py) в настоящем браузере:
-   манифест и иконки, service worker, всё открыто без оплаты (WEB_ALL_FREE),
+   манифест и иконки, service worker, замок — как в сборке (WEB_ALL_FREE или BARIK_WEB_PAID),
    работа без интернета после первого захода, нет внешних запросов.
    Запуск: python3 tools/build_site.py && node tests/test_site.js */
 const {chromium}=require('playwright');
@@ -46,12 +46,13 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   await pg.click('[data-act=pickLang][data-arg=ru]');
   ok((await pg.textContent('.brand')).includes('Barik'),'главная: Barik');
   await pg.click('[data-act=lvtog][data-arg=A2]');
-  ok(await pg.locator('.topic.locked').count()===0,'на сайте всё открыто: замков нет (WEB_ALL_FREE)');
+  { const free=await pg.evaluate(()=>!!(window.BARARAN_CONFIG||{}).WEB_ALL_FREE), n=await pg.locator('.topic.locked').count();   // замок — по сборке (O-165/O-195)
+    ok(free?n===0:n>0,free?'сборка без замка: темы A2 открыты':'сборка с замком (BARIK_WEB_PAID): темы A2 под замком — '+n); }
   // озвучка (O-135): запись слова берётся, когда звучит, и остаётся без интернета; заранее в кэш не грузится
   const au=await pg.evaluate(()=>window.__bararan.audioUrl('բարև ձեզ'));
   await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=say][data-arg="բարև ձեզ"]'); await pg.waitForTimeout(800);
-  ok(await pg.evaluate(u=>caches.open('barik-audio-v1').then(c=>c.match(u)).then(r=>!!r&&r.status===200),au),'озвучка: прослушанная запись в кэше озвучки ('+au+')');
-  ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.filter(k=>k!=='barik-audio-v1').map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\.mp3$/.test(q.url))))),'записи не грузятся заранее в кэш приложения');
+  ok(await pg.evaluate(u=>caches.open('barik-audio-v2').then(c=>c.match(u)).then(r=>!!r&&r.status===200),au),'озвучка: прослушанная запись в кэше озвучки ('+au+')');
+  ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.filter(k=>k!=='barik-audio-v2').map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\.mp3$/.test(q.url))))),'записи не грузятся заранее в кэш приложения');
   // без интернета
   await ctx.setOffline(true);
   await pg.reload(); await pg.waitForTimeout(500);

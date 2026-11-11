@@ -317,7 +317,9 @@ function loadManifest(){
 const BLOB=new Map();             // адрес записи → blob: (на время сеанса)
 function getAudio(url){
   if(BLOB.has(url)) return Promise.resolve(BLOB.get(url));
-  return fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.blob(); })
+  // не запись (страница-заглушка защиты хостинга, O-199) — как нет файла; со второй попытки — мимо кэша браузера
+  const get=u=>fetch(u).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); if(!/^audio\//.test(r.headers.get('content-type')||'audio/')) throw new Error('type'); return r.blob(); });
+  return get(url).catch(e=>{ if(e.message!=='type') throw e; return new Promise(ok=>setTimeout(ok,1500)).then(()=>get(url+'?r=1')); })
     .then(b=>{ const o=URL.createObjectURL(b); BLOB.set(url,o); return o; });
 }
 /* слова урока и темы — заранее: звучат сразу и потом без интернета */
@@ -471,8 +473,11 @@ function firstLetter(a){const m=a.match(/[ա-ֆԱ-Ֆև]/);return m?m[0].toUpperC
 function emo(e,cls){const n=EMO[e], c=cls?' '+cls:'';
   if(!n) return '<span class="emo'+c+'" aria-hidden="true">'+e+'</span>';
   return '<img class="e3d'+c+'" src="'+(n.indexOf(':')>=0?n:'pics/'+n+'.webp')+'" data-e="'+esc(e)+'" alt="" draggable="false" decoding="async" loading="lazy">';}
-document.addEventListener('error',ev=>{const t=ev.target; if(t&&(t.tagName==='SCRIPT'||t.tagName==='LINK'||t.tagName==='IMG')) resFail(); if(!t||t.tagName!=='IMG'||!t.dataset||!t.dataset.e) return;
-  const sp=document.createElement('span'); sp.className=t.className.replace('e3d','emo')+' emo'; sp.style.cssText=t.style.cssText; sp.setAttribute('aria-hidden','true'); sp.textContent=t.dataset.e; t.replaceWith(sp);},true);
+document.addEventListener('error',ev=>{const t=ev.target;
+  // картинка не пришла (защита хостинга иногда отдаёт страницу-заглушку вместо файла, O-199) — один повтор через 1,5 с
+  if(t&&t.tagName==='IMG'&&t.dataset&&t.dataset.e&&!t.dataset.rt&&navigator.onLine!==false){ t.dataset.rt='1'; const u=t.getAttribute('src')||''; setTimeout(()=>{ if(t.isConnected) t.src=u+(u.indexOf('?')<0?'?':'&')+'r=1'; },1500); return; }
+  if(t&&(t.tagName==='SCRIPT'||t.tagName==='LINK'||t.tagName==='IMG')) resFail(); if(!t||t.tagName!=='IMG'||!t.dataset||!t.dataset.e) return;
+  const sp=document.createElement('span'); sp.className=t.className.replace('e3d','emo')+' emo'; sp.style.cssText=t.style.cssText; sp.setAttribute('aria-hidden','true'); sp.dataset.fb='1'; sp.textContent=t.dataset.e; t.replaceWith(sp);},true);
 function picQ(w){return w.p?pic(w):emo(TOPICS[w.t].ic);}
 function pic(w){
   const p=w.p;

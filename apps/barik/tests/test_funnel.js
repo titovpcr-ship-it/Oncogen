@@ -38,7 +38,7 @@ c.commit()`,db,String(now)]);
   await ctx.route('**/pics/**',rt=>rt.abort());
   const pg=await ctx.newPage(); pg.on('pageerror',e=>errs.push(String(e)));
   await pg.goto(base+'?from=TG_Test'); await pg.waitForSelector('[data-act=pickLang]');
-  await pg.click('[data-act=pickLang]'); await pg.waitForTimeout(300);
+  await pg.click('[data-act=pickLang]'); await pg.waitForTimeout(2200);   // картинки не пришли и после повтора (1,5 с)
   await pg.click('[data-act=learnNew]'); await pg.waitForSelector('.sess-top');
   for(let i=0;i<6&&!(await pg.locator('.opt:not([disabled])').count());i++){ if(await pg.locator('.foot [data-act=next]').count()) await pg.click('.foot [data-act=next]'); await pg.waitForTimeout(150); }
   await pg.locator('.opt').first().click(); await pg.waitForTimeout(600);
@@ -67,6 +67,17 @@ c.commit()`,db,String(now)]);
   await fetch(base+'api/?r=hit',{method:'POST',headers:{'User-Agent':'Mozilla/5.0 (compatible; Googlebot/2.1)'},body:JSON.stringify({e:'start',g:1,l:'en'})});
   S=await stats(); ok(S['g:start']===3,'робот не попадает в воронку');
 
+  // 4. защита хостинга отдала вместо картинки страницу-заглушку (200, text/html) — повтор через 1,5 с, картинка на месте, сбоя нет
+  { const c4=await br.newContext({viewport:{width:390,height:844},locale:'ru-RU',userAgent:UA+' D',serviceWorkers:'block'});
+    await c4.addInitScript(()=>localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'ru'})));
+    const seen=new Set(); let stubbed=0;
+    await c4.route('**/pics/**',rt=>{ const u=rt.request().url().split('?')[0]; if(!seen.has(u)){ seen.add(u); stubbed++; return rt.fulfill({status:200,contentType:'text/html',body:'<title>One moment, please...</title>'}); } return rt.continue(); });
+    const p4=await c4.newPage(); p4.on('pageerror',e=>errs.push(String(e)));
+    let rf=0; p4.on('request',q=>{ if(/r=hit/.test(q.url())&&/res_fail/.test(q.postData()||'')) rf++; });
+    await p4.goto(base); await p4.waitForTimeout(3500);
+    const st=await p4.evaluate(()=>{ const im=[...document.querySelectorAll('img.e3d')].filter(i=>i.complete); return {n:im.length,okN:im.filter(i=>i.naturalWidth>0).length,fall:document.querySelectorAll('span[data-fb]').length}; });   // ленивые за экраном ещё не грузились
+    ok(stubbed>0&&st.n>0&&st.okN===st.n&&st.fall===0,'заглушка вместо картинки — повтор, все картинки на месте: '+st.okN+'/'+st.n+' (заглушек '+stubbed+')');
+    ok(rf===0,'после удачного повтора сбой не считается'); await c4.close(); }
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(!phpErr,'PHP без ошибок '+phpErr.slice(0,300));
   await br.close(); php.kill(); fs.rmSync(TMP,{recursive:true,force:true});
