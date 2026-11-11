@@ -863,3 +863,11 @@
 ալանի | Ալանին շատ համեղ է։ | Алани очень вкусные. | Alani is very tasty. | L'alani est très délicieux. | El alani es muy delicioso. | Alani ist sehr lecker. | O alani é muito delicioso.
 քյուֆթա | Քյուֆթան հայտնի ուտեստ է։ | Кюфта — известное блюдо. | Kyufta is a famous dish. | Le kyufta est un plat célèbre. | El kyufta es un plato famoso. | Kyufta ist ein bekanntes Gericht. | O kyufta é um prato famoso.
 խաշլամա | Ես պատրաստում եմ խաշլամա։ | Я готовлю хашламу. | I am making khashlama. | Je prépare le khashlama. | Estoy preparando el khashlama. | Ich mache Khashlama. | Estou preparando o khashlama.
+բոզբաշ | Բոզբաշը համեղ է։ | Бозбаш вкусный. | Bozbash is delicious. | Le bozbash est délicieux. | El bozbash está delicioso. | Bozbash ist lecker. | O bozbash é delicioso.
+սպաս | Սպասը սառ ապուր է։ | Спас — холодный суп. | Spas is a cold soup. | Le spas est une soupe froide. | El spas es una sopa fría. | Spas ist eine kalte Suppe. | O spas é uma sopa fria.
+փլավ | Փլավը լավաշի հետ է ուտվում։ | Плов едят с лавашом. | Pilaf is eaten with lavash. | Le pilaf se mange avec du lavash. | El pilaf se come con lavash. | Pilaf wird mit Lavash gegessen. | O pilaf é comido com lavash.
+քաբաբ | Քաբաբը խորոված միս է։ | Кебаб — это жареное мясо. | Kebab is grilled meat. | Le kebab est de la viande grillée. | El kebab es carne a la parrilla. | Kebab ist gegrilltes Fleisch. | O kebab é carne grelhada.
+ղափամա | Ղափաման տոնական ուտեստ է։ | Гапама — праздничное блюдо. | Ghapama is a holiday dish. | Le ghapama est un plat de fête. | El ghapama es un plato festivo. | Ghapama ist ein Festtagsgericht. | O ghapama é um prato festivo.
+մանթի | Մանթիները համեղ են։ | Манты вкусные. | Manti are delicious. | Les manti sont délicieux. | Los manti son deliciosos. | Manti sind lecker. | Os manti são deliciosos.
+լահմաջո | Լահմաջոն շատ համեղ է։ | Лахмаджо очень вкусный. | Lahmajo is very tasty. | Le lahmajo est très savoureux. | El lahmajo es muy sabroso. | Lahmajo ist sehr lecker. | O lahmajo é muito saboroso.
+չանախ | Չանախը կարելի է մատուցել բրնձով։ | Чанах можно подавать с рисом. | Chanakh can be served with rice. | Le chanakh peut être servi avec du riz. | El chanakh se puede servir con arroz. | Chanakh kann mit Reis serviert werden. | O chanakh pode ser servido com arroz.
