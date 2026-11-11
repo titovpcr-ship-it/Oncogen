@@ -29,10 +29,45 @@ def main():
         x = by[d]; day = datetime.date(1970, 1, 1) + datetime.timedelta(days=d)
         print('%s  %5d  %8d  %6d  %4d  %8d  %6d' % (day, x.get('u', 0), x.get('open', 0), x.get('e:start', 0), x.get('e:login', 0),
               x.get('e:name_save', 0) + x.get('e:name_share', 0), x.get('e:checkout', 0)))
+    funnel(by, tot)
     for pre, title in (('c:', 'страны'), ('l:', 'языки'), ('r:', 'откуда пришли'), ('d:', 'устройства'), ('e:', 'события'), ('e:v_', '')):
         if not title: continue
         it = sorted(((k[len(pre):], n) for k, n in tot.items() if k.startswith(pre)), key=lambda t: -t[1])[:15]
         if it: print('\n%s: %s' % (title, ', '.join('%s %d' % t for t in it)))
+
+
+STEPS = [('guest', 'гости'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_done', 'урок'), ('unit_done', 'путь'),
+         ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'оплата')]
+
+
+def funnel(by, tot):
+    """воронка новичка (O-198): шаги из первого визита гостя, по дням, языкам и источникам"""
+    if not any(k.startswith('g:') for k in tot):
+        return
+    w = [max(len(t), 5) for _, t in STEPS]
+    print('\nворонка новичка (первый визит)')
+    print('день        ' + '  '.join(t.rjust(n) for (_, t), n in zip(STEPS, w)))
+    for d in sorted(by):
+        x = by[d]; day = datetime.date(1970, 1, 1) + datetime.timedelta(days=d)
+        if not any(k.startswith('g:') for k in x): continue
+        print('%s  %s' % (day, '  '.join(str(x.get('g:' + k, 0)).rjust(n) for (k, _), n in zip(STEPS, w))))
+    g = tot.get('g:guest', 0)
+    if g:
+        print('итого       ' + '  '.join(('%d%%' % round(100 * tot.get('g:' + k, 0) / g)).rjust(n) for (k, _), n in zip(STEPS, w)))
+    for pre, title in (('gl:', 'по языку'), ('gs:', 'по источнику')):
+        grp = collections.defaultdict(collections.Counter)
+        for k, n in tot.items():
+            if k.startswith(pre):
+                a, _, ev = k[len(pre):].rpartition(':'); grp[a][ev] += n
+        if not grp: continue
+        print('\n%s: %s' % (title, '  '.join(t for _, t in STEPS[:6])))
+        for a, c in sorted(grp.items(), key=lambda t: -t[1].get('guest', 0))[:12]:
+            print('  %-24s %s' % (a, '  '.join(str(c.get(k, 0)) for k, _ in STEPS[:6])))
+    land = [(k[7:], n) for k, n in tot.items() if k.startswith('e:land_')]
+    if land: print('\nкнопки обложки: ' + ', '.join('%s %d' % t for t in sorted(land, key=lambda t: -t[1])))
+    if tot.get('open'): print('сбои загрузки (картинка, скрипт, запись): %d на %d открытий (%.1f%%)' % (tot.get('e:res_fail', 0), tot['open'], 100 * tot.get('e:res_fail', 0) / tot['open']))
+    fr = [(k[2:], n) for k, n in tot.items() if k.startswith('f:')]
+    if fr: print('метки ?from=: ' + ', '.join('%s %d' % t for t in sorted(fr, key=lambda t: -t[1])))
 
 
 if __name__ == '__main__':

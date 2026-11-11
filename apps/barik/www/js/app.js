@@ -14,6 +14,7 @@ function saveUI(){try{localStorage.setItem(UIK,JSON.stringify(UI));}catch(e){}}
 const NAV=(navigator.language||'').toLowerCase();
 /* Со страницы поиска (/fr/w/…) — сразу на языке страницы, без выбора языка;
    выбор, сделанный раньше, не трогаем. */
+const FIRST=!UI.lang;   // первый визит (язык ещё не выбран) — для воронки новичка, O-198; ?lang= ниже его не отменяет
 const QL=(/[?&]lang=(ru|en|fr|es|de|pt)(?:&|$)/.exec(location.search||'')||[])[1];
 if(QL&&!UI.lang){UI.lang=QL; saveUI();}
 /* Язык по стране (O-154, владелец 08.11.2026: «человек с какой страны заходил — с такой язык и открывался»):
@@ -342,6 +343,7 @@ function playUrl(url,text,slow,btn,loud,done,tr){
     if(tr){ if(done) setTimeout(done,200); return; }     // нет записи перевода — дальше молча
     // у второго голоса нет записи (новое слово) — основным голосом
     const main='audio/'+MAN.dir+'/'; if(MAN.dir&&/^audio\//.test(url)&&url.indexOf(main)!==0) return playUrl(url.replace(/^audio\/[^/]+\//,main),text,slow,btn,loud,done);
+    if(navigator.onLine!==false) resFail();
     if(!speakTTS(text,slow,btn,false)&&loud) toast(T(navigator.onLine===false?'audioLoadFail':'noAudio')); };
   getAudio(url).then(src=>{
     if(tok!==playTok) return;
@@ -469,7 +471,7 @@ function firstLetter(a){const m=a.match(/[ա-ֆԱ-Ֆև]/);return m?m[0].toUpperC
 function emo(e,cls){const n=EMO[e], c=cls?' '+cls:'';
   if(!n) return '<span class="emo'+c+'" aria-hidden="true">'+e+'</span>';
   return '<img class="e3d'+c+'" src="'+(n.indexOf(':')>=0?n:'pics/'+n+'.webp')+'" data-e="'+esc(e)+'" alt="" draggable="false" decoding="async" loading="lazy">';}
-document.addEventListener('error',ev=>{const t=ev.target; if(!t||t.tagName!=='IMG'||!t.dataset||!t.dataset.e) return;
+document.addEventListener('error',ev=>{const t=ev.target; if(t&&(t.tagName==='SCRIPT'||t.tagName==='LINK'||t.tagName==='IMG')) resFail(); if(!t||t.tagName!=='IMG'||!t.dataset||!t.dataset.e) return;
   const sp=document.createElement('span'); sp.className=t.className.replace('e3d','emo')+' emo'; sp.style.cssText=t.style.cssText; sp.setAttribute('aria-hidden','true'); sp.textContent=t.dataset.e; t.replaceWith(sp);},true);
 function picQ(w){return w.p?pic(w):emo(TOPICS[w.t].ic);}
 function pic(w){
@@ -595,7 +597,7 @@ function queueRepeat(it){
   sess.items.splice(Math.min(sess.items.length,sess.i+3),0,mk(k,it.w,{rep:true}));
 }
 function answer(idx){
-  const it=cur(); if(!it||it.done||!it.opts) return;
+  const it=cur(); if(!it||it.done||!it.opts) return; hit('first_answer');
   const ok=it.opts[idx]===it.w;
   it.done=true; it.ok=ok; it.pick=idx;
   record(it,ok);
@@ -755,10 +757,14 @@ document.addEventListener('touchend',e=>{
 /* ================= RENDER ================= */
 /* ---------- счётчик (O-174): без cookie, без IP — открытие сайта и несколько событий; сервер хранит только суммы по дням ---------- */
 const HITS=new Set();
+/* источник визита (O-198): метка ?from= → переход со страницы поиска (тип w/t/p/a/g/n) → чужой сайт → «-» */
+const HSRC=(()=>{ let r='',seo=''; try{ const sp=new URLSearchParams(location.search||''), f=(sp.get('from')||'').toLowerCase().replace(/[^a-z0-9_.-]/g,'').slice(0,24);
+    if(document.referrer){ const u=new URL(document.referrer); if(u.hostname===location.hostname){ const m=u.pathname.match(/^\/(?:ru|en|fr|es|de|pt)\/(?:([wtpagn])\/)?/); if(m) seo=m[1]||'i'; } else r=u.hostname.replace(/^(www\.|m\.|l\.|lm\.)/,''); }
+    return {f,r,seo,g:FIRST?1:0,s:f?'from='+f:seo?'seo':(r||'-')}; }catch(x){ return {f:'',r:'',seo:'',g:FIRST?1:0,s:'-'}; } })();
 function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; if(e&&HITS.has(e)) return; if(e) HITS.add(e);
-  let r=''; try{ r=document.referrer?new URL(document.referrer).hostname:''; }catch(x){} if(r===location.hostname) r='';
-  navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
-function go(v,arg){ if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
+  navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e,l:L,s:HSRC.s,g:HSRC.g}:{l:L,c:tzCC(TZ)||'',r:HSRC.r,f:HSRC.f,s:HSRC.s,g:HSRC.g})); }catch(x){} }
+function resFail(){ hit('res_fail'); }
+function go(v,arg){ if(view==='onboard'&&v!=='onboard'&&v!=='doc') hit('start'); if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
 function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='gift') return 'settings'; if(v==='cert') return 'path'; if(v==='teach') return 'settings'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
@@ -2046,7 +2052,7 @@ async function giftReturn(){
   try{ ['pay','payment_id','status','email','license_key'].forEach(k=>sp.delete(k)); const qs=sp.toString(); history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+location.hash); }catch(e){}
   if(!ACC.me||!pid) return;
   go('gift'); toast(T('cardWait'));
-  for(let i=0;i<8;i++){ const j=await api('gift_check',{payment_id:pid,lang:L}); if(j.ok&&j.code){ GF.code=j.code; if(view==='gift') render(false); toast(T('thanks')); return; } await new Promise(r=>setTimeout(r,4000)); }
+  for(let i=0;i<8;i++){ const j=await api('gift_check',{payment_id:pid,lang:L}); if(j.ok&&j.code){ hit('gift_paid'); GF.code=j.code; if(view==='gift') render(false); toast(T('thanks')); return; } await new Promise(r=>setTimeout(r,4000)); }
   toast(T('cardPending'));
 }
 /* вернулись со страницы Dodo (?pay=card&subscription_id=…&status=…): сервер сам спрашивает Dodo о подписке */
@@ -2060,7 +2066,7 @@ async function cardReturn(){
     const j=await api('pay_check',{sub});
     if(!j.ok) return;
     accApply(j); render();
-    if(j.user&&j.user.premium){ toast(T('thanks')); return; }
+    if(j.user&&j.user.premium){ hit('paid'); toast(T('thanks')); return; }
     await new Promise(r=>setTimeout(r,4000));
   }
   toast(T('cardPending'));
@@ -2481,11 +2487,11 @@ function pSayIt(it){
 }
 function pAnswer(i){
   const it=pCur(); if(!it||it.done||!it.opts||i>=it.opts.length) return;
-  it.done=true; it.pick=i; it.ok=it.opts[i]===it.a; if(it.ok) PU.ok++; else buzz();
+  it.done=true; it.pick=i; it.ok=it.opts[i]===it.a; if(it.ok) PU.ok++; else buzz(); hit('first_answer');
   render(); pSayIt(it);
 }
 function pFinish(){
-  PU.end=true;
+  PU.end=true; hit('unit_done');
   const sc=Math.round(100*PU.ok/PU.q.length);
   if(PU.kind==='unit'){ const r=PG.u[PU.u.id]; PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; }
   else if(PU.kind==='read'){ PU.pass=PU.ok>=Math.ceil(PU.q.length*0.75); if(PU.pass) PG.abc=1; }
@@ -2596,16 +2602,16 @@ let docFrom='settings';
 const H={
   brand:()=>ACT.tab('home'),
   tab:a=>{ if(view==='session'&&sess&&!sess.ended){ finish(); return; } if(view==='tquiz') tq=null; if(view==='abcquiz'&&aq){clearTimeout(aq.timer); aq=null;} if(view==='pquiz'&&pq){clearTimeout(pq.timer); pq=null;} go(a); },
-  pickLang:a=>{setLang(a); hit('start'); go('home');},
+  pickLang:a=>{setLang(a); hit(view==='onboard'?'land_start':'pick_lang'); hit('start'); go('home');},
   landSay:(a,b)=>{ const k=String(a||'').split('|'); sayText(k[0],b,false,null,k[1]==='m'?'m':'f'); },
   geoX:()=>{ UI.geoX=1; saveUI(); const g=document.querySelector('.ld-geo'); if(g) g.remove(); },
   landHow:(a,b,e)=>{ const t=document.getElementById('how'); if(t){ if(e) e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } },
   landLang:a=>{ if(a===L) return; L=a; UI.ll=a; saveUI(); document.documentElement.lang=a; renderTabs(); render(); trLoad(a); },   // UI.ll — язык обложки, выбранный кнопкой (обложку не пропускает)
-  landGo:()=>{setLang(L); go('home');},
-  landPen:()=>{ const box=document.getElementById('featCb'), seq=CUR_ABC(), k=box&&box.__k?(box.__k-1+seq.length)%seq.length:0, i=Math.max(0,ABC.findIndex(x=>x.up===seq[k]));
+  landGo:()=>{hit('land_open'); setLang(L); go('home');},
+  landPen:()=>{ hit('land_pen'); const box=document.getElementById('featCb'), seq=CUR_ABC(), k=box&&box.__k?(box.__k-1+seq.length)%seq.length:0, i=Math.max(0,ABC.findIndex(x=>x.up===seq[k]));
     setLang(L); penNew(i); go('pen',i); },
   pen:a=>{ penNew(+a); go('pen',+a); },
-  nmOpen:()=>{ go('name'); },
+  nmOpen:()=>{ if(view==='onboard') hit('land_name'); go('name'); },
   dgOpen:()=>{ hit('v_daily'); go('daily'); },
   pbOpen:()=>{ hit('v_phrases'); go('phrases'); },
   tcOpen:()=>{ hit('v_teach'); go('teach'); },
@@ -2651,9 +2657,9 @@ const H={
   penGhost:()=>{ const st=penT; if(!st||st.wait) return; penNew(st.i); penT.ghost=!st.ghost; render(); },
   penShow:()=>{ if(penT&&!penT.wait) penDemo(); },
   penAgain:()=>{ penNew(penT.i,true); render(); window.scrollTo(0,0); },
-  landAbc:()=>{setLang(L); go('abc');},
-  landLetter:a=>{ const box=document.getElementById('featCb'); if(!box||!box.__one) return; if(box.__io) box.__io.disconnect(); box.__k=+a; box.__one(); },
-  landDoc:a=>{setLang(L); docFrom='home'; go('doc',a);},
+  landAbc:()=>{hit('land_abc'); setLang(L); go('abc');},
+  landLetter:a=>{ hit('land_letter'); const box=document.getElementById('featCb'); if(!box||!box.__one) return; if(box.__io) box.__io.disconnect(); box.__k=+a; box.__one(); },
+  landDoc:a=>{hit('land_doc'); setLang(L); docFrom='home'; go('doc',a);},
   lang:a=>{setLang(a); render();},
   topic:a=>{const t=TOPICS[+a]; if(lvOpen(t.lv)) preloadAudio(t.list); go('topic',+a);},
   learnNew:()=>startLearn(null),
@@ -2890,7 +2896,7 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();
-hit();
+hit(); if(FIRST&&view!=='onboard') hit('start');   // по ссылке сразу в приложение, мимо обложки
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();

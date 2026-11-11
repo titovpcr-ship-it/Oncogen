@@ -633,6 +633,15 @@ function remind_run(?int $now = null): array {
 
 
 /* ---------- счётчик посещений (O-174) ---------- */
+const FUNNEL = ['start', 'first_answer', 'lesson_done', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
+                'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail'];
+
+/* Premium сейчас: подписки текущего режима Dodo (O-195) и подарки */
+function premium_count(): int {
+    return (int)q("SELECT COUNT(*) FROM users WHERE (sub_status IN ('active','trialing','past_due') AND (COALESCE(pd_sub,'') = '' OR COALESCE(NULLIF(sub_mode,''),'test') = ?)) OR gift_until > ?",
+                  [dodo_mode(), now()])->fetchColumn();
+}
+
 function stat_add(int $day, string $k, int $n = 1): void {
     q('INSERT INTO stats(day, k, n) VALUES(?, ?, ?) ON CONFLICT(day, k) DO UPDATE SET n = n + excluded.n', [$day, mb_substr($k, 0, 80), $n]);
 }
@@ -643,7 +652,16 @@ function stat_hit(array $b): void {
     $day = intdiv(time(), 86400);
     $clean = fn($x, $re) => preg_match($re, (string)$x) ? (string)$x : '';
     $ev = $clean($b['e'] ?? '', '/^[a-z][a-z0-9_]{0,23}$/');
-    if ($ev !== '' && $ev !== 'open') { stat_add($day, 'e:' . $ev); return; }
+    if ($ev !== '' && $ev !== 'open') {
+        stat_add($day, 'e:' . $ev);
+        // воронка новичка (O-198): шаги из первого визита — всего, по языку и по источнику
+        if (!empty($b['g']) && in_array($ev, FUNNEL, true)) {
+            stat_add($day, 'g:' . $ev);
+            $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'gl:' . $l . ':' . $ev);
+            $src = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/')); stat_add($day, 'gs:' . ($src ?: '-') . ':' . $ev);
+        }
+        return;
+    }
     // открытие сайта: посетитель за день, язык, страна по поясу, источник, телефон/компьютер
     $h = substr(hash_hmac('sha256', ip_key() . '|' . $ua . '|' . $day, (string)cfg('PEPPER', 'barik')), 0, 20);
     q('DELETE FROM stat_v WHERE day < ?', [$day - 1]);
@@ -657,7 +675,13 @@ function stat_hit(array $b): void {
     $r = preg_replace('/^(www\.|m\.|l\.|lm\.)/', '', $r);
     stat_add($day, 'r:' . ($r ?: '-'));
     stat_add($day, 'd:' . (preg_match('/Mobi|Android|iPhone|iPad/i', $ua) ? 'phone' : 'desk'));
-    if (!empty($b['g'])) stat_add($day, 'e:guest_new');
+    $f = strtolower($clean($b['f'] ?? '', '/^[A-Za-z0-9._\-]{1,24}$/')); if ($f !== '') stat_add($day, 'f:' . $f);
+    if (!empty($b['g'])) {
+        stat_add($day, 'e:guest_new');
+        stat_add($day, 'g:guest');
+        $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'gl:' . $l . ':guest');
+        $sp = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/')); stat_add($day, 'gs:' . ($sp ?: '-') . ':guest');
+    }
 }
 
 function stats_key(): string {

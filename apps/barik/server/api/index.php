@@ -67,7 +67,7 @@ if ($r === 'stats') {
     $from = intdiv(time(), 86400) - $days + 1;
     out(['ok' => true, 'from' => $from, 'rows' => q('SELECT day, k, n FROM stats WHERE day >= ? ORDER BY day, k', [$from])->fetchAll(),
          'users' => (int)q('SELECT COUNT(*) FROM users')->fetchColumn(), 'remind' => (int)q('SELECT COUNT(*) FROM remind WHERE on_ = 1')->fetchColumn(),
-         'premium' => (int)q("SELECT COUNT(*) FROM users WHERE sub_status IN ('active','trialing')")->fetchColumn()]);
+         'premium' => premium_count()]);
 }
 
 if ($r === 'reports') {
