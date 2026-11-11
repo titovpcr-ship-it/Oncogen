@@ -2435,3 +2435,11 @@
 եղբորաղջիկ | Իմ եղբորաղջիկը շատ խելացի է։ | Моя племянница очень умная. | My niece is very smart. | Ma nièce est très intelligente. | Mi sobrina es muy inteligente. | Meine Nichte ist sehr intelligent. | Minha sobrinha é muito inteligente.
 քրոջորդի | Քրոջորդիս անունը Արամ է։ | Моего племянника зовут Арам. | My nephew's name is Aram. | Mon neveu s'appelle Aram. | Mi sobrino se llama Aram. | Mein Neffe heißt Aram. | Meu sobrinho se chama Aram.
 քրոջաղջիկ | Քրոջաղջիկս գեղեցիկ է։ | Моя племянница красивая. | My niece is beautiful. | Ma nièce est belle. | Mi sobrina es bonita. | Meine Nichte ist schön. | Minha sobrinha é bonita.
+սանիկ | Իմ սանիկը գնաց դպրոց։ | Мой крестник пошел в школу. | My godchild went to school. | Mon filleul est allé à l'école. | Mi ahijado fue a la escuela. | Mein Patenkind ging zur Schule. | Meu afilhado foi à escola.
+համակուրսեցի | Նա իմ համակուրսեցին է։ | Он мой однокурсник. | He is my fellow student. | Il est mon camarade de promo. | Él es mi compañero de curso. | Er ist mein Kommilitone. | Ele é meu colega de curso.
+ընկերակից | Նա իմ լավ ընկերակիցն է։ | Он мой хороший спутник. | He is my good companion. | Il est mon bon compagnon. | Él es mi buen compañero. | Er ist mein guter Begleiter. | Ele é meu bom companheiro.
+ուղեկից | Իմ ուղեկիցը քնած է։ | Мой попутчик спит. | My travelling companion is sleeping. | Mon compagnon de voyage dort. | Mi compañero de viaje está durmiendo. | Mein Reisebegleiter schläft. | Meu companheiro de viagem está dormindo.
+ճամփորդ | Ճամփորդը հոգնած էր։ | Путешественник устал. | The traveller was tired. | Le voyageur était fatigué. | El viajero estaba cansado. | Der Reisende war müde. | O viajante estava cansado.
+համագյուղացի | Նա իմ համագյուղացին է։ | Он мой односельчанин. | He is from my village. | Il est de mon village. | Él es de mi pueblo. | Er ist aus meinem Dorf. | Ele é da minha aldeia.
+համաքաղաքացի | Նա իմ համաքաղաքացին է։ | Он мой земляк. | He is from my city. | Il est de ma ville. | Él es de mi ciudad. | Er ist aus meiner Stadt. | Ele é da minha cidade.
+կրակմարիչ | Կրակմարիչը պատի վրա է։ | Огнетушитель на стене. | The fire extinguisher is on the wall. | L'extincteur est sur le mur. | El extintor está en la pared. | Der Feuerlöscher ist an der Wand. | O extintor de incêndio está na parede.
