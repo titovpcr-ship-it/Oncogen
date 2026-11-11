@@ -612,6 +612,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'игра: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // O-192: ссылка со страницы алфавита ?lang=..&letter=N — сразу буква с прописью
+    const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const pg=await ctx.newPage();
+    await pg.goto(base+'?lang=ru&letter=13'); await pg.waitForTimeout(600);
+    ok(await pg.evaluate(()=>window.__bararan.view==='letter')&&await pg.locator('.copybook').count()===1,'?letter=13 — открыта буква с прописью');
+    await ctx.close(); }
   { // O-181: разговорник — разделы, фразы, звук, сохранение без интернета, ссылка ?phrases
     const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const pg=await ctx.newPage();
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));

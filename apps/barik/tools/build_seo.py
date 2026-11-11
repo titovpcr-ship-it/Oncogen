@@ -262,6 +262,16 @@ ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .
 .pb-n{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .pb-n small{color:var(--mut)}
 .nm-big.ph{font-size:clamp(30px,8vw,46px)}
+.cbx{background:#fff;border-radius:18px;box-shadow:inset 0 0 0 1px #EBE1D9;padding:6px 8px;margin:12px 0 18px}
+.cbx svg{display:block;width:100%;height:auto;max-height:230px}
+.cb-lines line{stroke:#E8DDD4;stroke-width:1.3}.cb-lines .x{stroke:#C9A23A;stroke-dasharray:6 7;opacity:.6}.cb-lines .b{stroke:#9F1D35;opacity:.4;stroke-width:1.6}
+.cb-ink path{fill:none;stroke:#1C2045;stroke-linecap:round;stroke-linejoin:round}.cb-ink path.cl{stroke:none}.cb .nib{display:none}
+.abc-g{list-style:none;padding:0;margin:18px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.abc-g a{display:flex;flex-direction:column;align-items:center;padding:10px 6px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9;text-decoration:none;color:inherit}
+.abc-g b{font:700 30px/1.15 A,serif}.abc-g small{color:var(--mut);font-size:13px}.abc-g i{font-style:normal;color:#9F1D35;font-size:14px}
+.lt-big{font:700 clamp(64px,18vw,96px)/1 A,serif;margin:4px 0 10px;letter-spacing:.04em}
+.facts{list-style:none;padding:0;margin:8px 0 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.facts li{background:#fff;border-radius:14px;box-shadow:inset 0 0 0 1px #EBE1D9;padding:10px 12px}.facts b{display:block;font-size:20px}.facts small{color:var(--mut)}
 .thead{display:flex;align-items:center;gap:16px}
 .thead .tic{display:grid;place-items:center;flex:none;width:76px;height:86px;border-radius:38px 38px 16px 16px/34px 34px 16px 16px;background:var(--acc-soft)}
 .thead .tic img{width:54px;height:54px}
@@ -532,7 +542,7 @@ def build(site, base, words_path):
         n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
         fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
-                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p>{secs}')
+                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>{secs}')
         write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
                         alts, body, depth=1).replace('href="../../', 'href="../'))
         urls[L].insert(0, rel)
@@ -550,10 +560,11 @@ def build(site, base, words_path):
         open(os.path.join(site, f"sitemap-{L}.xml"), "w", encoding="utf-8").write("\n".join(sm))
     files += build_names(site, base)
     files += build_phrases(site, base, d, wslug)
+    files += build_alphabet(site, base, d, wslug)
     open(os.path.join(site, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
-        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap></sitemapindex>")
+        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap></sitemapindex>")
     rb = os.path.join(site, "robots.txt")
     txt = open(rb).read() if os.path.exists(rb) else "User-agent: *\nAllow: /\n"
     if "Sitemap:" not in txt:
@@ -797,6 +808,149 @@ def build_phrases(site, base, d, wslug):
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
     print(f"страницы разговорника: {files}")
+    return files
+
+
+AB_TXT = {
+    "ru": {"cta_all": "Учить алфавит в Barik", "idx_h": "Армянский алфавит", "idx_t": "Армянский алфавит: 39 букв с произношением, прописью и озвучкой",
+           "idx_d": "Все 39 букв восточноармянского алфавита: как читается каждая, как её писать от руки, название и запись голоса.",
+           "idx_l": "Восточноармянский алфавит — 39 букв. Нажмите на букву: как она читается, как пишется прописью и какие слова на неё начинаются.",
+           "let_t": "Буква {up} {lo} ({nm}) — армянский алфавит: как читается и пишется", "let_d": "Армянская буква {up} {lo}: название «{nm}» [{nt}], читается как «{rd}». Пропись, запись голоса и слова на эту букву.",
+           "h1": "Буква {up} {lo}", "name": "название", "reads": "читается", "ipa": "звук (МФА)", "pos": "буква из 39", "cursive": "Прописью",
+           "words": "Слова на букву {up}", "cta": "Учить букву в Barik — обвести пальцем", "all": "Весь алфавит", "listen": "Послушать",
+           "num_h": "Числа по-армянски", "num_t": "Числа по-армянски: от нуля до тысячи с произношением",
+           "num_d": "Как считать по-армянски: ноль, один, два, три… сто, тысяча — с транскрипцией, переводом и записью голоса.",
+           "num_l": "Числа восточноармянского языка с произношением русскими буквами. Нажмите кнопку — услышите число.", "num_cta": "Учить числа в Barik"},
+    "en": {"cta_all": "Learn the alphabet in Barik", "idx_h": "Armenian alphabet", "idx_t": "Armenian alphabet: 39 letters with pronunciation, handwriting and audio",
+           "idx_d": "All 39 letters of the Eastern Armenian alphabet: how each one sounds, how to write it by hand, its name and a voice recording.",
+           "idx_l": "The Eastern Armenian alphabet has 39 letters. Tap a letter to see how it sounds, how it is written by hand and which words start with it.",
+           "let_t": "Letter {up} {lo} ({nm}) — Armenian alphabet: pronunciation and handwriting", "let_d": "Armenian letter {up} {lo}: named “{nm}” [{nt}], sounds like “{rd}”. Handwriting, audio and words that start with it.",
+           "h1": "Letter {up} {lo}", "name": "name", "reads": "sounds like", "ipa": "sound (IPA)", "pos": "letter of 39", "cursive": "Handwriting",
+           "words": "Words starting with {up}", "cta": "Learn this letter in Barik — trace it with your finger", "all": "Whole alphabet", "listen": "Listen",
+           "num_h": "Numbers in Armenian", "num_t": "Numbers in Armenian: from zero to a thousand with pronunciation",
+           "num_d": "How to count in Armenian: zero, one, two, three… a hundred, a thousand — with pronunciation, translation and audio.",
+           "num_l": "Eastern Armenian numbers with pronunciation in Latin letters. Tap the button to hear each number.", "num_cta": "Learn numbers in Barik"},
+    "fr": {"cta_all": "Apprendre l’alphabet dans Barik", "idx_h": "Alphabet arménien", "idx_t": "Alphabet arménien : 39 lettres avec prononciation, écriture manuscrite et audio",
+           "idx_d": "Les 39 lettres de l’alphabet arménien oriental : prononciation, écriture à la main, nom de la lettre et enregistrement.",
+           "idx_l": "L’alphabet arménien oriental compte 39 lettres. Touchez une lettre : sa prononciation, son écriture manuscrite et des mots qui commencent par elle.",
+           "let_t": "Lettre {up} {lo} ({nm}) — alphabet arménien : prononciation et écriture", "let_d": "Lettre arménienne {up} {lo} : nom « {nm} » [{nt}], se prononce « {rd} ». Écriture manuscrite, audio et mots.",
+           "h1": "Lettre {up} {lo}", "name": "nom", "reads": "se prononce", "ipa": "son (API)", "pos": "lettre sur 39", "cursive": "Écriture manuscrite",
+           "words": "Mots commençant par {up}", "cta": "Apprendre la lettre dans Barik — la tracer du doigt", "all": "Tout l’alphabet", "listen": "Écouter",
+           "num_h": "Les nombres en arménien", "num_t": "Les nombres en arménien : de zéro à mille avec la prononciation",
+           "num_d": "Compter en arménien : zéro, un, deux, trois… cent, mille — avec prononciation, traduction et audio.",
+           "num_l": "Les nombres en arménien oriental avec la prononciation. Touchez le bouton pour entendre chaque nombre.", "num_cta": "Apprendre les nombres dans Barik"},
+    "es": {"cta_all": "Aprende el alfabeto en Barik", "idx_h": "Alfabeto armenio", "idx_t": "Alfabeto armenio: 39 letras con pronunciación, escritura a mano y audio",
+           "idx_d": "Las 39 letras del alfabeto armenio oriental: cómo suena cada una, cómo se escribe a mano, su nombre y una grabación.",
+           "idx_l": "El alfabeto armenio oriental tiene 39 letras. Toca una letra para ver cómo suena, cómo se escribe a mano y qué palabras empiezan por ella.",
+           "let_t": "Letra {up} {lo} ({nm}) — alfabeto armenio: pronunciación y escritura", "let_d": "Letra armenia {up} {lo}: se llama «{nm}» [{nt}], suena como «{rd}». Escritura a mano, audio y palabras.",
+           "h1": "Letra {up} {lo}", "name": "nombre", "reads": "suena", "ipa": "sonido (AFI)", "pos": "letra de 39", "cursive": "Escritura a mano",
+           "words": "Palabras que empiezan por {up}", "cta": "Aprende la letra en Barik — trázala con el dedo", "all": "Todo el alfabeto", "listen": "Escuchar",
+           "num_h": "Los números en armenio", "num_t": "Los números en armenio: de cero a mil con pronunciación",
+           "num_d": "Cómo contar en armenio: cero, uno, dos, tres… cien, mil — con pronunciación, traducción y audio.",
+           "num_l": "Los números del armenio oriental con pronunciación. Toca el botón para escuchar cada número.", "num_cta": "Aprende los números en Barik"},
+    "de": {"cta_all": "Das Alphabet in Barik lernen", "idx_h": "Armenisches Alphabet", "idx_t": "Armenisches Alphabet: 39 Buchstaben mit Aussprache, Schreibschrift und Audio",
+           "idx_d": "Alle 39 Buchstaben des ostarmenischen Alphabets: Aussprache, Schreibschrift, Name des Buchstabens und Aufnahme.",
+           "idx_l": "Das ostarmenische Alphabet hat 39 Buchstaben. Tippe auf einen Buchstaben: Aussprache, Schreibschrift und Wörter mit diesem Anfangsbuchstaben.",
+           "let_t": "Buchstabe {up} {lo} ({nm}) — armenisches Alphabet: Aussprache und Schreibschrift", "let_d": "Armenischer Buchstabe {up} {lo}: Name „{nm}“ [{nt}], klingt wie „{rd}“. Schreibschrift, Audio und Wörter.",
+           "h1": "Buchstabe {up} {lo}", "name": "Name", "reads": "klingt wie", "ipa": "Laut (IPA)", "pos": "Buchstabe von 39", "cursive": "Schreibschrift",
+           "words": "Wörter mit {up}", "cta": "Den Buchstaben in Barik lernen — mit dem Finger nachfahren", "all": "Ganzes Alphabet", "listen": "Anhören",
+           "num_h": "Zahlen auf Armenisch", "num_t": "Zahlen auf Armenisch: von null bis tausend mit Aussprache",
+           "num_d": "Auf Armenisch zählen: null, eins, zwei, drei… hundert, tausend — mit Aussprache, Übersetzung und Audio.",
+           "num_l": "Ostarmenische Zahlen mit Aussprache. Tippe auf die Taste, um jede Zahl zu hören.", "num_cta": "Zahlen in Barik lernen"},
+    "pt": {"cta_all": "Aprenda o alfabeto no Barik", "idx_h": "Alfabeto armênio", "idx_t": "Alfabeto armênio: 39 letras com pronúncia, escrita à mão e áudio",
+           "idx_d": "As 39 letras do alfabeto armênio oriental: como soa cada uma, como se escreve à mão, o nome e uma gravação.",
+           "idx_l": "O alfabeto armênio oriental tem 39 letras. Toque numa letra para ver como soa, como se escreve à mão e quais palavras começam com ela.",
+           "let_t": "Letra {up} {lo} ({nm}) — alfabeto armênio: pronúncia e escrita", "let_d": "Letra armênia {up} {lo}: chama-se “{nm}” [{nt}], soa como “{rd}”. Escrita à mão, áudio e palavras.",
+           "h1": "Letra {up} {lo}", "name": "nome", "reads": "soa como", "ipa": "som (AFI)", "pos": "letra de 39", "cursive": "Escrita à mão",
+           "words": "Palavras com {up}", "cta": "Aprenda a letra no Barik — trace com o dedo", "all": "Alfabeto completo", "listen": "Ouvir",
+           "num_h": "Números em armênio", "num_t": "Números em armênio: de zero a mil com pronúncia",
+           "num_d": "Como contar em armênio: zero, um, dois, três… cem, mil — com pronúncia, tradução e áudio.",
+           "num_l": "Números do armênio oriental com pronúncia. Toque no botão para ouvir cada número.", "num_cta": "Aprenda os números no Barik"},
+}
+
+
+def build_alphabet(site, base, d, wslug):
+    """Алфавит для поиска (O-192): /<язык>/a/ — 39 букв, /<язык>/a/<название>.html — буква (чтение, звук, пропись — тот же SVG,
+    что в приложении, слова на букву), /<язык>/a/numbers.html — числа (темы «Числа» A1 и «Числа 2» A2)."""
+    abc = d.get("abc") or []
+    if not abc:
+        return 0
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None
+
+    def say(a, label):
+        if not vdir:
+            return ""
+        h = aid(a); rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return f'<button class="say" type="button" data-src="../../{rel}" aria-label="{esc(label)}" title="{esc(label)}">{SPK}</button>'
+    topics, words = d["topics"], d["words"]
+    LVO = {lv: i for i, lv in enumerate(LV)}
+    SLUG_FIX = {"ը": "yt"}                       # «ըթ» латиницей даёт одну «t»
+    slug = {x["i"]: SLUG_FIX.get(x["lo"]) or ascii_slug(x["nt"]["en"], 20) or f"letter-{x['i'] + 1}" for x in abc}
+    assert len(set(slug.values())) == len(abc), "адреса букв совпали"
+
+    def starts(x):
+        lo = x["lo"]
+        r = [w for w in words if w["a"].startswith(lo) and " " not in w["a"] and wslug.get(w["a"])
+             and not (lo == "ո" and w["a"].startswith("ու")) and not (lo == "ե" and w["a"].startswith("և"))]
+        r.sort(key=lambda w: (LVO.get(topics[w["t"]]["lv"], 9), 0 if w.get("p") else 1, len(w["a"])))
+        return r[:10]
+    num = [w for w in words if topics[w["t"]]["ru"] in ("Числа", "Числа 2")]
+    files, sm = 0, []
+
+    def put(rel, html):
+        nonlocal files
+        p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(html); files += 1; sm.append(base + rel)
+
+    def wrow(w, L):
+        return (f'<li><a href="../w/{wslug[w["a"]]}.html"><span class="hy" lang="hy">{esc(w["a"])}</span><span class="t">{esc(w[TR[L]])}</span>'
+                f'<span class="x">{esc(w[TX[L]])}</span></a>{say(w["a"], AB_TXT[L]["listen"] + " — " + w["a"])}</li>')
+    for L in LANGS:
+        T = AB_TXT[L]
+        grid = "".join(f'<li><a href="{slug[x["i"]]}.html"><b lang="hy">{esc(x["up"])} {esc(x["lo"])}</b><small lang="hy">{esc(x["nm"])}</small>'
+                       f'<i>{esc(x["rd"][L])}</i></a></li>' for x in abc)
+        rel = f"{L}/a/index.html"
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><p class="eyebrow" lang="hy">Այբուբեն</p><h1 class="pg">{T["idx_h"]}</h1>'
+                f'<i class="orn" aria-hidden="true"></i><p>{T["idx_l"]}</p><ul class="abc-g">{grid}</ul>'
+                f'<a class="cta" href="../../?lang={L}&amp;letter=0">{T["cta_all"]}</a><p><a href="numbers.html">{T["num_h"]} →</a></p>')
+        put(rel, page(L, base, rel, T["idx_t"], T["idx_d"], {l: f"{l}/a/index.html" for l in LANGS}, body,
+                      crumbs_ld([("Barik", base), (TXT[L]["dict"], f"{base}{L}/"), (T["idx_h"], base + rel)])))
+        for k, x in enumerate(abc):
+            rel = f"{L}/a/{slug[x['i']]}.html"
+            prv, nxt = abc[k - 1] if k else None, abc[k + 1] if k + 1 < len(abc) else None
+            ws = starts(x)
+            facts = (f'<ul class="facts"><li><b lang="hy">{esc(x["nm"])}</b><small>{T["name"]} [{esc(x["nt"][L])}]</small></li>'
+                     f'<li><b>{esc(x["rd"][L])}</b><small>{T["reads"]}</small></li><li><b>[{esc(x["ipa"])}]</b><small>{T["ipa"]}</small></li>'
+                     f'<li><b>{k + 1}</b><small>{T["pos"]}</small></li></ul>')
+            body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<h1 class="pg">{esc(T["h1"].format(up=x["up"], lo=x["lo"]))}</h1>'
+                    f'<p class="lt-big" lang="hy">{esc(x["up"])} {esc(x["lo"])}</p><p class="tr">{say(x["nm"], T["listen"] + " — " + x["nm"])}</p>'
+                    f'{facts}<p>{esc(x["t"][L])}</p>'
+                    f'<h2>{T["cursive"]}</h2><div class="cbx">{x["svg"]}</div>'
+                    f'<a class="cta" href="../../?lang={L}&amp;letter={x["i"]}">{T["cta"]}</a>'
+                    + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["words"].format(up=x["up"]))}</h2><ul class="ws">{"".join(wrow(w, L) for w in ws)}</ul>' if ws else "")
+                    + '<p class="pn">' + (f'<a href="{slug[prv["i"]]}.html">‹ <span lang="hy">{esc(prv["up"])}</span></a>' if prv else '<a href="index.html">' + T["all"] + '</a>')
+                    + (f'<a href="{slug[nxt["i"]]}.html"><span lang="hy">{esc(nxt["up"])}</span> ›</a>' if nxt else '<a href="numbers.html">' + T["num_h"] + ' →</a>') + '</p>')
+            ld = [{"@context": "https://schema.org", "@type": "DefinedTerm", "name": f'{x["up"]} {x["lo"]}', "alternateName": x["nm"], "inLanguage": "hy",
+                   "description": x["t"][L], "url": base + rel,
+                   "inDefinedTermSet": {"@type": "DefinedTermSet", "name": T["idx_h"], "url": f"{base}{L}/a/index.html"}},
+                  crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/a/index.html"), (f'{x["up"]} {x["lo"]}', base + rel)])]
+            fm = dict(up=x["up"], lo=x["lo"], nm=x["nm"], nt=x["nt"][L], rd=x["rd"][L])
+            put(rel, page(L, base, rel, T["let_t"].format(**fm), T["let_d"].format(**fm), {l: f"{l}/a/{slug[x['i']]}.html" for l in LANGS}, body, ld))
+        rel = f"{L}/a/numbers.html"
+        ti = next(i for i, t in enumerate(topics) if t["ru"] == "Числа")
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p><p class="eyebrow" lang="hy">Թվեր</p>'
+                f'<h1 class="pg">{T["num_h"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["num_l"]}</p><ul class="ws">{"".join(wrow(w, L) for w in num)}</ul>'
+                f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["num_cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+        put(rel, page(L, base, rel, T["num_t"], T["num_d"], {l: f"{l}/a/numbers.html" for l in LANGS}, body,
+                      crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/a/index.html"), (T["num_h"], base + rel)])))
+    open(os.path.join(site, "sitemap-abc.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"страницы алфавита: {files}")
     return files
 
 

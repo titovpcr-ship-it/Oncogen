@@ -138,5 +138,14 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы фраз: записи на месте ('+srcs.length+')');
     const sm=fs.readFileSync(path.join(ROOT,'sitemap-phrases.xml'),'utf8');
     ok((sm.match(/<loc>/g)||[]).length===n.reduce((a,x)=>a+x,0)&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-phrases.xml')&&fs.readFileSync(path.join(ROOT,'ru','index.html'),'utf8').includes('href="p/index.html"'),'sitemap-phrases, ссылка из оглавления словаря'); }
+  { // алфавит для поиска (O-192): 39 букв, числа, пропись, звук, вход в приложение на букву
+    const L6=['ru','en','fr','es','de','pt'], n=L6.map(l=>fs.readdirSync(path.join(ROOT,l,'a')).filter(f=>f.endsWith('.html')).length);
+    ok(n.every(x=>x===41),'алфавит: 41 страница на язык ('+n.join('/')+')');
+    const a=fs.readFileSync(path.join(ROOT,'ru','a','ayb.html'),'utf8'), nb=fs.readFileSync(path.join(ROOT,'en','a','numbers.html'),'utf8');
+    ok(a.includes('<title>Буква Ա ա (այբ) — армянский алфавит')&&a.includes('class="cb-ink"')&&a.includes('?lang=ru&amp;letter=0')&&a.includes('../w/'),'буква Ա: заголовок, пропись, вход в приложение, слова на букву');
+    const srcs=[...a.matchAll(/data-src="\.\.\/\.\.\/([^"]+)"/g)].map(m=>m[1]);
+    ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы букв: записи на месте ('+srcs.length+')');
+    ok(nb.includes('Numbers in Armenian')&&(nb.match(/class="say"/g)||[]).length>=15,'числа: страница со звуком');
+    ok(fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-abc.xml')&&fs.readFileSync(path.join(ROOT,'en','index.html'),'utf8').includes('href="a/index.html"'),'sitemap-abc, ссылка из оглавления'); }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();

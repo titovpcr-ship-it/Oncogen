@@ -22,6 +22,11 @@ const srv=http.createServer((q,r)=>{
   d.phrases=await pg.evaluate(async()=>{ const B=window.__bararan, P=await (await fetch('ex/phrases.json')).json();
     const cl=h=>h.replace(/[։՞՛՜]/g,'').replace(/,/g,' ,').toLowerCase();
     return P.map(s=>({k:s.k,e:s.e,t:s.t,items:s.items.map(([hy,tx])=>({hy,tx,tr:Object.fromEntries(['ru','en','fr','es','de','pt'].map(l=>[l,B.trPhrase(cl(hy),l).replace(/ ,/g,',')]))}))})); });
+  // алфавит (O-192): буквы с чтением на 6 языках, произношением названия и прописью (тот же SVG, что в приложении)
+  d.abc=await pg.evaluate(()=>{ const B=window.__bararan, R={ru:'tru',en:'ten',fr:'tfr',es:'tes',de:'tde',pt:'tpt'};
+    return B.ABC.map((x,i)=>({i,up:x.up,lo:x.lo,nm:x.nm,ipa:x.ipa,ex:x.ex,rd:Object.fromEntries(Object.keys(R).map(l=>[l,x[l]||x.en])),
+      t:Object.fromEntries(Object.entries(R).map(([l,k])=>[l,x[k]||x.ten])),nt:Object.fromEntries(Object.keys(R).map(l=>[l,B.trPhrase(x.nm,l)])),
+      svg:B.cursiveSVG(x,'Cursive')})); });
   fs.mkdirSync(path.dirname(OUT),{recursive:true}); fs.writeFileSync(OUT,JSON.stringify(d));
   console.log('слов',d.words.length,'тем',d.topics.length,'фраз',d.phrases.reduce((n,s)=>n+s.items.length,0),'→',OUT);
   await br.close(); srv.close();
