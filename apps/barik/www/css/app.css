@@ -727,6 +727,8 @@ details[open] .pm::after{transform:rotate(0)}
 .ld-social a{display:inline-flex;align-items:center;gap:7px;color:var(--L-ink);font-weight:600;text-decoration:none;padding:7px 14px;border:1px solid currentColor;border-radius:999px}
 .ld-social a:hover{color:var(--accent)}
 .ld-social svg{width:18px;height:18px}
+.set-soc .ld-social{justify-content:flex-start;margin:0}
+.set-soc .ld-social a{color:var(--ink)}
 .ld-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
 .ld-links a,.ld .lnk{color:var(--L-ink2);text-decoration:underline;text-underline-offset:3px;background:none;border:0;padding:0;font:inherit;cursor:pointer}
 .cr{opacity:.8}

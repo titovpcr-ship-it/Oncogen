@@ -38,7 +38,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       { const lt=await pg.textContent('.ld');
         ok(!/живы[мйх]? голос|живой голос|записаны/i.test(lt)&&(await pg.textContent('.hear-note')).includes('синтезированные голоса Microsoft Azure'),'обложка: голоса не «живые», пометка о синтезе речи');
         ok((await pg.textContent('.ld-foot')).includes('hello@barik.am')&&await pg.locator('.ld-foot [data-act=landDoc][data-arg=terms]').count()===1,'подвал: почта и условия'); 
-        ok(await pg.locator('.ld-foot .ld-social a[href="https://www.instagram.com/barik_armenian"]').count()===1&&await pg.locator('.ld-foot .ld-social a[href="https://t.me/armenian_word_daily"]').count()===1,'подвал: Instagram и Telegram-канал'); }
+        ok(await pg.locator('.ld-foot .ld-social a[href="https://www.instagram.com/barik_armenian"]').count()===1&&await pg.locator('.ld-foot .ld-social a[href="https://t.me/armenian_word_daily"]').count()===1,'подвал: Instagram и Telegram-канал'); 
+        }
       ok(await pg.locator('.ld-abc button').count()===39,'под прописью — все 39 букв');
       await pg.click('.ld-abc button >> nth=17');
       const lab=await pg.getAttribute('#featCb .cb','aria-label')||'';
@@ -153,6 +154,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.fill('#dq','tʰrrchʰun'); ok((await pg.textContent('#dlist')).includes('թռչուն'),'поиск латиницей'); await pg.fill('#dq','собака'); await shot('dict'); await noHScroll('dict');
     // настройки → английский
     await pg.click('[data-act=tab][data-arg=settings]'); await shot('settings'); await noHScroll('settings');
+    ok(await pg.locator('.set-soc a[href="https://www.instagram.com/barik_armenian"]').count()===1&&(await pg.textContent('.set-soc')).includes('Мы в соцсетях'),'настройки: «Мы в соцсетях» — Instagram и Telegram');
     await pg.click('[data-act=lang][data-arg=en]');
     ok((await pg.textContent('#tabs')).includes('Dictionary'),'интерфейс на английском');
     await pg.click('[data-act=tab][data-arg=home]'); ok((await pg.textContent('.today')).includes('word'),'главная на английском'); await shot('home-en'); await noHScroll('home-en');

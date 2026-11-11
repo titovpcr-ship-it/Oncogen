@@ -1789,6 +1789,7 @@ function settingsHTML(){
   '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
   flagsHTML()+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setProgress'))+'</h2><p class="note">'+esc(!LSOK?T('progNoSave'):ACC.me?T('progSync'):T('progLocal'))+'</p><div class="actions" style="margin-top:14px">'+(ACC.srv===true&&!ACC.me?'<button class="btn secondary" data-act="syncLogin">'+esc(T('progLogin'))+'</button>':'')+'<button class="btn danger" data-act="reset">'+esc(resetArm?T('resetArm'):T('reset'))+'</button></div></section>'+
+  (socialHTML()?'<section class="set-sec set-soc"><h2 class="sec">'+esc(T('follow'))+'</h2>'+socialHTML()+'</section>':'')+
   '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="project">'+esc(T('project'))+'</button><button class="linkbtn" data-act="doc" data-arg="credits">'+esc(T('credits'))+'</button><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button>'+(BILL.native?'':'<button class="linkbtn" data-act="doc" data-arg="refund">'+esc(T('refund'))+'</button><button class="linkbtn" data-act="tcOpen">'+esc(T('tcTitle'))+'</button>')+'</div></section>';
 }
 /* «Ошибка в слове?» (O-187): что не так (перевод, звук, пример, картинка, другое) + как правильно → сервер (api/?r=report, сводка —
