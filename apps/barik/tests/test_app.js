@@ -569,7 +569,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       for(const l of ['ru','en','fr','es','de','pt']){ const j=await (await fetch('ex/'+l+'.json')).json(); out.n[l]=Object.keys(j).length; if(!keys) keys=j; for(const k in j){ if(!b.BY[k]) out.miss.push(k); if(j[k][0]!==keys[k][0]||!j[k][1]) out.miss.push(l+':'+k); } }
       const ph=Object.values(keys).map(x=>x[0]); for(const g of ['f','m']) for(const p of [ph[0],ph[50],ph[ph.length-1]]){ const q=await fetch(b.audioUrl(p,g)); if(q.ok&&(await q.arrayBuffer()).byteLength>2000) out.aud++; }
       return out; });
-    ok(r.n.ru>=410&&new Set(Object.values(r.n)).size===1&&!r.miss.length,'примеры: '+r.n.ru+' слов, одинаково на шести языках, все слова из словаря '+r.miss.slice(0,3).join(','));
+    ok(r.n.ru>=3400&&new Set(Object.values(r.n)).size===1&&!r.miss.length,'примеры: '+r.n.ru+' слов, одинаково на шести языках, все слова из словаря '+r.miss.slice(0,3).join(','));
     ok(r.aud===6,'примеры озвучены обоими голосами ('+r.aud+' из 6 проб)');
     await pg.click('[data-act=exSay]'); await pg.waitForTimeout(300);
     // O-175: «Скажи сам» — запись (поддельный микрофон Chromium), затем «Моя запись»; ничего не уходит на сервер
