@@ -51,6 +51,16 @@ if ($r === 'hit') {
     exit;
 }
 
+if ($r === 'jserr') {
+    // ошибка JS у посетителя (O-200): sendBeacon без нашего заголовка; храним текст и место, без адреса и браузера
+    if ($method === 'POST' && !limited(ip_key() . ':jserr', 20, 3600)) {
+        $b = json_decode(substr((string)file_get_contents('php://input'), 0, 2000), true);
+        if (is_array($b)) js_err_add($b);
+    }
+    http_response_code(204);
+    exit;
+}
+
 if ($r === 'tg') {
     // вебхук Telegram-бота (O-186): только с секретом, который мы сами задали в setWebhook (tools/tg_setup.py)
     if ($method !== 'POST') fail('method', 405);
@@ -67,7 +77,7 @@ if ($r === 'stats') {
     $from = intdiv(time(), 86400) - $days + 1;
     out(['ok' => true, 'from' => $from, 'rows' => q('SELECT day, k, n FROM stats WHERE day >= ? ORDER BY day, k', [$from])->fetchAll(),
          'users' => (int)q('SELECT COUNT(*) FROM users')->fetchColumn(), 'remind' => (int)q('SELECT COUNT(*) FROM remind WHERE on_ = 1')->fetchColumn(),
-         'premium' => premium_count()]);
+         'premium' => premium_count(), 'js' => js_err_last(20)]);
 }
 
 if ($r === 'reports') {
@@ -132,6 +142,7 @@ switch ($r) {
           [$email, code_hash($email, $code), now() + CODE_TTL, now()]);
         if (!send_code($email, $code, $lang)) {
             q('DELETE FROM codes WHERE email = ?', [$email]);
+            stat_add(intdiv(time(), 86400), 'w:mail_fail');     // сигнал владельцу (O-200)
             fail('mail', 502);
         }
         out(['ok' => true, 'gap' => CODE_GAP]);
@@ -431,7 +442,10 @@ function dodo_webhook(): never {
     $id = (string)($_SERVER['HTTP_WEBHOOK_ID'] ?? '');
     $secret = (string)cfg('DODO_WEBHOOK_SECRET', '');
     if ($secret !== '' && !dodo_signed($raw, $id, (string)($_SERVER['HTTP_WEBHOOK_TIMESTAMP'] ?? ''),
-                                       (string)($_SERVER['HTTP_WEBHOOK_SIGNATURE'] ?? ''), $secret)) fail('sig', 401);
+                                       (string)($_SERVER['HTTP_WEBHOOK_SIGNATURE'] ?? ''), $secret)) {
+        stat_add(intdiv(time(), 86400), 'w:dodo_sig');      // сигнал владельцу (O-200): неверный секрет — оплаты не доходят
+        fail('sig', 401);
+    }
     $ev = json_decode($raw, true);
     if (!is_array($ev)) fail('bad', 400);
     $d = is_array($ev['data'] ?? null) ? $ev['data'] : [];
@@ -451,6 +465,7 @@ function dodo_webhook(): never {
     $code = (int)$GLOBALS['DODO_CODE'];
     if (!$u && ($code === 0 || $code === 429 || $code >= 500)) {   // Dodo не ответил — событие не помним, отвечаем 503: Dodo повторит (O-195)
         if ($id !== '') q('DELETE FROM events WHERE id = ?', ['dodo:' . $id]);
+        stat_add(intdiv(time(), 86400), 'w:dodo_retry');
         fail('retry', 503);
     }
     out(['ok' => true, 'user' => (bool)$u]);

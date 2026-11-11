@@ -54,6 +54,7 @@ run barik-test_tg "$B" node tests/test_tg.js       # Telegram-бот «слов�
 run barik-test_report "$B" node tests/test_report.js   # «Ошибка в слове?» на сервер (O-187): www + server/api
 run barik-test_backup "$B" node tests/test_backup.js   # копии базы (O-189): снимок за сутки, раз в неделю — владельцу в Telegram
 run barik-test_funnel "$B" node tests/test_funnel.js   # воронка новичка (O-198): шаги, язык, источник, res_fail, Premium по режиму
+run barik-test_watch "$B" node tests/test_watch.js   # сигнал о поломке (O-200): срочное сразу, сводка в 7:00, ошибки JS, подпись вебхука
 if [ $BUILT -eq 1 ]; then
   run barik-test_account "$B" node tests/test_account.js
   if [ $FULL -eq 1 ]; then

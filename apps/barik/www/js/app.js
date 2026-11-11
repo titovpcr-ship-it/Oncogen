@@ -769,6 +769,14 @@ const HSRC=(()=>{ let r='',seo=''; try{ const sp=new URLSearchParams(location.se
 function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; if(e&&HITS.has(e)) return; if(e) HITS.add(e);
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e,l:L,s:HSRC.s,g:HSRC.g}:{l:L,c:tzCC(TZ)||'',r:HSRC.r,f:HSRC.f,s:HSRC.s,g:HSRC.g})); }catch(x){} }
 function resFail(){ hit('res_fail'); }
+/* ошибки JS у посетителей (O-200): текст и место — на сервер, не больше 5 разных за визит; шум браузеров (воспроизведение без касания,
+   прерванная загрузка, чужие скрипты «Script error.») — мимо */
+const JSE=new Set();
+function jsErr(m,src){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon||JSE.size>=5) return;
+  m=String(m||'').slice(0,300); if(!m||JSE.has(m)||/^Script error\.?$|NotAllowedError|AbortError|play\(\) request|ResizeObserver loop/.test(m)) return;
+  JSE.add(m); navigator.sendBeacon('api/?r=jserr',JSON.stringify({m,s:String(src||'').replace(location.origin,'').slice(0,200)})); }catch(x){} }
+window.addEventListener('error',e=>{ if(e&&e.message) jsErr(e.message,(e.filename||'')+':'+e.lineno+':'+e.colno); });
+window.addEventListener('unhandledrejection',e=>{ const r=e&&e.reason; jsErr((r&&r.name?r.name+': ':'')+(r&&(r.message||r)),r&&r.stack?String(r.stack).split('\n')[1]:''); });
 function go(v,arg){ if(view==='onboard'&&v!=='onboard'&&v!=='doc') hit('start'); if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
 function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='gift') return 'settings'; if(v==='cert') return 'path'; if(v==='teach') return 'settings'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }

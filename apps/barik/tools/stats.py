@@ -30,6 +30,12 @@ def main():
         print('%s  %5d  %8d  %6d  %4d  %8d  %6d' % (day, x.get('u', 0), x.get('open', 0), x.get('e:start', 0), x.get('e:login', 0),
               x.get('e:name_save', 0) + x.get('e:name_share', 0), x.get('e:checkout', 0)))
     funnel(by, tot)
+    if j.get('js'):
+        print('\nошибки JS у посетителей (последние): ')
+        for e in j['js'][:10]:
+            print('  %s  %-7s %s  @ %s' % (datetime.datetime.utcfromtimestamp(e['t']).strftime('%d.%m %H:%M'), e['dev'], e['msg'][:110], e['src'][:60]))
+    w = [(k[2:], n) for k, n in tot.items() if k.startswith('w:')]
+    if w: print('сбои сервера: ' + ', '.join('%s %d' % t for t in w))
     for pre, title in (('c:', 'страны'), ('l:', 'языки'), ('r:', 'откуда пришли'), ('d:', 'устройства'), ('e:', 'события'), ('e:v_', '')):
         if not title: continue
         it = sorted(((k[len(pre):], n) for k, n in tot.items() if k.startswith(pre)), key=lambda t: -t[1])[:15]

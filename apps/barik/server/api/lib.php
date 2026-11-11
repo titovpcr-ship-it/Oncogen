@@ -1036,3 +1036,145 @@ function sub_recheck(array $u): array {
     return dodo_sync((string)$u['pd_sub'], (int)$u['id']) ?? (q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: $u);
 }
 
+
+/* ---------- сигнал о поломке (O-200) ----------
+   cron.php раз в час: срочное (сайт или кабинет не отвечают, база не пишется, новые ошибки PHP, сбои вебхука Dodo, не ушло письмо)
+   — владельцу в Telegram сразу, не чаще раза в сутки на причину. В WATCH_HOUR (UTC, по умолчанию 3 = 7:00 по Еревану) — сводка
+   дня: «всё в порядке» или что не так (плюс Dodo, сертификат, свежесть копии базы) и вчерашние цифры. Нет утренней сводки —
+   не работает сам хостинг или cron. */
+function watch_db(): void {
+    db()->exec('CREATE TABLE IF NOT EXISTS watch(k TEXT PRIMARY KEY, v TEXT NOT NULL)');
+    db()->exec('CREATE TABLE IF NOT EXISTS js_err(id INTEGER PRIMARY KEY AUTOINCREMENT, t INTEGER NOT NULL, msg TEXT NOT NULL, src TEXT NOT NULL, dev TEXT NOT NULL)');
+}
+function watch_get(string $k, string $d = ''): string {
+    watch_db();
+    $v = q('SELECT v FROM watch WHERE k = ?', [$k])->fetchColumn();
+    return $v === false ? $d : (string)$v;
+}
+function watch_set(string $k, string $v): void {
+    watch_db();
+    q('INSERT INTO watch(k, v) VALUES(?, ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v', [$k, $v]);
+}
+function watch_http(string $url): array {
+    if (!function_exists('curl_init')) return [0, ''];
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 20, CURLOPT_FOLLOWLOCATION => false,
+        CURLOPT_USERAGENT => 'BarikWatch/1 (monitor)', CURLOPT_HTTPHEADER => ['Cache-Control: no-cache']]);
+    $b = curl_exec($ch);
+    $c = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+    curl_close($ch);
+    return [$c, is_string($b) ? $b : ''];
+}
+function day_sum(int $day, string $k): int {
+    return (int)q('SELECT COALESCE(SUM(n), 0) FROM stats WHERE day = ? AND k = ?', [$day, $k])->fetchColumn();
+}
+
+function watch_urgent(int $now): array {
+    $p = [];
+    try { watch_set('ping', (string)$now); } catch (Throwable $e) { return ['db' => 'база не пишется: ' . $e->getMessage()]; }
+    $base = rtrim((string)cfg('WATCH_URL', cfg('SITE_URL', '')), '/');
+    if ($base !== '') {
+        [$c, $b] = watch_http($base . '/');
+        if ($c !== 200 || stripos($b, 'Barik') === false) $p['site'] = 'главная сайта отвечает ' . ($c ?: 'ничем (нет связи)');
+        [$c, $b] = watch_http($base . '/api/?r=me');
+        $j = json_decode($b, true);
+        if ($c !== 200 || !is_array($j) || empty($j['ok'])) $p['api'] = 'личный кабинет (api/?r=me) отвечает ' . ($c ?: 'ничем');
+        elseif (dodo_on() && empty($j['pay']['ready'])) $p['pay'] = 'оплата на сайте не готова';
+    }
+    // новые строки журнала ошибок PHP (с прошлого запуска)
+    $log = (string)cfg('PHP_ERROR_LOG', dirname(__DIR__, 2) . '/logs/php.error.log');
+    if (is_file($log)) {
+        $size = (int)filesize($log);
+        $off = (int)watch_get('log_off', '-1');
+        if ($off < 0) $off = $size;                     // первый запуск — с конца, старое не считаем
+        elseif ($off > $size) $off = 0;                 // журнал обнулили
+        if ($size > $off) {
+            $fh = fopen($log, 'r'); fseek($fh, $off); $chunk = (string)fread($fh, min(200000, $size - $off)); fclose($fh);
+            $bad = array_values(array_filter(explode("\n", $chunk), fn($l) => preg_match('/PHP (Fatal|Parse)|Uncaught|barik api:|barik dodo/', $l)));
+            if ($bad) $p['php'] = count($bad) . ' новых ошибок на сервере, первая: ' . mb_substr(trim(preg_replace('/^\[[^\]]*\]\s*/', '', $bad[0])), 0, 300);
+        }
+        watch_set('log_off', (string)$size);
+    }
+    $day = intdiv($now, 86400);
+    foreach (['w:dodo_retry' => 'вебхук Dodo: сервер не достучался до Dodo, событие отложено (Dodo повторит)',
+              'w:dodo_sig' => 'вебхук Dodo: неверная подпись — оплаты могут не доходить',
+              'w:mail_fail' => 'не ушло письмо с кодом входа'] as $k => $t) {
+        $n = day_sum($day, $k);
+        if ($n > (int)watch_get($k . ':' . $day, '0')) { $p[$k] = $t . ' (' . $n . ' за сегодня)'; watch_set($k . ':' . $day, (string)$n); }
+    }
+    return $p;
+}
+
+function watch_daily(int $now): array {
+    $p = [];
+    if (dodo_on()) {
+        $prod = (string)cfg('DODO_PRODUCT_MONTH', '');
+        if ($prod === '' || !dodo('GET', '/products/' . rawurlencode($prod))) $p['dodo'] = 'Dodo не принимает ключ или тариф не найден (HTTP ' . (int)($GLOBALS['DODO_CODE'] ?? 0) . ')';
+    }
+    $host = (string)parse_url((string)cfg('SITE_URL', ''), PHP_URL_HOST);
+    if ($host !== '' && cfg('WATCH_CERT', '1') === '1') {
+        $ctx = stream_context_create(['ssl' => ['capture_peer_cert' => true, 'verify_peer' => false, 'peer_name' => $host]]);
+        $s = @stream_socket_client('ssl://' . $host . ':443', $en, $es, 15, STREAM_CLIENT_CONNECT, $ctx);
+        $cert = $s ? (stream_context_get_params($s)['options']['ssl']['peer_certificate'] ?? null) : null;
+        if ($s) fclose($s);
+        $info = $cert ? openssl_x509_parse($cert) : null;
+        $left = $info ? intdiv((int)$info['validTo_time_t'] - $now, 86400) : -1;
+        if ($left < 14) $p['cert'] = $info ? 'сертификат HTTPS истекает через ' . $left . ' дн.' : 'не удалось проверить сертификат HTTPS';
+    }
+    $snaps = glob(backup_dir() . '/barik-*.sqlite') ?: [];
+    $last = $snaps ? max(array_map('filemtime', $snaps)) : 0;
+    if ($now - $last > 2 * 86400) $p['backup'] = 'копии базы не делались больше двух суток';
+    return $p;
+}
+
+function watch_digest(array $p, int $yday): string {
+    watch_db();
+    $js = (int)q('SELECT COUNT(*) FROM js_err WHERE t >= ? AND t < ?', [$yday * 86400, ($yday + 1) * 86400])->fetchColumn();
+    $head = $p ? "⚠️ Barik: есть проблемы\n• " . implode("\n• ", $p) : '✅ Barik: всё в порядке';
+    return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): людей ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
+        . ', вошли ' . day_sum($yday, 'g:start') . ', уроков ' . day_sum($yday, 'e:lesson_done') . ', оформляли ' . day_sum($yday, 'e:checkout')
+        . ', оплат ' . day_sum($yday, 'e:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
+        . "\nОшибок JS у посетителей: " . $js . ', сбоев загрузки: ' . day_sum($yday, 'e:res_fail');
+}
+
+function watch_run(?int $now = null): string {
+    $owner = (string)cfg('TG_OWNER', '');
+    if (!tg_on() || $owner === '') return '';
+    $now = $now ?? time();
+    $day = intdiv($now, 86400);
+    $p = watch_urgent($now);
+    if ((int)gmdate('G', $now) >= (int)cfg('WATCH_HOUR', '3') && (int)watch_get('daily', '0') < $day) {
+        $p += watch_daily($now);
+        watch_set('daily', (string)$day);
+        tg_say($owner, watch_digest($p, $day - 1));
+        foreach (array_keys($p) as $k) watch_set('a:' . $k, (string)$day);
+        return 'daily' . ($p ? ' ⚠ ' . implode(',', array_keys($p)) : ' ok');
+    }
+    $new = [];
+    foreach ($p as $k => $t) {
+        if ((int)watch_get('a:' . $k, '-1') === $day) continue;   // об этом сегодня уже писали
+        $new[] = $t; watch_set('a:' . $k, (string)$day);
+    }
+    if (!$new) return '';
+    tg_say($owner, "⚠️ Barik: что-то сломалось\n• " . implode("\n• ", $new));
+    return 'alert ' . count($new);
+}
+
+/* ошибки JS у посетителей (O-200): последние 500, без адреса и браузера — только вид устройства */
+function js_err_add(array $b): void {
+    $ua = (string)($_SERVER['HTTP_USER_AGENT'] ?? '');
+    if ($ua === '' || preg_match('/bot|crawl|spider|headless|monitor|python|curl/i', $ua)) return;
+    $clean = fn($x, $n) => trim(preg_replace('/[\x00-\x1F\x7F]+/u', ' ', mb_substr((string)$x, 0, $n)) ?? '');
+    $msg = $clean($b['m'] ?? '', 300);
+    if ($msg === '') return;
+    watch_db();
+    q('INSERT INTO js_err(t, msg, src, dev) VALUES(?, ?, ?, ?)', [time(), $msg, $clean($b['s'] ?? '', 200),
+        preg_match('/iPhone|iPad/', $ua) ? 'ios' : (preg_match('/Android/', $ua) ? 'android' : 'desk')]);
+    q('DELETE FROM js_err WHERE id <= (SELECT MAX(id) FROM js_err) - 500');
+    stat_add(intdiv(time(), 86400), 'e:js_err');
+}
+function js_err_last(int $n): array {
+    watch_db();
+    return q('SELECT t, msg, src, dev FROM js_err ORDER BY id DESC LIMIT ' . max(1, min(100, $n)))->fetchAll();
+}
+
