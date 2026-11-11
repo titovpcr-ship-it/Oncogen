@@ -2188,3 +2188,11 @@
 ծալք | Նրա շրջազգեստի վրա ծալք կա։ | На её платье есть складка. | Her dress has a fold. | Sa robe a un pli. | Su vestido tiene un pliegue. | Ihr Kleid hat eine Falte. | O vestido dela tem uma dobra.
 կար | Նրա զգեստի կարը բացվել է։ | Шов на её платье разошёлся. | The seam on her dress has come undone. | La couture de sa robe s'est défaite. | La costura de su vestido se ha deshecho. | Die Naht an ihrem Kleid hat sich geöffnet. | A costura do vestido dela se desfez.
 կարկատել | Նա կարկատեց վերնաշապիկը։ | Он залатал рубашку. | He patched the shirt. | Il a rapiécé la chemise. | Él remendó la camisa. | Er flickte das Hemd. | Ele remendou a camisa.
+բուտիկ | Այս բուտիկը շատ գեղեցիկ է։ | Этот бутик очень красивый. | This boutique is very beautiful. | Cette boutique est très belle. | Esta boutique es muy bonita. | Diese Boutique ist sehr schön. | Esta boutique é muito bonita.
+բարձրակրունկ | Ես նախընտրում եմ բարձրակրունկ կոշիկները։ | Я предпочитаю туфли на высоком каблуке. | I prefer high-heeled shoes. | Je préfère les chaussures à talons hauts. | Prefiero los zapatos de tacón alto. | Ich bevorzuge Schuhe mit hohen Absätzen. | Eu prefiro sapatos de salto alto.
+մոկասին | Այս մոկասինները հարմար են։ | Эти мокасины удобные. | These moccasins are comfortable. | Ces mocassins sont confortables. | Estos mocasines son cómodos. | Diese Mokassins sind bequem. | Estes mocassins são confortáveis.
+կեդեր | Ես կեդեր եմ հագնում։ | Я ношу кеды. | I am wearing sneakers. | Je porte des baskets. | Llevo zapatillas. | Ich trage Sneaker. | Estou usando tênis.
+ճտքակոշիկ | Նա գնեց ճտքակոշիկ։ | Она купила ботинки. | She bought ankle boots. | Elle a acheté des bottines. | Ella compró botines. | Sie hat Stiefeletten gekauft. | Ela comprou botas de cano curto.
+թաթման | Երեխան թաթման է կորցրել։ | Ребенок потерял варежку. | The child lost a mitten. | L'enfant a perdu une moufle. | El niño perdió un mitón. | Das Kind hat einen Fäustling verloren. | A criança perdeu uma luva.
+կեպի | Կեպին չափազանց մեծ է։ | Кепка слишком большая. | The cap is too big. | La casquette est trop grande. | La gorra es demasiado grande. | Die Kappe ist zu groß. | O boné é grande demais.
+բերետ | Բերետը գեղեցիկ է։ | Берет красивый. | The beret is beautiful. | Le béret est beau. | La boina es bonita. | Das Barett ist schön. | A boina é bonita.
