@@ -5144,3 +5144,16 @@ $14.97; `WEB_ALL_FREE:false`; гость: 88 тем A2 под замком, ок
 - Тест `tests/test_watch.js` (в `check_all.sh`): заглушки Bot API и «сайта», время cron задаётся аргументом.
 - Не сделано: место на диске (квоту cPanel из PHP не видно — смотреть `deploy_site.py --check`); внешняя проверка на случай, если
   лежит весь хостинг, — молчание утренней сводки.
+
+## O-201. Barik: обложка на пяти языках для поиска, оглавления адресом папки (аудит O-197, задача 4)
+
+- **`/<язык>/learn.html`** (ru, fr, es, de, pt; английская — сама главная `/`): разметка настоящей обложки на языке
+  (`dump_words.js` → `covers`: приложение в браузере, `reducedMotion`, `UI.ll=<язык>`, без плашки страны), свой title и description из
+  `land` (`land_meta`), canonical, og на языке, hreflang взаимные (`en` → `/`, x-default → `/`), главная получила hreflang на них;
+  `sitemap-learn.xml`. Кнопки — маленький скрипт: в приложение `/?lang=<язык>&from=learn` (буквы/пропись — `&letter=0`, имя —
+  `&name=`, документы — `&doc=`), языки — на соседние обложки, «Как это устроено» — якорь. Пути картинок — `../`.
+- **Оглавления — адресом папки** (`folder_urls` в build_seo.py): `/ru/`, `/ru/p/` вместо `…/index.html` — canonical, hreflang, og:url,
+  schema.org, ссылки и все sitemap; `.htaccess`: явный запрос `/<язык>/…/index.html` → 301 на папку (по `THE_REQUEST`, не трогает
+  внутренний DirectoryIndex; корень `/index.html` — без перенаправления, его кэширует service worker).
+- `test_seo.js`: canonical папкой, нет ссылок на index.html, обложки ×5 (canonical, hreflang взаимные, ссылки целы, sitemap), 301 в .htaccess.
+- Обложка в learn.html — снимок на момент сборки: после правки обложки она обновится сама (dump_words.js пересобирается, если www/js новее).

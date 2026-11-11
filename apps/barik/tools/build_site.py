@@ -200,6 +200,9 @@ ErrorDocument 404 /404.html
   # LiteSpeed REDIRECT_STATUS не ставит: подставленная 404.html шла на https (O-157) — её не уводить
   RewriteCond %{REQUEST_URI} !^/404\.html$
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # оглавления страниц поиска — адресом папки (O-201): /ru/index.html → /ru/ (только явный запрос, не внутренний DirectoryIndex)
+  RewriteCond %{THE_REQUEST} \s/((?:ru|en|fr|es|de|pt)/(?:[^\s?]*/)?)index\.html[\s?]
+  RewriteRule ^ /%1 [L,R=301]
 </IfModule>
 # служебное наружу не отдаётся: архивы выкладки, базы, журналы, скрытые файлы
 <FilesMatch "(\.(zip|sqlite|db|log|bak|sh|py)|^\..+)$">
@@ -417,7 +420,12 @@ def seo_pages(out, url):
     sys.path.insert(0, HERE)
     import build_seo
     build_seo.build(out, url, words)
+    covers = json.load(open(words, encoding="utf-8")).get("covers") or {}
+    n, hl = build_seo.build_covers(out, url if url.endswith("/") else url + "/", covers, land_meta())
+    print(f"обложка на языках (learn.html): {n}")
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
+    if n and 'hreflang="ru"' not in html:              # главная — английская обложка; её языковые пары (O-201)
+        html = html.replace("</head>", hl + "\n</head>", 1)
     D = (("en", "Armenian dictionary", "Your name in Armenian"), ("ru", "Армянский словарь", "Ваше имя по-армянски"),
          ("fr", "Dictionnaire arménien", "Votre prénom en arménien"), ("es", "Diccionario armenio", "Tu nombre en armenio"),
          ("de", "Armenisches Wörterbuch", "Dein Name auf Armenisch"), ("pt", "Dicionário armênio", "Seu nome em armênio"))

@@ -204,6 +204,7 @@ TXT = {
     },
 }
 HL = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de", "pt": "pt"}
+OGL = {"ru": "ru_RU", "en": "en_US", "fr": "fr_FR", "es": "es_ES", "de": "de_DE", "pt": "pt_BR"}
 TX = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de", "pt": "pt"}      # перевод
 TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st", "de": "dt", "pt": "ptr"}   # транскрипция
 TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de", "pt": "pt"}   # название темы
@@ -392,7 +393,7 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=No
         for l in LANGS if l in alts)
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>'
                  for j in (jsonld if isinstance(jsonld, list) else [jsonld] if jsonld else []))
-    return (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8">'
+    return folder_urls(base, f'<!doctype html><html lang="{L}"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)}</title><meta name="description" content="{esc(desc)}">'
             + (f'<meta name="robots" content="{robots}">' if robots else '') +
@@ -408,6 +409,52 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=No
             f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
             f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
             f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a></footer></body></html>')
+
+
+def folder_urls(base, h):
+    """Оглавления — адресом папки (/ru/, /ru/p/), не /ru/index.html (O-201): canonical, hreflang, og:url, schema.org и ссылки;
+    старые адреса с index.html сервер перенаправляет (301, .htaccess в build_site.py)."""
+    h = re.sub(re.escape(base) + r'((?:[\w\-]+/)*)index\.html', lambda m: base + m.group(1), h)
+    return re.sub(r'href="((?:\.\./)*(?:[\w\-]+/)*)index\.html"', lambda m: f'href="{m.group(1) or "./"}"', h)
+
+
+LEARN = ("ru", "fr", "es", "de", "pt")      # английская обложка — сама главная /
+
+
+def build_covers(site, base, covers, meta):
+    """Обложка на языке для поиска (O-201): /<язык>/learn.html — та же разметка, что гость видит в приложении (dump_words.js,
+    без движения), свой title и description (раздел land в i18n.js), hreflang с главной. Кнопки ведут в приложение на этом языке
+    (?lang=..&from=learn), «Как это устроено» — якорь на странице."""
+    alts = {"en": base, **{l: f"{base}{l}/learn.html" for l in LEARN if l in covers}}
+    hl = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{u}">' for l, u in alts.items()) + f'<link rel="alternate" hreflang="x-default" href="{base}">'
+    sm = []
+    for L in LEARN:
+        if L not in covers: continue
+        t, d = meta[L]
+        frag = re.sub(r'(\s(?:src|href)=")(?!https?:|/|#|data:|mailto:|\.\./)', r'\1../', covers[L]["html"])
+        js = ("(function(){var L='%s';document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;"
+              "var a=b.getAttribute('data-act'),g=b.getAttribute('data-arg')||'';if(a==='landHow'||a==='geoX')return;e.preventDefault();"
+              "if(a==='landLang'){location.href=g==='en'?'../':(%s.indexOf(g)>=0?'../'+g+'/learn.html':'../?lang='+g);return;}"
+              "var q='../?lang='+L+'&from=learn';if(a==='landDoc')q+='&doc='+encodeURIComponent(g);"
+              "else if(a==='landAbc'||a==='landPen'||a==='landLetter')q+='&letter=0';else if(a==='nmOpen')q+='&name=';"
+              "location.href=q;});})();") % (L, json.dumps(list(LEARN)))
+        h = (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+             f'<title>{esc(t)}</title><meta name="description" content="{esc(d)}"><link rel="canonical" href="{alts[L]}">{hl}'
+             f'<meta property="og:title" content="{esc(t)}"><meta property="og:description" content="{esc(d)}"><meta property="og:url" content="{alts[L]}">'
+             f'<meta property="og:type" content="website"><meta property="og:site_name" content="Barik"><meta property="og:locale" content="{OGL.get(L, L)}">'
+             f'<meta property="og:image" content="{base}og/og-{L}.jpg"><meta property="og:image:width" content="2400"><meta property="og:image:height" content="1260">'
+             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
+             f'<link rel="icon" type="image/png" href="../favicon.png"><link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">'
+             f'<link rel="stylesheet" href="../css/app.css"><meta name="theme-color" content="#FBF6F1"></head>'
+             f'<body><main id="view">{frag}</main><script>{js}</script></body></html>')
+        open(os.path.join(site, L, "learn.html"), "w", encoding="utf-8").write(h)
+        sm.append(f"<url><loc>{alts[L]}</loc></url>")
+    open(os.path.join(site, "sitemap-learn.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(sm) + "</urlset>")
+    ix = os.path.join(site, "sitemap.xml"); x = open(ix, encoding="utf-8").read()
+    if "sitemap-learn.xml" not in x:
+        open(ix, "w", encoding="utf-8").write(x.replace("</sitemapindex>", f"<sitemap><loc>{base}sitemap-learn.xml</loc></sitemap></sitemapindex>"))
+    return len(sm), hl
 
 
 def word_slugs(words):
@@ -617,6 +664,10 @@ def build(site, base, words_path):
         '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
         + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap><sitemap><loc>{base}sitemap-guides.xml</loc></sitemap></sitemapindex>")
+    for f in os.listdir(site):                           # sitemap: оглавления адресом папки (O-201)
+        if f.startswith("sitemap") and f.endswith(".xml"):
+            p = os.path.join(site, f); x = open(p, encoding="utf-8").read(); y = folder_urls(base, x)
+            if y != x: open(p, "w", encoding="utf-8").write(y)
     rb = os.path.join(site, "robots.txt")
     txt = open(rb).read() if os.path.exists(rb) else "User-agent: *\nAllow: /\n"
     if "Sitemap:" not in txt:

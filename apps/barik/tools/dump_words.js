@@ -27,6 +27,16 @@ const srv=http.createServer((q,r)=>{
     return B.ABC.map((x,i)=>({i,up:x.up,lo:x.lo,nm:x.nm,ipa:x.ipa,ex:x.ex,rd:Object.fromEntries(Object.keys(R).map(l=>[l,x[l]||x.en])),
       t:Object.fromEntries(Object.entries(R).map(([l,k])=>[l,x[k]||x.ten])),nt:Object.fromEntries(Object.keys(R).map(l=>[l,B.trPhrase(x.nm,l)])),
       svg:B.cursiveSVG(x,'Cursive')})); });
+  // обложка на языках (O-201) — для статичных страниц /<язык>/learn.html: та же разметка, что видит гость, без движения
+  d.covers={};
+  for(const L of ['ru','fr','es','de','pt']){
+    const c=await br.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'});
+    await c.addInitScript(l=>localStorage.setItem('bararan-ui-v1',JSON.stringify({ll:l,geoX:1})),L);
+    const p=await c.newPage(); await p.goto('http://127.0.0.1:'+srv.address().port+'/');
+    await p.waitForSelector('#view .ld'); await p.waitForTimeout(400);
+    d.covers[L]=await p.evaluate(()=>{ const v=document.querySelector('#view').cloneNode(true); v.querySelectorAll('.ld-geo').forEach(x=>x.remove());
+      return {html:v.innerHTML,lang:document.documentElement.lang}; });
+    await c.close(); }
   fs.mkdirSync(path.dirname(OUT),{recursive:true}); fs.writeFileSync(OUT,JSON.stringify(d));
   console.log('слов',d.words.length,'тем',d.topics.length,'фраз',d.phrases.reduce((n,s)=>n+s.items.length,0),'→',OUT);
   await br.close(); srv.close();

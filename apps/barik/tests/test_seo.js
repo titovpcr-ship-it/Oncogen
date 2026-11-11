@@ -31,12 +31,14 @@ const LANGS=['ru','en','fr','es','de','pt'];
     for(const sub of ['w','t','']){
       const dir=path.join(ROOT,L,sub);
       for(const f of fs.readdirSync(dir)){
-        if(!f.endsWith('.html')) continue;
+        if(!f.endsWith('.html')||(sub===''&&f==='learn.html')) continue;   // обложка на языке — проверка ниже (O-201)
         const p=path.join(dir,f), s=fs.readFileSync(p,'utf8'); pages++;
         const rel=path.relative(ROOT,p).split(path.sep).join('/');
         if(s.includes('<meta name="robots" content="noindex')) noidx.add(rel);
-        const need=[`<html lang="${L}">`,`<link rel="canonical" href="${BASE}${rel}">`,'hreflang="x-default"',
-          ...LANGS.map(l=>`hreflang="${l}" href="${BASE}${rel.replace(L+'/',l+'/')}"`),'<meta name="description" content="'];
+        const cr=rel.replace(/index\.html$/,'');   // оглавления — адресом папки (O-201)
+        const need=[`<html lang="${L}">`,`<link rel="canonical" href="${BASE}${cr}">`,'hreflang="x-default"',
+          ...LANGS.map(l=>`hreflang="${l}" href="${BASE}${cr.replace(L+'/',l+'/')}"`),'<meta name="description" content="'];
+        if(/href="[^"]*index\.html"/.test(s)) nohead.push(rel+' (ссылка на index.html)');
         if(need.some(x=>!s.includes(x))) nohead.push(rel);
         const t=(s.match(/<title>([^<]*)<\/title>/)||[])[1]||'';
         if(sub==='w') dupTitle.set(t,(dupTitle.get(t)||0)+1);
@@ -58,7 +60,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
   let locs=0, miss=[], inNo=[];
   for(const L of LANGS){
     const sm=fs.readFileSync(path.join(ROOT,'sitemap-'+L+'.xml'),'utf8');
-    for(const m of sm.matchAll(/<loc>([^<]+)<\/loc>/g)){ locs++; const r=m[1].slice(BASE.length);
+    for(const m of sm.matchAll(/<loc>([^<]+)<\/loc>/g)){ locs++; let r=m[1].slice(BASE.length); if(r===''||r.endsWith('/')) r+='index.html';
       if(!fs.existsSync(path.join(ROOT,r))) miss.push(r); if(noidx.has(r)) inNo.push(r); }
     ok(fs.statSync(path.join(ROOT,'sitemap-'+L+'.xml')).size<50e6,'sitemap-'+L+' меньше 50 МБ (предел поисковиков)');
   }
@@ -72,6 +74,19 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(pick(s=>s.includes('<h2>Пример</h2>')&&s.includes('class="exs"'))!==undefined,'пример на странице слова'); }
   ok(locs/LANGS.length<=50000,'в одном sitemap не больше 50 000 адресов');
   ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8')),'robots.txt знает sitemap');
+  { // O-201: обложка на языке для поиска — /<язык>/learn.html, главная / — английская; hreflang взаимные; адреса оглавлений папкой
+    const LS=['ru','fr','es','de','pt'], root=fs.readFileSync(path.join(ROOT,'index.html'),'utf8'), sl=fs.readFileSync(path.join(ROOT,'sitemap-learn.xml'),'utf8');
+    const bad=[];
+    for(const L of LS){ const s=fs.readFileSync(path.join(ROOT,L,'learn.html'),'utf8');
+      if(!s.includes(`<html lang="${L}">`)||!s.includes(`<link rel="canonical" href="${BASE}${L}/learn.html">`)||!s.includes(`hreflang="en" href="${BASE}"`)
+        ||!s.includes('hreflang="x-default"')||!LS.every(l=>s.includes(`hreflang="${l}" href="${BASE}${l}/learn.html"`))||!s.includes('class="ld')||!sl.includes(`${BASE}${L}/learn.html`)) bad.push(L);
+      for(const m of s.matchAll(/(?:href|src)="([^"#?]*)/g)){ const h=m[1]; if(!h||/^(https?|mailto):/.test(h)) continue; let q=path.join(ROOT,L,h); if(h.endsWith('/')) q=path.join(q,'index.html'); if(!fs.existsSync(q)) bad.push(L+' → '+h); } }
+    ok(bad.length===0&&LS.every(l=>root.includes(`hreflang="${l}" href="${BASE}${l}/learn.html"`))&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-learn.xml'),
+       'обложка ×5 языков + английская главная: canonical, hreflang взаимные, ссылки целы, в sitemap '+bad.slice(0,4).join(' '));
+    const ru=fs.readFileSync(path.join(ROOT,'ru','learn.html'),'utf8');
+    ok(ru.includes('по-армянски')&&/<title>[^<]*армянск/i.test(ru),'русская обложка — по-русски: '+(ru.match(/<title>([^<]*)/)||[])[1]);
+    ok(!fs.readdirSync(ROOT).filter(f=>/^sitemap.*\.xml$/.test(f)).some(f=>fs.readFileSync(path.join(ROOT,f),'utf8').includes('index.html</loc>')),'в sitemap нет адресов с index.html');
+    ok(/RewriteCond %\{THE_REQUEST\}.*index\\\.html/.test(fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8')),'.htaccess: /ru/index.html → /ru/ (301)'); }
   // 3. Приложение
   const sw=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8');
   ok(!/"\.\/(ru|en|fr|es|de)\//.test(sw)&&!sw.includes('sitemap'),'страниц поиска нет в кэше приложения');
@@ -145,7 +160,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
     const srcs=[...h.matchAll(/data-src="\.\.\/\.\.\/([^"]+)"/g)].map(m=>m[1]);
     ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы фраз: записи на месте ('+srcs.length+')');
     const sm=fs.readFileSync(path.join(ROOT,'sitemap-phrases.xml'),'utf8');
-    ok((sm.match(/<loc>/g)||[]).length===n.reduce((a,x)=>a+x,0)&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-phrases.xml')&&fs.readFileSync(path.join(ROOT,'ru','index.html'),'utf8').includes('href="p/index.html"'),'sitemap-phrases, ссылка из оглавления словаря'); }
+    ok((sm.match(/<loc>/g)||[]).length===n.reduce((a,x)=>a+x,0)&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-phrases.xml')&&fs.readFileSync(path.join(ROOT,'ru','index.html'),'utf8').includes('href="p/"'),'sitemap-phrases, ссылка из оглавления словаря'); }
   { // справочник (O-194) и битые ссылки на новых страницах: разговорник, алфавит, справочник
     const gs=['ru','en'].map(l=>fs.readdirSync(path.join(ROOT,l,'g')).filter(f=>f.endsWith('.html')).length);
     ok(gs.every(x=>x===11),'справочник: 10 статей + оглавление на ru и en ('+gs.join('/')+')');
@@ -166,6 +181,6 @@ const LANGS=['ru','en','fr','es','de','pt'];
     const srcs=[...a.matchAll(/data-src="\.\.\/\.\.\/([^"]+)"/g)].map(m=>m[1]);
     ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы букв: записи на месте ('+srcs.length+')');
     ok(nb.includes('Numbers in Armenian')&&(nb.match(/class="say"/g)||[]).length>=15,'числа: страница со звуком');
-    ok(fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-abc.xml')&&fs.readFileSync(path.join(ROOT,'en','index.html'),'utf8').includes('href="a/index.html"'),'sitemap-abc, ссылка из оглавления'); }
+    ok(fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-abc.xml')&&fs.readFileSync(path.join(ROOT,'en','index.html'),'utf8').includes('href="a/"'),'sitemap-abc, ссылка из оглавления'); }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();
