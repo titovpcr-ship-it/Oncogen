@@ -4923,3 +4923,11 @@ A1–C2, темы уровня, у каждой «Ссылка для класс
   `--all` — все. Ключ — как у `stats.py`.
 - Политика конфиденциальности ×6: раздел «Отметки об ошибках и Telegram» (что приходит в отметке; что хранит бот).
 - Тест — `tests/test_report.js` (в `check_all.sh`).
+
+**11.11.2026 — выложено O-180 … O-187** (владелец: «Выкладывай. Подписка 14.97 нормально на три месяца»). `check_all.sh --full` —
+0 упавших; `deploy_site.py` — 166 файлов; `check_live.py` — всё на месте; живой сайт: Москва грузит tr-en + tr-ru, Париж — en + fr,
+Нью-Йорк — только en; `api/tg_words.json` снаружи 403. Подарок на 3 месяца — $14.97: товары Dodo созданы через API (test
+`pdt_0NrgiIkN3NvfIo1AOZ42H`, live `pdt_0NrgiItWRkC7LX4PK6Mfw`, в `.env` — `DODO_PRODUCT_GIFT3`, `DODO_LIVE_PRODUCT_GIFT3`,
+`GIFT3_LABEL`), `dodo_setup.py` теперь пишет подарки в config.php (и `--live` берёт `DODO_LIVE_PRODUCT_GIFT3`); `me` отдаёт
+`gift: {"3": "$14.97"}`. Подарка на 12 месяцев нет — владелец назвал только 3 месяца. Оплата — пока тестовый режим Dodo.
+Telegram-бот не подключён — ждёт ключа от @BotFather.
