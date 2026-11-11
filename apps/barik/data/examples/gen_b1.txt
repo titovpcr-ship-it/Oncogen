@@ -5117,3 +5117,15 @@
 սիրուհի | Նրա սիրուհին գեղեցիկ է։ | Его любовница красивая. | His mistress is beautiful. | Sa maîtresse est belle. | Su amante es hermosa. | Seine Geliebte ist schön. | Sua amante é bonita.
 սկալդ | Սկալդը պոեմ է գրում։ | Скальд пишет поэму. | The skald is writing a poem. | Le scalde écrit un poème. | El escaldo escribe un poema. | Der Skalde schreibt ein Gedicht. | O escaldo está escrevendo um poema.
 սպասավոր | Սպասավորը սեղան է պատրաստում։ | Слуга накрывает на стол. | The servant is setting the table. | Le serveur met la table. | El sirviente pone la mesa. | Der Diener deckt den Tisch. | O criado está pondo a mesa.
+ներկայացնել | Ես կներկայացնեմ իմ նախագիծը։ | Я представлю свой проект. | I will present my project. | Je présenterai mon projet. | Presentaré mi proyecto. | Ich werde mein Projekt vorstellen. | Vou apresentar meu projeto.
+առողջարար | Այս բույսը առողջարար է։ | Это растение целебное. | This plant is curative. | Cette plante est curative. | Esta planta es curativa. | Diese Pflanze ist heilsam. | Esta planta é curativa.
+ասվեղ | Շունն ասվեղ է։ | Собака лохматая. | The dog is shaggy. | Le chien est hirsute. | El perro es peludo. | Der Hund ist zottig. | O cachorro é peludo.
+ասվի | Այս շալը ասվի է։ | Эта шаль шерстяная. | This shawl is woollen. | Ce châle est en laine. | Este chal es de lana. | Dieser Schal ist aus Wolle. | Este xale é de lã.
+աստիճանավոր | Գործընթացը աստիճանավոր է։ | Процесс постепенный. | The process is gradual. | Le processus est graduel. | El proceso es gradual. | Der Prozess ist allmählich. | O processo é gradual.
+աստղակերպ | Այս զարդը աստղակերպ է։ | Это украшение звездообразное. | This ornament is star-shaped. | Cet ornement est en forme d'étoile. | Este adorno tiene forma de estrella. | Diese Verzierung ist sternförmig. | Este enfeite tem formato de estrela.
+գունային | Մարդիկ ունեն գունային տեսողություն։ | У людей есть цветовое зрение. | Humans have color vision. | Les humains ont la vision des couleurs. | Los seres humanos tienen visión en color. | Menschen können Farben sehen. | Os humanos têm visão em cores.
+գռուզ | Նրա մազերը գռուզ են։ | Её волосы курчавые. | Her hair is frizzy. | Ses cheveux sont frisottés. | Su pelo es crespo. | Ihre Haare sind kraus. | O cabelo dela é crespo.
+գրավոր | Պատասխանը գրավոր է։ | Ответ письменный. | The answer is written. | La réponse est écrite. | La respuesta es escrita. | Die Antwort ist schriftlich. | A resposta é escrita.
+դռնփակ | Հանդիպումը դռնփակ է։ | Встреча закрытая. | The meeting is closed-door. | La réunion est à huis clos. | La reunión es a puerta cerrada. | Das Treffen ist nicht öffentlich. | A reunião é a portas fechadas.
+համագույն | Նրանց գլխարկներն ու շալվարները համագույն են։ | Их шляпы и брюки одинакового цвета. | Their hats and pants are the same color. | Leurs chapeaux et pantalons sont de la même couleur. | Sus sombreros y pantalones son del mismo color. | Ihre Hüte und Hosen haben die gleiche Farbe. | Seus chapéus e calças são da mesma cor.
+համառոտ | Պատասխանը համառոտ էր։ | Ответ был кратким. | The answer was brief. | La réponse était brève. | La respuesta fue breve. | Die Antwort war kurz. | A resposta foi breve.
