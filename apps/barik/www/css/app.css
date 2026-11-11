@@ -1107,3 +1107,6 @@ details[open] .pm::after{transform:rotate(0)}
 .fl-form .sec{margin:0 0 8px}
 .fl-k{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
 .fl-note{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:12px;border:0;box-shadow:inset 0 0 0 1px var(--line);background:var(--bg,transparent);color:inherit;font:inherit;margin-bottom:10px}
+.pb-nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.pb-nav .tc-chip{font-size:14px;padding:6px 12px}
+.pb-sec{scroll-margin-top:72px}

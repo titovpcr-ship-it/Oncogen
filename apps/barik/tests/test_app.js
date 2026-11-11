@@ -617,12 +617,15 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base+'?phrases&lang=ru'); await pg.waitForSelector('.pb-row',{timeout:8000}).catch(()=>{});
     const n=await pg.locator('.pb-row').count(), secs=await pg.locator('.pb-sec').count();
-    ok(n>=80&&secs===9,'разговорник: '+secs+' разделов, '+n+' фраз');
+    ok(n>=280&&secs===20,'разговорник: '+secs+' разделов, '+n+' фраз (O-190: ≥280, 20 разделов)');
     const t=await pg.textContent('.pb-sec'); ok(t.includes('Знакомство')&&t.includes('Բարև ձեզ։')&&t.includes('Здравствуйте.'),'фраза: армянский, транскрипция, перевод');
-    const urls=await pg.evaluate(async()=>{ const b=window.__bararan; const r=[]; for(const p of ['Բարև ձեզ։','Հաշիվը, խնդրում եմ։','Օգնեցե՛ք։']){ for(const g of ['f','m']){ const q=await fetch(b.audioUrl(p,g)); r.push(q.ok?1:0); } } return r.reduce((a,x)=>a+x,0); });
-    ok(urls===6,'фразы озвучены обоими голосами ('+urls+'/6)');
-    await pg.click('[data-act=pbOffline]'); await pg.waitForFunction(()=>/без интернета/.test(document.body.innerText)&&/Готово/.test(document.body.innerText),null,{timeout:20000}).catch(()=>{});
+    const urls=await pg.evaluate(async()=>{ const b=window.__bararan; const r=[]; for(const p of ['Բարև ձեզ։','Հաշիվը, խնդրում եմ։','Օգնեցե՛ք։','Ես քեզ սիրում եմ։','Քրիստոս ծնավ և հայտնեցավ։','Գլուխս ցավում է։']){ for(const g of ['f','m']){ const q=await fetch(b.audioUrl(p,g)); r.push(q.ok?1:0); } } return r.reduce((a,x)=>a+x,0); });
+    ok(urls===12,'фразы озвучены обоими голосами ('+urls+'/12)');
+    await pg.click('[data-act=pbOffline]'); await pg.waitForFunction(()=>/без интернета/.test(document.body.innerText)&&/Готово/.test(document.body.innerText),null,{timeout:60000}).catch(()=>{});
     ok((await pg.textContent('body')).includes('Готово: фразы звучат и без интернета'),'«Сохранить без интернета» — готово');
+    ok(await pg.locator('.pb-nav .tc-chip').count()===20,'разговорник: 20 чипов разделов');
+    await pg.click('.pb-nav [data-arg=love]'); await pg.waitForTimeout(900);
+    ok(await pg.evaluate(()=>{ const r=document.getElementById('pb-love').getBoundingClientRect(); return r.top>=0&&r.top<200; }),'чип «Чувства» ведёт к разделу');
     ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'разговорник: без прокрутки вбок');
     if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'phrases.png')});
     { const c2=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const p2=await c2.newPage(); await p2.goto(base); await p2.click('[data-act=landLang][data-arg=ru]'); ok(await p2.locator('.ld-dg [data-act=pbOpen]').count()===1,'обложка: вход в разговорник'); await c2.close(); }

@@ -11,6 +11,12 @@
 Դուք ռուսերեն խոսո՞ւմ եք։ | Вы говорите по-русски? | Do you speak Russian? | Parlez-vous russe ? | ¿Habla ruso? | Sprechen Sie Russisch? | Você fala russo?
 Դուք անգլերեն խոսո՞ւմ եք։ | Вы говорите по-английски? | Do you speak English? | Parlez-vous anglais ? | ¿Habla inglés? | Sprechen Sie Englisch? | Você fala inglês?
 Ցտեսություն։ | До свидания. | Goodbye. | Au revoir. | Adiós. | Auf Wiedersehen. | Tchau.
+Բարև։ | Привет. | Hi. | Salut. | Hola. | Hallo. | Oi.
+Բարի լույս։ | Доброе утро. | Good morning. | Bonjour. | Buenos días. | Guten Morgen. | Bom dia.
+Բարի երեկո։ | Добрый вечер. | Good evening. | Bonsoir. | Buenas tardes. | Guten Abend. | Boa noite.
+Մինչ հանդիպում։ | До встречи. | See you. | À bientôt. | Hasta luego. | Bis bald. | Até logo.
+Ես Ամերիկայից եմ։ | Я из Америки. | I’m from the USA. | Je viens des États-Unis. | Soy de Estados Unidos. | Ich komme aus Amerika. | Sou dos Estados Unidos.
+Ես Ֆրանսիայից եմ։ | Я из Франции. | I’m from France. | Je viens de France. | Soy de Francia. | Ich komme aus Frankreich. | Sou da França.
 ## polite | Вежливость | Politeness | Politesse | Cortesía | Höflichkeit | Cortesia | 🙏
 Խնդրում եմ։ | Пожалуйста. | Please. | S’il vous plaît. | Por favor. | Bitte. | Por favor.
 Շնորհակալություն։ | Спасибо. | Thank you. | Merci. | Gracias. | Danke. | Obrigado.
@@ -23,6 +29,9 @@
 Կրկնեք, խնդրում եմ։ | Повторите, пожалуйста. | Could you repeat, please? | Répétez, s’il vous plaît. | Repita, por favor. | Wiederholen Sie bitte. | Repita, por favor.
 Ավելի դանդաղ, խնդրում եմ։ | Медленнее, пожалуйста. | Slower, please. | Plus lentement, s’il vous plaît. | Más despacio, por favor. | Langsamer, bitte. | Mais devagar, por favor.
 Կարո՞ղ եք գրել։ | Можете написать? | Can you write it down? | Pouvez-vous l’écrire ? | ¿Puede escribirlo? | Können Sie es aufschreiben? | Pode escrever?
+Խնդրեմ։ | Не за что. | You’re welcome. | De rien. | De nada. | Gern geschehen. | De nada.
+Կներեք, որ ուշացա։ | Извините за опоздание. | Sorry I’m late. | Désolé d’être en retard. | Perdón por llegar tarde. | Entschuldigen Sie die Verspätung. | Desculpe o atraso.
+Կարո՞ղ եմ ձեզ օգնել։ | Могу я вам помочь? | Can I help you? | Je peux vous aider ? | ¿Le puedo ayudar? | Kann ich Ihnen helfen? | Posso ajudar?
 ## taxi | Такси и дорога | Taxi and directions | Taxi et itinéraire | Taxi y direcciones | Taxi und Weg | Táxi e direções | 🚕
 Տաքսի կանչեք, խնդրում եմ։ | Вызовите такси, пожалуйста. | Please call a taxi. | Appelez un taxi, s’il vous plaît. | Llame un taxi, por favor. | Rufen Sie bitte ein Taxi. | Chame um táxi, por favor.
 Ինձ տարեք այս հասցեով։ | Отвезите меня по этому адресу. | Take me to this address. | Emmenez-moi à cette adresse. | Lléveme a esta dirección. | Bringen Sie mich zu dieser Adresse. | Leve-me a este endereço.
@@ -38,6 +47,10 @@
 Աջ թեքվեք։ | Поверните направо. | Turn right. | Tournez à droite. | Gire a la derecha. | Biegen Sie rechts ab. | Vire à direita.
 Ձախ թեքվեք։ | Поверните налево. | Turn left. | Tournez à gauche. | Gire a la izquierda. | Biegen Sie links ab. | Vire à esquerda.
 Ես մոլորվել եմ։ | Я заблудился. | I’m lost. | Je suis perdu. | Me he perdido. | Ich habe mich verlaufen. | Eu me perdi.
+Կարո՞ղ եք ավելի դանդաղ քշել։ | Можете ехать помедленнее? | Could you drive more slowly? | Pouvez-vous rouler plus lentement ? | ¿Puede conducir más despacio? | Können Sie langsamer fahren? | Pode dirigir mais devagar?
+Որտե՞ղ է ավտոկայանը։ | Где автовокзал? | Where is the bus station? | Où est la gare routière ? | ¿Dónde está la estación de autobuses? | Wo ist der Busbahnhof? | Onde fica a rodoviária?
+Մեկ տոմս դեպի Սևան, խնդրում եմ։ | Один билет до Севана, пожалуйста. | One ticket to Sevan, please. | Un billet pour Sevan, s’il vous plaît. | Un billete a Seván, por favor. | Eine Fahrkarte nach Sewan, bitte. | Uma passagem para Sevan, por favor.
+Որքա՞ն ժամանակ է պետք մինչև Գյումրի։ | Сколько ехать до Гюмри? | How long does it take to get to Gyumri? | Combien de temps faut-il pour aller à Gyumri ? | ¿Cuánto se tarda hasta Gyumri? | Wie lange dauert es bis Gjumri? | Quanto tempo leva até Gyumri?
 ## cafe | Кафе и ресторан | Café and restaurant | Café et restaurant | Café y restaurante | Café und Restaurant | Café e restaurante | ☕
 Ճաշացանկը, խնդրում եմ։ | Меню, пожалуйста. | The menu, please. | Le menu, s’il vous plaît. | La carta, por favor. | Die Speisekarte, bitte. | O cardápio, por favor.
 Ազատ սեղան ունե՞ք։ | У вас есть свободный столик? | Do you have a free table? | Avez-vous une table libre ? | ¿Tienen una mesa libre? | Haben Sie einen freien Tisch? | Vocês têm uma mesa livre?
@@ -50,6 +63,11 @@
 Հաշիվը, խնդրում եմ։ | Счёт, пожалуйста. | The bill, please. | L’addition, s’il vous plaît. | La cuenta, por favor. | Die Rechnung, bitte. | A conta, por favor.
 Քարտով կարելի՞ է վճարել։ | Можно оплатить картой? | Can I pay by card? | Puis-je payer par carte ? | ¿Puedo pagar con tarjeta? | Kann ich mit Karte zahlen? | Posso pagar com cartão?
 Կենացդ։ | За твоё здоровье! | Cheers! | Santé ! | ¡Salud! | Prost! | Saúde!
+Ջուր առանց գազի, խնդրում եմ։ | Воду без газа, пожалуйста. | Still water, please. | De l’eau plate, s’il vous plaît. | Agua sin gas, por favor. | Stilles Wasser, bitte. | Água sem gás, por favor.
+Թեյ, խնդրում եմ։ | Чай, пожалуйста. | Tea, please. | Un thé, s’il vous plaît. | Un té, por favor. | Einen Tee, bitte. | Um chá, por favor.
+Կարելի՞ է առանց շաքարի։ | Можно без сахара? | Can I have it without sugar? | Sans sucre, c’est possible ? | ¿Puede ser sin azúcar? | Geht das ohne Zucker? | Pode ser sem açúcar?
+Սա կծո՞ւ է։ | Это острое? | Is this spicy? | C’est épicé ? | ¿Esto pica? | Ist das scharf? | Isto é picante?
+Հետս կտանեմ։ | Я возьму с собой. | To take away, please. | C’est à emporter. | Para llevar. | Zum Mitnehmen. | Para viagem.
 ## market | Рынок и магазин | Market and shop | Marché et magasin | Mercado y tienda | Markt und Laden | Mercado e loja | 🛒
 Սա ի՞նչ արժե։ | Сколько это стоит? | How much does this cost? | Combien coûte ceci ? | ¿Cuánto cuesta esto? | Was kostet das? | Quanto custa isto?
 Շատ թանկ է։ | Очень дорого. | It’s too expensive. | C’est trop cher. | Es muy caro. | Das ist zu teuer. | Está muito caro.
@@ -61,6 +79,10 @@
 Կարո՞ղ եմ փորձել։ | Можно примерить? | Can I try it on? | Puis-je l’essayer ? | ¿Me lo puedo probar? | Kann ich es anprobieren? | Posso experimentar?
 Տոպրակ տվեք, խնդրում եմ։ | Дайте пакет, пожалуйста. | A bag, please. | Un sac, s’il vous plaît. | Una bolsa, por favor. | Eine Tüte, bitte. | Uma sacola, por favor.
 Որտե՞ղ է մոտակա խանութը։ | Где ближайший магазин? | Where is the nearest shop? | Où est le magasin le plus proche ? | ¿Dónde está la tienda más cercana? | Wo ist der nächste Laden? | Onde fica a loja mais próxima?
+Սա թա՞րմ է։ | Это свежее? | Is this fresh? | C’est frais ? | ¿Esto es fresco? | Ist das frisch? | Isto é fresco?
+Կարո՞ղ եմ համտեսել։ | Можно попробовать? | Can I taste it? | Je peux goûter ? | ¿Puedo probar? | Kann ich probieren? | Posso provar?
+Ավելի մեծ չափս ունե՞ք։ | Есть размер побольше? | Do you have a bigger size? | Vous avez une taille au-dessus ? | ¿Tiene una talla más grande? | Haben Sie eine Nummer größer? | Tem um tamanho maior?
+Միայն նայում եմ, շնորհակալություն։ | Я просто смотрю, спасибо. | I’m just looking, thanks. | Je regarde seulement, merci. | Solo estoy mirando, gracias. | Ich schaue nur, danke. | Só estou olhando, obrigado.
 ## hotel | Жильё | Accommodation | Logement | Alojamiento | Unterkunft | Hospedagem | 🏨
 Ես սենյակ եմ ամրագրել։ | Я забронировал номер. | I have booked a room. | J’ai réservé une chambre. | He reservado una habitación. | Ich habe ein Zimmer gebucht. | Eu reservei um quarto.
 Ազատ սենյակ ունե՞ք։ | У вас есть свободный номер? | Do you have a free room? | Avez-vous une chambre libre ? | ¿Tienen una habitación libre? | Haben Sie ein freies Zimmer? | Vocês têm um quarto livre?
@@ -69,6 +91,10 @@
 Տաք ջուր չկա։ | Нет горячей воды. | There is no hot water. | Il n’y a pas d’eau chaude. | No hay agua caliente. | Es gibt kein warmes Wasser. | Não tem água quente.
 Ժամը քանիսի՞ն պետք է դուրս գալ։ | Во сколько нужно выехать? | What time is check-out? | À quelle heure faut-il partir ? | ¿A qué hora hay que dejar la habitación? | Wann muss ich auschecken? | A que horas é o check-out?
 Կարո՞ղ եմ պայուսակս թողնել։ | Можно оставить сумку? | Can I leave my bag? | Puis-je laisser mon sac ? | ¿Puedo dejar mi bolso? | Kann ich meine Tasche hierlassen? | Posso deixar minha bolsa?
+Սենյակը մաքրեք, խնդրում եմ։ | Уберите номер, пожалуйста. | Please clean the room. | Faites le ménage, s’il vous plaît. | Limpien la habitación, por favor. | Bitte reinigen Sie das Zimmer. | Limpe o quarto, por favor.
+Օդորակիչը չի աշխատում։ | Кондиционер не работает. | The air conditioning doesn’t work. | La climatisation ne marche pas. | El aire acondicionado no funciona. | Die Klimaanlage funktioniert nicht. | O ar-condicionado não funciona.
+Ես ուզում եմ ևս մեկ գիշեր մնալ։ | Я хочу остаться ещё на одну ночь. | I’d like to stay one more night. | Je voudrais rester une nuit de plus. | Quiero quedarme una noche más. | Ich möchte eine Nacht länger bleiben. | Quero ficar mais uma noite.
+Սրբիչ տվեք, խնդրում եմ։ | Дайте полотенце, пожалуйста. | A towel, please. | Une serviette, s’il vous plaît. | Una toalla, por favor. | Ein Handtuch, bitte. | Uma toalha, por favor.
 ## time | Время и числа | Time and numbers | Heure et nombres | Hora y números | Zeit und Zahlen | Hora e números | 🕐
 Ժամը քանի՞սն է։ | Который час? | What time is it? | Quelle heure est-il ? | ¿Qué hora es? | Wie spät ist es? | Que horas são?
 Ե՞րբ է բացվում։ | Когда открывается? | When does it open? | Quand est-ce que ça ouvre ? | ¿Cuándo abre? | Wann öffnet es? | Quando abre?
@@ -77,6 +103,10 @@
 Վաղը։ | Завтра. | Tomorrow. | Demain. | Mañana. | Morgen. | Amanhã.
 Մեկ րոպե։ | Одну минуту. | One minute. | Une minute. | Un minuto. | Eine Minute. | Um minuto.
 Հազար դրամ։ | Тысяча драмов. | A thousand drams. | Mille drams. | Mil drams. | Tausend Dram. | Mil drams.
+Երեկ։ | Вчера. | Yesterday. | Hier. | Ayer. | Gestern. | Ontem.
+Հիմա։ | Сейчас. | Now. | Maintenant. | Ahora. | Jetzt. | Agora.
+Մեկ ժամից։ | Через час. | In an hour. | Dans une heure. | Dentro de una hora. | In einer Stunde. | Daqui a uma hora.
+Ամեն օր։ | Каждый день. | Every day. | Tous les jours. | Todos los días. | Jeden Tag. | Todos os dias.
 ## help | Помощь и здоровье | Help and health | Aide et santé | Ayuda y salud | Hilfe und Gesundheit | Ajuda e saúde | 🆘
 Օգնեցե՛ք։ | Помогите! | Help! | Au secours ! | ¡Ayuda! | Hilfe! | Socorro!
 Շտապ օգնություն կանչեք։ | Вызовите скорую помощь. | Call an ambulance. | Appelez une ambulance. | Llame a una ambulancia. | Rufen Sie einen Krankenwagen. | Chame uma ambulância.
@@ -87,6 +117,10 @@
 Ես կորցրել եմ իմ անձնագիրը։ | Я потерял паспорт. | I have lost my passport. | J’ai perdu mon passeport. | He perdido mi pasaporte. | Ich habe meinen Pass verloren. | Eu perdi meu passaporte.
 Ինձ բժիշկ է պետք։ | Мне нужен врач. | I need a doctor. | J’ai besoin d’un médecin. | Necesito un médico. | Ich brauche einen Arzt. | Eu preciso de um médico.
 Ալերգիա ունեմ։ | У меня аллергия. | I have an allergy. | J’ai une allergie. | Tengo alergia. | Ich habe eine Allergie. | Eu tenho alergia.
+Զգույշ եղեք։ | Осторожно! | Be careful! | Attention ! | ¡Cuidado! | Vorsicht! | Cuidado!
+Ինձ թարգմանիչ է պետք։ | Мне нужен переводчик. | I need an interpreter. | J’ai besoin d’un interprète. | Necesito un intérprete. | Ich brauche einen Dolmetscher. | Preciso de um intérprete.
+Ինձ թալանել են։ | Меня ограбили. | I’ve been robbed. | On m’a volé. | Me han robado. | Ich wurde bestohlen. | Fui roubado.
+Որտե՞ղ է դեսպանատունը։ | Где посольство? | Where is the embassy? | Où est l’ambassade ? | ¿Dónde está la embajada? | Wo ist die Botschaft? | Onde fica a embaixada?
 ## visit | В гостях | Visiting | En visite | De visita | Zu Besuch | Visitando | 🏡
 Բարի գալուստ։ | Добро пожаловать. | Welcome. | Bienvenue. | Bienvenido. | Willkommen. | Bem-vindo.
 Համեցեք։ | Проходите, угощайтесь. | Come in, help yourself. | Entrez, servez-vous. | Pase, sírvase. | Kommen Sie herein, greifen Sie zu. | Entre, sirva-se.
@@ -96,3 +130,179 @@
 Շնորհավորում եմ։ | Поздравляю! | Congratulations! | Félicitations ! | ¡Felicidades! | Herzlichen Glückwunsch! | Parabéns!
 Ծնունդդ շնորհավոր։ | С днём рождения! | Happy birthday! | Joyeux anniversaire ! | ¡Feliz cumpleaños! | Alles Gute zum Geburtstag! | Feliz aniversário!
 Շնորհավոր Նոր տարի։ | С Новым годом! | Happy New Year! | Bonne année ! | ¡Feliz Año Nuevo! | Frohes neues Jahr! | Feliz Ano Novo!
+## love | Чувства и комплименты | Love and compliments | Sentiments et compliments | Amor y cumplidos | Liebe und Komplimente | Amor e elogios | ❤️
+Ես քեզ սիրում եմ։ | Я тебя люблю. | I love you. | Je t’aime. | Te quiero. | Ich liebe dich. | Eu te amo.
+Ես էլ քեզ եմ սիրում։ | Я тоже тебя люблю. | I love you too. | Moi aussi, je t’aime. | Yo también te quiero. | Ich liebe dich auch. | Eu também te amo.
+Դու ինձ դուր ես գալիս։ | Ты мне нравишься. | I like you. | Tu me plais. | Me gustas. | Ich mag dich. | Eu gosto de você.
+Դու շատ գեղեցիկ ես։ | Ты очень красивая. | You are very beautiful. | Tu es très belle. | Eres muy guapa. | Du bist sehr schön. | Você é muito bonita.
+Ինչ գեղեցիկ աչքեր ունես։ | Какие у тебя красивые глаза. | What beautiful eyes you have. | Quels beaux yeux tu as. | Qué ojos tan bonitos tienes. | Was für schöne Augen du hast. | Que olhos lindos você tem.
+Ես կարոտում եմ քեզ։ | Я скучаю по тебе. | I miss you. | Tu me manques. | Te extraño. | Ich vermisse dich. | Sinto sua falta.
+Դու իմ արևն ես։ | Ты моё солнышко. | You are my sunshine. | Tu es mon soleil. | Eres mi sol. | Du bist mein Sonnenschein. | Você é o meu sol.
+Ջանս։ | Дорогой мой, дорогая моя. | My dear. | Mon chéri, ma chérie. | Cariño. | Mein Schatz. | Meu bem.
+Ցավդ տանեմ։ | Возьму твою боль (ласковое армянское «родной мой»). | Let me take your pain (a loving Armenian phrase). | Que je prenne ta douleur (mot tendre arménien). | Que tu dolor sea mío (expresión cariñosa armenia). | Ich nehme deinen Schmerz (armenischer Kosename). | Que eu leve a sua dor (expressão carinhosa armênia).
+Դու ինձ համար ամենաթանկ մարդն ես։ | Ты для меня самый дорогой человек. | You are the dearest person to me. | Tu es la personne la plus chère pour moi. | Eres la persona más querida para mí. | Du bist der wichtigste Mensch für mich. | Você é a pessoa mais querida para mim.
+Քեզ հետ ինձ լավ եմ զգում։ | Мне хорошо с тобой. | I feel good with you. | Je me sens bien avec toi. | Me siento bien contigo. | Mit dir fühle ich mich wohl. | Eu me sinto bem com você.
+Ուզո՞ւմ ես ինձ հետ սուրճ խմել։ | Хочешь выпить со мной кофе? | Would you like to have coffee with me? | Tu veux prendre un café avec moi ? | ¿Quieres tomar un café conmigo? | Möchtest du mit mir einen Kaffee trinken? | Quer tomar um café comigo?
+Կարո՞ղ եմ քո համարը վերցնել։ | Можно твой номер? | Can I have your number? | Je peux avoir ton numéro ? | ¿Me das tu número? | Kann ich deine Nummer haben? | Posso pegar o seu número?
+Ինձ հետ կամուսնանա՞ս։ | Выйдешь за меня? | Will you marry me? | Veux-tu m’épouser ? | ¿Quieres casarte conmigo? | Willst du mich heiraten? | Quer casar comigo?
+Գրիր ինձ, երբ հասնես։ | Напиши мне, когда доедешь. | Text me when you get there. | Écris-moi quand tu arrives. | Escríbeme cuando llegues. | Schreib mir, wenn du angekommen bist. | Me manda mensagem quando chegar.
+Բարի գիշեր, քաղցր երազներ։ | Спокойной ночи, сладких снов. | Good night, sweet dreams. | Bonne nuit, fais de beaux rêves. | Buenas noches, dulces sueños. | Gute Nacht, süße Träume. | Boa noite, bons sonhos.
+Դու շատ լավ մարդ ես։ | Ты очень хороший человек. | You are a very good person. | Tu es une très bonne personne. | Eres muy buena persona. | Du bist ein sehr guter Mensch. | Você é uma pessoa muito boa.
+Քեզ շատ է սազում։ | Тебе очень идёт. | It really suits you. | Ça te va très bien. | Te queda muy bien. | Das steht dir sehr gut. | Fica muito bem em você.
+Դու շատ համեղ ես պատրաստում։ | Ты очень вкусно готовишь. | You cook really well. | Tu cuisines très bien. | Cocinas muy rico. | Du kochst sehr lecker. | Você cozinha muito bem.
+Դուք հրաշալի տեսք ունեք։ | Вы прекрасно выглядите. | You look wonderful. | Vous avez très bonne mine. | Tiene muy buen aspecto. | Sie sehen wunderbar aus. | Você está com ótima aparência.
+## congrats | Поздравления и праздники | Wishes and holidays | Vœux et fêtes | Felicitaciones y fiestas | Glückwünsche und Feste | Felicitações e festas | 🎉
+Ծնունդդ շնորհավոր, երկար ու երջանիկ կյանք քեզ։ | С днём рождения, долгой и счастливой жизни! | Happy birthday, wishing you a long and happy life! | Joyeux anniversaire, longue et heureuse vie à toi ! | ¡Feliz cumpleaños, que tengas una vida larga y feliz! | Alles Gute zum Geburtstag, ein langes und glückliches Leben! | Feliz aniversário, uma vida longa e feliz!
+Շնորհավոր Նոր տարի և Սուրբ Ծնունդ։ | С Новым годом и Рождеством! | Happy New Year and Merry Christmas! | Bonne année et joyeux Noël ! | ¡Feliz Año Nuevo y feliz Navidad! | Frohes neues Jahr und frohe Weihnachten! | Feliz Ano Novo e Feliz Natal!
+Քրիստոս ծնավ և հայտնեցավ։ | Христос родился и явился! (рождественское приветствие) | Christ is born and revealed! (Armenian Christmas greeting) | Le Christ est né et s’est révélé ! (salutation de Noël arménien) | ¡Cristo nació y se reveló! (saludo de Navidad armenio) | Christus ist geboren und offenbart! (armenischer Weihnachtsgruß) | Cristo nasceu e se revelou! (saudação de Natal armênio)
+Օրհնյալ է հայտնությունը Քրիստոսի։ | Благословенно явление Христово (ответ). | Blessed is the revelation of Christ (the reply). | Bénie soit la révélation du Christ (réponse). | Bendita sea la revelación de Cristo (respuesta). | Gesegnet ist die Offenbarung Christi (Antwort). | Bendita é a revelação de Cristo (resposta).
+Քրիստոս հարյավ ի մեռելոց։ | Христос воскрес из мёртвых! (пасхальное приветствие) | Christ is risen from the dead! (Easter greeting) | Le Christ est ressuscité des morts ! (salutation de Pâques) | ¡Cristo resucitó de entre los muertos! (saludo de Pascua) | Christus ist von den Toten auferstanden! (Ostergruß) | Cristo ressuscitou dos mortos! (saudação de Páscoa)
+Օրհնյալ է հարությունը Քրիստոսի։ | Благословенно воскресение Христово (ответ). | Blessed is the resurrection of Christ (the reply). | Bénie soit la résurrection du Christ (réponse). | Bendita sea la resurrección de Cristo (respuesta). | Gesegnet ist die Auferstehung Christi (Antwort). | Bendita é a ressurreição de Cristo (resposta).
+Շնորհավոր Զատիկ։ | С Пасхой! | Happy Easter! | Joyeuses Pâques ! | ¡Felices Pascuas! | Frohe Ostern! | Feliz Páscoa!
+Շնորհավոր տոնդ։ | С праздником! | Happy holiday! | Bonne fête ! | ¡Feliz día! | Schönen Feiertag! | Boas festas!
+Շնորհավոր կանանց տոնը։ | С Женским днём! | Happy Women’s Day! | Bonne Journée de la femme ! | ¡Feliz Día de la Mujer! | Alles Gute zum Frauentag! | Feliz Dia da Mulher!
+Շնորհավոր հարսանիքը։ | Поздравляю со свадьбой! | Congratulations on your wedding! | Félicitations pour votre mariage ! | ¡Felicidades por la boda! | Herzlichen Glückwunsch zur Hochzeit! | Parabéns pelo casamento!
+Մեկ բարձի վրա ծերանաք։ | Состарьтесь на одной подушке (свадебное пожелание). | May you grow old on one pillow (wedding wish). | Vieillissez sur le même oreiller (vœu de mariage). | Que envejezcan en la misma almohada (deseo de boda). | Mögt ihr auf einem Kissen alt werden (Hochzeitswunsch). | Que envelheçam no mesmo travesseiro (voto de casamento).
+Շնորհավոր երեխայի ծնունդը։ | Поздравляю с рождением ребёнка! | Congratulations on the baby! | Félicitations pour la naissance ! | ¡Felicidades por el bebé! | Herzlichen Glückwunsch zur Geburt! | Parabéns pelo bebê!
+Շնորհավոր նոր բնակարանը։ | С новосельем! | Congratulations on your new home! | Félicitations pour ton nouveau logement ! | ¡Felicidades por la casa nueva! | Glückwunsch zur neuen Wohnung! | Parabéns pela casa nova!
+Բարով մաշես։ | Носи на здоровье (о новой вещи). | Wear it in good health (about something new). | Porte-le avec plaisir (d’un nouveau vêtement). | Que lo disfrutes (de una prenda nueva). | Trag es mit Freude (über etwas Neues). | Use com saúde (sobre algo novo).
+Հաջողություն քեզ։ | Удачи тебе! | Good luck! | Bonne chance ! | ¡Buena suerte! | Viel Glück! | Boa sorte!
+Առողջություն եմ մաղթում։ | Желаю здоровья. | I wish you good health. | Je vous souhaite une bonne santé. | Le deseo salud. | Ich wünsche Ihnen Gesundheit. | Desejo saúde.
+Աստված քեզ պահապան։ | Храни тебя Бог. | May God protect you. | Que Dieu te protège. | Que Dios te proteja. | Gott beschütze dich. | Que Deus te proteja.
+Ցավակցում եմ։ | Соболезную. | My condolences. | Mes condoléances. | Mi más sentido pésame. | Mein Beileid. | Meus pêsames.
+Լույսերի մեջ լինի։ | Пусть покоится в свете (о покойном). | May they rest in light (about the deceased). | Qu’il repose dans la lumière (d’un défunt). | Que descanse en la luz (sobre un difunto). | Möge er im Licht ruhen (über einen Verstorbenen). | Que descanse na luz (sobre um falecido).
+## toast | За столом и тосты | At the table and toasts | À table et toasts | En la mesa y brindis | Am Tisch und Trinksprüche | À mesa e brindes | 🥂
+Բարի ախորժակ։ | Приятного аппетита. | Enjoy your meal. | Bon appétit. | Buen provecho. | Guten Appetit. | Bom apetite.
+Ձեր կենացը։ | За вас! | To your health! | À votre santé ! | ¡Por ustedes! | Auf Ihr Wohl! | À saúde de vocês!
+Ծնողների կենացը։ | За родителей! | To our parents! | Aux parents ! | ¡Por los padres! | Auf die Eltern! | Aos pais!
+Սիրո կենացը։ | За любовь! | To love! | À l’amour ! | ¡Por el amor! | Auf die Liebe! | Ao amor!
+Խաղաղության կենացը։ | За мир! | To peace! | À la paix ! | ¡Por la paz! | Auf den Frieden! | À paz!
+Մեր հանդիպման կենացը։ | За нашу встречу! | To our meeting! | À nos retrouvailles ! | ¡Por nuestro encuentro! | Auf unser Wiedersehen! | Ao nosso encontro!
+Տանտիրոջ կենացը։ | За хозяина дома! | To the host! | À l’hôte ! | ¡Por el anfitrión! | Auf den Gastgeber! | Ao anfitrião!
+Տանտիրուհու կենացը։ | За хозяйку дома! | To the hostess! | À la maîtresse de maison ! | ¡Por la anfitriona! | Auf die Gastgeberin! | À anfitriã!
+Թամադան ո՞վ է։ | Кто тамада? | Who is the toastmaster? | Qui est le maître des toasts ? | ¿Quién es el tamadá (maestro de brindis)? | Wer ist der Tamada (Tischredner)? | Quem é o tamadá (mestre dos brindes)?
+Էլի լցնե՞մ։ | Подлить ещё? | Shall I pour you more? | Je vous ressers ? | ¿Le sirvo más? | Soll ich nachschenken? | Posso servir mais?
+Բավական է, շնորհակալություն։ | Достаточно, спасибо. | That’s enough, thank you. | Ça suffit, merci. | Es suficiente, gracias. | Das reicht, danke. | Já está bom, obrigado.
+Ես ալկոհոլ չեմ խմում։ | Я не пью алкоголь. | I don’t drink alcohol. | Je ne bois pas d’alcool. | No bebo alcohol. | Ich trinke keinen Alkohol. | Eu não bebo álcool.
+Գինին տնակա՞ն է։ | Вино домашнее? | Is the wine homemade? | Le vin est fait maison ? | ¿El vino es casero? | Ist der Wein hausgemacht? | O vinho é caseiro?
+Այս ուտեստն ի՞նչ է կոչվում։ | Как называется это блюдо? | What is this dish called? | Comment s’appelle ce plat ? | ¿Cómo se llama este plato? | Wie heißt dieses Gericht? | Como se chama este prato?
+Կարելի՞ է մի քիչ թան։ | Можно немного тана? | Could I have some tan (yogurt drink)? | Je peux avoir un peu de tan (boisson au yaourt) ? | ¿Me da un poco de tan (bebida de yogur)? | Kann ich etwas Tan (Joghurtgetränk) haben? | Posso tomar um pouco de tan (bebida de iogurte)?
+Ես այլևս չեմ կարող, շատ եմ կերել։ | Я больше не могу, я наелся. | I can’t eat any more, I’m full. | Je n’en peux plus, j’ai trop mangé. | No puedo más, estoy lleno. | Ich kann nicht mehr, ich bin satt. | Não aguento mais, estou satisfeito.
+Ամեն ինչ շատ համով էր։ | Всё было очень вкусно. | Everything was delicious. | Tout était délicieux. | Todo estaba riquísimo. | Alles war sehr lecker. | Estava tudo delicioso.
+Ձեր ձեռքերին դալար։ | Золотые у вас руки (спасибо хозяйке за угощение). | Bless your hands (thanks to the cook). | Bénies soient vos mains (merci pour le repas). | Bendiciones a sus manos (gracias a quien cocinó). | Gesegnet seien Ihre Hände (Dank für das Essen). | Benditas sejam suas mãos (obrigado pela comida).
+## family | Семья и родные | Family | Famille | Familia | Familie | Família | 👨‍👩‍👧
+Սա իմ մայրն է։ | Это моя мама. | This is my mother. | C’est ma mère. | Esta es mi madre. | Das ist meine Mutter. | Esta é a minha mãe.
+Սա իմ հայրն է։ | Это мой папа. | This is my father. | C’est mon père. | Este es mi padre. | Das ist mein Vater. | Este é o meu pai.
+Սա իմ կինն է։ | Это моя жена. | This is my wife. | C’est ma femme. | Esta es mi esposa. | Das ist meine Frau. | Esta é a minha esposa.
+Սա իմ ամուսինն է։ | Это мой муж. | This is my husband. | C’est mon mari. | Este es mi marido. | Das ist mein Mann. | Este é o meu marido.
+Սա իմ ընկերն է։ | Это мой друг. | This is my friend. | C’est mon ami. | Este es mi amigo. | Das ist mein Freund. | Este é o meu amigo.
+Ծանոթացեք, սրանք իմ ծնողներն են։ | Знакомьтесь, это мои родители. | Let me introduce my parents. | Je vous présente mes parents. | Les presento a mis padres. | Darf ich vorstellen, meine Eltern. | Estes são os meus pais.
+Ես ամուսնացած եմ։ | Я женат (замужем). | I’m married. | Je suis marié(e). | Estoy casado (casada). | Ich bin verheiratet. | Sou casado (casada).
+Երեխաներ ունե՞ք։ | У вас есть дети? | Do you have children? | Vous avez des enfants ? | ¿Tiene hijos? | Haben Sie Kinder? | Você tem filhos?
+Ես երկու երեխա ունեմ։ | У меня двое детей. | I have two children. | J’ai deux enfants. | Tengo dos hijos. | Ich habe zwei Kinder. | Tenho dois filhos.
+Ձեր աղջիկը քանի՞ տարեկան է։ | Сколько лет вашей дочке? | How old is your daughter? | Quel âge a votre fille ? | ¿Cuántos años tiene su hija? | Wie alt ist Ihre Tochter? | Quantos anos tem a sua filha?
+Ձեր տղան շատ նման է ձեզ։ | Ваш сын очень похож на вас. | Your son looks a lot like you. | Votre fils vous ressemble beaucoup. | Su hijo se parece mucho a usted. | Ihr Sohn sieht Ihnen sehr ähnlich. | Seu filho é muito parecido com você.
+Քանի՞ եղբայր ու քույր ունես։ | Сколько у тебя братьев и сестёр? | How many brothers and sisters do you have? | Combien as-tu de frères et sœurs ? | ¿Cuántos hermanos tienes? | Wie viele Geschwister hast du? | Quantos irmãos você tem?
+Ձեր ընտանիքը մե՞ծ է։ | У вас большая семья? | Is your family big? | Votre famille est grande ? | ¿Su familia es grande? | Ist Ihre Familie groß? | Sua família é grande?
+Ես երեսուն տարեկան եմ։ | Мне тридцать лет. | I’m thirty years old. | J’ai trente ans. | Tengo treinta años. | Ich bin dreißig Jahre alt. | Tenho trinta anos.
+Իմ տատիկը հայ է։ | Моя бабушка армянка. | My grandmother is Armenian. | Ma grand-mère est arménienne. | Mi abuela es armenia. | Meine Großmutter ist Armenierin. | Minha avó é armênia.
+Իմ արմատները Հայաստանից են։ | Мои корни из Армении. | My roots are in Armenia. | Mes racines sont en Arménie. | Mis raíces están en Armenia. | Meine Wurzeln liegen in Armenien. | Minhas raízes são da Armênia.
+Ես հայերեն եմ սովորում, որ խոսեմ իմ ընտանիքի հետ։ | Я учу армянский, чтобы говорить со своей семьёй. | I’m learning Armenian to talk with my family. | J’apprends l’arménien pour parler avec ma famille. | Aprendo armenio para hablar con mi familia. | Ich lerne Armenisch, um mit meiner Familie zu sprechen. | Estou aprendendo armênio para falar com a minha família.
+Ողջույններ ձեր ընտանիքին։ | Привет вашей семье. | Say hello to your family. | Mes amitiés à votre famille. | Saludos a su familia. | Grüße an Ihre Familie. | Lembranças à sua família.
+## doctor | У врача и в аптеке | At the doctor and pharmacy | Chez le médecin et à la pharmacie | En el médico y la farmacia | Beim Arzt und in der Apotheke | No médico e na farmácia | 💊
+Ինձ մոտ ջերմություն կա։ | У меня температура. | I have a fever. | J’ai de la fièvre. | Tengo fiebre. | Ich habe Fieber. | Estou com febre.
+Գլուխս ցավում է։ | У меня болит голова. | I have a headache. | J’ai mal à la tête. | Me duele la cabeza. | Ich habe Kopfschmerzen. | Estou com dor de cabeça.
+Կոկորդս ցավում է։ | У меня болит горло. | I have a sore throat. | J’ai mal à la gorge. | Me duele la garganta. | Ich habe Halsschmerzen. | Estou com dor de garganta.
+Փորս ցավում է։ | У меня болит живот. | I have a stomach ache. | J’ai mal au ventre. | Me duele el estómago. | Ich habe Bauchschmerzen. | Estou com dor de barriga.
+Ատամս ցավում է։ | У меня болит зуб. | I have a toothache. | J’ai mal aux dents. | Me duele una muela. | Ich habe Zahnschmerzen. | Estou com dor de dente.
+Այստեղ է ցավում։ | Болит здесь. | It hurts here. | J’ai mal ici. | Me duele aquí. | Es tut hier weh. | Dói aqui.
+Ես մրսել եմ։ | Я простудился. | I have a cold. | J’ai attrapé froid. | Me resfrié. | Ich habe mich erkältet. | Eu me resfriei.
+Ինձ մոտ սրտխառնոց կա։ | Меня тошнит. | I feel nauseous. | J’ai la nausée. | Tengo náuseas. | Mir ist übel. | Estou enjoado.
+Ես քնել չեմ կարողանում։ | Я не могу уснуть. | I can’t sleep. | Je n’arrive pas à dormir. | No puedo dormir. | Ich kann nicht schlafen. | Não consigo dormir.
+Ես շաքարախտ ունեմ։ | У меня диабет. | I have diabetes. | J’ai du diabète. | Tengo diabetes. | Ich habe Diabetes. | Eu tenho diabetes.
+Ես հղի եմ։ | Я беременна. | I’m pregnant. | Je suis enceinte. | Estoy embarazada. | Ich bin schwanger. | Estou grávida.
+Ինձ ցավազրկող է պետք։ | Мне нужно обезболивающее. | I need a painkiller. | J’ai besoin d’un antidouleur. | Necesito un analgésico. | Ich brauche ein Schmerzmittel. | Preciso de um analgésico.
+Այս դեղը կարելի՞ է առանց դեղատոմսի։ | Это лекарство можно без рецепта? | Can I get this medicine without a prescription? | Ce médicament est-il sans ordonnance ? | ¿Este medicamento se vende sin receta? | Ist dieses Medikament rezeptfrei? | Este remédio é vendido sem receita?
+Օրը քանի՞ անգամ խմել։ | Сколько раз в день принимать? | How many times a day should I take it? | Combien de fois par jour faut-il le prendre ? | ¿Cuántas veces al día hay que tomarlo? | Wie oft am Tag soll ich es nehmen? | Quantas vezes por dia devo tomar?
+Ինձ ատամնաբույժ է պետք։ | Мне нужен стоматолог. | I need a dentist. | J’ai besoin d’un dentiste. | Necesito un dentista. | Ich brauche einen Zahnarzt. | Preciso de um dentista.
+Կարո՞ղ եք բժիշկ կանչել։ | Можете вызвать врача? | Can you call a doctor? | Pouvez-vous appeler un médecin ? | ¿Puede llamar a un médico? | Können Sie einen Arzt rufen? | Pode chamar um médico?
+Որտե՞ղ է մոտակա հիվանդանոցը։ | Где ближайшая больница? | Where is the nearest hospital? | Où est l’hôpital le plus proche ? | ¿Dónde está el hospital más cercano? | Wo ist das nächste Krankenhaus? | Onde fica o hospital mais próximo?
+Ես ապահովագրություն ունեմ։ | У меня есть страховка. | I have insurance. | J’ai une assurance. | Tengo seguro. | Ich bin versichert. | Eu tenho seguro.
+## rent | Аренда жилья | Renting a flat | Louer un logement | Alquilar un piso | Wohnung mieten | Alugar um apartamento | 🔑
+Բնակարան եմ փնտրում։ | Я ищу квартиру. | I’m looking for an apartment. | Je cherche un appartement. | Busco un piso. | Ich suche eine Wohnung. | Estou procurando um apartamento.
+Ամսական որքա՞ն է վարձը։ | Сколько стоит аренда в месяц? | How much is the rent per month? | Combien coûte le loyer par mois ? | ¿Cuánto es el alquiler al mes? | Wie hoch ist die Miete im Monat? | Quanto é o aluguel por mês?
+Կոմունալ վճարները ներառվա՞ծ են։ | Коммунальные услуги включены? | Are utilities included? | Les charges sont-elles comprises ? | ¿Los gastos están incluidos? | Sind die Nebenkosten inbegriffen? | As contas estão incluídas?
+Կարո՞ղ եմ բնակարանը տեսնել։ | Можно посмотреть квартиру? | Can I see the apartment? | Je peux visiter l’appartement ? | ¿Puedo ver el piso? | Kann ich die Wohnung ansehen? | Posso ver o apartamento?
+Քանի՞ սենյակ կա։ | Сколько комнат? | How many rooms are there? | Combien y a-t-il de pièces ? | ¿Cuántas habitaciones hay? | Wie viele Zimmer gibt es? | Quantos quartos tem?
+Լվացքի մեքենա կա՞։ | Есть стиральная машина? | Is there a washing machine? | Il y a une machine à laver ? | ¿Hay lavadora? | Gibt es eine Waschmaschine? | Tem máquina de lavar?
+Ջեռուցումն ինչպե՞ս է աշխատում։ | Как работает отопление? | How does the heating work? | Comment fonctionne le chauffage ? | ¿Cómo funciona la calefacción? | Wie funktioniert die Heizung? | Como funciona o aquecimento?
+Կանխավճար պե՞տք է։ | Нужна предоплата? | Is a prepayment needed? | Faut-il payer d’avance ? | ¿Hace falta pagar por adelantado? | Ist eine Vorauszahlung nötig? | Precisa pagar adiantado?
+Պայմանագիր կկնքե՞նք։ | Мы заключим договор? | Will we sign a contract? | On signe un contrat ? | ¿Firmamos un contrato? | Machen wir einen Vertrag? | Vamos assinar um contrato?
+Կենդանիներով կարելի՞ է։ | Можно с животными? | Are pets allowed? | Les animaux sont-ils acceptés ? | ¿Se admiten mascotas? | Sind Haustiere erlaubt? | Aceita animais?
+Մոտակայքում մետրո կա՞։ | Рядом есть метро? | Is there a metro nearby? | Il y a un métro à proximité ? | ¿Hay metro cerca? | Gibt es eine U-Bahn in der Nähe? | Tem metrô perto?
+Ես կվերցնեմ այս բնակարանը։ | Я сниму эту квартиру. | I’ll take this apartment. | Je prends cet appartement. | Me quedo con este piso. | Ich nehme diese Wohnung. | Vou ficar com este apartamento.
+Ծորակը կաթում է։ | Кран течёт. | The tap is leaking. | Le robinet fuit. | El grifo gotea. | Der Wasserhahn tropft. | A torneira está pingando.
+Լույս չկա։ | Нет света. | There is no electricity. | Il n’y a pas d’électricité. | No hay luz. | Es gibt keinen Strom. | Está sem luz.
+## phone | Связь и интернет | Phone and internet | Téléphone et internet | Teléfono e internet | Telefon und Internet | Telefone e internet | 📱
+Որտե՞ղ կարող եմ սիմ քարտ գնել։ | Где можно купить сим-карту? | Where can I buy a SIM card? | Où puis-je acheter une carte SIM ? | ¿Dónde puedo comprar una tarjeta SIM? | Wo kann ich eine SIM-Karte kaufen? | Onde posso comprar um chip?
+Ինձ ինտերնետ է պետք։ | Мне нужен интернет. | I need internet. | J’ai besoin d’internet. | Necesito internet. | Ich brauche Internet. | Preciso de internet.
+Ինտերնետը չի աշխատում։ | Интернет не работает. | The internet isn’t working. | Internet ne marche pas. | Internet no funciona. | Das Internet funktioniert nicht. | A internet não está funcionando.
+Կարո՞ղ եմ հեռախոսս լիցքավորել։ | Можно зарядить телефон? | Can I charge my phone? | Je peux charger mon téléphone ? | ¿Puedo cargar el móvil? | Kann ich mein Handy aufladen? | Posso carregar o celular?
+Ձեր հեռախոսահամարն ի՞նչ է։ | Какой у вас номер телефона? | What is your phone number? | Quel est votre numéro de téléphone ? | ¿Cuál es su número de teléfono? | Wie ist Ihre Telefonnummer? | Qual é o seu número de telefone?
+Ես ձեզ կզանգեմ։ | Я вам позвоню. | I’ll call you. | Je vous appellerai. | Le llamaré. | Ich rufe Sie an. | Eu ligo para você.
+Զանգեք ինձ, խնդրում եմ։ | Позвоните мне, пожалуйста. | Please call me. | Appelez-moi, s’il vous plaît. | Llámeme, por favor. | Rufen Sie mich bitte an. | Me ligue, por favor.
+Ես ձեզ հաղորդագրություն կգրեմ։ | Я напишу вам сообщение. | I’ll send you a message. | Je vous enverrai un message. | Le escribiré un mensaje. | Ich schreibe Ihnen eine Nachricht. | Vou te mandar uma mensagem.
+Լավ չեմ լսում։ | Плохо слышно. | I can’t hear you well. | Je vous entends mal. | No le oigo bien. | Ich höre Sie schlecht. | Não estou ouvindo bem.
+Ալո, լսում եմ։ | Алло, слушаю. | Hello, I’m listening. | Allô, j’écoute. | Hola, le escucho. | Hallo, ich höre. | Alô, estou ouvindo.
+## money | Деньги и банк | Money and bank | Argent et banque | Dinero y banco | Geld und Bank | Dinheiro e banco | 💳
+Որտե՞ղ է մոտակա բանկոմատը։ | Где ближайший банкомат? | Where is the nearest ATM? | Où est le distributeur le plus proche ? | ¿Dónde está el cajero más cercano? | Wo ist der nächste Geldautomat? | Onde fica o caixa eletrônico mais próximo?
+Որտե՞ղ կարող եմ փող փոխել։ | Где можно обменять деньги? | Where can I exchange money? | Où puis-je changer de l’argent ? | ¿Dónde puedo cambiar dinero? | Wo kann ich Geld wechseln? | Onde posso trocar dinheiro?
+Ինչքա՞ն է դոլարի փոխարժեքը։ | Какой курс доллара? | What is the dollar exchange rate? | Quel est le taux du dollar ? | ¿A cuánto está el dólar? | Wie ist der Dollarkurs? | Qual é a cotação do dólar?
+Կանխիկ կվճարեմ։ | Я заплачу наличными. | I’ll pay in cash. | Je paie en espèces. | Pagaré en efectivo. | Ich zahle bar. | Vou pagar em dinheiro.
+Մանր չունեմ։ | У меня нет мелочи. | I don’t have change. | Je n’ai pas de monnaie. | No tengo cambio. | Ich habe kein Kleingeld. | Não tenho troco.
+Կտրոն տվեք, խնդրում եմ։ | Дайте чек, пожалуйста. | A receipt, please. | Un reçu, s’il vous plaît. | El tique, por favor. | Eine Quittung, bitte. | O recibo, por favor.
+Ես ուզում եմ բանկային հաշիվ բացել։ | Я хочу открыть счёт в банке. | I want to open a bank account. | Je veux ouvrir un compte bancaire. | Quiero abrir una cuenta bancaria. | Ich möchte ein Bankkonto eröffnen. | Quero abrir uma conta bancária.
+Բանկոմատը կուլ տվեց քարտս։ | Банкомат проглотил мою карту. | The ATM swallowed my card. | Le distributeur a avalé ma carte. | El cajero se tragó mi tarjeta. | Der Automat hat meine Karte eingezogen. | O caixa engoliu meu cartão.
+Սա ինձ համար շատ թանկ է։ | Это слишком дорого для меня. | It’s too expensive for me. | C’est trop cher pour moi. | Es demasiado caro para mí. | Das ist mir zu teuer. | É caro demais para mim.
+## work | Работа и учёба | Work and study | Travail et études | Trabajo y estudios | Arbeit und Studium | Trabalho e estudos | 💼
+Ինչո՞վ եք զբաղվում։ | Чем вы занимаетесь? | What do you do? | Que faites-vous dans la vie ? | ¿A qué se dedica? | Was machen Sie beruflich? | O que você faz?
+Ես ծրագրավորող եմ։ | Я программист. | I’m a programmer. | Je suis programmeur. | Soy programador. | Ich bin Programmierer. | Sou programador.
+Ես ուսանող եմ։ | Я студент. | I’m a student. | Je suis étudiant. | Soy estudiante. | Ich bin Student. | Sou estudante.
+Ես հեռավար եմ աշխատում։ | Я работаю удалённо. | I work remotely. | Je travaille à distance. | Trabajo en remoto. | Ich arbeite von zu Hause aus. | Trabalho remotamente.
+Ես այստեղ աշխատանք եմ փնտրում։ | Я ищу здесь работу. | I’m looking for a job here. | Je cherche du travail ici. | Busco trabajo aquí. | Ich suche hier Arbeit. | Estou procurando trabalho aqui.
+Հանդիպումը ժամը քանիսի՞ն է։ | Во сколько встреча? | What time is the meeting? | À quelle heure est la réunion ? | ¿A qué hora es la reunión? | Um wie viel Uhr ist das Treffen? | A que horas é a reunião?
+Ես հայերեն եմ սովորում։ | Я учу армянский. | I’m learning Armenian. | J’apprends l’arménien. | Estoy aprendiendo armenio. | Ich lerne Armenisch. | Estou aprendendo armênio.
+Ինչպե՞ս է սա հայերեն։ | Как это по-армянски? | How do you say this in Armenian? | Comment dit-on ça en arménien ? | ¿Cómo se dice esto en armenio? | Wie heißt das auf Armenisch? | Como se diz isso em armênio?
+Ի՞նչ է նշանակում այս բառը։ | Что значит это слово? | What does this word mean? | Que veut dire ce mot ? | ¿Qué significa esta palabra? | Was bedeutet dieses Wort? | O que significa esta palavra?
+Ուղղեք ինձ, եթե սխալվեմ։ | Поправьте меня, если я ошибусь. | Correct me if I make a mistake. | Corrigez-moi si je me trompe. | Corríjame si me equivoco. | Korrigieren Sie mich, wenn ich einen Fehler mache. | Me corrija se eu errar.
+## weather | Погода | Weather | Météo | El tiempo | Wetter | Tempo | ☀️
+Այսօր շատ շոգ է։ | Сегодня очень жарко. | It’s very hot today. | Il fait très chaud aujourd’hui. | Hoy hace mucho calor. | Heute ist es sehr heiß. | Hoje está muito quente.
+Այսօր ցուրտ է։ | Сегодня холодно. | It’s cold today. | Il fait froid aujourd’hui. | Hoy hace frío. | Heute ist es kalt. | Hoje está frio.
+Անձրև է գալիս։ | Идёт дождь. | It’s raining. | Il pleut. | Está lloviendo. | Es regnet. | Está chovendo.
+Ձյուն է գալիս։ | Идёт снег. | It’s snowing. | Il neige. | Está nevando. | Es schneit. | Está nevando.
+Ուժեղ քամի է։ | Сильный ветер. | It’s very windy. | Il y a beaucoup de vent. | Hace mucho viento. | Es ist sehr windig. | Está ventando muito.
+Ինչ լավ եղանակ է։ | Какая хорошая погода. | What lovely weather. | Quel beau temps. | Qué buen tiempo. | Was für ein schönes Wetter. | Que tempo bom.
+Վաղն ինչպիսի՞ եղանակ է լինելու։ | Какая погода будет завтра? | What will the weather be like tomorrow? | Quel temps fera-t-il demain ? | ¿Qué tiempo hará mañana? | Wie wird das Wetter morgen? | Como vai estar o tempo amanhã?
+Հովանոց վերցրու։ | Возьми зонт. | Take an umbrella. | Prends un parapluie. | Llévate un paraguas. | Nimm einen Regenschirm mit. | Leve um guarda-chuva.
+Այսօր Արագածը երևում է։ | Сегодня видно Арагац. | You can see Mount Aragats today. | On voit l’Aragats aujourd’hui. | Hoy se ve el Aragats. | Heute sieht man den Aragaz. | Hoje dá para ver o Aragats.
+## talk | Разговор | Small talk | Conversation | Conversación | Gespräch | Conversa | 💬
+Ինչպե՞ս ես։ | Как ты? | How are you doing? | Comment ça va ? | ¿Cómo estás? | Wie geht’s dir? | Como você está?
+Լավ, իսկ դո՞ւ։ | Хорошо, а ты? | Fine, and you? | Bien, et toi ? | Bien, ¿y tú? | Gut, und dir? | Bem, e você?
+Ի՞նչ կա-չկա։ | Как дела, что нового? | What’s new? | Quoi de neuf ? | ¿Qué hay de nuevo? | Was gibt’s Neues? | Quais as novidades?
+Վաղուց չենք տեսնվել։ | Давно не виделись. | Long time no see. | Ça fait longtemps. | Cuánto tiempo sin vernos. | Lange nicht gesehen. | Quanto tempo!
+Ուրախ եմ քեզ տեսնել։ | Рад тебя видеть. | Good to see you. | Content de te voir. | Me alegro de verte. | Schön, dich zu sehen. | Que bom te ver.
+Ամեն ինչ լավ է։ | Всё хорошо. | Everything is fine. | Tout va bien. | Todo está bien. | Alles ist gut. | Está tudo bem.
+Հոգնել եմ։ | Я устал. | I’m tired. | Je suis fatigué. | Estoy cansado. | Ich bin müde. | Estou cansado.
+Համաձայն եմ։ | Согласен. | I agree. | Je suis d’accord. | Estoy de acuerdo. | Ich bin einverstanden. | Concordo.
+Իհարկե։ | Конечно. | Of course. | Bien sûr. | Por supuesto. | Natürlich. | Claro.
+Չգիտեմ։ | Не знаю. | I don’t know. | Je ne sais pas. | No sé. | Ich weiß nicht. | Não sei.
+Ոչ մի խնդիր։ | Без проблем. | No problem. | Pas de problème. | No hay problema. | Kein Problem. | Sem problema.
+Ի՜նչ լավ է։ | Как здорово! | That’s great! | Super ! | ¡Qué bien! | Wie schön! | Que legal!
+Ի՞նչ ես անում այսօր։ | Что делаешь сегодня? | What are you doing today? | Qu’est-ce que tu fais aujourd’hui ? | ¿Qué haces hoy? | Was machst du heute? | O que você vai fazer hoje?
+Արի վաղը հանդիպենք։ | Давай встретимся завтра. | Let’s meet tomorrow. | On se voit demain. | Quedamos mañana. | Lass uns morgen treffen. | Vamos nos encontrar amanhã.
+Որտե՞ղ հանդիպենք։ | Где встретимся? | Where shall we meet? | On se retrouve où ? | ¿Dónde quedamos? | Wo treffen wir uns? | Onde nos encontramos?
+Ուշանում եմ, ներիր։ | Я опаздываю, прости. | I’m running late, sorry. | Je suis en retard, désolé. | Llego tarde, perdona. | Ich verspäte mich, entschuldige. | Estou atrasado, desculpa.
+Մեկ րոպե, հիմա կգամ։ | Минутку, сейчас приду. | One moment, I’ll be right there. | Une minute, j’arrive. | Un momento, ya voy. | Einen Moment, ich komme gleich. | Um momento, já vou.
+Առաջին անգամ եմ Հայաստանում։ | Я впервые в Армении. | It’s my first time in Armenia. | C’est ma première fois en Arménie. | Es mi primera vez en Armenia. | Ich bin zum ersten Mal in Armenien. | É minha primeira vez na Armênia.
+Մեկ տարի է, ինչ այստեղ եմ ապրում։ | Я живу здесь уже год. | I’ve been living here for a year. | J’habite ici depuis un an. | Vivo aquí desde hace un año. | Ich wohne seit einem Jahr hier. | Moro aqui há um ano.
+Ինձ դուր է գալիս Երևանը։ | Мне нравится Ереван. | I like Yerevan. | J’aime Erevan. | Me gusta Ereván. | Mir gefällt Jerewan. | Eu gosto de Yerevan.

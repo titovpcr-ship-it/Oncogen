@@ -1076,7 +1076,9 @@ function phrasesHTML(){
   const head='<button class="back" data-act="dgBack">‹ '+esc(T('back'))+'</button><div class="pb-head"><p class="pb-hy-t" lang="hy">Զրուցարան</p><h1 class="pg">'+esc(T('pbTitle'))+'</h1><p class="note">'+esc(T('pbLead'))+'</p></div>';
   if(!PB) return head+'<p class="note">…</p>';
   const off=audioOK()?'<div class="actions"><button class="btn secondary" data-act="pbOffline">'+esc(PBS==='ok'?T('pbSaved'):PBS==='run'?T('pbSaving'):T('pbSave'))+'</button></div>':'';
-  return head+off+PB.map(sec=>'<section class="set-sec pb-sec"><h2 class="sec">'+sec.e+' '+esc(sec.t[L]||sec.t.en)+'</h2><ul class="pb">'+
+  // разделы — чипами сверху: 20 разделов, ~300 фраз — без прокрутки всей ленты (O-190)
+  const nav='<nav class="pb-nav">'+PB.map(sec=>'<button class="tc-chip" data-act="pbJump" data-arg="'+esc(sec.k)+'">'+sec.e+' '+esc(sec.t[L]||sec.t.en)+'</button>').join('')+'</nav>';
+  return head+off+nav+PB.map(sec=>'<section class="set-sec pb-sec" id="pb-'+esc(sec.k)+'"><h2 class="sec">'+sec.e+' '+esc(sec.t[L]||sec.t.en)+'</h2><ul class="pb">'+
     sec.items.map(it=>'<li><button class="pb-row" data-act="pbSay" data-arg="'+esc(it[0])+'"><span class="pb-hy" lang="hy">'+esc(it[0])+'</span><span class="pb-tr">'+esc(exTr(it[0]))+'</span><span class="pb-tx">'+esc(it[1][L]||it[1].en)+'</span></button></li>').join('')+'</ul></section>').join('');
 }
 async function pbOffline(){ if(!PB||PBS==='run') return; PBS='run'; render(false); hit('pb_offline');
@@ -2580,6 +2582,7 @@ const H={
   tcCopy:async a=>{ const u=location.origin+'/?lang='+L+'&t='+a; hit('teach_link');
     try{ await navigator.clipboard.writeText(u); toast(T('tcCopied')); }catch(e){ toast(u); } },
   pbSay:(a,b)=>{ sayText(a,b); },
+  pbJump:k=>{ const e=document.getElementById('pb-'+k); if(e) e.scrollIntoView({behavior:'smooth',block:'start'}); },
   pbOffline:()=>pbOffline(),
   dgBack:()=>go(UI.lang?'home':'onboard'),
   dgPick:a=>{ const d=dgDay(), g=dgState(d.td); if(g.done) return; const i=+a, o=d.opts[i];
