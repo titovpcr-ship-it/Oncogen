@@ -326,6 +326,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     for f in ("index.php", "lib.php", "cron.php", ".htaccess"):
         shutil.copy(os.path.join(APP, "server", "api", f), os.path.join(api, f))
     split = split_data(out)
+    print("бот «слово дня»: %d слов с примером" % tg_words(out))
     icons(out)
     shutil.copytree(os.path.join(APP, "assets", "og"), os.path.join(out, "og"))
     json.dump(MANIFEST, open(os.path.join(out, "manifest.webmanifest"), "w", encoding="utf-8"),
@@ -367,14 +368,49 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     return out
 
 
-def seo_pages(out, url):
-    """Страницы поиска: слова с транскрипцией берутся из настоящего приложения
-    в браузере (dump_words.js), чтобы произношение совпало с тем, что в нём видно."""
+def words_tr():
+    """dist/words_tr.json — слова с переводами и транскрипцией из настоящего приложения (dump_words.js), свежее www/js."""
     import subprocess
     words = os.path.join(APP, "dist", "words_tr.json")
     src = [os.path.join(r, f) for r, _, fs in os.walk(os.path.join(SRC, "js")) for f in fs]
     if not os.path.exists(words) or os.path.getmtime(words) < max(map(os.path.getmtime, src)):
         subprocess.run(["node", os.path.join(HERE, "dump_words.js"), words], check=True, cwd=APP)
+    return words
+
+
+def tg_words(out):
+    """Слова для Telegram-бота «слово дня» (O-186) → api/tg_words.json (снаружи закрыт, читает сервер): только слова с примером
+    на всех шести языках, в перемешанном раз и навсегда порядке (зерно 186) — слово дня = номер дня по кругу."""
+    import random
+    sys.path.insert(0, HERE)
+    import build_seo
+    d = json.load(open(words_tr(), encoding="utf-8"))
+    slug = build_seo.word_slugs(d["words"])
+    ex = {l: json.load(open(os.path.join(SRC, "ex", l + ".json"), encoding="utf-8")) for l in TR_COL}
+    man = json.load(open(os.path.join(SRC, "audio", "manifest.json"), encoding="utf-8"))
+    TX = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de", "pt": "pt"}
+    TRK = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st", "de": "dt", "pt": "ptr"}
+    lv = [t["lv"] for t in d["topics"]]
+    rows = []
+    for w in d["words"]:
+        a = w["a"]
+        if not all(a in ex[l] for l in TR_COL):
+            continue
+        h = build_seo.aid(a)
+        au = f"audio/{man['dir']}/{h[:2]}/{h}.mp3"
+        rows.append({"a": a, "p": w.get("p", ""), "lv": lv[w["t"]], "u": slug[a],
+                     "au": au if os.path.exists(os.path.join(SRC, au)) else "",
+                     "x": {l: w[TX[l]] for l in TR_COL}, "t": {l: w[TRK[l]] for l in TR_COL},
+                     "e": [ex["ru"][a][0], {l: ex[l][a][1] for l in TR_COL}]})
+    random.Random(186).shuffle(rows)
+    json.dump(rows, open(os.path.join(out, "api", "tg_words.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    return len(rows)
+
+
+def seo_pages(out, url):
+    """Страницы поиска: слова с транскрипцией берутся из настоящего приложения
+    в браузере (dump_words.js), чтобы произношение совпало с тем, что в нём видно."""
+    words = words_tr()
     sys.path.insert(0, HERE)
     import build_seo
     build_seo.build(out, url, words)

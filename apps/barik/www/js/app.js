@@ -1063,7 +1063,8 @@ function dailyHTML(){
     (audioOK()?'<div class="audio"><button class="aud" data-act="sayFree" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button></div>':'')+
     '<p class="q">'+esc(g.done?T('dgWin'):T('dgQ'))+'</p><div class="opts list dg-opts">'+opts+'</div>'+
     (g.done?'<div class="dg-res"><p class="dg-sq">'+sq+'</p><p>'+esc(T('dgStreak',g.streak))+'</p><div class="actions"><button class="btn primary" data-act="dgShare">'+esc(T('dgShare'))+'</button>'+
-      '<button class="btn secondary" data-act="dgLearn">'+esc(T('dgLearn'))+'</button></div><p class="note">'+esc(T('dgNext'))+'</p></div>':'')+'</section>';
+      '<button class="btn secondary" data-act="dgLearn">'+esc(T('dgLearn'))+'</button></div><p class="note">'+esc(T('dgNext'))+'</p></div>':'')+
+    (ACC.tg?'<a class="dg-tg" href="https://t.me/'+ACC.tg+'?start='+L+'" target="_blank" rel="noopener">📬 '+esc(T('tgBot'))+'</a>':'')+'</section>';
 }
 function dgText(){ const d=dgDay(), g=dgState(d.td);
   return 'Barik · '+T('dgTitle')+' № '+d.n+'\n'+g.tries.map(()=>'🟥').join('')+'🟩 '+(g.tries.length+1)+'/4\n🔥 '+T('dgStreak',g.streak)+'\n'+location.origin+'/?daily&lang='+L; }
@@ -1830,7 +1831,7 @@ function api(r,body){
 }
 function accApply(j){
   if(j&&'user' in j) ACC.me=j.user;
-  if(j&&j.pay) ACC.pay=j.pay;
+  if(j&&j.pay) ACC.pay=j.pay; if(j) ACC.tg=/^\w{5,32}$/.test(j.tg||'')?j.tg:'';
   if(j&&j.crypto) ACC.crypto=j.crypto;
   BILL.setWeb(!!(ACC.me&&ACC.me.premium),(ACC.me&&ACC.me.until)||0);
   if(!ACC.me) SY.seen=false; else if(!SY.seen){ SY.seen=true; setTimeout(syncNow,0); }

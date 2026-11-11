@@ -50,6 +50,15 @@ if ($r === 'hit') {
     exit;
 }
 
+if ($r === 'tg') {
+    // вебхук Telegram-бота (O-186): только с секретом, который мы сами задали в setWebhook (tools/tg_setup.py)
+    if ($method !== 'POST') fail('method', 405);
+    if (!tg_on() || !hash_equals(tg_secret(), (string)($_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] ?? ''))) fail('auth', 401);
+    $u = json_decode(substr((string)file_get_contents('php://input'), 0, 100000), true);
+    if (is_array($u)) tg_update($u);
+    out(['ok' => true]);
+}
+
 if ($r === 'stats') {
     // сводка для владельца: ключ — от PEPPER (tools/stats.py берёт его из config.php хостинга)
     if (!hash_equals(stats_key(), (string)($_GET['key'] ?? ''))) fail('auth', 401);
@@ -92,7 +101,8 @@ if ($method === 'POST') {
 switch ($r) {
     case 'me':
         $u = session_user();
-        out(['ok' => true, 'user' => $u ? user_out($u) : null, 'pay' => pay_info(), 'crypto' => crypto_info($u)]);
+        out(['ok' => true, 'user' => $u ? user_out($u) : null, 'pay' => pay_info(), 'crypto' => crypto_info($u),
+             'tg' => tg_on() ? (string)cfg('TG_BOT', '') : '']);
 
     case 'start':
         need_post($method);

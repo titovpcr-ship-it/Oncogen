@@ -663,3 +663,196 @@ function gift_redeem(array $u, string $code): string {
     q('UPDATE users SET gift_until = ? WHERE id = ?', [$from + (int)$g['months'] * 30 * 86400, $u['id']]);
     return 'ok';
 }
+
+
+/* ---------- Telegram-бот «слово дня» (O-186) ----------
+   Подписчик пишет боту /start → каждый день в час своего языка (TG_HOUR, по UTC) — слово с примером, произношением (запись
+   Анаит) и кнопками «Послушать и выучить» (страница слова) и «Игра». Слова — api/tg_words.json (build_site.py), слово дня —
+   номер дня по кругу, у всех одно. Каналы (TG_CHANNELS «ru:@barik_ru,en:@…») получают то же. Вебхук — api/?r=tg с
+   заголовком X-Telegram-Bot-Api-Secret-Token = tg_secret(). Отправка — из cron.php (раз в час). */
+const TG_LANGS = ['ru' => 'Русский', 'en' => 'English', 'fr' => 'Français', 'es' => 'Español', 'de' => 'Deutsch', 'pt' => 'Português'];
+const TG_HOUR = ['ru' => 6, 'en' => 13, 'fr' => 7, 'es' => 12, 'de' => 7, 'pt' => 12];   // ≈ 9 утра: Москва, Нью-Йорк, Париж, Буэнос-Айрес, Берлин, Сан-Паулу
+const TG_D0 = 20768;                                                                   // 11.11.2026 — слово №1
+const TG_TEXT = [
+    'ru' => ['day' => 'Слово дня', 'listen' => '🔊 Послушать и выучить', 'game' => '🎯 Игра «Слово дня»',
+             'hello' => "Բարև! Я Barik. Каждое утро присылаю одно армянское слово: перевод, произношение и пример.\n\nСегодняшнее — ниже. Язык перевода — /lang, отписаться — /stop.",
+             'stop' => 'Готово, больше не присылаю. Вернуться — /start.', 'pick' => 'Язык перевода:', 'set' => 'Язык перевода — русский.',
+             'help' => "/word — слово дня\n/lang — язык перевода\n/stop — отписаться"],
+    'en' => ['day' => 'Word of the day', 'listen' => '🔊 Listen and learn', 'game' => '🎯 Word of the Day game',
+             'hello' => "Բարև! I'm Barik. Every morning I send one Armenian word: translation, pronunciation and an example.\n\nToday's word is below. Translation language — /lang, unsubscribe — /stop.",
+             'stop' => 'Done, no more messages. To come back — /start.', 'pick' => 'Translation language:', 'set' => 'Translation language: English.',
+             'help' => "/word — word of the day\n/lang — translation language\n/stop — unsubscribe"],
+    'fr' => ['day' => 'Mot du jour', 'listen' => '🔊 Écouter et apprendre', 'game' => '🎯 Jeu « Mot du jour »',
+             'hello' => "Բարև ! Je suis Barik. Chaque matin, je vous envoie un mot arménien : traduction, prononciation et exemple.\n\nCelui d’aujourd’hui est ci-dessous. Langue de traduction — /lang, se désabonner — /stop.",
+             'stop' => 'C’est fait, plus de messages. Pour revenir — /start.', 'pick' => 'Langue de traduction :', 'set' => 'Langue de traduction : français.',
+             'help' => "/word — mot du jour\n/lang — langue de traduction\n/stop — se désabonner"],
+    'es' => ['day' => 'Palabra del día', 'listen' => '🔊 Escuchar y aprender', 'game' => '🎯 Juego «Palabra del día»',
+             'hello' => "¡Բարև! Soy Barik. Cada mañana te envío una palabra en armenio: traducción, pronunciación y un ejemplo.\n\nLa de hoy está abajo. Idioma de la traducción — /lang, darse de baja — /stop.",
+             'stop' => 'Listo, no te envío más mensajes. Para volver — /start.', 'pick' => 'Idioma de la traducción:', 'set' => 'Idioma de la traducción: español.',
+             'help' => "/word — palabra del día\n/lang — idioma de la traducción\n/stop — darse de baja"],
+    'de' => ['day' => 'Wort des Tages', 'listen' => '🔊 Anhören und lernen', 'game' => '🎯 Spiel „Wort des Tages“',
+             'hello' => "Բարև! Ich bin Barik. Jeden Morgen schicke ich dir ein armenisches Wort: Übersetzung, Aussprache und ein Beispiel.\n\nDas heutige steht unten. Sprache der Übersetzung — /lang, abbestellen — /stop.",
+             'stop' => 'Erledigt, keine Nachrichten mehr. Zurück — /start.', 'pick' => 'Sprache der Übersetzung:', 'set' => 'Sprache der Übersetzung: Deutsch.',
+             'help' => "/word — Wort des Tages\n/lang — Sprache der Übersetzung\n/stop — abbestellen"],
+    'pt' => ['day' => 'Palavra do dia', 'listen' => '🔊 Ouvir e aprender', 'game' => '🎯 Jogo “Palavra do dia”',
+             'hello' => "Բարև! Eu sou o Barik. Toda manhã envio uma palavra em armênio: tradução, pronúncia e um exemplo.\n\nA de hoje está abaixo. Idioma da tradução — /lang, cancelar — /stop.",
+             'stop' => 'Pronto, não envio mais mensagens. Para voltar — /start.', 'pick' => 'Idioma da tradução:', 'set' => 'Idioma da tradução: português.',
+             'help' => "/word — palavra do dia\n/lang — idioma da tradução\n/stop — cancelar"],
+];
+
+function tg_on(): bool { return (string)cfg('TG_TOKEN', '') !== ''; }
+
+function tg_secret(): string {
+    $s = (string)cfg('TG_SECRET', '');
+    return $s !== '' ? $s : substr(hash_hmac('sha256', 'tg', (string)cfg('PEPPER', 'barik')), 0, 40);
+}
+
+function tg_db(): void {
+    static $done = false;
+    if ($done) return;
+    // chat — id чата (число) или @канал; on_ — подписан; day — день (UTC) последнего слова; kind — private | channel
+    db()->exec('CREATE TABLE IF NOT EXISTS tg(chat TEXT PRIMARY KEY, lang TEXT NOT NULL DEFAULT \'en\', on_ INTEGER NOT NULL DEFAULT 1,
+        day INTEGER NOT NULL DEFAULT 0, kind TEXT NOT NULL DEFAULT \'private\', created INTEGER NOT NULL)');
+    $done = true;
+}
+
+function tg(string $method, array $params): ?array {
+    $tok = (string)cfg('TG_TOKEN', '');
+    if ($tok === '' || !function_exists('curl_init')) return null;
+    $ch = curl_init(rtrim((string)cfg('TG_API', 'https://api.telegram.org'), '/') . '/bot' . $tok . '/' . $method);
+    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 20,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json'], CURLOPT_POSTFIELDS => json_encode($params, JSON_UNESCAPED_UNICODE)]);
+    $r = curl_exec($ch);
+    curl_close($ch);
+    $j = is_string($r) ? json_decode($r, true) : null;
+    if (!is_array($j) || empty($j['ok'])) error_log('barik tg ' . $method . ': ' . substr((string)$r, 0, 300));
+    return is_array($j) ? $j : null;
+}
+
+function tg_lang($code): string {
+    $l = strtolower(substr((string)$code, 0, 2));
+    return isset(TG_LANGS[$l]) ? $l : 'en';
+}
+
+/* слово дня: $day — номер дня UTC */
+function tg_word(int $day): ?array {
+    static $w = null;
+    if ($w === null) {
+        $f = (string)cfg('TG_WORDS', __DIR__ . '/tg_words.json');
+        $w = is_file($f) ? (json_decode((string)file_get_contents($f), true) ?: []) : [];
+    }
+    if (!$w) return null;
+    $n = count($w);
+    return $w[(($day - TG_D0) % $n + $n) % $n];
+}
+
+function tg_post(string $chat, string $lang, int $day): ?array {
+    $w = tg_word($day);
+    if (!$w) return null;
+    $t = TG_TEXT[$lang] ?? TG_TEXT['en'];
+    $h = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $site = rtrim((string)cfg('SITE_URL', 'https://barik.am/'), '/') . '/';
+    $txt = '📅 ' . $h($t['day']) . ' · ' . gmdate('d.m', $day * 86400) . "\n\n"
+         . ($w['p'] !== '' ? $w['p'] . ' ' : '') . '<b>' . $h($w['a']) . '</b>  [' . $h($w['t'][$lang] ?? '') . "]\n"
+         . $h($w['x'][$lang] ?? '') . "\n\n"
+         . '«' . $h($w['e'][0]) . "»\n<i>" . $h($w['e'][1][$lang] ?? '') . '</i>';
+    $kb = ['inline_keyboard' => [[['text' => $t['listen'], 'url' => $site . $lang . '/w/' . $w['u'] . '.html']],
+                                 [['text' => $t['game'], 'url' => $site . '?daily&lang=' . $lang]]]];
+    $r = null;
+    if ($w['au'] !== '') {
+        $r = tg('sendAudio', ['chat_id' => $chat, 'audio' => $site . $w['au'], 'caption' => $txt, 'parse_mode' => 'HTML',
+                              'title' => $w['a'], 'performer' => 'Barik', 'reply_markup' => $kb]);
+        if (isset($r['error_code']) && (int)$r['error_code'] === 403) return $r;          // бот заблокирован — без второй попытки
+    }
+    if (!$r || empty($r['ok'])) $r = tg('sendMessage', ['chat_id' => $chat, 'text' => $txt, 'parse_mode' => 'HTML',
+                                                       'reply_markup' => $kb, 'link_preview_options' => ['is_disabled' => true]]);
+    return $r;
+}
+
+function tg_say(string $chat, string $text, ?array $kb = null): void {
+    $p = ['chat_id' => $chat, 'text' => $text];
+    if ($kb) $p['reply_markup'] = $kb;
+    tg('sendMessage', $p);
+}
+
+function tg_lang_kb(): array {
+    $row = []; $rows = [];
+    foreach (TG_LANGS as $l => $name) { $row[] = ['text' => $name, 'callback_data' => 'lang:' . $l]; if (count($row) === 2) { $rows[] = $row; $row = []; } }
+    return ['inline_keyboard' => $rows];
+}
+
+/* одно обновление от Telegram (вебхук) */
+function tg_update(array $u, ?int $now = null): void {
+    tg_db();
+    $now = $now ?? time();
+    $day = intdiv($now, 86400);
+    if (isset($u['callback_query'])) {
+        $c = $u['callback_query'];
+        $chat = (string)($c['message']['chat']['id'] ?? '');
+        tg('answerCallbackQuery', ['callback_query_id' => (string)($c['id'] ?? '')]);
+        if ($chat === '' || !preg_match('/^lang:(ru|en|fr|es|de|pt)$/', (string)($c['data'] ?? ''), $m)) return;
+        q('INSERT INTO tg(chat, lang, on_, day, created) VALUES(?, ?, 1, ?, ?) ON CONFLICT(chat) DO UPDATE SET lang = excluded.lang, on_ = 1, day = excluded.day',
+          [$chat, $m[1], $day, $now]);
+        tg_say($chat, TG_TEXT[$m[1]]['set']);
+        tg_post($chat, $m[1], $day);
+        stat_add($day, 'e:tg_lang');
+        return;
+    }
+    if (isset($u['my_chat_member'])) {                 // бота заблокировали / удалили из чата
+        $st = (string)($u['my_chat_member']['new_chat_member']['status'] ?? '');
+        if ($st === 'kicked' || $st === 'left') q('UPDATE tg SET on_ = 0 WHERE chat = ?', [(string)($u['my_chat_member']['chat']['id'] ?? '')]);
+        return;
+    }
+    $m = $u['message'] ?? null;
+    if (!is_array($m) || ($m['chat']['type'] ?? '') !== 'private') return;
+    $chat = (string)$m['chat']['id'];
+    $text = trim((string)($m['text'] ?? ''));
+    $row = q('SELECT * FROM tg WHERE chat = ?', [$chat])->fetch();
+    $lang = $row ? (string)$row['lang'] : tg_lang($m['from']['language_code'] ?? '');
+    if (preg_match('~^/start(?:@\w+)?(?:\s+(\S+))?~', $text, $s)) {
+        if (isset($s[1]) && isset(TG_LANGS[$s[1]])) $lang = $s[1];          // ссылка с сайта: t.me/<бот>?start=ru
+        q('INSERT INTO tg(chat, lang, on_, day, created) VALUES(?, ?, 1, ?, ?) ON CONFLICT(chat) DO UPDATE SET lang = excluded.lang, on_ = 1, day = excluded.day',
+          [$chat, $lang, $day, $now]);
+        tg_say($chat, TG_TEXT[$lang]['hello']);
+        tg_post($chat, $lang, $day);
+        stat_add($day, 'e:tg_start');
+        return;
+    }
+    if (preg_match('~^/stop~', $text)) {
+        q('UPDATE tg SET on_ = 0 WHERE chat = ?', [$chat]);
+        tg_say($chat, TG_TEXT[$lang]['stop']);
+        stat_add($day, 'e:tg_stop');
+        return;
+    }
+    if (preg_match('~^/lang~', $text)) { tg_say($chat, TG_TEXT[$lang]['pick'], tg_lang_kb()); return; }
+    if (preg_match('~^/word~', $text)) { tg_post($chat, $lang, $day); return; }
+    tg_say($chat, TG_TEXT[$lang]['help']);
+}
+
+/* рассылка (cron.php, раз в час): кому наступил час его языка и сегодня ещё не слали. Возвращает [отправлено, ошибок] */
+function tg_run(?int $now = null): array {
+    if (!tg_on() || !tg_word(0)) return [0, 0];
+    tg_db();
+    $now = $now ?? time();
+    $day = intdiv($now, 86400);
+    $hour = (int)gmdate('G', $now);
+    foreach (array_filter(array_map('trim', explode(',', (string)cfg('TG_CHANNELS', '')))) as $c) {
+        if (!preg_match('/^(ru|en|fr|es|de|pt):(@\w{4,}|-100\d+)$/', $c, $m)) continue;
+        q('INSERT INTO tg(chat, lang, on_, kind, created) VALUES(?, ?, 1, \'channel\', ?) ON CONFLICT(chat) DO UPDATE SET lang = excluded.lang, kind = \'channel\'', [$m[2], $m[1], $now]);
+    }
+    $sent = 0; $bad = 0;
+    foreach (q('SELECT * FROM tg WHERE on_ = 1 AND day < ?', [$day])->fetchAll() as $r) {
+        if ($hour < (TG_HOUR[$r['lang']] ?? 9)) continue;
+        $res = tg_post((string)$r['chat'], (string)$r['lang'], $day);
+        if ($res && !empty($res['ok'])) { $sent++; q('UPDATE tg SET day = ? WHERE chat = ?', [$day, $r['chat']]); }
+        else {
+            $bad++;
+            $ec = (int)($res['error_code'] ?? 0);           // заблокировал бота / чата нет — больше не слать (иная ошибка — попробуем через час)
+            if ($ec === 403 || ($ec === 400 && stripos((string)($res['description'] ?? ''), 'chat not found') !== false))
+                q('UPDATE tg SET on_ = 0, day = ? WHERE chat = ?', [$day, $r['chat']]);
+        }
+        usleep(50000);                                  // Telegram: не больше ~30 сообщений в секунду
+    }
+    if ($sent) stat_add($day, 'e:tg_sent', $sent);
+    return [$sent, $bad];
+}

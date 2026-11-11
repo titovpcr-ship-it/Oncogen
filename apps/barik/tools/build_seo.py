@@ -384,6 +384,18 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2):
             f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a></footer></body></html>')
 
 
+def word_slugs(words):
+    """Адрес страницы слова (без .html): латиница по произношению, при совпадении — хвост хэша. Тот же — у бота (O-186)."""
+    wslug, used = {}, set()
+    for w in words:
+        s = ascii_slug(w["lt"])
+        if s in used:
+            s = f"{s}-{hashlib.sha1(w['a'].encode()).hexdigest()[:4]}"
+        used.add(s)
+        wslug[w["a"]] = s
+    return wslug
+
+
 def build(site, base, words_path):
     d = json.load(open(words_path, encoding="utf-8"))
     topics, words = d["topics"], d["words"]
@@ -392,13 +404,7 @@ def build(site, base, words_path):
         base += "/"
     # Адреса: слово — латиницей по произношению (как в английской версии), при
     # совпадении — хвост из хэша армянского написания; тема — по английскому названию.
-    wslug, used = {}, set()
-    for w in words:
-        s = ascii_slug(w["lt"])
-        if s in used:
-            s = f"{s}-{hashlib.sha1(w['a'].encode()).hexdigest()[:4]}"
-        used.add(s)
-        wslug[w["a"]] = s
+    wslug = word_slugs(words)
     tslug, tused = {}, set()
     for i, t in enumerate(topics):
         s = ascii_slug(t["en"], 50)
