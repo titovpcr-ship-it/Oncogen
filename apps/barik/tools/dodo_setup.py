@@ -75,7 +75,7 @@ def main():
     a = ap.parse_args()
     D.load_env()
     if a.live:   # боевые значения хранятся рядом с тестовыми под своими именами (живой вебхук создан через API)
-        for k in ('API_KEY', 'PRODUCT_MONTH', 'WEBHOOK_SECRET'):
+        for k in ('API_KEY', 'PRODUCT_MONTH', 'WEBHOOK_SECRET', 'PRODUCT_GIFT3', 'PRODUCT_GIFT12'):
             os.environ['DODO_' + k] = os.environ.get('DODO_LIVE_' + k, '')
         os.environ['DODO_MODE'] = 'live'
     if a.off:
@@ -109,8 +109,19 @@ def main():
     if os.environ.get('DODO_WEBHOOK_SECRET', '').strip():
         text = set_key(text, 'DODO_WEBHOOK_SECRET', os.environ['DODO_WEBHOOK_SECRET'].strip())
     text = set_key(text, 'PRICE_MONTH_LABEL', os.environ.get('PRICE_MONTH_LABEL', '$4.99').strip())
+    gifts = []
+    for m in (3, 12):                      # подарочные коды (O-184): разовые товары; нет в .env — подарка этого срока нет
+        g = os.environ.get('DODO_PRODUCT_GIFT%d' % m, '').strip()
+        if g:
+            code, gj = dodo('GET', '/products/' + g, key, mode)
+            if code != 200:
+                sys.exit('Dodo (%s): подарок на %d мес. %s не найден — HTTP %s' % (mode, m, g, code))
+            gifts.append('%d мес. %s' % (m, os.environ.get('GIFT%d_LABEL' % m, '')))
+        text = set_key(text, 'DODO_PRODUCT_GIFT%d' % m, g)
+        text = set_key(text, 'GIFT%d_LABEL' % m, os.environ.get('GIFT%d_LABEL' % m, '').strip() if g else '')
     save(cp, text)
-    print('config.php: Dodo (%s), тариф %s, подпись цены %s' % (mode, prod, os.environ.get('PRICE_MONTH_LABEL', '$4.99')))
+    print('config.php: Dodo (%s), тариф %s, подпись цены %s, подарки: %s' % (mode, prod, os.environ.get('PRICE_MONTH_LABEL', '$4.99'),
+                                                                        ', '.join(gifts) or 'нет'))
 
 
 if __name__ == '__main__':
