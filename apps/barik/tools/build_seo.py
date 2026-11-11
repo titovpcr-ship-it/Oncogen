@@ -1239,3 +1239,41 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+def sitemap_lastmod(site, base, store, today=None):
+    """lastmod в sitemap (O-206, совет поддержки хостинга: робот не перекачивает всё заново): дата — когда страница
+    действительно изменилась. Отпечатки страниц и даты — в data/seo/lastmod.json.gz (в git): новая или изменённая страница
+    получает дату сборки, неизменная — прежнюю. Указатель sitemap.xml — самая свежая дата своего файла."""
+    import datetime, gzip, hashlib
+    today = today or datetime.date.today().isoformat()
+    old = json.load(gzip.open(store, "rt", encoding="utf-8")) if os.path.exists(store) else {}
+    new, files = {}, {}
+    for f in sorted(os.listdir(site)):
+        if not (f.startswith("sitemap-") and f.endswith(".xml")): continue
+        x = open(os.path.join(site, f), encoding="utf-8").read()
+        last = ""
+
+        def put(m):
+            nonlocal last
+            u = m.group(1)
+            rel = u[len(base):] if u.startswith(base) else ""
+            p = os.path.join(site, rel + ("index.html" if rel == "" or rel.endswith("/") else ""))
+            h = hashlib.sha1(open(p, "rb").read()).hexdigest()[:10] if os.path.exists(p) else ""
+            o = old.get(rel)
+            d = o[1] if o and o[0] == h else today
+            new[rel] = [h, d]; last = max(last, d)
+            return f"<loc>{u}</loc><lastmod>{d}</lastmod>"
+        x = re.sub(r"<loc>([^<]+)</loc>(?!<lastmod>)", put, x)
+        open(os.path.join(site, f), "w", encoding="utf-8").write(x)
+        files[f] = last
+    ix = os.path.join(site, "sitemap.xml"); x = open(ix, encoding="utf-8").read()
+    x = re.sub(r"<loc>([^<]+/(sitemap-[^<]+\.xml))</loc>(?:<lastmod>[^<]*</lastmod>)?",
+               lambda m: f"<loc>{m.group(1)}</loc>" + (f"<lastmod>{files[m.group(2)]}</lastmod>" if files.get(m.group(2)) else ""), x)
+    open(ix, "w", encoding="utf-8").write(x)
+    os.makedirs(os.path.dirname(store), exist_ok=True)
+    with gzip.open(store, "wt", encoding="utf-8") as g:
+        json.dump(new, g, separators=(",", ":"), sort_keys=True)
+    ch = sum(1 for k, v in new.items() if v[1] == today)
+    return len(new), ch
+

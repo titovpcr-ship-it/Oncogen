@@ -440,6 +440,8 @@ def seo_pages(out, url):
     covers = json.load(open(words, encoding="utf-8")).get("covers") or {}
     n, hl = build_seo.build_covers(out, url if url.endswith("/") else url + "/", covers, land_meta())
     print(f"обложка на языках (learn.html): {n}")
+    nl, ch = build_seo.sitemap_lastmod(out, url if url.endswith("/") else url + "/", os.path.join(APP, "data", "seo", "lastmod.json.gz"))
+    print(f"sitemap: lastmod у {nl} адресов, изменилось сегодня {ch}")
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     if n and 'hreflang="ru"' not in html:              # главная — английская обложка; её языковые пары (O-201)
         html = html.replace("</head>", hl + "\n</head>", 1)
