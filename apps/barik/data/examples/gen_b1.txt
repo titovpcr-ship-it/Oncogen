@@ -5129,3 +5129,10 @@
 դռնփակ | Հանդիպումը դռնփակ է։ | Встреча закрытая. | The meeting is closed-door. | La réunion est à huis clos. | La reunión es a puerta cerrada. | Das Treffen ist nicht öffentlich. | A reunião é a portas fechadas.
 համագույն | Նրանց գլխարկներն ու շալվարները համագույն են։ | Их шляпы и брюки одинакового цвета. | Their hats and pants are the same color. | Leurs chapeaux et pantalons sont de la même couleur. | Sus sombreros y pantalones son del mismo color. | Ihre Hüte und Hosen haben die gleiche Farbe. | Seus chapéus e calças são da mesma cor.
 համառոտ | Պատասխանը համառոտ էր։ | Ответ был кратким. | The answer was brief. | La réponse était brève. | La respuesta fue breve. | Die Antwort war kurz. | A resposta foi breve.
+հերքելի | Այս պնդումը հերքելի է։ | Это утверждение опровержимо. | This statement is refutable. | Cette affirmation est réfutable. | Esta afirmación es refutable. | Diese Aussage ist widerlegbar. | Esta afirmação é refutável.
+հիբրիդային | Դա հիբրիդային կենդանի է։ | Это гибридное животное. | It is a hybrid animal. | C'est un animal hybride. | Es un animal híbrido. | Es ist ein hybrides Tier. | É um animal híbrido.
+հինավուրց | Մենք այցելեցինք հինավուրց տաճար։ | Мы посетили древний храм. | We visited an ancient temple. | Nous avons visité un temple ancien. | Visitamos un templo antiguo. | Wir besuchten einen antiken Tempel. | Visitamos um templo antigo.
+հյութեղ | Այս նարինջը հյութեղ է։ | Этот апельсин сочный. | This orange is juicy. | Cette orange est juteuse. | Esta naranja es jugosa. | Diese Orange ist saftig. | Esta laranja é suculenta.
+ճանճկեն | Այս ձուն ճանճկեն է։ | Это яйцо в крапинку. | This egg is speckled. | Cet œuf est tacheté. | Este huevo es moteado. | Dieses Ei ist gesprenkelt. | Este ovo é pintado.
+ճոխ | Պալատը ճոխ է։ | Дворец роскошный. | The palace is splendid. | Le palais est splendide. | El palacio es espléndido. | Der Palast ist prächtig. | O palácio é esplêndido.
+ճոռոմ | Նրա ելույթը ճոռոմ էր։ | Его выступление было напыщенным. | His speech was ornate. | Son discours était ampoulé. | Su discurso fue ampuloso. | Seine Rede war schwülstig. | Seu discurso foi pomposo.
