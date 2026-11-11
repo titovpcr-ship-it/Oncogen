@@ -5045,3 +5045,11 @@
 ղարաբաղցի | Ղարաբաղցիները հայտնի են իրենց խոհանոցով։ | Карабахские армяне известны своей кухней. | Armenians from Karabakh are known for their cuisine. | Les Arméniens du Karabakh sont connus pour leur cuisine. | Los armenios de Karabaj son conocidos por su cocina. | Die Armenier aus Bergkarabach sind für ihre Küche bekannt. | Os armênios do Carabaque são conhecidos por sua culinária.
 ճանապարհորդ | Ճանապարհորդը շատ երկրներ է այցելել։ | Путешественник посетил много стран. | The traveler has visited many countries. | Le voyageur a visité de nombreux pays. | El viajero ha visitado muchos países. | Der Reisende hat viele Länder besucht. | O viajante visitou muitos países.
 ճգնավոր | Ճգնավորը ապրում է անտառում։ | Отшельник живёт в лесу. | The hermit lives in the forest. | L'ermite vit dans la forêt. | El ermitaño vive en el bosque. | Der Einsiedler lebt im Wald. | O eremita vive na floresta.
+ճորտատեր | Նրա պապը ճորտատեր էր։ | Его дед был крепостником. | His grandfather was a serf-owner. | Son grand-père était un propriétaire de serfs. | Su abuelo era un terrateniente de siervos. | Sein Großvater war ein Leibeigenenbesitzer. | Seu avô era um senhor de servos.
+մահմեդական | Նա մահմեդական է։ | Он мусульманин. | He is a Muslim. | Il est musulman. | Él es musulmán. | Er ist Muslim. | Ele é muçulmano.
+մամա | Իմ մաման բժիշկ է։ | Моя мама врач. | My mother is a doctor. | Ma mère est médecin. | Mi madre es doctora. | Meine Mutter ist Ärztin. | Minha mãe é médica.
+մայրապետ | Մայրապետը վանքում է ապրում։ | Игуменья живёт в монастыре. | The abbess lives in the monastery. | L'abbesse vit dans le monastère. | La abadesa vive en el monasterio. | Die Äbtissin lebt im Kloster. | A abadessa mora no mosteiro.
+մայրասպան | Նա մայրասպան է։ | Он матереубийца. | He is a matricide. | Il est un matricide. | Él es un matricida. | Er ist ein Muttermörder. | Ele é um matricida.
+մայրիկ | Մայրիկ, ես քեզ սիրում եմ։ | Мамочка, я тебя люблю. | Mommy, I love you. | Maman, je t'aime. | Mamá, te quiero. | Mama, ich liebe dich. | Mamãe, eu te amo.
+մանչ | Մանչս դպրոցում է։ | Мой сын в школе. | My son is at school. | Mon fils est à l'école. | Mi hijo está en la escuela. | Mein Sohn ist in der Schule. | Meu filho está na escola.
+մասոն | Նա մասոն է։ | Он масон. | He is a Freemason. | Il est franc-maçon. | Él es masón. | Er ist Freimaurer. | Ele é maçom.
