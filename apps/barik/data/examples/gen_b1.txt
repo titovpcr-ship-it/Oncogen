@@ -2181,3 +2181,10 @@
 սպիտակամաշկ | Նա սպիտակամաշկ է։ | Она светлокожая. | She is fair-skinned. | Elle a la peau claire. | Ella tiene la piel clara. | Sie ist hellhäutig. | Ela tem a pele clara.
 թխամորթ | Ես թխամորթ եմ։ | Я темнокожий. | I am dark-skinned. | J'ai la peau mate. | Yo tengo la piel morena. | Ich bin dunkelhäutig. | Eu tenho a pele morena.
 կարմրած | Նրա երեսը կարմրած էր։ | Его лицо покраснело. | His face was red. | Son visage était rouge. | Su cara estaba roja. | Sein Gesicht war rot. | O rosto dele estava vermelho.
+դժգույն | Նրա դեմքը դժգույն էր։ | Его лицо было бледным. | His face was pale. | Son visage était pâle. | Su rostro estaba pálido. | Sein Gesicht war blass. | Seu rosto estava pálido.
+կարկատան | Այս վերնաշապիկի վրա կարկատան կա։ | На этой рубашке есть заплатка. | There is a patch on this shirt. | Il y a une pièce sur cette chemise. | Hay un parche en esta camisa. | Auf diesem Hemd ist ein Flicken. | Há um remendo nesta camisa.
+ճարմանդ | Նրա գոտու ճարմանդը կոտրվել է։ | Его пряжка на ремне сломана. | His belt buckle is broken. | La boucle de sa ceinture est cassée. | La hebilla de su cinturón está rota. | Seine Gürtelschnalle ist kaputt. | A fivela do cinto dele está quebrada.
+աստառ | Այս պիջակի աստառը մետաքսե է։ | Подкладка этого пиджака шёлковая. | The lining of this jacket is silk. | La doublure de cette veste est en soie. | El forro de esta chaqueta es de seda. | Das Futter dieser Jacke ist aus Seide. | O forro deste casaco é de seda.
+ծալք | Նրա շրջազգեստի վրա ծալք կա։ | На её платье есть складка. | Her dress has a fold. | Sa robe a un pli. | Su vestido tiene un pliegue. | Ihr Kleid hat eine Falte. | O vestido dela tem uma dobra.
+կար | Նրա զգեստի կարը բացվել է։ | Шов на её платье разошёлся. | The seam on her dress has come undone. | La couture de sa robe s'est défaite. | La costura de su vestido se ha deshecho. | Die Naht an ihrem Kleid hat sich geöffnet. | A costura do vestido dela se desfez.
+կարկատել | Նա կարկատեց վերնաշապիկը։ | Он залатал рубашку. | He patched the shirt. | Il a rapiécé la chemise. | Él remendó la camisa. | Er flickte das Hemd. | Ele remendou a camisa.
