@@ -2915,5 +2915,5 @@ Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='sessio
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();
   if(/[?&]pay=gift(?:&|$)/.test(location.search||'')) giftReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={trPhrase,cursiveSVG,get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={trPhrase,cursiveSVG,writeCursive,get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

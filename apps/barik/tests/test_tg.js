@@ -46,7 +46,7 @@ const TOKEN='123:abc', SECRET='tg-secret-test', D0=20768;
   const cap=post&&(post.b.caption||post.b.text)||'';
   ok(cap.includes('<b>'+w0.a+'</b>')&&cap.includes('[ '.trim()+w0.t.fr+']')&&cap.includes(w0.x.fr)&&cap.includes('ex-fr &lt;b&gt;')&&/Mot du jour/.test(cap),'слово дня: армянское, произношение, перевод, пример (HTML экранирован) — '+w0.a);
   const kb=post&&post.b.reply_markup.inline_keyboard.flat();
-  ok(kb&&kb[0].url==='https://barik.am/fr/w/'+w0.u+'.html'&&kb[1].url==='https://barik.am/?daily&lang=fr','кнопки: страница слова и игра на языке подписчика');
+  ok(kb&&kb[0].url==='https://barik.am/fr/w/'+w0.u+'.html'&&kb[1].url==='https://barik.am/?daily&lang=fr&from=tg_bot','кнопки: страница слова и игра на языке подписчика');
   if(w0.au) ok(post.m==='sendAudio'&&post.b.audio==='https://barik.am/'+w0.au&&post.b.title===w0.a,'с записью — аудио с подписью');
   n=seen.length; await hook(msg(6,'/start ru','en'));
   s=after(n); ok(s.some(x=>/Каждое утро/.test(x.b.text||''))&&s.some(x=>(x.b.caption||x.b.text||'').includes(w0.x.ru)),'ссылка с сайта ?start=ru — русский, даже если Telegram английский');

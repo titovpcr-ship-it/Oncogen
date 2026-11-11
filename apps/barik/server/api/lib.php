@@ -833,7 +833,7 @@ function tg_post(string $chat, string $lang, int $day): ?array {
          . $h($w['x'][$lang] ?? '') . "\n\n"
          . '«' . $h($w['e'][0]) . "»\n<i>" . $h($w['e'][1][$lang] ?? '') . '</i>';
     $kb = ['inline_keyboard' => [[['text' => $t['listen'], 'url' => $site . $lang . '/w/' . $w['u'] . '.html']],
-                                 [['text' => $t['game'], 'url' => $site . '?daily&lang=' . $lang]]]];
+                                 [['text' => $t['game'], 'url' => $site . '?daily&lang=' . $lang . '&from=' . ((str_starts_with($chat, '@') || str_starts_with($chat, '-100')) ? 'tg_channel' : 'tg_bot')]]]];   // метка источника (O-198)
     $r = null;
     if ($w['au'] !== '') {
         $r = tg('sendAudio', ['chat_id' => $chat, 'audio' => $site . $w['au'], 'caption' => $txt, 'parse_mode' => 'HTML',
