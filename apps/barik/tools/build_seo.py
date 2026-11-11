@@ -408,7 +408,8 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=No
             f'<body><header class="top"><div class="top-in"><a class="brand" href="{up}"><img class="mk" src="{up}mark.svg" alt="" width="32" height="35">'
             f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
             f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
-            f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a></footer></body></html>')
+            f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a> · '
+            f'<a href="https://www.instagram.com/barik_armenian" rel="noopener">Instagram</a> · <a href="https://t.me/armenian_word_daily" rel="noopener">Telegram</a></footer></body></html>')
 
 
 def folder_urls(base, h):

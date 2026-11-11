@@ -37,7 +37,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       // голоса — синтез речи Azure: на обложке не «живые» и не «записаны», рядом с примерами — пометка (O-159, правила Microsoft)
       { const lt=await pg.textContent('.ld');
         ok(!/живы[мйх]? голос|живой голос|записаны/i.test(lt)&&(await pg.textContent('.hear-note')).includes('синтезированные голоса Microsoft Azure'),'обложка: голоса не «живые», пометка о синтезе речи');
-        ok((await pg.textContent('.ld-foot')).includes('hello@barik.am')&&await pg.locator('.ld-foot [data-act=landDoc][data-arg=terms]').count()===1,'подвал: почта и условия'); }
+        ok((await pg.textContent('.ld-foot')).includes('hello@barik.am')&&await pg.locator('.ld-foot [data-act=landDoc][data-arg=terms]').count()===1,'подвал: почта и условия'); 
+        ok(await pg.locator('.ld-foot .ld-social a[href="https://www.instagram.com/barik_armenian"]').count()===1&&await pg.locator('.ld-foot .ld-social a[href="https://t.me/armenian_word_daily"]').count()===1,'подвал: Instagram и Telegram-канал'); }
       ok(await pg.locator('.ld-abc button').count()===39,'под прописью — все 39 букв');
       await pg.click('.ld-abc button >> nth=17');
       const lab=await pg.getAttribute('#featCb .cb','aria-label')||'';

@@ -955,9 +955,15 @@ function onboardHTML(){
     '<svg class="end-hills" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V86c160-50 320-40 480-10s320 34 460-6c100-28 190-24 260-8v78z" fill="currentColor" opacity=".55"/><path d="M0 140v-30c200-40 380-10 560 4 180 14 380-26 640-10v36z" fill="currentColor"/></svg></section>'+
   '<footer class="ld-foot"><div class="ld-wrap">'+brand+'<p>'+esc(D.foot)+'</p>'+
     '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="project">'+esc(T('project'))+'</button><button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button><button class="lnk" data-act="landDoc" data-arg="terms">'+esc(T('terms'))+'</button><button class="lnk" data-act="landDoc" data-arg="refund">'+esc(T('refund'))+'</button><button class="lnk" data-act="tcOpen">'+esc(T('tcTitle'))+'</button><button class="lnk" data-act="landDoc" data-arg="credits">'+esc(T('credits'))+'</button></p>'+
-    '<p class="ld-mail"><a href="mailto:'+esc(CFG.CONTACT||'hello@barik.am')+'">'+esc(CFG.CONTACT||'hello@barik.am')+'</a></p><p class="cr">© 2026 Barik</p></div></footer>'+
+    socialHTML()+'<p class="ld-mail"><a href="mailto:'+esc(CFG.CONTACT||'hello@barik.am')+'">'+esc(CFG.CONTACT||'hello@barik.am')+'</a></p><p class="cr">© 2026 Barik</p></div></footer>'+
   '</div>';
 }
+/* Подписаться: Instagram и Telegram-канал «слово дня» (CFG.SOCIAL) — в подвале обложки */
+const SOC_IC={ig:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg>',
+  tg:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.2 2.9 11.4c-1 .4-.9 1.2 0 1.5l4.6 1.4 1.8 5.5c.2.6.9.8 1.4.3l2.6-2.4 4.8 3.5c.6.4 1.3.1 1.5-.6l3.1-14.6c.2-.9-.4-1.3-1.2-1z" fill="currentColor"/></svg>'};
+function socialHTML(){ const S=CFG.SOCIAL||{}; if(BILL.native||!(S.ig||S.tg)) return '';
+  return '<p class="ld-social">'+(S.ig?'<a href="'+esc(S.ig)+'" target="_blank" rel="noopener" aria-label="Instagram">'+SOC_IC.ig+'<span>Instagram</span></a>':'')+
+    (S.tg?'<a href="'+esc(S.tg)+'" target="_blank" rel="noopener" aria-label="Telegram">'+SOC_IC.tg+'<span>Telegram</span></a>':'')+'</p>'; }
 /* Телефон на обложке: картинка и слово, через миг загорается верный ответ, потом следующее слово. */
 function landDemo(){
   const card=document.getElementById('phCard'), opts=document.getElementById('phOpts'); if(!card) return;
