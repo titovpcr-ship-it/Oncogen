@@ -698,3 +698,11 @@
 դուդուկ | Նա դուդուկ է նվագում։ | Он играет на дудуке. | He plays the duduk. | Il joue du duduk. | Él toca el duduk. | Er spielt Duduk. | Ele toca duduk.
 գաթա | Գաթան համեղ է։ | Гата вкусная. | Gata is delicious. | La gata est délicieuse. | La gata es deliciosa. | Gata ist lecker. | A gata é deliciosa.
 սուջուխ | Սուջուխը համեղ քաղցրավենիք է։ | Суджух - вкусная сладость. | Sujukh is a delicious sweet. | Le sudjouk est une délicieuse confiserie. | El sujuk es un dulce delicioso. | Sujukh ist eine leckere Süßigkeit. | O sujukh é um doce delicioso.
+բաստուրմա | Բաստուրման համեղ է։ | Бастурма вкусная. | Basturma is delicious. | La bastourma est délicieuse. | La basturma es deliciosa. | Basturma ist lecker. | A basturma é deliciosa.
+կոնյակ | Կոնյակը հայտնի է Հայաստանում։ | Коньяк известен в Армении. | Cognac is famous in Armenia. | Le cognac est célèbre en Arménie. | El coñac es famoso en Armenia. | Cognac ist in Armenien berühmt. | O conhaque é famoso na Armênia.
+թան | Ամռանը թան ենք խմում։ | Летом мы пьём тан. | In summer we drink tan. | En été, nous buvons du tan. | En verano bebemos tan. | Im Sommer trinken wir Tan. | No verão bebemos tan.
+Վարդավառ | Վարդավառը ջրի տոն է։ | Вардавар — водный праздник. | Vardavar is a water festival. | Vardavar est une fête de l'eau. | Vardavar es una fiesta del agua. | Vardavar ist ein Wasserfest. | Vardavar é uma festa da água.
+Տրնդեզ | Տրնդեզը փետրվարին է։ | Трндез бывает в феврале. | Trndez is in February. | Trndez est en février. | Trndez es en febrero. | Trndez ist im Februar. | Trndez é em fevereiro.
+Զատիկ | Զատիկին ներկում են ձվեր։ | На Пасху красят яйца. | On Easter they paint eggs. | À Pâques, on peint des œufs. | En Pascua se pintan huevos. | Zu Ostern malt man Eier. | Na Páscoa pintam ovos.
+գրաբար | Գրաբարը հին հայերենն է։ | Грабар — это древнеармянский язык. | Grabar is Old Armenian. | Le grabar est l'ancien arménien. | El grabar es el antiguo armenio. | Grabar ist Altarmenisch. | O grabar é o armênio antigo.
+աշխարհաբար | Աշխարհաբարը մեր առօրյա լեզուն է։ | Ашхарабар — наш повседневный язык. | Ashkharabar is our everyday language. | L'ashkharabar est notre langue quotidienne. | El ashkharabar es nuestro lenguaje cotidiano. | Ashkharabar ist unsere Alltagssprache. | O ashkharabar é a nossa língua do dia a dia.
