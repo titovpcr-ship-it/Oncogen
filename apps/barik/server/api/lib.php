@@ -881,3 +881,70 @@ function report_add(array $b, ?int $uid): string {
     return '';
 }
 
+
+
+/* ---------- копии базы (O-189) ----------
+   Каждые сутки (первый запуск cron.php после полуночи UTC) — снимок базы VACUUM INTO в barik-data/backups/barik-<дата>.sqlite,
+   хранятся 7 последних. Раз в 7 дней — снимок и config.php в zip с паролем (AES-256, BACKUP_PASSWORD — пароль «Барик бэкапа»)
+   уходят владельцу в Telegram ботом (TG_OWNER — номер чата владельца). Без пароля или без чата — только копии на хостинге. */
+function backup_dir(): string {
+    $d = (string)cfg('DATA_DIR', dirname(__DIR__, 2) . '/barik-data') . '/backups';
+    if (!is_dir($d)) @mkdir($d, 0700, true);
+    return $d;
+}
+
+function backup_run(?int $now = null): array {
+    $now = $now ?? time();
+    $dir = backup_dir();
+    $day = gmdate('Y-m-d', $now);
+    $snap = $dir . '/barik-' . $day . '.sqlite';
+    $made = false;
+    if (!is_file($snap)) {
+        db()->exec('PRAGMA wal_checkpoint(TRUNCATE)');
+        db()->exec('VACUUM INTO ' . db()->quote($snap));          // целостный снимок без остановки сайта
+        @chmod($snap, 0600);
+        $made = true;
+        $all = glob($dir . '/barik-*.sqlite') ?: [];
+        sort($all);
+        foreach (array_slice($all, 0, max(0, count($all) - 7)) as $old) @unlink($old);
+    }
+    $sent = '';
+    $pw = (string)cfg('BACKUP_PASSWORD', '');
+    $owner = (string)cfg('TG_OWNER', '');
+    $mark = $dir . '/last_offsite';
+    $last = is_file($mark) ? (int)file_get_contents($mark) : 0;
+    if ($pw !== '' && $owner !== '' && tg_on() && $now - $last >= 7 * 86400 - 3600) {
+        $sent = backup_offsite($snap, $pw, $owner, $day) ? 'ok' : 'fail';
+        if ($sent === 'ok') file_put_contents($mark, (string)$now);
+    }
+    return [$made, $sent];
+}
+
+function backup_offsite(string $snap, string $pw, string $owner, string $day): bool {
+    if (!class_exists('ZipArchive') || !defined('ZipArchive::EM_AES_256')) { error_log('barik backup: нет ZipArchive с AES'); return false; }
+    $zip = backup_dir() . '/barik-db-' . $day . '.zip';
+    $z = new ZipArchive();
+    if ($z->open($zip, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) return false;
+    $z->setPassword($pw);
+    $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
+    foreach ($files as $name => $path) {
+        if (!is_file($path)) continue;
+        $z->addFile($path, $name);
+        $z->setEncryptionName($name, ZipArchive::EM_AES_256);
+    }
+    $z->addFromString('README.txt', "Barik: копия базы и config.php с хостинга, $day (O-189).\nПароль — как у «Барик бэкапа». "
+        . "База — public_html/../barik-data/barik.sqlite, config.php — public_html/api/config.php. Подробно — START_HERE.md в бэкапе.\n");
+    $z->close();
+    @chmod($zip, 0600);
+    $users = (int)q('SELECT COUNT(*) FROM users')->fetchColumn();
+    $tok = (string)cfg('TG_TOKEN', '');
+    $ch = curl_init(rtrim((string)cfg('TG_API', 'https://api.telegram.org'), '/') . '/bot' . $tok . '/sendDocument');
+    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 60,
+        CURLOPT_POSTFIELDS => ['chat_id' => $owner, 'document' => new CURLFile($zip, 'application/zip', basename($zip)),
+            'caption' => "🔐 Barik: еженедельная копия базы ($day). Аккаунтов: $users. Пароль — как у «Барик бэкапа». Сохраните файл."]]);
+    $r = json_decode((string)curl_exec($ch), true);
+    curl_close($ch);
+    @unlink($zip);
+    if (empty($r['ok'])) error_log('barik backup tg: ' . json_encode($r));
+    return !empty($r['ok']);
+}
