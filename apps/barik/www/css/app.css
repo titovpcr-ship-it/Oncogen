@@ -1077,3 +1077,17 @@ details[open] .pm::after{transform:rotate(0)}
 .pb-tx{font-size:15px}
 .pb-head{margin:6px 0 14px}.pb-head .pg{margin:2px 0 6px}
 .pb-hy-t{margin:0;font-family:var(--hy);color:var(--pom);font-size:18px}
+
+/* O-182: учителям */
+.tc-how{margin:0;padding-left:20px;display:grid;gap:6px}
+.tc{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.tc-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.tc-n{display:grid}.tc-n small{opacity:.65}
+.tc-row .btn.sm{min-height:38px;padding:0 12px;white-space:nowrap}
+.tc-lv{display:flex;flex-wrap:wrap;gap:6px}
+.tc-chip{border:0;border-radius:999px;padding:6px 14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);font:inherit;cursor:pointer}
+.tc-chip.on{background:var(--lapis);color:#fff;box-shadow:none}
+.tc-row{grid-template-columns:auto minmax(0,1fr) auto}
+.tc-row .t-ic{width:40px;height:40px;flex:none}.tc-row .t-ic img,.tc-row .t-ic .e3d{width:28px;height:28px}
+.tc-n{min-width:0;overflow-wrap:anywhere}
+@media (max-width:420px){.tc-row{grid-template-columns:auto minmax(0,1fr)}.tc-row .btn.sm{grid-column:1/-1;width:100%}}

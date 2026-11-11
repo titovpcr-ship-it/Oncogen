@@ -629,6 +629,24 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'разговорник: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // O-182: учителям — темы уровня, ссылка для класса открывает тему
+    const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]');
+    await pg.click('.ld-foot [data-act=tcOpen]'); await pg.waitForSelector('.tc-row');
+    ok((await pg.textContent('body')).includes('Учителям и школам')&&await pg.locator('.tc-row').count()>10,'учителям: страница и темы A1');
+    await pg.click('[data-act=tcLv][data-arg=A2]'); ok(await pg.locator('.tc-row').count()>20,'переключение уровня A2');
+    await pg.evaluate(()=>{ navigator.clipboard.writeText=x=>{ window.__tc=x; return Promise.resolve(); }; });
+    await pg.locator('[data-act=tcCopy]').first().click(); await pg.waitForTimeout(200);
+    const u=await pg.evaluate(()=>window.__tc||''); ok(/\?lang=ru&t=\d+$/.test(u),'ссылка для класса: '+u);
+    const c2=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const p2=await c2.newPage();
+    await p2.goto(u.replace(/^https?:\/\/[^/]+\//,base)); await p2.waitForTimeout(800);
+    ok(await p2.evaluate(()=>window.__bararan.view)==='topic','ученик по ссылке попадает сразу в тему'); await c2.close();
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'учителям: без прокрутки вбок');
+    if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'teach.png')});
+    ok(errs.length===0,'учителям: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});

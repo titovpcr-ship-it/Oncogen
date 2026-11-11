@@ -758,7 +758,7 @@ function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.se
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
 function go(v,arg){ if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='teach') return 'settings'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -782,6 +782,7 @@ function render(auto){
   else if(view==='name'){ el.innerHTML=nameHTML(); nmWrite(); }
   else if(view==='daily'){ el.innerHTML=dailyHTML(); }
   else if(view==='phrases'){ el.innerHTML=phrasesHTML(); }
+  else if(view==='teach'){ el.innerHTML=teachHTML(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -930,7 +931,7 @@ function onboardHTML(){
   '<section class="ld-end"><div class="ld-wrap"><p class="end-hy"><span lang="hy">'+esc(D.endHy)+'</span> <i>'+esc(D.endTr)+'</i></p><h2>'+esc(D.endTitle)+'</h2>'+cta('xl inv')+'<ul class="ld-micro">'+micro+'</ul></div>'+
     '<svg class="end-hills" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V86c160-50 320-40 480-10s320 34 460-6c100-28 190-24 260-8v78z" fill="currentColor" opacity=".55"/><path d="M0 140v-30c200-40 380-10 560 4 180 14 380-26 640-10v36z" fill="currentColor"/></svg></section>'+
   '<footer class="ld-foot"><div class="ld-wrap">'+brand+'<p>'+esc(D.foot)+'</p>'+
-    '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="project">'+esc(T('project'))+'</button><button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button><button class="lnk" data-act="landDoc" data-arg="terms">'+esc(T('terms'))+'</button><button class="lnk" data-act="landDoc" data-arg="refund">'+esc(T('refund'))+'</button><button class="lnk" data-act="landDoc" data-arg="credits">'+esc(T('credits'))+'</button></p>'+
+    '<p class="ld-links">'+(BILL.native?'':'<a href="'+L+'/">'+esc(D.topics)+'</a>')+'<button class="lnk" data-act="landDoc" data-arg="project">'+esc(T('project'))+'</button><button class="lnk" data-act="landDoc" data-arg="privacy">'+esc(D.privacy)+'</button><button class="lnk" data-act="landDoc" data-arg="terms">'+esc(T('terms'))+'</button><button class="lnk" data-act="landDoc" data-arg="refund">'+esc(T('refund'))+'</button><button class="lnk" data-act="tcOpen">'+esc(T('tcTitle'))+'</button><button class="lnk" data-act="landDoc" data-arg="credits">'+esc(T('credits'))+'</button></p>'+
     '<p class="ld-mail"><a href="mailto:'+esc(CFG.CONTACT||'hello@barik.am')+'">'+esc(CFG.CONTACT||'hello@barik.am')+'</a></p><p class="cr">© 2026 Barik</p></div></footer>'+
   '</div>';
 }
@@ -1077,6 +1078,17 @@ async function pbOffline(){ if(!PB||PBS==='run') return; PBS='run'; render(false
   const all=[].concat(...PB.map(s=>s.items.map(i=>i[0])));
   for(let i=0;i<all.length;i+=6) await Promise.all(all.slice(i,i+6).map(t=>fetch(audioUrl(t,UI.rv==='m'?'m':'f')).catch(()=>null)));
   PBS='ok'; if(view==='phrases') render(false); }
+/* ---------- учителям (O-182): ссылка на тему для класса — ученики открывают её сразу, без регистрации ---------- */
+let TC_LV='A1';
+function teachHTML(){
+  const lv=LEVELS.map(l=>'<button class="tc-chip'+(l===TC_LV?' on':'')+'" data-act="tcLv" data-arg="'+l+'">'+l+'</button>').join('');
+  const rows=TOPICS.map((t,i)=>[t,i]).filter(x=>x[0].lv===TC_LV&&x[0].list&&x[0].list.length).map(([t,i])=>
+    '<li class="tc-row"><span class="t-ic">'+emo(t.ic)+'</span><span class="tc-n">'+esc(tn(t))+'<small>'+esc(T('nWords',t.list.length))+'</small></span><button class="btn sm secondary" data-act="tcCopy" data-arg="'+i+'">'+esc(T('tcCopy'))+'</button></li>').join('');
+  return '<button class="back" data-act="dgBack">‹ '+esc(T('back'))+'</button><div class="pb-head"><p class="pb-hy-t" lang="hy">Ուսուցչին</p><h1 class="pg">'+esc(T('tcTitle'))+'</h1><p class="note">'+esc(T('tcLead'))+'</p></div>'+
+    '<section class="set-sec"><ol class="tc-how">'+T('tcHow').map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></section>'+
+    '<section class="set-sec"><h2 class="sec">'+esc(T('tcPick'))+'</h2><div class="tc-lv">'+lv+'</div><ul class="tc">'+rows+'</ul></section>'+
+    '<section class="set-sec"><p class="note">'+esc(T('tcContact'))+' <a href="mailto:hello@barik.am">hello@barik.am</a></p></section>';
+}
 function wordRow(w,free){
   const st=status(w), op=free||canUse(w);
   return '<li class="wrow"><span class="w-pic">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+esc(T('st_'+st))+'"></i>'+esc(tx(w))+'<span class="w-tr">'+esc(trn(w))+'</span></span></span><button class="say" data-act="'+(free?'sayFree':'say')+'" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+(op?ICON.spk:emo('🔒','ie'))+'</button></li>';
@@ -1745,7 +1757,7 @@ function settingsHTML(){
   '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
   flagsHTML()+
   '<section class="set-sec"><h2 class="sec">'+esc(T('setProgress'))+'</h2><p class="note">'+esc(!LSOK?T('progNoSave'):ACC.me?T('progSync'):T('progLocal'))+'</p><div class="actions" style="margin-top:14px">'+(ACC.srv===true&&!ACC.me?'<button class="btn secondary" data-act="syncLogin">'+esc(T('progLogin'))+'</button>':'')+'<button class="btn danger" data-act="reset">'+esc(resetArm?T('resetArm'):T('reset'))+'</button></div></section>'+
-  '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="project">'+esc(T('project'))+'</button><button class="linkbtn" data-act="doc" data-arg="credits">'+esc(T('credits'))+'</button><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button>'+(BILL.native?'':'<button class="linkbtn" data-act="doc" data-arg="refund">'+esc(T('refund'))+'</button>')+'</div></section>';
+  '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="project">'+esc(T('project'))+'</button><button class="linkbtn" data-act="doc" data-arg="credits">'+esc(T('credits'))+'</button><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button>'+(BILL.native?'':'<button class="linkbtn" data-act="doc" data-arg="refund">'+esc(T('refund'))+'</button><button class="linkbtn" data-act="tcOpen">'+esc(T('tcTitle'))+'</button>')+'</div></section>';
 }
 function flagsHTML(){
   const fl=Object.keys(S.flag||{}).filter(a=>BY[a]);
@@ -2467,6 +2479,10 @@ const H={
   nmOpen:()=>{ go('name'); },
   dgOpen:()=>{ hit('v_daily'); go('daily'); },
   pbOpen:()=>{ hit('v_phrases'); go('phrases'); },
+  tcOpen:()=>{ hit('v_teach'); go('teach'); },
+  tcLv:a=>{ TC_LV=a; render(false); },
+  tcCopy:async a=>{ const u=location.origin+'/?lang='+L+'&t='+a; hit('teach_link');
+    try{ await navigator.clipboard.writeText(u); toast(T('tcCopied')); }catch(e){ toast(u); } },
   pbSay:(a,b)=>{ sayText(a,b); },
   pbOffline:()=>pbOffline(),
   dgBack:()=>go(UI.lang?'home':'onboard'),
@@ -2711,6 +2727,7 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   const dk=sp.get('doc'); if(dk&&/^(refund|terms|privacy|project|credits)$/.test(dk)&&nm===null){ docFrom=(UI.lang?'settings':'onboard'); view='doc'; viewArg=dk; }
   if(sp.has('daily')&&nm===null){ view='daily'; }
   if(sp.has('phrases')&&nm===null){ view='phrases'; }
+  if(sp.has('teach')&&nm===null){ view='teach'; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
 BILL.hideSplash();
