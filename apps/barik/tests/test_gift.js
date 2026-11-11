@@ -41,8 +41,10 @@ const KEY='dodo_test_key', SECRET='whsec_'+Buffer.from('barik-gift-secret-1').to
   let r=await call('me'); ok(r.j.pay&&r.j.pay.gift&&r.j.pay.gift['12']==='$59.88'&&r.j.pay.gift['3']==='$14.97','me: подарки на 3 и 12 месяцев с ценой');
   const ca=await login('giver@example.com','Giver'); r=await call('me',undefined,ca); const uid=1;
   r=await call('gift_checkout',{months:5,lang:'ru'},ca); ok(r.status===503,'неизвестный срок — отказ');
+  r=await call('gift_checkout',{months:12,lang:'ru'},ca); ok(r.status===409&&r.j.err==='profile','подарок без анкеты покупателя — отказ (O-196)');
+  r=await call('profile',{first:'Giver',last:'Smith',birth:'1985-03-03',gender:'m',country:'US'},ca); ok(r.j.ok&&r.j.user.pf.country==='US','анкета покупателя подарка');
   r=await call('gift_checkout',{months:12,lang:'ru'},ca); const ck=seen.filter(x=>x.u==='/checkouts').pop();
-  ok(r.j.ok&&/^https:\/\//.test(r.j.url)&&ck.b.product_cart[0].product_id==='pdt_g12'&&ck.b.metadata.gift==='1'&&ck.b.metadata.months==='12'&&/pay=gift/.test(ck.b.return_url),'покупка: страница оплаты, товар «12 месяцев», метки подарка');
+  ok(r.j.ok&&/^https:\/\//.test(r.j.url)&&ck.b.product_cart[0].product_id==='pdt_g12'&&ck.b.metadata.gift==='1'&&ck.b.metadata.months==='12'&&/pay=gift/.test(ck.b.return_url)&&ck.b.customer.name==='Giver Smith'&&ck.b.billing_address.country==='US','покупка: страница оплаты, товар «12 месяцев», метки подарка, имя и страна из анкеты');
   // неоплаченный платёж кода не даёт
   PAYS.pay_1={payment_id:'pay_1',status:'processing',metadata:ck.b.metadata};
   r=await call('gift_check',{payment_id:'pay_1'},ca); ok(r.status===404,'платёж не оплачен — кода нет');

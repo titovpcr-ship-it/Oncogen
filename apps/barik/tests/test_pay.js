@@ -85,11 +85,26 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   ok(!pw.includes('Premium активна')&&!pw.includes('Восстановить покупки'),'сайт открыт всем, но без подписки окно не пишет «Premium активна», «Восстановить покупки» нет');
   ok(pw.includes('$4.99')&&pw.includes('Dodo Payments')&&pw.includes('Apple Pay')&&!pw.includes('Год'),'окно подписки: месяц $4.99, «карта, Apple Pay… Dodo Payments», без года');
   await shot('pay-paywall');
-  await Promise.all([pg.waitForURL(/test\.checkout\.dodopayments\.com/,{timeout:8000}).catch(()=>{}),pg.click('[data-act=webBuy]')]);
-  ok(/test\.checkout\.dodopayments\.com\/session\/cks_1/.test(pg.url()),'«Оформить» → страница оплаты Dodo');
+  // O-196: без анкеты покупателя оплата не открывается; анкета проверяется на сервере
+  r=await api('checkout',{plan:'month',lang:'ru'}); ok(r.status===409&&r.j.err==='profile','без анкеты счёт не создаётся (409 profile)');
+  { const P={first:'Анна',last:'Петрова',birth:'1990-01-01',gender:'f',country:'AM'}, kid=new Date(Date.now()-10*365*864e5).toISOString().slice(0,10);
+    for(const [d,e] of [[{first:''},'pf_first'],[{first:'<b>x'},'pf_first'],[{last:'1234'},'pf_last'],[{birth:'1990-02-30'},'pf_birth'],[{birth:kid},'pf_age'],[{gender:'x'},'pf_gender'],[{country:'ARM'},'pf_country']]){
+      r=await api('profile',Object.assign({},P,d)); ok(r.status===400&&r.j.err===e,'анкета: отказ '+e+' ('+r.status+' '+r.j.err+')'); } }
+  ok(seen.filter(x=>x.url==='/checkouts').length===0,'без анкеты к Dodo не ходили');
+  await pg.click('[data-act=webBuy]'); await pg.waitForSelector('#pfForm',{timeout:5000}).catch(()=>{});
+  ok(await pg.locator('#pfForm').count()===1&&(await pg.textContent('#pfForm')).includes('Данные для оплаты')===false&&(await pg.textContent('.pf')).includes('Данные для оплаты'),'«Оформить» без анкеты → кабинет, форма «Данные для оплаты»');
+  await shot('pay-profile');
+  await pg.click('#pfForm button[type=submit]'); await pg.waitForTimeout(200);
+  ok((await pg.textContent('#pfForm')).includes('Имя: буквами'),'пустая форма — подсказка, что не так');
+  await pg.fill('#pfFirst','Анна'); await pg.fill('#pfLast','Петрова-Саркисян'); await pg.fill('#pfBirth','1990-05-17');
+  await pg.check('input[name=pfG][value=f]'); await pg.selectOption('#pfCountry','AM');
+  await Promise.all([pg.waitForURL(/test\.checkout\.dodopayments\.com/,{timeout:8000}).catch(()=>{}),pg.click('#pfForm button[type=submit]')]);
+  ok(/test\.checkout\.dodopayments\.com\/session\/cks_1/.test(pg.url()),'«Сохранить и перейти к оплате» → страница оплаты Dodo');
   const ck=seen.find(x=>x.url==='/checkouts');
   ok(ck&&ck.body.product_cart[0].product_id===PROD&&ck.body.customer.email==='anna@example.com'&&/^https:\/\/barik\.am\/\?lang=ru&pay=card$/.test(ck.body.return_url)
      &&ck.body.metadata.uid&&ck.body.metadata.sig&&ck.body.metadata.sig.length===32,'счёт: тариф, почта Анны, возврат ?lang=ru&pay=card, подписанный uid');
+  ok(ck.body.customer.name==='Анна Петрова-Саркисян'&&ck.body.billing_address&&ck.body.billing_address.country==='AM'&&ck.body.customization.force_language==='ru','счёт: имя и фамилия из анкеты (не никнейм), страна AM, язык страницы ru');
+  j=await me(); ok(j.user.pf&&j.user.pf.birth==='1990-05-17'&&j.user.pf.gender==='f'&&j.user.pf.country==='AM','анкета сохранена в кабинете');
   const uidA=ck.body.metadata.uid, sigA=ck.body.metadata.sig;
 
   // вебхук: подпись обязательна, статус — только из API

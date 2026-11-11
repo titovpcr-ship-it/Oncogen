@@ -1879,7 +1879,7 @@ async function accSendCode(){
   accSet({busy:false,err:j.err||'server',errArg:j.retry||''});
 }
 function openAccount(next){
-  ACC.next=next||null; ACC.err=''; ACC.del=0; ACC.edit=false;
+  ACC.next=next||null; ACC.err=''; ACC.del=0; ACC.edit=false; ACC.pfEdit=false; ACC.pfNext=null; ACC.pfErr='';
   if(view!=='account') accFrom={v:view,a:viewArg};
   go('account');
   if(ACC.srv!==true) accInit().then(()=>{ if(view==='account') render(); });
@@ -1927,11 +1927,53 @@ function accProfileHTML(){
     accErrHTML()+'<div class="actions"><button class="btn primary" type="submit"'+(ACC.busy?' disabled':'')+'>'+esc(T('accSave'))+'</button><button class="btn ghost" type="button" data-act="accNickCancel">'+esc(T('accCancel'))+'</button></div></form>':'';
   return '<section class="set-sec acc"><div class="acc-card"><span class="acc-av" aria-hidden="true">'+esc(first)+'</span><div class="acc-who"><b class="acc-nick">'+esc(u.nick)+'</b><span class="acc-mail">'+esc(u.email)+'</span></div>'+
       (ACC.edit?'':'<button class="linkbtn" data-act="accNickEdit">'+esc(T('accNickChange'))+'</button>')+'</div>'+edit+'</section>'+
-    '<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
+    pfHTML()+'<section class="set-sec"><h2 class="sec">'+esc(T('setSub'))+'</h2>'+sub+'</section>'+
     '<section class="set-sec gf"><h2 class="sec">🎁 '+esc(T('gfCodeT'))+'</h2><form class="nm-form" data-act="gfRedeem"><input class="search" id="gfIn" type="text" maxlength="20" autocapitalize="characters" placeholder="BARIK-XXXX-XXXX"><button class="btn secondary" type="submit">'+esc(T('gfApply'))+'</button></form></section>'+
     '<section class="set-sec rm"><h2 class="sec">'+esc(T('rmTitle'))+'</h2><p class="note">'+esc(T('rmText'))+'</p><div class="actions"><button class="btn '+(u.remind?'secondary':'primary')+'" data-act="rmTog">'+esc(u.remind?T('rmOff'):T('rmOn'))+'</button></div></section>'+
     '<section class="set-sec"><div class="actions"><button class="btn secondary" data-act="accLogout">'+esc(T('accLogout'))+'</button><button class="btn danger" data-act="accDel">'+esc(ACC.del?T('accDeleteArm'):T('accDelete'))+'</button></div>'+
       (ACC.edit?'':accErrHTML())+'<p class="note">'+esc(T('accSync'))+' '+esc(T('accData'))+'</p></section>';
+}
+/* анкета покупателя (O-196): обязательна до оплаты; имя и страна уходят на страницу оплаты Dodo */
+function pfCountries(){
+  const set={}; const T_=window.BARIK_TZ||{}; Object.keys(T_).forEach(k=>Object.values(T_[k]).forEach(c=>{ if(/^[A-Z]{2}$/.test(c)) set[c]=1; }));
+  let dn=null; try{ dn=new Intl.DisplayNames([L],{type:'region'}); }catch(e){}
+  return Object.keys(set).map(c=>{ let n=c; try{ n=dn?dn.of(c)||c:c; }catch(e){} return [c,n]; }).sort((a,b)=>a[1].localeCompare(b[1],L));
+}
+function pfHTML(){
+  const u=ACC.me, p=u.pf||{}, ed=ACC.pfEdit||!u.pf;
+  const err=ACC.pfErr?'<p class="acc-err" role="alert">'+esc(T('accErr_'+ACC.pfErr)!=='accErr_'+ACC.pfErr?T('accErr_'+ACC.pfErr):T('accErr_server'))+'</p>':'';
+  if(!ed){
+    let cn=p.country; try{ cn=new Intl.DisplayNames([L],{type:'region'}).of(p.country)||p.country; }catch(e){}
+    return '<section class="set-sec pf"><h2 class="sec">'+esc(T('pfTitle'))+'</h2><p class="pf-sum"><b>'+esc(p.first+' '+p.last)+'</b><span>'+
+      esc(fmtDate(Date.parse(p.birth+'T12:00:00Z')))+' · '+esc(T(p.gender==='f'?'pfF':'pfM'))+' · '+esc(cn)+'</span></p>'+
+      '<div class="linkrow"><button class="linkbtn" data-act="pfEdit">'+esc(T('pfEdit'))+'</button></div></section>';
+  }
+  const cc=p.country||ACC.pfCC||tzCC(TZ)||'', max=new Date(Date.now()-14*365.25*864e5).toISOString().slice(0,10);
+  const g=p.gender||'';
+  return '<section class="set-sec pf"><h2 class="sec">'+esc(T('pfTitle'))+'</h2><form id="pfForm" class="acc-form" data-act="pfSave" novalidate><p class="note">'+esc(T('pfLead'))+'</p>'+
+    '<label class="fld"><span>'+esc(T('pfFirst'))+'</span><input id="pfFirst" type="text" autocomplete="given-name" maxlength="60" value="'+esc(p.first||'')+'"></label>'+
+    '<label class="fld"><span>'+esc(T('pfLast'))+'</span><input id="pfLast" type="text" autocomplete="family-name" maxlength="60" value="'+esc(p.last||'')+'"></label>'+
+    '<label class="fld"><span>'+esc(T('pfBirth'))+'</span><input id="pfBirth" type="date" autocomplete="bday" min="1915-01-01" max="'+max+'" value="'+esc(p.birth||'')+'"></label>'+
+    '<fieldset class="fld pf-g"><legend>'+esc(T('pfGender'))+'</legend><label><input type="radio" name="pfG" value="f"'+(g==='f'?' checked':'')+'> '+esc(T('pfF'))+'</label><label><input type="radio" name="pfG" value="m"'+(g==='m'?' checked':'')+'> '+esc(T('pfM'))+'</label></fieldset>'+
+    '<label class="fld"><span>'+esc(T('pfCountry'))+'</span><select id="pfCountry" autocomplete="country"><option value="">'+esc(T('pfPick'))+'</option>'+
+      pfCountries().map(([c,n])=>'<option value="'+c+'"'+(c===cc?' selected':'')+'>'+esc(n)+'</option>').join('')+'</select></label>'+
+    err+'<div class="actions"><button class="btn primary" type="submit"'+(ACC.busy?' disabled':'')+'>'+esc(ACC.pfNext?T('pfSaveGo'):T('pfSave'))+'</button>'+
+    (u.pf?'<button class="btn ghost" type="button" data-act="pfCancel">'+esc(T('accCancel'))+'</button>':'')+'</div></form></section>';
+}
+function pfNeed(next){
+  openAccount(); Object.assign(ACC,{pfNext:next,pfEdit:true,pfErr:''}); render(); toast(T('pfNeed'));
+  setTimeout(()=>{ const f=$('#pfForm'); if(f) f.scrollIntoView({block:'start',behavior:'smooth'}); },60);
+}
+async function pfSave(){
+  const v=id=>{ const e=$(id); return e?e.value.trim():''; }, gi=document.querySelector('input[name=pfG]:checked');
+  const b={first:v('#pfFirst'),last:v('#pfLast'),birth:v('#pfBirth'),gender:gi?gi.value:'',country:v('#pfCountry')};
+  const loc=!b.first?'pf_first':!b.last?'pf_last':!b.birth?'pf_birth':!b.gender?'pf_gender':!b.country?'pf_country':'';
+  if(loc){ accSet({pfErr:loc}); return; }
+  accSet({busy:true,pfErr:''});
+  const j=await api('profile',b);
+  if(!j.ok){ accSet({busy:false,pfErr:j.err||'server'}); return; }
+  accApply(j); const n=ACC.pfNext; Object.assign(ACC,{busy:false,pfEdit:false,pfNext:null}); hit('profile');
+  if(n==='gift'){ go('gift'); gfBuy(); } else if(n){ go('paywall'); webBuy(n); } else { render(); toast(T('accSaved')); }
 }
 /* на сайте: оплата Paddle из кабинета (без входа — сначала войти) */
 function webPlansHTML(){
@@ -1993,10 +2035,11 @@ function giftHTML(){
 }
 async function gfBuy(){
   if(!ACC.me){ openAccount('gift'); return; }
+  if(!ACC.me.pf){ pfNeed('gift'); return; }
   GF.busy=true; GF.err=''; render(false); hit('gift_checkout');
   const j=await api('gift_checkout',{months:GF.m,lang:L});
   if(j.ok&&j.url){ location.assign(j.url); return; }
-  GF.busy=false; GF.err=j.err||'pay'; render(false);
+  GF.busy=false; if(j.err==='profile'){ pfNeed('gift'); return; } GF.err=j.err||'pay'; render(false);
 }
 async function giftReturn(){
   const sp=new URLSearchParams(location.search||''), pid=sp.get('payment_id')||'';
@@ -2035,9 +2078,11 @@ function loadPaddle(){
 }
 async function webBuy(plan){
   if(!ACC.me){ openAccount('paywall'); return; }
+  if(ACC.pay&&ACC.pay.card&&!ACC.me.pf){ pfNeed(plan); return; }
   pwState.busy=true; render();
   const j=await api('checkout',{plan,lang:L});
   if(j.ok&&j.url){ location.assign(j.url); return; }   // Dodo (O-164): страница оплаты Dodo, назад — ?pay=card
+  if(j.err==='profile'){ pwState.busy=false; pfNeed(plan); return; }
   if(!j.ok){ pwState.busy=false; render(); toast(T('accErr_'+(j.err||'server'))); if(j.err==='auth'){ accApply({user:null}); render(); } return; }
   try{
     const P=await loadPaddle();
@@ -2715,6 +2760,9 @@ const H={
     accSet({busy:false,err:j.err||'server',errArg:j.left!=null?j.left:''});
   },
   accNickEdit:()=>accSet({edit:true,nick:ACC.me?ACC.me.nick:'',err:''}),
+  pfEdit:()=>accSet({pfEdit:true,pfErr:''}),
+  pfCancel:()=>accSet({pfEdit:false,pfNext:null,pfErr:''}),
+  pfSave:()=>pfSave(),
   accNickCancel:()=>accSet({edit:false,err:''}),
   accNickSave:async()=>{
     const n=$('#accNick'), nick=n?n.value.trim():''; accSet({busy:true,err:'',nick});

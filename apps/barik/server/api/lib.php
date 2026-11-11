@@ -92,6 +92,10 @@ function db(): PDO {
     try { $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER'); } catch (PDOException $e) { /* уже есть */ }
     // режим Dodo, в котором оформлена подписка (O-195): test | live; NULL — заведена до O-195, значит тестовая
     try { $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT'); } catch (PDOException $e) { /* уже есть */ }
+    // анкета покупателя (O-196): имя и фамилия для страницы оплаты, дата рождения, пол, страна — до оплаты обязательны
+    foreach (['pf_first', 'pf_last', 'pf_birth', 'pf_gender', 'pf_country'] as $c) {
+        try { $pdo->exec('ALTER TABLE users ADD COLUMN ' . $c . ' TEXT'); } catch (PDOException $e) { /* уже есть */ }
+    }
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
@@ -203,7 +207,43 @@ function user_out(array $u): array {
             'until' => $gift ? (int)$u['gift_until'] * 1000 : ($u['sub_until'] ? (int)$u['sub_until'] * 1000 : 0), 'plan' => $gift ? 'gift' : ($u['sub_plan'] ?: ''),
             'status' => $u['sub_status'] ?: '',
             'portal' => (bool)$u['pd_customer'] && (dodo_on() || (bool)cfg('PADDLE_API_KEY')),
-            'remind' => (bool)q('SELECT on_ FROM remind WHERE uid = ?', [$u['id']])->fetchColumn()];
+            'remind' => (bool)q('SELECT on_ FROM remind WHERE uid = ?', [$u['id']])->fetchColumn(),
+            'pf' => pf_ok($u) ? ['first' => $u['pf_first'], 'last' => $u['pf_last'], 'birth' => $u['pf_birth'],
+                                 'gender' => $u['pf_gender'], 'country' => $u['pf_country']] : null];
+}
+
+/* анкета покупателя (O-196) */
+function pf_name($v): ?string {
+    $v = trim(preg_replace('/\s+/u', ' ', (string)$v));
+    if ($v === '' || mb_strlen($v) > 60) return null;
+    return preg_match("/^\p{L}[\p{L}\p{M} .'’-]*$/u", $v) ? $v : null;
+}
+function pf_check(array $b): array {   // → [поля] или ['err' => код]
+    $first = pf_name($b['first'] ?? ''); if ($first === null) return ['err' => 'pf_first'];
+    $last = pf_name($b['last'] ?? ''); if ($last === null) return ['err' => 'pf_last'];
+    $birth = (string)($b['birth'] ?? '');
+    if (!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $birth, $m) || !checkdate((int)$m[2], (int)$m[3], (int)$m[1])) return ['err' => 'pf_birth'];
+    $age = (int)date_diff(date_create($birth), date_create('today'))->format('%r%y');
+    if ($age < 14 || $age > 110) return ['err' => 'pf_age'];
+    $gender = (string)($b['gender'] ?? ''); if (!in_array($gender, ['f', 'm'], true)) return ['err' => 'pf_gender'];
+    $country = strtoupper((string)($b['country'] ?? '')); if (!preg_match('/^[A-Z]{2}$/', $country)) return ['err' => 'pf_country'];
+    return ['first' => $first, 'last' => $last, 'birth' => $birth, 'gender' => $gender, 'country' => $country];
+}
+function pf_ok(array $u): bool {
+    foreach (['pf_first', 'pf_last', 'pf_birth', 'pf_gender', 'pf_country'] as $c) if ((string)($u[$c] ?? '') === '') return false;
+    return true;
+}
+/* общее для страниц оплаты Dodo: имя и страна из анкеты, язык страницы — язык сайта */
+function dodo_checkout(array $u, array $req, string $lang): array {
+    $req['customer'] = ['email' => $u['email'], 'name' => $u['pf_first'] . ' ' . $u['pf_last']];
+    $req['billing_address'] = ['country' => $u['pf_country']];
+    $req['customization'] = ['force_language' => $lang];
+    $j = dodo('POST', '/checkouts', $req);
+    if (!is_array($j) || !isset($j['checkout_url'])) {   // страну или язык Dodo не принял — без подсказок, человек введёт сам
+        unset($req['billing_address'], $req['customization']);
+        $j = dodo('POST', '/checkouts', $req);
+    }
+    return is_array($j) ? $j : [];
 }
 
 function uid_sig(int $uid): string {

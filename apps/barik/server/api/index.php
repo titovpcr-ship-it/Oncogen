@@ -4,6 +4,7 @@
    POST start   {email, lang}  — письмо с кодом
    POST verify  {email, code, nick?} — вход (новичку нужен никнейм: ответ need_nick)
    POST nick    {nick}         — сменить никнейм
+   POST profile {first, last, birth, gender, country} — анкета покупателя (O-196), без неё оплата не открывается
    POST logout / delete        — выйти / удалить аккаунт
    POST checkout {plan, lang}  — Dodo: адрес страницы оплаты ($4.99/мес, O-164); без Dodo — окно Paddle (month | year)
    POST pay_check {sub}        — вернулись со страницы Dodo (?subscription_id=…): сверить подписку по API
@@ -181,6 +182,16 @@ switch ($r) {
         $u['nick'] = $nick;
         out(['ok' => true, 'user' => user_out($u)]);
 
+    case 'profile':
+        need_post($method);
+        $u = session_user() ?? fail('auth', 401);
+        $pf = pf_check(body());
+        if (isset($pf['err'])) fail($pf['err']);
+        q('UPDATE users SET pf_first = ?, pf_last = ?, pf_birth = ?, pf_gender = ?, pf_country = ? WHERE id = ?',
+          [$pf['first'], $pf['last'], $pf['birth'], $pf['gender'], $pf['country'], $u['id']]);
+        $u = q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        out(['ok' => true, 'user' => user_out($u)]);
+
     case 'logout':
         need_post($method);
         end_session();
@@ -244,15 +255,15 @@ switch ($r) {
         if (!pay_ready()) fail('pay', 503);
         if (dodo_on()) {
             if (premium($u) && sub_here($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
+            if (!pf_ok($u)) fail('profile', 409);
             if (limited('u:' . $u['id'] . ':checkout', 10, 3600)) fail('wait', 429, ['retry' => 600]);
             $lang = in_array(body()['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? body()['lang'] : 'en';
             $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
-            $j = dodo('POST', '/checkouts', [
+            $j = dodo_checkout($u, [
                 'product_cart' => [['product_id' => (string)cfg('DODO_PRODUCT_MONTH'), 'quantity' => 1]],
-                'customer' => ['email' => $u['email'], 'name' => $u['nick']],
                 'return_url' => $site . '/?lang=' . $lang . '&pay=card',
-                'metadata' => ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]]);
-            $url = is_array($j) ? (string)($j['checkout_url'] ?? '') : '';
+                'metadata' => ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
+            $url = (string)($j['checkout_url'] ?? '');
             if (!preg_match('~^https://~', $url)) fail('pay', 502);
             out(['ok' => true, 'url' => $url]);
         }
@@ -270,15 +281,15 @@ switch ($r) {
         $b = body(); $months = (int)($b['months'] ?? 0);
         $prod = in_array($months, [3, 12], true) ? (string)cfg('DODO_PRODUCT_GIFT' . $months, '') : '';
         if (!dodo_on() || $prod === '') fail('pay', 503);
+        if (!pf_ok($u)) fail('profile', 409);
         if (limited('u:' . $u['id'] . ':gift', 10, 3600)) fail('wait', 429, ['retry' => 600]);
         $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
         $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
-        $j = dodo('POST', '/checkouts', [
+        $j = dodo_checkout($u, [
             'product_cart' => [['product_id' => $prod, 'quantity' => 1]],
-            'customer' => ['email' => $u['email'], 'name' => $u['nick']],
             'return_url' => $site . '/?lang=' . $lang . '&pay=gift',
-            'metadata' => ['gift' => '1', 'months' => (string)$months, 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]]);
-        $url = is_array($j) ? (string)($j['checkout_url'] ?? '') : '';
+            'metadata' => ['gift' => '1', 'months' => (string)$months, 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
+        $url = (string)($j['checkout_url'] ?? '');
         if (!preg_match('~^https://~', $url)) fail('pay', 502);
         out(['ok' => true, 'url' => $url]);
 
