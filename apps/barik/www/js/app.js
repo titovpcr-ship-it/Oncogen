@@ -758,7 +758,7 @@ function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.se
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e}:{l:L,c:tzCC(TZ)||'',r,g:UI.lang?0:1})); }catch(x){} }
 function go(v,arg){ if(REC.on||REC.url) recReset(); if(v==='name'||v==='pen'||v==='listen'||v==='paywall'||v==='account'||v==='unit') hit('v_'+v); if(sess&&!sess.ended&&v!=='session'){clearTimeout(sess.timer);} if(LP&&v!=='listen'){ lpStop(); LP=null; } view=v; viewArg=arg; resetArm=0; render(); window.scrollTo(0,0); }
 function openPaywall(){ if(view!=='paywall') backTo=view==='session'?{v:'home'}:{v:view,a:viewArg}; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); loadPlans(); }
-function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='teach') return 'settings'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
+function tabOf(v){ if(v==='path'||v==='unit'||v==='seed') return 'path'; if(v==='topic'||v==='result'||v==='home'||v==='listen') return 'home'; if(v==='letter'||v==='abcquiz'||v==='abc'||v==='pen'||v==='name') return 'abc'; if(v==='daily'||v==='phrases') return 'home'; if(v==='cert') return 'path'; if(v==='teach') return 'settings'; if(v==='pics'||v==='pcard'||v==='pquiz') return 'pics'; if(v==='tquiz') return tq&&tq.back&&tq.back.v==='topic'?'home':'pics'; if(v==='dict') return 'dict'; if(v==='settings'||v==='doc'||v==='account') return 'settings'; return ''; }
 function renderTabs(){
   const tabs=[['home',ICON.home,T('tabLearn')],['path',ICON.path,T('tabPath')],['pics',ICON.pic,T('tabPics')],['abc',ICON.abc,T('tabAbc')],['dict',ICON.dict,T('tabDict')],['settings',ICON.set,T('tabSet')]];
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
@@ -783,6 +783,7 @@ function render(auto){
   else if(view==='daily'){ el.innerHTML=dailyHTML(); }
   else if(view==='phrases'){ el.innerHTML=phrasesHTML(); }
   else if(view==='teach'){ el.innerHTML=teachHTML(); }
+  else if(view==='cert'){ el.innerHTML=certHTML(); ctDraw(); }
   else if(view==='abcquiz') el.innerHTML=abcQuizHTML();
   else if(view==='pics') el.innerHTML=picsHTML();
   else if(view==='pcard') el.innerHTML=pcardHTML(viewArg);
@@ -2138,6 +2139,40 @@ function pathStat(){
 }
 const nextUnit=()=>CRS.units.find(u=>!PG.u[u.id]&&unitOpen(u))||CRS.units.find(u=>!PG.u[u.id]);
 /* ступень 0 пройдена: проверка чтения (или входной тест) либо обведено 20+ букв */
+/* ---------- сертификат ступени (O-183): картинка 1080×1350 — ступень, «я могу…», имя по-армянски, дата ---------- */
+function stageDone(id){ if(id===0) return stage0Done(); const us=CRS.units.filter(u=>u.stage===id); return us.length>0&&us.every(u=>PG.u[u.id]); }
+let CT={st:0,name:''};
+function ctHy(){ const n=(CT.name||'').trim(); if(!n) return ''; if(/[Ա-և]/.test(n)) return n; try{ return NAMES?NAMES.toHy(n,L):''; }catch(e){ return ''; } }
+function certHTML(){
+  const s=CRS.stages.find(x=>x.id===CT.st); if(!s) return '';
+  return '<button class="back" data-act="tab" data-arg="path">‹ '+esc(T('pathTitle'))+'</button><div class="pb-head"><p class="pb-hy-t" lang="hy">Վկայական</p><h1 class="pg">'+esc(T('ctTitle'))+'</h1><p class="note">'+esc(T('ctLead'))+'</p></div>'+
+    '<form class="nm-form" data-act="ctName"><input class="search" id="ctIn" type="text" maxlength="40" value="'+esc(CT.name)+'" placeholder="'+esc(T('ctName'))+'" autocomplete="given-name"><button class="btn primary" type="submit">'+esc(T('ctMake'))+'</button></form>'+
+    '<div class="ct-prev"><img id="ctImg" alt=""></div><div class="actions"><button class="btn primary" data-act="ctShare">'+esc(T('nmShare'))+'</button><button class="btn secondary" data-act="ctSave">'+esc(T('nmSave'))+'</button></div>';
+}
+function ctCanvas(){
+  const s=CRS.stages.find(x=>x.id===CT.st), W=1080, Hh=1350, c=document.createElement('canvas'); c.width=W; c.height=Hh;
+  const g=c.getContext('2d'), bg=g.createLinearGradient(0,0,W,Hh); bg.addColorStop(0,'#1E2A66'); bg.addColorStop(1,'#3B1F5E'); g.fillStyle=bg; g.fillRect(0,0,W,Hh);
+  g.strokeStyle='#D9B26A'; g.lineWidth=6; g.strokeRect(46,46,W-92,Hh-92); g.lineWidth=2; g.strokeRect(66,66,W-132,Hh-132);
+  const fit=(t,font,size,max)=>{ let f=size; g.font=font.replace('#',f); while(g.measureText(t).width>max&&f>20){ f-=2; g.font=font.replace('#',f); } };
+  const wrap=(t,y,lh,max)=>{ const ws=t.split(' '); let line='', ys=y; ws.forEach(w=>{ const tl=line?line+' '+w:w; if(g.measureText(tl).width>max&&line){ g.fillText(line,W/2,ys); ys+=lh; line=w; } else line=tl; }); if(line) g.fillText(line,W/2,ys); return ys; };
+  g.textAlign='center';
+  g.fillStyle='#F2C879'; g.font='800 40px Manrope, system-ui, sans-serif'; g.fillText('Barik · Բառիկ',W/2,170);
+  g.fillStyle='#fff'; g.font='600 34px Manrope, system-ui, sans-serif'; g.fillText(T('ctHead'),W/2,250);
+  g.font='700 64px "Noto Serif Armenian", serif'; g.fillStyle='#F2C879'; g.fillText('🏅',W/2,360);
+  const hy=ctHy(), nm=(CT.name||'').trim();
+  g.fillStyle='#fff'; if(hy){ fit(hy,'700 #px "Noto Serif Armenian", serif',110,W-200); g.fillText(hy,W/2,520); }
+  if(nm&&nm!==hy){ g.fillStyle='#C9CCE8'; fit(nm,'600 #px Manrope, system-ui, sans-serif',44,W-200); g.fillText(nm,W/2,590); }
+  g.fillStyle='#fff'; g.font='600 38px Manrope, system-ui, sans-serif'; g.fillText(T('ctDone'),W/2,700);
+  g.fillStyle='#F2C879'; fit(T('pStageN',s.id)+' · '+rdx(s)+' ('+s.lv+')','800 #px Manrope, system-ui, sans-serif',58,W-200); g.fillText(T('pStageN',s.id)+' · '+rdx(s)+' ('+s.lv+')',W/2,790);
+  g.font='600 48px "Noto Serif Armenian", serif'; g.fillStyle='#C9CCE8'; g.fillText(s.hy,W/2,860);
+  g.fillStyle='#fff'; g.font='500 36px Manrope, system-ui, sans-serif'; wrap(T('pCan')+' '+rdx(s.can),960,48,W-240);
+  let dt=''; try{ dt=new Date().toLocaleDateString(L,{day:'numeric',month:'long',year:'numeric'}); }catch(e){}
+  g.fillStyle='#C9CCE8'; g.font='500 32px Manrope, system-ui, sans-serif'; g.fillText(dt,W/2,1170);
+  g.fillStyle='#EF8B2C'; g.font='800 44px Manrope, system-ui, sans-serif'; g.fillText('barik.am',W/2,1240);
+  return c;
+}
+function ctDraw(){ const im=document.getElementById('ctImg'); if(!im) return; try{ im.src=ctCanvas().toDataURL('image/png'); }catch(e){} }
+function ctBlob(){ return new Promise(res=>{ try{ ctCanvas().toBlob(b=>res(b),'image/png'); }catch(e){ res(null); } }); }
 function stage0Done(){ return !!PG.abc||Object.keys(S.pen||{}).length>=20; }
 const harvestedToday=()=>!!(PG.h&&PG.h.last===today());
 function sayText(t,btn,slow,done,g){
@@ -2194,7 +2229,7 @@ function pathHTML(){
         const lk=!unitOpen(u);
         return '<li><button class="topic p-unit'+(r?' done':'')+(lk?' locked':'')+'" data-act="pUnit" data-arg="'+u.id+'"><span class="t-ic">'+emo(u.ic)+'</span><span class="t-body"><span class="t-name">'+(i+1)+'. '+esc(rdx(u.title))+'</span><span class="t-hy" lang="hy">'+esc(u.formula)+'</span></span><span class="t-cnt">'+(r?'<span class="p-ok" aria-label="'+esc(T('pDoneAria'))+'">✓</span>':(lk?'<span class="lock" role="img" aria-label="'+esc(T('locked'))+'">'+emo('🔒','ie')+'</span>':'›'))+'</span></button></li>'; }).join('')+'</ol>';
     }else body='<p class="p-sub p-soon">'+emo('🔒','ie')+' '+esc(T('pSoon'))+'</p>';
-    return '<section class="p-st'+(us.length||s.id===0?'':' off')+'"><header class="p-sth"><span class="p-lv">'+esc(s.lv)+'</span><span class="p-nm"><b>'+esc(T('pStageN',s.id))+' · '+esc(rdx(s))+'</b><span lang="hy">'+esc(s.hy)+'</span></span></header><p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+body+'</section>';
+    return '<section class="p-st'+(us.length||s.id===0?'':' off')+'"><header class="p-sth"><span class="p-lv">'+esc(s.lv)+'</span><span class="p-nm"><b>'+esc(T('pStageN',s.id))+' · '+esc(rdx(s))+'</b><span lang="hy">'+esc(s.hy)+'</span></span></header><p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+body+(stageDone(s.id)?'<button class="btn primary sm p-cert" data-act="ctOpen" data-arg="'+s.id+'">🏅 '+esc(T('ctGet'))+'</button>':'')+'</section>';
   }).join('');
   return '<div class="path"><header class="p-head">'+pomSVG()+'<div><h1 class="p-title">'+esc(T('pathTitle'))+'</h1><p class="p-lead">'+esc(T('pathLead'))+'</p></div></header>'+
     '<div class="p-stats">'+tile(st.roots,'pcRoots')+tile(st.aff,'pcAff')+tile(st.open,'pcOpen')+tile(st.done+'/'+st.total,'pcUnits')+'</div>'+gain+
@@ -2480,6 +2515,14 @@ const H={
   dgOpen:()=>{ hit('v_daily'); go('daily'); },
   pbOpen:()=>{ hit('v_phrases'); go('phrases'); },
   tcOpen:()=>{ hit('v_teach'); go('teach'); },
+  ctOpen:a=>{ CT.st=+a; if(!CT.name&&ACC.me&&ACC.me.nick) CT.name=ACC.me.nick; hit('v_cert'); go('cert'); },
+  ctName:()=>{ const i=$('#ctIn'); CT.name=i?i.value:''; ctDraw(); },
+  ctSave:async()=>{ const i=$('#ctIn'); if(i) CT.name=i.value; const b=await ctBlob(); if(!b) return; hit('cert_save'); const a=document.createElement('a'), u=URL.createObjectURL(b); a.href=u; a.download='barik-stage-'+CT.st+'.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000); },
+  ctShare:async()=>{ const i=$('#ctIn'); if(i) CT.name=i.value; hit('cert_share'); const s=CRS.stages.find(x=>x.id===CT.st); const text=T('ctShareText',T('pStageN',s.id)+' · '+rdx(s))+' '+location.origin+'/?lang='+L;
+    try{ const b=await ctBlob(), f=b&&window.File?new File([b],'barik-stage-'+CT.st+'.png',{type:'image/png'}):null;
+      if(f&&navigator.canShare&&navigator.canShare({files:[f]})){ await navigator.share({files:[f],text}); return; }
+      if(navigator.share){ await navigator.share({title:'Barik',text}); return; } }catch(e){ if(e&&e.name==='AbortError') return; }
+    try{ await navigator.clipboard.writeText(text); toast(T('dgCopied')); }catch(e){} },
   tcLv:a=>{ TC_LV=a; render(false); },
   tcCopy:async a=>{ const u=location.origin+'/?lang='+L+'&t='+a; hit('teach_link');
     try{ await navigator.clipboard.writeText(u); toast(T('tcCopied')); }catch(e){ toast(u); } },

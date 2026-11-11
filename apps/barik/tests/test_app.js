@@ -647,6 +647,23 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'учителям: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // O-183: сертификат ступени — кнопка у пройденной ступени, имя по-армянски на картинке
+    const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU',acceptDownloads:true}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base+'?lang=ru'); await pg.waitForFunction(()=>window.__bararan);
+    await pg.evaluate(()=>{ const b=window.__bararan; b.CRS.units.filter(u=>u.stage===1).forEach(u=>{ b.PG.u[u.id]={d:Date.now(),b:90}; }); b.pgSave(); b.go('path'); });
+    ok(await pg.locator('[data-act=ctOpen][data-arg="1"]').count()===1,'пройденная ступень 1 — кнопка «Получить сертификат»');
+    ok(await pg.locator('[data-act=ctOpen][data-arg="2"]').count()===0,'непройденная ступень — без кнопки');
+    await pg.click('[data-act=ctOpen][data-arg="1"]'); await pg.fill('#ctIn','Анна'); await pg.click('form[data-act=ctName] button');
+    await pg.waitForFunction(()=>{ const i=document.getElementById('ctImg'); return i&&i.naturalWidth===1080; },null,{timeout:8000}).catch(()=>{});
+    ok(await pg.evaluate(()=>{ const i=document.getElementById('ctImg'); return i&&i.naturalWidth===1080&&i.naturalHeight===1350; }),'картинка сертификата 1080×1350');
+    const dl=pg.waitForEvent('download',{timeout:8000}).catch(()=>null); await pg.click('[data-act=ctSave]'); const d=await dl;
+    ok(d&&/barik-stage-1\.png/.test(d.suggestedFilename()),'сохранение сертификата: '+(d&&d.suggestedFilename()));
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'сертификат: без прокрутки вбок');
+    if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'cert.png'),fullPage:true});
+    ok(errs.length===0,'сертификат: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});
