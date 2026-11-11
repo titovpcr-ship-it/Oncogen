@@ -51,6 +51,7 @@ run barik-test_sync "$B" node tests/test_sync.js   # прогресс в акк�
 run barik-test_remind "$B" node tests/test_remind.js   # напоминания на почту (O-173): www + server/api + cron.php
 run barik-test_gift "$B" node tests/test_gift.js   # подарочная подписка (O-184): www + server/api, заглушка Dodo
 run barik-test_tg "$B" node tests/test_tg.js       # Telegram-бот «слово дня» (O-186): server/api, заглушка Bot API
+run barik-test_report "$B" node tests/test_report.js   # «Ошибка в слове?» на сервер (O-187): www + server/api
 if [ $BUILT -eq 1 ]; then
   run barik-test_account "$B" node tests/test_account.js
   if [ $FULL -eq 1 ]; then

@@ -1764,6 +1764,20 @@ function settingsHTML(){
   '<section class="set-sec"><h2 class="sec">'+esc(T('setProgress'))+'</h2><p class="note">'+esc(!LSOK?T('progNoSave'):ACC.me?T('progSync'):T('progLocal'))+'</p><div class="actions" style="margin-top:14px">'+(ACC.srv===true&&!ACC.me?'<button class="btn secondary" data-act="syncLogin">'+esc(T('progLogin'))+'</button>':'')+'<button class="btn danger" data-act="reset">'+esc(resetArm?T('resetArm'):T('reset'))+'</button></div></section>'+
   '<section class="set-sec"><h2 class="sec">'+esc(T('about'))+'</h2><p class="note">'+esc(T('aboutText',CFG.VERSION||'1.0.0',WORDS.length))+'</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="project">'+esc(T('project'))+'</button><button class="linkbtn" data-act="doc" data-arg="credits">'+esc(T('credits'))+'</button><button class="linkbtn" data-act="doc" data-arg="privacy">'+esc(T('privacy'))+'</button><button class="linkbtn" data-act="doc" data-arg="terms">'+esc(T('terms'))+'</button>'+(BILL.native?'':'<button class="linkbtn" data-act="doc" data-arg="refund">'+esc(T('refund'))+'</button><button class="linkbtn" data-act="tcOpen">'+esc(T('tcTitle'))+'</button>')+'</div></section>';
 }
+/* «Ошибка в слове?» (O-187): что не так (перевод, звук, пример, картинка, другое) + как правильно → сервер (api/?r=report, сводка —
+   tools/reports.py); отметка остаётся и на устройстве (S.flag, список в настройках). Без сервера или сети — очередь FLQ, дошлём позже. */
+let FLW=null, FLK='';
+function flagHTML(w){
+  if(FLW!==w.a) return '<button class="flag" data-act="flag" data-arg="'+esc(w.a)+'">'+esc(S.flag&&S.flag[w.a]?T('flagged'):T('flagAsk'))+'</button>';
+  const K=T('flK');
+  return '<form class="fl-form" data-act="flagSend"><p class="sec">'+esc(T('flWhat'))+'</p><div class="fl-k">'+Object.keys(K).map(k=>'<button type="button" class="tc-chip'+(FLK===k?' on':'')+'" data-act="flagKind" data-arg="'+k+'">'+esc(K[k])+'</button>').join('')+'</div>'+
+    '<input class="fl-note" name="note" maxlength="300" autocomplete="off" placeholder="'+esc(T('flNote'))+'"><div class="actions"><button class="btn primary" type="submit">'+esc(T('flSend'))+'</button><button class="btn ghost" type="button" data-act="flagX">'+esc(T('flCancel'))+'</button></div></form>';
+}
+const FLQK='barik-flq-v1';
+function flQ(){ try{ return JSON.parse(localStorage.getItem(FLQK)||'[]')||[]; }catch(e){ return []; } }
+function flQSave(q){ try{ localStorage.setItem(FLQK,JSON.stringify(q.slice(-50))); }catch(e){} }
+function flFlush(){ const q=flQ(); if(!q.length||BILL.native) return; const x=q[0];
+  api('report',x).then(j=>{ if(j&&(j.ok||j.status===400)){ flQSave(flQ().slice(1)); if(flQ().length) setTimeout(flFlush,300); } }); }
 function flagsHTML(){
   const fl=Object.keys(S.flag||{}).filter(a=>BY[a]);
   return '<section class="set-sec"><h2 class="sec">'+esc(T('flagsTitle'))+'</h2>'+(fl.length?
@@ -1838,7 +1852,7 @@ function accApply(j){
 }
 function accInit(){
   if(BILL.native){ ACC.srv=false; return Promise.resolve(); }
-  return api('me').then(j=>{ if(j.ok){ ACC.srv=true; accApply(j); } else if(j.err!=='net') ACC.srv=false; });
+  return api('me').then(j=>{ if(j.ok){ ACC.srv=true; accApply(j); flFlush(); } else if(j.err!=='net') ACC.srv=false; });
 }
 function accSet(p){ Object.assign(ACC,p); if(view==='account') render(); }
 function accWait(){ return Math.max(0,ACC.gap-Math.floor((Date.now()-ACC.sentAt)/1000)); }
@@ -2118,7 +2132,7 @@ function sessionHTML(){
   const ph=w.a.indexOf(' ')>=0?' phrase':'';
   let body='', foot='';
   if(it.k==='intro'){
-    body='<p class="q">'+esc(T('qNew'))+'</p><div class="pic-xl">'+pic(w)+'</div><div class="hyw'+ph+'" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div><div class="ruw">'+esc(tx(w))+'</div>'+audioRow(w)+recHTML(w)+exHTML(w)+'<button class="flag" data-act="flag" data-arg="'+esc(w.a)+'">'+esc(S.flag&&S.flag[w.a]?T('flagged'):T('flagAsk'))+'</button>';
+    body='<p class="q">'+esc(T('qNew'))+'</p><div class="pic-xl">'+pic(w)+'</div><div class="hyw'+ph+'" lang="hy">'+letters(w.a)+'</div><div class="trn">'+esc(trn(w))+'</div><div class="ruw">'+esc(tx(w))+'</div>'+audioRow(w)+recHTML(w)+exHTML(w)+flagHTML(w);
     foot='<div class="row2"><button class="btn secondary" data-act="know">'+esc(T('know'))+'</button><button class="btn primary" data-act="next">'+esc(T('next'))+'</button></div>';
   }else if(it.k==='a2r'){
     body='<p class="q">'+esc(T('qMeaning'))+'</p><div class="hyw'+ph+'" lang="hy">'+esc(w.a)+'</div>'+((S.set.tr||it.done)?'<div class="trn">'+esc(trn(w))+'</div>':'')+audioRow(w)+optsPic(it);
@@ -2609,7 +2623,16 @@ const H={
     sess.items=sess.items.filter((x,i)=>i<=sess.i||x.w!==w);
     nextItem();
   },
-  flag:a=>{S.flag=S.flag||{}; if(S.flag[a]) delete S.flag[a]; else S.flag[a]=1; save(); render(false); toast(S.flag[a]?T('flagToast'):T('unflagToast'));},
+  flag:a=>{S.flag=S.flag||{}; if(S.flag[a]){ delete S.flag[a]; save(); render(false); toast(T('unflagToast')); return; }
+    if(BILL.native){ S.flag[a]=1; save(); render(false); toast(T('flagToast')); return; }
+    FLW=a; FLK=''; render(false); const f=$('.fl-form'); if(f) f.scrollIntoView({block:'nearest',behavior:'smooth'}); },
+  flagKind:k=>{ FLK=FLK===k?'':k; document.querySelectorAll('.fl-k .tc-chip').forEach(b=>b.classList.toggle('on',b.dataset.arg===FLK)); },
+  flagX:()=>{ FLW=null; render(false); },
+  flagSend:(arg,el)=>{ const a=FLW; if(!a) return; const f=el&&el.closest?el.closest('form'):$('.fl-form'), note=((f&&f.note&&f.note.value)||'').trim().slice(0,300);
+    S.flag=S.flag||{}; S.flag[a]=1; save(); FLW=null;
+    const q=flQ(); q.push({a,l:L,k:FLK||'oth',n:note,t:BY[a]?BY[a].t:-1}); flQSave(q); hit('flag');
+    if(navigator.onLine===false){ render(false); toast(T('flLocal')); return; }
+    flFlush(); render(false); toast(T('flThanks')); },
   copyFlags:()=>{
     const txt=Object.keys(S.flag||{}).filter(a=>BY[a]).map(a=>a+' — '+BY[a].tr+' — '+BY[a].r+' — '+BY[a].e+' — '+BY[a].f).join('\n');
     const fallback=()=>{const t=$('#flagtxt'); if(t){t.hidden=false; t.value=txt; t.focus(); t.select();} toast(T('copyManual'));};

@@ -69,6 +69,16 @@ if ($r === 'stats') {
          'premium' => (int)q("SELECT COUNT(*) FROM users WHERE sub_status IN ('active','trialing')")->fetchColumn()]);
 }
 
+if ($r === 'reports') {
+    // отметки «Ошибка в слове?» для владельца (O-187): ключ — как у сводки; done=1 — отметить разобранные до id
+    if (!hash_equals(stats_key(), (string)($_GET['key'] ?? ''))) fail('auth', 401);
+    db()->exec('CREATE TABLE IF NOT EXISTS reports(id INTEGER PRIMARY KEY AUTOINCREMENT, a TEXT NOT NULL, lang TEXT NOT NULL, kind TEXT NOT NULL,
+        note TEXT NOT NULL DEFAULT \'\', topic INTEGER NOT NULL DEFAULT -1, uid INTEGER, t INTEGER NOT NULL, done INTEGER NOT NULL DEFAULT 0)');
+    if ($method === 'POST' && isset($_GET['done'])) q('UPDATE reports SET done = 1 WHERE id <= ?', [(int)$_GET['done']]);
+    $all = !empty($_GET['all']);
+    out(['ok' => true, 'rows' => q('SELECT id, a, lang, kind, note, topic, t, done FROM reports' . ($all ? '' : ' WHERE done = 0') . ' ORDER BY id')->fetchAll()]);
+}
+
 if ($r === 'unsub') {
     // отписка от напоминаний по ссылке из письма (и One-Click POST почтовика): без входа, подпись — unsub_sig
     $uid = (int)($_GET['u'] ?? 0);
@@ -186,6 +196,14 @@ switch ($r) {
         q('DELETE FROM remind WHERE uid = ?', [$u['id']]);
         q('DELETE FROM users WHERE id = ?', [$u['id']]);
         end_session();
+        out(['ok' => true]);
+
+    case 'report':
+        need_post($method);
+        if (limited(ip_key() . ':report', 30, 3600)) fail('rate', 429);
+        $u = session_user();
+        $e = report_add(body(), $u ? (int)$u['id'] : null);
+        if ($e !== '') fail($e, 400);
         out(['ok' => true]);
 
     case 'sync':

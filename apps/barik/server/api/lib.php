@@ -856,3 +856,28 @@ function tg_run(?int $now = null): array {
     if ($sent) stat_add($day, 'e:tg_sent', $sent);
     return [$sent, $bad];
 }
+
+
+/* ---------- «Ошибка в слове?» (O-187) ----------
+   Отметки учеников: слово, язык интерфейса, что не так (tr перевод | snd произношение | ex пример | pic картинка | oth другое),
+   «как правильно» (по желанию, до 300 знаков), номер темы. Без входа; 30 в час с адреса. Сводка — api/?r=reports&key= (tools/reports.py). */
+const REPORT_KINDS = ['tr', 'snd', 'ex', 'pic', 'oth'];
+
+function report_add(array $b, ?int $uid): string {
+    $a = trim((string)($b['a'] ?? ''));
+    if ($a === '' || mb_strlen($a) > 60 || !preg_match('/^[\x{0531}-\x{058F}\x{FB13}-\x{FB17} \-]+$/u', $a)) return 'word';
+    $l = (string)($b['l'] ?? '');
+    $k = (string)($b['k'] ?? 'oth');
+    if (!preg_match('/^(ru|en|fr|es|de|pt)$/', $l) || !in_array($k, REPORT_KINDS, true)) return 'bad';
+    $n = trim(preg_replace('/[\x00-\x1F\x7F]+/u', ' ', mb_substr((string)($b['n'] ?? ''), 0, 300)) ?? '');
+    $t = max(-1, min(10000, (int)($b['t'] ?? -1)));
+    db()->exec('CREATE TABLE IF NOT EXISTS reports(id INTEGER PRIMARY KEY AUTOINCREMENT, a TEXT NOT NULL, lang TEXT NOT NULL, kind TEXT NOT NULL,
+        note TEXT NOT NULL DEFAULT \'\', topic INTEGER NOT NULL DEFAULT -1, uid INTEGER, t INTEGER NOT NULL, done INTEGER NOT NULL DEFAULT 0)');
+    // одна и та же отметка с одного адреса за сутки — один раз (повторные нажатия, очередь без сети)
+    $h = substr(hash_hmac('sha256', ip_key() . '|' . $a . '|' . $k . '|' . intdiv(time(), 86400), (string)cfg('PEPPER', 'barik')), 0, 20);
+    if (limited('rep1:' . $h, 1, 86400)) return '';
+    q('INSERT INTO reports(a, lang, kind, note, topic, uid, t) VALUES(?, ?, ?, ?, ?, ?, ?)', [$a, $l, $k, $n, $t, $uid, time()]);
+    stat_add(intdiv(time(), 86400), 'e:report_' . $k);
+    return '';
+}
+
