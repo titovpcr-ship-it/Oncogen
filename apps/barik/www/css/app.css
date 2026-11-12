@@ -621,7 +621,7 @@ body[data-view="onboard"]{background:#FFFAF5}
 .bt b{display:block;font:600 19px/1.15 var(--hy)}
 .bt span{display:block;font-size:13px;color:var(--L-ink3);margin-top:2px}
 @media (prefers-reduced-motion: reduce){ .ph-card.in,.bub.on .pl,.vb.on .pl{animation:none} }
-@media (max-width:420px){ .ph{right:5%;width:46%} .ph-scr{padding:40px 10px 12px;gap:8px} .ph-opt{min-height:32px;font-size:12px} .ph-hy{font-size:22px} .bub{padding:9px 13px 9px 9px;gap:9px} .bub .pl{width:32px;height:32px} .bt b{font-size:16px} .bt span{font-size:12px} }
+@media (max-width:420px){ .ph{right:5%;width:46%} .ph-scr{padding:40px 10px 12px;gap:8px} .ph-opt{min-height:30px;font-size:12px} .ph-opts{gap:5px} .ph-card .pimg{aspect-ratio:16/7} .ph-k{display:none} .ph-hy{font-size:22px} .bub{padding:9px 13px 9px 9px;gap:9px} .bub .pl{width:32px;height:32px} .bt b{font-size:16px} .bt span{font-size:12px} }
 /* факты */
 .ld-proof{padding:26px 0 0}
 .ld-proof ul{list-style:none;margin:0;padding:18px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;border-radius:28px;background:var(--L-card);box-shadow:var(--L-sh)}
@@ -1148,3 +1148,12 @@ ul.u-note{margin:0 0 12px;padding-left:20px;display:grid;gap:6px}
 .g-tab th,.g-tab td{border-bottom:1px solid var(--line);padding:6px 10px 6px 0;text-align:left;vertical-align:top}
 .g-tab th{font-weight:500;color:var(--ink-2)}
 .g-tab tr.on td,.g-tab tr.on th{color:var(--accent);font-weight:700}
+/* Б3: телефон на обложке отвечает на нажатия */
+button.ph-opt{width:100%;cursor:pointer;color:inherit}
+button.ph-opt:hover:not([disabled]){border-color:var(--accent,#C2410C)}
+button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offset:2px}
+.ph-opt.bad{background:#FDECEC;border-color:#C8193C;color:#C8193C}
+.ph-opt.ph-go{background:var(--accent,#C2410C);border-color:transparent;color:#fff}
+.ph-done{font-size:40px;line-height:1}
+@media (max-width:380px){ .ph-card .pimg{aspect-ratio:16/5.5} .ph-hy{font-size:20px} .ph-scr{gap:6px} }
+@media (max-width:340px){ .ph{width:50%} .ph-card .pimg{aspect-ratio:16/4} .ph-scr{padding-top:34px} }

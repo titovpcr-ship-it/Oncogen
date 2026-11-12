@@ -436,6 +436,26 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'этап C: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // Б3: урок прямо на обложке — телефон отвечает на нажатия, «Продолжить» ведёт в урок с прогрессом этих слов
+    const ctx=await br.newContext({viewport:{width:390,height:844},locale:'en-US',timezoneId:'America/New_York'});
+    const pg=await ctx.newPage(), errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base); await pg.waitForSelector('#phOpts .ph-opt');
+    for(const w of [320,390]){ await pg.setViewportSize({width:w,height:844}); await pg.waitForTimeout(100);
+      ok(await pg.evaluate(()=>{ const s=document.querySelector('.ph-scr').getBoundingClientRect(); return [...document.querySelectorAll('#phOpts .ph-opt')].every(b=>b.getBoundingClientRect().bottom<=s.bottom); }),'Б3: все три ответа видны в телефоне на '+w+' px'); }
+    const tried=[];
+    for(let i=0;i<3;i++){ await pg.waitForSelector('#phOpts .ph-opt.right:not([disabled])');
+      const a=await pg.getAttribute('#phOpts .ph-opt.right','data-arg'); tried.push(a);
+      await pg.click(i===1?'#phOpts .ph-opt:not(.right)':'#phOpts .ph-opt.right'); await pg.waitForTimeout(i===1?1700:1100); }
+    ok(await pg.locator('[data-act=landTryGo]').count()===1,'Б3: после трёх слов в телефоне — «Продолжить урок»');
+    const sw=await pg.evaluate(t=>t.map(a=>window.__bararan.S.w[a]&&window.__bararan.S.w[a].b),tried);
+    ok(sw[0]===2&&sw[1]===1&&sw[2]===2,'Б3: ответы сохранены в прогрессе (верно — ступень 2, ошибка — 1): '+sw);
+    await pg.click('[data-act=landTryGo]'); await pg.waitForTimeout(400);
+    ok(await pg.evaluate(()=>document.body.dataset.view)==='session','Б3: «Продолжить» — сразу урок, без регистрации');
+    const inLesson=await pg.evaluate(t=>{ const S=window.__bararan.S; return t.every(a=>!!S.w[a]); },tried);
+    ok(inLesson,'Б3: слова с обложки остались в прогрессе после входа в урок');
+    ok(errs.length===0,'Б3: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   { // источники и лицензии (O-149): всё стороннее названо, ссылки на тексты лицензий ведут на настоящие файлы
     const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage();

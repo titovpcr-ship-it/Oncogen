@@ -44,7 +44,7 @@ def main():
         if it: print('\n%s: %s' % (title, ', '.join('%s %d' % t for t in it)))
 
 
-STEPS = [('guest', 'гости'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_done', 'урок'), ('unit_done', 'путь'),
+STEPS = [('guest', 'гости'), ('land_try', 'телефон'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_done', 'урок'), ('unit_done', 'путь'),
          ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'оплата')]
 
 
@@ -68,9 +68,9 @@ def funnel(by, tot):
             if k.startswith(pre):
                 a, _, ev = k[len(pre):].rpartition(':'); grp[a][ev] += n
         if not grp: continue
-        print('\n%s: %s' % (title, '  '.join(t for _, t in STEPS[:6])))
+        print('\n%s: %s' % (title, '  '.join(t for _, t in STEPS[:7])))
         for a, c in sorted(grp.items(), key=lambda t: -t[1].get('guest', 0))[:12]:
-            print('  %-24s %s' % (a, '  '.join(str(c.get(k, 0)) for k, _ in STEPS[:6])))
+            print('  %-24s %s' % (a, '  '.join(str(c.get(k, 0)) for k, _ in STEPS[:7])))
     path_line(tot)
     land = [(k[7:], n) for k, n in tot.items() if k.startswith('e:land_')]
     if land: print('\nкнопки обложки: ' + ', '.join('%s %d' % t for t in sorted(land, key=lambda t: -t[1])))

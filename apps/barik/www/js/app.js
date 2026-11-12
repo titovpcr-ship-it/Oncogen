@@ -933,7 +933,7 @@ function onboardHTML(){
       '<div class="ld-ctas">'+cta('xl')+'<a class="ld-how" href="#how" data-act="landHow">'+esc(D.cta2)+'</a></div>'+
       '<ul class="ld-micro">'+micro+'</ul></div>'+
     '<div class="ld-art"><div class="ld-scene" aria-hidden="true">'+ART.scene+'</div>'+
-      '<div class="ph" aria-hidden="true"><div class="ph-scr"><div class="ph-top"><span class="ph-x">✕</span><span class="ph-bar"><i></i></span><span class="ph-n">4/10</span></div>'+
+      '<div class="ph" role="group" aria-label="'+esc(T('landTryAria'))+'"><div class="ph-scr"><div class="ph-top"><span class="ph-x">✕</span><span class="ph-bar"><i></i></span><span class="ph-n">4/10</span></div>'+
         '<p class="ph-k">'+esc(T('qMeaning'))+'</p><div class="ph-card" id="phCard"></div><div class="ph-opts" id="phOpts"></div></div></div>'+
       bub(D.bubA.toLowerCase(),'f','b1')+bub(D.bubB.toLowerCase(),'m','b2')+
     '</div></div></section>'+
@@ -975,15 +975,34 @@ function landDemo(){
     const pick=[o[(landK)%3],o[(landK+1)%3],o[(landK+2)%3]];
     card.classList.remove('in'); void card.offsetWidth;
     card.innerHTML='<span class="pimg">'+picSvg(w)+'</span><span class="ph-hy" lang="hy">'+esc(w.a)+'</span><span class="ph-tr">'+esc(trn(w))+'</span>';
-    opts.innerHTML=pick.map(x=>'<span class="ph-opt'+(x===w?' right':'')+'">'+esc(tx(x))+'</span>').join('');
+    LT.w=w; LT.done=false;
+    opts.innerHTML=pick.map(x=>'<button type="button" class="ph-opt'+(x===w?' right':'')+'" data-act="landTry" data-arg="'+esc(x.a)+'">'+esc(tx(x))+'</button>').join('');
     card.classList.add('in');
     const bar=document.querySelector('.ph-bar i'); if(bar) bar.style.width=(20+(landK%8)*10)+'%';
     const n=document.querySelector('.ph-n'); if(n) n.textContent=((landK%8)+3)+'/10';
+    if(LT.on) return;   // гость уже отвечает сам — без автопоказа
     if(still) { opts.querySelector('.right').classList.add('ok'); return; }
-    landLater(()=>{ const r=opts.querySelector('.right'); if(r) r.classList.add('ok'); },1500);
-    landLater(()=>{ landK++; show(); },3600);
+    landLater(()=>{ if(!LT.on){ const r=opts.querySelector('.right'); if(r) r.classList.add('ok'); } },1500);
+    landLater(()=>{ if(!LT.on){ landK++; show(); } },3600);
   };
-  show();
+  LT.show=show; show();
+}
+/* Б3: урок прямо на обложке — гость отвечает в телефоне: три слова, затем «Продолжить» ведёт в урок; ответы уже в прогрессе */
+const LT={on:false,n:0,w:null,done:false,show:null};
+function landTry(a){
+  const opts=document.getElementById('phOpts'); if(!opts||!LT.w||LT.done) return;
+  if(!LT.on){ LT.on=true; landT.forEach(clearTimeout); landT=[]; hit('land_try'); }
+  LT.done=true; const w=LT.w, ok=a===w.a;
+  opts.querySelectorAll('.ph-opt').forEach(b=>{ b.disabled=true; if(b.classList.contains('right')) b.classList.add('ok'); else if(b.dataset.arg===a) b.classList.add('bad'); });
+  speak(w); if(!ok) buzz();
+  if(!S.w[w.a]){ S.w[w.a]={b:ok?2:1,d:today()+1,t:Date.now(),n:1,e:ok?0:1}; save(); }
+  LT.n++;
+  const n=document.querySelector('.ph-n'); if(n) n.textContent=LT.n+'/3';
+  const bar=document.querySelector('.ph-bar i'); if(bar) bar.style.width=Math.round(100*LT.n/3)+'%';
+  setTimeout(()=>{ if(view!=='onboard') return;
+    if(LT.n<3){ landK++; LT.show&&LT.show(); return; }
+    const card=document.getElementById('phCard'); if(card) card.innerHTML='<span class="ph-done">'+emo('🎉','ie')+'</span><span class="ph-tr">'+esc(T('landTryDone'))+'</span>';
+    opts.innerHTML='<button type="button" class="ph-opt ph-go" data-act="landTryGo">'+esc(T('landTryGo'))+' →</button>'; },ok?900:1500);
 }
 /* Пропись на обложке и в разделе «Пропись»: перо пишет букву, потом следующую. В разделе под
    прописью — весь алфавит: нажатая буква пишется сразу, дальше снова по порядку. */
@@ -2732,6 +2751,8 @@ const H={
   lang:a=>{setLang(a); render();},
   topic:a=>{const t=TOPICS[+a]; if(lvOpen(t.lv)) preloadAudio(t.list); go('topic',+a);},
   learnNew:()=>startLearn(null),
+  landTry:a=>landTry(a),
+  landTryGo:()=>{ setLang(L); hit('land_start'); hit('start'); startLearn(null); },
   learnTopic:a=>startLearn(+a),
   learnAgain:()=>{const m=sess?sess.meta:{}; startLearn(m.ti!=null?m.ti:null,m.lv||null);},
   learnLevel:a=>startLearn(null,a),

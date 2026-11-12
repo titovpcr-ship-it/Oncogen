@@ -633,7 +633,7 @@ function remind_run(?int $now = null): array {
 
 
 /* ---------- счётчик посещений (O-174) ---------- */
-const FUNNEL = ['start', 'first_answer', 'lesson_done', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
+const FUNNEL = ['land_try', 'start', 'first_answer', 'lesson_done', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
                 'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail'];
 
 /* Premium сейчас: подписки текущего режима Dodo (O-195) и подарки */
