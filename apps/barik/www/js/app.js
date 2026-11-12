@@ -2419,6 +2419,9 @@ function pBuild(u){
     else if(d.t==='num') shuffle(d.items).slice(0,4).forEach(([n,w])=>items.push({k:'num',n,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
     else if(d.t==='pick') shuffle(d.items).slice(0,3).forEach(([q,w])=>items.push({k:'pick',q,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
   });
+  /* А4: зёрна урока — «что значит слово» (только слова из словаря, 4–6 штук) */
+  const sd=u.kind==='read'?[]:u.seeds.filter(w=>BY[w]&&tx(BY[w]));
+  shuffle(sd).slice(0,Math.min(6,Math.max(4,sd.length>=4?5:sd.length))).forEach(w=>items.push({k:'seed',w,a:tx(BY[w]),opts:uniq(tx(BY[w]),shuffle(sd.filter(x=>x!==w).map(x=>tx(BY[x]))))}));
   const ls=u.scene.lines, keep=properOf(ls); (u.names||[]).forEach(n=>keep.add(n));
   const short=shuffle(ls.filter(l=>{ const n=pWords(l[1],keep).length; return n>=3&&n<=7; }));
   short.slice(0,2).forEach(l=>{ const a=pWords(l[1],keep); items.push({k:'tiles',ln:l,a,bank:shuffle(a).map((t,id)=>({id,t,used:false})),ans:[]}); });
@@ -2483,6 +2486,9 @@ function practiceHTML(){
     body='<p class="q">'+esc(T('pNumQ'))+'</p><div class="p-num">'+esc(String(it.n))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='pick'){
     body='<p class="q">'+esc(T('pPickQ'))+'</p><div class="ruw big">'+esc(rdx(it.q))+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='seed'){
+    const x=BY[it.w];
+    body='<p class="q">'+esc(T('pMeanQ'))+'</p><div class="p-seedpic">'+(x?picQ(x):'')+'</div><div class="hyw" lang="hy">'+esc(it.w)+'</div>'+(x?'<div class="ruw tr">'+esc(trL(it.w))+'</div>':'')+'<div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(o)+'</span>')).join('')+'</div>';
   }else if(it.k==='read'){
     body='<p class="q">'+esc(T('pReadQ'))+'</p><div class="hyw" lang="hy">'+esc(it.w)+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(o)+'</span>')).join('')+'</div>';
   }else if(it.k==='hear'){
@@ -2495,8 +2501,8 @@ function practiceHTML(){
     if(!it.done) foot='<div class="row2"><button class="btn secondary" data-act="pTileReset">'+esc(T('erase'))+'</button><button class="btn primary" data-act="pTileCheck"'+(it.ans.length<it.a.length?' disabled':'')+'>'+esc(T('pCheck'))+'</button></div>';
   }
   if(it.done){
-    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:(it.k==='conj'?PRON[it.p]+' '+it.a:it.a)));
-    const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
+    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'||it.k==='seed'?it.w:(it.k==='conj'?PRON[it.p]+' '+it.a:it.a)));
+    const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):it.k==='seed'?' — '+it.a:((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
     const txl=(it.k==='tiles'||it.k==='hear')&&PU.u&&pTxOn(PU.u)?'<span class="ln-tx">'+esc(lnTx(shown))+'</span>':'';
     foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+txl+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+txl+(tr?esc(tr):'')+'</span></div>')+
       '<button class="btn primary" data-act="pNext">'+esc(T('next'))+'</button>';
@@ -2506,7 +2512,7 @@ function practiceHTML(){
 /* пол говорящего реплики: who.g ('m' | 'f') */
 function lnG(l){const u=(PU&&PU.u)||CRS.units.find(x=>x.scene.lines.includes(l)), w=u&&u.scene.who[l[0]]; return w&&w.g||'f';}
 function pSayIt(it){
-  const ln=it.k==='tiles'||it.k==='hear', t=ln?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:it.a));
+  const ln=it.k==='tiles'||it.k==='hear', t=ln?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'||it.k==='seed'?it.w:it.a));
   sayText(t,null,false,null,ln?lnG(it.ln):null);
 }
 /* А1: неверное задание урока один раз возвращается в конец очереди; счёт — по первой попытке */
@@ -2517,10 +2523,13 @@ function pAnswer(i){
   it.done=true; it.pick=i; it.ok=it.opts[i]===it.a; if(it.ok){ if(!it.re) PU.ok++; } else pWrong(it); hit('first_answer');
   render(); pSayIt(it);
 }
+/* А4: зёрна зачтённого урока — в повторение слов первой ступенью Лейтнера (если их там ещё нет) */
+function pSeedsToReview(u){ if(u.kind==='read') return 0; let n=0; const td=today();
+  u.seeds.forEach(w=>{ if(BY[w]&&!S.w[w]){ S.w[w]={b:1,d:td+1,t:Date.now(),n:0,e:0}; n++; } }); if(n) save(); PU.seedsN=n; return n; }
 function pFinish(){
   PU.end=true; hit('unit_done');
   const n0=pN0(), sc=Math.round(100*PU.ok/n0); PU.n0=n0;
-  if(PU.kind==='unit'){ PU.pass=sc>=PLACE_OK*100; const r=PG.u[PU.u.id]; if(PU.pass) PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; }
+  if(PU.kind==='unit'){ PU.pass=sc>=PLACE_OK*100; const r=PG.u[PU.u.id]; if(PU.pass){ PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; pSeedsToReview(PU.u); } }
   else if(PU.kind==='read'){ PU.pass=PU.ok>=Math.ceil(PU.q.length*0.75); if(PU.pass) PG.abc=1; }
   else if(PU.kind==='place') placeApply();
   else if(PU.kind==='harvest'){ const td=today(), h=PG.h||{}; if(h.last!==td){ h.streak=h.last===td-1?(h.streak||0)+1:1; h.last=td; } PG.h=h; touchStreak(); save(); }
@@ -2571,6 +2580,7 @@ function pResultHTML(){
   return '<div class="result p-res"><div class="pom-sm">'+pomSVG()+'</div><h1 class="pg">'+esc(T('pUnitDone'))+'</h1><p class="u-formula sm" lang="hy">'+fmlHTML(u.formula)+'</p>'+
     '<p class="summary">'+esc(T('pScore',PU.ok,PU.n0))+'</p>'+
     (d>0?'<p class="p-gain big">'+emo('🌱','ie')+' '+esc(T('pOpened',d))+(A?' — '+esc(T('pThanks',u.affix)):'')+'</p>':'')+
+    (PU.seedsN?'<p class="p-gain">'+emo('🔁','ie')+' '+esc(T('pSeedsRev',PU.seedsN))+'</p>':'')+
     '<div class="actions">'+(nu?'<button class="btn primary" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T('pNextUnit'))+'<span class="cap">'+esc(rdx(nu.title))+'</span></button>':'')+
     '<button class="btn secondary" data-act="pAgain">'+esc(T('pRepeat'))+'</button><button class="btn ghost" data-act="tab" data-arg="path">'+esc(T('pBackPath'))+'</button></div></div>';
 }

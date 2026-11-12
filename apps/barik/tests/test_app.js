@@ -302,7 +302,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       ok(sc.includes(want)&&!sc.includes('nice to meet')&&!sc.includes('neighbours'),'сцена на '+lg+': «'+want+'», без английского');
       await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
       const hint=await pg.evaluate(lg=>{ const B=window.__bararan, x=B.PU.q.find(q=>q.k==='tiles'); return x?x.ln[{de:6,pt:7}[lg]]:null; },lg);
-      for(let i=0;i<12&&!(await pg.locator('.ruw').count());i++){ const it=await pg.evaluate(()=>{const P=window.__bararan.PU,x=P.q[P.i];return {k:x.k,a:x.a,opts:x.opts||null};}); if(it.k==='tiles') break; await pg.locator('.opt').nth(it.opts.indexOf(it.a)).click(); await pg.click('[data-act=pNext]'); }
+      for(let i=0;i<30;i++){ const it=await pg.evaluate(()=>{const P=window.__bararan.PU,x=P.q[P.i];return {k:x.k,a:x.a,opts:x.opts||null};}); if(it.k==='tiles') break; await pg.locator('.opt').nth(it.opts.indexOf(it.a)).click(); await pg.click('[data-act=pNext]'); }
       ok(hint&&(await pg.textContent('.ruw'))===hint,'сборка фразы на '+lg+': подсказка на своём языке');
       await pg.click('[data-act=pQuit]'); await pg.click('[data-act=tab][data-arg=path]');
     }
@@ -366,6 +366,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     k=await run(i=>i!==0);
     const pass=await pg.evaluate(()=>{ const P=window.__bararan.PU; return {ok:P.ok,n:P.n0,u:window.__bararan.PG.u.s1u1}; });
     ok((await pg.textContent('.p-res h1')).includes('Формула освоена')&&pass.u&&pass.ok===pass.n-1,'одна ошибка — освоена ('+pass.ok+' из '+pass.n+')');
+    const sw=await pg.evaluate(()=>{ const B=window.__bararan, u=B.CRS.units[0], inBy=u.seeds.filter(w=>B.BY[w]); return {n:inBy.length, rev:inBy.filter(w=>B.S.w[w]&&B.S.w[w].b===1).length, seed:B.PU.q.filter(x=>x.k==='seed'&&!x.re).length, stat:B.counts?B.counts():null}; });
+    ok(sw.seed>=4&&sw.seed<=6,'А4: в практике '+sw.seed+' заданий на зёрна урока');
+    ok(sw.n>=10&&sw.rev===sw.n,'А4: после зачёта s1u1 все '+sw.n+' зёрен из словаря — в повторении, ступень 1');
+    ok((await pg.textContent('.p-res')).includes('в повторении'),'итог: сказано, сколько слов ушло в повторение');
+    ok(await pg.evaluate(()=>{ const P=window.__bararan.syncPack?window.__bararan.syncPack():null; return !P||Object.keys(P.s.w).length>=10; }),'синхронизация видит зёрна в S.w');
     await pg.evaluate(()=>{ const B=window.__bararan; B.PG.u.s1u1={d:Date.now(),b:50}; });
     await pg.click('[data-act=tab][data-arg=path]');
     ok(await pg.evaluate(()=>document.querySelector('[data-arg=s1u1] .p-redo')!==null),'старая запись ниже 70 % — пометка «повторить» на карте');
