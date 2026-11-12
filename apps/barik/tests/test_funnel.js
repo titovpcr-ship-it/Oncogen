@@ -47,6 +47,13 @@ c.commit()`,db,String(now)]);
   ok(S['gl:ru:guest']===1&&S['gl:ru:start']===1&&S['gl:ru:first_answer']===1,'воронка по языку (ru)');
   ok(S['gs:from=tg_test:guest']===1&&S['gs:from=tg_test:start']===1&&S['f:tg_test']===1,'источник — метка ?from=tg_test');
   ok(S['e:res_fail']===1,'незагрузившиеся картинки — один res_fail на визит: '+S['e:res_fail']);
+  // А8: шаги Пути по ступеням — открытие формулы ступени 1
+  await pg.click('[data-act=quit]').catch(()=>{}); await pg.click('[data-act=tab][data-arg=path]').catch(()=>{});
+  if(!(await pg.locator('[data-act=pUnit][data-arg=s1u1]').count())){ await pg.goto(base+'?t=0'); await pg.click('[data-act=tab][data-arg=path]'); }
+  await pg.click('[data-act=pUnit][data-arg=s1u1]'); await pg.waitForTimeout(500);
+  S=await stats(); ok(S['e:unit_open_p1']===1,'Путь: открытие формулы ступени 1 — событие unit_open_p1');
+  const pl=execFileSync('python3.13',['-c','import sys,collections;sys.path.insert(0,sys.argv[1]);import stats;print(stats.path_line(collections.Counter({"e:unit_open_p1":1,"e:unit_pass_p1":1,"e:harvest_done":1})))',path.join(ROOT,'tools')]).toString();
+  ok(pl.includes('p1 1→1→0')&&pl.includes('урожай 1'),'сводка: строка «Путь: открыли → прошли → не прошли»');
 
   // 2. гость со страницы поиска: источник «seo»; вход кнопкой «Открыть» — тоже «вошли»
   const c2=await br.newContext({viewport:{width:390,height:844},locale:'en-US',userAgent:UA+' B',serviceWorkers:'block'});

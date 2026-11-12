@@ -69,11 +69,23 @@ def funnel(by, tot):
         print('\n%s: %s' % (title, '  '.join(t for _, t in STEPS[:6])))
         for a, c in sorted(grp.items(), key=lambda t: -t[1].get('guest', 0))[:12]:
             print('  %-24s %s' % (a, '  '.join(str(c.get(k, 0)) for k, _ in STEPS[:6])))
+    path_line(tot)
     land = [(k[7:], n) for k, n in tot.items() if k.startswith('e:land_')]
     if land: print('\nкнопки обложки: ' + ', '.join('%s %d' % t for t in sorted(land, key=lambda t: -t[1])))
     if tot.get('open'): print('сбои загрузки (картинка, скрипт, запись): %d на %d открытий (%.1f%%)' % (tot.get('e:res_fail', 0), tot['open'], 100 * tot.get('e:res_fail', 0) / tot['open']))
     fr = [(k[2:], n) for k, n in tot.items() if k.startswith('f:')]
     if fr: print('метки ?from=: ' + ', '.join('%s %d' % t for t in sorted(fr, key=lambda t: -t[1])))
+
+
+def path_line(tot):
+    """шаги Пути (TZ_AUDIT2 А8): по ступеням — открыли → прошли → не прошли; плюс входной тест и урожай"""
+    st = [(n, tot.get('e:unit_open_p%d' % n, 0), tot.get('e:unit_pass_p%d' % n, 0), tot.get('e:unit_fail_p%d' % n, 0)) for n in range(1, 6)]
+    if not any(o or p or f for _, o, p, f in st) and not tot.get('e:place_done') and not tot.get('e:harvest_done'):
+        return ''
+    line = 'Путь: открыли → прошли → не прошли: ' + ', '.join('p%d %d→%d→%d' % t for t in st if any(t[1:]))
+    line += '; входной тест %d, урожай %d' % (tot.get('e:place_done', 0), tot.get('e:harvest_done', 0))
+    print('\n' + line)
+    return line
 
 
 if __name__ == '__main__':

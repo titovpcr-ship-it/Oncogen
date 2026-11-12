@@ -2366,7 +2366,7 @@ const unitOpen=u=>u.stage<2||premium();     // ступени 0–1 беспла
 function openUnit(id,step){
   const u=unitById(id); if(!u) return;
   if(!unitOpen(u)){ openPaywall(); return; }
-  PU={kind:'unit',u,step:step||0,q:null,i:0,ok:0,end:false,chain:0};
+  PU={kind:'unit',u,step:step||0,q:null,i:0,ok:0,end:false,chain:0}; hit('unit_open_p'+u.stage);
   if(REAL_ANY) u.scene.lines.forEach(l=>getAudio(audioUrl(l[1],(u.scene.who[l[0]]||{}).g||'f')).catch(()=>{}));
   go('unit',id);
 }
@@ -2558,10 +2558,10 @@ function pGramTable(u){
 function pFinish(){
   PU.end=true; hit('unit_done');
   const n0=pN0(), sc=Math.round(100*PU.ok/n0); PU.n0=n0;
-  if(PU.kind==='unit'){ PU.pass=sc>=PLACE_OK*100; const r=PG.u[PU.u.id]; if(PU.pass){ PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; pSeedsToReview(PU.u); } }
+  if(PU.kind==='unit'){ PU.pass=sc>=PLACE_OK*100; const r=PG.u[PU.u.id]; if(PU.pass){ PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; pSeedsToReview(PU.u); } hit('unit_'+(PU.pass?'pass':'fail')+'_p'+PU.u.stage); }
   else if(PU.kind==='read'){ PU.pass=PU.ok>=Math.ceil(PU.q.length*0.75); if(PU.pass) PG.abc=1; }
-  else if(PU.kind==='place') placeApply();
-  else if(PU.kind==='harvest'){ const td=today(), h=PG.h||{}; if(h.last!==td){ h.streak=h.last===td-1?(h.streak||0)+1:1; h.last=td; } PG.h=h; touchStreak(); save(); }
+  else if(PU.kind==='place'){ placeApply(); hit('place_done'); }
+  else if(PU.kind==='harvest'){ hit('harvest_done'); const td=today(), h=PG.h||{}; if(h.last!==td){ h.streak=h.last===td-1?(h.streak||0)+1:1; h.last=td; } PG.h=h; touchStreak(); save(); }
   pgSave(); PU.after=openCount(); PU.sc=sc;
   render(); window.scrollTo(0,0);
 }
