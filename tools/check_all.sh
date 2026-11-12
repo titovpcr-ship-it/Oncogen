@@ -45,6 +45,7 @@ if [ $FULL -eq 1 ]; then
 elif [ ! -f "$B/dist/site/api/index.php" ]; then
   run barik-build_site "$B" python3.13 tools/build_site.py --no-seo || BUILT=0
 fi
+run barik-test_guest_return "$B" node tests/test_guest_return.js
 run barik-test_grammar "$B" node tests/test_grammar.js
 run barik-test_app "$B" node tests/test_app.js
 run barik-test_crypto "$B" node tests/test_crypto.js   # оплата криптой (O-162): www + server/api, сборка не нужна
@@ -70,6 +71,7 @@ fi
 echo "всего: $(( $(date +%s) - T_ALL ))s, упало: ${#FAILED[@]}"
 for n in "${FAILED[@]}"; do
   echo "--- $n (out/check/$n.log):"
+  rg -n "FAIL|ПРОВАЛ|Error|Timeout" "$LOG/$n.log" || true
   tail -n 8 "$LOG/$n.log"
 done
 [ ${#FAILED[@]} -eq 0 ]

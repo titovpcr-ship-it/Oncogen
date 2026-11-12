@@ -746,8 +746,15 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=pbOffline]'); await pg.waitForFunction(()=>/без интернета/.test(document.body.innerText)&&/Готово/.test(document.body.innerText),null,{timeout:60000}).catch(()=>{});
     ok((await pg.textContent('body')).includes('Готово: фразы звучат и без интернета'),'«Сохранить без интернета» — готово');
     ok(await pg.locator('.pb-nav .tc-chip').count()===20,'разговорник: 20 чипов разделов');
-    await pg.click('.pb-nav [data-arg=love]'); await pg.waitForTimeout(900);
-    ok(await pg.evaluate(()=>{ const r=document.getElementById('pb-love').getBoundingClientRect(); return r.top>=0&&r.top<200; }),'чип «Чувства» ведёт к разделу');
+    await pg.click('.pb-nav [data-arg=love]');
+    // Smooth scrolling duration depends on distance and browser scheduling.
+    // Keep the destination assertion; wait for it instead of a fixed 900 ms.
+    const reachedLove=await pg.waitForFunction(()=>{
+      const r=document.getElementById('pb-love').getBoundingClientRect();
+      return r.top>=0&&r.top<200;
+    },null,{timeout:5000}).then(()=>true,()=>false);
+    const loveTop=await pg.locator('#pb-love').evaluate(e=>e.getBoundingClientRect().top);
+    ok(reachedLove,'чип «Чувства» ведёт к разделу (top='+loveTop+')');
     ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'разговорник: без прокрутки вбок');
     if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'phrases.png')});
     { const c2=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const p2=await c2.newPage(); await p2.goto(base); await p2.click('[data-act=landLang][data-arg=ru]'); ok(await p2.locator('.ld-dg [data-act=pbOpen]').count()===1,'обложка: вход в разговорник'); await c2.close(); }
