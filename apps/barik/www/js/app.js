@@ -2347,7 +2347,7 @@ function pathHTML(){
     }else if(us.length){
       body='<ol class="p-units">'+us.map((u,i)=>{ const r=PG.u[u.id];
         const lk=!unitOpen(u);
-        return '<li><button class="topic p-unit'+(r?' done':'')+(lk?' locked':'')+'" data-act="pUnit" data-arg="'+u.id+'"><span class="t-ic">'+emo(u.ic)+'</span><span class="t-body"><span class="t-name">'+(i+1)+'. '+esc(rdx(u.title))+'</span><span class="t-hy" lang="hy">'+esc(u.formula)+'</span></span><span class="t-cnt">'+(r?'<span class="p-ok" aria-label="'+esc(T('pDoneAria'))+'">✓</span>':(lk?'<span class="lock" role="img" aria-label="'+esc(T('locked'))+'">'+emo('🔒','ie')+'</span>':'›'))+'</span></button></li>'; }).join('')+'</ol>';
+        return '<li><button class="topic p-unit'+(r?' done':'')+(lk?' locked':'')+'" data-act="pUnit" data-arg="'+u.id+'"><span class="t-ic">'+emo(u.ic)+'</span><span class="t-body"><span class="t-name">'+(i+1)+'. '+esc(rdx(u.title))+'</span><span class="t-hy" lang="hy">'+esc(u.formula)+'</span></span><span class="t-cnt">'+(r?(r.b<PLACE_OK*100&&!r.p?'<span class="p-redo">'+esc(T('pRedo'))+'</span>':'<span class="p-ok" aria-label="'+esc(T('pDoneAria'))+'">✓</span>'):(lk?'<span class="lock" role="img" aria-label="'+esc(T('locked'))+'">'+emo('🔒','ie')+'</span>':'›'))+'</span></button></li>'; }).join('')+'</ol>';
     }else body='<p class="p-sub p-soon">'+emo('🔒','ie')+' '+esc(T('pSoon'))+'</p>';
     return '<section class="p-st'+(us.length||s.id===0?'':' off')+'"><header class="p-sth"><span class="p-lv">'+esc(s.lv)+'</span><span class="p-nm"><b>'+esc(T('pStageN',s.id))+' · '+esc(rdx(s))+'</b><span lang="hy">'+esc(s.hy)+'</span></span></header><p class="p-can">'+esc(T('pCan'))+' '+esc(rdx(s.can))+'</p>'+body+(stageDone(s.id)?'<button class="btn primary sm p-cert" data-act="ctOpen" data-arg="'+s.id+'">🏅 '+esc(T('ctGet'))+'</button>':'')+'</section>';
   }).join('');
@@ -2505,15 +2505,18 @@ function pSayIt(it){
   const ln=it.k==='tiles'||it.k==='hear', t=ln?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:it.a));
   sayText(t,null,false,null,ln?lnG(it.ln):null);
 }
+/* А1: неверное задание урока один раз возвращается в конец очереди; счёт — по первой попытке */
+function pWrong(it){ buzz(); if(PU.kind==='unit'&&!it.re) PU.q.push(Object.assign({},it,{re:1,done:false,ok:undefined,pick:undefined,ans:[],bank:it.bank&&it.bank.map(b=>Object.assign({},b,{used:false}))})); }
+function pN0(){ return PU.q.filter(x=>!x.re).length; }
 function pAnswer(i){
   const it=pCur(); if(!it||it.done||!it.opts||i>=it.opts.length) return;
-  it.done=true; it.pick=i; it.ok=it.opts[i]===it.a; if(it.ok) PU.ok++; else buzz(); hit('first_answer');
+  it.done=true; it.pick=i; it.ok=it.opts[i]===it.a; if(it.ok){ if(!it.re) PU.ok++; } else pWrong(it); hit('first_answer');
   render(); pSayIt(it);
 }
 function pFinish(){
   PU.end=true; hit('unit_done');
-  const sc=Math.round(100*PU.ok/PU.q.length);
-  if(PU.kind==='unit'){ const r=PG.u[PU.u.id]; PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; }
+  const n0=pN0(), sc=Math.round(100*PU.ok/n0); PU.n0=n0;
+  if(PU.kind==='unit'){ PU.pass=sc>=PLACE_OK*100; const r=PG.u[PU.u.id]; if(PU.pass) PG.u[PU.u.id]={d:Date.now(),b:Math.max(sc,r?r.b:0)}; }
   else if(PU.kind==='read'){ PU.pass=PU.ok>=Math.ceil(PU.q.length*0.75); if(PU.pass) PG.abc=1; }
   else if(PU.kind==='place') placeApply();
   else if(PU.kind==='harvest'){ const td=today(), h=PG.h||{}; if(h.last!==td){ h.streak=h.last===td-1?(h.streak||0)+1:1; h.last=td; } PG.h=h; touchStreak(); save(); }
@@ -2559,8 +2562,10 @@ function pResultHTML(){
   if(PU.kind!=='unit') return drillResultHTML();
   const u=PU.u, nu=nextUnit(), d=PU.after-PU.before;
   const A=u.affix&&BP.af&&BP.af[u.affix];
+  if(!PU.pass) return '<div class="result p-res p-fail"><h1 class="pg">'+esc(T('pAlmost',PU.ok,PU.n0))+'</h1><p class="u-formula sm" lang="hy">'+fmlHTML(u.formula)+'</p>'+
+    '<p class="summary">'+esc(T('pAlmostCap'))+'</p><div class="actions"><button class="btn primary" data-act="pAgain">'+esc(T('pRepeat'))+'</button><button class="btn ghost" data-act="tab" data-arg="path">'+esc(T('pBackPath'))+'</button></div></div>';
   return '<div class="result p-res"><div class="pom-sm">'+pomSVG()+'</div><h1 class="pg">'+esc(T('pUnitDone'))+'</h1><p class="u-formula sm" lang="hy">'+fmlHTML(u.formula)+'</p>'+
-    '<p class="summary">'+esc(T('pScore',PU.ok,PU.q.length))+'</p>'+
+    '<p class="summary">'+esc(T('pScore',PU.ok,PU.n0))+'</p>'+
     (d>0?'<p class="p-gain big">'+emo('🌱','ie')+' '+esc(T('pOpened',d))+(A?' — '+esc(T('pThanks',u.affix)):'')+'</p>':'')+
     '<div class="actions">'+(nu?'<button class="btn primary" data-act="pUnit" data-arg="'+nu.id+'">'+esc(T('pNextUnit'))+'<span class="cap">'+esc(rdx(nu.title))+'</span></button>':'')+
     '<button class="btn secondary" data-act="pAgain">'+esc(T('pRepeat'))+'</button><button class="btn ghost" data-act="tab" data-arg="path">'+esc(T('pBackPath'))+'</button></div></div>';
@@ -2599,7 +2604,7 @@ const PH={
   pUntile:a=>{ const it=pCur(); if(!it||it.done) return; const id=it.ans.splice(+a,1)[0]; if(id!=null) it.bank[id].used=false; render(); },
   pTileReset:()=>{ const it=pCur(); if(!it||it.done) return; it.ans=[]; it.bank.forEach(b=>b.used=false); render(); },
   pTileCheck:()=>{ const it=pCur(); if(!it||it.done||it.ans.length<it.a.length) return; it.done=true;
-    it.ok=it.ans.map(id=>it.bank[id].t).join(' ')===it.a.join(' '); if(it.ok) PU.ok++; else buzz(); render(); pSayIt(it); },
+    it.ok=it.ans.map(id=>it.bank[id].t).join(' ')===it.a.join(' '); if(it.ok){ if(!it.re) PU.ok++; } else pWrong(it); render(); pSayIt(it); },
   pNext:()=>{ if(!PU) return; PU.i++;
     if(PU.i>=PU.q.length&&PU.kind==='place'){ const more=placeMore(); if(more.length) PU.q=PU.q.concat(more); }
     if(PU.i>=PU.q.length) pFinish(); else { render(); window.scrollTo(0,0); const it=pCur(); if(it&&it.k==='hear') sayText(it.a,document.querySelector('.play-big')); } },

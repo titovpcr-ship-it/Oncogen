@@ -333,11 +333,28 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
         else{ const k=it.opts.indexOf(it.a); await pg.locator('.opt').nth(good?k:(k+1)%it.opts.length).click(); }
         await pg.click('[data-act=pNext]');
       } return kinds; };
+    // А1: формула зачитывается только при ≥ 70 % с первой попытки, ошибка возвращается в конец
+    await pg.click('[data-act=tab][data-arg=path]'); await pg.click('[data-act=pUnit][data-arg=s1u1]'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]'); await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
+    const n0=await pg.evaluate(()=>window.__bararan.PU.q.length);
+    let wrongA=null, seen=[];
+    let k=await run((i,kind)=>{ if(i===0) return false; return i<n0? i>=Math.ceil(n0*0.5) : true; });
+    ok(k.length>n0,'ошибки вернулись в конец очереди: '+k.length+' заданий из '+n0);
+    ok(await pg.evaluate(()=>{ const P=window.__bararan.PU; return P.q.slice(P.q.length-(P.q.filter(x=>x.re).length)).every(x=>x.re); }),'повторы — в конце');
+    ok((await pg.textContent('.p-res h1')).includes('Почти')&&await pg.evaluate(()=>!window.__bararan.PG.u.s1u1),'половина верно — «Почти», формула не зачтена');
+    ok(await pg.locator('.p-res [data-act=pUnit]').count()===0&&await pg.locator('.p-res [data-act=pAgain]').count()===1,'ниже порога — нет «Следующей формулы», есть «Ещё раз»');
+    await pg.click('.p-res [data-act=pAgain]');
+    k=await run(i=>i!==0);
+    const pass=await pg.evaluate(()=>{ const P=window.__bararan.PU; return {ok:P.ok,n:P.n0,u:window.__bararan.PG.u.s1u1}; });
+    ok((await pg.textContent('.p-res h1')).includes('Формула освоена')&&pass.u&&pass.ok===pass.n-1,'одна ошибка — освоена ('+pass.ok+' из '+pass.n+')');
+    await pg.evaluate(()=>{ const B=window.__bararan; B.PG.u.s1u1={d:Date.now(),b:50}; });
+    await pg.click('[data-act=tab][data-arg=path]');
+    ok(await pg.evaluate(()=>document.querySelector('[data-arg=s1u1] .p-redo')!==null),'старая запись ниже 70 % — пометка «повторить» на карте');
+    await pg.evaluate(()=>{ const B=window.__bararan; for(const k of Object.keys(B.PG.u)) delete B.PG.u[k]; B.pgSave&&B.pgSave(); });
     await pg.click('[data-act=tab][data-arg=path]');
     ok(await pg.locator('.actions [data-act=pPlace]').count()===1&&(await pg.textContent('.path')).includes('Входной тест'),'новичку — входной тест рядом с первой формулой');
     // не читает → ступень 0, ничего не отмечено
     await pg.click('.actions [data-act=pPlace]');
-    let k=await run((i,kind)=>kind!=='read');
+    k=await run((i,kind)=>kind!=='read');
     ok(k.filter(x=>x==='read').length===4&&k.length===13,'входной тест: 4 на чтение и 9 на ступень 1, всего '+k.length);
     ok((await pg.textContent('.p-res h1')).includes('Ваша ступень: 0')&&await pg.locator('.p-res [data-arg=abc]').count()>=1,'не читает — ступень 0, «Начать с алфавита»');
     ok(await pg.evaluate(()=>Object.keys(window.__bararan.PG.u).length===0&&!window.__bararan.PG.abc),'не читает — формулы не отмечены');
