@@ -370,7 +370,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("audio/", "pics/", "og/", "api/", "ex/"))
+            if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("cover-", "audio/", "pics/", "og/", "api/", "ex/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel + ("?v=" + ver[rel] if rel in ver else ""))
@@ -423,7 +423,7 @@ def tg_words(out):
     return len(rows)
 
 
-def prerender(cover):
+def prerender(cover, cv=None):
     """Главная быстрее (O-202): английская обложка уже в HTML — видна до загрузки скриптов (раньше ждала ~860 КБ JS).
     Вернувшемуся (язык выбран), гостю из страны со своим языком (тот же расчёт, что lang0.js) и ссылкам с параметрами приложения (t=, name=, doc=, pay=, #…) —
     не показывается; рекламные метки (from=, lang=en, utm_*, fbclid) обложку не прячут (TZ_AUDIT2 Б1): класс nopre прячет её до первого кадра, приложение рисует своё. Скрипт затем рисует ту же разметку поверх."""
@@ -433,8 +433,14 @@ def prerender(cover):
     js = ("(function(){try{var u=JSON.parse(localStorage.getItem('bararan-ui-v1')||'null')||{},T=" + m.group(1).replace("\n", "") +
           ",z='';try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var l=u.ll||'';if(!l){if(z.indexOf('America/Argentina/')===0)l='es';"
           "else for(var k in T)if(T[k].indexOf(z)>=0)l=k;}var q=location.search.replace(/^\\?/,'').split('&').filter(Boolean),bad=location.hash.length>1||q.some(function(p){return !/^(from=[^&]*|lang=en|utm_[a-z]+=[^&]*|fbclid=[^&]*|gclid=[^&]*|ref=[^&]*)$/i.test(p)});if(u.lang||(l&&l!=='en')||bad)"
-          "document.documentElement.className+=' nopre'}catch(e){document.documentElement.className+=' nopre'}})();")
-    return f'<script>{js}</script><style>.nopre #view>.ld{{display:none}}</style><main id="view">{cover}</main>'
+          "document.documentElement.className+=' nopre';"
+          # TZ_AUDIT3 №4: гостю из страны со своим языком — его обложка фрагментом, пока грузятся большие скрипты
+          "var V=" + json.dumps(cv or {}) + ";if(!u.lang&&!bad&&l&&V[l]){fetch('cover-'+l+'.html?v='+V[l],{priority:'high'}).then(function(r){return r.ok?r.text():''}).then(function(t){"
+          "var n=0,put=function(){var v=document.getElementById('view');if(window.__barikOk||!t||t.indexOf('class=\"ld')<0)return;if(!v){if(n++<300)setTimeout(put,20);return}v.innerHTML=t;"
+          "document.documentElement.classList.remove('nopre');document.documentElement.lang=l};put()}).catch(function(){})}"
+          "}catch(e){document.documentElement.className+=' nopre'}})();")
+    # скрипт — в самом начале <head> (до стилей: иначе ждёт CSS и фрагмент обложки стартует на ~0,7 с позже)
+    return f'<script>{js}</script><style>.nopre #view>.ld{{display:none}}</style>', f'<main id="view">{cover}</main>'
 
 
 def seo_pages(out, url):
@@ -453,7 +459,15 @@ def seo_pages(out, url):
     if n and 'hreflang="ru"' not in html:              # главная — английская обложка; её языковые пары (O-201)
         html = html.replace("</head>", hl + "\n</head>", 1)
     if covers.get("en") and '<main id="view"></main>' in html:
-        html = html.replace('<main id="view"></main>', prerender(covers["en"]["html"]), 1)
+        cv = {}
+        for l, c in covers.items():
+            if l == "en" or not c.get("html"): continue
+            open(os.path.join(out, "cover-%s.html" % l), "w", encoding="utf-8").write(c["html"])
+            cv[l] = hashlib.sha1(c["html"].encode()).hexdigest()[:8]
+        hs, mn = prerender(covers["en"]["html"], cv)
+        html = html.replace('<main id="view"></main>', mn, 1)
+        html = re.sub(r'(<meta charset="[^"]*">)', lambda m: m.group(1) + hs, html, count=1)
+        assert hs in html, "index.html: нет <meta charset> для скрипта обложки"
     D = (("en", "Armenian dictionary", "Your name in Armenian"), ("ru", "Армянский словарь", "Ваше имя по-армянски"),
          ("fr", "Dictionnaire arménien", "Votre prénom en arménien"), ("es", "Diccionario armenio", "Tu nombre en armenio"),
          ("de", "Armenisches Wörterbuch", "Dein Name auf Armenisch"), ("pt", "Dicionário armênio", "Seu nome em armênio"))

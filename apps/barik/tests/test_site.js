@@ -44,11 +44,21 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const raw=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     ok(/<main id="view"><div class="[^"]*\bld\b/.test(raw)&&raw.includes('Start speaking'),'главная: обложка в HTML (до загрузки скриптов)');
     const c2=await br.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block'}); const p2=await c2.newPage();
-    await p2.route('**/js/**',rt=>rt.abort()); await p2.goto(base); const ru=await p2.evaluate(()=>document.documentElement.className.includes('nopre'));
+    await p2.route('**/js/**',rt=>rt.abort()); await p2.goto(base); await p2.waitForTimeout(600); const ru=await p2.evaluate(()=>document.documentElement.lang==='ru'&&!document.documentElement.className.includes('nopre'));   // TZ3 №4: русская обложка фрагментом
     const c3=await br.newContext({timezoneId:'America/New_York',serviceWorkers:'block'}); const p3=await c3.newPage();
     await p3.route('**/js/**',rt=>rt.abort()); await p3.goto(base); const us=await p3.evaluate(()=>!document.documentElement.className.includes('nopre')&&getComputedStyle(document.querySelector('#view .ld')).display!=='none');
     await p3.addInitScript(()=>localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'en'}))); await p3.goto(base); const back=await p3.evaluate(()=>document.documentElement.className.includes('nopre'));
-    ok(ru&&us&&back,'обложка в HTML: гостю из США видна без скриптов, из Москвы и вернувшемуся — спрятана ('+[ru,us,back]+')');
+    ok(ru&&us&&back,'обложка в HTML: гостю из США — английская, из Москвы — русская фрагментом, вернувшемуся — спрятана ('+[ru,us,back]+')');
+    { // TZ3 №4: гость из Москвы без скриптов видит русскую обложку (фрагмент cover-ru.html), вернувшийся — нет
+      for(const [tz,lg,want] of [['Europe/Moscow','ru','Заговорите'],['Europe/Paris','fr',''],['Europe/Berlin','de','']]){
+        const c5=await br.newContext({timezoneId:tz,serviceWorkers:'block'}); const p5=await c5.newPage(); await p5.route('**/js/**',rt=>rt.abort());
+        await p5.goto(base); await p5.waitForTimeout(700);
+        const r=await p5.evaluate(()=>({lang:document.documentElement.lang,cls:document.documentElement.className,h:(document.querySelector('#view .ld h1')||{}).textContent||''}));
+        ok(r.lang===lg&&!r.cls.includes('nopre')&&(!want||r.h.includes(want)),'TZ3 №4: '+tz+' — обложка на «'+lg+'» до скриптов '+JSON.stringify(r).slice(0,120));
+        await c5.close(); }
+      const c6=await br.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block'}); const p6=await c6.newPage(); await p6.route('**/js/**',rt=>rt.abort());
+      await p6.addInitScript(()=>localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'ru'}))); await p6.goto(base); await p6.waitForTimeout(700);
+      ok(await p6.evaluate(()=>document.documentElement.className.includes('nopre')),'TZ3 №4: вернувшемуся фрагмент обложки не вставляется'); await c6.close(); }
     { // Б1: рекламные метки обложку не прячут, параметры приложения — прячут
       const c4=await br.newContext({timezoneId:'America/New_York',serviceWorkers:'block'}); const p4=await c4.newPage(); await p4.route('**/js/**',rt=>rt.abort());
       const res={};
