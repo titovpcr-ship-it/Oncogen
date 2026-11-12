@@ -56,6 +56,17 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
         const r=await p5.evaluate(()=>({lang:document.documentElement.lang,cls:document.documentElement.className,h:(document.querySelector('#view .ld h1')||{}).textContent||''}));
         ok(r.lang===lg&&!r.cls.includes('nopre')&&(!want||r.h.includes(want)),'TZ3 №4: '+tz+' — обложка на «'+lg+'» до скриптов '+JSON.stringify(r).slice(0,120));
         await c5.close(); }
+      { const c7=await br.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block'}); const p7=await c7.newPage(); await p7.route('**/js/**',rt=>rt.abort());
+        await p7.goto(base+'?lang=en'); await p7.waitForTimeout(700);
+        ok(await p7.evaluate(()=>document.documentElement.lang==='en'&&!document.documentElement.className.includes('nopre')),'TZ4 №5: Москва + ?lang=en — английская обложка, без русского фрагмента'); await c7.close(); }
+      { // TZ4 №2: «Начать» до загрузки приложения — кнопка ждёт, после загрузки гость в приложении
+        const c8=await br.newContext({timezoneId:'America/New_York',serviceWorkers:'block',viewport:{width:390,height:780}}); const p8=await c8.newPage();
+        await p8.route('**/js/app.js*',async rt=>{ await new Promise(r=>setTimeout(r,2500)); rt.continue(); });
+        await p8.goto(base,{waitUntil:'commit'}); await p8.waitForSelector('#view .ld-ctas .btn'); await p8.click('#view .ld-ctas .btn');
+        const busy=await p8.evaluate(()=>!!document.querySelector('.lz-busy[aria-busy=true]')&&!window.__barikOk);
+        await p8.waitForFunction(()=>window.__barikOk,null,{timeout:20000}); await p8.waitForTimeout(400);
+        const v=await p8.evaluate(()=>document.body.dataset.view);
+        ok(busy&&v!=='onboard','TZ4 №2: ранний клик «Начать» — кнопка ждёт ('+busy+'), после загрузки вид «'+v+'»'); await c8.close(); }
       const c6=await br.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block'}); const p6=await c6.newPage(); await p6.route('**/js/**',rt=>rt.abort());
       await p6.addInitScript(()=>localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'ru'}))); await p6.goto(base); await p6.waitForTimeout(700);
       ok(await p6.evaluate(()=>document.documentElement.className.includes('nopre')),'TZ3 №4: вернувшемуся фрагмент обложки не вставляется'); await c6.close(); }
@@ -105,6 +116,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ht=fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8');
     ok(/RewriteCond %\{REQUEST_URI\} \^\/\\\.well-known\/[^\n]*\n\s*RewriteRule \^ - \[L\]/.test(ht)&&ht.indexOf('well-known')<ht.indexOf('%{HTTPS}'),'.htaccess: /.well-known/ — до перенаправления на https');
     ok(/HTTP_HOST\} \^www\\\./.test(ht)&&/ErrorDocument 404 \/404\.html/.test(ht)&&/Options -Indexes/.test(ht),'.htaccess: www → домен, своя 404, без списков папок');
+    ok(/microphone=\(self\)/.test(ht)&&/cover-\[a-z\]\+\\.html[\s\S]{0,60}X-Robots-Tag "noindex"/.test(ht),'.htaccess: микрофон своему сайту, фрагменты обложки — noindex (TZ_AUDIT4 №1, №6)');
     ok(/media-src 'self' blob: data:;/.test(ht),'.htaccess: CSP media-src разрешает data: — разблокировка звука не шумит в отчётах (Б2)');
     ok(/Require all denied/.test(ht)&&/zip\|sqlite/.test(ht)&&/webp\|mp3\)\$"[^<]*immutable/.test(ht),'.htaccess: архивы и базы закрыты, записи и картинки — кэш навсегда');
     { const hs=(ht.match(/^\s*Header always set Strict-Transport-Security.*$/m)||[''])[0];

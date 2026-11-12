@@ -45,6 +45,9 @@ def main():
     ok(r.status_code == 200 and 'Barik' in r.text, 'главная 200', '%s' % r.status_code)
     ok(r.headers.get('Content-Encoding') in ('gzip', 'br', 'deflate'), 'главная сжата', str(r.headers.get('Content-Encoding')))
     ok('nosniff' in r.headers.get('X-Content-Type-Options', ''), 'X-Content-Type-Options')
+    ok('microphone=(self)' in r.headers.get('Permissions-Policy', ''), 'микрофон разрешён своему сайту («Скажи сам», TZ_AUDIT4 №1)', r.headers.get('Permissions-Policy', ''))
+    rc = get('/cover-ru.html')
+    ok('noindex' in rc.headers.get('X-Robots-Tag', ''), 'фрагмент обложки — noindex (TZ_AUDIT4 №6)', rc.headers.get('X-Robots-Tag', ''))
     ok(bool(r.headers.get('Referrer-Policy')), 'Referrer-Policy')
     scripts = [x.split('?')[0] for x in re.findall(r'<script src="([^"]+)"', r.text)]
     ok('js/app.js' in scripts and 'js/path_meta.js' in scripts and 'js/path_data.js' not in scripts, 'главная подключает приложение; путь и картинки — по требованию (Б4)', ', '.join(scripts))

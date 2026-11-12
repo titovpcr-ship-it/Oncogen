@@ -3010,6 +3010,9 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   if(sp.has('gift')&&nm===null){ view='gift'; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
 render();
+/* TZ_AUDIT4 №2: нажатие, сделанное до загрузки приложения (скрипт обложки в <head> сохранил его в __pend), — исполняем */
+{ const PD=window.__pend; window.__pend=null;
+  if(PD&&H[PD.a]&&(PD.a!=='landTry'||(LT.w&&LT.w.a===PD.g))){ hit('land_early'); try{ H[PD.a](PD.g,document.querySelector('#view [data-act="'+PD.a+'"]'),null); }catch(e){} } }
 BILL.hideSplash();
 hit(); if(FIRST&&view!=='onboard') hit('start');   // по ссылке сразу в приложение, мимо обложки
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();

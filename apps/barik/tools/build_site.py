@@ -205,6 +205,9 @@ ErrorDocument 404 /404.html
   RewriteRule ^ /%1 [L,R=301]
 </IfModule>
 # служебное наружу не отдаётся: архивы выкладки, базы, журналы, скрытые файлы
+<FilesMatch "^cover-[a-z]+\.html$">
+  Header set X-Robots-Tag "noindex"
+</FilesMatch>
 <FilesMatch "(\.(zip|sqlite|db|log|bak|sh|py)|^\..+)$">
   Require all denied
 </FilesMatch>
@@ -227,7 +230,7 @@ ErrorDocument 404 /404.html
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Permissions-Policy "camera=(), microphone=(self), geolocation=()"
   # правила безопасности браузера (O-203) — пока «только наблюдать»: ничего не блокируют, нарушения уходят в api/?r=csp (видны в stats.py);
   # через неделю без лишних отчётов — включить боевой Content-Security-Policy
   Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri /api/?r=csp"
@@ -432,12 +435,18 @@ def prerender(cover, cv=None):
     assert m, "lang0.js: нет TZ_LANG"
     js = ("(function(){try{var u=JSON.parse(localStorage.getItem('bararan-ui-v1')||'null')||{},T=" + m.group(1).replace("\n", "") +
           ",z='';try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var l=u.ll||'';if(!l){if(z.indexOf('America/Argentina/')===0)l='es';"
-          "else for(var k in T)if(T[k].indexOf(z)>=0)l=k;}var q=location.search.replace(/^\\?/,'').split('&').filter(Boolean),bad=location.hash.length>1||q.some(function(p){return !/^(from=[^&]*|lang=en|utm_[a-z]+=[^&]*|fbclid=[^&]*|gclid=[^&]*|ref=[^&]*)$/i.test(p)});if(u.lang||(l&&l!=='en')||bad)"
+          "else for(var k in T)if(T[k].indexOf(z)>=0)l=k;}var q=location.search.replace(/^\\?/,'').split('&').filter(Boolean),bad=location.hash.length>1||q.some(function(p){return !/^(from=[^&]*|lang=en|utm_[a-z]+=[^&]*|fbclid=[^&]*|gclid=[^&]*|ref=[^&]*)$/i.test(p)});if(/[?&]lang=en(&|$)/.test(location.search))l='en';if(u.lang||(l&&l!=='en')||bad)"
           "document.documentElement.className+=' nopre';"
           # TZ_AUDIT3 №4: гостю из страны со своим языком — его обложка фрагментом, пока грузятся большие скрипты
-          "var V=" + json.dumps(cv or {}) + ";if(!u.lang&&!bad&&l&&V[l]){fetch('cover-'+l+'.html?v='+V[l],{priority:'high'}).then(function(r){return r.ok?r.text():''}).then(function(t){"
-          "var n=0,put=function(){var v=document.getElementById('view');if(window.__barikOk||!t||t.indexOf('class=\"ld')<0)return;if(!v){if(n++<300)setTimeout(put,20);return}v.innerHTML=t;"
+          "var V=" + json.dumps(cv or {}) + ";if(!u.lang&&!bad&&l&&V[l]&&!/[?&]lang=en(&|$)/.test(location.search)){fetch('cover-'+l+'.html?v='+V[l],{priority:'high'}).then(function(r){return r.ok?r.text():''}).then(function(t){"
+          "var n=0,put=function(){var v=document.getElementById('view');if(window.__barikOk||!t||t.indexOf('class=\"ld')<0)return;if(!v){if(n++<300)setTimeout(put,20);return}if(window.__en0==null)window.__en0=v.innerHTML;v.innerHTML=t;"
           "document.documentElement.classList.remove('nopre');document.documentElement.lang=l};put()}).catch(function(){})}"
+          # TZ_AUDIT4 №2: нажатие до загрузки приложения не пропадает — кнопка «ждёт», последнее нажатие исполнит приложение
+          "document.addEventListener('click',function(e){if(window.__barikOk)return;var b=e.target.closest&&e.target.closest('#view [data-act]');if(!b)return;"
+          "e.preventDefault();var a=b.getAttribute('data-act'),g=b.getAttribute('data-arg');window.__pend={a:a,g:g};"
+          "var o=document.querySelector('.lz-busy');if(o){o.classList.remove('lz-busy');o.removeAttribute('aria-busy')}b.classList.add('lz-busy');b.setAttribute('aria-busy','true');"
+          "if(a==='landLang'){var v=document.getElementById('view');if(g==='en'&&window.__en0!=null){v.innerHTML=window.__en0;document.documentElement.lang='en'}"
+          "else if(V[g])fetch('cover-'+g+'.html?v='+V[g]).then(function(r){return r.text()}).then(function(t){if(window.__barikOk||t.indexOf('class=\"ld')<0)return;if(window.__en0==null)window.__en0=v.innerHTML;v.innerHTML=t;document.documentElement.classList.remove('nopre');document.documentElement.lang=g})}},true);"
           "}catch(e){document.documentElement.className+=' nopre'}})();")
     # скрипт — в самом начале <head> (до стилей: иначе ждёт CSS и фрагмент обложки стартует на ~0,7 с позже)
     return f'<script>{js}</script><style>.nopre #view>.ld{{display:none}}</style>', f'<main id="view">{cover}</main>'
