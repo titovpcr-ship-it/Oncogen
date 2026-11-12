@@ -2403,8 +2403,9 @@ let PU=null, seedFrom=null;
 const unitOpen=u=>u.stage<2||premium();     // ступени 0–1 бесплатно, со 2-й — Premium
 function openUnit(id,step){
   const u=unitById(id); if(!u) return;
-  if(!unitOpen(u)){ openPaywall(); return; }
-  PU={kind:'unit',u,step:step||0,q:null,i:0,ok:0,end:false,chain:0}; hit('unit_open_p'+u.stage);
+  /* владелец 12.11.2026: пояснение платного урока — бесплатно (только шаг «Формула»); сцена и практика — по подписке */
+  const lk=!unitOpen(u); if(lk&&u.kind==='read'){ openPaywall(); return; }
+  PU={kind:'unit',u,lk,step:lk?0:(step||0),q:null,i:0,ok:0,end:false,chain:0}; hit('unit_open_p'+u.stage);
   if(REAL_ANY) u.scene.lines.forEach(l=>getAudio(audioUrl(l[1],(u.scene.who[l[0]]||{}).g||'f')).catch(()=>{}));
   go('unit',id);
 }
@@ -2420,6 +2421,7 @@ function unitHTML(){
     '<header class="thead"><span class="t-ic">'+emo(u.ic)+'</span><div><h1 class="pg">'+esc(T(u.kind==='read'?'pTextN':'pFormulaN',idx))+'</h1><p class="u-title">'+esc(rdx(u.title))+'</p></div></header>'+unitSteps();
   if(PU.step===0){
     const seeds=u.seeds.map(w=>{ const x=BY[w], fam=GR?GR.family(w).length:0;
+      if(PU&&PU.lk) return '<span class="chip"><b lang="hy">'+esc(w)+'</b><span>'+esc(x?tx(x):'')+'</span></span>';
       return '<button class="chip" data-act="pSeed" data-arg="'+esc(w)+'"><b lang="hy">'+esc(w)+'</b><span>'+esc(x?tx(x):'')+'</span>'+(fam?'<i class="fam" title="'+esc(T('pFamily'))+'">'+emo('🌱','ie')+fam+'</i>':'')+'</button>'; }).join('');
     let aff='';
     const A=u.affix&&BP.af&&BP.af[u.affix];
@@ -2427,7 +2429,7 @@ function unitHTML(){
     const src=u.kind==='read'?'<p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+' · '+esc(T('pPD'))+' · <a href="'+esc(u.src)+'" target="_blank" rel="noopener">'+esc(T('pSource'))+'</a></p>':'';
     return head+'<div class="u-formula'+(u.kind==='read'?' read':'')+'" lang="hy">'+fmlHTML(u.formula)+'</div>'+src+pNoteHTML(rdx(u.note))+pGramTable(u)+
       '<h2 class="u-h">'+esc(T('pSeeds'))+'</h2><div class="chips">'+seeds+'</div>'+aff+
-      '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T(u.kind==='read'?'pToText':'pToScene'))+'</button></div>';
+      '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T(u.kind==='read'?'pToText':'pToScene'))+(PU&&PU.lk?' '+emo('🔒','ie'):'')+'</button></div>';
   }
   const who=Object.keys(u.scene.who);
   /* А6: текст ступени 5 — стихом: без облачков и подписи автора у строк, зёрна подсвечены и открывают карточку */
@@ -2669,7 +2671,7 @@ function seedHTML(w){
 }
 const PH={
   pUnit:a=>openUnit(a,0),
-  pStep:a=>{ if(!PU) return; PU.step=+a; if(PU.step===2){ PU.q=null; } render(); window.scrollTo(0,0); },
+  pStep:a=>{ if(!PU) return; if(PU.lk&&+a>0){ if(unitOpen(PU.u)) PU.lk=false; else { hit('v_paywall_unit'); openPaywall(); return; } } PU.step=+a; if(PU.step===2){ PU.q=null; } render(); window.scrollTo(0,0); },
   pSeed:a=>{ seedFrom={v:view,a:viewArg}; go('seed',a); },
   pBackSeed:()=>{ if(seedFrom&&seedFrom.v==='unit'&&PU) go('unit',PU.u.id); else go('path'); },
   pSayLn:(a,b)=>{ if(PU){ const l=PU.u.scene.lines[+a]; sayText(l[1],b,false,null,lnG(l)); } },

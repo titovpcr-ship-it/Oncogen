@@ -247,8 +247,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(NU>=25&&await pg.locator('svg.pom .gr').count()===NU+1&&await pg.locator('.p-units .p-unit').count()===NU,'путь: гранат из '+(NU+1)+' зёрен, формул '+NU);
     ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===0,'путь: 6 ступеней, во всех есть формулы');
     ok(await pg.locator('.p-unit.locked').count()===NU-9,'ступени 2–3 — под замком Premium');
-    await pg.locator('.p-unit.locked').first().click(); ok(await pg.locator('.pw-hero').count()===1,'формула ступени 2 без подписки — окно подписки');
-    await pg.click('[data-act=pwClose]'); ok(await pg.locator('.path').count()===1,'окно подписки закрывается обратно на путь');
+    await pg.locator('.p-unit.locked').first().click();
+    ok(await pg.locator('.u-formula').count()===1&&await pg.locator('.u-note').count()===1&&await pg.locator('.pw-hero').count()===0,'платная формула гостю: пояснение открыто бесплатно');
+    ok(await pg.locator('.chips [data-act=pSeed]').count()===0,'платная формула гостю: зёрна без перехода в карточку');
+    await pg.click('.page-actions [data-act=pStep][data-arg="1"]'); ok(await pg.locator('.pw-hero').count()===1,'платная формула: сцена — по подписке');
+    await pg.click('[data-act=pwClose]'); await pg.click('[data-act=tab][data-arg=path]'); ok(await pg.locator('.path').count()===1,'окно подписки закрывается, путь на месте');
     await noH('карта');
     await pg.click('[data-act=pUnit][data-arg=s1u4]');
     ok((await pg.textContent('.u-formula')).includes('կա')&&await pg.locator('.chips .chip').count()>=8,'формула: рамка и зёрна урока');
