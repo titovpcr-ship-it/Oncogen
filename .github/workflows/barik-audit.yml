@@ -30,6 +30,7 @@ jobs:
       - name: Run Barik tests including SEO
         env:
           BARIK_ONLY: '1'
+          BARIK_WEB_PAID: '1'
         run: bash tools/check_all.sh --full
       - uses: actions/upload-artifact@v4
         if: always()
