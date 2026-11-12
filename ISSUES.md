@@ -5479,3 +5479,14 @@ microphone=()` (заголовок с 08.11, запись голоса с 10.11;
 Ветка codex/audit4. На результате 1-го и 3-го завершённых гостевых уроков показывается приглашение вернуться к повторению, максимум один раз в день. Есть переход в Telegram, включение почтовых напоминаний через вход в аккаунт и добавление сайта на домашний экран. Клики идут в воронку и сводку. У новичков с менее чем 20 просмотренными словами Premium расположен после учебных кнопок. Повышен контраст и увеличены кнопки языков. В ship.sh добавлена браузерная проверка гостевого урока и микрофона. Подготовлен запуск полной проверки Barik в GitHub Actions.
 
 Локально прошли 8 сценариев показа блока и проверки синтаксиса. Браузерный и серверный прогон ещё не выполнены. GitHub вернул 403 на создание ветки через подключение, отдельный вход CLI не завершён. Выкладки не было. По ТЗ остаются сжатие памяти, замер раздельной загрузки локализаций, B2 и шаблонные примеры, боевой CSP.
+
+
+## O-231. Audit 4: memory and rendered contrast (13.11.2026)
+
+Previous O-230 status superseded: deployment 43299032040 succeeded, full tests and live guest/microphone checks passed.
+Working rules reduced from 108220 to 12182 UTF-8 bytes; full original preserved in docs/HISTORY.md, restrictive paragraphs inventoried in docs/AUDIT4_RULES_REVIEW.md.
+Rendered browser checks cover landing secondary text, language target size, lesson flag link and subscription legal copy in light/dark themes, and primary gradient contrast. Fixed late CSS override of button gradient plus phone transcription.
+Language loading benchmark compares five paired cold Moscow visits, gzip, 1.6 Mbit/s, 150ms latency and CPU x4; production i18n unchanged until measured gain meets 500ms threshold.
+Generator now requires 5–8 words and rejects pronoun/definition templates; unit tests added. 561 existing candidate templates listed in docs/template_examples.json; replacement follows completion and verification of B2, not marked complete.
+Azure access confirmed; B2 resumed from 1225 stored examples, 3958 remaining initially. Generated examples are not published until checked and voiced. CSP remains report-only until approximately 19 November and review of reports.
+Release workflow saves deployment fingerprints only after successful ship/live verification for incremental subsequent uploads.

@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.join(APP, 'tools'))
 from build_examples import HY, STEM
 LANGS = ['ru', 'en', 'fr', 'es', 'de', 'pt']
 PROMPT = """You write example sentences for an Eastern Armenian learner's dictionary (reformed orthography, the standard literary language of Armenia).
-For each word write ONE short natural sentence (3-7 words), level {lv}, that uses the word (any grammatical form). The sentence ends with "։"; a question has ՞ on the stressed vowel. Use the dictionary sense given by the Russian/English gloss. Avoid politics, religion disputes, violence. Think briefly: do not deliberate at length, answer quickly.
+For each word write ONE natural sentence (5-8 words), level {lv}, that uses the word (any grammatical form). Describe an action or a concrete situation, not a definition. Do not use Նա as the subject. Avoid templates such as «Նա X է» or «X կարևոր/անհրաժեշտ է». The sentence ends with "։"; a question has ՞ on the stressed vowel. Use the dictionary sense given by the Russian/English gloss. Avoid politics, religion disputes, violence. Think briefly: do not deliberate at length, answer quickly.
 Then translate the sentence naturally to ru, en, fr, es, de and pt (Brazilian).
 Output ONLY a JSON array: [{{"w": word, "hy": sentence, "ru": "", "en": "", "fr": "", "es": "", "de": "", "pt": ""}}].
 Words (Armenian | Russian | English):
@@ -21,6 +21,10 @@ Words (Armenian | Russian | English):
 def ok(w, x):
     hy = (x.get('hy') or '').strip()
     if not hy or not HY.match(hy) or not hy.endswith('։'): return False
+    words = re.sub(r'[՞՛՜։]', '', hy).split()
+    if not 5 <= len(words) <= 8: return False
+    if words[0].lower() == 'նա': return False
+    if re.search(r'(?:կարևոր|անհրաժեշտ)\s+է[։.!]?$', hy): return False
     st = STEM.get(w, w[:max(2, len(w) - 2)] if len(w) > 3 else w[:2]).lower()
     if st not in re.sub(r'[՞՛՜]', '', hy).lower(): return False
     return all((x.get(l) or '').strip() and not re.search(r'[Ա-և|]', x[l]) for l in LANGS)
@@ -30,6 +34,7 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--level', default='A2'); ap.add_argument('--minutes', type=float, default=110)
     ap.add_argument('--batch', type=int, default=8); a = ap.parse_args()
     env = dict(l.strip().split('=', 1) for l in open(os.path.join(APP, '.env')) if '=' in l and not l.startswith('#'))
+    env = {k: v.strip().strip("\"'") for k, v in env.items()}
     url = env['AZURE_FOUNDRY_ENDPOINT'].rstrip('/') + '/openai/deployments/DeepSeek-V3.2-Speciale/chat/completions?api-version=2024-10-21'
     H = {'api-key': env['AZURE_FOUNDRY_KEY']}
     out = os.path.join(APP, 'data', 'examples', 'gen_%s.txt' % a.level.lower())
@@ -70,6 +75,7 @@ def main():
         m = re.findall(r'\[\s*\{.*?\}\s*\]', c, re.S)
         try: arr = json.loads(m[-1]) if m else []
         except Exception: arr = []
+        print('parsed examples:', len(arr), flush=True)
         want = {p[0] for p in part}
         lines = []
         for x in arr:

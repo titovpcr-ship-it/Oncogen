@@ -596,7 +596,7 @@ body[data-view="onboard"]{background:#FFFAF5}
 .ph{position:absolute;z-index:2;right:7%;bottom:0;width:min(232px,48%);aspect-ratio:272/560;border-radius:42px;padding:9px;background:linear-gradient(160deg,#2A2B4F,#0E0F24);box-shadow:0 40px 70px -26px rgba(14,15,36,.7),0 0 0 1px rgba(255,255,255,.08) inset;transform:rotate(4deg)}
 .ph::before{content:"";position:absolute;top:18px;left:50%;width:72px;height:20px;margin-left:-36px;border-radius:999px;background:#05060F;z-index:3}
 .ph-scr{height:100%;border-radius:34px;overflow:hidden;background:#FFFAF5;color:#191933;display:flex;flex-direction:column;padding:48px 12px 14px;gap:10px}
-.ph-top{display:flex;align-items:center;gap:8px;font-size:11px;color:#8B8BA2}
+.ph-top{display:flex;align-items:center;gap:8px;font-size:11px;color:#66667B}
 .ph-x{font-size:12px}
 .ph-bar{flex:1;height:6px;border-radius:9px;background:#F1E7DE;overflow:hidden}
 .ph-bar i{display:block;height:100%;width:40%;border-radius:9px;background:linear-gradient(90deg,#FF8A3D,#EE5A2A);transition:width .6s cubic-bezier(.3,.7,.2,1)}
@@ -606,7 +606,7 @@ body[data-view="onboard"]{background:#FFFAF5}
 @keyframes phIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
 .ph-card .pimg{width:100%;aspect-ratio:16/10;border-radius:14px}
 .ph-hy{font:600 26px/1.15 var(--hy);margin-top:4px}
-.ph-tr{font-size:12px;color:#8B8BA2}
+.ph-tr{font-size:12px;color:#66667B}
 .ph-opts{display:grid;gap:7px}
 .ph-opt{display:flex;align-items:center;justify-content:center;min-height:36px;border-radius:12px;background:#fff;border:1.5px solid #EFE4DA;font:700 13px/1.2 var(--ui);transition:background .3s,border-color .3s,color .3s,transform .3s}
 .ph-opt.ok{background:#E3F6EC;border-color:#1F9D6B;color:#1F9D6B;transform:scale(1.02)}
@@ -988,8 +988,8 @@ fieldset.pf-g input{accent-color:var(--accent);width:20px;height:20px;margin:0}
    Кнопка — тёплый градиент с белой надписью, как на обложке; «сегодня» — та же индиго-карточка, что «Послушайте»;
    плетёнка хачкара осталась только на букве и в итоге урока, под заголовками — короткий мазок, между уровнями — линия. */
 .btn{border-radius:18px}
-.btn.primary{background:linear-gradient(135deg,#FF8A3D,#EE5A2A);color:#fff;border-color:transparent;box-shadow:0 12px 24px -14px rgba(238,90,42,.8),inset 0 1px 0 rgba(255,255,255,.25)}
-.btn.primary:active{background:linear-gradient(135deg,#F27A2C,#D94B1E)}
+.btn.primary{background:linear-gradient(135deg,#BB5017,#BD3C20);color:#fff;border-color:transparent;box-shadow:0 12px 24px -14px rgba(238,90,42,.8),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn.primary:active{background:linear-gradient(135deg,#A94412,#A53219)}
 .btn.primary .cap{opacity:.9}
 .lp-play{background:linear-gradient(135deg,#FF8A3D,#EE5A2A);box-shadow:0 14px 28px -14px rgba(238,90,42,.85)}
 .today{background:radial-gradient(120% 90% at 85% 0%,#5B5EC4 0,transparent 55%),linear-gradient(160deg,#34367E,#1E1F4E);box-shadow:0 2px 6px rgba(25,25,51,.08),0 30px 60px -30px rgba(25,25,51,.55)}
@@ -1181,3 +1181,6 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
 .return-offer{margin-top:20px;padding:16px;background:var(--surface-2);border-radius:16px}
 .return-offer h2{margin:0 0 12px;font-size:1rem}
 .return-offer a.btn{text-decoration:none}
+
+/* Audit 4: readable white labels on cover lesson and selected letters. */
+.ld-try .btn,.ld-abc button[aria-pressed="true"]{background:linear-gradient(135deg,#BB5017,#BD3C20)}
