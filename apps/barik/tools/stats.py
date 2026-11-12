@@ -45,6 +45,7 @@ def main():
 
 
 STEPS = [('guest', 'гости'), ('land_try', 'телефон'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_done', 'урок'), ('unit_done', 'путь'),
+         ('rem_tg', 'Telegram'), ('rem_mail', 'почта'), ('a2hs', 'на экран Домой'),
          ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'оплата')]
 
 

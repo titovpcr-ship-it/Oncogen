@@ -15,7 +15,10 @@ python3.13 tools/build_site.py > /dev/null || { echo "ship: сборка упа�
 python3.13 tools/deploy_site.py 2>&1 | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || { echo "ship: выкладка упала"; exit 3; }
 for i in 1 2 3; do
   R=$(python3.13 tools/check_live.py 2>&1 | tail -1); echo "$R"
-  echo "$R" | grep -q "всё на месте" && { echo "ship: выложено"; exit 0; }
+  if echo "$R" | grep -q "всё на месте" && node tools/check_guest.js; then
+    echo "ship: выложено"
+    exit 0
+  fi
   sleep 30
 done
 echo "ship: живой сайт не прошёл проверку"; exit 4

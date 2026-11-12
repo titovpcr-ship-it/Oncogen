@@ -641,7 +641,20 @@ function nextItem(){ if(REC.on||REC.url) recReset();
   if(sess.i>=sess.items.length){finish();return;}
   render(true); window.scrollTo(0,0);
 }
+let installPrompt=null;
+window.addEventListener('beforeinstallprompt',event=>{
+  event.preventDefault();
+  installPrompt=event;
+});
 function finish(){ hit('lesson_done'); if(!UI.l1){ UI.l1=1; saveUI(); }
+  if(!BILL.native&&!ACC.me&&sess.mode==='learn'&&sess.i>=sess.items.length&&sess.first.size){
+    UI.guestLessons=(UI.guestLessons||0)+1;
+    if([1,3].includes(UI.guestLessons)&&UI.returnDay!==today()){
+      sess.returnOffer=true;
+      UI.returnDay=today();
+    }
+    saveUI();
+  }
   clearTimeout(sess.timer);
   if(!sess.first.size&&!sess.known){ sess=null; go('home'); return; }
   const firstOk=[...sess.first.values()].filter(Boolean).length;
@@ -1095,7 +1108,7 @@ function homeHTML(){
     return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+(free?'':' <span class="lock">'+emo('🔒','ie')+'</span>')+'</span><span class="lvc">'+esc(T('lvCount',lc.learned,lc.total))+'</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+esc(T('lvd_'+lv))+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
   }).join('');
   return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">'+MARK()+'<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">'+esc(T('tagline'))+'</p></header>'+
-    '<section class="today">'+streak+wotdHTML()+'<button class="dg-go" data-act="dgOpen">🎯 <span>'+esc(T('dgBtn'))+'</span>'+(UI.dg&&UI.dg.td===today()&&UI.dg.done?' ✓':'')+'</button><button class="dg-go" data-act="pbOpen">🧳 <span>'+esc(T('pbTitle'))+'</span></button>'+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+premCTA()+'<div class="actions">'+acts+'</div></section></div>'+
+    '<section class="today">'+streak+wotdHTML()+'<button class="dg-go" data-act="dgOpen">🎯 <span>'+esc(T('dgBtn'))+'</span>'+(UI.dg&&UI.dg.td===today()&&UI.dg.done?' ✓':'')+'</button><button class="dg-go" data-act="pbOpen">🧳 <span>'+esc(T('pbTitle'))+'</span></button>'+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+(c.seen>=20?premCTA():'')+'<div class="actions">'+acts+'</div>'+(c.seen<20?premCTA():'')+'</section></div>'+
     '<div class="home-main">'+rows+'</div></div>';
 }
 /* Слово дня: каждый день другое, с объёмной картинкой, из открытых уровней. */
@@ -2174,6 +2187,17 @@ function docHTML(k){
   const web=!BILL.native&&STR.ru['doc_'+k+'_web'];
   return '<button class="back" data-act="docBack">‹ '+esc(T('back'))+'</button><article class="doc">'+T('doc_'+k+(web?'_web':''),CFG.CONTACT||'hello@barik.am')+'</article>';
 }
+function returnOfferHTML(){
+  if(!sess.returnOffer||ACC.me) return '';
+  const standalone=navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+  const telegram=ACC.tg?'<a class="btn secondary" data-act="returnTg" href="https://t.me/'+ACC.tg+'?start='+L+'" target="_blank" rel="noopener">'+esc(T('returnTg'))+'</a>':'';
+  const mail=ACC.srv===true?'<button class="btn secondary" data-act="returnMail">'+esc(T('returnMail'))+'</button>':'';
+  const install=standalone?'':'<button class="btn secondary" data-act="returnInstall">'+esc(T('returnInstall'))+'</button>';
+  if(!telegram&&!mail&&!install) return '';
+  return '<section class="return-offer"><h2>'+esc(T('returnTitle'))+'</h2><div class="actions">'+telegram+mail+install+
+    '<button class="btn ghost" data-act="returnDismiss">'+esc(T('close'))+'</button></div>'+
+    (sess.installHelp?'<p class="note" role="status">'+esc(T('returnInstallHelp'))+'</p>':'')+'</section>';
+}
 function resultHTML(){
   const r=sess.res, c=counts(), ti=sess.meta.ti, lv=sess.meta.lv;
   const more=lv?WORDS.filter(w=>TOPICS[w.t].lv===lv&&!S.w[w.a]&&canUse(w)).length:nextNew(ti==null?null:ti,1).length;
@@ -2190,7 +2214,7 @@ function resultHTML(){
   const missed=r.missed.length?'<p class="miss-h">'+esc(T('repeatHdr'))+'</p><ul class="words">'+r.missed.map(w=>wordRow(w,true)).join('')+'</ul>':'';
   const good=r.firstOk/r.n>=0.6;
   return '<div class="result"><div class="apres" lang="hy">'+(good?'Ապրե՛ս':'Լավ է')+'</div><p class="sub">'+esc(good?T('wellDone'):T('goodTry'))+'</p>'+
-    '<p class="score">'+T('firstTry',r.firstOk,r.n)+'</p>'+kn+missed+'<div class="actions">'+acts+'</div></div>';
+    '<p class="score">'+T('firstTry',r.firstOk,r.n)+'</p>'+kn+missed+'<div class="actions">'+acts+'</div>'+returnOfferHTML()+'</div>';
 }
 /* ---------- примеры к словам (O-172): ex/<язык>.json — слово → [фраза, перевод]; файл берётся при первой нужде ---------- */
 let EX=null, EXL='';
@@ -2874,7 +2898,12 @@ const H={
     if(j.ok){
       hit('login'); accApply(j); Object.assign(ACC,{busy:false,step:'email',code:'',needNick:false,nick:''}); clearInterval(ACC.timer);
       toast(T('accHello',j.user.nick));
-      if(ACC.next==='paywall'){ ACC.next=null; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); } else if(ACC.next==='gift'){ ACC.next=null; go('gift'); } else render();   // backTo — прежний: после оплаты туда же
+      if(ACC.next==='paywall'){ ACC.next=null; pwState={plans:null,sel:'yearly',busy:false}; go('paywall'); } else if(ACC.next==='gift'){ ACC.next=null; go('gift'); }
+      else if(ACC.next==='remind'){
+        ACC.next=null;
+        if(!ACC.me.remind) await H.rmTog();
+        else render();
+      } else render();   // backTo — прежний: после оплаты туда же
       return;
     }
     if(j.err==='need_nick'){ accSet({busy:false,needNick:true,err:''}); setTimeout(()=>{ const i=$('#accNick'); if(i) i.focus(); },30); return; }
@@ -2929,6 +2958,18 @@ const H={
     if(j.ok){ accApply(j); toast(on?T('rmOnT'):T('rmOffT')); render(); } else toast(T('buyFail')); },
   syncX:()=>{ UI.syX=1; saveUI(); render(); },
   syncLogin:()=>openAccount(),
+  returnTg:()=>hit('rem_tg'),
+  returnMail:()=>{ hit('rem_mail'); openAccount('remind'); },
+  returnDismiss:()=>{ sess.returnOffer=false; render(); },
+  returnInstall:async()=>{
+    hit('a2hs');
+    if(installPrompt){
+      const prompt=installPrompt;
+      installPrompt=null;
+      try{ await prompt.prompt(); return; }catch(e){}
+    }
+    if(view==='result'&&sess){ sess.installHelp=true; render(); }
+  },
   docBack:()=>go(docFrom==='paywall'?'paywall':(docFrom||'settings')),
   reset:()=>{
     if(!resetArm){resetArm=Date.now(); render(); setTimeout(()=>{if(resetArm&&Date.now()-resetArm>=4900&&view==='settings'){resetArm=0;render();}},5000); return;}

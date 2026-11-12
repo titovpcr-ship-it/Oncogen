@@ -634,7 +634,7 @@ function remind_run(?int $now = null): array {
 
 /* ---------- счётчик посещений (O-174) ---------- */
 const FUNNEL = ['land_try', 'start', 'first_answer', 'lesson_done', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
-                'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail'];
+                'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail', 'rem_tg', 'rem_mail', 'a2hs'];
 
 /* Premium сейчас: подписки текущего режима Dodo (O-195) и подарки */
 function premium_count(): int {
@@ -1141,6 +1141,7 @@ function watch_digest(array $p, int $yday): string {
 function watch_funnel(int $d): string {
     $g = fn($k) => day_sum($d, 'g:' . $k);
     $t = "\nНовички: гости " . $g('guest') . ' → телефон ' . $g('land_try') . ' → вошли ' . $g('start') . ' → 1-й ответ ' . $g('first_answer') . ' → урок ' . $g('lesson_done');
+    $t .= "\nПосле урока: Telegram " . $g('rem_tg') . ', почта ' . $g('rem_mail') . ', на экран «Домой» ' . $g('a2hs');
     $st = [];
     for ($n = 1; $n <= 5; $n++) {
         [$o, $ps, $f] = [day_sum($d, 'e:unit_open_p' . $n), day_sum($d, 'e:unit_pass_p' . $n), day_sum($d, 'e:unit_fail_p' . $n)];

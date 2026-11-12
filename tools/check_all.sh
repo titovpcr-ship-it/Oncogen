@@ -31,10 +31,12 @@ run() {  # имя папка команда…
   return $rc
 }
 
-for f in "$ROOT"/tests/test_*.py; do
-  n=$(basename "$f" .py)
-  run "$n" "$ROOT" python3.13 "tests/$n.py"
-done
+if [ "${BARIK_ONLY:-0}" != 1 ]; then
+  for f in "$ROOT"/tests/test_*.py; do
+    n=$(basename "$f" .py)
+    run "$n" "$ROOT" python3.13 "tests/$n.py"
+  done
+fi
 
 B="$ROOT/apps/barik"
 BUILT=1

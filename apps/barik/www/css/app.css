@@ -13,7 +13,7 @@
 /* Раскладка: телефон — одна колонка и вкладки снизу; с 960px — сайт: вкладки сверху с гербом,
    главная в две колонки (слева «сегодня», справа уровни и темы плиткой). */
 :root{
-  --bg:#FBF6F1; --bg-2:#F2EAE3; --surface:#FFFFFF; --surface-2:#F5EDE6; --ink:#1C2045; --ink-2:#4C4F6E; --ink-3:#88849A; --line:#EBE1D9;
+  --bg:#FBF6F1; --bg-2:#F2EAE3; --surface:#FFFFFF; --surface-2:#F5EDE6; --ink:#1C2045; --ink-2:#4C4F6E; --ink-3:#666177; --line:#EBE1D9;
   --accent:#EF8B2C; --accent-press:#D97616; --on-accent:#2B1404; --accent-soft:#FCE4CC;
   --pom:#A8173A; --pom-soft:#F7DDE2; --lapis:#1E2A66; --lapis-2:#2C3B86; --on-lapis:#F8F1E8; --on-lapis-2:#C9CBE6;
   --gold:#C2953F; --gold-hi:#E7C477; --gold-soft:#EEDDB6;
@@ -35,7 +35,7 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#10122A; --bg-2:#151836; --surface:#1A1E40; --surface-2:#252A52; --ink:#F4EEE8; --ink-2:#BDB8D0; --ink-3:#8E8AA6; --line:#2E3462;
+    --bg:#10122A; --bg-2:#151836; --surface:#1A1E40; --surface-2:#252A52; --ink:#F4EEE8; --ink-2:#BDB8D0; --ink-3:#AAA6C2; --line:#2E3462;
     --accent:#FFA03F; --accent-press:#F08A26; --on-accent:#2B1404; --accent-soft:#3D2A1D;
     --pom:#FF8FA6; --pom-soft:#3C1F30; --lapis:#1A2260; --lapis-2:#28338A; --on-lapis:#F8F1E8; --on-lapis-2:#B9BCE0;
     --gold:#DDB766; --gold-hi:#F2D58F; --gold-soft:#463C24;
@@ -46,7 +46,7 @@
   }
 }
 :root[data-theme="dark"]{
-  --bg:#10122A; --bg-2:#151836; --surface:#1A1E40; --surface-2:#252A52; --ink:#F4EEE8; --ink-2:#BDB8D0; --ink-3:#8E8AA6; --line:#2E3462;
+  --bg:#10122A; --bg-2:#151836; --surface:#1A1E40; --surface-2:#252A52; --ink:#F4EEE8; --ink-2:#BDB8D0; --ink-3:#AAA6C2; --line:#2E3462;
   --accent:#FFA03F; --accent-press:#F08A26; --on-accent:#2B1404; --accent-soft:#3D2A1D;
   --pom:#FF8FA6; --pom-soft:#3C1F30; --lapis:#1A2260; --lapis-2:#28338A; --on-lapis:#F8F1E8; --on-lapis-2:#B9BCE0;
   --gold:#DDB766; --gold-hi:#F2D58F; --gold-soft:#463C24;
@@ -520,13 +520,13 @@ body.kbon .tacts{margin-top:4px}
    Порядок: плашка страны → шапка → первый экран (сцена + телефон + «облачка» с голосом) → факты → зачем →
    послушайте → как устроено (3 шага) → цена → вопросы → финал → подвал. */
 .ld{--wrap:1160px;
-  --L-bg:#FFFAF5;--L-card:#FFFFFF;--L-tint:#FFF1E6;--L-ink:#191933;--L-ink2:#55566F;--L-ink3:#8B8BA2;--L-line:rgba(25,25,51,.08);
+  --L-bg:#FFFAF5;--L-card:#FFFFFF;--L-tint:#FFF1E6;--L-ink:#191933;--L-ink2:#55566F;--L-ink3:#66667B;--L-line:rgba(25,25,51,.08);
   --L-a1:#FF8A3D;--L-a2:#EE5A2A;--L-pom:#D7263D;--L-ind:#3F418F;--L-ok:#1F9D6B;
   --L-sh:0 1px 2px rgba(25,25,51,.04),0 22px 44px -26px rgba(25,25,51,.32);
   --L-sh2:0 2px 6px rgba(25,25,51,.06),0 30px 60px -30px rgba(25,25,51,.45);
   color:var(--L-ink);background:var(--L-bg)}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ld{--L-bg:#111228;--L-card:#1A1B37;--L-tint:#2A1F2B;--L-ink:#F6F2EE;--L-ink2:#BAB9D0;--L-ink3:#8D8CA8;--L-line:rgba(255,255,255,.08);--L-ind:#2B2D6B;--L-sh:0 1px 2px rgba(0,0,0,.3),0 22px 44px -26px rgba(0,0,0,.85);--L-sh2:0 2px 6px rgba(0,0,0,.35),0 30px 60px -30px rgba(0,0,0,.9)} }
-:root[data-theme="dark"] .ld{--L-bg:#111228;--L-card:#1A1B37;--L-tint:#2A1F2B;--L-ink:#F6F2EE;--L-ink2:#BAB9D0;--L-ink3:#8D8CA8;--L-line:rgba(255,255,255,.08);--L-ind:#2B2D6B;--L-sh:0 1px 2px rgba(0,0,0,.3),0 22px 44px -26px rgba(0,0,0,.85);--L-sh2:0 2px 6px rgba(0,0,0,.35),0 30px 60px -30px rgba(0,0,0,.9)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ld{--L-bg:#111228;--L-card:#1A1B37;--L-tint:#2A1F2B;--L-ink:#F6F2EE;--L-ink2:#BAB9D0;--L-ink3:#AAA9C4;--L-line:rgba(255,255,255,.08);--L-ind:#2B2D6B;--L-sh:0 1px 2px rgba(0,0,0,.3),0 22px 44px -26px rgba(0,0,0,.85);--L-sh2:0 2px 6px rgba(0,0,0,.35),0 30px 60px -30px rgba(0,0,0,.9)} }
+:root[data-theme="dark"] .ld{--L-bg:#111228;--L-card:#1A1B37;--L-tint:#2A1F2B;--L-ink:#F6F2EE;--L-ink2:#BAB9D0;--L-ink3:#AAA9C4;--L-line:rgba(255,255,255,.08);--L-ind:#2B2D6B;--L-sh:0 1px 2px rgba(0,0,0,.3),0 22px 44px -26px rgba(0,0,0,.85);--L-sh2:0 2px 6px rgba(0,0,0,.35),0 30px 60px -30px rgba(0,0,0,.9)}
 body[data-view="onboard"] #view{max-width:none;padding:0 0 calc(24px + var(--sab))}
 body[data-view="onboard"]{background:#FFFAF5}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) body[data-view="onboard"]{background:#111228} }
@@ -553,14 +553,17 @@ body[data-view="onboard"]{background:#FFFAF5}
 .ld-brand .hyn{font:600 15px/1 var(--hy);color:var(--L-pom);margin-left:2px}
 .ld-navr{display:flex;align-items:center;gap:10px}
 .lngs{display:flex;background:color-mix(in srgb,var(--L-ink) 6%,transparent);border-radius:999px;padding:3px}
-.lng{border:0;background:none;font:700 13px/1 var(--ui);letter-spacing:.04em;padding:8px 11px;border-radius:999px;color:var(--L-ink2);cursor:pointer}
+.lng{min-width:40px;min-height:40px;border:0;background:none;font:700 13px/1 var(--ui);letter-spacing:.04em;padding:8px 11px;border-radius:999px;color:var(--L-ink2);cursor:pointer}
 .lng[aria-pressed="true"]{background:var(--L-card);color:var(--L-ink);box-shadow:0 1px 3px rgba(25,25,51,.14)}
 .ld-open{height:42px;min-height:0;padding:0 20px;font:700 15px/1 var(--ui);border-radius:999px;width:auto;background:var(--L-ink);color:var(--L-bg);border:0}
 .ld-open:hover{opacity:.9}
 @media (max-width:600px){ .ld-open{display:none} }
 @media (max-width:440px){ .ld-brand .hyn{display:none} .lng{padding:8px 7px;letter-spacing:0} }
-/* шесть языков (O-161): на самых узких экранах кнопки RU…PT ещё плотнее, чтобы шапка не давала прокрутку вбок */
-@media (max-width:350px){ .lng{padding:7px 5px;font-size:12px} .ld-nav .ld-wrap{gap:8px} }
+/* Keep all six 40 px targets available on narrow phones. */
+@media (max-width:410px){
+  .ld-nav .ld-wrap{gap:8px;padding-inline:12px}
+  .ld-brand b{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
 /* первый экран */
 .ld-hero{position:relative;padding:36px 0 30px;isolation:isolate;overflow:hidden}
 .ld-hero::before{content:"";position:absolute;z-index:-1;left:-15%;top:-30%;width:70%;aspect-ratio:1;background:radial-gradient(closest-side,color-mix(in srgb,#FFB37A 30%,transparent),transparent 72%)}
@@ -575,7 +578,7 @@ body[data-view="onboard"]{background:#FFFAF5}
 .ld-sub{font-size:clamp(17px,2.1vw,20px);line-height:1.6;color:var(--L-ink2);margin:22px 0 0;max-width:31em}
 .ld-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;margin-top:30px}
 .ld .btn.xl{width:auto;min-height:62px;padding:0 32px;font:800 18px/1 var(--ui);letter-spacing:-.01em;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;transition:transform .2s,box-shadow .2s}
-.ld .btn.primary.xl{background:linear-gradient(135deg,var(--L-a1),var(--L-a2));color:#fff;box-shadow:0 16px 32px -14px rgba(238,90,42,.7),inset 0 1px 0 rgba(255,255,255,.25)}
+.ld .btn.primary.xl{background:linear-gradient(135deg,#BB5017,#BD3C20);color:#fff;box-shadow:0 16px 32px -14px rgba(238,90,42,.7),inset 0 1px 0 rgba(255,255,255,.25)}
 .ld .btn.primary.xl:hover{transform:translateY(-2px);box-shadow:0 22px 38px -14px rgba(238,90,42,.75),inset 0 1px 0 rgba(255,255,255,.25)}
 .ld .btn.xl.inv{background:#fff;color:var(--L-a2);box-shadow:0 16px 34px -16px rgba(0,0,0,.45)}
 .ld .btn .arr{font-size:20px;transition:transform .2s}
@@ -1174,3 +1177,7 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
 /* TZ_AUDIT4 №2: кнопка, нажатая до загрузки приложения, — ждёт */
 .lz-busy{position:relative;pointer-events:none;opacity:.85}
 .lz-busy::after{content:"";display:inline-block;width:14px;height:14px;margin-left:8px;vertical-align:-2px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:lzr .8s linear infinite}
+
+.return-offer{margin-top:20px;padding:16px;background:var(--surface-2);border-radius:16px}
+.return-offer h2{margin:0 0 12px;font-size:1rem}
+.return-offer a.btn{text-decoration:none}
