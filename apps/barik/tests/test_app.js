@@ -310,6 +310,15 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     // ступени 2–3 с подпиской: спряжение по лицам и подсказка в таблице
     await pg.evaluate(()=>{ window.BARARAN_CONFIG.FORCE_PREMIUM=true; }); await pg.click('[data-act=lang][data-arg=ru]').catch(()=>{});
     await pg.click('[data-act=tab][data-arg=path]'); ok(await pg.locator('.p-unit.locked').count()===0,'с подпиской замков нет');
+    // А7: таблица под формулой сверяется с грамматикой, пояснение — пунктами
+    await pg.click('[data-act=pUnit][data-arg=s3u1]');
+    const gt=await pg.evaluate(()=>{ const t=document.querySelector('.g-tab'); if(!t) return null; const v=t.dataset.w, G=window.BARIK_GRAMMAR, F=G.verb(v,'aor');
+      return {rows:[...t.querySelectorAll('td')].map(x=>x.textContent), F:Array.isArray(F)?F:null, li:document.querySelectorAll('ul.u-note li').length}; });
+    ok(gt&&gt.rows.length===6&&(!gt.F||gt.F.join()===gt.rows.join()),'А7: таблица спряжения в s3u1 совпадает с грамматикой ('+(gt&&gt.rows.join(' '))+')');
+    ok(gt&&gt.li>=2,'А7: пояснение формулы — списком ('+(gt&&gt.li)+' пунктов)');
+    await pg.click('[data-act=pUnit][data-arg=s3u3]').catch(()=>{}); await pg.click('[data-act=tab][data-arg=path]'); await pg.click('[data-act=pUnit][data-arg=s3u3]');
+    ok(await pg.locator('.g-tab tr').count()>=5&&await pg.locator('.g-tab tr.on').count()===1,'А7: в s3u3 — падежи, исходный выделен');
+    await pg.click('[data-act=tab][data-arg=path]');
     for(const id of ['s2u1','s2u8','s3u1','s4u1','s4u5']){
       await pg.click('[data-act=pUnit][data-arg='+id+']'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
       ok(await pg.locator('.scene .ln').count()>=6,id+': сцена');

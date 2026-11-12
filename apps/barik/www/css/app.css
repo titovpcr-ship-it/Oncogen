@@ -1141,3 +1141,10 @@ fieldset.pf-g input{accent-color:var(--accent);width:20px;height:20px;margin:0}
 .scene.poem .say.sm{opacity:.55}
 .sd{font:inherit;color:inherit;background:none;border:0;padding:0;border-bottom:2px solid var(--accent);cursor:pointer}
 .sd:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* А7: пояснение пунктами и таблица формы */
+ul.u-note{margin:0 0 12px;padding-left:20px;display:grid;gap:6px}
+.g-tab{border-collapse:collapse;margin:4px 0 16px;min-width:min(100%,320px);font-size:15px}
+.g-tab caption{text-align:left;font-weight:700;padding-bottom:6px}
+.g-tab th,.g-tab td{border-bottom:1px solid var(--line);padding:6px 10px 6px 0;text-align:left;vertical-align:top}
+.g-tab th{font-weight:500;color:var(--ink-2)}
+.g-tab tr.on td,.g-tab tr.on th{color:var(--accent);font-weight:700}

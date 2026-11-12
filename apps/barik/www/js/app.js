@@ -2387,7 +2387,7 @@ function unitHTML(){
     const A=u.affix&&BP.af&&BP.af[u.affix];
     if(A) aff='<section class="u-aff"><h2 class="u-h">'+esc(T('pGraft'))+'</h2><p><b lang="hy" class="af">'+esc(u.affix)+'</b> — '+esc(rdx(A))+'</p><ul class="af-ex">'+A.ex.map(([d,r])=>'<li><span lang="hy">'+esc(r)+'</span> → <b lang="hy">'+esc(d)+'</b>'+(BY[d]?' <span class="af-tr">'+esc(tx(BY[d]))+'</span>':'')+'</li>').join('')+'</ul></section>';
     const src=u.kind==='read'?'<p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+' · '+esc(T('pPD'))+' · <a href="'+esc(u.src)+'" target="_blank" rel="noopener">'+esc(T('pSource'))+'</a></p>':'';
-    return head+'<div class="u-formula'+(u.kind==='read'?' read':'')+'" lang="hy">'+fmlHTML(u.formula)+'</div>'+src+'<p class="u-note">'+esc(rdx(u.note))+'</p>'+
+    return head+'<div class="u-formula'+(u.kind==='read'?' read':'')+'" lang="hy">'+fmlHTML(u.formula)+'</div>'+src+pNoteHTML(rdx(u.note))+pGramTable(u)+
       '<h2 class="u-h">'+esc(T('pSeeds'))+'</h2><div class="chips">'+seeds+'</div>'+aff+
       '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T(u.kind==='read'?'pToText':'pToScene'))+'</button></div>';
   }
@@ -2541,6 +2541,20 @@ function pAnswer(i){
 /* А4: зёрна зачтённого урока — в повторение слов первой ступенью Лейтнера (если их там ещё нет) */
 function pSeedsToReview(u){ if(u.kind==='read') return 0; let n=0; const td=today();
   u.seeds.forEach(w=>{ if(BY[w]&&!S.w[w]){ S.w[w]={b:1,d:td+1,t:Date.now(),n:0,e:0}; n++; } }); if(n) save(); PU.seedsN=n; return n; }
+/* А7: пояснение формулы — пунктами (режем по предложениям при показе), под ним — таблица из грамматики:
+   спряжение первого глагола упражнения (6 лиц) или падежи первого существительного (слова — с эталоном Викисловаря) */
+function pNoteHTML(t){ const ps=String(t||'').split(/(?<=[.!?])\s+(?=[A-ZА-ЯЁÀ-ÖØ-Þ«“„¿¡"])/u).filter(Boolean);
+  return ps.length<2?'<p class="u-note">'+esc(t)+'</p>':'<ul class="u-note">'+ps.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'; }
+const CASES=['def','pl','dat','abl','ins','loc'];
+function pGramTable(u){
+  if(!GR||u.kind==='read') return '';
+  const c=u.drills.find(d=>d.t==='conj'&&d.items&&d.items.length);
+  if(c){ const [v,F]=c.items[0]; return '<table class="g-tab" data-w="'+esc(v)+'"><caption lang="hy">'+esc(v)+(BY[v]?' — '+esc(tx(BY[v])):'')+'</caption>'+F.map((f,i)=>'<tr><th lang="hy">'+esc(PRON[i])+'</th><td lang="hy">'+esc(f)+'</td></tr>').join('')+'</table>'; }
+  const f=u.drills.find(d=>d.t==='form'&&CASES.includes(d.key)&&d.items&&d.items.length);
+  if(f){ const w=f.items[0][0], nm=T('pCases'), rows=[[nm[0],w]].concat(CASES.map((k,i)=>[nm[i+1],GR.noun(w,k),k])).filter(r=>r[1]);
+    return '<table class="g-tab" data-w="'+esc(w)+'"><caption lang="hy">'+esc(w)+(BY[w]?' — '+esc(tx(BY[w])):'')+'</caption>'+rows.map(r=>'<tr'+(r[2]===f.key?' class="on"':'')+'><th>'+esc(r[0])+'</th><td lang="hy">'+esc(r[1])+'</td></tr>').join('')+'</table>'; }
+  return '';
+}
 function pFinish(){
   PU.end=true; hit('unit_done');
   const n0=pN0(), sc=Math.round(100*PU.ok/n0); PU.n0=n0;
