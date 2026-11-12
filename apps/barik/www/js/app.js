@@ -2410,22 +2410,24 @@ const pUniq=(a,arr,n)=>{ const o=[a]; arr.forEach(x=>{ if(o.length<(n||4)&&o.ind
 function pBuild(u){
   const items=[], uniq=pUniq;
   u.drills.forEach(d=>{
-    if(d.t==='form') shuffle(d.items).slice(0,4).forEach(([w,a,alt])=>items.push({k:'form',w,q:d.q,a,opts:uniq(a,alt)}));
-    else if(d.t==='mean') shuffle(d.words).slice(0,3).forEach(w=>items.push({k:'mean',w,frame:d.frame,a:w,opts:uniq(w,shuffle(d.words))}));
-    else if(d.t==='table') shuffle(d.rows).slice(0,3).forEach(r=>items.push({k:'table',txt:d.hint?d.frame:d.frame.replace('{0}',r[0]),hint:d.hint?r[0]:null,a:r[1],opts:uniq(r[1],shuffle(d.rows.map(x=>x[1])))}));
-    else if(d.t==='conj') shuffle(d.items).slice(0,4).forEach(([v,F,alt])=>{ const p=Math.floor(Math.random()*6);
+    if(d.t==='form') shuffle(d.items).slice(0,6).forEach(([w,a,alt])=>items.push({k:'form',w,q:d.q,a,opts:uniq(a,alt)}));
+    else if(d.t==='mean') shuffle(d.words).slice(0,5).forEach(w=>items.push({k:'mean',w,frame:d.frame,a:w,opts:uniq(w,shuffle(d.words))}));
+    else if(d.t==='table') shuffle(d.rows).slice(0,5).forEach(r=>items.push({k:'table',txt:d.hint?d.frame:d.frame.replace('{0}',r[0]),hint:d.hint?r[0]:null,a:r[1],opts:uniq(r[1],shuffle(d.rows.map(x=>x[1])))}));
+    else if(d.t==='conj') shuffle(d.items).slice(0,6).forEach(([v,F,alt])=>{ const p=Math.floor(Math.random()*6);
       // варианты: то же лицо в другом времени, затем другие лица
       items.push({k:'conj',w:v,p,q:d.q,a:F[p],opts:uniq(F[p],alt.map(x=>x[p]).concat(shuffle(F.filter((x,i)=>i!==p))))}); });
-    else if(d.t==='num') shuffle(d.items).slice(0,4).forEach(([n,w])=>items.push({k:'num',n,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
-    else if(d.t==='pick') shuffle(d.items).slice(0,3).forEach(([q,w])=>items.push({k:'pick',q,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
+    else if(d.t==='num') shuffle(d.items).slice(0,6).forEach(([n,w])=>items.push({k:'num',n,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
+    else if(d.t==='pick') shuffle(d.items).slice(0,5).forEach(([q,w])=>items.push({k:'pick',q,a:w,opts:uniq(w,shuffle(d.items.map(x=>x[1])))}));
   });
   /* А4: зёрна урока — «что значит слово» (только слова из словаря, 4–6 штук) */
   const sd=u.kind==='read'?[]:u.seeds.filter(w=>BY[w]&&tx(BY[w]));
-  shuffle(sd).slice(0,Math.min(6,Math.max(4,sd.length>=4?5:sd.length))).forEach(w=>items.push({k:'seed',w,a:tx(BY[w]),opts:uniq(tx(BY[w]),shuffle(sd.filter(x=>x!==w).map(x=>tx(BY[x]))))}));
+  shuffle(sd).slice(0,4).forEach(w=>items.push({k:'seed',w,a:tx(BY[w]),opts:uniq(tx(BY[w]),shuffle(sd.filter(x=>x!==w).map(x=>tx(BY[x]))))}));
   const ls=u.scene.lines, keep=properOf(ls); (u.names||[]).forEach(n=>keep.add(n));
   const short=shuffle(ls.filter(l=>{ const n=pWords(l[1],keep).length; return n>=3&&n<=7; }));
   short.slice(0,2).forEach(l=>{ const a=pWords(l[1],keep); items.push({k:'tiles',ln:l,a,bank:shuffle(a).map((t,id)=>({id,t,used:false})),ans:[]}); });
-  if(audioOK()){ const l=shuffle(ls)[0]; items.push({k:'hear',ln:l,a:l[1],opts:uniq(l[1],shuffle(ls.map(x=>x[1])),3)}); }
+  /* А5: перевод → выберите армянскую реплику; два задания на слух */
+  const tl=shuffle(ls.filter(l=>!short.slice(0,2).includes(l)))[0]; if(tl) items.push({k:'trpick',ln:tl,a:tl[1],opts:uniq(tl[1],shuffle(ls.map(x=>x[1])),3)});
+  if(audioOK()) shuffle(ls).slice(0,2).forEach(l=>items.push({k:'hear',ln:l,a:l[1],opts:uniq(l[1],shuffle(ls.map(x=>x[1])),3)}));
   return items;
 }
 /* чтение (ступень 0): армянское слово A1 → транскрипция на языке интерфейса */
@@ -2448,7 +2450,7 @@ function placeMore(){
 }
 /* урожай дня: повторение пройденных формул (до 3 формул, 9 заданий) */
 function harvestItems(){
-  const done=shuffle(CRS.units.filter(u=>PG.u[u.id]&&unitOpen(u))).slice(0,3), per=Math.ceil(9/Math.max(1,done.length));
+  const done=CRS.units.filter(u=>PG.u[u.id]&&unitOpen(u)).sort((a,b)=>(PG.u[a.id].b||0)-(PG.u[b.id].b||0)||(PG.u[a.id].d||0)-(PG.u[b.id].d||0)).slice(0,3), per=Math.ceil(9/Math.max(1,done.length));
   let q=[]; done.forEach(u=>{ q=q.concat(shuffle(pBuild(u)).slice(0,per)); });
   return shuffle(q).slice(0,9);
 }
@@ -2484,6 +2486,8 @@ function practiceHTML(){
     body='<p class="q">'+esc(T('pTableQ'))+'</p>'+(it.hint?'<div class="p-hint" lang="hy">('+esc(it.hint)+')</div>':'')+'<div class="hyw phrase" lang="hy">'+esc(it.done?it.txt.replace('___',it.a):it.txt)+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='num'){
     body='<p class="q">'+esc(T('pNumQ'))+'</p><div class="p-num">'+esc(String(it.n))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
+  }else if(it.k==='trpick'){
+    body='<p class="q">'+esc(T('pTrPickQ'))+'</p><div class="ruw big">'+esc(lnTr(it.ln))+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='pick'){
     body='<p class="q">'+esc(T('pPickQ'))+'</p><div class="ruw big">'+esc(rdx(it.q))+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='seed'){
@@ -2501,10 +2505,11 @@ function practiceHTML(){
     if(!it.done) foot='<div class="row2"><button class="btn secondary" data-act="pTileReset">'+esc(T('erase'))+'</button><button class="btn primary" data-act="pTileCheck"'+(it.ans.length<it.a.length?' disabled':'')+'>'+esc(T('pCheck'))+'</button></div>';
   }
   if(it.done){
-    const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'||it.k==='seed'?it.w:(it.k==='conj'?PRON[it.p]+' '+it.a:it.a)));
-    const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):it.k==='seed'?' — '+it.a:((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
-    const txl=(it.k==='tiles'||it.k==='hear')&&PU.u&&pTxOn(PU.u)?'<span class="ln-tx">'+esc(lnTx(shown))+'</span>':'';
-    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+txl+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+txl+(tr?esc(tr):'')+'</span></div>')+
+    const lk=it.k==='tiles'||it.k==='hear'||it.k==='trpick';
+    const shown=lk?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'||it.k==='seed'?it.w:(it.k==='conj'?PRON[it.p]+' '+it.a:it.a)));
+    const tr=lk?lnTr(it.ln):it.k==='seed'?' — '+it.a:(it.k==='form'||it.k==='conj')&&BY[it.w]?' · '+it.w+' — '+tx(BY[it.w]):((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
+    const txl=lk&&PU.u&&pTxOn(PU.u)?'<span class="ln-tx">'+esc(lnTx(shown))+'</span>':'';
+    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+txl+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+txl+(tr?esc(tr):'')+'</span>'+(it.q&&(it.k==='form'||it.k==='conj')?'<span class="p-why">'+esc(rdx(it.q))+'</span>':'')+'</div>')+
       '<button class="btn primary" data-act="pNext">'+esc(T('next'))+'</button>';
   }
   return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
@@ -2512,7 +2517,7 @@ function practiceHTML(){
 /* пол говорящего реплики: who.g ('m' | 'f') */
 function lnG(l){const u=(PU&&PU.u)||CRS.units.find(x=>x.scene.lines.includes(l)), w=u&&u.scene.who[l[0]]; return w&&w.g||'f';}
 function pSayIt(it){
-  const ln=it.k==='tiles'||it.k==='hear', t=ln?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'||it.k==='seed'?it.w:it.a));
+  const ln=it.k==='tiles'||it.k==='hear'||it.k==='trpick', t=ln?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'||it.k==='seed'?it.w:it.a));
   sayText(t,null,false,null,ln?lnG(it.ln):null);
 }
 /* А1: неверное задание урока один раз возвращается в конец очереди; счёт — по первой попытке */

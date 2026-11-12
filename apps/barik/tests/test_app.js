@@ -316,11 +316,17 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       if(id==='s3u1') ok(await pg.locator('.scene .ln-tx').count()===0,'s3u1: транскрипция по умолчанию выключена');
       await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
       const it=await pg.evaluate(()=>{const P=window.__bararan.PU; return P.q.map(x=>x.k);});
-      if(id==='s4u5') ok(it.filter(k=>k==='form').length===4,id+': 4 задания на причастие');
-      else if(id!=='s2u8') ok(it.filter(k=>k==='conj').length===4,id+': 4 задания на спряжение');
+      ok(it.length>=10,id+': в уроке '+it.length+' заданий (А5: не меньше 10)');
+      ok(it.filter(k=>k==='hear').length===2&&it.includes('trpick'),id+': два на слух и «перевод → армянская реплика»');
+      if(id==='s4u5') ok(it.filter(k=>k==='form').length>=5,id+': задания на причастие');
+      else if(id!=='s2u8') ok(it.filter(k=>k==='conj').length>=5,id+': задания на спряжение');
       else ok(it.includes('table')&&await pg.locator('.p-hint').count()===1,id+': таблица с подсказкой лица');
       const q0=await pg.evaluate(()=>{const P=window.__bararan.PU, x=P.q[0]; return {a:x.a,opts:x.opts};});
       await pg.locator('.opt').nth(q0.opts.indexOf(q0.a)).click(); ok(await pg.locator('.foot.ok').count()===1,id+': верный ответ принят');
+      if(id==='s3u1'){ await pg.click('[data-act=pNext]');
+        const q1=await pg.evaluate(()=>{const P=window.__bararan.PU, x=P.q[P.i]; return {k:x.k,a:x.a,opts:x.opts,q:x.q};});
+        await pg.locator('.opt').nth((q1.opts.indexOf(q1.a)+1)%q1.opts.length).click();
+        ok(await pg.locator('.foot.bad .p-why').count()===1&&(await pg.textContent('.foot.bad')).includes(' — '),id+': при ошибке — перевод слова и подсказка, почему ('+q1.k+')'); }
       await noH(id);
       await pg.click('[data-act=pQuit]'); await pg.click('[data-act=tab][data-arg=path]');
     }
@@ -402,7 +408,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.locator('svg.pom .gr.on').count()===10,'гранат: налиты алфавит и 9 формул ступени 1');
     await pg.click('[data-act=pHarvestGo]'); ok(await pg.evaluate(()=>document.body.dataset.view)==='session','урожай дня — на весь экран');
     k=await run(()=>true);
-    ok(k.length>=6&&k.length<=9,'урожай дня: '+k.length+' заданий из пройденных формул');
+    ok(k.length===9,'урожай дня: '+k.length+' заданий из пройденных формул');
     ok((await pg.textContent('.p-res')).includes('Урожай собран')&&(await pg.textContent('.p-res')).includes('1 день подряд'),'урожай собран, 1 день подряд');
     await pg.click('[data-act=tab][data-arg=path]');
     ok((await pg.textContent('.path')).includes('урожай сегодня собран')&&await pg.locator('[data-act=pHarvestGo]').count()===0,'второй раз за день урожай не предлагается');
