@@ -36,6 +36,16 @@ jobs:
                       result = json.load(response)
                   if result.get("status") == 1:
                       print(f"{host}: cPanel token accepted")
+                      if host == "cpanel.barik.am":
+                          files_url = f"https://{host}/execute/Fileman/list_files?dir=public_html"
+                          files_request = urllib.request.Request(files_url, headers={"Authorization": f"cpanel barik:{token}"})
+                          with client.open(files_request, timeout=20) as files_response:
+                              listing = json.load(files_response)
+                          if listing.get("status") != 1:
+                              raise SystemExit("cPanel file listing failed")
+                          entries = listing.get("data") or []
+                          archives = [row for row in entries if row.get("file", "").startswith("barik-deploy-")]
+                          print("Release archives present:", [(row["file"], row.get("size")) for row in archives])
                       break
                   print(f"{host}: cPanel API rejected the request")
               except urllib.error.HTTPError as error:
