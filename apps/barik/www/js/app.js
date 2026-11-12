@@ -535,10 +535,12 @@ function kindFor(w){
 let view='home', viewArg=null, sess=null, resetArm=0, dq='', dt='all', dLimit=150, backTo={v:'home'};
 function cur(){return sess&&sess.items[sess.i];}
 function newSess(mode,items,meta){ sess={mode,items,i:0,first:new Map(),meta:meta||{},timer:null,reps:{},ended:false}; view='session'; preloadAudio(items.map(it=>it.w)); render(true); window.scrollTo(0,0); }
+/* TZ_AUDIT3 №2: первый урок гостя — 4 слова (≈15 шагов), не 10: из ролика человек 40 шагов не проходит */
+function firstN(){ return !UI.l1&&Object.keys(S.w).length<=3?4:(S.set.size||10); }
 function startLearn(ti,lv){
   if(lv&&!lvOpen(lv)){openPaywall(); return;}
   if(ti!=null&&!lvOpen(TOPICS[ti].lv)){openPaywall(); return;}
-  const list=lv?WORDS.filter(w=>TOPICS[w.t].lv===lv&&!S.w[w.a]).slice(0,S.set.size||10):nextNew(ti,S.set.size||10);
+  const list=lv?WORDS.filter(w=>TOPICS[w.t].lv===lv&&!S.w[w.a]).slice(0,firstN()):nextNew(ti,firstN());
   if(!list.length){toast(T('noNew'));return;}
   const items=[];
   for(let i=0;i<list.length;i+=4){
@@ -639,7 +641,7 @@ function nextItem(){ if(REC.on||REC.url) recReset();
   if(sess.i>=sess.items.length){finish();return;}
   render(true); window.scrollTo(0,0);
 }
-function finish(){ hit('lesson_done');
+function finish(){ hit('lesson_done'); if(!UI.l1){ UI.l1=1; saveUI(); }
   clearTimeout(sess.timer);
   if(!sess.first.size&&!sess.known){ sess=null; go('home'); return; }
   const firstOk=[...sess.first.values()].filter(Boolean).length;
@@ -3014,5 +3016,5 @@ Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='sessio
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();
   if(/[?&]pay=gift(?:&|$)/.test(location.search||'')) giftReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={trPhrase,cursiveSVG,writeCursive,get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,get PW(){return PW;},get PICS(){return PICS;},normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,get CRS(){return CRS;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={get UI(){return UI;},startLearn,trPhrase,cursiveSVG,writeCursive,get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,get PW(){return PW;},get PICS(){return PICS;},normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,get CRS(){return CRS;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();

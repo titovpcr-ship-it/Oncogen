@@ -1162,3 +1162,12 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
 .lz-dot{width:18px;height:18px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:lzr .8s linear infinite}
 @keyframes lzr{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.lz-dot{animation:none}}
+/* TZ_AUDIT3 №3: на телефоне первый экран — заголовок, кнопка и телефон с ответами; описание и галочки — под картинкой */
+@media (max-width:699px){
+  .ld-hero-in{display:flex;flex-direction:column;gap:14px}
+  .ld-copy{display:contents}
+  .ld-eyebrow{order:5} .ld-hero h1{order:2} .ld-ctas .ld-how{display:none} .ld-ctas{order:3} .ld-art{order:4} .ld-sub{order:5;margin:0} .ld-micro{order:6}
+  .ld-art{height:clamp(330px,92vw,380px);margin-top:0}
+  .ph{width:min(176px,44%)}
+}
+@media (max-width:340px){ .ph{width:52%} }

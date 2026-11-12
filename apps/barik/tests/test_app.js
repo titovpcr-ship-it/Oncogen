@@ -460,6 +460,10 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.goto(base); await pg.waitForSelector('#phOpts .ph-opt');
     for(const w of [320,390]){ await pg.setViewportSize({width:w,height:844}); await pg.waitForTimeout(100);
       ok(await pg.evaluate(()=>{ const s=document.querySelector('.ph-scr').getBoundingClientRect(); return [...document.querySelectorAll('#phOpts .ph-opt')].every(b=>b.getBoundingClientRect().bottom<=s.bottom); }),'Б3: все три ответа видны в телефоне на '+w+' px'); }
+    for(const [w,h] of [[360,640],[390,700],[430,740]]){ await pg.setViewportSize({width:w,height:h}); await pg.evaluate(()=>scrollTo(0,0)); await pg.waitForTimeout(100);
+      const f=await pg.evaluate(()=>{ const b=s=>document.querySelector(s).getBoundingClientRect().bottom; return {h1:b('.ld-hero h1'),cta:b('.ld-ctas .btn'),o2:b('#phOpts .ph-opt:nth-child(2)')}; });
+      ok(f.h1<=h&&f.cta<=h&&f.o2<=h,'TZ3 №3: на '+w+'×'+h+' без прокрутки — заголовок, кнопка и два ответа в телефоне '+JSON.stringify(f)); }
+    await pg.setViewportSize({width:390,height:844});
     const tried=[];
     for(let i=0;i<3;i++){ await pg.waitForSelector('#phOpts .ph-opt.right:not([disabled])');
       const a=await pg.getAttribute('#phOpts .ph-opt.right','data-arg'); tried.push(a);
@@ -469,6 +473,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(sw[0]===2&&sw[1]===1&&sw[2]===2,'Б3: ответы сохранены в прогрессе (верно — ступень 2, ошибка — 1): '+sw);
     await pg.click('[data-act=landTryGo]'); await pg.waitForTimeout(400);
     ok(await pg.evaluate(()=>document.body.dataset.view)==='session','Б3: «Продолжить» — сразу урок, без регистрации');
+    const cnt=async()=>pg.evaluate(()=>{ const t=[...document.querySelectorAll('.sess-top span')].map(e=>e.textContent).find(x=>/^\d+\s*\/\s*\d+$/.test(x.trim())); return t?+t.split('/')[1]:0; });
+    const n1=await cnt(); ok(n1>0&&n1<=16,'TZ3 №2: первый урок гостя — не больше 16 шагов ('+n1+')');
+    await pg.evaluate(()=>{ const B=window.__bararan; B.UI.l1=1; B.startLearn(null); }); await pg.waitForTimeout(200);
+    const n2=await cnt(); ok(n2>16,'TZ3 №2: после первого урока — обычный размер ('+n2+')');
+
     const inLesson=await pg.evaluate(t=>{ const S=window.__bararan.S; return t.every(a=>!!S.w[a]); },tried);
     ok(inLesson,'Б3: слова с обложки остались в прогрессе после входа в урок');
     ok(errs.length===0,'Б3: без ошибок страницы '+errs.join(' | '));
