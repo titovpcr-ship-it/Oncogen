@@ -47,19 +47,23 @@ def main():
     print('осталось слов:', len(todo), flush=True)
     if not os.path.exists(out):
         open(out, 'w', encoding='utf-8').write('# Примеры %s — DeepSeek (Azure Foundry), проверены правилами build_examples.py; носителем не вычитаны\n' % a.level)
-    t0, good, tok = time.time(), 0, 0
+    t0, good, tok, bad = time.time(), 0, 0, 0
     for i in range(0, len(todo), a.batch):
         if time.time() - t0 > a.minutes * 60: break
         part = todo[i:i + a.batch]
         body = {'messages': [{'role': 'user', 'content': PROMPT.format(lv=a.level) + '\n'.join('%s | %s | %s' % p for p in part)}], 'max_tokens': 30000}
-        for tr in range(6):
+        # TZ_AUDIT3 №7: обрыв связи — пауза и повтор (до 10 раз, пауза растёт до 2 мин); три пачки подряд без ответа —
+        # выход (внешний цикл запустит заново), а не пропуск всего списка; сделанное уже дописано после каждой пачки
+        for tr in range(10):
             try:
                 r = requests.post(url, headers=H, json=body, timeout=900)
                 if r.status_code == 429: time.sleep(int(r.headers.get('Retry-After', 30)) + 2); continue
-                r.raise_for_status(); j = r.json(); break
+                r.raise_for_status(); j = r.json(); bad = 0; break
             except Exception as e:
-                print('ошибка', e, flush=True); time.sleep(20)
+                print('ошибка', str(e)[:200], flush=True); time.sleep(min(120, 15 * (tr + 1)))
         else:
+            bad += 1
+            if bad >= 3: print('связи нет — выход, сделанное записано', flush=True); sys.exit(3)
             continue
         tok += (j.get('usage') or {}).get('completion_tokens', 0)
         c = j['choices'][0]['message']['content'] or ''
