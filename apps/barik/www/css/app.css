@@ -1157,3 +1157,8 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
 .ph-done{font-size:40px;line-height:1}
 @media (max-width:380px){ .ph-card .pimg{aspect-ratio:16/5.5} .ph-hy{font-size:20px} .ph-scr{gap:6px} }
 @media (max-width:340px){ .ph{width:50%} .ph-card .pimg{aspect-ratio:16/4} .ph-scr{padding-top:34px} }
+/* Б4: ожидание данных по требованию */
+.lz-wait{display:flex;align-items:center;justify-content:center;gap:10px;min-height:40vh;color:var(--ink-2);font-weight:600;flex-wrap:wrap;padding:16px;text-align:center}
+.lz-dot{width:18px;height:18px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:lzr .8s linear infinite}
+@keyframes lzr{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.lz-dot{animation:none}}

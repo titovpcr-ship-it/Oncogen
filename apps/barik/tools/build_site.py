@@ -350,6 +350,13 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     ix = os.path.join(out, "index.html")
     html = open(ix, encoding="utf-8").read()
     ver = {}
+    # Б4: path_data.js и pictures.js приложение грузит само (lazyJs) — версию вписываем в app.js до его отпечатка
+    apj = os.path.join(out, "js", "app.js"); aps = open(apj, encoding="utf-8").read()
+    for rel in ("js/path_data.js", "js/pictures.js"):
+        ver[rel] = hashlib.sha1(open(os.path.join(out, rel), "rb").read()).hexdigest()[:8]
+        assert aps.count("'" + rel + "'") >= 1, "app.js: нет ленивой загрузки " + rel
+        aps = aps.replace("'" + rel + "'", "'" + rel + "?v=" + ver[rel] + "'")
+    open(apj, "w", encoding="utf-8").write(aps)
     def _v(m):
         rel = m.group(2)
         ver[rel] = hashlib.sha1(open(os.path.join(out, rel), "rb").read()).hexdigest()[:8]

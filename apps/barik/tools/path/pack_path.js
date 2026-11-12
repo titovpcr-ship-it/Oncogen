@@ -129,6 +129,9 @@ const out = { x: { n: xn, v: xv }, w: words, af: affixes, course,
 const js = '/* Сгенерировано tools/path/pack_path.js — не править руками. Формы и этимология — Викисловарь, CC BY-SA. */\n' +
   'window.BARIK_PATH=' + JSON.stringify(out) + ';\n';
 fs.writeFileSync(path.join(APP, 'www', 'js', 'path_data.js'), js);
+// Б4: обложке нужны только число формул и ступени — маленький path_meta.js грузится сразу, path_data.js — по требованию
+if (course) fs.writeFileSync(path.join(APP, 'www', 'js', 'path_meta.js'), '/* Сгенерировано tools/path/pack_path.js */\nwindow.BARIK_PATH_META=' +
+  JSON.stringify({ n: course.units.length, stages: course.stages }) + ';\n');
 console.log(`path_data.js ${(js.length / 1024).toFixed(0)} КБ: сущ. ${out.stat.nouns} (правила верны в ${(100 * out.stat.nRule / nf).toFixed(1)}% форм, исключений ${Object.keys(xn).length} слов), ` +
   `глаголов ${out.stat.verbs} (${(100 * out.stat.vRule / vf).toFixed(1)}%, исключений ${Object.keys(xv).length}), производных ${Object.keys(words).length}` +
   (course ? `; курс: ${course.units.length} формул, фраз для озвучки ${say.size}` : ""));

@@ -242,7 +242,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'путь '+n+': без горизонтальной прокрутки ('+w+')'); };
-    await pg.click('[data-act=tab][data-arg=path]');
+    await pg.click('[data-act=tab][data-arg=path]'); await pg.waitForSelector('.p-units');   // Б4: путь грузится по требованию
     const NU=await pg.evaluate(()=>window.__bararan.CRS.units.length);
     ok(NU>=25&&await pg.locator('svg.pom .gr').count()===NU+1&&await pg.locator('.p-units .p-unit').count()===NU,'путь: гранат из '+(NU+1)+' зёрен, формул '+NU);
     ok(await pg.locator('.p-st').count()===6&&await pg.locator('.p-soon').count()===0,'путь: 6 ступеней, во всех есть формулы');
@@ -434,6 +434,21 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('.p-res [data-act=pAgain]'); await run(()=>true);
     ok((await pg.textContent('.p-res h1')).includes('ступень 0 пройдена')&&await pg.evaluate(()=>window.__bararan.PG.abc===1),'8 из 8 — ступень 0 пройдена');
     ok(errs.length===0,'этап C: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
+  { // Б4: path_data.js и pictures.js — не в загрузке страницы; путь — при входе во вкладку, картинки — после первого кадра обложки
+    const ctx=await br.newContext({viewport:{width:390,height:844},locale:'ru-RU',timezoneId:'Europe/Moscow'});
+    const pg=await ctx.newPage(), req=[], errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    pg.on('request',r=>{ const m=r.url().match(/js\/(path_data|pictures)\.js/); if(m) req.push(m[1]); });
+    let firstFrame=null; await pg.exposeFunction('__ff',v=>{ if(firstFrame===null) firstFrame=v; });
+    await pg.addInitScript(()=>{ new MutationObserver((l,o)=>{ if(document.querySelector('#view .ld h1')&&!document.documentElement.classList.contains('nopre')){ window.__ff(performance.getEntriesByType('resource').filter(e=>/path_data|pictures/.test(e.name)).length); o.disconnect(); } }).observe(document,{subtree:true,childList:true,attributes:true}); });
+    await pg.goto(base); await pg.waitForSelector('[data-act=pickLang]'); await pg.waitForTimeout(800);
+    ok(firstFrame===0,'Б4: первый кадр обложки — без path_data.js и pictures.js ('+firstFrame+')');
+    ok(!req.includes('path_data'),'Б4: обложка не грузит path_data.js');
+    ok(await pg.locator('.ld-tile .pimg svg, .ld-tile .pimg img').count()>0,'Б4: картинки обложки дорисованы после загрузки pictures.js');
+    await pg.click('[data-act=pickLang]'); await pg.click('[data-act=tab][data-arg=path]'); await pg.waitForSelector('.p-units');
+    ok(req.includes('path_data'),'Б4: вкладка «Путь» загрузила path_data.js по требованию');
+    ok(errs.length===0,'Б4: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
   { // Б3: урок прямо на обложке — телефон отвечает на нажатия, «Продолжить» ведёт в урок с прогрессом этих слов
@@ -744,6 +759,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU',acceptDownloads:true}); const pg=await ctx.newPage();
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base+'?lang=ru'); await pg.waitForFunction(()=>window.__bararan);
+    await pg.evaluate(()=>window.__bararan.go('path')); await pg.waitForSelector('.p-units');   // Б4: путь грузится по требованию
     await pg.evaluate(()=>{ const b=window.__bararan; b.CRS.units.filter(u=>u.stage===1).forEach(u=>{ b.PG.u[u.id]={d:Date.now(),b:90}; }); b.pgSave(); b.go('path'); });
     ok(await pg.locator('[data-act=ctOpen][data-arg="1"]').count()===1,'пройденная ступень 1 — кнопка «Получить сертификат»');
     ok(await pg.locator('[data-act=ctOpen][data-arg="2"]').count()===0,'непройденная ступень — без кнопки');

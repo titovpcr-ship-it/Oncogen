@@ -47,10 +47,10 @@ def main():
     ok('nosniff' in r.headers.get('X-Content-Type-Options', ''), 'X-Content-Type-Options')
     ok(bool(r.headers.get('Referrer-Policy')), 'Referrer-Policy')
     scripts = [x.split('?')[0] for x in re.findall(r'<script src="([^"]+)"', r.text)]
-    ok('js/app.js' in scripts and 'js/path_data.js' in scripts, 'главная подключает приложение и путь', ', '.join(scripts))
+    ok('js/app.js' in scripts and 'js/path_meta.js' in scripts and 'js/path_data.js' not in scripts, 'главная подключает приложение; путь и картинки — по требованию (Б4)', ', '.join(scripts))
     ok(all('?v=' in x for x in re.findall(r'(?:src|href)="((?:js|css)/[^"]+)"', r.text)),
        'скрипты и стили главной — с версией в адресе (?v=)')
-    for p in ['/js/app.js', '/js/data.js', '/js/path_data.js', '/js/grammar.js', '/css/app.css', '/manifest.webmanifest', '/favicon.png']:
+    for p in ['/js/app.js', '/js/data.js', '/js/path_data.js', '/js/path_meta.js', '/js/pictures.js', '/js/grammar.js', '/css/app.css', '/manifest.webmanifest', '/favicon.png']:
         x = get(p)
         ok(x.status_code == 200 and len(x.content) > 100, p, str(x.status_code))
     sw = get('/sw.js')

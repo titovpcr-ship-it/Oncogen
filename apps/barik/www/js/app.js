@@ -3,8 +3,9 @@
    сверху — второй язык интерфейса, латинская транскрипция, алфавит, подписка. */
 (function(){
 'use strict';
+let PICS=window.BARARAN_PICS||{};   // Б4: pictures.js грузится по требованию (lazyJs), до этого — пусто
 const TOPICS=window.BARARAN_DATA.topics, ABC=window.BARARAN_ABC, CFG=window.BARARAN_CONFIG||{};
-const BILL=window.BARARAN_BILLING, STR=window.BARARAN_STR, PICS=window.BARARAN_PICS||{}, EMO=window.BARARAN_EMO||{};
+const BILL=window.BARARAN_BILLING, STR=window.BARARAN_STR, EMO=window.BARARAN_EMO||{};
 
 /* ================= LANGUAGE ================= */
 const UIK='bararan-ui-v1';
@@ -190,7 +191,7 @@ TOPICS.forEach((t,ti)=>{
 function trLoad(l){ if(!window.BARARAN_SPLIT||(window.BARARAN_TR&&window.BARARAN_TR[l])) return;
   const sc=document.createElement('script'); sc.src='js/tr-'+l+'.js?v='+window.BARARAN_SPLIT;
   sc.onload=()=>{ WORDS.forEach(w=>{ ['r','e','f','s','de','pt'].forEach(f=>{ if(Object.prototype.hasOwnProperty.call(w,f)) delete w[f]; }); }); render(false); }; document.head.appendChild(sc); }
-const PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
+let PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
 const TXK={ru:'r',en:'e',fr:'f',es:'s',de:'de',pt:'pt'}, TRK={ru:'tr',en:'lt',fr:'ft',es:'st',de:'dt',pt:'ptr'};
 const tx=w=>w[TXK[L]||'e'];       // перевод на языке интерфейса
 const trn=w=>w[TRK[L]||'lt'];   // транскрипция на языке интерфейса
@@ -785,12 +786,29 @@ function renderTabs(){
   const nav=$('#tabs'); nav.setAttribute('aria-label',T('tabsAria'));
   nav.innerHTML='<button class="tbrand" data-act="brand" aria-label="Barik">'+MARK()+'<b>Barik</b><span lang="hy">Բառիկ</span></button>'+tabs.map(t=>'<button class="tab" data-act="tab" data-arg="'+t[0]+'">'+t[1]+'<span>'+esc(t[2])+'</span></button>').join('');
 }
+/* Б4: тяжёлые данные по требованию — path_data.js (Путь, зерно, сертификат) и pictures.js (Картинки, тренажёр с картинкой,
+   обложка — после первого кадра). Сервис-воркер всё равно кладёт их в кэш для офлайна. */
+const LZ={};
+function lazyJs(src){ return LZ[src]||(LZ[src]=new Promise((ok,no)=>{ const s=document.createElement('script'); s.src=src; s.onload=()=>ok(); s.onerror=()=>{ delete LZ[src]; resFail(); no(new Error(src)); }; document.head.appendChild(s); })); }
+function picsOn(){ const P=window.BARARAN_PICS; if(P&&PICS!==P){ PICS=P; PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]); } return !!P; }
+function pathOn(){ const P=window.BARIK_PATH; if(P&&P.course&&BP!==P){ BP=P; CRS=P.course; } return !!(P&&P.course); }
+const NEED_PATH=new Set(['path','unit','seed','cert']), NEED_PICS=new Set(['pics','pcard','pquiz','tquiz','daily']);
+function needData(el){
+  const v=view, src=NEED_PATH.has(v)&&!pathOn()?'js/path_data.js':(NEED_PICS.has(v)&&!picsOn()?'js/pictures.js':'');
+  if(!src) return false;
+  el.innerHTML='<div class="lz-wait" role="status" aria-live="polite"><span class="lz-dot"></span>'+esc(T('loading'))+'</div>';
+  lazyJs(src).then(()=>{ pathOn(); picsOn(); if(view===v) render(); }).catch(()=>{ if(view===v) el.innerHTML='<div class="lz-wait" role="alert">'+esc(T('lzFail'))+' <button class="btn secondary sm" data-act="lzRetry">'+esc(T('lzRetry'))+'</button></div>'; });
+  return true;
+}
 function render(auto){ document.documentElement.classList.remove('nopre'); if(!window.__barikOk){ window.__barikOk=1; try{ sessionStorage.removeItem('barik-rl'); }catch(e){} }   // обложка из HTML спрятана до первого кадра приложения (O-202) — дальше рисует оно
   const el=$('#view');
   document.body.dataset.view=(view==='session'||(view==='unit'&&PU&&PU.step===2&&!PU.end)||(view==='abcquiz'&&aq&&aq.i<aq.items.length)||(view==='pquiz'&&pq&&pq.i<pq.items.length)||(view==='tquiz'&&tq&&tq.i<tq.items.length))?'session':view;
   const tk=tcur(); document.body.classList.toggle('kbon',view==='tquiz'&&!!tk&&!tk.done&&kbOwn());
   if(view!=='onboard') landStop();
-  if(view==='onboard'){ el.innerHTML=onboardHTML(); landStart(); }
+  if(needData(el)) return;
+  if(view==='onboard'){ el.innerHTML=onboardHTML(); landStart();
+    if(!picsOn()) lazyJs('js/pictures.js').then(()=>{ picsOn(); if(view!=='onboard') return;
+      document.querySelectorAll('.ld-tile[data-a] .pimg').forEach(e=>{ const w=BY[e.parentNode.dataset.a]; if(w) e.innerHTML=picSvg(w); }); landDemo(); }).catch(()=>{}); }
   else if(view==='home') el.innerHTML=homeHTML();
   else if(view==='path') el.innerHTML=pathHTML();
   else if(view==='unit') el.innerHTML=PU?unitHTML():pathHTML();
@@ -902,17 +920,17 @@ function onboardHTML(){
   const cta=c=>'<button class="btn primary '+(c||'')+'" data-act="pickLang" data-arg="'+L+'">'+esc(D.cta)+'<span class="arr" aria-hidden="true">→</span></button>';
   const langs=[['ru','RU'],['en','EN'],['fr','FR'],['es','ES'],['de','DE'],['pt','PT']].map(x=>'<button class="lng" data-act="landLang" data-arg="'+x[0]+'" aria-pressed="'+(x[0]===L)+'" lang="'+x[0]+'">'+x[1]+'</button>').join('');
   const brand='<a class="ld-brand" href="./" aria-label="Barik">'+ART.mark('ld-mk')+'<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a>';
-  const byA=a=>BY[a]&&PICS[a]?BY[a]:null;
-  const tile=w=>'<li class="ld-tile"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(tx(w))+'</span></li>';
+  const byA=a=>BY[a]&&(PICS[a]||!picsOn())?BY[a]:null;
+  const tile=w=>'<li class="ld-tile" data-a="'+esc(w.a)+'"><span class="pimg">'+picSvg(w)+'</span><span class="pw-hy" lang="hy">'+esc(w.a)+'</span><span class="pw-tr">'+esc(tx(w))+'</span></li>';
   const tiles=FEAT.map(byA).filter(Boolean).map(tile).join('');
   const wIc=[I.family,I.city,I.roots];
   const why=D.why.map((m,i)=>'<li class="wy-'+i+'"><span class="wy-ic">'+wIc[i]+'</span><h3>'+esc(m[1])+'</h3><p>'+esc(m[2])+'</p></li>').join('');
   const pIc=[I.words,I.voice,I.lessons,I.globe];
-  const proof=D.proof(WORDS.length,CRS.units.length).map((x,i)=>'<li><span class="pf-ic">'+pIc[i]+'</span><span class="pf-t"><b>'+esc(x[0])+'</b><span>'+esc(x[1])+'</span></span></li>').join('');
+  const proof=D.proof(WORDS.length,CRS.units.length||PMETA.n).map((x,i)=>'<li><span class="pf-ic">'+pIc[i]+'</span><span class="pf-t"><b>'+esc(x[0])+'</b><span>'+esc(x[1])+'</span></span></li>').join('');
   const say=(a,g,lab)=>'<button class="vb'+(g==='m'?' m':'')+'" data-act="landSay" data-arg="'+esc(a)+'|'+g+'" aria-label="'+esc(lab+' — '+a)+'"><span class="pl">'+I.play+'</span>'+esc(lab)+'</button>';
   const hear=HEAR.map(a=>BY[a]).filter(Boolean).map(w=>'<li><span class="hr-t"><b lang="hy">'+esc(capHy(w.a))+'</b><span>'+esc(tx(w))+'</span></span><span class="hr-v">'+say(w.a,'f',D.vF)+say(w.a,'m',D.vM)+'</span></li>').join('');
   const bub=(a,g,cls)=>{ const w=BY[a]; return w?'<button class="bub '+cls+'" data-act="landSay" data-arg="'+esc(a)+'|'+g+'"><span class="pl">'+I.play+'</span><span class="bt"><b lang="hy">'+esc(capHy(w.a))+'</b><span>'+esc(tx(w))+'</span></span></button>':''; };
-  const stages=(CRS.stages||[]).map(st=>'<li><span class="st-hy" lang="hy">'+esc(st.hy||'')+'</span><span class="st-b"><b>'+esc(rdx(st))+'</b><span>'+esc(rdx(st.can))+'</span></span><span class="st-lv">'+esc(st.lv||'')+'</span></li>').join('');
+  const stages=(CRS.stages.length?CRS.stages:PMETA.stages||[]).map(st=>'<li><span class="st-hy" lang="hy">'+esc(st.hy||'')+'</span><span class="st-b"><b>'+esc(rdx(st))+'</b><span>'+esc(rdx(st.can))+'</span></span><span class="st-lv">'+esc(st.lv||'')+'</span></li>').join('');
   const pr=D.prList(a1,PW.length,premium()).map(x=>'<li>'+ck+'<span>'+esc(x)+'</span></li>').join('');
   const faq=D.faq(chk).map((q,i)=>'<details'+(i===0?' open':'')+'><summary>'+esc(q[0])+'<span class="pm" aria-hidden="true"></span></summary><p>'+esc(q[1])+'</p></details>').join('');
   const micro=D.micro.map(x=>'<li>'+ck+esc(x)+'</li>').join('');
@@ -945,7 +963,7 @@ function onboardHTML(){
   '<section class="ld-sec" id="how"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.howTitle)+'</h2><p class="ld-lead">'+esc(D.howLead)+'</p><ol class="ld-steps">'+
     step(1,D.s1,D.s1t,'<div class="ld-cb" id="featCb"><div class="cbw"></div><div class="ld-abc" role="group" aria-label="'+esc(D.abcPick)+'">'+keys+'</div><div class="ld-try"><button class="btn primary" data-act="landPen">'+ICON.pen+esc(T('penBtn'))+'</button></div></div>')+
     step(2,D.s2,D.s2t(WORDS.length),'<ul class="ld-tiles">'+tiles+'</ul>')+
-    step(3,D.s3,D.s3t(CRS.units.length),'<ol class="ld-stages">'+stages+'</ol>')+
+    step(3,D.s3,D.s3t(CRS.units.length||PMETA.n),'<ol class="ld-stages">'+stages+'</ol>')+
   '</ol></div></section>'+
   '<section class="ld-sec ld-pr"><div class="ld-wrap"><h2 class="ld-h2">'+esc(D.prTitle)+'</h2>'+
     '<div class="ld-price"><p class="pr-big">'+esc(D.prFree)+'</p><p class="pr-note">'+esc(D.prNote)+'</p><ul>'+pr+'</ul>'+
@@ -2256,7 +2274,8 @@ function sessionHTML(){
 /* ================= ПУТЬ «ГРАНАТ» (O-140, этап B) =================
    Ступени и формулы — window.BARIK_PATH.course (data/path/course.json → tools/path/pack_path.js),
    формы и семьи слов — www/js/grammar.js. Прогресс пути — отдельный ключ barik-path-v1 (S не трогаем). */
-const GR=window.BARIK_GRAMMAR, BP=window.BARIK_PATH||{}, CRS=BP.course||{stages:[],units:[]};
+const GR=window.BARIK_GRAMMAR, PMETA=window.BARIK_PATH_META||{n:0,stages:[]};
+let BP=window.BARIK_PATH||{}, CRS=BP.course||{stages:[],units:[]};   // Б4: path_data.js (~0,9 МБ) — по требованию
 const PGK='barik-path-v1';
 let PG={u:{},tr:true};
 try{ const j=JSON.parse(localStorage.getItem(PGK)||'null'); if(j&&j.u) PG=Object.assign(PG,j); }catch(e){}
@@ -2751,6 +2770,7 @@ const H={
   lang:a=>{setLang(a); render();},
   topic:a=>{const t=TOPICS[+a]; if(lvOpen(t.lv)) preloadAudio(t.list); go('topic',+a);},
   learnNew:()=>startLearn(null),
+  lzRetry:()=>render(),
   landTry:a=>landTry(a),
   landTryGo:()=>{ setLang(L); hit('land_start'); hit('start'); startLearn(null); },
   learnTopic:a=>startLearn(+a),
@@ -2992,5 +3012,5 @@ Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='sessio
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();
   if(/[?&]pay=gift(?:&|$)/.test(location.search||'')) giftReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={trPhrase,cursiveSVG,writeCursive,get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,PW,PICS,normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,CRS,trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={trPhrase,cursiveSVG,writeCursive,get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,get PW(){return PW;},get PICS(){return PICS;},normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,get CRS(){return CRS;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
 })();
