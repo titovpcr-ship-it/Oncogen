@@ -2392,6 +2392,16 @@ function unitHTML(){
       '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T(u.kind==='read'?'pToText':'pToScene'))+'</button></div>';
   }
   const who=Object.keys(u.scene.who);
+  /* А6: текст ступени 5 — стихом: без облачков и подписи автора у строк, зёрна подсвечены и открывают карточку */
+  if(u.kind==='read'){
+    const sl=u.seeds.filter(w=>BY[w]||(GR&&GR.family(w).length)), PU_=/[։,՝.!?․…—–«»():;"՛՜՞]/g;
+    const hl=t=>t.split(/(\s+)/).map(tok=>{ const k=tok.replace(PU_,'').toLowerCase(); const w=k&&sl.find(x=>k===x||(x.length>=3&&k.startsWith(x)&&k.length-x.length<=3));
+      if(!w) return esc(tok); const m=tok.match(/^([«"(—–]*)(.*?)([։,՝.!?․…—–»():;"]*)$/u);
+      return esc(m[1])+'<button class="sd" data-act="pSeed" data-arg="'+esc(w)+'" lang="hy">'+esc(m[2])+'</button>'+esc(m[3]); }).join('');
+    const pl=u.scene.lines.map((l,i)=>'<div class="ln pl" id="ln'+i+'"><div class="ln-b"><button class="say sm" data-act="pSayLn" data-arg="'+i+'" aria-label="'+esc(T('pListen'))+'">'+ICON.spk+'</button><span class="ln-t"><span class="ln-hy" lang="hy">'+hl(l[1])+'</span>'+(pTxOn(u)?'<span class="ln-tx">'+esc(lnTx(l[1]))+'</span>':'')+(PG.tr?'<span class="ln-tr">'+esc(lnTr(l))+'</span>':'')+'</span></div></div>').join('');
+    return head+'<h2 class="u-scene">'+esc(rdx(u.scene.title))+'</h2><p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+'</p><div class="u-tools"><button class="btn secondary sm" data-act="pPlayAll">'+ICON.play+' '+esc(T('pPlayText'))+'</button><button class="btn ghost sm" data-act="pTr">'+esc(T(PG.tr?'pTrHide':'pTrShow'))+'</button><button class="btn ghost sm" data-act="pTx" aria-pressed="'+pTxOn(u)+'">'+esc(T('pTxBtn'))+(pTxOn(u)?' ✓':'')+'</button></div>'+
+      '<div class="scene poem">'+pl+'</div><div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="2">'+esc(T('pToPractice'))+'</button></div>';
+  }
   const lines=u.scene.lines.map((l,i)=>'<div class="ln'+(l[0]===who[0]?'':' r')+'" id="ln'+i+'"><span class="ln-who">'+esc(rdx(u.scene.who[l[0]]))+'</span><div class="ln-b"><button class="say sm" data-act="pSayLn" data-arg="'+i+'" aria-label="'+esc(T('pListen'))+'">'+ICON.spk+'</button><span class="ln-t"><span class="ln-hy" lang="hy">'+esc(l[1])+'</span>'+(pTxOn(u)?'<span class="ln-tx">'+esc(lnTx(l[1]))+'</span>':'')+(PG.tr?'<span class="ln-tr">'+esc(lnTr(l))+'</span>':'')+'</span></div></div>').join('');
   return head+'<h2 class="u-scene">'+esc(rdx(u.scene.title))+'</h2>'+(u.kind==='read'?'<p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+'</p>':'')+'<div class="u-tools"><button class="btn secondary sm" data-act="pPlayAll">'+ICON.play+' '+esc(T('pPlayAll'))+'</button><button class="btn ghost sm" data-act="pTr">'+esc(T(PG.tr?'pTrHide':'pTrShow'))+'</button><button class="btn ghost sm" data-act="pTx" aria-pressed="'+pTxOn(u)+'">'+esc(T('pTxBtn'))+(pTxOn(u)?' ✓':'')+'</button></div>'+
     '<div class="scene">'+lines+'</div><div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="2">'+esc(T('pToPractice'))+'</button></div>';

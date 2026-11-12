@@ -334,6 +334,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=pUnit][data-arg=s5u6]');
     ok(/Текст|Text/.test(await pg.textContent('h1.pg'))&&await pg.locator('.u-src a[href^="https://hy.wikisource.org/"]').count()===1,'текст: заголовок «Текст N» и ссылка на источник');
     await pg.click('.page-actions [data-act=pStep][data-arg="1"]'); ok(await pg.locator('.scene .ln').count()===14,'текст: 14 строк с переводом');
+    ok(await pg.locator('.scene .ln-who').count()===0&&await pg.locator('.scene.poem').count()===1,'А6: текст — без облачков и подписи автора у строк');
+    ok(/Слушать текст|Listen to the text/.test(await pg.textContent('[data-act=pPlayAll]')),'А6: кнопка «Слушать текст»');
+    ok(await pg.locator('.scene .sd').count()>=1,'А6: зёрна подсвечены в тексте ('+await pg.locator('.scene .sd').count()+')');
+    await pg.locator('.scene .sd').first().click(); ok(await pg.locator('.frow, .seed').count()>=1||(await pg.evaluate(()=>location.hash+document.body.dataset.view)).includes('seed'),'А6: зерно в тексте открывает карточку');
+    await pg.click('[data-act=pBackSeed]'); if(!(await pg.locator('.scene.poem').count())) await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
     await noH('текст');
     await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
     const rd=await pg.evaluate(()=>window.__bararan.PU.q.map(x=>({k:x.k,a:x.a})));

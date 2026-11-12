@@ -1132,3 +1132,12 @@ fieldset.pf-g input{accent-color:var(--accent);width:20px;height:20px;margin:0}
 .pb-nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
 .pb-nav .tc-chip{font-size:14px;padding:6px 12px}
 .pb-sec{scroll-margin-top:72px}
+/* А6: текст ступени 5 — стихом */
+.scene.poem{gap:2px}
+.scene.poem .ln{max-width:100%}
+.scene.poem .ln-b{background:none;border:0;border-radius:8px;padding:6px 4px}
+.scene.poem .ln.on .ln-b{background:var(--accent-soft);box-shadow:none}
+.scene.poem .ln-hy{font-size:18px;line-height:1.45}
+.scene.poem .say.sm{opacity:.55}
+.sd{font:inherit;color:inherit;background:none;border:0;padding:0;border-bottom:2px solid var(--accent);cursor:pointer}
+.sd:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
