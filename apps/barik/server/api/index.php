@@ -62,12 +62,16 @@ if ($r === 'jserr') {
 }
 
 if ($r === 'csp') {
-    // отчёт о нарушении правил безопасности браузера (O-203, режим «только наблюдать»): в тот же журнал, что ошибки JS
+    // отчёт о нарушении правил безопасности браузера (O-203, режим «только наблюдать»): в свой счётчик, не в журнал ошибок JS (Б2)
     if ($method === 'POST' && !limited(ip_key() . ':csp', 20, 3600)) {
         $b = json_decode(substr((string)file_get_contents('php://input'), 0, 4000), true);
         $c = is_array($b) ? ($b['csp-report'] ?? $b) : null;
-        if (is_array($c)) js_err_add(['m' => 'CSP ' . ($c['violated-directive'] ?? $c['effective-directive'] ?? '?') . ': ' . ($c['blocked-uri'] ?? '?'),
-                                      's' => (string)($c['source-file'] ?? $c['document-uri'] ?? '') . ':' . (string)($c['line-number'] ?? '')]);
+        // отдельный счётчик (TZ_AUDIT2 Б2): отчёты CSP — не ошибки JS; в сводке своей строкой «csp:<правило> <источник>»
+        if (is_array($c)) {
+            $dir = preg_replace('/[^a-z\-]/', '', strtolower(explode(' ', (string)($c['effective-directive'] ?? $c['violated-directive'] ?? '?'))[0])) ?: '?';
+            $uri = (string)($c['blocked-uri'] ?? '?'); $host = preg_match('~^[a-z]+://([^/:]+)~i', $uri, $m) ? strtolower($m[1]) : preg_replace('/[^a-z\-]/', '', strtolower(explode(':', $uri)[0]));
+            $day = intdiv(time(), 86400); stat_add($day, 'csp'); stat_add($day, 'csp:' . substr($dir . ' ' . ($host ?: '?'), 0, 60));
+        }
     }
     http_response_code(204);
     exit;

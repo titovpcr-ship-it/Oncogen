@@ -49,6 +49,14 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await p3.route('**/js/**',rt=>rt.abort()); await p3.goto(base); const us=await p3.evaluate(()=>!document.documentElement.className.includes('nopre')&&getComputedStyle(document.querySelector('#view .ld')).display!=='none');
     await p3.addInitScript(()=>localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'en'}))); await p3.goto(base); const back=await p3.evaluate(()=>document.documentElement.className.includes('nopre'));
     ok(ru&&us&&back,'обложка в HTML: гостю из США видна без скриптов, из Москвы и вернувшемуся — спрятана ('+[ru,us,back]+')');
+    { // Б1: рекламные метки обложку не прячут, параметры приложения — прячут
+      const c4=await br.newContext({timezoneId:'America/New_York',serviceWorkers:'block'}); const p4=await c4.newPage(); await p4.route('**/js/**',rt=>rt.abort());
+      const res={};
+      for(const q of ['?from=reels','?from=tg_chat&utm_source=x','?lang=en','?fbclid=abc','?t=0','?name=Anna','?doc=terms','?pay=ok','?daily','?lang=ru','#letter-1']){
+        await p4.goto(base+q); res[q]=await p4.evaluate(()=>document.documentElement.className.includes('nopre')); }
+      ok(!res['?from=reels']&&!res['?from=tg_chat&utm_source=x']&&!res['?lang=en']&&!res['?fbclid=abc'],'Б1: ?from=, utm, ?lang=en, fbclid — обложка в HTML видна '+JSON.stringify(res));
+      ok(res['?t=0']&&res['?name=Anna']&&res['?doc=terms']&&res['?pay=ok']&&res['?daily']&&res['?lang=ru']&&res['#letter-1'],'Б1: t=, name=, doc=, pay=, daily, lang=ru, #… — обложка спрятана');
+      await c4.close(); }
     // со скриптами: гость из Москвы видит русскую обложку приложения (класс nopre снят первым кадром)
     await p2.unroute('**/js/**'); await p2.goto(base); await p2.waitForSelector('#view .ld h1',{state:'visible',timeout:15000}).catch(()=>{});
     const vis=await p2.evaluate(()=>{ const h=document.querySelector('#view .ld h1'); return !!h&&h.offsetHeight>0&&!document.documentElement.className.includes('nopre')&&document.documentElement.lang; });
@@ -87,6 +95,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ht=fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8');
     ok(/RewriteCond %\{REQUEST_URI\} \^\/\\\.well-known\/[^\n]*\n\s*RewriteRule \^ - \[L\]/.test(ht)&&ht.indexOf('well-known')<ht.indexOf('%{HTTPS}'),'.htaccess: /.well-known/ — до перенаправления на https');
     ok(/HTTP_HOST\} \^www\\\./.test(ht)&&/ErrorDocument 404 \/404\.html/.test(ht)&&/Options -Indexes/.test(ht),'.htaccess: www → домен, своя 404, без списков папок');
+    ok(/media-src 'self' blob: data:;/.test(ht),'.htaccess: CSP media-src разрешает data: — разблокировка звука не шумит в отчётах (Б2)');
     ok(/Require all denied/.test(ht)&&/zip\|sqlite/.test(ht)&&/webp\|mp3\)\$"[^<]*immutable/.test(ht),'.htaccess: архивы и базы закрыты, записи и картинки — кэш навсегда');
     { const hs=(ht.match(/^\s*Header always set Strict-Transport-Security.*$/m)||[''])[0];
       ok(/"max-age=2592000"/.test(hs)&&!/includeSubDomains|preload/.test(hs),'.htaccess: HSTS на 30 дней, без поддоменов и preload (O-155)'); }

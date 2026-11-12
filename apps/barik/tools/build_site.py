@@ -230,7 +230,7 @@ ErrorDocument 404 /404.html
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
   # правила безопасности браузера (O-203) — пока «только наблюдать»: ничего не блокируют, нарушения уходят в api/?r=csp (видны в stats.py);
   # через неделю без лишних отчётов — включить боевой Content-Security-Policy
-  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri /api/?r=csp"
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; report-uri /api/?r=csp"
   # HSTS (O-155): включён 08.11.2026, когда AutoSSL выпустил сертификат Let's Encrypt и check_live прошёл по https.
   # 30 дней, без includeSubDomains/preload — поддомены cPanel и почта живут сами; увеличить до года — когда AutoSSL
   # переживёт первое продление (~январь 2027).
@@ -418,14 +418,14 @@ def tg_words(out):
 
 def prerender(cover):
     """Главная быстрее (O-202): английская обложка уже в HTML — видна до загрузки скриптов (раньше ждала ~860 КБ JS).
-    Вернувшемуся (язык выбран), гостю из страны со своим языком (тот же расчёт, что lang0.js) и ссылкам с параметрами —
-    не показывается: класс nopre прячет её до первого кадра, приложение рисует своё. Скрипт затем рисует ту же разметку поверх."""
+    Вернувшемуся (язык выбран), гостю из страны со своим языком (тот же расчёт, что lang0.js) и ссылкам с параметрами приложения (t=, name=, doc=, pay=, #…) —
+    не показывается; рекламные метки (from=, lang=en, utm_*, fbclid) обложку не прячут (TZ_AUDIT2 Б1): класс nopre прячет её до первого кадра, приложение рисует своё. Скрипт затем рисует ту же разметку поверх."""
     lang0 = open(os.path.join(SRC, "js", "lang0.js"), encoding="utf-8").read()
     m = re.search(r"var TZ_LANG=(\{.*?\n\});", lang0, re.S)
     assert m, "lang0.js: нет TZ_LANG"
     js = ("(function(){try{var u=JSON.parse(localStorage.getItem('bararan-ui-v1')||'null')||{},T=" + m.group(1).replace("\n", "") +
           ",z='';try{z=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var l=u.ll||'';if(!l){if(z.indexOf('America/Argentina/')===0)l='es';"
-          "else for(var k in T)if(T[k].indexOf(z)>=0)l=k;}if(u.lang||(l&&l!=='en')||/[?&#]/.test(location.search+location.hash))"
+          "else for(var k in T)if(T[k].indexOf(z)>=0)l=k;}var q=location.search.replace(/^\\?/,'').split('&').filter(Boolean),bad=location.hash.length>1||q.some(function(p){return !/^(from=[^&]*|lang=en|utm_[a-z]+=[^&]*|fbclid=[^&]*|gclid=[^&]*|ref=[^&]*)$/i.test(p)});if(u.lang||(l&&l!=='en')||bad)"
           "document.documentElement.className+=' nopre'}catch(e){document.documentElement.className+=' nopre'}})();")
     return f'<script>{js}</script><style>.nopre #view>.ld{{display:none}}</style><main id="view">{cover}</main>'
 

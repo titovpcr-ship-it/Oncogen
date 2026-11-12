@@ -34,6 +34,8 @@ def main():
         print('\nошибки JS у посетителей (последние): ')
         for e in j['js'][:10]:
             print('  %s  %-7s %s  @ %s' % (datetime.datetime.utcfromtimestamp(e['t']).strftime('%d.%m %H:%M'), e['dev'], e['msg'][:110], e['src'][:60]))
+    csp = sorted(((k[4:], n) for k, n in tot.items() if k.startswith('csp:')), key=lambda t: -t[1])[:8]
+    if tot.get('csp'): print('отчёты CSP (не ошибки JS): %d — %s' % (tot['csp'], ', '.join('%s %d' % t for t in csp)))
     w = [(k[2:], n) for k, n in tot.items() if k.startswith('w:')]
     if w: print('сбои сервера: ' + ', '.join('%s %d' % t for t in w))
     for pre, title in (('c:', 'страны'), ('l:', 'языки'), ('r:', 'откуда пришли'), ('d:', 'устройства'), ('e:', 'события'), ('e:v_', '')):
