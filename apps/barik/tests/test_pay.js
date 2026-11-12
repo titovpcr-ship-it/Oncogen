@@ -186,8 +186,8 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
     await p2.click('[data-act=tab][data-arg=dict]'); await p2.fill('#dq',a2); await p2.waitForTimeout(300);
     ok(await p2.locator('#dlist .wrow').count()>=1&&await p2.locator('#dlist .wrow .say .e3d, #dlist .wrow .say img[alt="🔒"]').count()===0&&await p2.locator('#dlist [data-act=sayFree]').count()>=1,'словарь: слово A2 найдено, произношение бесплатно');
     // путь: ступени 0–1 открыты, 2+ под замком
+    await p2.click('[data-act=tab][data-arg=path]'); await p2.waitForSelector('.p-units');   // Б4: путь грузится по требованию
     const lk=await p2.evaluate(()=>{ const C=window.__bararan.CRS; return {free:C.units.filter(u=>u.stage<2).length,paid:C.units.filter(u=>u.stage>=2).length}; });
-    await p2.click('[data-act=tab][data-arg=path]'); await p2.waitForTimeout(300);
     ok(lk.free>0&&lk.paid>0,'путь: есть бесплатные (0–1) и платные (2+) уроки ('+lk.free+' / '+lk.paid+')');
     // начатое слово A2 (была подписка — кончилась) повторяется без подписки
     await p2.evaluate(a=>{ const k='hy-vocab-v1'; const S=JSON.parse(localStorage.getItem(k)||'{}'); S.w=S.w||{}; S.w[a]={b:2,d:0,e:0}; localStorage.setItem(k,JSON.stringify(S)); },a2);
