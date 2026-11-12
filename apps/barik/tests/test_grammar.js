@@ -109,7 +109,7 @@ const voiced = t => VD.every(d => fs.existsSync(path.join(APP, 'www/audio', d, a
 let noVoice = [];
 for (const u of C.units) {
   ok(u.scene.lines.length >= 5 && u.drills.length >= 1, `${u.id}: сцена из 5+ реплик и упражнения`);
-  ok(u.scene.lines.every(l => l.length === 6 && l.every(Boolean)), `${u.id}: у реплик 4 перевода`);
+  ok(u.scene.lines.every(l => l.length === 8 && l.every(Boolean)), `${u.id}: у реплик 6 переводов (ru en fr es de pt)`);
   ok(u.seeds.every(w => DICT.has(w)), `${u.id}: все зёрна есть в словаре`);
   ok(Object.values(u.scene.who).every(w => w.g === 'm' || w.g === 'f'), `${u.id}: у говорящих указан пол — голос записи`);
   noVoice = noVoice.concat(u.scene.lines.map(l => l[1]).filter(t => !voiced(t)));

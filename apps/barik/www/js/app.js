@@ -2245,7 +2245,7 @@ function pgWrite(){ try{localStorage.setItem(PGK,JSON.stringify(PG));}catch(e){}
 function pgSave(){ pgWrite(); syncTouch(); }
 const unitById=id=>CRS.units.find(u=>u.id===id);
 const rdx=o=>o?(o[L]||o.en||o.ru):'';
-const LNI={ru:2,en:3,fr:4,es:5};
+const LNI={ru:2,en:3,fr:4,es:5,de:6,pt:7};
 const lnTr=ln=>ln[LNI[L]||3];
 let ROOTS=null;
 function allRoots(){ if(!ROOTS){ ROOTS=new Set(); Object.values(BP.w||{}).forEach(p=>p[0].forEach(r=>ROOTS.add(r))); } return ROOTS; }

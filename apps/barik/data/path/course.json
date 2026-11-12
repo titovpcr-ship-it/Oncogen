@@ -174,7 +174,9 @@
       "Здравствуйте!",
       "Hello!",
       "Bonjour !",
-      "¡Hola!"
+      "¡Hola!",
+      "Guten Tag!",
+      "Olá!"
      ],
      [
       "Մ",
@@ -182,7 +184,9 @@
       "Здравствуйте! Я Марк.",
       "Hello! I'm Mark.",
       "Bonjour ! Je suis Mark.",
-      "¡Hola! Soy Mark."
+      "¡Hola! Soy Mark.",
+      "Guten Tag! Ich bin Mark.",
+      "Olá! Eu sou o Mark."
      ],
      [
       "Ա",
@@ -190,7 +194,9 @@
       "А я Анаит. Вы русский?",
       "And I'm Anahit. Are you Russian?",
       "Et moi, je suis Anahit. Vous êtes russe ?",
-      "Y yo soy Anahit. ¿Usted es ruso?"
+      "Y yo soy Anahit. ¿Usted es ruso?",
+      "Und ich bin Anahit. Sind Sie Russe?",
+      "E eu sou a Anahit. Você é russo?"
      ],
      [
       "Մ",
@@ -198,7 +204,9 @@
       "Да, я русский. А вы армянка?",
       "Yes, I'm Russian. And are you Armenian?",
       "Oui, je suis russe. Et vous, vous êtes arménienne ?",
-      "Sí, soy ruso. ¿Y usted es armenia?"
+      "Sí, soy ruso. ¿Y usted es armenia?",
+      "Ja, ich bin Russe. Und sind Sie Armenierin?",
+      "Sim, sou russo. E você é armênia?"
      ],
      [
       "Ա",
@@ -206,7 +214,9 @@
       "Да, я армянка. Мы соседи.",
       "Yes, I'm Armenian. We're neighbours.",
       "Oui, je suis arménienne. Nous sommes voisins.",
-      "Sí, soy armenia. Somos vecinos."
+      "Sí, soy armenia. Somos vecinos.",
+      "Ja, ich bin Armenierin. Wir sind Nachbarn.",
+      "Sim, sou armênia. Somos vizinhos."
      ],
      [
       "Մ",
@@ -214,7 +224,9 @@
       "Очень рад.",
       "Very nice to meet you.",
       "Enchanté.",
-      "Encantado."
+      "Encantado.",
+      "Sehr erfreut.",
+      "Muito prazer."
      ]
     ]
    },
@@ -323,7 +335,9 @@
       "Что это?",
       "What is this?",
       "Qu'est-ce que c'est ?",
-      "¿Qué es esto?"
+      "¿Qué es esto?",
+      "Was ist das?",
+      "O que é isto?"
      ],
      [
       "Վ",
@@ -331,7 +345,9 @@
       "Это гранат.",
       "It's a pomegranate.",
       "C'est une grenade.",
-      "Es una granada."
+      "Es una granada.",
+      "Das ist ein Granatapfel.",
+      "Isto é uma romã."
      ],
      [
       "Մ",
@@ -339,7 +355,9 @@
       "А это?",
       "And this?",
       "Et ça ?",
-      "¿Y esto?"
+      "¿Y esto?",
+      "Und das?",
+      "E isto?"
      ],
      [
       "Վ",
@@ -347,7 +365,9 @@
       "Это абрикос, армянский абрикос.",
       "This is an apricot, an Armenian apricot.",
       "C'est un abricot, un abricot arménien.",
-      "Es un damasco, un damasco armenio."
+      "Es un damasco, un damasco armenio.",
+      "Das ist eine Aprikose, eine armenische Aprikose.",
+      "Isto é um damasco, um damasco armênio."
      ],
      [
       "Մ",
@@ -355,7 +375,9 @@
       "Это лаваш?",
       "Is this lavash?",
       "C'est du lavash ?",
-      "¿Esto es lavash?"
+      "¿Esto es lavash?",
+      "Ist das Lavasch?",
+      "Isto é lavash?"
      ],
      [
       "Վ",
@@ -363,7 +385,9 @@
       "Нет, это не лаваш, это хлеб.",
       "No, it isn't lavash, it's bread.",
       "Non, ce n'est pas du lavash, c'est du pain.",
-      "No, no es lavash, es pan."
+      "No, no es lavash, es pan.",
+      "Nein, das ist kein Lavasch, das ist Brot.",
+      "Não, isto não é lavash, é pão."
      ]
     ]
    },
@@ -451,7 +475,9 @@
       "Яблоко свежее?",
       "Is the apple fresh?",
       "La pomme est fraîche ?",
-      "¿La manzana está fresca?"
+      "¿La manzana está fresca?",
+      "Ist der Apfel frisch?",
+      "A maçã está fresca?"
      ],
      [
       "Վ",
@@ -459,7 +485,9 @@
       "Да, яблоко свежее и сладкое.",
       "Yes, the apple is fresh and sweet.",
       "Oui, la pomme est fraîche et sucrée.",
-      "Sí, la manzana está fresca y dulce."
+      "Sí, la manzana está fresca y dulce.",
+      "Ja, der Apfel ist frisch und süß.",
+      "Sim, a maçã está fresca e doce."
      ],
      [
       "Մ",
@@ -467,7 +495,9 @@
       "А гранат?",
       "And the pomegranate?",
       "Et la grenade ?",
-      "¿Y la granada?"
+      "¿Y la granada?",
+      "Und der Granatapfel?",
+      "E a romã?"
      ],
      [
       "Վ",
@@ -475,7 +505,9 @@
       "Гранат очень хороший.",
       "The pomegranate is very good.",
       "La grenade est très bonne.",
-      "La granada es muy buena."
+      "La granada es muy buena.",
+      "Der Granatapfel ist sehr gut.",
+      "A romã está muito boa."
      ],
      [
       "Մ",
@@ -483,7 +515,9 @@
       "Лаваш тёплый?",
       "Is the lavash warm?",
       "Le lavash est chaud ?",
-      "¿El lavash está caliente?"
+      "¿El lavash está caliente?",
+      "Ist das Lavasch warm?",
+      "O lavash está quente?"
      ],
      [
       "Վ",
@@ -491,7 +525,9 @@
       "Да, лаваш свежий, ещё тёплый.",
       "Yes, the lavash is fresh, still warm.",
       "Oui, le lavash est frais, encore chaud.",
-      "Sí, el lavash está fresco, todavía caliente."
+      "Sí, el lavash está fresco, todavía caliente.",
+      "Ja, das Lavasch ist frisch, noch warm.",
+      "Sim, o lavash está fresco, ainda quente."
      ]
     ]
    },
@@ -598,7 +634,9 @@
       "На кухне есть холодильник?",
       "Is there a fridge in the kitchen?",
       "Il y a un frigo dans la cuisine ?",
-      "¿Hay heladera en la cocina?"
+      "¿Hay heladera en la cocina?",
+      "Gibt es in der Küche einen Kühlschrank?",
+      "Tem geladeira na cozinha?"
      ],
      [
       "Տ",
@@ -606,7 +644,9 @@
       "Да, есть. И стол есть, и стулья.",
       "Yes, there is. There's a table and chairs too.",
       "Oui. Il y a aussi une table et des chaises.",
-      "Sí, hay. También hay mesa y sillas."
+      "Sí, hay. También hay mesa y sillas.",
+      "Ja, gibt es. Einen Tisch gibt es auch, und Stühle auch.",
+      "Tem, sim. Tem mesa também, e cadeiras também."
      ],
      [
       "Մ",
@@ -614,7 +654,9 @@
       "А в комнате есть кровать?",
       "And is there a bed in the room?",
       "Et il y a un lit dans la chambre ?",
-      "¿Y hay cama en la habitación?"
+      "¿Y hay cama en la habitación?",
+      "Und gibt es im Zimmer ein Bett?",
+      "E no quarto tem cama?"
      ],
      [
       "Տ",
@@ -622,7 +664,9 @@
       "Есть, большая кровать.",
       "Yes, a big bed.",
       "Oui, un grand lit.",
-      "Sí, una cama grande."
+      "Sí, una cama grande.",
+      "Ja, ein großes Bett.",
+      "Tem, uma cama grande."
      ],
      [
       "Մ",
@@ -630,7 +674,9 @@
       "В ванной есть стиральная машина?",
       "Is there a washing machine in the bathroom?",
       "Il y a un lave-linge dans la salle de bain ?",
-      "¿Hay lavarropas en el baño?"
+      "¿Hay lavarropas en el baño?",
+      "Gibt es im Bad eine Waschmaschine?",
+      "Tem máquina de lavar no banheiro?"
      ],
      [
       "Տ",
@@ -638,7 +684,9 @@
       "Нет. Но во дворе есть.",
       "No, there isn't. But there's one in the yard.",
       "Non. Mais il y en a un dans la cour.",
-      "No, no hay. Pero hay uno en el patio."
+      "No, no hay. Pero hay uno en el patio.",
+      "Nein, gibt es nicht. Aber im Hof gibt es eine.",
+      "Não, não tem. Mas tem uma no quintal."
      ]
     ]
    },
@@ -746,7 +794,9 @@
       "Это моя семья.",
       "This is my family.",
       "C'est ma famille.",
-      "Esta es mi familia."
+      "Esta es mi familia.",
+      "Das ist meine Familie.",
+      "Esta é a minha família."
      ],
      [
       "Մ",
@@ -754,7 +804,9 @@
       "У вас есть брат?",
       "Do you have a brother?",
       "Vous avez un frère ?",
-      "¿Tiene un hermano?"
+      "¿Tiene un hermano?",
+      "Hast du einen Bruder?",
+      "Você tem irmão?"
      ],
      [
       "Ա",
@@ -762,7 +814,9 @@
       "Да, у меня два брата и одна сестра.",
       "Yes, I have two brothers and one sister.",
       "Oui, j'ai deux frères et une sœur.",
-      "Sí, tengo dos hermanos y una hermana."
+      "Sí, tengo dos hermanos y una hermana.",
+      "Ja, ich habe zwei Brüder und eine Schwester.",
+      "Sim, tenho dois irmãos e uma irmã."
      ],
      [
       "Մ",
@@ -770,7 +824,9 @@
       "А у меня нет брата. У меня одна сестра.",
       "I don't have a brother. I have one sister.",
       "Moi, je n'ai pas de frère. J'ai une sœur.",
-      "Yo no tengo hermano. Tengo una hermana."
+      "Yo no tengo hermano. Tengo una hermana.",
+      "Ich habe keinen Bruder. Ich habe eine Schwester.",
+      "Eu não tenho irmão. Tenho uma irmã."
      ],
      [
       "Ա",
@@ -778,7 +834,9 @@
       "Это моя мама, а это — моя бабушка.",
       "This is my mum, and this is my grandma.",
       "Voici ma maman, et voici ma grand-mère.",
-      "Esta es mi mamá, y esta, mi abuela."
+      "Esta es mi mamá, y esta, mi abuela.",
+      "Das ist meine Mama, und das ist meine Oma.",
+      "Esta é a minha mãe, e esta é a minha avó."
      ],
      [
       "Մ",
@@ -786,7 +844,9 @@
       "Очень красивая семья.",
       "What a beautiful family.",
       "Quelle belle famille.",
-      "Qué linda familia."
+      "Qué linda familia.",
+      "Was für eine schöne Familie.",
+      "Que família bonita."
      ]
     ]
    },
@@ -919,7 +979,9 @@
       "Сколько стоит лаваш?",
       "How much is the lavash?",
       "Combien coûte le lavash ?",
-      "¿Cuánto cuesta el lavash?"
+      "¿Cuánto cuesta el lavash?",
+      "Wie viel kostet das Lavasch?",
+      "Quanto custa o lavash?"
      ],
      [
       "Վ",
@@ -927,7 +989,9 @@
       "Триста драмов.",
       "Three hundred drams.",
       "Trois cents drams.",
-      "Trescientos drams."
+      "Trescientos drams.",
+      "Dreihundert Dram.",
+      "Trezentos drams."
      ],
      [
       "Մ",
@@ -935,7 +999,9 @@
       "Два лаваша, пожалуйста.",
       "Two lavash, please.",
       "Deux lavash, s'il vous plaît.",
-      "Dos lavash, por favor."
+      "Dos lavash, por favor.",
+      "Zwei Lavasch, bitte.",
+      "Dois lavash, por favor."
      ],
      [
       "Վ",
@@ -943,7 +1009,9 @@
       "Шестьсот драмов. Что-нибудь ещё?",
       "Six hundred drams. Anything else?",
       "Six cents drams. Autre chose ?",
-      "Seiscientos drams. ¿Algo más?"
+      "Seiscientos drams. ¿Algo más?",
+      "Sechshundert Dram. Sonst noch etwas?",
+      "Seiscentos drams. Mais alguma coisa?"
      ],
      [
       "Մ",
@@ -951,7 +1019,9 @@
       "И один сыр. Сколько всего?",
       "And one cheese. How much altogether?",
       "Et un fromage. Ça fait combien en tout ?",
-      "Y un queso. ¿Cuánto es en total?"
+      "Y un queso. ¿Cuánto es en total?",
+      "Noch einen Käse. Wie viel macht das zusammen?",
+      "E um queijo. Quanto dá tudo?"
      ],
      [
       "Վ",
@@ -959,7 +1029,9 @@
       "Две тысячи драмов.",
       "Two thousand drams.",
       "Deux mille drams.",
-      "Dos mil drams."
+      "Dos mil drams.",
+      "Zweitausend Dram.",
+      "Dois mil drams."
      ]
     ]
    },
@@ -1099,7 +1171,9 @@
       "Здесь есть книги на армянском?",
       "Are there books in Armenian here?",
       "Il y a des livres en arménien ici ?",
-      "¿Hay libros en armenio aquí?"
+      "¿Hay libros en armenio aquí?",
+      "Gibt es hier Bücher auf Armenisch?",
+      "Tem livros em armênio aqui?"
      ],
      [
       "Վ",
@@ -1107,7 +1181,9 @@
       "Да, есть. Вот книги на армянском.",
       "Yes. Here are the Armenian books.",
       "Oui. Voici les livres en arménien.",
-      "Sí, hay. Aquí están los libros en armenio."
+      "Sí, hay. Aquí están los libros en armenio.",
+      "Ja, gibt es. Hier sind die armenischen Bücher.",
+      "Tem, sim. Aqui estão os livros em armênio."
      ],
      [
       "Մ",
@@ -1115,7 +1191,9 @@
       "А тетради и ручки у вас тоже есть?",
       "Do you also have notebooks and pens?",
       "Vous avez aussi des cahiers et des stylos ?",
-      "¿También tienen cuadernos y lapiceras?"
+      "¿También tienen cuadernos y lapiceras?",
+      "Haben Sie auch Hefte und Kugelschreiber?",
+      "Vocês também têm cadernos e canetas?"
      ],
      [
       "Վ",
@@ -1123,7 +1201,9 @@
       "Есть. Ручки здесь, тетради — там.",
       "We do. The pens are here, the notebooks over there.",
       "Oui. Les stylos sont ici, les cahiers là-bas.",
-      "Sí. Las lapiceras están aquí, los cuadernos, allá."
+      "Sí. Las lapiceras están aquí, los cuadernos, allá.",
+      "Haben wir. Die Kugelschreiber sind hier, die Hefte dort.",
+      "Temos. As canetas estão aqui, os cadernos, ali."
      ],
      [
       "Մ",
@@ -1131,7 +1211,9 @@
       "Две тетради и одну ручку, пожалуйста.",
       "Two notebooks and one pen, please.",
       "Deux cahiers et un stylo, s'il vous plaît.",
-      "Dos cuadernos y una lapicera, por favor."
+      "Dos cuadernos y una lapicera, por favor.",
+      "Zwei Hefte und einen Kugelschreiber, bitte.",
+      "Dois cadernos e uma caneta, por favor."
      ]
     ]
    },
@@ -1246,7 +1328,9 @@
       "Добро пожаловать! Что желаете?",
       "Welcome! What would you like?",
       "Bienvenue ! Que désirez-vous ?",
-      "¡Bienvenidos! ¿Qué desean?"
+      "¡Bienvenidos! ¿Qué desean?",
+      "Willkommen! Was möchten Sie?",
+      "Bem-vindos! O que vão querer?"
      ],
      [
       "Մ",
@@ -1254,7 +1338,9 @@
       "Один кофе, пожалуйста. Без сахара.",
       "One coffee, please. No sugar.",
       "Un café, s'il vous plaît. Sans sucre.",
-      "Un café, por favor. Sin azúcar."
+      "Un café, por favor. Sin azúcar.",
+      "Einen Kaffee, bitte. Ohne Zucker.",
+      "Um café, por favor. Sem açúcar."
      ],
      [
       "Ա",
@@ -1262,7 +1348,9 @@
       "А мне чай, пожалуйста.",
       "And tea for me, please.",
       "Et pour moi, un thé, s'il vous plaît.",
-      "Y para mí, un té, por favor."
+      "Y para mí, un té, por favor.",
+      "Und für mich einen Tee, bitte.",
+      "E para mim um chá, por favor."
      ],
      [
       "Մտ",
@@ -1270,7 +1358,9 @@
       "Воды тоже принести?",
       "Shall I bring water too?",
       "Je vous apporte aussi de l'eau ?",
-      "¿Les traigo agua también?"
+      "¿Les traigo agua también?",
+      "Soll ich auch Wasser bringen?",
+      "Trago água também?"
      ],
      [
       "Մ",
@@ -1278,7 +1368,9 @@
       "Да, принесите, пожалуйста. И счёт.",
       "Yes, please. And the bill.",
       "Oui, s'il vous plaît. Et l'addition.",
-      "Sí, tráigala, por favor. Y la cuenta."
+      "Sí, tráigala, por favor. Y la cuenta.",
+      "Ja, bitte. Und die Rechnung.",
+      "Sim, por favor. E a conta."
      ],
      [
       "Մտ",
@@ -1286,7 +1378,9 @@
       "Сейчас же.",
       "Right away.",
       "Tout de suite.",
-      "Enseguida."
+      "Enseguida.",
+      "Sofort.",
+      "Agora mesmo."
      ]
     ]
    },
@@ -1388,7 +1482,9 @@
       "Извините, где метро?",
       "Excuse me, where is the metro?",
       "Excusez-moi, où est le métro ?",
-      "Disculpe, ¿dónde está el subte?"
+      "Disculpe, ¿dónde está el subte?",
+      "Entschuldigung, wo ist die U-Bahn?",
+      "Com licença, onde fica o metrô?"
      ],
      [
       "Ա",
@@ -1396,7 +1492,9 @@
       "Идите прямо, потом налево.",
       "Go straight, then left.",
       "Allez tout droit, puis à gauche.",
-      "Siga derecho, después a la izquierda."
+      "Siga derecho, después a la izquierda.",
+      "Gehen Sie geradeaus, dann links.",
+      "Siga em frente, depois à esquerda."
      ],
      [
       "Մ",
@@ -1404,7 +1502,9 @@
       "Далеко?",
       "Is it far?",
       "C'est loin ?",
-      "¿Está lejos?"
+      "¿Está lejos?",
+      "Ist es weit?",
+      "É longe?"
      ],
      [
       "Ա",
@@ -1412,7 +1512,9 @@
       "Нет, близко, пять минут.",
       "No, it's close, five minutes.",
       "Non, c'est près, cinq minutes.",
-      "No, está cerca, cinco minutos."
+      "No, está cerca, cinco minutos.",
+      "Nein, es ist nah, fünf Minuten.",
+      "Não, é perto, cinco minutos."
      ],
      [
       "Մ",
@@ -1420,7 +1522,9 @@
       "А где рынок?",
       "And where is the market?",
       "Et où est le marché ?",
-      "¿Y dónde está el mercado?"
+      "¿Y dónde está el mercado?",
+      "Und wo ist der Markt?",
+      "E onde fica a feira?"
      ],
      [
       "Ա",
@@ -1428,7 +1532,9 @@
       "Рынок рядом с метро.",
       "The market is next to the metro.",
       "Le marché est à côté du métro.",
-      "El mercado está al lado del subte."
+      "El mercado está al lado del subte.",
+      "Der Markt ist bei der U-Bahn.",
+      "A feira fica perto do metrô."
      ],
      [
       "Մ",
@@ -1436,7 +1542,9 @@
       "Спасибо!",
       "Thank you!",
       "Merci !",
-      "¡Gracias!"
+      "¡Gracias!",
+      "Danke schön!",
+      "Obrigado!"
      ]
     ]
    },
@@ -1603,7 +1711,9 @@
       "Алло, милый, что делаешь?",
       "Hello, sweetheart, what are you doing?",
       "Allô, mon chéri, que fais-tu ?",
-      "Hola, querido, ¿qué haces?"
+      "Hola, querido, ¿qué haces?",
+      "Hallo, mein Schatz, was machst du?",
+      "Alô, meu bem, o que você está fazendo?"
      ],
      [
       "Մ",
@@ -1611,7 +1721,9 @@
       "Привет, бабушка. Учу армянский.",
       "Hi, grandma. I’m studying Armenian.",
       "Salut, mamie. J’apprends l’arménien.",
-      "Hola, abuela. Estudio armenio."
+      "Hola, abuela. Estudio armenio.",
+      "Hallo, Oma. Ich lerne Armenisch.",
+      "Oi, vó. Estou estudando armênio."
      ],
      [
       "Տ",
@@ -1619,7 +1731,9 @@
       "Молодец! А что делает Анна?",
       "Well done! And what is Anna doing?",
       "Bravo ! Et Anna, que fait-elle ?",
-      "¡Muy bien! ¿Y qué hace Anna?"
+      "¡Muy bien! ¿Y qué hace Anna?",
+      "Brav! Und was macht Anna?",
+      "Muito bem! E a Anna, o que está fazendo?"
      ],
      [
       "Մ",
@@ -1627,7 +1741,9 @@
       "Анна читает, а папа работает.",
       "Anna is reading, and dad is working.",
       "Anna lit, et papa travaille.",
-      "Anna lee y papá trabaja."
+      "Anna lee y papá trabaja.",
+      "Anna liest, und Papa arbeitet.",
+      "A Anna está lendo, e o papai está trabalhando."
      ],
      [
       "Տ",
@@ -1635,7 +1751,9 @@
       "Вы хорошо кушаете?",
       "Are you eating well?",
       "Vous mangez bien ?",
-      "¿Comen bien?"
+      "¿Comen bien?",
+      "Esst ihr gut?",
+      "Vocês estão comendo bem?"
      ],
      [
       "Մ",
@@ -1643,7 +1761,9 @@
       "Да, бабушка, мы очень хорошо кушаем.",
       "Yes, grandma, we eat very well.",
       "Oui, mamie, nous mangeons très bien.",
-      "Sí, abuela, comemos muy bien."
+      "Sí, abuela, comemos muy bien.",
+      "Ja, Oma, wir essen sehr gut.",
+      "Sim, vó, a gente come muito bem."
      ],
      [
       "Տ",
@@ -1651,7 +1771,9 @@
       "Ну хорошо, целую.",
       "All right, kisses.",
       "Bon, je t’embrasse.",
-      "Bueno, un beso."
+      "Bueno, un beso.",
+      "Gut, Küsschen.",
+      "Tá bom, beijos."
      ]
     ]
    },
@@ -1751,7 +1873,9 @@
       "Куда едете?",
       "Where are you going?",
       "Où allez-vous ?",
-      "¿Adónde va?"
+      "¿Adónde va?",
+      "Wohin fahren Sie?",
+      "Para onde o senhor vai?"
      ],
      [
       "Մ",
@@ -1759,7 +1883,9 @@
       "К Каскаду. Извините, я плохо говорю по-армянски.",
       "To the Cascade. Sorry, I don’t speak Armenian well.",
       "À la Cascade. Pardon, je ne parle pas bien arménien.",
-      "A la Cascada. Perdón, no hablo bien armenio."
+      "A la Cascada. Perdón, no hablo bien armenio.",
+      "Zur Kaskade. Entschuldigung, ich spreche nicht gut Armenisch.",
+      "Para a Cascata. Desculpe, eu não falo bem armênio."
      ],
      [
       "Վ",
@@ -1767,7 +1893,9 @@
       "Ничего. По-русски говорите?",
       "No problem. Do you speak Russian?",
       "Pas grave. Vous parlez russe ?",
-      "No pasa nada. ¿Habla ruso?"
+      "No pasa nada. ¿Habla ruso?",
+      "Macht nichts. Sprechen Sie Russisch?",
+      "Não tem problema. O senhor fala russo?"
      ],
      [
       "Մ",
@@ -1775,7 +1903,9 @@
       "Да, но армянский тоже учу. Немного понимаю.",
       "Yes, but I’m learning Armenian too. I understand a little.",
       "Oui, mais j’apprends aussi l’arménien. Je comprends un peu.",
-      "Sí, pero también estudio armenio. Entiendo un poco."
+      "Sí, pero también estudio armenio. Entiendo un poco.",
+      "Ja, aber ich lerne auch Armenisch. Ich verstehe ein bisschen.",
+      "Sim, mas também estou aprendendo armênio. Entendo um pouco."
      ],
      [
       "Վ",
@@ -1783,7 +1913,9 @@
       "Молодец! Каскад — следующая остановка.",
       "Well done! The Cascade is the next stop.",
       "Bravo ! La Cascade, c’est le prochain arrêt.",
-      "¡Bien! La Cascada es la próxima parada."
+      "¡Bien! La Cascada es la próxima parada.",
+      "Bravo! Die Kaskade ist die nächste Haltestelle.",
+      "Parabéns! A Cascata é a próxima parada."
      ],
      [
       "Մ",
@@ -1791,7 +1923,9 @@
       "Спасибо. Здесь выхожу.",
       "Thank you. I’m getting off here.",
       "Merci. Je descends ici.",
-      "Gracias. Me bajo aquí."
+      "Gracias. Me bajo aquí.",
+      "Danke. Ich steige hier aus.",
+      "Obrigado. Eu desço aqui."
      ]
     ]
    },
@@ -1893,7 +2027,9 @@
       "Марк, это твой ключ?",
       "Mark, is this your key?",
       "Mark, c’est ta clé ?",
-      "Mark, ¿esta es tu llave?"
+      "Mark, ¿esta es tu llave?",
+      "Mark, ist das dein Schlüssel?",
+      "Mark, esta chave é sua?"
      ],
      [
       "Մ",
@@ -1901,7 +2037,9 @@
       "Нет, не мой. Это ключ Арама.",
       "No, it’s not mine. It’s Aram’s key.",
       "Non, ce n’est pas la mienne. C’est la clé d’Aram.",
-      "No, no es mía. Es la llave de Aram."
+      "No, no es mía. Es la llave de Aram.",
+      "Nein, nicht meiner. Das ist Arams Schlüssel.",
+      "Não, não é minha. É a chave do Aram."
      ],
      [
       "Ա",
@@ -1909,7 +2047,9 @@
       "А эта сумка чья?",
       "And whose bag is this?",
       "Et ce sac, il est à qui ?",
-      "¿Y de quién es este bolso?"
+      "¿Y de quién es este bolso?",
+      "Und wem gehört diese Tasche?",
+      "E de quem é esta bolsa?"
      ],
      [
       "Մ",
@@ -1917,7 +2057,9 @@
       "Это сумка моей сестры.",
       "That’s my sister’s bag.",
       "C’est le sac de ma sœur.",
-      "Es el bolso de mi hermana."
+      "Es el bolso de mi hermana.",
+      "Das ist die Tasche meiner Schwester.",
+      "É a bolsa da minha irmã."
      ],
      [
       "Ա",
@@ -1925,7 +2067,9 @@
       "А книга?",
       "And the book?",
       "Et le livre ?",
-      "¿Y el libro?"
+      "¿Y el libro?",
+      "Und das Buch?",
+      "E o livro?"
      ],
      [
       "Մ",
@@ -1933,7 +2077,9 @@
       "Книга моего друга. Он писатель, а его жена — поэтесса.",
       "The book is my friend’s. He’s a writer, and his wife is a poet.",
       "Le livre est à mon ami. Il est écrivain, et sa femme est poétesse.",
-      "El libro es de mi amigo. Él es escritor y su esposa, poeta."
+      "El libro es de mi amigo. Él es escritor y su esposa, poeta.",
+      "Das Buch gehört meinem Freund. Er ist Schriftsteller, und seine Frau ist Dichterin.",
+      "O livro é do meu amigo. Ele é escritor, e a mulher dele é poeta."
      ]
     ]
    },
@@ -2038,7 +2184,9 @@
       "Анаит, завтра свободна?",
       "Anahit, are you free tomorrow?",
       "Anahit, tu es libre demain ?",
-      "Anahit, ¿estás libre mañana?"
+      "Anahit, ¿estás libre mañana?",
+      "Anahit, hast du morgen Zeit?",
+      "Anahit, você está livre amanhã?"
      ],
      [
       "Ա",
@@ -2046,7 +2194,9 @@
       "Утром работаю, но вечером свободна.",
       "I work in the morning, but I’m free in the evening.",
       "Je travaille le matin, mais je suis libre le soir.",
-      "Trabajo por la mañana, pero a la tarde estoy libre."
+      "Trabajo por la mañana, pero a la tarde estoy libre.",
+      "Morgens arbeite ich, aber abends habe ich Zeit.",
+      "De manhã eu trabalho, mas à noite estou livre."
      ],
      [
       "Մ",
@@ -2054,7 +2204,9 @@
       "Встретимся в столовой. Во сколько?",
       "Let’s meet at the canteen. What time?",
       "Retrouvons-nous à la cantine. À quelle heure ?",
-      "Nos vemos en el comedor. ¿A qué hora?"
+      "Nos vemos en el comedor. ¿A qué hora?",
+      "Treffen wir uns in der Kantine. Um wie viel Uhr?",
+      "Vamos nos encontrar no refeitório. Que horas?"
      ],
      [
       "Ա",
@@ -2062,7 +2214,9 @@
       "В семь нормально?",
       "Is seven OK?",
       "Sept heures, ça va ?",
-      "¿A las siete está bien?"
+      "¿A las siete está bien?",
+      "Passt sieben?",
+      "Sete horas está bom?"
      ],
      [
       "Մ",
@@ -2070,7 +2224,9 @@
       "Отлично. Араму тоже позвоню, он тоже придёт.",
       "Great. I’m calling Aram too, he’s coming as well.",
       "Très bien. J’appelle aussi Aram, il vient aussi.",
-      "Perfecto. Llamo también a Aram, él también viene."
+      "Perfecto. Llamo también a Aram, él también viene.",
+      "Super. Ich rufe auch Aram an, er kommt auch.",
+      "Ótimo. Vou ligar também para o Aram, ele também vem."
      ],
      [
       "Ա",
@@ -2078,7 +2234,9 @@
       "Хорошо, значит, завтра в семь.",
       "OK, tomorrow at seven then.",
       "D’accord, donc demain à sept heures.",
-      "Bueno, entonces mañana a las siete."
+      "Bueno, entonces mañana a las siete.",
+      "Gut, dann morgen um sieben.",
+      "Combinado, amanhã às sete."
      ]
     ]
    },
@@ -2235,7 +2393,9 @@
       "Здравствуйте. Мне нужно в аэропорт.",
       "Hello. I want to go to the airport.",
       "Bonjour. Je veux aller à l’aéroport.",
-      "Hola. Quiero ir al aeropuerto."
+      "Hola. Quiero ir al aeropuerto.",
+      "Guten Tag. Ich möchte zum Flughafen.",
+      "Boa tarde. Quero ir ao aeroporto."
      ],
      [
       "Վ",
@@ -2243,7 +2403,9 @@
       "Хорошо. Когда хотите ехать?",
       "OK. When do you want to go?",
       "D’accord. Vous voulez partir quand ?",
-      "Bien. ¿Cuándo quiere ir?"
+      "Bien. ¿Cuándo quiere ir?",
+      "Gut. Wann möchten Sie fahren?",
+      "Certo. Quando o senhor quer ir?"
      ],
      [
       "Մ",
@@ -2251,7 +2413,9 @@
       "Сейчас. Самолёт в шесть.",
       "Now. The plane is at six.",
       "Maintenant. L’avion est à six heures.",
-      "Ahora. El avión sale a las seis."
+      "Ahora. El avión sale a las seis.",
+      "Jetzt. Der Flug ist um sechs.",
+      "Agora. O voo é às seis."
      ],
      [
       "Վ",
@@ -2259,7 +2423,9 @@
       "Значит, надо ехать быстро.",
       "Then we have to go fast.",
       "Alors il faut aller vite.",
-      "Entonces hay que ir rápido."
+      "Entonces hay que ir rápido.",
+      "Dann müssen wir schnell fahren.",
+      "Então temos que ir rápido."
      ],
      [
       "Մ",
@@ -2267,7 +2433,9 @@
       "Картой можно заплатить?",
       "Can I pay by card?",
       "Je peux payer par carte ?",
-      "¿Puedo pagar con tarjeta?"
+      "¿Puedo pagar con tarjeta?",
+      "Kann ich mit Karte zahlen?",
+      "Posso pagar com cartão?"
      ],
      [
       "Վ",
@@ -2275,7 +2443,9 @@
       "Да, можно. Садитесь, пожалуйста.",
       "Yes, you can. Get in, please.",
       "Oui, vous pouvez. Montez, je vous prie.",
-      "Sí, puede. Suba, por favor."
+      "Sí, puede. Suba, por favor.",
+      "Ja, das geht. Steigen Sie bitte ein.",
+      "Pode, sim. Entre, por favor."
      ]
     ]
    },
@@ -2410,7 +2580,9 @@
       "Анаит, как проходит твой день?",
       "Anahit, what’s your day like?",
       "Anahit, comment se passe ta journée ?",
-      "Anahit, ¿cómo es tu día?"
+      "Anahit, ¿cómo es tu día?",
+      "Anahit, wie sieht dein Tag aus?",
+      "Anahit, como é o seu dia?"
      ],
      [
       "Ա",
@@ -2418,7 +2590,9 @@
       "Утром в семь просыпаюсь и пью кофе.",
       "I wake up at seven in the morning and drink coffee.",
       "Le matin, je me réveille à sept heures et je bois un café.",
-      "Me despierto a las siete y tomo café."
+      "Me despierto a las siete y tomo café.",
+      "Ich stehe um sieben Uhr morgens auf und trinke Kaffee.",
+      "Acordo às sete da manhã e tomo café."
      ],
      [
       "Ա",
@@ -2426,7 +2600,9 @@
       "В девять иду на работу.",
       "At nine I go to work.",
       "À neuf heures, je vais au travail.",
-      "A las nueve voy a trabajar."
+      "A las nueve voy a trabajar.",
+      "Um neun gehe ich zur Arbeit.",
+      "Às nove vou para o trabalho."
      ],
      [
       "Մ",
@@ -2434,7 +2610,9 @@
       "Где обедаешь?",
       "Where do you have lunch?",
       "Où est-ce que tu déjeunes ?",
-      "¿Dónde almuerzas?"
+      "¿Dónde almuerzas?",
+      "Wo isst du zu Mittag?",
+      "Onde você almoça?"
      ],
      [
       "Ա",
@@ -2442,7 +2620,9 @@
       "Обедаю в офисе, а вечером пою в хоре.",
       "I have lunch at the office, and in the evening I sing in a choir.",
       "Je déjeune au bureau, et le soir je chante dans une chorale.",
-      "Almuerzo en la oficina y a la noche canto en un coro."
+      "Almuerzo en la oficina y a la noche canto en un coro.",
+      "Ich esse im Büro zu Mittag, und abends singe ich im Chor.",
+      "Almoço no escritório, e à noite canto no coral."
      ],
      [
       "Մ",
@@ -2450,7 +2630,9 @@
       "А в воскресенье?",
       "And on Sunday?",
       "Et le dimanche ?",
-      "¿Y el domingo?"
+      "¿Y el domingo?",
+      "Und am Sonntag?",
+      "E no domingo?"
      ],
      [
       "Ա",
@@ -2458,7 +2640,9 @@
       "В воскресенье отдыхаю.",
       "On Sunday I rest.",
       "Le dimanche, je me repose.",
-      "El domingo descanso."
+      "El domingo descanso.",
+      "Am Sonntag ruhe ich mich aus.",
+      "No domingo eu descanso."
      ]
     ]
    },
@@ -2570,7 +2754,9 @@
       "Где ты жила в детстве?",
       "Where did you live as a child?",
       "Où vivais-tu quand tu étais petite ?",
-      "¿Dónde vivías de chica?"
+      "¿Dónde vivías de chica?",
+      "Wo hast du als Kind gewohnt?",
+      "Onde você morava quando era criança?"
      ],
      [
       "Ա",
@@ -2578,7 +2764,9 @@
       "В Гюмри. Каждое лето ездила к бабушке в деревню.",
       "In Gyumri. Every summer I went to my grandma’s village.",
       "À Gumri. Chaque été, j’allais chez ma grand-mère au village.",
-      "En Guiumri. Cada verano iba al pueblo de mi abuela."
+      "En Guiumri. Cada verano iba al pueblo de mi abuela.",
+      "In Gjumri. Jeden Sommer bin ich ins Dorf zu meiner Oma gefahren.",
+      "Em Gyumri. Todo verão eu ia para a aldeia da minha avó."
      ],
      [
       "Մ",
@@ -2586,7 +2774,9 @@
       "Что вы делали в деревне?",
       "What did you do in the village?",
       "Que faisiez-vous au village ?",
-      "¿Qué hacían en el pueblo?"
+      "¿Qué hacían en el pueblo?",
+      "Was hast du im Dorf gemacht?",
+      "O que você fazia na aldeia?"
      ],
      [
       "Ա",
@@ -2594,7 +2784,9 @@
       "Играли, купались в реке, а вечером бабушка рассказывала сказки.",
       "We played, swam in the river, and in the evening grandma told fairy tales.",
       "On jouait, on nageait dans la rivière, et le soir mamie racontait des contes.",
-      "Jugábamos, nadábamos en el río y a la noche la abuela contaba cuentos."
+      "Jugábamos, nadábamos en el río y a la noche la abuela contaba cuentos.",
+      "Wir haben gespielt, im Fluss gebadet, und abends hat Oma Märchen erzählt.",
+      "A gente brincava, nadava no rio, e à noite a vovó contava histórias."
      ],
      [
       "Մ",
@@ -2602,7 +2794,9 @@
       "А ты хорошо училась?",
       "And were you a good student?",
       "Et tu travaillais bien à l’école ?",
-      "¿Y eras buena alumna?"
+      "¿Y eras buena alumna?",
+      "Und warst du ein guter Schüler?",
+      "E você era um bom aluno?"
      ],
      [
       "Ա",
@@ -2610,7 +2804,9 @@
       "Да, я много читала.",
       "Yes, I read a lot.",
       "Oui, je lisais beaucoup.",
-      "Sí, leía mucho."
+      "Sí, leía mucho.",
+      "Ja, ich habe viel gelesen.",
+      "Era, eu lia muito."
      ]
     ]
    },
@@ -2710,7 +2906,9 @@
       "Здравствуйте. Чем могу помочь?",
       "Hello. How can I help?",
       "Bonjour. Je peux vous aider ?",
-      "Hola. ¿En qué puedo ayudarlo?"
+      "Hola. ¿En qué puedo ayudarlo?",
+      "Guten Tag. Wie kann ich helfen?",
+      "Bom dia. Em que posso ajudar?"
      ],
      [
       "Մ",
@@ -2718,7 +2916,9 @@
       "У меня сильно болит голова. Мне нужно лекарство.",
       "I have a bad headache. I need some medicine.",
       "J’ai très mal à la tête. Il me faut un médicament.",
-      "Me duele mucho la cabeza. Necesito un remedio."
+      "Me duele mucho la cabeza. Necesito un remedio.",
+      "Ich habe starke Kopfschmerzen. Ich brauche ein Medikament.",
+      "Estou com muita dor de cabeça. Preciso de um remédio."
      ],
      [
       "Դ",
@@ -2726,7 +2926,9 @@
       "Температура есть?",
       "Do you have a temperature?",
       "Vous avez de la fièvre ?",
-      "¿Tiene fiebre?"
+      "¿Tiene fiebre?",
+      "Haben Sie Fieber?",
+      "O senhor está com febre?"
      ],
      [
       "Մ",
@@ -2734,7 +2936,9 @@
       "Нет, температуры нет.",
       "No, I don’t have a temperature.",
       "Non, je n’ai pas de fièvre.",
-      "No, no tengo fiebre."
+      "No, no tengo fiebre.",
+      "Nein, Fieber habe ich nicht.",
+      "Não, febre eu não tenho."
      ],
      [
       "Դ",
@@ -2742,7 +2946,9 @@
       "Вот, это лекарство пейте три раза в день.",
       "Here, take this medicine three times a day.",
       "Voici, prenez ce médicament trois fois par jour.",
-      "Tome, este remedio tómelo tres veces al día."
+      "Tome, este remedio tómelo tres veces al día.",
+      "Hier, nehmen Sie dieses Medikament dreimal täglich.",
+      "Tome, use este remédio três vezes ao dia."
      ],
      [
       "Մ",
@@ -2750,7 +2956,9 @@
       "Спасибо. Сколько нужно заплатить?",
       "Thank you. How much do I need to pay?",
       "Merci. Combien je vous dois ?",
-      "Gracias. ¿Cuánto hay que pagar?"
+      "Gracias. ¿Cuánto hay que pagar?",
+      "Danke. Wie viel muss ich zahlen?",
+      "Obrigado. Quanto eu pago?"
      ],
      [
       "Դ",
@@ -2758,7 +2966,9 @@
       "Две тысячи драмов. Будьте здоровы.",
       "Two thousand drams. Get well soon.",
       "Deux mille drams. Prenez soin de vous.",
-      "Dos mil drams. Que se mejore."
+      "Dos mil drams. Que se mejore.",
+      "Zweitausend Dram. Gute Besserung.",
+      "Dois mil drams. Melhoras."
      ]
     ]
    },
@@ -2863,7 +3073,9 @@
       "Привет, Марк. Что делал на выходных?",
       "Hi, Mark. What did you do at the weekend?",
       "Salut, Mark. Qu’as-tu fait ce week-end ?",
-      "Hola, Mark. ¿Qué hiciste el fin de semana?"
+      "Hola, Mark. ¿Qué hiciste el fin de semana?",
+      "Hallo, Mark. Was hast du am Wochenende gemacht?",
+      "Oi, Mark. O que você fez no fim de semana?"
      ],
      [
       "Մ",
@@ -2871,7 +3083,9 @@
       "В субботу съездил в Гарни. Храм очень красивый.",
       "On Saturday I went to Garni. The temple is beautiful.",
       "Samedi, je suis allé à Garni. Le temple est très beau.",
-      "El sábado fui a Garni. El templo es muy lindo."
+      "El sábado fui a Garni. El templo es muy lindo.",
+      "Am Samstag bin ich nach Garni gefahren. Der Tempel ist wunderschön.",
+      "No sábado fui a Garni. O templo é lindo."
      ],
      [
       "Գ",
@@ -2879,7 +3093,9 @@
       "А в Гегард заехали?",
       "And did you go to Geghard?",
       "Et vous êtes allés à Gueghard ?",
-      "¿Y fueron a Geghard?"
+      "¿Y fueron a Geghard?",
+      "Und warst du in Geghard?",
+      "E você foi a Geghard?"
      ],
      [
       "Մ",
@@ -2887,7 +3103,9 @@
       "Да, потом поехали в Гегард, там слушали хор.",
       "Yes, then we went to Geghard and heard a choir there.",
       "Oui, ensuite nous sommes allés à Gueghard, nous y avons écouté un chœur.",
-      "Sí, después fuimos a Geghard y escuchamos un coro."
+      "Sí, después fuimos a Geghard y escuchamos un coro.",
+      "Ja, danach sind wir nach Geghard gefahren und haben dort einen Chor gehört.",
+      "Fui, depois fomos a Geghard e lá ouvimos um coral."
      ],
      [
       "Գ",
@@ -2895,7 +3113,9 @@
       "Пообедали в деревне?",
       "Did you have lunch in the village?",
       "Vous avez déjeuné au village ?",
-      "¿Almorzaron en el pueblo?"
+      "¿Almorzaron en el pueblo?",
+      "Habt ihr im Dorf zu Mittag gegessen?",
+      "Vocês almoçaram na aldeia?"
      ],
      [
       "Մ",
@@ -2903,7 +3123,9 @@
       "Да, ели хоровац. Было очень вкусно.",
       "Yes, we had khorovats. It was delicious.",
       "Oui, nous avons mangé du khorovats. C’était délicieux.",
-      "Sí, comimos jorovats. Estaba riquísimo."
+      "Sí, comimos jorovats. Estaba riquísimo.",
+      "Ja, wir haben Chorowaz gegessen. Es war köstlich.",
+      "Sim, comemos khorovats. Estava delicioso."
      ]
     ]
    },
@@ -3006,7 +3228,9 @@
       "Марк, что будешь делать летом?",
       "Mark, what are you going to do in summer?",
       "Mark, que vas-tu faire cet été ?",
-      "Mark, ¿qué vas a hacer en verano?"
+      "Mark, ¿qué vas a hacer en verano?",
+      "Mark, was machst du im Sommer?",
+      "Mark, o que você vai fazer no verão?"
      ],
      [
       "Մ",
@@ -3014,7 +3238,9 @@
       "Поеду на Севан. Хочу поплавать.",
       "I’m going to Sevan. I want to swim.",
       "Je vais aller au lac Sevan. Je veux nager.",
-      "Voy a ir al Sevan. Quiero nadar."
+      "Voy a ir al Sevan. Quiero nadar.",
+      "Ich fahre an den Sewan. Ich will schwimmen.",
+      "Vou para o Sevan. Quero nadar."
      ],
      [
       "Ա",
@@ -3022,7 +3248,9 @@
       "А Дилижан?",
       "And Dilijan?",
       "Et Dilijan ?",
-      "¿Y Dilijan?"
+      "¿Y Dilijan?",
+      "Und Dilidschan?",
+      "E Dilijan?"
      ],
      [
       "Մ",
@@ -3030,7 +3258,9 @@
       "В Дилижане пробудем два дня. Друзья тоже приедут.",
       "We’ll stay in Dilijan for two days. My friends are coming too.",
       "Nous resterons deux jours à Dilijan. Mes amis viendront aussi.",
-      "Nos vamos a quedar dos días en Dilijan. También vienen mis amigos."
+      "Nos vamos a quedar dos días en Dilijan. También vienen mis amigos.",
+      "In Dilidschan bleiben wir zwei Tage. Meine Freunde kommen auch mit.",
+      "Em Dilijan vamos ficar dois dias. Meus amigos também vão."
      ],
      [
       "Ա",
@@ -3038,7 +3268,9 @@
       "На чём поедете?",
       "How will you get there?",
       "Vous y allez comment ?",
-      "¿En qué van a ir?"
+      "¿En qué van a ir?",
+      "Womit fahrt ihr?",
+      "Vocês vão como?"
      ],
      [
       "Մ",
@@ -3046,7 +3278,9 @@
       "На автобусе. А ты поедешь с нами?",
       "By bus. Will you come with us?",
       "En bus. Et toi, tu viens avec nous ?",
-      "En micro. ¿Y tú vienes con nosotros?"
+      "En micro. ¿Y tú vienes con nosotros?",
+      "Mit dem Bus. Kommst du mit?",
+      "De ônibus. Você vem com a gente?"
      ],
      [
       "Ա",
@@ -3054,7 +3288,9 @@
       "Не знаю, наверное, поеду.",
       "I don’t know, I probably will.",
       "Je ne sais pas, sans doute que oui.",
-      "No sé, seguramente sí."
+      "No sé, seguramente sí.",
+      "Weiß nicht, wahrscheinlich komme ich.",
+      "Não sei, acho que vou."
      ]
     ]
    },
@@ -3156,7 +3392,9 @@
       "Вы откуда?",
       "Where are you from?",
       "Vous êtes d’où ?",
-      "¿De dónde es usted?"
+      "¿De dónde es usted?",
+      "Woher kommen Sie?",
+      "De onde você é?"
      ],
      [
       "Մ",
@@ -3164,7 +3402,9 @@
       "Я из Москвы, но сейчас живу в Ереване.",
       "I’m from Moscow, but now I live in Yerevan.",
       "Je suis de Moscou, mais maintenant je vis à Erevan.",
-      "Soy de Moscú, pero ahora vivo en Ereván."
+      "Soy de Moscú, pero ahora vivo en Ereván.",
+      "Ich bin aus Moskau, aber jetzt wohne ich in Jerewan.",
+      "Sou de Moscou, mas agora moro em Yerevan."
      ],
      [
       "Ս",
@@ -3172,7 +3412,9 @@
       "А я из Лос-Анджелеса, мои родители из Бейрута.",
       "And I’m from Los Angeles, my parents are from Beirut.",
       "Et moi, je suis de Los Angeles, mes parents sont de Beyrouth.",
-      "Y yo soy de Los Ángeles, mis padres son de Beirut."
+      "Y yo soy de Los Ángeles, mis padres son de Beirut.",
+      "Und ich bin aus Los Angeles, meine Eltern sind aus Beirut.",
+      "E eu sou de Los Angeles, meus pais são de Beirute."
      ],
      [
       "Մ",
@@ -3180,7 +3422,9 @@
       "Когда возвращаетесь в Америку?",
       "When are you going back to America?",
       "Quand rentrez-vous en Amérique ?",
-      "¿Cuándo vuelve a Estados Unidos?"
+      "¿Cuándo vuelve a Estados Unidos?",
+      "Wann fliegen Sie nach Amerika zurück?",
+      "Quando você volta para os Estados Unidos?"
      ],
      [
       "Ս",
@@ -3188,7 +3432,9 @@
       "Через неделю. А вы сейчас откуда летите?",
       "In a week. And where are you coming from now?",
       "Dans une semaine. Et vous, vous venez d’où, là ?",
-      "Dentro de una semana. ¿Y usted de dónde viene ahora?"
+      "Dentro de una semana. ¿Y usted de dónde viene ahora?",
+      "In einer Woche. Und woher kommen Sie gerade?",
+      "Daqui a uma semana. E você está vindo de onde agora?"
      ],
      [
       "Մ",
@@ -3196,7 +3442,9 @@
       "С работы. Очень устал.",
       "From work. I’m very tired.",
       "Du travail. Je suis très fatigué.",
-      "Del trabajo. Estoy muy cansado."
+      "Del trabajo. Estoy muy cansado.",
+      "Von der Arbeit. Ich bin sehr müde.",
+      "Do trabalho. Estou muito cansado."
      ]
     ]
    },
@@ -3298,7 +3546,9 @@
       "Что больше — Гюмри или Ванадзор?",
       "Which is bigger, Gyumri or Vanadzor?",
       "Laquelle est la plus grande, Gumri ou Vanadzor ?",
-      "¿Cuál es más grande, Guiumri o Vanadzor?"
+      "¿Cuál es más grande, Guiumri o Vanadzor?",
+      "Was ist größer, Gjumri oder Wanadsor?",
+      "Qual é maior, Gyumri ou Vanadzor?"
      ],
      [
       "Ա",
@@ -3306,7 +3556,9 @@
       "Гюмри больше Ванадзора, но самый большой — Ереван.",
       "Gyumri is bigger than Vanadzor, but Yerevan is the biggest.",
       "Gumri est plus grande que Vanadzor, mais c’est Erevan la plus grande.",
-      "Guiumri es más grande que Vanadzor, pero Ereván es la más grande."
+      "Guiumri es más grande que Vanadzor, pero Ereván es la más grande.",
+      "Gjumri ist größer als Wanadsor, aber Jerewan ist am größten.",
+      "Gyumri é maior que Vanadzor, mas Yerevan é a maior de todas."
      ],
      [
       "Մ",
@@ -3314,7 +3566,9 @@
       "А где холоднее?",
       "And where is it colder?",
       "Et où fait-il plus froid ?",
-      "¿Y dónde hace más frío?"
+      "¿Y dónde hace más frío?",
+      "Und wo ist es kälter?",
+      "E onde faz mais frio?"
      ],
      [
       "Ա",
@@ -3322,7 +3576,9 @@
       "В Гюмри зима холоднее, чем в Ереване.",
       "In Gyumri the winter is colder than in Yerevan.",
       "À Gumri, l’hiver est plus froid qu’à Erevan.",
-      "En Guiumri el invierno es más frío que en Ereván."
+      "En Guiumri el invierno es más frío que en Ereván.",
+      "In Gjumri ist der Winter kälter als in Jerewan.",
+      "Em Gyumri o inverno é mais frio que em Yerevan."
      ],
      [
       "Մ",
@@ -3330,7 +3586,9 @@
       "Какая самая высокая гора Армении?",
       "What is the highest mountain in Armenia?",
       "Quelle est la plus haute montagne d’Arménie ?",
-      "¿Cuál es la montaña más alta de Armenia?"
+      "¿Cuál es la montaña más alta de Armenia?",
+      "Welcher ist der höchste Berg Armeniens?",
+      "Qual é a montanha mais alta da Armênia?"
      ],
      [
       "Ա",
@@ -3338,7 +3596,9 @@
       "Арагац. А Арарат видно из Еревана.",
       "Aragats. And Ararat can be seen from Yerevan.",
       "L’Aragats. Et l’Ararat se voit depuis Erevan.",
-      "El Aragats. Y el Ararat se ve desde Ereván."
+      "El Aragats. Y el Ararat se ve desde Ereván.",
+      "Der Aragaz. Und von Jerewan aus sieht man den Ararat.",
+      "O Aragats. E de Yerevan dá para ver o Ararat."
      ]
     ]
    },
@@ -3428,7 +3688,9 @@
       "Извините, на чём можно доехать до Севана?",
       "Excuse me, how can I get to Sevan?",
       "Excusez-moi, comment peut-on aller au lac Sevan ?",
-      "Disculpe, ¿en qué se puede ir al Sevan?"
+      "Disculpe, ¿en qué se puede ir al Sevan?",
+      "Entschuldigung, wie komme ich zum Sewan?",
+      "Com licença, como chego ao Sevan?"
      ],
      [
       "Կ",
@@ -3436,7 +3698,9 @@
       "На автобусе или на такси. Автобус дешёвый, такси — быстрое.",
       "By bus or by taxi. The bus is cheap, the taxi is fast.",
       "En bus ou en taxi. Le bus est bon marché, le taxi est rapide.",
-      "En micro o en taxi. El micro es barato; el taxi, rápido."
+      "En micro o en taxi. El micro es barato; el taxi, rápido.",
+      "Mit dem Bus oder mit dem Taxi. Der Bus ist billig, das Taxi schnell.",
+      "De ônibus ou de táxi. O ônibus é barato, o táxi é rápido."
      ],
      [
       "Մ",
@@ -3444,7 +3708,9 @@
       "Откуда идёт автобус?",
       "Where does the bus leave from?",
       "D’où part le bus ?",
-      "¿De dónde sale el micro?"
+      "¿De dónde sale el micro?",
+      "Wo fährt der Bus ab?",
+      "De onde sai o ônibus?"
      ],
      [
       "Կ",
@@ -3452,7 +3718,9 @@
       "С Северного автовокзала. Туда можно доехать на метро.",
       "From the Northern bus station. You can get there by metro.",
       "De la gare routière Nord. Vous pouvez y aller en métro.",
-      "De la terminal Norte. Puede llegar ahí en subte."
+      "De la terminal Norte. Puede llegar ahí en subte.",
+      "Vom Nordbusbahnhof. Dorthin kommen Sie mit der U-Bahn.",
+      "Da rodoviária Norte. Até lá você vai de metrô."
      ],
      [
       "Մ",
@@ -3460,7 +3728,9 @@
       "Билет можно оплатить картой?",
       "Can I pay for the ticket by card?",
       "Je peux payer le billet par carte ?",
-      "¿Puedo pagar el boleto con tarjeta?"
+      "¿Puedo pagar el boleto con tarjeta?",
+      "Kann ich die Fahrkarte mit Karte bezahlen?",
+      "Posso pagar a passagem com cartão?"
      ],
      [
       "Կ",
@@ -3468,7 +3738,9 @@
       "Нет, только наличными.",
       "No, cash only.",
       "Non, seulement en espèces.",
-      "No, solo en efectivo."
+      "No, solo en efectivo.",
+      "Nein, nur bar.",
+      "Não, só em dinheiro."
      ]
     ]
    },
@@ -3572,7 +3844,9 @@
       "Анаит, не могу найти ключи.",
       "Anahit, I can’t find my keys.",
       "Anahit, je ne trouve pas mes clés.",
-      "Anahit, no encuentro mis llaves."
+      "Anahit, no encuentro mis llaves.",
+      "Anahit, ich finde meine Schlüssel nicht.",
+      "Anahit, não acho as minhas chaves."
      ],
      [
       "Ա",
@@ -3580,7 +3854,9 @@
       "На столе смотрел?",
       "Did you look on the table?",
       "Tu as regardé sur la table ?",
-      "¿Te fijaste sobre la mesa?"
+      "¿Te fijaste sobre la mesa?",
+      "Hast du auf dem Tisch nachgesehen?",
+      "Você olhou em cima da mesa?"
      ],
      [
       "Մ",
@@ -3588,7 +3864,9 @@
       "Да, на столе нет, и в сумке нет.",
       "Yes, they’re not on the table, and not in the bag either.",
       "Oui, elles ne sont pas sur la table, ni dans le sac.",
-      "Sí, no están sobre la mesa ni dentro del bolso."
+      "Sí, no están sobre la mesa ni dentro del bolso.",
+      "Ja, auf dem Tisch sind sie nicht, und in der Tasche auch nicht.",
+      "Olhei, na mesa não estão, nem na bolsa."
      ],
      [
       "Ա",
@@ -3596,7 +3874,9 @@
       "А под диваном?",
       "And under the sofa?",
       "Et sous le canapé ?",
-      "¿Y debajo del sillón?"
+      "¿Y debajo del sillón?",
+      "Und unter dem Sofa?",
+      "E embaixo do sofá?"
      ],
      [
       "Մ",
@@ -3604,7 +3884,9 @@
       "Вот они — под диваном.",
       "Here they are, under the sofa.",
       "Les voilà, sous le canapé.",
-      "Acá están, debajo del sillón."
+      "Acá están, debajo del sillón.",
+      "Da sind sie, unter dem Sofa.",
+      "Aqui estão, embaixo do sofá."
      ],
      [
       "Ա",
@@ -3612,7 +3894,9 @@
       "Хорошо, пошли. Арам ждёт у двери.",
       "OK, let’s go. Aram is waiting by the door.",
       "Bon, on y va. Aram attend près de la porte.",
-      "Bueno, vamos. Aram espera junto a la puerta."
+      "Bueno, vamos. Aram espera junto a la puerta.",
+      "Gut, gehen wir. Aram wartet an der Tür.",
+      "Ótimo, vamos. O Aram está esperando na porta."
      ]
     ]
    },
@@ -3789,7 +4073,9 @@
       "Вы бывали в Матенадаране?",
       "Have you been to the Matenadaran?",
       "Vous êtes déjà venu au Maténadaran ?",
-      "¿Ya estuvo en el Matenadarán?"
+      "¿Ya estuvo en el Matenadarán?",
+      "Waren Sie schon im Matenadaran?",
+      "Você já esteve no Matenadaran?"
      ],
      [
       "Մ",
@@ -3797,7 +4083,9 @@
       "Нет, ещё не был, но много слышал.",
       "No, not yet, but I’ve heard a lot about it.",
       "Non, pas encore, mais j’en ai beaucoup entendu parler.",
-      "No, todavía no, pero escuché mucho."
+      "No, todavía no, pero escuché mucho.",
+      "Nein, noch nicht, aber ich habe viel davon gehört.",
+      "Não, ainda não, mas já ouvi falar muito."
      ],
      [
       "Գ",
@@ -3805,7 +4093,9 @@
       "Здесь хранятся древние рукописи. Вы видели армянские миниатюры?",
       "Ancient manuscripts are kept here. Have you seen Armenian miniatures?",
       "Ici sont conservés des manuscrits anciens. Avez-vous déjà vu des miniatures arméniennes ?",
-      "Acá se guardan manuscritos antiguos. ¿Vio miniaturas armenias?"
+      "Acá se guardan manuscritos antiguos. ¿Vio miniaturas armenias?",
+      "Hier werden alte Handschriften aufbewahrt. Haben Sie armenische Miniaturen gesehen?",
+      "Aqui são guardados manuscritos antigos. Você já viu miniaturas armênias?"
      ],
      [
       "Մ",
@@ -3813,7 +4103,9 @@
       "В книге видел, а вживую — никогда.",
       "I’ve seen them in a book, but never for real.",
       "Dans un livre, oui, mais en vrai — jamais.",
-      "En un libro sí, pero en persona, nunca."
+      "En un libro sí, pero en persona, nunca.",
+      "In einem Buch schon, aber noch nie in echt.",
+      "Num livro já, mas ao vivo nunca."
      ],
      [
       "Գ",
@@ -3821,7 +4113,9 @@
       "Тогда милости прошу, проходите.",
       "Then please, come in.",
       "Alors je vous en prie, entrez.",
-      "Entonces adelante, pase."
+      "Entonces adelante, pase.",
+      "Dann bitte, treten Sie ein.",
+      "Então, por favor, entre."
      ],
      [
       "Մ",
@@ -3829,7 +4123,9 @@
       "С большим удовольствием.",
       "With great pleasure.",
       "Avec grand plaisir.",
-      "Con mucho gusto."
+      "Con mucho gusto.",
+      "Mit großem Vergnügen.",
+      "Com muito prazer."
      ]
     ]
    },
@@ -3931,7 +4227,9 @@
       "Извините, как мне дойти до Каскада?",
       "Excuse me, how can I get to the Cascade?",
       "Excusez-moi, comment aller à la Cascade ?",
-      "Disculpe, ¿cómo llego a la Cascada?"
+      "Disculpe, ¿cómo llego a la Cascada?",
+      "Entschuldigung, wie komme ich zur Kaskade?",
+      "Com licença, como chego à Cascata?"
      ],
      [
       "Կ",
@@ -3939,7 +4237,9 @@
       "Сначала идите прямо до светофора.",
       "First go straight as far as the traffic lights.",
       "D’abord, allez tout droit jusqu’au feu.",
-      "Primero siga derecho hasta el semáforo."
+      "Primero siga derecho hasta el semáforo.",
+      "Gehen Sie zuerst geradeaus bis zur Ampel.",
+      "Primeiro siga em frente até o semáforo."
      ],
      [
       "Կ",
@@ -3947,7 +4247,9 @@
       "Потом поверните направо и перейдите улицу.",
       "Then turn right and cross the street.",
       "Ensuite, tournez à droite et traversez la rue.",
-      "Después doble a la derecha y cruce la calle."
+      "Después doble a la derecha y cruce la calle.",
+      "Dann biegen Sie rechts ab und überqueren die Straße.",
+      "Depois vire à direita e atravesse a rua."
      ],
      [
       "Մ",
@@ -3955,7 +4257,9 @@
       "А потом?",
       "And then?",
       "Et après ?",
-      "¿Y después?"
+      "¿Y después?",
+      "Und dann?",
+      "E depois?"
      ],
      [
       "Կ",
@@ -3963,7 +4267,9 @@
       "Потом поднимитесь по лестнице. Каскад прямо там.",
       "Then go up the stairs. The Cascade is right there.",
       "Puis montez l’escalier. La Cascade est juste là.",
-      "Después suba la escalera. La Cascada está justo ahí."
+      "Después suba la escalera. La Cascada está justo ahí.",
+      "Dann gehen Sie die Treppe hinauf. Die Kaskade ist gleich dort.",
+      "Depois suba a escada. A Cascata fica bem ali."
      ],
      [
       "Մ",
@@ -3971,7 +4277,9 @@
       "Большое спасибо.",
       "Thank you very much.",
       "Merci beaucoup.",
-      "Muchas gracias."
+      "Muchas gracias.",
+      "Vielen Dank.",
+      "Muito obrigado."
      ],
      [
       "Կ",
@@ -3979,7 +4287,9 @@
       "Пожалуйста. Хорошей прогулки!",
       "You’re welcome. Enjoy your walk!",
       "Je vous en prie. Bonne promenade !",
-      "De nada. ¡Buen paseo!"
+      "De nada. ¡Buen paseo!",
+      "Bitte sehr. Schönen Spaziergang!",
+      "De nada. Bom passeio!"
      ]
     ]
    },
@@ -4141,7 +4451,9 @@
       "Гости придут в семь. Надо быстро всё приготовить.",
       "The guests are coming at seven. We need to get everything ready fast.",
       "Les invités arrivent à sept heures. Il faut tout préparer vite.",
-      "Las visitas llegan a las siete. Tenemos que preparar todo rápido."
+      "Las visitas llegan a las siete. Tenemos que preparar todo rápido.",
+      "Die Gäste kommen um sieben. Wir müssen schnell alles vorbereiten.",
+      "Os convidados chegam às sete. Precisamos preparar tudo rápido."
      ],
      [
       "Մ",
@@ -4149,7 +4461,9 @@
       "Что мне сделать? Хлеба купить?",
       "What shall I do? Should I buy bread?",
       "Je fais quoi ? J’achète du pain ?",
-      "¿Qué hago? ¿Compro pan?"
+      "¿Qué hago? ¿Compro pan?",
+      "Was soll ich machen? Soll ich Brot kaufen?",
+      "O que eu faço? Compro pão?"
      ],
      [
       "Ա",
@@ -4157,7 +4471,9 @@
       "Да, купи лаваш и сыр. Хочу, чтобы стол был красивым.",
       "Yes, buy lavash and cheese. I want the table to look nice.",
       "Oui, achète du lavash et du fromage. Je veux que la table soit belle.",
-      "Sí, compra lavash y queso. Quiero que la mesa quede linda."
+      "Sí, compra lavash y queso. Quiero que la mesa quede linda.",
+      "Ja, kauf Lavasch und Käse. Ich möchte, dass der Tisch schön aussieht.",
+      "Sim, compre lavash e queijo. Quero que a mesa fique bonita."
      ],
      [
       "Մ",
@@ -4165,7 +4481,9 @@
       "Цветы тоже принести?",
       "Shall I bring flowers too?",
       "J’apporte aussi des fleurs ?",
-      "¿Traigo flores también?"
+      "¿Traigo flores también?",
+      "Soll ich auch Blumen mitbringen?",
+      "Trago flores também?"
      ],
      [
       "Ա",
@@ -4173,7 +4491,9 @@
       "Хорошая мысль. Только надо вернуться пораньше.",
       "Good idea. Just be back early.",
       "Bonne idée. Mais il faut que tu rentres tôt.",
-      "Buena idea. Solo tienes que volver temprano."
+      "Buena idea. Solo tienes que volver temprano.",
+      "Gute Idee. Komm nur früh zurück.",
+      "Boa ideia. Só volte cedo."
      ],
      [
       "Մ",
@@ -4181,7 +4501,9 @@
       "Через полчаса я здесь.",
       "I’ll be back in half an hour.",
       "Je suis là dans une demi-heure.",
-      "En media hora estoy acá."
+      "En media hora estoy acá.",
+      "In einer halben Stunde bin ich zurück.",
+      "Volto em meia hora."
      ]
     ]
    },
@@ -4284,7 +4606,9 @@
       "Значит, завтра летишь в Москву.",
       "So you’re flying to Moscow tomorrow.",
       "Donc, demain tu t’envoles pour Moscou.",
-      "Entonces mañana vuelas a Moscú."
+      "Entonces mañana vuelas a Moscú.",
+      "Du fliegst also morgen nach Moskau.",
+      "Então você voa amanhã para Moscou."
      ],
      [
       "Մ",
@@ -4292,7 +4616,9 @@
       "Да, но через неделю вернусь.",
       "Yes, but I’ll be back in a week.",
       "Oui, mais je reviendrai dans une semaine.",
-      "Sí, pero vuelvo dentro de una semana."
+      "Sí, pero vuelvo dentro de una semana.",
+      "Ja, aber in einer Woche bin ich zurück.",
+      "Sim, mas volto daqui a uma semana."
      ],
      [
       "Ա",
@@ -4300,7 +4626,9 @@
       "Позвонишь, когда долетишь?",
       "Will you call when you arrive?",
       "Tu m’appelleras en arrivant ?",
-      "¿Me llamas cuando llegues?"
+      "¿Me llamas cuando llegues?",
+      "Rufst du an, wenn du ankommst?",
+      "Você liga quando chegar?"
      ],
      [
       "Մ",
@@ -4308,7 +4636,9 @@
       "Конечно, позвоню. И привезу тебе подарок.",
       "Of course I’ll call. And I’ll bring you a present.",
       "Bien sûr que j’appellerai. Et je te rapporterai un cadeau.",
-      "Claro que te llamo. Y te traigo un regalo."
+      "Claro que te llamo. Y te traigo un regalo.",
+      "Natürlich rufe ich an. Und ich bringe dir ein Geschenk mit.",
+      "Claro que ligo. E vou trazer um presente para você."
      ],
      [
       "Ա",
@@ -4316,7 +4646,9 @@
       "Я буду скучать.",
       "I’ll miss you.",
       "Tu vas me manquer.",
-      "Te voy a extrañar."
+      "Te voy a extrañar.",
+      "Ich werde dich vermissen.",
+      "Vou sentir sua falta."
      ],
      [
       "Մ",
@@ -4324,7 +4656,9 @@
       "Я тоже. Неделя быстро пройдёт.",
       "Me too. The week will go by fast.",
       "Moi aussi. La semaine passera vite.",
-      "Yo también. La semana va a pasar rápido."
+      "Yo también. La semana va a pasar rápido.",
+      "Ich dich auch. Die Woche vergeht schnell.",
+      "Eu também. A semana passa rápido."
      ]
     ]
    },
@@ -4426,7 +4760,9 @@
       "В субботу поднимемся на Арагац?",
       "Shall we climb Aragats on Saturday?",
       "On monte sur l’Aragats samedi ?",
-      "¿Subimos al Aragats el sábado?"
+      "¿Subimos al Aragats el sábado?",
+      "Steigen wir am Samstag auf den Aragaz?",
+      "Vamos subir o Aragats no sábado?"
      ],
      [
       "Ա",
@@ -4434,7 +4770,9 @@
       "Если погода будет хорошая, пойдём.",
       "If the weather is good, we’ll go.",
       "S’il fait beau, on ira.",
-      "Si hace buen tiempo, vamos."
+      "Si hace buen tiempo, vamos.",
+      "Wenn das Wetter gut ist, gehen wir.",
+      "Se o tempo estiver bom, a gente vai."
      ],
      [
       "Մ",
@@ -4442,7 +4780,9 @@
       "А если пойдёт дождь?",
       "And if it rains?",
       "Et s’il pleut ?",
-      "¿Y si llueve?"
+      "¿Y si llueve?",
+      "Und wenn es regnet?",
+      "E se chover?"
      ],
      [
       "Ա",
@@ -4450,7 +4790,9 @@
       "Если пойдёт дождь, останемся дома и посмотрим фильм.",
       "If it rains, we’ll stay at home and watch a film.",
       "S’il pleut, on restera à la maison et on regardera un film.",
-      "Si llueve, nos quedamos en casa y miramos una película."
+      "Si llueve, nos quedamos en casa y miramos una película.",
+      "Wenn es regnet, bleiben wir zu Hause und schauen einen Film.",
+      "Se chover, ficamos em casa e vemos um filme."
      ],
      [
       "Մ",
@@ -4458,7 +4800,9 @@
       "Если бы у меня было время, я бы каждую неделю ходил в горы.",
       "If I had time, I’d climb a mountain every week.",
       "Si j’avais le temps, je monterais en montagne chaque semaine.",
-      "Si tuviera tiempo, subiría a una montaña cada semana."
+      "Si tuviera tiempo, subiría a una montaña cada semana.",
+      "Wenn ich Zeit hätte, würde ich jede Woche auf einen Berg steigen.",
+      "Se eu tivesse tempo, subiria uma montanha toda semana."
      ],
      [
       "Ա",
@@ -4466,7 +4810,9 @@
       "Я тоже. Значит, в субботу, если всё будет хорошо.",
       "Me too. Saturday then, if all goes well.",
       "Moi aussi. Donc samedi, si tout va bien.",
-      "Yo también. Entonces el sábado, si todo sale bien."
+      "Yo también. Entonces el sábado, si todo sale bien.",
+      "Ich auch. Also Samstag, wenn alles gut geht.",
+      "Eu também. Então sábado, se tudo der certo."
      ]
     ]
    },
@@ -4611,7 +4957,9 @@
       "Кто звонил?",
       "Who was that on the phone?",
       "Qui c’était, au téléphone ?",
-      "¿Quién llamó?"
+      "¿Quién llamó?",
+      "Wer war am Telefon?",
+      "Quem era no telefone?"
      ],
      [
       "Մ",
@@ -4619,7 +4967,9 @@
       "Арам. Сказал, что сегодня не сможет прийти.",
       "It was Aram. He said he can’t come today.",
       "C’était Aram. Il a dit qu’il ne pouvait pas venir aujourd’hui.",
-      "Era Aram. Dijo que hoy no puede venir."
+      "Era Aram. Dijo que hoy no puede venir.",
+      "Das war Aram. Er hat gesagt, dass er heute nicht kommen kann.",
+      "Era o Aram. Ele disse que hoje não pode vir."
      ],
      [
       "Ա",
@@ -4627,7 +4977,9 @@
       "Почему?",
       "Why?",
       "Pourquoi ?",
-      "¿Por qué?"
+      "¿Por qué?",
+      "Warum?",
+      "Por quê?"
      ],
      [
       "Մ",
@@ -4635,7 +4987,9 @@
       "Потому что его мама болеет. Сказал, что завтра позвонит.",
       "Because his mother is ill. He said he’ll call tomorrow.",
       "Parce que sa mère est malade. Il a dit qu’il appellerait demain.",
-      "Porque su mamá está enferma. Dijo que mañana llama."
+      "Porque su mamá está enferma. Dijo que mañana llama.",
+      "Weil seine Mutter krank ist. Er hat gesagt, dass er morgen anruft.",
+      "Porque a mãe dele está doente. Ele disse que liga amanhã."
      ],
      [
       "Ա",
@@ -4643,7 +4997,9 @@
       "Жаль. Торт, который я купила, съедим мы.",
       "What a pity. We’ll eat the cake I bought then.",
       "Dommage. Le gâteau que j’avais acheté, c’est nous qui le mangerons.",
-      "Qué pena. La torta que compré nos la comemos nosotros."
+      "Qué pena. La torta que compré nos la comemos nosotros.",
+      "Schade. Dann essen wir den Kuchen, den ich gekauft habe.",
+      "Que pena. Então vamos comer o bolo que eu comprei."
      ],
      [
       "Մ",
@@ -4651,7 +5007,9 @@
       "Можем оставить ему кусочек, чтобы завтра попробовал.",
       "We can leave him a piece so he can try it tomorrow.",
       "On peut lui en garder une part pour qu’il y goûte demain.",
-      "Podemos dejarle un pedazo para que la pruebe mañana."
+      "Podemos dejarle un pedazo para que la pruebe mañana.",
+      "Wir können ihm ein Stück aufheben, damit er es morgen probiert.",
+      "Podemos guardar um pedaço para ele provar amanhã."
      ]
     ]
    },
@@ -4786,7 +5144,9 @@
       "Этот ковёр ручной работы?",
       "Is this rug handmade?",
       "Ce tapis est fait main ?",
-      "¿Esta alfombra está hecha a mano?"
+      "¿Esta alfombra está hecha a mano?",
+      "Ist dieser Teppich handgemacht?",
+      "Este tapete é feito à mão?"
      ],
      [
       "Վ",
@@ -4794,7 +5154,9 @@
       "Да, его соткала моя бабушка, ему сто лет.",
       "Yes, my grandmother wove it, it’s a hundred years old.",
       "Oui, c’est ma grand-mère qui l’a tissé, il a cent ans.",
-      "Sí, la tejió mi abuela, tiene cien años."
+      "Sí, la tejió mi abuela, tiene cien años.",
+      "Ja, meine Großmutter hat ihn gewebt, er ist hundert Jahre alt.",
+      "Sim, foi minha avó que teceu, tem cem anos."
      ],
      [
       "Մ",
@@ -4802,7 +5164,9 @@
       "А эту картину кто нарисовал?",
       "And who painted this picture?",
       "Et ce tableau, qui l’a peint ?",
-      "¿Y quién pintó este cuadro?"
+      "¿Y quién pintó este cuadro?",
+      "Und wer hat dieses Bild gemalt?",
+      "E quem pintou este quadro?"
      ],
      [
       "Վ",
@@ -4810,7 +5174,9 @@
       "Это картина моего сына. Он нарисовал Арарат.",
       "It’s a painting by my son. He painted Ararat.",
       "C’est un tableau de mon fils. Il a peint l’Ararat.",
-      "Es un cuadro de mi hijo. Pintó el Ararat."
+      "Es un cuadro de mi hijo. Pintó el Ararat.",
+      "Das ist ein Bild meines Sohnes. Er hat den Ararat gemalt.",
+      "É um quadro do meu filho. Ele pintou o Ararat."
      ],
      [
       "Մ",
@@ -4818,7 +5184,9 @@
       "Очень красиво. Завернёте, пожалуйста?",
       "It’s beautiful. Could you wrap it, please?",
       "C’est très beau. Vous pouvez l’emballer, s’il vous plaît ?",
-      "Es muy lindo. ¿Me lo envuelve, por favor?"
+      "Es muy lindo. ¿Me lo envuelve, por favor?",
+      "Es ist wunderschön. Können Sie es bitte einpacken?",
+      "É lindo. Pode embrulhar, por favor?"
      ],
      [
       "Վ",
@@ -4826,7 +5194,9 @@
       "Конечно. Пусть купленная картина приносит вам радость.",
       "Of course. May the painting you bought bring you joy.",
       "Bien sûr. Que ce tableau vous apporte de la joie.",
-      "Claro. Que el cuadro que compró le traiga alegría."
+      "Claro. Que el cuadro que compró le traiga alegría.",
+      "Natürlich. Möge Ihnen das gekaufte Bild Freude bringen.",
+      "Claro. Que o quadro que você comprou lhe traga alegria."
      ]
     ]
    },
@@ -4930,7 +5300,9 @@
       "Это Кафедральный собор Эчмиадзина.",
       "This is the Mother Cathedral of Etchmiadzin.",
       "Voici la cathédrale mère d’Etchmiadzine.",
-      "Esta es la Catedral Madre de Echmiadzín."
+      "Esta es la Catedral Madre de Echmiadzín.",
+      "Das ist die Mutterkathedrale von Etschmiadsin.",
+      "Esta é a Catedral-Mãe de Etchmiadzin."
      ],
      [
       "Մ",
@@ -4938,7 +5310,9 @@
       "Когда он построен?",
       "When was it built?",
       "Quand a-t-elle été construite ?",
-      "¿Cuándo fue construida?"
+      "¿Cuándo fue construida?",
+      "Wann wurde sie gebaut?",
+      "Quando ela foi construída?"
      ],
      [
       "Գ",
@@ -4946,7 +5320,9 @@
       "В начале IV века. Потом много раз восстанавливался.",
       "At the beginning of the 4th century. It has been restored many times since.",
       "Au début du IVᵉ siècle. Elle a été restaurée de nombreuses fois depuis.",
-      "A comienzos del siglo IV. Después fue restaurada muchas veces."
+      "A comienzos del siglo IV. Después fue restaurada muchas veces.",
+      "Anfang des 4. Jahrhunderts. Seitdem wurde sie viele Male restauriert.",
+      "No início do século IV. Desde então foi restaurada muitas vezes."
      ],
      [
       "Մ",
@@ -4954,7 +5330,9 @@
       "Музей открыт?",
       "Is the museum open?",
       "Le musée est ouvert ?",
-      "¿El museo está abierto?"
+      "¿El museo está abierto?",
+      "Ist das Museum geöffnet?",
+      "O museu está aberto?"
      ],
      [
       "Գ",
@@ -4962,7 +5340,9 @@
       "Музей открывается в десять и закрывается в пять.",
       "The museum opens at ten and closes at five.",
       "Le musée ouvre à dix heures et ferme à cinq heures.",
-      "El museo abre a las diez y cierra a las cinco."
+      "El museo abre a las diez y cierra a las cinco.",
+      "Das Museum öffnet um zehn und schließt um fünf.",
+      "O museu abre às dez e fecha às cinco."
      ],
      [
       "Մ",
@@ -4970,7 +5350,9 @@
       "Значит, время есть. Фотографировать можно?",
       "So we have time. Can I take photos?",
       "On a donc le temps. On peut prendre des photos ?",
-      "Entonces tenemos tiempo. ¿Se pueden sacar fotos?"
+      "Entonces tenemos tiempo. ¿Se pueden sacar fotos?",
+      "Dann haben wir Zeit. Darf man fotografieren?",
+      "Então temos tempo. Pode tirar fotos?"
      ],
      [
       "Գ",
@@ -4978,7 +5360,9 @@
       "Внутри нет, а во дворе можно.",
       "Not inside, but in the courtyard, yes.",
       "Pas à l’intérieur, mais dans la cour, oui.",
-      "Adentro no, en el patio sí."
+      "Adentro no, en el patio sí.",
+      "Drinnen nicht, aber im Hof schon.",
+      "Lá dentro não, mas no pátio pode."
      ]
     ]
    },
@@ -5124,7 +5508,9 @@
       "Марк, подогреешь молоко? Надо уложить Давида.",
       "Mark, will you warm up the milk? I need to put Davit to bed.",
       "Mark, tu peux réchauffer le lait ? Je dois coucher Davit.",
-      "Mark, ¿calientas la leche? Tengo que hacer dormir a Davit."
+      "Mark, ¿calientas la leche? Tengo que hacer dormir a Davit.",
+      "Mark, machst du die Milch warm? Ich muss Davit ins Bett bringen.",
+      "Mark, você esquenta o leite? Preciso pôr o Davit para dormir."
      ],
      [
       "Մ",
@@ -5132,7 +5518,9 @@
       "Уже подогрел. А почему он не спит?",
       "Already done. Why isn’t he sleeping?",
       "C’est déjà fait. Et pourquoi il ne dort pas ?",
-      "Ya la calenté. ¿Y por qué no duerme?"
+      "Ya la calenté. ¿Y por qué no duerme?",
+      "Schon erledigt. Warum schläft er nicht?",
+      "Já está pronto. Por que ele não dorme?"
      ],
      [
       "Ա",
@@ -5140,7 +5528,9 @@
       "Хочет, чтобы я рассказала сказку.",
       "He wants me to tell him a story.",
       "Il veut que je lui raconte une histoire.",
-      "Quiere que le cuente un cuento."
+      "Quiere que le cuente un cuento.",
+      "Er will, dass ich ihm eine Geschichte erzähle.",
+      "Ele quer que eu conte uma história."
      ],
      [
       "Մ",
@@ -5148,7 +5538,9 @@
       "Давай я расскажу. Знаю одну сказку, которая его удивит.",
       "Let me tell it. I know a story that will surprise him.",
       "Laisse-moi faire. Je connais une histoire qui va l’étonner.",
-      "Déjame a mí. Sé un cuento que lo va a sorprender."
+      "Déjame a mí. Sé un cuento que lo va a sorprender.",
+      "Lass mich erzählen. Ich kenne eine Geschichte, die ihn überraschen wird.",
+      "Deixa que eu conto. Sei uma história que vai surpreendê-lo."
      ],
      [
       "Ա",
@@ -5156,7 +5548,9 @@
       "Ладно. Только не смеши его сильно, а то не уснёт.",
       "OK. Just don’t make him laugh too much, or he won’t sleep.",
       "D’accord. Mais ne le fais pas trop rire, sinon il ne dormira pas.",
-      "Bueno. Pero no lo hagas reír mucho, que si no, no se duerme."
+      "Bueno. Pero no lo hagas reír mucho, que si no, no se duerme.",
+      "Gut. Bring ihn nur nicht zu sehr zum Lachen, sonst schläft er nicht.",
+      "Tá bom. Só não o faça rir demais, senão ele não dorme."
      ],
      [
       "Մ",
@@ -5164,7 +5558,9 @@
       "Обещаю.",
       "I promise.",
       "Promis.",
-      "Te lo prometo."
+      "Te lo prometo.",
+      "Versprochen.",
+      "Prometo."
      ]
     ]
    },
@@ -5261,7 +5657,9 @@
       "Мои родители приезжают. Что стоит посмотреть?",
       "My parents are coming. What is worth seeing?",
       "Mes parents arrivent. Qu’est-ce qui vaut la peine d’être vu ?",
-      "Vienen mis padres. ¿Qué vale la pena ver?"
+      "Vienen mis padres. ¿Qué vale la pena ver?",
+      "Meine Eltern kommen. Was lohnt sich anzuschauen?",
+      "Meus pais vão vir. O que vale a pena ver?"
      ],
      [
       "Ա",
@@ -5269,7 +5667,9 @@
       "Обязательно стоит съездить в Татев. Канатная дорога очень впечатляет.",
       "Tatev is a must. The cable car is very impressive.",
       "Il faut absolument aller à Tatev. Le téléphérique est impressionnant.",
-      "Hay que ir sí o sí a Tatev. El teleférico impresiona mucho."
+      "Hay que ir sí o sí a Tatev. El teleférico impresiona mucho.",
+      "Tatew unbedingt. Die Seilbahn ist sehr beeindruckend.",
+      "Tatev, com certeza. O teleférico impressiona muito."
      ],
      [
       "Մ",
@@ -5277,7 +5677,9 @@
       "А Дилижан?",
       "And Dilijan?",
       "Et Dilijan ?",
-      "¿Y Dilijan?"
+      "¿Y Dilijan?",
+      "Und Dilidschan?",
+      "E Dilijan?"
      ],
      [
       "Ա",
@@ -5285,7 +5687,9 @@
       "Если есть время, стоит. Но лучше ехать летом, а не зимой.",
       "If you have time, yes. But you’d better go in summer, not in winter.",
       "Si vous avez le temps, oui. Mais mieux vaut y aller l’été, pas l’hiver.",
-      "Si tienen tiempo, vale la pena. Pero mejor vayan en verano, no en invierno."
+      "Si tienen tiempo, vale la pena. Pero mejor vayan en verano, no en invierno.",
+      "Wenn ihr Zeit habt, ja. Aber fahrt lieber im Sommer, nicht im Winter.",
+      "Se tiverem tempo, sim. Mas é melhor ir no verão, não no inverno."
      ],
      [
       "Մ",
@@ -5293,7 +5697,9 @@
       "Им наверняка понравится.",
       "They’re sure to like it.",
       "Ça va sûrement leur plaire.",
-      "Seguro que les va a gustar."
+      "Seguro que les va a gustar.",
+      "Es wird ihnen bestimmt gefallen.",
+      "Com certeza eles vão gostar."
      ],
      [
       "Ա",
@@ -5301,7 +5707,9 @@
       "Конечно, понравится. Не надо беспокоиться.",
       "Of course they will. No need to worry.",
       "Bien sûr que ça leur plaira. Pas la peine de t’inquiéter.",
-      "Claro que les va a gustar. No hace falta preocuparse."
+      "Claro que les va a gustar. No hace falta preocuparse.",
+      "Natürlich. Du brauchst dir keine Sorgen zu machen.",
+      "Claro que vão. Não precisa se preocupar."
      ]
     ]
    },
@@ -5403,7 +5811,9 @@
       "Хури пошла за зеленью,",
       "Huri went to gather greens,",
       "Houri est allée cueillir des herbes,",
-      "Huri fue a juntar verdura,"
+      "Huri fue a juntar verdura,",
+      "Huri ging Kräuter sammeln,",
+      "Huri foi colher verduras,"
      ],
      [
       "Թ",
@@ -5411,7 +5821,9 @@
       "Зелени не нашлось — нашлась трава,",
       "there were no greens, only grass,",
       "pas d’herbes à cueillir, rien que de l’herbe,",
-      "no había verdura, había pasto,"
+      "no había verdura, había pasto,",
+      "Kräuter gab es nicht, nur Gras,",
+      "verduras não havia, só capim,"
      ],
      [
       "Թ",
@@ -5419,7 +5831,9 @@
       "Под травой была птичка,",
       "under the grass there was a little bird,",
       "sous l’herbe il y avait un petit oiseau,",
-      "debajo del pasto había un pajarito,"
+      "debajo del pasto había un pajarito,",
+      "unter dem Gras war ein Vöglein,",
+      "debaixo do capim havia um passarinho,"
      ],
      [
       "Թ",
@@ -5427,7 +5841,9 @@
       "С щебетом вылетела наружу.",
       "and out it flew, chirping.",
       "il s’est envolé en gazouillant.",
-      "que salió volando, piando."
+      "que salió volando, piando.",
+      "und zwitschernd flog es davon.",
+      "e ele saiu voando, piando."
      ],
      [
       "Թ",
@@ -5435,7 +5851,9 @@
       "Птичка взлетела на балку,",
       "The bird flew up onto the beam,",
       "L’oiseau s’est posé sur la poutre,",
-      "El pajarito voló a la viga,"
+      "El pajarito voló a la viga,",
+      "Das Vöglein flog auf den Balken,",
+      "O passarinho voou para a viga,"
      ],
      [
       "Թ",
@@ -5443,7 +5861,9 @@
       "С зелёной травинкой в клюве.",
       "with green grass in its beak.",
       "l’herbe verte au bec.",
-      "con el pasto verde en el pico."
+      "con el pasto verde en el pico.",
+      "grünes Gras in seinem Schnabel.",
+      "com capim verde no bico."
      ]
     ]
    },
@@ -5581,7 +6001,9 @@
       "— Кукареку!",
       "— Cock-a-doodle-doo!",
       "— Cocorico !",
-      "— ¡Quiquiriquí!"
+      "— ¡Quiquiriquí!",
+      "— Kikeriki!",
+      "— Cocoricó!"
      ],
      [
       "Թ",
@@ -5589,7 +6011,9 @@
       "Звонко крикнул петух на насесте.",
       "The rooster crowed loud on his perch.",
       "Le coq a chanté haut sur son perchoir.",
-      "El gallo cantó fuerte en su palo."
+      "El gallo cantó fuerte en su palo.",
+      "Laut krähte der Hahn auf seiner Stange.",
+      "Alto cantou o galo no poleiro."
      ],
      [
       "Թ",
@@ -5597,7 +6021,9 @@
       "— Чик-чик, чик-чик,",
       "— Cheep-cheep, cheep-cheep,",
       "— Cui-cui, cui-cui,",
-      "— Pío-pío, pío-pío,"
+      "— Pío-pío, pío-pío,",
+      "— Piep-piep, piep-piep,",
+      "— Piu-piu, piu-piu,"
      ],
      [
       "Թ",
@@ -5605,7 +6031,9 @@
       "Проснулась в темноте птичка на дереве.",
       "the little bird woke in the dark in the tree.",
       "le petit oiseau s’est réveillé dans le noir, sur l’arbre.",
-      "se despertó en lo oscuro el pajarito en el árbol."
+      "se despertó en lo oscuro el pajarito en el árbol.",
+      "das Vöglein erwachte im Dunkeln im Baum.",
+      "o passarinho acordou no escuro, na árvore."
      ],
      [
       "Թ",
@@ -5613,7 +6041,9 @@
       "Кукареку!",
       "Cock-a-doodle-doo!",
       "Cocorico !",
-      "¡Quiquiriquí!"
+      "¡Quiquiriquí!",
+      "Kikeriki!",
+      "Cocoricó!"
      ],
      [
       "Թ",
@@ -5621,7 +6051,9 @@
       "На заре он прокричал второй раз.",
       "At daybreak he called a second time.",
       "À l’aube, il a chanté une deuxième fois.",
-      "Al alba cantó por segunda vez."
+      "Al alba cantó por segunda vez.",
+      "Im Morgengrauen rief er zum zweiten Mal.",
+      "Ao raiar do dia, cantou pela segunda vez."
      ],
      [
       "Թ",
@@ -5629,7 +6061,9 @@
       "— Хо-хо, хо-хо,",
       "— Ho-ho, ho-ho,",
       "— Ho-ho, ho-ho,",
-      "— Jo-jo, jo-jo,"
+      "— Jo-jo, jo-jo,",
+      "— Ho-ho, ho-ho,",
+      "— Rô-rô, rô-rô,"
      ],
      [
       "Թ",
@@ -5637,7 +6071,9 @@
       "Стадо уже погнали на пастбище.",
       "the herd has already been driven to pasture.",
       "on a déjà mené le troupeau au pâturage.",
-      "ya llevaron el rebaño al campo."
+      "ya llevaron el rebaño al campo.",
+      "die Herde ist schon auf die Weide getrieben.",
+      "o rebanho já foi levado ao pasto."
      ],
      [
       "Թ",
@@ -5645,7 +6081,9 @@
       "— Кукареку!",
       "— Cock-a-doodle-doo!",
       "— Cocorico !",
-      "— ¡Quiquiriquí!"
+      "— ¡Quiquiriquí!",
+      "— Kikeriki!",
+      "— Cocoricó!"
      ],
      [
       "Թ",
@@ -5653,7 +6091,9 @@
       "С третьим криком рассвело.",
       "Day broke at the third call.",
       "Le jour s’est levé au troisième chant.",
-      "Amaneció con el tercer canto."
+      "Amaneció con el tercer canto.",
+      "Beim dritten Ruf brach der Tag an.",
+      "No terceiro canto, o dia nasceu."
      ],
      [
       "Թ",
@@ -5661,7 +6101,9 @@
       "— Ой-ой-ой-ой,",
       "— Oh my, oh my,",
       "— Oh là là là,",
-      "— Ay, ay, ay, ay,"
+      "— Ay, ay, ay, ay,",
+      "— Ach je, ach je,",
+      "— Ai, ai, ai, ai,"
      ],
      [
       "Թ",
@@ -5669,7 +6111,9 @@
       "И нани села посреди постели.",
       "and Nana sat up in the middle of the bed.",
       "et Nana s’est assise au milieu du lit.",
-      "y la nana se sentó en medio de la cama."
+      "y la nana se sentó en medio de la cama.",
+      "und Nana setzte sich mitten im Bett auf.",
+      "e a Nana se sentou no meio da cama."
      ]
     ]
    },
@@ -5815,7 +6259,9 @@
       "Пришла весна с тучами,",
       "Spring came with clouds,",
       "Le printemps est venu avec les nuages,",
-      "Llegó la primavera con nubes,"
+      "Llegó la primavera con nubes,",
+      "Der Frühling kam mit Wolken,",
+      "A primavera veio com nuvens,"
      ],
      [
       "Թ",
@@ -5823,7 +6269,9 @@
       "Тучи пришли с дождём.",
       "the clouds came with rain.",
       "les nuages sont venus avec la pluie.",
-      "las nubes vinieron con lluvia."
+      "las nubes vinieron con lluvia.",
+      "die Wolken kamen mit Regen.",
+      "as nuvens vieram com chuva."
      ],
      [
       "Թ",
@@ -5831,7 +6279,9 @@
       "Отнесу-ка дождь, отдам полю,",
       "I’ll take the rain and give it to the field,",
       "je porterai la pluie, je la donnerai au champ,",
-      "llevaré la lluvia y se la daré al campo,"
+      "llevaré la lluvia y se la daré al campo,",
+      "Den Regen nehm ich, geb ihn dem Feld,",
+      "A chuva eu pego e dou ao campo,"
      ],
      [
       "Թ",
@@ -5839,7 +6289,9 @@
       "Пусть поле даст мне пшеницу.",
       "and the field will give me wheat.",
       "que le champ me donne du blé.",
-      "que el campo me dé trigo."
+      "que el campo me dé trigo.",
+      "und das Feld gibt mir Weizen.",
+      "e o campo me dá trigo."
      ],
      [
       "Թ",
@@ -5847,7 +6299,9 @@
       "Пшеницу отнесу, отдам мельнице,",
       "I’ll take the wheat and give it to the mill,",
       "je porterai le blé, je le donnerai au moulin,",
-      "llevaré el trigo y se lo daré al molino,"
+      "llevaré el trigo y se lo daré al molino,",
+      "Den Weizen nehm ich, geb ihn der Mühle,",
+      "O trigo eu pego e dou ao moinho,"
      ],
      [
       "Թ",
@@ -5855,7 +6309,9 @@
       "Пусть мельница даст мне муку.",
       "and the mill will give me flour.",
       "que le moulin me donne de la farine.",
-      "que el molino me dé harina."
+      "que el molino me dé harina.",
+      "und die Mühle gibt mir Mehl.",
+      "e o moinho me dá farinha."
      ],
      [
       "Թ",
@@ -5863,7 +6319,9 @@
       "Муку отнесу, отдам квашне,",
       "I’ll take the flour and give it to the trough,",
       "je porterai la farine, je la donnerai au pétrin,",
-      "llevaré la harina y se la daré a la artesa,"
+      "llevaré la harina y se la daré a la artesa,",
+      "Das Mehl nehm ich, geb es dem Trog,",
+      "A farinha eu pego e dou à gamela,"
      ],
      [
       "Թ",
@@ -5871,7 +6329,9 @@
       "Пусть квашня даст мне тесто.",
       "and the trough will give me dough.",
       "que le pétrin me donne de la pâte.",
-      "que la artesa me dé masa."
+      "que la artesa me dé masa.",
+      "und der Trog gibt mir Teig.",
+      "e a gamela me dá massa."
      ],
      [
       "Թ",
@@ -5879,7 +6339,9 @@
       "Тесто отнесу, отдам тониру,",
       "I’ll take the dough and give it to the tonir,",
       "je porterai la pâte, je la donnerai au tonir,",
-      "llevaré la masa y se la daré al tonir,"
+      "llevaré la masa y se la daré al tonir,",
+      "Den Teig nehm ich, geb ihn dem Tonir,",
+      "A massa eu pego e dou ao tonir,"
      ],
      [
       "Թ",
@@ -5887,7 +6349,9 @@
       "Пусть тонир даст мне хлеб.",
       "and the tonir will give me bread.",
       "que le tonir me donne du pain.",
-      "que el tonir me dé pan."
+      "que el tonir me dé pan.",
+      "und der Tonir gibt mir Brot.",
+      "e o tonir me dá pão."
      ],
      [
       "Թ",
@@ -5895,7 +6359,9 @@
       "Хлеб отнесу, отдам бродячей торговке,",
       "I’ll take the bread and give it to the wandering trader,",
       "je porterai le pain, je le donnerai à la marchande ambulante,",
-      "llevaré el pan y se lo daré a la vendedora ambulante,"
+      "llevaré el pan y se lo daré a la vendedora ambulante,",
+      "Das Brot nehm ich, geb es dem Wanderhändler,",
+      "O pão eu pego e dou ao mascate,"
      ],
      [
       "Թ",
@@ -5903,7 +6369,9 @@
       "Пусть торговка даст мне бусинку.",
       "and the trader will give me a bead.",
       "que la marchande me donne une perle.",
-      "que la vendedora me dé una cuenta."
+      "que la vendedora me dé una cuenta.",
+      "und der Händler gibt mir eine Perle.",
+      "e o mascate me dá uma conta."
      ],
      [
       "Թ",
@@ -5911,7 +6379,9 @@
       "Бусинку отнесу, отдам маме,",
       "I’ll take the bead and give it to my mum,",
       "je porterai la perle, je la donnerai à ma maman,",
-      "llevaré la cuenta y se la daré a mi mamá,"
+      "llevaré la cuenta y se la daré a mi mamá,",
+      "Die Perle nehm ich, geb sie der Mama,",
+      "A conta eu pego e dou à mamãe,"
      ],
      [
       "Թ",
@@ -5919,7 +6389,9 @@
       "А мама меня отшлёпает, отшлёпает,",
       "and my mum will spank me, spank me,",
       "et ma maman me donnera la fessée, la fessée,",
-      "y mi mamá me va a pegar, a pegar,"
+      "y mi mamá me va a pegar, a pegar,",
+      "und Mama gibt mir einen Klaps, einen Klaps,",
+      "e a mamãe me dá uma palmada, uma palmada,"
      ],
      [
       "Թ",
@@ -5927,7 +6399,9 @@
       "Прогонит из дома, выставит вон.",
       "chase me from the house and throw me out.",
       "me chassera de la maison, me mettra dehors.",
-      "me va a echar de la casa, me va a sacar afuera."
+      "me va a echar de la casa, me va a sacar afuera.",
+      "jagt mich aus dem Haus und wirft mich hinaus.",
+      "me põe para fora de casa e me expulsa."
      ]
     ]
    },
@@ -6074,7 +6548,9 @@
       "Рассвело,",
       "Dawn has broken,",
       "Le jour s’est levé,",
-      "Ya amaneció,"
+      "Ya amaneció,",
+      "Die Morgenröte ist aufgegangen,",
+      "A aurora raiou,"
      ],
      [
       "Թ",
@@ -6082,7 +6558,9 @@
       "Добра прибавилось.",
       "and good things have multiplied.",
       "le bien s’est accru.",
-      "y el bien creció."
+      "y el bien creció.",
+      "und das Gute hat sich vermehrt.",
+      "e as coisas boas se multiplicaram."
      ],
      [
       "Թ",
@@ -6090,7 +6568,9 @@
       "Ранним утром, на рассвете",
       "Early at dawn",
       "Tôt, à l’aube,",
-      "Temprano, al alba,"
+      "Temprano, al alba,",
+      "Früh im Morgengrauen",
+      "Bem cedo, ao amanhecer,"
      ],
      [
       "Թ",
@@ -6098,7 +6578,9 @@
       "Запрягли плуг.",
       "they yoked the plough.",
       "on a attelé la charrue.",
-      "uncieron el arado."
+      "uncieron el arado.",
+      "spannten sie den Pflug an.",
+      "atrelaram o arado."
      ],
      [
       "Թ",
@@ -6106,7 +6588,9 @@
       "Хоровел, хо!..",
       "Horovel, ho!..",
       "Horovel, ho !..",
-      "¡Horovel, jo!.."
+      "¡Horovel, jo!..",
+      "Horowel, ho!..",
+      "Horovel, ô!.."
      ],
      [
       "Թ",
@@ -6114,7 +6598,9 @@
       "Плуг налажен,",
       "The plough is ready,",
       "La charrue est prête,",
-      "El arado listo,"
+      "El arado listo,",
+      "Der Pflug ist bereit,",
+      "O arado está pronto,"
      ],
      [
       "Թ",
@@ -6122,7 +6608,9 @@
       "Погонщики в ряд,",
       "the drivers in a row,",
       "les bouviers en rang,",
-      "los boyeros en fila,"
+      "los boyeros en fila,",
+      "die Treiber in einer Reihe,",
+      "os condutores em fila,"
      ],
      [
       "Թ",
@@ -6130,7 +6618,9 @@
       "Пахарь у рукояти,",
       "the ploughman at the handle,",
       "le laboureur au mancheron,",
-      "el labrador en la mancera,"
+      "el labrador en la mancera,",
+      "der Pflüger am Sterz,",
+      "o lavrador no cabo,"
      ],
      [
       "Թ",
@@ -6138,7 +6628,9 @@
       "Ладонь у уха — поёт.",
       "his hand to his ear as he sings.",
       "la main à l’oreille, il chante.",
-      "la mano en la oreja, cantando."
+      "la mano en la oreja, cantando.",
+      "die Hand am Ohr, und er singt.",
+      "a mão no ouvido, cantando."
      ],
      [
       "Թ",
@@ -6146,7 +6638,9 @@
       "Хоровел, хо!..",
       "Horovel, ho!..",
       "Horovel, ho !..",
-      "¡Horovel, jo!.."
+      "¡Horovel, jo!..",
+      "Horowel, ho!..",
+      "Horovel, ô!.."
      ],
      [
       "Թ",
@@ -6154,7 +6648,9 @@
       "Плуг родной, паши,",
       "Dear plough, plough on,",
       "Charrue chérie, laboure,",
-      "Querido arado, ara,"
+      "Querido arado, ara,",
+      "Lieber Pflug, pflüge weiter,",
+      "Arado querido, vai arando,"
      ],
      [
       "Թ",
@@ -6162,7 +6658,9 @@
       "Борозду к борозде клади.",
       "lay furrow after furrow.",
       "aligne les sillons.",
-      "alinea los surcos."
+      "alinea los surcos.",
+      "zieh Furche um Furche.",
+      "abre sulco após sulco."
      ],
      [
       "Թ",
@@ -6170,7 +6668,9 @@
       "Размахнись, расправь крылья,",
       "Swing out, spread your wings,",
       "Prends ton élan, déploie tes ailes,",
-      "Toma impulso, abre las alas,"
+      "Toma impulso, abre las alas,",
+      "Hol aus, breite die Flügel,",
+      "Avança, abre as asas,"
      ],
      [
       "Թ",
@@ -6178,7 +6678,9 @@
       "Переворачивай, делай землю чёрной.",
       "turn the earth and make it black.",
       "retourne la terre, rends-la noire.",
-      "dala vuelta, vuélvela negra."
+      "dala vuelta, vuélvela negra.",
+      "wende die Erde, mach sie schwarz.",
+      "revira a terra e deixa-a negra."
      ],
      [
       "Թ",
@@ -6186,7 +6688,9 @@
       "Хоровел, хо!..",
       "Horovel, ho!..",
       "Horovel, ho !..",
-      "¡Horovel, jo!.."
+      "¡Horovel, jo!..",
+      "Horowel, ho!..",
+      "Horovel, ô!.."
      ],
      [
       "Թ",
@@ -6194,7 +6698,9 @@
       "Посеем, вырастим ниву,",
       "Let us sow and make a field,",
       "Semons, faisons un champ,",
-      "Sembremos, hagamos un campo,"
+      "Sembremos, hagamos un campo,",
+      "Lasst uns säen und ein Feld anlegen,",
+      "Vamos semear e fazer o campo,"
      ],
      [
       "Թ",
@@ -6202,7 +6708,9 @@
       "Сожнём, домой унесём,",
       "let us reap and bring it home,",
       "moissonnons, rapportons à la maison,",
-      "cosechemos, llevémoslo a casa,"
+      "cosechemos, llevémoslo a casa,",
+      "lasst uns ernten und heimbringen,",
+      "vamos colher e levar para casa,"
      ],
      [
       "Թ",
@@ -6210,7 +6718,9 @@
       "Пусть будет у нас много хлеба.",
       "let us have plenty of bread.",
       "ayons beaucoup de pain.",
-      "tengamos mucho pan."
+      "tengamos mucho pan.",
+      "lasst uns Brot in Fülle haben.",
+      "vamos ter pão com fartura."
      ],
      [
       "Թ",
@@ -6218,7 +6728,9 @@
       "Благословен Бог.",
       "Blessed be God.",
       "Béni soit Dieu.",
-      "Bendito sea Dios."
+      "Bendito sea Dios.",
+      "Gelobt sei Gott.",
+      "Bendito seja Deus."
      ],
      [
       "Թ",
@@ -6226,7 +6738,9 @@
       "Хоровел, хо!..",
       "Horovel, ho!..",
       "Horovel, ho !..",
-      "¡Horovel, jo!.."
+      "¡Horovel, jo!..",
+      "Horowel, ho!..",
+      "Horovel, ô!.."
      ]
     ]
    },
@@ -6372,7 +6886,9 @@
       "Меж двух веков,",
       "Between two centuries,",
       "Entre deux siècles,",
-      "Entre dos siglos,"
+      "Entre dos siglos,",
+      "Zwischen zwei Jahrhunderten,",
+      "Entre dois séculos,"
      ],
      [
       "Թ",
@@ -6380,7 +6896,9 @@
       "Меж двух камней,",
       "between two stones,",
       "entre deux pierres,",
-      "entre dos piedras,"
+      "entre dos piedras,",
+      "zwischen zwei Steinen",
+      "entre duas pedras,"
      ],
      [
       "Թ",
@@ -6388,7 +6906,9 @@
       "Я устал — меж новым другом",
       "I have grown weary — between a new friend",
       "je suis las — entre un ami nouveau",
-      "estoy cansado: entre un amigo nuevo"
+      "estoy cansado: entre un amigo nuevo",
+      "bin ich müde geworden — zwischen einem neuen Freund",
+      "eu me cansei — entre um amigo novo"
      ],
      [
       "Թ",
@@ -6396,7 +6916,9 @@
       "И старой болью.",
       "and an old pain.",
       "et une vieille douleur.",
-      "y un viejo dolor."
+      "y un viejo dolor.",
+      "und einem alten Schmerz.",
+      "e uma dor antiga."
      ],
      [
       "Թ",
@@ -6404,7 +6926,9 @@
       "В старый мир каждый день",
       "Into the old world every day",
       "Dans le vieux monde, chaque jour,",
-      "Al viejo mundo, cada día,"
+      "Al viejo mundo, cada día,",
+      "In die alte Welt kommen jeden Tag",
+      "Ao velho mundo, todo dia,"
      ],
      [
       "Թ",
@@ -6412,7 +6936,9 @@
       "Входят тысячи новых людей,",
       "a thousand new people come,",
       "entrent mille hommes nouveaux,",
-      "entran mil personas nuevas,"
+      "entran mil personas nuevas,",
+      "tausend neue Menschen,",
+      "chegam mil pessoas novas,"
      ],
      [
       "Թ",
@@ -6420,7 +6946,9 @@
       "И тысячелетний опыт и труд",
       "and a thousand years of experience and work",
       "et l’expérience et l’œuvre de mille ans",
-      "y la experiencia y la obra de mil años"
+      "y la experiencia y la obra de mil años",
+      "und tausend Jahre Erfahrung und Arbeit",
+      "e mil anos de experiência e trabalho"
      ],
      [
       "Թ",
@@ -6428,7 +6956,9 @@
       "Начинаются заново каждый день.",
       "begin anew every day.",
       "recommencent chaque jour.",
-      "empiezan de nuevo cada día."
+      "empiezan de nuevo cada día.",
+      "beginnen jeden Tag von Neuem.",
+      "recomeçam todo dia."
      ],
      [
       "Թ",
@@ -6436,7 +6966,9 @@
       "Море — моя печаль, без берегов и глубока,",
       "My sorrow is a sea, shoreless and deep,",
       "Ma peine est une mer, sans rives et profonde,",
-      "Mi pena es un mar, sin orillas y profundo,"
+      "Mi pena es un mar, sin orillas y profundo,",
+      "Mein Kummer ist ein Meer, uferlos und tief,",
+      "Minha tristeza é um mar, sem margem e profundo,"
      ],
      [
       "Թ",
@@ -6444,7 +6976,9 @@
       "Полна тысячей родников.",
       "full of a thousand springs.",
       "pleine de mille sources.",
-      "lleno de miles de manantiales."
+      "lleno de miles de manantiales.",
+      "voll von tausend Quellen.",
+      "cheio de mil nascentes."
      ],
      [
       "Թ",
@@ -6452,7 +6986,9 @@
       "Мой гнев полон любви,",
       "My anger is full of love,",
       "Ma colère est pleine d’amour,",
-      "Mi enojo está lleno de amor,"
+      "Mi enojo está lleno de amor,",
+      "Mein Zorn ist voller Liebe,",
+      "Minha raiva é cheia de amor,"
      ],
      [
       "Թ",
@@ -6460,7 +6996,9 @@
       "Моя ночь — полна звёзд.",
       "my night is full of stars.",
       "ma nuit, pleine d’étoiles.",
-      "mi noche, llena de estrellas."
+      "mi noche, llena de estrellas.",
+      "meine Nacht ist voller Sterne.",
+      "minha noite é cheia de estrelas."
      ]
     ]
    },
@@ -6608,7 +7146,9 @@
       "Бледные поля, голый лес…",
       "Pale fields, a bare forest…",
       "Champs blêmes, forêt nue…",
-      "Campos pálidos, bosque desnudo…"
+      "Campos pálidos, bosque desnudo…",
+      "Blasse Felder, kahler Wald…",
+      "Campos pálidos, floresta nua…"
      ],
      [
       "Տ",
@@ -6616,7 +7156,9 @@
       "— Печальная жизнь умирающего…",
       "— the sad life of one who is dying…",
       "— triste vie de celui qui meurt…",
-      "— triste vida del que muere…"
+      "— triste vida del que muere…",
+      "— das traurige Leben eines Sterbenden…",
+      "— a vida triste de quem está morrendo…"
      ],
      [
       "Տ",
@@ -6624,7 +7166,9 @@
       "Дождь, ветер, чёрный свод…",
       "Rain, wind, a black vault…",
       "Pluie, vent, voûte noire…",
-      "Lluvia, viento, bóveda negra…"
+      "Lluvia, viento, bóveda negra…",
+      "Regen, Wind, ein schwarzes Gewölbe…",
+      "Chuva, vento, uma abóbada negra…"
      ],
      [
       "Տ",
@@ -6632,7 +7176,9 @@
       "— Рыдание, рвущее сердце.",
       "— heartbreaking sobbing.",
       "— sanglots à fendre le cœur.",
-      "— un sollozo desgarrador."
+      "— un sollozo desgarrador.",
+      "— herzzerreißendes Schluchzen.",
+      "— um soluço de partir o coração."
      ],
      [
       "Տ",
@@ -6640,7 +7186,9 @@
       "В тумане блеснул холодный свет.",
       "A cold light gleamed in the mist.",
       "Dans la brume a lui une froide lumière.",
-      "En la niebla brilló una luz fría."
+      "En la niebla brilló una luz fría.",
+      "Ein kaltes Licht schimmerte im Nebel.",
+      "Uma luz fria brilhou na névoa."
      ],
      [
       "Տ",
@@ -6648,7 +7196,9 @@
       "— О, есть ли возврат?",
       "— Oh, is there a way back?",
       "— Oh, y a-t-il un retour ?",
-      "— Oh, ¿habrá regreso?"
+      "— Oh, ¿habrá regreso?",
+      "— Ach, gibt es einen Weg zurück?",
+      "— Ah, existe um caminho de volta?"
      ],
      [
       "Տ",
@@ -6656,7 +7206,9 @@
       "Бессильная надежда умирающего,",
       "The powerless hope of the dying,",
       "Espoir impuissant du mourant,",
-      "Esperanza impotente del que muere,"
+      "Esperanza impotente del que muere,",
+      "Die kraftlose Hoffnung der Sterbenden,",
+      "A esperança sem forças dos que morrem,"
      ],
      [
       "Տ",
@@ -6664,7 +7216,9 @@
       "Грустный вопрос поникшего сердца…",
       "the sad question of a despondent heart…",
       "triste question d’un cœur abattu…",
-      "triste pregunta de un corazón abatido…"
+      "triste pregunta de un corazón abatido…",
+      "die traurige Frage eines verzagten Herzens…",
+      "a pergunta triste de um coração desanimado…"
      ],
      [
       "Տ",
@@ -6672,7 +7226,9 @@
       "Холодный свинец бессильной боли…",
       "The cold lead of a helpless pain…",
       "Plomb froid d’une douleur sans force…",
-      "Plomo frío de un dolor sin fuerzas…"
+      "Plomo frío de un dolor sin fuerzas…",
+      "Das kalte Blei eines hilflosen Schmerzes…",
+      "O chumbo frio de uma dor impotente…"
      ],
      [
       "Տ",
@@ -6680,7 +7236,9 @@
       "Печальная жизнь умирающего.",
       "The sad life of the dying.",
       "Triste vie du mourant.",
-      "Triste vida del que muere."
+      "Triste vida del que muere.",
+      "Das traurige Leben der Sterbenden.",
+      "A vida triste dos que morrem."
      ],
      [
       "Տ",
@@ -6688,7 +7246,9 @@
       "— Безутешное, нескончаемое",
       "— Inconsolable, endless",
       "— Inconsolable, sans fin,",
-      "— Inconsolable, interminable"
+      "— Inconsolable, interminable",
+      "— Untröstliches, endloses",
+      "— Inconsolável, sem fim,"
      ],
      [
       "Տ",
@@ -6696,7 +7256,9 @@
       "Рыдание уныния…",
       "sobbing of despair…",
       "sanglot du découragement…",
-      "sollozo del desaliento…"
+      "sollozo del desaliento…",
+      "Schluchzen der Verzweiflung…",
+      "o soluço do desespero…"
      ]
     ]
    },
@@ -6843,7 +7405,9 @@
       "Устав от мук своего бесконечного пути,",
       "Tired from the torment of my endless road,",
       "Las du tourment de mon chemin sans fin,",
-      "Cansado del tormento de mi camino sin fin,"
+      "Cansado del tormento de mi camino sin fin,",
+      "Müde von der Qual meines endlosen Weges,",
+      "Cansado do tormento do meu caminho sem fim,"
      ],
      [
       "Տ",
@@ -6851,7 +7415,9 @@
       "Я задремал в золотой ниве.",
       "I had dozed off in a golden field.",
       "je m’étais assoupi dans un champ doré.",
-      "me había dormido en un campo dorado."
+      "me había dormido en un campo dorado.",
+      "war ich auf einem goldenen Feld eingeschlummert.",
+      "eu tinha cochilado num campo dourado."
      ],
      [
       "Տ",
@@ -6859,7 +7425,9 @@
       "И вдруг вскрикнуло сердце от блаженства —",
       "And suddenly my heart cried out with delight —",
       "Et soudain mon cœur a crié de délice —",
-      "Y de pronto mi corazón gritó de dicha:"
+      "Y de pronto mi corazón gritó de dicha:",
+      "Und plötzlich rief mein Herz vor Entzücken —",
+      "E de repente meu coração gritou de encanto —"
      ],
      [
       "Տ",
@@ -6867,7 +7435,9 @@
       "Показалось, что кто-то печально зовёт…",
       "it seemed someone was calling sadly…",
       "il m’a semblé que quelqu’un appelait tristement…",
-      "me pareció que alguien llamaba con tristeza…"
+      "me pareció que alguien llamaba con tristeza…",
+      "mir schien, jemand rufe traurig…",
+      "pareceu-me que alguém chamava, triste…"
      ],
      [
       "Տ",
@@ -6875,7 +7445,9 @@
       "И я проснулся от боли радости.",
       "And I woke from the pain of joy.",
       "Et je me suis éveillé de la douleur de la joie.",
-      "Y desperté del dolor de la alegría."
+      "Y desperté del dolor de la alegría.",
+      "Und ich erwachte vom Schmerz der Freude.",
+      "E acordei com a dor da alegria."
      ],
      [
       "Տ",
@@ -6883,7 +7455,9 @@
       "Это ночной ветерок плакал в полях,",
       "It was the night breeze weeping in the fields,",
       "C’était la brise nocturne qui pleurait dans les champs,",
-      "Era la brisa de la noche que lloraba en los campos,"
+      "Era la brisa de la noche que lloraba en los campos,",
+      "Es war der Nachtwind, der in den Feldern weinte,",
+      "Era a brisa da noite chorando nos campos,"
      ],
      [
       "Տ",
@@ -6891,7 +7465,9 @@
       "Тёмная даль неохотно глядела на меня,",
       "the dark distance looked at me reluctantly,",
       "le lointain obscur me regardait à contrecœur,",
-      "la oscura lejanía me miraba de mala gana,"
+      "la oscura lejanía me miraba de mala gana,",
+      "die dunkle Ferne sah mich widerwillig an,",
+      "a distância escura me olhava a contragosto,"
      ],
      [
       "Տ",
@@ -6899,7 +7475,9 @@
       "Одиночество молчало, как камень…",
       "loneliness was silent as a stone…",
       "la solitude se taisait comme une pierre…",
-      "la soledad callaba como una piedra…"
+      "la soledad callaba como una piedra…",
+      "die Einsamkeit schwieg wie ein Stein…",
+      "a solidão calava como uma pedra…"
      ]
     ]
    },
@@ -7046,7 +7624,9 @@
       "Сошла зима, жестокая, как смерть,",
       "Winter has come down, cruel as death,",
       "L’hiver est descendu, cruel comme la mort,",
-      "Bajó el invierno, cruel como la muerte,"
+      "Bajó el invierno, cruel como la muerte,",
+      "Der Winter ist herabgestiegen, grausam wie der Tod,",
+      "O inverno desceu, cruel como a morte,"
      ],
      [
       "Տ",
@@ -7054,7 +7634,9 @@
       "Угасли, умерли — песня, цветок и аромат.",
       "song, flower and scent have faded and died.",
       "chant, fleur et parfum se sont éteints, sont morts.",
-      "se apagaron y murieron canción, flor y aroma."
+      "se apagaron y murieron canción, flor y aroma.",
+      "Lied, Blume und Duft sind verwelkt und gestorben.",
+      "canção, flor e perfume murcharam e morreram."
      ],
      [
       "Տ",
@@ -7062,7 +7644,9 @@
       "А ты — и в каменный холод, и среди снегов —",
       "But you, in the stone-cold frost, among the snows,",
       "Mais toi, dans le froid de pierre, au milieu des neiges,",
-      "Pero tú, en el frío de piedra, entre las nieves,"
+      "Pero tú, en el frío de piedra, entre las nieves,",
+      "Doch du, im steinkalten Frost, zwischen dem Schnee,",
+      "Mas você, na geada fria como pedra, entre as neves,"
      ],
      [
       "Տ",
@@ -7070,7 +7654,9 @@
       "Вечно живой, журчащий родник…",
       "are forever alive, babbling spring…",
       "tu restes vive à jamais, source qui gazouille…",
-      "sigues viva para siempre, fuente que murmura…"
+      "sigues viva para siempre, fuente que murmura…",
+      "lebst ewig, plätschernde Quelle…",
+      "vive para sempre, fonte murmurante…"
      ],
      [
       "Տ",
@@ -7078,7 +7664,9 @@
       "Ты вырываешься из груди скалистой горы,",
       "You burst from the breast of the rocky mountain,",
       "Tu jaillis du sein de la montagne rocheuse,",
-      "Brotas del pecho de la montaña rocosa,"
+      "Brotas del pecho de la montaña rocosa,",
+      "Du brichst hervor aus der Brust des felsigen Berges,",
+      "Você brota do peito da montanha rochosa,"
      ],
      [
       "Տ",
@@ -7086,7 +7674,9 @@
       "Раскалываешь лёд, рассыпаешь самоцветы,",
       "you split the ice and scatter jewels,",
       "tu fends la glace et sèmes des joyaux,",
-      "partes el hielo y esparces joyas,"
+      "partes el hielo y esparces joyas,",
+      "du spaltest das Eis und streust Juwelen,",
+      "racha o gelo e espalha joias,"
      ],
      [
       "Տ",
@@ -7094,7 +7684,9 @@
       "С насмешкой брызжешь снегу в лицо,",
       "mockingly you splash the snow in its face,",
       "moqueuse, tu éclabousses le visage de la neige,",
-      "burlona, le salpicas la cara a la nieve,"
+      "burlona, le salpicas la cara a la nieve,",
+      "spöttisch spritzt du dem Schnee ins Gesicht",
+      "zombeteira, respinga no rosto da neve"
      ],
      [
       "Տ",
@@ -7102,7 +7694,9 @@
       "Светло смеёшься в лицо хмурому небу.",
       "and laugh brightly at the gloomy sky.",
       "et tu ris clair face au ciel morose.",
-      "y ríes clara frente al cielo sombrío."
+      "y ríes clara frente al cielo sombrío.",
+      "und lachst hell den finsteren Himmel an.",
+      "e ri, clara, para o céu sombrio."
      ],
      [
       "Տ",
@@ -7110,7 +7704,9 @@
       "В тебе живёт неугасимая надежда…",
       "In you lives a hope that never fades…",
       "En toi vit l’espoir qui ne s’éteint pas…",
-      "En ti vive la esperanza que no se apaga…"
+      "En ti vive la esperanza que no se apaga…",
+      "In dir lebt eine Hoffnung, die niemals verlischt…",
+      "Em você vive uma esperança que nunca se apaga…"
      ],
      [
       "Տ",
@@ -7118,7 +7714,9 @@
       "Ты — как весть о грядущих вёснах,",
       "You, like news of springs to come,",
       "Toi, comme l’annonce des printemps à venir,",
-      "Tú, como noticia de primaveras por venir,"
+      "Tú, como noticia de primaveras por venir,",
+      "Du, wie die Kunde von kommenden Frühlingen,",
+      "Você, como a notícia de primaveras que virão,"
      ],
      [
       "Տ",
@@ -7126,7 +7724,9 @@
       "Ты, как любовь, сильнее смерти —",
       "you, like love, strong against death —",
       "toi, comme l’amour, plus fort que la mort —",
-      "tú, como el amor, fuerte frente a la muerte:"
+      "tú, como el amor, fuerte frente a la muerte:",
+      "du, wie die Liebe, stark gegen den Tod —",
+      "você, como o amor, forte contra a morte —"
      ],
      [
       "Տ",
@@ -7134,7 +7734,9 @@
       "Песнь свободы, журчащий родник…",
       "song of freedom, babbling spring…",
       "chant de liberté, source qui gazouille…",
-      "canción de libertad, fuente que murmura…"
+      "canción de libertad, fuente que murmura…",
+      "Lied der Freiheit, plätschernde Quelle…",
+      "canção da liberdade, fonte murmurante…"
      ]
     ]
    },
@@ -7303,7 +7905,9 @@
       "Когда-то Кот был шапочником,",
       "Once upon a time the Cat was a hatter,",
       "Jadis, le Chat était chapelier,",
-      "Hace tiempo el Gato era sombrerero,"
+      "Hace tiempo el Gato era sombrerero,",
+      "Es war einmal, da war die Katze Mützenmacherin,",
+      "Era uma vez: a Gata era chapeleira,"
      ],
      [
       "Թ",
@@ -7311,7 +7915,9 @@
       "А у Пса на голове шапки не было.",
       "and the Dog had no cap on his head.",
       "et le Chien n’avait pas de bonnet sur la tête.",
-      "y el Perro no tenía gorro en la cabeza."
+      "y el Perro no tenía gorro en la cabeza.",
+      "und der Hund hatte keine Mütze auf dem Kopf.",
+      "e o Cão não tinha gorro na cabeça."
      ],
      [
       "Թ",
@@ -7319,7 +7925,9 @@
       "Но, уж не знаю откуда,",
       "But — from where, I cannot say —",
       "Mais, je ne sais d’où,",
-      "Pero, no sé de dónde,"
+      "Pero, no sé de dónde,",
+      "Doch — woher, kann ich nicht sagen —",
+      "Mas — de onde, não sei dizer —"
      ],
      [
       "Թ",
@@ -7327,7 +7935,9 @@
       "Раздобыл он шкурку ягнёнка.",
       "he had got hold of a lambskin.",
       "il avait mis la patte sur une peau d’agneau.",
-      "había conseguido una piel de cordero."
+      "había conseguido una piel de cordero.",
+      "hatte er ein Lammfell ergattert.",
+      "ele tinha arranjado uma pele de cordeiro."
      ],
      [
       "Թ",
@@ -7335,7 +7945,9 @@
       "Пришёл он однажды в самую зиму,",
       "One day, in the depth of winter,",
       "Un jour, au cœur de l’hiver,",
-      "Un día, en pleno invierno,"
+      "Un día, en pleno invierno,",
+      "Eines Tages, mitten im Winter,",
+      "Um dia, em pleno inverno,"
      ],
      [
       "Թ",
@@ -7343,7 +7955,9 @@
       "Принёс шкурку к Коту.",
       "he brought the skin to the Cat.",
       "il apporta la peau chez le Chat.",
-      "le llevó la piel al Gato."
+      "le llevó la piel al Gato.",
+      "brachte er das Fell zur Katze.",
+      "levou a pele para a Gata."
      ],
      [
       "Շ",
@@ -7351,7 +7965,9 @@
       "— Бог в помощь, мастер Писо,",
       "— Good luck with your work, master Piso,",
       "— Bon travail, maître Piso,",
-      "— Buen trabajo, maestro Piso,"
+      "— Buen trabajo, maestro Piso,",
+      "— Gutes Gelingen, Meister Pisso,",
+      "— Bom trabalho, mestre Piso,"
      ],
      [
       "Շ",
@@ -7359,7 +7975,9 @@
       "Голова у меня мёрзнет, ради Бога,",
       "my head is freezing, for God’s sake,",
       "j’ai froid à la tête, pour l’amour de Dieu,",
-      "se me hiela la cabeza, por Dios,"
+      "se me hiela la cabeza, por Dios,",
+      "mein Kopf friert, um Gottes willen,",
+      "minha cabeça está congelando, pelo amor de Deus,"
      ],
      [
       "Շ",
@@ -7367,7 +7985,9 @@
       "Возьми эту шкурку и мне",
       "take this skin and for me",
       "prends cette peau et pour moi",
-      "toma esta piel y para mí"
+      "toma esta piel y para mí",
+      "nimm dieses Fell und näh mir",
+      "pegue esta pele e costure para mim"
      ],
      [
       "Շ",
@@ -7375,7 +7995,9 @@
       "Сшей шапку, чтоб была впору.",
       "sew a cap that fits my head.",
       "couds un bonnet à ma taille.",
-      "cose un gorro a la medida de mi cabeza."
+      "cose un gorro a la medida de mi cabeza.",
+      "eine Mütze, die mir passt.",
+      "um gorro do tamanho da minha cabeça."
      ],
      [
       "Շ",
@@ -7383,7 +8005,9 @@
       "За плату не беспокойся,",
       "Don’t worry about your fee,",
       "Pour ton salaire, sois tranquille,",
-      "Por tu paga, quédate tranquilo,"
+      "Por tu paga, quédate tranquilo,",
+      "Um deinen Lohn sorg dich nicht,",
+      "Com o seu pagamento não se preocupe,"
      ],
      [
       "Շ",
@@ -7391,7 +8015,9 @@
       "Только смотри, не затягивай.",
       "just don’t take too long.",
       "mais surtout ne traîne pas.",
-      "pero eso sí, no tardes mucho."
+      "pero eso sí, no tardes mucho.",
+      "nur lass dir nicht zu lange Zeit.",
+      "só não demore muito."
      ],
      [
       "Կ",
@@ -7399,7 +8025,9 @@
       "— С радостью, дядюшка Кучи,",
       "— With pleasure, uncle Kuchi,",
       "— Avec plaisir, oncle Koutchi,",
-      "— Con mucho gusto, tío Kuchi,"
+      "— Con mucho gusto, tío Kuchi,",
+      "— Mit Vergnügen, Onkel Kutschi,",
+      "— Com prazer, tio Kuchi,"
      ],
      [
       "Կ",
@@ -7407,7 +8035,9 @@
       "Это ж шапка, а не шуба.",
       "it’s only a cap, not a fur coat.",
       "ce n’est qu’un bonnet, pas une pelisse.",
-      "es un gorro, no un tapado de piel."
+      "es un gorro, no un tapado de piel.",
+      "ist doch nur eine Mütze, kein Pelzmantel.",
+      "é só um gorro, não é um casaco de pele."
      ],
      [
       "Կ",
@@ -7415,7 +8045,9 @@
       "Ради твоего дорогого уважения",
       "For the sake of your precious friendship,",
       "Pour ta précieuse amitié,",
-      "Por tu preciada amistad,"
+      "Por tu preciada amistad,",
+      "Um deiner teuren Freundschaft willen",
+      "Em nome da sua preciosa amizade,"
      ],
      [
       "Կ",
@@ -7423,7 +8055,9 @@
       "В пятницу милости прошу — заберёшь.",
       "come on Friday and take it.",
       "viens vendredi le chercher.",
-      "ven el viernes a buscarlo."
+      "ven el viernes a buscarlo.",
+      "komm am Freitag und hol sie ab.",
+      "venha na sexta e leve."
      ],
      [
       "Կ",
@@ -7431,7 +8065,9 @@
       "О деньгах и говорить лишнее,",
       "No need to talk about money,",
       "Parler d’argent est inutile,",
-      "De plata ni hablar,"
+      "De plata ni hablar,",
+      "Über Geld brauchen wir nicht zu reden,",
+      "Não precisamos falar de dinheiro,"
      ],
      [
       "Կ",
@@ -7439,7 +8075,9 @@
       "Между нами о таком и говорить стыдно,",
       "between us it’s a shame even to mention it,",
       "entre nous, c’est même honteux d’en parler,",
-      "entre nosotros hasta da vergüenza hablarlo,"
+      "entre nosotros hasta da vergüenza hablarlo,",
+      "unter uns ist es eine Schande, es auch nur zu erwähnen,",
+      "entre nós é vergonha até mencionar,"
      ],
      [
       "Կ",
@@ -7447,7 +8085,9 @@
       "Велика ли важность, эх, дорогой мой,",
       "what a big deal it is, my blessed fellow,",
       "quelle affaire, voyons, mon brave,",
-      "qué gran cosa, vamos, bendito,"
+      "qué gran cosa, vamos, bendito,",
+      "was ist das schon, mein Gesegneter,",
+      "que grande coisa é isso, meu abençoado,"
      ],
      [
       "Կ",
@@ -7455,7 +8095,9 @@
       "Всего-то плата за одну шапку.",
       "only, only the price of one cap.",
       "seulement le prix d’un bonnet.",
-      "nada más el precio de un gorro."
+      "nada más el precio de un gorro.",
+      "nur, nur der Preis einer Mütze.",
+      "só, só o preço de um gorro."
      ]
     ]
    },
@@ -7620,7 +8262,9 @@
       "Один крестьянин в своей деревне",
       "A villager in his own village",
       "Un villageois, dans son village,",
-      "Un aldeano, en su aldea,"
+      "Un aldeano, en su aldea,",
+      "Ein Dorfbewohner hatte in seinem Dorf",
+      "Um aldeão, na sua própria aldeia,"
      ],
      [
       "Թ",
@@ -7628,7 +8272,9 @@
       "Открыл лавку и торговал всякой всячиной.",
       "had set up a shop and sold this and that.",
       "avait monté une boutique et vendait de tout.",
-      "había armado un almacén y vendía de todo."
+      "había armado un almacén y vendía de todo.",
+      "einen Laden eröffnet und verkaufte dies und das.",
+      "tinha aberto uma venda e vendia de tudo um pouco."
      ],
      [
       "Թ",
@@ -7636,7 +8282,9 @@
       "Однажды из соседней деревни,",
       "One fine day, from a nearby village,",
       "Un beau jour, d’un village voisin,",
-      "Un buen día, de una aldea vecina,"
+      "Un buen día, de una aldea vecina,",
+      "Eines schönen Tages kommt aus dem Nachbardorf,",
+      "Num belo dia, da aldeia vizinha,"
      ],
      [
       "Թ",
@@ -7644,7 +8292,9 @@
       "С дубиной на плече, с собакой позади,",
       "club on his shoulder, dog at his heels,",
       "gourdin sur l’épaule, son chien derrière,",
-      "con el garrote al hombro y el perro detrás,"
+      "con el garrote al hombro y el perro detrás,",
+      "den Knüppel auf der Schulter, den Hund bei Fuß,",
+      "porrete no ombro, cachorro nos calcanhares,"
      ],
      [
       "Թ",
@@ -7652,7 +8302,9 @@
       "Входит здоровенный пастух.",
       "in walks a hulking shepherd.",
       "entre un berger costaud.",
-      "entra un pastor grandote."
+      "entra un pastor grandote.",
+      "ein baumlanger Hirte herein.",
+      "entra um pastor grandalhão."
      ],
      [
       "Չ",
@@ -7660,7 +8312,9 @@
       "— Добрый день тебе, лавочник,",
       "— Good day to you, shopkeeper,",
       "— Bonjour à toi, boutiquier,",
-      "— Buen día, almacenero,"
+      "— Buen día, almacenero,",
+      "— Guten Tag, Krämer,",
+      "— Bom dia, vendeiro,"
      ],
      [
       "Չ",
@@ -7668,7 +8322,9 @@
       "Мёду не найдётся?",
       "haven’t you got honey?",
       "tu n’as pas de miel ?",
-      "¿no tienes miel?"
+      "¿no tienes miel?",
+      "hast du keinen Honig?",
+      "você não tem mel?"
      ],
      [
       "Չ",
@@ -7676,7 +8332,9 @@
       "Дал бы нам немножко.",
       "Give us a little.",
       "Donne-nous-en un peu.",
-      "Danos un poco."
+      "Danos un poco.",
+      "Gib uns ein wenig.",
+      "Me dá um pouquinho."
      ],
      [
       "Խ",
@@ -7684,7 +8342,9 @@
       "— Есть, есть, брат-пастух.",
       "— I have, I have, brother shepherd.",
       "— J’en ai, j’en ai, frère berger.",
-      "— Tengo, tengo, hermano pastor."
+      "— Tengo, tengo, hermano pastor.",
+      "— Hab ich, hab ich, Bruder Hirte.",
+      "— Tenho, tenho, irmão pastor."
      ],
      [
       "Խ",
@@ -7692,7 +8352,9 @@
       "Где твоя посуда? Неси посуду,",
       "Where’s your pot? Bring your pot,",
       "Où est ton pot ? Apporte ton pot,",
-      "¿Dónde está tu vasija? Trae tu vasija,"
+      "¿Dónde está tu vasija? Trae tu vasija,",
+      "Wo ist dein Topf? Bring deinen Topf,",
+      "Cadê o seu pote? Traga o pote,"
      ],
      [
       "Խ",
@@ -7700,7 +8362,9 @@
       "Откуда сам захочешь,",
       "from wherever you like,",
       "d’où tu voudras toi-même,",
-      "de donde tú quieras,"
+      "de donde tú quieras,",
+      "woher du willst,",
+      "de onde você quiser,"
      ],
      [
       "Խ",
@@ -7708,7 +8372,9 @@
       "Сию минуту взвешу тебе.",
       "I’ll weigh it out for you this minute.",
       "je te le pèse tout de suite.",
-      "te lo peso en este momento."
+      "te lo peso en este momento.",
+      "ich wiege ihn dir sofort ab.",
+      "eu peso agora mesmo para você."
      ],
      [
       "Թ",
@@ -7716,7 +8382,9 @@
       "Вот так спокойно, так душевно,",
       "So calmly, so warmly,",
       "Ainsi, tranquillement, avec bonté,",
-      "Así, tranquilos, con cariño,"
+      "Así, tranquilos, con cariño,",
+      "So ruhig, so herzlich,",
+      "Tão calmos, tão cordiais,"
      ],
      [
       "Թ",
@@ -7724,7 +8392,9 @@
       "Добрыми словами, слаще мёда,",
       "with kind words sweeter than honey,",
       "avec de bons mots plus doux que le miel,",
-      "con buenas palabras más dulces que la miel,"
+      "con buenas palabras más dulces que la miel,",
+      "mit freundlichen Worten, süßer als Honig,",
+      "com palavras gentis, mais doces que o mel,"
      ],
      [
       "Թ",
@@ -7732,7 +8402,9 @@
       "Вешают мёд. И вдруг",
       "they weigh the honey. And suddenly",
       "ils pèsent le miel. Et soudain",
-      "pesan la miel. Y de repente"
+      "pesan la miel. Y de repente",
+      "wiegen sie den Honig. Und plötzlich",
+      "pesam o mel. E de repente"
      ],
      [
       "Թ",
@@ -7740,7 +8412,9 @@
       "Капля мёда стекает вниз.",
       "a drop of honey drips down.",
       "une goutte de miel tombe par terre.",
-      "una gota de miel cae al piso."
+      "una gota de miel cae al piso.",
+      "tropft ein Tropfen Honig herab.",
+      "cai uma gota de mel."
      ],
      [
       "Թ",
@@ -7748,7 +8422,9 @@
       "Жжж — летит оттуда муха,",
       "Bzzz — over comes a fly,",
       "Bzzz — une mouche arrive de là-bas,",
-      "Bzzz, de por allá viene una mosca,"
+      "Bzzz, de por allá viene una mosca,",
+      "Sss — da kommt eine Fliege",
+      "Zzz — chega uma mosca"
      ],
      [
       "Թ",
@@ -7756,7 +8432,9 @@
       "Садится на эту каплю.",
       "and lands on the drop.",
       "et se pose sur la goutte.",
-      "y se posa en la gota."
+      "y se posa en la gota.",
+      "und setzt sich auf den Tropfen.",
+      "e pousa na gota."
      ],
      [
       "Թ",
@@ -7764,7 +8442,9 @@
       "На муху, тихо-тихо, крадучись,",
       "At the fly, stealthily, stealthily,",
       "Sur la mouche, en cachette,",
-      "Sobre la mosca, a escondidas,"
+      "Sobre la mosca, a escondidas,",
+      "Auf die Fliege, heimlich, heimlich,",
+      "Na mosca, de mansinho, de mansinho,"
      ],
      [
       "Թ",
@@ -7772,7 +8452,9 @@
       "Кошка хозяина лавки",
       "the shopkeeper’s cat",
       "le chat du patron de la boutique",
-      "el gato del dueño del almacén"
+      "el gato del dueño del almacén",
+      "springt die Katze des Krämers",
+      "a gata do vendeiro"
      ],
      [
       "Թ",
@@ -7780,7 +8462,9 @@
       "Выпрыгивает,",
       "leaps out,",
       "bondit,",
-      "salta afuera,"
+      "salta afuera,",
+      "hervor,",
+      "dá um pulo,"
      ],
      [
       "Թ",
@@ -7788,7 +8472,9 @@
       "Бьёт лапой…",
       "strikes with its paw…",
       "frappe de la patte…",
-      "le da con la pata…"
+      "le da con la pata…",
+      "schlägt mit der Pfote zu…",
+      "e acerta com a pata…"
      ]
     ]
    },
@@ -7953,7 +8639,9 @@
       "Жили-были бедные муж с женой, и было у них три дочери.",
       "Once there lived a poor man and his wife, and they had three daughters.",
       "Il était une fois un homme pauvre et sa femme, qui avaient trois filles.",
-      "Había una vez un hombre pobre y su mujer, que tenían tres hijas."
+      "Había una vez un hombre pobre y su mujer, que tenían tres hijas.",
+      "Es lebten einmal ein armer Mann und seine Frau, und sie hatten drei Töchter.",
+      "Era uma vez um homem pobre e sua mulher, e eles tinham três filhas."
      ],
      [
       "Պ",
@@ -7961,7 +8649,9 @@
       "Однажды отец работал, захотел пить и послал старшую дочь за водой.",
       "One day the father was working, got thirsty and sent the eldest daughter for water.",
       "Un jour, le père travaillait ; il eut soif et envoya l’aînée chercher de l’eau.",
-      "Un día el padre estaba trabajando, tuvo sed y mandó a la hija mayor a buscar agua."
+      "Un día el padre estaba trabajando, tuvo sed y mandó a la hija mayor a buscar agua.",
+      "Eines Tages arbeitete der Vater, bekam Durst und schickte die älteste Tochter Wasser holen.",
+      "Um dia o pai estava trabalhando, ficou com sede e mandou a filha mais velha buscar água."
      ],
      [
       "Պ",
@@ -7969,7 +8659,9 @@
       "Девушка взяла кувшин и пошла к роднику.",
       "The girl took the jug and went to the spring.",
       "La jeune fille prit la cruche et alla à la source.",
-      "La muchacha tomó el cántaro y fue a la fuente."
+      "La muchacha tomó el cántaro y fue a la fuente.",
+      "Das Mädchen nahm den Krug und ging zur Quelle.",
+      "A moça pegou a jarra e foi até a fonte."
      ],
      [
       "Պ",
@@ -7977,7 +8669,9 @@
       "У родника стояло высокое дерево.",
       "By the spring there stood a tall tree.",
       "Au-dessus de la source se dressait un grand arbre.",
-      "Junto a la fuente había un árbol alto."
+      "Junto a la fuente había un árbol alto.",
+      "An der Quelle stand ein hoher Baum.",
+      "Junto à fonte havia uma árvore alta."
      ],
      [
       "Պ",
@@ -7985,7 +8679,9 @@
       "Увидела она дерево и задумалась про себя:",
       "When she saw the tree, she began to think to herself:",
       "En voyant cet arbre, elle se mit à songer :",
-      "Al ver el árbol, se puso a pensar para sí:"
+      "Al ver el árbol, se puso a pensar para sí:",
+      "Als sie den Baum sah, begann sie bei sich zu denken:",
+      "Quando viu a árvore, começou a pensar consigo:"
      ],
      [
       "Ա",
@@ -7993,7 +8689,9 @@
       "— Вот выйду я замуж, рожу сына и назовём его Кикос.",
       "— Now, if I get married and have a son, we’ll call him Kikos.",
       "— Si je me marie et que j’ai un fils, nous l’appellerons Kikos.",
-      "— Si me caso y tengo un hijo, le pondremos Kikos."
+      "— Si me caso y tengo un hijo, le pondremos Kikos.",
+      "— Wenn ich jetzt heirate und einen Sohn bekomme, nennen wir ihn Kikos.",
+      "— Se eu me casar e tiver um filho, vamos chamá-lo de Kikos."
      ],
      [
       "Ա",
@@ -8001,7 +8699,9 @@
       "Придёт Кикос, залезет на это дерево, упадёт, ударится о камень и умрёт…",
       "Kikos will come, climb this tree, fall down, hit a stone and die…",
       "Kikos viendra, grimpera à cet arbre, tombera, heurtera une pierre et mourra…",
-      "Kikos vendrá, se subirá a este árbol, se caerá, se golpeará con una piedra y se morirá…"
+      "Kikos vendrá, se subirá a este árbol, se caerá, se golpeará con una piedra y se morirá…",
+      "Kikos wird kommen, auf diesen Baum klettern, herunterfallen, auf einen Stein schlagen und sterben…",
+      "Kikos vai vir, subir nesta árvore, cair, bater numa pedra e morrer…"
      ],
      [
       "Ա",
@@ -8009,7 +8709,9 @@
       "— Ой, Кикос, родненький, ой…",
       "— Alas, dear Kikos, alas…",
       "— Hélas, mon Kikos chéri, hélas…",
-      "— ¡Ay, Kikos querido, ay…"
+      "— ¡Ay, Kikos querido, ay…",
+      "— Weh, lieber Kikos, weh…",
+      "— Ai, querido Kikos, ai…"
      ],
      [
       "Պ",
@@ -8017,7 +8719,9 @@
       "Тут же села под деревом и принялась его оплакивать.",
       "She sat right down under the tree and began to mourn.",
       "Elle s’assit sur-le-champ sous l’arbre et se mit à le pleurer.",
-      "Ahí mismo se sentó bajo el árbol y empezó a llorarlo."
+      "Ahí mismo se sentó bajo el árbol y empezó a llorarlo.",
+      "Sie setzte sich gleich unter den Baum und begann zu klagen.",
+      "Sentou-se ali mesmo debaixo da árvore e começou a lamentar."
      ],
      [
       "Պ",
@@ -8025,7 +8729,9 @@
       "Самым умным из них оказался отец.",
       "The wisest of them turned out to be the father.",
       "Le plus sensé d’entre eux, c’était le père.",
-      "El más sensato de todos resultó ser el padre."
+      "El más sensato de todos resultó ser el padre.",
+      "Der Klügste von allen war am Ende der Vater.",
+      "O mais sábio de todos acabou sendo o pai."
      ],
      [
       "Հ",
@@ -8033,7 +8739,9 @@
       "— Эй, глупые, что вы тут расселись и голосите?",
       "— Hey, you fools, why are you sitting here mourning?",
       "— Eh, les sottes, qu’avez-vous à rester assises ici à vous lamenter ?",
-      "— ¡Eh, tontas! ¿Qué hacen sentadas aquí de luto?"
+      "— ¡Eh, tontas! ¿Qué hacen sentadas aquí de luto?",
+      "— He, ihr Dummköpfe, warum sitzt ihr hier und klagt?",
+      "— Ei, suas bobas, por que estão aí sentadas lamentando?"
      ],
      [
       "Հ",
@@ -8041,7 +8749,9 @@
       "Сколько ни горюйте, сколько ни плачьте — Кикос ведь не оживёт.",
       "However much you mourn and weep, Kikos won’t come back to life.",
       "Vous aurez beau vous lamenter et pleurer, Kikos ne ressuscitera pas.",
-      "Por más que lloren y se lamenten, Kikos no va a revivir."
+      "Por más que lloren y se lamenten, Kikos no va a revivir.",
+      "Wie sehr ihr auch klagt und weint, Kikos wird nicht wieder lebendig.",
+      "Por mais que lamentem e chorem, Kikos não vai voltar à vida."
      ],
      [
       "Հ",
@@ -8049,7 +8759,9 @@
       "Вставайте, пойдём домой, позовём людей, закажем службу, справим Кикосу поминки — что толку от слёз?",
       "Get up, let’s go home, invite people, have a service said and hold Kikos’s wake — what good will crying do?",
       "Levez-vous, rentrons, appelons du monde, faisons dire la messe et offrons le repas des funérailles de Kikos — à quoi bon pleurer ?",
-      "Levántense, vamos a casa, llamemos a la gente, hagamos misa y el velorio de Kikos: ¿de qué sirve llorar?"
+      "Levántense, vamos a casa, llamemos a la gente, hagamos misa y el velorio de Kikos: ¿de qué sirve llorar?",
+      "Steht auf, gehen wir nach Hause, laden wir Leute ein, lassen wir eine Messe lesen und halten Kikos’ Totenmahl — was nützt das Weinen?",
+      "Levantem, vamos para casa, chamar as pessoas, mandar rezar uma missa e fazer o velório do Kikos — de que adianta chorar?"
      ],
      [
       "Հ",
@@ -8057,7 +8769,9 @@
       "Таков порядок мира: как пришёл, так и уйти должен.",
       "That’s the way of the world: as he came, so he must go.",
       "C’est l’ordre du monde : comme il est venu, il doit s’en aller.",
-      "Es la ley del mundo: así como vino, así se tiene que ir."
+      "Es la ley del mundo: así como vino, así se tiene que ir.",
+      "So ist der Lauf der Welt: Wie er kam, so muss er gehen.",
+      "Assim é o mundo: como veio, assim tem de ir."
      ]
     ]
    },
@@ -8207,7 +8921,9 @@
       "Я люблю солнцем напоённое слово моей милой Армении,",
       "I love the sun-flavoured word of my sweet Armenia,",
       "J’aime le mot au goût de soleil de ma douce Arménie,",
-      "Amo la palabra con sabor a sol de mi dulce Armenia,"
+      "Amo la palabra con sabor a sol de mi dulce Armenia,",
+      "Ich liebe das sonnengewürzte Wort meines süßen Armeniens,",
+      "Amo a palavra com sabor de sol da minha doce Armênia,"
      ],
      [
       "Չ",
@@ -8215,7 +8931,9 @@
       "Люблю плачущую, полную слёз струну нашего старого саза,",
       "I love the mournful, tearful string of our old saz,",
       "j’aime la corde plaintive et en larmes de notre vieux saz,",
-      "amo la cuerda quejumbrosa y llorosa de nuestro viejo saz,"
+      "amo la cuerda quejumbrosa y llorosa de nuestro viejo saz,",
+      "ich liebe die klagende, tränenreiche Saite unserer alten Saz,",
+      "amo a corda queixosa e chorosa do nosso velho saz,"
      ],
      [
       "Չ",
@@ -8223,7 +8941,9 @@
       "Жгучий аромат алых, как кровь, цветов и роз,",
       "the burning scent of blood-red flowers and roses,",
       "le parfum brûlant des fleurs couleur de sang et des roses,",
-      "el perfume ardiente de flores color sangre y de rosas,"
+      "el perfume ardiente de flores color sangre y de rosas,",
+      "den brennenden Duft blutroter Blumen und Rosen",
+      "o perfume ardente das flores cor de sangue e das rosas"
      ],
      [
       "Չ",
@@ -8231,7 +8951,9 @@
       "И кроткий, гибкий танец девушек Наири люблю.",
       "and the gentle, supple dance of the girls of Nairi I love.",
       "et la danse douce et souple des filles de Naïri, je l’aime.",
-      "y la danza dulce y flexible de las muchachas de Nairi amo."
+      "y la danza dulce y flexible de las muchachas de Nairi amo.",
+      "und den sanften, geschmeidigen Tanz der Mädchen von Nairi liebe ich.",
+      "e a dança suave e leve das moças de Nairi eu amo."
      ],
      [
       "Չ",
@@ -8239,7 +8961,9 @@
       "Люблю наше тёмное небо, чистые воды, светлое озеро,",
       "I love our deep sky, our clear waters, the shining lake,",
       "J’aime notre ciel profond, nos eaux limpides, le lac lumineux,",
-      "Amo nuestro cielo hondo, las aguas claras, el lago luminoso,"
+      "Amo nuestro cielo hondo, las aguas claras, el lago luminoso,",
+      "Ich liebe unseren tiefen Himmel, die klaren Wasser, den leuchtenden See,",
+      "Amo nosso céu profundo, as águas claras, o lago brilhante,"
      ],
      [
       "Չ",
@@ -8247,7 +8971,9 @@
       "Летнее солнце и величавую вьюгу зимы с голосом дракона,",
       "the summer sun and the sublime, dragon-voiced blizzard of winter,",
       "le soleil d’été et le sublime blizzard d’hiver à la voix de dragon,",
-      "el sol del verano y la sublime ventisca del invierno con voz de dragón,"
+      "el sol del verano y la sublime ventisca del invierno con voz de dragón,",
+      "die Sommersonne und den erhabenen, drachenstimmigen Wintersturm,",
+      "o sol do verão e a sublime nevasca de inverno com voz de dragão,"
      ],
      [
       "Չ",
@@ -8255,7 +8981,9 @@
       "Негостеприимные чёрные стены затерянных во мраке лачуг,",
       "the black, unwelcoming walls of huts lost in the dark,",
       "les murs noirs, inhospitaliers, des masures perdues dans l’ombre,",
-      "las negras paredes inhóspitas de chozas perdidas en la oscuridad,"
+      "las negras paredes inhóspitas de chozas perdidas en la oscuridad,",
+      "die schwarzen, unwirtlichen Wände der im Dunkel verlorenen Hütten",
+      "as paredes negras e inóspitas das choupanas perdidas no escuro"
      ],
      [
       "Չ",
@@ -8263,7 +8991,9 @@
       "И тысячелетний камень древних городов люблю.",
       "and the thousand-year-old stone of ancient cities I love.",
       "et la pierre millénaire des cités anciennes, je l’aime.",
-      "y la piedra milenaria de las ciudades antiguas amo."
+      "y la piedra milenaria de las ciudades antiguas amo.",
+      "und den tausendjährigen Stein der alten Städte liebe ich.",
+      "e a pedra milenar das cidades antigas eu amo."
      ],
      [
       "Չ",
@@ -8271,7 +9001,9 @@
       "Где бы я ни был — не забуду наших скорбных песен,",
       "Wherever I may be, I will not forget our mournful songs,",
       "Où que je sois, je n’oublierai pas nos chants plaintifs,",
-      "Dondequiera que esté, no olvidaré nuestros cantos dolientes,"
+      "Dondequiera que esté, no olvidaré nuestros cantos dolientes,",
+      "Wo ich auch sei, ich vergesse unsere klagenden Lieder nicht,",
+      "Onde quer que eu esteja, não esquecerei nossas canções tristes,"
      ],
      [
       "Չ",
@@ -8279,7 +9011,9 @@
       "Не забуду наших древних книг, ставших молитвой,",
       "I will not forget our ancient books that became prayer,",
       "je n’oublierai pas nos livres anciens devenus prière,",
-      "no olvidaré nuestros libros antiguos convertidos en oración,"
+      "no olvidaré nuestros libros antiguos convertidos en oración,",
+      "vergesse nicht unsere alten Bücher, die zum Gebet wurden,",
+      "não esquecerei nossos livros antigos que se tornaram oração,"
      ],
      [
       "Չ",
@@ -8287,7 +9021,9 @@
       "Как бы остро ни ранили сердце наши кровоточащие раны —",
       "however sharply our bleeding wounds may pierce my heart —",
       "si cruellement que nos plaies sanglantes me percent le cœur —",
-      "por mucho que hieran mi corazón nuestras heridas sangrantes,"
+      "por mucho que hieran mi corazón nuestras heridas sangrantes,",
+      "wie scharf auch unsere blutenden Wunden mein Herz durchbohren —",
+      "por mais que nossas feridas sangrentas me atravessem o coração —"
      ],
      [
       "Չ",
@@ -8295,7 +9031,9 @@
       "Всё равно я люблю мою осиротевшую, пылающую Армению — любимую.",
       "still I love my orphaned, blood-lit Armenia, my beloved.",
       "j’aime encore mon Arménie orpheline et embrasée, ma bien-aimée.",
-      "aún amo a mi Armenia huérfana y encendida, mi amada."
+      "aún amo a mi Armenia huérfana y encendida, mi amada.",
+      "dennoch liebe ich mein verwaistes, blutbeleuchtetes Armenien, mein geliebtes.",
+      "ainda assim amo minha Armênia órfã, iluminada de sangue, minha amada."
      ],
      [
       "Չ",
@@ -8303,7 +9041,9 @@
       "Для моего тоскующего сердца нет другой сказки;",
       "For my longing heart there is no other fairy tale;",
       "Pour mon cœur nostalgique, il n’est pas d’autre conte ;",
-      "Para mi corazón nostálgico no hay otro cuento;"
+      "Para mi corazón nostálgico no hay otro cuento;",
+      "Für mein sehnsüchtiges Herz gibt es kein anderes Märchen;",
+      "Para meu coração saudoso não há outro conto de fadas;"
      ],
      [
       "Չ",
@@ -8311,7 +9051,9 @@
       "Нет чела в таком сиянии, как у Нарекаци и Кучака;",
       "there is no brow crowned with light like Narekatsi’s and Kuchak’s;",
       "pas de front auréolé comme ceux de Narekatsi et de Koutchak ;",
-      "no hay frente coronada de luz como la de Narekatsí y Kuchak;"
+      "no hay frente coronada de luz como la de Narekatsí y Kuchak;",
+      "keine lichtgekrönte Stirn wie die Narekatsis und Kutschaks;",
+      "não há fronte coroada de luz como a de Narekatsi e Kuchak;"
      ],
      [
       "Չ",
@@ -8319,7 +9061,9 @@
       "Обойди весь мир — нет белой вершины, как Арарат;",
       "cross the whole world: there is no white summit like Ararat;",
       "parcours le monde : il n’est pas de sommet blanc comme l’Ararat ;",
-      "recorre el mundo: no hay cumbre blanca como el Ararat;"
+      "recorre el mundo: no hay cumbre blanca como el Ararat;",
+      "durchquere die ganze Welt: Es gibt keinen weißen Gipfel wie den Ararat;",
+      "atravesse o mundo inteiro: não há cume branco como o Ararat;"
      ],
      [
       "Չ",
@@ -8327,7 +9071,9 @@
       "Как путь к недостижимой славе, я люблю мою гору Масис.",
       "like a road to unreachable glory, I love my mountain Masis.",
       "comme le chemin d’une gloire inaccessible, j’aime ma montagne Massis.",
-      "como el camino a una gloria inalcanzable, amo mi monte Masis."
+      "como el camino a una gloria inalcanzable, amo mi monte Masis.",
+      "wie einen Weg zu unerreichbarem Ruhm liebe ich meinen Berg Masis.",
+      "como um caminho para a glória inalcançável, amo minha montanha Masis."
      ]
     ]
    },

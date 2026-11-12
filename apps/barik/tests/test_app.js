@@ -288,6 +288,19 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok((await pg.textContent('#tabs')).includes('Path')&&(await pg.textContent('.path')).includes('Pomegranate'),'путь по-английски');
     await pg.click('[data-act=pUnit][data-arg=s1u1]'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
     ok((await pg.textContent('.scene')).includes('neighbours'),'сцена по-английски');
+    // А2: сцены на немецком и португальском — свой перевод, не английский
+    for(const [lg,want] of [['de','Sehr erfreut'],['pt','Muito prazer']]){
+      await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg='+lg+']'); await pg.click('[data-act=tab][data-arg=path]');
+      await pg.click('[data-act=pUnit][data-arg=s1u1]'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
+      const sc=await pg.textContent('.scene');
+      ok(sc.includes(want)&&!sc.includes('nice to meet')&&!sc.includes('neighbours'),'сцена на '+lg+': «'+want+'», без английского');
+      await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
+      const hint=await pg.evaluate(lg=>{ const B=window.__bararan, x=B.PU.q.find(q=>q.k==='tiles'); return x?x.ln[{de:6,pt:7}[lg]]:null; },lg);
+      for(let i=0;i<12&&!(await pg.locator('.ruw').count());i++){ const it=await pg.evaluate(()=>{const P=window.__bararan.PU,x=P.q[P.i];return {k:x.k,a:x.a,opts:x.opts||null};}); if(it.k==='tiles') break; await pg.locator('.opt').nth(it.opts.indexOf(it.a)).click(); await pg.click('[data-act=pNext]'); }
+      ok(hint&&(await pg.textContent('.ruw'))===hint,'сборка фразы на '+lg+': подсказка на своём языке');
+      await pg.click('[data-act=pQuit]'); await pg.click('[data-act=tab][data-arg=path]');
+    }
+    await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=lang][data-arg=en]'); await pg.click('[data-act=tab][data-arg=path]');
     // ступени 2–3 с подпиской: спряжение по лицам и подсказка в таблице
     await pg.evaluate(()=>{ window.BARARAN_CONFIG.FORCE_PREMIUM=true; }); await pg.click('[data-act=lang][data-arg=ru]').catch(()=>{});
     await pg.click('[data-act=tab][data-arg=path]'); ok(await pg.locator('.p-unit.locked').count()===0,'с подпиской замков нет');
