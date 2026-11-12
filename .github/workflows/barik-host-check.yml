@@ -1,0 +1,47 @@
+name: Barik hosting access
+on:
+  push:
+    branches: [codex/audit4]
+    paths: ['.github/workflows/barik-host-check.yml']
+permissions: {}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check cPanel token with a read-only API request
+        env:
+          BARIK_HOST_TOKEN: ${{ secrets.BARIK_HOST_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+
+          token = os.environ.get("BARIK_HOST_TOKEN")
+          if not token:
+              raise SystemExit("BARIK_HOST_TOKEN is missing")
+
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, *args, **kwargs):
+                  return None
+
+          client = urllib.request.build_opener(NoRedirect())
+          for host in ("host30.name.am:2083", "cpanel.barik.am"):
+              url = f"https://{host}/execute/Quota/get_quota_info"
+              request = urllib.request.Request(url, headers={"Authorization": f"cpanel barik:{token}"})
+              try:
+                  with client.open(request, timeout=20) as response:
+                      result = json.load(response)
+                  if result.get("status") == 1:
+                      print(f"{host}: cPanel token accepted")
+                      break
+                  print(f"{host}: cPanel API rejected the request")
+              except urllib.error.HTTPError as error:
+                  print(f"{host}: HTTP {error.code}")
+              except (OSError, ValueError) as error:
+                  print(f"{host}: {type(error).__name__}")
+          else:
+              raise SystemExit("No cPanel endpoint accepted the token")
+          PY
