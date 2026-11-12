@@ -2544,7 +2544,7 @@ function practiceHTML(){
     body='<p class="q">'+esc(T('pPickQ'))+'</p><div class="ruw big">'+esc(rdx(it.q))+'</div><div class="opts">'+it.opts.map((o,i)=>pOpt(o,i,it,hyLbl(o))).join('')+'</div>';
   }else if(it.k==='seed'){
     const x=BY[it.w];
-    body='<p class="q">'+esc(T('pMeanQ'))+'</p><div class="p-seedpic">'+(x?picQ(x):'')+'</div><div class="hyw" lang="hy">'+esc(it.w)+'</div>'+(x?'<div class="ruw tr">'+esc(trL(it.w))+'</div>':'')+'<div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(o)+'</span>')).join('')+'</div>';
+    body='<p class="q">'+esc(T('pMeanQ'))+'</p><div class="p-seedpic">'+(x&&it.done?picQ(x):'<button class="say" data-act="pSeedSay" aria-label="'+esc(T('pListen'))+'">'+ICON.spk+'</button>')+'</div><div class="hyw" lang="hy">'+esc(it.w)+'</div>'+(x?'<div class="ruw tr">'+esc(trL(it.w))+'</div>':'')+'<div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(o)+'</span>')).join('')+'</div>';
   }else if(it.k==='read'){
     body='<p class="q">'+esc(T('pReadQ'))+'</p><div class="hyw" lang="hy">'+esc(it.w)+'</div><div class="opts list">'+it.opts.map((o,i)=>pOpt(o,i,it,'<span class="o-lbl">'+esc(o)+'</span>')).join('')+'</div>';
   }else if(it.k==='hear'){
@@ -2683,6 +2683,7 @@ const PH={
       const b=el&&el.querySelector('.say'); if(!sayText(ls[i][1],b,false,()=>setTimeout(()=>step(i+1),350),lnG(ls[i]))) return; if(!REAL_ANY) setTimeout(()=>step(i+1),2600); };
     step(0); },
   pTr:()=>{ PG.tr=!PG.tr; pgSave(); render(); },
+  pSeedSay:(a,b)=>{ const it=pCur(); if(it&&BY[it.w]) speak(BY[it.w],false,b); },   // TZ3 №6: до ответа — звук вместо картинки-подсказки
   pTx:()=>{ PG.tx=pTxOn(PU&&PU.u)?0:1; pgSave(); render(); },
   pAns:a=>pAnswer(+a),
   pHear:(a,b)=>{ const it=pCur(); if(it) sayText(it.a,b); },

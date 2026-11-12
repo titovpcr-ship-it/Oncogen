@@ -35,8 +35,13 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
   fs.appendFileSync(LOG,'[11-Nov-2026 02:10:00 UTC] PHP Fatal error:  boom-2\n');
   await cron(D0+2*H+1800);
   ok(msgs.length===1,'та же причина в тот же день — второй раз не пишем');
+  { // TZ3 №5: вчерашние шаги воронки и Пути — в сводке
+    const yd=Math.floor(D0/86400)-1, rows=[['g:guest',8],['g:land_try',3],['g:start',2],['g:first_answer',1],['g:lesson_done',1],['e:unit_open_p1',2],['e:unit_pass_p1',1],['f:reels',4],['gs:from=reels:start',1],['csp',5]];
+    require('child_process').execFileSync('python3.13',['-c','import sqlite3,sys,json;c=sqlite3.connect(sys.argv[1]);[c.execute("INSERT INTO stats(day,k,n) VALUES(?,?,?)",(int(sys.argv[2]),k,n)) for k,n in json.loads(sys.argv[3])];c.commit()',path.join(DATA,'barik.sqlite'),String(yd),JSON.stringify(rows)]); }
   broken=true;
   o=await cron(D0+3*H+420);
+  ok(/Новички: гости 8 → телефон 3 → вошли 2 → 1-й ответ 1 → урок 1/.test(last())&&/Путь \(открыли→прошли→не прошли\): p1 2→1→0/.test(last())&&/Из роликов: 4 \(из них вошли 1\)/.test(last())&&/Отчёты CSP: 5/.test(last()),
+     'TZ3 №5: в сводке — воронка новичка, Путь, ролики, CSP: '+last().split('\n').slice(-4).join(' | '));
   ok(msgs.length===2&&/^⚠️ Barik: есть проблемы/.test(last())&&/главная сайта отвечает 500/.test(last())&&/личный кабинет/.test(last())&&/Вчера \(10\.11\)/.test(last()),
      '07:07 по Еревану — сводка дня с проблемой (сайт сломан): '+last().replace(/\n/g,' | ').slice(0,160));
   await cron(D0+5*H+420); ok(msgs.length===2,'сводка — раз в сутки; о сломанном сайте сегодня уже сказано');

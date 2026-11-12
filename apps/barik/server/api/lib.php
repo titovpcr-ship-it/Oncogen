@@ -1134,7 +1134,22 @@ function watch_digest(array $p, int $yday): string {
     return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): людей ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
         . ', вошли ' . day_sum($yday, 'g:start') . ', уроков ' . day_sum($yday, 'e:lesson_done') . ', оформляли ' . day_sum($yday, 'e:checkout')
         . ', оплат ' . day_sum($yday, 'e:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
-        . "\nОшибок JS у посетителей: " . $js . ', сбоев загрузки: ' . day_sum($yday, 'e:res_fail');
+        . "\nОшибок JS у посетителей: " . $js . ', сбоев загрузки: ' . day_sum($yday, 'e:res_fail') . watch_funnel($yday);
+}
+
+/* TZ_AUDIT3 №5: воронка новичка, Путь по ступеням, ролики и отчёты CSP — в утренней сводке (раньше только в stats.py) */
+function watch_funnel(int $d): string {
+    $g = fn($k) => day_sum($d, 'g:' . $k);
+    $t = "\nНовички: гости " . $g('guest') . ' → телефон ' . $g('land_try') . ' → вошли ' . $g('start') . ' → 1-й ответ ' . $g('first_answer') . ' → урок ' . $g('lesson_done');
+    $st = [];
+    for ($n = 1; $n <= 5; $n++) {
+        [$o, $ps, $f] = [day_sum($d, 'e:unit_open_p' . $n), day_sum($d, 'e:unit_pass_p' . $n), day_sum($d, 'e:unit_fail_p' . $n)];
+        if ($o || $ps || $f) $st[] = 'p' . $n . ' ' . $o . '→' . $ps . '→' . $f;
+    }
+    if ($st) $t .= "\nПуть (открыли→прошли→не прошли): " . implode(', ', $st);
+    $r = day_sum($d, 'f:reels'); if ($r) $t .= "\nИз роликов: " . $r . ' (из них вошли ' . day_sum($d, 'gs:from=reels:start') . ')';
+    $c = day_sum($d, 'csp'); if ($c) $t .= "\nОтчёты CSP: " . $c;
+    return $t;
 }
 
 function watch_run(?int $now = null): string {

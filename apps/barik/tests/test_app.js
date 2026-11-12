@@ -394,6 +394,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(sw.n>=10&&sw.rev===sw.n,'А4: после зачёта s1u1 все '+sw.n+' зёрен из словаря — в повторении, ступень 1');
     ok((await pg.textContent('.p-res')).includes('в повторении'),'итог: сказано, сколько слов ушло в повторение');
     ok(await pg.evaluate(()=>{ const P=window.__bararan.syncPack?window.__bararan.syncPack():null; return !P||Object.keys(P.s.w).length>=10; }),'синхронизация видит зёрна в S.w');
+    { await pg.evaluate(()=>{ const B=window.__bararan; B.PU.q=B.PU.q.filter(x=>x.k==='seed').map(x=>Object.assign({},x,{done:false,re:0})); B.PU.end=false; B.PU.i=0; B.go('unit','s1u1'); }); await pg.waitForTimeout(150);
+      const before=await pg.evaluate(()=>({img:document.querySelectorAll('.p-seedpic img, .p-seedpic svg:not(.say svg)').length,say:document.querySelectorAll('.p-seedpic [data-act=pSeedSay]').length}));
+      const it=await pg.evaluate(()=>{const P=window.__bararan.PU,x=P.q[P.i];return {a:x.a,opts:x.opts};}); await pg.locator('.opt').nth(it.opts.indexOf(it.a)).click();
+      const after=await pg.evaluate(()=>document.querySelectorAll('.p-seedpic [data-act=pSeedSay]').length);
+      ok(before.say===1&&after===0,'TZ3 №6: зерно — до ответа кнопка «Слушать», картинка после ответа '+JSON.stringify(before));  await pg.click('[data-act=pQuit]'); }
     await pg.evaluate(()=>{ const B=window.__bararan; B.PG.u.s1u1={d:Date.now(),b:50}; });
     await pg.click('[data-act=tab][data-arg=path]');
     ok(await pg.evaluate(()=>document.querySelector('[data-arg=s1u1] .p-redo')!==null),'старая запись ниже 70 % — пометка «повторить» на карте');
