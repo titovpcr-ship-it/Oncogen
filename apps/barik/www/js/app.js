@@ -2247,6 +2247,9 @@ const unitById=id=>CRS.units.find(u=>u.id===id);
 const rdx=o=>o?(o[L]||o.en||o.ru):'';
 const LNI={ru:2,en:3,fr:4,es:5,de:6,pt:7};
 const lnTr=ln=>ln[LNI[L]||3];
+/* А3: транскрипция реплик — по умолчанию на ступенях 1–2; выбор ученика — PG.tx */
+const pTxOn=u=>PG.tx!=null?!!PG.tx:!!(u&&u.stage<=2);
+const lnTx=hy=>trPhrase(hy.replace(/[։,՝.!?․…—–«»():;"՛՜՞]/g,'').replace(/\s+/g,' ').trim().toLowerCase(),L);
 let ROOTS=null;
 function allRoots(){ if(!ROOTS){ ROOTS=new Set(); Object.values(BP.w||{}).forEach(p=>p[0].forEach(r=>ROOTS.add(r))); } return ROOTS; }
 function knownAff(extra){ const s=new Set(); CRS.units.forEach(u=>{ if(u.affix&&(PG.u[u.id]||u===extra)) s.add(u.affix); }); return s; }
@@ -2389,8 +2392,8 @@ function unitHTML(){
       '<div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="1">'+esc(T(u.kind==='read'?'pToText':'pToScene'))+'</button></div>';
   }
   const who=Object.keys(u.scene.who);
-  const lines=u.scene.lines.map((l,i)=>'<div class="ln'+(l[0]===who[0]?'':' r')+'" id="ln'+i+'"><span class="ln-who">'+esc(rdx(u.scene.who[l[0]]))+'</span><div class="ln-b"><button class="say sm" data-act="pSayLn" data-arg="'+i+'" aria-label="'+esc(T('pListen'))+'">'+ICON.spk+'</button><span class="ln-t"><span class="ln-hy" lang="hy">'+esc(l[1])+'</span>'+(PG.tr?'<span class="ln-tr">'+esc(lnTr(l))+'</span>':'')+'</span></div></div>').join('');
-  return head+'<h2 class="u-scene">'+esc(rdx(u.scene.title))+'</h2>'+(u.kind==='read'?'<p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+'</p>':'')+'<div class="u-tools"><button class="btn secondary sm" data-act="pPlayAll">'+ICON.play+' '+esc(T('pPlayAll'))+'</button><button class="btn ghost sm" data-act="pTr">'+esc(T(PG.tr?'pTrHide':'pTrShow'))+'</button></div>'+
+  const lines=u.scene.lines.map((l,i)=>'<div class="ln'+(l[0]===who[0]?'':' r')+'" id="ln'+i+'"><span class="ln-who">'+esc(rdx(u.scene.who[l[0]]))+'</span><div class="ln-b"><button class="say sm" data-act="pSayLn" data-arg="'+i+'" aria-label="'+esc(T('pListen'))+'">'+ICON.spk+'</button><span class="ln-t"><span class="ln-hy" lang="hy">'+esc(l[1])+'</span>'+(pTxOn(u)?'<span class="ln-tx">'+esc(lnTx(l[1]))+'</span>':'')+(PG.tr?'<span class="ln-tr">'+esc(lnTr(l))+'</span>':'')+'</span></div></div>').join('');
+  return head+'<h2 class="u-scene">'+esc(rdx(u.scene.title))+'</h2>'+(u.kind==='read'?'<p class="u-src">'+esc(rdx(u.author))+(u.year?', '+esc(u.year):'')+'</p>':'')+'<div class="u-tools"><button class="btn secondary sm" data-act="pPlayAll">'+ICON.play+' '+esc(T('pPlayAll'))+'</button><button class="btn ghost sm" data-act="pTr">'+esc(T(PG.tr?'pTrHide':'pTrShow'))+'</button><button class="btn ghost sm" data-act="pTx" aria-pressed="'+pTxOn(u)+'">'+esc(T('pTxBtn'))+(pTxOn(u)?' ✓':'')+'</button></div>'+
     '<div class="scene">'+lines+'</div><div class="actions page-actions"><button class="btn primary" data-act="pStep" data-arg="2">'+esc(T('pToPractice'))+'</button></div>';
 }
 /* практика: упражнения формулы + собрать фразу сцены + на слух */
@@ -2494,7 +2497,8 @@ function practiceHTML(){
   if(it.done){
     const shown=it.k==='tiles'||it.k==='hear'?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'?it.w:(it.k==='conj'?PRON[it.p]+' '+it.a:it.a)));
     const tr=it.k==='tiles'||it.k==='hear'?lnTr(it.ln):((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
-    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+(tr?esc(tr):'')+'</span></div>')+
+    const txl=(it.k==='tiles'||it.k==='hear')&&PU.u&&pTxOn(PU.u)?'<span class="ln-tx">'+esc(lnTx(shown))+'</span>':'';
+    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+txl+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+txl+(tr?esc(tr):'')+'</span></div>')+
       '<button class="btn primary" data-act="pNext">'+esc(T('next'))+'</button>';
   }
   return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
@@ -2598,6 +2602,7 @@ const PH={
       const b=el&&el.querySelector('.say'); if(!sayText(ls[i][1],b,false,()=>setTimeout(()=>step(i+1),350),lnG(ls[i]))) return; if(!REAL_ANY) setTimeout(()=>step(i+1),2600); };
     step(0); },
   pTr:()=>{ PG.tr=!PG.tr; pgSave(); render(); },
+  pTx:()=>{ PG.tx=pTxOn(PU&&PU.u)?0:1; pgSave(); render(); },
   pAns:a=>pAnswer(+a),
   pHear:(a,b)=>{ const it=pCur(); if(it) sayText(it.a,b); },
   pTile:a=>{ const it=pCur(); if(!it||it.done) return; const b=it.bank[+a]; if(!b||b.used) return; b.used=true; it.ans.push(b.id); render(); },

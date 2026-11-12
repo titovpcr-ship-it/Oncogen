@@ -258,6 +258,12 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.locator('.scene .ln').count()===6&&(await pg.textContent('.scene')).includes('холодильник'),'сцена: 6 реплик с переводом');
     await pg.click('[data-act=pTr]'); ok(await pg.locator('.ln-tr').count()===0,'сцена: перевод скрывается');
     await pg.click('[data-act=pTr]'); await noH('сцена');
+    // А3: транскрипция на ступени 1 — включена, переключатель запоминается
+    ok(await pg.locator('.scene .ln-tx').count()===6&&/[a-zа-я]/i.test(await pg.textContent('.scene .ln-tx')),'сцена ступени 1: транскрипция под каждой репликой');
+    await pg.click('[data-act=pTx]'); ok(await pg.locator('.scene .ln-tx').count()===0,'транскрипция выключается');
+    ok(await pg.evaluate(()=>JSON.parse(localStorage.getItem('barik-path-v1')).tx===0),'выбор транскрипции сохранён в прогрессе пути');
+    await pg.click('[data-act=pTx]'); ok(await pg.locator('.scene .ln-tx').count()===6,'транскрипция включается обратно');
+    await pg.evaluate(()=>{ delete window.__bararan.PG.tx; window.__bararan.pgSave(); });
     await pg.click('[data-act=pSayLn][data-arg="0"]'); await pg.waitForTimeout(600);
     const h0=await pg.evaluate(()=>window.__bararan.aid(window.__bararan.CRS.units[3].scene.lines[0][1]));
     ok(got.some(x=>x.startsWith('200')&&x.includes(h0)),'сцена: реплика звучит своей записью');
@@ -307,6 +313,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     for(const id of ['s2u1','s2u8','s3u1','s4u1','s4u5']){
       await pg.click('[data-act=pUnit][data-arg='+id+']'); await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
       ok(await pg.locator('.scene .ln').count()>=6,id+': сцена');
+      if(id==='s3u1') ok(await pg.locator('.scene .ln-tx').count()===0,'s3u1: транскрипция по умолчанию выключена');
       await pg.click('.page-actions [data-act=pStep][data-arg="2"]');
       const it=await pg.evaluate(()=>{const P=window.__bararan.PU; return P.q.map(x=>x.k);});
       if(id==='s4u5') ok(it.filter(k=>k==='form').length===4,id+': 4 задания на причастие');
