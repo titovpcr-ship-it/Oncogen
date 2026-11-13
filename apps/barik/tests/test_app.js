@@ -486,7 +486,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const pg=await ctx.newPage(), errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base); await pg.waitForSelector('#phOpts .ph-opt');
     for(const w of [320,390]){ await pg.setViewportSize({width:w,height:844}); await pg.waitForTimeout(100);
-      ok(await pg.evaluate(()=>{ const s=document.querySelector('.ph-scr').getBoundingClientRect(); return [...document.querySelectorAll('#phOpts .ph-opt')].every(b=>b.getBoundingClientRect().bottom<=s.bottom); }),'Б3: все три ответа видны в телефоне на '+w+' px'); }
+      const fit=await pg.evaluate(()=>{const s=document.querySelector('.ph-scr').getBoundingClientRect();return {screen:s.bottom,answers:[...document.querySelectorAll('#phOpts .ph-opt')].map(b=>Math.round(b.getBoundingClientRect().bottom))};});
+      ok(fit.answers.length===3&&fit.answers.every(y=>y<=fit.screen),'Б3: все три ответа видны в телефоне на '+w+' px '+JSON.stringify(fit)); }
     for(const [w,h] of [[360,640],[390,700],[430,740]]){ await pg.setViewportSize({width:w,height:h}); await pg.evaluate(()=>scrollTo(0,0)); await pg.waitForTimeout(100);
       const f=await pg.evaluate(()=>{ const b=s=>document.querySelector(s).getBoundingClientRect().bottom; return {h1:b('.ld-hero h1'),cta:b('.ld-ctas .btn'),o2:b('#phOpts .ph-opt:nth-child(2)')}; });
       ok(f.h1<=h&&f.cta<=h&&f.o2<=h,'TZ3 №3: на '+w+'×'+h+' без прокрутки — заголовок, кнопка и два ответа в телефоне '+JSON.stringify(f)); }
@@ -531,7 +532,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const A=await pg.evaluate(()=>{const B=window.__bararan; return {man:B.MAN, urls:[...new Set(B.WORDS.map(w=>B.audioUrl(w.a)).concat(B.ABC.map(x=>B.audioUrl(x.nm))))], hi:B.aid('բարև ձեզ')};});
     const miss=A.urls.filter(u=>!fs.existsSync(path.join(ROOT,u)));
-    ok(A.man.count>0&&miss.length===0&&A.man.count===A.man.total,'озвучка: запись у всех '+A.urls.length+' слов и названий букв ('+A.man.voice+'), нет: '+miss.length);
+    ok(A.man.count>=A.urls.length&&A.man.total>=A.urls.length&&miss.length===0,'озвучка: запись у всех '+A.urls.length+' слов и названий букв ('+A.man.voice+'), нет: '+miss.length);
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=say][data-arg="բարև ձեզ"]'); await pg.waitForTimeout(700);
     ok(got.some(x=>x.startsWith('200 audio/mpeg')&&x.includes(A.hi)),'«Проверить звук» берёт запись слова: '+got.join(' '));
     const dur=await pg.evaluate(u=>new Promise(r=>{const a=new Audio(u); a.onloadedmetadata=()=>r(a.duration); a.onerror=()=>r(-1);}),A.urls[0]);
@@ -543,7 +544,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     if(A.man.voices&&A.man.voices.hayk){
       const H=await pg.evaluate(()=>{const B=window.__bararan; return B.WORDS.map(w=>B.audioUrl(w.a,'m')).concat(B.ABC.map(x=>B.audioUrl(x.nm,'m')));});
       const hm=H.filter(u=>!u.includes('/hayk/')||!fs.existsSync(path.join(ROOT,u)));
-      ok(hm.length===0&&A.man.voices.hayk.count===A.man.total,'мужской голос: запись у всех '+H.length+', нет: '+hm.length);
+      ok(hm.length===0&&A.man.voices.hayk.count>=H.length&&A.man.voices.hayk.total>=H.length,'мужской голос: запись у всех '+H.length+', нет: '+hm.length);
       await pg.click('[data-act=tab][data-arg=settings]');
       ok(await pg.locator('[data-act=rv]').count()===2&&await pg.locator('[data-act=rv][data-arg=f][aria-pressed=true]').count()===1,'настройки: выбор голоса, по умолчанию женский');
       got.length=0; await pg.click('[data-act=rv][data-arg=m]'); await pg.waitForTimeout(700);

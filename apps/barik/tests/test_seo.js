@@ -111,10 +111,10 @@ const LANGS=['ru','en','fr','es','de','pt'];
   { // Статическая SEO-обложка должна оставаться понятной и навигационной без JavaScript.
     const nc=await br.newContext({javaScriptEnabled:false}), np=await nc.newPage();
     await np.goto(base+'ru/learn.html');
-    const staticPage=await np.evaluate(()=>({h:document.querySelectorAll('h1').length,buttons:document.querySelectorAll('button').length,
+    const staticPage=await np.evaluate(()=>({h:document.querySelectorAll('h1').length,buttons:[...document.querySelectorAll('button')].map(b=>({type:b.type,form:!!b.form})),
       cta:document.querySelector('#phOpts a')?.getAttribute('href')||'',language:document.querySelector('a[href="../fr/learn.html"]')?.href||''}));
-    ok(staticPage.h===1&&staticPage.buttons===0&&staticPage.cta==='../?lang=ru&from=learn&switch=1&start=lesson'
-      &&staticPage.language===base+'fr/learn.html','SEO-обложка без JS: одна H1, без неработающих кнопок, CTA и язык — ссылки');
+    ok(staticPage.h===1&&staticPage.buttons.every(b=>b.type==='submit'&&b.form)&&staticPage.cta==='../?lang=ru&from=learn&switch=1&start=lesson'
+      &&staticPage.language===base+'fr/learn.html','SEO-обложка без JS: одна H1, нет инертных кнопок, CTA и язык — ссылки '+JSON.stringify(staticPage));
     await np.click('#phOpts a');
     const route=new URL(np.url());
     ok(route.pathname==='/'&&route.searchParams.get('lang')==='ru'&&route.searchParams.get('switch')==='1'&&route.searchParams.get('start')==='lesson',

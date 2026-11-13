@@ -8,7 +8,7 @@ async function scan(p,selector,min=4.5){
  const over=(a,b)=>a.slice(0,3).map((x,i)=>x*(a[3]??1)+b[i]*(1-(a[3]??1)));
  const lum=c=>c.slice(0,3).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;}).reduce((s,x,i)=>s+x*[.2126,.7152,.0722][i],0);
  return els.filter(e=>e.getClientRects().length&&e.textContent.trim()).map(e=>{const chain=[];for(let a=e;a;a=a.parentElement)chain.unshift(a);let bg=[255,255,255];for(const a of chain)bg=over(rgb(getComputedStyle(a).backgroundColor),bg);const s=getComputedStyle(e),fg=over(rgb(s.color),bg);const l=[lum(fg),lum(bg)].sort((a,b)=>a-b);return {selector:e.className,text:e.textContent.trim().slice(0,60),ratio:(l[1]+.05)/(l[0]+.05)};});
- });assert(rows.length,'Missing contrast target '+selector);for(const r of rows){console.log(JSON.stringify(r));assert(r.ratio>=min,selector+' contrast '+r.ratio.toFixed(2));}
+ });assert(rows.length,'Missing contrast target '+selector);for(const r of rows){console.log(JSON.stringify(r));assert(r.ratio>=min,selector+' contrast '+r.ratio.toFixed(2)+' '+JSON.stringify(r));}
 }
 async function gradients(p,sel){
  const rows=await p.locator(sel).evaluateAll(es=>es.filter(e=>e.getClientRects().length).map(e=>{const s=getComputedStyle(e);return {color:s.color,bg:s.backgroundImage,solid:s.backgroundColor};}));

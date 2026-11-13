@@ -613,10 +613,10 @@ body[data-view="onboard"]{background:#FFFAF5}
 @keyframes phIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
 .ph-card .pimg{width:100%;aspect-ratio:16/10;border-radius:14px}
 .ph-hy{font:600 26px/1.15 var(--hy);margin-top:4px}
-.ph-tr{font-size:12px;color:#66667B}
+.ph-tr{font-size:12px;color:#535367}
 .ph-opts{display:grid;gap:7px}
 .ph-opt{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:12px;background:#fff;border:1.5px solid #EFE4DA;font:700 13px/1.2 var(--ui);transition:background .3s,border-color .3s,color .3s,transform .3s}
-.ph-opt.ok{background:#E3F6EC;border-color:#1F9D6B;color:#176447;transform:scale(1.02)}
+.ph-opt.ok{background:#176447;border-color:#10533A;color:#fff;transform:scale(1.02)}
 .ph-opt.ok::after{content:"✓";margin-left:7px;font-weight:800}
 .bub{position:absolute;z-index:3;display:flex;align-items:center;gap:11px;padding:11px 16px 11px 11px;border:0;border-radius:22px;background:var(--L-card);color:var(--L-ink);box-shadow:var(--L-sh2);cursor:pointer;text-align:left;font:inherit;transition:transform .2s}
 .bub:hover{transform:translateY(-2px)}
@@ -730,7 +730,7 @@ details[open] .pm::after{transform:rotate(0)}
 .ld-end h2{font:800 clamp(30px,5vw,50px)/1.08 var(--disp);letter-spacing:-.04em;margin:16px 0 30px}
 .ld-end .ld-micro{justify-content:center;color:rgba(255,255,255,.92)}
 .ld-end .ck{background:rgba(255,255,255,.22);color:#fff}
-.ld-foot{padding:18px 0 14px;text-align:center;color:var(--L-ink3);font-size:14px}
+.ld-foot{padding:18px 0 14px;text-align:center;color:var(--L-ink2);font-size:14px}
 .ld-foot .ld-brand{justify-content:center;color:var(--L-ink)}
 .ld-foot p{margin:10px 0 0}
 .ld-social{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
@@ -1179,13 +1179,15 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
 @media (prefers-reduced-motion:reduce){.lz-dot{animation:none}}
 /* TZ_AUDIT3 №3: на телефоне первый экран — заголовок, кнопка и телефон с ответами; описание и галочки — под картинкой */
 @media (max-width:699px){
-  .ld-hero-in{display:flex;flex-direction:column;gap:14px}
+  .ld-hero-in{display:flex;flex-direction:column;gap:8px}
   .ld-copy{display:contents}
   .ld-eyebrow{order:5} .ld-hero h1{order:2} .ld-ctas .ld-how{display:none} .ld-ctas{order:3} .ld-art{order:4} .ld-sub{order:5;margin:0} .ld-micro{order:6}
   .ld-art{height:clamp(330px,92vw,380px);margin-top:0}
   .ph{width:min(176px,44%)}
 }
 @media (max-width:340px){ .ph{width:52%} }
+@media (max-width:420px){ .ph-scr{padding-top:28px} .ph-card .pimg{aspect-ratio:16/6} }
+@media (max-width:340px){ .ph{width:60%} .ph-scr{padding-top:24px} }
 /* TZ_AUDIT4 №2: кнопка, нажатая до загрузки приложения, — ждёт */
 .lz-busy{position:relative;pointer-events:none;opacity:.85}
 .lz-busy::after{content:"";display:inline-block;width:14px;height:14px;margin-left:8px;vertical-align:-2px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:lzr .8s linear infinite}

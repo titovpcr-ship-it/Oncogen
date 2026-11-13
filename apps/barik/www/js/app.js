@@ -1300,7 +1300,7 @@ function pbSaveLabel(voice){
 function pbSaveStatus(voice){
   const visible=PBS.voice===voice&&PBS.state!=='idle';
   const progress=visible?T('pbSaveProgress',PBS.done,PBS.total):'';
-  const announcement=visible&&PBS.state!=='run'?(PBS.error?T('pbSaveNeedSW'):progress):'';
+  const announcement=visible&&PBS.state!=='run'?(PBS.error?T('pbSaveNeedSW'):PBS.state==='ok'?T('pbSaved'):progress):'';
   return '<p class="note" id="pbSaveProgress" aria-hidden="true"'+(visible&&PBS.state==='run'?'':' hidden')+'>'+esc(progress)+'</p>'+
     '<p class="note" id="pbSaveAnnouncement" role="status">'+esc(announcement)+'</p>';
 }
@@ -1314,7 +1314,7 @@ function pbSaveUI(){
   progress.hidden=PBS.voice!==voice||PBS.state!=='run';
   progress.textContent=T('pbSaveProgress',PBS.done,PBS.total);
   if(PBS.state==='run'||PBS.voice!==voice) announcement.textContent='';
-  else announcement.textContent=PBS.error?T('pbSaveNeedSW'):progress.textContent;
+  else announcement.textContent=PBS.error?T('pbSaveNeedSW'):PBS.state==='ok'?T('pbSaved'):progress.textContent;
 }
 async function pbOffline(){
   if(!PB||PBS.state==='run') return;
