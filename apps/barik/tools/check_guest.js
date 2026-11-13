@@ -18,10 +18,21 @@ async function main(){
       const stream=await navigator.mediaDevices.getUserMedia({audio:true});
       stream.getTracks().forEach(track=>track.stop());
     });
-    for(let i=0;i<3;i++){
+    for(let i=1;i<=3;i++){
       await page.locator('#phOpts .ph-opt.right:not([disabled])').click();
+      try {
+        await page.waitForFunction(expected=>
+          document.querySelector('.ph-n')?.textContent?.replace(/\s/g,'')===`${expected}/3`,
+          i,{timeout:8000}
+        );
+      } catch {
+        const count=await page.locator('.ph-n').textContent().catch(()=>'(missing)');
+        throw new Error(`Guest demo did not advance to ${i}/3 (counter: ${count})`);
+      }
     }
-    await page.locator('[data-act=landTryGo]').click();
+    const continueButton=page.locator('[data-act=landTryGo]');
+    await continueButton.waitFor({state:'visible',timeout:8000});
+    await continueButton.click();
     await page.waitForFunction(()=>document.body.dataset.view==='session');
     if(errors.length) throw new Error(errors.join('; '));
     console.log('Guest lesson and microphone checks passed');
