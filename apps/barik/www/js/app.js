@@ -312,11 +312,12 @@ function today(){const d=new Date();return Math.floor((d.getTime()-d.getTimezone
 function status(w){const s=S.w[w.a]; if(!s) return 'new'; return s.b>=4?'learned':'learning';}
 const LEVELS=['A1','A2','B1','B2','C1','C2'];
 function counts(list){
+  const pool=list||WORDS, saved=Object.keys(S.w); if(!saved.length) return {learned:0,learning:0,due:0,seen:0,total:pool.length};
   const td=today(); let learned=0,learning=0,due=0;
-  for(const w of (list||WORDS)){const s=S.w[w.a]; if(!s) continue; if(s.b>=4) learned++; else learning++; if(s.d<=td&&canReview(w)) due++;}
-  return {learned,learning,due,seen:learned+learning,total:(list||WORDS).length};
+  for(const w of pool){const s=S.w[w.a]; if(!s) continue; if(s.b>=4) learned++; else learning++; if(s.d<=td&&canReview(w)) due++;}
+  return {learned,learning,due,seen:learned+learning,total:pool.length};
 }
-function nextNew(ti,n){const pool=(ti==null)?WORDS:TOPICS[ti].list; return pool.filter(w=>!S.w[w.a]&&canUse(w)).slice(0,n);}
+function nextNew(ti,n){const pool=(ti==null)?WORDS:TOPICS[ti].list, out=[]; for(const w of pool){if(!S.w[w.a]&&canUse(w)){out.push(w);if(out.length>=n) break;}} return out;}
 function touchStreak(){const td=today(); if(S.st.day===td) return; S.st.streak=(S.st.day===td-1)?(S.st.streak||0)+1:1; S.st.day=td;}
 
 /* ================= SPEECH ================= */
@@ -1102,8 +1103,14 @@ function socialHTML(){ const S=CFG.SOCIAL||{}; if(BILL.native||!(S.ig||S.tg)) re
   return '<p class="ld-social">'+(S.ig?'<a href="'+esc(S.ig)+'" target="_blank" rel="noopener" aria-label="Instagram">'+SOC_IC.ig+'<span>Instagram</span></a>':'')+
     (S.tg?'<a href="'+esc(S.tg)+'" target="_blank" rel="noopener" aria-label="Telegram">'+SOC_IC.tg+'<span>Telegram</span></a>':'')+'</p>'; }
 /* Телефон на обложке: картинка и слово, через миг загорается верный ответ, потом следующее слово. */
+function landTryComplete(){
+  const card=document.getElementById('phCard'), opts=document.getElementById('phOpts');
+  if(card) card.innerHTML='<span class="ph-done">'+emo('🎉','ie')+'</span><span class="ph-tr">'+esc(T('landTryDone'))+'</span>';
+  if(opts) opts.innerHTML='<button type="button" class="ph-opt ph-go" data-act="landTryGo">'+esc(T('landTryGo'))+' →</button>';
+}
 function landDemo(){
   const card=document.getElementById('phCard'), opts=document.getElementById('phOpts'); if(!card) return;
+  if(LT.on&&LT.n>=3){ landTryComplete(); return; }
   const ws=DEMO.map(a=>BY[a]&&PICS[a]?BY[a]:null).filter(Boolean); if(!ws.length) return;
   const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   let gen=0, paused=false;
@@ -1146,9 +1153,7 @@ function landTry(a){
   const bar=document.querySelector('.ph-bar i'); if(bar) bar.style.width=Math.round(100*LT.n/3)+'%';
   setTimeout(()=>{ if(view!=='onboard') return;
     if(LT.n<3){ landK++; LT.show&&LT.show(); return; }
-    const card=document.getElementById('phCard'); if(card) card.innerHTML='<span class="ph-done">'+emo('🎉','ie')+'</span><span class="ph-tr">'+esc(T('landTryDone'))+'</span>';
-    const currentOpts=document.getElementById('phOpts');
-    if(currentOpts) currentOpts.innerHTML='<button type="button" class="ph-opt ph-go" data-act="landTryGo">'+esc(T('landTryGo'))+' →</button>'; },ok?900:1500);
+    landTryComplete(); },ok?900:1500);
 }
 /* Пропись на обложке и в разделе «Пропись»: перо пишет букву, потом следующую. В разделе под
    прописью — весь алфавит: нажатая буква пишется сразу, дальше снова по порядку. */
