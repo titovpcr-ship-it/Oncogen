@@ -1,5 +1,5 @@
 name: Release Barik
-# Contrast scanner handles solid and gradient buttons.
+# Wait for lazy lesson data before checking rendered contrast.
 on:
   push:
     branches: [codex/audit4]

@@ -21,6 +21,6 @@ async function gradients(p,sel){
 (async()=>{await new Promise(r=>srv.listen(0,'127.0.0.1',r));const b=await chromium.launch();try{for(const theme of ['light','dark']){const c=await b.newContext({colorScheme:theme,timezoneId:'Europe/Moscow',serviceWorkers:'block',viewport:{width:390,height:844}});const p=await c.newPage();await p.goto('http://127.0.0.1:'+srv.address().port+'/');await p.waitForFunction(()=>window.__bararan);console.log('Theme',theme);await scan(p,'.ld-foot p, .ph-tr, .pr-note');
 await gradients(p,'.ld .btn.primary');
 const sizes=await p.locator('.ld .lng').evaluateAll(es=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})));assert(sizes.length===6&&sizes.every(s=>s.w>=40&&s.h>=40),'Language targets >=40px');
-await p.evaluate(()=>{window.__bararan.H.pickLang('ru');window.__bararan.startLearn();});await scan(p,'.flag');
+await p.evaluate(()=>{window.__bararan.H.pickLang('ru');window.__bararan.startLearn();});await p.locator('.flag').waitFor({state:'visible'});await scan(p,'.flag');
 await gradients(p,'.btn.primary');
-await p.evaluate(()=>window.__bararan.H.paywall());await scan(p,'.pw-legal');await c.close();}}finally{await b.close();srv.close();}})().catch(e=>{console.error(e);srv.close();process.exitCode=1;});
+await p.evaluate(()=>window.__bararan.H.paywall());await p.locator('.pw-legal').waitFor({state:'visible'});await scan(p,'.pw-legal');await c.close();}}finally{await b.close();srv.close();}})().catch(e=>{console.error(e);srv.close();process.exitCode=1;});
