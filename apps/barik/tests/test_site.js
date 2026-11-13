@@ -10,7 +10,7 @@ const TYPES={'.html':'text/html','.js':'text/javascript','.css':'text/css','.jso
 const OVR={};   // подмена ответа сервера по пути — «вышла новая версия» (тест обновления, O-157)
 const srv=http.createServer((q,r)=>{
   const pn=decodeURIComponent(q.url.split('?')[0]);
-  if(OVR[pn]!==undefined){ r.writeHead(200,{'Content-Type':TYPES[path.extname(pn)||'.html']||'text/html'}); r.end(OVR[pn]); return; }
+  if(OVR[pn]!==undefined){ const x=typeof OVR[pn]==='object'?OVR[pn]:{body:OVR[pn]}; r.writeHead(x.status||200,{'Content-Type':x.type||TYPES[path.extname(pn)||'.html']||'text/html'}); r.end(x.body); return; }
   let f=path.join(ROOT,pn);
   if(f.endsWith('/')) f+='index.html';
   if(!f.startsWith(ROOT)||!fs.existsSync(f)){r.writeHead(404);r.end();return;}
@@ -26,14 +26,36 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   const pg=await ctx.newPage(); const errs=[], ext=[];
   pg.on('pageerror',e=>errs.push(String(e)));
   pg.on('request',q=>{const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')&&!u.startsWith('blob:')) ext.push(u);});
-  await pg.goto(base);
+  await pg.goto(base); await pg.waitForFunction(()=>window.__barikOk);
   const man=await pg.evaluate(async()=>{const l=document.querySelector('link[rel=manifest]'); if(!l) return null; const r=await fetch(l.href); return r.ok?r.json():null;});
   ok(man&&man.display==='standalone'&&man.icons.length>=3,'манифест: на экран «Домой», иконки '+(man&&man.icons.length));
   for(const ic of (man?man.icons:[])){ const r=await pg.request.get(base+ic.src); ok(r.ok(),'иконка '+ic.src); }
   ok((await pg.request.get(base+'icons/apple-touch-icon.png')).ok(),'иконка для iPhone');
   await pg.evaluate(()=>navigator.serviceWorker.ready);
-  await pg.reload(); await pg.waitForTimeout(400);
+  await pg.reload(); await pg.waitForFunction(()=>window.__barikOk);
   ok(await pg.evaluate(()=>!!navigator.serviceWorker.controller),'service worker управляет страницей');
+  { const raw=fs.readFileSync(path.join(ROOT,'index.html'),'utf8'), sw=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8');
+    const lang0=fs.readFileSync(path.join(ROOT,'js','lang0.js'),'utf8'), sh=(sw.match(/^const SHELL = (.+);$/m)||[])[1], shell=sh?JSON.parse(sh):[];
+    const tags=[...raw.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*>/g)], main=tags.filter(x=>!x[1].includes('/lang0.js?'));
+    ok(tags.some(x=>/js\/lang0\.js\?v=[0-9a-f]{8}/.test(x[1])&&/data-translations="[0-9a-f]{8}"/.test(x[0])&&/data-examples="[0-9a-f]{8}"/.test(x[0]))
+      &&main.length>=8&&main.every(x=>/\bdefer\b/.test(x[0]))&&lang0.includes('BARIK_LOAD_TRANSLATION'),'локаль запускается до параллельной загрузки отложенных скриптов');
+    const noscript=(raw.match(/<noscript>([\s\S]*?)<\/noscript>/)||[])[1]||'';
+    ok((raw.match(/<h1\b/g)||[]).length===1&&!/<h1\b/i.test(noscript),'главная: один пользовательский h1, noscript не дублирует заголовок');
+    ok(shell.some(x=>/^\.\/js\/app\.js\?v=/.test(x))&&!shell.some(x=>/\.\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|path_data|pictures)\.js/.test(x))&&/caches\.open\(CACHE\)/.test(sw),'переводы и необязательные разделы не входят в первоначальный PWA-кэш'); }
+  { const langs=['ru','en','fr','es','de','pt'], levels=['A1','A2','B1','B2','C1','C2'];
+    const chunks=langs.flatMap(l=>levels.map(level=>path.join(ROOT,'ex',l+'-'+level+'.json')));
+    ok(/data-examples="[0-9a-f]{8}"/.test(fs.readFileSync(path.join(ROOT,'index.html'),'utf8'))&&chunks.every(fs.existsSync)&&langs.every(l=>!fs.existsSync(path.join(ROOT,'ex',l+'.json')))&&fs.existsSync(path.join(ROOT,'ex','phrases.json')),
+      'сайт: примеры слов разбиты по языкам и уровням с версией кэша; полный JSON удалён только из web-сборки'); }
+  { const cx=await br.newContext({viewport:{width:390,height:844},timezoneId:'America/New_York',serviceWorkers:'block'}), p=await cx.newPage(); let frAttempts=0,deAttempts=0;
+    await p.route('**/js/tr-fr.js*',rt=>{frAttempts++;return frAttempts===1?rt.abort():rt.continue();});
+    await p.route('**/js/tr-de.js*',rt=>{deAttempts++;return deAttempts===1?rt.abort():rt.continue();});
+    await p.goto(base+'?lang=en&switch=1'); await p.waitForFunction(()=>window.__barikOk&&window.__bararan);
+    await p.evaluate(()=>window.__bararan.setLang('fr')); await p.waitForSelector('#trLoadError [data-act=trRetry]');
+    ok(await p.locator('#trLoadError[role=alert]').count()===1,'перевод: отказ сети показывает локализованную ошибку и повтор');
+    await p.evaluate(()=>window.__bararan.setLang('de')); await p.waitForFunction(()=>document.querySelector('#trLoadError')&&document.querySelector('#trLoadError').textContent.includes(window.__bararan.T('lzFail')));
+    ok(deAttempts===1&&await p.locator('#trLoadError').count()===1,'перевод: при быстром переключении сообщение обновляется на выбранную локаль');
+    await p.click('#trLoadError [data-act=trRetry]'); await p.waitForFunction(()=>window.BARARAN_TR&&window.BARARAN_TR.de);
+    ok(deAttempts===2,'перевод: ручной повтор загружает выбранную локаль ('+deAttempts+' попытки)'); await cx.close(); }
   ok(await pg.locator('.onb').count()===1,'первый заход — выбор языка');
   // превью ссылки (Open Graph / Twitter): картинка из обложки, заголовок и описание — из её текстов
   const og=await pg.evaluate(()=>{const m=n=>{const e=document.querySelector('meta[property="'+n+'"],meta[name="'+n+'"]'); return e?e.content:'';};
@@ -90,6 +112,44 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ok4=await p4.evaluate(()=>!!window.__barikOk&&!!document.querySelector('#view h1')&&document.querySelector('#view h1').offsetHeight>0);
     ok(stub===1&&loads>=2&&ok4,'заглушка вместо скрипта — одна перезагрузка, приложение работает (загрузок '+loads+')'); await c4.close(); }
   await pg.click('[data-act=landLang][data-arg=ru]');
+  await pg.waitForFunction(()=>document.documentElement.lang==='ru');
+  await pg.waitForFunction(()=>window.BARARAN_TR&&window.BARARAN_TR.ru);
+  { const cached=await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.map(k=>caches.open(k).then(c=>c.keys())))).then(rows=>rows.flat().map(r=>new URL(r.url).pathname)));
+    ok(cached.some(p=>/\/js\/tr-en\.js$/.test(p))&&cached.some(p=>/\/js\/tr-ru\.js$/.test(p))&&!cached.some(p=>/\/js\/tr-(?:fr|es|de|pt)\.js$/.test(p)),'переводы попадают в PWA-кэш по мере использования'); }
+  { // PWA не должен сохранять HTML-заглушку как перевод или JSON, а ручной повтор восстанавливает офлайн-функции.
+    const cx=await br.newContext({viewport:{width:390,height:800},timezoneId:'America/New_York'}), p=await cx.newPage();
+    await p.goto(base); await p.evaluate(()=>navigator.serviceWorker.ready); await p.reload();
+    await p.waitForFunction(()=>window.__barikOk&&navigator.serviceWorker.controller);
+    OVR['/js/tr-fr.js']={status:200,type:'text/html',body:'<title>Temporary hosting page</title>'};
+    await p.evaluate(()=>window.__bararan.setLang('fr')); await p.waitForSelector('#trLoadError [data-act=trRetry]');
+    const badTranslationCached=await p.evaluate(()=>caches.open('barik-lazy-v1').then(c=>c.keys()).then(ks=>ks.some(k=>new URL(k.url).pathname.endsWith('/tr-fr.js'))));
+    ok(!badTranslationCached,'service worker не сохраняет HTML-заглушку вместо перевода');
+    OVR['/js/tr-fr.js']={status:200,type:'text/javascript',body:fs.readFileSync(path.join(ROOT,'js','tr-fr.js'),'utf8')};
+    await p.click('#trLoadError [data-act=trRetry]'); await p.waitForFunction(()=>window.BARARAN_TR&&window.BARARAN_TR.fr);
+    const goodTranslationCached=await p.evaluate(()=>caches.open('barik-lazy-v1').then(c=>c.keys()).then(ks=>ks.some(k=>new URL(k.url).pathname.endsWith('/tr-fr.js'))));
+    ok(goodTranslationCached,'после повтора рабочий перевод попал в ленивый кэш');
+    const phrases=JSON.parse(fs.readFileSync(path.join(ROOT,'ex','phrases.json'),'utf8'));
+    const subset=[Object.assign({},phrases[0],{items:phrases[0].items.slice(0,1)})];
+    OVR['/ex/phrases.json']={status:200,type:'text/html',body:'<title>Temporary hosting page</title>'};
+    await p.goto(base+'?lang=ru&switch=1&phrases=1'); await p.waitForSelector('[data-act=pbRetry]');
+    const badJsonCached=await p.evaluate(()=>caches.open('barik-audio-v2').then(c=>c.keys()).then(ks=>ks.some(k=>new URL(k.url).pathname.endsWith('/ex/phrases.json'))));
+    ok(!badJsonCached,'service worker не сохраняет HTML-заглушку вместо разговорника');
+    OVR['/ex/phrases.json']={status:200,type:'application/json',body:JSON.stringify(subset)};
+    await p.click('[data-act=pbRetry]'); await p.waitForSelector('.pb-row');
+    ok(await p.locator('.pb-row').count()===1,'разговорник восстанавливается после повтора');
+    await p.click('#pbOfflineButton');
+    await p.waitForFunction(()=>document.querySelector('#pbSaveAnnouncement')?.textContent.includes('Готово'),null,{timeout:15000});
+    const audio=await p.evaluate(()=>({url:window.__bararan.audioUrl(document.querySelector('.pb-row .pb-hy').textContent,'f')}));
+    const cachedAudio=await p.evaluate(async u=>{const r=await caches.open('barik-audio-v2').then(c=>c.match(u));return !!r&&r.status===200&&/^audio\/mpeg/.test(r.headers.get('content-type')||'');},audio.url);
+    ok(cachedAudio,'разговорник сохранил проверенный MP3 в офлайн-кэш');
+    await cx.setOffline(true); await p.goto(base+'?lang=ru&switch=1&phrases=1'); await p.waitForSelector('.pb-row');
+    const offlineAudio=await p.evaluate(async u=>{const r=await fetch(u);return r.ok&&/^audio\/mpeg/.test(r.headers.get('content-type')||'')&&(await r.arrayBuffer()).byteLength>512;},audio.url).catch(()=>false);
+    ok(offlineAudio&&await p.locator('.pb-row').count()===1,'разговорник и его MP3 доступны после перезагрузки без сети');
+    await cx.setOffline(false); delete OVR['/js/tr-fr.js']; delete OVR['/ex/phrases.json']; await cx.close(); }
+  { const cx=await br.newContext({viewport:{width:390,height:844},timezoneId:'America/New_York',serviceWorkers:'block'}), p=await cx.newPage(), req=[];
+    p.on('request',q=>{if(/\/ex\/.*\.json/.test(q.url()))req.push(new URL(q.url()).pathname);});
+    await p.goto(base+'?lang=en&switch=1&start=lesson'); await p.waitForSelector('.ex-hy',{timeout:12000});
+    ok(req.some(x=>/\/ex\/en-A1\.json$/.test(x))&&!req.some(x=>/\/ex\/en\.json$/.test(x)),'первый пример запрашивает только лёгкий пакет EN/A1 ('+req.join(', ')+')'); await cx.close(); }
   for(const L of ['ru','en','fr','es','de','pt']){ const r=await pg.request.get(base+'og/og-'+L+'.jpg'); ok(r.ok()&&(await r.body()).length>50000,'картинка превью og-'+L+'.jpg'); }
   ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\/og\//.test(q.url))))),'картинки превью не лежат в кэше приложения');
   await pg.click('[data-act=pickLang][data-arg=ru]');

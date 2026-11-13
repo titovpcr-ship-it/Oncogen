@@ -91,6 +91,14 @@ const LANGS=['ru','en','fr','es','de','pt'];
        'обложка ×5 языков + английская главная: canonical, hreflang взаимные, ссылки целы, в sitemap '+bad.slice(0,4).join(' '));
     const ru=fs.readFileSync(path.join(ROOT,'ru','learn.html'),'utf8');
     ok(ru.includes('по-армянски')&&/<title>[^<]*армянск/i.test(ru),'русская обложка — по-русски: '+(ru.match(/<title>([^<]*)/)||[])[1]);
+    const route=q=>`href="../?lang=ru&from=learn&switch=1${q}"`;
+    ok(ru.includes(route('&start=lesson'))&&ru.includes(route('&pen=0'))&&ru.includes(route('&letter=38'))&&ru.includes(route('&daily=1'))&&ru.includes(route('&phrases=1'))&&ru.includes(route('&doc=project'))&&ru.includes(route('&teach=1')),
+       'SEO-обложка без JS: CTA ведут к уроку, конкретной букве, прописи, слову дня, разговорнику, документу и экрану для учителей');
+    ok(ru.includes('data-act="landLang"')&&ru.includes('href="../fr/learn.html"')&&ru.includes('id="phOpts"')&&ru.includes('Start your first lesson')===false&&ru.includes('Начать первый урок')
+       &&!/<button[^>]*data-act="landTry"/.test(ru),'SEO-обложка: переключение языка работает без JS, статичный демо-блок честно предлагает начать урок');
+    ok(/<form[^>]*action="\.\.\/" method="get"[^>]*>/.test(ru)&&/id="ldName"[^>]*name="name"/.test(ru)&&/<input type="hidden" name="lang" value="ru">/.test(ru),
+       'SEO-обложка: форма имени отправляет введённое имя на приложение без JS');
+    ok(/href="\.\.\/audio\/anahit\/[0-9a-f]{2}\/[0-9a-f]{16}\.mp3"/.test(ru),'SEO-обложка: ссылка прослушивания открывает прямую запись Azure');
     ok(!fs.readdirSync(ROOT).filter(f=>/^sitemap.*\.xml$/.test(f)).some(f=>fs.readFileSync(path.join(ROOT,f),'utf8').includes('index.html</loc>')),'в sitemap нет адресов с index.html');
     ok(/RewriteCond %\{THE_REQUEST\}.*index\\\.html/.test(fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8')),'.htaccess: /ru/index.html → /ru/ (301)'); }
   // 3. Приложение
@@ -100,6 +108,22 @@ const LANGS=['ru','en','fr','es','de','pt'];
   // 4. В браузере
   await new Promise(r=>srv.listen(0,'127.0.0.1',r)); const base='http://127.0.0.1:'+srv.address().port+'/';
   const br=await chromium.launch();
+  { // Статическая SEO-обложка должна оставаться понятной и навигационной без JavaScript.
+    const nc=await br.newContext({javaScriptEnabled:false}), np=await nc.newPage();
+    await np.goto(base+'ru/learn.html');
+    const staticPage=await np.evaluate(()=>({h:document.querySelectorAll('h1').length,buttons:document.querySelectorAll('button').length,
+      cta:document.querySelector('#phOpts a')?.getAttribute('href')||'',language:document.querySelector('a[href="../fr/learn.html"]')?.href||''}));
+    ok(staticPage.h===1&&staticPage.buttons===0&&staticPage.cta==='../?lang=ru&from=learn&switch=1&start=lesson'
+      &&staticPage.language===base+'fr/learn.html','SEO-обложка без JS: одна H1, без неработающих кнопок, CTA и язык — ссылки');
+    await np.click('#phOpts a');
+    const route=new URL(np.url());
+    ok(route.pathname==='/'&&route.searchParams.get('lang')==='ru'&&route.searchParams.get('switch')==='1'&&route.searchParams.get('start')==='lesson',
+      'SEO-CTA без JS открывает приложение на русском прямо с первым уроком');
+    await np.goto(base+'ru/learn.html'); await np.fill('#ldName','Анна'); await np.locator('#ldName').press('Enter');
+    const nameRoute=new URL(np.url());
+    ok(nameRoute.pathname==='/'&&nameRoute.searchParams.get('name')==='Анна'&&nameRoute.searchParams.get('lang')==='ru',
+      'форма имени без JS отправляет имя в приложение');
+    await nc.close(); }
   const ctx=await br.newContext({viewport:{width:390,height:844},deviceScaleFactor:2});
   const pg=await ctx.newPage(); const errs=[], ext=[], bad=[];
   pg.on('pageerror',e=>errs.push(String(e)));

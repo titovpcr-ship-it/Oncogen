@@ -34,6 +34,18 @@ jobs:
           BARIK_ONLY: '1'
           BARIK_WEB_PAID: '1'
         run: bash tools/check_all.sh --full
+      - name: Build current production baseline without search pages
+        if: success()
+        run: |
+          git fetch --no-tags --depth=1 origin e4a20681aba2502db43e07fc0429e20f25c2058a
+          git worktree add --detach "$RUNNER_TEMP/barik-baseline" e4a20681aba2502db43e07fc0429e20f25c2058a
+          cd "$RUNNER_TEMP/barik-baseline/apps/barik"
+          python3.13 tools/build_examples.py
+          BARIK_WEB_PAID=1 python3.13 tools/build_site.py --no-seo
+          mv dist/site "$RUNNER_TEMP/barik-baseline-site"
+      - name: Compare five cold guest journeys
+        if: success()
+        run: node apps/barik/tests/benchmark_luna.js "$RUNNER_TEMP/barik-baseline-site" apps/barik/dist/site
       - uses: actions/upload-artifact@v4
         if: always()
         with:

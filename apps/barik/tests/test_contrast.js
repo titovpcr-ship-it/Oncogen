@@ -15,12 +15,21 @@ async function gradients(p,sel){
  assert(rows.length,'No gradient targets');
  for(const row of rows){const colors=row.bg==='none'?[row.solid,row.solid]:(row.bg.match(/rgba?\([^)]+\)/g)||[]);assert(colors.length>=2,'Gradient not parsed: '+row.bg);
  const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number);const lum=c=>c.map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;}).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0);
- const a=rgb(colors[0]),b=rgb(colors[1]);for(let i=0;i<=20;i++){const bg=a.map((v,k)=>v+(b[k]-v)*i/20),ls=[lum(rgb(row.color)),lum(bg)].sort((a,b)=>a-b);assert((ls[1]+.05)/(ls[0]+.05)>=3.5,'Primary gradient contrast');}
+ const a=rgb(colors[0]),b=rgb(colors[1]);for(let i=0;i<=20;i++){const bg=a.map((v,k)=>v+(b[k]-v)*i/20),ls=[lum(rgb(row.color)),lum(bg)].sort((a,b)=>a-b);assert((ls[1]+.05)/(ls[0]+.05)>=4.5,'Primary gradient contrast');}
  }
 }
-(async()=>{await new Promise(r=>srv.listen(0,'127.0.0.1',r));const b=await chromium.launch();try{for(const theme of ['light','dark']){const c=await b.newContext({colorScheme:theme,timezoneId:'Europe/Moscow',serviceWorkers:'block',viewport:{width:390,height:844}});const p=await c.newPage();await p.goto('http://127.0.0.1:'+srv.address().port+'/');await p.waitForFunction(()=>window.__bararan);console.log('Theme',theme);await scan(p,'.ld-foot p, .ph-tr, .pr-note');
+(async()=>{await new Promise(r=>srv.listen(0,'127.0.0.1',r));const b=await chromium.launch();try{for(const theme of ['light','dark']){const c=await b.newContext({colorScheme:theme,timezoneId:'Europe/Moscow',serviceWorkers:'block',viewport:{width:390,height:844}});const p=await c.newPage();await p.goto('http://127.0.0.1:'+srv.address().port+'/');await p.waitForFunction(()=>window.__bararan);console.log('Theme',theme);await p.locator('.ph-opt.ok').waitFor({state:'visible',timeout:8000});await scan(p,'.ld-foot p, .ph-tr, .pr-note, .ph-opt.ok, .ld .lng');
 await gradients(p,'.ld .btn.primary');
-const sizes=await p.locator('.ld .lng').evaluateAll(es=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})));assert(sizes.length===6&&sizes.every(s=>s.w>=40&&s.h>=40),'Language targets >=40px');
+const sizes=await p.locator('.ld .lng').evaluateAll(es=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})));assert(sizes.length===6&&sizes.every(s=>s.w>=44&&s.h>=44),'Language targets >=44px');
+const touch=await p.locator('.ph-opt').evaluateAll(es=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})));assert(touch.length===3&&touch.every(s=>s.w>=44&&s.h>=44),'Lesson preview choices >=44px');
+for(let i=0;i<3;i++){await p.locator('.ph-opt.right').click();if(i<2)await p.waitForFunction(()=>{const x=document.querySelector('.ph-opt.right');return !!x&&!x.disabled;});}
+await p.locator('.ph-opt.ph-go').waitFor({state:'visible',timeout:5000});await scan(p,'.ph-opt.ph-go');
 await p.evaluate(()=>{window.__bararan.H.pickLang('ru');window.__bararan.startLearn();});await p.locator('.flag').first().waitFor({state:'visible',timeout:15000});await scan(p,'.flag');
 await gradients(p,'.btn.primary');
-await p.evaluate(()=>window.__bararan.H.paywall());await p.locator('.pw-legal').first().waitFor({state:'visible',timeout:15000});await scan(p,'.pw-legal');await c.close();}}finally{await b.close();srv.close();}})().catch(e=>{console.error(e);srv.close();process.exitCode=1;});
+await p.evaluate(()=>window.__bararan.H.paywall());await p.locator('.pw-legal').first().waitFor({state:'visible',timeout:15000});await scan(p,'.pw-legal');await c.close();}
+for(const width of [320,340,360,390]){const c=await b.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block',viewport:{width,height:780}}),p=await c.newPage();await p.goto('http://127.0.0.1:'+srv.address().port+'/');await p.waitForFunction(()=>window.__bararan);
+const start=await p.evaluate(()=>({doc:document.documentElement.scrollWidth,view:innerWidth,header:document.querySelector('.ld-nav .ld-wrap').scrollWidth,headerClient:document.querySelector('.ld-nav .ld-wrap').clientWidth,langs:[...document.querySelectorAll('.ld .lng')].map(e=>[e.getBoundingClientRect().width,e.getBoundingClientRect().height])}));
+assert(start.doc<=start.view+1&&start.header<=start.headerClient+1,'No horizontal overflow on landing at '+width+'px '+JSON.stringify(start));assert(start.langs.length===6&&start.langs.every(([w,h])=>w>=44&&h>=44),'Six 44px language targets at '+width+'px '+JSON.stringify(start.langs));
+await p.evaluate(()=>window.__bararan.H.pickLang('ru'));await p.locator('#tabs .tab').first().waitFor({state:'visible'});const tabs=await p.locator('#tabs .tab').evaluateAll(es=>es.map(e=>[e.getBoundingClientRect().width,e.getBoundingClientRect().height]));
+assert(tabs.length===5&&tabs.every(([w,h])=>w>=44&&h>=44),'Five 44px mobile tabs at '+width+'px '+JSON.stringify(tabs));assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow in app at '+width+'px');await c.close();}
+}finally{await b.close();srv.close();}})().catch(e=>{console.error(e);srv.close();process.exitCode=1;});

@@ -423,22 +423,61 @@ LEARN = ("ru", "fr", "es", "de", "pt")      # английская обложк�
 
 
 def build_covers(site, base, covers, meta):
-    """Обложка на языке для поиска (O-201): /<язык>/learn.html — та же разметка, что гость видит в приложении (dump_words.js,
-    без движения), свой title и description (раздел land в i18n.js), hreflang с главной. Кнопки ведут в приложение на этом языке
-    (?lang=..&from=learn), «Как это устроено» — якорь на странице."""
+    """Статические SEO-обложки с рабочими ссылками и fallback без JavaScript."""
     alts = {"en": base, **{l: f"{base}{l}/learn.html" for l in LEARN if l in covers}}
     hl = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{u}">' for l, u in alts.items()) + f'<link rel="alternate" hreflang="x-default" href="{base}">'
+    labels = {
+        "ru": ("Начать первый урок", "Демонстрация урока"),
+        "en": ("Start your first lesson", "Lesson preview"),
+        "fr": ("Commencer la première leçon", "Aperçu de la leçon"),
+        "es": ("Empezar la primera lección", "Vista previa de la lección"),
+        "de": ("Erste Lektion starten", "Lektionsvorschau"),
+        "pt": ("Começar a primeira lição", "Prévia da lição"),
+    }
+    voice_dirs = {"f": "anahit", "m": "hayk"}
     sm = []
     for L in LEARN:
         if L not in covers: continue
         t, d = meta[L]
         frag = re.sub(r'(\s(?:src|href)=")(?!https?:|/|#|data:|mailto:|\.\./)', r'\1../', covers[L]["html"])
-        js = ("(function(){var L='%s';document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;"
-              "var a=b.getAttribute('data-act'),g=b.getAttribute('data-arg')||'';if(a==='landHow'||a==='geoX')return;e.preventDefault();"
-              "if(a==='landLang'){location.href=g==='en'?'../':(%s.indexOf(g)>=0?'../'+g+'/learn.html':'../?lang='+g);return;}"
-              "var q='../?lang='+L+'&from=learn';if(a==='landDoc')q+='&doc='+encodeURIComponent(g);"
-              "else if(a==='landAbc'||a==='landPen'||a==='landLetter')q+='&letter=0';else if(a==='nmOpen')q+='&name=';"
-              "location.href=q;});})();") % (L, json.dumps(list(LEARN)))
+        root = f"../?lang={L}&from=learn&switch=1"
+        routes = {"pickLang": "&start=lesson", "landGo": "", "landAbc": "&abc=1", "landPen": "&pen=0",
+                  "dgOpen": "&daily=1", "pbOpen": "&phrases=1", "nmOpen": "&name=", "tcOpen": "&teach=1"}
+
+        def action_link(m):
+            attrs, action, inner = m.group(1), m.group(2), m.group(3)
+            ma = re.search(r'\bdata-arg="([^"]*)"', attrs)
+            arg = html.unescape(ma.group(1)) if ma else ""
+            if action == "landLang":
+                href = "../?lang=en&switch=1&welcome" if arg == "en" else f"../{arg}/learn.html"
+                attrs = re.sub(r'\saria-pressed="[^"]*"', "", attrs)
+                current = ' aria-current="true"' if arg == L else ''
+                return f'<a{attrs}{current} href="{href}">{inner}</a>'
+            if action == "landSay":
+                word, _, gender = arg.partition("|")
+                voice = voice_dirs.get(gender, voice_dirs["f"])
+                sound = aid(word)
+                href = f"../audio/{voice}/{sound[:2]}/{sound}.mp3"
+                return f'<a{attrs} href="{href}">{inner}</a>'
+            if action == "landLetter": path = "&letter=" + str(int(arg))
+            elif action == "landDoc": path = "&doc=" + urllib.parse.quote(arg, safe="")
+            elif action in routes: path = routes[action]
+            else: raise ValueError(f"Missing static route for {action}")
+            attrs = re.sub(r'\sdata-act="[^"]*"|\sdata-arg="[^"]*"|\saria-pressed="[^"]*"|\stype="[^"]*"', "", attrs)
+            return f'<a{attrs} href="{root}{path}">{inner}</a>'
+
+        preview = ('<a class="btn primary ph-opt ph-go" href="' + root + '&start=lesson">' +
+                   html.escape(labels[L][0]) + ' →</a>')
+        frag = re.sub(r'(<div\b[^>]*\bid="phOpts"[^>]*>).*?(</div>)',
+                      lambda m: m.group(1) + preview + m.group(2), frag, count=1, flags=re.S)
+        frag = re.sub(r'<button\b([^>]*\bdata-act="([^"]+)"[^>]*)>(.*?)</button>', action_link, frag, flags=re.S)
+        frag = re.sub(r'(<div\b[^>]*class="ph"[^>]*role="group"[^>]*aria-label=")[^"]*(")',
+                      lambda m: m.group(1) + html.escape(labels[L][1], quote=True) + m.group(2), frag, count=1)
+        frag = re.sub(r'<form\b([^>]*\bdata-act="nmLand"[^>]*)>',
+                      lambda m: '<form' + re.sub(r'\sdata-act="nmLand"', '', m.group(1)) + ' action="../" method="get">', frag)
+        frag = re.sub(r'(<input\b[^>]*\bid="ldName"[^>]*)(>)', lambda m: m.group(1) + ' name="name" required' + m.group(2), frag)
+        if 'id="ldName"' in frag:
+            frag = frag.replace('</form>', f'<input type="hidden" name="lang" value="{L}"><input type="hidden" name="from" value="learn"><input type="hidden" name="switch" value="1">\n</form>', 1)
         h = (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
              f'<title>{esc(t)}</title><meta name="description" content="{esc(d)}"><link rel="canonical" href="{alts[L]}">{hl}'
              f'<meta property="og:title" content="{esc(t)}"><meta property="og:description" content="{esc(d)}"><meta property="og:url" content="{alts[L]}">'
@@ -447,7 +486,7 @@ def build_covers(site, base, covers, meta):
              f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
              f'<link rel="icon" type="image/png" href="../favicon.png"><link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">'
              f'<link rel="stylesheet" href="../css/app.css"><meta name="theme-color" content="#FBF6F1"></head>'
-             f'<body><main id="view">{frag}</main><script>{js}</script></body></html>')
+             f'<body><main id="view">{frag}</main></body></html>')
         open(os.path.join(site, L, "learn.html"), "w", encoding="utf-8").write(h)
         sm.append(f"<url><loc>{alts[L]}</loc></url>")
     open(os.path.join(site, "sitemap-learn.xml"), "w", encoding="utf-8").write(
