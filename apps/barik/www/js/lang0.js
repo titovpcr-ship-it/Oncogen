@@ -52,7 +52,8 @@ function loadTranslation(lang){
   return request;
 }
 window.BARIK_LOAD_TRANSLATION=loadTranslation;
-window.BARIK_TRANSLATIONS_READY=loadTranslation(initial).catch(function(){
-  return initial==='en'?undefined:loadTranslation('en').catch(function(){});
+var needed=initial==='en'?['en']:['en',initial];
+window.BARIK_TRANSLATIONS_READY=Promise.all(needed.map(loadTranslation)).catch(function(){
+  return loadTranslation('en').catch(function(){});
 });
 })();

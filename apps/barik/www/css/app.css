@@ -1186,8 +1186,9 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
   .ph{width:min(176px,44%)}
 }
 @media (max-width:340px){ .ph{width:52%} }
+@media (max-width:699px){ .ph{width:min(194px,48%)} }
 @media (max-width:420px){ .ph-scr{padding-top:28px} .ph-card .pimg{aspect-ratio:16/6} }
-@media (max-width:340px){ .ph{width:60%} .ph-scr{padding-top:24px} }
+@media (max-width:340px){ .ph{width:58%} .ph-scr{padding-top:24px} }
 /* TZ_AUDIT4 №2: кнопка, нажатая до загрузки приложения, — ждёт */
 .lz-busy{position:relative;pointer-events:none;opacity:.85}
 .lz-busy::after{content:"";display:inline-block;width:14px;height:14px;margin-left:8px;vertical-align:-2px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:lzr .8s linear infinite}

@@ -205,7 +205,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await p2.evaluate(()=>window.__upd===1),'обновление: новая версия видна с первого захода после выкладки');
     ok((await p2.evaluate(()=>fetch('audio/manifest.json').then(r=>r.json()))).probe===1,'обновление: свежий список озвучки (не из вечного кэша)');
     await p2.evaluate(()=>navigator.serviceWorker.getRegistration().then(r=>r&&r.update()));   // как проверка при заходе
-    let ks=[]; for(let i=0;i<30;i++){ ks=await p2.evaluate(()=>caches.keys()); if(ks.includes('barik-upd')&&ks.filter(k=>/^barik-(?!audio|pics)/.test(k)).length===1) break; await p2.waitForTimeout(500); }
+    let ks=[]; for(let i=0;i<30;i++){ ks=await p2.evaluate(()=>caches.keys()); if(ks.includes('barik-upd')&&ks.filter(k=>/^barik-(?!audio|pics|lazy)/.test(k)).length===1) break; await p2.waitForTimeout(500); }
     ok(ks.includes('barik-upd')&&ks.filter(k=>/^barik-(?!audio|pics)/.test(k)).length===1,'обновление: новый офлайн-кэш встал, старый удалён ('+ks.join(', ')+')');
     for(const k of Object.keys(OVR)) delete OVR[k];
     await c2.close();
