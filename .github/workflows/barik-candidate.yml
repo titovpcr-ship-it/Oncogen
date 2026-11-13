@@ -1,0 +1,56 @@
+name: Barik candidate checks
+on:
+  push:
+    branches: [codex/luna-implementation]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: barik-candidate
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install test dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y php-cli php-sqlite3 php-curl ripgrep
+          python -m pip install requests Pillow pyzipper
+          npm install --no-save --package-lock=false playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Run the production-mode suite
+        env:
+          BARIK_ONLY: '1'
+          BARIK_WEB_PAID: '1'
+        run: bash tools/check_all.sh --full
+      - name: Build current production baseline without search pages
+        if: success()
+        env:
+          NODE_PATH: ${{ github.workspace }}/node_modules
+        run: |
+          git fetch --no-tags --depth=1 origin e4a20681aba2502db43e07fc0429e20f25c2058a
+          git worktree add --detach "$RUNNER_TEMP/barik-baseline" e4a20681aba2502db43e07fc0429e20f25c2058a
+          cd "$RUNNER_TEMP/barik-baseline/apps/barik"
+          python3.13 tools/build_examples.py
+          BARIK_WEB_PAID=1 python3.13 tools/build_site.py --no-seo
+          mv dist/site "$RUNNER_TEMP/barik-baseline-site"
+      - name: Compare five cold guest journeys
+        if: success()
+        run: node apps/barik/tests/benchmark_luna.js "$RUNNER_TEMP/barik-baseline-site" apps/barik/dist/site
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: barik-candidate-logs
+          path: out/check/
+          retention-days: 7
