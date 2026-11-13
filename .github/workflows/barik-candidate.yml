@@ -36,6 +36,8 @@ jobs:
         run: bash tools/check_all.sh --full
       - name: Build current production baseline without search pages
         if: success()
+        env:
+          NODE_PATH: ${{ github.workspace }}/node_modules
         run: |
           git fetch --no-tags --depth=1 origin e4a20681aba2502db43e07fc0429e20f25c2058a
           git worktree add --detach "$RUNNER_TEMP/barik-baseline" e4a20681aba2502db43e07fc0429e20f25c2058a
