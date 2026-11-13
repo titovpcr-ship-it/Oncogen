@@ -85,6 +85,14 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       for(let i=0;i<3;i++) await p9.locator('#phOpts .ph-opt.right:not([disabled])').click();
       releaseApi(); await p9.waitForSelector('[data-act=landTryGo]',{timeout:8000});
       ok(true,'долгий ответ аккаунта не сбрасывает демо после третьего правильного ответа'); await c9.close(); }
+    { const c10=await br.newContext({timezoneId:'UTC',locale:'en-US',serviceWorkers:'block'}), p10=await c10.newPage(); let releaseApi;
+      const gate=new Promise(r=>{releaseApi=r;});
+      await p10.route('**/api/**',async rt=>{await gate;await rt.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":null}'});});
+      await p10.goto(base); await p10.waitForFunction(()=>window.__barikOk&&document.querySelector('#phOpts .ph-opt.right'));
+      for(let i=0;i<3;i++) await p10.locator('#phOpts .ph-opt.right:not([disabled])').click();
+      await p10.waitForSelector('[data-act=landTryGo]',{timeout:8000}); releaseApi();
+      await p10.waitForSelector('[data-act=landTryGo]',{timeout:8000});
+      ok(true,'поздний ответ аккаунта сохраняет уже показанное продолжение демо'); await c10.close(); }
     { // TZ3 №4: гость из Москвы без скриптов видит русскую обложку (фрагмент cover-ru.html), вернувшийся — нет
       for(const [tz,lg,want] of [['Europe/Moscow','ru','Заговорите'],['Europe/Paris','fr',''],['Europe/Berlin','de','']]){
         const c5=await br.newContext({timezoneId:tz,serviceWorkers:'block'}); const p5=await c5.newPage(); await p5.route('**/js/**',rt=>rt.abort());
