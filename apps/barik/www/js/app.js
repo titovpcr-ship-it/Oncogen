@@ -312,11 +312,12 @@ function today(){const d=new Date();return Math.floor((d.getTime()-d.getTimezone
 function status(w){const s=S.w[w.a]; if(!s) return 'new'; return s.b>=4?'learned':'learning';}
 const LEVELS=['A1','A2','B1','B2','C1','C2'];
 function counts(list){
+  const pool=list||WORDS, saved=Object.keys(S.w); if(!saved.length) return {learned:0,learning:0,due:0,seen:0,total:pool.length};
   const td=today(); let learned=0,learning=0,due=0;
-  for(const w of (list||WORDS)){const s=S.w[w.a]; if(!s) continue; if(s.b>=4) learned++; else learning++; if(s.d<=td&&canReview(w)) due++;}
-  return {learned,learning,due,seen:learned+learning,total:(list||WORDS).length};
+  for(const w of pool){const s=S.w[w.a]; if(!s) continue; if(s.b>=4) learned++; else learning++; if(s.d<=td&&canReview(w)) due++;}
+  return {learned,learning,due,seen:learned+learning,total:pool.length};
 }
-function nextNew(ti,n){const pool=(ti==null)?WORDS:TOPICS[ti].list; return pool.filter(w=>!S.w[w.a]&&canUse(w)).slice(0,n);}
+function nextNew(ti,n){const pool=(ti==null)?WORDS:TOPICS[ti].list, out=[]; for(const w of pool){if(!S.w[w.a]&&canUse(w)){out.push(w);if(out.length>=n) break;}} return out;}
 function touchStreak(){const td=today(); if(S.st.day===td) return; S.st.streak=(S.st.day===td-1)?(S.st.streak||0)+1:1; S.st.day=td;}
 
 /* ================= SPEECH ================= */
