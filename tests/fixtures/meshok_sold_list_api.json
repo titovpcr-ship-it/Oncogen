@@ -1,0 +1,3045 @@
+{
+ "correlationId": "dl2f2xjy70l58cqerc3jkz1k0zjnauvz",
+ "result": {
+  "lots": [
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 459
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-07-29T15:21:30.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 5600,
+     "name": "Сестрорецк",
+     "popularity": 279,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 0,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-08-27T18:17:00.000Z",
+    "watchCount": 1,
+    "hitsCount": 7,
+    "id": 345022592,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/345022592.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/345022592.0.208x208s.jpg?1",
+       "x2": "/i/345022592.0.208x208.jpg?1"
+      },
+      "ratio": 0.978663
+     },
+     {
+      "url": "/i/345022592.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/345022592.1.208x208s.jpg?1",
+       "x2": "/i/345022592.1.208x208.jpg?1"
+      },
+      "ratio": 0.993836
+     },
+     {
+      "url": "/i/345022592.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/345022592.2.208x208s.jpg?1",
+       "x2": "/i/345022592.2.208x208.jpg?1"
+      },
+      "ratio": 0.989101
+     },
+     {
+      "url": "/i/345022592.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/345022592.3.208x208s.jpg?1",
+       "x2": "/i/345022592.3.208x208.jpg?1"
+      },
+      "ratio": 0.984722
+     },
+     {
+      "url": "/i/345022592.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/345022592.4.208x208s.jpg?1",
+       "x2": "/i/345022592.4.208x208.jpg?1"
+      },
+      "ratio": 0.998136
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "NALOZH",
+     "CARD",
+     "MAIL"
+    ],
+    "picsCount": 5,
+    "picsVersion": 1,
+    "price": 3500,
+    "normalizedPrice": 3500,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "vinylrarities62",
+     "id": 1474998,
+     "rating": 2685,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": true,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1474998.120x120.jpg?1",
+     "avatarThumbnailURL": "/a/1474998.120x120.jpg?1",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 3500,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Miles Davis Quintet – Workin' 1975/59 LP JAPAN Prestige SMJ-6503 MONO John Coltrane, Red Garland NM",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 450
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "VG",
+        "valueId": 461
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-08-27T12:20:00.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 2,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 350,
+     "localDelivery": 0,
+     "localPrice": 200,
+     "soloDelivery": false,
+     "worldPrice": 1250
+    },
+    "endDate": "2026-08-27T13:30:41.000Z",
+    "watchCount": 0,
+    "hitsCount": 9,
+    "id": 365732210,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/365732210.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/365732210.0.208x208s.jpg?1",
+       "x2": "/i/365732210.0.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "CARD"
+    ],
+    "picsCount": 1,
+    "picsVersion": 1,
+    "price": 2550,
+    "normalizedPrice": 2550,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "Alexpunk987",
+     "id": 1584355,
+     "rating": 1520,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1584355.120x120.jpg?1",
+     "avatarThumbnailURL": "/a/1584355.120x120.jpg?1",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 2550,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Red Garland Quintet Featuring John Coltrane And Donald Byrd – Jazz Junction 2LP USA 1973",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 450
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 459
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-08-16T16:33:00.000Z",
+    "bidsCount": 24,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 14918,
+     "name": "Бахчисарай",
+     "popularity": 637,
+     "region": "Крым",
+     "regionId": 10227,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 400,
+     "localDelivery": 2,
+     "localPrice": 300,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-08-23T16:33:00.000Z",
+    "watchCount": 3,
+    "hitsCount": 20,
+    "id": 365085650,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/365085650.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/365085650.0.208x208s.jpg?1",
+       "x2": "/i/365085650.0.208x208.jpg?1"
+      },
+      "ratio": 1.44307
+     },
+     {
+      "url": "/i/365085650.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/365085650.1.208x208s.jpg?1",
+       "x2": "/i/365085650.1.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/365085650.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/365085650.2.208x208s.jpg?1",
+       "x2": "/i/365085650.2.208x208.jpg?1"
+      },
+      "ratio": 2.32727
+     },
+     {
+      "url": "/i/365085650.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/365085650.3.208x208s.jpg?1",
+       "x2": "/i/365085650.3.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/365085650.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/365085650.4.208x208s.jpg?1",
+       "x2": "/i/365085650.4.208x208.jpg?1"
+      },
+      "ratio": 1.35737
+     },
+     {
+      "url": "/i/365085650.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/365085650.5.208x208s.jpg?1",
+       "x2": "/i/365085650.5.208x208.jpg?1"
+      },
+      "ratio": 1.26607
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "SBP"
+    ],
+    "picsCount": 6,
+    "picsVersion": 1,
+    "price": 1347,
+    "normalizedPrice": 1347,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "Bootleg King",
+     "id": 1970515,
+     "rating": 1053,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1970515.120x120.jpg?1",
+     "avatarThumbnailURL": "/a/1970515.120x120.jpg?1",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "lp vinyl",
+     "lp",
+     "lp record",
+     "lp vinil",
+     "lp records",
+     "rock music",
+     "аукцион",
+     "аукционы с рубля",
+     "аукцион с рубля",
+     "торги с рубля",
+     "торги с 1 рубля",
+     "торги с одного рубля",
+     "jazz",
+     "red garland",
+     "modal"
+    ],
+    "title": "LP Red Garland – The Quota // 1975 Japan // MPS Records – UXP-17-P // EX/EX - С 1 Руб!!!",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2026-07-24T16:56:00.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 5428,
+     "name": "Воскресенск",
+     "popularity": 1467,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-08-07T13:37:01.000Z",
+    "watchCount": 1,
+    "hitsCount": 21,
+    "id": 363850470,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/363850470.0.jpg",
+      "thumbnail": {
+       "x1": "/i/363850470.0.208x208s.jpg",
+       "x2": "/i/363850470.0.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/363850470.1.jpg",
+      "thumbnail": {
+       "x1": "/i/363850470.1.208x208s.jpg",
+       "x2": "/i/363850470.1.208x208.jpg"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/363850470.2.jpg",
+      "thumbnail": {
+       "x1": "/i/363850470.2.208x208s.jpg",
+       "x2": "/i/363850470.2.208x208.jpg"
+      },
+      "ratio": 0.363328
+     },
+     {
+      "url": "/i/363850470.3.jpg",
+      "thumbnail": {
+       "x1": "/i/363850470.3.208x208s.jpg",
+       "x2": "/i/363850470.3.208x208.jpg"
+      },
+      "ratio": 1.26597
+     },
+     {
+      "url": "/i/363850470.4.jpg",
+      "thumbnail": {
+       "x1": "/i/363850470.4.208x208s.jpg",
+       "x2": "/i/363850470.4.208x208.jpg"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "SBP"
+    ],
+    "picsCount": 5,
+    "picsVersion": 0,
+    "price": 2390,
+    "normalizedPrice": 2390,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "VladKes",
+     "id": 787863,
+     "rating": 9539,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/787863.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/787863.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 2390,
+    "strikePrice": 0,
+    "tags": [
+     "red garland",
+     "paul chambers",
+     "art taylor",
+     "jazz",
+     "hard bop",
+     "cool jazz"
+    ],
+    "title": "LP Red Garland Trio, The – Groovy 1957/1976 (Japan) Obi Prestige SMJ-6504(M)",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2026-08-06T16:58:00.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 5428,
+     "name": "Воскресенск",
+     "popularity": 1467,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-08-06T17:01:01.000Z",
+    "watchCount": 0,
+    "hitsCount": 3,
+    "id": 364384644,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/364384644.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/364384644.0.208x208s.jpg?1",
+       "x2": "/i/364384644.0.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/364384644.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/364384644.1.208x208s.jpg?1",
+       "x2": "/i/364384644.1.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/364384644.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/364384644.2.208x208s.jpg?1",
+       "x2": "/i/364384644.2.208x208.jpg?1"
+      },
+      "ratio": 0.309864
+     },
+     {
+      "url": "/i/364384644.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/364384644.3.208x208s.jpg?1",
+       "x2": "/i/364384644.3.208x208.jpg?1"
+      },
+      "ratio": 1.28386
+     },
+     {
+      "url": "/i/364384644.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/364384644.4.208x208s.jpg?1",
+       "x2": "/i/364384644.4.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "CARD",
+     "YANDEX",
+     "SBP"
+    ],
+    "picsCount": 5,
+    "picsVersion": 1,
+    "price": 2790,
+    "normalizedPrice": 2790,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "VladKes",
+     "id": 787863,
+     "rating": 9539,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/787863.120x120.jpg?9",
+     "avatarThumbnailURL": "/a/787863.120x120.jpg?9",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 2790,
+    "strikePrice": 0,
+    "tags": [
+     "red garland",
+     "blue mitchell",
+     "pepper adams",
+     "sam jones",
+     "philly joe jones",
+     "jazz",
+     "bop",
+     "hard bop",
+     "limited edition"
+    ],
+    "title": "LP Red Garland Quintet – Red's Good Groove 1963/1978 (Japan, Ltd) Riverside Records VIJ-5047",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 450
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 459
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-07-29T04:53:44.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 92,
+     "name": "Томск",
+     "popularity": 10460,
+     "region": "Томская обл.",
+     "regionId": 5291,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 500,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-07-30T08:17:20.000Z",
+    "watchCount": 1,
+    "hitsCount": 1,
+    "id": 360724816,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/360724816.0.jpg",
+      "thumbnail": {
+       "x1": "/i/360724816.0.208x208s.jpg",
+       "x2": "/i/360724816.0.208x208.jpg"
+      },
+      "ratio": 1.00943
+     },
+     {
+      "url": "/i/360724816.1.jpg",
+      "thumbnail": {
+       "x1": "/i/360724816.1.208x208s.jpg",
+       "x2": "/i/360724816.1.208x208.jpg"
+      },
+      "ratio": 1.00626
+     },
+     {
+      "url": "/i/360724816.2.jpg",
+      "thumbnail": {
+       "x1": "/i/360724816.2.208x208s.jpg",
+       "x2": "/i/360724816.2.208x208.jpg"
+      },
+      "ratio": 1.70599
+     },
+     {
+      "url": "/i/360724816.3.jpg",
+      "thumbnail": {
+       "x1": "/i/360724816.3.208x208s.jpg",
+       "x2": "/i/360724816.3.208x208.jpg"
+      },
+      "ratio": 1.68248
+     },
+     {
+      "url": "/i/360724816.4.jpg",
+      "thumbnail": {
+       "x1": "/i/360724816.4.208x208s.jpg",
+       "x2": "/i/360724816.4.208x208.jpg"
+      },
+      "ratio": 1.29888
+     },
+     {
+      "url": "/i/360724816.5.jpg",
+      "thumbnail": {
+       "x1": "/i/360724816.5.208x208s.jpg",
+       "x2": "/i/360724816.5.208x208.jpg"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 6,
+    "picsVersion": 0,
+    "price": 2882,
+    "normalizedPrice": 2882,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "634041VP",
+     "id": 411591,
+     "rating": 7824,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/411591.120x120.jpg?8",
+     "avatarThumbnailURL": "/a/411591.120x120.jpg?8",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 2882,
+    "strikePrice": 0,
+    "tags": [
+     "rare",
+     "japan",
+     "lp",
+     "vinyl",
+     "red garland",
+     "jimmy heath",
+     "jazz",
+     "cool jazz",
+     "modal",
+     "swing",
+     "редкость"
+    ],
+    "title": "LP : Red Garland (feat. Jimmy Heath) : The Quota : 1974 : Japan (MPS Jazz Series)",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2026-07-29T14:52:39.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 50,
+     "name": "Пенза",
+     "popularity": 11489,
+     "region": "Пензенская обл.",
+     "regionId": 4657,
+     "isNameUnique": true
+    },
+    "condition": 2,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 0,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-07-29T15:02:38.000Z",
+    "watchCount": 0,
+    "hitsCount": 4,
+    "id": 364114518,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/364114518.0.jpg",
+      "thumbnail": {
+       "x1": "/i/364114518.0.208x208s.jpg",
+       "x2": "/i/364114518.0.208x208.jpg"
+      },
+      "ratio": 0.985333
+     },
+     {
+      "url": "/i/364114518.1.jpg",
+      "thumbnail": {
+       "x1": "/i/364114518.1.208x208s.jpg",
+       "x2": "/i/364114518.1.208x208.jpg"
+      },
+      "ratio": 1.00806
+     },
+     {
+      "url": "/i/364114518.2.jpg",
+      "thumbnail": {
+       "x1": "/i/364114518.2.208x208s.jpg",
+       "x2": "/i/364114518.2.208x208.jpg"
+      },
+      "ratio": 0.984396
+     },
+     {
+      "url": "/i/364114518.3.jpg",
+      "thumbnail": {
+       "x1": "/i/364114518.3.208x208s.jpg",
+       "x2": "/i/364114518.3.208x208.jpg"
+      },
+      "ratio": 1.09449
+     },
+     {
+      "url": "/i/364114518.4.jpg",
+      "thumbnail": {
+       "x1": "/i/364114518.4.208x208s.jpg",
+       "x2": "/i/364114518.4.208x208.jpg"
+      },
+      "ratio": 1.06232
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 5,
+    "picsVersion": 0,
+    "price": 2240,
+    "normalizedPrice": 2240,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "Poseydon-1",
+     "id": 1049060,
+     "rating": 4099,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1049060.120x120.jpg?6",
+     "avatarThumbnailURL": "/a/1049060.120x120.jpg?6",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 2240,
+    "strikePrice": 0,
+    "tags": [
+     "japan",
+     "lp vinyl",
+     "jazz",
+     "винил",
+     "the red garland trio",
+     "япония",
+     "винтаж",
+     "япония",
+     "red garland",
+     "paul chambers",
+     "red garland",
+     "редкость",
+     "винил",
+     "lp vinyl",
+     "подарок",
+     "коллекционное",
+     "отличное состояние",
+     "jazz",
+     "art taylor",
+     "фирменная"
+    ],
+    "title": "пластинка The Red Garland Trio – Groovy (M2), 5- / 5, Japan 1976.",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-07-10T18:30:00.000Z",
+    "bidsCount": 7,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 500,
+     "localDelivery": 2,
+     "localPrice": 500,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-07-13T18:30:00.000Z",
+    "watchCount": 0,
+    "hitsCount": 6,
+    "id": 363084215,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/363084215.0.jpg",
+      "thumbnail": {
+       "x1": "/i/363084215.0.208x208s.jpg",
+       "x2": "/i/363084215.0.208x208.jpg"
+      },
+      "ratio": 1.9512
+     },
+     {
+      "url": "/i/363084215.1.jpg",
+      "thumbnail": {
+       "x1": "/i/363084215.1.208x208s.jpg",
+       "x2": "/i/363084215.1.208x208.jpg"
+      },
+      "ratio": 1.96237
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CARD"
+    ],
+    "picsCount": 2,
+    "picsVersion": 0,
+    "price": 645,
+    "normalizedPrice": 645,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "661827",
+     "id": 247726,
+     "rating": 2364,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/247726.120x120.jpg?6",
+     "avatarThumbnailURL": "/a/247726.120x120.jpg?6",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "винил",
+     "lp",
+     "оригинал"
+    ],
+    "title": "RED GARLAND – \"THE QUOTA” UXP-17-P, JAPAN, (NM) , с 1 рубля",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-07-10T18:30:00.000Z",
+    "bidsCount": 14,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 59,
+     "name": "Санкт-Петербург",
+     "popularity": 248150,
+     "region": "Санкт-Петербург и область",
+     "regionId": 4925,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 500,
+     "localDelivery": 2,
+     "localPrice": 500,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-07-13T18:30:00.000Z",
+    "watchCount": 1,
+    "hitsCount": 10,
+    "id": 363101848,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/363101848.0.jpg",
+      "thumbnail": {
+       "x1": "/i/363101848.0.208x208s.jpg",
+       "x2": "/i/363101848.0.208x208.jpg"
+      },
+      "ratio": 1.43553
+     },
+     {
+      "url": "/i/363101848.1.jpg",
+      "thumbnail": {
+       "x1": "/i/363101848.1.208x208s.jpg",
+       "x2": "/i/363101848.1.208x208.jpg"
+      },
+      "ratio": 1.63891
+     },
+     {
+      "url": "/i/363101848.2.jpg",
+      "thumbnail": {
+       "x1": "/i/363101848.2.208x208s.jpg",
+       "x2": "/i/363101848.2.208x208.jpg"
+      },
+      "ratio": 3.79183
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CARD"
+    ],
+    "picsCount": 3,
+    "picsVersion": 0,
+    "price": 579,
+    "normalizedPrice": 579,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "661827",
+     "id": 247726,
+     "rating": 2364,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/247726.120x120.jpg?6",
+     "avatarThumbnailURL": "/a/247726.120x120.jpg?6",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "винил",
+     "lp",
+     "оригинал"
+    ],
+    "title": "RED GARLAND – \"FEELIN' RED” IXJ-70184, JAPAN, OBI (NM) , с 1 рубля",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Mint",
+        "valueId": 448
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Mint",
+        "valueId": 458
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-06-19T16:49:00.000Z",
+    "bidsCount": 36,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 14918,
+     "name": "Бахчисарай",
+     "popularity": 637,
+     "region": "Крым",
+     "regionId": 10227,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 400,
+     "localDelivery": 2,
+     "localPrice": 300,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-06-26T16:49:00.000Z",
+    "watchCount": 1,
+    "hitsCount": 23,
+    "id": 361925697,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/361925697.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361925697.0.208x208s.jpg?1",
+       "x2": "/i/361925697.0.208x208.jpg?1"
+      },
+      "ratio": 1.36752
+     },
+     {
+      "url": "/i/361925697.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361925697.1.208x208s.jpg?1",
+       "x2": "/i/361925697.1.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361925697.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361925697.2.208x208s.jpg?1",
+       "x2": "/i/361925697.2.208x208.jpg?1"
+      },
+      "ratio": 5.35565
+     },
+     {
+      "url": "/i/361925697.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361925697.3.208x208s.jpg?1",
+       "x2": "/i/361925697.3.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361925697.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361925697.4.208x208s.jpg?1",
+       "x2": "/i/361925697.4.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361925697.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361925697.5.208x208s.jpg?1",
+       "x2": "/i/361925697.5.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361925697.6.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361925697.6.208x208s.jpg?1",
+       "x2": "/i/361925697.6.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "SBP"
+    ],
+    "picsCount": 7,
+    "picsVersion": 1,
+    "price": 1200,
+    "normalizedPrice": 1200,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "Bootleg King",
+     "id": 1970515,
+     "rating": 1053,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1970515.120x120.jpg?1",
+     "avatarThumbnailURL": "/a/1970515.120x120.jpg?1",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "lp vinyl",
+     "lp",
+     "lp record",
+     "lp",
+     "lp vinil",
+     "lp records",
+     "rock music",
+     "аукцион",
+     "аукционы с рубля",
+     "аукцион с рубля",
+     "аукцион",
+     "торги с рубля",
+     "торги с 1 рубля",
+     "торги с одного рубля",
+     "торги с 1 рубля",
+     "jazz",
+     "red garland",
+     "modal"
+    ],
+    "title": "LP Red Garland – The Quota // 1975 Japan // OBI // MPS Records – UXP-17-P // M/M - C 1 Руб!!!",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "EX",
+        "valueId": 450
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-06-07T16:18:00.000Z",
+    "bidsCount": 19,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 718,
+     "name": "Севастополь",
+     "popularity": 9548,
+     "region": "Крым",
+     "regionId": 10227,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-06-14T16:18:00.000Z",
+    "watchCount": 3,
+    "hitsCount": 18,
+    "id": 361279784,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/361279784.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361279784.0.208x208s.jpg?1",
+       "x2": "/i/361279784.0.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361279784.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361279784.1.208x208s.jpg?1",
+       "x2": "/i/361279784.1.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361279784.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361279784.2.208x208s.jpg?1",
+       "x2": "/i/361279784.2.208x208.jpg?1"
+      },
+      "ratio": 5.56522
+     },
+     {
+      "url": "/i/361279784.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361279784.3.208x208s.jpg?1",
+       "x2": "/i/361279784.3.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361279784.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361279784.4.208x208s.jpg?1",
+       "x2": "/i/361279784.4.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361279784.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361279784.5.208x208s.jpg?1",
+       "x2": "/i/361279784.5.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 2,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "SBP"
+    ],
+    "picsCount": 6,
+    "picsVersion": 1,
+    "price": 1122,
+    "normalizedPrice": 1122,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "skr66",
+     "id": 1343444,
+     "rating": 7267,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1343444.120x120.jpg?15",
+     "avatarThumbnailURL": "/a/1343444.120x120.jpg?15",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "lp vinyl",
+     "lp record",
+     "lp",
+     "lp vinil",
+     "lp records",
+     "rock",
+     "rock music",
+     "rock",
+     "pop",
+     "аукцион",
+     "аукционы с рубля",
+     "аукцион с рубля",
+     "аукцион",
+     "торги с рубля",
+     "торги с 1 рубля",
+     "торги с рубля",
+     "торги с одного рубля",
+     "торги с 1 рубля",
+     "philly joe jones",
+     "ron carter",
+     "red garland",
+     "jazz"
+    ],
+    "title": "LP Red Garland – Crossings // 1978 US // Galaxy – GXY-5106 // NM/EX+ - C 1 Руб!!!",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-06-07T16:06:00.000Z",
+    "bidsCount": 19,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 718,
+     "name": "Севастополь",
+     "popularity": 9548,
+     "region": "Крым",
+     "regionId": 10227,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-06-14T16:06:00.000Z",
+    "watchCount": 4,
+    "hitsCount": 45,
+    "id": 361274419,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/361274419.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274419.0.208x208s.jpg?1",
+       "x2": "/i/361274419.0.208x208.jpg?1"
+      },
+      "ratio": 1.52927
+     },
+     {
+      "url": "/i/361274419.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274419.1.208x208s.jpg?1",
+       "x2": "/i/361274419.1.208x208.jpg?1"
+      },
+      "ratio": 1.48664
+     },
+     {
+      "url": "/i/361274419.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274419.2.208x208s.jpg?1",
+       "x2": "/i/361274419.2.208x208.jpg?1"
+      },
+      "ratio": 5.56522
+     },
+     {
+      "url": "/i/361274419.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274419.3.208x208s.jpg?1",
+       "x2": "/i/361274419.3.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361274419.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274419.4.208x208s.jpg?1",
+       "x2": "/i/361274419.4.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361274419.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274419.5.208x208s.jpg?1",
+       "x2": "/i/361274419.5.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 2,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "SBP"
+    ],
+    "picsCount": 6,
+    "picsVersion": 1,
+    "price": 3888,
+    "normalizedPrice": 3888,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "skr66",
+     "id": 1343444,
+     "rating": 7267,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1343444.120x120.jpg?15",
+     "avatarThumbnailURL": "/a/1343444.120x120.jpg?15",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "lp vinyl",
+     "lp record",
+     "lp",
+     "lp vinil",
+     "lp records",
+     "rock",
+     "rock music",
+     "rock",
+     "pop",
+     "аукцион",
+     "аукционы с рубля",
+     "аукцион с рубля",
+     "аукцион",
+     "торги с рубля",
+     "торги с 1 рубля",
+     "торги с рубля",
+     "торги с одного рубля",
+     "торги с 1 рубля",
+     "the red garland trio",
+     "hard bop",
+     "jazz",
+     "john coltrane"
+    ],
+    "title": "LP Red Garland With John Coltrane – Dig It! // 1963 Japan // OBI // MJ-7053 // NM/NM - C 1 Руб!!!",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-06-07T16:05:00.000Z",
+    "bidsCount": 20,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 718,
+     "name": "Севастополь",
+     "popularity": 9548,
+     "region": "Крым",
+     "regionId": 10227,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-06-14T16:05:00.000Z",
+    "watchCount": 5,
+    "hitsCount": 46,
+    "id": 361274296,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/361274296.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274296.0.208x208s.jpg?1",
+       "x2": "/i/361274296.0.208x208.jpg?1"
+      },
+      "ratio": 1.54964
+     },
+     {
+      "url": "/i/361274296.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274296.1.208x208s.jpg?1",
+       "x2": "/i/361274296.1.208x208.jpg?1"
+      },
+      "ratio": 1.57442
+     },
+     {
+      "url": "/i/361274296.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274296.2.208x208s.jpg?1",
+       "x2": "/i/361274296.2.208x208.jpg?1"
+      },
+      "ratio": 5.56522
+     },
+     {
+      "url": "/i/361274296.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274296.3.208x208s.jpg?1",
+       "x2": "/i/361274296.3.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361274296.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274296.4.208x208s.jpg?1",
+       "x2": "/i/361274296.4.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/361274296.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/361274296.5.208x208s.jpg?1",
+       "x2": "/i/361274296.5.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 2,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "SBP"
+    ],
+    "picsCount": 6,
+    "picsVersion": 1,
+    "price": 3746,
+    "normalizedPrice": 3746,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "skr66",
+     "id": 1343444,
+     "rating": 7267,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1343444.120x120.jpg?15",
+     "avatarThumbnailURL": "/a/1343444.120x120.jpg?15",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "lp vinyl",
+     "lp record",
+     "lp",
+     "lp vinil",
+     "lp records",
+     "rock",
+     "rock music",
+     "rock",
+     "pop",
+     "аукцион",
+     "аукционы с рубля",
+     "аукцион с рубля",
+     "аукцион",
+     "торги с рубля",
+     "торги с 1 рубля",
+     "торги с рубля",
+     "торги с одного рубля",
+     "торги с 1 рубля",
+     "the red garland trio",
+     "ray barretto",
+     "hard bop",
+     "jazz"
+    ],
+    "title": "LP The Red Garland Trio – Manteca // 1965 Japan // OBI // Prestige – SMJ-7231 // NM/NM - C 1 Руб!!!",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2026-06-12T11:23:48.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 50,
+     "name": "Пенза",
+     "popularity": 11489,
+     "region": "Пензенская обл.",
+     "regionId": 4657,
+     "isNameUnique": true
+    },
+    "condition": 2,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 2,
+     "countryPrice": 0,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-06-12T13:01:10.000Z",
+    "watchCount": 0,
+    "hitsCount": 6,
+    "id": 361553491,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/361553491.0.jpg",
+      "thumbnail": {
+       "x1": "/i/361553491.0.208x208s.jpg",
+       "x2": "/i/361553491.0.208x208.jpg"
+      },
+      "ratio": 1.00806
+     },
+     {
+      "url": "/i/361553491.1.jpg",
+      "thumbnail": {
+       "x1": "/i/361553491.1.208x208s.jpg",
+       "x2": "/i/361553491.1.208x208.jpg"
+      },
+      "ratio": 1.00806
+     },
+     {
+      "url": "/i/361553491.2.jpg",
+      "thumbnail": {
+       "x1": "/i/361553491.2.208x208s.jpg",
+       "x2": "/i/361553491.2.208x208.jpg"
+      },
+      "ratio": 1.89663
+     },
+     {
+      "url": "/i/361553491.3.jpg",
+      "thumbnail": {
+       "x1": "/i/361553491.3.208x208s.jpg",
+       "x2": "/i/361553491.3.208x208.jpg"
+      },
+      "ratio": 1.03235
+     },
+     {
+      "url": "/i/361553491.4.jpg",
+      "thumbnail": {
+       "x1": "/i/361553491.4.208x208s.jpg",
+       "x2": "/i/361553491.4.208x208.jpg"
+      },
+      "ratio": 0.980713
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 5,
+    "picsVersion": 0,
+    "price": 3400,
+    "normalizedPrice": 3400,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "Poseydon-1",
+     "id": 1049060,
+     "rating": 4099,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1049060.120x120.jpg?6",
+     "avatarThumbnailURL": "/a/1049060.120x120.jpg?6",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 3400,
+    "strikePrice": 0,
+    "tags": [
+     "red garland",
+     "подарок",
+     "япония",
+     "коллекционное",
+     "фирменная",
+     "ретро",
+     "винтаж",
+     "редкость",
+     "отличное состояние",
+     "japan",
+     "грампластинка",
+     "винил",
+     "john coltrane",
+     "lp vinyl",
+     "japan",
+     "оригинал",
+     "фирменный",
+     "vinyl",
+     "john coltrane"
+    ],
+    "title": "пластинка John Coltrane With Red Garland – Soultrane, 5- / 5-, Japan 1977.",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-05-30T16:01:00.000Z",
+    "bidsCount": 25,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 718,
+     "name": "Севастополь",
+     "popularity": 9548,
+     "region": "Крым",
+     "regionId": 10227,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-06-06T16:01:00.000Z",
+    "watchCount": 4,
+    "hitsCount": 39,
+    "id": 360819508,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/360819508.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/360819508.0.208x208s.jpg?1",
+       "x2": "/i/360819508.0.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/360819508.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/360819508.1.208x208s.jpg?1",
+       "x2": "/i/360819508.1.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/360819508.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/360819508.2.208x208s.jpg?1",
+       "x2": "/i/360819508.2.208x208.jpg?1"
+      },
+      "ratio": 5.56522
+     },
+     {
+      "url": "/i/360819508.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/360819508.3.208x208s.jpg?1",
+       "x2": "/i/360819508.3.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/360819508.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/360819508.4.208x208s.jpg?1",
+       "x2": "/i/360819508.4.208x208.jpg?1"
+      },
+      "ratio": 1.36026
+     },
+     {
+      "url": "/i/360819508.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/360819508.5.208x208s.jpg?1",
+       "x2": "/i/360819508.5.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 2,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "SBP"
+    ],
+    "picsCount": 6,
+    "picsVersion": 1,
+    "price": 1531,
+    "normalizedPrice": 1531,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "skr66",
+     "id": 1343444,
+     "rating": 7267,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1343444.120x120.jpg?15",
+     "avatarThumbnailURL": "/a/1343444.120x120.jpg?15",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1,
+    "strikePrice": 0,
+    "tags": [
+     "lp vinyl",
+     "lp record",
+     "lp",
+     "lp vinil",
+     "lp records",
+     "rock",
+     "rock music",
+     "rock",
+     "pop",
+     "аукцион",
+     "аукционы с рубля",
+     "аукцион с рубля",
+     "аукцион",
+     "торги с рубля",
+     "торги с 1 рубля",
+     "торги с рубля",
+     "торги с одного рубля",
+     "торги с 1 рубля",
+     "jazz",
+     "bop",
+     "hard bop",
+     "free improvisation",
+     "red garland"
+    ],
+    "title": "LP The Red Garland Trio – Groovy // 1976 Japan // OBI // Prestige – SMJ-6504 // NM/NM- - C 1 Руб!!!",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-05-05T18:41:50.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 12,
+     "name": "Воронеж",
+     "popularity": 30145,
+     "region": "Воронежская обл.",
+     "regionId": 3529,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-05-25T12:18:23.000Z",
+    "watchCount": 0,
+    "hitsCount": 7,
+    "id": 353195488,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/353195488.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/353195488.0.208x208s.jpg?1",
+       "x2": "/i/353195488.0.208x208.jpg?1"
+      },
+      "ratio": 0.75
+     },
+     {
+      "url": "/i/353195488.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/353195488.1.208x208s.jpg?1",
+       "x2": "/i/353195488.1.208x208.jpg?1"
+      },
+      "ratio": 0.75
+     },
+     {
+      "url": "/i/353195488.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/353195488.2.208x208s.jpg?1",
+       "x2": "/i/353195488.2.208x208.jpg?1"
+      },
+      "ratio": 0.75
+     },
+     {
+      "url": "/i/353195488.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/353195488.3.208x208s.jpg?1",
+       "x2": "/i/353195488.3.208x208.jpg?1"
+      },
+      "ratio": 0.75
+     },
+     {
+      "url": "/i/353195488.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/353195488.4.208x208s.jpg?1",
+       "x2": "/i/353195488.4.208x208.jpg?1"
+      },
+      "ratio": 0.75
+     },
+     {
+      "url": "/i/353195488.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/353195488.5.208x208s.jpg?1",
+       "x2": "/i/353195488.5.208x208.jpg?1"
+      },
+      "ratio": 0.75
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 5,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 6,
+    "picsVersion": 1,
+    "price": 2200,
+    "normalizedPrice": 2200,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "first902",
+     "id": 1123900,
+     "rating": 323,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/1123900.120x120.jpg?4",
+     "avatarThumbnailURL": "/a/1123900.120x120.jpg?4",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 2200,
+    "strikePrice": 0,
+    "tags": [
+     "jazz",
+     "japan",
+     "lp",
+     "vinyl",
+     "red garland",
+     "виниловые пластинки"
+    ],
+    "title": "Lp Red Garland Trio ‎– Groovy",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-05-10T17:20:00.000Z",
+    "bidsCount": 1,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 7284,
+     "name": "Лениногорск",
+     "popularity": 554,
+     "region": "Татарстан",
+     "regionId": 5246,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 400,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-05-19T17:20:00.000Z",
+    "watchCount": 0,
+    "hitsCount": 17,
+    "id": 359640721,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/359640721.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/359640721.0.208x208s.jpg?1",
+       "x2": "/i/359640721.0.208x208.jpg?1"
+      },
+      "ratio": 2.21645
+     },
+     {
+      "url": "/i/359640721.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/359640721.1.208x208s.jpg?1",
+       "x2": "/i/359640721.1.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/359640721.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/359640721.2.208x208s.jpg?1",
+       "x2": "/i/359640721.2.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/359640721.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/359640721.3.208x208s.jpg?1",
+       "x2": "/i/359640721.3.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/359640721.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/359640721.4.208x208s.jpg?1",
+       "x2": "/i/359640721.4.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/359640721.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/359640721.5.208x208s.jpg?1",
+       "x2": "/i/359640721.5.208x208.jpg?1"
+      },
+      "ratio": 1
+     },
+     {
+      "url": "/i/359640721.6.jpg?1",
+      "thumbnail": {
+       "x1": "/i/359640721.6.208x208s.jpg?1",
+       "x2": "/i/359640721.6.208x208.jpg?1"
+      },
+      "ratio": 1
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 7,
+    "picsVersion": 1,
+    "price": 1600,
+    "normalizedPrice": 1600,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "gs278",
+     "id": 565177,
+     "rating": 4522,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/565177.120x120.jpg?11",
+     "avatarThumbnailURL": "/a/565177.120x120.jpg?11",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1600,
+    "strikePrice": 0,
+    "tags": [
+     "jazz",
+     "red garland",
+     "hard bop",
+     "lou donaldson"
+    ],
+    "title": "LP. Lou Donaldson With The Red Garland Trio – Fine And Dandy.LDC 1022.NM.Japan.(Jazz)",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-05-01T05:28:00.000Z",
+    "bidsCount": 1,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 74,
+     "name": "Ульяновск",
+     "popularity": 10735,
+     "region": "Ульяновская обл.",
+     "regionId": 5432,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 0,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-05-15T05:28:00.000Z",
+    "watchCount": 0,
+    "hitsCount": 7,
+    "id": 358867505,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/358867505.0.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.0.208x208s.jpg?1",
+       "x2": "/i/358867505.0.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/358867505.1.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.1.208x208s.jpg?1",
+       "x2": "/i/358867505.1.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/358867505.2.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.2.208x208s.jpg?1",
+       "x2": "/i/358867505.2.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/358867505.3.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.3.208x208s.jpg?1",
+       "x2": "/i/358867505.3.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/358867505.4.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.4.208x208s.jpg?1",
+       "x2": "/i/358867505.4.208x208.jpg?1"
+      },
+      "ratio": 0.444336
+     },
+     {
+      "url": "/i/358867505.5.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.5.208x208s.jpg?1",
+       "x2": "/i/358867505.5.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/358867505.6.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.6.208x208s.jpg?1",
+       "x2": "/i/358867505.6.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/358867505.7.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.7.208x208s.jpg?1",
+       "x2": "/i/358867505.7.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     },
+     {
+      "url": "/i/358867505.8.jpg?1",
+      "thumbnail": {
+       "x1": "/i/358867505.8.208x208s.jpg?1",
+       "x2": "/i/358867505.8.208x208.jpg?1"
+      },
+      "ratio": 1.33333
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 9,
+    "picsVersion": 1,
+    "price": 3000,
+    "normalizedPrice": 3000,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "yarusta",
+     "id": 357363,
+     "rating": 846,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/357363.120x120.jpg?7",
+     "avatarThumbnailURL": "/a/357363.120x120.jpg?7",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 3000,
+    "strikePrice": 0,
+    "tags": [
+     "jazz",
+     "lp",
+     "винил",
+     "coltrane",
+     "hard bop",
+     "john coltrane",
+     "red garland",
+     "japan"
+    ],
+    "title": "John Coltrane With The Red Garland Trio - Traneing In -1958, Japan",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [],
+    "beginDate": "2026-04-14T04:49:20.000Z",
+    "bidsCount": 0,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 55,
+     "name": "Ростов-на-Дону",
+     "popularity": 42295,
+     "region": "Ростовская обл.",
+     "regionId": 4800,
+     "isNameUnique": true
+    },
+    "condition": 2,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 289,
+     "localDelivery": 0,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-05-06T11:05:13.000Z",
+    "watchCount": 0,
+    "hitsCount": 8,
+    "id": 297895646,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/297895646.0.jpg",
+      "thumbnail": {
+       "x1": "/i/297895646.0.208x208s.jpg",
+       "x2": "/i/297895646.0.208x208.jpg"
+      },
+      "ratio": 1.3318
+     },
+     {
+      "url": "/i/297895646.1.jpg",
+      "thumbnail": {
+       "x1": "/i/297895646.1.208x208s.jpg",
+       "x2": "/i/297895646.1.208x208.jpg"
+      },
+      "ratio": 1.3318
+     },
+     {
+      "url": "/i/297895646.2.jpg",
+      "thumbnail": {
+       "x1": "/i/297895646.2.208x208s.jpg",
+       "x2": "/i/297895646.2.208x208.jpg"
+      },
+      "ratio": 1.3318
+     },
+     {
+      "url": "/i/297895646.3.jpg",
+      "thumbnail": {
+       "x1": "/i/297895646.3.208x208s.jpg",
+       "x2": "/i/297895646.3.208x208.jpg"
+      },
+      "ratio": 1.3318
+     },
+     {
+      "url": "/i/297895646.4.jpg",
+      "thumbnail": {
+       "x1": "/i/297895646.4.208x208s.jpg",
+       "x2": "/i/297895646.4.208x208.jpg"
+      },
+      "ratio": 1.3318
+     }
+    ],
+    "isAntisniperEnabled": false,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "BANK",
+     "CARD"
+    ],
+    "picsCount": 5,
+    "picsVersion": 0,
+    "price": 1751,
+    "normalizedPrice": 1751,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "music4you",
+     "id": 385983,
+     "rating": 5072,
+     "isTrusted": true,
+     "hasEconomyDelivery": true,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/385983.120x120.jpg?46",
+     "avatarThumbnailURL": "/a/385983.120x120.jpg?46",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1751,
+    "strikePrice": 0,
+    "tags": [],
+    "title": "Red Garland Trio – Groovy 1957/76 JAPAN PRESTIGE LP (Paul Chambers, Arthur Taylor, 5/5) Y5",
+    "type": "fixedPrice",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   },
+   {
+    "additionalProperties": [
+     {
+      "categoryId": 2211,
+      "name": "Состояние",
+      "propertyId": 446,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 449
+       }
+      ]
+     },
+     {
+      "categoryId": 2211,
+      "name": "Конверт",
+      "propertyId": 456,
+      "values": [
+       {
+        "value": "Near Mint",
+        "valueId": 15390
+       }
+      ]
+     }
+    ],
+    "beginDate": "2026-04-20T17:00:00.000Z",
+    "bidsCount": 1,
+    "categoryId": 2228,
+    "altCategoryId": null,
+    "city": {
+     "country": "Россия",
+     "countryId": 107,
+     "id": 1215,
+     "name": "Пушкино",
+     "popularity": 2264,
+     "region": "Москва и Московская обл.",
+     "regionId": 4312,
+     "isNameUnique": true
+    },
+    "condition": 1,
+    "availability": 0,
+    "currency": "RUB",
+    "delivery": {
+     "abroadDelivery": 1,
+     "countryPrice": 500,
+     "localDelivery": 2,
+     "localPrice": 0,
+     "soloDelivery": false,
+     "worldPrice": 0
+    },
+    "endDate": "2026-04-25T17:00:00.000Z",
+    "watchCount": 0,
+    "hitsCount": 14,
+    "id": 356628846,
+    "newId": null,
+    "pictures": [
+     {
+      "url": "/i/356628846.0.jpg",
+      "thumbnail": {
+       "x1": "/i/356628846.0.208x208s.jpg",
+       "x2": "/i/356628846.0.208x208.jpg"
+      },
+      "ratio": 1.77531
+     }
+    ],
+    "isAntisniperEnabled": true,
+    "isEndDateExtended": false,
+    "blocked": false,
+    "banned": false,
+    "delisted": false,
+    "isBargainAvailable": false,
+    "isFeatured": false,
+    "minRating": 0,
+    "paymentMethods": [
+     "CASH",
+     "CARD"
+    ],
+    "picsCount": 1,
+    "picsVersion": 0,
+    "price": 1300,
+    "normalizedPrice": 1300,
+    "quantity": 1,
+    "soldQuantity": 1,
+    "status": 1,
+    "seller": {
+     "displayName": "l.....SS",
+     "id": 338389,
+     "rating": 13056,
+     "isTrusted": true,
+     "hasEconomyDelivery": false,
+     "hasDiscounts": false,
+     "discountAction": null,
+     "pauseMessage": null,
+     "avatarURL": "/a/338389.120x120.jpg?15",
+     "avatarThumbnailURL": "/a/338389.120x120.jpg?15",
+     "isBanned": false,
+     "isOnHold": false,
+     "hasNewUserLimits": false
+    },
+    "startPrice": 1300,
+    "strikePrice": 0,
+    "tags": [
+     "виниловые пластинки",
+     "psychedelic rock",
+     "hard rock",
+     "pink floyd",
+     "редкость",
+     "коллекционное",
+     "винтаж",
+     "psychedelic",
+     "blues rock",
+     "jazz rock",
+     "распродажа коллекции",
+     "фирменный cd",
+     "avantgarde",
+     "heavy metal",
+     "japan cd",
+     "john coltrane"
+    ],
+    "title": "Red Garland – Can't See For Lookin'     USA  1972",
+    "type": "auction",
+    "markedAsBold": false,
+    "isTemporarilyBlocked": false,
+    "charityPercent": 0,
+    "hasReposts": false,
+    "isPremium": false,
+    "isSafeDealEnabled": false,
+    "isDiscountDisabled": false,
+    "ageCategory": "0"
+   }
+  ],
+  "foundByDescription": [],
+  "suggest": {
+   "text": null,
+   "words": [],
+   "categories": [],
+   "queries": []
+  },
+  "lastSortValues": [
+   3,
+   1777136400000,
+   "356628846"
+  ]
+ }
+}

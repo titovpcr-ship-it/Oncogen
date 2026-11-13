@@ -1,0 +1,22 @@
+{
+ "correlationId": "dl2f2zeyqzwmsobvjq3xsof57oqp8lzj",
+ "error": {
+  "name": "CommandValidationError",
+  "message": "Validation of command lots/get-items has failed",
+  "innerError": null,
+  "code": 3,
+  "commandType": "lots/get-items",
+  "errors": [
+   {
+    "name": "ValidationError",
+    "message": "trying to apply soldStatus filter in buyer mode",
+    "innerError": null,
+    "code": 7,
+    "isFatal": true,
+    "path": [],
+    "httpCode": 418
+   }
+  ],
+  "httpCode": 418
+ }
+}

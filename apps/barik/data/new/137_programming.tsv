@@ -1,0 +1,60 @@
+# lv=C1; ru=Программирование; en=Programming; fr=Programmation; hy=Ծրագրավորում; ic=👨‍💻
+ելակետային կոդ	исходный код	source code		code source
+կոմպիլյատոր	компилятор	compiler		compilateur
+ինտերպրետատոր	интерпретатор	interpreter		interpréteur
+ֆրեյմվորք	фреймворк	framework		framework
+հատկություն	свойство	property, attribute		propriété
+ժառանգում	наследование	inheritance		héritage
+ինկապսուլյացիա	инкапсуляция	encapsulation		encapsulation
+բուլյան	булев тип	Boolean		booléen
+ռեկուրսիա	рекурсия	recursion		récursivité
+տվյալների կառուցվածք	структура данных	data structure		structure de données
+գրաֆ	граф	graph		graphe
+կույտ	куча, груда	heap, pile		tas
+հեշ աղյուսակ	хеш-таблица	hash table		table de hachage
+հարցում	запрос, опрос	query, request, survey		requête
+առաջնային բանալի	первичный ключ	primary key		clé primaire
+ինդեքս	индекс	index		index
+միկրոծառայություն	микросервис	microservice		microservice
+ամպային հաշվարկ	облачные вычисления	cloud computing	☁️	informatique en nuage
+վիրտուալ մեքենա	виртуальная машина	virtual machine		machine virtuelle
+կոնտեյներ	контейнер	container		conteneur
+տեղակայում	развёртывание	deployment		déploiement
+տարբերակների կառավարում	контроль версий	version control		gestion de versions
+կոմիթ	коммит	commit		commit
+պահոց	хранилище, репозиторий	repository, storage		dépôt
+թեստավորում	тестирование	testing		test
+միավորային թեստ	модульный тест	unit test		test unitaire
+ինտեգրացիոն թեստ	интеграционный тест	integration test		test d'intégration
+վրիպազերծում	отладка	debugging		débogage
+վրիպազերծիչ	отладчик	debugger		débogueur
+տեղեկամատյան	журнал (логов)	log		journal
+կատարողականություն	производительность	performance		performance
+օպտիմալացում	оптимизация	optimization		optimisation
+մասշտաբավորում	масштабирование	scaling		mise à l'échelle
+բեռնվածություն	нагрузка	load		charge
+խափանում	сбой	failure, outage		panne
+խոցելիություն	уязвимость	vulnerability		vulnérabilité
+նույնականացում	идентификация, аутентификация	authentication		authentification
+թոքեն	токен	token		jeton
+կիբեռհարձակում	кибератака	cyberattack		cyberattaque
+ֆիշինգ	фишинг	phishing	🎣	hameçonnage
+չարամիտ ծրագիր	вредоносная программа	malware		logiciel malveillant
+փրկագին պահանջող ծրագիր	программа-вымогатель	ransomware		rançongiciel
+հրապատ	брандмауэр	firewall	🧱	pare-feu
+վիրտուալ մասնավոր ցանց	VPN	VPN		VPN
+տիրույթի անուն	доменное имя	domain name		nom de domaine
+հոսթինգ	хостинг	hosting		hébergement
+կայքի հասցե	адрес сайта	web address		adresse du site
+սերտիֆիկատ	сертификат	certificate		certificat
+բաց կոդ	открытый код	open source		code ouvert
+ծրագրային ապահովման մշակում	разработка ПО	software development		développement logiciel
+ծրագրավորման միջավայր	среда разработки	development environment		environnement de développement
+տեքստային խմբագիր	текстовый редактор	text editor		éditeur de texte
+հրամանի տող	командная строка	command line		ligne de commande
+սկրիպտ	скрипт	script		script
+մակրո	макрос	macro		macro
+պլագին	плагин	plug-in		plugin
+ընդլայնում	расширение	extension		extension
+պատչ	патч	patch		correctif
+թողարկում	выпуск, релиз	release		version

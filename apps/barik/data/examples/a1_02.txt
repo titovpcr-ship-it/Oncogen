@@ -1,0 +1,115 @@
+# Время, дни недели, прилагательные, фрукты и овощи, животные
+ժամանակ | Ես ժամանակ չունեմ։ | У меня нет времени. | I have no time. | Je n’ai pas le temps. | No tengo tiempo. | Ich habe keine Zeit. | Eu não tenho tempo.
+ժամ | Դասը մեկ ժամ է տևում։ | Урок длится один час. | The lesson lasts one hour. | Le cours dure une heure. | La clase dura una hora. | Der Unterricht dauert eine Stunde. | A aula dura uma hora.
+րոպե | Մեկ րոպե, խնդրում եմ։ | Одну минуту, пожалуйста. | One minute, please. | Une minute, s’il vous plaît. | Un minuto, por favor. | Eine Minute, bitte. | Um minuto, por favor.
+օր | Այսօր լավ օր է։ | Сегодня хороший день. | Today is a good day. | Aujourd’hui est une belle journée. | Hoy es un buen día. | Heute ist ein guter Tag. | Hoje é um bom dia.
+գիշեր | Գիշերը ցուրտ է։ | Ночью холодно. | It is cold at night. | La nuit, il fait froid. | Por la noche hace frío. | Nachts ist es kalt. | À noite faz frio.
+առավոտ | Առավոտը արևոտ է։ | Утро солнечное. | The morning is sunny. | La matinée est ensoleillée. | La mañana está soleada. | Der Morgen ist sonnig. | A manhã está ensolarada.
+երեկո | Երեկոն հանգիստ է։ | Вечер спокойный. | The evening is quiet. | La soirée est calme. | La tarde está tranquila. | Der Abend ist ruhig. | A noite está tranquila.
+այսօր | Այսօր ես տանն եմ։ | Сегодня я дома. | Today I am at home. | Aujourd’hui, je suis à la maison. | Hoy estoy en casa. | Heute bin ich zu Hause. | Hoje eu estou em casa.
+վաղը | Վաղը կիրակի է։ | Завтра воскресенье. | Tomorrow is Sunday. | Demain, c’est dimanche. | Mañana es domingo. | Morgen ist Sonntag. | Amanhã é domingo.
+երեկ | Երեկ անձրև էր գալիս։ | Вчера шёл дождь. | It was raining yesterday. | Hier, il pleuvait. | Ayer llovía. | Gestern hat es geregnet. | Ontem estava chovendo.
+հիմա | Հիմա ժամը քանի՞սն է։ | Который сейчас час? | What time is it now? | Quelle heure est-il maintenant ? | ¿Qué hora es ahora? | Wie spät ist es jetzt? | Que horas são agora?
+ամիս | Այս ամիս ես արձակուրդում եմ։ | В этом месяце я в отпуске. | This month I am on holiday. | Ce mois-ci, je suis en vacances. | Este mes estoy de vacaciones. | Diesen Monat habe ich Urlaub. | Este mês eu estou de férias.
+տարի | Շնորհավոր Նոր տարի։ | С Новым годом! | Happy New Year! | Bonne année ! | ¡Feliz Año Nuevo! | Frohes neues Jahr! | Feliz Ano Novo!
+ձմեռ | Ձմռանը ձյուն է գալիս։ | Зимой идёт снег. | It snows in winter. | En hiver, il neige. | En invierno nieva. | Im Winter schneit es. | No inverno neva.
+գարուն | Գարնանը ծաղիկները բացվում են։ | Весной распускаются цветы. | Flowers bloom in spring. | Au printemps, les fleurs s’ouvrent. | En primavera se abren las flores. | Im Frühling blühen die Blumen. | Na primavera as flores se abrem.
+ամառ | Ամռանը շոգ է։ | Летом жарко. | It is hot in summer. | En été, il fait chaud. | En verano hace calor. | Im Sommer ist es heiß. | No verão faz calor.
+աշուն | Աշնանը տերևները դեղնում են։ | Осенью листья желтеют. | In autumn the leaves turn yellow. | En automne, les feuilles jaunissent. | En otoño las hojas se ponen amarillas. | Im Herbst werden die Blätter gelb. | No outono as folhas ficam amarelas.
+երկուշաբթի | Երկուշաբթի ես աշխատում եմ։ | В понедельник я работаю. | On Monday I work. | Lundi, je travaille. | El lunes trabajo. | Am Montag arbeite ich. | Na segunda-feira eu trabalho.
+երեքշաբթի | Երեքշաբթի դաս ունեմ։ | Во вторник у меня урок. | On Tuesday I have a lesson. | Mardi, j’ai cours. | El martes tengo clase. | Am Dienstag habe ich Unterricht. | Na terça-feira eu tenho aula.
+չորեքշաբթի | Չորեքշաբթի հանդիպում ունենք։ | В среду у нас встреча. | On Wednesday we have a meeting. | Mercredi, nous avons une réunion. | El miércoles tenemos una reunión. | Am Mittwoch haben wir ein Treffen. | Na quarta-feira temos uma reunião.
+հինգշաբթի | Հինգշաբթի գնում եմ բժշկի։ | В четверг я иду к врачу. | On Thursday I am going to the doctor. | Jeudi, je vais chez le médecin. | El jueves voy al médico. | Am Donnerstag gehe ich zum Arzt. | Na quinta-feira eu vou ao médico.
+ուրբաթ | Ուրբաթ երեկոյան ազատ եմ։ | В пятницу вечером я свободен. | On Friday evening I am free. | Vendredi soir, je suis libre. | El viernes por la tarde estoy libre. | Am Freitagabend habe ich frei. | Na sexta à noite eu estou livre.
+շաբաթ | Շաբաթ օրը շուկա ենք գնում։ | В субботу мы идём на рынок. | On Saturday we go to the market. | Samedi, nous allons au marché. | El sábado vamos al mercado. | Am Samstag gehen wir auf den Markt. | No sábado vamos ao mercado.
+կիրակի | Կիրակի օրը հանգստանում եմ։ | В воскресенье я отдыхаю. | On Sunday I rest. | Le dimanche, je me repose. | El domingo descanso. | Am Sonntag ruhe ich mich aus. | No domingo eu descanso.
+մեծ | Սա մեծ տուն է։ | Это большой дом. | This is a big house. | C’est une grande maison. | Es una casa grande. | Das ist ein großes Haus. | Esta é uma casa grande.
+փոքր | Իմ եղբայրը փոքր է։ | Мой брат маленький. | My brother is little. | Mon frère est petit. | Mi hermano es pequeño. | Mein Bruder ist klein. | Meu irmão é pequeno.
+գեղեցիկ | Հայաստանը գեղեցիկ երկիր է։ | Армения — красивая страна. | Armenia is a beautiful country. | L’Arménie est un beau pays. | Armenia es un país hermoso. | Armenien ist ein schönes Land. | A Armênia é um país bonito.
+նոր | Ես նոր հեռախոս ունեմ։ | У меня новый телефон. | I have a new phone. | J’ai un nouveau téléphone. | Tengo un teléfono nuevo. | Ich habe ein neues Telefon. | Eu tenho um telefone novo.
+հին | Երևանը հին քաղաք է։ | Ереван — древний город. | Yerevan is an old city. | Erevan est une ville ancienne. | Ereván es una ciudad antigua. | Jerewan ist eine alte Stadt. | Yerevan é uma cidade antiga.
+ծեր | Պապիկս ծեր է։ | Мой дедушка старый. | My grandfather is old. | Mon grand-père est vieux. | Mi abuelo es viejo. | Mein Opa ist alt. | Meu avô é velho.
+երիտասարդ | Նա երիտասարդ բժիշկ է։ | Он молодой врач. | He is a young doctor. | C’est un jeune médecin. | Es un médico joven. | Er ist ein junger Arzt. | Ele é um médico jovem.
+տաք | Այսօր տաք է։ | Сегодня тепло. | It is warm today. | Aujourd’hui, il fait chaud. | Hoy hace calor. | Heute ist es warm. | Hoje está quente.
+սառը | Ջուրը սառն է։ | Вода холодная. | The water is cold. | L’eau est froide. | El agua está fría. | Das Wasser ist kalt. | A água está fria.
+արագ | Գնացքը արագ է գնում։ | Поезд едет быстро. | The train goes fast. | Le train roule vite. | El tren va rápido. | Der Zug fährt schnell. | O trem anda rápido.
+դանդաղ | Դանդաղ խոսիր, խնդրում եմ։ | Говори медленно, пожалуйста. | Speak slowly, please. | Parle lentement, s’il te plaît. | Habla despacio, por favor. | Sprich bitte langsam. | Fale devagar, por favor.
+երկար | Ճանապարհը երկար է։ | Дорога длинная. | The road is long. | La route est longue. | El camino es largo. | Der Weg ist lang. | O caminho é longo.
+կարճ | Նրա մազերը կարճ են։ | У неё короткие волосы. | Her hair is short. | Elle a les cheveux courts. | Tiene el pelo corto. | Ihre Haare sind kurz. | O cabelo dela é curto.
+բարձր | Արագածը բարձր սար է։ | Арагац — высокая гора. | Aragats is a high mountain. | L’Aragats est une haute montagne. | El Aragats es una montaña alta. | Der Aragaz ist ein hoher Berg. | O Aragats é uma montanha alta.
+ցածր | Այս սեղանը ցածր է։ | Этот стол низкий. | This table is low. | Cette table est basse. | Esta mesa es baja. | Dieser Tisch ist niedrig. | Esta mesa é baixa.
+ուրախ | Ես շատ ուրախ եմ։ | Я очень рад. | I am very happy. | Je suis très content. | Estoy muy contento. | Ich bin sehr froh. | Eu estou muito feliz.
+տխուր | Այս երգը տխուր է։ | Эта песня грустная. | This song is sad. | Cette chanson est triste. | Esta canción es triste. | Dieses Lied ist traurig. | Esta música é triste.
+հոգնած | Ես հոգնած եմ։ | Я устал. | I am tired. | Je suis fatigué. | Estoy cansado. | Ich bin müde. | Eu estou cansado.
+քաղցած | Երեխան քաղցած է։ | Ребёнок голоден. | The child is hungry. | L’enfant a faim. | El niño tiene hambre. | Das Kind hat Hunger. | A criança está com fome.
+համեղ | Ճաշը շատ համեղ է։ | Обед очень вкусный. | The lunch is very tasty. | Le déjeuner est très bon. | El almuerzo está muy rico. | Das Mittagessen ist sehr lecker. | O almoço está muito gostoso.
+հեշտ | Այս դասը հեշտ է։ | Этот урок лёгкий. | This lesson is easy. | Cette leçon est facile. | Esta lección es fácil. | Diese Lektion ist leicht. | Esta lição é fácil.
+դժվար | Հայերենը դժվար չէ։ | Армянский не трудный. | Armenian is not difficult. | L’arménien n’est pas difficile. | El armenio no es difícil. | Armenisch ist nicht schwer. | O armênio não é difícil.
+թանկ | Այս պայուսակը թանկ է։ | Эта сумка дорогая. | This bag is expensive. | Ce sac est cher. | Este bolso es caro. | Diese Tasche ist teuer. | Esta bolsa é cara.
+էժան | Շուկայում միրգը էժան է։ | На рынке фрукты дешёвые. | Fruit is cheap at the market. | Au marché, les fruits sont bon marché. | En el mercado la fruta es barata. | Auf dem Markt ist Obst billig. | No mercado as frutas são baratas.
+մաքուր | Սենյակը մաքուր է։ | Комната чистая. | The room is clean. | La chambre est propre. | La habitación está limpia. | Das Zimmer ist sauber. | O quarto está limpo.
+կեղտոտ | Կոշիկներս կեղտոտ են։ | Мои ботинки грязные. | My shoes are dirty. | Mes chaussures sont sales. | Mis zapatos están sucios. | Meine Schuhe sind schmutzig. | Meus sapatos estão sujos.
+ուժեղ | Այսօր ուժեղ քամի է։ | Сегодня сильный ветер. | There is a strong wind today. | Aujourd’hui, il y a un vent fort. | Hoy hay viento fuerte. | Heute weht ein starker Wind. | Hoje está ventando forte.
+թույլ | Հիվանդը դեռ թույլ է։ | Больной ещё слаб. | The patient is still weak. | Le malade est encore faible. | El enfermo todavía está débil. | Der Kranke ist noch schwach. | O doente ainda está fraco.
+հարուստ | Նա հարուստ մարդ է։ | Он богатый человек. | He is a rich man. | C’est un homme riche. | Es un hombre rico. | Er ist ein reicher Mann. | Ele é um homem rico.
+աղքատ | Այդ ընտանիքը աղքատ է։ | Та семья бедная. | That family is poor. | Cette famille est pauvre. | Esa familia es pobre. | Diese Familie ist arm. | Essa família é pobre.
+ճիշտ | Դու ճիշտ ես։ | Ты прав. | You are right. | Tu as raison. | Tienes razón. | Du hast recht. | Você tem razão.
+սխալ | Սա իմ սխալն է։ | Это моя ошибка. | This is my mistake. | C’est mon erreur. | Es mi error. | Das ist mein Fehler. | Este é o meu erro.
+շատ | Ես քեզ շատ եմ սիրում։ | Я тебя очень люблю. | I love you very much. | Je t’aime beaucoup. | Te quiero mucho. | Ich liebe dich sehr. | Eu te amo muito.
+քիչ | Ես քիչ ժամանակ ունեմ։ | У меня мало времени. | I have little time. | J’ai peu de temps. | Tengo poco tiempo. | Ich habe wenig Zeit. | Eu tenho pouco tempo.
+խնձոր | Ես խնձոր եմ ուտում։ | Я ем яблоко. | I am eating an apple. | Je mange une pomme. | Como una manzana. | Ich esse einen Apfel. | Eu como uma maçã.
+տանձ | Տանձը քաղցր է։ | Груша сладкая. | The pear is sweet. | La poire est sucrée. | La pera es dulce. | Die Birne ist süß. | A pera é doce.
+խաղող | Խաղողից գինի են պատրաստում։ | Из винограда делают вино. | Wine is made from grapes. | On fait du vin avec le raisin. | Con la uva se hace vino. | Aus Trauben macht man Wein. | Da uva se faz vinho.
+ծիրան | Հայկական ծիրանը շատ համեղ է։ | Армянский абрикос очень вкусный. | Armenian apricots are very tasty. | L’abricot arménien est très bon. | El damasco armenio es muy rico. | Die armenische Aprikose ist sehr lecker. | O damasco armênio é muito gostoso.
+բալ | Բալը թթու է։ | Вишня кислая. | The cherry is sour. | La cerise est acide. | La guinda es ácida. | Die Kirsche ist sauer. | A cereja é azeda.
+ելակ | Երեխաները ելակ են սիրում։ | Дети любят клубнику. | Children love strawberries. | Les enfants aiment les fraises. | A los niños les gustan las frutillas. | Kinder lieben Erdbeeren. | As crianças adoram morango.
+ձմերուկ | Ամռանը ձմերուկ ենք ուտում։ | Летом мы едим арбуз. | In summer we eat watermelon. | En été, nous mangeons de la pastèque. | En verano comemos sandía. | Im Sommer essen wir Wassermelone. | No verão comemos melancia.
+սեխ | Սեխը հասած է։ | Дыня спелая. | The melon is ripe. | Le melon est mûr. | El melón está maduro. | Die Melone ist reif. | O melão está maduro.
+բանան | Կապիկը բանան է ուտում։ | Обезьяна ест банан. | The monkey is eating a banana. | Le singe mange une banane. | El mono come una banana. | Der Affe isst eine Banane. | O macaco come uma banana.
+նարինջ | Ես նարնջի հյութ եմ խմում։ | Я пью апельсиновый сок. | I am drinking orange juice. | Je bois du jus d’orange. | Tomo jugo de naranja. | Ich trinke Orangensaft. | Eu bebo suco de laranja.
+կիտրոն | Թեյ կիտրոնով, խնդրում եմ։ | Чай с лимоном, пожалуйста. | Tea with lemon, please. | Un thé au citron, s’il vous plaît. | Té con limón, por favor. | Tee mit Zitrone, bitte. | Chá com limão, por favor.
+ընկույզ | Սկյուռը ընկույզ է սիրում։ | Белка любит орехи. | The squirrel loves nuts. | L’écureuil aime les noix. | A la ardilla le gustan las nueces. | Das Eichhörnchen mag Nüsse. | O esquilo adora nozes.
+կարտոֆիլ | Մայրիկը կարտոֆիլ է եփում։ | Мама варит картошку. | Mum is cooking potatoes. | Maman fait cuire des pommes de terre. | Mamá cocina papas. | Mama kocht Kartoffeln. | A mamãe cozinha batatas.
+լոլիկ | Լոլիկը կարմիր է։ | Помидор красный. | The tomato is red. | La tomate est rouge. | El tomate es rojo. | Die Tomate ist rot. | O tomate é vermelho.
+վարունգ | Վարունգը թարմ է։ | Огурец свежий. | The cucumber is fresh. | Le concombre est frais. | El pepino está fresco. | Die Gurke ist frisch. | O pepino está fresco.
+սոխ | Աղցանի մեջ սոխ կա։ | В салате есть лук. | There is onion in the salad. | Il y a de l’oignon dans la salade. | La ensalada tiene cebolla. | Im Salat sind Zwiebeln. | Tem cebola na salada.
+սխտոր | Ես սխտոր չեմ սիրում։ | Я не люблю чеснок. | I don’t like garlic. | Je n’aime pas l’ail. | No me gusta el ajo. | Ich mag keinen Knoblauch. | Eu não gosto de alho.
+գազար | Նապաստակը գազար է ուտում։ | Кролик ест морковь. | The rabbit is eating a carrot. | Le lapin mange une carotte. | El conejo come una zanahoria. | Der Hase frisst eine Karotte. | O coelho come uma cenoura.
+կաղամբ | Տատիկը կաղամբով ապուր է եփում։ | Бабушка варит суп с капустой. | Grandma is cooking cabbage soup. | Grand-mère prépare une soupe au chou. | La abuela cocina sopa de repollo. | Oma kocht Kohlsuppe. | A vovó cozinha sopa de repolho.
+պղպեղ | Այս պղպեղը կծու է։ | Этот перец острый. | This pepper is hot. | Ce piment est fort. | Este ají es picante. | Diese Paprika ist scharf. | Esta pimenta é ardida.
+եգիպտացորեն | Դաշտում եգիպտացորեն է աճում։ | В поле растёт кукуруза. | Corn grows in the field. | Du maïs pousse dans le champ. | En el campo crece maíz. | Auf dem Feld wächst Mais. | No campo cresce milho.
+սունկ | Անտառում սունկ ենք հավաքում։ | В лесу мы собираем грибы. | We pick mushrooms in the forest. | Nous cueillons des champignons dans la forêt. | Recogemos hongos en el bosque. | Im Wald sammeln wir Pilze. | Colhemos cogumelos na floresta.
+շուն | Իմ շունը խելացի է։ | Моя собака умная. | My dog is clever. | Mon chien est intelligent. | Mi perro es inteligente. | Mein Hund ist klug. | Meu cachorro é inteligente.
+կատու | Կատուն քնած է բազմոցի վրա։ | Кошка спит на диване. | The cat is asleep on the sofa. | Le chat dort sur le canapé. | El gato duerme en el sofá. | Die Katze schläft auf dem Sofa. | O gato está dormindo no sofá.
+ձի | Ձին արագ է վազում։ | Лошадь быстро бежит. | The horse runs fast. | Le cheval court vite. | El caballo corre rápido. | Das Pferd läuft schnell. | O cavalo corre rápido.
+կով | Կովը կաթ է տալիս։ | Корова даёт молоко. | The cow gives milk. | La vache donne du lait. | La vaca da leche. | Die Kuh gibt Milch. | A vaca dá leite.
+ոչխար | Սարում ոչխարներ են արածում։ | В горах пасутся овцы. | Sheep graze in the mountains. | Des moutons paissent dans la montagne. | En la montaña pastan ovejas. | In den Bergen weiden Schafe. | Ovelhas pastam na montanha.
+այծ | Այծը խոտ է ուտում։ | Коза ест траву. | The goat is eating grass. | La chèvre mange de l’herbe. | La cabra come hierba. | Die Ziege frisst Gras. | A cabra come capim.
+խոզ | Խոզը ցեխի մեջ է։ | Свинья в грязи. | The pig is in the mud. | Le cochon est dans la boue. | El cerdo está en el barro. | Das Schwein ist im Schlamm. | O porco está na lama.
+հավ | Հավը ձու է ածում։ | Курица несёт яйца. | The hen lays eggs. | La poule pond des œufs. | La gallina pone huevos. | Die Henne legt Eier. | A galinha bota ovos.
+աքաղաղ | Աքաղաղը առավոտյան կանչում է։ | Петух кричит по утрам. | The rooster crows in the morning. | Le coq chante le matin. | El gallo canta por la mañana. | Der Hahn kräht am Morgen. | O galo canta de manhã.
+բադ | Բադը լողում է լճում։ | Утка плавает в озере. | The duck is swimming in the lake. | Le canard nage dans le lac. | El pato nada en el lago. | Die Ente schwimmt im See. | O pato nada no lago.
+թռչուն | Թռչունը երգում է ծառի վրա։ | Птица поёт на дереве. | The bird is singing in the tree. | L’oiseau chante sur l’arbre. | El pájaro canta en el árbol. | Der Vogel singt auf dem Baum. | O pássaro canta na árvore.
+աղավնի | Հրապարակում շատ աղավնիներ կան։ | На площади много голубей. | There are many pigeons in the square. | Il y a beaucoup de pigeons sur la place. | En la plaza hay muchas palomas. | Auf dem Platz sind viele Tauben. | Há muitos pombos na praça.
+արծիվ | Արծիվը բարձր է թռչում։ | Орёл летает высоко. | The eagle flies high. | L’aigle vole haut. | El águila vuela alto. | Der Adler fliegt hoch. | A águia voa alto.
+բու | Բուն գիշերը չի քնում։ | Сова ночью не спит. | The owl doesn’t sleep at night. | Le hibou ne dort pas la nuit. | El búho no duerme de noche. | Die Eule schläft nachts nicht. | A coruja não dorme à noite.
+արջ | Արջը անտառում է ապրում։ | Медведь живёт в лесу. | The bear lives in the forest. | L’ours vit dans la forêt. | El oso vive en el bosque. | Der Bär lebt im Wald. | O urso vive na floresta.
+գայլ | Գայլը վտանգավոր կենդանի է։ | Волк — опасное животное. | The wolf is a dangerous animal. | Le loup est un animal dangereux. | El lobo es un animal peligroso. | Der Wolf ist ein gefährliches Tier. | O lobo é um animal perigoso.
+աղվես | Աղվեսը խորամանկ է։ | Лиса хитрая. | The fox is cunning. | Le renard est rusé. | El zorro es astuto. | Der Fuchs ist schlau. | A raposa é esperta.
+նապաստակ | Նապաստակը արագ է վազում։ | Заяц быстро бегает. | The hare runs fast. | Le lièvre court vite. | La liebre corre rápido. | Der Hase läuft schnell. | A lebre corre rápido.
+սկյուռ | Սկյուռը ծառի վրա է։ | Белка на дереве. | The squirrel is in the tree. | L’écureuil est sur l’arbre. | La ardilla está en el árbol. | Das Eichhörnchen ist auf dem Baum. | O esquilo está na árvore.
+ոզնի | Ոզնին փշեր ունի։ | У ежа есть иголки. | The hedgehog has spines. | Le hérisson a des piquants. | El erizo tiene púas. | Der Igel hat Stacheln. | O ouriço tem espinhos.
+մուկ | Կատուն մուկ է բռնում։ | Кошка ловит мышь. | The cat is catching a mouse. | Le chat attrape une souris. | El gato atrapa un ratón. | Die Katze fängt eine Maus. | O gato pega um rato.
+առյուծ | Առյուծը ուժեղ կենդանի է։ | Лев — сильное животное. | The lion is a strong animal. | Le lion est un animal fort. | El león es un animal fuerte. | Der Löwe ist ein starkes Tier. | O leão é um animal forte.
+վագր | Վագրը մեծ կատու է։ | Тигр — большая кошка. | The tiger is a big cat. | Le tigre est un grand félin. | El tigre es un gato grande. | Der Tiger ist eine große Katze. | O tigre é um gato grande.
+փիղ | Փիղը շատ մեծ է։ | Слон очень большой. | The elephant is very big. | L’éléphant est très grand. | El elefante es muy grande. | Der Elefant ist sehr groß. | O elefante é muito grande.
+կապիկ | Կապիկը նստած է ծառի վրա։ | Обезьяна сидит на дереве. | The monkey is sitting in the tree. | Le singe est assis sur l’arbre. | El mono está sentado en el árbol. | Der Affe sitzt auf dem Baum. | O macaco está sentado na árvore.
+ուղտ | Ուղտը քիչ ջուր է խմում։ | Верблюд пьёт мало воды. | The camel drinks little water. | Le chameau boit peu d’eau. | El camello bebe poca agua. | Das Kamel trinkt wenig Wasser. | O camelo bebe pouca água.
+օձ | Ես օձից վախենում եմ։ | Я боюсь змей. | I am afraid of snakes. | J’ai peur des serpents. | Les tengo miedo a las serpientes. | Ich habe Angst vor Schlangen. | Eu tenho medo de cobra.
+գորտ | Գորտը կանաչ է։ | Лягушка зелёная. | The frog is green. | La grenouille est verte. | La rana es verde. | Der Frosch ist grün. | O sapo é verde.
+կրիա | Կրիան դանդաղ է քայլում։ | Черепаха ходит медленно. | The tortoise walks slowly. | La tortue marche lentement. | La tortuga camina despacio. | Die Schildkröte läuft langsam. | A tartaruga anda devagar.
+կետ | Կետը ապրում է ծովում։ | Кит живёт в море. | The whale lives in the sea. | La baleine vit dans la mer. | La ballena vive en el mar. | Der Wal lebt im Meer. | A baleia vive no mar.
+դելֆին | Դելֆինը խելացի կենդանի է։ | Дельфин — умное животное. | The dolphin is a clever animal. | Le dauphin est un animal intelligent. | El delfín es un animal inteligente. | Der Delfin ist ein kluges Tier. | O golfinho é um animal inteligente.
+մեղու | Մեղուն մեղր է պատրաստում։ | Пчела делает мёд. | The bee makes honey. | L’abeille fait du miel. | La abeja hace miel. | Die Biene macht Honig. | A abelha faz mel.
+թիթեռ | Թիթեռը նստեց ծաղկին։ | Бабочка села на цветок. | The butterfly landed on the flower. | Le papillon s’est posé sur la fleur. | La mariposa se posó en la flor. | Der Schmetterling setzte sich auf die Blume. | A borboleta pousou na flor.
+ճանճ | Սենյակում ճանճ կա։ | В комнате муха. | There is a fly in the room. | Il y a une mouche dans la pièce. | Hay una mosca en la habitación. | Im Zimmer ist eine Fliege. | Tem uma mosca no quarto.

@@ -1,0 +1,1280 @@
+#!/usr/bin/env python3
+"""Страницы Barik для поиска: каждое слово, каждая тема, оглавление — на русском,
+английском и французском (владелец 02.11.2026: «Делай» — страницы слов для поиска).
+
+Зачем: приложение — одна страница на JS, поисковик видит в ней мало. Отдельная
+статичная страница на слово отвечает на запрос «как по-армянски яблоко»,
+«apple in Armenian», «pomme en arménien» и ведёт в приложение.
+
+Вход — слова и темы с транскрипцией ровно как в приложении
+(`node tools/dump_words.js dist/words_tr.json`). Выход — в папку сайта:
+  /{ru,en,fr}/index.html           оглавление: уровни A1–C2 и темы
+  /{ru,en,fr}/t/<тема>.html         тема: все слова с произношением
+  /{ru,en,fr}/w/<слово>.html        слово: перевод, произношение, тема,
+                                    соседние слова, schema.org DefinedTerm
+  /seo.css, /sitemap.xml (+ sitemap-ru/en/fr/es.xml), строка Sitemap в robots.txt.
+У каждой страницы canonical и hreflang (ru, en, fr, x-default → en).
+Часть словника — по Викисловарю (CC BY-SA 4.0): ссылка в подвале каждой страницы.
+
+    python3 tools/build_seo.py --site dist/site --url https://barik.am/
+"""
+import argparse, urllib.parse
+import hashlib
+import html
+import json
+import os
+import re
+import sys
+import unicodedata
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+APP = os.path.dirname(HERE)
+LANGS = ("ru", "en", "fr", "es", "de", "pt")
+LV = ("A1", "A2", "B1", "B2", "C1", "C2")
+NEIGHBOURS = 12
+
+TXT = {
+    "ru": {
+        "title_w": "«{x}» по-армянски — {a} [{tr}] | Barik",
+        "desc_w": "Как будет «{x}» по-армянски: {a}, произношение — {tr}. Тема «{t}», уровень {lv}. "
+                  "Учите армянские слова бесплатно с Barik.",
+        "h_tr": "Произношение", "listen": "Слушать", "h_tx": "Перевод", "lv": "Уровень", "topic": "Тема",
+        "more": "Другие слова темы «{t}»", "all_topic": "Все {n} {w} темы",
+        "cta": "Учить армянские слова в Barik — бесплатно",
+        "cta_t": "Учить эти слова в Barik", "next_t": "Следующая тема",
+        "dict": "Армянский словарь", "home": "Barik",
+        "title_t": "{t} по-армянски — {n} {w} с произношением | Barik",
+        "desc_t": "{t} на армянском языке: {n} {w} с переводом и произношением, уровень {lv}. "
+                  "Восточноармянский, учите с Barik.",
+        "h_t": "{t} по-армянски", "intro_t": "{n} {w}, уровень {lv}. Восточноармянский язык, "
+                                           "произношение русскими буквами.",
+        "title_i": "Армянский словарь — {n} {w} по темам с произношением | Barik",
+        "desc_i": "Восточноармянский словарь: {n} {w} в {k} темах от A1 до C2, перевод на русский "
+                  "и произношение русскими буквами. Учите бесплатно с Barik.",
+        "h_i": "Армянский словарь", "intro_i": "{n} {w} в {k} темах — от первых слов (A1) до "
+                                              "свободного владения (C2). Нажмите на тему.",
+        "lvname": {"A1": "A1 — начальный", "A2": "A2 — базовый", "B1": "B1 — средний",
+                   "B2": "B2 — выше среднего", "C1": "C1 — продвинутый", "C2": "C2 — свободный"},
+        "words": "слов", "prev": "← Предыдущее", "next": "Следующее →",
+        "foot": "Barik — восточноармянский язык для русскоязычных, англоязычных, франкоязычных и испаноязычных. "
+                "Часть словника — по <a href=\"https://www.wiktionary.org/\">Викисловарю</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "с изменениями; переводы — свои.",
+        "lang_name": "Русский",
+    },
+    "en": {
+        "title_w": "“{x}” in Armenian — {a} ({tr}) | Barik",
+        "desc_w": "How to say “{x}” in Armenian: {a}, pronounced {tr}. Topic: {t}, level {lv}. "
+                  "Learn Armenian words for free with Barik.",
+        "h_tr": "Pronunciation", "listen": "Listen", "h_tx": "Translation", "lv": "Level", "topic": "Topic",
+        "more": "More words: {t}", "all_topic": "All {n} {w} of the topic",
+        "cta": "Learn Armenian words with Barik — free",
+        "cta_t": "Learn these words in Barik", "next_t": "Next topic",
+        "dict": "Armenian dictionary", "home": "Barik",
+        "title_t": "{t} in Armenian — {n} {w} with pronunciation | Barik",
+        "desc_t": "{t} in Armenian: {n} {w} with English translation and pronunciation, level {lv}. "
+                  "Eastern Armenian — learn with Barik.",
+        "h_t": "{t} in Armenian", "intro_t": "{n} {w}, level {lv}. Eastern Armenian, "
+                                            "pronunciation in Latin letters.",
+        "title_i": "Armenian dictionary — {n} {w} by topic with pronunciation | Barik",
+        "desc_i": "Eastern Armenian dictionary: {n} {w} in {k} topics from A1 to C2, English "
+                  "translation and pronunciation. Learn for free with Barik.",
+        "h_i": "Armenian dictionary", "intro_i": "{n} {w} in {k} topics — from your first words "
+                                                "(A1) to proficiency (C2). Pick a topic.",
+        "lvname": {"A1": "A1 — beginner", "A2": "A2 — elementary", "B1": "B1 — intermediate",
+                   "B2": "B2 — upper intermediate", "C1": "C1 — advanced", "C2": "C2 — proficient"},
+        "words": "words", "prev": "← Previous", "next": "Next →",
+        "foot": "Barik — Eastern Armenian for English, Russian, French and Spanish speakers. Part of the word "
+                "list is based on <a href=\"https://www.wiktionary.org/\">Wiktionary</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>); "
+                "with changes; translations are our own.",
+        "lang_name": "English",
+    },
+    "fr": {
+        "title_w": "« {x} » en arménien — {a} ({tr}) | Barik",
+        "desc_w": "Comment dit-on « {x} » en arménien : {a}, prononciation {tr}. Thème : {t}, "
+                  "niveau {lv}. Apprenez les mots arméniens gratuitement avec Barik.",
+        "h_tr": "Prononciation", "listen": "Écouter", "h_tx": "Traduction", "lv": "Niveau", "topic": "Thème",
+        "more": "Autres mots du thème « {t} »", "all_topic": "Les {n} {w} du thème",
+        "cta": "Apprendre l’arménien avec Barik — gratuit",
+        "cta_t": "Apprendre ces mots dans Barik", "next_t": "Thème suivant",
+        "dict": "Dictionnaire arménien", "home": "Barik",
+        "title_t": "{t} en arménien — {n} {w} avec prononciation | Barik",
+        "desc_t": "{t} en arménien : {n} {w} avec traduction française et prononciation, niveau {lv}. "
+                  "Arménien oriental — apprenez avec Barik.",
+        "h_t": "{t} en arménien", "intro_t": "{n} {w}, niveau {lv}. Arménien oriental, "
+                                            "prononciation à la française.",
+        "title_i": "Dictionnaire arménien — {n} {w} par thème avec prononciation | Barik",
+        "desc_i": "Dictionnaire d’arménien oriental : {n} {w} en {k} thèmes de A1 à C2, traduction "
+                  "française et prononciation. Apprenez gratuitement avec Barik.",
+        "h_i": "Dictionnaire arménien", "intro_i": "{n} {w} en {k} thèmes — des premiers mots (A1) "
+                                                  "à la maîtrise (C2). Choisissez un thème.",
+        "lvname": {"A1": "A1 — débutant", "A2": "A2 — élémentaire", "B1": "B1 — intermédiaire",
+                   "B2": "B2 — avancé", "C1": "C1 — autonome", "C2": "C2 — maîtrise"},
+        "words": "mots", "prev": "← Précédent", "next": "Suivant →",
+        "foot": "Barik — l’arménien oriental pour francophones, anglophones, russophones et hispanophones. Une partie "
+                "du lexique s’appuie sur le <a href=\"https://www.wiktionary.org/\">Wiktionnaire</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "avec modifications ; traductions originales.",
+        "lang_name": "Français",
+    },
+    "es": {
+        "title_w": "«{x}» en armenio — {a} ({tr}) | Barik",
+        "desc_w": "Cómo se dice «{x}» en armenio: {a}, se pronuncia {tr}. Tema: {t}, nivel {lv}. "
+                  "Aprende palabras armenias gratis con Barik.",
+        "h_tr": "Pronunciación", "listen": "Escuchar", "h_tx": "Traducción", "lv": "Nivel", "topic": "Tema",
+        "more": "Más palabras del tema «{t}»", "all_topic": "Las {n} {w} del tema",
+        "cta": "Aprende armenio con Barik — gratis",
+        "cta_t": "Aprender estas palabras en Barik", "next_t": "Siguiente tema",
+        "dict": "Diccionario armenio", "home": "Barik",
+        "title_t": "{t} en armenio — {n} {w} con pronunciación | Barik",
+        "desc_t": "{t} en armenio: {n} {w} con traducción al español y pronunciación, nivel {lv}. "
+                  "Armenio oriental — aprende con Barik.",
+        "h_t": "{t} en armenio", "intro_t": "{n} {w}, nivel {lv}. Armenio oriental, "
+                                           "pronunciación en letras latinas para hispanohablantes.",
+        "title_i": "Diccionario armenio — {n} {w} por temas con pronunciación | Barik",
+        "desc_i": "Diccionario de armenio oriental: {n} {w} en {k} temas de A1 a C2, traducción "
+                  "al español y pronunciación. Aprende gratis con Barik.",
+        "h_i": "Diccionario armenio", "intro_i": "{n} {w} en {k} temas — de las primeras palabras "
+                                                "(A1) al dominio (C2). Elige un tema.",
+        "lvname": {"A1": "A1 — principiante", "A2": "A2 — básico", "B1": "B1 — intermedio",
+                   "B2": "B2 — intermedio alto", "C1": "C1 — avanzado", "C2": "C2 — dominio"},
+        "words": "palabras", "prev": "← Anterior", "next": "Siguiente →",
+        "foot": "Barik — armenio oriental para hispanohablantes, anglófonos, francófonos y rusohablantes. "
+                "Parte del léxico se basa en el <a href=\"https://www.wiktionary.org/\">Wikcionario</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "con cambios; traducciones propias.",
+        "lang_name": "Español",
+    },
+    "de": {
+        "title_w": "„{x}“ auf Armenisch — {a} ({tr}) | Barik",
+        "desc_w": "Wie sagt man „{x}“ auf Armenisch: {a}, gesprochen {tr}. Thema: {t}, Stufe {lv}. "
+                  "Lerne armenische Wörter kostenlos mit Barik.",
+        "h_tr": "Aussprache", "listen": "Anhören", "h_tx": "Übersetzung", "lv": "Stufe", "topic": "Thema",
+        "more": "Mehr Wörter zum Thema „{t}“", "all_topic": "Alle {n} {w} des Themas",
+        "cta": "Armenisch lernen mit Barik — kostenlos",
+        "cta_t": "Diese Wörter in Barik lernen", "next_t": "Nächstes Thema",
+        "dict": "Armenisches Wörterbuch", "home": "Barik",
+        "title_t": "{t} auf Armenisch — {n} {w} mit Aussprache | Barik",
+        "desc_t": "{t} auf Armenisch: {n} {w} mit deutscher Übersetzung und Aussprache, Stufe {lv}. "
+                  "Ostarmenisch — lerne mit Barik.",
+        "h_t": "{t} auf Armenisch", "intro_t": "{n} {w}, Stufe {lv}. Ostarmenisch, "
+                                             "Aussprache in lateinischen Buchstaben für Deutschsprachige.",
+        "title_i": "Armenisches Wörterbuch — {n} {w} nach Themen mit Aussprache | Barik",
+        "desc_i": "Wörterbuch des Ostarmenischen: {n} {w} in {k} Themen von A1 bis C2, deutsche "
+                  "Übersetzung und Aussprache. Kostenlos lernen mit Barik.",
+        "h_i": "Armenisches Wörterbuch", "intro_i": "{n} {w} in {k} Themen — von den ersten Wörtern "
+                                                   "(A1) bis zur sicheren Beherrschung (C2). Wähle ein Thema.",
+        "lvname": {"A1": "A1 — Anfänger", "A2": "A2 — Grundkenntnisse", "B1": "B1 — Mittelstufe",
+                   "B2": "B2 — gute Mittelstufe", "C1": "C1 — fortgeschritten", "C2": "C2 — sicher"},
+        "words": "Wörter", "prev": "← Vorheriges", "next": "Nächstes →",
+        "foot": "Barik — Ostarmenisch für Deutsch-, Englisch-, Französisch-, Spanisch- und Russischsprachige. "
+                "Ein Teil des Wortschatzes beruht auf dem <a href=\"https://www.wiktionary.org/\">Wiktionary</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "mit Änderungen; eigene Übersetzungen.",
+        "lang_name": "Deutsch",
+    },
+    "pt": {
+        "title_w": "“{x}” em armênio — {a} ({tr}) | Barik",
+        "desc_w": "Como se diz “{x}” em armênio: {a}, pronuncia-se {tr}. Tema: {t}, nível {lv}. "
+                  "Aprenda palavras armênias grátis com o Barik.",
+        "h_tr": "Pronúncia", "listen": "Ouvir", "h_tx": "Tradução", "lv": "Nível", "topic": "Tema",
+        "more": "Mais palavras do tema “{t}”", "all_topic": "As {n} {w} do tema",
+        "cta": "Aprenda armênio com o Barik — grátis",
+        "cta_t": "Aprender estas palavras no Barik", "next_t": "Próximo tema",
+        "dict": "Dicionário de armênio", "home": "Barik",
+        "title_t": "{t} em armênio — {n} {w} com pronúncia | Barik",
+        "desc_t": "{t} em armênio: {n} {w} com tradução para o português e pronúncia, nível {lv}. "
+                  "Armênio oriental — aprenda com o Barik.",
+        "h_t": "{t} em armênio", "intro_t": "{n} {w}, nível {lv}. Armênio oriental, "
+                                            "pronúncia em letras latinas para falantes de português.",
+        "title_i": "Dicionário de armênio — {n} {w} por tema com pronúncia | Barik",
+        "desc_i": "Dicionário de armênio oriental: {n} {w} em {k} temas do A1 ao C2, tradução "
+                  "para o português e pronúncia. Aprenda grátis com o Barik.",
+        "h_i": "Dicionário de armênio", "intro_i": "{n} {w} em {k} temas — das primeiras palavras "
+                                                  "(A1) ao domínio (C2). Escolha um tema.",
+        "lvname": {"A1": "A1 — iniciante", "A2": "A2 — básico", "B1": "B1 — intermediário",
+                   "B2": "B2 — intermediário avançado", "C1": "C1 — avançado", "C2": "C2 — domínio"},
+        "words": "palavras", "prev": "← Anterior", "next": "Próxima →",
+        "foot": "Barik — armênio oriental para falantes de português, espanhol, inglês, francês, alemão e russo. "
+                "Parte do vocabulário vem do <a href=\"https://www.wiktionary.org/\">Wikcionário</a> "
+                "(<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>), "
+                "com alterações; traduções próprias.",
+        "lang_name": "Português",
+    },
+}
+HL = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de", "pt": "pt"}
+OGL = {"ru": "ru_RU", "en": "en_US", "fr": "fr_FR", "es": "es_ES", "de": "de_DE", "pt": "pt_BR"}
+TX = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de", "pt": "pt"}      # перевод
+TR = {"ru": "tr", "en": "lt", "fr": "ft", "es": "st", "de": "dt", "pt": "ptr"}   # транскрипция
+TN = {"ru": "ru", "en": "en", "fr": "fr", "es": "es", "de": "de", "pt": "pt"}   # название темы
+
+CSS = """.nm-big{font-family:"Noto Serif Armenian",serif;font-size:56px;font-weight:700;margin:6px 0 18px;line-height:1.2}
+.nm-l{list-style:none;display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:8px 0 22px}.nm-l li{display:grid;justify-items:center;min-width:54px;padding:8px 10px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9}.nm-l b{font-family:"Noto Serif Armenian",serif;font-size:26px}.nm-l small{opacity:.7}
+.nm-i{list-style:none;padding:0;margin:20px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.nm-i a{display:flex;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9;text-decoration:none;color:inherit}.nm-i .hy{font-family:"Noto Serif Armenian",serif;color:#9F1D35}
+.note{font-size:14px;opacity:.75}
+@font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:G;font-display:swap;font-weight:400 900;src:url(fonts/golos-text-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02B0,U+02C6,U+02DA,U+02DC,U+0259,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:A;font-display:swap;font-weight:100 900;font-stretch:62.5% 100%;src:url(fonts/noto-serif-armenian-armenian-wdth-normal.woff2) format("woff2");unicode-range:U+0308,U+0530-058F,U+2010,U+2024,U+25CC,U+FB13-FB17}
+@font-face{font-family:F;font-display:swap;font-weight:200 800;src:url(fonts/manrope-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:F;font-display:swap;font-weight:200 800;src:url(fonts/manrope-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--bg:#FBF6F1;--card:#FFFFFF;--card2:#F5EDE6;--ink:#1C2045;--mut:#5E5F7C;--acc:#EF8B2C;--acc-ink:#2B1404;--acc-soft:#FCE4CC;--pom:#A8173A;--lapis:#1E2A66;--gold:#C2953F;--gold-hi:#E7C477;--line:#EBE1D9;
+  --braid:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 16' width='28' height='16'><path d='M0 .6H28M0 15.4H28' stroke='%23000' stroke-width='1.2'/><path d='M-10.80 4.97 L-10.35 4.64 L-9.90 4.34 L-9.45 4.08 L-9.00 3.86 L-8.55 3.68 L-8.10 3.54 L-7.65 3.45 L-7.20 3.40 L-6.75 3.41 L-6.30 3.46 L-5.85 3.55 L-5.40 3.69 L-4.95 3.88 L-4.50 4.11 L-4.05 4.37 L-3.60 4.68 L-3.15 5.01 L-2.70 5.38 L-2.25 5.77 L-1.80 6.19 L-1.35 6.63 L-0.90 7.08 L-0.45 7.54 L0.00 8.00 M0.00 8.00 L0.45 8.46 L0.90 8.92 L1.35 9.37 L1.80 9.81 L2.25 10.23 L2.70 10.62 L3.15 10.99 L3.60 11.32 L4.05 11.63 L4.50 11.89 L4.95 12.12 L5.40 12.31 L5.85 12.45 L6.30 12.54 L6.75 12.59 L7.20 12.60 L7.65 12.55 L8.10 12.46 L8.55 12.32 L9.00 12.14 L9.45 11.92 L9.90 11.66 L10.35 11.36 L10.80 11.03 M17.20 4.97 L17.65 4.64 L18.10 4.34 L18.55 4.08 L19.00 3.86 L19.45 3.68 L19.90 3.54 L20.35 3.45 L20.80 3.40 L21.25 3.41 L21.70 3.46 L22.15 3.55 L22.60 3.69 L23.05 3.88 L23.50 4.11 L23.95 4.37 L24.40 4.68 L24.85 5.01 L25.30 5.38 L25.75 5.77 L26.20 6.19 L26.65 6.63 L27.10 7.08 L27.55 7.54 L28.00 8.00 M28.00 8.00 L28.45 8.46 L28.90 8.92 L29.35 9.37 L29.80 9.81 L30.25 10.23 L30.70 10.62 L31.15 10.99 L31.60 11.32 L32.05 11.63 L32.50 11.89 L32.95 12.12 L33.40 12.31 L33.85 12.45 L34.30 12.54 L34.75 12.59 L35.20 12.60 L35.65 12.55 L36.10 12.46 L36.55 12.32 L37.00 12.14 L37.45 11.92 L37.90 11.66 L38.35 11.36 L38.80 11.03 M-14.00 8.00 L-13.55 8.46 L-13.10 8.92 L-12.65 9.37 L-12.20 9.81 L-11.75 10.23 L-11.30 10.62 L-10.85 10.99 L-10.40 11.32 L-9.95 11.63 L-9.50 11.89 L-9.05 12.12 L-8.60 12.31 L-8.15 12.45 L-7.70 12.54 L-7.25 12.59 L-6.80 12.60 L-6.35 12.55 L-5.90 12.46 L-5.45 12.32 L-5.00 12.14 L-4.55 11.92 L-4.10 11.66 L-3.65 11.36 L-3.20 11.03 M3.20 4.97 L3.65 4.64 L4.10 4.34 L4.55 4.08 L5.00 3.86 L5.45 3.68 L5.90 3.54 L6.35 3.45 L6.80 3.40 L7.25 3.41 L7.70 3.46 L8.15 3.55 L8.60 3.69 L9.05 3.88 L9.50 4.11 L9.95 4.37 L10.40 4.68 L10.85 5.01 L11.30 5.38 L11.75 5.77 L12.20 6.19 L12.65 6.63 L13.10 7.08 L13.55 7.54 L14.00 8.00 M14.00 8.00 L14.45 8.46 L14.90 8.92 L15.35 9.37 L15.80 9.81 L16.25 10.23 L16.70 10.62 L17.15 10.99 L17.60 11.32 L18.05 11.63 L18.50 11.89 L18.95 12.12 L19.40 12.31 L19.85 12.45 L20.30 12.54 L20.75 12.59 L21.20 12.60 L21.65 12.55 L22.10 12.46 L22.55 12.32 L23.00 12.14 L23.45 11.92 L23.90 11.66 L24.35 11.36 L24.80 11.03 M31.20 4.97 L31.65 4.64 L32.10 4.34 L32.55 4.08 L33.00 3.86 L33.45 3.68 L33.90 3.54 L34.35 3.45 L34.80 3.40 L35.25 3.41 L35.70 3.46 L36.15 3.55 L36.60 3.69 L37.05 3.88 L37.50 4.11 L37.95 4.37 L38.40 4.68 L38.85 5.01 L39.30 5.38 L39.75 5.77 L40.20 6.19 L40.65 6.63 L41.10 7.08 L41.55 7.54 L42.00 8.00' fill='none' stroke='%23000' stroke-width='2.1' stroke-linecap='round'/><g fill='%23000'><circle cx='7.0' cy='8.0' r='1.15'/><circle cx='21.0' cy='8.0' r='1.15'/></g></svg>");--rose:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'><g fill='%23000'><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%280.0%29'/><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%2845.0%29'/><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%2890.0%29'/><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%28135.0%29'/><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%28180.0%29'/><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%28225.0%29'/><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%28270.0%29'/><path d='M0 0 C 9.0 -17.0 31.0 -26.0 39.0 -10.0 C 31.0 -15.0 15.0 -9.0 0 0Z' transform='rotate%28315.0%29'/><circle r='4.50'/><circle cx='46.50' cy='0.00' r='1.75'/><circle cx='44.92' cy='12.04' r='1.75'/><circle cx='40.27' cy='23.25' r='1.75'/><circle cx='32.88' cy='32.88' r='1.75'/><circle cx='23.25' cy='40.27' r='1.75'/><circle cx='12.04' cy='44.92' r='1.75'/><circle cx='0.00' cy='46.50' r='1.75'/><circle cx='-12.04' cy='44.92' r='1.75'/><circle cx='-23.25' cy='40.27' r='1.75'/><circle cx='-32.88' cy='32.88' r='1.75'/><circle cx='-40.27' cy='23.25' r='1.75'/><circle cx='-44.92' cy='12.04' r='1.75'/><circle cx='-46.50' cy='0.00' r='1.75'/><circle cx='-44.92' cy='-12.04' r='1.75'/><circle cx='-40.27' cy='-23.25' r='1.75'/><circle cx='-32.88' cy='-32.88' r='1.75'/><circle cx='-23.25' cy='-40.27' r='1.75'/><circle cx='-12.04' cy='-44.92' r='1.75'/><circle cx='-0.00' cy='-46.50' r='1.75'/><circle cx='12.04' cy='-44.92' r='1.75'/><circle cx='23.25' cy='-40.27' r='1.75'/><circle cx='32.88' cy='-32.88' r='1.75'/><circle cx='40.27' cy='-23.25' r='1.75'/><circle cx='44.92' cy='-12.04' r='1.75'/></g><circle r='42.00' fill='none' stroke='%23000' stroke-width='1.25'/></svg>")}
+@media (prefers-color-scheme:dark){:root{--bg:#10122A;--card:#1A1E40;--card2:#252A52;--ink:#F4EEE8;--mut:#BDB8D0;--acc:#FFA03F;--acc-soft:#3D2A1D;--pom:#FF8FA6;--lapis:#1A2260;--gold:#DDB766;--gold-hi:#F2D58F;--line:#2E3462;color-scheme:dark}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 G,system-ui,sans-serif}
+a{color:inherit}main{max-width:820px;margin:0 auto;padding:6px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left))}
+[lang=hy]{font-family:A,serif}
+.top{position:relative;background:var(--card);box-shadow:0 1px 0 var(--line)}
+.top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold) 80%,transparent);opacity:.6}
+.top-in{max-width:820px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left));display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand b{font:800 25px/1 F,system-ui,sans-serif;letter-spacing:-.01em}.brand .hy{font:600 15px/1 A,serif;color:var(--pom)}
+.mk{width:32px;height:35px;display:block;filter:drop-shadow(0 4px 8px rgba(200,25,60,.22))}
+.langs{margin-left:auto;display:flex;gap:6px}.langs a{padding:5px 11px;border-radius:999px;border:1px solid var(--line);text-decoration:none;font-size:14px;color:var(--mut)}
+.langs a[aria-current]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.crumbs{font-size:14px;color:var(--mut);margin:18px 0 12px}.crumbs a{color:var(--mut)}
+.orn{display:block;height:14px;background:var(--gold);opacity:.7;-webkit-mask:var(--braid) repeat-x left center/24.5px 14px;mask:var(--braid) repeat-x left center/24.5px 14px;margin:18px 0}
+.word{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:22px}
+.word::before{content:"";position:absolute;z-index:-1;width:220px;height:220px;right:-60px;top:-60px;background:var(--gold);opacity:.12;-webkit-mask:var(--rose) no-repeat center/contain;mask:var(--rose) no-repeat center/contain}
+.win{position:relative;display:grid;place-items:center;width:132px;height:146px;border-radius:66px 66px 22px 22px/58px 58px 22px 22px;background:radial-gradient(circle at 50% 42%,var(--card) 0,var(--acc-soft) 78%);font-size:84px}
+.win::after{content:"";position:absolute;inset:7px;border-radius:59px 59px 16px 16px/51px 51px 16px 16px;border:1.5px solid var(--gold);opacity:.55}
+.win img{width:96px;height:96px}.win .ltr{font:700 80px/1 A,serif;color:var(--pom)}.win .sw{width:76px;height:76px;border-radius:50%;border:2px solid rgba(128,118,140,.4)}
+.win .ptx{font:800 50px/1 F,system-ui,sans-serif;letter-spacing:-.02em;color:var(--pom)}
+h1{margin:0;font:700 clamp(38px,9vw,60px)/1.12 A,serif;font-stretch:86%;overflow-wrap:anywhere}
+h1.pg{font:800 clamp(30px,6.5vw,40px)/1.12 F,system-ui,sans-serif;letter-spacing:-.025em;font-stretch:100%}
+.eyebrow{margin:0 0 4px;font:600 12.5px/1.3 G,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--pom)}
+.eyebrow[lang=hy]{font:600 17px/1.3 A,serif;letter-spacing:.01em;text-transform:none}
+.tr{font-size:21px;color:var(--mut);margin:4px 0 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.say{flex:none;width:46px;height:46px;border-radius:50%;border:0;padding:0;background:var(--acc);color:var(--acc-ink);display:inline-grid;place-items:center;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.say svg{width:23px;height:23px}.say.on{background:var(--pom);color:#fff}.tx{font-size:25px;font-weight:600;margin:0 0 10px}
+.meta{font-size:15px;color:var(--mut);margin:0}
+.cta{display:block;text-align:center;margin:20px 0;padding:15px 18px;border-radius:16px;background:var(--acc);color:var(--acc-ink);font-weight:700;text-decoration:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+h2{font:600 13px/1.3 G,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--pom);margin:30px 0 10px}
+ul.ws{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+ul.ws li{border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+ul.ws li>a{flex:1;min-width:0}ul.ws .say{width:38px;height:38px}ul.ws .say svg{width:19px;height:19px}
+ul.ws a{display:flex;gap:12px;align-items:center;padding:9px 4px;text-decoration:none;flex-wrap:wrap}
+ul.ws .li-pic{width:34px;height:34px;flex:none}ul.ws .li-pic.no{display:grid;place-items:center;font:700 22px/1 A,serif;color:var(--pom)}
+ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .x{margin-left:auto;text-align:right}
+.ws .pa{display:flex;gap:12px;align-items:center;padding:9px 4px;flex-wrap:wrap;flex:1;min-width:0}
+.ws.pb .hy{font-size:19px}
+.ws.pb .x{margin-left:0;text-align:left;width:100%}
+.pb-n{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.pb-n small{color:var(--mut)}
+.nm-big.ph{font-size:clamp(30px,8vw,46px)}
+.art p,.art li{font-size:17px;line-height:1.6}.art h2{margin-top:26px}.art [lang=hy]{font-family:"Noto Serif Armenian",serif;font-weight:600}
+.art .ws,.art .ftw{margin:10px 0 16px}
+.gl{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px}
+.gl a{display:block;padding:14px 16px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9;text-decoration:none;color:inherit}
+.gl b{display:block;font-size:18px;margin-bottom:4px}.gl span{color:var(--mut);font-size:15px}
+.exs{font:600 21px/1.4 A,serif;margin:6px 0 2px;display:flex;align-items:center;gap:10px}.ex-tx{margin:0 0 8px;color:var(--mut)}
+.ftw{overflow-x:auto;margin:6px 0}.ft{border-collapse:collapse;width:100%;font-size:15px}
+.ft th,.ft td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ft th{font-weight:600;color:var(--mut)}.ft td[lang=hy],.ft th[lang=hy]{font:600 18px A,serif;color:var(--ink,#1C2045);white-space:nowrap}
+.cbx{background:#fff;border-radius:18px;box-shadow:inset 0 0 0 1px #EBE1D9;padding:6px 8px;margin:12px 0 18px}
+.cbx svg{display:block;width:100%;height:auto;max-height:230px}
+.cb-lines line{stroke:#E8DDD4;stroke-width:1.3}.cb-lines .x{stroke:#C9A23A;stroke-dasharray:6 7;opacity:.6}.cb-lines .b{stroke:#9F1D35;opacity:.4;stroke-width:1.6}
+.cb-ink path{fill:none;stroke:#1C2045;stroke-linecap:round;stroke-linejoin:round}.cb-ink path.cl{stroke:none}.cb .nib{display:none}
+.abc-g{list-style:none;padding:0;margin:18px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.abc-g a{display:flex;flex-direction:column;align-items:center;padding:10px 6px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px #EBE1D9;text-decoration:none;color:inherit}
+.abc-g b{font:700 30px/1.15 A,serif}.abc-g small{color:var(--mut);font-size:13px}.abc-g i{font-style:normal;color:#9F1D35;font-size:14px}
+.lt-big{font:700 clamp(64px,18vw,96px)/1 A,serif;margin:4px 0 10px;letter-spacing:.04em}
+.facts{list-style:none;padding:0;margin:8px 0 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.facts li{background:#fff;border-radius:14px;box-shadow:inset 0 0 0 1px #EBE1D9;padding:10px 12px}.facts b{display:block;font-size:20px}.facts small{color:var(--mut)}
+.thead{display:flex;align-items:center;gap:16px}
+.thead .tic{display:grid;place-items:center;flex:none;width:76px;height:86px;border-radius:38px 38px 16px 16px/34px 34px 16px 16px;background:var(--acc-soft)}
+.thead .tic img{width:54px;height:54px}
+.tp{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:8px 0 18px;padding:0;list-style:none}
+.tp a{display:flex;align-items:center;gap:10px;padding:9px 12px 9px 9px;border-radius:16px;background:var(--card);border:1px solid var(--line);text-decoration:none}
+.tp img{width:38px;height:38px;flex:none}.tp span{min-width:0}
+.tp small{display:block;color:var(--mut)}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-size:15px}
+footer{max-width:820px;margin:0 auto;padding:22px 16px 44px;font-size:13px;color:var(--mut)}
+@media (max-width:540px){.word{grid-template-columns:1fr;justify-items:center;text-align:center}.tr{justify-content:center}}
+"""
+
+
+def nw(L, n):
+    """«слово / слова / слов» — по числу; в других языках тем меньше 6 слов нет (было «mots» и в испанском — до 08.11.2026)."""
+    if L != "ru":
+        return TXT[L]["words"]
+    n = abs(int(n)) % 100
+    if 11 <= n <= 14:
+        return "слов"
+    return {1: "слово", 2: "слова", 3: "слова", 4: "слова"}.get(n % 10, "слов")
+
+
+def ascii_slug(s, maxlen=60):
+    s = unicodedata.normalize("NFKD", s.replace("ʰ", "").replace("ʼ", "").replace("'", ""))
+    s = "".join(c for c in s if not unicodedata.combining(c)).lower()
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s[:maxlen].strip("-") or "w"
+
+
+def esc(x):
+    return html.escape(x or "", quote=True)
+
+
+ARM = re.compile(r"[ա-ֆԱ-Ֆև]")
+EMO = {}   # эмодзи → файл Fluent 3D в pics/ (www/js/emoji.js, tools/fetch_pics.py)
+
+
+def load_emo():
+    p = os.path.join(APP, "www", "js", "emoji.js")
+    if os.path.exists(p):
+        EMO.update(json.loads(re.search(r"BARARAN_EMO=(\{.*\});", open(p, encoding="utf-8").read()).group(1)))
+
+
+def initial(a):
+    m = ARM.search(a)
+    return m.group(0).upper()[:1] if m else "?"
+
+
+def picture(w, up):
+    """Картинка слова в арке: объёмный Fluent 3D, цвет, число — или буквица."""
+    p = w.get("p") or ""
+    if p in EMO:
+        return f'<img src="{up}pics/{EMO[p]}.webp" alt="" width="96" height="96">'
+    if p.startswith("#"):
+        return f'<span class="sw" style="background:{esc(p)}"></span>'
+    if p.startswith("="):
+        return f'<span class="ptx">{esc(p[1:])}</span>'
+    if p:
+        return f'<span>{esc(p)}</span>'
+    return f'<span class="ltr" lang="hy">{esc(initial(w["a"]))}</span>'
+
+
+def mini(v, up):
+    p = v.get("p") or ""
+    if p in EMO:
+        return f'<img class="li-pic" src="{up}pics/{EMO[p]}.webp" alt="" width="34" height="34" loading="lazy">'
+    return f'<span class="li-pic no" lang="hy" aria-hidden="true">{esc(initial(v["a"]))}</span>'
+
+
+def icon(e, up, size):
+    if e in EMO:
+        return f'<img src="{up}pics/{EMO[e]}.webp" alt="" width="{size}" height="{size}" loading="lazy">'
+    return f'<span aria-hidden="true">{esc(e)}</span>'
+
+
+SPK = ('<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" '
+       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/>'
+       '<path d="M16.5 8.8a4.8 4.8 0 0 1 0 6.4"/><path d="M19.2 6.2a8.6 8.6 0 0 1 0 11.6"/></svg>')
+# «Слушать» на странице слова (O-135): запись та же, что в приложении; плеер — простой <audio>
+SEO_JS = """document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');if(!b)return;
+var a=b._a||(b._a=new Audio(b.getAttribute('data-src')));b.classList.add('on');a.onended=a.onerror=function(){b.classList.remove('on');};
+try{a.currentTime=0;}catch(x){}var p=a.play();if(p&&p.catch)p.catch(function(){b.classList.remove('on');});});
+"""
+
+
+def aid(text):
+    """Имя файла записи — как aid() в www/js/app.js и tools/gen_audio.py: два FNV-1a по UTF-8."""
+    def fnv(data, h):
+        for x in data:
+            h = ((h ^ x) * 0x01000193) & 0xFFFFFFFF
+        return h
+    b = text.encode("utf-8")
+    return "%08x%08x" % (fnv(b, 0x811C9DC5), fnv(b, 0x050C5D1F))
+
+
+def crumbs_ld(items):
+    """BreadcrumbList для поисковиков (O-177): [(название, полный адрес), …]"""
+    return {"@context": "https://schema.org", "@type": "BreadcrumbList",
+            "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(items)]}
+
+
+def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=None):
+    up = "../" * depth
+    alt = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{base}{p}">' for l, p in alts.items())
+    alt += f'<link rel="alternate" hreflang="x-default" href="{base}{alts.get("en", alts[L])}">'
+    langs = "".join(
+        f'<a href="{up}{alts[l]}" hreflang="{l}"{" aria-current=page" if l == L else ""}>{l.upper()}</a>'
+        for l in LANGS if l in alts)
+    ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>'
+                 for j in (jsonld if isinstance(jsonld, list) else [jsonld] if jsonld else []))
+    return folder_urls(base, f'<!doctype html><html lang="{L}"><head><meta charset="utf-8">'
+            f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+            f'<title>{esc(title)}</title><meta name="description" content="{esc(desc)}">'
+            + (f'<meta name="robots" content="{robots}">' if robots else '') +
+            f'<link rel="canonical" href="{base}{path}">{alt}'
+            f'<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">'
+            f'<meta property="og:url" content="{base}{path}"><meta property="og:type" content="website"><meta property="og:site_name" content="Barik">'
+            f'<meta property="og:image" content="{base}og/og-{L}.jpg"><meta property="og:image:width" content="2400"><meta property="og:image:height" content="1260">'
+            f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
+            f'<link rel="icon" type="image/png" href="{up}favicon.png"><link rel="apple-touch-icon" href="{up}icons/apple-touch-icon.png">'
+            f'<link rel="stylesheet" href="{up}seo.css"><meta name="theme-color" content="#FBF6F1">{ld}'
+            + (f'<script src="{up}seo.js" defer></script>' if 'data-src=' in body else '') + '</head>'
+            f'<body><header class="top"><div class="top-in"><a class="brand" href="{up}"><img class="mk" src="{up}mark.svg" alt="" width="32" height="35">'
+            f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
+            f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
+            f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a> · '
+            f'<a href="https://www.instagram.com/barik_armenian" rel="noopener">Instagram</a> · <a href="https://t.me/armenian_word_daily" rel="noopener">Telegram</a></footer></body></html>')
+
+
+def folder_urls(base, h):
+    """Оглавления — адресом папки (/ru/, /ru/p/), не /ru/index.html (O-201): canonical, hreflang, og:url, schema.org и ссылки;
+    старые адреса с index.html сервер перенаправляет (301, .htaccess в build_site.py)."""
+    h = re.sub(re.escape(base) + r'((?:[\w\-]+/)*)index\.html', lambda m: base + m.group(1), h)
+    return re.sub(r'href="((?:\.\./)*(?:[\w\-]+/)*)index\.html"', lambda m: f'href="{m.group(1) or "./"}"', h)
+
+
+LEARN = ("ru", "fr", "es", "de", "pt")      # английская обложка — сама главная /
+
+
+def build_covers(site, base, covers, meta):
+    """Обложка на языке для поиска (O-201): /<язык>/learn.html — та же разметка, что гость видит в приложении (dump_words.js,
+    без движения), свой title и description (раздел land в i18n.js), hreflang с главной. Кнопки ведут в приложение на этом языке
+    (?lang=..&from=learn), «Как это устроено» — якорь на странице."""
+    alts = {"en": base, **{l: f"{base}{l}/learn.html" for l in LEARN if l in covers}}
+    hl = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{u}">' for l, u in alts.items()) + f'<link rel="alternate" hreflang="x-default" href="{base}">'
+    sm = []
+    for L in LEARN:
+        if L not in covers: continue
+        t, d = meta[L]
+        frag = re.sub(r'(\s(?:src|href)=")(?!https?:|/|#|data:|mailto:|\.\./)', r'\1../', covers[L]["html"])
+        js = ("(function(){var L='%s';document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;"
+              "var a=b.getAttribute('data-act'),g=b.getAttribute('data-arg')||'';if(a==='landHow'||a==='geoX')return;e.preventDefault();"
+              "if(a==='landLang'){location.href=g==='en'?'../':(%s.indexOf(g)>=0?'../'+g+'/learn.html':'../?lang='+g);return;}"
+              "var q='../?lang='+L+'&from=learn';if(a==='landDoc')q+='&doc='+encodeURIComponent(g);"
+              "else if(a==='landAbc'||a==='landPen'||a==='landLetter')q+='&letter=0';else if(a==='nmOpen')q+='&name=';"
+              "location.href=q;});})();") % (L, json.dumps(list(LEARN)))
+        h = (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+             f'<title>{esc(t)}</title><meta name="description" content="{esc(d)}"><link rel="canonical" href="{alts[L]}">{hl}'
+             f'<meta property="og:title" content="{esc(t)}"><meta property="og:description" content="{esc(d)}"><meta property="og:url" content="{alts[L]}">'
+             f'<meta property="og:type" content="website"><meta property="og:site_name" content="Barik"><meta property="og:locale" content="{OGL.get(L, L)}">'
+             f'<meta property="og:image" content="{base}og/og-{L}.jpg"><meta property="og:image:width" content="2400"><meta property="og:image:height" content="1260">'
+             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
+             f'<link rel="icon" type="image/png" href="../favicon.png"><link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">'
+             f'<link rel="stylesheet" href="../css/app.css"><meta name="theme-color" content="#FBF6F1"></head>'
+             f'<body><main id="view">{frag}</main><script>{js}</script></body></html>')
+        open(os.path.join(site, L, "learn.html"), "w", encoding="utf-8").write(h)
+        sm.append(f"<url><loc>{alts[L]}</loc></url>")
+    open(os.path.join(site, "sitemap-learn.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(sm) + "</urlset>")
+    ix = os.path.join(site, "sitemap.xml"); x = open(ix, encoding="utf-8").read()
+    if "sitemap-learn.xml" not in x:
+        open(ix, "w", encoding="utf-8").write(x.replace("</sitemapindex>", f"<sitemap><loc>{base}sitemap-learn.xml</loc></sitemap></sitemapindex>"))
+    return len(sm), hl
+
+
+def word_slugs(words):
+    """Адрес страницы слова (без .html): латиница по произношению, при совпадении — хвост хэша. Тот же — у бота (O-186)."""
+    wslug, used = {}, set()
+    for w in words:
+        s = ascii_slug(w["lt"])
+        if s in used:
+            s = f"{s}-{hashlib.sha1(w['a'].encode()).hexdigest()[:4]}"
+        used.add(s)
+        wslug[w["a"]] = s
+    return wslug
+
+
+def build(site, base, words_path):
+    d = json.load(open(words_path, encoding="utf-8"))
+    topics, words = d["topics"], d["words"]
+    load_emo()
+    if not base.endswith("/"):
+        base += "/"
+    # Адреса: слово — латиницей по произношению (как в английской версии), при
+    # совпадении — хвост из хэша армянского написания; тема — по английскому названию.
+    wslug = word_slugs(words)
+    tslug, tused = {}, set()
+    for i, t in enumerate(topics):
+        s = ascii_slug(t["en"], 50)
+        if s in tused:
+            s = f"{s}-{i}"
+        tused.add(s)
+        tslug[i] = s
+    by_topic = {}
+    for w in words:
+        by_topic.setdefault(w["t"], []).append(w)
+    files, urls = 0, {l: [] for l in LANGS}
+    # обогащение страницы слова (O-193): пример, формы (эталон Викисловаря), однокоренные; без них — noindex и не в sitemap
+    EXL = {l: json.load(open(os.path.join(APP, "www", "ex", l + ".json"), encoding="utf-8")) for l in LANGS}
+    GOLD = json.load(open(os.path.join(APP, "data", "path", "gold.json"), encoding="utf-8"))
+    RT = json.load(open(os.path.join(APP, "data", "path", "roots.json"), encoding="utf-8"))
+    inw = {w["a"]: w for w in words}
+
+    def family(a):
+        rs = (RT["words"].get(a) or {}).get("r") or []
+        out = [r for r in rs if r != a and r in inw]
+        for r in rs + [a]:
+            out += [x for x in RT["roots"].get(r, {}) if x != a and x in inw]
+        return list(dict.fromkeys(out))[:12]
+    thin = {L: 0 for L in LANGS}
+    os.makedirs(site, exist_ok=True)
+    open(os.path.join(site, "seo.css"), "w", encoding="utf-8").write(CSS)
+    open(os.path.join(site, "seo.js"), "w", encoding="utf-8").write(SEO_JS)
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = (json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None)
+
+    def say(w, up, label):
+        if not vdir:
+            return ""
+        h = aid(w["a"])
+        rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return (f'<button class="say" type="button" data-src="{up}{rel}" aria-label="{esc(label)}" '
+                f'title="{esc(label)}">{SPK}</button>')
+
+    def write(rel, content):
+        nonlocal files
+        p = os.path.join(site, rel)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(content)
+        files += 1
+
+    order = [ti for lv in LV for ti, t in enumerate(topics) if t["lv"] == lv and by_topic.get(ti)]
+    for L in LANGS:
+        T = TXT[L]
+        tx, trk, tnk = TX[L], TR[L], TN[L]
+        # слова
+        for ti, lst in by_topic.items():
+            t = topics[ti]
+            tname = t[tnk] or t["en"]
+            for k, w in enumerate(lst):
+                rel = f"{L}/w/{wslug[w['a']]}.html"
+                alts = {l: f"{l}/w/{wslug[w['a']]}.html" for l in LANGS}
+                x = w[tx]
+                # соседи — окно вокруг слова, чтобы с каждой страницы вели ссылки
+                # на разные слова темы (а не на одни и те же первые двенадцать)
+                lo = max(0, min(k - NEIGHBOURS // 2, len(lst) - NEIGHBOURS - 1))
+                near = [v for v in lst[lo:lo + NEIGHBOURS + 1] if v is not w][:NEIGHBOURS]
+                li = "".join(f'<li><a href="{wslug[v["a"]]}.html">{mini(v, "../../")}<span class="hy" lang="hy">{esc(v["a"])}</span>'
+                             f'<span class="t">{esc(v[trk])}</span><span class="x">{esc(v[tx])}</span></a></li>'
+                             for v in near)
+                prev = lst[k - 1] if k > 0 else None
+                nxt = lst[k + 1] if k + 1 < len(lst) else None
+                pn = ('<p class="pn">'
+                      + (f'<a href="{wslug[prev["a"]]}.html">{T["prev"]}: <span lang="hy">{esc(prev["a"])}</span></a>' if prev else "<span></span>")
+                      + (f'<a href="{wslug[nxt["a"]]}.html"><span lang="hy">{esc(nxt["a"])}</span> — {T["next"]}</a>' if nxt else "")
+                      + "</p>")
+                F = FT[L]; xb = ""
+                e = EXL[L].get(w["a"])
+                if e:
+                    xb += (f'<h2>{F["ex"]}</h2><p class="exs"><span lang="hy">{esc(e[0])}</span>{say({"a": e[0]}, "../../", T["listen"])}</p>'
+                           f'<p class="ex-tx">{esc(e[1])}</p>')
+                nf = GOLD["nouns"].get(w["a"])
+                if nf:
+                    rows = "".join(f'<tr><th>{F["n"][k]}</th><td lang="hy">{esc(nf[k])}</td></tr>' for k in NK if nf.get(k) and nf[k] != "-")
+                    xb += f'<h2>{F["forms"]}</h2><div class="ftw"><table class="ft"><tr><th>{F["n"]["base"]}</th><td lang="hy">{esc(w["a"])}</td></tr>{rows}</table></div>'
+                vf = GOLD["verbs"].get(w["a"])
+                if vf:
+                    hd = "".join(f'<th>{F["v"][k]}</th>' for k in VK)
+                    rows = "".join(f'<tr><th lang="hy">{pn}</th>' + "".join(f'<td lang="hy">{esc(vf[k][i])}</td>' for k in VK) + '</tr>'
+                                   for i, pn in enumerate(PRON))
+                    tail = (f'<p class="meta">{F["v"]["imp"]}: <span lang="hy">{esc(vf.get("imp", ""))}, {esc(vf.get("imppl", ""))}</span> · '
+                            f'{F["v"]["part"]}: <span lang="hy">{esc(vf.get("part", ""))}</span></p>')
+                    xb += f'<h2>{F["conj"]}</h2><div class="ftw"><table class="ft fv"><tr><th></th>{hd}</tr>{rows}</table></div>{tail}'
+                if nf or vf:
+                    xb += f'<p class="note">{F["src"]}</p>'
+                fam = family(w["a"])
+                if fam:
+                    xb += (f'<h2>{F["fam"]}</h2><ul class="ws">' + "".join(
+                        f'<li><a href="{wslug[v]}.html"><span class="hy" lang="hy">{esc(v)}</span><span class="t">{esc(inw[v][trk])}</span>'
+                        f'<span class="x">{esc(inw[v][tx])}</span></a></li>' for v in fam) + '</ul>')
+                rich = bool(xb)
+                body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p>'
+                        f'<div class="word"><div class="win" aria-hidden="true">{picture(w, "../../")}</div><div>'
+                        f'<p class="eyebrow">{esc(tname)} · {t["lv"]}</p><h1 lang="hy">{esc(w["a"])}</h1>'
+                        f'<p class="tr"><span title="{T["h_tr"]}">[{esc(w[trk])}]</span>{say(w, "../../", T["listen"])}</p>'
+                        f'<p class="tx">{esc(x)}</p>'
+                        f'<p class="meta">{T["lv"]} {t["lv"]} · {T["topic"]}: <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p></div></div>'
+                        + xb + f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>'
+                        + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(t=tname))}</h2><ul class="ws">{li}</ul>'
+                           f'<p><a href="../t/{tslug[ti]}.html">{T["all_topic"].format(n=len(lst), w=nw(L, len(lst)))}</a></p>' if near else "")
+                        + pn)
+                ld = {"@context": "https://schema.org", "@type": "DefinedTerm", "name": w["a"],
+                      "inLanguage": "hy", "description": x,
+                      "termCode": w[trk], "url": base + rel,
+                      "inDefinedTermSet": {"@type": "DefinedTermSet", "name": f"Barik — {tname}",
+                                           "url": f"{base}{L}/t/{tslug[ti]}.html"}}
+                if w.get("p") in EMO:
+                    ld["image"] = f"{base}pics/{EMO[w['p']]}.webp"
+                ld = [ld, crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, f"{base}{L}/t/{tslug[ti]}.html"), (w["a"], base + rel)])]
+                write(rel, page(L, base, rel, T["title_w"].format(x=x, a=w["a"], tr=w[trk]),
+                                T["desc_w"].format(x=x, a=w["a"], tr=w[trk], t=tname, lv=t["lv"]),
+                                alts, body, ld, robots=None if rich else "noindex,follow"))
+                if rich:
+                    urls[L].append(rel)
+                else:
+                    thin[L] += 1
+        # темы
+        for ti, t in enumerate(topics):
+            lst = by_topic.get(ti) or []
+            if not lst:
+                continue
+            tname = t[tnk] or t["en"]
+            rel = f"{L}/t/{tslug[ti]}.html"
+            alts = {l: f"{l}/t/{tslug[ti]}.html" for l in LANGS}
+            li = "".join(f'<li><a href="../w/{wslug[v["a"]]}.html">{mini(v, "../../")}<span class="hy" lang="hy">{esc(v["a"])}</span>'
+                         f'<span class="t">{esc(v[trk])}</span><span class="x">{esc(v[tx])}</span></a>'
+                         f'{say(v, "../../", T["listen"] + " — " + v["a"])}</li>' for v in lst)
+            # следующая тема — по порядку оглавления (уровень, потом номер), с переходом на следующий уровень
+            nt = next((j for j in order[order.index(ti) + 1:]), None) if ti in order else None
+            ntl = (f'<p class="pn"><span></span><a href="{tslug[nt]}.html">{T["next_t"]}: {esc(topics[nt][tnk] or topics[nt]["en"])} →</a></p>'
+                   if nt is not None else "")
+            body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › {t["lv"]}</p>'
+                    f'<div class="thead"><span class="tic">{icon(t["ic"], "../../", 54)}</span><div>'
+                    f'<p class="eyebrow" lang="hy">{esc(t["hy"])}</p><h1 class="pg">{esc(T["h_t"].format(t=tname))}</h1></div></div>'
+                    f'<p>{T["intro_t"].format(n=len(lst), w=nw(L, len(lst)), lv=t["lv"])}</p>'
+                    f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
+            write(rel, page(L, base, rel, T["title_t"].format(t=tname, n=len(lst), w=nw(L, len(lst))),
+                            T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]), alts, body,
+                            [{"@context": "https://schema.org", "@type": "DefinedTermSet", "name": tname, "url": base + rel, "inLanguage": "hy"},
+                             crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, base + rel)])]))
+            urls[L].append(rel)
+        # оглавление
+        rel = f"{L}/index.html"
+        alts = {l: f"{l}/index.html" for l in LANGS}
+        secs = ""
+        for lv in LV:
+            items = [(ti, t) for ti, t in enumerate(topics) if t["lv"] == lv and by_topic.get(ti)]
+            if not items:
+                continue
+            secs += (f'<h2>{T["lvname"][lv]}</h2><ul class="tp">'
+                     + "".join(f'<li><a href="t/{tslug[ti]}.html">{icon(t["ic"], "../", 38)}<span>{esc(t[tnk] or t["en"])}'
+                               f'<small>{len(by_topic[ti])} {nw(L, len(by_topic[ti]))}</small></span></a></li>' for ti, t in items)
+                     + "</ul>")
+        n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
+        fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
+        body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
+                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
+        write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
+                        alts, body, depth=1).replace('href="../../', 'href="../'))
+        urls[L].insert(0, rel)
+    # sitemap
+    for L in LANGS:
+        sm = ['<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+              'xmlns:xhtml="http://www.w3.org/1999/xhtml">']
+        for rel in urls[L]:
+            alt_rel = {l: rel.replace(f"{L}/", f"{l}/", 1) for l in LANGS}
+            sm.append(f"<url><loc>{base}{rel}</loc>"
+                      + "".join(f'<xhtml:link rel="alternate" hreflang="{l}" href="{base}{p}"/>'
+                                for l, p in alt_rel.items()) + "</url>")
+        sm.append("</urlset>")
+        open(os.path.join(site, f"sitemap-{L}.xml"), "w", encoding="utf-8").write("\n".join(sm))
+    files += build_names(site, base)
+    files += build_phrases(site, base, d, wslug)
+    files += build_alphabet(site, base, d, wslug)
+    files += build_guides(site, base, d, wslug)
+    open(os.path.join(site, "sitemap.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
+        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap><sitemap><loc>{base}sitemap-guides.xml</loc></sitemap></sitemapindex>")
+    for f in os.listdir(site):                           # sitemap: оглавления адресом папки (O-201)
+        if f.startswith("sitemap") and f.endswith(".xml"):
+            p = os.path.join(site, f); x = open(p, encoding="utf-8").read(); y = folder_urls(base, x)
+            if y != x: open(p, "w", encoding="utf-8").write(y)
+    rb = os.path.join(site, "robots.txt")
+    txt = open(rb).read() if os.path.exists(rb) else "User-agent: *\nAllow: /\n"
+    if "Sitemap:" not in txt:
+        txt += f"Sitemap: {base}sitemap.xml\n"
+    open(rb, "w").write(txt)
+    size = sum(os.path.getsize(os.path.join(r, f)) for L in LANGS
+               for r, _, fs in os.walk(os.path.join(site, L)) for f in fs)
+    print(f"страницы слов без содержимого (noindex, не в sitemap): {', '.join(f'{L} {thin[L]}' for L in LANGS)}")
+    print(f"страницы поиска: {files} ({', '.join(f'{L} {len(urls[L])}' for L in LANGS)}), "
+          f"{size / 1e6:.0f} МБ")
+    return files
+
+
+# ---------- страницы имён (O-176): «Анна по-армянски — Աննա» ----------
+NM_TXT = {
+    "ru": dict(title="{n} по-армянски — {h} | Barik", desc="Как пишется имя {n} по-армянски: {h}. Буквы по отдельности, пропись пером и открытка с вашим именем — бесплатно на Barik.",
+               h1="{n} по-армянски", lead="Имя {n} армянскими буквами пишется так:", letters="Буквы", cta="Написать прописью и сделать открытку",
+               note="Армянские имена записывают по звучанию; у некоторых имён есть и другие привычные написания.",
+               idx_t="Ваше имя по-армянски — {k} имён | Barik", idx_d="Как написать имя армянскими буквами: {k} имён, буквы, пропись и открытка.", idx_h="Ваше имя по-армянски",
+               idx_l="Выберите имя — или впишите любое на сайте: перо напишет его прописью.", other="Любое имя — на сайте"),
+    "en": dict(title="{n} in Armenian — {h} | Barik", desc="How to write the name {n} in Armenian: {h}. Letter by letter, written in cursive by a pen, with a card to share — free on Barik.",
+               h1="{n} in Armenian", lead="In Armenian letters, {n} is written:", letters="Letters", cta="Write it in cursive and make a card",
+               note="Names are written in Armenian by how they sound; some names have other common spellings too.",
+               idx_t="Your name in Armenian — {k} names | Barik", idx_d="How to write a name in Armenian letters: {k} names, letters, cursive and a card.", idx_h="Your name in Armenian",
+               idx_l="Pick a name — or type any name on the site and the pen will write it in cursive.", other="Any name — on the site"),
+    "fr": dict(title="{n} en arménien — {h} | Barik", desc="Comment écrire le prénom {n} en arménien : {h}. Lettre par lettre, en cursive à la plume, avec une carte à partager — gratuit sur Barik.",
+               h1="{n} en arménien", lead="En lettres arméniennes, {n} s’écrit :", letters="Lettres", cta="L’écrire en cursive et créer une carte",
+               note="Les prénoms s’écrivent en arménien selon leur prononciation ; certains ont d’autres graphies courantes.",
+               idx_t="Votre prénom en arménien — {k} prénoms | Barik", idx_d="Comment écrire un prénom en lettres arméniennes : {k} prénoms, lettres, cursive et carte.", idx_h="Votre prénom en arménien",
+               idx_l="Choisissez un prénom — ou tapez-en un sur le site : la plume l’écrira en cursive.", other="N’importe quel prénom — sur le site"),
+    "es": dict(title="{n} en armenio — {h} | Barik", desc="Cómo se escribe el nombre {n} en armenio: {h}. Letra por letra, en cursiva con pluma y con una tarjeta para compartir — gratis en Barik.",
+               h1="{n} en armenio", lead="Con letras armenias, {n} se escribe así:", letters="Letras", cta="Escribirlo en cursiva y hacer una tarjeta",
+               note="Los nombres se escriben en armenio según cómo suenan; algunos tienen otras grafías habituales.",
+               idx_t="Tu nombre en armenio — {k} nombres | Barik", idx_d="Cómo escribir un nombre con letras armenias: {k} nombres, letras, cursiva y tarjeta.", idx_h="Tu nombre en armenio",
+               idx_l="Elige un nombre — o escribe cualquiera en el sitio: la pluma lo escribirá en cursiva.", other="Cualquier nombre — en el sitio"),
+    "de": dict(title="{n} auf Armenisch — {h} | Barik", desc="Wie man den Namen {n} auf Armenisch schreibt: {h}. Buchstabe für Buchstabe, in Schreibschrift mit der Feder und als Karte zum Teilen — kostenlos bei Barik.",
+               h1="{n} auf Armenisch", lead="In armenischen Buchstaben schreibt man {n} so:", letters="Buchstaben", cta="In Schreibschrift schreiben und Karte erstellen",
+               note="Namen werden im Armenischen nach dem Klang geschrieben; manche haben weitere übliche Schreibweisen.",
+               idx_t="Dein Name auf Armenisch — {k} Namen | Barik", idx_d="Wie man einen Namen in armenischen Buchstaben schreibt: {k} Namen, Buchstaben, Schreibschrift und Karte.", idx_h="Dein Name auf Armenisch",
+               idx_l="Wähle einen Namen — oder gib auf der Website einen beliebigen ein: Die Feder schreibt ihn in Schreibschrift.", other="Jeder Name — auf der Website"),
+    "pt": dict(title="{n} em armênio — {h} | Barik", desc="Como se escreve o nome {n} em armênio: {h}. Letra por letra, em letra cursiva com a pena e com um cartão para compartilhar — grátis no Barik.",
+               h1="{n} em armênio", lead="Em letras armênias, {n} se escreve assim:", letters="Letras", cta="Escrever em cursiva e criar um cartão",
+               note="Os nomes são escritos em armênio pelo som; alguns têm outras grafias comuns.",
+               idx_t="Seu nome em armênio — {k} nomes | Barik", idx_d="Como escrever um nome em letras armênias: {k} nomes, letras, cursiva e cartão.", idx_h="Seu nome em armênio",
+               idx_l="Escolha um nome — ou digite qualquer um no site: a pena vai escrevê-lo em cursiva.", other="Qualquer nome — no site"),
+}
+
+
+def build_names(site, base):
+    """Имена из словаря names.js → /<язык>/n/<имя>.html и /<язык>/n/ — ru: кириллические, остальные: латинские."""
+    import subprocess
+    js = os.path.join(APP, "www", "js")
+    out = subprocess.run(["node", "-e", """
+global.window={};require(process.argv[1]+'/names.js');const N=window.BARARAN_NAMES;
+const ab=require('fs').readFileSync(process.argv[1]+'/alphabet.js','utf8');const nm={};for(const m of ab.matchAll(/up:'([^']+)',lo:'([^']+)',nm:'([^']+)'/g)){nm[m[1]]=m[3];nm[m[2]]=m[3];}
+const r={};for(const k of Object.keys(N.DICT)){ for(const L of ['ru','en','fr','es','de','pt']){ const cyr=/[а-яё]/.test(k); if((L==='ru')!==cyr) continue;
+  const n=k.split(/([ -])/).map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(''); const h=N.toHy(n,L); if(!h) continue;
+  (r[L]=r[L]||[]).push({n,h,g:N.glyphs(h).filter(g=>!g.sp).map(g=>{const c=g.up?g.k.toUpperCase():g.k; return [g.k==='ու'&&g.up?'Ու':c,nm[g.k]||'']; })}); } }
+process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True, check=True).stdout
+    data = json.loads(out)
+    files, sm = 0, []
+    alt_re = re.compile(r'<link rel="alternate"[^>]*>')
+    for L in LANGS:
+        T = NM_TXT[L]
+        items = sorted(data.get(L, []), key=lambda x: x["n"].lower())
+        seen, rows = set(), []
+        idx_alts = {l: f"{l}/n/index.html" for l in LANGS}
+        for it in items:
+            slug = ascii_slug(it["n"]) if L != "ru" else ascii_slug(translit_ru(it["n"]))
+            if slug in seen:
+                continue
+            seen.add(slug)
+            rel = f"{L}/n/{slug}.html"
+            letters = "".join(f'<li><b lang="hy">{esc(c)}</b><small lang="hy">{esc(n)}</small></li>' for c, n in it["g"])
+            q = urllib.parse.quote(it["n"])
+            body = (f'<p class="crumbs"><a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<h1 class="pg">{esc(T["h1"].format(n=it["n"]))}</h1><i class="orn" aria-hidden="true"></i>'
+                    f'<p>{esc(T["lead"].format(n=it["n"]))}</p><p class="nm-big" lang="hy">{esc(it["h"])}</p>'
+                    f'<h2>{T["letters"]}</h2><ul class="nm-l">{letters}</ul>'
+                    f'<a class="cta" href="../../?lang={L}&amp;name={q}">{T["cta"]}</a><p class="note">{T["note"]}</p>')
+            ld = {"@context": "https://schema.org", "@type": "DefinedTerm", "name": it["h"], "alternateName": it["n"],
+                  "inLanguage": "hy", "url": base + rel}
+            ld = [ld, crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/n/index.html"), (it["n"], base + rel)])]
+            pg = page(L, base, rel, T["title"].format(n=it["n"], h=it["h"]), T["desc"].format(n=it["n"], h=it["h"]),
+                      idx_alts, body, ld)
+            p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+            open(p, "w", encoding="utf-8").write(alt_re.sub("", pg)); files += 1
+            sm.append(base + rel); rows.append((it["n"], it["h"], slug))
+        lst = "".join(f'<li><a href="{s_}.html"><span>{esc(n)}</span><span class="hy" lang="hy">{esc(h)}</span></a></li>' for n, h, s_ in rows)
+        rel = f"{L}/n/index.html"
+        body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Անուն</p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
+                f'<p>{T["idx_l"]}</p><a class="cta" href="../../?lang={L}&amp;name=">{T["other"]}</a><ul class="nm-i">{lst}</ul>')
+        pg = page(L, base, rel, T["idx_t"].format(k=len(rows)), T["idx_d"].format(k=len(rows)), idx_alts, body)
+        open(os.path.join(site, rel), "w", encoding="utf-8").write(pg); files += 1
+        sm.insert(0, base + rel)
+    sm.insert(0, base)
+    open(os.path.join(site, "sitemap-names.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"страницы имён: {files}")
+    return files
+
+
+NK = ("def", "pl", "dat", "datpl", "abl", "ins", "loc", "p1", "p2")
+VK = ("pres", "aor", "fut")
+PRON = ("ես", "դու", "նա", "մենք", "դուք", "նրանք")
+FT = {
+    "ru": {"ex": "Пример", "forms": "Формы слова", "conj": "Спряжение", "fam": "Однокоренные слова",
+           "src": "Формы — по таблицам Викисловаря (CC BY-SA 4.0).",
+           "n": {"base": "Основная форма", "def": "С определённым артиклем", "pl": "Множественное число", "dat": "Родительный и дательный",
+                 "datpl": "Родительный и дательный, мн. ч.", "abl": "Исходный (от, из)", "ins": "Творительный (чем, с чем)", "loc": "Местный (в чём)",
+                 "p1": "Мой, моя", "p2": "Твой, твоя"},
+           "v": {"pres": "Настоящее", "aor": "Прошедшее", "fut": "Будущее", "imp": "Повелительное", "part": "Причастие"}},
+    "en": {"ex": "Example", "forms": "Word forms", "conj": "Conjugation", "fam": "Words with the same root",
+           "src": "Forms follow Wiktionary tables (CC BY-SA 4.0).",
+           "n": {"base": "Basic form", "def": "Definite", "pl": "Plural", "dat": "Genitive and dative", "datpl": "Genitive and dative plural",
+                 "abl": "Ablative (from)", "ins": "Instrumental (with)", "loc": "Locative (in)", "p1": "My", "p2": "Your"},
+           "v": {"pres": "Present", "aor": "Past", "fut": "Future", "imp": "Imperative", "part": "Participle"}},
+    "fr": {"ex": "Exemple", "forms": "Formes du mot", "conj": "Conjugaison", "fam": "Mots de la même racine",
+           "src": "Formes d’après les tableaux du Wiktionnaire (CC BY-SA 4.0).",
+           "n": {"base": "Forme de base", "def": "Défini", "pl": "Pluriel", "dat": "Génitif et datif", "datpl": "Génitif et datif pluriel",
+                 "abl": "Ablatif (de)", "ins": "Instrumental (avec)", "loc": "Locatif (dans)", "p1": "Mon, ma", "p2": "Ton, ta"},
+           "v": {"pres": "Présent", "aor": "Passé", "fut": "Futur", "imp": "Impératif", "part": "Participe"}},
+    "es": {"ex": "Ejemplo", "forms": "Formas de la palabra", "conj": "Conjugación", "fam": "Palabras de la misma raíz",
+           "src": "Formas según las tablas de Wikcionario (CC BY-SA 4.0).",
+           "n": {"base": "Forma básica", "def": "Definido", "pl": "Plural", "dat": "Genitivo y dativo", "datpl": "Genitivo y dativo plural",
+                 "abl": "Ablativo (de)", "ins": "Instrumental (con)", "loc": "Locativo (en)", "p1": "Mi", "p2": "Tu"},
+           "v": {"pres": "Presente", "aor": "Pasado", "fut": "Futuro", "imp": "Imperativo", "part": "Participio"}},
+    "de": {"ex": "Beispiel", "forms": "Wortformen", "conj": "Konjugation", "fam": "Wörter mit derselben Wurzel",
+           "src": "Formen nach den Tabellen von Wiktionary (CC BY-SA 4.0).",
+           "n": {"base": "Grundform", "def": "Bestimmt", "pl": "Plural", "dat": "Genitiv und Dativ", "datpl": "Genitiv und Dativ Plural",
+                 "abl": "Ablativ (von, aus)", "ins": "Instrumental (mit)", "loc": "Lokativ (in)", "p1": "Mein", "p2": "Dein"},
+           "v": {"pres": "Präsens", "aor": "Vergangenheit", "fut": "Futur", "imp": "Imperativ", "part": "Partizip"}},
+    "pt": {"ex": "Exemplo", "forms": "Formas da palavra", "conj": "Conjugação", "fam": "Palavras da mesma raiz",
+           "src": "Formas segundo as tabelas do Wikcionário (CC BY-SA 4.0).",
+           "n": {"base": "Forma básica", "def": "Definido", "pl": "Plural", "dat": "Genitivo e dativo", "datpl": "Genitivo e dativo plural",
+                 "abl": "Ablativo (de)", "ins": "Instrumental (com)", "loc": "Locativo (em)", "p1": "Meu, minha", "p2": "Seu, sua"},
+           "v": {"pres": "Presente", "aor": "Passado", "fut": "Futuro", "imp": "Imperativo", "part": "Particípio"}},
+}
+PB_TXT = {
+    "ru": {"idx_h": "Армянский разговорник", "idx_t": "Армянский разговорник: {n} фраз с произношением и озвучкой",
+           "idx_d": "{n} готовых фраз по-армянски: знакомство, чувства, поздравления и тосты, такси, кафе, врач, жильё — с транскрипцией и записью голоса.",
+           "idx_l": "Готовые фразы на восточноармянском: армянская запись, произношение русскими буквами, перевод и голос. Нажмите на фразу — услышите её.",
+           "sec_t": "{s} по-армянски — {n} фраз с произношением", "sec_d": "{s}: {n} фраз по-армянски с транскрипцией, переводом и озвучкой. Например: {x}",
+           "how_t": "Как сказать «{x}» по-армянски — {hy}", "how_d": "«{x}» по-армянски — {hy}, произносится [{tr}]. Послушайте запись и посмотрите, из каких слов состоит фраза.",
+           "how_h": "Как сказать «{x}» по-армянски", "say": "Произносится", "words": "Из каких слов", "more": "Ещё фразы: {s}", "top": "Частые фразы",
+           "listen": "Послушать", "cta": "Открыть разговорник в Barik", "all": "Весь разговорник", "sections": "Разделы"},
+    "en": {"idx_h": "Armenian phrasebook", "idx_t": "Armenian phrasebook: {n} phrases with pronunciation and audio",
+           "idx_d": "{n} ready-made Armenian phrases: meeting people, love, wishes and toasts, taxi, café, doctor, renting — with pronunciation and audio.",
+           "idx_l": "Ready-made phrases in Eastern Armenian: Armenian script, pronunciation in Latin letters, translation and audio. Tap a phrase to hear it.",
+           "sec_t": "{s} in Armenian — {n} phrases with pronunciation", "sec_d": "{s}: {n} Armenian phrases with pronunciation, translation and audio. For example: {x}",
+           "how_t": "How to say \"{x}\" in Armenian — {hy}", "how_d": "\"{x}\" in Armenian is {hy}, pronounced [{tr}]. Listen to the recording and see which words the phrase is made of.",
+           "how_h": "How to say \"{x}\" in Armenian", "say": "Pronounced", "words": "Word by word", "more": "More phrases: {s}", "top": "Popular phrases",
+           "listen": "Listen", "cta": "Open the phrasebook in Barik", "all": "Whole phrasebook", "sections": "Sections"},
+    "fr": {"idx_h": "Guide de conversation arménien", "idx_t": "Guide de conversation arménien : {n} phrases avec prononciation et audio",
+           "idx_d": "{n} phrases arméniennes toutes faites : rencontres, sentiments, vœux et toasts, taxi, café, médecin, logement — avec prononciation et audio.",
+           "idx_l": "Des phrases toutes faites en arménien oriental : écriture arménienne, prononciation, traduction et voix. Touchez une phrase pour l’entendre.",
+           "sec_t": "{s} en arménien — {n} phrases avec prononciation", "sec_d": "{s} : {n} phrases arméniennes avec prononciation, traduction et audio. Par exemple : {x}",
+           "how_t": "Comment dire « {x} » en arménien — {hy}", "how_d": "« {x} » en arménien se dit {hy}, prononcé [{tr}]. Écoutez l’enregistrement et voyez de quels mots se compose la phrase.",
+           "how_h": "Comment dire « {x} » en arménien", "say": "Prononciation", "words": "Mot à mot", "more": "Autres phrases : {s}", "top": "Phrases courantes",
+           "listen": "Écouter", "cta": "Ouvrir le guide dans Barik", "all": "Tout le guide", "sections": "Rubriques"},
+    "es": {"idx_h": "Guía de conversación en armenio", "idx_t": "Guía de conversación en armenio: {n} frases con pronunciación y audio",
+           "idx_d": "{n} frases hechas en armenio: conocer gente, amor, felicitaciones y brindis, taxi, café, médico, alquiler — con pronunciación y audio.",
+           "idx_l": "Frases hechas en armenio oriental: escritura armenia, pronunciación, traducción y voz. Toca una frase para escucharla.",
+           "sec_t": "{s} en armenio — {n} frases con pronunciación", "sec_d": "{s}: {n} frases en armenio con pronunciación, traducción y audio. Por ejemplo: {x}",
+           "how_t": "Cómo se dice «{x}» en armenio — {hy}", "how_d": "«{x}» en armenio se dice {hy}, se pronuncia [{tr}]. Escucha la grabación y mira de qué palabras se compone la frase.",
+           "how_h": "Cómo se dice «{x}» en armenio", "say": "Se pronuncia", "words": "Palabra por palabra", "more": "Más frases: {s}", "top": "Frases frecuentes",
+           "listen": "Escuchar", "cta": "Abrir la guía en Barik", "all": "Toda la guía", "sections": "Secciones"},
+    "de": {"idx_h": "Armenischer Sprachführer", "idx_t": "Armenischer Sprachführer: {n} Sätze mit Aussprache und Audio",
+           "idx_d": "{n} fertige armenische Sätze: Kennenlernen, Liebe, Glückwünsche und Trinksprüche, Taxi, Café, Arzt, Wohnung — mit Aussprache und Audio.",
+           "idx_l": "Fertige Sätze auf Ostarmenisch: armenische Schrift, Aussprache, Übersetzung und Stimme. Tippe auf einen Satz, um ihn zu hören.",
+           "sec_t": "{s} auf Armenisch — {n} Sätze mit Aussprache", "sec_d": "{s}: {n} armenische Sätze mit Aussprache, Übersetzung und Audio. Zum Beispiel: {x}",
+           "how_t": "Wie sagt man „{x}“ auf Armenisch — {hy}", "how_d": "„{x}“ heißt auf Armenisch {hy}, gesprochen [{tr}]. Hör dir die Aufnahme an und sieh, aus welchen Wörtern der Satz besteht.",
+           "how_h": "Wie sagt man „{x}“ auf Armenisch", "say": "Aussprache", "words": "Wort für Wort", "more": "Weitere Sätze: {s}", "top": "Häufige Sätze",
+           "listen": "Anhören", "cta": "Sprachführer in Barik öffnen", "all": "Ganzer Sprachführer", "sections": "Bereiche"},
+    "pt": {"idx_h": "Guia de conversação em armênio", "idx_t": "Guia de conversação em armênio: {n} frases com pronúncia e áudio",
+           "idx_d": "{n} frases prontas em armênio: conhecer pessoas, amor, felicitações e brindes, táxi, café, médico, aluguel — com pronúncia e áudio.",
+           "idx_l": "Frases prontas em armênio oriental: escrita armênia, pronúncia, tradução e voz. Toque numa frase para ouvi-la.",
+           "sec_t": "{s} em armênio — {n} frases com pronúncia", "sec_d": "{s}: {n} frases em armênio com pronúncia, tradução e áudio. Por exemplo: {x}",
+           "how_t": "Como dizer “{x}” em armênio — {hy}", "how_d": "“{x}” em armênio é {hy}, pronuncia-se [{tr}]. Ouça a gravação e veja de quais palavras a frase é feita.",
+           "how_h": "Como dizer “{x}” em armênio", "say": "Pronúncia", "words": "Palavra por palavra", "more": "Mais frases: {s}", "top": "Frases frequentes",
+           "listen": "Ouvir", "cta": "Abrir o guia no Barik", "all": "Guia completo", "sections": "Seções"},
+}
+TX_KEY = {"ru": "r", "en": "e", "fr": "f", "es": "s", "de": "de", "pt": "pt"}
+
+
+def build_phrases(site, base, d, wslug):
+    """Разговорник для поиска (O-191): /<язык>/p/ — оглавление, /<язык>/p/<раздел>.html — фразы раздела со звуком,
+    /<язык>/p/<фраза>.html — «Как сказать … по-армянски» для фраз из data/phrasebook/featured.txt (разбор по словам)."""
+    secs = d.get("phrases") or []
+    if not secs:
+        return 0
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None
+    feat = [l.strip() for l in open(os.path.join(APP, "data", "phrasebook", "featured.txt"), encoding="utf-8")
+            if l.strip() and not l.startswith("#")]
+    allp = {it["hy"]: (sec, it) for sec in secs for it in sec["items"]}
+    missing = [f for f in feat if f not in allp]
+    if missing:
+        sys.exit("featured.txt: нет в разговорнике: " + ", ".join(missing))
+    words = {w["a"]: w for w in d["words"]}
+    clean = lambda x: re.sub(r"\s*\([^)]*\)", "", x).strip().rstrip(".!?…").strip()
+    fslug, used = {}, set()
+    for hy in feat:
+        en = re.sub(r"[’']", "", clean(allp[hy][1]["tx"]["en"]))
+        sl = "how-to-say-" + (ascii_slug(en, 50) or ascii_slug(allp[hy][1]["tr"]["en"], 50))
+        if sl in used:
+            sl = sl + "-" + hashlib.sha1(hy.encode()).hexdigest()[:4]
+        used.add(sl); fslug[hy] = sl
+
+    def say(hy, label):
+        if not vdir:
+            return ""
+        h = aid(hy); rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return f'<button class="say" type="button" data-src="../../{rel}" aria-label="{esc(label)}" title="{esc(label)}">{SPK}</button>'
+
+    def row(it, L, T):
+        hy = it["hy"]; link = f'{fslug[hy]}.html' if hy in fslug else None
+        a = f'<a href="{link}">' if link else '<span class="pa">'
+        return (f'<li>{a}<span class="hy" lang="hy">{esc(hy)}</span><span class="t">{esc(it["tr"][L])}</span>'
+                f'<span class="x">{esc(it["tx"][L])}</span>{"</a>" if link else "</span>"}{say(hy, T["listen"] + " — " + hy)}</li>')
+
+    files, sm = 0, []
+    total = sum(len(s_["items"]) for s_ in secs)
+
+    def put(rel, html):
+        nonlocal files
+        p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(html); files += 1; sm.append(base + rel)
+    for L in LANGS:
+        T = PB_TXT[L]
+        nav = "".join(f'<li><a href="{s_["k"]}.html">{s_["e"]} {esc(s_["t"][L])} <small>{len(s_["items"])}</small></a></li>' for s_ in secs)
+        top = "".join(row(allp[hy][1], L, T) for hy in feat[:12])
+        rel = f"{L}/p/index.html"
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><p class="eyebrow" lang="hy">Զրուցարան</p><h1 class="pg">{T["idx_h"]}</h1>'
+                f'<i class="orn" aria-hidden="true"></i><p>{T["idx_l"]}</p><a class="cta" href="../../?phrases&amp;lang={L}">{T["cta"]}</a>'
+                f'<h2>{T["sections"]}</h2><ul class="nm-i pb-n">{nav}</ul><h2>{T["top"]}</h2><ul class="ws pb">{top}</ul>')
+        put(rel, page(L, base, rel, T["idx_t"].format(n=total), T["idx_d"].format(n=total), {l: f"{l}/p/index.html" for l in LANGS}, body,
+                      crumbs_ld([("Barik", base), (TXT[L]["dict"], f"{base}{L}/"), (T["idx_h"], base + rel)])))
+        for i, sec in enumerate(secs):
+            name = sec["t"][L]; rel = f"{L}/p/{sec['k']}.html"
+            nxt = secs[(i + 1) % len(secs)]
+            li = "".join(row(it, L, T) for it in sec["items"])
+            body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<p class="eyebrow">{sec["e"]} {T["idx_h"]}</p><h1 class="pg">{esc(name)}</h1><i class="orn" aria-hidden="true"></i>'
+                    f'<ul class="ws pb">{li}</ul><a class="cta" href="../../?phrases&amp;lang={L}">{T["cta"]}</a>'
+                    f'<p class="pn"><a href="index.html">{T["all"]}</a><a href="{nxt["k"]}.html">{nxt["e"]} {esc(nxt["t"][L])} →</a></p>')
+            ex = clean(sec["items"][0]["tx"][L])
+            put(rel, page(L, base, rel, T["sec_t"].format(s=name, n=len(sec["items"])), T["sec_d"].format(s=name, n=len(sec["items"]), x=ex),
+                          {l: f"{l}/p/{sec['k']}.html" for l in LANGS}, body,
+                          crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/p/index.html"), (name, base + rel)])))
+        for hy in feat:
+            sec, it = allp[hy]; x = clean(it["tx"][L]); rel = f"{L}/p/{fslug[hy]}.html"
+            toks = [re.sub(r"[։՞՛՜,]", "", t_).lower() for t_ in hy.split()]
+            wl = []
+            for t_ in dict.fromkeys(toks):
+                w = words.get(t_)
+                if w and t_ in wslug:
+                    wl.append(f'<li><a href="../w/{wslug[t_]}.html"><span class="hy" lang="hy">{esc(t_)}</span>'
+                              f'<span class="t">{esc(w[TR[L]])}</span><span class="x">{esc(w[TX_KEY[L]])}</span></a></li>')
+            more = [o for o in sec["items"] if o["hy"] != hy][:8]
+            body = (f'<p class="crumbs"><a href="index.html">{T["idx_h"]}</a> › <a href="{sec["k"]}.html">{esc(sec["t"][L])}</a></p>'
+                    f'<p class="eyebrow">{sec["e"]} {esc(sec["t"][L])}</p><h1 class="pg">{esc(T["how_h"].format(x=x))}</h1>'
+                    f'<p class="nm-big ph" lang="hy">{esc(hy)}</p>'
+                    f'<p class="tr">{T["say"]}: <span>[{esc(it["tr"][L])}]</span>{say(hy, T["listen"])}</p><p class="tx">{esc(it["tx"][L])}</p>'
+                    + (f'<h2>{T["words"]}</h2><ul class="ws">{"".join(wl)}</ul>' if wl else "")
+                    + f'<a class="cta" href="../../?phrases&amp;lang={L}">{T["cta"]}</a>'
+                    f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(s=sec["t"][L]))}</h2><ul class="ws pb">{"".join(row(o, L, T) for o in more)}</ul>'
+                    f'<p class="pn"><a href="{sec["k"]}.html">{esc(sec["t"][L])}</a><a href="index.html">{T["all"]} →</a></p>')
+            ld = [{"@context": "https://schema.org", "@type": "DefinedTerm", "name": hy, "inLanguage": "hy", "description": it["tx"][L],
+                   "termCode": it["tr"][L], "url": base + rel},
+                  crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/p/index.html"), (sec["t"][L], f"{base}{L}/p/{sec['k']}.html"), (x, base + rel)])]
+            put(rel, page(L, base, rel, T["how_t"].format(x=x, hy=hy), T["how_d"].format(x=x, hy=hy, tr=it["tr"][L]),
+                          {l: f"{l}/p/{fslug[hy]}.html" for l in LANGS}, body, ld))
+    open(os.path.join(site, "sitemap-phrases.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"страницы разговорника: {files}")
+    return files
+
+
+AB_TXT = {
+    "ru": {"cta_all": "Учить алфавит в Barik", "idx_h": "Армянский алфавит", "idx_t": "Армянский алфавит: 39 букв с произношением, прописью и озвучкой",
+           "idx_d": "Все 39 букв восточноармянского алфавита: как читается каждая, как её писать от руки, название и запись голоса.",
+           "idx_l": "Восточноармянский алфавит — 39 букв. Нажмите на букву: как она читается, как пишется прописью и какие слова на неё начинаются.",
+           "let_t": "Буква {up} {lo} ({nm}) — армянский алфавит: как читается и пишется", "let_d": "Армянская буква {up} {lo}: название «{nm}» [{nt}], читается как «{rd}». Пропись, запись голоса и слова на эту букву.",
+           "h1": "Буква {up} {lo}", "name": "название", "reads": "читается", "ipa": "звук (МФА)", "pos": "буква из 39", "cursive": "Прописью",
+           "words": "Слова на букву {up}", "cta": "Учить букву в Barik — обвести пальцем", "all": "Весь алфавит", "listen": "Послушать",
+           "num_h": "Числа по-армянски", "num_t": "Числа по-армянски: от нуля до тысячи с произношением",
+           "num_d": "Как считать по-армянски: ноль, один, два, три… сто, тысяча — с транскрипцией, переводом и записью голоса.",
+           "num_l": "Числа восточноармянского языка с произношением русскими буквами. Нажмите кнопку — услышите число.", "num_cta": "Учить числа в Barik"},
+    "en": {"cta_all": "Learn the alphabet in Barik", "idx_h": "Armenian alphabet", "idx_t": "Armenian alphabet: 39 letters with pronunciation, handwriting and audio",
+           "idx_d": "All 39 letters of the Eastern Armenian alphabet: how each one sounds, how to write it by hand, its name and a voice recording.",
+           "idx_l": "The Eastern Armenian alphabet has 39 letters. Tap a letter to see how it sounds, how it is written by hand and which words start with it.",
+           "let_t": "Letter {up} {lo} ({nm}) — Armenian alphabet: pronunciation and handwriting", "let_d": "Armenian letter {up} {lo}: named “{nm}” [{nt}], sounds like “{rd}”. Handwriting, audio and words that start with it.",
+           "h1": "Letter {up} {lo}", "name": "name", "reads": "sounds like", "ipa": "sound (IPA)", "pos": "letter of 39", "cursive": "Handwriting",
+           "words": "Words starting with {up}", "cta": "Learn this letter in Barik — trace it with your finger", "all": "Whole alphabet", "listen": "Listen",
+           "num_h": "Numbers in Armenian", "num_t": "Numbers in Armenian: from zero to a thousand with pronunciation",
+           "num_d": "How to count in Armenian: zero, one, two, three… a hundred, a thousand — with pronunciation, translation and audio.",
+           "num_l": "Eastern Armenian numbers with pronunciation in Latin letters. Tap the button to hear each number.", "num_cta": "Learn numbers in Barik"},
+    "fr": {"cta_all": "Apprendre l’alphabet dans Barik", "idx_h": "Alphabet arménien", "idx_t": "Alphabet arménien : 39 lettres avec prononciation, écriture manuscrite et audio",
+           "idx_d": "Les 39 lettres de l’alphabet arménien oriental : prononciation, écriture à la main, nom de la lettre et enregistrement.",
+           "idx_l": "L’alphabet arménien oriental compte 39 lettres. Touchez une lettre : sa prononciation, son écriture manuscrite et des mots qui commencent par elle.",
+           "let_t": "Lettre {up} {lo} ({nm}) — alphabet arménien : prononciation et écriture", "let_d": "Lettre arménienne {up} {lo} : nom « {nm} » [{nt}], se prononce « {rd} ». Écriture manuscrite, audio et mots.",
+           "h1": "Lettre {up} {lo}", "name": "nom", "reads": "se prononce", "ipa": "son (API)", "pos": "lettre sur 39", "cursive": "Écriture manuscrite",
+           "words": "Mots commençant par {up}", "cta": "Apprendre la lettre dans Barik — la tracer du doigt", "all": "Tout l’alphabet", "listen": "Écouter",
+           "num_h": "Les nombres en arménien", "num_t": "Les nombres en arménien : de zéro à mille avec la prononciation",
+           "num_d": "Compter en arménien : zéro, un, deux, trois… cent, mille — avec prononciation, traduction et audio.",
+           "num_l": "Les nombres en arménien oriental avec la prononciation. Touchez le bouton pour entendre chaque nombre.", "num_cta": "Apprendre les nombres dans Barik"},
+    "es": {"cta_all": "Aprende el alfabeto en Barik", "idx_h": "Alfabeto armenio", "idx_t": "Alfabeto armenio: 39 letras con pronunciación, escritura a mano y audio",
+           "idx_d": "Las 39 letras del alfabeto armenio oriental: cómo suena cada una, cómo se escribe a mano, su nombre y una grabación.",
+           "idx_l": "El alfabeto armenio oriental tiene 39 letras. Toca una letra para ver cómo suena, cómo se escribe a mano y qué palabras empiezan por ella.",
+           "let_t": "Letra {up} {lo} ({nm}) — alfabeto armenio: pronunciación y escritura", "let_d": "Letra armenia {up} {lo}: se llama «{nm}» [{nt}], suena como «{rd}». Escritura a mano, audio y palabras.",
+           "h1": "Letra {up} {lo}", "name": "nombre", "reads": "suena", "ipa": "sonido (AFI)", "pos": "letra de 39", "cursive": "Escritura a mano",
+           "words": "Palabras que empiezan por {up}", "cta": "Aprende la letra en Barik — trázala con el dedo", "all": "Todo el alfabeto", "listen": "Escuchar",
+           "num_h": "Los números en armenio", "num_t": "Los números en armenio: de cero a mil con pronunciación",
+           "num_d": "Cómo contar en armenio: cero, uno, dos, tres… cien, mil — con pronunciación, traducción y audio.",
+           "num_l": "Los números del armenio oriental con pronunciación. Toca el botón para escuchar cada número.", "num_cta": "Aprende los números en Barik"},
+    "de": {"cta_all": "Das Alphabet in Barik lernen", "idx_h": "Armenisches Alphabet", "idx_t": "Armenisches Alphabet: 39 Buchstaben mit Aussprache, Schreibschrift und Audio",
+           "idx_d": "Alle 39 Buchstaben des ostarmenischen Alphabets: Aussprache, Schreibschrift, Name des Buchstabens und Aufnahme.",
+           "idx_l": "Das ostarmenische Alphabet hat 39 Buchstaben. Tippe auf einen Buchstaben: Aussprache, Schreibschrift und Wörter mit diesem Anfangsbuchstaben.",
+           "let_t": "Buchstabe {up} {lo} ({nm}) — armenisches Alphabet: Aussprache und Schreibschrift", "let_d": "Armenischer Buchstabe {up} {lo}: Name „{nm}“ [{nt}], klingt wie „{rd}“. Schreibschrift, Audio und Wörter.",
+           "h1": "Buchstabe {up} {lo}", "name": "Name", "reads": "klingt wie", "ipa": "Laut (IPA)", "pos": "Buchstabe von 39", "cursive": "Schreibschrift",
+           "words": "Wörter mit {up}", "cta": "Den Buchstaben in Barik lernen — mit dem Finger nachfahren", "all": "Ganzes Alphabet", "listen": "Anhören",
+           "num_h": "Zahlen auf Armenisch", "num_t": "Zahlen auf Armenisch: von null bis tausend mit Aussprache",
+           "num_d": "Auf Armenisch zählen: null, eins, zwei, drei… hundert, tausend — mit Aussprache, Übersetzung und Audio.",
+           "num_l": "Ostarmenische Zahlen mit Aussprache. Tippe auf die Taste, um jede Zahl zu hören.", "num_cta": "Zahlen in Barik lernen"},
+    "pt": {"cta_all": "Aprenda o alfabeto no Barik", "idx_h": "Alfabeto armênio", "idx_t": "Alfabeto armênio: 39 letras com pronúncia, escrita à mão e áudio",
+           "idx_d": "As 39 letras do alfabeto armênio oriental: como soa cada uma, como se escreve à mão, o nome e uma gravação.",
+           "idx_l": "O alfabeto armênio oriental tem 39 letras. Toque numa letra para ver como soa, como se escreve à mão e quais palavras começam com ela.",
+           "let_t": "Letra {up} {lo} ({nm}) — alfabeto armênio: pronúncia e escrita", "let_d": "Letra armênia {up} {lo}: chama-se “{nm}” [{nt}], soa como “{rd}”. Escrita à mão, áudio e palavras.",
+           "h1": "Letra {up} {lo}", "name": "nome", "reads": "soa como", "ipa": "som (AFI)", "pos": "letra de 39", "cursive": "Escrita à mão",
+           "words": "Palavras com {up}", "cta": "Aprenda a letra no Barik — trace com o dedo", "all": "Alfabeto completo", "listen": "Ouvir",
+           "num_h": "Números em armênio", "num_t": "Números em armênio: de zero a mil com pronúncia",
+           "num_d": "Como contar em armênio: zero, um, dois, três… cem, mil — com pronúncia, tradução e áudio.",
+           "num_l": "Números do armênio oriental com pronúncia. Toque no botão para ouvir cada número.", "num_cta": "Aprenda os números no Barik"},
+}
+
+
+def build_alphabet(site, base, d, wslug):
+    """Алфавит для поиска (O-192): /<язык>/a/ — 39 букв, /<язык>/a/<название>.html — буква (чтение, звук, пропись — тот же SVG,
+    что в приложении, слова на букву), /<язык>/a/numbers.html — числа (темы «Числа» A1 и «Числа 2» A2)."""
+    abc = d.get("abc") or []
+    if not abc:
+        return 0
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None
+
+    def say(a, label):
+        if not vdir:
+            return ""
+        h = aid(a); rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return f'<button class="say" type="button" data-src="../../{rel}" aria-label="{esc(label)}" title="{esc(label)}">{SPK}</button>'
+    topics, words = d["topics"], d["words"]
+    LVO = {lv: i for i, lv in enumerate(LV)}
+    SLUG_FIX = {"ը": "yt"}                       # «ըթ» латиницей даёт одну «t»
+    slug = {x["i"]: SLUG_FIX.get(x["lo"]) or ascii_slug(x["nt"]["en"], 20) or f"letter-{x['i'] + 1}" for x in abc}
+    assert len(set(slug.values())) == len(abc), "адреса букв совпали"
+
+    def starts(x):
+        lo = x["lo"]
+        r = [w for w in words if w["a"].startswith(lo) and " " not in w["a"] and wslug.get(w["a"])
+             and not (lo == "ո" and w["a"].startswith("ու")) and not (lo == "ե" and w["a"].startswith("և"))]
+        r.sort(key=lambda w: (LVO.get(topics[w["t"]]["lv"], 9), 0 if w.get("p") else 1, len(w["a"])))
+        return r[:10]
+    num = [w for w in words if topics[w["t"]]["ru"] in ("Числа", "Числа 2")]
+    files, sm = 0, []
+
+    def put(rel, html):
+        nonlocal files
+        p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(html); files += 1; sm.append(base + rel)
+
+    def wrow(w, L):
+        return (f'<li><a href="../w/{wslug[w["a"]]}.html"><span class="hy" lang="hy">{esc(w["a"])}</span><span class="t">{esc(w[TR[L]])}</span>'
+                f'<span class="x">{esc(w[TX[L]])}</span></a>{say(w["a"], AB_TXT[L]["listen"] + " — " + w["a"])}</li>')
+    for L in LANGS:
+        T = AB_TXT[L]
+        grid = "".join(f'<li><a href="{slug[x["i"]]}.html"><b lang="hy">{esc(x["up"])} {esc(x["lo"])}</b><small lang="hy">{esc(x["nm"])}</small>'
+                       f'<i>{esc(x["rd"][L])}</i></a></li>' for x in abc)
+        rel = f"{L}/a/index.html"
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><p class="eyebrow" lang="hy">Այբուբեն</p><h1 class="pg">{T["idx_h"]}</h1>'
+                f'<i class="orn" aria-hidden="true"></i><p>{T["idx_l"]}</p><ul class="abc-g">{grid}</ul>'
+                f'<a class="cta" href="../../?lang={L}&amp;letter=0">{T["cta_all"]}</a><p><a href="numbers.html">{T["num_h"]} →</a></p>')
+        put(rel, page(L, base, rel, T["idx_t"], T["idx_d"], {l: f"{l}/a/index.html" for l in LANGS}, body,
+                      crumbs_ld([("Barik", base), (TXT[L]["dict"], f"{base}{L}/"), (T["idx_h"], base + rel)])))
+        for k, x in enumerate(abc):
+            rel = f"{L}/a/{slug[x['i']]}.html"
+            prv, nxt = abc[k - 1] if k else None, abc[k + 1] if k + 1 < len(abc) else None
+            ws = starts(x)
+            facts = (f'<ul class="facts"><li><b lang="hy">{esc(x["nm"])}</b><small>{T["name"]} [{esc(x["nt"][L])}]</small></li>'
+                     f'<li><b>{esc(x["rd"][L])}</b><small>{T["reads"]}</small></li><li><b>[{esc(x["ipa"])}]</b><small>{T["ipa"]}</small></li>'
+                     f'<li><b>{k + 1}</b><small>{T["pos"]}</small></li></ul>')
+            body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<h1 class="pg">{esc(T["h1"].format(up=x["up"], lo=x["lo"]))}</h1>'
+                    f'<p class="lt-big" lang="hy">{esc(x["up"])} {esc(x["lo"])}</p><p class="tr">{say(x["nm"], T["listen"] + " — " + x["nm"])}</p>'
+                    f'{facts}<p>{esc(x["t"][L])}</p>'
+                    f'<h2>{T["cursive"]}</h2><div class="cbx">{x["svg"]}</div>'
+                    f'<a class="cta" href="../../?lang={L}&amp;letter={x["i"]}">{T["cta"]}</a>'
+                    + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["words"].format(up=x["up"]))}</h2><ul class="ws">{"".join(wrow(w, L) for w in ws)}</ul>' if ws else "")
+                    + '<p class="pn">' + (f'<a href="{slug[prv["i"]]}.html">‹ <span lang="hy">{esc(prv["up"])}</span></a>' if prv else '<a href="index.html">' + T["all"] + '</a>')
+                    + (f'<a href="{slug[nxt["i"]]}.html"><span lang="hy">{esc(nxt["up"])}</span> ›</a>' if nxt else '<a href="numbers.html">' + T["num_h"] + ' →</a>') + '</p>')
+            ld = [{"@context": "https://schema.org", "@type": "DefinedTerm", "name": f'{x["up"]} {x["lo"]}', "alternateName": x["nm"], "inLanguage": "hy",
+                   "description": x["t"][L], "url": base + rel,
+                   "inDefinedTermSet": {"@type": "DefinedTermSet", "name": T["idx_h"], "url": f"{base}{L}/a/index.html"}},
+                  crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/a/index.html"), (f'{x["up"]} {x["lo"]}', base + rel)])]
+            fm = dict(up=x["up"], lo=x["lo"], nm=x["nm"], nt=x["nt"][L], rd=x["rd"][L])
+            put(rel, page(L, base, rel, T["let_t"].format(**fm), T["let_d"].format(**fm), {l: f"{l}/a/{slug[x['i']]}.html" for l in LANGS}, body, ld))
+        rel = f"{L}/a/numbers.html"
+        ti = next(i for i, t in enumerate(topics) if t["ru"] == "Числа")
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p><p class="eyebrow" lang="hy">Թվեր</p>'
+                f'<h1 class="pg">{T["num_h"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["num_l"]}</p><ul class="ws">{"".join(wrow(w, L) for w in num)}</ul>'
+                f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["num_cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+        put(rel, page(L, base, rel, T["num_t"], T["num_d"], {l: f"{l}/a/numbers.html" for l in LANGS}, body,
+                      crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/a/index.html"), (T["num_h"], base + rel)])))
+    open(os.path.join(site, "sitemap-abc.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"страницы алфавита: {files}")
+    return files
+
+
+GD_TXT = {
+    "ru": {"idx_h": "Справочник: армянский простыми словами", "idx_d": "Короткие статьи об армянском языке: алфавит, чтение, падежи, глаголы, числа, имена, поздравления — с озвучкой и примерами.",
+           "idx_l": "Короткие статьи для тех, кто начинает армянский: как читать, как устроены слова, что говорить в жизни. В каждой — живые примеры со звуком.",
+           "cta": "Учить армянский в Barik — бесплатно", "all": "Все статьи", "listen": "Послушать"},
+    "en": {"idx_h": "Guide: Armenian made simple", "idx_d": "Short articles about the Armenian language: alphabet, reading, cases, verbs, numbers, names, wishes — with audio and examples.",
+           "idx_l": "Short articles for Armenian beginners: how to read, how words work, what to say in real life. Each one has examples you can listen to.",
+           "cta": "Learn Armenian in Barik — free", "all": "All articles", "listen": "Listen"},
+}
+
+
+def build_guides(site, base, d, wslug):
+    """Справочник (O-194): data/guides/<язык>/<адрес>.md → /<язык>/g/<адрес>.html и /<язык>/g/index.html.
+    Разметка: «# Заголовок», строка «> описание», «## подзаголовок», абзацы, списки «- », **жирный**, [текст](/ru/a/) (адрес от корня
+    сайта), и вставки из данных: {{words: слово, слово…}} — таблица слов (ссылка, транскрипция, перевод, звук), {{phrase: фраза}} —
+    фраза разговорника со звуком, {{noun: слово}} — падежи, {{verb: слово}} — спряжение (эталон gold.json)."""
+    root = os.path.join(APP, "data", "guides")
+    langs = [l for l in LANGS if os.path.isdir(os.path.join(root, l))]
+    if not langs:
+        return 0
+    man_p = os.path.join(site, "audio", "manifest.json")
+    vdir = json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None
+    inw = {w["a"]: w for w in d["words"]}
+    phr = {it["hy"]: it for s_ in d.get("phrases") or [] for it in s_["items"]}
+    gold = json.load(open(os.path.join(APP, "data", "path", "gold.json"), encoding="utf-8"))
+    slugs = sorted({f[:-3] for l in langs for f in os.listdir(os.path.join(root, l)) if f.endswith(".md")})
+
+    def say(a, label):
+        if not vdir:
+            return ""
+        h = aid(a); rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
+        if not os.path.exists(os.path.join(site, rel)):
+            return ""
+        return f'<button class="say" type="button" data-src="../../{rel}" aria-label="{esc(label)}" title="{esc(label)}">{SPK}</button>'
+
+    def inline(t):
+        t = esc(t)
+        t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
+        t = re.sub(r"\[([^\]]+)\]\(/([^)]*)\)", lambda m: f'<a href="../../{m.group(2)}">{m.group(1)}</a>', t)
+        return re.sub(r"([\u0531-\u0587\uFB13-\uFB17][\u0531-\u0587\uFB13-\uFB17\u055B-\u055F\u0589 \-]*)", r'<span lang="hy">\1</span>', t)
+
+    def block(kind, arg, L, T):
+        if kind == "words":
+            rows = []
+            for a in [x.strip() for x in arg.split(",") if x.strip()]:
+                w = inw.get(a)
+                if not w:
+                    sys.exit(f"справочник: слова «{a}» нет в словаре")
+                rows.append(f'<li><a href="../w/{wslug[a]}.html"><span class="hy" lang="hy">{esc(a)}</span><span class="t">{esc(w[TR[L]])}</span>'
+                            f'<span class="x">{esc(w[TX[L]])}</span></a>{say(a, T["listen"] + " — " + a)}</li>')
+            return f'<ul class="ws">{"".join(rows)}</ul>'
+        if kind == "phrase":
+            it = phr.get(arg)
+            if not it:
+                sys.exit(f"справочник: фразы «{arg}» нет в разговорнике")
+            return (f'<ul class="ws pb"><li><span class="pa"><span class="hy" lang="hy">{esc(arg)}</span><span class="t">{esc(it["tr"][L])}</span>'
+                    f'<span class="x">{esc(it["tx"][L])}</span></span>{say(arg, T["listen"])}</li></ul>')
+        if kind == "noun":
+            nf = gold["nouns"][arg]; F = FT[L]
+            rows = "".join(f'<tr><th>{F["n"][k]}</th><td lang="hy">{esc(nf[k])}</td></tr>' for k in NK if nf.get(k) and nf[k] != "-")
+            return f'<div class="ftw"><table class="ft"><tr><th>{F["n"]["base"]}</th><td lang="hy">{esc(arg)}</td></tr>{rows}</table></div>'
+        if kind == "verb":
+            vf = gold["verbs"][arg]; F = FT[L]
+            hd = "".join(f'<th>{F["v"][k]}</th>' for k in VK)
+            rows = "".join(f'<tr><th lang="hy">{pn}</th>' + "".join(f'<td lang="hy">{esc(vf[k][i])}</td>' for k in VK) + '</tr>' for i, pn in enumerate(PRON))
+            return f'<div class="ftw"><table class="ft fv"><tr><th></th>{hd}</tr>{rows}</table></div>'
+        sys.exit(f"справочник: неизвестная вставка {kind}")
+
+    def render(md, L, T):
+        lines = md.strip().split("\n")
+        title = lines[0].lstrip("# ").strip(); desc = lines[1].lstrip("> ").strip()
+        out, lst = [], []
+
+        def flush():
+            if lst:
+                out.append("<ul>" + "".join(f"<li>{inline(x)}</li>" for x in lst) + "</ul>"); lst.clear()
+        for ln in lines[2:]:
+            ln = ln.rstrip()
+            m = re.fullmatch(r"\{\{(\w+):\s*(.+?)\}\}", ln.strip())
+            if not ln.strip():
+                flush(); continue
+            if m:
+                flush(); out.append(block(m.group(1), m.group(2).strip(), L, T)); continue
+            if ln.startswith("## "):
+                flush(); out.append(f"<h2>{inline(ln[3:])}</h2>"); continue
+            if ln.startswith("- "):
+                lst.append(ln[2:]); continue
+            flush(); out.append(f"<p>{inline(ln)}</p>")
+        flush()
+        return title, desc, "".join(out)
+    files, sm = 0, []
+    for L in langs:
+        T = GD_TXT[L]; items = []
+        for sl in slugs:
+            f = os.path.join(root, L, sl + ".md")
+            if not os.path.exists(f):
+                continue
+            title, desc, html = render(open(f, encoding="utf-8").read(), L, T)
+            items.append((sl, title, desc))
+            rel = f"{L}/g/{sl}.html"
+            alts = {l: f"{l}/g/{sl}.html" for l in langs if os.path.exists(os.path.join(root, l, sl + ".md"))}
+            body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
+                    f'<h1 class="pg">{esc(title)}</h1><i class="orn" aria-hidden="true"></i><div class="art">{html}</div>'
+                    f'<a class="cta" href="../../?lang={L}">{T["cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+            ld = [{"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc, "inLanguage": L,
+                   "url": base + rel, "publisher": {"@type": "Organization", "name": "Barik", "url": base}},
+                  crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/g/index.html"), (title, base + rel)])]
+            p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+            open(p, "w", encoding="utf-8").write(page(L, base, rel, f"{title} — Barik", desc, alts, body, ld)); files += 1; sm.append(base + rel)
+        lst = "".join(f'<li><a href="{sl}.html"><b>{esc(t)}</b><span>{esc(dd)}</span></a></li>' for sl, t, dd in items)
+        rel = f"{L}/g/index.html"
+        body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
+                f'<p>{T["idx_l"]}</p><ul class="gl">{lst}</ul><a class="cta" href="../../?lang={L}">{T["cta"]}</a>')
+        p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(page(L, base, rel, T["idx_h"] + " — Barik", T["idx_d"], {l: f"{l}/g/index.html" for l in langs}, body,
+                                                  crumbs_ld([("Barik", base), (T["idx_h"], base + rel)])))
+        files += 1; sm.insert(0, base + rel)
+    open(os.path.join(site, "sitemap-guides.xml"), "w", encoding="utf-8").write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in sm) + "</urlset>")
+    print(f"справочник: {files} страниц ({', '.join(langs)})")
+    return files
+
+
+RU_LAT = dict(zip("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", ["a","b","v","g","d","e","yo","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"]))
+
+
+def translit_ru(s):
+    return "".join(RU_LAT.get(c, RU_LAT.get(c.lower(), c)) for c in s)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--site", default=os.path.join(APP, "dist", "site"))
+    ap.add_argument("--url", default="https://barik.am/")
+    ap.add_argument("--words", default=os.path.join(APP, "dist", "words_tr.json"))
+    a = ap.parse_args()
+    if not os.path.exists(a.words):
+        print("нет слов с транскрипцией — node tools/dump_words.js dist/words_tr.json")
+        return 1
+    build(a.site, a.url, a.words)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+
+def sitemap_lastmod(site, base, store, today=None):
+    """lastmod в sitemap (O-206, совет поддержки хостинга: робот не перекачивает всё заново): дата — когда страница
+    действительно изменилась. Отпечатки страниц и даты — в data/seo/lastmod.json.gz (в git): новая или изменённая страница
+    получает дату сборки, неизменная — прежнюю. Указатель sitemap.xml — самая свежая дата своего файла."""
+    import datetime, gzip, hashlib
+    today = today or datetime.date.today().isoformat()
+    old = json.load(gzip.open(store, "rt", encoding="utf-8")) if os.path.exists(store) else {}
+    new, files = {}, {}
+    for f in sorted(os.listdir(site)):
+        if not (f.startswith("sitemap-") and f.endswith(".xml")): continue
+        x = open(os.path.join(site, f), encoding="utf-8").read()
+        last = ""
+
+        def put(m):
+            nonlocal last
+            u = m.group(1)
+            rel = u[len(base):] if u.startswith(base) else ""
+            p = os.path.join(site, rel + ("index.html" if rel == "" or rel.endswith("/") else ""))
+            h = hashlib.sha1(open(p, "rb").read()).hexdigest()[:10] if os.path.exists(p) else ""
+            o = old.get(rel)
+            d = o[1] if o and o[0] == h else today
+            new[rel] = [h, d]; last = max(last, d)
+            return f"<loc>{u}</loc><lastmod>{d}</lastmod>"
+        x = re.sub(r"<loc>([^<]+)</loc>(?!<lastmod>)", put, x)
+        open(os.path.join(site, f), "w", encoding="utf-8").write(x)
+        files[f] = last
+    ix = os.path.join(site, "sitemap.xml"); x = open(ix, encoding="utf-8").read()
+    x = re.sub(r"<loc>([^<]+/(sitemap-[^<]+\.xml))</loc>(?:<lastmod>[^<]*</lastmod>)?",
+               lambda m: f"<loc>{m.group(1)}</loc>" + (f"<lastmod>{files[m.group(2)]}</lastmod>" if files.get(m.group(2)) else ""), x)
+    open(ix, "w", encoding="utf-8").write(x)
+    os.makedirs(os.path.dirname(store), exist_ok=True)
+    with gzip.open(store, "wt", encoding="utf-8") as g:
+        json.dump(new, g, separators=(",", ":"), sort_keys=True)
+    ch = sum(1 for k, v in new.items() if v[1] == today)
+    return len(new), ch
+

@@ -1,0 +1,423 @@
+#!/usr/bin/env python3
+"""Озвучка словаря и алфавита армянским нейроголосом Azure Speech (восточноармянский, hy-AM), O-135.
+
+Что делает:
+  Для каждого слова из tools/words.json и названия каждой буквы из www/js/alphabet.js кладёт запись
+  www/audio/<голос>/<ab>/<abcdef0123456789>.mp3 — файл на слово, имя — хэш текста (aid, тот же считает
+  app.js), и пишет www/audio/manifest.json. Готовые файлы не перезапрашивает — после обрыва просто
+  запустите снова. Сайт берёт файл, когда слово звучит, service worker хранит его без интернета.
+
+Пачки. Бесплатный тариф F0 — 20 запросов в минуту и 0,5 млн знаков в месяц, а в знаки идёт и разметка
+SSML (кроме <speak> и <voice>). Поэтому слова идут пачкой по --batch в одном запросе через перевод строки:
+Azure читает каждую строку отдельной фразой и ставит между ними паузу ~1 с; запись режется по паузам.
+Число кусков и их длина сверяются со словами; не сошлось — пачка делится пополам и озвучивается заново,
+до одного слова. Фразы с запятой (пословицы) — по одной: запятая даёт паузу внутри. Скорость --rate —
+одним тегом на пачку. Знаки по месяцам — tools/audio_usage.json; дальше --max-chars за месяц не идёт.
+
+Ключ: AZURE_SPEECH_KEY и AZURE_SPEECH_REGION — из переменных окружения или из файла .env рядом
+с package.json (шаблон — .env.example; .env в git не попадает).
+
+Запуск:  python3.13 tools/gen_audio.py [--voice hy-AM-HaykNeural] [--only A1,L] [--limit 200] [--check]
+"""
+import argparse, json, os, re, shutil, subprocess, sys, threading, time, wave
+import urllib.error, urllib.request
+from concurrent.futures import ThreadPoolExecutor
+from xml.sax.saxutils import escape
+
+import numpy as np
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+OUT_DIR = os.path.join(ROOT, 'www', 'audio')
+RESERVE = os.path.join(HERE, 'audio_reserve')          # запас: слова, которых ещё нет в словаре
+USAGE = os.path.join(HERE, 'audio_usage.json')
+META = os.path.join(ROOT, 'dist', 'audio_meta.json')      # длительности и пачки — для разбора, не в git
+LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+VOICES = {'hy-AM-AnahitNeural': 'anahit', 'hy-AM-HaykNeural': 'hayk'}
+SR = 24000
+FRAME = SR // 100                       # 10 мс
+LOUD_DB, SOFT_DB = -45.0, -60.0         # речь / слабый хвост (ս, շ, հ на конце)
+MERGE_GAP = 45                          # паузы короче 0,45 с — внутри фразы; между строками ~1 с
+LEAD, TAIL = 6, 12                      # запас до и после речи, кадров по 10 мс
+SOLO = re.compile(r'[,՝՜]')             # запятая — пауза внутри фразы: такие — по одной
+# Лигатуру «և» Azure (hy-AM) глотает: одна «և» — пустой WAV (44 байта), «սև» — 0,17 с вместо 0,55 с,
+# «բարև» — 0,44 вместо 0,59 (03.11.2026). В запрос идёт «եւ» (то же произношение), имя файла — по слову.
+def spoken(t):
+    return t.replace('և', 'եւ')
+
+
+def load_env():
+    path = os.path.join(ROOT, '.env')
+    if not os.path.exists(path):
+        return
+    for line in open(path, encoding='utf-8'):
+        k, _, v = line.strip().partition('=')
+        if k and not k.startswith('#') and v and not os.environ.get(k):
+            os.environ[k] = v.strip().strip('"').strip("'")
+
+
+def fnv(data, h):
+    for b in data:
+        h = ((h ^ b) * 0x01000193) & 0xFFFFFFFF
+    return h
+
+
+def aid(text):
+    """Имя файла записи: два FNV-1a по UTF-8 (как aid() в app.js)."""
+    b = text.encode('utf-8')
+    return '%08x%08x' % (fnv(b, 0x811C9DC5), fnv(b, 0x050C5D1F))
+
+
+def path_of(text, vdir, base=OUT_DIR):
+    h = aid(text)
+    return os.path.join(base, vdir, h[:2], h + '.mp3')
+
+
+def items():
+    """[(группа, текст)]: группа — уровень слова или 'L' для названий букв; без повторов текста."""
+    words = json.load(open(os.path.join(HERE, 'words.json'), encoding='utf-8'))
+    out = [(w['lv'], w['a']) for w in words]
+    abc = open(os.path.join(ROOT, 'www', 'js', 'alphabet.js'), encoding='utf-8').read()
+    out += [('L', nm) for nm in re.findall(r"nm:'([^']+)'", abc)]
+    # P — фразы курса «Гранат» (реплики сцен, ответы упражнений): data/path/say.txt пишет tools/path/pack_path.js
+    say = os.path.join(ROOT, 'data', 'path', 'say.txt')
+    if os.path.exists(say):
+        out += [('P', t.strip()) for t in open(say, encoding='utf-8') if t.strip() and not t.startswith('#')]
+    # F — разговорник (O-181): data/phrasebook/say.txt пишет tools/build_phrasebook.py
+    pb = os.path.join(ROOT, 'data', 'phrasebook', 'say.txt')
+    if os.path.exists(pb):
+        out += [('F', t.strip()) for t in open(pb, encoding='utf-8') if t.strip() and not t.startswith('#')]
+    # E — примеры к словам (O-172): data/examples/say.txt пишет tools/build_examples.py
+    ex = os.path.join(ROOT, 'data', 'examples', 'say.txt')
+    if os.path.exists(ex):
+        out += [('E', t.strip()) for t in open(ex, encoding='utf-8') if t.strip() and not t.startswith('#')]
+    seen, uniq = set(), []
+    for g, t in out:
+        if t not in seen:
+            seen.add(t)
+            uniq.append((g, t))
+    ids = {}
+    for _, t in uniq:
+        h = aid(t)
+        if h in ids:
+            sys.exit('совпали имена файлов: %r и %r — поменять aid()' % (ids[h], t))
+        ids[h] = t
+    return uniq
+
+
+class Limiter:
+    """Не больше n запросов за окно (F0: 20 за 60 с; держим запас)."""
+    def __init__(self, n, window):
+        self.n, self.window, self.times, self.lock = n, window, [], threading.Lock()
+
+    def wait(self):
+        while True:
+            with self.lock:
+                now = time.time()
+                self.times = [t for t in self.times if now - t < self.window]
+                if len(self.times) < self.n:
+                    self.times.append(now)
+                    return
+                pause = self.window - (now - self.times[0]) + 0.05
+            time.sleep(pause)
+
+
+class Usage:
+    """Знаки по месяцам (F0 — 0,5 млн в месяц): tools/audio_usage.json."""
+    def __init__(self, cap):
+        self.cap, self.lock = cap, threading.Lock()
+        self.data = json.load(open(USAGE, encoding='utf-8')) if os.path.exists(USAGE) else {}
+        self.month = time.strftime('%Y-%m')
+
+    def take(self, n):
+        with self.lock:
+            used = self.data.get(self.month, 0)
+            if used + n > self.cap:
+                return False
+            self.data[self.month] = used + n
+            json.dump(self.data, open(USAGE, 'w', encoding='utf-8'), indent=1, sort_keys=True)
+            return True
+
+    def used(self):
+        return self.data.get(self.month, 0)
+
+
+def ssml_body(texts, rate):
+    body = '\n'.join(escape(spoken(t)) for t in texts)
+    if rate and rate not in ('0%', '+0%', '0'):
+        body = "<prosody rate='%s'>%s</prosody>" % (rate, body)
+    return body
+
+
+def synth(body, key, region, voice):
+    ssml = "<speak version='1.0' xml:lang='%s'><voice name='%s'>%s</voice></speak>" % ('-'.join(voice.split('-')[:2]), voice, body)
+    req = urllib.request.Request(
+        'https://%s.tts.speech.microsoft.com/cognitiveservices/v1' % region,
+        data=ssml.encode('utf-8'), method='POST',
+        headers={'Ocp-Apim-Subscription-Key': key,
+                 'Content-Type': 'application/ssml+xml',
+                 'X-Microsoft-OutputFormat': 'riff-24khz-16bit-mono-pcm',
+                 'User-Agent': 'barik-audio'})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        return r.read()
+
+
+def pcm(wav_bytes):
+    """WAV → отсчёты; пустой ответ (только заголовок, формат 0) — пустой массив, без повторов."""
+    if len(wav_bytes) <= 44:
+        return np.zeros(0, dtype=np.int16)
+    tmp = '/dev/shm/barik_%d_%d.wav' % (os.getpid(), threading.get_ident())
+    with open(tmp, 'wb') as f:
+        f.write(wav_bytes)
+    with wave.open(tmp) as w:
+        assert w.getframerate() == SR and w.getnchannels() == 1 and w.getsampwidth() == 2
+        a = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16).copy()
+    os.remove(tmp)
+    return a
+
+
+def energy(a):
+    n = len(a) // FRAME
+    x = a[:n * FRAME].astype(np.float32).reshape(n, FRAME)
+    return 20 * np.log10(np.sqrt((x ** 2).mean(1)) / 32768 + 1e-9)
+
+
+def regions(e):
+    """Куски речи: громкие кадры, паузы короче MERGE_GAP внутри куска."""
+    loud, reg, i, n = e > LOUD_DB, [], 0, len(e)
+    while i < n:
+        if loud[i]:
+            j = i
+            while j < n and loud[j]:
+                j += 1
+            if reg and i - reg[-1][1] < MERGE_GAP:
+                reg[-1][1] = j
+            else:
+                reg.append([i, j])
+            i = j
+        else:
+            i += 1
+    return reg
+
+
+def cut(a, e, reg):
+    """Границы кусков: слабый хвост (до SOFT_DB) и запас, но не дальше середины паузы."""
+    n, out = len(e), []
+    for k, (s, t) in enumerate(reg):
+        lo_lim = 0 if k == 0 else (reg[k - 1][1] + s) // 2
+        hi_lim = n if k == len(reg) - 1 else (t + reg[k + 1][0]) // 2
+        while s > lo_lim and e[s - 1] > SOFT_DB:
+            s -= 1
+        while t < hi_lim and e[t] > SOFT_DB:
+            t += 1
+        lo, hi = max(lo_lim, s - LEAD), min(hi_lim, t + TAIL)
+        out.append((a[lo * FRAME:hi * FRAME], (t - s) / 100.0))
+    return out
+
+
+def plausible(texts, durs):
+    """Длина куска сходится с длиной текста (кусок не склеен с соседом и не обрезан): речь ≈ 0,25 с +
+    0,06 с на знак (проба 03.11.2026: ծառ 0,47, բարև 0,44, շնորհակալություն 1,10, բարի լույս 0,95);
+    склейка с соседом — вдвое-вчетверо длиннее (пауза ~1 с внутри), половина слова — вдвое короче."""
+    return all(0.4 <= d / (0.25 + 0.06 * len(spoken(t))) <= 2.4 for t, d in zip(texts, durs))
+
+
+def encode(samples, dst):
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    tmp = dst + '.part'
+    p = subprocess.run(
+        ['ffmpeg', '-v', 'error', '-y', '-f', 's16le', '-ar', str(SR), '-ac', '1', '-i', 'pipe:0',
+         '-af', 'afade=t=in:d=0.008,areverse,afade=t=in:d=0.03,areverse',
+         '-c:a', 'libmp3lame', '-q:a', '7', '-ar', str(SR), '-ac', '1', '-f', 'mp3', tmp],
+        input=samples.tobytes(), capture_output=True)
+    if p.returncode != 0:
+        raise RuntimeError(p.stderr.decode('utf-8', 'replace')[:300])
+    os.replace(tmp, dst)
+
+
+def synth_all(todo, voice, dst, rate='-5%', batch=50, workers=3, per_min=18, max_chars=1000000, solo=None, say=None):
+    """Озвучить тексты todo голосом voice; dst(текст) — путь mp3. Пачками через перевод строки, разрез по паузам,
+    сверка числа кусков и длины; не сошлось — пачка пополам (O-135). solo — тексты, которые идут по одному
+    (пауза внутри: запятая и т. п.); say(текст) — что произнести (по умолчанию сам текст). Общая для словаря (main) и переводов (gen_audio_tr.py, O-152)."""
+    solo_rx = solo or SOLO
+    load_env()
+    key = os.environ.get('AZURE_SPEECH_KEY', '').strip()
+    region = os.environ.get('AZURE_SPEECH_REGION', '').strip()
+    if not key or not region:
+        sys.exit('Нет ключа: впишите AZURE_SPEECH_KEY и AZURE_SPEECH_REGION в .env (шаблон — .env.example).')
+    limiter, usage = Limiter(per_min, 60.0), Usage(max_chars)
+    meta = json.load(open(META, encoding='utf-8')) if os.path.exists(META) else {}
+    lock, stat = threading.Lock(), {'done': 0, 'req': 0, 'split': 0, 'fail': []}
+
+    def request(texts):
+        body = ssml_body([say(t) for t in texts] if say else texts, rate)
+        if not usage.take(len(body)):
+            raise SystemExit('Потолок знаков за месяц (%d) — остановка. Израсходовано: %d.'
+                             % (max_chars, usage.used()))
+        delay = 5
+        for _ in range(8):
+            limiter.wait()
+            try:
+                with lock:
+                    stat['req'] += 1
+                return pcm(synth(body, key, region, voice))
+            except urllib.error.HTTPError as e:
+                if e.code in (401, 403):
+                    raise SystemExit('Azure отклонил запрос (HTTP %d): ключ, регион или исчерпан месячный '
+                                     'лимит F0.' % e.code)
+                if e.code == 400:
+                    return None
+                ra = e.headers.get('Retry-After') if e.headers else None
+                time.sleep(float(ra) if ra and ra.isdigit() else delay)
+                delay = min(delay * 2, 60)
+            except Exception:
+                time.sleep(delay)
+                delay = min(delay * 2, 60)
+        return None
+
+    def run(texts, tag):
+        a = request(texts)
+        if a is None:
+            if len(texts) == 1:
+                with lock:
+                    stat['fail'].append(texts[0])
+                return
+            return halve(texts, tag)
+        e = energy(a)
+        reg = regions(e)
+        if len(texts) == 1:
+            reg = [[reg[0][0], reg[-1][1]]] if reg else []
+        if len(reg) != len(texts):
+            if len(texts) == 1:
+                with lock:
+                    stat['fail'].append(texts[0])
+                return
+            return halve(texts, tag)
+        pieces = cut(a, e, reg)
+        if len(texts) > 1 and not plausible(texts, [d for _, d in pieces]):
+            return halve(texts, tag)
+        for t, (s, d) in zip(texts, pieces):
+            encode(s, dst(t))
+            with lock:
+                meta[t] = {'d': round(d, 2), 'n': len(texts), 'b': tag}
+        with lock:
+            stat['done'] += len(texts)
+            if stat['done'] % 500 < len(texts) or stat['done'] == len(todo):
+                print('  готово %d из %d (запросов %d, делений %d, знаков за месяц %d)'
+                      % (stat['done'], len(todo), stat['req'], stat['split'], usage.used()), flush=True)
+                json.dump(meta, open(META, 'w', encoding='utf-8'), ensure_ascii=False)
+
+    def halve(texts, tag):
+        with lock:
+            stat['split'] += 1
+        m = len(texts) // 2
+        run(texts[:m], tag + 'a')
+        run(texts[m:], tag + 'b')
+
+    solo = [t for t in todo if solo_rx.search(t) or len(t) > 45 or '։' in t.rstrip('։')]
+    rest = [t for t in todo if t not in set(solo)]
+    jobs = [[t] for t in solo] + [rest[i:i + batch] for i in range(0, len(rest), batch)]
+    os.makedirs(os.path.dirname(META), exist_ok=True)
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as ex:
+        futs = [ex.submit(run, texts, 'p%d' % i) for i, texts in enumerate(jobs)]
+        for f in futs:
+            f.result()
+    json.dump(meta, open(META, 'w', encoding='utf-8'), ensure_ascii=False)
+    print('Запросов: %d, делений пачек: %d, знаков за месяц: %d' % (stat['req'], stat['split'], usage.used()))
+    if stat['fail']:
+        print('Не озвучено %d — запустите ещё раз: %s' % (len(stat['fail']), ', '.join(stat['fail'][:20])))
+    return stat
+
+
+def write_manifest(allitems, voice, tier):
+    """manifest.json: основной голос (anahit) — dir/voice/count/total, как раньше; все голоса с записями —
+    voices: {папка: {voice, count, total, made}} — по нему приложение даёт выбрать голос и озвучивает
+    мужские роли сцен (O-151)."""
+    mp = os.path.join(OUT_DIR, 'manifest.json')
+    old = json.load(open(mp, encoding='utf-8')) if os.path.exists(mp) else {}
+    voices = {}
+    for v, d in sorted(VOICES.items()):
+        n = sum(os.path.exists(path_of(t, d)) for _, t in allitems)
+        if n:
+            prev = (old.get('voices') or {}).get(d, {})
+            same = prev.get('count') == n and prev.get('total') == len(allitems)
+            voices[d] = {'voice': v, 'count': n, 'total': len(allitems),
+                         'made': prev.get('made') if same and v != voice else time.strftime('%Y-%m-%d')}
+    main_d = VOICES['hy-AM-AnahitNeural'] if 'anahit' in voices else (next(iter(voices)) if voices else VOICES[voice])
+    m = voices.get(main_d, {'voice': voice, 'count': 0, 'total': len(allitems), 'made': time.strftime('%Y-%m-%d')})
+    os.makedirs(OUT_DIR, exist_ok=True)
+    with open(mp, 'w', encoding='utf-8') as f:
+        out = {'voice': m['voice'], 'dir': main_d, 'count': m['count'], 'total': m['total'],
+               'tier': tier, 'made': m['made'], 'voices': voices}
+        if old.get('tr'):
+            out['tr'] = old['tr']          # переводы — gen_audio_tr.py (O-152)
+        json.dump(out, f, ensure_ascii=False)
+
+
+def main():
+    ap = argparse.ArgumentParser(description='Озвучка словаря Barik через Azure Speech (файл на слово)')
+    ap.add_argument('--voice', default='hy-AM-AnahitNeural', choices=sorted(VOICES))
+    ap.add_argument('--rate', default='-5%', help='скорость речи, например -10%%')
+    ap.add_argument('--batch', type=int, default=50, help='слов в одном запросе')
+    ap.add_argument('--workers', type=int, default=3)
+    ap.add_argument('--per-min', type=int, default=18, help='запросов в минуту (F0 — до 20)')
+    ap.add_argument('--max-chars', type=int, default=1000000, help='потолок знаков за месяц (S0: $15 за 1 млн)')
+    ap.add_argument('--tier', default='S0', help='ценовая категория службы — пишется в manifest.json; права на '
+                    'коммерческое использование звука — только у платной (S0), O-135')
+    ap.add_argument('--reserve', action='store_true', help='озвучить запас tools/audio_reserve/words.txt')
+    ap.add_argument('--only', default='', help='группы через запятую: A1,A2,…,C2,L (L — буквы), P (фразы курса), E (примеры к словам)')
+    ap.add_argument('--limit', type=int, default=0, help='озвучить не больше N (проба)')
+    ap.add_argument('--check', action='store_true', help='без запросов: чего не хватает, манифест')
+    ap.add_argument('--redo', default='', help='переозвучить записи, где текст подходит под регулярное выражение')
+    args = ap.parse_args()
+
+    vdir = VOICES[args.voice]
+    base = RESERVE if args.reserve else OUT_DIR
+    if args.reserve:
+        allitems = [('R', w.strip()) for w in open(os.path.join(RESERVE, 'words.txt'), encoding='utf-8')
+                    if w.strip() and not w.startswith('#')]
+    else:
+        allitems = items()
+        # новое слово словаря, озвученное заранее в запасе, — копией, без запроса
+        got = 0
+        for _, t in allitems:
+            src, dst = path_of(t, vdir, RESERVE), path_of(t, vdir)
+            if not os.path.exists(dst) and os.path.exists(src):
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                shutil.copyfile(src, dst)
+                got += 1
+        if got:
+            print('Из запаса: %d' % got)
+    todo_items = allitems
+    if args.only:
+        keep = {x.strip().upper() for x in args.only.split(',')}
+        todo_items = [x for x in allitems if x[0] in keep]
+    if args.redo and not args.check:
+        rx = re.compile(args.redo)
+        gone = [t for _, t in todo_items if rx.search(t) and os.path.exists(path_of(t, vdir, base))]
+        for t in gone:
+            os.remove(path_of(t, vdir, base))
+        print('--redo %r: снято записей %d' % (args.redo, len(gone)))
+    todo = [t for _, t in todo_items if not os.path.exists(path_of(t, vdir, base))]
+    print('Записей: %d, уже есть: %d, нет: %d' % (len(todo_items), len(todo_items) - len(todo), len(todo)))
+    if args.limit:
+        todo = todo[:args.limit]
+    if args.check:
+        todo = []
+
+    if todo and not args.check:
+        synth_all(todo, args.voice, lambda t: path_of(t, vdir, base), args.rate, args.batch, args.workers,
+                  args.per_min, args.max_chars)
+
+    have = sum(os.path.exists(path_of(t, vdir, base)) for _, t in allitems)
+    missing = [t for _, t in allitems if not os.path.exists(path_of(t, vdir, base))]
+    if not args.reserve:
+        write_manifest(allitems, args.voice, args.tier)
+    size = sum(os.path.getsize(os.path.join(dp, x)) for dp, _, fs in os.walk(os.path.join(base, vdir))
+               for x in fs) if os.path.isdir(os.path.join(base, vdir)) else 0
+    print('Записей готово: %d из %d, %.1f МБ. Нет: %d%s' % (have, len(allitems), size / 1e6, len(missing),
+          (' — ' + ', '.join(missing[:10])) if missing else ''))
+
+
+if __name__ == '__main__':
+    main()

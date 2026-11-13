@@ -1,0 +1,250 @@
+{
+  "_meta": {
+    "purpose": "Мок-набор для дозапускового смоук-теста конвейера ДО получения eBay App ID/Cert ID. Заменяет собой ответ eBay-поиска — всё, что идёт ПОСЛЕ него (regex по каталожному номеру → fallback на фото/vision → Discogs lookup [уже живой и рабочий] → расчёт landed_cost → verdict → запись в CSV/decisions_log), можно прогнать на этих 10 записях уже сейчас.",
+    "captured": "2026-08-25, ручной разбор реальных листингов eBay",
+    "important": "Все 10 тайтлов НЕ содержат каталожный номер в тексте (это типично для реальных eBay-листингов винила — номер виден только на фото лейбла). Значит для ВСЕХ 10 записей ожидаемое поведение конвейера — regex по title/description возвращает пусто → срабатывает fallback на photo_review_urls / vision. Если на каком-то из этих 10 regex вдруг 'находит' номер — это повод перепроверить сам regex, там его быть не должно.",
+    "caveat_field_names": "Ключи в JSON — смысловые, не обязательно совпадают 1:1 с тем, что реально отдаёт eBay Browse API в вашем коде. Смаппируйте под свою реальную схему (title/current_price/shipping и т.д.) — это тестовые данные по значениям, а не контракт по именам полей.",
+    "caveat_discogs_stats": "captured_stats — это то, что Discogs показывал 25.08.2026 (median/high — с публичной страницы релиза, НЕ через price_suggestions). У вас в degraded mode эти лайв-запросы всё равно вернут low=median=high — captured_stats тут только как референс для сверки verdict'а, а не для хардкода вместо реального Discogs-вызова (Discogs API у вас уже рабочий, пусть дергается по-настоящему)."
+  },
+
+  "mock_listings": [
+    {
+      "mock_item_id": "MOCK-001",
+      "title": "BILL CONNORS Theme To The Gaurdian ECM LP VG++ germany r",
+      "current_price_usd": 8.00,
+      "shipping_usd": 6.00,
+      "bid_count": 1,
+      "watchers": 4,
+      "condition_field": "Б/у",
+      "condition_in_title": "VG++",
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/1054942-Bill-Connors-Theme-To-The-Gaurdian",
+        "catalog_number": "ECM 1057 ST",
+        "country": "Germany",
+        "captured_stats_2026_08_25": { "low": 8.00, "median": 13.24, "high": 34.77 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-002",
+      "title": "Chick Corea, David Holland, Barry Altschul - A.R.C. Vinyl LP Record",
+      "current_price_usd": 1.99,
+      "shipping_usd": 5.13,
+      "bid_count": 1,
+      "watchers": 2,
+      "condition_field": "Б/у",
+      "condition_in_title": null,
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/1380628-Chick-Corea-David-Holland-Barry-Altschul-A-R-C",
+        "catalog_number": "ECM 1-1009",
+        "country": "US",
+        "notes": "Pitman Pressing",
+        "captured_stats_2026_08_25": { "low": 4.99, "median": 9.52, "high": 27.91 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-003",
+      "title": "STEVE SWALLOW Home ECM LP VG++/ VG+ r",
+      "current_price_usd": 8.00,
+      "shipping_usd": 6.00,
+      "bid_count": 0,
+      "watchers": 4,
+      "condition_field": "Б/у",
+      "condition_in_title": "VG++/VG+",
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "notes": "Promo copy, cover stamped 'PROMOTIONAL COPY NOT FOR SALE'",
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/5046733-Steve-Swallow-Home-Music-By-Steve-Swallow-To-Poems-By-Robert-Creeley",
+        "catalog_number": "ECM 1-1160",
+        "country": "US",
+        "captured_stats_2026_08_25": { "low": 5.50, "median": 10.00, "high": 28.99 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-004",
+      "title": "RALPH TOWNER Old Friends, New Friends ECM LP VG+ r",
+      "current_price_usd": 8.00,
+      "shipping_usd": 6.00,
+      "bid_count": 0,
+      "watchers": 2,
+      "condition_field": "Б/у",
+      "condition_in_title": "VG+",
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/2394096-Ralph-Towner-Old-Friends-New-Friends",
+        "catalog_number": "ECM-1-1153",
+        "country": "US",
+        "captured_stats_2026_08_25": { "low": 3.50, "median": 10.00, "high": 41.25 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-005",
+      "title": "BARRE PHILLIPS Three Day Moon ECM LP VG++ r",
+      "current_price_usd": 8.00,
+      "shipping_usd": 6.00,
+      "bid_count": 0,
+      "watchers": 2,
+      "condition_field": "Б/у",
+      "condition_in_title": "VG++",
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/961885-Barre-Phillips-Three-Day-Moon",
+        "catalog_number": "ECM-1-1123",
+        "country": "US",
+        "captured_stats_2026_08_25": { "low": 8.25, "median": 14.64, "high": 29.07 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-006",
+      "title": "Egberto Gismonti - \"Solo\" - LP",
+      "current_price_usd": 9.00,
+      "shipping_usd": 6.00,
+      "bid_count": 0,
+      "watchers": 1,
+      "condition_field": "Б/у",
+      "condition_in_title": null,
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/1631812",
+        "catalog_number": "ECM-1-1136",
+        "country": "US",
+        "captured_stats_2026_08_25": { "low": 4.00, "median": 9.25, "high": 53.49 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-007",
+      "title": "BENNIE MAUPIN The Jewel In The Lotus ECM LP r",
+      "current_price_usd": 8.00,
+      "shipping_usd": 6.00,
+      "bid_count": 1,
+      "watchers": 15,
+      "condition_field": "Б/у",
+      "condition_in_title": null,
+      "seller_description_condition": "Record: VG- (sticker residue on label). Cover: VG (seam wear, ring wear, stains).",
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/1076101-Bennie-Maupin-The-Jewel-In-The-Lotus",
+        "catalog_number": "ECM 1043 ST",
+        "country": "US",
+        "notes": "Distributed by Polydor Incorporated, New York",
+        "captured_stats_2026_08_25": { "low": 50.00, "median": 76.01, "high": 232.56 }
+      },
+      "expected_verdict_from_manual_review": "WATCH",
+      "note": "Самый разогретый лот из всех 10 (15 watchers) — хороший тест-кейс для undervalued_priority (маржа хорошая, но 'недооценённость' под вопросом)."
+    },
+    {
+      "mock_item_id": "MOCK-008",
+      "title": "Keith Jarrett ~ Sacred Hymns ~ LP ~ Vinyl ~ Jazz ~ 1st Press ~ ECM",
+      "current_price_usd": 5.00,
+      "shipping_usd": 5.00,
+      "bid_count": 0,
+      "watchers": 2,
+      "condition_field": "Б/у",
+      "condition_in_title": null,
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/3062566",
+        "catalog_number": "ECM-1-1174",
+        "country": "US",
+        "notes": "Wakefield Pressing",
+        "captured_stats_2026_08_25": { "low": 1.23, "median": 5.39, "high": 46.51 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-009",
+      "title": "Art Lande ~ Rubisa Patrol ~ LP ~ Vinyl ~ Jazz ~ ECM",
+      "current_price_usd": 5.00,
+      "shipping_usd": 5.00,
+      "bid_count": 0,
+      "watchers": 3,
+      "condition_field": "Б/у",
+      "condition_in_title": null,
+      "format_hint": "single_lp",
+      "record_count": 1,
+      "discogs_reference": {
+        "release_url": "https://www.discogs.com/release/3179639",
+        "catalog_number": "ECM 1081",
+        "country": "US",
+        "captured_stats_2026_08_25": { "low": 5.99, "median": 8.90, "high": 14.00 }
+      },
+      "expected_verdict_from_manual_review": "REJECT"
+    },
+    {
+      "mock_item_id": "MOCK-010",
+      "title": "JAZZ LOT OF 5 LP RECORDS- ELLINGTON/HANCOCK & COREA/ MODERN JAZZ QUARTET/ART TATUM",
+      "current_price_usd": 7.99,
+      "shipping_usd": 6.60,
+      "bid_count": 1,
+      "watchers": 2,
+      "condition_field": "Б/у",
+      "condition_in_title": null,
+      "format_hint": "bundle_single_lp",
+      "record_count": 5,
+      "note": "Бандл из 5 разных пластинок в одном лоте — каждая требует своего Discogs-резолва. По конфигу бандл никогда не даёт auto-PASS, максимум WATCH.",
+      "bundle_items": [
+        {
+          "label": "Duke Ellington - Hi-Fi Ellington Uptown",
+          "discogs_reference": {
+            "release_url": "https://www.discogs.com/release/1987701-Duke-Ellington-And-His-Orchestra-Hi-Fi-Ellington-Uptown",
+            "catalog_number": "CL 830 (6-eye)",
+            "country": "US",
+            "captured_stats_2026_08_25": { "low": 0.99, "median": 8.00, "high": 49.99 }
+          }
+        },
+        {
+          "label": "The Modern Jazz Quartet - Blues On Bach",
+          "discogs_reference": {
+            "release_url": "https://www.discogs.com/release/1126287",
+            "catalog_number": "SD 1652",
+            "country": "US",
+            "captured_stats_2026_08_25": { "low": 1.69, "median": 5.24, "high": 22.08 }
+          }
+        },
+        {
+          "label": "Herbie Hancock & Chick Corea - An Evening With... In Concert",
+          "discogs_reference": {
+            "release_url": "https://www.discogs.com/release/881360",
+            "catalog_number": "CBS 88329",
+            "country": "Netherlands",
+            "captured_stats_2026_08_25": { "low": 4.65, "median": 9.68, "high": 29.07 }
+          }
+        },
+        {
+          "label": "Encounter: The Swingle Singers / The Modern Jazz Quartet",
+          "discogs_reference": {
+            "release_url": "https://www.discogs.com/release/3194991-The-Swingle-Singers-With-The-Modern-Jazz-Quartet-Encounter-The-Swingle-Singers-Perform-With-The-Mode",
+            "catalog_number": "PHM 200-225",
+            "country": "US",
+            "captured_stats_2026_08_25": { "low": 1.00, "median": 2.71, "high": 45.00 }
+          }
+        },
+        {
+          "label": "The Art Tatum Legacy",
+          "discogs_reference": {
+            "release_url": "https://www.discogs.com/release/2671983-Art-Tatum-The-Art-Tatum-Legacy",
+            "catalog_number": "OL-7120",
+            "country": "US",
+            "captured_stats_2026_08_25": { "low": 1.12, "median": 3.03, "high": 8.14 }
+          }
+        }
+      ],
+      "expected_verdict_from_manual_review": "WATCH"
+    }
+  ]
+}

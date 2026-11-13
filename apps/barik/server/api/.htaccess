@@ -1,0 +1,17 @@
+# Barik — личный кабинет: снаружи доступен только index.php (O-136)
+Options -Indexes
+DirectoryIndex index.php
+<IfModule mod_authz_core.c>
+  <FilesMatch "^(lib|config|config\.example|cron)\.php$|^tg_words\.json$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  <FilesMatch "^(lib|config|config\.example|cron)\.php$|^tg_words\.json$">
+    Order allow,deny
+    Deny from all
+  </FilesMatch>
+</IfModule>
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-store"
+</IfModule>
