@@ -13,7 +13,7 @@ async function scan(p,selector,min=4.5){
 async function gradients(p,sel){
  const rows=await p.locator(sel).evaluateAll(es=>es.filter(e=>e.getClientRects().length).map(e=>{const s=getComputedStyle(e);return {color:s.color,bg:s.backgroundImage,solid:s.backgroundColor};}));
  assert(rows.length,'No gradient targets');
- for(const row of rows){const colors=row.bg==='none'?[row.solid,row.solid]:(row.bg.match(/rgba?\([^)]+\)/g)||[];assert(colors.length>=2,'Gradient not parsed: '+row.bg);
+ for(const row of rows){const colors=row.bg==='none'?[row.solid,row.solid]:(row.bg.match(/rgba?\([^)]+\)/g)||[]);assert(colors.length>=2,'Gradient not parsed: '+row.bg);
  const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number);const lum=c=>c.map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;}).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0);
  const a=rgb(colors[0]),b=rgb(colors[1]);for(let i=0;i<=20;i++){const bg=a.map((v,k)=>v+(b[k]-v)*i/20),ls=[lum(rgb(row.color)),lum(bg)].sort((a,b)=>a-b);assert((ls[1]+.05)/(ls[0]+.05)>=3.5,'Primary gradient contrast');}
  }
