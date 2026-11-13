@@ -1300,7 +1300,7 @@ function pbSaveLabel(voice){
 function pbSaveStatus(voice){
   const visible=PBS.voice===voice&&PBS.state!=='idle';
   const progress=visible?T('pbSaveProgress',PBS.done,PBS.total):'';
-  const announcement=visible&&PBS.state!=='run'?(PBS.error?T('pbSaveNeedSW'):PBS.state==='ok'?T('pbSaved'):progress):'';
+  const announcement=visible&&PBS.state!=='run'?(PBS.error?T('pbSaveNeedSW'):progress):'';
   return '<p class="note" id="pbSaveProgress" aria-hidden="true"'+(visible&&PBS.state==='run'?'':' hidden')+'>'+esc(progress)+'</p>'+
     '<p class="note" id="pbSaveAnnouncement" role="status">'+esc(announcement)+'</p>';
 }
@@ -1314,7 +1314,7 @@ function pbSaveUI(){
   progress.hidden=PBS.voice!==voice||PBS.state!=='run';
   progress.textContent=T('pbSaveProgress',PBS.done,PBS.total);
   if(PBS.state==='run'||PBS.voice!==voice) announcement.textContent='';
-  else announcement.textContent=PBS.error?T('pbSaveNeedSW'):PBS.state==='ok'?T('pbSaved'):progress.textContent;
+  else announcement.textContent=PBS.error?T('pbSaveNeedSW'):progress.textContent;
 }
 async function pbOffline(){
   if(!PB||PBS.state==='run') return;
@@ -3320,7 +3320,19 @@ view=UI.lang&&!WELCOME?'home':'onboard';
   if(sp.has('teach')&&nm===null){ view='teach'; }
   if(sp.has('gift')&&nm===null){ view='gift'; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
-render();
+/* O-202: при первом визите сохраняем уже видимую серверную обложку. Она собрана из
+   того же HTML, что onboardHTML(); повторная сборка длинной страницы задерживала первый урок. */
+const keepCover=view==='onboard'&&!document.documentElement.classList.contains('nopre')&&
+  document.documentElement.lang===L&&document.querySelector('#view .ld');
+if(keepCover){
+  document.body.dataset.view='onboard';
+  const curTab=tabOf(view);
+  document.querySelectorAll('#tabs .tab').forEach(b=>{ if(b.dataset.arg===curTab) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  RENDER_VIEW=view; RENDER_STATE=renderState();
+  landStart();
+  if(!picsOn()) lazyJs('js/pictures.js').then(()=>{ picsOn(); if(view!=='onboard') return;
+    document.querySelectorAll('.ld-tile[data-a] .pimg').forEach(e=>{ const w=BY[e.parentNode.dataset.a]; if(w) e.innerHTML=picSvg(w); }); landDemo(); }).catch(()=>{});
+} else render();
 window.__barikOk=1;
 try{ sessionStorage.removeItem('barik-rl'); }catch(e){}
 if(!hasWordTranslations(L)){
