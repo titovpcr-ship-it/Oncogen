@@ -1160,7 +1160,7 @@ ul.u-note{margin:0 0 12px;padding-left:20px;display:grid;gap:6px}
 .g-tab tr.on td,.g-tab tr.on th{color:var(--accent);font-weight:700}
 /* Б3: телефон на обложке отвечает на нажатия */
 button.ph-opt{width:100%;cursor:pointer;color:inherit}
-button.ph-opt.ok{color:#176447}
+button.ph-opt.ok{color:#fff}
 button.ph-opt.bad{color:#A8173A}
 button.ph-opt.ph-go{color:#fff}
 button.ph-opt:hover:not([disabled]){border-color:var(--accent,#C2410C)}
