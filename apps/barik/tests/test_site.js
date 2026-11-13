@@ -210,14 +210,14 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     for(const k of Object.keys(OVR)) delete OVR[k];
     await c2.close();
   }
-  { // быстрая первая загрузка (O-185): словарь разделён, гость качает армянский + английский + язык своей страны
+  { // быстрая первая загрузка (O-185): сначала армянский + язык страны, английский fallback — при открытии словаря
     const dj=fs.readFileSync(path.join(ROOT,'js','data.js'),'utf8'), gz=f=>zlib.gzipSync(fs.readFileSync(path.join(ROOT,'js',f))).length;
     ok(/window\.BARARAN_SPLIT=/.test(dj)&&gz('data.js')<260000&&['ru','en','fr','es','de','pt'].every(l=>fs.existsSync(path.join(ROOT,'js','tr-'+l+'.js'))),'словарь разделён: data.js '+Math.round(gz('data.js')/1024)+' КБ сжатым, переводы — tr-<язык>.js');
     const c3=await br.newContext({viewport:{width:390,height:844},locale:'en-US',timezoneId:'Europe/Paris',serviceWorkers:'block'}); const p3=await c3.newPage(), got=[];
     p3.on('pageerror',e=>errs.push('fr: '+e)); p3.on('request',q=>{ const m=/js\/tr-(\w+)\.js/.exec(q.url()); if(m) got.push(m[1]); });
-    await p3.goto(base); await p3.waitForTimeout(800);
+    await p3.goto(base); await p3.waitForTimeout(800); await p3.evaluate(()=>window.BARIK_LOAD_TRANSLATION('en'));
     const w=await p3.evaluate(()=>{ const B=window.__bararan, x=B.BY['բարև']; return {f:x.f, e:x.e, n:B.WORDS.length}; });
-    ok(got.sort().join()==='en,fr'&&w.f.includes('salut')&&w.e.includes('hello')&&w.n>=20000,'Париж: грузятся только en и fr, слова по-французски ('+got.join()+'; '+w.f+'; '+w.n+' слов)');
+    ok(got.sort().join()==='en,fr'&&w.f.includes('salut')&&w.e.includes('hello')&&w.n>=20000,'Париж: FR готов до английского fallback, переводы по-французски ('+got.join()+'; '+w.f+'; '+w.n+' слов)');
     await p3.evaluate(()=>window.__bararan.setLang('ru')); await p3.waitForTimeout(800);
     const r=await p3.evaluate(()=>window.__bararan.BY['բարև'].r);
     ok(got.includes('ru')&&r==='привет','смена языка догружает переводы: '+r);

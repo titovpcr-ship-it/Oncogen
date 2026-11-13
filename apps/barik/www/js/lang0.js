@@ -1,5 +1,6 @@
 /* Язык при запуске (O-185): страна по поясу — TZ_LANG/tzLang (общие с app.js); в собранном сайте словарь разделён по языкам
-   (build_site.py: js/data.js — армянский и эмодзи, js/tr-<язык>.js — переводы) — здесь подгружаются английский и язык гостя. */
+   (build_site.py: js/data.js — армянский и эмодзи, js/tr-<язык>.js — переводы) — при старте загружается язык гостя;
+   английский fallback загружается по требованию словаря. */
 (function(){
 var TZ_LANG={
   ru:['Europe/Moscow','Europe/Kaliningrad','Europe/Samara','Europe/Volgograd','Europe/Saratov','Europe/Ulyanovsk','Europe/Astrakhan','Europe/Kirov','Europe/Minsk','Asia/Bishkek','Asia/Dushanbe','Asia/Tashkent','Asia/Samarkand','Asia/Ashgabat','Asia/Almaty','Asia/Qostanay','Asia/Aqtobe','Asia/Aqtau','Asia/Atyrau','Asia/Oral','Asia/Qyzylorda','Asia/Yekaterinburg','Asia/Omsk','Asia/Novosibirsk','Asia/Barnaul','Asia/Tomsk','Asia/Novokuznetsk','Asia/Krasnoyarsk','Asia/Irkutsk','Asia/Chita','Asia/Yakutsk','Asia/Khandyga','Asia/Vladivostok','Asia/Ust-Nera','Asia/Magadan','Asia/Sakhalin','Asia/Srednekolymsk','Asia/Kamchatka','Asia/Anadyr'],
@@ -52,8 +53,8 @@ function loadTranslation(lang){
   return request;
 }
 window.BARIK_LOAD_TRANSLATION=loadTranslation;
-var needed=initial==='en'?['en']:['en',initial];
-window.BARIK_TRANSLATIONS_READY=Promise.all(needed.map(loadTranslation)).catch(function(){
+window.BARIK_TRANSLATIONS_READY=loadTranslation(initial).catch(function(){
+  if(initial==='en') return Promise.resolve();
   return loadTranslation('en').catch(function(){});
 });
 })();
