@@ -18,7 +18,8 @@ const srv=http.createServer((req,res)=>{
   res.writeHead(200,{'Content-Type':MIME[path.extname(f)]||'application/octet-stream','Content-Length':body.length,'Cache-Control':'no-store',...(gz?{'Content-Encoding':'gzip','Vary':'Accept-Encoding'}:{})});res.end(body);
 });
 const med=a=>{const b=[...a].sort((x,y)=>x-y);return b[Math.floor(b.length/2)];};
-const summary=a=>({median:Math.round(med(a)),min:Math.round(Math.min(...a)),max:Math.round(Math.max(...a))});
+const summary=a=>{const digits=a.some(x=>!Number.isInteger(x))?4:0, round=x=>+x.toFixed(digits);
+  return {median:round(med(a)),min:round(Math.min(...a)),max:round(Math.max(...a))};};
 (async()=>{
   await new Promise(r=>srv.listen(0,'127.0.0.1',r)); const port=srv.address().port,browser=await chromium.launch();
   const rows={before:[],after:[]};
