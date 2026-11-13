@@ -8,6 +8,9 @@ on:
       - 'apps/barik/data/examples/**'
       - 'apps/barik/www/audio/**'
       - 'apps/barik/www/ex/**'
+      - 'apps/barik/tests/**'
+      - 'apps/barik/tools/build_examples.py'
+      - 'tools/check_all.sh'
 permissions:
   contents: read
 concurrency:

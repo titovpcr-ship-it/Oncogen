@@ -40,8 +40,14 @@ c.commit()`,db,String(now)]);
   await pg.goto(base+'?from=TG_Test'); await pg.waitForSelector('[data-act=pickLang]');
   await pg.click('[data-act=pickLang]'); await pg.waitForTimeout(2200);   // картинки не пришли и после повтора (1,5 с)
   await pg.click('[data-act=learnNew]'); await pg.waitForSelector('.sess-top');
-  for(let i=0;i<6&&!(await pg.locator('.opt:not([disabled])').count());i++){ if(await pg.locator('.foot [data-act=next]').count()) await pg.click('.foot [data-act=next]'); await pg.waitForTimeout(150); }
-  await pg.locator('.opt').first().click(); await pg.waitForTimeout(600);
+  const firstOption=pg.locator('.opt:not([disabled])').first();
+  for(let i=0;i<8&&!(await firstOption.count());i++){
+    const next=pg.locator('.foot [data-act=next]').first();
+    await next.waitFor({state:'visible',timeout:15000});
+    await next.click();
+  }
+  await firstOption.waitFor({state:'visible',timeout:15000});
+  await firstOption.click(); await pg.waitForTimeout(600);
   S=await stats();
   ok(S['g:guest']===1&&S['g:start']===1&&S['g:land_start']===1&&S['g:first_answer']===1,'воронка: гость → нажал «Начать» → вошёл → первый ответ');
   ok(S['gl:ru:guest']===1&&S['gl:ru:start']===1&&S['gl:ru:first_answer']===1,'воронка по языку (ru)');
