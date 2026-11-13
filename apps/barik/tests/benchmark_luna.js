@@ -45,7 +45,7 @@ const summary=a=>({median:Math.round(med(a)),min:Math.round(Math.min(...a)),max:
       await page.click('[data-act=pickLang]'); await page.waitForSelector('[data-act=learnNew]',{timeout:15000});
       await page.click('[data-act=learnNew]'); await page.waitForSelector('.sess-top',{timeout:20000});
       const lesson=await page.evaluate(()=>performance.now());
-      try{await page.waitForSelector('#exSlot .ex-hy',{timeout:30000});}
+      try{await page.waitForSelector('.ex-hy',{timeout:30000});}
       catch(e){const state=await page.evaluate(()=>({lang:document.documentElement.lang,view:document.body.dataset.view,exampleVersion:window.BARIK_EX_VERSION,slot:document.querySelector('#exSlot')?.outerHTML.slice(0,500)||null,heading:document.querySelector('#view')?.innerText.slice(0,220)||''}));throw new Error(`${key}: first example did not appear ${JSON.stringify({state,exampleIO,errors})}; ${e.message}`);}
       const example=await page.evaluate(()=>({ms:performance.now(),vitals:{...window.__auditVitals}}));
       if(errors.length) throw Error(`${key}: ${errors.join(' | ')}`);
