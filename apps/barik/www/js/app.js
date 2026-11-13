@@ -17,7 +17,10 @@ const NAV=(navigator.language||'').toLowerCase();
    выбор, сделанный раньше, не трогаем. */
 const FIRST=!UI.lang;   // первый визит (язык ещё не выбран) — для воронки новичка, O-198; ?lang= ниже его не отменяет
 const QL=(/[?&]lang=(ru|en|fr|es|de|pt)(?:&|$)/.exec(location.search||'')||[])[1];
-if(QL&&!UI.lang){UI.lang=QL; saveUI();}
+const START_QUERY=new URLSearchParams(location.search||'');
+const FORCE_LANG=START_QUERY.get('switch')==='1';
+const WELCOME=START_QUERY.has('welcome')||/(?:^|[&#])welcome(?:[&=]|$)/.test(location.hash||'');
+if(QL&&(!UI.lang||FORCE_LANG)&&!WELCOME){UI.lang=QL; if(FORCE_LANG) UI.ll=QL; saveUI();}
 /* Язык по стране (O-154, владелец 08.11.2026: «человек с какой страны заходил — с такой язык и открывался»):
    страна — по часовому поясу устройства (без IP и внешних сервисов, работает и без сети). Россия и СНГ, Армения —
    русский; Франция, Монако, Люксембург, Магриб, Ливан — французский; Испания и испаноязычная Америка — испанский;
@@ -31,7 +34,7 @@ const NAVL=['ru','fr','es','de','pt','en'].find(l=>NAV.indexOf(l)===0)||'';
    почему бы и нет». Страна точно ясна по часовому поясу (TZ_LANG) — сразу её язык; иначе английский, а язык
    браузера и Армении (русский) — только предложением в плашке (SUG). */
 const SUG=(TZ==='Asia/Yerevan'?'ru':'')||NAVL||'';
-let L=UI.lang||UI.ll||tzLang(TZ)||'en';
+let L=(FORCE_LANG&&QL)?QL:(UI.lang||QL||UI.ll||tzLang(TZ)||'en');
 function T(k){const a=[].slice.call(arguments,1); let v=STR[L]&&STR[L][k]; if(v==null) v=STR.ru[k]; return typeof v==='function'?v.apply(null,a):(v==null?k:v);}
 function setLang(l){L=l; UI.lang=l; saveUI(); document.documentElement.lang=l; renderTabs(); trLoad(l);}
 
@@ -187,13 +190,46 @@ TOPICS.forEach((t,ti)=>{
     BY[a]=w; WORDS.push(w); t.list.push(w);
   });
 });
-/* язык без загруженных переводов (собранный сайт) — догрузить js/tr-<язык>.js и перерисовать */
-function trLoad(l){ if(!window.BARARAN_SPLIT||(window.BARARAN_TR&&window.BARARAN_TR[l])) return;
-  const sc=document.createElement('script'); sc.src='js/tr-'+l+'.js?v='+window.BARARAN_SPLIT;
-  sc.onload=()=>{ WORDS.forEach(w=>{ ['r','e','f','s','de','pt'].forEach(f=>{ if(Object.prototype.hasOwnProperty.call(w,f)) delete w[f]; }); }); render(false); }; document.head.appendChild(sc); }
+/* Переводы для словаря загружаются отдельно. Пока их нет, используем доступный язык. */
+const translationState=new Map();
+function hasWordTranslations(lang){
+  return !window.BARARAN_SPLIT||!!(window.BARARAN_TR&&window.BARARAN_TR[lang]);
+}
+function translationNotice(){
+  const root=$('#view'); if(!root) return;
+  root.querySelector('#trLoadError')?.remove();
+  const noticeLang=view==='dict'?[L,...translationState.keys()].find(lang=>translationState.get(lang)==='error')||L:L;
+  const state=translationState.get(noticeLang);
+  const busy=view==='dict'&&[...translationState.values()].includes('loading');
+  if(state==='error'){
+    root.insertAdjacentHTML('afterbegin','<div class="tr-notice" id="trLoadError" role="alert">'+esc(T('lzFail'))+
+      ' <button type="button" class="btn secondary sm" data-act="trRetry" data-arg="'+esc(noticeLang)+'">'+esc(T('lzRetry'))+'</button></div>');
+  }else if(busy){
+    root.insertAdjacentHTML('afterbegin','<p class="tr-notice" id="trLoadError" role="status">'+esc(T('loading'))+'</p>');
+  }
+  const list=root.querySelector('#dlist');
+  if(list) list.setAttribute('aria-busy',String(busy));
+}
+function trLoad(lang,retry=false){
+  if(hasWordTranslations(lang)||!window.BARIK_LOAD_TRANSLATION){ translationNotice(); return; }
+  const state=translationState.get(lang);
+  if(state==='loading'||(state==='error'&&!retry)){ translationNotice(); return; }
+  translationState.set(lang,'loading'); translationNotice();
+  window.BARIK_LOAD_TRANSLATION(lang).then(()=>{
+    translationState.delete(lang);
+    const fields=lang==='en'?['r','e','f','s','de','pt']:[TXK[lang]];
+    for(const word of WORDS) for(const field of fields) if(Object.prototype.hasOwnProperty.call(word,field)) delete word[field];
+    if(lang!==L&&view!=='dict') return;
+    if(view==='dict'){ translationNotice(); dictRefresh(true); }
+    else render(false);
+  },()=>{
+    translationState.set(lang,'error');
+    if(lang===L||view==='dict') translationNotice();
+  });
+}
 let PW=Object.keys(PICS).filter(a=>BY[a]).map(a=>BY[a]);   // слова режима «Картинки»
 const TXK={ru:'r',en:'e',fr:'f',es:'s',de:'de',pt:'pt'}, TRK={ru:'tr',en:'lt',fr:'ft',es:'st',de:'dt',pt:'ptr'};
-const tx=w=>w[TXK[L]||'e'];       // перевод на языке интерфейса
+const tx=w=>w[TXK[L]||'e']||w.e||w.r||w.a;       // перевод на языке интерфейса или доступный fallback
 const trn=w=>w[TRK[L]||'lt'];   // транскрипция на языке интерфейса
 const tn=t=>(L!=='ru'&&L!=='en'&&t[L])?t[L]:(L==='ru'?t.ru:t.en);   // название темы
 
@@ -533,6 +569,68 @@ function kindFor(w){
 
 /* ================= SESSIONS ================= */
 let view='home', viewArg=null, sess=null, resetArm=0, dq='', dt='all', dLimit=150, backTo={v:'home'};
+let RENDER_VIEW=null, RENDER_STATE=null;
+function renderState(){
+  if(view==='session'&&sess){const it=cur();return 'session:'+sess.i+':'+(it&&it.k||'')+':'+!!(it&&it.done);}
+  if(view==='unit'&&PU){const it=pCur();return 'unit:'+PU.step+':'+(PU.i||0)+':'+!!(it&&it.done)+':'+!!PU.end;}
+  if(view==='tquiz'&&tq){const it=tcur();return 'tquiz:'+tq.i+':'+!!(it&&it.done);}
+  if(view==='abcquiz'&&aq){const it=aq.items[aq.i];return 'abcquiz:'+aq.i+':'+!!(it&&it.done);}
+  if(view==='pquiz'&&pq){const it=pq.items[pq.i];return 'pquiz:'+pq.i+':'+!!(it&&it.done);}
+  return view+':'+String(viewArg==null?'':viewArg);
+}
+function keyHandledByControl(e){
+  if(e.defaultPrevented||e.isComposing||e.metaKey||e.ctrlKey||e.altKey) return true;
+  const t=e.target, c=t&&t.closest?t.closest('button,a,input,select,textarea,[contenteditable="true"],[role="button"]'):null;
+  return !!c&&!(view==='tquiz'&&c.id==='tin');
+}
+function captureFocus(){
+  const a=document.activeElement, root=$('#view');
+  if(!a||!root||!root.contains(a)) return null;
+  return {id:a.id,act:a.getAttribute('data-act'),arg:a.getAttribute('data-arg'),tag:a.tagName,
+    start:typeof a.selectionStart==='number'?a.selectionStart:null,end:typeof a.selectionEnd==='number'?a.selectionEnd:null};
+}
+function focusTarget(target){
+  if(!target) return false;
+  if(!/^(BUTTON|A|INPUT|SELECT|TEXTAREA)$/.test(target.tagName)&&!target.hasAttribute('tabindex')) target.setAttribute('tabindex','-1');
+  try{target.focus({preventScroll:true});}catch(e){target.focus();}
+  return document.activeElement===target;
+}
+function restoreFocus(f){
+  if(!f) return;
+  const root=$('#view'); if(!root) return;
+  let target=null;
+  if(f.id) target=root.querySelector('#'+f.id);
+  if(!target&&f.act){target=[...root.querySelectorAll('[data-act]')].find(x=>x.getAttribute('data-act')===f.act&&x.getAttribute('data-arg')===f.arg)||null;}
+  if(target&&target.disabled){
+    if(f.act==='tile') target=[...root.querySelectorAll('[data-act="tile"]')].find(x=>!x.disabled)||null;
+    else target=null;
+  }
+  target=target||root.querySelector('.result .apres, .q, h1, [role="status"], [role="alert"]');
+  if(!target) return;
+  focusTarget(target);
+  if(f.start!=null&&typeof target.setSelectionRange==='function') try{target.setSelectionRange(f.start,f.end);}catch(e){}
+}
+function focusChangedScreen(oldState,newState,oldView){
+  if(oldState==null) return;
+  if(view==='home'&&focusTarget($('.home-primary button, .today .summary, .home-grid .tag'))) return;
+  if(view==='session'&&sess){
+    const it=cur(); if(it&&it.done&&oldState.indexOf('session:'+sess.i+':'+it.k+':false')===0){const fb=$('.fb[role="status"]'); if(focusTarget(fb)) return;}
+    const q=$('.stage .q'); if(focusTarget(q)) return;
+  }
+  if(view==='unit'&&PU&&PU.step===2){
+    const it=pCur(); if(it&&it.done){const fb=$('.fb[role="status"]'); if(focusTarget(fb)) return;}
+    const q=$('.stage .q'); if(focusTarget(q)) return;
+  }
+  if(view==='tquiz'&&tq){
+    const it=tcur();
+    if(!it&&tq.i>=tq.items.length&&focusTarget($('.result .apres'))) return;
+    if(it&&it.done&&focusTarget($('.fb[role="status"]'))) return;
+    const input=$('#tin'); if(input&&input.tagName==='INPUT'&&focusTarget(input)) return;
+    if(focusTarget($('.stage .q'))) return;
+  }
+  if((view==='result'||(view==='tquiz'&&tq&&tq.i>=tq.items.length))&&focusTarget($('.result .apres'))) return;
+  if(oldView!==view||oldState!==newState) restoreFocus({});
+}
 function cur(){return sess&&sess.items[sess.i];}
 function newSess(mode,items,meta){ sess={mode,items,i:0,first:new Map(),meta:meta||{},timer:null,reps:{},ended:false}; view='session'; preloadAudio(items.map(it=>it.w)); render(true); window.scrollTo(0,0); }
 /* TZ_AUDIT3 №2: первый урок гостя — 4 слова (≈15 шагов), не 10: из ролика человек 40 шагов не проходит */
@@ -815,12 +913,12 @@ function needData(el){
   lazyJs(src).then(()=>{ pathOn(); picsOn(); if(view===v) render(); }).catch(()=>{ if(view===v) el.innerHTML='<div class="lz-wait" role="alert">'+esc(T('lzFail'))+' <button class="btn secondary sm" data-act="lzRetry">'+esc(T('lzRetry'))+'</button></div>'; });
   return true;
 }
-function render(auto){ document.documentElement.classList.remove('nopre'); if(!window.__barikOk){ window.__barikOk=1; try{ sessionStorage.removeItem('barik-rl'); }catch(e){} }   // обложка из HTML спрятана до первого кадра приложения (O-202) — дальше рисует оно
+function render(auto){ const oldView=RENDER_VIEW, oldState=RENDER_STATE, savedFocus=captureFocus(); document.documentElement.classList.remove('nopre');
   const el=$('#view');
   document.body.dataset.view=(view==='session'||(view==='unit'&&PU&&PU.step===2&&!PU.end)||(view==='abcquiz'&&aq&&aq.i<aq.items.length)||(view==='pquiz'&&pq&&pq.i<pq.items.length)||(view==='tquiz'&&tq&&tq.i<tq.items.length))?'session':view;
   const tk=tcur(); document.body.classList.toggle('kbon',view==='tquiz'&&!!tk&&!tk.done&&kbOwn());
   if(view!=='onboard') landStop();
-  if(needData(el)) return;
+  if(needData(el)){ translationNotice(); return; }
   if(view==='onboard'){ el.innerHTML=onboardHTML(); landStart();
     if(!picsOn()) lazyJs('js/pictures.js').then(()=>{ picsOn(); if(view!=='onboard') return;
       document.querySelectorAll('.ld-tile[data-a] .pimg').forEach(e=>{ const w=BY[e.parentNode.dataset.a]; if(w) e.innerHTML=picSvg(w); }); landDemo(); }).catch(()=>{}); }
@@ -829,7 +927,7 @@ function render(auto){ document.documentElement.classList.remove('nopre'); if(!w
   else if(view==='unit') el.innerHTML=PU?unitHTML():pathHTML();
   else if(view==='seed') el.innerHTML=seedHTML(viewArg);
   else if(view==='topic') el.innerHTML=topicHTML(viewArg);
-  else if(view==='dict'){ el.innerHTML=dictHTML(); bindDict(); }
+  else if(view==='dict'){ el.innerHTML=dictHTML(); bindDict(); loadDictionaryTranslations(); }
   else if(view==='abc') el.innerHTML=abcHTML();
   else if(view==='letter'){ el.innerHTML=letterHTML(viewArg); writeCursive(); }
   else if(view==='pen'){ el.innerHTML=penHTML(); penMount(); }
@@ -851,8 +949,13 @@ function render(auto){ document.documentElement.classList.remove('nopre'); if(!w
   else if(view==='doc') el.innerHTML=docHTML(viewArg);
   else if(view==='result') el.innerHTML=resultHTML();
   else if(view==='session'){ el.innerHTML=sessionHTML(); fitWords(); if(auto) onShow(); }
+  translationNotice();
   const curT=tabOf(view);
   document.querySelectorAll('#tabs .tab').forEach(b=>{ if(b.dataset.arg===curT) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  const state=renderState();
+  if(oldView!==null&&(oldView!==view||oldState!==state)) focusChangedScreen(oldState,state,oldView);
+  else restoreFocus(savedFocus);
+  RENDER_VIEW=view; RENDER_STATE=state;
 }
 function onShow(){
   const it=cur(); if(!it) return;
@@ -872,6 +975,7 @@ const LETTERS=['Ա','Բ','Գ','Դ','Ե','Զ','Է','Թ','Ժ','Ի','Լ','Խ'];
 let landT=[], landK=0, landIO=null;
 function landStop(){ landT.forEach(clearTimeout); landT=[]; if(landIO){ landIO.disconnect(); landIO=null; } }
 function landLater(f,ms){ landT.push(setTimeout(()=>{ if(view==='onboard') f(); },ms)); }
+function landDemoFocused(){ const o=document.getElementById('phOpts'); return !!(o&&document.activeElement&&o.contains(document.activeElement)); }
 function setMeta(){ const D=LND(); document.title=D.title; const m=document.querySelector('meta[name=description]'); if(m) m.setAttribute('content',D.desc); }
 /* ================= ГРАФИКА ОБЛОЖКИ (O-157): своя, в одном стиле =================
    Гранат-знак, абрикосовый сад на рассвете (мягкие холмы, без узнаваемых вершин — владелец 08.11.2026), иконки «двухцветной линией»
@@ -1002,7 +1106,15 @@ function landDemo(){
   const card=document.getElementById('phCard'), opts=document.getElementById('phOpts'); if(!card) return;
   const ws=DEMO.map(a=>BY[a]&&PICS[a]?BY[a]:null).filter(Boolean); if(!ws.length) return;
   const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let gen=0, paused=false;
+  opts.addEventListener('focusout',e=>{
+    if(opts.contains(e.relatedTarget)||!paused||LT.on) return;
+    const g=++gen; paused=false;
+    landLater(()=>{if(g===gen&&!LT.on&&!landDemoFocused()){landK++;show();}},700);
+  });
   const show=()=>{
+    if(!LT.on&&landDemoFocused()){paused=true;return;}
+    const g=++gen;
     const w=ws[landK%ws.length], other=ws.filter(x=>x!==w);
     const o=[w,other[(landK*3+1)%other.length],other[(landK*5+3)%other.length]];
     const pick=[o[(landK)%3],o[(landK+1)%3],o[(landK+2)%3]];
@@ -1013,10 +1125,10 @@ function landDemo(){
     card.classList.add('in');
     const bar=document.querySelector('.ph-bar i'); if(bar) bar.style.width=(20+(landK%8)*10)+'%';
     const n=document.querySelector('.ph-n'); if(n) n.textContent=((landK%8)+3)+'/10';
-    if(LT.on) return;   // гость уже отвечает сам — без автопоказа
+    if(LT.on) return;
     if(still) { opts.querySelector('.right').classList.add('ok'); return; }
-    landLater(()=>{ if(!LT.on){ const r=opts.querySelector('.right'); if(r) r.classList.add('ok'); } },1500);
-    landLater(()=>{ if(!LT.on){ landK++; show(); } },3600);
+    landLater(()=>{ if(g!==gen)return; if(landDemoFocused()){paused=true;return;} if(!LT.on){ const r=opts.querySelector('.right'); if(r) r.classList.add('ok'); } },1500);
+    landLater(()=>{ if(g!==gen)return; if(landDemoFocused()){paused=true;return;} if(!LT.on){landK++;show();} },3600);
   };
   LT.show=show; show();
 }
@@ -1080,9 +1192,9 @@ function syncNudgeHTML(c){
   return '<div class="sy-nudge"><div><b>'+esc(T('syncNudge'))+'</b><span>'+esc(T('syncNudgeT'))+'</span></div><button class="btn sm" data-act="syncLogin">'+esc(T('accLogin'))+'</button><button class="sy-x" data-act="syncX" aria-label="'+esc(T('close'))+'">✕</button></div>'; }
 function homeHTML(){
   const c=counts(), td=today();
-  const nw=nextNew(null,S.set.size||10);
+  const nw=nextNew(null,firstN());
   let sum;
-  if(!c.seen) sum=T('sumFirst',WORDS.length,TOPICS.length,S.set.size||10);
+  if(!c.seen) sum=T('sumFirst',WORDS.length,TOPICS.length,firstN());
   else sum=T('sumProgress',c.learned,c.total,c.learning,c.due);
   const streak=(S.st.streak>=2&&S.st.day>=td-1)?'<div class="streak">'+emo('🔥','ie')+' '+esc(T('streak',S.st.streak))+'</div>':'';
   let acts='';
@@ -1090,7 +1202,8 @@ function homeHTML(){
   if(nw.length){
     const names=[...new Set(nw.map(w=>tn(TOPICS[w.t])))];
     acts+='<button class="btn '+(c.due?'secondary':'primary')+'" data-act="learnNew">'+esc(T('btnLearnNew'))+'<span class="cap">'+esc(names.slice(0,2).join(', '))+' — '+esc(T('nWords',nw.length))+'</span></button>';
-  }else if(!premium()) acts+='<button class="btn primary" data-act="paywall">'+esc(T('unlockAll'))+'</button>';
+  }else if(!premium()) acts+='<button class="btn '+(c.due?'secondary':'primary')+'" data-act="paywall">'+esc(T('unlockAll'))+'</button>';
+  if(!c.seen) acts+='<button class="btn ghost" data-act="tab" data-arg="abc">'+esc(T('pGoAbcStart'))+'</button>';
   const hard=hardWords().length;
   if(hard) acts+='<button class="btn ghost" data-act="hard">'+esc(T('btnHard',hard))+'</button>';
   const mine=hasTr()?WORDS.filter(w=>S.w[w.a]).length:0;
@@ -1108,7 +1221,7 @@ function homeHTML(){
     return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="'+lv+'" aria-expanded="'+op+'"><span class="lv">'+lv+(free?'':' <span class="lock">'+emo('🔒','ie')+'</span>')+'</span><span class="lvc">'+esc(T('lvCount',lc.learned,lc.total))+'</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">'+esc(T('lvd_'+lv))+'</p>'+la+(op?'<ul class="topics">'+ts.map(x=>topicRow(x[0],x[1])).join('')+'</ul>':'')+'</section>';
   }).join('');
   return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">'+MARK()+'<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">'+esc(T('tagline'))+'</p></header>'+
-    '<section class="today">'+streak+wotdHTML()+'<button class="dg-go" data-act="dgOpen">🎯 <span>'+esc(T('dgBtn'))+'</span>'+(UI.dg&&UI.dg.td===today()&&UI.dg.done?' ✓':'')+'</button><button class="dg-go" data-act="pbOpen">🧳 <span>'+esc(T('pbTitle'))+'</span></button>'+'<p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+(c.seen>=20?premCTA():'')+'<div class="actions">'+acts+'</div>'+(c.seen<20?premCTA():'')+'</section></div>'+
+    '<section class="today"><div class="actions home-primary">'+acts+'</div><p class="summary">'+sum+'</p>'+syncNudgeHTML(c)+premCTA()+streak+wotdHTML()+'<div class="actions home-secondary"><button class="dg-go" data-act="dgOpen">🎯 <span>'+esc(T('dgBtn'))+'</span>'+(UI.dg&&UI.dg.td===today()&&UI.dg.done?' ✓':'')+'</button><button class="dg-go" data-act="pbOpen">🧳 <span>'+esc(T('pbTitle'))+'</span></button></div></section></div>'+
     '<div class="home-main">'+rows+'</div></div>';
 }
 /* Слово дня: каждый день другое, с объёмной картинкой, из открытых уровней. */
@@ -1146,22 +1259,99 @@ function dailyHTML(){
 function dgText(){ const d=dgDay(), g=dgState(d.td);
   return 'Barik · '+T('dgTitle')+' № '+d.n+'\n'+g.tries.map(()=>'🟥').join('')+'🟩 '+(g.tries.length+1)+'/4\n🔥 '+T('dgStreak',g.streak)+'\n'+location.origin+'/?daily&lang='+L; }
 /* ---------- разговорник для поездки (O-181): ex/phrases.json, озвучка группы F; «Сохранить без интернета» кладёт записи в кэш ---------- */
-let PB=null, PBL=false, PBS=null;
-function pbLoad(){ if(PB||PBL) return; PBL=true; fetch('ex/phrases.json').then(r=>r.ok?r.json():null).then(j=>{ PB=j; PBL=false; if(view==='phrases') render(false); }).catch(()=>{ PBL=false; }); }
+let PB=null, PBSTATE='idle';
+let PBS={state:'idle',voice:'',done:0,total:0};
+function pbLoad(retry){
+  if(PB||PBSTATE==='loading'||(PBSTATE==='error'&&!retry)) return;
+  PBSTATE='loading';
+  fetch('ex/phrases.json',{cache:'no-cache'}).then(response=>{
+    if(!response.ok||!/^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type')||'')) throw new Error('Invalid phrasebook response');
+    return response.json();
+  }).then(sections=>{
+    const valid=Array.isArray(sections)&&sections.length&&sections.every(section=>
+      section&&typeof section.k==='string'&&typeof section.e==='string'&&section.t&&typeof section.t.en==='string'&&
+      Array.isArray(section.items)&&section.items.length&&section.items.every(item=>
+        Array.isArray(item)&&typeof item[0]==='string'&&item[1]&&typeof item[1].en==='string'));
+    if(!valid) throw new Error('Invalid phrasebook');
+    PB=sections; PBSTATE='ready';
+  }).catch(()=>{PBSTATE='error';}).finally(()=>{if(view==='phrases') render(false);});
+}
 function phrasesHTML(){
   pbLoad();
   const head='<button class="back" data-act="dgBack">‹ '+esc(T('back'))+'</button><div class="pb-head"><p class="pb-hy-t" lang="hy">Զրուցարան</p><h1 class="pg">'+esc(T('pbTitle'))+'</h1><p class="note">'+esc(T('pbLead'))+'</p></div>';
-  if(!PB) return head+'<p class="note">…</p>';
-  const off=audioOK()?'<div class="actions"><button class="btn secondary" data-act="pbOffline">'+esc(PBS==='ok'?T('pbSaved'):PBS==='run'?T('pbSaving'):T('pbSave'))+'</button></div>':'';
+  if(PBSTATE==='loading'||PBSTATE==='idle') return head+'<p class="note" role="status" aria-live="polite">'+esc(T('loading'))+'</p>';
+  if(PBSTATE==='error') return head+'<div class="note" role="alert"><p>'+esc(T('pbLoadFail'))+'</p><button class="btn secondary sm" data-act="pbRetry">'+esc(T('pbRetry'))+'</button></div>';
+  const voice=UI.rv==='m'?'m':'f';
+  const off=REAL_ANY&&!BILL.native?'<div class="actions"><button class="btn secondary" id="pbOfflineButton" data-act="pbOffline"'+pbBusyAttr()+'>'+esc(pbSaveLabel(voice))+'</button>'+pbSaveStatus(voice)+'</div>':'';
   // разделы — чипами сверху: 20 разделов, ~300 фраз — без прокрутки всей ленты (O-190)
   const nav='<nav class="pb-nav">'+PB.map(sec=>'<button class="tc-chip" data-act="pbJump" data-arg="'+esc(sec.k)+'">'+sec.e+' '+esc(sec.t[L]||sec.t.en)+'</button>').join('')+'</nav>';
   return head+off+nav+PB.map(sec=>'<section class="set-sec pb-sec" id="pb-'+esc(sec.k)+'"><h2 class="sec">'+sec.e+' '+esc(sec.t[L]||sec.t.en)+'</h2><ul class="pb">'+
-    sec.items.map(it=>'<li><button class="pb-row" data-act="pbSay" data-arg="'+esc(it[0])+'"><span class="pb-hy" lang="hy">'+esc(it[0])+'</span><span class="pb-tr">'+esc(exTr(it[0]))+'</span><span class="pb-tx">'+esc(it[1][L]||it[1].en)+'</span></button></li>').join('')+'</ul></section>').join('');
+    sec.items.map(it=>'<li><button class="pb-row" data-act="pbSay" data-arg="'+esc(it[0])+'"><span class="pb-hy" lang="hy">'+esc(it[0])+'</span><span class="pb-tr">'+esc(exTr(it[0]))+'</span><span class="pb-tx" lang="'+(it[1][L]?L:'en')+'">'+esc(it[1][L]||it[1].en)+'</span></button></li>').join('')+'</ul></section>').join('');
 }
-async function pbOffline(){ if(!PB||PBS==='run') return; PBS='run'; render(false); hit('pb_offline');
-  const all=[].concat(...PB.map(s=>s.items.map(i=>i[0])));
-  for(let i=0;i<all.length;i+=6) await Promise.all(all.slice(i,i+6).map(t=>fetch(audioUrl(t,UI.rv==='m'?'m':'f')).catch(()=>null)));
-  PBS='ok'; if(view==='phrases') render(false); }
+function pbRetry(){ pbLoad(true); render(false); }
+function pbBusyAttr(){ return PBS.state==='run'?' aria-busy="true"':''; }
+function pbSaveLabel(voice){
+  if(PBS.state==='run') return T('pbSaving');
+  if(PBS.voice!==voice) return T('pbSave');
+  if(PBS.state==='ok') return T('pbSaved');
+  if(PBS.state==='partial'&&!PBS.error) return T('pbSavePartial',PBS.done,PBS.total);
+  return T('pbSave');
+}
+function pbSaveStatus(voice){
+  const visible=PBS.voice===voice&&PBS.state!=='idle';
+  const progress=visible?T('pbSaveProgress',PBS.done,PBS.total):'';
+  const announcement=visible&&PBS.state!=='run'?(PBS.error?T('pbSaveNeedSW'):PBS.state==='ok'?T('pbSaved'):progress):'';
+  return '<p class="note" id="pbSaveProgress" aria-hidden="true"'+(visible&&PBS.state==='run'?'':' hidden')+'>'+esc(progress)+'</p>'+
+    '<p class="note" id="pbSaveAnnouncement" role="status">'+esc(announcement)+'</p>';
+}
+function pbSaveUI(){
+  if(view!=='phrases') return;
+  const voice=UI.rv==='m'?'m':'f', button=$('#pbOfflineButton');
+  if(!button) return;
+  if(PBS.state==='run') button.setAttribute('aria-busy','true'); else button.removeAttribute('aria-busy');
+  button.textContent=pbSaveLabel(voice);
+  const progress=$('#pbSaveProgress'), announcement=$('#pbSaveAnnouncement');
+  progress.hidden=PBS.voice!==voice||PBS.state!=='run';
+  progress.textContent=T('pbSaveProgress',PBS.done,PBS.total);
+  if(PBS.state==='run'||PBS.voice!==voice) announcement.textContent='';
+  else announcement.textContent=PBS.error?T('pbSaveNeedSW'):PBS.state==='ok'?T('pbSaved'):progress.textContent;
+}
+async function pbOffline(){
+  if(!PB||PBS.state==='run') return;
+  const voice=UI.rv==='m'?'m':'f', all=[...new Set(PB.flatMap(section=>section.items.map(item=>item[0])))];
+  PBS={state:'run',voice,done:0,total:all.length}; pbSaveUI(); hit('pb_offline');
+  let saved=0;
+  try{
+    if(!navigator.serviceWorker?.controller||!('caches' in window)||!hasVoice(VDIR[voice])) throw new Error('Offline audio unavailable');
+    const cache=await caches.open('barik-audio-v2');
+    for(let i=0;i<all.length;i+=6){
+      await Promise.all(all.slice(i,i+6).map(async t=>{
+        const url=new URL(audioUrl(t,voice),location.href).href;
+        try{
+          const cached=await cache.match(url);
+          if(await usablePhraseAudio(cached)){saved++;return;}
+          if(cached) await cache.delete(url);
+          const r=await fetch(url,{cache:'no-cache'});
+          if(!await usablePhraseAudio(r)){ await cache.delete(url); return; }
+          await cache.put(url,r);
+          if(await usablePhraseAudio(await cache.match(url))) saved++;
+        }catch(e){}
+      }));
+      PBS={state:'run',voice,done:saved,total:all.length}; pbSaveUI();
+    }
+    PBS={state:saved===all.length?'ok':'partial',voice,done:saved,total:all.length};
+  }catch(e){ PBS={state:'partial',voice,done:saved,total:all.length,error:true}; }
+  pbSaveUI();
+}
+async function usablePhraseAudio(response){
+  if(!response||response.status!==200||!/^audio\/mpeg(?:\s*;|$)/i.test(response.headers.get('content-type')||'')) return false;
+  const bytes=new Uint8Array(await response.clone().arrayBuffer());
+  let offset=0;
+  if(bytes[0]===0x49&&bytes[1]===0x44&&bytes[2]===0x33&&bytes.length>=10){
+    offset=10+((bytes[6]&127)<<21)+((bytes[7]&127)<<14)+((bytes[8]&127)<<7)+(bytes[9]&127);
+  }
+  return bytes.length>offset+512&&bytes[offset]===0xff&&(bytes[offset+1]&0xe0)===0xe0;
+}
 /* ---------- учителям (O-182): ссылка на тему для класса — ученики открывают её сразу, без регистрации ---------- */
 let TC_LV='A1';
 function teachHTML(){
@@ -1175,7 +1365,8 @@ function teachHTML(){
 }
 function wordRow(w,free){
   const st=status(w), op=free||canUse(w);
-  return '<li class="wrow"><span class="w-pic">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+esc(T('st_'+st))+'"></i>'+esc(tx(w))+'<span class="w-tr">'+esc(trn(w))+'</span></span></span><button class="say" data-act="'+(free?'sayFree':'say')+'" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+(op?ICON.spk:emo('🔒','ie'))+'</button></li>';
+  const translationLang=hasWordTranslations(L)?L:hasWordTranslations('en')?'en':hasWordTranslations('ru')?'ru':'hy';
+  return '<li class="wrow"><span class="w-pic" aria-hidden="true">'+pic(w)+'</span><span class="w-main"><span class="w-hy" lang="hy">'+esc(w.a)+'</span><span class="w-sub"><i class="dot s-'+st+'" title="'+esc(T('st_'+st))+'" aria-hidden="true"></i><span class="w-tx" lang="'+translationLang+'">'+esc(tx(w))+'</span><span class="w-tr"><span class="sr-only">'+esc(T('dictTranslit'))+': </span>'+esc(trn(w))+'</span></span></span><button class="say" data-act="'+(free?'sayFree':'say')+'" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',tx(w)))+'">'+(op?ICON.spk:emo('🔒','ie'))+'</button></li>';
 }
 function topicHTML(ti){
   const t=TOPICS[ti], tc=counts(t.list), nn=tc.total-tc.seen, op=lvOpen(t.lv);
@@ -1194,24 +1385,52 @@ function topicHTML(ti){
     '<div class="actions page-actions">'+acts+'</div><ul class="words">'+t.list.map(w=>wordRow(w,true)).join('')+'</ul>';
 }
 const fold=x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'');   // без ударений и точек: é → e, ë → e
-function dictRows(){
+function loadDictionaryTranslations(){
+  trLoad('en'); trLoad('ru');
+  if(L!=='en'&&L!=='ru') trLoad(L);
+}
+function dictFilter(){
   const q=dq.trim().toLowerCase();
   const qc=q.replace(/h/g,'һ').replace(/ʰ/g,''), ql=q.replace(/ʰ/g,''), qf=fold(ql);
   let list=(dt==='all')?WORDS:(dt.indexOf('lv:')===0?WORDS.filter(w=>TOPICS[w.t].lv===dt.slice(3)):TOPICS[+dt].list);
-  if(q) list=list.filter(w=>w.a.toLowerCase().indexOf(q)>=0||w.r.toLowerCase().indexOf(q)>=0||w.e.toLowerCase().indexOf(q)>=0||w.tr.replace(/ʰ/g,'').indexOf(qc)>=0||w.lt.replace(/ʰ/g,'').indexOf(ql)>=0||fold(w.f.toLowerCase()).indexOf(qf)>=0||fold(w.ft.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.s.toLowerCase()).indexOf(qf)>=0||fold(w.st.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.de.toLowerCase()).indexOf(qf)>=0||fold(w.dt.replace(/ʰ/g,'')).indexOf(qf)>=0||fold(w.pt.toLowerCase()).indexOf(qf)>=0||fold(w.ptr.replace(/ʰ/g,'')).indexOf(qf)>=0);
+  if(q) list=list.filter(w=>{
+    const has=(v,x)=>typeof v==='string'&&v.toLowerCase().indexOf(x)>=0;
+    const hasFold=(v,x)=>typeof v==='string'&&fold(v.toLowerCase()).indexOf(x)>=0;
+    return has(w.a,q)||has(w.r,q)||has(w.e,q)||hasFold(w.f,qf)||hasFold(w.s,qf)||hasFold(w.de,qf)||hasFold(w.pt,qf)||
+      has((w.tr||'').replace(/ʰ/g,''),qc)||has((w.lt||'').replace(/ʰ/g,''),ql)||
+      hasFold(w.ft.replace(/ʰ/g,''),qf)||hasFold(w.st.replace(/ʰ/g,''),qf)||
+      hasFold(w.dt.replace(/ʰ/g,''),qf)||hasFold(w.ptr.replace(/ʰ/g,''),qf);
+  });
+  return list;
+}
+function dictRows(list){
+  list=list||dictFilter();
   if(!list.length) return '<li class="empty">'+esc(T('dictEmpty'))+'</li>';
   const more=list.length>dLimit?'<li class="more-li"><button class="btn ghost" data-act="more">'+esc(T('showMore',list.length-dLimit))+'</button></li>':'';
   return list.slice(0,dLimit).map(w=>wordRow(w,true)).join('')+more;
 }
+let dictCountTimer=0;
+function dictRefresh(announce){
+  const list=dictFilter(), rows=$('#dlist'), clear=$('#dictClear'), status=$('#dcount');
+  if(rows) rows.innerHTML=dictRows(list);
+  if(clear) clear.hidden=!(dq.trim()||dt!=='all');
+  clearTimeout(dictCountTimer);
+  if(announce&&status) dictCountTimer=setTimeout(()=>{ if(view==='dict'&&status.isConnected) status.textContent=T('dictCount',list.length); },450);
+  return list;
+}
 function dictHTML(){
+  const list=dictFilter();
   return '<header class="head"><h1 class="pg">'+esc(T('dictTitle'))+'</h1><p class="t-hy2" lang="hy">Բառարան</p></header>'+
-    '<div class="filters"><input class="search" id="dq" type="search" inputmode="search" autocomplete="off" placeholder="'+esc(T('dictPh'))+'" value="'+esc(dq)+'"></div>'+
-    '<div class="filters"><select id="dt" aria-label="'+esc(T('topicAria'))+'"><option value="all">'+esc(T('allWords',WORDS.length))+'</option>'+LEVELS.map(lv=>{const n=WORDS.filter(w=>TOPICS[w.t].lv===lv).length;return '<option value="lv:'+lv+'"'+(dt==='lv:'+lv?' selected':'')+'>'+esc(T('levelN',lv,n))+'</option>';}).join('')+LEVELS.map(lv=>'<optgroup label="'+esc(T('topicsOf',lv))+'">'+TOPICS.map((t,i)=>t.lv===lv?'<option value="'+i+'"'+(String(i)===dt?' selected':'')+'>'+esc(tn(t))+' — '+t.list.length+'</option>':'').join('')+'</optgroup>').join('')+'</select></div>'+
-    '<ul class="words" id="dlist">'+dictRows()+'</ul>';
+    '<div class="filters"><label class="sr-only" for="dq">'+esc(T('dictLabel'))+'</label><input class="search" id="dq" type="search" inputmode="search" autocomplete="off" aria-describedby="dictHelp" placeholder="'+esc(T('dictPh'))+'" value="'+esc(dq)+'"><p class="note" id="dictHelp">'+esc(T('dictHelp'))+'</p></div>'+
+    '<div class="filters"><label class="sr-only" for="dt">'+esc(T('topicAria'))+'</label><select id="dt"><option value="all">'+esc(T('allWords',WORDS.length))+'</option>'+LEVELS.map(lv=>{const n=WORDS.filter(w=>TOPICS[w.t].lv===lv).length;return '<option value="lv:'+lv+'"'+(dt==='lv:'+lv?' selected':'')+'>'+esc(T('levelN',lv,n))+'</option>';}).join('')+LEVELS.map(lv=>'<optgroup label="'+esc(T('topicsOf',lv))+'">'+TOPICS.map((t,i)=>t.lv===lv?'<option value="'+i+'"'+(String(i)===dt?' selected':'')+'>'+esc(tn(t))+' — '+t.list.length+'</option>':'').join('')+'</optgroup>').join('')+'</select><button class="btn ghost sm" id="dictClear" data-act="clearDict"'+(dq.trim()||dt!=='all'?'':' hidden')+'>'+esc(T('dictClear'))+'</button></div>'+
+    '<p class="note" id="dcount" role="status" aria-live="polite" aria-atomic="true">'+esc(T('dictCount',list.length))+'</p><ul class="words" id="dlist">'+dictRows(list)+'</ul>';
 }
 function bindDict(){
-  const i=$('#dq'); i.addEventListener('input',()=>{dq=i.value;dLimit=150;$('#dlist').innerHTML=dictRows();});
-  $('#dt').addEventListener('change',e=>{dt=e.target.value;dLimit=150;$('#dlist').innerHTML=dictRows();});
+  const i=$('#dq');
+  function search(){ if(dq===i.value) return; dq=i.value; dLimit=150; dictRefresh(true); }
+  i.addEventListener('input',event=>{if(!event.isComposing) search();});
+  i.addEventListener('compositionend',search);
+  $('#dt').addEventListener('change',e=>{dt=e.target.value;dLimit=150;dictRefresh(true);});
 }
 function abcHTML(){
   const tiles=ABC.map((x,i)=>'<li><button data-act="letter" data-arg="'+i+'" aria-label="'+esc(x.up+' '+x.lo+' — '+rd(x))+'"><span class="up" lang="hy">'+esc(x.up)+(x.lo!==x.up?'<i>'+esc(x.lo)+'</i>':'')+'</span><span class="snd">'+esc(rd(x))+'</span>'+(S.pen[x.up]?'<span class="pen-mark" aria-hidden="true">★</span>':'')+'</button></li>').join('');
@@ -1787,8 +2006,8 @@ function tquizHTML(){
   let field, after='', foot='';
   if(it.done){
     field='<div class="tin done '+(it.ok?'ok':'bad')+'" lang="hy">'+(it.ok?esc(normHy(it.val)):tdiff(it.val,w.a))+'</div>';
-    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+(it.hints?' · '+esc(T('withHint')):'')+'<span class="ans"><b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w))+'</span></div>':
-      '<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w))+'</span></div>')+
+    foot=(it.ok?'<div class="fb ok" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">✓ '+esc(T('right'))+(it.hints?' · '+esc(T('withHint')):'')+'<span class="ans"><b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w))+'</span></div>':
+      '<div class="fb bad" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w))+'</span></div>')+
       '<button class="btn primary" data-act="typeNext">'+esc(T('next'))+'</button>';
   }else if(own){
     field='<div class="tin own" id="tin" lang="hy" role="textbox" aria-label="'+esc(T('typePh'))+'">'+esc(it.val)+'<span class="caret" aria-hidden="true"></span></div>';
@@ -2200,6 +2419,9 @@ function returnOfferHTML(){
 }
 function resultHTML(){
   const r=sess.res, c=counts(), ti=sess.meta.ti, lv=sess.meta.lv;
+  const dues=[...new Set(sess.items.map(item=>item.w.a))].map(a=>S.w[a]&&Number(S.w[a].d)).filter(d=>Number.isFinite(d)&&d>=0);
+  const nextDue=dues.length?Math.min(...dues):null;
+  const reviewNote=nextDue==null?'':'<p class="note" role="status">'+esc(T('nextReview',nextDue-today()))+'</p>';
   const more=lv?WORDS.filter(w=>TOPICS[w.t].lv===lv&&!S.w[w.a]&&canUse(w)).length:nextNew(ti==null?null:ti,1).length;
   let acts='';
   if(c.due) acts+='<button class="btn primary" data-act="review">'+esc(T('btnReview',c.due))+'</button>';
@@ -2214,17 +2436,50 @@ function resultHTML(){
   const missed=r.missed.length?'<p class="miss-h">'+esc(T('repeatHdr'))+'</p><ul class="words">'+r.missed.map(w=>wordRow(w,true)).join('')+'</ul>':'';
   const good=r.firstOk/r.n>=0.6;
   return '<div class="result"><div class="apres" lang="hy">'+(good?'Ապրե՛ս':'Լավ է')+'</div><p class="sub">'+esc(good?T('wellDone'):T('goodTry'))+'</p>'+
-    '<p class="score">'+T('firstTry',r.firstOk,r.n)+'</p>'+kn+missed+'<div class="actions">'+acts+'</div>'+returnOfferHTML()+'</div>';
+    '<p class="score">'+T('firstTry',r.firstOk,r.n)+'</p>'+reviewNote+kn+missed+'<div class="actions">'+acts+'</div>'+returnOfferHTML()+'</div>';
 }
 /* ---------- примеры к словам (O-172): ex/<язык>.json — слово → [фраза, перевод]; файл берётся при первой нужде ---------- */
-let EX=null, EXL='';
-function exLoad(){ if(EXL===L) return; const l=L; EXL=l; EX=null;
-  fetch('ex/'+l+'.json').then(r=>r.ok?r.json():null).then(j=>{ if(EXL!==l||!j) return; EX=j;
-    const it=sess&&!sess.ended&&cur(); if(view==='session'&&it&&it.k==='intro'&&EX[it.w.a]&&!document.querySelector('.ex')) render(false); }).catch(()=>{}); }
+const exampleCache=new Map(), exampleRequests=new Set(), exampleErrors=new Set();
+function exampleUrl(word,lang){
+  const version=window.BARIK_EX_VERSION;
+  return version?'ex/'+lang+'-'+TOPICS[word.t].lv+'.json?v='+version:'ex/'+lang+'.json';
+}
+function exLoad(url,retry=false){
+  if(exampleCache.has(url)){
+    const entries=exampleCache.get(url); exampleCache.delete(url); exampleCache.set(url,entries);
+    return;
+  }
+  if(exampleRequests.has(url)||exampleErrors.has(url)&&!retry) return;
+  exampleErrors.delete(url); exampleRequests.add(url);
+  fetch(url,{cache:'no-cache'}).then(response=>{
+    if(!response.ok||!/^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type')||'')) throw new Error('Invalid example response');
+    return response.json();
+  }).then(entries=>{
+    if(!entries||typeof entries!=='object'||Array.isArray(entries)) throw new Error('Invalid examples');
+    exampleCache.set(url,entries);
+    if(exampleCache.size>4) exampleCache.delete(exampleCache.keys().next().value);
+  }).catch(()=>exampleErrors.add(url)).finally(()=>{
+    exampleRequests.delete(url);
+    const item=view==='session'&&sess&&!sess.ended&&cur(), host=$('#exSlot');
+    if(host&&item&&item.k==='intro'&&exampleUrl(item.w,L)===url) host.innerHTML=exSlotContent(item.w,url);
+  });
+}
 function exTr(hy){ try{ return trL(hy.replace(/[։՞՛՜]/g,'').replace(/,/g,' ,').toLowerCase()).replace(/ ,/g,','); }catch(e){ return ''; } }
-function exHTML(w){ exLoad(); const e=EX&&EX[w.a]; if(!e) return '';
-  return '<div class="ex"><div class="ex-top"><span class="ex-k">'+esc(T('exLabel'))+'</span>'+(audioOK()?'<button class="ex-say" data-act="exSay" data-arg="'+esc(e[0])+'" aria-label="'+esc(T('listen'))+'">'+ICON.spk+'</button>':'')+'</div>'+
-    '<p class="ex-hy" lang="hy">'+esc(e[0])+'</p><p class="ex-tr">'+esc(exTr(e[0]))+'</p><p class="ex-tx">'+esc(e[1])+'</p></div>'; }
+function exMarkup(e){
+  if(!Array.isArray(e)||typeof e[0]!=='string'||typeof e[1]!=='string') return '';
+  return '<div class="ex"><div class="ex-top"><span class="ex-k">'+esc(T('exLabel'))+'</span>'+(audioOK()?'<button class="ex-say" data-act="exSay" data-arg="'+esc(e[0])+'" aria-label="'+esc(T('listenExample'))+'">'+ICON.spk+'</button>':'')+'</div>'+
+    '<p class="ex-hy" lang="hy">'+esc(e[0])+'</p><p class="ex-tr">'+esc(exTr(e[0]))+'</p><p class="ex-tx">'+esc(e[1])+'</p></div>';
+}
+function exSlotContent(word,url){
+  if(exampleCache.has(url)) return exMarkup(exampleCache.get(url)[word.a]);
+  if(exampleErrors.has(url)) return '<p class="ex-error" role="alert">'+esc(T('lzFail'))+' <button class="btn ghost sm" data-act="exRetry">'+esc(T('lzRetry'))+'</button></p>';
+  return '<p class="ex-loading" role="status" aria-live="polite">'+esc(T('loading'))+'</p>';
+}
+function exHTML(word){
+  const url=exampleUrl(word,L);
+  exLoad(url);
+  return '<div id="exSlot">'+exSlotContent(word,url)+'</div>';
+}
 /* ---------- «Скажи и сравни» (O-175): запись своего голоса в браузере и сравнение с образцом; запись никуда не уходит ---------- */
 const REC={on:false,a:'',url:'',mr:null,st:null,timer:0};
 const recOK=()=>!BILL.native&&!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
@@ -2251,7 +2506,7 @@ async function recStart(a){
 function recPlay(done){ if(!REC.url) return; try{ const el=AUD.el||(AUD.el=new Audio()); el.pause(); el.src=REC.url; el.onended=()=>{ el.onended=null; if(done) done(); }; el.play().catch(()=>{}); }catch(e){} }
 function audioRow(w){
   if(!audioOK()) return '';
-  return '<div class="audio"><button class="aud" data-act="say" data-arg="'+esc(w.a)+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlow" data-arg="'+esc(w.a)+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>';
+  return '<div class="audio"><button class="aud" data-act="say" data-arg="'+esc(w.a)+'" aria-label="'+esc(T('sayAria',w.a))+'">'+ICON.spk+'<span>'+esc(T('listen'))+'</span></button><button class="aud" data-act="saySlow" data-arg="'+esc(w.a)+'">'+emo('🐢','ie')+'<span>'+esc(T('slow'))+'</span></button></div>';
 }
 function optCls(o,i,it){if(!it.done) return ''; if(o===it.w) return 'ok'; if(i===it.pick) return 'bad'; return 'dim';}
 function optPic(o,i,it,sp){return '<button class="opt '+optCls(o,i,it)+'" data-act="opt" data-arg="'+i+'"'+(it.done?' disabled':'')+'>'+(sp?'<span class="o-pic">'+pic(o)+'</span>':'')+'<span class="o-lbl">'+esc(tx(o))+'</span></button>';}
@@ -2259,12 +2514,12 @@ function optsPic(it){const sp=it.opts.every(o=>o.p);return '<div class="opts'+(s
 function optHy(o,i,it){return '<button class="opt '+optCls(o,i,it)+'" data-act="opt" data-arg="'+i+'"'+(it.done?' disabled':'')+'><span class="o-hy" lang="hy">'+esc(o.a)+'</span>'+((S.set.tr||it.done)?'<span class="o-tr">'+esc(trn(o))+'</span>':'')+'</button>';}
 function fbFoot(it){
   const w=it.w;
-  if(it.ok) return '<div class="fb ok">✓ '+esc(T('right'))+'</div><button class="btn primary" data-act="next">'+esc(T('next'))+'</button>';
-  return '<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w))+' — '+esc(tx(w))+'</span></div><button class="btn primary" data-act="next">'+esc(T('next'))+'</button>';
+  if(it.ok) return '<div class="fb ok" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">✓ '+esc(T('right'))+'</div><button class="btn primary" data-act="next">'+esc(T('next'))+'</button>';
+  return '<div class="fb bad" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(w.a)+'</b>'+esc(trn(w))+' — '+esc(tx(w))+'</span></div><button class="btn primary" data-act="next">'+esc(T('next'))+'</button>';
 }
 function sessionHTML(){
   const it=cur(), w=it.w, n=sess.items.length;
-  const top='<div class="sess-top"><button class="x" data-act="quit" aria-label="'+esc(T('quit'))+'">✕</button><div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="'+n+'" aria-valuenow="'+sess.i+'"><i style="width:'+Math.round(100*sess.i/n)+'%"></i></div><span class="pcount">'+(sess.i+1)+'/'+n+'</span></div>';
+  const top='<div class="sess-top"><button class="x" data-act="quit" aria-label="'+esc(T('quit'))+'">✕</button><div class="pbar" role="progressbar" aria-label="'+esc(T('lessonProgress'))+'" aria-valuemin="1" aria-valuemax="'+n+'" aria-valuenow="'+(sess.i+1)+'" aria-valuetext="'+esc(T('stepProgress',sess.i+1,n))+'"><i style="width:'+Math.round(100*sess.i/n)+'%"></i></div><span class="pcount">'+(sess.i+1)+'/'+n+'</span></div>';
   const ph=w.a.indexOf(' ')>=0?' phrase':'';
   let body='', foot='';
   if(it.k==='intro'){
@@ -2548,7 +2803,7 @@ function practiceHTML(){
   if(!PU.q) pStart();
   if(PU.end) return pResultHTML();
   const it=pCur(), n=PU.q.length;
-  const top='<div class="sess-top"><button class="x" data-act="pQuit" aria-label="'+esc(T('quit'))+'">✕</button><div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="'+n+'" aria-valuenow="'+PU.i+'"><i style="width:'+Math.round(100*PU.i/n)+'%"></i></div><span class="pcount">'+(PU.i+1)+' / '+n+'</span></div>';
+  const top='<div class="sess-top"><button class="x" data-act="pQuit" aria-label="'+esc(T('quit'))+'">✕</button><div class="pbar" role="progressbar" aria-label="'+esc(T('lessonProgress'))+'" aria-valuemin="1" aria-valuemax="'+n+'" aria-valuenow="'+(PU.i+1)+'" aria-valuetext="'+esc(T('stepProgress',PU.i+1,n))+'"><i style="width:'+Math.round(100*PU.i/n)+'%"></i></div><span class="pcount">'+(PU.i+1)+' / '+n+'</span></div>';
   let body='', foot='';
   if(it.k==='form'){
     const x=BY[it.w];
@@ -2585,7 +2840,7 @@ function practiceHTML(){
     const shown=lk?it.ln[1]:(it.k==='table'?it.txt.replace('___',it.a):(it.k==='mean'||it.k==='read'||it.k==='seed'?it.w:(it.k==='conj'?PRON[it.p]+' '+it.a:it.a)));
     const tr=lk?lnTr(it.ln):it.k==='seed'?' — '+it.a:(it.k==='form'||it.k==='conj')&&BY[it.w]?' · '+it.w+' — '+tx(BY[it.w]):((it.k==='mean'||it.k==='read')&&BY[it.w]?(it.k==='read'?it.a+' — ':'')+tx(BY[it.w]):'');
     const txl=lk&&PU.u&&pTxOn(PU.u)?'<span class="ln-tx">'+esc(lnTx(shown))+'</span>':'';
-    foot=(it.ok?'<div class="fb ok">✓ '+esc(T('right'))+txl+'</div>':'<div class="fb bad"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+txl+(tr?esc(tr):'')+'</span>'+(it.q&&(it.k==='form'||it.k==='conj')?'<span class="p-why">'+esc(rdx(it.q))+'</span>':'')+'</div>')+
+    foot=(it.ok?'<div class="fb ok" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">✓ '+esc(T('right'))+txl+'</div>':'<div class="fb bad" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"><span>'+esc(T('correct'))+'</span><span class="ans"><b lang="hy">'+esc(shown)+'</b>'+txl+(tr?esc(tr):'')+'</span>'+(it.q&&(it.k==='form'||it.k==='conj')?'<span class="p-why">'+esc(rdx(it.q))+'</span>':'')+'</div>')+
       '<button class="btn primary" data-act="pNext">'+esc(T('next'))+'</button>';
   }
   return top+'<div class="stage">'+body+'</div>'+(foot?'<div class="foot'+(it.done?(it.ok?' ok':' bad'):'')+'"><div class="foot-in">'+foot+'</div></div>':'');
@@ -2726,6 +2981,7 @@ const PH={
   pAgain:()=>{ if(!PU) return; if(PU.kind!=='unit'){ startDrill(PU.kind); return; } PU.q=null; PU.step=2; render(); window.scrollTo(0,0); }
 };
 document.addEventListener('keydown',e=>{
+  if(keyHandledByControl(e)) return;
   if(view!=='unit'||!PU||PU.step!==2||!PU.q||PU.end) return;
   const it=pCur(); if(!it) return;
   if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
@@ -2750,6 +3006,7 @@ const H={
   nmOpen:()=>{ if(view==='onboard') hit('land_name'); go('name'); },
   dgOpen:()=>{ hit('v_daily'); go('daily'); },
   pbOpen:()=>{ hit('v_phrases'); go('phrases'); },
+  pbRetry:()=>pbRetry(),
   tcOpen:()=>{ hit('v_teach'); go('teach'); },
   gfOpen:()=>{ hit('v_gift'); GF.code=''; go('gift'); if(ACC.srv!==true) accInit().then(()=>{ if(view==='gift') render(false); }); },
   gfPick:a=>{ GF.m=+a; render(false); },
@@ -2801,6 +3058,7 @@ const H={
   learnNew:()=>startLearn(null),
   lzRetry:()=>render(),
   landTry:a=>landTry(a),
+  trRetry:lang=>trLoad(lang||L,true),
   landTryGo:()=>{ setLang(L); hit('land_start'); hit('start'); startLearn(null); },
   learnTopic:a=>startLearn(+a),
   learnAgain:()=>{const m=sess?sess.meta:{}; startLearn(m.ti!=null?m.ti:null,m.lv||null);},
@@ -2870,7 +3128,8 @@ const H={
   erase:()=>erase(),
   giveup:()=>giveUp(),
   quit:()=>finish(),
-  more:()=>{dLimit+=150; const l=$('#dlist'); if(l) l.innerHTML=dictRows();},
+  more:()=>{dLimit+=150; dictRefresh(false); const b=$('.more-li button')||$('#dlist li:last-child button')||$('#dq'); if(b) b.focus();},
+  clearDict:()=>{ dq=''; dt='all'; dLimit=150; const i=$('#dq'), s=$('#dt'); if(i) i.value=''; if(s) s.value='all'; dictRefresh(true); if(i) i.focus(); },
   tog:a=>{S.set[a]=!S.set[a]; save(); render();},
   size:a=>{S.set.size=+a; save(); render();},
   letter:a=>go('letter',+a),
@@ -2951,6 +3210,14 @@ const H={
   manageSub:()=>BILL.openStoreSubs(),
   doc:a=>{ docFrom=view; go('doc',a); },
   exSay:(a,b)=>{ sayText(a,b); },
+  exRetry:()=>{
+    const item=sess&&!sess.ended&&cur(), host=$('#exSlot');
+    if(!host||!item||item.k!=='intro') return;
+    const url=exampleUrl(item.w,L);
+    const hadFocus=host.contains(document.activeElement);
+    exLoad(url,true); host.innerHTML=exSlotContent(item.w,url);
+    if(hadFocus) focusTarget($('.stage .q'));
+  },
   recSay:a=>recStart(a),
   recMine:()=>recPlay(),
   rmX:()=>{ UI.rmX=1; saveUI(); render(); },
@@ -2983,6 +3250,7 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('submit',e=>{ const f=e.target.closest('form[data-act]'); if(!f) return; e.preventDefault(); const h=H[f.dataset.act]; if(h) h(f.dataset.arg,f,e); });
 document.addEventListener('keydown',e=>{
+  if(keyHandledByControl(e)) return;
   if(view==='tquiz'&&tq){ const it=tcur(); if(!it) return;
     if(e.key==='Enter'){ e.preventDefault(); if(it.done) tnext(); else tcheck(); return; }
     if(it.done||!kbOwn()||(e.target&&e.target.tagName==='INPUT')) return;
@@ -3027,6 +3295,7 @@ function onBack(){
 }
 
 /* ================= INIT ================= */
+function launch(){
 loadLocal();
 document.documentElement.lang=L;
 renderTabs();
@@ -3035,7 +3304,6 @@ BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!
 addEventListener('resize',()=>{ if(view==='pen') penWidths(); });
 BILL.onBack(onBack);
 // …/#welcome (или ?welcome) — показать главную для гостя и тому, кто уже выбрал язык (ссылка из рекламы, показ).
-const WELCOME=/(?:^|[?&#])welcome(?:[&=]|$)/.test((location.search||'')+(location.hash||''));
 view=UI.lang&&!WELCOME?'home':'onboard';
 // Со страницы темы (/ru/t/…, кнопка «Учить эти слова») — сразу в эту тему (?lang=ru&t=<номер>, O-159)
 { const qt=(/[?&]t=(\d+)(?:&|$)/.exec(location.search||'')||[])[1];
@@ -3045,21 +3313,47 @@ view=UI.lang&&!WELCOME?'home':'onboard';
 // ссылка «имя по-армянски» (O-168): ?name=Anna[&hy=Աննա] — сразу к написанному имени, и гостю тоже
 { const sp=new URLSearchParams(location.search||''), nm=sp.get('name'), hy=sp.get('hy');
   const dk=sp.get('doc'); if(dk&&/^(refund|terms|privacy|project|credits)$/.test(dk)&&nm===null){ docFrom=(UI.lang?'settings':'onboard'); view='doc'; viewArg=dk; }
+  if(sp.get('abc')==='1'&&nm===null){ view='abc'; }
+  const pn=sp.get('pen'); if(pn!==null&&/^\d+$/.test(pn)&&ABC[+pn]&&nm===null){ penNew(+pn); view='pen'; viewArg=+pn; }
   if(sp.has('daily')&&nm===null){ view='daily'; }
   if(sp.has('phrases')&&nm===null){ view='phrases'; }
   if(sp.has('teach')&&nm===null){ view='teach'; }
   if(sp.has('gift')&&nm===null){ view='gift'; }
   if(nm!==null&&NAMES){ nmSet(nm,hy&&/^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy)?hy:null); view='name'; } }
-render();
+/* O-202: при первом визите сохраняем уже видимую серверную обложку. Она собрана из того же HTML,
+   что onboardHTML(); повторная сборка длинной страницы задерживала готовность первого экрана. */
+const keepCover=view==='onboard'&&START_QUERY.get('start')!=='lesson'&&
+  !document.documentElement.classList.contains('nopre')&&document.documentElement.lang===L&&
+  document.querySelector('#view .ld');
+if(keepCover){
+  document.body.dataset.view='onboard'; document.body.classList.remove('kbon');
+  const curTab=tabOf(view);
+  document.querySelectorAll('#tabs .tab').forEach(b=>{ if(b.dataset.arg===curTab) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  RENDER_VIEW=view; RENDER_STATE=renderState();
+  translationNotice(); landStart();
+  if(!picsOn()) lazyJs('js/pictures.js').then(()=>{ picsOn(); if(view!=='onboard') return;
+    document.querySelectorAll('.ld-tile[data-a] .pimg').forEach(e=>{ const w=BY[e.parentNode.dataset.a]; if(w) e.innerHTML=picSvg(w); }); landDemo(); }).catch(()=>{});
+} else render();
+window.__barikOk=1;
+try{ sessionStorage.removeItem('barik-rl'); }catch(e){}
+if(!hasWordTranslations(L)){
+  translationState.set(L,'error');
+  translationNotice();
+}
+if(START_QUERY.get('start')==='lesson'){ setLang(L); startLearn(null); }
 /* TZ_AUDIT4 №2: нажатие, сделанное до загрузки приложения (скрипт обложки в <head> сохранил его в __pend), — исполняем */
 { const PD=window.__pend; window.__pend=null;
   if(PD&&H[PD.a]&&(PD.a!=='landTry'||(LT.w&&LT.w.a===PD.g))){ hit('land_early'); try{ H[PD.a](PD.g,document.querySelector('#view [data-act="'+PD.a+'"]'),null); }catch(e){} } }
 BILL.hideSplash();
 hit(); if(FIRST&&view!=='onboard') hit('start');   // по ссылке сразу в приложение, мимо обложки
-Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
+Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view==='session') render(false);
+  else if(view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();
   if(/[?&]pay=gift(?:&|$)/.test(location.search||'')) giftReturn(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(view==='session') fitWords(); });
-window.__bararan={get UI(){return UI;},startLearn,trPhrase,cursiveSVG,writeCursive,get EX(){return EX;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,get PW(){return PW;},get PICS(){return PICS;},normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,get CRS(){return CRS;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+window.__bararan={get UI(){return UI;},startLearn,trPhrase,cursiveSVG,writeCursive,get EX(){const item=cur();return item&&exampleCache.get(exampleUrl(item.w,L))||null;},get S(){return S;},get SY(){return SY;},syncNow,save,pgSave,WORDS,TOPICS,ABC,BY,get PW(){return PW;},get PICS(){return PICS;},normHy,trFr,trEs,trDe,trPt,aid,audioUrl,get MAN(){return MAN;},get ACC(){return ACC;},get tq(){return tq;},get pen(){return penT;},get PU(){return PU;},get LP(){return LP;},trUrl,hasTr,LPT,get PG(){return PG;},pathStat,get CRS(){return CRS;},trWord,trLat,T,setLang,go,get view(){return view;},onBack,H};
+}
+if(window.BARIK_TRANSLATIONS_READY) window.BARIK_TRANSLATIONS_READY.then(launch);
+else launch();
 })();

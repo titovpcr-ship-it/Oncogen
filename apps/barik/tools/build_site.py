@@ -10,8 +10,8 @@ www/ → dist/site/ — обычные статичные файлы для лю
 nginx), плюс то, что делает сайт приложением (PWA):
   * manifest.webmanifest и иконки — «На экран Домой» на iPhone и Android,
     открывается без адресной строки, со своей иконкой «Ա»;
-  * sw.js — работа без интернета: всё приложение (слова, сцены, шрифты)
-    кэшируется при первом заходе, озвучка и 3D-картинки (pics/) — по мере показа
+  * sw.js — работа без интернета: основа приложения и шрифты кэшируются при первом заходе,
+    язык, сцены, озвучка и 3D-картинки (pics/) — по мере использования
     (без сети и не в кэше — системный эмодзи);
   * config.js с WEB_ALL_FREE: true — пока оплата не подключена, открыто всё;
   * robots.txt, .htaccess (типы файлов, сжатие, кэш, HTTPS) для Apache;
@@ -80,23 +80,68 @@ SW = r"""/* Barik — работа без интернета. Версия ме�
 const VERSION = '%(version)s';
 const SHELL = %(shell)s;
 const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v2', PICS = 'barik-pics-v2';   // v2 (O-199): в v1 могла попасть заглушка хостинга
+const LAZY = 'barik-lazy-v1';
+const localePath = /\/js\/tr-(?:ru|en|fr|es|de|pt)\.js$/;
+const lazyPath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|path_data|pictures)\.js$/;
+async function lazyScript(request) {
+  const cache = await caches.open(LAZY).catch(() => null);
+  const hit = cache && await cache.match(request).catch(() => null);
+  if (hit) return hit;
+  const response = await fetch(request);
+  const type = response.headers.get('content-type') || '';
+  if (cache && response.status === 200 && /(?:java|ecma)script/i.test(type)) {
+    await cache.put(request, response.clone()).catch(() => {});
+    const pathname = new URL(request.url).pathname;
+    const copies = await cache.keys().catch(() => []);
+    await Promise.all(copies.filter(key => key.url !== request.url && new URL(key.url).pathname === pathname)
+      .map(key => cache.delete(key).catch(() => {})));
+  }
+  return response;
+}
 self.addEventListener('install', e => {
-  // cache: 'reload' — мимо HTTP-кэша браузера: иначе новая версия собиралась из старых файлов (O-157)
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL.map(u => new Request(u, {cache: 'reload'}))))
-    .then(() => self.skipWaiting()));
+  // Не активировать обновление, если сервер вернул заглушку хостинга с HTTP 200 вместо скрипта.
+  e.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    await cache.addAll(SHELL.map(u => new Request(u, {cache: 'reload'})));
+    for (const url of SHELL.filter(url => /\.(?:js|css)(?:\?|$)/.test(url))) {
+      const response = await cache.match(url);
+      const type = response && response.headers.get('content-type') || '';
+      const expected = /\.js(?:\?|$)/.test(url) ? /(?:java|ecma)script/i : /^text\/css/i;
+      if (!expected.test(type)) throw new Error('Invalid offline resource: ' + url);
+    }
+    await self.skipWaiting();
+  })().catch(async error => { await caches.delete(CACHE); throw error; }));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('barik-')
-    && k !== CACHE && k !== AUDIO && k !== PICS).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+    && k !== CACHE && k !== AUDIO && k !== PICS && k !== LAZY).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+});
+self.addEventListener('message', e => {
+  if (!e.data || e.data.type !== 'barik-warm-locale' || typeof e.data.url !== 'string') return;
+  const url = new URL(e.data.url, location.href);
+  if (url.origin === location.origin && localePath.test(url.pathname) && /^\?v=[0-9a-f]{8}$/.test(url.search)) {
+    e.waitUntil(lazyScript(new Request(url.href)).catch(() => {}));
+  }
 });
 self.addEventListener('fetch', e => {
   const r = e.request;
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
   const path = new URL(r.url).pathname;
   if (path.includes('/api/')) return;         // личный кабинет — всегда сеть, не кэш
-  if (path.endsWith('/audio/manifest.json') || path.includes('/ex/')) { // список записей меняется с озвучкой: сеть, без сети — кэш (O-157)
-    e.respondWith(caches.open(AUDIO).then(c => fetch(r, {cache: 'no-cache'})
-      .then(res => { if (res.status === 200) c.put(r, res.clone()); return res; }).catch(() => c.match(r))));
+  if (path.endsWith('/audio/manifest.json') || path.includes('/ex/')) { // изменяемые JSON: сеть, без сети — кэш (O-157)
+    e.respondWith(caches.open(AUDIO).catch(() => null).then(async cache => {
+      try {
+        const response = await fetch(r, {cache: 'no-cache'});
+        if (cache && response.status === 200 && /^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type') || '')) {
+          await cache.put(r, response.clone()).catch(() => {});
+        }
+        return response;
+      } catch (error) {
+        const cached = cache && await cache.match(r);
+        if (cached) return cached;
+        throw error;
+      }
+    }));
     return;
   }
   const media = path.includes('/audio/') ? AUDIO : (path.includes('/pics/') ? PICS : '');
@@ -107,6 +152,10 @@ self.addEventListener('fetch', e => {
         const ct = res.headers.get('content-type') || '';
         if (res.status === 200 && (media === AUDIO ? /^audio\//.test(ct) : /^image\//.test(ct))) c.put(r, res.clone());
         return res; }))));
+    return;
+  }
+  if (lazyPath.test(path)) {
+    e.respondWith(lazyScript(r));
     return;
   }
   if (r.mode === 'navigate') {                // страница: сеть, без сети — из кэша
@@ -313,6 +362,36 @@ def split_data(out):
     return h
 
 
+def split_examples(out):
+    """В статическом веб-сайте грузить примеры по языку и уровню; исходные JSON остаются целыми для Android и SEO."""
+    data = open(os.path.join(out, "js", "data.js"), encoding="utf-8").read()
+    m = re.search(r"window\.BARARAN_DATA=(\{.*\});?\s*$", data, re.S)
+    assert m, "data.js: нет window.BARARAN_DATA для разбивки примеров"
+    topics = json.loads(m.group(1))["topics"]
+    level_by_word = {}
+    for topic in topics:
+        level = topic.get("lv", "A1")
+        for row in topic.get("w", []):
+            if row and row[0]:
+                level_by_word.setdefault(row[0], level)
+    levels = ("A1", "A2", "B1", "B2", "C1", "C2")
+    version = hashlib.sha1()
+    for lang in TR_COL:
+        source = os.path.join(out, "ex", lang + ".json")
+        records = json.load(open(source, encoding="utf-8"))
+        parts = {level: {} for level in levels}
+        for word, row in records.items():
+            parts[level_by_word.get(word, "A1")][word] = row
+        for level, rows in parts.items():
+            target = os.path.join(out, "ex", lang + "-" + level + ".json")
+            payload = json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
+            with open(target, "w", encoding="utf-8") as f:
+                f.write(payload)
+            version.update(lang.encode("ascii") + b"\0" + level.encode("ascii") + b"\0" + payload.encode("utf-8"))
+        os.remove(source)
+    return version.hexdigest()[:8]
+
+
 def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     if os.path.isdir(out):
         shutil.rmtree(out)
@@ -348,6 +427,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     open(os.path.join(out, "404.html"), "w", encoding="utf-8").write(PAGE404)
     if seo and url:
         seo_pages(out, url)
+    example_version = split_examples(out)   # после SEO-страниц: пример — только нужный уровень; версия не даёт SW выдать старый JSON после обновления
     # Версия в адресе (?v=отпечаток) у скриптов и стилей главной: новая главная (она всегда из сети) сразу тянет
     # новые файлы мимо любого кэша, даже пока страницу обслуживает старый офлайн-режим (O-157).
     ix = os.path.join(out, "index.html")
@@ -365,20 +445,29 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
         ver[rel] = hashlib.sha1(open(os.path.join(out, rel), "rb").read()).hexdigest()[:8]
         return m.group(1) + rel + "?v=" + ver[rel] + '"'
     html = re.sub(r'((?:src|href)=")((?:js|css)/[\w./-]+\.(?:js|css))"', _v, html)
-    open(ix, "w", encoding="utf-8").write(html)
     for l in TR_COL:                      # переводы грузит lang0.js / trLoad с ?v=<отпечаток всех переводов> (O-185)
         ver["js/tr-%s.js" % l] = split
+    # Начать загрузку локали до больших скриптов. Остальные скрипты скачиваются параллельно
+    # и выполняются в исходном порядке. HTML Capacitor остаётся прежним.
+    lang_tag = f'<script src="js/lang0.js?v={ver["js/lang0.js"]}"></script>'
+    assert lang_tag in html, "index.html: отсутствует lang0.js"
+    html = html.replace(lang_tag, "", 1).replace("</head>",
+        f'<script src="js/lang0.js?v={ver["js/lang0.js"]}" data-translations="{split}" data-examples="{example_version}"></script>\n</head>', 1)
+    html = re.sub(r'(<script src="js/[^"?]+\.js\?v=[0-9a-f]{8}")></script>', r'\1 defer></script>', html)
+    open(ix, "w", encoding="utf-8").write(html)
     # Приложение не знает о страницах поиска — в его кэш (без интернета) они не идут.
     shell, h = ["./"], hashlib.sha1()
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("cover-", "audio/", "pics/", "og/", "api/", "ex/"))
+            lazy_js = re.fullmatch(r"js/(?:tr-(?:ru|en|fr|es|de|pt)|path_data|pictures)\.js", rel) is not None
+            if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or lazy_js or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("cover-", "audio/", "pics/", "og/", "api/", "ex/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel + ("?v=" + ver[rel] if rel in ver else ""))
             h.update(rel.encode())
             h.update(open(os.path.join(root, f), "rb").read())
+    h.update(SW.encode())
     version = h.hexdigest()[:10]
     open(os.path.join(out, "sw.js"), "w", encoding="utf-8").write(
         SW % {"version": version, "shell": json.dumps(sorted(shell), ensure_ascii=False)})
@@ -485,7 +574,7 @@ def seo_pages(out, url):
     PH = {"en": "Phrasebook", "ru": "Разговорник", "fr": "Guide de conversation", "es": "Guía de conversación", "de": "Sprachführer", "pt": "Guia de conversação"}
     links = "".join(f'<li lang="{L}"><a href="{L}/">{d}</a> · <a href="{L}/n/">{n}</a> · <a href="{L}/p/">{PH[L]}</a> · <a href="{L}/a/">{AB[L]}</a>' + (f' · <a href="{L}/g/">{GD[L]}</a>' if L in GD else '') + '</li>' for L, d, n in D)
     docs = " · ".join(f'<a href="?doc={k}">{t}</a>' for k, t in (("project", "About"), ("terms", "Terms"), ("privacy", "Privacy"), ("refund", "Refunds")))
-    html = html.replace("</body>", f'<noscript><h1>Barik — Eastern Armenian word by word</h1><p>20,121 Armenian words with pictures, audio and '
+    html = html.replace("</body>", f'<noscript><p><strong>Barik — Eastern Armenian word by word</strong></p><p>20,121 Armenian words with pictures, audio and '
                         f'transcription in six languages, handwriting for all 39 letters and a learning path up to reading Tumanyan.</p>'
                         f'<ul>{links}</ul><p>{docs}</p></noscript>\n</body>', 1)
     # структура для поисковиков (O-177): сайт, издатель, учебное приложение
