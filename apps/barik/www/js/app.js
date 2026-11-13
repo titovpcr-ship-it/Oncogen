@@ -1147,7 +1147,8 @@ function landTry(a){
   setTimeout(()=>{ if(view!=='onboard') return;
     if(LT.n<3){ landK++; LT.show&&LT.show(); return; }
     const card=document.getElementById('phCard'); if(card) card.innerHTML='<span class="ph-done">'+emo('🎉','ie')+'</span><span class="ph-tr">'+esc(T('landTryDone'))+'</span>';
-    opts.innerHTML='<button type="button" class="ph-opt ph-go" data-act="landTryGo">'+esc(T('landTryGo'))+' →</button>'; },ok?900:1500);
+    const currentOpts=document.getElementById('phOpts');
+    if(currentOpts) currentOpts.innerHTML='<button type="button" class="ph-opt ph-go" data-act="landTryGo">'+esc(T('landTryGo'))+' →</button>'; },ok?900:1500);
 }
 /* Пропись на обложке и в разделе «Пропись»: перо пишет букву, потом следующую. В разделе под
    прописью — весь алфавит: нажатая буква пишется сразу, дальше снова по порядку. */
