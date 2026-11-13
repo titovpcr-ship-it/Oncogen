@@ -26,7 +26,10 @@ const summary=a=>({median:Math.round(med(a)),min:Math.round(Math.min(...a)),max:
     for(let round=0;round<5;round++) for(const key of (round%2?['after','before']:['before','after'])){
       counts[key]={requests:0,bytes:0};
       const context=await browser.newContext({timezoneId:'Europe/Moscow',locale:'ru-RU',serviceWorkers:'block',viewport:{width:390,height:844},deviceScaleFactor:2});
-      const page=await context.newPage(),errors=[]; page.on('pageerror',e=>errors.push(e.message));
+      const page=await context.newPage(),errors=[],exampleIO=[]; page.on('pageerror',e=>errors.push(e.message));
+      page.on('request',r=>{if(/\/ex\/[^/]+\.json(?:\?|$)/.test(r.url()))exampleIO.push({type:'request',url:r.url()});});
+      page.on('response',r=>{if(/\/ex\/[^/]+\.json(?:\?|$)/.test(r.url()))exampleIO.push({type:'response',status:r.status(),url:r.url(),contentType:r.headers()['content-type']||''});});
+      page.on('requestfailed',r=>{if(/\/ex\/[^/]+\.json(?:\?|$)/.test(r.url()))exampleIO.push({type:'failed',error:r.failure()?.errorText||'',url:r.url()});});
       const cdp=await context.newCDPSession(page); await cdp.send('Network.enable'); await cdp.send('Network.setCacheDisabled',{cacheDisabled:true});
       await cdp.send('Network.emulateNetworkConditions',{offline:false,latency:150,downloadThroughput:200000,uploadThroughput:93750});
       await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
@@ -42,7 +45,8 @@ const summary=a=>({median:Math.round(med(a)),min:Math.round(Math.min(...a)),max:
       await page.click('[data-act=pickLang]'); await page.waitForSelector('[data-act=learnNew]',{timeout:15000});
       await page.click('[data-act=learnNew]'); await page.waitForSelector('.sess-top',{timeout:20000});
       const lesson=await page.evaluate(()=>performance.now());
-      await page.waitForSelector('#exSlot .ex-hy',{timeout:30000});
+      try{await page.waitForSelector('#exSlot .ex-hy',{timeout:30000});}
+      catch(e){const state=await page.evaluate(()=>({lang:document.documentElement.lang,view:document.body.dataset.view,exampleVersion:window.BARIK_EX_VERSION,slot:document.querySelector('#exSlot')?.outerHTML.slice(0,500)||null,heading:document.querySelector('#view')?.innerText.slice(0,220)||''}));throw new Error(`${key}: first example did not appear ${JSON.stringify({state,exampleIO,errors})}; ${e.message}`);}
       const example=await page.evaluate(()=>({ms:performance.now(),vitals:{...window.__auditVitals}}));
       if(errors.length) throw Error(`${key}: ${errors.join(' | ')}`);
       const row={readyMs:Math.round(ready.ms),lessonMs:Math.round(lesson),exampleMs:Math.round(example.ms),bytesReady,requestsReady,bytesExample:counts[key].bytes,requestsExample:counts[key].requests,
