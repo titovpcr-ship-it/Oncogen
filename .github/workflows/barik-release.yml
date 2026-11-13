@@ -3,7 +3,11 @@ name: Release Barik
 on:
   push:
     branches: [codex/audit4]
-    paths: ['.github/workflows/barik-release.yml']
+    paths:
+      - '.github/workflows/barik-release.yml'
+      - 'apps/barik/data/examples/**'
+      - 'apps/barik/www/audio/**'
+      - 'apps/barik/www/ex/**'
 permissions:
   contents: read
 concurrency:

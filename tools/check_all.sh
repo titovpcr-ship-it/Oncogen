@@ -32,13 +32,19 @@ run() {  # имя папка команда…
 }
 
 if [ "${BARIK_ONLY:-0}" != 1 ]; then
-  for f in "$ROOT"/tests/test_*.py; do
-    n=$(basename "$f" .py)
-    run "$n" "$ROOT" python3.13 "tests/$n.py"
-  done
+  ROOT_TESTS=("$ROOT"/tests/test_*.py)
+  if [ -f "${ROOT_TESTS[0]}" ]; then
+    for f in "${ROOT_TESTS[@]}"; do
+      n=$(basename "$f" .py)
+      run "$n" "$ROOT" python3.13 "tests/$n.py"
+    done
+  else
+    echo "Oncogen Python tests: not present in this checkout — skipped"
+  fi
 fi
 
 B="$ROOT/apps/barik"
+run barik-build_examples "$B" python3.13 tools/build_examples.py
 BUILT=1
 if [ $FULL -eq 1 ]; then
   run barik-build_site "$B" python3.13 tools/build_site.py || BUILT=0

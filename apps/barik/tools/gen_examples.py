@@ -5,6 +5,7 @@
 Проверка каждой строки — те же правила, что build_examples.py (слово во фразе, армянские буквы, «։», 6 переводов);
 не прошла — слово уходит в следующий заход. Затем: build_examples.py → check_examples.py → gen_audio.py --only E."""
 import argparse, json, os, re, sys, time
+from collections import Counter
 import requests
 APP = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(APP, 'tools'))
@@ -28,6 +29,25 @@ def ok(w, x):
     st = STEM.get(w, w[:max(2, len(w) - 2)] if len(w) > 3 else w[:2]).lower()
     if st not in re.sub(r'[՞՛՜]', '', hy).lower(): return False
     return all((x.get(l) or '').strip() and not re.search(r'[Ա-և|]', x[l]) for l in LANGS)
+
+
+def rejection_reasons(w, x):
+    """Give local diagnostics for rejected model output without relaxing acceptance rules."""
+    reasons = []
+    hy = (x.get('hy') or '').strip()
+    if not hy or not HY.match(hy): reasons.append('armenian_form')
+    if hy and not hy.endswith('։'): reasons.append('punctuation')
+    words = re.sub(r'[՞՛՜։]', '', hy).split()
+    if not 5 <= len(words) <= 8: reasons.append('word_count')
+    if words and words[0].lower() == 'նա': reasons.append('generic_subject')
+    if hy and re.search(r'(?:կարևոր|անհրաժեշտ)\s+է[։.!]?$', hy): reasons.append('template')
+    stem = STEM.get(w, w[:max(2, len(w) - 2)] if len(w) > 3 else w[:2]).lower()
+    if stem not in re.sub(r'[՞՛՜]', '', hy).lower(): reasons.append('missing_stem')
+    for lang in LANGS:
+        value = (x.get(lang) or '').strip()
+        if not value: reasons.append('missing_translation_' + lang)
+        elif re.search(r'[Ա-և|]', value): reasons.append('armenian_in_translation_' + lang)
+    return reasons
 
 
 def main():
@@ -77,12 +97,16 @@ def main():
         except Exception: arr = []
         print('parsed examples:', len(arr), flush=True)
         want = {p[0] for p in part}
-        lines = []
+        lines, rejected = [], Counter()
         for x in arr:
             w = (x.get('w') or '').strip()
             if w in want and ok(w, x):
                 want.discard(w)
                 lines.append(' | '.join([w, x['hy'].strip()] + [x[l].strip().replace('\n', ' ') for l in LANGS]))
+            else:
+                for reason in rejection_reasons(w, x): rejected[reason] += 1
+        if rejected:
+            print('отбраковка по причинам:', dict(rejected), flush=True)
         with open(out, 'a', encoding='utf-8') as f:
             f.write(''.join(l + '\n' for l in lines))
         good += len(lines)
