@@ -1147,7 +1147,8 @@ function landTry(a){
   setTimeout(()=>{ if(view!=='onboard') return;
     if(LT.n<3){ landK++; LT.show&&LT.show(); return; }
     const card=document.getElementById('phCard'); if(card) card.innerHTML='<span class="ph-done">'+emo('🎉','ie')+'</span><span class="ph-tr">'+esc(T('landTryDone'))+'</span>';
-    opts.innerHTML='<button type="button" class="ph-opt ph-go" data-act="landTryGo">'+esc(T('landTryGo'))+' →</button>'; },ok?900:1500);
+    const currentOpts=document.getElementById('phOpts');
+    if(currentOpts) currentOpts.innerHTML='<button type="button" class="ph-opt ph-go" data-act="landTryGo">'+esc(T('landTryGo'))+' →</button>'; },ok?900:1500);
 }
 /* Пропись на обложке и в разделе «Пропись»: перо пишет букву, потом следующую. В разделе под
    прописью — весь алфавит: нажатая буква пишется сразу, дальше снова по порядку. */
@@ -3300,7 +3301,7 @@ loadLocal();
 document.documentElement.lang=L;
 renderTabs();
 if(SPEECH){ loadVoices(); try{ window.speechSynthesis.addEventListener('voiceschanged',loadVoices); }catch(e){} }
-BILL.onChange(()=>{ if(view==='onboard'&&LT.on) return; if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
+BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 addEventListener('resize',()=>{ if(view==='pen') penWidths(); });
 BILL.onBack(onBack);
 // …/#welcome (или ?welcome) — показать главную для гостя и тому, кто уже выбрал язык (ссылка из рекламы, показ).
@@ -3347,7 +3348,7 @@ if(START_QUERY.get('start')==='lesson'){ setLang(L); startLearn(null); }
 BILL.hideSplash();
 hit(); if(FIRST&&view!=='onboard') hit('start');   // по ссылке сразу в приложение, мимо обложки
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view==='session') render(false);
-  else if(!(view==='onboard'&&LT.on)&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
+  else if(view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();
   if(/[?&]pay=gift(?:&|$)/.test(location.search||'')) giftReturn(); });
