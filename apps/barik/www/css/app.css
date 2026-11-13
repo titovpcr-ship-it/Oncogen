@@ -580,7 +580,7 @@ body[data-view="onboard"]{background:#FFFAF5}
 .ld .btn.xl{width:auto;min-height:62px;padding:0 32px;font:800 18px/1 var(--ui);letter-spacing:-.01em;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;transition:transform .2s,box-shadow .2s}
 .ld .btn.primary.xl{background:linear-gradient(135deg,#BB5017,#BD3C20);color:#fff;box-shadow:0 16px 32px -14px rgba(238,90,42,.7),inset 0 1px 0 rgba(255,255,255,.25)}
 .ld .btn.primary.xl:hover{transform:translateY(-2px);box-shadow:0 22px 38px -14px rgba(238,90,42,.75),inset 0 1px 0 rgba(255,255,255,.25)}
-.ld .btn.xl.inv{background:#fff;color:var(--L-a2);box-shadow:0 16px 34px -16px rgba(0,0,0,.45)}
+.ld .btn.xl.inv{background:#fff;color:#BD3C20;box-shadow:0 16px 34px -16px rgba(0,0,0,.45)}
 .ld .btn .arr{font-size:20px;transition:transform .2s}
 .ld .btn:hover .arr{transform:translateX(3px)}
 .ld-how{font:700 16px/1 var(--ui);color:var(--L-ink);text-decoration:none;display:inline-flex;align-items:center;gap:8px}

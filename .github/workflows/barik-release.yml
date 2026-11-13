@@ -1,4 +1,5 @@
 name: Release Barik
+# Contrast scanner handles solid and gradient buttons.
 on:
   push:
     branches: [codex/audit4]
