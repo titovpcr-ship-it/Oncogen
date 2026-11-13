@@ -39,12 +39,23 @@ c.commit()`,db,String(now)]);
   const pg=await ctx.newPage(); pg.on('pageerror',e=>errs.push(String(e)));
   await pg.goto(base+'?from=TG_Test'); await pg.waitForSelector('[data-act=pickLang]');
   await pg.click('[data-act=pickLang]'); await pg.waitForTimeout(2200);   // картинки не пришли и после повтора (1,5 с)
-  await pg.click('[data-act=learnNew]'); await pg.waitForSelector('.sess-top');
+  await pg.click('[data-act=learnNew]'); await pg.waitForSelector('.sess-top [data-act=quit]');
   const firstOption=pg.locator('.opt:not([disabled])').first();
-  for(let i=0;i<8&&!(await firstOption.count());i++){
+  for(let i=0;i<20&&!(await firstOption.isVisible().catch(()=>false));i++){
+    const giveup=pg.locator('.foot [data-act=giveup]').first();
+    if(await giveup.isVisible().catch(()=>false)){
+      await giveup.click();
+      const next=pg.locator('.foot [data-act=next]').first();
+      await next.waitFor({state:'visible',timeout:15000});
+      await next.click();
+      continue;
+    }
     const next=pg.locator('.foot [data-act=next]').first();
-    await next.waitFor({state:'visible',timeout:15000});
-    await next.click();
+    if(await next.isVisible().catch(()=>false)){
+      await next.click();
+      continue;
+    }
+    throw new Error('Неожиданный шаг урока до первого ответа: '+(await pg.locator('.stage').innerText().catch(()=>'')));
   }
   await firstOption.waitFor({state:'visible',timeout:15000});
   await firstOption.click(); await pg.waitForTimeout(600);
