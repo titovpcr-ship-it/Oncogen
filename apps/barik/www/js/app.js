@@ -3300,7 +3300,7 @@ loadLocal();
 document.documentElement.lang=L;
 renderTabs();
 if(SPEECH){ loadVoices(); try{ window.speechSynthesis.addEventListener('voiceschanged',loadVoices); }catch(e){} }
-BILL.onChange(()=>{ if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
+BILL.onChange(()=>{ if(view==='onboard'&&LT.on) return; if(view!=='session'&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render(); });
 addEventListener('resize',()=>{ if(view==='pen') penWidths(); });
 BILL.onBack(onBack);
 // …/#welcome (или ?welcome) — показать главную для гостя и тому, кто уже выбрал язык (ссылка из рекламы, показ).
@@ -3347,7 +3347,7 @@ if(START_QUERY.get('start')==='lesson'){ setLang(L); startLearn(null); }
 BILL.hideSplash();
 hit(); if(FIRST&&view!=='onboard') hit('start');   // по ссылке сразу в приложение, мимо обложки
 Promise.all([loadManifest(),BILL.init(),accInit()]).then(()=>{ if(view==='session') render(false);
-  else if(view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
+  else if(!(view==='onboard'&&LT.on)&&view!=='abcquiz'&&view!=='pquiz'&&view!=='tquiz'&&view!=='pen') render();
   if(/[?&]pay=crypto(?:&|$)/.test(location.search||'')) cryReturn();
   if(/[?&]pay=card(?:&|$)/.test(location.search||'')) cardReturn();
   if(/[?&]pay=gift(?:&|$)/.test(location.search||'')) giftReturn(); });
