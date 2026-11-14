@@ -18,6 +18,12 @@ async function main(){
       const stream=await navigator.mediaDevices.getUserMedia({audio:true});
       stream.getTracks().forEach(track=>track.stop());
     });
+    // __barikOk is set before the startup API and audio-manifest requests finish;
+    // their final render can replace an answer if the demo is clicked too early.
+    await page.waitForFunction(()=>
+      window.__bararan?.ACC?.srv!==null&&window.__bararan?.MAN?.count>0,
+      null,{timeout:15000}
+    );
     for(let i=1;i<=3;i++){
       await page.locator('#phOpts .ph-opt.right:not([disabled])').click();
       try {
