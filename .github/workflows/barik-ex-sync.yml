@@ -1,0 +1,67 @@
+name: Reconcile published Barik examples
+on:
+  push:
+    branches: [codex/voiced-ex-sync]
+    paths: ['.github/workflows/barik-ex-sync.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /apps/barik/tools/deploy_site.py
+            /apps/barik/www/ex/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install requests
+      - name: Verify source passed the production release checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(gh run view 43582243290 --json conclusion --jq .conclusion)" = success
+          test "$(gh run view 43582243290 --json headSha --jq .headSha)" = 720920b74bc2d92e1b8ffdbcc13d31f00d780344
+          git diff --exit-code 720920b74bc2d92e1b8ffdbcc13d31f00d780344 HEAD -- apps/barik/www/ex apps/barik/tools/deploy_site.py
+      - name: Reconcile six JSON files and verify public responses
+        env:
+          BARIK_HOST_TOKEN: ${{ secrets.BARIK_HOST_TOKEN }}
+        run: |
+          python -u - <<'PY'
+          import json, os, sys, time
+          from pathlib import Path
+          import requests
+          sys.path.insert(0, 'apps/barik/tools')
+          from deploy_site import CPanel
+          cp = CPanel('cpanel.barik.am', 'barik.am', 'barik', '', os.environ['BARIK_HOST_TOKEN'])
+          cp.login()
+          for lang in ('ru', 'en', 'fr', 'es', 'de', 'pt'):
+              path = Path('apps/barik/www/ex') / (lang + '.json')
+              expected = json.loads(path.read_text(encoding='utf-8'))
+              before = cp.uapi('Fileman', 'get_file_content', dir='public_html/ex', file=path.name)
+              old = (before.get('data') or {}).get('content', '')
+              try:
+                  old_count = len(json.loads(old))
+              except ValueError:
+                  old_count = 'unreadable'
+              print(lang, 'server before:', old_count, 'expected:', len(expected), flush=True)
+              cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (path.name, path.read_bytes(), 'application/json')}, dir='public_html/ex', overwrite='1'), 'example JSON upload')
+              back = cp.uapi('Fileman', 'get_file_content', dir='public_html/ex', file=path.name)
+              contents = (back.get('data') or {}).get('content', '')
+              assert json.loads(contents) == expected, 'Server readback mismatch: ' + lang
+              for attempt in range(3):
+                  response = requests.get('https://barik.am/ex/' + path.name, params={'verified':time.time_ns()}, headers={'Cache-Control':'no-cache', 'Accept-Encoding':'identity'}, timeout=45)
+                  if response.ok and response.json() == expected:
+                      print(lang, 'public JSON exact match:', len(expected), flush=True)
+                      break
+                  time.sleep(3)
+              else:
+                  raise RuntimeError('Public examples remain stale: ' + lang)
+          print('ALL_SIX_EXAMPLE_FILES_VERIFIED', flush=True)
+          PY
