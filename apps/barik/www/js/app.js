@@ -922,7 +922,7 @@ function render(auto){ const oldView=RENDER_VIEW, oldState=RENDER_STATE, savedFo
   if(needData(el)){ translationNotice(); return; }
   if(view==='onboard'){ el.innerHTML=onboardHTML(); landStart();
     if(!picsOn()) lazyJs('js/pictures.js').then(()=>{ picsOn(); if(view!=='onboard') return;
-      document.querySelectorAll('.ld-tile[data-a] .pimg').forEach(e=>{ const w=BY[e.parentNode.dataset.a]; if(w) e.innerHTML=picSvg(w); }); landDemo(); }).catch(()=>{}); }
+      landPicsReady(); }).catch(()=>{}); }
   else if(view==='home') el.innerHTML=homeHTML();
   else if(view==='path') el.innerHTML=pathHTML();
   else if(view==='unit') el.innerHTML=PU?unitHTML():pathHTML();
@@ -1111,7 +1111,7 @@ function landTryComplete(){
 function landDemo(){
   const card=document.getElementById('phCard'), opts=document.getElementById('phOpts'); if(!card) return;
   if(LT.on&&LT.n>=3){ landTryComplete(); return; }
-  const ws=DEMO.map(a=>BY[a]&&PICS[a]?BY[a]:null).filter(Boolean); if(!ws.length) return;
+  const ws=DEMO.map(a=>BY[a]||null).filter(Boolean); if(!ws.length) return;
   const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   let gen=0, paused=false;
   opts.addEventListener('focusout',e=>{
@@ -1141,6 +1141,14 @@ function landDemo(){
 }
 /* Б3: урок прямо на обложке — гость отвечает в телефоне: три слова, затем «Продолжить» ведёт в урок; ответы уже в прогрессе */
 const LT={on:false,n:0,w:null,done:false,show:null};
+/* Картинки дополняют уже работающий демо-урок и не пересоздают ответы,
+   если гость начал упражнение до загрузки ленивого ресурса. */
+function landPicsReady(){
+  document.querySelectorAll('.ld-tile[data-a] .pimg').forEach(e=>{ const w=BY[e.parentNode.dataset.a]; if(w) e.innerHTML=picSvg(w); });
+  const p=document.querySelector('#phCard .pimg');
+  if(p&&LT.w) p.innerHTML=picSvg(LT.w);
+  else if(!LT.w&&view==='onboard') landDemo();
+}
 function landTry(a){
   const opts=document.getElementById('phOpts'); if(!opts||!LT.w||LT.done) return;
   if(!LT.on){ LT.on=true; landT.forEach(clearTimeout); landT=[]; hit('land_try'); }
@@ -3338,7 +3346,7 @@ if(keepCover){
   RENDER_VIEW=view; RENDER_STATE=renderState();
   translationNotice(); landStart();
   if(!picsOn()) lazyJs('js/pictures.js').then(()=>{ picsOn(); if(view!=='onboard') return;
-    document.querySelectorAll('.ld-tile[data-a] .pimg').forEach(e=>{ const w=BY[e.parentNode.dataset.a]; if(w) e.innerHTML=picSvg(w); }); landDemo(); }).catch(()=>{});
+    landPicsReady(); }).catch(()=>{});
 } else render();
 window.__barikOk=1;
 try{ sessionStorage.removeItem('barik-rl'); }catch(e){}

@@ -93,6 +93,23 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       await p10.waitForSelector('[data-act=landTryGo]',{timeout:8000}); releaseApi();
       await p10.waitForSelector('[data-act=landTryGo]',{timeout:8000});
       ok(true,'поздний ответ аккаунта сохраняет уже показанное продолжение демо'); await c10.close(); }
+    { // B3: answers remain active while the optional pictures file is still loading
+      const c11=await br.newContext({timezoneId:'UTC',locale:'en-US',serviceWorkers:'block'}), p11=await c11.newPage(); let releasePictures;
+      const gate=new Promise(r=>{releasePictures=r;});
+      await p11.route('**/js/pictures.js*',async rt=>{await gate;await rt.continue();});
+      try {
+        await p11.goto(base); await p11.waitForFunction(()=>window.__barikOk&&document.querySelector('#phOpts .ph-opt.right'));
+        await p11.locator('#phOpts .ph-opt.right:not([disabled])').click();
+        await p11.waitForFunction(()=>document.querySelector('.ph-n')?.textContent?.replace(/\s/g,'')==='1/3',null,{timeout:3000});
+        releasePictures();
+        for(let i=2;i<=3;i++){
+          await p11.locator('#phOpts .ph-opt.right:not([disabled])').click();
+          await p11.waitForFunction(expected=>document.querySelector('.ph-n')?.textContent?.replace(/\s/g,'')===expected+'/3',i,{timeout:8000});
+        }
+        await p11.waitForSelector('[data-act=landTryGo]',{timeout:8000});
+        ok(true,'guest demo accepts answers before its lazy picture data arrives');
+      } finally { releasePictures(); await c11.close(); }
+    }
     { // TZ3 №4: гость из Москвы без скриптов видит русскую обложку (фрагмент cover-ru.html), вернувшийся — нет
       for(const [tz,lg,want] of [['Europe/Moscow','ru','Заговорите'],['Europe/Paris','fr',''],['Europe/Berlin','de','']]){
         const c5=await br.newContext({timezoneId:tz,serviceWorkers:'block'}); const p5=await c5.newPage(); await p5.route('**/js/**',rt=>rt.abort());
