@@ -1,0 +1,39 @@
+name: Check existing Barik model configuration
+on:
+  push:
+    branches: [codex/model-ready]
+    paths: ['.github/workflows/barik-model-ready.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check configured model without exposing credentials
+        env:
+          AZURE_FOUNDRY_KEY: ${{ secrets.AZURE_FOUNDRY_KEY }}
+          AZURE_FOUNDRY_ENDPOINT: ${{ secrets.AZURE_FOUNDRY_ENDPOINT }}
+          AZURE_FOUNDRY_MODEL: ${{ secrets.AZURE_FOUNDRY_MODEL }}
+          AZURE_OPENAI_KEY: ${{ secrets.AZURE_OPENAI_KEY }}
+          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+        run: |
+          python - <<'PY'
+          import os,json,urllib.request,urllib.error
+          for name in ('AZURE_FOUNDRY_KEY','AZURE_FOUNDRY_ENDPOINT','AZURE_FOUNDRY_MODEL','AZURE_OPENAI_KEY','AZURE_OPENAI_ENDPOINT'):
+              print(name, 'configured' if os.environ.get(name) else 'absent')
+          ep=os.environ.get('AZURE_FOUNDRY_ENDPOINT');key=os.environ.get('AZURE_FOUNDRY_KEY')
+          if not ep or not key:
+              print('NO_CONFIGURED_FOUNDRY_MODEL');raise SystemExit(0)
+          from urllib.parse import quote
+          model=os.environ.get('AZURE_FOUNDRY_MODEL') or 'DeepSeek-V3.2-Speciale'
+          url=ep.rstrip('/')+'/openai/deployments/'+quote(model,safe='')+'/chat/completions?api-version=2024-10-21'
+          body=json.dumps({'messages':[{'role':'user','content':'Reply with only OK.'}],'max_tokens':32}).encode()
+          req=urllib.request.Request(url,data=body,headers={'api-key':key,'Content-Type':'application/json'})
+          try:
+              with urllib.request.urlopen(req,timeout=45) as r:
+                  p=json.load(r)
+                  print('FOUNDRY_MODEL_READY' if p.get('choices') else 'FOUNDRY_NO_COMPLETION')
+          except urllib.error.HTTPError as e:
+              print('FOUNDRY_HTTP',e.code)
+          PY
