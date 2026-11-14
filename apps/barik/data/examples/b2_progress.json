@@ -1,51 +1,12 @@
 {
   "total": 5950,
-  "reviewed": 2595,
-  "in_files": 2595,
+  "in_files": 5950,
+  "reviewed": 5950,
   "published": 2595,
-  "drafts": 2900,
-  "draft_structure_pass": 2892,
+  "drafts": 0,
   "translations_cached": 36,
-  "status": "Шесть помощников готовят B2; черновики не считаются опубликованными",
-  "parts": [
-    {
-      "part": 1,
-      "assigned": 559,
-      "drafts": 401,
-      "structurally_valid": 400
-    },
-    {
-      "part": 2,
-      "assigned": 559,
-      "drafts": 500,
-      "structurally_valid": 496
-    },
-    {
-      "part": 3,
-      "assigned": 559,
-      "drafts": 559,
-      "structurally_valid": 559
-    },
-    {
-      "part": 4,
-      "assigned": 559,
-      "drafts": 520,
-      "structurally_valid": 519
-    },
-    {
-      "part": 5,
-      "assigned": 559,
-      "drafts": 420,
-      "structurally_valid": 419
-    },
-    {
-      "part": 6,
-      "assigned": 560,
-      "drafts": 500,
-      "structurally_valid": 499
-    }
-  ],
-  "updated_at": "2026-11-14T14:46:37.082707+00:00",
+  "status": "B2 5950 из5950 проверены; озвучка новой партии",
+  "updated_at": "2026-11-14T20:54:08.252834+00:00",
   "audio": {
     "anahit": 33919,
     "hayk": 33919,
