@@ -11,7 +11,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LANGS = ['ru', 'en', 'fr', 'es', 'de', 'pt']
 HY = re.compile(r'^[Ա-Ֆա-և ,՝։՞՛՜\-]+$')
 # корень, по которому слово узнаётся во фразе, когда оно меняется сильнее окончания (գալ → գալիս, տալ → տուր)
-STEM = {'նավահանգիստ': 'նավահանգ', 'գարուն': 'գարն', 'աշուն': 'աշն', 'նարինջ': 'նարնջ', 'արյուն': 'արյ', 'տալ': 'տուր', 'թիվ': 'թվ', 'խորհուրդ': 'խորհրդ', 'գիտենալ': 'գիտ', 'համակարգիչ': 'համակարգ', 'ասել': 'ասա', 'լինել': 'լին'}
+STEM = {'նավահանգիստ': 'նավահանգ', 'գարուն': 'գարն', 'աշուն': 'աշն', 'նարինջ': 'նարնջ', 'արյուն': 'արյ', 'տալ': 'տուր', 'թիվ': 'թվ', 'խորհուրդ': 'խորհրդ', 'սնունդ': 'սննդ', 'քուրձ': 'քրձ', 'գիտենալ': 'գիտ', 'համակարգիչ': 'համակարգ', 'ասել': 'ասա', 'լինել': 'լին'}
 
 
 def stem_candidates(word):
@@ -29,6 +29,25 @@ def stem_candidates(word):
     if word.endswith('ություն'):
         base = word[:-7]
         candidates.extend((base + 'ության', base + 'ությամբ', base + 'ություններ'))
+    # անկյուն and compounds have անկյ in the singular oblique: եռանկյուն -> եռանկյան.
+    if word.lower().endswith('անկյուն'):
+        candidates.append((word[:-7] + 'անկյ').lower())
+    # ածուխ and compounds take ածխ: գորշ ածուխ -> գորշ ածխի.
+    if word.lower().endswith('ածուխ'):
+        candidates.append((word[:-5] + 'ածխ').lower())
+    # Irregular oblique stems remain in compounds: գետնատուն -> գետնատան, աբբահայր -> աբբահոր.
+    for ending, oblique in (('տուն', 'տան'), ('հայր', 'հոր'), ('մայր', 'մոր')):
+        if word.lower().endswith(ending):
+            candidates.append((word[:-len(ending)] + oblique).lower())
+    # խումբ and compounds take խմբ: ավազակախումբ -> ավազակախմբի.
+    if word.lower().endswith('խումբ'):
+        candidates.append((word[:-5] + 'խմբ').lower())
+    # գալուստ and compounds: Հոգեգալուստ -> Հոգեգալստյան.
+    if word.lower().endswith('գալուստ'):
+        candidates.append((word[:-7] + 'գալստ').lower())
+    # անուն and compounds take անվ in oblique cases: դերանուն -> դերանվան.
+    if word.endswith('անուն'):
+        candidates.append((word[:-5] + 'անվ').lower())
     # գիրք and compounds take the oblique stem գրք: օրենսգիրք -> օրենսգրքի.
     if word.endswith('գիրք'):
         candidates.append((word[:-4] + 'գրք').lower())
@@ -38,7 +57,10 @@ def stem_candidates(word):
     # ջուր has the irregular stem ջր in compounds and plural forms (ածխաջուր -> ածխաջրեր).
     if word.endswith('ջուր'):
         candidates.append((word[:-4] + 'ջր').lower())
-    return tuple(dict.fromkeys(candidates))
+    # The Armenian և ligature and եւ sequence represent the same spelling.
+    lowered = (candidate.lower() for candidate in candidates)
+    return tuple(dict.fromkeys(variant for candidate in lowered
+                              for variant in (candidate, candidate.replace('և', 'եւ'), candidate.replace('եւ', 'և'))))
 
 
 def contains_word_stem(word, phrase):

@@ -1,16 +1,16 @@
 {
   "total": 5950,
-  "in_files": 2595,
-  "reviewed": 2595,
+  "in_files": 5950,
+  "reviewed": 5950,
+  "published": 2595,
   "drafts": 0,
   "translations_cached": 36,
-  "status": "Опубликованы 2595 из 5950 B2; осталось 3355, активной генерации нет",
-  "updated_at": "2026-11-14T10:35:30.649800+00:00",
-  "azure_generation_spend": 0,
+  "status": "B2: все 5 950 примеров проверены, оба голоса готовы; полный аудит и публикация",
+  "updated_at": "2026-11-14T21:05:27.218635+00:00",
   "audio": {
-    "anahit": 33919,
-    "hayk": 33919,
-    "total_per_voice": 33919
+    "anahit": 37274,
+    "hayk": 37274,
+    "total_per_voice": 37274
   },
   "release_run": 43585104332
 }
