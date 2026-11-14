@@ -11,13 +11,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LANGS = ['ru', 'en', 'fr', 'es', 'de', 'pt']
 HY = re.compile(r'^[Ա-Ֆա-և ,՝։՞՛՜\-]+$')
 # корень, по которому слово узнаётся во фразе, когда оно меняется сильнее окончания (գալ → գալիս, տալ → տուր)
-STEM = {'նավահանգիստ': 'նավահանգ', 'գարուն': 'գարն', 'աշուն': 'աշն', 'նարինջ': 'նարնջ', 'արյուն': 'արյ', 'տալ': 'տուր', 'գիտենալ': 'գիտ', 'համակարգիչ': 'համակարգ', 'ասել': 'ասա', 'լինել': 'լին'}
+STEM = {'նավահանգիստ': 'նավահանգ', 'գարուն': 'գարն', 'աշուն': 'աշն', 'նարինջ': 'նարնջ', 'արյուն': 'արյ', 'տալ': 'տուր', 'թիվ': 'թվ', 'խորհուրդ': 'խորհրդ', 'գիտենալ': 'գիտ', 'համակարգիչ': 'համակարգ', 'ասել': 'ասա', 'լինել': 'լին'}
 
 
 def stem_candidates(word):
     """Return attested spelling stems, including common Armenian inflections."""
     default = STEM.get(word, word[:max(2, len(word) - 2)] if len(word) > 3 else word[:2]).lower()
-    candidates = [default]
+    candidates = [word.lower(), default]
     # Armenian -ացնել/-եցնել verbs commonly form the aorist with -ացրեց/-եցրեց,
     # which drops նել. Example: երկարացնել -> երկարացրեց.
     if word.endswith(('ացնել', 'եցնել')) and len(word) > 5:
@@ -29,6 +29,12 @@ def stem_candidates(word):
     if word.endswith('ություն'):
         base = word[:-7]
         candidates.extend((base + 'ության', base + 'ությամբ', base + 'ություններ'))
+    # գիրք and compounds take the oblique stem գրք: օրենսգիրք -> օրենսգրքի.
+    if word.endswith('գիրք'):
+        candidates.append((word[:-4] + 'գրք').lower())
+    # Verbal nouns in -ում use -ման in oblique cases: ցնցում -> ցնցման.
+    if word.endswith('ում') and len(word) > 5:
+        candidates.append((word[:-3] + 'մ').lower())
     # ջուր has the irregular stem ջր in compounds and plural forms (ածխաջուր -> ածխաջրեր).
     if word.endswith('ջուր'):
         candidates.append((word[:-4] + 'ջր').lower())
@@ -37,6 +43,15 @@ def stem_candidates(word):
 
 def contains_word_stem(word, phrase):
     normalized = re.sub(r'[՞՛՜։]', '', phrase).lower()
+    if ' ' in word:
+        cursor = 0
+        for part in word.lower().split():
+            matches = [(pos, -len(stem)) for stem in stem_candidates(part)
+                       if (pos := normalized.find(stem, cursor)) >= 0]
+            if not matches: return False
+            pos, neg_len = min(matches)
+            cursor = pos - neg_len
+        return True
     return any(stem in normalized for stem in stem_candidates(word))
 
 
