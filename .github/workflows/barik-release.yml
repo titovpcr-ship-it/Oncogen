@@ -1,0 +1,67 @@
+name: Release Barik
+# Wait for lazy lesson data before checking rendered contrast.
+on:
+  push:
+    branches: [codex/audit4]
+    paths:
+      - '.github/workflows/barik-release.yml'
+      - 'apps/barik/data/examples/**'
+      - 'apps/barik/www/audio/**'
+      - 'apps/barik/www/ex/**'
+      - 'apps/barik/tests/**'
+      - 'apps/barik/tools/check_guest.js'
+      - 'apps/barik/tools/build_examples.py'
+      - 'tools/check_all.sh'
+permissions:
+  contents: read
+concurrency:
+  group: barik-production
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install release dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y php-cli php-sqlite3 php-curl ripgrep
+          python -m pip install requests Pillow pyzipper
+          npm install --no-save --package-lock=false playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - uses: actions/cache/restore@v4
+        with:
+          path: out/deploy/state.json
+          key: barik-production-cpanel-v1-${{ github.sha }}
+          restore-keys: barik-production-cpanel-v1-
+      - name: Test, publish and verify barik.am
+        env:
+          BARIK_ONLY: '1'
+          BARIK_WEB_PAID: '1'
+          BARIK_HOST_SERVER: cpanel.barik.am
+          BARIK_HOST_DOMAIN: barik.am
+          BARIK_HOST_USER: barik
+          BARIK_HOST_TOKEN: ${{ secrets.BARIK_HOST_TOKEN }}
+          SHIP_CHECK: bash tools/check_all.sh --full
+        run: |
+          test -n "$BARIK_HOST_TOKEN" || { echo "BARIK_HOST_TOKEN is missing"; exit 1; }
+          bash tools/ship.sh
+      - uses: actions/cache/save@v4
+        with:
+          path: out/deploy/state.json
+          key: barik-production-cpanel-v1-${{ github.sha }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: barik-release-test-logs
+          path: out/check/
+          retention-days: 7

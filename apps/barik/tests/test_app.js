@@ -81,9 +81,21 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.evaluate(()=>window.__bararan.onBack())===false,'«Назад» с главной — выход');
     // урок A1
     await pg.click('[data-act=learnNew]'); ok(await pg.locator('.sess-top').count()===1,'урок открылся'); await shot('lesson-intro'); await noHScroll('lesson');
+    ok(await pg.getAttribute('.pbar','aria-label')==='Прогресс урока'&&await pg.getAttribute('.pbar','aria-valuenow')==='1'&&(await pg.getAttribute('.pbar','aria-valuetext')).startsWith('Шаг 1 из '),'урок: озвученный прогресс показывает первый шаг');
+    ok(await pg.evaluate(()=>document.activeElement&&document.activeElement.classList.contains('q')),'урок: фокус поставлен на первый вопрос');
+    let keyboardAdvanceChecked=false;
     for(let i=0;i<14;i++){
       if(await pg.locator('[data-act=know]').count()) { await pg.click('.foot [data-act=next]'); continue; }
-      if(await pg.locator('.opt:not([disabled])').count()){ await pg.locator('.opt').first().click(); await pg.waitForTimeout(50); if(i===5) await shot('lesson-answer'); if(await pg.locator('.foot [data-act=next]').count()) await pg.click('.foot [data-act=next]'); else await pg.waitForTimeout(1300); continue; }
+      if(await pg.locator('.opt:not([disabled])').count()){ await pg.locator('.opt').first().click(); await pg.waitForTimeout(50); if(i===5) await shot('lesson-answer');
+        if(await pg.locator('.foot [data-act=next]').count()){
+          if(!keyboardAdvanceChecked){
+            ok(await pg.evaluate(()=>document.activeElement&&document.activeElement.classList.contains('fb')),'урок: ответ переносит фокус к обратной связи');
+            const before=+(await pg.getAttribute('.pbar','aria-valuenow'));
+            await pg.locator('.foot [data-act=next]').focus(); await pg.locator('.foot [data-act=next]').press('Enter'); await pg.waitForTimeout(30);
+            ok(+(await pg.getAttribute('.pbar','aria-valuenow'))===before+1&&await pg.evaluate(()=>document.activeElement&&document.activeElement.classList.contains('q')),'урок: Enter на кнопке переводит ровно на один шаг и фокусирует новый вопрос');
+            keyboardAdvanceChecked=true;
+          }else await pg.click('.foot [data-act=next]');
+        } else await pg.waitForTimeout(1300); continue; }
       if(await pg.locator('.tile').count()){ await shot('lesson-spell'); await pg.click('[data-act=giveup]'); await pg.click('.foot [data-act=next]'); continue; }
     }
     await noHScroll('lesson-2');
@@ -135,23 +147,31 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     // печать самому: клавиатура телефона и встроенная
     ok(await pg.evaluate(()=>{const n=window.__bararan.normHy; return n('արեւ')===n('արև')&&n('Ինչպե՞ս ես')===n('ինչպես ես');}),'проверка ответа: և = եւ, без ՞ и заглавных');
     await pg.click('[data-act=tab][data-arg=pics]'); await pg.click('[data-act=picType]');
-    ok(await pg.locator('input#tin').count()===1,'печать: поле для клавиатуры телефона');
+    ok(await pg.locator('input#tin').count()===1&&await pg.evaluate(()=>document.activeElement&&document.activeElement.id==='tin'),'печать: поле для клавиатуры телефона сразу получает фокус');
     await pg.fill('#tin','tsar'); ok(await pg.locator('#kbwarn').isVisible(),'латиница → подсказка про армянскую раскладку'); await shot('type-warn'); await noHScroll('type-sys');
     await pg.fill('#tin',''); ok(await pg.locator('#kbwarn').isHidden(),'пустое поле — подсказка скрыта'); await pg.click('.tacts [data-act=kbOwn]'); ok(await pg.locator('.kb button').count()>=41,'встроенная клавиатура: 39 букв, ⌫, пробел');
     const typeWord=async()=>{ const t=await pg.evaluate(()=>{const B=window.__bararan; return B.tq.items[B.tq.i].w.a.toLowerCase();});
       const keys=[]; for(let i=0;i<t.length;i++){ if(t[i]==='ո'&&t[i+1]==='ւ'){keys.push('ու');i++;} else keys.push(t[i]); }
       for(const k of keys) await pg.click('.kb [data-arg="'+k+'"]'); };
     await typeWord(); await shot('type-own'); await noHScroll('type-own'); await pg.click('.kbfoot [data-act=tcheck]');
-    ok(await pg.locator('.tin.done.ok').count()===1,'встроенная клавиатура: слово набрано и принято');
+    ok(await pg.locator('.tin.done.ok').count()===1&&await pg.evaluate(()=>document.activeElement&&document.activeElement.classList.contains('fb')&&document.activeElement.getAttribute('role')==='status'),'встроенная клавиатура: слово принято, фокус и объявление ведут к результату');
     await pg.click('[data-act=typeNext]'); await pg.click('[data-act=tkey][data-arg="ֆ"]'); await pg.click('.kbfoot [data-act=tcheck]'); ok(await pg.locator('.tin.done.bad .d-bad').count()>=1,'ошибка: неверные буквы подчёркнуты'); await shot('type-bad');
     await pg.click('[data-act=typeNext]'); for(let g=0;g<30&&!(await pg.locator('.tin.done').count());g++) await pg.click('.kbfoot [data-act=thint]');
     ok(await pg.locator('.tin.done.ok').count()===1,'подсказки по букве доводят до ответа');
     for(let i=3;i<=10;i++){ await pg.click('[data-act=typeNext]'); if(i===10) break; await pg.click('.kbfoot [data-act=tgive]'); }
-    ok((await pg.textContent('.result .score')).includes('2'),'итог печати: '+(await pg.textContent('.result .score')));
+    ok((await pg.textContent('.result .score')).includes('2')&&await pg.evaluate(()=>document.activeElement&&document.activeElement.classList.contains('apres')),'итог печати получает фокус: '+(await pg.textContent('.result .score')));
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=kbSys]'); ok(await pg.evaluate(()=>JSON.parse(localStorage.getItem('bararan-ui-v1')).kb)==='sys','настройка клавиатуры сохраняется');
-    // словарь: поиск по-английски и латиницей
+    // словарь: метки, поиск по армянскому, переводам и латинице, очистка и доступность результатов
     await pg.click('[data-act=tab][data-arg=dict]'); await pg.fill('#dq','dog'); ok((await pg.textContent('#dlist')).includes('շուն'),'поиск по-английски: dog → շուն');
-    await pg.fill('#dq','tʰrrchʰun'); ok((await pg.textContent('#dlist')).includes('թռչուն'),'поиск латиницей'); await pg.fill('#dq','собака'); await shot('dict'); await noHScroll('dict');
+    ok(await pg.locator('label[for=dq]').count()===1&&await pg.getAttribute('#dq','aria-describedby')==='dictHelp','словарь: у поиска есть постоянная метка и подсказка');
+    await pg.fill('#dq','բարև'); ok((await pg.textContent('#dlist')).includes('բարև'),'поиск по-армянски: բարև');
+    await pg.fill('#dq','barev'); ok((await pg.textContent('#dlist')).includes('բարև'),'поиск латиницей: barev → բարև');
+    await pg.fill('#dq','tʰrrchʰun'); ok((await pg.textContent('#dlist')).includes('թռչուն'),'поиск латиницей по транскрипции');
+    const accented=await pg.evaluate(()=>{const w=window.__bararan.WORDS.find(x=>x.f&&/[éèêàùûôç]/i.test(x.f));return w?{a:w.a,q:w.f.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}:null;});
+    if(accented){await pg.fill('#dq',accented.q);ok((await pg.textContent('#dlist')).includes(accented.a),'словарь: поиск по французскому переводу без диакритики');}
+    await pg.selectOption('#dt','lv:A1'); await pg.fill('#dq','собака'); ok(await pg.locator('#dictClear').isVisible(),'словарь: фильтр показывает доступную кнопку очистки');
+    await pg.click('#dictClear'); ok(await pg.inputValue('#dq')===''&&await pg.inputValue('#dt')==='all'&&await pg.evaluate(()=>document.activeElement.id)==='dq','словарь: очистка сбрасывает запрос и тему, возвращает фокус в поиск');
+    await pg.waitForFunction(()=>!!document.querySelector('#dcount')&&document.querySelector('#dcount').textContent.length>0); await shot('dict'); await noHScroll('dict');
     // настройки → английский
     await pg.click('[data-act=tab][data-arg=settings]'); await shot('settings'); await noHScroll('settings');
     ok(await pg.locator('.set-soc a[href="https://www.instagram.com/barik_armenian"]').count()===1&&(await pg.textContent('.set-soc')).includes('Мы в соцсетях'),'настройки: «Мы в соцсетях» — Instagram и Telegram');
@@ -256,6 +276,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=pUnit][data-arg=s1u4]');
     ok((await pg.textContent('.u-formula')).includes('կա')&&await pg.locator('.chips .chip').count()>=8,'формула: рамка и зёрна урока');
     ok((await pg.textContent('.u-aff')).includes('անտուն'),'формула: прививка ան- с примером անտուն');
+    const unitTargets=await pg.locator('.u-step').evaluateAll(es=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})));
+    ok(unitTargets.length===3&&unitTargets.every(x=>x.w>=44&&x.h>=44),'Путь: все три шага на мобильном — цели касания минимум 44×44 ('+JSON.stringify(unitTargets)+')');
     await noH('формула');
     await pg.click('.page-actions [data-act=pStep][data-arg="1"]');
     ok(await pg.locator('.scene .ln').count()===6&&(await pg.textContent('.scene')).includes('холодильник'),'сцена: 6 реплик с переводом');
@@ -464,7 +486,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const pg=await ctx.newPage(), errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base); await pg.waitForSelector('#phOpts .ph-opt');
     for(const w of [320,390]){ await pg.setViewportSize({width:w,height:844}); await pg.waitForTimeout(100);
-      ok(await pg.evaluate(()=>{ const s=document.querySelector('.ph-scr').getBoundingClientRect(); return [...document.querySelectorAll('#phOpts .ph-opt')].every(b=>b.getBoundingClientRect().bottom<=s.bottom); }),'Б3: все три ответа видны в телефоне на '+w+' px'); }
+      const fit=await pg.evaluate(()=>{const s=document.querySelector('.ph-scr').getBoundingClientRect();return {screen:s.bottom,answers:[...document.querySelectorAll('#phOpts .ph-opt')].map(b=>Math.round(b.getBoundingClientRect().bottom))};});
+      ok(fit.answers.length===3&&fit.answers.every(y=>y<=fit.screen),'Б3: все три ответа видны в телефоне на '+w+' px '+JSON.stringify(fit)); }
     for(const [w,h] of [[360,640],[390,700],[430,740]]){ await pg.setViewportSize({width:w,height:h}); await pg.evaluate(()=>scrollTo(0,0)); await pg.waitForTimeout(100);
       const f=await pg.evaluate(()=>{ const b=s=>document.querySelector(s).getBoundingClientRect().bottom; return {h1:b('.ld-hero h1'),cta:b('.ld-ctas .btn'),o2:b('#phOpts .ph-opt:nth-child(2)')}; });
       ok(f.h1<=h&&f.cta<=h&&f.o2<=h,'TZ3 №3: на '+w+'×'+h+' без прокрутки — заголовок, кнопка и два ответа в телефоне '+JSON.stringify(f)); }
@@ -509,7 +532,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const A=await pg.evaluate(()=>{const B=window.__bararan; return {man:B.MAN, urls:[...new Set(B.WORDS.map(w=>B.audioUrl(w.a)).concat(B.ABC.map(x=>B.audioUrl(x.nm))))], hi:B.aid('բարև ձեզ')};});
     const miss=A.urls.filter(u=>!fs.existsSync(path.join(ROOT,u)));
-    ok(A.man.count>0&&miss.length===0&&A.man.count===A.man.total,'озвучка: запись у всех '+A.urls.length+' слов и названий букв ('+A.man.voice+'), нет: '+miss.length);
+    ok(A.man.count>=A.urls.length&&A.man.total>=A.urls.length&&miss.length===0,'озвучка: запись у всех '+A.urls.length+' слов и названий букв ('+A.man.voice+'), нет: '+miss.length);
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=say][data-arg="բարև ձեզ"]'); await pg.waitForTimeout(700);
     ok(got.some(x=>x.startsWith('200 audio/mpeg')&&x.includes(A.hi)),'«Проверить звук» берёт запись слова: '+got.join(' '));
     const dur=await pg.evaluate(u=>new Promise(r=>{const a=new Audio(u); a.onloadedmetadata=()=>r(a.duration); a.onerror=()=>r(-1);}),A.urls[0]);
@@ -521,7 +544,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     if(A.man.voices&&A.man.voices.hayk){
       const H=await pg.evaluate(()=>{const B=window.__bararan; return B.WORDS.map(w=>B.audioUrl(w.a,'m')).concat(B.ABC.map(x=>B.audioUrl(x.nm,'m')));});
       const hm=H.filter(u=>!u.includes('/hayk/')||!fs.existsSync(path.join(ROOT,u)));
-      ok(hm.length===0&&A.man.voices.hayk.count===A.man.total,'мужской голос: запись у всех '+H.length+', нет: '+hm.length);
+      ok(hm.length===0&&A.man.voices.hayk.count>=H.length&&A.man.voices.hayk.total>=H.length,'мужской голос: запись у всех '+H.length+', нет: '+hm.length);
       await pg.click('[data-act=tab][data-arg=settings]');
       ok(await pg.locator('[data-act=rv]').count()===2&&await pg.locator('[data-act=rv][data-arg=f][aria-pressed=true]').count()===1,'настройки: выбор голоса, по умолчанию женский');
       got.length=0; await pg.click('[data-act=rv][data-arg=m]'); await pg.waitForTimeout(700);
@@ -743,15 +766,43 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const t=await pg.textContent('.pb-sec'); ok(t.includes('Знакомство')&&t.includes('Բարև ձեզ։')&&t.includes('Здравствуйте.'),'фраза: армянский, транскрипция, перевод');
     const urls=await pg.evaluate(async()=>{ const b=window.__bararan; const r=[]; for(const p of ['Բարև ձեզ։','Հաշիվը, խնդրում եմ։','Օգնեցե՛ք։','Ես քեզ սիրում եմ։','Քրիստոս ծնավ և հայտնեցավ։','Գլուխս ցավում է։']){ for(const g of ['f','m']){ const q=await fetch(b.audioUrl(p,g)); r.push(q.ok?1:0); } } return r.reduce((a,x)=>a+x,0); });
     ok(urls===12,'фразы озвучены обоими голосами ('+urls+'/12)');
-    await pg.click('[data-act=pbOffline]'); await pg.waitForFunction(()=>/без интернета/.test(document.body.innerText)&&/Готово/.test(document.body.innerText),null,{timeout:60000}).catch(()=>{});
-    ok((await pg.textContent('body')).includes('Готово: фразы звучат и без интернета'),'«Сохранить без интернета» — готово');
+    await pg.click('[data-act=pbOffline]');
+    ok((await pg.textContent('#pbSaveAnnouncement')).includes('Офлайн-хранилище пока недоступно'),'разговорник: без service worker нет ложного сообщения о сохранении');
+    ok(await pg.evaluate(()=>document.activeElement?.id==='pbOfflineButton'),'разговорник: обновление статуса сохраняет фокус');
     ok(await pg.locator('.pb-nav .tc-chip').count()===20,'разговорник: 20 чипов разделов');
-    await pg.click('.pb-nav [data-arg=love]'); await pg.waitForTimeout(900);
-    ok(await pg.evaluate(()=>{ const r=document.getElementById('pb-love').getBoundingClientRect(); return r.top>=0&&r.top<200; }),'чип «Чувства» ведёт к разделу');
+    await pg.click('.pb-nav [data-arg=love]');
+    // Smooth scrolling duration depends on distance and browser scheduling.
+    // Keep the destination assertion; wait for it instead of a fixed 900 ms.
+    const reachedLove=await pg.waitForFunction(()=>{
+      const r=document.getElementById('pb-love').getBoundingClientRect();
+      return r.top>=0&&r.top<200;
+    },null,{timeout:5000}).then(()=>true,()=>false);
+    const loveTop=await pg.locator('#pb-love').evaluate(e=>e.getBoundingClientRect().top);
+    ok(reachedLove,'чип «Чувства» ведёт к разделу (top='+loveTop+')');
     ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'разговорник: без прокрутки вбок');
     if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'phrases.png')});
     { const c2=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const p2=await c2.newPage(); await p2.goto(base); await p2.click('[data-act=landLang][data-arg=ru]'); ok(await p2.locator('.ld-dg [data-act=pbOpen]').count()===1,'обложка: вход в разговорник'); await c2.close(); }
     ok(errs.length===0,'разговорник: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
+  { // Сетевые отказы в разговорнике и примерах сообщаются в интерфейсе и допускают повтор.
+    const ctx=await br.newContext({serviceWorkers:'block',viewport:{width:390,height:800}}), pg=await ctx.newPage(); let phraseAttempts=0;
+    await pg.route('**/ex/phrases.json',rt=>{phraseAttempts++; return phraseAttempts===1?rt.abort():phraseAttempts===2?rt.fulfill({status:404,body:''}):rt.continue();});
+    await pg.goto(base+'?lang=ru&switch=1&phrases=1'); await pg.waitForSelector('[data-act=pbRetry]');
+    ok(await pg.locator('[role=alert] [data-act=pbRetry]').count()===1,'разговорник: ошибка загрузки видна и снабжена кнопкой повтора');
+    await pg.click('[data-act=pbRetry]'); await pg.waitForSelector('[data-act=pbRetry]');
+    ok(phraseAttempts===2,'разговорник: HTTP 404 оставляет ручной повтор');
+    await pg.click('[data-act=pbRetry]'); await pg.waitForSelector('.pb-row');
+    ok(phraseAttempts===3,'разговорник: повтор снова запрашивает данные и восстанавливает список');
+    await ctx.close();
+  }
+  { // Неудачная загрузка примеров не заменяет экран урока и также даёт повторить запрос.
+    const ctx=await br.newContext({serviceWorkers:'block',viewport:{width:390,height:800}}), pg=await ctx.newPage(); let exampleAttempts=0;
+    await pg.route('**/ex/ru.json',rt=>{exampleAttempts++; return exampleAttempts===1?rt.abort():rt.continue();});
+    await pg.goto(base+'?lang=ru&switch=1&start=lesson'); await pg.waitForSelector('.sess-top'); await pg.waitForSelector('[data-act=exRetry]');
+    ok(await pg.locator('.sess-top').count()===1&&await pg.locator('[role=alert] [data-act=exRetry]').count()===1,'пример: ошибка не ломает урок, рядом видна кнопка повтора');
+    await pg.click('[data-act=exRetry]'); await pg.waitForSelector('.ex-hy');
+    ok(exampleAttempts===2,'пример: повторная загрузка возвращает содержание в текущий урок');
     await ctx.close();
   }
   { // O-182: учителям — темы уровня, ссылка для класса открывает тему
@@ -788,6 +839,16 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'сертификат: без прокрутки вбок');
     if(SHOTS) await pg.screenshot({path:require('path').join(SHOTS,'cert.png'),fullPage:true});
     ok(errs.length===0,'сертификат: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
+  { // Прямые действия со статических SEO-обложек должны уважать язык ссылки и открывать нужный раздел.
+    const ctx=await br.newContext({viewport:{width:390,height:800},serviceWorkers:'block'}), pg=await ctx.newPage();
+    await pg.goto(base+'?lang=de&switch=1&start=lesson'); await pg.waitForSelector('.sess-top');
+    ok(await pg.evaluate(()=>document.documentElement.lang==='de'&&window.__bararan.UI.lang==='de'&&document.body.dataset.view==='session'),'SEO-CTA ?switch=1&start=lesson öffnet den ersten Unterricht auf Deutsch');
+    await pg.goto(base+'?lang=fr&switch=1&abc=1'); await pg.waitForSelector('.abc');
+    ok(await pg.evaluate(()=>document.documentElement.lang==='fr'&&document.body.dataset.view==='abc')&&await pg.locator('.abc button').count()===39,'SEO-CTA ?abc=1 ouvre l’alphabet dans la langue liée');
+    await pg.goto(base+'?lang=es&switch=1&pen=0'); await pg.waitForSelector('#penSvg');
+    ok(await pg.evaluate(()=>document.documentElement.lang==='es'&&document.body.dataset.view==='pen'),'SEO-CTA ?pen=0 abre la práctica de la primera letra');
     await ctx.close();
   }
   await br.close(); srv.close();

@@ -9,9 +9,72 @@ import glob, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LANGS = ['ru', 'en', 'fr', 'es', 'de', 'pt']
-HY = re.compile(r'^[Ա-Ֆա-և ,։՞՛՜\-]+$')
+HY = re.compile(r'^[Ա-Ֆա-և ,՝։՞՛՜\-]+$')
 # корень, по которому слово узнаётся во фразе, когда оно меняется сильнее окончания (գալ → գալիս, տալ → տուր)
-STEM = {'նավահանգիստ': 'նավահանգ', 'գարուն': 'գարն', 'աշուն': 'աշն', 'նարինջ': 'նարնջ', 'արյուն': 'արյ', 'տալ': 'տուր', 'գիտենալ': 'գիտ', 'համակարգիչ': 'համակարգ', 'ասել': 'ասա', 'լինել': 'լին'}
+STEM = {'նավահանգիստ': 'նավահանգ', 'գարուն': 'գարն', 'աշուն': 'աշն', 'նարինջ': 'նարնջ', 'արյուն': 'արյ', 'տալ': 'տուր', 'թիվ': 'թվ', 'խորհուրդ': 'խորհրդ', 'սնունդ': 'սննդ', 'քուրձ': 'քրձ', 'գիտենալ': 'գիտ', 'համակարգիչ': 'համակարգ', 'ասել': 'ասա', 'լինել': 'լին'}
+
+
+def stem_candidates(word):
+    """Return attested spelling stems, including common Armenian inflections."""
+    default = STEM.get(word, word[:max(2, len(word) - 2)] if len(word) > 3 else word[:2]).lower()
+    candidates = [word.lower(), default]
+    # Armenian -ացնել/-եցնել verbs commonly form the aorist with -ացրեց/-եցրեց,
+    # which drops նել. Example: երկարացնել -> երկարացրեց.
+    if word.endswith(('ացնել', 'եցնել')) and len(word) > 5:
+        candidates.append((word[:-3] + 'ր').lower())
+    # -անալ verbs often form the aorist with -ացավ (արժանանալ -> արժանացավ).
+    if word.endswith('անալ') and len(word) > 4:
+        candidates.append((word[:-4] + 'ա').lower())
+    # Abstract nouns ending in -ություն take -ության/-ությամբ in oblique cases.
+    if word.endswith('ություն'):
+        base = word[:-7]
+        candidates.extend((base + 'ության', base + 'ությամբ', base + 'ություններ'))
+    # անկյուն and compounds have անկյ in the singular oblique: եռանկյուն -> եռանկյան.
+    if word.lower().endswith('անկյուն'):
+        candidates.append((word[:-7] + 'անկյ').lower())
+    # ածուխ and compounds take ածխ: գորշ ածուխ -> գորշ ածխի.
+    if word.lower().endswith('ածուխ'):
+        candidates.append((word[:-5] + 'ածխ').lower())
+    # Irregular oblique stems remain in compounds: գետնատուն -> գետնատան, աբբահայր -> աբբահոր.
+    for ending, oblique in (('տուն', 'տան'), ('հայր', 'հոր'), ('մայր', 'մոր')):
+        if word.lower().endswith(ending):
+            candidates.append((word[:-len(ending)] + oblique).lower())
+    # խումբ and compounds take խմբ: ավազակախումբ -> ավազակախմբի.
+    if word.lower().endswith('խումբ'):
+        candidates.append((word[:-5] + 'խմբ').lower())
+    # գալուստ and compounds: Հոգեգալուստ -> Հոգեգալստյան.
+    if word.lower().endswith('գալուստ'):
+        candidates.append((word[:-7] + 'գալստ').lower())
+    # անուն and compounds take անվ in oblique cases: դերանուն -> դերանվան.
+    if word.endswith('անուն'):
+        candidates.append((word[:-5] + 'անվ').lower())
+    # գիրք and compounds take the oblique stem գրք: օրենսգիրք -> օրենսգրքի.
+    if word.endswith('գիրք'):
+        candidates.append((word[:-4] + 'գրք').lower())
+    # Verbal nouns in -ում use -ման in oblique cases: ցնցում -> ցնցման.
+    if word.endswith('ում') and len(word) > 5:
+        candidates.append((word[:-3] + 'մ').lower())
+    # ջուր has the irregular stem ջր in compounds and plural forms (ածխաջուր -> ածխաջրեր).
+    if word.endswith('ջուր'):
+        candidates.append((word[:-4] + 'ջր').lower())
+    # The Armenian և ligature and եւ sequence represent the same spelling.
+    lowered = (candidate.lower() for candidate in candidates)
+    return tuple(dict.fromkeys(variant for candidate in lowered
+                              for variant in (candidate, candidate.replace('և', 'եւ'), candidate.replace('եւ', 'և'))))
+
+
+def contains_word_stem(word, phrase):
+    normalized = re.sub(r'[՞՛՜։]', '', phrase).lower()
+    if ' ' in word:
+        cursor = 0
+        for part in word.lower().split():
+            matches = [(pos, -len(stem)) for stem in stem_candidates(part)
+                       if (pos := normalized.find(stem, cursor)) >= 0]
+            if not matches: return False
+            pos, neg_len = min(matches)
+            cursor = pos - neg_len
+        return True
+    return any(stem in normalized for stem in stem_candidates(word))
 
 
 def main():
@@ -35,8 +98,7 @@ def main():
             seen.add(w)
             if not HY.match(hy): bad.append(where + ' — во фразе не только армянские буквы: ' + hy)
             if not hy.endswith('։'): bad.append(where + ' — фраза без точки ։: ' + hy)
-            stem = STEM.get(w, w[:max(2, len(w) - 2)] if len(w) > 3 else w[:2]).lower()
-            if stem not in re.sub(r'[՞՛՜]', '', hy).lower(): bad.append(where + ' — во фразе нет слова «%s»: %s' % (w, hy))
+            if not contains_word_stem(w, hy): bad.append(where + ' — во фразе нет слова «%s»: %s' % (w, hy))
             for l, t in zip(LANGS, p[2:]):
                 if re.search(r'[Ա-և]', t): bad.append(where + ' — армянские буквы в переводе ' + l)
                 out[l][w] = [hy, t]

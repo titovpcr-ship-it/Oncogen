@@ -9,7 +9,7 @@
 <title>Barik</title>
 <script>/* O-205: защита хостинга иногда отдаёт страницу-заглушку вместо скрипта — тогда один раз перезагрузить страницу;
    приложение так и не запустилось — через 8 с показать обложку, уже лежащую в HTML (иначе пустой экран). */
-(function(){var K='barik-rl';addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='SCRIPT'||!/\/js\//.test(t.src||''))return;
+(function(){var K='barik-rl';addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='SCRIPT'||t.hasAttribute('data-barik-retry')||!/\/js\//.test(t.src||''))return;
 try{if(sessionStorage.getItem(K))return;sessionStorage.setItem(K,'1');}catch(x){return;}setTimeout(function(){location.reload();},1200);},true);
 setTimeout(function(){var h=document.documentElement;if(!window.__barikOk)h.className=h.className.replace(/\s*nopre/g,'');},8000);})();</script>
 <link rel="stylesheet" href="css/app.css">
