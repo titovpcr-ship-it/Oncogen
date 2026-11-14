@@ -1,10 +1,16 @@
 {
   "total": 5950,
-  "in_files": 2595,
+  "in_files": 2495,
   "reviewed": 2495,
   "drafts": 100,
   "translations_cached": 28,
-  "status": "Пауза: проверка ответа переводчика",
-  "updated_at": "2026-11-14T09:39:46.539289+00:00",
-  "azure_generation_spend": 0
+  "status": "Полная озвучка готова; проверки и выкладка",
+  "updated_at": "2026-11-14T09:49:30.156139+00:00",
+  "azure_generation_spend": 0,
+  "audio": {
+    "anahit": 33819,
+    "hayk": 33819,
+    "total_per_voice": 33819
+  },
+  "release_run": 43582243290
 }
