@@ -98,7 +98,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       const gate=new Promise(r=>{releasePictures=r;});
       await p11.route('**/js/pictures.js*',async rt=>{await gate;await rt.continue();});
       try {
-        await p11.goto(base); await p11.waitForFunction(()=>window.__barikOk&&document.querySelector('#phOpts .ph-opt.right'));
+        await p11.goto(base,{waitUntil:'domcontentloaded'}); await p11.waitForFunction(()=>window.__barikOk&&document.querySelector('#phOpts .ph-opt.right'));
         await p11.locator('#phOpts .ph-opt.right:not([disabled])').click();
         await p11.waitForFunction(()=>document.querySelector('.ph-n')?.textContent?.replace(/\s/g,'')==='1/3',null,{timeout:3000});
         releasePictures();
