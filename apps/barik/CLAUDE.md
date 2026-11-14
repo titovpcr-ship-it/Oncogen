@@ -47,7 +47,7 @@ PHP server/api, база вне public_html, api/config.php секретный �
 Анаит и Айк — синтез Microsoft Azure, не «живые голоса»/«real voices»/«записаны».
 Новая озвучка только Azure Standard S0; не F0, не edge-tts, Google Translate, Forvo, Meta MMS. Не нажимать Upgrade подписки и не снимать лимит расходов; кредит до ~03.12.2026.
 Два голоса hy-AM-AnahitNeural и hy-AM-HaykNeural, North Europe. Файлы на слово www/audio/<голос>/<ab>/<aid>.mp3, manifest.json, идентификатор FNV-1a совпадает с app.js. Новые слова озвучивать обоими голосами, готовые записи без причины не перегенерировать.
-14.11.2026: локально озвучены все 33 819 из 33 819 записей каждым голосом; пропусков нет. Новая партия — 30 фраз двумя голосами. Публикацию подтвердить после успешного release run. Ключи только в исключённом .env.
+14.11.2026: озвучены и опубликованы все 33 819 из 33 819 записей каждым голосом; пропусков нет. Новая партия — 30 фраз двумя голосами. Все 60 новых MP3 получены с barik.am и побайтово совпадают с исходниками; live manifest подтверждает оба счётчика. Ключи только в исключённом .env.
 Azure глотает և — spoken() отправляет եւ, имя файла по оригиналу. MP3 целиком/HTTP 200 кэшировать, Range не кэшировать. Подробности tools/README_AUDIO.md.
 Примеры: data/examples/*.txt → build_examples.py → www/ex/<язык>.json и say.txt. gen_examples.py --level B2 дописывает отсутствующее; check_examples.py перед озвучкой gen_audio.py --only E (оба голоса).
 
@@ -56,7 +56,7 @@ Azure глотает և — spoken() отправляет եւ, имя файл�
 Из apps/barik: `python3.13 tools/build_data.py`, `node tests/test_app.js`, `python3.13 tools/build_site.py`, `python3.13 tools/check_live.py`.
 Name.am host30.name.am, cPanel barik; для автоматизации https://cpanel.barik.am:443 с BARIK_HOST_TOKEN из секретов Actions. Port 2083 из облака может выдавать challenge.
 Сайт /home/barik/public_html, база /home/barik/barik-data/barik.sqlite. deploy_site.py грузит архивами и хранит отпечатки out/deploy/state.json; --prune не применять без разрешения на удаление.
-GitHub Actions .github/workflows/barik-release.yml: full suite → ship → live guest. Последняя успешная выкладка — run 43533054710, attempt 2, commit bae1ffc6546f5891c4b6ef8152d8983ab33d8781 (14.11.2026). Live JS `app.js?v=9237bc61` содержит `landPicsReady()`; гостевой урок и микрофон прошли.
+GitHub Actions .github/workflows/barik-release.yml: full suite → ship → live guest. Последняя успешная выкладка — run 43582243290, commit 720920b74bc2d92e1b8ffdbcc13d31f00d780344 (14.11.2026), полный набор проверок: 356 с, 0 ошибок. Live JS `app.js?v=9237bc61` содержит `landPicsReady()`; гостевой урок и микрофон прошли.
 Нельзя полагаться на старый state.json от другого сервера. Не затирать api/config.php и базу.
 Свой счётчик без IP/cookie: hit → stats; новое событие — FUNNEL lib.php, STEPS stats.py, tests/test_funnel.js и утренняя сводка.
 Мониторинг watch_run, срочное владельцу в Telegram, утро 03:00 UTC. Отсутствие сводки — повод проверить хостинг/cron, но не менять cron без разрешения.
@@ -64,7 +64,7 @@ GitHub Actions .github/workflows/barik-release.yml: full suite → ship → live
 «Барик бэкап» по просьбе: tools/barik_backup.py, шифрованный архив; docs/START_HERE.md обновлять при новых сервисах/ключах/командах; restore_drill.py проверяет восстановление. Не выдавать секреты незашифрованным архивом.
 
 ## Текущее состояние (14.11.2026)
-PR #3 слит в codex/audit4; полный аудит после слияния успешен (run 43533054585). Озвучка обоими голосами полная и опубликована: 33 789 из 33 789 на голос; live-манифест и два контрольных MP3 отвечают 200. cPanel token принят, production-доступ подтверждён; release run 43533054710, attempt 2, успешен (439 с, 0 ошибок, архивы загружены, live guest/microphone pass).
+PR #3 слит в codex/audit4 и включён в опубликованный релиз 720920b74bc2d92e1b8ffdbcc13d31f00d780344. Полный аудит run 43582243250 и выкладка run 43582243290 успешны (356 с, 0 ошибок, live guest/microphone pass). Озвучка обоими голосами опубликована: 33 819 из 33 819 на голос. Независимая live-проверка: все 60 новых MP3 отвечают HTTP 200 и побайтово совпадают; manifest содержит оба счётчика. После обнаружения устаревших JSON выполнена точечная повторная загрузка шести файлов ex/*.json (run 43583548585, success): каждый из шести языков отдаёт 12 372 записи, полное содержимое совпадает с проверенным релизом. Production-доступ подтверждён.
 B2: проверено 2 495 из 5 950 записей, остаётся 3 455. Добавлено 68 примеров: 30 новых и 38 привязок к подходящим примерам корпуса. Ещё 100 армянских/английских черновиков сохранены отдельно и в релиз не включены из-за ошибок машинного перевода. Azure Speech работает; расходы Azure разрешены владельцем без новых согласований. Azure OpenAI deployment DeepSeek не найден; новый вход Microsoft владелец просит не использовать. На физическом устройстве владельца сайт работает; Google sitemap/Search Console проверяли слишком рано — дать индексации время. CSP — изучить report-only после ~19.11.2026.
 Языковую загрузку не менять без замеренного выигрыша ≥0.5 секунды; шаблонные примеры менять после завершения и проверки B2.
 Полная прежняя память без потерь: [docs/HISTORY.md](docs/HISTORY.md). Инвентаризация ограничений: [docs/AUDIT4_RULES_REVIEW.md](docs/AUDIT4_RULES_REVIEW.md). Архив читать по нужному разделу, а не целиком при каждой сессии.
