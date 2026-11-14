@@ -1,0 +1,59 @@
+name: Barik B2 example generation
+on:
+  push:
+    branches: [codex/audit4]
+    paths:
+      - '.github/workflows/barik-b2-fill.yml'
+      - 'apps/barik/tools/gen_examples.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: barik-b2-generation
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/cache/restore@v4
+        with:
+          path: apps/barik/data/examples/gen_b2.txt
+          key: barik-b2-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: barik-b2-
+      - name: Install generator dependency
+        run: python -m pip install requests
+      - name: Check required Foundry credentials without printing them
+        env:
+          AZURE_FOUNDRY_ENDPOINT: ${{ secrets.AZURE_FOUNDRY_ENDPOINT || vars.AZURE_FOUNDRY_ENDPOINT }}
+          AZURE_FOUNDRY_KEY: ${{ secrets.AZURE_FOUNDRY_KEY }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          missing = [key for key in ('AZURE_FOUNDRY_ENDPOINT', 'AZURE_FOUNDRY_KEY') if not os.environ.get(key)]
+          if missing:
+              print('Missing GitHub Actions value(s): ' + ', '.join(missing))
+              sys.exit(1)
+          print('Azure AI Foundry credentials are configured.')
+          PY
+      - name: Fill remaining B2 examples, including multiword entries
+        env:
+          AZURE_FOUNDRY_ENDPOINT: ${{ secrets.AZURE_FOUNDRY_ENDPOINT || vars.AZURE_FOUNDRY_ENDPOINT }}
+          AZURE_FOUNDRY_KEY: ${{ secrets.AZURE_FOUNDRY_KEY }}
+        run: python -u apps/barik/tools/gen_examples.py --level B2 --minutes 320 --batch 8 --include-multiword
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: apps/barik/data/examples/gen_b2.txt
+          key: barik-b2-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: barik-b2-examples-${{ github.run_id }}-${{ github.run_attempt }}
+          path: apps/barik/data/examples/gen_b2.txt
+          if-no-files-found: error
+          retention-days: 30
