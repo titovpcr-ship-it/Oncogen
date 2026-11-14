@@ -3,49 +3,49 @@
   "reviewed": 2595,
   "in_files": 2595,
   "published": 2595,
-  "drafts": 603,
-  "draft_structure_pass": 600,
+  "drafts": 1687,
+  "draft_structure_pass": 1682,
   "translations_cached": 36,
   "status": "Шесть помощников готовят B2; черновики не считаются опубликованными",
   "parts": [
     {
       "part": 1,
       "assigned": 559,
-      "drafts": 98,
-      "structurally_valid": 97
+      "drafts": 256,
+      "structurally_valid": 255
     },
     {
       "part": 2,
       "assigned": 559,
-      "drafts": 100,
-      "structurally_valid": 100
+      "drafts": 300,
+      "structurally_valid": 298
     },
     {
       "part": 3,
       "assigned": 559,
-      "drafts": 65,
-      "structurally_valid": 65
+      "drafts": 291,
+      "structurally_valid": 291
     },
     {
       "part": 4,
       "assigned": 559,
-      "drafts": 120,
-      "structurally_valid": 120
+      "drafts": 300,
+      "structurally_valid": 300
     },
     {
       "part": 5,
       "assigned": 559,
-      "drafts": 120,
-      "structurally_valid": 120
+      "drafts": 240,
+      "structurally_valid": 240
     },
     {
       "part": 6,
       "assigned": 560,
-      "drafts": 100,
-      "structurally_valid": 98
+      "drafts": 300,
+      "structurally_valid": 298
     }
   ],
-  "updated_at": "2026-11-14T10:44:14.825820+00:00",
+  "updated_at": "2026-11-14T14:36:16.139055+00:00",
   "audio": {
     "anahit": 33919,
     "hayk": 33919,
