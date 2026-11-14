@@ -37,6 +37,15 @@ def stem_candidates(word):
 
 def contains_word_stem(word, phrase):
     normalized = re.sub(r'[՞՛՜։]', '', phrase).lower()
+    if ' ' in word:
+        cursor = 0
+        for part in word.lower().split():
+            matches = [(pos, -len(stem)) for stem in stem_candidates(part)
+                       if (pos := normalized.find(stem, cursor)) >= 0]
+            if not matches: return False
+            pos, neg_len = min(matches)
+            cursor = pos - neg_len
+        return True
     return any(stem in normalized for stem in stem_candidates(word))
 
 
