@@ -1,16 +1,55 @@
 {
   "total": 5950,
-  "in_files": 2495,
-  "reviewed": 2495,
-  "drafts": 100,
-  "translations_cached": 28,
-  "status": "Полная озвучка готова; проверки и выкладка",
-  "updated_at": "2026-11-14T09:49:30.156139+00:00",
-  "azure_generation_spend": 0,
+  "reviewed": 2595,
+  "in_files": 2595,
+  "published": 2595,
+  "drafts": 603,
+  "draft_structure_pass": 600,
+  "translations_cached": 36,
+  "status": "Шесть помощников готовят B2; черновики не считаются опубликованными",
+  "parts": [
+    {
+      "part": 1,
+      "assigned": 559,
+      "drafts": 98,
+      "structurally_valid": 97
+    },
+    {
+      "part": 2,
+      "assigned": 559,
+      "drafts": 100,
+      "structurally_valid": 100
+    },
+    {
+      "part": 3,
+      "assigned": 559,
+      "drafts": 65,
+      "structurally_valid": 65
+    },
+    {
+      "part": 4,
+      "assigned": 559,
+      "drafts": 120,
+      "structurally_valid": 120
+    },
+    {
+      "part": 5,
+      "assigned": 559,
+      "drafts": 120,
+      "structurally_valid": 120
+    },
+    {
+      "part": 6,
+      "assigned": 560,
+      "drafts": 100,
+      "structurally_valid": 98
+    }
+  ],
+  "updated_at": "2026-11-14T10:44:14.825820+00:00",
   "audio": {
-    "anahit": 33819,
-    "hayk": 33819,
-    "total_per_voice": 33819
+    "anahit": 33919,
+    "hayk": 33919,
+    "total_per_voice": 33919
   },
-  "release_run": 43582243290
+  "release_run": 43585104332
 }
