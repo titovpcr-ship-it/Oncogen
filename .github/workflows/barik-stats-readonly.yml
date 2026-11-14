@@ -1,0 +1,70 @@
+name: Read Barik visitor statistics
+on:
+  push:
+    branches: [codex/stats-readonly]
+    paths: ['.github/workflows/barik-stats-readonly.yml']
+permissions: {}
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read aggregate counters and encrypt the result
+        env:
+          BARIK_HOST_TOKEN: ${{ secrets.BARIK_HOST_TOKEN }}
+        run: |
+          cat > stats-public.pem <<'PEM'
+          -----BEGIN PUBLIC KEY-----
+          MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzcWZcm3/K5gJoEt5ZKeR
+          hWRAGTA2R7eoxzK21ek6F93xe6owstdeKHfWBS36k8w/TKY1Xa91Mn1go3MoSkw3
+          wvogSSUgb2oqBZSQsFNbcVs9+yU+5CkpeG4t1MKnH2iqTE+XhovY8ejSx3jyNgxH
+          x2BQnuyQZR5xdfNvCUIl316ErMZ8YkBkeYsD9iyZjxB9KjAWVyh/F/IAj8k2kP7N
+          pU9BYIyexc8x/BAC425orEGxd0NZVioi0hAEZdPe+7Glft7CfPgoc5ro5/jhNqJc
+          Db2qjdJSOkixDBkf0upgzXMm5zQaH7P9Ip1ICIPPKY9/je82Qyt59iJx6OqZcR6u
+          mZHItxgjNjblHvcNUlKYzbbqwSiW2wc5o017YUDJ+JrxDwJjE64/9d2oZgs66f1J
+          74TZcfjN6AMdRVGodmaiNww87JCZuUS5BHKCc2iHkD7oWGb7TYT0XzgKMHWjq2Np
+          X22BOlQzrBDn5OTucC3nvlhP2SmDXgo3u2bfQAtFGtNRqPxhQ5VQd0Jop6DwwAks
+          KpS0CnWbgcSIQcuFlW9I7tAYLA/lfspN3aULOINJFwfembEWJ/TPlYq5W07IIPJZ
+          2tcDzH7DNMNztiuRsft3O8hy4OtZtWLikoJFAH+No/Bgj3RJgVKXq8mxhmLYm05I
+          f4Rp7V3HnTYwNudJerCtRJkCAwEAAQ==
+          -----END PUBLIC KEY-----
+          PEM
+          python3 - <<'PYCODE'
+          import base64,datetime,hashlib,hmac,json,os,re,subprocess,urllib.request,urllib.error
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+           def redirect_request(self,*args,**kwargs):return None
+          client=urllib.request.build_opener(NoRedirect())
+          token=os.environ.get('BARIK_HOST_TOKEN');assert token,'Hosting token missing'
+          def cp(module,func,**params):
+           from urllib.parse import urlencode
+           url='https://cpanel.barik.am/execute/'+module+'/'+func+'?'+urlencode(params)
+           req=urllib.request.Request(url,headers={'Authorization':'cpanel barik:'+token})
+           with client.open(req,timeout=45) as r:return json.load(r)
+          cfg=''
+          for directory in ('/home/barik/public_html/api','public_html/api'):
+           try:
+            data=cp('Fileman','get_file_content',dir=directory,file='config.php',charset='utf-8')
+           except (urllib.error.HTTPError,urllib.error.URLError,ValueError):
+            print('Config read request unavailable');continue
+           body=data.get('data') or {};content=body.get('content','') if isinstance(body,dict) else ''
+           if isinstance(content,str) and "'PEPPER'" in content:cfg=content;break
+           print('Config API structure:',data.get('status'),list(body.keys()) if isinstance(body,dict) else type(body).__name__)
+          m=re.search(r"['\"]PEPPER['\"]\s*=>\s*['\"]([^'\"]+)['\"]",cfg)
+          if not m:raise SystemExit('Stats authentication not available through configuration read')
+          key=hmac.new(m.group(1).encode(),b'stats',hashlib.sha256).hexdigest()[:32]
+          from urllib.parse import urlencode
+          url='https://barik.am/api/?'+urlencode({'r':'stats','key':key,'days':400})
+          try:
+           with urllib.request.urlopen(url,timeout=45) as r:j=json.load(r)
+          except (urllib.error.HTTPError,urllib.error.URLError,ValueError):raise SystemExit('Statistics read failed; no credential output') from None
+          if not j.get('ok'):raise SystemExit('Statistics API did not return success')
+          rows=[r for r in j['rows'] if r.get('k') in ('u','open','e:start','e:lesson_done','g:guest')]
+          payload=json.dumps({'fetched_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'max_days':400,'rows':rows},separators=(',',':')).encode()
+          blocks=[]
+          for i in range(0,len(payload),400):
+           r=subprocess.run(['openssl','pkeyutl','-encrypt','-pubin','-inkey','stats-public.pem','-pkeyopt','rsa_padding_mode:oaep','-pkeyopt','rsa_oaep_md:sha256'],input=payload[i:i+400],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+           if r.returncode:raise SystemExit('Encrypted transfer failed')
+           blocks.append(base64.b64encode(r.stdout).decode())
+          print('BARIK_ENCRYPTED_STATS='+json.dumps(blocks,separators=(',',':')))
+          print('Read-only statistics retrieval completed; no site or counter changes')
+          PYCODE
