@@ -3,14 +3,14 @@
   "in_files": 2595,
   "reviewed": 2595,
   "drafts": 0,
-  "translations_cached": 28,
-  "status": "2595 проверенных B2: новая партия озвучена; проверки и публикация",
-  "updated_at": "2026-11-14T10:23:10.643093+00:00",
+  "translations_cached": 36,
+  "status": "Опубликованы 2595 из 5950 B2; осталось 3355, активной генерации нет",
+  "updated_at": "2026-11-14T10:35:30.649800+00:00",
   "azure_generation_spend": 0,
   "audio": {
     "anahit": 33919,
     "hayk": 33919,
     "total_per_voice": 33919
   },
-  "release_run": 43582243290
+  "release_run": 43585104332
 }
