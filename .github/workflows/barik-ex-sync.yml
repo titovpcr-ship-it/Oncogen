@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 5
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /apps/barik/tools/deploy_site.py
@@ -44,17 +44,8 @@ jobs:
           for lang in ('ru', 'en', 'fr', 'es', 'de', 'pt'):
               path = Path('apps/barik/www/ex') / (lang + '.json')
               expected = json.loads(path.read_text(encoding='utf-8'))
-              before = cp.uapi('Fileman', 'get_file_content', dir='public_html/ex', file=path.name)
-              old = (before.get('data') or {}).get('content', '')
-              try:
-                  old_count = len(json.loads(old))
-              except ValueError:
-                  old_count = 'unreadable'
-              print(lang, 'server before:', old_count, 'expected:', len(expected), flush=True)
+              print(lang, 'expected:', len(expected), flush=True)
               cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (path.name, path.read_bytes(), 'application/json')}, dir='public_html/ex', overwrite='1'), 'example JSON upload')
-              back = cp.uapi('Fileman', 'get_file_content', dir='public_html/ex', file=path.name)
-              contents = (back.get('data') or {}).get('content', '')
-              assert json.loads(contents) == expected, 'Server readback mismatch: ' + lang
               for attempt in range(3):
                   response = requests.get('https://barik.am/ex/' + path.name, params={'verified':time.time_ns()}, headers={'Cache-Control':'no-cache', 'Accept-Encoding':'identity'}, timeout=45)
                   if response.ok and response.json() == expected:
