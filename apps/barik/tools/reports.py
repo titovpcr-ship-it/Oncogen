@@ -31,12 +31,12 @@ def main():
     if not m: sys.exit('в config.php нет PEPPER')
     key = hmac.new(m.group(1).encode(), b'stats', hashlib.sha256).hexdigest()[:32]
     url = 'https://%s/api/' % os.environ['BARIK_HOST_DOMAIN']
-    p = {'r': 'reports', 'key': key}
+    p = {'r': 'reports'}
     if a.done:
         p['done'] = a.done
     if a.all:
         p['all'] = 1
-    j = (requests.post if a.done else requests.get)(url, params=p, timeout=60).json()
+    j = (requests.post if a.done else requests.get)(url, params=p, headers={'Authorization': 'Bearer ' + key}, timeout=60).json()
     if not j.get('ok'): sys.exit('ошибка: %s' % j)
     W = words()
     by = collections.OrderedDict()

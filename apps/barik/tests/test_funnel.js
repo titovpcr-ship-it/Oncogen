@@ -20,7 +20,7 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
   let phpErr=''; php.stderr.on('data',d=>{ const s=String(d); if(/PHP (Fatal|Warning|Parse|Notice|Deprecated)/.test(s)) phpErr+=s; });
   for(let i=0;i<50;i++){ try{ if((await fetch(base+'api/?r=me')).ok) break; }catch(e){} await new Promise(r=>setTimeout(r,100)); }
   const KEY=crypto.createHmac('sha256','test-pepper').update('stats').digest('hex').slice(0,32);
-  const stats=async()=>{ const j=await (await fetch(base+'api/?r=stats&key='+KEY+'&days=2')).json(); const m={}; for(const r of j.rows) m[r.k]=(m[r.k]||0)+r.n; m.__premium=j.premium; return m; };
+  const stats=async()=>{ const j=await (await fetch(base+'api/?r=stats&days=2',{headers:{Authorization:'Bearer '+KEY}})).json(); const m={}; for(const r of j.rows) m[r.k]=(m[r.k]||0)+r.n; m.__premium=j.premium; return m; };
 
   // Premium в сводке: тестовая подписка в боевом режиме не считается, боевая и подарок — считаются
   await stats();   // база и таблицы создаются при первом обращении

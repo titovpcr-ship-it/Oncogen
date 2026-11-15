@@ -88,7 +88,7 @@ if ($r === 'tg') {
 
 if ($r === 'stats') {
     // сводка для владельца: ключ — от PEPPER (tools/stats.py берёт его из config.php хостинга)
-    if (!hash_equals(stats_key(), (string)($_GET['key'] ?? ''))) fail('auth', 401);
+    if (!hash_equals(stats_key(), preg_replace('/^Bearer /', '', (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '')))) fail('auth', 401);
     $days = max(1, min(400, (int)($_GET['days'] ?? 30)));
     $from = intdiv(time(), 86400) - $days + 1;
     out(['ok' => true, 'from' => $from, 'rows' => q('SELECT day, k, n FROM stats WHERE day >= ? ORDER BY day, k', [$from])->fetchAll(),
@@ -98,7 +98,7 @@ if ($r === 'stats') {
 
 if ($r === 'reports') {
     // отметки «Ошибка в слове?» для владельца (O-187): ключ — как у сводки; done=1 — отметить разобранные до id
-    if (!hash_equals(stats_key(), (string)($_GET['key'] ?? ''))) fail('auth', 401);
+    if (!hash_equals(stats_key(), preg_replace('/^Bearer /', '', (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '')))) fail('auth', 401);
     db()->exec('CREATE TABLE IF NOT EXISTS reports(id INTEGER PRIMARY KEY AUTOINCREMENT, a TEXT NOT NULL, lang TEXT NOT NULL, kind TEXT NOT NULL,
         note TEXT NOT NULL DEFAULT \'\', topic INTEGER NOT NULL DEFAULT -1, uid INTEGER, t INTEGER NOT NULL, done INTEGER NOT NULL DEFAULT 0)');
     if ($method === 'POST' && isset($_GET['done'])) q('UPDATE reports SET done = 1 WHERE id <= ?', [(int)$_GET['done']]);

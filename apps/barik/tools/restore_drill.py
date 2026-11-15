@@ -70,7 +70,7 @@ def main():
                 me = {}
             ok(me.get('ok') is True, 'кабинет из архива отвечает (api/?r=me)')
             key = hmac.new(m.group(1).encode(), b'stats', hashlib.sha256).hexdigest()[:32] if m else ''
-            st = json.loads(urllib.request.urlopen(base + 'api/?r=stats&key=%s&days=30' % key, timeout=10).read())
+            st = json.loads(urllib.request.urlopen(urllib.request.Request(base + 'api/?r=stats&days=30', headers={'Authorization': 'Bearer ' + key}), timeout=10).read())
             ok(st.get('ok') and st.get('users') == users, 'сводка по ключу из восстановленного PEPPER: аккаунтов %s (в базе %d)' % (st.get('users'), users))
             home = urllib.request.urlopen(base, timeout=10).read().decode('utf-8', 'replace')
             ok('Barik' in home and 'js/app.js' in home, 'приложение из архива открывается')
