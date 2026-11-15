@@ -488,7 +488,7 @@ function dodo_webhook(): never {
         try { $eventStamp = (int)(new DateTimeImmutable($ev['timestamp']))->format('Uu'); }
         catch (Exception $dateError) { fail('retry', 503); }
     }
-    $fetchRev = $sid !== '' ? (int)q('INSERT INTO events(id,t) VALUES(?,1) ON CONFLICT(id) DO UPDATE SET t=t+1 RETURNING t', ['dodo-fetch:' . $sid])->fetchColumn() : 0;
+    $fetchRev = $sid !== '' ? (int)q('INSERT INTO subscription_versions(sid,issued) VALUES(?,1) ON CONFLICT(sid) DO UPDATE SET issued=issued+1 RETURNING issued', [$sid])->fetchColumn() : 0;
     $lang = in_array($meta['lang'] ?? '', ['ru', 'en'], true) ? $meta['lang'] : 'en';
     // Network I/O must not hold SQLite's single writer lock.
     $GLOBALS['DODO_CODE'] = -1;
@@ -497,21 +497,22 @@ function dodo_webhook(): never {
     if (dodo_on() && preg_match('/^[A-Za-z0-9_]{3,80}$/', $giftPayment ? $pid : $sid)) {
         $verified = dodo('GET', ($giftPayment ? '/payments/' : '/subscriptions/') . rawurlencode($giftPayment ? $pid : $sid));
     }
-    $code = (int)$GLOBALS['DODO_CODE'];
+    $stateHttp = $code = (int)$GLOBALS['DODO_CODE'];
+    $paymentHttp = $stateHttp;
     if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
     if (($ev['type'] ?? '') === 'payment.succeeded' && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
         $payment = $giftPayment ? $verified : dodo('GET', '/payments/' . rawurlencode($pid));
-        $code = (int)$GLOBALS['DODO_CODE'];
+        $paymentHttp = $code = (int)$GLOBALS['DODO_CODE'];
         if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
     }
-    $validSubscription = $sid === '' || (is_array($verified) && ($verified['subscription_id'] ?? '') === $sid
+    $validSubscription = $sid === '' || $stateHttp >= 400 || (is_array($verified) && ($verified['subscription_id'] ?? '') === $sid
         && is_array($verified['customer'] ?? null)
         && (!empty($verified['customer']['customer_id']) || norm_email($verified['customer']['email'] ?? null))
         && is_string($verified['product_id'] ?? null) && $verified['product_id'] !== ''
         && in_array($verified['status'] ?? '', ['active','past_due','cancelled','expired','pending','on_hold','paused','failed'], true));
-    $needsPayment = $giftPayment || ($ev['type'] ?? '') === 'payment.succeeded';
+    $needsPayment = $giftPayment || (($ev['type'] ?? '') === 'payment.succeeded' && $pid !== '');
     $paymentState = $giftPayment ? $verified : $payment;
-    $validPayment = !$needsPayment || (is_array($paymentState) && ($paymentState['payment_id'] ?? '') === $pid
+    $validPayment = !$needsPayment || $paymentHttp >= 400 || (is_array($paymentState) && ($paymentState['payment_id'] ?? '') === $pid
         && is_string($paymentState['status'] ?? null) && $paymentState['status'] !== '');
     if (!$validSubscription || !$validPayment) fail('retry', 503);
     $pdo = db();
@@ -529,13 +530,13 @@ function dodo_webhook(): never {
                 if ($g && !$existed) $notifyGift = $g;
                 $result = ['ok' => true, 'gift' => (bool)$g];
             } elseif ($sid !== '' && dodo_on()) {
-                $applied = (int)q('SELECT t FROM events WHERE id=?', ['dodo-applied:' . $sid])->fetchColumn();
-                $appliedStamp = (int)q('SELECT t FROM events WHERE id=?', ['dodo-stamp:' . $sid])->fetchColumn();
+                $applied = (int)q('SELECT applied FROM subscription_versions WHERE sid=?', [$sid])->fetchColumn();
+                $appliedStamp = (int)q('SELECT event_stamp FROM subscription_versions WHERE sid=?', [$sid])->fetchColumn();
                 $fresh = $eventStamp > 0 && $appliedStamp > 0 ? ($eventStamp > $appliedStamp || ($eventStamp === $appliedStamp && $fetchRev >= $applied)) : $fetchRev >= $applied;
                 $u = $fresh && $verified ? dodo_sync($sid, null, $verified) : null;
                 if ($u) {
-                    q('INSERT INTO events(id,t) VALUES(?,?) ON CONFLICT(id) DO UPDATE SET t=excluded.t', ['dodo-applied:' . $sid, $fetchRev]);
-                    if ($eventStamp > 0) q('INSERT INTO events(id,t) VALUES(?,?) ON CONFLICT(id) DO UPDATE SET t=excluded.t', ['dodo-stamp:' . $sid, $eventStamp]);
+                    q('UPDATE subscription_versions SET applied=MAX(applied,CAST(? AS INTEGER)) WHERE sid=?', [$fetchRev, $sid]);
+                    if ($eventStamp > 0) q('UPDATE subscription_versions SET event_stamp=? WHERE sid=?', [$eventStamp, $sid]);
                 }
                 $result = ['ok' => true, 'user' => (bool)$u];
             } else {

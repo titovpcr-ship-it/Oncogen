@@ -54,7 +54,7 @@ class Guard(unittest.TestCase):
         sys.path.insert(0,str(HELPER.parent))
         import deploy_site as deploy
         from unittest.mock import patch
-        state=self.base/'state.json'; state.write_text('{"app.js":"stale"}')
+        state=self.base/'state.json'; state.write_text(json.dumps({name:deploy.sha(self.work/'stage'/name) for name in ('app.js','z.js')}))
         def control(action, credentials=None):
             if action=='rollback':
                 self.assertEqual(self.action('rollback').returncode,0)
@@ -69,6 +69,21 @@ class Guard(unittest.TestCase):
         (self.work/'journal.json').unlink()
         self.assertEqual(self.action('activate').returncode,0)
         self.assertEqual((self.root/'app.js').read_text(),'new')
+    def test_lock_is_shared_between_release_ids(self):
+        import fcntl, time
+        other=self.base/'another-release'
+        lock=open(self.base/'.barik-release.lock','w')
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        script='require '+json.dumps(str(HELPER))+'; release_action('+','.join(json.dumps(str(x)) for x in (self.root,other,'prepare','other.php'))+');'
+        proc=subprocess.Popen(['php','-r',script],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        try:
+            time.sleep(.15); self.assertIsNone(proc.poll())
+        finally:
+            fcntl.flock(lock,fcntl.LOCK_UN); lock.close()
+        stdout,stderr=proc.communicate(timeout=5)
+        self.assertEqual(proc.returncode,0,stderr)
+        self.assertTrue((other/'stage').exists())
+
     def test_rotation_keeps_three_finalized_releases(self):
         import os
         for i in range(5):

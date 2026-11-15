@@ -195,15 +195,30 @@ class AtomicAPI(unittest.TestCase):
         self.dodo_state.update(subscription={'status':'past_due','next_billing_date':'2020-01-01'},delay=.8,entered=entered)
         try:
             with concurrent.futures.ThreadPoolExecutor() as pool:
-                old=pool.submit(self.call,'dodo',payload,1,'evt_older')
+                older=dict(payload,timestamp='2026-11-15T00:00:00Z')
+                newer=dict(payload,timestamp='2026-11-15T00:00:01Z')
+                old=pool.submit(self.call,'dodo',older,1,'evt_older')
                 self.assertTrue(entered.wait(3))
                 self.dodo_state.update(subscription={'status':'active','next_billing_date':'2031-01-01'},delay=.01)
-                self.assertEqual(self.call('dodo',payload,1,'evt_newer')[0],200)
+                self.assertEqual(self.call('dodo',newer,1,'evt_newer')[0],200)
                 self.assertEqual(old.result()[0],200)
+            self.dodo_state.update(subscription={'status':'past_due','next_billing_date':'2020-01-01'},delay=.01)
+            self.assertEqual(self.call('dodo',older,1,'evt_older_late_delivery')[0],200)
             self.assertEqual(self.sql.execute('SELECT sub_status FROM users WHERE id=1').fetchone()[0],'active')
             self.assertGreater(self.sql.execute('SELECT sub_until FROM users WHERE id=1').fetchone()[0],1900000000)
         finally:
             for key in ('subscription','delay','entered'): self.dodo_state.pop(key,None)
+
+    def test_h3_missing_required_state_is_retryable(self):
+        payload={'data':{'subscription_id':'sub_atomic'}}
+        for i, fields in enumerate(({'status':None},{'product_id':None},{'customer':{}})):
+            self.dodo_state['subscription']=fields
+            try:
+                event=f'evt_missing_field{i}'
+                self.assertEqual(self.call('dodo',payload,1,event)[0],503)
+                self.assertFalse(self.sql.execute('SELECT 1 FROM events WHERE id=?',('dodo:'+event,)).fetchone())
+            finally: self.dodo_state.pop('subscription',None)
+            self.assertEqual(self.call('dodo',payload,1,event)[0],200)
 
     def test_h4_missing_date_has_fixed_grace(self):
         old = int(time.time()) - 10*86400
@@ -250,7 +265,7 @@ class AtomicAPI(unittest.TestCase):
         with urllib.request.urlopen(req) as r: self.assertEqual(r.status,200)
 
     def test_m3_concurrent_limit_and_migration(self):
-        self.assertEqual(self.sql.execute('PRAGMA user_version').fetchone()[0],1)
+        self.assertEqual(self.sql.execute('PRAGMA user_version').fetchone()[0],2)
         # Run the genuine limiter in independent PHP processes against this same database.
         code='require '+json.dumps(str(ROOT/'server/api/lib.php'))+'; echo limited("concurrent", 1, 3600) ? "blocked" : "allowed";'
         env=dict(os.environ,BARIK_DATA_DIR=str(self.data))
@@ -265,6 +280,6 @@ class AtomicAPI(unittest.TestCase):
         # Existing pre-versioned databases are upgraded without duplicate-column errors.
         self.sql.execute('PRAGMA user_version=0'); self.sql.commit()
         self.assertEqual(self.call('me')[0],200)
-        self.assertEqual(self.sql.execute('PRAGMA user_version').fetchone()[0],1)
+        self.assertEqual(self.sql.execute('PRAGMA user_version').fetchone()[0],2)
 
 if __name__ == '__main__': unittest.main()

@@ -61,10 +61,10 @@ function db(): PDO {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
     $pdo->exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
-    if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
+    if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 2) {
         $pdo->exec('BEGIN IMMEDIATE');
         try {
-            if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
+            if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 2) {
     $pdo->exec('CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
@@ -106,7 +106,8 @@ function db(): PDO {
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS crypto_uid ON crypto(uid, created)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS hits_t ON hits(t)');
-    $pdo->exec('PRAGMA user_version=1');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS subscription_versions(sid TEXT PRIMARY KEY, issued INTEGER NOT NULL DEFAULT 0, applied INTEGER NOT NULL DEFAULT 0, event_stamp INTEGER NOT NULL DEFAULT 0)');
+    $pdo->exec('PRAGMA user_version=2');
             }
             $pdo->exec('COMMIT');
         } catch (Throwable $e) {
@@ -663,7 +664,7 @@ const FUNNEL = ['land_try', 'start', 'first_answer', 'lesson_complete', 'unit_do
 function premium_count(): int {
     $count = 0;
     foreach (q('SELECT * FROM users')->fetchAll() as $u) {
-        if ((int)($u['gift_until'] ?? 0) > now() || (premium($u) &&
+        if ((int)($u['gift_until'] ?? 0) > now() || (premium($u) && (empty($u['pd_sub']) || ((($u['sub_mode'] ?? '') ?: 'test') === dodo_mode())) &&
             ((int)($u['sub_until'] ?? 0) > now() || (($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub']))))) $count++;
     }
     return $count;
