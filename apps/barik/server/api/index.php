@@ -258,10 +258,24 @@ switch ($r) {
         if (!is_string($data) || strlen($data) > 3000000) fail('big', 413);
         $chk = json_decode($data, true);
         if (!is_array($chk) || !array_key_exists('s', $chk)) fail('data');
-        if ((int)($b['rev'] ?? -1) !== $rev) fail('rev', 409, ['u' => (int)$u['id'], 'rev' => $rev, 'data' => $cur]);
-        q('INSERT INTO progress(uid, rev, data, t) VALUES(?, ?, ?, ?)
-           ON CONFLICT(uid) DO UPDATE SET rev = excluded.rev, data = excluded.data, t = excluded.t',
-            [$u['id'], $rev + 1, $data, time()]);
+        $pdo = db();
+        $pdo->exec('BEGIN IMMEDIATE');
+        try {
+            $row = q('SELECT rev, data FROM progress WHERE uid = ?', [$u['id']])->fetch();
+            $rev = $row ? (int)$row['rev'] : 0;
+            $cur = $row ? (string)$row['data'] : null;
+            $conflict = (int)($b['rev'] ?? -1) !== $rev;
+            if (!$conflict) {
+                q('INSERT INTO progress(uid, rev, data, t) VALUES(?, ?, ?, ?)
+                   ON CONFLICT(uid) DO UPDATE SET rev = excluded.rev, data = excluded.data, t = excluded.t',
+                    [$u['id'], $rev + 1, $data, time()]);
+            }
+            $pdo->exec('COMMIT');
+        } catch (Throwable $e) {
+            $pdo->exec('ROLLBACK');
+            throw $e;
+        }
+        if ($conflict) fail('rev', 409, ['u' => (int)$u['id'], 'rev' => $rev, 'data' => $cur]);
         out(['ok' => true, 'u' => (int)$u['id'], 'rev' => $rev + 1]);
 
     case 'remind':

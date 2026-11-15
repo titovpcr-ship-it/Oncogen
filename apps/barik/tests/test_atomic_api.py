@@ -77,4 +77,27 @@ class AtomicAPI(unittest.TestCase):
         finally:
             self.sql.execute('DROP TRIGGER fail_gift'); self.sql.commit()
 
+    def test_h2_concurrent_versions(self):
+        self.sql.execute('DELETE FROM progress'); self.sql.commit()
+        for rev in (0, 1):
+            payloads = [{'rev':rev,'data':json.dumps({'s':{'w':{str(i):i}}})} for i in (1,2)]
+            results = self.parallel([('sync',p,1) for p in payloads])
+            self.assertEqual(sorted(r[0] for r in results),[200,409])
+            current = self.call('sync')[1]
+            conflict = next(r[1] for r in results if r[0]==409)
+            self.assertEqual(current['rev'],rev+1)
+            self.assertEqual(conflict['data'],current['data'])
+        merged = json.dumps({'s':{'w':{'1':1,'2':2}}})
+        self.assertEqual(self.call('sync',{'rev':2,'data':merged})[0],200)
+        self.assertEqual(self.call('sync')[1]['data'],merged)
+
+    def test_h2_rollback(self):
+        previous = self.call('sync')[1]
+        self.sql.execute("CREATE TRIGGER fail_sync BEFORE UPDATE ON progress BEGIN SELECT RAISE(ABORT,'injected'); END"); self.sql.commit()
+        try:
+            self.assertEqual(self.call('sync',{'rev':previous['rev'],'data':'{"s":{}}'})[0],500)
+            self.assertEqual(self.call('sync')[1],previous)
+        finally:
+            self.sql.execute('DROP TRIGGER fail_sync'); self.sql.commit()
+
 if __name__ == '__main__': unittest.main()
