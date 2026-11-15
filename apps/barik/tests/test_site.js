@@ -38,7 +38,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const lang0=fs.readFileSync(path.join(ROOT,'js','lang0.js'),'utf8'), sh=(sw.match(/^const SHELL = (.+);$/m)||[])[1], shell=sh?JSON.parse(sh):[];
     const tags=[...raw.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*>/g)], main=tags.filter(x=>!x[1].includes('/lang0.js?'));
     ok(tags.some(x=>/js\/lang0\.js\?v=[0-9a-f]{8}/.test(x[1])&&/data-translations="[0-9a-f]{8}"/.test(x[0])&&/data-examples="[0-9a-f]{8}"/.test(x[0]))
-      &&main.length>=8&&main.every(x=>/\bdefer\b|\btype="module"\b/.test(x[0]))&&lang0.includes('BARIK_LOAD_TRANSLATION'),'локаль запускается до параллельной загрузки отложенных скриптов');
+      &&main.length>=8&&main.every(x=>/\bdefer\b|\btype="module"(?=[\s>])/.test(x[0]))&&lang0.includes('BARIK_LOAD_TRANSLATION'),'локаль запускается до параллельной загрузки отложенных скриптов');
     const noscript=(raw.match(/<noscript>([\s\S]*?)<\/noscript>/)||[])[1]||'';
     ok((raw.match(/<h1\b/g)||[]).length===1&&!/<h1\b/i.test(noscript),'главная: один пользовательский h1, noscript не дублирует заголовок');
     ok(shell.some(x=>/^\.\/js\/app\/main\.js\?v=/.test(x))&&!shell.some(x=>/\.\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:fr|es|de|pt)|path_data|pictures)\.js/.test(x))&&/caches\.open\(CACHE\)/.test(sw),'переводы и необязательные разделы не входят в первоначальный PWA-кэш'); }
@@ -231,14 +231,14 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   {
     const swt=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8'), ixt=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     ok(swt.includes("cache: 'reload'"),'sw.js: установка мимо HTTP-кэша браузера');
-    ok((ixt.match(/(?:src|href)="(?:js|css)\/[^"]+"/g)||[]).every(x=>/\?v=[0-9a-f]{8}"$/.test(x))&&/app\.js\?v=/.test(ixt),'главная: скрипты и стили с версией в адресе');
+    ok((ixt.match(/(?:src|href)="(?:js|css)\/[^"]+"/g)||[]).every(x=>/\?v=[0-9a-f]{8}"$/.test(x))&&/app\/main\.js\?v=/.test(ixt),'главная: скрипты и стили с версией в адресе');
     ok(/js\|css[^"]*">\s*\n\s*Header set Cache-Control "no-cache"/.test(fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8')),'.htaccess: js и css — с проверкой свежести, не «неделю»');
     const c2=await br.newContext({viewport:{width:390,height:844},locale:'ru-RU'}); const p2=await c2.newPage();
     await p2.goto(base); await p2.evaluate(()=>navigator.serviceWorker.ready); await p2.reload(); await p2.waitForTimeout(300);
     const m0=await p2.evaluate(()=>fetch('audio/manifest.json').then(r=>r.json()));
     OVR['/js/app/main.js']=fs.readFileSync(path.join(ROOT,'js','app','main.js'),'utf8')+'\nwindow.__upd=1;';
-    OVR['/index.html']=OVR['/']=ixt.replace(/js\/app\.js\?v=\w+/,'js/app/main.js?v=feedf00d');
-    OVR['/sw.js']=swt.replace(/const VERSION = '\w+'/,"const VERSION = 'upd'").replace(/\.\/js\/app\.js\?v=\w+/,'./js/app/main.js?v=feedf00d');
+    OVR['/index.html']=OVR['/']=ixt.replace(/js\/app\/main\.js\?v=\w+/,'js/app/main.js?v=feedf00d');
+    OVR['/sw.js']=swt.replace(/const VERSION = '\w+'/,"const VERSION = 'upd'").replace(/\.\/js\/app\/main\.js\?v=\w+/,'./js/app/main.js?v=feedf00d');
     OVR['/audio/manifest.json']=JSON.stringify(Object.assign({},m0,{probe:1}));
     await p2.goto(base); await p2.waitForTimeout(500);
     ok(await p2.evaluate(()=>window.__upd===1),'обновление: новая версия видна с первого захода после выкладки');
