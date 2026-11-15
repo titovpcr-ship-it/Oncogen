@@ -49,7 +49,7 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
   ok(msgs.length===3&&/главная сайта отвечает 500/.test(last()),'на следующий день сайт всё ещё сломан — снова сигнал');
   broken=false;
   o=await cron(D0+86400+3*H+420);
-  ok(msgs.length===4&&/^✅ Barik: всё в порядке/.test(last())&&/людей \d+/.test(last())&&/Premium сейчас: 0/.test(last())&&/Ошибок JS у посетителей: 0/.test(last()),
+  ok(msgs.length===4&&/^✅ Barik: всё в порядке/.test(last())&&/IP\+браузер \d+/.test(last())&&/Premium сейчас: 0/.test(last())&&/Ошибок JS у посетителей: 0/.test(last()),
      'сайт починили — утром «всё в порядке» и вчерашние цифры: '+last().replace(/\n/g,' | ').slice(0,200));
 
   // сервер: ошибка JS посетителя, неверная подпись вебхука Dodo

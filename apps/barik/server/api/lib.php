@@ -676,6 +676,7 @@ function stat_hit(array $b): void {
     $ev = $clean($b['e'] ?? '', '/^[a-z][a-z0-9_]{0,23}$/');
     if ($ev !== '' && $ev !== 'open') {
         stat_add($day, 'e:' . $ev);
+        if ($ev === 'lesson_done' && ($b['v'] ?? 0) === 2) stat_add($day, 'e:lesson_complete');
         // воронка новичка (O-198): шаги из первого визита — всего, по языку и по источнику
         if (!empty($b['g']) && in_array($ev, FUNNEL, true)) {
             stat_add($day, 'g:' . $ev);
@@ -1195,8 +1196,8 @@ function watch_digest(array $p, int $yday): string {
     watch_db();
     $js = (int)q('SELECT COUNT(*) FROM js_err WHERE t >= ? AND t < ?', [$yday * 86400, ($yday + 1) * 86400])->fetchColumn();
     $head = $p ? "⚠️ Barik: есть проблемы\n• " . implode("\n• ", $p) : '✅ Barik: всё в порядке';
-    return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): людей ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
-        . ', вошли ' . day_sum($yday, 'g:start') . ', уроков ' . day_sum($yday, 'e:lesson_done') . ', оформляли ' . day_sum($yday, 'e:checkout')
+    return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): IP+браузер ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
+        . ', вошли ' . day_sum($yday, 'g:start') . ', завершено уроков ' . day_sum($yday, 'e:lesson_complete') . ', оформляли ' . day_sum($yday, 'e:checkout')
         . ', платежей Dodo ' . day_sum($yday, 'p:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
         . "\nОшибок JS у посетителей: " . $js . ', сбоев загрузки: ' . day_sum($yday, 'e:res_fail') . watch_funnel($yday);
 }

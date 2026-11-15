@@ -30,6 +30,8 @@ def main():
         print('%s  %5d  %8d  %6d  %4d  %8d  %6d' % (day, x.get('u', 0), x.get('open', 0), x.get('e:start', 0), x.get('e:login', 0),
               x.get('e:name_save', 0) + x.get('e:name_share', 0), x.get('e:checkout', 0)))
     print('Посещения: суточные IP+браузер, включая владельца; сумма дней не равна числу людей.')
+    print('Завершено уроков (новый счётчик): %d' % tot.get('e:lesson_complete', 0))
+    print('Старые lesson_done могут включать досрочные выходы; клиентский paid не является продажей.')
     print('Подтверждённые платежи Dodo: %d' % tot.get('p:paid', 0))
     funnel(by, tot)
     if j.get('js'):

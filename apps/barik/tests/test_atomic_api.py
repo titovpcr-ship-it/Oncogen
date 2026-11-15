@@ -195,6 +195,12 @@ class AtomicAPI(unittest.TestCase):
         finally:
             self.dodo_state.pop('subscription',None)
 
+    def test_m1_legacy_events_are_not_new_completions(self):
+        for payload in ({'e':'lesson_done'}, {'e':'lesson_exit','v':2}, {'e':'lesson_done','v':2}):
+            req=urllib.request.Request(self.url+'hit', data=json.dumps(payload).encode(), headers={'User-Agent':'BarikBrowser/1.0','Content-Type':'application/json'})
+            with urllib.request.urlopen(req) as response: self.assertEqual(response.status,204)
+        self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='e:lesson_complete'").fetchone()[0],1)
+
     def test_m2_bearer_only(self):
         key=hmac.new(b'atomic-tests',b'stats',hashlib.sha256).hexdigest()[:32]
         self.assertEqual(self.call('stats&key='+key)[0],401)
