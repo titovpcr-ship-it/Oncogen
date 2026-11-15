@@ -481,6 +481,23 @@ function dodo_webhook(): never {
     $d = is_array($ev['data'] ?? null) ? $ev['data'] : [];
     $sid = (string)($d['subscription_id'] ?? '');
     $meta = is_array($d['metadata'] ?? null) ? $d['metadata'] : [];
+    if (q('SELECT 1 FROM events WHERE id = ?', ['dodo:' . $id])->fetchColumn()) out(['ok' => true, 'dup' => true]);
+    $verified = null; $payment = null; $notifyGift = null;
+    $lang = in_array($meta['lang'] ?? '', ['ru', 'en'], true) ? $meta['lang'] : 'en';
+    // Network I/O must not hold SQLite's single writer lock.
+    $GLOBALS['DODO_CODE'] = -1;
+    $giftPayment = $sid === '' && ($meta['gift'] ?? '') === '1';
+    $pid = (string)($d['payment_id'] ?? '');
+    if (dodo_on() && preg_match('/^[A-Za-z0-9_]{3,80}$/', $giftPayment ? $pid : $sid)) {
+        $verified = dodo('GET', ($giftPayment ? '/payments/' : '/subscriptions/') . rawurlencode($giftPayment ? $pid : $sid));
+    }
+    $code = (int)$GLOBALS['DODO_CODE'];
+    if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
+    if (($ev['type'] ?? '') === 'payment.succeeded' && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
+        $payment = $giftPayment ? $verified : dodo('GET', '/payments/' . rawurlencode($pid));
+        $code = (int)$GLOBALS['DODO_CODE'];
+        if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
+    }
     $pdo = db();
     // Serialize duplicates; persist acknowledgement only with the completed business update.
     $pdo->exec('BEGIN IMMEDIATE');
@@ -491,10 +508,12 @@ function dodo_webhook(): never {
         } else {
             $GLOBALS['DODO_CODE'] = -1;
             if ($sid === '' && dodo_on() && ($meta['gift'] ?? '') === '1' && (string)($d['payment_id'] ?? '') !== '') {
-                $g = gift_settle((string)$d['payment_id'], in_array($meta['lang'] ?? '', ['ru', 'en'], true) ? $meta['lang'] : 'en');
+                $existed = q('SELECT 1 FROM gifts WHERE pay_id = ?', [$pid])->fetchColumn();
+                $g = $verified ? gift_settle($pid, $lang, $verified, false) : null;
+                if ($g && !$existed) $notifyGift = $g;
                 $result = ['ok' => true, 'gift' => (bool)$g];
             } elseif ($sid !== '' && dodo_on()) {
-                $u = dodo_sync($sid);
+                $u = $verified ? dodo_sync($sid, null, $verified) : null;
                 $result = ['ok' => true, 'user' => (bool)$u];
             } else {
                 $result = ['ok' => true, 'skip' => true];
@@ -504,9 +523,7 @@ function dodo_webhook(): never {
             if (!$retry && ($ev['type'] ?? '') === 'payment.succeeded' && !empty($d['payment_id'])) {
                 $pid = (string)$d['payment_id'];
                 if (preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
-                    $payment = dodo('GET', '/payments/' . rawurlencode($pid));
-                    $http = (int)$GLOBALS['DODO_CODE'];
-                    $retry = $http === 0 || $http === 429 || $http >= 500;
+
                     if (($payment['payment_id'] ?? '') === $pid && ($payment['status'] ?? '') === 'succeeded') {
                         $added = q('INSERT OR IGNORE INTO events(id, t) VALUES(?, ?)', ['paid:' . $pid, now()])->rowCount();
                         if ($added === 1) stat_add(intdiv(time(), 86400), 'p:paid');
@@ -524,6 +541,7 @@ function dodo_webhook(): never {
         stat_add(intdiv(time(), 86400), 'w:dodo_retry');
         fail('retry', 503);
     }
+    if ($notifyGift) gift_mail($notifyGift, $lang);
     out($result);
 }
 

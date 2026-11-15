@@ -33,6 +33,7 @@ function release_action(string $root, string $work, string $action, string $endp
         if (!unlink($root . '/' . $endpoint)) throw new RuntimeException('finalize failed');
         return;
     }
+    if ($action === 'rollback' && !is_dir($work)) return;
     $lock = fopen($work . '/lock', 'c');
     if (!$lock || !flock($lock, LOCK_EX)) throw new RuntimeException('lock failed');
     try {
@@ -77,6 +78,7 @@ function release_action(string $root, string $work, string $action, string $endp
     }
 }
 if (PHP_SAPI !== 'cli') {
+    set_time_limit(0);
     header('Content-Type: application/json'); header('Cache-Control: no-store');
     if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST' || !hash_equals('__TOKEN__', (string)($_SERVER['HTTP_X_RELEASE_TOKEN'] ?? ''))) {
         http_response_code(403); echo '{"ok":false}'; exit;

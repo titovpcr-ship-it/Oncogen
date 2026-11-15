@@ -22,7 +22,7 @@ server/config.example.php со случайным PEPPER и почтой хос�
   python3.13 tools/deploy_site.py --check     вход в cPanel, PHP, место на диске — без выкладки
   python3.13 tools/deploy_site.py --all       выложить всё заново
 """
-import argparse, hashlib, json, os, re, secrets, sys, time, zipfile
+import argparse, hashlib, hmac, json, os, re, secrets, sys, time, zipfile
 
 import requests
 
@@ -208,13 +208,27 @@ def release_control(action, credentials=None):
     if action == 'rollback':
         # Force reconciliation after rollback; never reuse fingerprints of the rejected release.
         if os.path.exists(STATE): os.remove(STATE)
-    if action == 'finalize': os.remove(RELEASE)
+    if action == 'finalize' and os.path.exists(RELEASE): os.remove(RELEASE)
 
 
 def guarded_release(cp, root, todo):
     if os.path.exists(RELEASE):
         raise RuntimeError('Unfinished release: run --rollback then --finalize before retrying')
-    rid, token = secrets.token_hex(12), secrets.token_hex(32)
+    # Recover an interrupted runner using endpoint names and an HMAC derived from the existing host credential.
+    host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
+    def credentials_for(rid):
+        token = hmac.new(host_secret.encode(), ('barik-release:' + rid).encode(), hashlib.sha256).hexdigest()
+        return {'url': 'https://' + os.environ['BARIK_HOST_DOMAIN'] + '/barik-release-' + rid + '.php', 'token': token}
+    remote = cp.uapi('Fileman', 'list_files', dir='public_html')
+    cp.ok(remote, 'pending release discovery')
+    for item in remote.get('data') or []:
+        match = re.fullmatch(r'barik-release-([0-9a-f]{24})\.php', item.get('file', ''))
+        if match:
+            previous = credentials_for(match.group(1))
+            release_control('rollback', previous)
+            release_control('finalize', previous)
+    rid = secrets.token_hex(12)
+    token = credentials_for(rid)['token']
     endpoint = 'barik-release-' + rid + '.php'
     work = root.rsplit('/', 1)[0] + '/barik-release-' + rid
     source = open(os.path.join(HERE, 'release_guard.php'), encoding='utf-8').read()

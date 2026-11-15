@@ -553,9 +553,9 @@ function dodo_signed(string $raw, string $id, string $ts, string $sig, string $s
 /* Состояние подписки Dodo → users. Чья подписка: подписанный uid из metadata окна оплаты, иначе id подписки
    или покупателя в базе, иначе почта покупателя (вход у нас по почте, окно оплаты получает ту же почту).
    $want — uid, которому подписка должна принадлежать (pay_check): чужую не привязываем. */
-function dodo_sync(string $sid, ?int $want = null): ?array {
+function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?array {
     if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $sid)) return null;
-    $s = dodo('GET', '/subscriptions/' . rawurlencode($sid));
+    $s = $verified ?? dodo('GET', '/subscriptions/' . rawurlencode($sid));
     if (!$s || ($s['subscription_id'] ?? '') !== $sid) return null;
     if ((string)($s['product_id'] ?? '') !== (string)cfg('DODO_PRODUCT_MONTH', '')) return null;
     $md = is_array($s['metadata'] ?? null) ? $s['metadata'] : [];
@@ -731,11 +731,11 @@ function gift_code(): string {
 }
 
 /* спросить Dodo о платеже и, если он оплачен и это наш подарок, выпустить код — ровно один раз; вернуть строку gifts */
-function gift_settle(string $pid, string $lang = 'en'): ?array {
+function gift_settle(string $pid, string $lang = 'en', ?array $verified = null, bool $notify = true): ?array {
     if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) return null;
     $row = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch();
     if ($row) return $row;
-    $p = dodo('GET', '/payments/' . rawurlencode($pid));
+    $p = $verified ?? dodo('GET', '/payments/' . rawurlencode($pid));
     if (!is_array($p) || (string)($p['status'] ?? '') !== 'succeeded') return null;
     $m = is_array($p['metadata'] ?? null) ? $p['metadata'] : [];
     $uid = (int)($m['uid'] ?? 0); $months = (int)($m['months'] ?? 0);
@@ -748,13 +748,21 @@ function gift_settle(string $pid, string $lang = 'en'): ?array {
         if (!$existing) throw $e;
         return $existing;
     }
-    $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch();
+    $row = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null;
+    if ($notify && $row) gift_mail($row, $lang);
+    return $row;
+}
+
+function gift_mail(array $row, string $lang): void {
+    $u = q('SELECT * FROM users WHERE id = ?', [$row['buyer']])->fetch();
     if ($u) {
         $t = GIFT_TEXT[$lang] ?? GIFT_TEXT['en'];
-        mail_out($u['email'], $t[0], sprintf($t[1], $code, $months, (string)cfg('SITE_URL', 'https://barik.am/')), ['gift' => $code]);
+        if (!mail_out($u['email'], $t[0], sprintf($t[1], $row['code'], $row['months'], (string)cfg('SITE_URL', 'https://barik.am/')), ['gift' => $row['code']])) {
+            error_log('barik gift mail delivery failed');
+        }
     }
-    return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null;
 }
+
 
 function gift_redeem(array $u, string $code): string {
     $code = strtoupper(preg_replace('/[^A-Za-z0-9-]/', '', $code));
