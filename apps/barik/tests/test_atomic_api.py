@@ -20,6 +20,7 @@ class AtomicAPI(unittest.TestCase):
                 time.sleep(.05)
                 payload = {'subscription_id':'sub_atomic','status':'active','product_id':'prod_month',
                            'next_billing_date':'2030-01-01T00:00:00Z','customer':{'email':'1@example.com'}}
+                payload.update(cls.dodo_state.get('subscription', {}))
                 if self.path.startswith('/payments/'):
                     payload = {'payment_id':'pay_hook','status':'succeeded','metadata':{'gift':'1','uid':'1','months':'3',
                                'sig':hmac.new(b'atomic-tests',b'uid:1',hashlib.sha256).hexdigest()[:32]}}
@@ -152,5 +153,20 @@ class AtomicAPI(unittest.TestCase):
         self.assertEqual([r[0] for r in self.parallel([('dodo',gift,1,'evt_gift')]*2)],[200,200])
         self.assertEqual(self.sql.execute("SELECT COUNT(*) FROM gifts WHERE pay_id='pay_hook'").fetchone()[0],1)
         self.assertEqual(self.call('dodo',payload)[0],401)
+
+    def test_h4_missing_date_has_fixed_grace(self):
+        old = int(time.time()) - 10*86400
+        self.sql.execute("UPDATE users SET gift_until=0, sub_until=NULL, sub_at=?, sub_status='past_due', sub_mode='test' WHERE id=1",(old,)); self.sql.commit()
+        self.dodo_state['subscription'] = {'status':'past_due','next_billing_date':'invalid'}
+        try:
+            for i in range(2):
+                self.assertEqual(self.call('dodo',{'data':{'subscription_id':'sub_atomic'}},1,f'evt_missing{i}')[0],200)
+                self.assertEqual(self.sql.execute('SELECT sub_until FROM users WHERE id=1').fetchone()[0],old)
+                self.assertFalse(self.call('me')[1]['user']['premium'])
+            self.dodo_state['subscription'] = {'status':'active'}
+            self.call('dodo',{'data':{'subscription_id':'sub_atomic'}},1,'evt_active')
+            self.assertTrue(self.call('me')[1]['user']['premium'])
+        finally:
+            self.dodo_state.pop('subscription',None)
 
 if __name__ == '__main__': unittest.main()

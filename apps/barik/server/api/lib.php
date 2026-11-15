@@ -197,7 +197,7 @@ function premium(array $u): bool {
     if (!sub_here($u)) return false;
     if (!in_array((string)$u['sub_status'], PREMIUM_STATUSES, true)) return false;
     $until = (int)($u['sub_until'] ?? 0);
-    return $until === 0 || $until + 3 * 86400 > now();
+    return $until > 0 && $until + 3 * 86400 > now();
 }
 
 function user_out(array $u): array {
@@ -557,7 +557,9 @@ function dodo_sync(string $sid, ?int $want = null): ?array {
         $status = 'active';                         // оплачено до next_billing_date (+3 дня запаса в premium())
         if (!$until) $until = now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
     } elseif ($st === 'past_due') {
-        $status = 'past_due';                       // льготный срок Dodo: доступ пока остаётся
+        $status = 'past_due';
+        // Missing dates must never slide the grace window on repeated checks.
+        if (!$until) $until = (int)($u['sub_until'] ?? 0) ?: ((int)($u['sub_at'] ?? 0) ?: now());
     } elseif ($st === 'cancelled' || $st === 'expired') {
         // отменена: оплаченный срок дослуживает, если он ещё не кончился
         $paid = $next && $next > now() ? $next : now();
