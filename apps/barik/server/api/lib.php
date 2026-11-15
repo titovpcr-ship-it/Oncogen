@@ -217,7 +217,8 @@ function premium(array $u): bool {
     if (!sub_here($u)) return false;
     if (!in_array((string)$u['sub_status'], PREMIUM_STATUSES, true)) return false;
     $until = (int)($u['sub_until'] ?? 0);
-    return $until > 0 && $until + 3 * 86400 > now();
+    return ($until === 0 && ($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub']))
+        || ($until > 0 && $until + 3 * 86400 > now());
 }
 
 function user_out(array $u): array {
