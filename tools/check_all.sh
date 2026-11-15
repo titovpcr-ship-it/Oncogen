@@ -51,6 +51,7 @@ if [ $FULL -eq 1 ]; then
 elif [ ! -f "$B/dist/site/api/index.php" ]; then
   run barik-build_site "$B" python3.13 tools/build_site.py --no-seo || BUILT=0
 fi
+run barik-test_dictionary_review "$B" python3 tests/test_dictionary_review.py
 run barik-test_example_quality "$B" python3.13 tests/test_example_quality.py
 run barik-test_contrast "$B" node tests/test_contrast.js
 run barik-test_guest_return "$B" node tests/test_guest_return.js
@@ -58,11 +59,15 @@ run barik-test_grammar "$B" node tests/test_grammar.js
 run barik-test_app "$B" node tests/test_app.js
 run barik-test_crypto "$B" node tests/test_crypto.js   # оплата криптой (O-162): www + server/api, сборка не нужна
 run barik-test_pay "$B" node tests/test_pay.js   # оплата картой Dodo (O-164): www + server/api, сборка не нужна
+run barik-test_release_guard "$B" python3 tests/test_release_guard.py
+run barik-test_lesson_metrics "$B" node tests/test_lesson_metrics.js
+run barik-test_atomic "$B" python3 tests/test_atomic_api.py
 run barik-test_sync "$B" node tests/test_sync.js   # прогресс в аккаунте (O-171): www + server/api, сборка не нужна
 run barik-test_remind "$B" node tests/test_remind.js   # напоминания на почту (O-173): www + server/api + cron.php
 run barik-test_gift "$B" node tests/test_gift.js   # подарочная подписка (O-184): www + server/api, заглушка Dodo
 run barik-test_tg "$B" node tests/test_tg.js       # Telegram-бот «слово дня» (O-186): server/api, заглушка Bot API
 run barik-test_report "$B" node tests/test_report.js   # «Ошибка в слове?» на сервер (O-187): www + server/api
+run barik-test_backup_failures "$B" python3 tests/test_backup_failures.py
 run barik-test_backup "$B" node tests/test_backup.js   # копии базы (O-189): снимок за сутки, раз в неделю — владельцу в Telegram
 run barik-test_funnel "$B" node tests/test_funnel.js   # воронка новичка (O-198): шаги, язык, источник, res_fail, Premium по режиму
 run barik-test_watch "$B" node tests/test_watch.js   # сигнал о поломке (O-200): срочное сразу, сводка в 7:00, ошибки JS, подпись вебхука

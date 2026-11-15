@@ -18,9 +18,12 @@ python3.13 -u tools/deploy_site.py || { echo "ship: выкладка упала"
 for i in 1 2 3; do
   R=$(python3.13 tools/check_live.py 2>&1 | tail -1); echo "$R"
   if echo "$R" | grep -q "всё на месте" && node tools/check_guest.js; then
+    python3.13 tools/deploy_site.py --finalize || exit 5
     echo "ship: выложено"
     exit 0
   fi
   sleep 30
 done
-echo "ship: живой сайт не прошёл проверку"; exit 4
+python3.13 tools/deploy_site.py --rollback || { echo "ship: rollback failed; maintenance may remain"; exit 6; }
+python3.13 tools/deploy_site.py --finalize || exit 5
+echo "ship: живой сайт не прошёл проверку; выполнен откат"; exit 4

@@ -61,6 +61,10 @@ function db(): PDO {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
     $pdo->exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
+    if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
+        $pdo->exec('BEGIN IMMEDIATE');
+        try {
+            if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
     $pdo->exec('CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
@@ -89,17 +93,27 @@ function db(): PDO {
     // подарочная подписка (O-184): код покупает один, вводит другой; доступ — users.gift_until, отдельно от подписки Dodo
     $pdo->exec('CREATE TABLE IF NOT EXISTS gifts(code TEXT PRIMARY KEY, pay_id TEXT NOT NULL UNIQUE, buyer INTEGER NOT NULL, months INTEGER NOT NULL,
         created INTEGER NOT NULL, used_by INTEGER, used_at INTEGER)');
-    try { $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER'); } catch (PDOException $e) { /* уже есть */ }
+    $columns = array_fill_keys($pdo->query('PRAGMA table_info(users)')->fetchAll(PDO::FETCH_COLUMN, 1), true);
+    if (!isset($columns['gift_until'])) $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER');
     // режим Dodo, в котором оформлена подписка (O-195): test | live; NULL — заведена до O-195, значит тестовая
-    try { $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT'); } catch (PDOException $e) { /* уже есть */ }
+    if (!isset($columns['sub_mode'])) $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT');
     // анкета покупателя (O-196): имя и фамилия для страницы оплаты, дата рождения, пол, страна — до оплаты обязательны
     foreach (['pf_first', 'pf_last', 'pf_birth', 'pf_gender', 'pf_country'] as $c) {
-        try { $pdo->exec('ALTER TABLE users ADD COLUMN ' . $c . ' TEXT'); } catch (PDOException $e) { /* уже есть */ }
+        if (!isset($columns[$c])) $pdo->exec('ALTER TABLE users ADD COLUMN ' . $c . ' TEXT');
     }
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS crypto_uid ON crypto(uid, created)');
+    $pdo->exec('CREATE INDEX IF NOT EXISTS hits_t ON hits(t)');
+    $pdo->exec('PRAGMA user_version=1');
+            }
+            $pdo->exec('COMMIT');
+        } catch (Throwable $e) {
+            $pdo->exec('ROLLBACK');
+            throw $e;
+        }
+    }
     return $pdo;
 }
 
@@ -112,11 +126,17 @@ function q(string $sql, array $args = []): PDOStatement {
 /* ---------- лимиты: ключ (почта или хэш адреса) — не больше n за окно ---------- */
 function limited(string $key, int $n, int $window): bool {
     $t = now();
-    q('DELETE FROM hits WHERE t < ?', [$t - 86400]);
-    $c = (int)q('SELECT COUNT(*) FROM hits WHERE k = ? AND t > ?', [$key, $t - $window])->fetchColumn();
-    if ($c >= $n) return true;
-    q('INSERT INTO hits(k, t) VALUES(?, ?)', [$key, $t]);
-    return false;
+    $pdo = db();
+    $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        $c = (int)q('SELECT COUNT(*) FROM hits WHERE k = ? AND t > ?', [$key, $t - $window])->fetchColumn();
+        if ($c < $n) q('INSERT INTO hits(k, t) VALUES(?, ?)', [$key, $t]);
+        $pdo->exec('COMMIT');
+        return $c >= $n;
+    } catch (Throwable $e) {
+        $pdo->exec('ROLLBACK');
+        throw $e;
+    }
 }
 
 function ip_key(): string {
@@ -197,7 +217,7 @@ function premium(array $u): bool {
     if (!sub_here($u)) return false;
     if (!in_array((string)$u['sub_status'], PREMIUM_STATUSES, true)) return false;
     $until = (int)($u['sub_until'] ?? 0);
-    return $until === 0 || $until + 3 * 86400 > now();
+    return $until > 0 && $until + 3 * 86400 > now();
 }
 
 function user_out(array $u): array {
@@ -533,9 +553,9 @@ function dodo_signed(string $raw, string $id, string $ts, string $sig, string $s
 /* Состояние подписки Dodo → users. Чья подписка: подписанный uid из metadata окна оплаты, иначе id подписки
    или покупателя в базе, иначе почта покупателя (вход у нас по почте, окно оплаты получает ту же почту).
    $want — uid, которому подписка должна принадлежать (pay_check): чужую не привязываем. */
-function dodo_sync(string $sid, ?int $want = null): ?array {
+function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?array {
     if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $sid)) return null;
-    $s = dodo('GET', '/subscriptions/' . rawurlencode($sid));
+    $s = $verified ?? dodo('GET', '/subscriptions/' . rawurlencode($sid));
     if (!$s || ($s['subscription_id'] ?? '') !== $sid) return null;
     if ((string)($s['product_id'] ?? '') !== (string)cfg('DODO_PRODUCT_MONTH', '')) return null;
     $md = is_array($s['metadata'] ?? null) ? $s['metadata'] : [];
@@ -557,7 +577,9 @@ function dodo_sync(string $sid, ?int $want = null): ?array {
         $status = 'active';                         // оплачено до next_billing_date (+3 дня запаса в premium())
         if (!$until) $until = now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
     } elseif ($st === 'past_due') {
-        $status = 'past_due';                       // льготный срок Dodo: доступ пока остаётся
+        $status = 'past_due';
+        // Missing dates must never slide the grace window on repeated checks.
+        if (!$until) $until = (int)($u['sub_until'] ?? 0) ?: ((int)($u['sub_at'] ?? 0) ?: now());
     } elseif ($st === 'cancelled' || $st === 'expired') {
         // отменена: оплаченный срок дослуживает, если он ещё не кончился
         $paid = $next && $next > now() ? $next : now();
@@ -654,6 +676,7 @@ function stat_hit(array $b): void {
     $ev = $clean($b['e'] ?? '', '/^[a-z][a-z0-9_]{0,23}$/');
     if ($ev !== '' && $ev !== 'open') {
         stat_add($day, 'e:' . $ev);
+        if ($ev === 'lesson_done' && ($b['v'] ?? 0) === 2) stat_add($day, 'e:lesson_complete');
         // воронка новичка (O-198): шаги из первого визита — всего, по языку и по источнику
         if (!empty($b['g']) && in_array($ev, FUNNEL, true)) {
             stat_add($day, 'g:' . $ev);
@@ -709,35 +732,60 @@ function gift_code(): string {
 }
 
 /* спросить Dodo о платеже и, если он оплачен и это наш подарок, выпустить код — ровно один раз; вернуть строку gifts */
-function gift_settle(string $pid, string $lang = 'en'): ?array {
+function gift_settle(string $pid, string $lang = 'en', ?array $verified = null, bool $notify = true): ?array {
     if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) return null;
     $row = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch();
     if ($row) return $row;
-    $p = dodo('GET', '/payments/' . rawurlencode($pid));
+    $p = $verified ?? dodo('GET', '/payments/' . rawurlencode($pid));
     if (!is_array($p) || (string)($p['status'] ?? '') !== 'succeeded') return null;
     $m = is_array($p['metadata'] ?? null) ? $p['metadata'] : [];
     $uid = (int)($m['uid'] ?? 0); $months = (int)($m['months'] ?? 0);
     if (($m['gift'] ?? '') !== '1' || !in_array($months, [3, 12], true) || !hash_equals(uid_sig($uid), (string)($m['sig'] ?? ''))) return null;
     $code = gift_code();
     try { q('INSERT INTO gifts(code, pay_id, buyer, months, created) VALUES(?, ?, ?, ?, ?)', [$code, $pid, $uid, $months, now()]); }
-    catch (PDOException $e) { return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null; }
-    $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch();
+    catch (PDOException $e) {
+        if (($e->errorInfo[1] ?? 0) !== 19 || !str_contains($e->getMessage(), 'UNIQUE constraint failed: gifts.')) throw $e;
+        $existing = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch();
+        if (!$existing) throw $e;
+        return $existing;
+    }
+    $row = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null;
+    if ($notify && $row) gift_mail($row, $lang);
+    return $row;
+}
+
+function gift_mail(array $row, string $lang): void {
+    $u = q('SELECT * FROM users WHERE id = ?', [$row['buyer']])->fetch();
     if ($u) {
         $t = GIFT_TEXT[$lang] ?? GIFT_TEXT['en'];
-        mail_out($u['email'], $t[0], sprintf($t[1], $code, $months, (string)cfg('SITE_URL', 'https://barik.am/')), ['gift' => $code]);
+        if (!mail_out($u['email'], $t[0], sprintf($t[1], $row['code'], $row['months'], (string)cfg('SITE_URL', 'https://barik.am/')), ['gift' => $row['code']])) {
+            error_log('barik gift mail delivery failed');
+        }
     }
-    return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null;
 }
+
 
 function gift_redeem(array $u, string $code): string {
     $code = strtoupper(preg_replace('/[^A-Za-z0-9-]/', '', $code));
-    $g = q('SELECT * FROM gifts WHERE code = ?', [$code])->fetch();
-    if (!$g) return 'nocode';
-    if ($g['used_by']) return (int)$g['used_by'] === (int)$u['id'] ? 'ok' : 'used';
-    $from = max(now(), (int)($u['gift_until'] ?? 0));
-    q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
-    q('UPDATE users SET gift_until = ? WHERE id = ?', [$from + (int)$g['months'] * 30 * 86400, $u['id']]);
-    return 'ok';
+    $pdo = db();
+    $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        $g = q('SELECT * FROM gifts WHERE code = ?', [$code])->fetch();
+        $result = !$g ? 'nocode' : ($g['used_by'] ? ((int)$g['used_by'] === (int)$u['id'] ? 'ok' : 'used') : '');
+        if ($result === '') {
+            $claimed = q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
+            if ($claimed->rowCount() !== 1) throw new RuntimeException('Gift claim conflict');
+            $changed = q('UPDATE users SET gift_until = MAX(CAST(? AS INTEGER), COALESCE(gift_until, 0)) + ? WHERE id = ?',
+                [now(), (int)$g['months'] * 30 * 86400, $u['id']]);
+            if ($changed->rowCount() !== 1) throw new RuntimeException('Gift recipient missing');
+            $result = 'ok';
+        }
+        $pdo->exec('COMMIT');
+        return $result;
+    } catch (Throwable $e) {
+        $pdo->exec('ROLLBACK');
+        throw $e;
+    }
 }
 
 
@@ -1001,16 +1049,33 @@ function backup_offsite(string $snap, string $pw, string $owner, string $day): b
     $zip = backup_dir() . '/barik-db-' . $day . '.zip';
     $z = new ZipArchive();
     if ($z->open($zip, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) return false;
-    $z->setPassword($pw);
-    $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
-    foreach ($files as $name => $path) {
-        if (!is_file($path)) continue;
-        $z->addFile($path, $name);
-        $z->setEncryptionName($name, ZipArchive::EM_AES_256);
+    try {
+        if (!$z->setPassword($pw)) throw new RuntimeException('backup password failed');
+        $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
+        foreach ($files as $name => $path) {
+            if (!is_file($path) || !$z->addFile($path, $name) || !$z->setEncryptionName($name, ZipArchive::EM_AES_256)) {
+                throw new RuntimeException('backup encryption/add failed');
+            }
+        }
+        if (!$z->addFromString('README.txt', "Barik encrypted backup $day. Database and config.php.\n")) throw new RuntimeException('backup README failed');
+        if (!$z->close()) throw new RuntimeException('backup close failed');
+        $verify = new ZipArchive();
+        if ($verify->open($zip) !== true) throw new RuntimeException('backup verification open failed');
+        foreach ($files as $name => $path) {
+            $stat = $verify->statName($name);
+            if (($stat['encryption_method'] ?? 0) !== ZipArchive::EM_AES_256) throw new RuntimeException('backup is not AES-256');
+        }
+        if (!$verify->setPassword($pw)) throw new RuntimeException('backup verification password failed');
+        foreach ($files as $name => $path) {
+            $bytes = $verify->getFromName($name);
+            if (!is_string($bytes) || hash('sha256', $bytes) !== hash_file('sha256', $path)) throw new RuntimeException('backup content mismatch');
+        }
+        if (!$verify->close()) throw new RuntimeException('backup verification close failed');
+    } catch (Throwable $e) {
+        error_log('barik backup verification: ' . $e->getMessage());
+        if (is_file($zip)) unlink($zip);
+        return false;
     }
-    $z->addFromString('README.txt', "Barik: копия базы и config.php с хостинга, $day (O-189).\nПароль — как у «Барик бэкапа». "
-        . "База — public_html/../barik-data/barik.sqlite, config.php — public_html/api/config.php. Подробно — START_HERE.md в бэкапе.\n");
-    $z->close();
     @chmod($zip, 0600);
     $users = (int)q('SELECT COUNT(*) FROM users')->fetchColumn();
     $tok = (string)cfg('TG_TOKEN', '');
@@ -1131,9 +1196,9 @@ function watch_digest(array $p, int $yday): string {
     watch_db();
     $js = (int)q('SELECT COUNT(*) FROM js_err WHERE t >= ? AND t < ?', [$yday * 86400, ($yday + 1) * 86400])->fetchColumn();
     $head = $p ? "⚠️ Barik: есть проблемы\n• " . implode("\n• ", $p) : '✅ Barik: всё в порядке';
-    return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): людей ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
-        . ', вошли ' . day_sum($yday, 'g:start') . ', уроков ' . day_sum($yday, 'e:lesson_done') . ', оформляли ' . day_sum($yday, 'e:checkout')
-        . ', оплат ' . day_sum($yday, 'e:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
+    return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): IP+браузер ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
+        . ', вошли ' . day_sum($yday, 'g:start') . ', завершено уроков ' . day_sum($yday, 'e:lesson_complete') . ', оформляли ' . day_sum($yday, 'e:checkout')
+        . ', платежей Dodo ' . day_sum($yday, 'p:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
         . "\nОшибок JS у посетителей: " . $js . ', сбоев загрузки: ' . day_sum($yday, 'e:res_fail') . watch_funnel($yday);
 }
 

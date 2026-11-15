@@ -4,14 +4,9 @@ on:
   push:
     branches: [codex/audit4]
     paths:
+      - 'apps/barik/**'
+      - 'tools/**'
       - '.github/workflows/barik-release.yml'
-      - 'apps/barik/data/examples/**'
-      - 'apps/barik/www/audio/**'
-      - 'apps/barik/www/ex/**'
-      - 'apps/barik/tests/**'
-      - 'apps/barik/tools/check_guest.js'
-      - 'apps/barik/tools/build_examples.py'
-      - 'tools/check_all.sh'
 permissions:
   contents: read
 concurrency:
@@ -34,7 +29,7 @@ jobs:
       - name: Install release dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y php-cli php-sqlite3 php-curl ripgrep
+          sudo apt-get install -y php-cli php-sqlite3 php-curl php-mbstring php-zip ripgrep
           python -m pip install requests Pillow pyzipper
           npm install --no-save --package-lock=false playwright@1.62.1
           npx playwright install --with-deps chromium

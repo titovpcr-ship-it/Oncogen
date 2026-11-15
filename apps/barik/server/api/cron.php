@@ -3,6 +3,7 @@
    php /home/barik/public_html/api/cron.php      — снаружи файл закрыт (.htaccess) и сам отказывает не-CLI. */
 if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 require __DIR__ . '/lib.php';
+q('DELETE FROM hits WHERE t < ?', [time() - 86400]);
 [$sent, $seen] = remind_run(isset($argv[1]) ? (int)$argv[1] : null);
 echo date('c') . " remind: sent $sent of $seen\n";
 [$tsent, $tbad] = tg_run(isset($argv[1]) ? (int)$argv[1] : null);      // Telegram-бот «слово дня» (O-186)

@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y php-cli php-sqlite3 php-curl
+          sudo apt-get install -y php-cli php-sqlite3 php-curl php-mbstring php-zip
           python -m pip install requests Pillow pyzipper
           npm install --no-save --package-lock=false playwright@1.62.1
           npx playwright install --with-deps chromium

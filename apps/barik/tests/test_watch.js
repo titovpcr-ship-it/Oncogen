@@ -49,7 +49,7 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
   ok(msgs.length===3&&/главная сайта отвечает 500/.test(last()),'на следующий день сайт всё ещё сломан — снова сигнал');
   broken=false;
   o=await cron(D0+86400+3*H+420);
-  ok(msgs.length===4&&/^✅ Barik: всё в порядке/.test(last())&&/людей \d+/.test(last())&&/Premium сейчас: 0/.test(last())&&/Ошибок JS у посетителей: 0/.test(last()),
+  ok(msgs.length===4&&/^✅ Barik: всё в порядке/.test(last())&&/IP\+браузер \d+/.test(last())&&/Premium сейчас: 0/.test(last())&&/Ошибок JS у посетителей: 0/.test(last()),
      'сайт починили — утром «всё в порядке» и вчерашние цифры: '+last().replace(/\n/g,' | ').slice(0,200));
 
   // сервер: ошибка JS посетителя, неверная подпись вебхука Dodo
@@ -66,12 +66,12 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
   await pg.evaluate(()=>{ setTimeout(()=>{ throw new Error('boom-js-test'); },0); setTimeout(()=>{ throw new Error('boom-js-test'); },10);
     Promise.reject(new Error('reject-test')); const a=new Audio(); a.play().catch(()=>{}); });
   await pg.waitForTimeout(600);
-  let j=await (await fetch(base+'api/?r=stats&key='+KEY+'&days=2')).json();
+  let j=await (await fetch(base+'api/?r=stats&days=2',{headers:{Authorization:'Bearer '+KEY}})).json();
   const js=(j.js||[]).map(x=>x.msg);
   ok(js.filter(m=>/boom-js-test/.test(m)).length===1&&js.some(m=>/reject-test/.test(m))&&(j.js||[]).every(x=>x.dev==='ios'),'ошибки JS посетителя — на сервере, одинаковая — один раз: '+js.join(' ; '));
-  ok(await (await fetch(base+'api/?r=jserr',{method:'POST',headers:{'User-Agent':'Googlebot/2.1'},body:'{"m":"bot"}'})).status===204&&!(((await (await fetch(base+'api/?r=stats&key='+KEY)).json()).js||[]).some(x=>x.msg==='bot')),'робот в ошибки не пишется');
+  ok(await (await fetch(base+'api/?r=jserr',{method:'POST',headers:{'User-Agent':'Googlebot/2.1'},body:'{"m":"bot"}'})).status===204&&!(((await (await fetch(base+'api/?r=stats',{headers:{Authorization:'Bearer '+KEY}})).json()).js||[]).some(x=>x.msg==='bot')),'робот в ошибки не пишется');
   await fetch(base+'api/?r=csp',{method:'POST',headers:{'Content-Type':'application/csp-report','User-Agent':UA},body:JSON.stringify({'csp-report':{'violated-directive':'img-src','blocked-uri':'https://evil.example/x.png','document-uri':'https://barik.am/'}})});
-  { const j2=await (await fetch(base+'api/?r=stats&key='+KEY+'&days=2')).json(); const m={}; for(const r of j2.rows) m[r.k]=(m[r.k]||0)+r.n;
+  { const j2=await (await fetch(base+'api/?r=stats&days=2',{headers:{Authorization:'Bearer '+KEY}})).json(); const m={}; for(const r of j2.rows) m[r.k]=(m[r.k]||0)+r.n;
     ok(!(j2.js||[]).some(x=>/^CSP/.test(x.msg))&&m['csp']===1&&m['csp:img-src evil.example']===1,'отчёт CSP — в свой счётчик csp, не в журнал ошибок JS (Б2)'); }
   const st=await fetch(base+'api/?r=dodo',{method:'POST',headers:{'Content-Type':'application/json','webhook-id':'msg_x','webhook-timestamp':String(Math.floor(Date.now()/1000)),'webhook-signature':'v1,AAAA'},body:'{"type":"x"}'});
   ok(st.status===401,'вебхук с неверной подписью — 401');

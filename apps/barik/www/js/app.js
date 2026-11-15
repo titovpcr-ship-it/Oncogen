@@ -745,7 +745,7 @@ window.addEventListener('beforeinstallprompt',event=>{
   event.preventDefault();
   installPrompt=event;
 });
-function finish(){ hit('lesson_done'); if(!UI.l1){ UI.l1=1; saveUI(); }
+function finish(){ if(!sess||sess.ended) return; const completed=sess.items.length>0&&sess.i>=sess.items.length; hit(completed?'lesson_done':'lesson_exit'); if(completed&&!UI.l1){ UI.l1=1; saveUI(); }
   if(!BILL.native&&!ACC.me&&sess.mode==='learn'&&sess.i>=sess.items.length&&sess.first.size){
     UI.guestLessons=(UI.guestLessons||0)+1;
     if([1,3].includes(UI.guestLessons)&&UI.returnDay!==today()){
@@ -881,8 +881,8 @@ const HITS=new Set();
 const HSRC=(()=>{ let r='',seo=''; try{ const sp=new URLSearchParams(location.search||''), f=(sp.get('from')||'').toLowerCase().replace(/[^a-z0-9_.-]/g,'').slice(0,24);
     if(document.referrer){ const u=new URL(document.referrer); if(u.hostname===location.hostname){ const m=u.pathname.match(/^\/(?:ru|en|fr|es|de|pt)\/(?:([wtpagn])\/)?/); if(m) seo=m[1]||'i'; } else r=u.hostname.replace(/^(www\.|m\.|l\.|lm\.)/,''); }
     return {f,r,seo,g:FIRST?1:0,s:f?'from='+f:seo?'seo':(r||'-')}; }catch(x){ return {f:'',r:'',seo:'',g:FIRST?1:0,s:'-'}; } })();
-function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; if(e&&HITS.has(e)) return; if(e) HITS.add(e);
-  navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e,l:L,s:HSRC.s,g:HSRC.g}:{l:L,c:tzCC(TZ)||'',r:HSRC.r,f:HSRC.f,s:HSRC.s,g:HSRC.g})); }catch(x){} }
+function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; const repeat=e==='lesson_done'||e==='lesson_exit'; if(e&&!repeat&&HITS.has(e)) return; if(e&&!repeat) HITS.add(e);
+  navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e,v:2,l:L,s:HSRC.s,g:HSRC.g}:{l:L,c:tzCC(TZ)||'',r:HSRC.r,f:HSRC.f,s:HSRC.s,g:HSRC.g})); }catch(x){} }
 function resFail(){ hit('res_fail'); }
 /* ошибки JS у посетителей (O-200): текст и место — на сервер, не больше 5 разных за визит; шум браузеров (воспроизведение без касания,
    прерванная загрузка, чужие скрипты «Script error.») — мимо */
@@ -2484,8 +2484,10 @@ function exMarkup(e){
   return '<div class="ex"><div class="ex-top"><span class="ex-k">'+esc(T('exLabel'))+'</span>'+(audioOK()?'<button class="ex-say" data-act="exSay" data-arg="'+esc(e[0])+'" aria-label="'+esc(T('listenExample'))+'">'+ICON.spk+'</button>':'')+'</div>'+
     '<p class="ex-hy" lang="hy">'+esc(e[0])+'</p><p class="ex-tr">'+esc(exTr(e[0]))+'</p><p class="ex-tx">'+esc(e[1])+'</p></div>';
 }
+const LEXICAL_REVIEW=["Ուշ լինի, նուշ լինի","Ռուսիա","անգիր","անկապակացություն","անհետ կորած","անտոմս ուղեւոր","առանձնացում","ատմոսֆերա","արմավենու յուղյուղ","բանահյուսական","բացատրական դերանուն","բրինձ քացախ","գյուղ տեղ","գոյական խառնիչ","գործադիր","գրասալիկը","ժամակահատված","լրատու","ծավալային","կեղծ թիվ","կցաղետապ","հայաստանցի","հեռագիր","հիվանդոտ","հողմահակառակ","հրանետ","նախանձախնդիր","շահագործական","որբահավաք","որքին","սաղարթավոր","վայրի գազար","տրանսցենդենտ","փոթոր"];
+const LEXICAL_NOTE={"ru":"Написание или значение этой словарной статьи уточняется. Не используйте её как единственный образец.","en":"The spelling or meaning of this dictionary entry is under review. Do not use it as your only reference.","fr":"L’orthographe ou le sens de cette entrée est en cours de vérification. Ne l’utilisez pas comme seule référence.","es":"La escritura o el significado de esta entrada está en revisión. No la uses como única referencia.","de":"Schreibweise oder Bedeutung dieses Eintrags wird geprüft. Verwende ihn nicht als einzige Referenz.","pt":"A grafia ou o significado deste verbete está em revisão. Não o use como única referência."};
 function exSlotContent(word,url){
-  if(exampleCache.has(url)) return exMarkup(exampleCache.get(url)[word.a]);
+  if(exampleCache.has(url)) return (LEXICAL_REVIEW.includes(word.a)?'<p class="note" role="note">'+esc(LEXICAL_NOTE[L]||LEXICAL_NOTE.en)+'</p>':'')+exMarkup(exampleCache.get(url)[word.a]);
   if(exampleErrors.has(url)) return '<p class="ex-error" role="alert">'+esc(T('lzFail'))+' <button class="btn ghost sm" data-act="exRetry">'+esc(T('lzRetry'))+'</button></p>';
   return '<p class="ex-loading" role="status" aria-live="polite">'+esc(T('loading'))+'</p>';
 }

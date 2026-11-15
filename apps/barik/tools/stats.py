@@ -14,21 +14,25 @@ def main():
     cp = D.CPanel(os.environ['BARIK_HOST_SERVER'], os.environ['BARIK_HOST_DOMAIN'], os.environ['BARIK_HOST_USER'],
                   os.environ.get('BARIK_HOST_PASSWORD', ''), os.environ.get('BARIK_HOST_TOKEN', ''))
     cp.login()
-    cfg = (cp.uapi('Fileman', 'get_file_content', dir='public_html/api', file='config.php').get('data') or {}).get('content') or ''
+    cfg = (cp.uapi('Fileman', 'get_file_content', dir='/home/' + cp.user + '/public_html/api', file='config.php', charset='utf-8').get('data') or {}).get('content') or ''
     m = re.search(r"'PEPPER'\s*=>\s*'([^']+)'", cfg)
     if not m: sys.exit('в config.php нет PEPPER')
     key = hmac.new(m.group(1).encode(), b'stats', hashlib.sha256).hexdigest()[:32]
-    j = requests.get('https://%s/api/' % os.environ['BARIK_HOST_DOMAIN'], params={'r': 'stats', 'key': key, 'days': a.days}, timeout=60).json()
+    j = requests.get('https://%s/api/' % os.environ['BARIK_HOST_DOMAIN'], params={'r': 'stats', 'days': a.days}, headers={'Authorization': 'Bearer ' + key}, timeout=60).json()
     if not j.get('ok'): sys.exit('ошибка: %s' % j)
     by = collections.defaultdict(dict); tot = collections.Counter()
     for r in j['rows']:
         by[r['day']][r['k']] = r['n']; tot[r['k']] += r['n']
     print('аккаунтов: %d, с напоминаниями: %d, Premium: %d' % (j['users'], j['remind'], j['premium']))
-    print('\nдень        люди  открытий  начали  вход  открытка  оплата')
+    print('\nдень        IP+UA открытий  начали  вход  открытка checkout')
     for d in sorted(by):
         x = by[d]; day = datetime.date(1970, 1, 1) + datetime.timedelta(days=d)
         print('%s  %5d  %8d  %6d  %4d  %8d  %6d' % (day, x.get('u', 0), x.get('open', 0), x.get('e:start', 0), x.get('e:login', 0),
               x.get('e:name_save', 0) + x.get('e:name_share', 0), x.get('e:checkout', 0)))
+    print('Посещения: суточные IP+браузер, включая владельца; сумма дней не равна числу людей.')
+    print('Завершено уроков (новый счётчик): %d' % tot.get('e:lesson_complete', 0))
+    print('Старые lesson_done могут включать досрочные выходы; клиентский paid не является продажей.')
+    print('Подтверждённые платежи Dodo: %d' % tot.get('p:paid', 0))
     funnel(by, tot)
     if j.get('js'):
         print('\nошибки JS у посетителей (последние): ')
@@ -46,7 +50,7 @@ def main():
 
 STEPS = [('guest', 'гости'), ('land_try', 'телефон'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_done', 'урок'), ('unit_done', 'путь'),
          ('rem_tg', 'Telegram'), ('rem_mail', 'почта'), ('a2hs', 'на экран Домой'),
-         ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'оплата')]
+         ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'возврат Premium')]
 
 
 def funnel(by, tot):
