@@ -211,9 +211,10 @@ def release_control(action, credentials=None):
     if action == 'finalize' and os.path.exists(RELEASE): os.remove(RELEASE)
 
 
-def guarded_release(cp, root, todo):
+def recover_release(cp):
     if os.path.exists(RELEASE):
-        raise RuntimeError('Unfinished release: run --rollback then --finalize before retrying')
+        release_control('rollback')
+        release_control('finalize')
     # Recover an interrupted runner using endpoint names and an HMAC derived from the existing host credential.
     host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
     def credentials_for(rid):
@@ -227,6 +228,12 @@ def guarded_release(cp, root, todo):
             previous = credentials_for(match.group(1))
             release_control('rollback', previous)
             release_control('finalize', previous)
+
+
+def guarded_release(cp, root, todo):
+    host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
+    def credentials_for(rid):
+        return {'token': hmac.new(host_secret.encode(), ('barik-release:' + rid).encode(), hashlib.sha256).hexdigest()}
     rid = secrets.token_hex(12)
     token = credentials_for(rid)['token']
     endpoint = 'barik-release-' + rid + '.php'
@@ -267,6 +274,16 @@ def guarded_release(cp, root, todo):
         raise
 
 
+def release_plan(cp, all_files=False):
+    recover_release(cp)
+    files = scan()
+    state = {} if all_files or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
+    now = {rel: sha(p) for rel, p in files.items()}
+    todo = {rel: files[rel] for rel in files if state.get(rel) != now[rel]}
+    gone = sorted(set(state) - set(files))
+    return files, state, now, todo, gone
+
+
 def main():
     ap = argparse.ArgumentParser(description='Выкладка dist/site на хостинг Name.am через cPanel (HTTPS)')
     ap.add_argument('--check', action='store_true', help='только вход, PHP и место на диске')
@@ -302,11 +319,7 @@ def main():
 
     if not os.path.exists(os.path.join(SITE, 'index.html')):
         sys.exit('Нет dist/site — сначала python3.13 tools/build_site.py')
-    files = scan()
-    state = {} if a.all or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
-    now = {rel: sha(p) for rel, p in files.items()}
-    todo = {rel: files[rel] for rel in files if state.get(rel) != now[rel]}
-    gone = sorted(set(state) - set(files))
+    files, state, now, todo, gone = release_plan(cp, a.all)
     print('файлов в сборке %d, к выкладке %d, исчезло из сборки %d' % (len(files), len(todo), len(gone)))
 
     # распаковка — по абсолютному пути: относительный cPanel считает от папки архива (public_html/public_html)

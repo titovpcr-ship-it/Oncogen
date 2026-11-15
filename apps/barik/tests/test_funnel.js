@@ -29,6 +29,8 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
 c=sqlite3.connect(sys.argv[1]); t=int(sys.argv[2])
 for i,(st,sub,mode,gift) in enumerate([('active','sub_t',None,0),('active','sub_l','live',0),('',None,None,t+86400),('expired','sub_x','live',0)]):
     c.execute("INSERT INTO users(email,nick,nick_key,created,sub_status,pd_sub,sub_mode,gift_until) VALUES(?,?,?,?,?,?,?,?)",('u%d@x.am'%i,'u%d'%i,'u%d'%i,t,st,sub,mode,gift))
+c.execute("UPDATE users SET sub_until=? WHERE sub_status='active'",(t+86400,))
+c.execute("INSERT INTO users(email,nick,nick_key,created,sub_status,pd_sub,sub_mode,sub_until) VALUES('elapsed@x.am','elapsed','elapsed',?,'active','sub_elapsed','live',?)",(t,t-86400))
 c.commit()`,db,String(now)]);
   let S=await stats(); ok(S.__premium===2,'Premium в сводке: боевая подписка и подарок (тестовая и кончившаяся — нет): '+S.__premium);
 

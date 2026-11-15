@@ -61,10 +61,10 @@ function db(): PDO {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
     $pdo->exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
-    if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
+    if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 2) {
         $pdo->exec('BEGIN IMMEDIATE');
         try {
-            if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
+            if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 2) {
     $pdo->exec('CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
@@ -106,7 +106,8 @@ function db(): PDO {
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS crypto_uid ON crypto(uid, created)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS hits_t ON hits(t)');
-    $pdo->exec('PRAGMA user_version=1');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS subscription_versions(sid TEXT PRIMARY KEY, issued INTEGER NOT NULL DEFAULT 0, applied INTEGER NOT NULL DEFAULT 0, event_stamp INTEGER NOT NULL DEFAULT 0)');
+    $pdo->exec('PRAGMA user_version=2');
             }
             $pdo->exec('COMMIT');
         } catch (Throwable $e) {
@@ -576,7 +577,7 @@ function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?ar
     $until = $next;
     if ($st === 'active') {
         $status = 'active';                         // оплачено до next_billing_date (+3 дня запаса в premium())
-        if (!$until) $until = now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
+        if (!$until) $until = $u['pd_sub'] === $sid && (int)($u['sub_until'] ?? 0) > 0 ? min((int)$u['sub_until'], now() + 35 * 86400) : now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
     } elseif ($st === 'past_due') {
         $status = 'past_due';
         // Missing dates must never slide the grace window on repeated checks.
@@ -656,13 +657,17 @@ function remind_run(?int $now = null): array {
 
 
 /* ---------- счётчик посещений (O-174) ---------- */
-const FUNNEL = ['land_try', 'start', 'first_answer', 'lesson_done', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
+const FUNNEL = ['land_try', 'start', 'first_answer', 'lesson_complete', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
                 'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail', 'rem_tg', 'rem_mail', 'a2hs'];
 
 /* Premium сейчас: подписки текущего режима Dodo (O-195) и подарки */
 function premium_count(): int {
-    return (int)q("SELECT COUNT(*) FROM users WHERE (sub_status IN ('active','trialing','past_due') AND (COALESCE(pd_sub,'') = '' OR COALESCE(NULLIF(sub_mode,''),'test') = ?)) OR gift_until > ?",
-                  [dodo_mode(), now()])->fetchColumn();
+    $count = 0;
+    foreach (q('SELECT * FROM users')->fetchAll() as $u) {
+        if ((int)($u['gift_until'] ?? 0) > now() || (premium($u) && (empty($u['pd_sub']) || ((($u['sub_mode'] ?? '') ?: 'test') === dodo_mode())) &&
+            ((int)($u['sub_until'] ?? 0) > now() || (($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub']))))) $count++;
+    }
+    return $count;
 }
 
 function stat_add(int $day, string $k, int $n = 1): void {
@@ -1050,6 +1055,7 @@ function backup_offsite(string $snap, string $pw, string $owner, string $day): b
     $zip = backup_dir() . '/barik-db-' . $day . '.zip';
     $z = new ZipArchive();
     if ($z->open($zip, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) return false;
+    $zOpen = true; $verifyOpen = false; $verify = null;
     try {
         if (!$z->setPassword($pw)) throw new RuntimeException('backup password failed');
         $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
@@ -1060,8 +1066,10 @@ function backup_offsite(string $snap, string $pw, string $owner, string $day): b
         }
         if (!$z->addFromString('README.txt', "Barik encrypted backup $day. Database and config.php.\n")) throw new RuntimeException('backup README failed');
         if (!$z->close()) throw new RuntimeException('backup close failed');
+        $zOpen = false;
         $verify = new ZipArchive();
         if ($verify->open($zip) !== true) throw new RuntimeException('backup verification open failed');
+        $verifyOpen = true;
         foreach ($files as $name => $path) {
             $stat = $verify->statName($name);
             if (($stat['encryption_method'] ?? 0) !== ZipArchive::EM_AES_256) throw new RuntimeException('backup is not AES-256');
@@ -1072,8 +1080,19 @@ function backup_offsite(string $snap, string $pw, string $owner, string $day): b
             if (!is_string($bytes) || hash('sha256', $bytes) !== hash_file('sha256', $path)) throw new RuntimeException('backup content mismatch');
         }
         if (!$verify->close()) throw new RuntimeException('backup verification close failed');
+        $verifyOpen = false;
     } catch (Throwable $e) {
         error_log('barik backup verification: ' . $e->getMessage());
+        $backupFailed = true;
+    } finally {
+        foreach ([[$z, $zOpen], [$verify, $verifyOpen]] as [$archive, $opened]) {
+            if ($opened && $archive) {
+                try { if (!$archive->close()) { $backupFailed = true; error_log('barik backup final close failed'); } }
+                catch (Throwable $closeError) { $backupFailed = true; error_log('barik backup close: ' . $closeError->getMessage()); }
+            }
+        }
+    }
+    if (!empty($backupFailed)) {
         if (is_file($zip)) unlink($zip);
         return false;
     }
@@ -1206,7 +1225,7 @@ function watch_digest(array $p, int $yday): string {
 /* TZ_AUDIT3 №5: воронка новичка, Путь по ступеням, ролики и отчёты CSP — в утренней сводке (раньше только в stats.py) */
 function watch_funnel(int $d): string {
     $g = fn($k) => day_sum($d, 'g:' . $k);
-    $t = "\nНовички: гости " . $g('guest') . ' → телефон ' . $g('land_try') . ' → вошли ' . $g('start') . ' → 1-й ответ ' . $g('first_answer') . ' → урок ' . $g('lesson_done');
+    $t = "\nНовички: гости " . $g('guest') . ' → телефон ' . $g('land_try') . ' → вошли ' . $g('start') . ' → 1-й ответ ' . $g('first_answer') . ' → урок ' . $g('lesson_complete');
     $t .= "\nПосле урока: Telegram " . $g('rem_tg') . ', почта ' . $g('rem_mail') . ', на экран «Домой» ' . $g('a2hs');
     $st = [];
     for ($n = 1; $n <= 5; $n++) {
