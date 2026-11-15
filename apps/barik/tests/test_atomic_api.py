@@ -17,14 +17,17 @@ class AtomicAPI(unittest.TestCase):
         class Dodo(http.server.BaseHTTPRequestHandler):
             def do_GET(self):
                 cls.dodo_state['calls'] += 1
-                time.sleep(.05)
+                time.sleep(cls.dodo_state.get('delay',.05))
                 payload = {'subscription_id':'sub_atomic','status':'active','product_id':'prod_month',
                            'next_billing_date':'2030-01-01T00:00:00Z','customer':{'email':'1@example.com'}}
                 payload.update(cls.dodo_state.get('subscription', {}))
                 if self.path.startswith('/payments/'):
                     payload = {'payment_id':'pay_hook','status':'succeeded','metadata':{'gift':'1','uid':'1','months':'3',
                                'sig':hmac.new(b'atomic-tests',b'uid:1',hashlib.sha256).hexdigest()[:32]}}
-                self.send_response(cls.dodo_state['status']); self.end_headers(); self.wfile.write(json.dumps(payload).encode())
+                try:
+                    self.send_response(cls.dodo_state['status']); self.end_headers(); self.wfile.write(json.dumps(payload).encode())
+                except BrokenPipeError:
+                    self.close_connection=True  # expected after the simulated upstream timeout
             def log_message(self, *args): pass
         cls.stub = http.server.ThreadingHTTPServer(('127.0.0.1',0),Dodo)
         threading.Thread(target=cls.stub.serve_forever,daemon=True).start()
@@ -58,7 +61,7 @@ class AtomicAPI(unittest.TestCase):
             sig = base64.b64encode(hmac.new(b'webhook-test',event_id.encode()+b'.'+ts.encode()+b'.'+req.data,hashlib.sha256).digest()).decode()
             req.add_header('webhook-id',event_id); req.add_header('webhook-timestamp',ts); req.add_header('webhook-signature','v1,'+sig)
         try:
-            with urllib.request.urlopen(req, timeout=15) as r: return r.status, json.load(r)
+            with urllib.request.urlopen(req, timeout=30) as r: return r.status, json.load(r)
         except urllib.error.HTTPError as r: return r.code, json.load(r)
 
     def parallel(self, calls):
@@ -129,6 +132,21 @@ class AtomicAPI(unittest.TestCase):
         self.assertEqual([r[0] for r in results],[200,200])
         self.assertEqual(sum(bool(r[1].get('dup')) for r in results),1)
         self.assertIn(self.dodo_state['calls']-before,(1,2))
+
+    def test_h3_timeout_does_not_lock_progress(self):
+        self.dodo_state['delay']=21
+        try:
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                pending=pool.submit(self.call,'dodo',{'data':{'subscription_id':'sub_atomic'}},1,'evt_timeout')
+                time.sleep(.3)
+                started=time.monotonic()
+                current=self.call('sync')[1]
+                self.assertEqual(self.call('sync',{'rev':current['rev'],'data':current['data'] or '{"s":{}}'})[0],200)
+                self.assertLess(time.monotonic()-started,2)
+                self.assertEqual(pending.result(timeout=30)[0],503)
+            self.assertEqual(self.sql.execute("SELECT COUNT(*) FROM events WHERE id='dodo:evt_timeout'").fetchone()[0],0)
+        finally:
+            self.dodo_state.pop('delay',None)
 
     def test_h3_transient_and_rollback(self):
         for code in (429,500):
