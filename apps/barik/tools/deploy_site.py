@@ -274,6 +274,16 @@ def guarded_release(cp, root, todo):
         raise
 
 
+def release_plan(cp, all_files=False):
+    recover_release(cp)
+    files = scan()
+    state = {} if all_files or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
+    now = {rel: sha(p) for rel, p in files.items()}
+    todo = {rel: files[rel] for rel in files if state.get(rel) != now[rel]}
+    gone = sorted(set(state) - set(files))
+    return files, state, now, todo, gone
+
+
 def main():
     ap = argparse.ArgumentParser(description='Выкладка dist/site на хостинг Name.am через cPanel (HTTPS)')
     ap.add_argument('--check', action='store_true', help='только вход, PHP и место на диске')
@@ -309,12 +319,7 @@ def main():
 
     if not os.path.exists(os.path.join(SITE, 'index.html')):
         sys.exit('Нет dist/site — сначала python3.13 tools/build_site.py')
-    recover_release(cp)
-    files = scan()
-    state = {} if a.all or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
-    now = {rel: sha(p) for rel, p in files.items()}
-    todo = {rel: files[rel] for rel in files if state.get(rel) != now[rel]}
-    gone = sorted(set(state) - set(files))
+    files, state, now, todo, gone = release_plan(cp, a.all)
     print('файлов в сборке %d, к выкладке %d, исчезло из сборки %d' % (len(files), len(todo), len(gone)))
 
     # распаковка — по абсолютному пути: относительный cPanel считает от папки архива (public_html/public_html)

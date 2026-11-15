@@ -576,7 +576,7 @@ function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?ar
     $until = $next;
     if ($st === 'active') {
         $status = 'active';                         // оплачено до next_billing_date (+3 дня запаса в premium())
-        if (!$until) $until = $u['pd_sub'] === $sid && (int)($u['sub_until'] ?? 0) > 0 ? (int)$u['sub_until'] : now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
+        if (!$until) $until = $u['pd_sub'] === $sid && (int)($u['sub_until'] ?? 0) > 0 ? min((int)$u['sub_until'], now() + 35 * 86400) : now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
     } elseif ($st === 'past_due') {
         $status = 'past_due';
         // Missing dates must never slide the grace window on repeated checks.
