@@ -10,7 +10,7 @@ function release_path(string $rel): void {
     }
 }
 function release_write(string $path, string $bytes): void {
-    if (!is_dir(dirname($path)) && !mkdir(dirname($path), 0700, true)) throw new RuntimeException('mkdir failed');
+    if (!is_dir(dirname($path)) && !mkdir(dirname($path), 0755, true)) throw new RuntimeException('mkdir failed');
     $tmp = $path . '.barik-tmp';
     if (file_put_contents($tmp, $bytes) !== strlen($bytes) || !rename($tmp, $path)) throw new RuntimeException('write failed');
 }

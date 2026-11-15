@@ -8,7 +8,7 @@ rid=secrets.token_hex(12); token=secrets.token_hex(32)
 endpoint='barik-release-'+rid+'.php'; probe='barik-probe-'+rid
 source=open(os.path.join(D.HERE,'release_guard.php')).read().replace('__TOKEN__',token).replace('__ID__',rid)
 # Use the actual guarded transaction against a dedicated empty test root.
-source=source.replace("        release_action(__DIR__,", "        $probe = __DIR__ . '/"+probe+"';\n        if (!is_dir($probe)) { mkdir($probe,0700); file_put_contents($probe . '/app.js','old'); }\n        release_action($probe,")
+source=source.replace("        release_action(__DIR__,", "        $probe = __DIR__ . '/"+probe+"';\n        if (!is_dir($probe)) { mkdir($probe,0755); file_put_contents($probe . '/app.js','old'); }\n        release_action($probe,")
 # Finalize only this probe and the temporary authenticated endpoint.
 source=source.replace("        release_action($probe,", "        if (($_GET['action'] ?? '') === 'finalize') { unlink($probe . '/app.js'); if (is_file($probe . '/.htaccess')) unlink($probe . '/.htaccess'); rmdir($probe); unlink(__FILE__); echo '{\"ok\":true}'; exit; }\n        release_action($probe,")
 cp.ok(cp.uapi('Fileman','upload_files',files={'file-1':(endpoint,source.encode(),'text/plain')},dir='public_html',overwrite='0'),'probe endpoint')
