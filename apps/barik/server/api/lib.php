@@ -731,13 +731,25 @@ function gift_settle(string $pid, string $lang = 'en'): ?array {
 
 function gift_redeem(array $u, string $code): string {
     $code = strtoupper(preg_replace('/[^A-Za-z0-9-]/', '', $code));
-    $g = q('SELECT * FROM gifts WHERE code = ?', [$code])->fetch();
-    if (!$g) return 'nocode';
-    if ($g['used_by']) return (int)$g['used_by'] === (int)$u['id'] ? 'ok' : 'used';
-    $from = max(now(), (int)($u['gift_until'] ?? 0));
-    q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
-    q('UPDATE users SET gift_until = ? WHERE id = ?', [$from + (int)$g['months'] * 30 * 86400, $u['id']]);
-    return 'ok';
+    $pdo = db();
+    $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        $g = q('SELECT * FROM gifts WHERE code = ?', [$code])->fetch();
+        $result = !$g ? 'nocode' : ($g['used_by'] ? ((int)$g['used_by'] === (int)$u['id'] ? 'ok' : 'used') : '');
+        if ($result === '') {
+            $claimed = q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
+            if ($claimed->rowCount() !== 1) throw new RuntimeException('Gift claim conflict');
+            $changed = q('UPDATE users SET gift_until = MAX(CAST(? AS INTEGER), COALESCE(gift_until, 0)) + ? WHERE id = ?',
+                [now(), (int)$g['months'] * 30 * 86400, $u['id']]);
+            if ($changed->rowCount() !== 1) throw new RuntimeException('Gift recipient missing');
+            $result = 'ok';
+        }
+        $pdo->exec('COMMIT');
+        return $result;
+    } catch (Throwable $e) {
+        $pdo->exec('ROLLBACK');
+        throw $e;
+    }
 }
 
 
