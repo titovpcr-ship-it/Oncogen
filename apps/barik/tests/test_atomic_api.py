@@ -17,15 +17,18 @@ class AtomicAPI(unittest.TestCase):
         class Dodo(http.server.BaseHTTPRequestHandler):
             def do_GET(self):
                 cls.dodo_state['calls'] += 1
-                time.sleep(cls.dodo_state.get('delay',.05))
+                snapshot=dict(cls.dodo_state.get('subscription', {}))
+                delay=cls.dodo_state.get('delay',.05)
+                cls.dodo_state.get('entered',threading.Event()).set()
+                time.sleep(delay)
                 payload = {'subscription_id':'sub_atomic','status':'active','product_id':'prod_month',
                            'next_billing_date':'2030-01-01T00:00:00Z','customer':{'email':'1@example.com'}}
-                payload.update(cls.dodo_state.get('subscription', {}))
+                payload.update(snapshot)
                 if self.path.startswith('/payments/'):
                     payload = {'payment_id':'pay_hook','status':'succeeded','metadata':{'gift':'1','uid':'1','months':'3',
                                'sig':hmac.new(b'atomic-tests',b'uid:1',hashlib.sha256).hexdigest()[:32]}}
                 try:
-                    self.send_response(cls.dodo_state['status']); self.end_headers(); self.wfile.write(json.dumps(payload).encode())
+                    self.send_response(cls.dodo_state['status']); self.end_headers(); self.wfile.write(b'{broken' if cls.dodo_state.get('broken') else json.dumps(payload).encode())
                 except BrokenPipeError:
                     self.close_connection=True  # expected after the simulated upstream timeout
             def log_message(self, *args): pass
@@ -180,6 +183,28 @@ class AtomicAPI(unittest.TestCase):
         self.assertEqual(self.call('dodo',payload,1,'evt_paid1')[0],200)
         self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='p:paid'").fetchone()[0],1)
 
+    def test_h3_invalid_success_and_reordered_responses(self):
+        payload={'data':{'subscription_id':'sub_atomic'}}
+        self.dodo_state['broken']=True
+        try:
+            self.assertEqual(self.call('dodo',payload,1,'evt_bad_json')[0],503)
+            self.assertFalse(self.sql.execute("SELECT 1 FROM events WHERE id='dodo:evt_bad_json'").fetchone())
+        finally: self.dodo_state.pop('broken',None)
+        self.assertEqual(self.call('dodo',payload,1,'evt_bad_json')[0],200)
+        entered=threading.Event()
+        self.dodo_state.update(subscription={'status':'past_due','next_billing_date':'2020-01-01'},delay=.8,entered=entered)
+        try:
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                old=pool.submit(self.call,'dodo',payload,1,'evt_older')
+                self.assertTrue(entered.wait(3))
+                self.dodo_state.update(subscription={'status':'active','next_billing_date':'2031-01-01'},delay=.01)
+                self.assertEqual(self.call('dodo',payload,1,'evt_newer')[0],200)
+                self.assertEqual(old.result()[0],200)
+            self.assertEqual(self.sql.execute('SELECT sub_status FROM users WHERE id=1').fetchone()[0],'active')
+            self.assertGreater(self.sql.execute('SELECT sub_until FROM users WHERE id=1').fetchone()[0],1900000000)
+        finally:
+            for key in ('subscription','delay','entered'): self.dodo_state.pop(key,None)
+
     def test_h4_missing_date_has_fixed_grace(self):
         old = int(time.time()) - 10*86400
         self.sql.execute("UPDATE users SET gift_until=0, sub_until=NULL, sub_at=?, sub_status='past_due', sub_mode='test' WHERE id=1",(old,)); self.sql.commit()
@@ -194,6 +219,17 @@ class AtomicAPI(unittest.TestCase):
             self.assertTrue(self.call('me')[1]['user']['premium'])
         finally:
             self.dodo_state.pop('subscription',None)
+
+    def test_h4_active_missing_date_is_fixed(self):
+        self.dodo_state['subscription']={'status':'active','next_billing_date':'invalid'}
+        try:
+            payload={'data':{'subscription_id':'sub_atomic'}}
+            self.call('dodo',payload,1,'evt_active_missing1')
+            first=self.sql.execute('SELECT sub_until FROM users WHERE id=1').fetchone()[0]
+            time.sleep(1.1)
+            self.call('dodo',payload,1,'evt_active_missing2')
+            self.assertEqual(first,self.sql.execute('SELECT sub_until FROM users WHERE id=1').fetchone()[0])
+        finally: self.dodo_state.pop('subscription',None)
 
     def test_h4_legacy_lifetime_is_not_missing_recurring_date(self):
         cases=[{'sub_plan':plan,'pd_sub':sid,'sub_status':'active','sub_until':0,'gift_until':0} for plan,sid in [('month','sub_x'),('life','sub_x'),('life','')]]
