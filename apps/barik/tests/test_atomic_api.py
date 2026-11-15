@@ -177,4 +177,28 @@ class AtomicAPI(unittest.TestCase):
         finally:
             self.dodo_state.pop('subscription',None)
 
+    def test_m2_bearer_only(self):
+        key=hmac.new(b'atomic-tests',b'stats',hashlib.sha256).hexdigest()[:32]
+        self.assertEqual(self.call('stats&key='+key)[0],401)
+        req=urllib.request.Request(self.url+'stats',headers={'Authorization':'Bearer '+key})
+        with urllib.request.urlopen(req) as r: self.assertEqual(r.status,200)
+
+    def test_m3_concurrent_limit_and_migration(self):
+        self.assertEqual(self.sql.execute('PRAGMA user_version').fetchone()[0],1)
+        # Run the genuine limiter in independent PHP processes against this same database.
+        code='require '+json.dumps(str(ROOT/'server/api/lib.php'))+'; echo limited("concurrent", 1, 3600) ? "blocked" : "allowed";'
+        env=dict(os.environ,BARIK_DATA_DIR=str(self.data))
+        self.sql.execute('BEGIN IMMEDIATE')
+        procs=[subprocess.Popen(['php','-r',code],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env) for _ in range(4)]
+        time.sleep(.2); self.sql.commit()
+        outputs=[p.communicate(timeout=15)[0].decode() for p in procs]
+        self.assertEqual(outputs.count('allowed'),1)
+        self.assertEqual(outputs.count('blocked'),3)
+        plan=self.sql.execute('EXPLAIN QUERY PLAN DELETE FROM hits WHERE t < ?', (0,)).fetchall()
+        self.assertIn('hits_t',str(plan))
+        # Existing pre-versioned databases are upgraded without duplicate-column errors.
+        self.sql.execute('PRAGMA user_version=0'); self.sql.commit()
+        self.assertEqual(self.call('me')[0],200)
+        self.assertEqual(self.sql.execute('PRAGMA user_version').fetchone()[0],1)
+
 if __name__ == '__main__': unittest.main()

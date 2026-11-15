@@ -61,6 +61,10 @@ function db(): PDO {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
     $pdo->exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
+    if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
+        $pdo->exec('BEGIN IMMEDIATE');
+        try {
+            if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 1) {
     $pdo->exec('CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
@@ -89,17 +93,27 @@ function db(): PDO {
     // подарочная подписка (O-184): код покупает один, вводит другой; доступ — users.gift_until, отдельно от подписки Dodo
     $pdo->exec('CREATE TABLE IF NOT EXISTS gifts(code TEXT PRIMARY KEY, pay_id TEXT NOT NULL UNIQUE, buyer INTEGER NOT NULL, months INTEGER NOT NULL,
         created INTEGER NOT NULL, used_by INTEGER, used_at INTEGER)');
-    try { $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER'); } catch (PDOException $e) { /* уже есть */ }
+    $columns = array_fill_keys($pdo->query('PRAGMA table_info(users)')->fetchAll(PDO::FETCH_COLUMN, 1), true);
+    if (!isset($columns['gift_until'])) $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER');
     // режим Dodo, в котором оформлена подписка (O-195): test | live; NULL — заведена до O-195, значит тестовая
-    try { $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT'); } catch (PDOException $e) { /* уже есть */ }
+    if (!isset($columns['sub_mode'])) $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT');
     // анкета покупателя (O-196): имя и фамилия для страницы оплаты, дата рождения, пол, страна — до оплаты обязательны
     foreach (['pf_first', 'pf_last', 'pf_birth', 'pf_gender', 'pf_country'] as $c) {
-        try { $pdo->exec('ALTER TABLE users ADD COLUMN ' . $c . ' TEXT'); } catch (PDOException $e) { /* уже есть */ }
+        if (!isset($columns[$c])) $pdo->exec('ALTER TABLE users ADD COLUMN ' . $c . ' TEXT');
     }
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS crypto_uid ON crypto(uid, created)');
+    $pdo->exec('CREATE INDEX IF NOT EXISTS hits_t ON hits(t)');
+    $pdo->exec('PRAGMA user_version=1');
+            }
+            $pdo->exec('COMMIT');
+        } catch (Throwable $e) {
+            $pdo->exec('ROLLBACK');
+            throw $e;
+        }
+    }
     return $pdo;
 }
 
@@ -112,11 +126,17 @@ function q(string $sql, array $args = []): PDOStatement {
 /* ---------- лимиты: ключ (почта или хэш адреса) — не больше n за окно ---------- */
 function limited(string $key, int $n, int $window): bool {
     $t = now();
-    q('DELETE FROM hits WHERE t < ?', [$t - 86400]);
-    $c = (int)q('SELECT COUNT(*) FROM hits WHERE k = ? AND t > ?', [$key, $t - $window])->fetchColumn();
-    if ($c >= $n) return true;
-    q('INSERT INTO hits(k, t) VALUES(?, ?)', [$key, $t]);
-    return false;
+    $pdo = db();
+    $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        $c = (int)q('SELECT COUNT(*) FROM hits WHERE k = ? AND t > ?', [$key, $t - $window])->fetchColumn();
+        if ($c < $n) q('INSERT INTO hits(k, t) VALUES(?, ?)', [$key, $t]);
+        $pdo->exec('COMMIT');
+        return $c >= $n;
+    } catch (Throwable $e) {
+        $pdo->exec('ROLLBACK');
+        throw $e;
+    }
 }
 
 function ip_key(): string {
