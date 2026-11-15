@@ -1152,7 +1152,7 @@ function watch_digest(array $p, int $yday): string {
     $head = $p ? "⚠️ Barik: есть проблемы\n• " . implode("\n• ", $p) : '✅ Barik: всё в порядке';
     return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): людей ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
         . ', вошли ' . day_sum($yday, 'g:start') . ', уроков ' . day_sum($yday, 'e:lesson_done') . ', оформляли ' . day_sum($yday, 'e:checkout')
-        . ', оплат ' . day_sum($yday, 'e:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
+        . ', платежей Dodo ' . day_sum($yday, 'p:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
         . "\nОшибок JS у посетителей: " . $js . ', сбоев загрузки: ' . day_sum($yday, 'e:res_fail') . watch_funnel($yday);
 }
 

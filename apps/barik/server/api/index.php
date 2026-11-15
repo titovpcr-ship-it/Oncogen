@@ -501,6 +501,18 @@ function dodo_webhook(): never {
             }
             $code = (int)$GLOBALS['DODO_CODE'];
             $retry = $code === 0 || $code === 429 || $code >= 500;
+            if (!$retry && ($ev['type'] ?? '') === 'payment.succeeded' && !empty($d['payment_id'])) {
+                $pid = (string)$d['payment_id'];
+                if (preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
+                    $payment = dodo('GET', '/payments/' . rawurlencode($pid));
+                    $http = (int)$GLOBALS['DODO_CODE'];
+                    $retry = $http === 0 || $http === 429 || $http >= 500;
+                    if (($payment['payment_id'] ?? '') === $pid && ($payment['status'] ?? '') === 'succeeded') {
+                        $added = q('INSERT OR IGNORE INTO events(id, t) VALUES(?, ?)', ['paid:' . $pid, now()])->rowCount();
+                        if ($added === 1) stat_add(intdiv(time(), 86400), 'p:paid');
+                    }
+                }
+            }
             if (!$retry) q('INSERT INTO events(id, t) VALUES(?, ?)', ['dodo:' . $id, now()]);
         }
         $pdo->exec($retry ? 'ROLLBACK' : 'COMMIT');

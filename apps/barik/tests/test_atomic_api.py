@@ -154,6 +154,14 @@ class AtomicAPI(unittest.TestCase):
         self.assertEqual(self.sql.execute("SELECT COUNT(*) FROM gifts WHERE pay_id='pay_hook'").fetchone()[0],1)
         self.assertEqual(self.call('dodo',payload)[0],401)
 
+    def test_m1_verified_payment_idempotency(self):
+        payload={'type':'payment.succeeded','data':{'payment_id':'pay_hook','metadata':{'gift':'1'}}}
+        results=self.parallel([('dodo',payload,1,'evt_paid1'),('dodo',payload,1,'evt_paid2')])
+        self.assertEqual([r[0] for r in results],[200,200])
+        self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='p:paid'").fetchone()[0],1)
+        self.assertEqual(self.call('dodo',payload,1,'evt_paid1')[0],200)
+        self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='p:paid'").fetchone()[0],1)
+
     def test_h4_missing_date_has_fixed_grace(self):
         old = int(time.time()) - 10*86400
         self.sql.execute("UPDATE users SET gift_until=0, sub_until=NULL, sub_at=?, sub_status='past_due', sub_mode='test' WHERE id=1",(old,)); self.sql.commit()

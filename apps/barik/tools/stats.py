@@ -24,11 +24,13 @@ def main():
     for r in j['rows']:
         by[r['day']][r['k']] = r['n']; tot[r['k']] += r['n']
     print('аккаунтов: %d, с напоминаниями: %d, Premium: %d' % (j['users'], j['remind'], j['premium']))
-    print('\nдень        люди  открытий  начали  вход  открытка  оплата')
+    print('\nдень        IP+UA открытий  начали  вход  открытка checkout')
     for d in sorted(by):
         x = by[d]; day = datetime.date(1970, 1, 1) + datetime.timedelta(days=d)
         print('%s  %5d  %8d  %6d  %4d  %8d  %6d' % (day, x.get('u', 0), x.get('open', 0), x.get('e:start', 0), x.get('e:login', 0),
               x.get('e:name_save', 0) + x.get('e:name_share', 0), x.get('e:checkout', 0)))
+    print('Посещения: суточные IP+браузер, включая владельца; сумма дней не равна числу людей.')
+    print('Подтверждённые платежи Dodo: %d' % tot.get('p:paid', 0))
     funnel(by, tot)
     if j.get('js'):
         print('\nошибки JS у посетителей (последние): ')
@@ -46,7 +48,7 @@ def main():
 
 STEPS = [('guest', 'гости'), ('land_try', 'телефон'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_done', 'урок'), ('unit_done', 'путь'),
          ('rem_tg', 'Telegram'), ('rem_mail', 'почта'), ('a2hs', 'на экран Домой'),
-         ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'оплата')]
+         ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'возврат Premium')]
 
 
 def funnel(by, tot):

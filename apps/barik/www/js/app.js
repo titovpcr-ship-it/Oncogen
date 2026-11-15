@@ -745,7 +745,7 @@ window.addEventListener('beforeinstallprompt',event=>{
   event.preventDefault();
   installPrompt=event;
 });
-function finish(){ hit('lesson_done'); if(!UI.l1){ UI.l1=1; saveUI(); }
+function finish(){ if(!sess||sess.ended) return; const completed=sess.items.length>0&&sess.i>=sess.items.length; hit(completed?'lesson_done':'lesson_exit'); if(completed&&!UI.l1){ UI.l1=1; saveUI(); }
   if(!BILL.native&&!ACC.me&&sess.mode==='learn'&&sess.i>=sess.items.length&&sess.first.size){
     UI.guestLessons=(UI.guestLessons||0)+1;
     if([1,3].includes(UI.guestLessons)&&UI.returnDay!==today()){
@@ -881,7 +881,7 @@ const HITS=new Set();
 const HSRC=(()=>{ let r='',seo=''; try{ const sp=new URLSearchParams(location.search||''), f=(sp.get('from')||'').toLowerCase().replace(/[^a-z0-9_.-]/g,'').slice(0,24);
     if(document.referrer){ const u=new URL(document.referrer); if(u.hostname===location.hostname){ const m=u.pathname.match(/^\/(?:ru|en|fr|es|de|pt)\/(?:([wtpagn])\/)?/); if(m) seo=m[1]||'i'; } else r=u.hostname.replace(/^(www\.|m\.|l\.|lm\.)/,''); }
     return {f,r,seo,g:FIRST?1:0,s:f?'from='+f:seo?'seo':(r||'-')}; }catch(x){ return {f:'',r:'',seo:'',g:FIRST?1:0,s:'-'}; } })();
-function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; if(e&&HITS.has(e)) return; if(e) HITS.add(e);
+function hit(e){ try{ if(BILL.native||location.protocol==='file:'||!navigator.sendBeacon) return; const repeat=e==='lesson_done'||e==='lesson_exit'; if(e&&!repeat&&HITS.has(e)) return; if(e&&!repeat) HITS.add(e);
   navigator.sendBeacon('api/?r=hit',JSON.stringify(e?{e,l:L,s:HSRC.s,g:HSRC.g}:{l:L,c:tzCC(TZ)||'',r:HSRC.r,f:HSRC.f,s:HSRC.s,g:HSRC.g})); }catch(x){} }
 function resFail(){ hit('res_fail'); }
 /* ошибки JS у посетителей (O-200): текст и место — на сервер, не больше 5 разных за визит; шум браузеров (воспроизведение без касания,
