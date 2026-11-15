@@ -720,7 +720,12 @@ function gift_settle(string $pid, string $lang = 'en'): ?array {
     if (($m['gift'] ?? '') !== '1' || !in_array($months, [3, 12], true) || !hash_equals(uid_sig($uid), (string)($m['sig'] ?? ''))) return null;
     $code = gift_code();
     try { q('INSERT INTO gifts(code, pay_id, buyer, months, created) VALUES(?, ?, ?, ?, ?)', [$code, $pid, $uid, $months, now()]); }
-    catch (PDOException $e) { return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null; }
+    catch (PDOException $e) {
+        if (($e->errorInfo[1] ?? 0) !== 19 || !str_contains($e->getMessage(), 'UNIQUE constraint failed: gifts.')) throw $e;
+        $existing = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch();
+        if (!$existing) throw $e;
+        return $existing;
+    }
     $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch();
     if ($u) {
         $t = GIFT_TEXT[$lang] ?? GIFT_TEXT['en'];
