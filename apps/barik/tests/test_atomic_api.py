@@ -195,6 +195,12 @@ class AtomicAPI(unittest.TestCase):
         finally:
             self.dodo_state.pop('subscription',None)
 
+    def test_h4_legacy_lifetime_is_not_missing_recurring_date(self):
+        cases=[{'sub_plan':plan,'pd_sub':sid,'sub_status':'active','sub_until':0,'gift_until':0} for plan,sid in [('month','sub_x'),('life','sub_x'),('life','')]]
+        code='require '+json.dumps(str(ROOT/'server/api/lib.php'))+'; echo json_encode(array_map("premium",json_decode($argv[1],true)));'
+        output=subprocess.check_output(['php','-r',code,json.dumps(cases)])
+        self.assertEqual(json.loads(output),[False,False,True])
+
     def test_m1_legacy_events_are_not_new_completions(self):
         for payload in ({'e':'lesson_done'}, {'e':'lesson_exit','v':2}, {'e':'lesson_done','v':2}):
             req=urllib.request.Request(self.url+'hit', data=json.dumps(payload).encode(), headers={'User-Agent':'BarikBrowser/1.0','Content-Type':'application/json'})
