@@ -1,0 +1,26 @@
+name: Barik isolated release guard probe
+on:
+  push:
+    branches: [codex/audit-fixes]
+    paths: ['.github/workflows/barik-guard-probe.yml', 'apps/barik/tools/probe_release_guard.py']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: apps/barik/tools
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install requests
+      - run: python apps/barik/tools/probe_release_guard.py
+        env:
+          BARIK_HOST_SERVER: cpanel.barik.am
+          BARIK_HOST_DOMAIN: barik.am
+          BARIK_HOST_USER: barik
+          BARIK_HOST_TOKEN: ${{ secrets.BARIK_HOST_TOKEN }}
