@@ -1,9 +1,9 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-const source=fs.readFileSync('www/js/app.js','utf8');
-const finish=source.slice(source.indexOf('function finish(){'),source.indexOf('/* ================= ALPHABET QUIZ'));
+const source=fs.readFileSync('www/js/app/exercises.js','utf8');
+const finish=source.slice(source.indexOf('export function finish()'),source.indexOf('/* ================= ПРИМЕРЫ К СЛОВАМ')).replace(/^export /,'');
 function run(o={}){
- const c={UI:{guestLessons:o.n||0,returnDay:o.day||''},BILL:{native:!!o.native},ACC:{me:o.account?{}:null},sess:{mode:o.mode||'learn',i:o.partial?0:1,items:[{}],first:new Map(o.empty?[]:[['word',true]]),known:0},today:()=> '2026-11-12',hit(){},saveUI(){},clearTimeout(){},go(){},render(){},window:{scrollTo(){}},BY:{}};
+ const st={UI:{guestLessons:o.n||0,returnDay:o.day||''},sess:{mode:o.mode||'learn',i:o.partial?0:1,items:[{}],first:new Map(o.empty?[]:[['word',true]]),known:0},view:'session'};const c={st,UI:st.UI,sess:st.sess,BILL:{native:!!o.native},ACC:{me:o.account?{}:null},cb:{go(){},render(){}},today:()=>'2026-11-12',hit(){},saveUI(){},clearTimeout(){},window:{scrollTo(){}},BY:{}};
  vm.createContext(c);vm.runInContext(finish+';finish();',c);return c;
 }
 assert.equal(run().sess.returnOffer,true);

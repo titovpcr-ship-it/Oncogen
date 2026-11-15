@@ -798,7 +798,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   }
   { // Неудачная загрузка примеров не заменяет экран урока и также даёт повторить запрос.
     const ctx=await br.newContext({serviceWorkers:'block',viewport:{width:390,height:800}}), pg=await ctx.newPage(); let exampleAttempts=0;
-    await pg.route('**/ex/ru.json',rt=>{exampleAttempts++; return exampleAttempts===1?rt.abort():rt.continue();});
+    await pg.route('**/ex/ru*.json',rt=>{exampleAttempts++; return exampleAttempts===1?rt.abort():rt.continue();});
     await pg.goto(base+'?lang=ru&switch=1&start=lesson'); await pg.waitForSelector('.sess-top'); await pg.waitForSelector('[data-act=exRetry]');
     ok(await pg.locator('.sess-top').count()===1&&await pg.locator('[role=alert] [data-act=exRetry]').count()===1,'пример: ошибка не ломает урок, рядом видна кнопка повтора');
     await pg.click('[data-act=exRetry]'); await pg.waitForSelector('.ex-hy');
