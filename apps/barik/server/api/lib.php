@@ -1040,16 +1040,33 @@ function backup_offsite(string $snap, string $pw, string $owner, string $day): b
     $zip = backup_dir() . '/barik-db-' . $day . '.zip';
     $z = new ZipArchive();
     if ($z->open($zip, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) return false;
-    $z->setPassword($pw);
-    $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
-    foreach ($files as $name => $path) {
-        if (!is_file($path)) continue;
-        $z->addFile($path, $name);
-        $z->setEncryptionName($name, ZipArchive::EM_AES_256);
+    try {
+        if (!$z->setPassword($pw)) throw new RuntimeException('backup password failed');
+        $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
+        foreach ($files as $name => $path) {
+            if (!is_file($path) || !$z->addFile($path, $name) || !$z->setEncryptionName($name, ZipArchive::EM_AES_256)) {
+                throw new RuntimeException('backup encryption/add failed');
+            }
+        }
+        if (!$z->addFromString('README.txt', "Barik encrypted backup $day. Database and config.php.\n")) throw new RuntimeException('backup README failed');
+        if (!$z->close()) throw new RuntimeException('backup close failed');
+        $verify = new ZipArchive();
+        if ($verify->open($zip) !== true) throw new RuntimeException('backup verification open failed');
+        foreach ($files as $name => $path) {
+            $stat = $verify->statName($name);
+            if (($stat['encryption_method'] ?? 0) !== ZipArchive::EM_AES_256) throw new RuntimeException('backup is not AES-256');
+        }
+        if (!$verify->setPassword($pw)) throw new RuntimeException('backup verification password failed');
+        foreach ($files as $name => $path) {
+            $bytes = $verify->getFromName($name);
+            if (!is_string($bytes) || hash('sha256', $bytes) !== hash_file('sha256', $path)) throw new RuntimeException('backup content mismatch');
+        }
+        if (!$verify->close()) throw new RuntimeException('backup verification close failed');
+    } catch (Throwable $e) {
+        error_log('barik backup verification: ' . $e->getMessage());
+        if (is_file($zip)) unlink($zip);
+        return false;
     }
-    $z->addFromString('README.txt', "Barik: копия базы и config.php с хостинга, $day (O-189).\nПароль — как у «Барик бэкапа». "
-        . "База — public_html/../barik-data/barik.sqlite, config.php — public_html/api/config.php. Подробно — START_HERE.md в бэкапе.\n");
-    $z->close();
     @chmod($zip, 0600);
     $users = (int)q('SELECT COUNT(*) FROM users')->fetchColumn();
     $tok = (string)cfg('TG_TOKEN', '');
