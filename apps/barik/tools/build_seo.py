@@ -530,6 +530,7 @@ def build(site, base, words_path):
         by_topic.setdefault(w["t"], []).append(w)
     files, urls = 0, {l: [] for l in LANGS}
     # обогащение страницы слова (O-193): пример, формы (эталон Викисловаря), однокоренные; без них — noindex и не в sitemap
+    lexical_review = json.load(open(os.path.join(APP, "data", "examples", "dictionary_review.json"), encoding="utf-8"))
     EXL = {l: json.load(open(os.path.join(APP, "www", "ex", l + ".json"), encoding="utf-8")) for l in LANGS}
     GOLD = json.load(open(os.path.join(APP, "data", "path", "gold.json"), encoding="utf-8"))
     RT = json.load(open(os.path.join(APP, "data", "path", "roots.json"), encoding="utf-8"))
@@ -591,6 +592,8 @@ def build(site, base, words_path):
                       + (f'<a href="{wslug[nxt["a"]]}.html"><span lang="hy">{esc(nxt["a"])}</span> — {T["next"]}</a>' if nxt else "")
                       + "</p>")
                 F = FT[L]; xb = ""
+                if w["a"] in lexical_review["entries"]:
+                    xb += '<p role="note">' + esc(lexical_review["messages"][L]) + "</p>"
                 e = EXL[L].get(w["a"])
                 if e:
                     xb += (f'<h2>{F["ex"]}</h2><p class="exs"><span lang="hy">{esc(e[0])}</span>{say({"a": e[0]}, "../../", T["listen"])}</p>'

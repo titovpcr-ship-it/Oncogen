@@ -2484,8 +2484,10 @@ function exMarkup(e){
   return '<div class="ex"><div class="ex-top"><span class="ex-k">'+esc(T('exLabel'))+'</span>'+(audioOK()?'<button class="ex-say" data-act="exSay" data-arg="'+esc(e[0])+'" aria-label="'+esc(T('listenExample'))+'">'+ICON.spk+'</button>':'')+'</div>'+
     '<p class="ex-hy" lang="hy">'+esc(e[0])+'</p><p class="ex-tr">'+esc(exTr(e[0]))+'</p><p class="ex-tx">'+esc(e[1])+'</p></div>';
 }
+const LEXICAL_REVIEW=["Ուշ լինի, նուշ լինի","Ռուսիա","անգիր","անկապակացություն","անհետ կորած","անտոմս ուղեւոր","առանձնացում","ատմոսֆերա","արմավենու յուղյուղ","բանահյուսական","բացատրական դերանուն","բրինձ քացախ","գյուղ տեղ","գոյական խառնիչ","գործադիր","գրասալիկը","ժամակահատված","լրատու","ծավալային","կեղծ թիվ","կցաղետապ","հայաստանցի","հեռագիր","հիվանդոտ","հողմահակառակ","հրանետ","նախանձախնդիր","շահագործական","որբահավաք","որքին","սաղարթավոր","վայրի գազար","տրանսցենդենտ","փոթոր"];
+const LEXICAL_NOTE={"ru":"Написание или значение этой словарной статьи уточняется. Не используйте её как единственный образец.","en":"The spelling or meaning of this dictionary entry is under review. Do not use it as your only reference.","fr":"L’orthographe ou le sens de cette entrée est en cours de vérification. Ne l’utilisez pas comme seule référence.","es":"La escritura o el significado de esta entrada está en revisión. No la uses como única referencia.","de":"Schreibweise oder Bedeutung dieses Eintrags wird geprüft. Verwende ihn nicht als einzige Referenz.","pt":"A grafia ou o significado deste verbete está em revisão. Não o use como única referência."};
 function exSlotContent(word,url){
-  if(exampleCache.has(url)) return exMarkup(exampleCache.get(url)[word.a]);
+  if(exampleCache.has(url)) return (LEXICAL_REVIEW.includes(word.a)?'<p class="note" role="note">'+esc(LEXICAL_NOTE[L]||LEXICAL_NOTE.en)+'</p>':'')+exMarkup(exampleCache.get(url)[word.a]);
   if(exampleErrors.has(url)) return '<p class="ex-error" role="alert">'+esc(T('lzFail'))+' <button class="btn ghost sm" data-act="exRetry">'+esc(T('lzRetry'))+'</button></p>';
   return '<p class="ex-loading" role="status" aria-live="polite">'+esc(T('loading'))+'</p>';
 }

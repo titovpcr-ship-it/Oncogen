@@ -51,6 +51,7 @@ if [ $FULL -eq 1 ]; then
 elif [ ! -f "$B/dist/site/api/index.php" ]; then
   run barik-build_site "$B" python3.13 tools/build_site.py --no-seo || BUILT=0
 fi
+run barik-test_dictionary_review "$B" python3 tests/test_dictionary_review.py
 run barik-test_example_quality "$B" python3.13 tests/test_example_quality.py
 run barik-test_contrast "$B" node tests/test_contrast.js
 run barik-test_guest_return "$B" node tests/test_guest_return.js
