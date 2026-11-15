@@ -66,7 +66,11 @@ class Guard(unittest.TestCase):
             files, cached, hashes, todo, gone = deploy.release_plan(CP())
         self.assertFalse(state.exists())
         self.assertEqual(set(todo),{'app.js','z.js'})
-        (self.work/'journal.json').unlink()
+        import shutil
+        next_work=self.base/'next-release'
+        shutil.copytree(self.work/'stage', next_work/'stage')
+        shutil.copy2(self.work/'manifest.json', next_work/'manifest.json')
+        self.work=next_work
         self.assertEqual(self.action('activate').returncode,0)
         self.assertEqual((self.root/'app.js').read_text(),'new')
     def test_lock_is_shared_between_release_ids(self):
