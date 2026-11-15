@@ -81,8 +81,8 @@ const VERSION = '%(version)s';
 const SHELL = %(shell)s;
 const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v2', PICS = 'barik-pics-v2';   // v2 (O-199): в v1 могла попасть заглушка хостинга
 const LAZY = 'barik-lazy-v1';
-const localePath = /\/js\/tr-(?:ru|en|fr|es|de|pt)\.js$/;
-const lazyPath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|path_data|pictures)\.js$/;
+const localePath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt))\.js$/;
+const lazyPath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt)|path_data|pictures)\.js$/;
 async function lazyScript(request) {
   const cache = await caches.open(LAZY).catch(() => null);
   const hit = cache && await cache.match(request).catch(() => null);
@@ -171,10 +171,15 @@ self.addEventListener('fetch', e => {
 def land_meta():
     """Заголовок и описание главной на трёх языках — из текстов обложки (i18n.js, раздел land),
     чтобы превью ссылки и поиск говорили то же, что сама страница."""
-    s = open(os.path.join(SRC, "js", "i18n.js"), encoding="utf-8").read()
+    parts = [open(os.path.join(SRC, "js", "i18n.js"), encoding="utf-8").read()]
+    for L in ("en", "fr", "es", "de", "pt"):
+        lp = os.path.join(SRC, "js", f"i18n-{L}.js")
+        if os.path.exists(lp):
+            parts.append(open(lp, encoding="utf-8").read())
+    s = "\n".join(parts)
     q = r"'((?:\\.|[^'\\])*)'"
     found = re.findall(r"land:\{\s*title:" + q + r",\s*desc:" + q, s)
-    assert len(found) == 6, "в i18n.js не шесть разделов land"
+    assert len(found) == 6, "в i18n*.js не шесть разделов land"
     un = lambda x: x.replace("\\'", "'")
     return {L: (un(t), un(d)) for L, (t, d) in zip(("ru", "en", "fr", "es", "de", "pt"), found)}
 
@@ -260,8 +265,11 @@ ErrorDocument 404 /404.html
 <FilesMatch "(\.(zip|sqlite|db|log|bak|sh|py)|^\..+)$">
   Require all denied
 </FilesMatch>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json application/manifest+json image/svg+xml application/xml text/xml text/plain
+</IfModule>
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/json application/manifest+json image/svg+xml application/xml text/xml text/plain
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/manifest+json image/svg+xml application/xml text/xml text/plain
 </IfModule>
 <IfModule mod_headers.c>
   # всё, что меняется между сборками, — с проверкой свежести (ответ 304 без тела); раньше js/css хранились неделю,
@@ -350,7 +358,11 @@ def split_data(out):
                 tr[l].append(r[c] if len(r) > c else "")
         t["w"] = rows
     body = {l: json.dumps(v, ensure_ascii=False, separators=(",", ":")) for l, v in tr.items()}
-    h = hashlib.sha1("".join(body[l] for l in TR_COL).encode()).hexdigest()[:8]
+    i18n_extra = "".join(
+        open(os.path.join(out, "js", "i18n-%s.js" % l), encoding="utf-8").read()
+        for l in TR_COL if l != "ru" and os.path.exists(os.path.join(out, "js", "i18n-%s.js" % l))
+    )
+    h = hashlib.sha1(("".join(body[l] for l in TR_COL) + i18n_extra).encode()).hexdigest()[:8]
     for l in TR_COL:
         open(os.path.join(out, "js", "tr-%s.js" % l), "w", encoding="utf-8").write(
             "/* Переводы слов (%s) — собрано build_site.py из data.js (O-185). */\n"
@@ -398,9 +410,10 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     shutil.copytree(SRC, out, ignore=shutil.ignore_patterns("vendor"))
     # Capacitor на сайте не нужен: billing.js сам видит, что он не в приложении.
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
-    html = re.sub(r'\s*<script src="js/vendor/capacitor\.js"></script>', "", html)
+    html = re.sub(r'\s*<script\b[^>]*\bsrc="js/vendor/capacitor\.js"[^>]*></script>', "", html)
     title, desc = land_meta()[ROOT_L]
     html = html.replace('<html lang="ru">', '<html lang="%s">' % ROOT_L, 1)
+    html = re.sub(r'<meta\s+name="description"[^>]*>\s*', "", html, count=1)
     html = html.replace("<title>Barik</title>",
                         f"<title>{esc(title)}</title>\n" + HEAD % {"desc": esc(desc)}
                         + og_tags(ROOT_L, url, title, desc) + (CANON % {"url": url} if url else ""))
@@ -433,11 +446,11 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     ix = os.path.join(out, "index.html")
     html = open(ix, encoding="utf-8").read()
     ver = {}
-    # Б4: path_data.js и pictures.js приложение грузит само (lazyJs) — версию вписываем в app.js до его отпечатка
-    apj = os.path.join(out, "js", "app.js"); aps = open(apj, encoding="utf-8").read()
+    # Б4: path_data.js и pictures.js приложение грузит само (lazyJs) — версию вписываем в app/main.js до его отпечатка
+    apj = os.path.join(out, "js", "app", "main.js"); aps = open(apj, encoding="utf-8").read()
     for rel in ("js/path_data.js", "js/pictures.js"):
         ver[rel] = hashlib.sha1(open(os.path.join(out, rel), "rb").read()).hexdigest()[:8]
-        assert aps.count("'" + rel + "'") >= 1, "app.js: нет ленивой загрузки " + rel
+        assert aps.count("'" + rel + "'") >= 1, "app/main.js: нет ленивой загрузки " + rel
         aps = aps.replace("'" + rel + "'", "'" + rel + "?v=" + ver[rel] + "'")
     open(apj, "w", encoding="utf-8").write(aps)
     def _v(m):
@@ -449,18 +462,18 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
         ver["js/tr-%s.js" % l] = split
     # Начать загрузку локали до больших скриптов. Остальные скрипты скачиваются параллельно
     # и выполняются в исходном порядке. HTML Capacitor остаётся прежним.
-    lang_tag = f'<script src="js/lang0.js?v={ver["js/lang0.js"]}"></script>'
-    assert lang_tag in html, "index.html: отсутствует lang0.js"
-    html = html.replace(lang_tag, "", 1).replace("</head>",
+    lang_m = re.search(r'<script\b[^>]*\bsrc="' + re.escape(f'js/lang0.js?v={ver["js/lang0.js"]}') + r'"[^>]*></script>', html)
+    assert lang_m, "index.html: отсутствует lang0.js"
+    html = html.replace(lang_m.group(0), "", 1).replace("</head>",
         f'<script src="js/lang0.js?v={ver["js/lang0.js"]}" data-translations="{split}" data-examples="{example_version}"></script>\n</head>', 1)
-    html = re.sub(r'(<script src="js/[^"?]+\.js\?v=[0-9a-f]{8}")></script>', r'\1 defer></script>', html)
+    html = re.sub(r'<script(\s+src="js/[^"?]+\.js\?v=[0-9a-f]{8}")></script>', r'<script defer\1></script>', html)
     open(ix, "w", encoding="utf-8").write(html)
     # Приложение не знает о страницах поиска — в его кэш (без интернета) они не идут.
     shell, h = ["./"], hashlib.sha1()
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            lazy_js = re.fullmatch(r"js/(?:tr-(?:ru|en|fr|es|de|pt)|path_data|pictures)\.js", rel) is not None
+            lazy_js = re.fullmatch(r"js/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt)|path_data|pictures)\.js", rel) is not None
             if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or lazy_js or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("cover-", "audio/", "pics/", "og/", "api/", "ex/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue

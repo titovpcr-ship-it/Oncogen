@@ -49,16 +49,16 @@ def main():
     rc = get('/cover-ru.html')
     ok('noindex' in rc.headers.get('X-Robots-Tag', ''), 'фрагмент обложки — noindex (TZ_AUDIT4 №6)', rc.headers.get('X-Robots-Tag', ''))
     ok(bool(r.headers.get('Referrer-Policy')), 'Referrer-Policy')
-    scripts = [x.split('?')[0] for x in re.findall(r'<script src="([^"]+)"', r.text)]
-    ok('js/app.js' in scripts and 'js/path_meta.js' in scripts and 'js/path_data.js' not in scripts, 'главная подключает приложение; путь и картинки — по требованию (Б4)', ', '.join(scripts))
+    scripts = [x.split('?')[0] for x in re.findall(r'<script\b[^>]*\bsrc="([^"]+)"', r.text)]
+    ok('js/app/main.js' in scripts and 'js/path_meta.js' in scripts and 'js/path_data.js' not in scripts, 'главная подключает приложение; путь и картинки — по требованию (Б4)', ', '.join(scripts))
     ok(all('?v=' in x for x in re.findall(r'(?:src|href)="((?:js|css)/[^"]+)"', r.text)),
        'скрипты и стили главной — с версией в адресе (?v=)')
-    for p in ['/js/app.js', '/js/data.js', '/js/path_data.js', '/js/path_meta.js', '/js/pictures.js', '/js/grammar.js', '/css/app.css', '/manifest.webmanifest', '/favicon.png']:
+    for p in ['/js/app/main.js', '/js/data.js', '/js/path_data.js', '/js/path_meta.js', '/js/pictures.js', '/js/grammar.js', '/css/app.css', '/manifest.webmanifest', '/favicon.png']:
         x = get(p)
         ok(x.status_code == 200 and len(x.content) > 100, p, str(x.status_code))
     sw = get('/sw.js')
     ok(sw.status_code == 200 and 'no-cache' in sw.headers.get('Cache-Control', ''), 'sw.js без кэша', sw.headers.get('Cache-Control', ''))
-    js = get('/js/app.js')
+    js = get('/js/app/main.js')
     ok('max-age=604800' not in js.headers.get('Cache-Control', '') and 'no-cache' in js.headers.get('Cache-Control', ''),
        'app.js с проверкой свежести (не «неделю»)', js.headers.get('Cache-Control', ''))
     fonts = re.findall(r'url\((?:\.\./)?(fonts/[^)]+\.woff2)\)', get('/css/app.css').text)

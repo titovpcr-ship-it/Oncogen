@@ -1,6 +1,6 @@
-/* Язык при запуске (O-185): страна по поясу — TZ_LANG/tzLang (общие с app.js); в собранном сайте словарь разделён по языкам
-   (build_site.py: js/data.js — армянский и эмодзи, js/tr-<язык>.js — переводы) — при старте загружается язык гостя;
-   английский fallback загружается по требованию словаря. */
+/* Язык при запуске (O-185) + ленивая загрузка словаря и интерфейса по языку:
+   - js/tr-<lang>.js (переводы 20 121 слова)
+   - js/i18n-<lang>.js (строки интерфейса; ru всегда встроен как базовый fallback) */
 (function(){
 var TZ_LANG={
   ru:['Europe/Moscow','Europe/Kaliningrad','Europe/Samara','Europe/Volgograd','Europe/Saratov','Europe/Ulyanovsk','Europe/Astrakhan','Europe/Kirov','Europe/Minsk','Asia/Bishkek','Asia/Dushanbe','Asia/Tashkent','Asia/Samarkand','Asia/Ashgabat','Asia/Almaty','Asia/Qostanay','Asia/Aqtobe','Asia/Aqtau','Asia/Atyrau','Asia/Oral','Asia/Qyzylorda','Asia/Yekaterinburg','Asia/Omsk','Asia/Novosibirsk','Asia/Barnaul','Asia/Tomsk','Asia/Novokuznetsk','Asia/Krasnoyarsk','Asia/Irkutsk','Asia/Chita','Asia/Yakutsk','Asia/Khandyga','Asia/Vladivostok','Asia/Ust-Nera','Asia/Magadan','Asia/Sakhalin','Asia/Srednekolymsk','Asia/Kamchatka','Asia/Anadyr'],
@@ -12,13 +12,14 @@ var TZ_LANG={
 function tzLang(tz){
   if(!tz) return '';
   if(tz.indexOf('America/Argentina/')===0) return 'es';
-  for(const l in TZ_LANG) if(TZ_LANG[l].indexOf(tz)>=0) return l;
+  for(var l in TZ_LANG) if(TZ_LANG[l].indexOf(tz)>=0) return l;
   return '';
 }
 window.BARIK_TZLANG=TZ_LANG; window.BARIK_tzLang=tzLang;
-// Только в веб-сборке. Все исходные переводы уже входят в данные Capacitor.
+
 var build=document.currentScript&&document.currentScript.dataset;
-if(!build||!build.translations) return;
+var trVer=(build&&build.translations)||'';
+var exVer=(build&&build.examples)||'';
 var UI={}; try{ UI=JSON.parse(localStorage.getItem('bararan-ui-v1')||'null')||{}; }catch(e){}
 var supported=/^(ru|en|fr|es|de|pt)$/;
 var query=new URLSearchParams(location.search), q=query.get('lang');
@@ -26,29 +27,45 @@ if(!supported.test(q)) q='';
 var tz=''; try{ tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; }catch(e){}
 var initial=query.get('switch')==='1'&&q?q:(UI.lang||q||UI.ll||tzLang(tz)||'en');
 if(!supported.test(initial)) initial='en';
-window.BARIK_EX_VERSION=build.examples;
-var requests=new Map();
-function loadTranslation(lang){
-  if(window.BARARAN_TR&&window.BARARAN_TR[lang]) return Promise.resolve();
-  if(!supported.test(lang)) return Promise.reject(new Error('Unsupported locale'));
-  if(requests.has(lang)) return requests.get(lang);
+if(exVer) window.BARIK_EX_VERSION=exVer;
+
+var scriptCache=new Map();
+function loadLocaleScript(key, src, readyCheck){
+  if(readyCheck()) return Promise.resolve();
+  if(scriptCache.has(key)) return scriptCache.get(key);
   var script=document.createElement('script');
-  script.src='js/tr-'+lang+'.js?v='+build.translations;
+  script.src=src;
   script.dataset.barikRetry='';
   var worker=navigator.serviceWorker, wasControlled=worker&&worker.controller;
-  var request=new Promise(function(resolve,reject){
+  var p=new Promise(function(resolve,reject){
     function complete(){
-      requests.delete(lang);
+      scriptCache.delete(key);
       script.remove();
-      if(!(window.BARARAN_TR&&window.BARARAN_TR[lang])){ reject(new Error('Missing translation: '+lang)); return; }
-      if(worker&&!wasControlled) worker.ready.then(function(registration){
-        if(registration.active) registration.active.postMessage({type:'barik-warm-locale',url:script.src});
+      if(!readyCheck()){ reject(new Error('Missing locale asset: '+src)); return; }
+      if(worker&&!wasControlled) worker.ready.then(function(reg){
+        if(reg.active) reg.active.postMessage({type:'barik-warm-locale',url:script.src});
       }).catch(function(){});
       resolve();
     }
     script.onload=script.onerror=complete;
     document.head.appendChild(script);
   });
+  scriptCache.set(key,p);
+  return p;
+}
+
+var requests=new Map();
+function loadTranslation(lang){
+  if(!supported.test(lang)) return Promise.reject(new Error('Unsupported locale'));
+  var hasTr=function(){ return !trVer||Boolean(window.BARARAN_TR&&window.BARARAN_TR[lang]); };
+  var hasStr=function(){ return lang==='ru'||Boolean(window.BARARAN_STR&&window.BARARAN_STR[lang]); };
+  if(hasTr()&&hasStr()) return Promise.resolve();
+  if(requests.has(lang)) return requests.get(lang);
+  var qStr=trVer?('?v='+trVer):'';
+  var tasks=[];
+  if(!hasTr()) tasks.push(loadLocaleScript('tr-'+lang,'js/tr-'+lang+'.js'+qStr,hasTr));
+  if(!hasStr()) tasks.push(loadLocaleScript('i18n-'+lang,'js/i18n-'+lang+'.js'+qStr,hasStr));
+  var request=Promise.all(tasks).then(function(){ requests.delete(lang); },function(err){ requests.delete(lang); throw err; });
   requests.set(lang,request);
   return request;
 }

@@ -38,10 +38,10 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const lang0=fs.readFileSync(path.join(ROOT,'js','lang0.js'),'utf8'), sh=(sw.match(/^const SHELL = (.+);$/m)||[])[1], shell=sh?JSON.parse(sh):[];
     const tags=[...raw.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*>/g)], main=tags.filter(x=>!x[1].includes('/lang0.js?'));
     ok(tags.some(x=>/js\/lang0\.js\?v=[0-9a-f]{8}/.test(x[1])&&/data-translations="[0-9a-f]{8}"/.test(x[0])&&/data-examples="[0-9a-f]{8}"/.test(x[0]))
-      &&main.length>=8&&main.every(x=>/\bdefer\b/.test(x[0]))&&lang0.includes('BARIK_LOAD_TRANSLATION'),'локаль запускается до параллельной загрузки отложенных скриптов');
+      &&main.length>=8&&main.every(x=>/\bdefer\b|\btype="module"\b/.test(x[0]))&&lang0.includes('BARIK_LOAD_TRANSLATION'),'локаль запускается до параллельной загрузки отложенных скриптов');
     const noscript=(raw.match(/<noscript>([\s\S]*?)<\/noscript>/)||[])[1]||'';
     ok((raw.match(/<h1\b/g)||[]).length===1&&!/<h1\b/i.test(noscript),'главная: один пользовательский h1, noscript не дублирует заголовок');
-    ok(shell.some(x=>/^\.\/js\/app\.js\?v=/.test(x))&&!shell.some(x=>/\.\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|path_data|pictures)\.js/.test(x))&&/caches\.open\(CACHE\)/.test(sw),'переводы и необязательные разделы не входят в первоначальный PWA-кэш'); }
+    ok(shell.some(x=>/^\.\/js\/app\/main\.js\?v=/.test(x))&&!shell.some(x=>/\.\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt)|path_data|pictures)\.js/.test(x))&&/caches\.open\(CACHE\)/.test(sw),'переводы и необязательные разделы не входят в первоначальный PWA-кэш'); }
   { const langs=['ru','en','fr','es','de','pt'], levels=['A1','A2','B1','B2','C1','C2'];
     const chunks=langs.flatMap(l=>levels.map(level=>path.join(ROOT,'ex',l+'-'+level+'.json')));
     ok(/data-examples="[0-9a-f]{8}"/.test(fs.readFileSync(path.join(ROOT,'index.html'),'utf8'))&&chunks.every(fs.existsSync)&&langs.every(l=>!fs.existsSync(path.join(ROOT,'ex',l+'.json')))&&fs.existsSync(path.join(ROOT,'ex','phrases.json')),
@@ -72,7 +72,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await p3.addInitScript(()=>localStorage.setItem('bararan-ui-v1',JSON.stringify({lang:'en'}))); await p3.goto(base); const back=await p3.evaluate(()=>document.documentElement.className.includes('nopre'));
     ok(ru&&us&&back,'обложка в HTML: гостю из США — английская, из Москвы — русская фрагментом, вернувшемуся — спрятана ('+[ru,us,back]+')');
     { const c0=await br.newContext({timezoneId:'UTC',locale:'en-US',serviceWorkers:'block'}), p0=await c0.newPage(); let release;
-      const gate=new Promise(r=>{release=r;}); await p0.route('**/js/app.js*',async rt=>{await gate;await rt.continue();});
+      const gate=new Promise(r=>{release=r;}); await p0.route('**/js/app/main.js*',async rt=>{await gate;await rt.continue();});
       await p0.goto(base,{waitUntil:'commit'});
       await p0.waitForFunction(()=>document.documentElement.lang==='en'&&!document.documentElement.classList.contains('nopre')&&document.querySelector('#view .ld'));
       const cover=await p0.evaluateHandle(()=>document.querySelector('#view .ld')); release();
@@ -122,7 +122,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
         ok(await p7.evaluate(()=>document.documentElement.lang==='en'&&!document.documentElement.className.includes('nopre')),'TZ4 №5: Москва + ?lang=en — английская обложка, без русского фрагмента'); await c7.close(); }
       { // TZ4 №2: «Начать» до загрузки приложения — кнопка ждёт, после загрузки гость в приложении
         const c8=await br.newContext({timezoneId:'America/New_York',serviceWorkers:'block',viewport:{width:390,height:780}}); const p8=await c8.newPage();
-        await p8.route('**/js/app.js*',async rt=>{ await new Promise(r=>setTimeout(r,2500)); rt.continue(); });
+        await p8.route('**/js/app/main.js*',async rt=>{ await new Promise(r=>setTimeout(r,2500)); rt.continue(); });
         await p8.goto(base,{waitUntil:'commit'}); await p8.waitForSelector('#view .ld-ctas .btn'); await p8.click('#view .ld-ctas .btn');
         const busy=await p8.evaluate(()=>!!document.querySelector('.lz-busy[aria-busy=true]')&&!window.__barikOk);
         await p8.waitForFunction(()=>window.__barikOk,null,{timeout:20000}); await p8.waitForTimeout(400);
@@ -227,7 +227,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   ok(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').includes("path.includes('/api/')"),'sw.js: запросы кабинета мимо кэша');
   // обновление (O-157): вернувшийся посетитель видит новую версию с первого захода, а не через неделю.
   // Главная всегда из сети, скрипты и стили — с версией в адресе; установка офлайн-режима — мимо HTTP-кэша;
-  // список озвучки — из сети. Раньше app.js/app.css хранились неделю и новая версия собиралась из старых файлов.
+  // список озвучки — из сети. Раньше app/main.js/app.css хранились неделю и новая версия собиралась из старых файлов.
   {
     const swt=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8'), ixt=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     ok(swt.includes("cache: 'reload'"),'sw.js: установка мимо HTTP-кэша браузера');
@@ -236,9 +236,9 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const c2=await br.newContext({viewport:{width:390,height:844},locale:'ru-RU'}); const p2=await c2.newPage();
     await p2.goto(base); await p2.evaluate(()=>navigator.serviceWorker.ready); await p2.reload(); await p2.waitForTimeout(300);
     const m0=await p2.evaluate(()=>fetch('audio/manifest.json').then(r=>r.json()));
-    OVR['/js/app.js']=fs.readFileSync(path.join(ROOT,'js','app.js'),'utf8')+'\nwindow.__upd=1;';
-    OVR['/index.html']=OVR['/']=ixt.replace(/js\/app\.js\?v=\w+/,'js/app.js?v=feedf00d');
-    OVR['/sw.js']=swt.replace(/const VERSION = '\w+'/,"const VERSION = 'upd'").replace(/\.\/js\/app\.js\?v=\w+/,'./js/app.js?v=feedf00d');
+    OVR['/js/app/main.js']=fs.readFileSync(path.join(ROOT,'js','app','main.js'),'utf8')+'\nwindow.__upd=1;';
+    OVR['/index.html']=OVR['/']=ixt.replace(/js\/app\.js\?v=\w+/,'js/app/main.js?v=feedf00d');
+    OVR['/sw.js']=swt.replace(/const VERSION = '\w+'/,"const VERSION = 'upd'").replace(/\.\/js\/app\.js\?v=\w+/,'./js/app/main.js?v=feedf00d');
     OVR['/audio/manifest.json']=JSON.stringify(Object.assign({},m0,{probe:1}));
     await p2.goto(base); await p2.waitForTimeout(500);
     ok(await p2.evaluate(()=>window.__upd===1),'обновление: новая версия видна с первого захода после выкладки');

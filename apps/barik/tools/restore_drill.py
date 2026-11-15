@@ -35,7 +35,7 @@ def main():
         code, host = os.path.join(tmp, 'barik'), os.path.join(tmp, 'hosting')
         ok(os.path.exists(os.path.join(tmp, 'START_HERE.md')) and os.path.exists(os.path.join(code, '.env')), 'архив открыт паролем: инструкция и .env на месте')
         n_code = sum(len(fs) for _, _, fs in os.walk(code))
-        ok(n_code > 500 and os.path.exists(os.path.join(code, 'server', 'api', 'index.php')) and os.path.exists(os.path.join(code, 'www', 'js', 'app.js')),
+        ok(n_code > 500 and os.path.exists(os.path.join(code, 'server', 'api', 'index.php')) and os.path.exists(os.path.join(code, 'www', 'js', 'app', 'main.js')),
            'код: %d файлов, сервер и приложение на месте' % n_code)
         db = os.path.join(host, 'barik.sqlite')
         c = sqlite3.connect(db)
@@ -73,7 +73,7 @@ def main():
             st = json.loads(urllib.request.urlopen(urllib.request.Request(base + 'api/?r=stats&days=30', headers={'Authorization': 'Bearer ' + key}), timeout=10).read())
             ok(st.get('ok') and st.get('users') == users, 'сводка по ключу из восстановленного PEPPER: аккаунтов %s (в базе %d)' % (st.get('users'), users))
             home = urllib.request.urlopen(base, timeout=10).read().decode('utf-8', 'replace')
-            ok('Barik' in home and 'js/app.js' in home, 'приложение из архива открывается')
+            ok('Barik' in home and 'js/app/main.js' in home, 'приложение из архива открывается')
         finally:
             php.terminate()
         # сборка сайта из кода архива
