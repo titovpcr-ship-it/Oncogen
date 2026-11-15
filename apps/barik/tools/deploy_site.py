@@ -192,12 +192,78 @@ def config_php():
     return s
 
 
+RELEASE = os.path.join(os.path.dirname(STATE), 'release-private.json')
+
+
+def release_control(action, credentials=None):
+    if credentials is None and not os.path.exists(RELEASE):
+        if action == 'finalize': return
+        raise RuntimeError('No release journal credentials')
+    c = credentials or json.load(open(RELEASE, encoding='utf-8'))
+    r = requests.post(c['url'] + '?action=' + action,
+                      headers={'X-Release-Token': c['token']}, timeout=900)
+    r.raise_for_status()
+    if not r.json().get('ok'):
+        raise RuntimeError('release control failed: ' + action)
+    if action == 'rollback':
+        # Force reconciliation after rollback; never reuse fingerprints of the rejected release.
+        if os.path.exists(STATE): os.remove(STATE)
+    if action == 'finalize': os.remove(RELEASE)
+
+
+def guarded_release(cp, root, todo):
+    if os.path.exists(RELEASE):
+        raise RuntimeError('Unfinished release: run --rollback then --finalize before retrying')
+    rid, token = secrets.token_hex(12), secrets.token_hex(32)
+    endpoint = 'barik-release-' + rid + '.php'
+    work = root.rsplit('/', 1)[0] + '/barik-release-' + rid
+    source = open(os.path.join(HERE, 'release_guard.php'), encoding='utf-8').read()
+    source = source.replace('__TOKEN__', token).replace('__ID__', rid)
+    cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (endpoint, source.encode(), 'text/plain')},
+                  dir='public_html', overwrite='0'), 'release endpoint')
+    credentials = {'url': 'https://' + os.environ['BARIK_HOST_DOMAIN'] + '/' + endpoint, 'token': token}
+    os.makedirs(os.path.dirname(RELEASE), exist_ok=True)
+    fd = os.open(RELEASE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, 'w') as f: json.dump(credentials, f)
+    release_control('prepare', credentials)
+    # Preserve host-managed PHP directives in the staged .htaccess.
+    paths = dict(todo)
+    if '.htaccess' in paths:
+        srv = (cp.uapi('Fileman', 'get_file_content', dir=root, file='.htaccess', charset='utf-8').get('data') or {}).get('content', '')
+        block = re.search(r'# BEGIN cPanel-generated.*?# END cPanel-generated[^\n]*\n', srv, re.S)
+        merged = os.path.join(os.path.dirname(STATE), 'release.htaccess')
+        with open(merged, 'w', encoding='utf-8') as f:
+            f.write((block.group(0) if block else '') + open(paths['.htaccess'], encoding='utf-8').read())
+        paths['.htaccess'] = merged
+    manifest = {rel: hashlib.sha256(open(path, 'rb').read()).hexdigest() for rel, path in paths.items()}
+    for archive in make_zips(paths):
+        name = os.path.basename(archive)
+        with open(archive, 'rb') as f:
+            cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (name, f.read(), 'application/zip')},
+                          dir=work, overwrite='1'), 'staging upload')
+        cp.ok(cp.api2('Fileman', 'fileop', op='extract', sourcefiles=work + '/' + name,
+                      destfiles=work + '/stage', doubledecode='0'), 'staging extraction')
+        cp.ok(cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=work + '/' + name, doubledecode='0'), 'staging archive cleanup')
+    cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': ('manifest.json', json.dumps(manifest).encode(), 'application/json')},
+                  dir=work, overwrite='1'), 'staging manifest')
+    try:
+        release_control('activate', credentials)
+    except Exception:
+        release_control('rollback', credentials)
+        raise
+
+
 def main():
     ap = argparse.ArgumentParser(description='Выкладка dist/site на хостинг Name.am через cPanel (HTTPS)')
     ap.add_argument('--check', action='store_true', help='только вход, PHP и место на диске')
     ap.add_argument('--all', action='store_true', help='выложить все файлы, не только изменённые')
     ap.add_argument('--prune', action='store_true', help='удалить на хостинге файлы, которых нет в сборке')
+    ap.add_argument('--rollback', action='store_true')
+    ap.add_argument('--finalize', action='store_true')
     a = ap.parse_args()
+    if a.rollback or a.finalize:
+        release_control('rollback' if a.rollback else 'finalize')
+        return
     load_env()
     need = ['BARIK_HOST_SERVER', 'BARIK_HOST_DOMAIN', 'BARIK_HOST_USER'] + ([] if os.environ.get('BARIK_HOST_TOKEN') else ['BARIK_HOST_PASSWORD'])
     miss = [k for k in need if not os.environ.get(k)]
@@ -233,58 +299,15 @@ def main():
     root = next((f.get('absdir') for f in (cp.uapi('Fileman', 'list_files', dir='public_html').get('data') or [])), '')
     if not root.endswith('/public_html'):
         sys.exit('не нашёл public_html на хостинге: %r' % root)
+    if a.prune:
+        sys.exit('--prune is incompatible with guarded releases')
     if todo:
-        zips = make_zips(todo)
-        for i, z in enumerate(zips, 1):
-            name = os.path.basename(z)
-            size = os.path.getsize(z) / 1e6
-            t0 = time.time()
-            with open(z, 'rb') as f:
-                blob = f.read()                      # целиком в памяти: при повторе файл читается заново
-            if True:
-                cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (name, blob, 'application/zip')},
-                              dir='public_html', overwrite='1'), 'загрузка ' + name)
-            cp.ok(cp.api2('Fileman', 'fileop', op='extract', sourcefiles='public_html/' + name,
-                          destfiles=root, doubledecode='0'), 'распаковка ' + name)
-            cp.api2('Fileman', 'fileop', op='unlink', sourcefiles='public_html/' + name, doubledecode='0')
-            # отпечатки выложенного — сразу: обрыв на следующем архиве не заставит слать этот заново
-            with zipfile.ZipFile(z) as zz:
-                for rel in zz.namelist():
-                    state[rel] = now[rel]
-            os.makedirs(os.path.dirname(STATE), exist_ok=True)
-            json.dump(state, open(STATE, 'w', encoding='utf-8'))
-            print('  %d/%d %s: %.1f МБ, %.0f с' % (i, len(zips), name, size, time.time() - t0), flush=True)
-            os.remove(z)
-
-    # архивы, оставшиеся от прерванной выкладки, — убрать
-    left = [f.get('file') for f in (cp.uapi('Fileman', 'list_files', dir='public_html').get('data') or [])
-            if re.match(r'barik-deploy-\d+\.zip$', f.get('file') or '')]
-    for f in left:
-        cp.api2('Fileman', 'fileop', op='unlink', sourcefiles='public_html/' + f, doubledecode='0')
-    if left:
-        print('убраны остатки прошлой выкладки: %s' % ', '.join(left))
-
-    if gone and a.prune:
-        for k in range(0, len(gone), 200):
-            part = gone[k:k + 200]
-            cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=','.join('public_html/' + g for g in part), doubledecode='0')
-        for g in gone:
-            state.pop(g, None)
+        guarded_release(cp, root, todo)
+        state.update({rel: now[rel] for rel in todo})
+        os.makedirs(os.path.dirname(STATE), exist_ok=True)
         json.dump(state, open(STATE, 'w', encoding='utf-8'))
-        print('удалено с хостинга: %d' % len(gone))
-    elif gone:
-        print('на хостинге остались %d файлов, которых нет в сборке (--prune — удалить)' % len(gone))
-
-    # .htaccess из сборки затирает блок, который пишет сам cPanel (журнал ошибок PHP), — вернуть его сверху
-    if '.htaccess' in todo:
-        fix_htaccess(cp, root)
-    # настройки кабинета: создать один раз, потом не трогать. Загрузкой файла: текст с «<?php» в адресе
-    # (save_file_content) сервер отсекает
-    got = cp.uapi('Fileman', 'get_file_content', dir='public_html/api', file='config.php')
-    if got.get('status') != 1:
-        cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': ('config.php', config_php().encode(), 'text/plain')},
-                      dir='public_html/api', overwrite='0'), 'config.php')
-        print('api/config.php создан (PEPPER случайный, почта — хостинга). Paddle — вписать позже.')
+    if gone:
+        print('старые файлы сохранены: %d' % len(gone))
     print('готово: https://%s/' % os.environ['BARIK_HOST_DOMAIN'])
 
 
