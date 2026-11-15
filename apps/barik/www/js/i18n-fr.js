@@ -1,6 +1,7 @@
 (function(){
 "use strict";
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
+const mots=n=>n<2?'mot':'mots';
 const fr={
   returnTitle:"Ces mots seront à réviser demain", returnTg:"Rappels sur Telegram", returnMail:"Rappels par e-mail", returnInstall:"Ajouter à l’écran d’accueil", returnInstallHelp:"Sur iPhone, touchez Partager dans Safari, puis Sur l’écran d’accueil. Sur Android, ouvrez le menu du navigateur et choisissez Ajouter à l’écran d’accueil.",
   nmEx:'Camille', prPrem:'4,99 $ par mois', prPremT:'Les mots des niveaux A2 à C2 et le parcours « Grenade » au-delà de la première étape. Paiement par carte, résiliable à tout moment.',

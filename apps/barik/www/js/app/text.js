@@ -254,6 +254,10 @@ export function hasWordTranslations(lang) {
   return !window.BARARAN_SPLIT || !!(window.BARARAN_TR && window.BARARAN_TR[lang]);
 }
 
+export function hasLocaleAssets(lang) {
+  return hasWordTranslations(lang) && (lang === 'ru' || lang === 'en' || !!(window.BARARAN_STR && window.BARARAN_STR[lang]));
+}
+
 export function translationNotice() {
   const root = $('#view');
   if (!root) return;
@@ -274,7 +278,7 @@ export function translationNotice() {
 }
 
 export function trLoad(lang, retry = false) {
-  if (hasWordTranslations(lang) || !window.BARIK_LOAD_TRANSLATION) {
+  if (hasLocaleAssets(lang) || !window.BARIK_LOAD_TRANSLATION) {
     translationNotice();
     return;
   }

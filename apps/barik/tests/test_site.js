@@ -41,7 +41,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       &&main.length>=8&&main.every(x=>/\bdefer\b|\btype="module"\b/.test(x[0]))&&lang0.includes('BARIK_LOAD_TRANSLATION'),'локаль запускается до параллельной загрузки отложенных скриптов');
     const noscript=(raw.match(/<noscript>([\s\S]*?)<\/noscript>/)||[])[1]||'';
     ok((raw.match(/<h1\b/g)||[]).length===1&&!/<h1\b/i.test(noscript),'главная: один пользовательский h1, noscript не дублирует заголовок');
-    ok(shell.some(x=>/^\.\/js\/app\/main\.js\?v=/.test(x))&&!shell.some(x=>/\.\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt)|path_data|pictures)\.js/.test(x))&&/caches\.open\(CACHE\)/.test(sw),'переводы и необязательные разделы не входят в первоначальный PWA-кэш'); }
+    ok(shell.some(x=>/^\.\/js\/app\/main\.js\?v=/.test(x))&&!shell.some(x=>/\.\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:fr|es|de|pt)|path_data|pictures)\.js/.test(x))&&/caches\.open\(CACHE\)/.test(sw),'переводы и необязательные разделы не входят в первоначальный PWA-кэш'); }
   { const langs=['ru','en','fr','es','de','pt'], levels=['A1','A2','B1','B2','C1','C2'];
     const chunks=langs.flatMap(l=>levels.map(level=>path.join(ROOT,'ex',l+'-'+level+'.json')));
     ok(/data-examples="[0-9a-f]{8}"/.test(fs.readFileSync(path.join(ROOT,'index.html'),'utf8'))&&chunks.every(fs.existsSync)&&langs.every(l=>!fs.existsSync(path.join(ROOT,'ex',l+'.json')))&&fs.existsSync(path.join(ROOT,'ex','phrases.json')),

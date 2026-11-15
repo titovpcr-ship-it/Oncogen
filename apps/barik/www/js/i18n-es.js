@@ -1,6 +1,7 @@
 (function(){
 "use strict";
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
+const pals=n=>n===1?'palabra':'palabras';const apr=n=>n===1?'aprendida':'aprendidas';
 const es={
   returnTitle:"Mañana podrás repasar estas palabras", returnTg:"Recordatorios en Telegram", returnMail:"Recordatorios por correo", returnInstall:"Añadir a la pantalla de inicio", returnInstallHelp:"En iPhone, toca Compartir en Safari y luego Añadir a pantalla de inicio. En Android, abre el menú del navegador y selecciona Añadir a la pantalla de inicio.",
   nmEx:'Sofía', prPrem:'4,99 US$ al mes', prPremT:'Las palabras de los niveles A2–C2 y el camino «Granada» más allá de la primera etapa. Pago con tarjeta, cancela cuando quieras.',

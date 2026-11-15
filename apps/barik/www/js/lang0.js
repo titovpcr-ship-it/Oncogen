@@ -58,14 +58,19 @@ var requests=new Map();
 function loadTranslation(lang){
   if(!supported.test(lang)) return Promise.reject(new Error('Unsupported locale'));
   var hasTr=function(){ return !trVer||Boolean(window.BARARAN_TR&&window.BARARAN_TR[lang]); };
-  var hasStr=function(){ return lang==='ru'||Boolean(window.BARARAN_STR&&window.BARARAN_STR[lang]); };
+  var hasStr=function(){ return lang==='ru'||lang==='en'||Boolean(window.BARARAN_STR&&window.BARARAN_STR[lang]); };
   if(hasTr()&&hasStr()) return Promise.resolve();
   if(requests.has(lang)) return requests.get(lang);
   var qStr=trVer?('?v='+trVer):'';
   var tasks=[];
   if(!hasTr()) tasks.push(loadLocaleScript('tr-'+lang,'js/tr-'+lang+'.js'+qStr,hasTr));
   if(!hasStr()) tasks.push(loadLocaleScript('i18n-'+lang,'js/i18n-'+lang+'.js'+qStr,hasStr));
-  var request=Promise.all(tasks).then(function(){ requests.delete(lang); },function(err){ requests.delete(lang); throw err; });
+  var request=Promise.all(tasks.map(function(t){
+    return t.then(function(){ return {ok:true}; },function(e){ return {ok:false,err:e}; });
+  })).then(function(res){
+    requests.delete(lang);
+    for(var i=0;i<res.length;i++) if(!res[i].ok) throw res[i].err;
+  });
   requests.set(lang,request);
   return request;
 }

@@ -1,6 +1,7 @@
 (function(){
 "use strict";
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
+const pal=n=>n===1?'palavra':'palavras';
 const pt={
   returnTitle:"Amanhã você poderá revisar estas palavras", returnTg:"Lembretes no Telegram", returnMail:"Lembretes por e-mail", returnInstall:"Adicionar à tela inicial", returnInstallHelp:"No iPhone, toque em Compartilhar no Safari e depois em Adicionar à Tela de Início. No Android, abra o menu do navegador e selecione Adicionar à tela inicial.",
   nmEx:'Gabriel', prPrem:'US$ 4,99 por mês', prPremT:'As palavras dos níveis A2–C2 e o caminho “Romã” além da primeira etapa. Pagamento com cartão, cancele quando quiser.',

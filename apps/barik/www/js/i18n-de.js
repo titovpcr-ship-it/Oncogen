@@ -1,6 +1,7 @@
 (function(){
 "use strict";
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
+const wort=n=>n===1?'Wort':'Wörter';
 const de={
   returnTitle:"Morgen kannst du diese Wörter wiederholen", returnTg:"Erinnerungen in Telegram", returnMail:"Erinnerungen per E-Mail", returnInstall:"Zum Home-Bildschirm hinzufügen", returnInstallHelp:"Tippe auf dem iPhone in Safari auf Teilen und dann auf Zum Home-Bildschirm. Öffne unter Android das Browsermenü und wähle Zum Startbildschirm hinzufügen.",
   nmEx:'Lukas', prPrem:'4,99 $ im Monat', prPremT:'Die Wörter der Stufen A2–C2 und der Weg „Granatapfel“ über die erste Stufe hinaus. Zahlung per Karte, jederzeit kündbar.',

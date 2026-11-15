@@ -3,9 +3,12 @@
 const fs=require('fs'),path=require('path'),http=require('http'),zlib=require('zlib');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'../dist/site');
-const original=fs.readFileSync(path.join(root,'js/i18n.js'),'utf8');
-const source=original.replace(/const fr=\{[\s\S]*window.BARARAN_STR=\{ru,en,fr,es,de,pt\};/, 'window.BARARAN_STR={ru,en};');
-if(source===original||!source.includes('const en=')) throw Error('Language boundaries changed');
+const raw=fs.readFileSync(path.join(root,'js/i18n.js'),'utf8');
+const alreadySplit=!raw.includes('const fr={');
+const extra=['fr','es','de','pt'].map(l=>fs.readFileSync(path.join(root,'js',`i18n-${l}.js`),'utf8')).join('\n');
+const original=alreadySplit?(raw+'\n'+extra):raw;
+const source=alreadySplit?raw:raw.replace(/const fr=\{[\s\S]*window.BARARAN_STR=\{ru,en,fr,es,de,pt\};/, 'window.BARARAN_STR={ru,en};');
+if(!alreadySplit&&(source===original||!source.includes('const en='))) throw Error('Language boundaries changed');
 let candidate=false;
 const srv=http.createServer((q,r)=>{
  const rel=decodeURIComponent(q.url.split('?')[0]),f=path.resolve(root,'.'+(rel==='/'?'/index.html':rel));

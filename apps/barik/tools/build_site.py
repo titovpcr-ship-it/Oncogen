@@ -81,8 +81,8 @@ const VERSION = '%(version)s';
 const SHELL = %(shell)s;
 const CACHE = 'barik-' + VERSION, AUDIO = 'barik-audio-v2', PICS = 'barik-pics-v2';   // v2 (O-199): в v1 могла попасть заглушка хостинга
 const LAZY = 'barik-lazy-v1';
-const localePath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt))\.js$/;
-const lazyPath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt)|path_data|pictures)\.js$/;
+const localePath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:fr|es|de|pt))\.js$/;
+const lazyPath = /\/js\/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:fr|es|de|pt)|path_data|pictures)\.js$/;
 async function lazyScript(request) {
   const cache = await caches.open(LAZY).catch(() => null);
   const hit = cache && await cache.match(request).catch(() => null);
@@ -172,7 +172,7 @@ def land_meta():
     """Заголовок и описание главной на трёх языках — из текстов обложки (i18n.js, раздел land),
     чтобы превью ссылки и поиск говорили то же, что сама страница."""
     parts = [open(os.path.join(SRC, "js", "i18n.js"), encoding="utf-8").read()]
-    for L in ("en", "fr", "es", "de", "pt"):
+    for L in ("fr", "es", "de", "pt"):
         lp = os.path.join(SRC, "js", f"i18n-{L}.js")
         if os.path.exists(lp):
             parts.append(open(lp, encoding="utf-8").read())
@@ -360,7 +360,7 @@ def split_data(out):
     body = {l: json.dumps(v, ensure_ascii=False, separators=(",", ":")) for l, v in tr.items()}
     i18n_extra = "".join(
         open(os.path.join(out, "js", "i18n-%s.js" % l), encoding="utf-8").read()
-        for l in TR_COL if l != "ru" and os.path.exists(os.path.join(out, "js", "i18n-%s.js" % l))
+        for l in TR_COL if l not in ("ru", "en") and os.path.exists(os.path.join(out, "js", "i18n-%s.js" % l))
     )
     h = hashlib.sha1(("".join(body[l] for l in TR_COL) + i18n_extra).encode()).hexdigest()[:8]
     for l in TR_COL:
@@ -473,7 +473,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     for root, _, files in os.walk(out):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
-            lazy_js = re.fullmatch(r"js/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:en|fr|es|de|pt)|path_data|pictures)\.js", rel) is not None
+            lazy_js = re.fullmatch(r"js/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:fr|es|de|pt)|path_data|pictures)\.js", rel) is not None
             if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or lazy_js or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("cover-", "audio/", "pics/", "og/", "api/", "ex/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue
