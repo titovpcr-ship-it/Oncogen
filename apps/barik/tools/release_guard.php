@@ -24,19 +24,30 @@ function release_restore(string $root, string $work, array $journal): void {
     if ($journal['.htaccess']) release_write($root . '/.htaccess', (string)file_get_contents($work . '/old/.htaccess'));
     elseif (is_file($root . '/.htaccess') && !unlink($root . '/.htaccess')) throw new RuntimeException('rollback htaccess failed');
 }
+function release_remove(string $dir): void {
+    foreach (new FilesystemIterator($dir) as $entry) {
+        if ($entry->isDir() && !$entry->isLink()) release_remove($entry->getPathname());
+        elseif (!unlink($entry->getPathname())) throw new RuntimeException('release cleanup failed');
+    }
+    if (!rmdir($dir)) throw new RuntimeException('release directory cleanup failed');
+}
 function release_action(string $root, string $work, string $action, string $endpoint): void {
-    if ($action === 'prepare') {
-        if (!is_dir($work . '/stage') && !mkdir($work . '/stage', 0700, true)) throw new RuntimeException('prepare failed');
-        return;
-    }
-    if ($action === 'finalize') {
-        if (!unlink($root . '/' . $endpoint)) throw new RuntimeException('finalize failed');
-        return;
-    }
-    if ($action === 'rollback' && !is_dir($work)) return;
-    $lock = fopen($work . '/lock', 'c');
+    $lock = fopen(dirname($root) . '/.barik-release.lock', 'c');
     if (!$lock || !flock($lock, LOCK_EX)) throw new RuntimeException('lock failed');
     try {
+        if ($action === 'prepare') {
+            if (!is_dir($work . '/stage') && !mkdir($work . '/stage', 0700, true)) throw new RuntimeException('prepare failed');
+            return;
+        }
+        if ($action === 'finalize') {
+            release_write($work . '/finalized', (string)time());
+            $dirs = array_filter(glob(dirname($root) . '/barik-release-*') ?: [], fn($d) => is_file($d . '/finalized') && !is_link($d));
+            usort($dirs, fn($a, $b) => filemtime($b . '/finalized') <=> filemtime($a . '/finalized'));
+            foreach (array_slice($dirs, 3) as $old) release_remove($old);
+            if (!unlink($root . '/' . $endpoint)) throw new RuntimeException('finalize failed');
+            return;
+        }
+        if ($action === 'rollback' && !is_dir($work)) return;
         if ($action === 'rollback') {
             if (!is_file($work . '/journal.json')) return;
             release_write($root . '/.htaccess', "RewriteEngine On\nRewriteCond %{REQUEST_URI} !^/" . preg_quote($endpoint, '~') . "$\nRewriteRule ^ - [R=503,L]\n");

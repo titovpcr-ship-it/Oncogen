@@ -211,9 +211,10 @@ def release_control(action, credentials=None):
     if action == 'finalize' and os.path.exists(RELEASE): os.remove(RELEASE)
 
 
-def guarded_release(cp, root, todo):
+def recover_release(cp):
     if os.path.exists(RELEASE):
-        raise RuntimeError('Unfinished release: run --rollback then --finalize before retrying')
+        release_control('rollback')
+        release_control('finalize')
     # Recover an interrupted runner using endpoint names and an HMAC derived from the existing host credential.
     host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
     def credentials_for(rid):
@@ -227,6 +228,12 @@ def guarded_release(cp, root, todo):
             previous = credentials_for(match.group(1))
             release_control('rollback', previous)
             release_control('finalize', previous)
+
+
+def guarded_release(cp, root, todo):
+    host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
+    def credentials_for(rid):
+        return {'token': hmac.new(host_secret.encode(), ('barik-release:' + rid).encode(), hashlib.sha256).hexdigest()}
     rid = secrets.token_hex(12)
     token = credentials_for(rid)['token']
     endpoint = 'barik-release-' + rid + '.php'
@@ -302,6 +309,7 @@ def main():
 
     if not os.path.exists(os.path.join(SITE, 'index.html')):
         sys.exit('Нет dist/site — сначала python3.13 tools/build_site.py')
+    recover_release(cp)
     files = scan()
     state = {} if a.all or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
     now = {rel: sha(p) for rel, p in files.items()}

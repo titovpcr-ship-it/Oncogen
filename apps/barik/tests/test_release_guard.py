@@ -34,10 +34,39 @@ class Guard(unittest.TestCase):
         self.assertEqual((self.root/'app.js').read_text(),'old')
         self.assertEqual((self.root/'.htaccess').read_text(),'# old rules')
     def test_resume_after_process_loss(self):
-        self.action('activate')
-        (self.root/'.htaccess').write_text('RewriteRule ^ - [R=503,L]')
+        # Pause inside rename after replacing the first file, while the gate and lock are held.
+        instrumented=self.base/'guard.php'
+        text=HELPER.read_text().replace('!rename($tmp, $path)', '!test_rename($tmp, $path)')
+        text += '\nfunction test_rename($a,$b){$ok=rename($a,$b); if(str_ends_with($b,"/app.js") && !str_contains($b,"/old/")){echo "MID_WRITE\\n"; fflush(STDOUT); fread(STDIN,1);} return $ok;}\n'
+        instrumented.write_text(text)
+        script='require '+json.dumps(str(instrumented))+'; release_action('+','.join(json.dumps(str(x)) for x in (self.root,self.work,'activate','release.php'))+');'
+        proc=subprocess.Popen(['php','-r',script],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        self.assertEqual(proc.stdout.readline().strip(),b'MID_WRITE')
+        proc.kill(); proc.communicate(timeout=5)
+        self.assertIn('503',(self.root/'.htaccess').read_text())
         self.assertEqual(self.action('rollback').returncode,0)
         self.assertEqual((self.root/'app.js').read_text(),'old')
+        # A subsequent release recomputes all fingerprints after recovery invalidates state.
+        import sys, importlib.util, os
+        sys.path.insert(0,str(HELPER.parent))
+        import deploy_site as deploy
+        from unittest.mock import patch
+        state=self.base/'state.json'; state.write_text('{"app.js":"stale"}')
+        def control(action, credentials=None):
+            if action=='rollback':
+                self.assertEqual(self.action('rollback').returncode,0)
+                if state.exists(): state.unlink()
+        class CP:
+            def uapi(self,*args,**kwargs): return {'status':1,'data':[{'file':'barik-release-'+('a'*24)+'.php'}]}
+            def ok(self,*args): return None
+        with patch.dict(os.environ,{'BARIK_HOST_TOKEN':'test','BARIK_HOST_DOMAIN':'example.com'}), patch.object(deploy,'RELEASE',str(self.base/'absent')), patch.object(deploy,'release_control',side_effect=control):
+            deploy.recover_release(CP())
+        self.assertFalse(state.exists())
+        todo={'app.js':'new'} if not state.exists() else {}
+        self.assertEqual(set(todo),{'app.js'})
+        (self.work/'journal.json').unlink()
+        self.assertEqual(self.action('activate').returncode,0)
+        self.assertEqual((self.root/'app.js').read_text(),'new')
     def test_config_rejected(self):
         (self.work/'manifest.json').write_text(json.dumps({'api/config.php':'x'}))
         self.assertNotEqual(self.action('activate').returncode,0)
