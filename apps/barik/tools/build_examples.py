@@ -16,6 +16,7 @@ STEM = {'նավահանգիստ': 'նավահանգ', 'գարուն': 'գարն'
 
 def stem_candidates(word):
     """Return attested spelling stems, including common Armenian inflections."""
+    word = re.sub(r'[՞՛՜։,]', '', word)
     default = STEM.get(word, word[:max(2, len(word) - 2)] if len(word) > 3 else word[:2]).lower()
     candidates = [word.lower(), default]
     # Armenian -ացնել/-եցնել verbs commonly form the aorist with -ացրեց/-եցրեց,
