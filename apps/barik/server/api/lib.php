@@ -542,6 +542,10 @@ function dodo_sub_plan(string $productId): string {
     $mProd = (string)cfg('DODO_PRODUCT_MONTH', '');
     if ($yProd !== '' && $productId === $yProd) return 'year';
     if ($mProd !== '' && $productId === $mProd) return 'month';
+    $yLeg = array_filter(array_map('trim', explode(',', (string)cfg('DODO_PRODUCT_YEAR_LEGACY', ''))));
+    if (in_array($productId, $yLeg, true)) return 'year';
+    $mLeg = array_filter(array_map('trim', explode(',', (string)cfg('DODO_PRODUCT_MONTH_LEGACY', ''))));
+    if (in_array($productId, $mLeg, true)) return 'month';
     return '';
 }
 

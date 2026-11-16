@@ -26,6 +26,7 @@ return [
     'DODO_PRODUCT_MONTH' => '',      // pdt_… — тариф «Pro Monthly», $12 / month
     'DODO_PRODUCT_YEAR' => '',       // pdt_… — тариф «Pro Annual», $59 / year ($4.92/mo, Most Popular)
     'DODO_PRODUCT_LIFE' => '',       // pdt_… — тариф «Heritage Lifetime», $129 one-time payment
+    'DODO_PRODUCT_MONTH_LEGACY' => '', // старые pdt_… (через запятую) для продления прежних подписок
     'DODO_WEBHOOK_SECRET' => '',     // whsec_… — подпись вебхуков (без него статус всё равно берётся запросом к Dodo)
 
     // Paddle Billing: Developer tools → Authentication (client-side token, API key), Catalog → Prices,
