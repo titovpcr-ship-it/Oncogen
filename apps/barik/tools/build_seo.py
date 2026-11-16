@@ -31,7 +31,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 LANGS = ("ru", "en", "fr", "es", "de", "pt")
 LV = ("A1", "A2", "B1", "B2", "C1", "C2")
-NEIGHBOURS = 12
+NEIGHBOURS = 8
 
 TXT = {
     "ru": {
@@ -526,8 +526,10 @@ def build(site, base, words_path):
         tused.add(s)
         tslug[i] = s
     by_topic = {}
+    by_level = {}
     for w in words:
         by_topic.setdefault(w["t"], []).append(w)
+        by_level.setdefault(topics[w["t"]]["lv"], []).append(w)
     files, urls = 0, {l: [] for l in LANGS}
     # обогащение страницы слова (O-193): пример, формы (эталон Викисловаря), однокоренные; без них — noindex и не в sitemap
     lexical_review = json.load(open(os.path.join(APP, "data", "examples", "dictionary_review.json"), encoding="utf-8"))
@@ -548,13 +550,26 @@ def build(site, base, words_path):
     open(os.path.join(site, "seo.js"), "w", encoding="utf-8").write(SEO_JS)
     man_p = os.path.join(site, "audio", "manifest.json")
     vdir = (json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None)
+    audio_hashes = set()
+    if vdir:
+        vpath = os.path.join(site, "audio", vdir)
+        if os.path.isdir(vpath):
+            for _dp, _dns, _fns in os.walk(vpath):
+                for _fn in _fns:
+                    if _fn.endswith(".mp3"):
+                        audio_hashes.add(_fn[:-4])
 
-    def say(w, up, label):
+    def audio_rel(text):
         if not vdir:
             return ""
-        h = aid(w["a"])
-        rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
-        if not os.path.exists(os.path.join(site, rel)):
+        h = aid(text)
+        if h not in audio_hashes:
+            return ""
+        return f"audio/{vdir}/{h[:2]}/{h}.mp3"
+
+    def say(w, up, label):
+        rel = audio_rel(w["a"])
+        if not rel:
             return ""
         return (f'<button class="say" type="button" data-src="{up}{rel}" aria-label="{esc(label)}" '
                 f'title="{esc(label)}">{SPK}</button>')
@@ -582,6 +597,18 @@ def build(site, base, words_path):
                 # на разные слова темы (а не на одни и те же первые двенадцать)
                 lo = max(0, min(k - NEIGHBOURS // 2, len(lst) - NEIGHBOURS - 1))
                 near = [v for v in lst[lo:lo + NEIGHBOURS + 1] if v is not w][:NEIGHBOURS]
+                if len(near) < 6:
+                    lv_pool = by_level.get(t["lv"], [])
+                    seen_near = {w["a"]} | {v["a"] for v in near}
+                    if lv_pool:
+                        start = (ti * 7 + k) % len(lv_pool)
+                        for off in range(len(lv_pool)):
+                            cand = lv_pool[(start + off) % len(lv_pool)]
+                            if cand["a"] not in seen_near:
+                                near.append(cand)
+                                seen_near.add(cand["a"])
+                                if len(near) >= NEIGHBOURS:
+                                    break
                 li = "".join(f'<li><a href="{wslug[v["a"]]}.html">{mini(v, "../../")}<span class="hy" lang="hy">{esc(v["a"])}</span>'
                              f'<span class="t">{esc(v[trk])}</span><span class="x">{esc(v[tx])}</span></a></li>'
                              for v in near)
@@ -633,6 +660,13 @@ def build(site, base, words_path):
                       "termCode": w[trk], "url": base + rel,
                       "inDefinedTermSet": {"@type": "DefinedTermSet", "name": f"Barik — {tname}",
                                            "url": f"{base}{L}/t/{tslug[ti]}.html"}}
+                word_audio = audio_rel(w["a"])
+                if word_audio:
+                    ld["audio"] = {"@type": "AudioObject",
+                                   "contentUrl": base + word_audio,
+                                   "encodingFormat": "audio/mpeg",
+                                   "inLanguage": "hy",
+                                   "name": w["a"]}
                 if w.get("p") in EMO:
                     ld["image"] = f"{base}pics/{EMO[w['p']]}.webp"
                 ld = [ld, crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, f"{base}{L}/t/{tslug[ti]}.html"), (w["a"], base + rel)])]
@@ -663,10 +697,18 @@ def build(site, base, words_path):
                     f'<p class="eyebrow" lang="hy">{esc(t["hy"])}</p><h1 class="pg">{esc(T["h_t"].format(t=tname))}</h1></div></div>'
                     f'<p>{T["intro_t"].format(n=len(lst), w=nw(L, len(lst)), lv=t["lv"])}</p>'
                     f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
+            topic_ld = {"@context": "https://schema.org", "@type": "LearningResource",
+                        "name": tname,
+                        "description": T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]),
+                        "url": base + rel,
+                        "educationalLevel": t["lv"],
+                        "inLanguage": ["hy", L],
+                        "learningResourceType": "Vocabulary",
+                        "isAccessibleForFree": t["lv"] == "A1",
+                        "provider": {"@type": "Organization", "name": "Barik", "url": base}}
             write(rel, page(L, base, rel, T["title_t"].format(t=tname, n=len(lst), w=nw(L, len(lst))),
                             T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]), alts, body,
-                            [{"@context": "https://schema.org", "@type": "DefinedTermSet", "name": tname, "url": base + rel, "inLanguage": "hy"},
-                             crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, base + rel)])]))
+                            [topic_ld, crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, base + rel)])]))
             urls[L].append(rel)
         # оглавление
         rel = f"{L}/index.html"
@@ -1289,25 +1331,47 @@ def sitemap_lastmod(site, base, store, today=None):
     действительно изменилась. Отпечатки страниц и даты — в data/seo/lastmod.json.gz (в git): новая или изменённая страница
     получает дату сборки, неизменная — прежнюю. Указатель sitemap.xml — самая свежая дата своего файла."""
     import datetime, gzip, hashlib
+    from concurrent.futures import ThreadPoolExecutor
     today = today or datetime.date.today().isoformat()
     old = json.load(gzip.open(store, "rt", encoding="utf-8")) if os.path.exists(store) else {}
     new, files = {}, {}
-    for f in sorted(os.listdir(site)):
-        if not (f.startswith("sitemap-") and f.endswith(".xml")): continue
-        x = open(os.path.join(site, f), encoding="utf-8").read()
+    sm_names = [f for f in sorted(os.listdir(site)) if f.startswith("sitemap-") and f.endswith(".xml")]
+    sm_texts = {f: open(os.path.join(site, f), encoding="utf-8").read() for f in sm_names}
+    loc_re = re.compile(r"<loc>([^<]+)</loc>(?!<lastmod>)")
+    rels = []
+    for f in sm_names:
+        for u in loc_re.findall(sm_texts[f]):
+            rel = u[len(base):] if u.startswith(base) else ""
+            rels.append(rel)
+
+    def _hash_rel(rel):
+        p = os.path.join(site, rel + ("index.html" if rel == "" or rel.endswith("/") else ""))
+        if not os.path.exists(p):
+            return ""
+        with open(p, "rb") as fh:
+            return hashlib.sha1(fh.read()).hexdigest()[:10]
+
+    uniq_rels = list(dict.fromkeys(rels))
+    if len(uniq_rels) >= 64:
+        workers = min(16, max(4, (os.cpu_count() or 4) * 2))
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            rel_hashes = dict(zip(uniq_rels, pool.map(_hash_rel, uniq_rels, chunksize=256)))
+    else:
+        rel_hashes = {rel: _hash_rel(rel) for rel in uniq_rels}
+
+    for f in sm_names:
         last = ""
 
         def put(m):
             nonlocal last
             u = m.group(1)
             rel = u[len(base):] if u.startswith(base) else ""
-            p = os.path.join(site, rel + ("index.html" if rel == "" or rel.endswith("/") else ""))
-            h = hashlib.sha1(open(p, "rb").read()).hexdigest()[:10] if os.path.exists(p) else ""
+            h = rel_hashes.get(rel, "")
             o = old.get(rel)
             d = o[1] if o and o[0] == h else today
             new[rel] = [h, d]; last = max(last, d)
             return f"<loc>{u}</loc><lastmod>{d}</lastmod>"
-        x = re.sub(r"<loc>([^<]+)</loc>(?!<lastmod>)", put, x)
+        x = loc_re.sub(put, sm_texts[f])
         open(os.path.join(site, f), "w", encoding="utf-8").write(x)
         files[f] = last
     ix = os.path.join(site, "sitemap.xml"); x = open(ix, encoding="utf-8").read()

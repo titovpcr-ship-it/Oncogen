@@ -23,6 +23,7 @@ server/config.example.php со случайным PEPPER и почтой хос�
   python3.13 tools/deploy_site.py --all       выложить всё заново
 """
 import argparse, hashlib, hmac, json, os, re, secrets, sys, time, zipfile
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
@@ -133,6 +134,24 @@ def sha(path):
     return h.hexdigest()
 
 
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, 'rb') as f:
+        for b in iter(lambda: f.read(1 << 20), b''):
+            h.update(b)
+    return h.hexdigest()
+
+
+def _hash_many(paths, fn):
+    if len(paths) < 64:
+        return {rel: fn(p) for rel, p in paths.items()}
+    workers = min(16, max(4, (os.cpu_count() or 4) * 2))
+    keys = list(paths.keys())
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        vals = list(pool.map(fn, (paths[k] for k in keys), chunksize=128))
+    return dict(zip(keys, vals))
+
+
 def scan():
     out = {}
     for dp, _, fs in os.walk(SITE):
@@ -154,7 +173,7 @@ def make_zips(paths):
                 z.close()
             n += 1
             name = os.path.join(WORK, 'barik-deploy-%03d.zip' % n)
-            z = zipfile.ZipFile(name, 'w', allowZip64=True)
+            z = zipfile.ZipFile(name, 'w', compresslevel=3, allowZip64=True)
             zips.append(name)
         comp = zipfile.ZIP_STORED if rel.lower().endswith(STORE) else zipfile.ZIP_DEFLATED
         z.write(paths[rel], rel, compress_type=comp)
@@ -256,7 +275,7 @@ def guarded_release(cp, root, todo):
         with open(merged, 'w', encoding='utf-8') as f:
             f.write((block.group(0) if block else '') + open(paths['.htaccess'], encoding='utf-8').read())
         paths['.htaccess'] = merged
-    manifest = {rel: hashlib.sha256(open(path, 'rb').read()).hexdigest() for rel, path in paths.items()}
+    manifest = _hash_many(paths, sha256_file)
     for archive in make_zips(paths):
         name = os.path.basename(archive)
         with open(archive, 'rb') as f:
@@ -278,7 +297,7 @@ def release_plan(cp, all_files=False):
     recover_release(cp)
     files = scan()
     state = {} if all_files or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
-    now = {rel: sha(p) for rel, p in files.items()}
+    now = _hash_many(files, sha)
     todo = {rel: files[rel] for rel in files if state.get(rel) != now[rel]}
     gone = sorted(set(state) - set(files))
     return files, state, now, todo, gone

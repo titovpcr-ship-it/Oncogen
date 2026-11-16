@@ -127,7 +127,11 @@ export function onboardHTML() {
     '</ol></div></section>' +
     '<section class="ld-sec ld-pr"><div class="ld-wrap"><h2 class="ld-h2">' + esc(D.prTitle) + '</h2>' +
     '<div class="ld-price"><p class="pr-big">' + esc(D.prFree) + '</p><p class="pr-note">' + esc(D.prNote) + '</p><ul>' + pr + '</ul>' +
-    (BILL.native ? '' : '<div class="pr-prem"><p class="pp-t"><b>Barik Premium</b><span>' + esc(T('prPrem')) + '</span></p><p class="pp-d">' + esc(T('prPremT')) + '</p></div>') + cta('xl') + '</div></div></section>' +
+    (BILL.native ? '' : '<div class="pr-prem"><p class="pp-t"><b>Barik Premium</b><span>' + esc(T('prPrem')) + '</span></p><p class="pp-d">' + esc(T('prPremT')) + '</p><div class="pp-tiers">' +
+      '<div class="pp-tier"><span class="pp-n">' + esc(T('proMonth')) + '</span><b>$12</b><small>' + esc(T('planMonth')) + '</small></div>' +
+      '<div class="pp-tier pop"><span class="pp-tag">' + esc(T('mostPop')) + ' · ' + esc(T('save59')) + '</span><span class="pp-n">' + esc(T('proYear')) + '</span><b>' + esc(T('proYearEq', '$4.92')) + '</b><small>' + esc(T('billedAnnual', '$59')) + '</small></div>' +
+      '<div class="pp-tier"><span class="pp-n">' + esc(T('proLife')) + '</span><b>$129</b><small>' + esc(T('oneTimePay')) + '</small></div>' +
+      '</div></div>') + cta('xl') + '</div></div></section>' +
     '<section class="ld-sec"><div class="ld-wrap ld-narrow"><h2 class="ld-h2">' + esc(D.qTitle) + '</h2><div class="ld-faq">' + faq + '</div></div></section>' +
     '<section class="ld-end"><div class="ld-wrap"><p class="end-hy"><span lang="hy">' + esc(D.endHy) + '</span> <i>' + esc(D.endTr) + '</i></p><h2>' + esc(D.endTitle) + '</h2>' + cta('xl inv') + '<ul class="ld-micro">' + micro + '</ul></div>' +
     '<svg class="end-hills" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V86c160-50 320-40 480-10s320 34 460-6c100-28 190-24 260-8v78z" fill="currentColor" opacity=".55"/><path d="M0 140v-30c200-40 380-10 560 4 180 14 380-26 640-10v36z" fill="currentColor"/></svg></section>' +

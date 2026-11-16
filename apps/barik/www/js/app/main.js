@@ -518,7 +518,7 @@ export const H = {
     if (j.ok && j.url) location.assign(j.url);
     else toast(T('accErr_' + (j.err === 'nosub' ? 'nosub' : 'pay')));
   },
-  webBuy: () => { hit('checkout'); return webBuy(st.pwState.sel === 'monthly' ? 'month' : 'year'); },
+  webBuy: () => { hit('checkout'); return webBuy(st.pwState.sel === 'monthly' ? 'month' : st.pwState.sel === 'lifetime' ? 'life' : 'year'); },
   cryBuy: () => cryBuy(st.pwState.csel === 'year' ? 'year' : 'life'),
   cplan: a => { st.pwState.csel = a; render(); },
   pwClose: () => go(st.backTo.v, st.backTo.a),

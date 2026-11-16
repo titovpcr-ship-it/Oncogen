@@ -407,7 +407,16 @@ def split_examples(out):
 def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     if os.path.isdir(out):
         shutil.rmtree(out)
-    shutil.copytree(SRC, out, ignore=shutil.ignore_patterns("vendor"))
+    def _fast_copy(src, dst):
+        if src.lower().endswith((".mp3", ".webp", ".woff2")):
+            try:
+                os.link(src, dst)
+                return dst
+            except OSError:
+                pass
+        return shutil.copy2(src, dst)
+
+    shutil.copytree(SRC, out, ignore=shutil.ignore_patterns("vendor"), copy_function=_fast_copy)
     # Capacitor на сайте не нужен: billing.js сам видит, что он не в приложении.
     html = open(os.path.join(out, "index.html"), encoding="utf-8").read()
     html = re.sub(r'\s*<script\b[^>]*\bsrc="js/vendor/capacitor\.js"[^>]*></script>', "", html)
@@ -597,8 +606,10 @@ def seo_pages(out, url):
            "email": "hello@barik.am"},
           {"@context": "https://schema.org", "@type": "WebApplication", "name": "Barik", "url": url, "applicationCategory": "EducationalApplication",
            "operatingSystem": "Any", "inLanguage": "hy", "isAccessibleForFree": True,
-           "offers": [{"@type": "Offer", "price": "0", "priceCurrency": "USD"},
-                      {"@type": "Offer", "price": "4.99", "priceCurrency": "USD", "name": "Barik Premium (monthly)"}]}]
+           "offers": [{"@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Barik Free"},
+                      {"@type": "Offer", "price": "12.00", "priceCurrency": "USD", "name": "Barik Pro Monthly"},
+                      {"@type": "Offer", "price": "59.00", "priceCurrency": "USD", "name": "Barik Pro Annual"},
+                      {"@type": "Offer", "price": "129.00", "priceCurrency": "USD", "name": "Barik Heritage Lifetime"}]}]
     html = html.replace("</head>", "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>' for j in ld) + "\n</head>", 1)
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
 

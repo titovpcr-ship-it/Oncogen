@@ -9,7 +9,7 @@ const fs=require('fs'), path=require('path'), os=require('os'), crypto=require('
 const APP=path.join(__dirname,'..'), SHOTS=process.argv[2]||'';
 let fails=0;
 const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  ',m); };
-const KEY='dodo_test_key', PROD='pdt_month', SECRET='whsec_'+Buffer.from('barik-test-secret-123').toString('base64');
+const KEY='dodo_test_key', PROD='pdt_month', PROD_Y='pdt_year', PROD_L='pdt_life', SECRET='whsec_'+Buffer.from('barik-test-secret-123').toString('base64');
 
 function req(url,method,body,headers){ return new Promise(res=>{ const d=body==null?'':(typeof body==='string'?body:JSON.stringify(body));
   const q=http.request(url,{method,headers:Object.assign({'Content-Type':'application/json','Content-Length':Buffer.byteLength(d)},headers||{})},r=>{ let b=''; r.on('data',x=>b+=x); r.on('end',()=>res({status:r.statusCode,body:b})); });
@@ -17,7 +17,8 @@ function req(url,method,body,headers){ return new Promise(res=>{ const d=body==n
 let evn=0;
 function hook(base,type,sid,opt){
   opt=opt||{};
-  const raw=JSON.stringify({business_id:'bus_1',type,timestamp:new Date().toISOString(),data:{payload_type:'Subscription',subscription_id:sid,status:'active'}});
+  const data=opt.payment_id?{payload_type:'Payment',payment_id:opt.payment_id,status:opt.status||'succeeded'}:{payload_type:'Subscription',subscription_id:sid,status:'active'};
+  const raw=JSON.stringify({business_id:'bus_1',type,timestamp:new Date().toISOString(),data});
   const id=opt.id||('msg_'+(++evn)), ts=String(opt.ts||Math.floor(Date.now()/1000));
   const key=Buffer.from(SECRET.slice(6),'base64');
   const sig='v1,'+crypto.createHmac('sha256',key).update(id+'.'+ts+'.'+raw).digest('base64');
@@ -31,8 +32,8 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   for(const f of fs.readdirSync(path.join(APP,'www'))) fs.symlinkSync(path.join(APP,'www',f),path.join(SITE,f));
   fs.symlinkSync(path.join(APP,'server','api'),path.join(SITE,'api'));
 
-  // заглушка Dodo: checkouts → адрес страницы оплаты, subscriptions/{id} → из SUBS, портал покупателя
-  const SUBS={}, seen=[]; let n=0, FAIL=false;
+  // заглушка Dodo: checkouts → адрес страницы оплаты, subscriptions/{id} и payments/{id}, портал покупателя
+  const SUBS={}, PAYS={}, seen=[]; let n=0, FAIL=false;
   const stub=http.createServer((q,r)=>{ let b=''; q.on('data',x=>b+=x); q.on('end',()=>{
     const j=b?JSON.parse(b):{}; seen.push({method:q.method,url:q.url,auth:q.headers.authorization,body:j});
     const send=(o,c)=>{ r.writeHead(c||200,{'Content-Type':'application/json'}); r.end(JSON.stringify(o)); };
@@ -40,17 +41,23 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
     if(q.method==='POST'&&q.url==='/checkouts'){ n++; return send({session_id:'cks_'+n,checkout_url:'https://test.checkout.dodopayments.com/session/cks_'+n}); }
     let m=/^\/subscriptions\/([A-Za-z0-9_]+)$/.exec(q.url);
     if(q.method==='GET'&&m){ if(FAIL) return send({code:'INTERNAL'},500); const s=SUBS[m[1]]; return s?send(s):send({code:'NOT_FOUND'},404); }
+    m=/^\/payments\/([A-Za-z0-9_]+)$/.exec(q.url);
+    if(q.method==='GET'&&m){ if(FAIL) return send({code:'INTERNAL'},500); const p=PAYS[m[1]]; return p?send(p):send({code:'NOT_FOUND'},404); }
     m=/^\/customers\/([A-Za-z0-9_]+)\/customer-portal\/session/.exec(q.url);
     if(q.method==='POST'&&m) return send({link:'https://test.customer.dodopayments.com/portal/'+m[1]});
     send({code:'NOT_FOUND'},404); }); });
   await new Promise(r=>stub.listen(0,'127.0.0.1',r));
   const sub=(id,o)=>{ SUBS[id]=Object.assign({subscription_id:id,status:'active',product_id:PROD,next_billing_date:iso(30),previous_billing_date:iso(0),
     cancel_at_next_billing_date:false,metadata:{},customer:{customer_id:'cus_'+id,email:'x@example.com',name:'x'}},o); return SUBS[id]; };
+  const pay=(id,o)=>{ PAYS[id]=Object.assign({payment_id:id,status:'succeeded',product_cart:[{product_id:PROD_L,quantity:1}],
+    metadata:{},customer:{customer_id:'cus_'+id,email:'x@example.com',name:'x'}},o); return PAYS[id]; };
 
   const PORT=20000+Math.floor(Math.random()*2000), base='http://127.0.0.1:'+PORT+'/';
   const env=Object.assign({},process.env,{BARIK_DATA_DIR:DATA,BARIK_MAIL_DRIVER:'log',BARIK_PEPPER:'test-pepper',BARIK_SITE_URL:'https://barik.am',
-    BARIK_DODO_API_KEY:KEY,BARIK_DODO_API:'http://127.0.0.1:'+stub.address().port,BARIK_DODO_PRODUCT_MONTH:PROD,
-    BARIK_DODO_WEBHOOK_SECRET:SECRET,BARIK_PRICE_MONTH_LABEL:'$4.99',PHP_CLI_SERVER_WORKERS:'4'});
+    BARIK_DODO_API_KEY:KEY,BARIK_DODO_API:'http://127.0.0.1:'+stub.address().port,
+    BARIK_DODO_PRODUCT_MONTH:PROD,BARIK_DODO_PRODUCT_YEAR:PROD_Y,BARIK_DODO_PRODUCT_LIFE:PROD_L,
+    BARIK_DODO_WEBHOOK_SECRET:SECRET,
+    BARIK_PRICE_MONTH_LABEL:'$12',BARIK_PRICE_YEAR_LABEL:'$59',BARIK_PRICE_LIFE_LABEL:'$129',PHP_CLI_SERVER_WORKERS:'4'});
   const php=spawn('php',['-S','127.0.0.1:'+PORT,'-t',SITE,path.join(__dirname,'php_router.php')],{env,stdio:['ignore','ignore','pipe']});
   let phpErr=''; php.stderr.on('data',d=>{ const s=String(d); if(process.env.DBG&&/barik/.test(s)) console.log('PHPLOG',s.trim().slice(0,300)); if(/PHP (Fatal|Warning|Parse|Notice|Deprecated)/.test(s)) phpErr+=s; });
   for(let i=0;i<50;i++){ const r=await req(base+'api/?r=me','GET'); if(r.status===200) break; await new Promise(r=>setTimeout(r,100)); }
@@ -72,8 +79,8 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   const me=async()=>(await pg.request.get(base+'api/?r=me')).json();
 
   let j=await me();
-  ok(j.pay&&j.pay.ready&&j.pay.month&&!j.pay.year&&j.pay.card&&j.pay.mLabel==='$4.99','гость: оплата готова — один тариф, месяц $4.99');
-  let r=await api('checkout',{plan:'month'}); ok(r.status===401,'без входа счёт не создаётся (401)');
+  ok(j.pay&&j.pay.ready&&j.pay.month&&j.pay.year&&j.pay.life&&j.pay.card&&j.pay.mLabel==='$12'&&j.pay.yLabel==='$59'&&j.pay.lLabel==='$129','гость: оплата готова — 3 тарифа ($12 / $59 / $129)');
+  let r=await api('checkout',{plan:'year'}); ok(r.status===401,'без входа счёт не создаётся (401)');
 
   // человек A: окно подписки → страница Dodo
   await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
@@ -83,7 +90,9 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   await pg.waitForSelector('[data-act=webBuy]',{timeout:5000}).catch(()=>{});
   const pw=await pg.textContent('.pw').catch(()=>'');
   ok(!pw.includes('Premium активна')&&!pw.includes('Восстановить покупки'),'сайт открыт всем, но без подписки окно не пишет «Premium активна», «Восстановить покупки» нет');
-  ok(pw.includes('$4.99')&&pw.includes('Dodo Payments')&&pw.includes('Apple Pay')&&!pw.includes('Год'),'окно подписки: месяц $4.99, «карта, Apple Pay… Dodo Payments», без года');
+  ok(pw.includes('$12')&&pw.includes('$59')&&pw.includes('$4.92')&&pw.includes('59%')&&pw.includes('$129')&&pw.includes('Dodo Payments')&&pw.includes('Apple Pay'),'окно подписки: 3 тарифа ($12, $59 / $4.92 / 59%, $129), Dodo Payments');
+  ok(await pg.getAttribute('[data-act=plan][data-arg=yearly]','aria-pressed')==='true','тариф Pro Год ($59) выбран по умолчанию');
+  await pg.click('[data-act=plan][data-arg=monthly]');
   await shot('pay-paywall');
   // O-196: без анкеты покупателя оплата не открывается; анкета проверяется на сервере
   r=await api('checkout',{plan:'month',lang:'ru'}); ok(r.status===409&&r.j.err==='profile','без анкеты счёт не создаётся (409 profile)');
@@ -101,7 +110,7 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   await Promise.all([pg.waitForURL(/test\.checkout\.dodopayments\.com/,{timeout:8000}).catch(()=>{}),pg.click('#pfForm button[type=submit]')]);
   ok(/test\.checkout\.dodopayments\.com\/session\/cks_1/.test(pg.url()),'«Сохранить и перейти к оплате» → страница оплаты Dodo');
   const ck=seen.find(x=>x.url==='/checkouts');
-  ok(ck&&ck.body.product_cart[0].product_id===PROD&&ck.body.customer.email==='anna@example.com'&&/^https:\/\/barik\.am\/\?lang=ru&pay=card$/.test(ck.body.return_url)
+  ok(ck&&ck.body.product_cart[0].product_id===PROD&&ck.body.customer.email==='anna@example.com'&&/^https:\/\/barik\.am\/\?lang=ru&pay=card(&plan=month)?$/.test(ck.body.return_url)
      &&ck.body.metadata.uid&&ck.body.metadata.sig&&ck.body.metadata.sig.length===32,'счёт: тариф, почта Анны, возврат ?lang=ru&pay=card, подписанный uid');
   ok(ck.body.customer.name==='Анна Петрова-Саркисян'&&ck.body.billing_address&&ck.body.billing_address.country==='AM'&&ck.body.customization.force_language==='ru','счёт: имя и фамилия из анкеты (не никнейм), страна AM, язык страницы ru');
   j=await me(); ok(j.user.pf&&j.user.pf.birth==='1990-05-17'&&j.user.pf.gender==='f'&&j.user.pf.country==='AM','анкета сохранена в кабинете');
@@ -173,6 +182,27 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   // страница со странной подпиской
   r=await hook(base,'payment.succeeded','');   ok(r.status===200&&JSON.parse(r.body).skip===true,'событие без подписки — пропущено, 200');
   r=await hook(base,'subscription.active','sub_none'); ok(r.status===200&&JSON.parse(r.body).user===false,'неизвестная подписка — 200, без привязки');
+  await api('logout');
+
+  // человек C: годовой план и разовый Heritage Lifetime ($129) через payment.succeeded + pay_check(payment_id)
+  r=await login('carol@example.com','Каролина');
+  await api('profile',{first:'Каролина',last:'Иванова',birth:'1988-03-10',gender:'f',country:'DE'});
+  r=await api('checkout',{plan:'life',lang:'de'});
+  const ckl=seen.filter(x=>x.url==='/checkouts').pop();
+  ok(r.status===200&&ckl&&ckl.body.product_cart[0].product_id===PROD_L&&ckl.body.metadata.plan==='life','счёт Heritage Lifetime: товар pdt_life, metadata.plan=life, force_language=de');
+  pay('pay_L1',{metadata:{uid:ckl.body.metadata.uid,sig:ckl.body.metadata.sig,plan:'life'},customer:{customer_id:'cus_L',email:'carol@example.com',name:'Каролина Иванова'}});
+  r=await hook(base,'payment.succeeded','',{payment_id:'pay_L1',id:'msg_L1'});
+  ok(r.status===200&&JSON.parse(r.body).user===true,'вебхук payment.succeeded (Lifetime): бессрочный доступ выдан');
+  j=await me(); ok(j.user.premium&&j.user.plan==='life'&&j.user.until===0,'Каролина: Heritage Lifetime (plan=life, until=0)');
+  r=await api('checkout',{plan:'year',lang:'en'}); ok(r.status===409&&r.j.err==='have','повторная покупка при Lifetime запрещена (409 have)');
+  await api('logout');
+  r=await login('dave@example.com','Дэйв');
+  pay('pay_L2',{customer:{customer_id:'cus_D',email:'dave@example.com',name:'Dave'}});
+  await pg.goto(base+'?lang=en&pay=card&payment_id=pay_L2&plan=life');
+  await pg.waitForFunction(()=>window.__bararan.ACC.me&&window.__bararan.ACC.me.plan==='life',null,{timeout:8000}).catch(()=>{});
+  ok(await pg.evaluate(()=>!!(window.__bararan.ACC.me&&window.__bararan.ACC.me.premium&&window.__bararan.ACC.me.plan==='life')),'возврат ?pay=card&payment_id=…: Lifetime открыт через pay_check');
+  ok(!/payment_id/.test(pg.url()),'адрес очищен от payment_id');
+  await api('logout');
 
   // замок (O-165): сайт с оплатой (WEB_ALL_FREE false, как после build_site.py --paid) — бесплатно алфавит, A1, путь 0–1,
   // словарь и произношение; A2–C2 и ступени 2+ — по подписке; начатые слова повторяются и без подписки

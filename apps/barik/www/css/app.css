@@ -400,7 +400,15 @@ select{width:100%;max-width:100%;background:var(--surface);border:1px solid var(
 .plan b{display:block;font-weight:600}
 .plan small{display:block;font-size:13px;color:var(--ink-2)}
 .plan .pr{font-weight:700;font-size:17px;text-align:right;font-variant-numeric:tabular-nums}
-.badge{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:99px;background:var(--ok);color:#fff;font-size:12px;font-weight:600;vertical-align:1px}
+.badge{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:99px;background:var(--ok-soft);color:var(--ok);font-size:12px;font-weight:700;vertical-align:1px}
+.badge-pop{background:var(--accent);color:var(--on-accent)}
+.badge-save{background:var(--ok-soft);color:var(--ok)}
+.badge-life{background:var(--lapis);color:var(--on-lapis)}
+.plan-pop{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.plan-life{border-color:color-mix(in srgb,var(--gold) 65%,var(--line))}
+.plan .pr-hero-mo{display:block;margin-top:2px;font:800 17px/1.2 var(--disp);color:var(--accent)}
+.plan .pr b{display:block;font-weight:700;font-size:17px}
+.plan .pr small{display:block;font-size:12px;font-weight:500;color:var(--ink-3)}
 .pw-legal{font-size:13px;color:var(--ink-3);margin:14px 2px 0;line-height:1.45}
 .linkrow{display:flex;flex-wrap:wrap;gap:4px 16px;margin:10px 2px 0}
 .linkbtn{border:0;background:none;padding:6px 0;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;font-size:14px}
@@ -1034,10 +1042,19 @@ fieldset.pf-g input{accent-color:var(--accent);width:20px;height:20px;margin:0}
 .nm-side .nm-form{max-width:520px;margin:18px auto 0}
 @media (min-width:768px){ .nm-box{grid-template-columns:1fr 1fr;padding:30px 34px} .nm-side{text-align:left} .nm-side .nm-form{margin-left:0} }
 /* цена Premium в блоке «Сколько стоит» (O-169) */
-.pr-prem{max-width:410px;margin:0 auto 26px;padding:16px 18px;border-radius:20px;text-align:left;background:color-mix(in srgb,var(--L-a1) 9%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--L-a1) 26%,transparent)}
+.pr-prem{max-width:560px;margin:0 auto 26px;padding:18px;border-radius:22px;text-align:left;background:color-mix(in srgb,var(--L-a1) 9%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--L-a1) 26%,transparent)}
 .pp-t{margin:0;display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;font:800 18px/1.25 var(--disp)}
 .pp-t span{color:var(--L-a2);white-space:nowrap}
 .pp-d{margin:7px 0 0;font-size:14.5px;line-height:1.5;color:var(--L-ink2)}
+.pp-tiers{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+@media (min-width:640px){.pp-tiers{grid-template-columns:1fr 1.2fr 1fr;align-items:stretch}}
+.pp-tier{position:relative;display:flex;flex-direction:column;gap:3px;padding:12px 13px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.pp-tier.pop{border:1.5px solid var(--accent);background:var(--accent-soft)}
+.pp-tag{display:inline-block;align-self:flex-start;margin-bottom:4px;padding:2px 8px;border-radius:99px;background:var(--accent);color:var(--on-accent);font-size:11px;font-weight:700}
+.pp-n{font-size:13px;font-weight:700;color:var(--ink)}
+.pp-tier b{font:800 18px/1.2 var(--disp);color:var(--ink);font-variant-numeric:tabular-nums}
+.pp-tier.pop b{color:var(--accent)}
+.pp-tier small{font-size:12px;color:var(--ink-2)}
 /* главная короче на телефоне (O-169): причины — строкой с иконкой слева, фраз для прослушивания — три */
 @media (max-width:767px){
   .ld-sec.ld-why{padding-top:28px}

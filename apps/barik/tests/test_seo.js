@@ -148,8 +148,14 @@ const LANGS=['ru','en','fr','es','de','pt'];
     await pg.click('.tr .say'); const r=await resp;
     ok(!!r&&r.status()<300&&/audio\/mpeg/.test(r.headers()['content-type']||''),'«Слушать» берёт mp3: '+(r?r.status()+' '+r.url():'нет запроса'));
   }
-  const ld=await pg.evaluate(()=>JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent));
+  const lds=await pg.evaluate(()=>[...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent)));
+  const ld=lds[0];
   ok(ld['@type']==='DefinedTerm'&&ld.inLanguage==='hy'&&ld.url===BASE+'ru/w/barev.html','schema.org DefinedTerm');
+  ok(ld.audio&&ld.audio['@type']==='AudioObject'&&/\/audio\/.+\.mp3$/.test(ld.audio.contentUrl),'schema.org DefinedTerm → AudioObject');
+  ok(lds[1]&&lds[1]['@type']==='BreadcrumbList'&&lds[1].itemListElement.length===4,'schema.org BreadcrumbList (слово)');
+  ok((await pg.textContent('.exs')).length>4&&(await pg.textContent('.ex-tx')).length>4,'слово: пример в статическом HTML до JS');
+  const nearCount=await pg.locator('ul.ws').last().locator('li a').count();
+  ok(nearCount>=6&&nearCount<=8,'слово: перелинковка на 6–8 соседних слов ('+nearCount+')');
   ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'без прокрутки вбок на телефоне');
   await pg.click('nav.langs a[hreflang=fr]');
   ok((await pg.title()).includes('en arménien')&&(await pg.textContent('.tx')).includes(W.f),'переключатель языка: FR — '+W.f);
@@ -171,6 +177,9 @@ const LANGS=['ru','en','fr','es','de','pt'];
   ok(await pg.evaluate(i=>window.__bararan.TOPICS[i].en,cti)==='Basics'&&await pg.locator('[data-act=learnTopic][data-arg="'+cti+'"]').count()===1,'кнопка темы открывает ту же тему (Basics)');
   // у слов темы — озвучка, внизу — следующая тема
   await pg.goto(base+'ru/t/basics.html');
+  const tlds=await pg.evaluate(()=>[...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent)));
+  ok(tlds[0]&&tlds[0]['@type']==='LearningResource'&&tlds[0].educationalLevel==='A1'&&Array.isArray(tlds[0].inLanguage)&&tlds[0].inLanguage.includes('hy')&&tlds[0].inLanguage.includes('ru'),'schema.org LearningResource (тема)');
+  ok(tlds[1]&&tlds[1]['@type']==='BreadcrumbList','schema.org BreadcrumbList (тема)');
   const nsay=await pg.locator('ul.ws .say').count(), nli=await pg.locator('ul.ws li').count();
   ok(nsay===nli&&nli>0,'тема: у каждого слова кнопка озвучки ('+nsay+' из '+nli+')');
   ok(await pg.locator('.pn a').count()===1,'тема: ссылка «Следующая тема»');

@@ -6,7 +6,7 @@
    POST nick    {nick}         — сменить никнейм
    POST profile {first, last, birth, gender, country} — анкета покупателя (O-196), без неё оплата не открывается
    POST logout / delete        — выйти / удалить аккаунт
-   POST checkout {plan, lang}  — Dodo: адрес страницы оплаты ($4.99/мес, O-164); без Dodo — окно Paddle (month | year)
+   POST checkout {plan, lang}  — Dodo: адрес страницы оплаты (month $12 | year $59 | life $129); без Dodo — окно Paddle (month | year)
    POST pay_check {sub}        — вернулись со страницы Dodo (?subscription_id=…): сверить подписку по API
    POST portal                 — ссылка на кабинет покупателя Dodo / Paddle (отмена, карта)
    POST dodo                   — вебхук Dodo (подпись Standard Webhooks; статус — своим запросом по id)
@@ -295,15 +295,24 @@ switch ($r) {
         $u = session_user() ?? fail('auth', 401);
         if (!pay_ready()) fail('pay', 503);
         if (dodo_on()) {
+            if (premium($u) && (string)($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub'])) fail('have', 409);
             if (premium($u) && sub_here($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
             if (!pf_ok($u)) fail('profile', 409);
+            $b = body();
+            $reqPlan = (string)($b['plan'] ?? 'year');
+            $prodMap = [
+                'month' => (string)cfg('DODO_PRODUCT_MONTH', ''),
+                'year' => (string)cfg('DODO_PRODUCT_YEAR', ''),
+                'life' => (string)cfg('DODO_PRODUCT_LIFE', ''),
+            ];
+            if (!isset($prodMap[$reqPlan]) || $prodMap[$reqPlan] === '') fail('pay', 503);
             if (limited('u:' . $u['id'] . ':checkout', 10, 3600)) fail('wait', 429, ['retry' => 600]);
-            $lang = in_array(body()['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? body()['lang'] : 'en';
+            $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
             $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
             $j = dodo_checkout($u, [
-                'product_cart' => [['product_id' => (string)cfg('DODO_PRODUCT_MONTH'), 'quantity' => 1]],
-                'return_url' => $site . '/?lang=' . $lang . '&pay=card',
-                'metadata' => ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
+                'product_cart' => [['product_id' => $prodMap[$reqPlan], 'quantity' => 1]],
+                'return_url' => $site . '/?lang=' . $lang . '&pay=card&plan=' . $reqPlan,
+                'metadata' => ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id']), 'plan' => $reqPlan]], $lang);
             $url = (string)($j['checkout_url'] ?? '');
             if (!preg_match('~^https://~', $url)) fail('pay', 502);
             out(['ok' => true, 'url' => $url]);
@@ -374,9 +383,15 @@ switch ($r) {
         $u = session_user() ?? fail('auth', 401);
         if (!dodo_on()) fail('pay', 503);
         if (limited('u:' . $u['id'] . ':pcheck', 60, 3600)) fail('wait', 429, ['retry' => 60]);
-        $sid = (string)(body()['sub'] ?? '');
-        if ($sid === '' && $u['pd_sub']) $sid = (string)$u['pd_sub'];
-        if ($sid !== '') $u = dodo_sync($sid, (int)$u['id']) ?? q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        $b = body();
+        $sid = (string)($b['sub'] ?? '');
+        $pid = (string)($b['payment_id'] ?? '');
+        if ($sid === '' && $pid !== '') {
+            $u = dodo_payment_sync($pid, (int)$u['id']) ?? q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        } else {
+            if ($sid === '' && $u['pd_sub']) $sid = (string)$u['pd_sub'];
+            if ($sid !== '') $u = dodo_sync($sid, (int)$u['id']) ?? q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        }
         out(['ok' => true, 'user' => user_out($u), 'pay' => pay_info()]);
 
     case 'crypto':
@@ -492,16 +507,17 @@ function dodo_webhook(): never {
     $lang = in_array($meta['lang'] ?? '', ['ru', 'en'], true) ? $meta['lang'] : 'en';
     // Network I/O must not hold SQLite's single writer lock.
     $GLOBALS['DODO_CODE'] = -1;
-    $giftPayment = $sid === '' && ($meta['gift'] ?? '') === '1';
     $pid = (string)($d['payment_id'] ?? '');
-    if (dodo_on() && preg_match('/^[A-Za-z0-9_]{3,80}$/', $giftPayment ? $pid : $sid)) {
-        $verified = dodo('GET', ($giftPayment ? '/payments/' : '/subscriptions/') . rawurlencode($giftPayment ? $pid : $sid));
+    $giftPayment = $sid === '' && ($meta['gift'] ?? '') === '1';
+    $oneTimePayment = $sid === '' && !$giftPayment && $pid !== '' && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid);
+    if (dodo_on() && preg_match('/^[A-Za-z0-9_]{3,80}$/', ($giftPayment || $oneTimePayment) ? $pid : $sid)) {
+        $verified = dodo('GET', (($giftPayment || $oneTimePayment) ? '/payments/' : '/subscriptions/') . rawurlencode(($giftPayment || $oneTimePayment) ? $pid : $sid));
     }
     $stateHttp = $code = (int)$GLOBALS['DODO_CODE'];
     $paymentHttp = $stateHttp;
     if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
     if (($ev['type'] ?? '') === 'payment.succeeded' && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
-        $payment = $giftPayment ? $verified : dodo('GET', '/payments/' . rawurlencode($pid));
+        $payment = ($giftPayment || $oneTimePayment) ? $verified : dodo('GET', '/payments/' . rawurlencode($pid));
         $paymentHttp = $code = (int)$GLOBALS['DODO_CODE'];
         if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
     }
@@ -510,8 +526,8 @@ function dodo_webhook(): never {
         && (!empty($verified['customer']['customer_id']) || norm_email($verified['customer']['email'] ?? null))
         && is_string($verified['product_id'] ?? null) && $verified['product_id'] !== ''
         && in_array($verified['status'] ?? '', ['active','past_due','cancelled','expired','pending','on_hold','paused','failed'], true));
-    $needsPayment = $giftPayment || (($ev['type'] ?? '') === 'payment.succeeded' && $pid !== '');
-    $paymentState = $giftPayment ? $verified : $payment;
+    $needsPayment = $giftPayment || $oneTimePayment || (($ev['type'] ?? '') === 'payment.succeeded' && $pid !== '');
+    $paymentState = ($giftPayment || $oneTimePayment) ? $verified : $payment;
     $validPayment = !$needsPayment || $paymentHttp >= 400 || (is_array($paymentState) && ($paymentState['payment_id'] ?? '') === $pid
         && is_string($paymentState['status'] ?? null) && $paymentState['status'] !== '');
     if (!$validSubscription || !$validPayment) fail('retry', 503);
@@ -524,11 +540,14 @@ function dodo_webhook(): never {
             $result = ['ok' => true, 'dup' => true];
         } else {
             $GLOBALS['DODO_CODE'] = -1;
-            if ($sid === '' && dodo_on() && ($meta['gift'] ?? '') === '1' && (string)($d['payment_id'] ?? '') !== '') {
+            if ($sid === '' && dodo_on() && ($meta['gift'] ?? '') === '1' && $pid !== '') {
                 $existed = q('SELECT 1 FROM gifts WHERE pay_id = ?', [$pid])->fetchColumn();
                 $g = $verified ? gift_settle($pid, $lang, $verified, false) : null;
                 if ($g && !$existed) $notifyGift = $g;
                 $result = ['ok' => true, 'gift' => (bool)$g];
+            } elseif ($sid === '' && dodo_on() && $oneTimePayment && $verified) {
+                $u = dodo_payment_sync($pid, null, $verified);
+                $result = $u ? ['ok' => true, 'user' => true, 'plan' => 'life'] : ['ok' => true, 'skip' => true];
             } elseif ($sid !== '' && dodo_on()) {
                 $applied = (int)q('SELECT applied FROM subscription_versions WHERE sid=?', [$sid])->fetchColumn();
                 $appliedStamp = (int)q('SELECT event_stamp FROM subscription_versions WHERE sid=?', [$sid])->fetchColumn();

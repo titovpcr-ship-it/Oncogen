@@ -310,21 +310,50 @@ export async function pfSave() {
   else { cb.render(); toast(T('accSaved')); }
 }
 
+function annualEqPrice(yLabel) {
+  const m = /^(\$)\s*(\d+(?:\.\d+)?)$/.exec((yLabel || '').trim());
+  return m ? m[1] + (parseFloat(m[2]) / 12).toFixed(2) : '';
+}
+
 export function webPlansHTML() {
   if (ACC.srv === false) return '<p class="note" style="text-align:center">' + esc(T('accNoServer')) + '</p>';
   if (!ACC.me) return '<p class="note" style="text-align:center">' + esc(T('accLoginToPay')) + '</p><div class="actions"><button class="btn primary" data-act="accGo" data-arg="paywall">' + esc(T('accEnter')) + '</button></div>';
   const P = ACC.pay || {};
   if (ACC.crypto && ACC.crypto.ready) return cryPlansHTML();
   if (!P.ready) return '<p class="note" style="text-align:center">' + esc(T('accPaySoon')) + '</p>';
+  if (!P.card) {
+    const ks = [];
+    if (P.year) ks.push('yearly');
+    if (P.month) ks.push('monthly');
+    if (ks.indexOf(st.pwState.sel) < 0) st.pwState.sel = ks[0];
+    return '<p class="note" style="text-align:center">' + esc(T('accAs', ACC.me.nick)) + '</p><div class="plans" role="radiogroup">' + ks.map(k => {
+      const lab = k === 'yearly' ? P.yLabel : P.mLabel;
+      return '<button class="plan" role="radio" data-act="plan" data-arg="' + k + '" aria-pressed="' + (k === st.pwState.sel) + '" aria-checked="' + (k === st.pwState.sel) + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T(k === 'yearly' ? 'planYear' : 'planMonth')) + (k === 'yearly' ? '<span class="badge">' + esc(T('best')) + '</span>' : '') + '</b></span><span class="pr">' + esc(lab || '') + '</span></button>';
+    }).join('') + '</div><div class="actions"><button class="btn primary" data-act="webBuy"' + (st.pwState.busy ? ' disabled' : '') + '>' + esc(st.pwState.busy ? T('pwBusy') : T('subscribe')) + '</button></div>';
+  }
   const ks = [];
-  if (P.year) ks.push('yearly');
   if (P.month) ks.push('monthly');
-  if (ks.indexOf(st.pwState.sel) < 0) st.pwState.sel = ks[0];
-  return '<p class="note" style="text-align:center">' + esc(T('accAs', ACC.me.nick)) + '</p><div class="plans" role="radiogroup">' + ks.map(k => {
-    const lab = k === 'yearly' ? P.yLabel : P.mLabel;
-    return '<button class="plan" role="radio" data-act="plan" data-arg="' + k + '" aria-pressed="' + (k === st.pwState.sel) + '" aria-checked="' + (k === st.pwState.sel) + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T(k === 'yearly' ? 'planYear' : 'planMonth')) + (k === 'yearly' ? '<span class="badge">' + esc(T('best')) + '</span>' : '') + '</b></span><span class="pr">' + esc(lab || '') + '</span></button>';
-  }).join('') + '</div>' + (P.card ? '<p class="note cry-note">' + esc(T('cardNote')) + '</p>' : '') +
-    '<div class="actions"><button class="btn primary" data-act="webBuy"' + (st.pwState.busy ? ' disabled' : '') + '>' + esc(st.pwState.busy ? T('pwBusy') : T('subscribe')) + '</button></div>';
+  if (P.year) ks.push('yearly');
+  if (P.life) ks.push('lifetime');
+  if (ks.indexOf(st.pwState.sel) < 0) st.pwState.sel = ks.indexOf('yearly') >= 0 ? 'yearly' : ks[0];
+  const eq = annualEqPrice(P.yLabel || '$59');
+  const cards = ks.map(k => {
+    const sel = k === st.pwState.sel;
+    if (k === 'yearly') {
+      const yr = P.yLabel || '$59';
+      return '<button class="plan plan-pop" role="radio" data-act="plan" data-arg="yearly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proYear')) + '<span class="badge badge-pop">' + esc(T('mostPop')) + '</span><span class="badge badge-save">' + esc(T('save59')) + '</span></b><span class="pr-hero-mo">' + esc(eq ? T('proYearEq', eq) : yr) + '</span><small>' + esc(T('billedAnnual', yr)) + '</small></span><span class="pr"><b>' + esc(yr) + '</b><small>' + esc(T('planYear')) + '</small></span></button>';
+    }
+    if (k === 'lifetime') {
+      const lf = P.lLabel || '$129';
+      return '<button class="plan plan-life" role="radio" data-act="plan" data-arg="lifetime" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proLife')) + '<span class="badge badge-life">' + esc(T('oneTimePay')) + '</span></b><small>' + esc(T('proLifeSub')) + '</small></span><span class="pr"><b>' + esc(lf) + '</b><small>' + esc(T('cryOnce')) + '</small></span></button>';
+    }
+    const mo = P.mLabel || '$12';
+    return '<button class="plan" role="radio" data-act="plan" data-arg="monthly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proMonth')) + '</b><small>' + esc(T('proMonthSub')) + '</small></span><span class="pr"><b>' + esc(mo) + '</b><small>' + esc(T('planMonth')) + '</small></span></button>';
+  }).join('');
+  const isLife = st.pwState.sel === 'lifetime';
+  return '<p class="note" style="text-align:center">' + esc(T('accAs', ACC.me.nick)) + '</p><div class="plans" role="radiogroup">' + cards + '</div>' +
+    '<p class="note cry-note">' + esc(T(isLife ? 'cardNoteOnce' : 'cardNote')) + '</p>' +
+    '<div class="actions"><button class="btn primary" data-act="webBuy"' + (st.pwState.busy ? ' disabled' : '') + '>' + esc(st.pwState.busy ? T('pwBusy') : T(isLife ? 'buyOnce' : 'subscribe')) + '</button></div>';
 }
 
 export function cryPlansHTML() {
@@ -419,16 +448,18 @@ export async function giftReturn() {
 }
 
 export async function cardReturn() {
-  const sp = new URLSearchParams(location.search || ''), sub = sp.get('subscription_id') || '';
+  const sp = new URLSearchParams(location.search || ''),
+        sub = sp.get('subscription_id') || '',
+        pid = sp.get('payment_id') || '';
   try {
-    ['pay', 'subscription_id', 'status', 'email', 'payment_id', 'license_key'].forEach(k => sp.delete(k));
+    ['pay', 'subscription_id', 'plan', 'status', 'email', 'payment_id', 'license_key'].forEach(k => sp.delete(k));
     const qs = sp.toString();
     history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
   } catch (e) {}
   if (!ACC.me) return;
   toast(T('cardWait'));
   for (let i = 0; i < 8; i++) {
-    const j = await api('pay_check', { sub });
+    const j = await api('pay_check', { sub, payment_id: pid });
     if (!j.ok) return;
     accApply(j);
     cb.render();

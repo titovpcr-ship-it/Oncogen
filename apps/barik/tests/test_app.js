@@ -56,7 +56,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     }
     if(scheme==='light'){ // «О проекте» (O-167): в подвале обложки, факты без имени автора, цена и продавец
       await pg.click('.ld-foot [data-act=landDoc][data-arg=project]'); const t=await pg.textContent('.doc');
-      ok(t.includes('независимый проект из Еревана')&&t.includes('4,99 $ в месяц')&&t.includes('Dodo Payments')&&t.includes('hello@barik.am')&&!t.includes('Как это сделано'),'«О проекте»: что это, цена, продавец, почта; без раздела «Как это сделано»');
+      ok(t.includes('независимый проект из Еревана')&&t.includes('$12')&&t.includes('$59')&&t.includes('$129')&&t.includes('Dodo Payments')&&t.includes('hello@barik.am')&&!t.includes('Как это сделано'),'«О проекте»: что это, цена, продавец, почта; без раздела «Как это сделано»');
       await noHScroll('project'); await shot('project'); await pg.click('[data-act=docBack]'); }   // документ с обложки открывает приложение на выбранном языке
     else await pg.click('[data-act=pickLang][data-arg=ru]');
     ok((await pg.textContent('.brand')).includes('Barik'),'главная: бренд Barik');
@@ -625,7 +625,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.goto(base+'#welcome'); await pg.waitForSelector('.ld h1');
     // обложка (O-169): блок имени — сразу под первым экраном, с примером прописью; цена Premium видна гостю
     ok(await pg.evaluate(()=>{ const a=document.querySelector('.ld-nm'), b=document.querySelector('.ld-why'); return !!a&&!!b&&a.getBoundingClientRect().top<b.getBoundingClientRect().top; })&&await pg.locator('.ld-nm .nm-cb .cb-ink path').count()>=3&&(await pg.textContent('.nm-cap')).includes('Մարիա'),'обложка: «Ваше имя по-армянски» выше причин, пример Мария → Մարիա прописью');
-    ok((await pg.textContent('.pr-prem')).includes('4,99 $ в месяц')&&(await pg.textContent('.pr-prem')).includes('отмена в любой момент'),'обложка: цена Barik Premium — 4,99 $ в месяц, отмена в любой момент');
+    ok((await pg.textContent('.pr-prem')).includes('$12')&&(await pg.textContent('.pr-prem')).includes('$59')&&(await pg.textContent('.pr-prem')).includes('$4.92')&&(await pg.textContent('.pr-prem')).includes('$129'),'обложка: 3 тарифа Barik Premium — $12, $59 ($4.92/мес), $129');
     { const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'обложка с блоком имени: без прокрутки вбок'); }
     await pg.fill('#ldName','Tom'); await pg.click('.ld-nm button[type=submit]'); await pg.waitForSelector('.nm-cb');
     ok((await pg.textContent('.nm-hy'))==='Թոմ','с обложки: поле имени ведёт к написанному имени');
@@ -688,11 +688,11 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base+'?doc=refund'); await pg.waitForSelector('.doc');
     let t=await pg.textContent('.doc');
-    ok(t.includes('Refunds and cancellation')&&t.includes('$4.99 per month')&&t.includes('within 14 days')&&t.includes('Dodo Payments')&&t.includes('hello@barik.am'),'прямая ссылка ?doc=refund: цена, отмена, 14 дней, продавец, почта');
+    ok(t.includes('Refunds and cancellation')&&t.includes('$12/month')&&t.includes('$59/year')&&t.includes('$129')&&t.includes('within 14 days')&&t.includes('Dodo Payments')&&t.includes('hello@barik.am'),'прямая ссылка ?doc=refund: цена, отмена, 14 дней, продавец, почта');
     await pg.click('[data-act=docBack]'); ok(await pg.locator('.ld h1').count()===1,'назад из документа — обложка (гость остаётся гостем)');
     ok(await pg.locator('.ld-foot [data-act=landDoc][data-arg=refund]').count()===1,'в подвале обложки — «Refunds and cancellation»');
     const faq=await pg.evaluate(()=>window.__bararan.T('land').faq(false)); 
-    ok(faq.length===6&&faq[4][1].includes('$4.99')&&faq[5][1].includes('14 days'),'ЧаВо: сколько стоит и как отменить');
+    ok(faq.length===6&&faq[4][1].includes('$12')&&faq[4][1].includes('$59')&&faq[4][1].includes('$129')&&faq[5][1].includes('14 days'),'ЧаВо: сколько стоит и как отменить');
     await pg.goto(base+'?doc=terms'); t=await pg.textContent('.doc');
     ok(t.includes('first two stages')&&t.includes('within 14 days')&&!t.includes('Until payments are connected'),'условия: что бесплатно, что по подписке, возврат');
     await pg.goto(base+'?doc=privacy'); t=await pg.textContent('.doc');

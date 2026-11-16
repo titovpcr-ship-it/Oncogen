@@ -273,10 +273,28 @@ function uid_sig(int $uid): string {
 }
 
 function pay_info(): array {
-    if (dodo_on()) return ['ready' => true, 'month' => true, 'year' => false, 'card' => true,
-                           'mLabel' => (string)cfg('PRICE_MONTH_LABEL', '$4.99'), 'yLabel' => '', 'gift' => gift_info()];
+    if (dodo_on()) {
+        $mProd = (string)cfg('DODO_PRODUCT_MONTH', '');
+        $yProd = (string)cfg('DODO_PRODUCT_YEAR', '');
+        $lProd = (string)cfg('DODO_PRODUCT_LIFE', '');
+        $mLab = (string)cfg('PRICE_MONTH_LABEL', '');
+        $yLab = (string)cfg('PRICE_YEAR_LABEL', '');
+        $lLab = (string)cfg('PRICE_LIFE_LABEL', '');
+        return [
+            'ready' => true,
+            'month' => $mProd !== '',
+            'year' => $yProd !== '',
+            'life' => $lProd !== '',
+            'card' => true,
+            'mLabel' => $mLab !== '' ? $mLab : ($mProd !== '' ? '$12' : ''),
+            'yLabel' => $yLab !== '' ? $yLab : ($yProd !== '' ? '$59' : ''),
+            'lLabel' => $lLab !== '' ? $lLab : ($lProd !== '' ? '$129' : ''),
+            'gift' => gift_info(),
+        ];
+    }
     return ['ready' => pay_ready(), 'month' => (bool)cfg('PADDLE_PRICE_MONTH'), 'year' => (bool)cfg('PADDLE_PRICE_YEAR'),
-            'mLabel' => (string)cfg('PRICE_MONTH_LABEL', ''), 'yLabel' => (string)cfg('PRICE_YEAR_LABEL', '')];
+            'life' => false,
+            'mLabel' => (string)cfg('PRICE_MONTH_LABEL', ''), 'yLabel' => (string)cfg('PRICE_YEAR_LABEL', ''), 'lLabel' => ''];
 }
 
 function pay_ready(): bool {
@@ -504,14 +522,37 @@ function paddle_post(string $path, array $payload): ?array {
     return ($code >= 200 && $code < 300 && is_array($j)) ? $j : null;
 }
 
-/* ---------- Dodo Payments (O-164): подписка по карте, $4.99 в месяц ----------
+/* ---------- Dodo Payments (O-164): подписки ($12/мес, $59/год) и разовый «Навсегда» ($129) ----------
    Продавец — Dodo (merchant of record): налоги и чеки на нём, выплаты владельцу на счёт. Окно оплаты — страница Dodo
-   (api checkout → checkout_url), после оплаты Dodo возвращает на сайт с ?subscription_id=…; доступ даёт только
-   состояние подписки, которое сервер сам спросил у Dodo по ключу (GET /subscriptions/{id}): по вебхуку
-   (api dodo) и по возвращении человека (api pay_check). Тело вебхука не доверяем — из него берётся только id.
-   Колонки users.pd_customer / pd_sub (были у Paddle) хранят id покупателя и подписки Dodo. */
+   (api checkout → checkout_url), после оплаты Dodo возвращает на сайт с ?subscription_id=… или ?payment_id=…;
+   доступ даёт только состояние, которое сервер сам спросил у Dodo по ключу (GET /subscriptions/{id} или GET /payments/{id}):
+   по вебхуку (api dodo) и по возвращении человека (api pay_check). Тело вебхука не доверяем — из него берётся только id.
+   Колонки users.pd_customer / pd_sub хранят id покупателя и подписки Dodo (для разового «Навсегда» pd_sub пустой). */
 function dodo_on(): bool {
-    return (string)cfg('DODO_API_KEY', '') !== '' && (string)cfg('DODO_PRODUCT_MONTH', '') !== '';
+    return (string)cfg('DODO_API_KEY', '') !== '' && (
+        (string)cfg('DODO_PRODUCT_MONTH', '') !== ''
+        || (string)cfg('DODO_PRODUCT_YEAR', '') !== ''
+        || (string)cfg('DODO_PRODUCT_LIFE', '') !== ''
+    );
+}
+
+function dodo_sub_plan(string $productId): string {
+    if ($productId === '') return '';
+    $yProd = (string)cfg('DODO_PRODUCT_YEAR', '');
+    $mProd = (string)cfg('DODO_PRODUCT_MONTH', '');
+    if ($yProd !== '' && $productId === $yProd) return 'year';
+    if ($mProd !== '' && $productId === $mProd) return 'month';
+    return '';
+}
+
+function dodo_payment_has_product(array $payment, string $productId): bool {
+    if ($productId === '') return false;
+    if ((string)($payment['product_id'] ?? '') === $productId) return true;
+    $cart = is_array($payment['product_cart'] ?? null) ? $payment['product_cart'] : [];
+    foreach ($cart as $item) {
+        if (is_array($item) && (string)($item['product_id'] ?? '') === $productId) return true;
+    }
+    return false;
 }
 
 function dodo_base(): string {
@@ -559,7 +600,8 @@ function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?ar
     if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $sid)) return null;
     $s = $verified ?? dodo('GET', '/subscriptions/' . rawurlencode($sid));
     if (!$s || ($s['subscription_id'] ?? '') !== $sid) return null;
-    if ((string)($s['product_id'] ?? '') !== (string)cfg('DODO_PRODUCT_MONTH', '')) return null;
+    $plan = dodo_sub_plan((string)($s['product_id'] ?? ''));
+    if ($plan === '') return null;
     $md = is_array($s['metadata'] ?? null) ? $s['metadata'] : [];
     $cust = is_array($s['customer'] ?? null) ? $s['customer'] : [];
     $u = null;
@@ -569,15 +611,18 @@ function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?ar
     if (!$u && !empty($cust['customer_id'])) $u = q('SELECT * FROM users WHERE pd_customer = ?', [(string)$cust['customer_id']])->fetch() ?: null;
     if (!$u && ($e = norm_email($cust['email'] ?? null))) $u = q('SELECT * FROM users WHERE email = ?', [$e])->fetch() ?: null;
     if (!$u || ($want !== null && (int)$u['id'] !== $want)) return null;
+    // постоянный доступ «Навсегда» (Heritage Lifetime / Crypto Life) никогда не перетираем старой подпиской
+    if (($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub']) && premium($u)) return $u;
     // другая подписка того же человека уже идёт — эту (старую, отменённую) не даём ей затереть
     if ($u['pd_sub'] && $u['pd_sub'] !== $sid && premium($u) && ($s['status'] ?? '') !== 'active') return $u;
     $st = (string)($s['status'] ?? '');
     $next = strtotime((string)($s['next_billing_date'] ?? '')) ?: null;
     $status = $st;
     $until = $next;
+    $fallbackDays = $plan === 'year' ? 370 : 35;
     if ($st === 'active') {
         $status = 'active';                         // оплачено до next_billing_date (+3 дня запаса в premium())
-        if (!$until) $until = $u['pd_sub'] === $sid && (int)($u['sub_until'] ?? 0) > 0 ? min((int)$u['sub_until'], now() + 35 * 86400) : now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
+        if (!$until) $until = $u['pd_sub'] === $sid && (int)($u['sub_until'] ?? 0) > 0 ? min((int)$u['sub_until'], now() + $fallbackDays * 86400) : now() + $fallbackDays * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
     } elseif ($st === 'past_due') {
         $status = 'past_due';
         // Missing dates must never slide the grace window on repeated checks.
@@ -591,7 +636,35 @@ function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?ar
         $until = now();
     }
     q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = ?, sub_at = ?, sub_mode = ? WHERE id = ?',
-      [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, 'month', $until, now(), dodo_mode(), $u['id']]);
+      [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, $plan, $until, now(), dodo_mode(), $u['id']]);
+    return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
+}
+
+/* Разовый платёж Heritage Lifetime ($129) → users (бессрочный доступ: sub_plan = 'life', sub_until = NULL, pd_sub = ''). */
+function dodo_payment_sync(string $pid, ?int $want = null, ?array $verified = null): ?array {
+    if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) return null;
+    $lifeProd = (string)cfg('DODO_PRODUCT_LIFE', '');
+    if ($lifeProd === '') return null;
+    $p = $verified ?? dodo('GET', '/payments/' . rawurlencode($pid));
+    if (!is_array($p) || ($p['payment_id'] ?? '') !== $pid) return null;
+    if ((string)($p['status'] ?? '') !== 'succeeded') return null;
+    $md = is_array($p['metadata'] ?? null) ? $p['metadata'] : [];
+    if (($md['gift'] ?? '') === '1') return null;
+    $hasProductMeta = !empty($p['product_id']) || (!empty($p['product_cart']) && is_array($p['product_cart']));
+    if ($hasProductMeta) {
+        if (!dodo_payment_has_product($p, $lifeProd)) return null;
+    } elseif (($md['plan'] ?? '') !== 'life') {
+        return null;
+    }
+    $cust = is_array($p['customer'] ?? null) ? $p['customer'] : [];
+    $u = null;
+    $uid = (int)($md['uid'] ?? 0);
+    if ($uid > 0 && hash_equals(uid_sig($uid), (string)($md['sig'] ?? ''))) $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch() ?: null;
+    if (!$u && !empty($cust['customer_id'])) $u = q('SELECT * FROM users WHERE pd_customer = ?', [(string)$cust['customer_id']])->fetch() ?: null;
+    if (!$u && ($e = norm_email($cust['email'] ?? null))) $u = q('SELECT * FROM users WHERE email = ?', [$e])->fetch() ?: null;
+    if (!$u || ($want !== null && (int)$u['id'] !== $want)) return null;
+    q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = NULL, sub_at = ?, sub_mode = ? WHERE id = ?',
+      [(string)($cust['customer_id'] ?? $u['pd_customer']), '', 'active', 'life', now(), dodo_mode(), $u['id']]);
     return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
 }
 
@@ -1193,7 +1266,12 @@ function watch_urgent(int $now): array {
 function watch_daily(int $now): array {
     $p = [];
     if (dodo_on()) {
-        $prod = (string)cfg('DODO_PRODUCT_MONTH', '');
+        $prods = array_values(array_filter([
+            (string)cfg('DODO_PRODUCT_YEAR', ''),
+            (string)cfg('DODO_PRODUCT_MONTH', ''),
+            (string)cfg('DODO_PRODUCT_LIFE', ''),
+        ], fn($x) => $x !== ''));
+        $prod = $prods[0] ?? '';
         if ($prod === '' || !dodo('GET', '/products/' . rawurlencode($prod))) $p['dodo'] = 'Dodo не принимает ключ или тариф не найден (HTTP ' . (int)($GLOBALS['DODO_CODE'] ?? 0) . ')';
     }
     $host = (string)parse_url((string)cfg('SITE_URL', ''), PHP_URL_HOST);
