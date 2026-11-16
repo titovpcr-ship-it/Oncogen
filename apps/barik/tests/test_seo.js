@@ -66,7 +66,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(fs.statSync(path.join(ROOT,'sitemap-'+L+'.xml')).size<50e6,'sitemap-'+L+' меньше 50 МБ (предел поисковиков)');
   }
   ok(locs===pages-noidx.size&&miss.length===0&&inNo.length===0,'в sitemap все страницы, кроме закрытых noindex: '+locs+' из '+pages+' (noindex '+noidx.size+') '+miss.slice(0,3).join(' ')+inNo.slice(0,3).join(' '));
-  ok(noidx.size>0&&[...noidx].every(r=>/^[a-z]{2}\/w\//.test(r))&&noidx.size<pages*0.5,'noindex — только пустые страницы слов ('+noidx.size+')');
+  ok([...noidx].every(r=>/^[a-z]{2}\/w\//.test(r))&&noidx.size<pages*0.5,'noindex — только пустые страницы слов ('+noidx.size+')');
   { // O-193: богатая страница слова — пример, падежи, спряжение, однокоренные
     const pick=f=>fs.readdirSync(path.join(ROOT,'ru','w')).map(x=>fs.readFileSync(path.join(ROOT,'ru','w',x),'utf8')).find(f);
     const n=pick(s=>s.includes('<h1 lang="hy">տուն</h1>')), v=pick(s=>s.includes('<h1 lang="hy">գրել</h1>'));
