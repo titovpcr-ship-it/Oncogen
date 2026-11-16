@@ -290,7 +290,30 @@ def guarded_release(cp, root, todo):
         release_control('activate', credentials)
     except Exception:
         release_control('rollback', credentials)
+        try:
+            release_control('finalize', credentials)
+        except Exception:
+            pass
         raise
+    return credentials
+
+
+BATCH = 6000
+CORE_TOP = ('api/', 'js/', 'css/', 'og/')
+
+
+def split_batches(todo, size=BATCH):
+    """Split large deployments into <=6000-file batches so activate() stays fast; core/app/sitemap/.htaccess go last."""
+    if len(todo) <= size:
+        return [dict(todo)]
+    bulk, core = [], []
+    for rel in sorted(todo):
+        is_core = ('/' not in rel) or rel.startswith(CORE_TOP)
+        (core if is_core else bulk).append(rel)
+    batches = [{k: todo[k] for k in bulk[i:i + size]} for i in range(0, len(bulk), size)]
+    for i in range(0, len(core), size):
+        batches.append({k: todo[k] for k in core[i:i + size]})
+    return batches
 
 
 def release_plan(cp, all_files=False):
@@ -348,10 +371,17 @@ def main():
     if a.prune:
         sys.exit('--prune is incompatible with guarded releases')
     if todo:
-        guarded_release(cp, root, todo)
-        state.update({rel: now[rel] for rel in todo})
-        os.makedirs(os.path.dirname(STATE), exist_ok=True)
-        json.dump(state, open(STATE, 'w', encoding='utf-8'))
+        batches = split_batches(todo)
+        total_b = len(batches)
+        for bi, chunk in enumerate(batches, 1):
+            if total_b > 1:
+                print('пакет %d/%d (%d файлов)' % (bi, total_b, len(chunk)), flush=True)
+            creds = guarded_release(cp, root, chunk)
+            if bi < total_b:
+                release_control('finalize', creds)
+            state.update({rel: now[rel] for rel in chunk})
+            os.makedirs(os.path.dirname(STATE), exist_ok=True)
+            json.dump(state, open(STATE, 'w', encoding='utf-8'))
     if gone:
         print('старые файлы сохранены: %d' % len(gone))
     print('готово: https://%s/' % os.environ['BARIK_HOST_DOMAIN'])

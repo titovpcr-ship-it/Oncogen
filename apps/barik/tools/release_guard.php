@@ -10,7 +10,12 @@ function release_path(string $rel): void {
     }
 }
 function release_write(string $path, string $bytes): void {
-    if (!is_dir(dirname($path)) && !mkdir(dirname($path), 0755, true)) throw new RuntimeException('mkdir failed');
+    static $dirs = [];
+    $dir = dirname($path);
+    if (!isset($dirs[$dir])) {
+        if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) throw new RuntimeException('mkdir failed');
+        $dirs[$dir] = true;
+    }
     $tmp = $path . '.barik-tmp';
     if (file_put_contents($tmp, $bytes) !== strlen($bytes) || !rename($tmp, $path)) throw new RuntimeException('write failed');
 }
@@ -89,6 +94,8 @@ function release_action(string $root, string $work, string $action, string $endp
     }
 }
 if (PHP_SAPI !== 'cli') {
+    @ignore_user_abort(true);
+    @ini_set('memory_limit', '1024M');
     set_time_limit(0);
     header('Content-Type: application/json'); header('Cache-Control: no-store');
     if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST' || !hash_equals('__TOKEN__', (string)($_SERVER['HTTP_X_RELEASE_TOKEN'] ?? ''))) {
