@@ -219,9 +219,27 @@ def release_control(action, credentials=None):
         if action == 'finalize': return
         raise RuntimeError('No release journal credentials')
     c = credentials or json.load(open(RELEASE, encoding='utf-8'))
-    r = requests.post(c['url'] + '?action=' + action,
-                      headers={'X-Release-Token': c['token']}, timeout=900)
-    r.raise_for_status()
+    max_att = 3 if action == 'activate' else 6
+    r = None
+    for att in range(max_att):
+        try:
+            r = requests.post(c['url'] + '?action=' + action,
+                              headers={'X-Release-Token': c['token']}, timeout=900)
+            if r.status_code in (429, 502, 503, 504) and att + 1 < max_att:
+                wait = min(30, 4 * (att + 1))
+                print('  release %s: HTTP %s — жду %d с' % (action, r.status_code, wait), flush=True)
+                time.sleep(wait)
+                continue
+            r.raise_for_status()
+            break
+        except requests.RequestException as e:
+            if action == 'activate' and getattr(e, 'response', None) is not None and e.response.status_code not in (429, 502, 503, 504):
+                raise
+            if att + 1 >= max_att:
+                raise
+            wait = min(30, 4 * (att + 1))
+            print('  release %s: сбой (%s) — жду %d с' % (action, e, wait), flush=True)
+            time.sleep(wait)
     if not r.json().get('ok'):
         raise RuntimeError('release control failed: ' + action)
     if action == 'rollback':
@@ -265,7 +283,16 @@ def guarded_release(cp, root, todo):
     os.makedirs(os.path.dirname(RELEASE), exist_ok=True)
     fd = os.open(RELEASE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(fd, 'w') as f: json.dump(credentials, f)
-    release_control('prepare', credentials)
+    try:
+        release_control('prepare', credentials)
+    except Exception:
+        try:
+            cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=root + '/' + endpoint, doubledecode='0')
+        except Exception:
+            pass
+        if os.path.exists(RELEASE):
+            os.remove(RELEASE)
+        raise
     # Preserve host-managed PHP directives in the staged .htaccess.
     paths = dict(todo)
     if '.htaccess' in paths:
@@ -298,12 +325,12 @@ def guarded_release(cp, root, todo):
     return credentials
 
 
-BATCH = 6000
+BATCH = 10000
 CORE_TOP = ('api/', 'js/', 'css/', 'og/')
 
 
 def split_batches(todo, size=BATCH):
-    """Split large deployments into <=6000-file batches so activate() stays fast; core/app/sitemap/.htaccess go last."""
+    """Split large deployments into <=10000-file batches so activate() stays fast; core/app/sitemap/.htaccess go last."""
     if len(todo) <= size:
         return [dict(todo)]
     bulk, core = [], []
@@ -374,6 +401,8 @@ def main():
         batches = split_batches(todo)
         total_b = len(batches)
         for bi, chunk in enumerate(batches, 1):
+            if bi > 1:
+                time.sleep(3)
             if total_b > 1:
                 print('пакет %d/%d (%d файлов)' % (bi, total_b, len(chunk)), flush=True)
             creds = guarded_release(cp, root, chunk)
