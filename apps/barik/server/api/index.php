@@ -295,11 +295,12 @@ switch ($r) {
         $u = session_user() ?? fail('auth', 401);
         if (!pay_ready()) fail('pay', 503);
         if (dodo_on()) {
-            if (premium($u) && (string)($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub'])) fail('have', 409);
-            if (premium($u) && sub_here($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
-            if (!pf_ok($u)) fail('profile', 409);
             $b = body();
             $reqPlan = (string)($b['plan'] ?? 'year');
+            $isGift = $reqPlan === 'life' && !empty($b['gift']);
+            if (!$isGift && premium($u) && (string)($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub'])) fail('have', 409);
+            if (!$isGift && premium($u) && sub_here($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
+            if (!pf_ok($u)) fail('profile', 409);
             $prodMap = [
                 'month' => (string)cfg('DODO_PRODUCT_MONTH', ''),
                 'year' => (string)cfg('DODO_PRODUCT_YEAR', ''),
@@ -309,10 +310,14 @@ switch ($r) {
             if (limited('u:' . $u['id'] . ':checkout', 10, 3600)) fail('wait', 429, ['retry' => 600]);
             $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
             $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
+            $meta = $isGift
+                ? ['gift' => '1', 'plan' => 'life', 'months' => '0', 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]
+                : ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id']), 'plan' => $reqPlan];
+            $retUrl = $isGift ? ($site . '/?lang=' . $lang . '&pay=gift') : ($site . '/?lang=' . $lang . '&pay=card&plan=' . $reqPlan);
             $j = dodo_checkout($u, [
                 'product_cart' => [['product_id' => $prodMap[$reqPlan], 'quantity' => 1]],
-                'return_url' => $site . '/?lang=' . $lang . '&pay=card&plan=' . $reqPlan,
-                'metadata' => ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id']), 'plan' => $reqPlan]], $lang);
+                'return_url' => $retUrl,
+                'metadata' => $meta], $lang);
             $url = (string)($j['checkout_url'] ?? '');
             if (!preg_match('~^https://~', $url)) fail('pay', 502);
             out(['ok' => true, 'url' => $url]);

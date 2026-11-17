@@ -4,8 +4,11 @@ import {
   TOPICS, CFG, BILL, STR, LEVELS, FREE_LV, st, cb, $, esc, T, hit, toast, ICON,
   TZ, tzCC, premium, ACC, accFrom, api, accApply, accInit, accSet
 } from './state.js';
-import { WORDS, BY, emo, wordRow, ART } from './text.js';
-import { bothVoices } from './audio.js';
+import {
+  WORDS, BY, tx, trn, exTr, emo, wordRow, ART,
+  exampleCache, exampleErrors, levelExampleUrl, exLoadAsync, pickLevelExamples
+} from './text.js';
+import { bothVoices, sayText } from './audio.js';
 
 const kbOwn = () => st.UI.kb === 'own';
 
@@ -107,12 +110,48 @@ export function trialText(iso) {
   return T('trial', days);
 }
 
+function pwContextHTML(reason, payload) {
+  const p = payload || {};
+  if (reason === 'audio15' && p.word) {
+    const w = p.word;
+    return '<div class="pw-ctx pw-ctx-audio" data-pw-reason="audio15">' +
+      '<p class="pw-ctx-k">⏸ ' + esc(T('pwNextTrack')) + '</p>' +
+      '<div class="pw-prev-card"><span class="pw-prev-hy" lang="hy">' + esc(w.a) + '</span>' +
+      '<span class="pw-prev-tr">[' + esc(trn(w)) + ']</span>' +
+      '<span class="pw-prev-blur" aria-hidden="true">' + esc(tx(w)) + '</span></div></div>';
+  }
+  if (reason === 'level_lock' && p.level) {
+    const lv = p.level, url = levelExampleUrl(lv, st.L);
+    const exs = pickLevelExamples(lv, st.L, 2);
+    if (!exs.length && !exampleCache.has(url) && !exampleErrors.has(url)) {
+      exLoadAsync(url).then(loaded => { if (loaded && st.view === 'paywall' && st.pwState.reason === 'level_lock') cb.render(false); });
+    }
+    const list = exs.length
+      ? '<ul class="pw-ex-list">' + exs.map((e, i) => {
+          const g = i % 2 === 0 ? 'f' : 'm';
+          return '<li class="pw-ex-row"><div class="pw-ex-txt"><span class="pw-ex-hy" lang="hy">' + esc(e.hy) + '</span>' +
+            (e.tr ? '<span class="pw-ex-tr">' + esc(e.tr) + '</span>' : '') +
+            '<span class="pw-ex-tx">' + esc(e.tx) + '</span></div>' +
+            '<button type="button" class="ex-say pw-ex-say" data-act="pwExSay" data-arg="' + esc(e.hy + '|' + g) + '" aria-label="' + esc(T('listen')) + '">' + ICON.spk + '</button></li>';
+        }).join('') + '</ul>'
+      : '<p class="note pw-ex-wait">' + esc(T('loading')) + '</p>';
+    return '<div class="pw-ctx pw-ctx-lock" data-pw-reason="level_lock">' +
+      '<p class="pw-ctx-k">🔒 ' + esc(T('pwLockTitle', lv)) + '</p>' +
+      '<p class="pw-ctx-sub">' + esc(T('pwLockSub')) + '</p>' + list + '</div>';
+  }
+  return '';
+}
+
 export function paywallHTML() {
   const lvls = LEVELS.filter(l => l !== FREE_LV).join(', ');
   const ben = [['📚', T('ben1', WORDS.length, TOPICS.length)], ['🔓', T('ben2', lvls)], ['🔊', T('ben3')], ['✈️', T('ben4')], ['🚫', T('ben5')]];
   if (!BILL.native) ben.splice(2, 3, ['🌱', T('benPath')], ['↩️', T('benRefund')]);
+  const reason = st.pwState.reason || 'default', payload = st.pwState.payload || {};
+  const heroTitle = reason === 'audio15' ? T('pwAudio15Title') : T('pwTitle');
+  const heroMark = reason === 'audio15' ? '<span class="pw-pause-ic" aria-hidden="true">⏸</span>' : (BILL.native ? '<span class="mark" aria-hidden="true" lang="hy">Ա</span>' : ART.mark('pw-mk'));
   let plans = '';
   const have = BILL.native ? premium() : !!(ACC.me && ACC.me.premium);
+  const ctxHtml = have ? '' : pwContextHTML(reason, payload);
   if (have) {
     plans = '<p class="summary" style="text-align:center">✓ ' + esc(T('subOn')) + '</p>' +
       (!BILL.native && ACC.me.portal ? '<div class="actions"><button class="btn secondary" data-act="accPortal">' + esc(T('accManage')) + '</button></div>' : '');
@@ -132,7 +171,8 @@ export function paywallHTML() {
     plans += '<div class="actions"><button class="btn primary" data-act="buy"' + (st.pwState.busy ? ' disabled' : '') + '>' + esc(st.pwState.busy ? T('pwBusy') : (tr ? T('startTrial') : T('subscribe'))) + '</button></div>';
   }
   return '<div class="pw"><div class="sess-top" style="grid-template-columns:44px 1fr"><button class="x" data-act="pwClose" aria-label="' + esc(T('close')) + '">✕</button><span></span></div>' +
-    '<div class="pw-hero">' + (BILL.native ? '<span class="mark" aria-hidden="true" lang="hy">Ա</span>' : ART.mark('pw-mk')) + '<h1>' + esc(T('pwTitle')) + '</h1><p>' + esc(T('pwSub')) + '</p></div>' +
+    '<div class="pw-hero">' + heroMark + '<h1>' + esc(heroTitle) + '</h1><p>' + esc(T('pwSub')) + '</p></div>' +
+    ctxHtml +
     '<ul class="pw-list">' + ben.map(b => '<li><span aria-hidden="true">' + emo(b[0]) + '</span><span>' + esc(b[1]) + '</span></li>').join('') + '</ul>' +
     plans +
     (BILL.native ? '<div class="actions" style="margin-top:10px"><button class="btn ghost" data-act="restore">' + esc(T('restore')) + '</button></div>' : '') +
@@ -315,7 +355,20 @@ function annualEqPrice(yLabel) {
   return m ? m[1] + (parseFloat(m[2]) / 12).toFixed(2) : '';
 }
 
-function tierCardsHTML(P, interactive) {
+export function trustBarHTML() {
+  const wc = String(WORDS.length || 20121).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const voiceSum = st.MAN && st.MAN.voices
+    ? Object.values(st.MAN.voices).reduce((s, v) => s + (Number(v && v.count) || 0), 0)
+    : (Number(st.MAN && st.MAN.count) || 0);
+  const ac = String(Math.max(83068, voiceSum)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return '<ul class="pw-trust">' +
+    '<li><span aria-hidden="true">🛡️</span><span>' + esc(T('trustPay')) + '</span></li>' +
+    '<li><span aria-hidden="true">↩️</span><span>' + esc(T('trustCancel')) + '</span></li>' +
+    '<li><span aria-hidden="true">🎧</span><span>' + esc(T('trustContent', wc, ac)) + '</span></li>' +
+    '</ul>';
+}
+
+export function tierCardsHTML(P, interactive = true) {
   const hasServerPlans = !!(P && (P.month || P.year || P.life));
   const ks = hasServerPlans
     ? ['monthly', 'yearly', 'lifetime'].filter(k => (k === 'monthly' && P.month) || (k === 'yearly' && P.year) || (k === 'lifetime' && P.life))
@@ -328,20 +381,39 @@ function tierCardsHTML(P, interactive) {
   const cards = ks.map(k => {
     const sel = k === st.pwState.sel;
     if (k === 'yearly') {
-      return '<button class="plan plan-pop" role="radio" data-act="plan" data-arg="yearly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proYear')) + '<span class="badge badge-pop">' + esc(T('mostPop')) + '</span><span class="badge badge-save">' + esc(T('save59')) + '</span></b><span class="pr-hero-mo">' + esc(T('proYearEq', eq)) + '</span><small>' + esc(T('billedAnnual', yr)) + '</small></span><span class="pr"><b>' + esc(yr) + '</b><small>' + esc(T('planYear')) + '</small></span></button>';
+      return '<button type="button" class="plan plan-pop" role="radio" data-act="plan" data-arg="yearly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proYear')) + '<span class="badge badge-pop">' + esc(T('mostPop')) + '</span><span class="badge badge-save">' + esc(T('save59')) + '</span></b><span class="pr-hero-mo">' + esc(T('proYearEq', eq)) + '</span><small>' + esc(T('billedAnnual', yr)) + '</small></span><span class="pr"><b>' + esc(yr) + '</b><small>' + esc(T('planYear')) + '</small></span></button>';
     }
     if (k === 'lifetime') {
-      return '<button class="plan plan-life" role="radio" data-act="plan" data-arg="lifetime" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proLife')) + '<span class="badge badge-life">' + esc(T('oneTimePay')) + '</span></b><small>' + esc(T('proLifeSub')) + '</small></span><span class="pr"><b>' + esc(lf) + '</b><small>' + esc(T('cryOnce')) + '</small></span></button>';
+      const checked = st.pwState.gift129 ? ' checked' : '';
+      return '<div class="plan-wrap plan-life-wrap' + (sel ? ' sel' : '') + '">' +
+        '<button type="button" class="plan plan-life" role="radio" data-act="plan" data-arg="lifetime" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proLife')) + '<span class="badge badge-life">' + esc(T('oneTimePay')) + '</span></b><small>' + esc(T('proLifeSub')) + '</small></span><span class="pr"><b>' + esc(lf) + '</b><small>' + esc(T('cryOnce')) + '</small></span></button>' +
+        '<label class="gift-pass"><input type="checkbox" data-act="pwGiftPass"' + checked + '><span>🎁 ' + esc(T('giftPassTog')) + '</span></label>' +
+        '</div>';
     }
-    return '<button class="plan" role="radio" data-act="plan" data-arg="monthly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proMonth')) + '</b><small>' + esc(T('proMonthSub')) + '</small></span><span class="pr"><b>' + esc(mo) + '</b><small>' + esc(T('planMonth')) + '</small></span></button>';
+    return '<button type="button" class="plan" role="radio" data-act="plan" data-arg="monthly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proMonth')) + '</b><small>' + esc(T('proMonthSub')) + '</small></span><span class="pr"><b>' + esc(mo) + '</b><small>' + esc(T('planMonth')) + '</small></span></button>';
   }).join('');
   return '<div class="plans" role="radiogroup"' + (interactive ? '' : ' aria-label="Barik Premium"') + '>' + cards + '</div>';
 }
 
-export function webPlansHTML() {
+export function webPlansHTML(opts) {
+  const embed = !!(opts && opts.embed === 'quiz_result');
   const P = ACC.pay || {};
-  if (ACC.srv === false) return tierCardsHTML(P, false) + '<p class="note" style="text-align:center">' + esc(T('accNoServer')) + '</p>';
-  if (!ACC.me) return tierCardsHTML(P, false) + '<p class="note" style="text-align:center">' + esc(T('accLoginToPay')) + '</p><div class="actions"><button class="btn primary" data-act="accGo" data-arg="paywall">' + esc(T('accEnter')) + '</button></div>';
+  const lf = (P && P.lLabel) || '$129';
+  const isLife = st.pwState.sel === 'lifetime';
+  const isLifeGift = isLife && !!st.pwState.gift129;
+  if (ACC.srv === false) {
+    const lbl = isLifeGift ? T('buyGiftLife', lf) : T(isLife ? 'buyOnce' : 'subscribe');
+    return tierCardsHTML(P, true) +
+      '<div class="actions"><button type="button" class="btn primary pw-buy-btn" data-act="pwNoSrv">' + esc(lbl) + '</button></div>' +
+      '<p class="note" style="text-align:center">' + esc(T('accNoServer')) + '</p>' + trustBarHTML();
+  }
+  if (!ACC.me) {
+    const lbl = isLifeGift ? T('buyGiftLife', lf) : T('accEnter');
+    return tierCardsHTML(P, true) +
+      '<p class="note" style="text-align:center">' + esc(T('accLoginToPay')) + '</p>' +
+      '<div class="actions"><button type="button" class="btn primary pw-buy-btn" data-act="accGo" data-arg="' + (embed ? 'lvlquiz' : 'paywall') + '">' + esc(lbl) + '</button></div>' +
+      trustBarHTML();
+  }
   if (ACC.crypto && ACC.crypto.ready) return cryPlansHTML();
   if (!P.ready) return '<p class="note" style="text-align:center">' + esc(T('accPaySoon')) + '</p>';
   if (!P.card) {
@@ -354,29 +426,12 @@ export function webPlansHTML() {
       return '<button class="plan" role="radio" data-act="plan" data-arg="' + k + '" aria-pressed="' + (k === st.pwState.sel) + '" aria-checked="' + (k === st.pwState.sel) + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T(k === 'yearly' ? 'planYear' : 'planMonth')) + (k === 'yearly' ? '<span class="badge">' + esc(T('best')) + '</span>' : '') + '</b></span><span class="pr">' + esc(lab || '') + '</span></button>';
     }).join('') + '</div><div class="actions"><button class="btn primary" data-act="webBuy"' + (st.pwState.busy ? ' disabled' : '') + '>' + esc(st.pwState.busy ? T('pwBusy') : T('subscribe')) + '</button></div>';
   }
-  const ks = [];
-  if (P.month) ks.push('monthly');
-  if (P.year) ks.push('yearly');
-  if (P.life) ks.push('lifetime');
-  if (ks.indexOf(st.pwState.sel) < 0) st.pwState.sel = ks.indexOf('yearly') >= 0 ? 'yearly' : ks[0];
-  const eq = annualEqPrice(P.yLabel || '$59');
-  const cards = ks.map(k => {
-    const sel = k === st.pwState.sel;
-    if (k === 'yearly') {
-      const yr = P.yLabel || '$59';
-      return '<button class="plan plan-pop" role="radio" data-act="plan" data-arg="yearly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proYear')) + '<span class="badge badge-pop">' + esc(T('mostPop')) + '</span><span class="badge badge-save">' + esc(T('save59')) + '</span></b><span class="pr-hero-mo">' + esc(eq ? T('proYearEq', eq) : yr) + '</span><small>' + esc(T('billedAnnual', yr)) + '</small></span><span class="pr"><b>' + esc(yr) + '</b><small>' + esc(T('planYear')) + '</small></span></button>';
-    }
-    if (k === 'lifetime') {
-      const lf = P.lLabel || '$129';
-      return '<button class="plan plan-life" role="radio" data-act="plan" data-arg="lifetime" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proLife')) + '<span class="badge badge-life">' + esc(T('oneTimePay')) + '</span></b><small>' + esc(T('proLifeSub')) + '</small></span><span class="pr"><b>' + esc(lf) + '</b><small>' + esc(T('cryOnce')) + '</small></span></button>';
-    }
-    const mo = P.mLabel || '$12';
-    return '<button class="plan" role="radio" data-act="plan" data-arg="monthly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proMonth')) + '</b><small>' + esc(T('proMonthSub')) + '</small></span><span class="pr"><b>' + esc(mo) + '</b><small>' + esc(T('planMonth')) + '</small></span></button>';
-  }).join('');
-  const isLife = st.pwState.sel === 'lifetime';
-  return '<p class="note" style="text-align:center">' + esc(T('accAs', ACC.me.nick)) + '</p><div class="plans" role="radiogroup">' + cards + '</div>' +
+  const ctaLbl = st.pwState.busy ? T('pwBusy') : (isLifeGift ? T('buyGiftLife', lf) : T(isLife ? 'buyOnce' : 'subscribe'));
+  return (embed ? '' : '<p class="note" style="text-align:center">' + esc(T('accAs', ACC.me.nick)) + '</p>') +
+    tierCardsHTML(P, true) +
     '<p class="note cry-note">' + esc(T(isLife ? 'cardNoteOnce' : 'cardNote')) + '</p>' +
-    '<div class="actions"><button class="btn primary" data-act="webBuy"' + (st.pwState.busy ? ' disabled' : '') + '>' + esc(st.pwState.busy ? T('pwBusy') : T(isLife ? 'buyOnce' : 'subscribe')) + '</button></div>';
+    '<div class="actions"><button type="button" class="btn primary pw-buy-btn" data-act="webBuy"' + (st.pwState.busy ? ' disabled' : '') + '>' + esc(ctaLbl) + '</button></div>' +
+    trustBarHTML();
 }
 
 export function cryPlansHTML() {
@@ -512,7 +567,9 @@ export async function webBuy(plan) {
   if (ACC.pay && ACC.pay.card && !ACC.me.pf) { pfNeed(plan); return; }
   st.pwState.busy = true;
   cb.render();
-  const j = await api('checkout', { plan, lang: st.L });
+  const body = { plan, lang: st.L };
+  if (plan === 'life' && st.pwState.gift129) body.gift = 1;
+  const j = await api('checkout', body);
   if (j.ok && j.url) { location.assign(j.url); return; }
   if (j.err === 'profile') { st.pwState.busy = false; pfNeed(plan); return; }
   if (!j.ok) {

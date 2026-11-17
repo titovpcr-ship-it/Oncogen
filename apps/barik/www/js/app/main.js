@@ -1,7 +1,7 @@
 /* Barik — маршрутизатор, ленивые данные, глобальные события, таблица действий и точка входа. */
 
 import {
-  TOPICS, ABC, BILL, CUR, NAMES, INT, START_QUERY, FIRST, QL, WELCOME,
+  TOPICS, ABC, BILL, CUR, NAMES, LEVELS, FREE_LV, INT, START_QUERY, FIRST, QL, WELCOME,
   st, cb, $, esc, shuffle, toast, ICON, T, saveUI, setLang, premium, lvOpen, canReview,
   today, touchStreak, loadLocal, save, pgSave, ACC, accFrom, api, accApply,
   accInit, accSet, flQ, flQSave, flFlush, SY, syncNow, hit, resFail, jsErr,
@@ -10,7 +10,8 @@ import {
 import {
   WORDS, BY, trWord, trLat, trFr, trEs, trDe, trPt, trPhrase,
   trLoad, loadDictionaryTranslations, translationState, translationNotice,
-  hasWordTranslations, picsOn, pathOn, tn, normHy, fitWords, MARK
+  hasWordTranslations, picsOn, pathOn, tn, normHy, fitWords, MARK,
+  levelExampleUrl, exLoadAsync
 } from './text.js';
 import {
   SPEECH, aid, audioUrl, hasTr, trUrl, LPT, REC, listenStart, listenOpenHome,
@@ -34,7 +35,7 @@ import {
   startAbcQuiz, onAbcShow, abcAnswer, abcNext, abcQuizHTML, startPicQuiz,
   onPicShow, picAnswer, picNext, picsHTML, pcardHTML, pquizHTML, kbOwn,
   startType, onTypeFocus, onTypeShow, tfield, tcheck, thint, tgive, tnext,
-  tquizHTML
+  tquizHTML, startLvlQuiz, lvlAnswer, lvlNext, lvlQuizHTML
 } from './exercises.js';
 import {
   rdx, pathStat, certHTML, ctDraw, ctBlob, pathHTML, unitHTML, seedHTML, PH
@@ -59,16 +60,22 @@ export function go(v, arg) {
   window.scrollTo(0, 0);
 }
 
-export function openPaywall() {
+export function openPaywall(reason = 'default', payload = null) {
   if (st.view !== 'paywall') st.backTo = st.view === 'session' ? { v: 'home' } : { v: st.view, a: st.viewArg };
-  st.pwState = { plans: null, sel: 'yearly', busy: false };
+  const lv = (payload && payload.level) || (payload && payload.ti != null && TOPICS[payload.ti] && TOPICS[payload.ti].lv) || null;
+  if (reason === 'level_lock' && lv) {
+    exLoadAsync(levelExampleUrl(lv, st.L)).then(loaded => {
+      if (loaded && st.view === 'paywall' && st.pwState.reason === 'level_lock') render(false);
+    });
+  }
+  st.pwState = { plans: null, sel: 'yearly', busy: false, reason: reason || 'default', payload: payload || null, gift129: false };
   go('paywall');
   loadPlans();
 }
 
 function tabOf(v) {
   if (v === 'path' || v === 'unit' || v === 'seed' || v === 'cert') return 'path';
-  if (v === 'topic' || v === 'result' || v === 'home' || v === 'listen' || v === 'daily' || v === 'phrases') return 'home';
+  if (v === 'topic' || v === 'result' || v === 'home' || v === 'listen' || v === 'daily' || v === 'phrases' || v === 'lvlquiz') return 'home';
   if (v === 'letter' || v === 'abcquiz' || v === 'abc' || v === 'pen' || v === 'name') return 'abc';
   if (v === 'gift' || v === 'teach' || v === 'settings' || v === 'doc' || v === 'account') return 'settings';
   if (v === 'pics' || v === 'pcard' || v === 'pquiz') return 'pics';
@@ -139,7 +146,8 @@ export function render(auto) {
     (v === 'unit' && st.PU && st.PU.step === 2 && !st.PU.end) ||
     (v === 'abcquiz' && st.aq && st.aq.i < st.aq.items.length) ||
     (v === 'pquiz' && st.pq && st.pq.i < st.pq.items.length) ||
-    (v === 'tquiz' && st.tq && st.tq.i < st.tq.items.length)
+    (v === 'tquiz' && st.tq && st.tq.i < st.tq.items.length) ||
+    (v === 'lvlquiz' && st.lq && st.lq.i < st.lq.items.length)
   ) ? 'session' : v;
   const tk = tcur();
   document.body.classList.toggle('kbon', v === 'tquiz' && !!tk && !tk.done && kbOwn());
@@ -175,6 +183,7 @@ export function render(auto) {
   else if (v === 'pcard') el.innerHTML = pcardHTML(st.viewArg);
   else if (v === 'pquiz') el.innerHTML = pquizHTML();
   else if (v === 'tquiz') el.innerHTML = tquizHTML();
+  else if (v === 'lvlquiz') el.innerHTML = st.lq ? lvlQuizHTML() : homeHTML();
   else if (v === 'listen') el.innerHTML = listenHTML();
   else if (v === 'settings') el.innerHTML = settingsHTML();
   else if (v === 'paywall') el.innerHTML = paywallHTML();
@@ -203,6 +212,7 @@ export const H = {
     if (st.view === 'tquiz') st.tq = null;
     if (st.view === 'abcquiz' && st.aq) { clearTimeout(st.aq.timer); st.aq = null; }
     if (st.view === 'pquiz' && st.pq) { clearTimeout(st.pq.timer); st.pq = null; }
+    if (st.view === 'lvlquiz' && st.lq) { clearTimeout(st.lq.timer); st.lq = null; }
     go(a);
   },
   pickLang: a => { setLang(a); hit(st.view === 'onboard' ? 'land_start' : 'pick_lang'); hit('start'); go('home'); },
@@ -453,7 +463,36 @@ export const H = {
   abcNext: () => abcNext(),
   abcHear: (a, b) => { const it = st.aq && st.aq.items[st.aq.i]; if (it) speakLetter(it.x, false, b); },
   abcQuit: () => { if (st.aq) clearTimeout(st.aq.timer); st.aq = null; go('abc'); },
-  paywall: () => openPaywall(),
+  lvlStart: () => startLvlQuiz(),
+  lvlOpt: a => lvlAnswer(+a),
+  lvlNext: () => lvlNext(),
+  lvlSay: (a, b) => { const it = st.lq && st.lq.items[st.lq.i]; if (it) sayText(it.w.a, b, false, null, it.voice); },
+  lvlQuit: () => { if (st.lq) clearTimeout(st.lq.timer); st.lq = null; go('home'); },
+  lvlStartTrack: a => {
+    const lv = a && LEVELS.includes(a) ? a : FREE_LV;
+    if (!lvOpen(lv)) { openPaywall('level_lock', { level: lv }); return; }
+    const pool = WORDS.filter(w => TOPICS[w.t] && TOPICS[w.t].lv === lv);
+    exLoadAsync(levelExampleUrl(lv, st.L));
+    listenStart(pool, T('lpLevelTitle', lv), { v: 'home' }, {
+      src: 'stream', stLv: lv, stTi: null, infinite: true, bridge: st.UI.lpb !== undefined ? !!st.UI.lpb : true
+    });
+  },
+  pwGiftPass: (a, b) => {
+    const on = b && b.type === 'checkbox' ? !!b.checked : !st.pwState.gift129;
+    st.pwState.gift129 = on;
+    if (on) st.pwState.sel = 'lifetime';
+    render(false);
+  },
+  pwExSay: (a, b) => { const k = String(a || '').split('|'); sayText(k[0], b, false, null, k[1] === 'm' ? 'm' : 'f'); },
+  pwNoSrv: () => toast(T('accNoServer')),
+  paywall: a => {
+    if (a && String(a).indexOf('level:') === 0) {
+      const p = String(a).split(':');
+      openPaywall('level_lock', { level: p[1], ti: p[2] != null ? +p[2] : null });
+      return;
+    }
+    openPaywall();
+  },
   accGo: a => openAccount(a),
   accBack: () => { const f = accFrom || { v: 'settings' }; if (f.v === 'account') go('settings'); else go(f.v, f.a); },
   accEmail: () => { const i = $('#accEmail'); if (i) ACC.email = i.value.trim(); accSendCode(); },
@@ -475,8 +514,14 @@ export const H = {
       Object.assign(ACC, { busy: false, step: 'email', code: '', needNick: false, nick: '' });
       clearInterval(ACC.timer);
       toast(T('accHello', j.user.nick));
-      if (ACC.next === 'paywall') { ACC.next = null; st.pwState = { plans: null, sel: 'yearly', busy: false }; go('paywall'); }
-      else if (ACC.next === 'gift') { ACC.next = null; go('gift'); }
+      if (ACC.next === 'paywall') {
+        ACC.next = null;
+        st.pwState = Object.assign({ plans: null, sel: 'yearly', busy: false, reason: 'default', payload: null, gift129: false }, st.pwState || {}, { busy: false });
+        go('paywall');
+      } else if (ACC.next === 'lvlquiz') {
+        ACC.next = null;
+        go('lvlquiz');
+      } else if (ACC.next === 'gift') { ACC.next = null; go('gift'); }
       else if (ACC.next === 'remind') {
         ACC.next = null;
         if (!ACC.me.remind) await H.rmTog();
@@ -625,6 +670,7 @@ export function onBack() {
   if (v === 'name') { go(st.UI.lang ? 'abc' : 'onboard'); return true; }
   if (v === 'pquiz') { H.picQuit(); return true; }
   if (v === 'tquiz') { H.typeQuit(); return true; }
+  if (v === 'lvlquiz') { H.lvlQuit(); return true; }
   if (v === 'pcard') { go('pics'); return true; }
   if (v === 'doc') { H.docBack(); return true; }
   if (v === 'paywall') { H.pwClose(); return true; }
@@ -726,15 +772,15 @@ window.addEventListener('beforeinstallprompt', event => {
 
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
-  if (!b || b.disabled || b.tagName === 'FORM' || b.tagName === 'SELECT') return;
+  if (!b || b.disabled || b.tagName === 'FORM' || b.tagName === 'SELECT' || (b.tagName === 'INPUT' && b.type === 'checkbox')) return;
   const f = H[b.dataset.act];
   if (f) f(b.dataset.arg, b, e);
 });
 document.addEventListener('change', e => {
-  const b = e.target.closest('select[data-act]');
+  const b = e.target.closest('select[data-act], input[type="checkbox"][data-act]');
   if (!b || b.disabled) return;
   const f = H[b.dataset.act];
-  if (f) f(b.value, b, e);
+  if (f) f(b.type === 'checkbox' ? b.checked : b.value, b, e);
 });
 document.addEventListener('submit', e => {
   const f = e.target.closest('form[data-act]');
@@ -782,6 +828,13 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && it.done) { e.preventDefault(); abcNext(); }
     return;
   }
+  if (st.view === 'lvlquiz' && st.lq) {
+    const it = st.lq.items[st.lq.i];
+    if (!it) return;
+    if (/^[1-3]$/.test(e.key) && !it.done) { lvlAnswer(+e.key - 1); return; }
+    if (e.key === 'Enter' && it.done) { e.preventDefault(); lvlNext(); }
+    return;
+  }
   if (st.view !== 'session' || !st.sess) return;
   const it = cur();
   if (!it) return;
@@ -809,7 +862,7 @@ function launch() {
     try { window.speechSynthesis.addEventListener('voiceschanged', loadVoices); } catch (e) {}
   }
   BILL.onChange(() => {
-    if (st.view !== 'session' && st.view !== 'abcquiz' && st.view !== 'pquiz' && st.view !== 'tquiz' && st.view !== 'pen') render();
+    if (st.view !== 'session' && st.view !== 'abcquiz' && st.view !== 'pquiz' && st.view !== 'tquiz' && st.view !== 'lvlquiz' && st.view !== 'pen') render();
   });
   addEventListener('resize', () => { if (st.view === 'pen') penWidths(); });
   BILL.onBack(onBack);
@@ -884,6 +937,22 @@ function launch() {
     translationNotice();
   }
   if (START_QUERY.get('start') === 'lesson') { setLang(st.L); startLearn(null); }
+  {
+    const qt = (/[?&]t=(\d+)(?:&|$)/.exec(location.search || '') || [])[1];
+    if (QL && qt !== undefined && TOPICS[+qt] && START_QUERY.get('listen') === '1') {
+      const t = TOPICS[+qt];
+      setLang(QL);
+      if (lvOpen(t.lv)) {
+        exLoadAsync(levelExampleUrl(t.lv, st.L));
+        listenStart(t.list, tn(t), { v: 'topic', a: +qt }, {
+          src: 'stream', stLv: t.lv, stTi: +qt, infinite: true, bridge: st.UI.lpb !== undefined ? !!st.UI.lpb : true
+        });
+      } else {
+        st.backTo = { v: 'topic', a: +qt };
+        openPaywall('level_lock', { level: t.lv, ti: +qt });
+      }
+    }
+  }
 
   {
     const PD = window.__pend;
@@ -898,7 +967,7 @@ function launch() {
   if (FIRST && st.view !== 'onboard') hit('start');
   Promise.all([loadManifest(), BILL.init(), accInit()]).then(() => {
     if (st.view === 'session') render(false);
-    else if (st.view !== 'abcquiz' && st.view !== 'pquiz' && st.view !== 'tquiz' && st.view !== 'pen') render();
+    else if (st.view !== 'abcquiz' && st.view !== 'pquiz' && st.view !== 'tquiz' && st.view !== 'lvlquiz' && st.view !== 'pen') render();
     if (/[?&]pay=crypto(?:&|$)/.test(location.search || '')) cryReturn();
     if (/[?&]pay=card(?:&|$)/.test(location.search || '')) cardReturn();
     if (/[?&]pay=gift(?:&|$)/.test(location.search || '')) giftReturn();
@@ -936,6 +1005,10 @@ function launch() {
     get pen() { return st.penT; },
     get PU() { return st.PU; },
     get LP() { return st.LP; },
+    get lq() { return st.lq; },
+    get pwState() { return st.pwState; },
+    openPaywall,
+    startLvlQuiz,
     trUrl,
     hasTr,
     LPT,

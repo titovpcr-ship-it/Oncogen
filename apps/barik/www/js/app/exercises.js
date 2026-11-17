@@ -2,7 +2,7 @@
 
 import {
   TOPICS, ABC, BILL, EMO, LEVELS, INT, st, cb, $, esc, shuffle, buzz, toast, T, ICON,
-  lvOpen, canUse, canReview, today, touchStreak, save, saveUI, hit, ACC, focusTarget
+  lvOpen, premium, canUse, canReview, today, touchStreak, save, saveUI, hit, ACC, focusTarget
 } from './state.js';
 import {
   WORDS, BY, tx, trn, normHy, exTr, LEXICAL_REVIEW, LEXICAL_NOTE, pic, picQ, emo,
@@ -11,9 +11,9 @@ import {
 } from './text.js';
 export { exampleCache, exampleUrl };
 import {
-  audioOK, preloadAudio, speak, speakLetter, hasRealKey, recHTML, recReset
+  audioOK, preloadAudio, speak, speakLetter, sayText, hasRealKey, recHTML, recReset
 } from './audio.js';
-import { flagHTML } from './account.js';
+import { flagHTML, webPlansHTML } from './account.js';
 
 const ALPHA = 'աբգդեզէըթժիլխծկհձղճմյնշոչպջռսվտրցփքօֆ';
 const CONF = {
@@ -123,6 +123,10 @@ export function renderState() {
     const it = st.pq.items[st.pq.i];
     return 'pquiz:' + st.pq.i + ':' + !!(it && it.done);
   }
+  if (st.view === 'lvlquiz' && st.lq) {
+    const it = st.lq.items[st.lq.i];
+    return 'lvlquiz:' + st.lq.i + ':' + !!(it && it.done);
+  }
   return st.view + ':' + String(st.viewArg == null ? '' : st.viewArg);
 }
 
@@ -181,6 +185,12 @@ export function focusChangedScreen(oldState, newState, oldView) {
     if (input && input.tagName === 'INPUT' && focusTarget(input)) return;
     if (focusTarget($('.stage .q'))) return;
   }
+  if (st.view === 'lvlquiz' && st.lq) {
+    const it = st.lq.items[st.lq.i];
+    if (!it && st.lq.i >= st.lq.items.length && focusTarget($('.result .apres'))) return;
+    if (it && it.done && focusTarget($('.fb[role="status"]'))) return;
+    if (focusTarget($('.stage .q'))) return;
+  }
   if ((st.view === 'result' || (st.view === 'tquiz' && st.tq && st.tq.i >= st.tq.items.length)) && focusTarget($('.result .apres'))) return;
   if (oldView !== st.view || oldState !== newState) restoreFocus({});
 }
@@ -198,8 +208,8 @@ export function firstN() {
 }
 
 export function startLearn(ti, lv) {
-  if (lv && !lvOpen(lv)) { cb.openPaywall(); return; }
-  if (ti != null && !lvOpen(TOPICS[ti].lv)) { cb.openPaywall(); return; }
+  if (lv && !lvOpen(lv)) { cb.openPaywall('level_lock', { level: lv }); return; }
+  if (ti != null && !lvOpen(TOPICS[ti].lv)) { cb.openPaywall('level_lock', { level: TOPICS[ti].lv, ti }); return; }
   const list = lv ? WORDS.filter(w => TOPICS[w.t].lv === lv && !st.S.w[w.a]).slice(0, firstN()) : nextNew(ti, firstN());
   if (!list.length) { toast(T('noNew')); return; }
   const items = [];
@@ -226,15 +236,15 @@ export function startReview() {
 }
 
 export function startPractice(ti) {
-  if (!lvOpen(TOPICS[ti].lv)) { cb.openPaywall(); return; }
+  if (!lvOpen(TOPICS[ti].lv)) { cb.openPaywall('level_lock', { level: TOPICS[ti].lv, ti }); return; }
   const seen = TOPICS[ti].list.filter(w => st.S.w[w.a]);
   if (!seen.length) { toast(T('learnFirst')); return; }
   newSess('practice', spread(shuffle(seen).slice(0, 20).map(w => mk(kindFor(w), w))), { ti });
 }
 
 export function startCheck(list, meta) {
-  if (meta && meta.lv && !lvOpen(meta.lv)) { cb.openPaywall(); return; }
-  if (meta && meta.ti != null && !lvOpen(TOPICS[meta.ti].lv)) { cb.openPaywall(); return; }
+  if (meta && meta.lv && !lvOpen(meta.lv)) { cb.openPaywall('level_lock', { level: meta.lv }); return; }
+  if (meta && meta.ti != null && !lvOpen(TOPICS[meta.ti].lv)) { cb.openPaywall('level_lock', { level: TOPICS[meta.ti].lv, ti: meta.ti }); return; }
   const pool = shuffle(list.filter(w => !st.S.w[w.a])).slice(0, 30);
   if (!pool.length) { toast(T('noUnseen')); return; }
   newSess('check', pool.map(w => mk('a2r', w)), meta);
@@ -822,4 +832,136 @@ export function tquizHTML() {
   }
   return top + '<div class="stage"><p class="q">' + esc(T('qType')) + '</p>' + prompt + audio + field + after + '</div>' +
     (foot ? '<div class="foot' + (it.done ? (it.ok ? ' ok' : ' bad') : ' kbfoot') + '"><div class="foot-in">' + foot + '</div></div>' : '');
+}
+
+/* ================= 60-СЕКУНДНЫЙ ТЕСТ УРОВНЯ (A1 -> C1) ================= */
+const LVL_VOCAB = { 0: 180, 1: 420, 2: 950, 3: 1450, 4: 2850, 5: 5400, 6: 8200 };
+const LVL_MAP = ['A1', 'A1', 'A2', 'B1', 'B2', 'C1', 'C1'];
+
+function fmtInt(n) {
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+function lvlPickWord(lv) {
+  const pool = WORDS.filter(w => TOPICS[w.t] && TOPICS[w.t].lv === lv && tx(w) && w.a.length <= 28);
+  const src = pool.length ? pool : WORDS.filter(w => TOPICS[w.t] && TOPICS[w.t].lv === lv && tx(w));
+  return src[Math.floor(Math.random() * src.length)] || WORDS[0];
+}
+
+function lvlDistractors(w, lv) {
+  const out = [w], used = new Set([tx(w)]), usedHy = new Set([w.a]);
+  const add = cand => {
+    if (out.length >= 3 || !cand || usedHy.has(cand.a)) return;
+    const t = tx(cand);
+    if (!t || used.has(t)) return;
+    used.add(t);
+    usedHy.add(cand.a);
+    out.push(cand);
+  };
+  shuffle(WORDS.filter(x => TOPICS[x.t] && TOPICS[x.t].lv === lv)).forEach(add);
+  if (out.length < 3) shuffle(WORDS).forEach(add);
+  return shuffle(out);
+}
+
+export function startLvlQuiz() {
+  if (st.lq && st.lq.timer) clearTimeout(st.lq.timer);
+  const items = LEVELS.map((lv, idx) => {
+    const w = lvlPickWord(lv);
+    return { lv, w, voice: idx % 2 === 0 ? 'f' : 'm', opts: lvlDistractors(w, lv), done: false, ok: false, pick: -1 };
+  });
+  st.lq = { items, i: 0, ok: 0, level: 'A1', vocab: 180, timer: null };
+  hit('lvl_start');
+  cb.go('lvlquiz');
+  onLvlShow();
+}
+
+export function onLvlShow() {
+  const it = st.lq && st.lq.items[st.lq.i];
+  if (it) sayText(it.w.a, document.querySelector('.lvl-play'), false, null, it.voice);
+}
+
+function computeLvlResult(lq) {
+  if (lq.computed) return;
+  lq.computed = true;
+  const ok = Math.max(0, Math.min(6, lq.ok || 0));
+  lq.level = LVL_MAP[ok] || 'A1';
+  lq.vocab = LVL_VOCAB[ok] || 180;
+  st.UI.lvlTested = lq.level;
+  st.UI.lvlWords = lq.vocab;
+  saveUI();
+  hit('lvl_done_' + lq.level);
+}
+
+export function lvlAnswer(idx) {
+  const it = st.lq && st.lq.items[st.lq.i];
+  if (!it || it.done) return;
+  it.done = true;
+  it.pick = idx;
+  it.ok = idx >= 0 && it.opts[idx] === it.w;
+  if (it.ok) st.lq.ok++;
+  else if (idx >= 0) buzz();
+  if (st.lq.i >= st.lq.items.length - 1) computeLvlResult(st.lq);
+  cb.render();
+  if (it.ok) {
+    st.lq.timer = setTimeout(() => {
+      if (st.lq && st.lq.items[st.lq.i] === it) lvlNext();
+    }, 750);
+  }
+}
+
+export function lvlNext() {
+  if (!st.lq) return;
+  clearTimeout(st.lq.timer);
+  st.lq.i++;
+  if (st.lq.i >= st.lq.items.length && !st.lq.computed) {
+    st.lq.computed = true;
+    computeLvlResult(st.lq);
+  }
+  cb.render();
+  window.scrollTo(0, 0);
+  onLvlShow();
+}
+
+export function lvlQuizHTML() {
+  const lq = st.lq;
+  if (!lq) return '';
+  const n = lq.items.length;
+  const top = '<div class="sess-top"><button class="x" data-act="lvlQuit" aria-label="' + esc(T('quit')) + '">✕</button>' +
+    '<div class="pbar"><i style="width:' + Math.round(100 * lq.i / n) + '%"></i></div>' +
+    '<span class="pcount">' + Math.min(lq.i + 1, n) + '/' + n + '</span></div>';
+  if (lq.i >= n) {
+    const lv = lq.level || 'A1';
+    const minIdx = Math.max(0, LEVELS.indexOf(lv));
+    const trackCount = WORDS.filter(w => TOPICS[w.t] && LEVELS.indexOf(TOPICS[w.t].lv) >= minIdx).length;
+    const isUp = lv !== 'A1' && !premium();
+    const offer = isUp
+      ? '<div class="lvl-offer"><p class="lvl-offer-tx">' + esc(T('lvlOffer', lv, fmtInt(trackCount))) + '</p></div>' +
+        (!BILL.native ? webPlansHTML({ embed: 'quiz_result' }) : '<div class="actions"><button class="btn primary" data-act="paywall" data-arg="level:' + esc(lv) + '">' + esc(T('unlockLevel', lv)) + '</button></div>')
+      : '<p class="note lvl-a1-note">' + esc(T('lvlReadyA1')) + '</p>' +
+        '<div class="actions"><button class="btn primary" data-act="lvlStartTrack" data-arg="' + esc(lv) + '">' + emo('🎧', 'ie') + ' ' + esc(T('lvlStartTrack', lv)) + '</button></div>';
+    return top + '<div class="result lvl-res"><div class="apres" lang="hy">Ապրե՛ս</div>' +
+      '<h1 class="pg lvl-res-h">' + esc(T('lvlResTitle', lv)) + '</h1>' +
+      '<p class="lvl-vocab">' + esc(T('lvlVocab', fmtInt(lq.vocab))) + '</p>' +
+      offer +
+      '<div class="actions lvl-res-acts"><button class="btn ghost" data-act="lvlStart">' + esc(T('lvlRetake')) + '</button><button class="btn ghost" data-act="tab" data-arg="home">' + esc(T('toHome')) + '</button></div></div>';
+  }
+  const it = lq.items[lq.i], w = it.w;
+  const cls = (o, j) => !it.done ? '' : (o === w ? 'ok' : (j === it.pick ? 'bad' : 'dim'));
+  const voiceNm = it.voice === 'm' ? 'Hayk' : 'Anahit';
+  const body = '<p class="q">' + esc(T('lvlTitle')) + ' · ' + esc(it.lv) + ' · ' + voiceNm + '</p>' +
+    '<button type="button" class="play-big lvl-play" data-act="lvlSay" aria-label="' + esc(T('listen')) + '">' + ICON.spk + '</button>' +
+    '<div class="hyw lvl-hy" lang="hy">' + esc(w.a) + '</div>' +
+    '<div class="trn">' + esc(trn(w)) + '</div>' +
+    '<p class="lvl-q-sub">' + esc(T('lvlQ')) + '</p>' +
+    '<div class="opts list lvl-opts">' + it.opts.map((o, j) =>
+      '<button type="button" class="opt ' + cls(o, j) + '" data-act="lvlOpt" data-arg="' + j + '"' + (it.done ? ' disabled' : '') + '><span>' + esc(tx(o)) + '</span></button>'
+    ).join('') + '</div>' +
+    (it.done ? '' : '<div class="actions lvl-skip-wrap"><button type="button" class="btn ghost lvl-skip" data-act="lvlOpt" data-arg="-1">' + esc(T('lvlSkip')) + '</button></div>');
+  let foot = '';
+  if (it.done) {
+    foot = it.ok
+      ? '<div class="fb ok" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">✓ ' + esc(T('right')) + '</div><button class="btn primary" data-act="lvlNext">' + esc(T('next')) + '</button>'
+      : '<div class="fb bad" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"><span>' + esc(T('correct')) + '</span><span class="ans"><b lang="hy">' + esc(w.a) + '</b>' + esc(trn(w)) + ' — ' + esc(tx(w)) + '</span></div><button class="btn primary" data-act="lvlNext">' + esc(T('next')) + '</button>';
+  }
+  return top + '<div class="stage">' + body + '</div>' + (foot ? '<div class="foot' + (it.done ? (it.ok ? ' ok' : ' bad') : '') + '"><div class="foot-in">' + foot + '</div></div>' : '');
 }

@@ -441,11 +441,15 @@ export function listenSelectStation({ lv, ti }) {
   const targetTi = ti != null && TOPICS[ti] ? +ti : null;
   const targetLv = targetTi != null ? TOPICS[targetTi].lv : (lv && LEVELS.includes(lv) ? lv : FREE_LV);
   if (!lvOpen(targetLv)) {
+    const rawPreview = buildStationPool(targetLv, targetTi);
     if (LP) {
       lpStop();
       if (st.view === 'listen') cb.render();
     }
-    cb.openPaywall();
+    exLoadAsync(levelExampleUrl(targetLv, st.L)).then(loaded => {
+      if (loaded && st.view === 'paywall') cb.render(false);
+    });
+    cb.openPaywall('level_lock', { level: targetLv, ti: targetTi, word: rawPreview[0] || null });
     return;
   }
   const rawPool = buildStationPool(targetLv, targetTi);
@@ -534,10 +538,18 @@ function lpAdvance() {
   const LP = st.LP;
   if (!LP || !LP.on) return;
   if (LP.bridge && !premium() && LP.cycles >= FREE_IMMERSION_CYCLES) {
+    const nextIdx = LP.list.length ? ((LP.i + 1) % LP.list.length) : 0;
+    const nextWord = LP.list[nextIdx] || LP.list[LP.i] || null;
+    const nextItems = [];
+    for (let k = 0; k < Math.min(3, LP.list.length); k++) nextItems.push(LP.list[(nextIdx + k) % LP.list.length]);
     lpStop();
     LP.cycles = 0;
     if (st.view === 'listen') cb.render();
-    cb.openPaywall();
+    cb.openPaywall('audio15', {
+      word: nextWord,
+      level: (nextWord && TOPICS[nextWord.t] && TOPICS[nextWord.t].lv) || LP.stLv || FREE_LV,
+      nextItems
+    });
     return;
   }
   LP.i++;

@@ -292,6 +292,19 @@ ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .
 .pn{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-size:15px}
 footer{max-width:820px;margin:0 auto;padding:22px 16px 44px;font-size:13px;color:var(--mut)}
 @media (max-width:540px){.word{grid-template-columns:1fr;justify-items:center;text-align:center}.tr{justify-content:center}}
+.mq{margin:18px 0 8px;padding:18px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.mq-k{margin:0 0 10px;font:700 13px/1.3 G,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--pom)}
+.mq-row{display:flex;align-items:center;gap:12px;margin:0 0 12px;flex-wrap:wrap}
+.mq-hy{font:700 24px/1.25 A,serif;color:var(--ink);overflow-wrap:anywhere}
+.mq-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.mq-opts{grid-template-columns:1fr}}
+.mq-opt{min-height:46px;padding:10px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:600 15px/1.3 G,sans-serif;text-align:left;cursor:pointer}
+.mq-opt:hover:not(:disabled){border-color:var(--acc)}
+.mq-opt.ok{border-color:#157A42;background:rgba(21,122,66,.14);color:var(--ink)}
+.mq-opt.bad{border-color:#B4232E;background:rgba(180,35,46,.12);color:var(--ink);text-decoration:line-through}
+.mq-res{margin:10px 0 0;font-size:14.5px;font-weight:700}
+.mq-res:empty{display:none}
+.mq-radio{display:inline-flex;align-items:center;gap:6px;margin:12px 0 0;padding:10px 16px;border-radius:99px;background:var(--card2);border:1px solid var(--line);color:var(--ink);font:700 14px/1.2 G,sans-serif;text-decoration:none}
 """
 
 
@@ -362,9 +375,23 @@ SPK = ('<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="curr
        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/>'
        '<path d="M16.5 8.8a4.8 4.8 0 0 1 0 6.4"/><path d="M19.2 6.2a8.6 8.6 0 0 1 0 11.6"/></svg>')
 # «Слушать» на странице слова (O-135): запись та же, что в приложении; плеер — простой <audio>
-SEO_JS = """document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');if(!b)return;
-var a=b._a||(b._a=new Audio(b.getAttribute('data-src')));b.classList.add('on');a.onended=a.onerror=function(){b.classList.remove('on');};
-try{a.currentTime=0;}catch(x){}var p=a.play();if(p&&p.catch)p.catch(function(){b.classList.remove('on');});});
+MQ = {
+    "ru": {"hdr": "Проверь себя на слух за 5 секунд", "ok": "Верно!", "bad": "Правильный ответ:", "radio": "Слушать эту тему в режиме Радио 🎧"},
+    "en": {"hdr": "5-second listening check", "ok": "Correct!", "bad": "Correct answer:", "radio": "Listen to this topic in Radio mode 🎧"},
+    "fr": {"hdr": "Test audio de 5 secondes", "ok": "Exact !", "bad": "Bonne réponse :", "radio": "Écouter ce thème en mode Radio 🎧"},
+    "es": {"hdr": "Ponte a prueba en 5 segundos", "ok": "¡Correcto!", "bad": "Respuesta correcta:", "radio": "Escuchar este tema en modo Radio 🎧"},
+    "de": {"hdr": "5-Sekunden-Hörtest", "ok": "Richtig!", "bad": "Richtige Antwort:", "radio": "Dieses Thema im Radio-Modus hören 🎧"},
+    "pt": {"hdr": "Teste de áudio em 5 segundos", "ok": "Certo!", "bad": "Resposta correta:", "radio": "Ouvir este tema no modo Rádio 🎧"},
+}
+
+SEO_JS = """document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');
+if(b){var a=b._a||(b._a=new Audio(b.getAttribute('data-src')));b.classList.add('on');a.onended=a.onerror=function(){b.classList.remove('on');};
+try{a.currentTime=0;}catch(x){}var p=a.play();if(p&&p.catch)p.catch(function(){b.classList.remove('on');});return;}
+var o=e.target.closest&&e.target.closest('[data-mq] .mq-opt');if(!o||o.disabled)return;
+var box=o.closest('[data-mq]'),opts=box.querySelectorAll('.mq-opt'),res=box.querySelector('.mq-res'),right=null;
+for(var i=0;i<opts.length;i++){opts[i].disabled=true;if(opts[i].getAttribute('data-ok')==='1'){right=opts[i];opts[i].classList.add('ok');}}
+var ok=o.getAttribute('data-ok')==='1';if(!ok)o.classList.add('bad');
+if(res)res.textContent=ok?('✓ '+box.getAttribute('data-ok')):('✕ '+box.getAttribute('data-bad')+' '+(right?right.textContent:''));});
 """
 
 
@@ -404,7 +431,7 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=No
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
             f'<link rel="icon" type="image/png" href="{up}favicon.png"><link rel="apple-touch-icon" href="{up}icons/apple-touch-icon.png">'
             f'<link rel="stylesheet" href="{up}seo.css"><meta name="theme-color" content="#FBF6F1">{ld}'
-            + (f'<script src="{up}seo.js" defer></script>' if 'data-src=' in body else '') + '</head>'
+            + (f'<script src="{up}seo.js" defer></script>' if 'data-src=' in body or 'data-mq' in body else '') + '</head>'
             f'<body><header class="top"><div class="top-in"><a class="brand" href="{up}"><img class="mk" src="{up}mark.svg" alt="" width="32" height="35">'
             f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
             f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
@@ -558,11 +585,20 @@ def build(site, base, words_path):
                 for _fn in _fns:
                     if _fn.endswith(".mp3"):
                         audio_hashes.add(_fn[:-4])
+    hayk_hashes = set()
+    hpath = os.path.join(site, "audio", "hayk")
+    if os.path.isdir(hpath):
+        for _dp, _dns, _fns in os.walk(hpath):
+            for _fn in _fns:
+                if _fn.endswith(".mp3"):
+                    hayk_hashes.add(_fn[:-4])
 
-    def audio_rel(text):
+    def audio_rel(text, voice=None):
+        h = aid(text)
+        if voice == "hayk" and h in hayk_hashes:
+            return f"audio/hayk/{h[:2]}/{h}.mp3"
         if not vdir:
             return ""
-        h = aid(text)
         if h not in audio_hashes:
             return ""
         return f"audio/{vdir}/{h[:2]}/{h}.mp3"
@@ -645,13 +681,75 @@ def build(site, base, words_path):
                         f'<li><a href="{wslug[v]}.html"><span class="hy" lang="hy">{esc(v)}</span><span class="t">{esc(inw[v][trk])}</span>'
                         f'<span class="x">{esc(inw[v][tx])}</span></a></li>' for v in fam) + '</ul>')
                 rich = bool(xb)
+                mq_html = ""
+                mq_meta = MQ[L]
+                mq_hy = w["a"]
+                mq_ok = x
+                mq_bad = ""
+                mq_src = ""
+                if e:
+                    e_src = audio_rel(e[0], "hayk") or audio_rel(e[0])
+                    if e_src:
+                        cand_pool = near or lst
+                        for cand in cand_pool:
+                            if cand["a"] != w["a"]:
+                                ce = EXL[L].get(cand["a"])
+                                if ce and ce[1] and ce[1] != e[1]:
+                                    mq_src = e_src
+                                    mq_hy = e[0]
+                                    mq_ok = e[1]
+                                    mq_bad = ce[1]
+                                    break
+                        if not mq_bad:
+                            n_words = len(words)
+                            base_idx = (k * 13 + ti * 7) % n_words
+                            for off in range(min(400, n_words)):
+                                cand = words[(base_idx + off) % n_words]
+                                if cand["a"] != w["a"]:
+                                    ce = EXL[L].get(cand["a"])
+                                    if ce and ce[1] and ce[1] != e[1]:
+                                        mq_src = e_src
+                                        mq_hy = e[0]
+                                        mq_ok = e[1]
+                                        mq_bad = ce[1]
+                                        break
+                if not mq_bad:
+                    mq_src = audio_rel(w["a"])
+                    for cand in (near or lst):
+                        if cand["a"] != w["a"] and cand.get(tx) and cand[tx] != x:
+                            mq_bad = cand[tx]
+                            break
+                    if not mq_bad:
+                        n_words = len(words)
+                        base_idx = (k * 13 + ti * 7) % n_words
+                        for off in range(min(200, n_words)):
+                            cand = words[(base_idx + off) % n_words]
+                            if cand["a"] != w["a"] and cand.get(tx) and cand[tx] != x:
+                                mq_bad = cand[tx]
+                                break
+                if mq_bad:
+                    pair = [(mq_ok, "1"), (mq_bad, "0")]
+                    if (ti + k) % 2:
+                        pair.reverse()
+                    mq_play = (f'<button type="button" class="say mq-play" data-src="../../{mq_src}" aria-label="{esc(T["listen"])}">{SPK}</button>' if mq_src else "")
+                    mq_opts = "".join(
+                        f'<button type="button" class="mq-opt" data-ok="{okf}">{esc(txt)}</button>'
+                        for txt, okf in pair
+                    )
+                    mq_html = (f'<section class="mq" data-mq data-ok="{esc(mq_meta["ok"])}" data-bad="{esc(mq_meta["bad"])}">'
+                               f'<p class="mq-k">{esc(mq_meta["hdr"])}</p>'
+                               f'<div class="mq-row">{mq_play}<span class="mq-hy" lang="hy">{esc(mq_hy)}</span></div>'
+                               f'<div class="mq-opts">{mq_opts}</div>'
+                               f'<p class="mq-res" role="status" aria-live="polite"></p>'
+                               f'<a class="mq-radio" href="../../?lang={L}&amp;t={ti}&amp;listen=1">{esc(mq_meta["radio"])}</a>'
+                               f'</section>')
                 body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p>'
                         f'<div class="word"><div class="win" aria-hidden="true">{picture(w, "../../")}</div><div>'
                         f'<p class="eyebrow">{esc(tname)} · {t["lv"]}</p><h1 lang="hy">{esc(w["a"])}</h1>'
                         f'<p class="tr"><span title="{T["h_tr"]}">[{esc(w[trk])}]</span>{say(w, "../../", T["listen"])}</p>'
                         f'<p class="tx">{esc(x)}</p>'
                         f'<p class="meta">{T["lv"]} {t["lv"]} · {T["topic"]}: <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p></div></div>'
-                        + xb + f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>'
+                        + xb + f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>' + mq_html
                         + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(t=tname))}</h2><ul class="ws">{li}</ul>'
                            f'<p><a href="../t/{tslug[ti]}.html">{T["all_topic"].format(n=len(lst), w=nw(L, len(lst)))}</a></p>' if near else "")
                         + pn)

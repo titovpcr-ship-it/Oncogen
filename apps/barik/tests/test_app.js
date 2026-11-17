@@ -900,6 +900,50 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(await pg.evaluate(()=>document.documentElement.lang==='es'&&document.body.dataset.view==='pen'),'SEO-CTA ?pen=0 abre la práctica de la primera letra');
     await ctx.close();
   }
+  { // CRO Upgrade (4 модуля): тест уровня (60с), контекстный Paywall (audio15 + level_lock), Gift Pass и Trust Bar, ?listen=1
+    const ctx=await br.newContext({viewport:{width:320,height:740},locale:'ru-RU',serviceWorkers:'block'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.waitForSelector('[data-act=lvlStart]',{timeout:5000});
+    await pg.click('[data-act=lvlStart]');
+    await pg.waitForSelector('.lvl-play',{timeout:5000});
+    for(let i=0;i<6;i++){
+      const ansIdx=i<3?await pg.evaluate(k=>{ const q=window.__bararan.lq.items[k]; return q.opts.indexOf(q.w); },i):-1;
+      await pg.click('[data-act=lvlOpt][data-arg="'+ansIdx+'"]');
+      await pg.waitForTimeout(80);
+      if(await pg.locator('[data-act=lvlNext]').count()) await pg.click('[data-act=lvlNext]');
+      await pg.waitForTimeout(80);
+    }
+    await pg.waitForSelector('.lvl-res-h',{timeout:5000});
+    const resTxt=await pg.textContent('#view');
+    ok(resTxt.includes('Твой уровень — B1')&&resTxt.includes('~1 450')&&resTxt.includes('$59')&&resTxt.includes('$4.92')&&resTxt.includes('$129'),'тест уровня (3/6 -> B1): персональный оффер и тарифные карточки сразу на экране');
+    ok(await pg.locator('.pw-trust li').count()===3,'тест уровня: Trust Bar (3 пункта) на экране результата');
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'тест уровня 320px: без горизонтальной прокрутки');
+    // Gift Pass toggle switches CTA label on $129
+    await pg.click('[data-act=pwGiftPass]');
+    const giftBtnTxt=await pg.textContent('.pw-buy-btn');
+    ok(giftBtnTxt.includes('Оформить подарочный сертификат')&&giftBtnTxt.includes('$129'),'Gift Pass: переключатель меняет кнопку оплаты на подарочный сертификат ($129)');
+    // Contextual Paywall: audio15 blurred preview & level_lock playable examples
+    await pg.evaluate(()=>{ const B=window.__bararan; B.openPaywall('audio15',{word:B.WORDS[0],level:'A1',nextItems:[B.WORDS[0]]}); });
+    await pg.waitForSelector('.pw-ctx-audio .pw-prev-blur',{timeout:5000});
+    const pw15=await pg.evaluate(()=>({
+      h1:document.querySelector('.pw-hero h1').textContent,
+      blur:getComputedStyle(document.querySelector('.pw-prev-blur')).filter,
+      trust:document.querySelectorAll('.pw-trust li').length,
+      w:[document.documentElement.scrollWidth,innerWidth]
+    }));
+    ok(pw15.h1.includes('паузе')&&pw15.blur.includes('blur')&&pw15.trust===3&&pw15.w[0]<=pw15.w[1]+1,'Paywall audio15: пауза, размытое превью 16-го слова, Trust Bar и 320px без скролла');
+    await pg.evaluate(()=>window.__bararan.openPaywall('level_lock',{level:'B1'}));
+    await pg.waitForSelector('.pw-ex-row',{timeout:8000});
+    const exCnt=await pg.locator('.pw-ex-row').count();
+    ok(exCnt>=1&&exCnt<=2&&await pg.locator('[data-act=pwExSay]').count()===exCnt,'Paywall level_lock: показаны живые примеры B1 с кнопками озвучки ('+exCnt+')');
+    // SEO deep-link ?lang=en&t=0&listen=1 starts Radio on English
+    await pg.goto(base+'?lang=en&t=0&listen=1');
+    await pg.waitForFunction(()=>window.__bararan&&window.__bararan.view==='listen',null,{timeout:6000});
+    ok(await pg.evaluate(()=>document.documentElement.lang==='en'&&window.__bararan.LP&&window.__bararan.LP.src==='stream'),'SEO deep-link ?listen=1 сразу запускает поток Радио по теме');
+    ok(errs.length===0,'CRO Upgrade: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});

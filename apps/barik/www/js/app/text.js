@@ -465,7 +465,7 @@ export function exLoadAsync(url, retry = false) {
   }).then(entries => {
     if (!entries || typeof entries !== 'object' || Array.isArray(entries)) throw new Error('Invalid examples');
     exampleCache.set(url, entries);
-    if (exampleCache.size > 8) exampleCache.delete(exampleCache.keys().next().value);
+    if (exampleCache.size > 12) exampleCache.delete(exampleCache.keys().next().value);
     return entries;
   }).catch(() => {
     exampleErrors.add(url);
@@ -482,6 +482,21 @@ export function wordExample(word, lang) {
   const entries = exampleCache.get(exampleUrl(word, lang));
   const row = entries && entries[word.a];
   return Array.isArray(row) && typeof row[0] === 'string' && typeof row[1] === 'string' ? row : null;
+}
+
+export function pickLevelExamples(lv, lang, limit = 2) {
+  const entries = exampleCache.get(levelExampleUrl(lv, lang));
+  if (!entries) return [];
+  const out = [];
+  for (const w of WORDS) {
+    if (lv && TOPICS[w.t].lv !== lv) continue;
+    const row = entries[w.a];
+    if (Array.isArray(row) && typeof row[0] === 'string' && row[0] && typeof row[1] === 'string' && row[1]) {
+      out.push({ w, hy: row[0], tx: row[1], tr: exTr(row[0]) });
+      if (out.length >= limit) break;
+    }
+  }
+  return out;
 }
 
 export const LEXICAL_REVIEW = [

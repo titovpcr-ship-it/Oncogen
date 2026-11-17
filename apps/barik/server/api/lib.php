@@ -823,7 +823,8 @@ function gift_settle(string $pid, string $lang = 'en', ?array $verified = null, 
     if (!is_array($p) || (string)($p['status'] ?? '') !== 'succeeded') return null;
     $m = is_array($p['metadata'] ?? null) ? $p['metadata'] : [];
     $uid = (int)($m['uid'] ?? 0); $months = (int)($m['months'] ?? 0);
-    if (($m['gift'] ?? '') !== '1' || !in_array($months, [3, 12], true) || !hash_equals(uid_sig($uid), (string)($m['sig'] ?? ''))) return null;
+    $lifeGift = $months === 0 && ($m['plan'] ?? '') === 'life' && ((!empty($p['product_id']) || !empty($p['product_cart'])) ? dodo_payment_has_product($p, (string)cfg('DODO_PRODUCT_LIFE', '')) : true);
+    if (($m['gift'] ?? '') !== '1' || (!in_array($months, [3, 12], true) && !$lifeGift) || !hash_equals(uid_sig($uid), (string)($m['sig'] ?? ''))) return null;
     $code = gift_code();
     try { q('INSERT INTO gifts(code, pay_id, buyer, months, created) VALUES(?, ?, ?, ?, ?)', [$code, $pid, $uid, $months, now()]); }
     catch (PDOException $e) {
@@ -841,7 +842,10 @@ function gift_mail(array $row, string $lang): void {
     $u = q('SELECT * FROM users WHERE id = ?', [$row['buyer']])->fetch();
     if ($u) {
         $t = GIFT_TEXT[$lang] ?? GIFT_TEXT['en'];
-        if (!mail_out($u['email'], $t[0], sprintf($t[1], $row['code'], $row['months'], (string)cfg('SITE_URL', 'https://barik.am/')), ['gift' => $row['code']])) {
+        $bodyText = (int)$row['months'] === 0
+            ? str_replace(["0 мес. Barik Premium", "0 months of Barik Premium"], ["Barik Heritage Lifetime", "Barik Heritage Lifetime"], sprintf($t[1], $row['code'], 0, (string)cfg('SITE_URL', 'https://barik.am/')))
+            : sprintf($t[1], $row['code'], $row['months'], (string)cfg('SITE_URL', 'https://barik.am/'));
+        if (!mail_out($u['email'], $t[0], $bodyText, ['gift' => $row['code']])) {
             error_log('barik gift mail delivery failed');
         }
     }
@@ -858,8 +862,11 @@ function gift_redeem(array $u, string $code): string {
         if ($result === '') {
             $claimed = q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
             if ($claimed->rowCount() !== 1) throw new RuntimeException('Gift claim conflict');
-            $changed = q('UPDATE users SET gift_until = MAX(CAST(? AS INTEGER), COALESCE(gift_until, 0)) + ? WHERE id = ?',
-                [now(), (int)$g['months'] * 30 * 86400, $u['id']]);
+            $changed = (int)$g['months'] === 0
+                ? q('UPDATE users SET sub_status = ?, sub_plan = ?, sub_until = NULL, sub_at = ?, pd_sub = ? WHERE id = ?',
+                    ['active', 'life', now(), '', $u['id']])
+                : q('UPDATE users SET gift_until = MAX(CAST(? AS INTEGER), COALESCE(gift_until, 0)) + ? WHERE id = ?',
+                    [now(), (int)$g['months'] * 30 * 86400, $u['id']]);
             if ($changed->rowCount() !== 1) throw new RuntimeException('Gift recipient missing');
             $result = 'ok';
         }

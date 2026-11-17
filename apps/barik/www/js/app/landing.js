@@ -328,6 +328,9 @@ export function homeHTML() {
   if (hard) acts += '<button class="btn ghost" data-act="hard">' + esc(T('btnHard', hard)) + '</button>';
   const mine = WORDS.filter(w => st.S.w[w.a]).length;
   acts += '<button class="btn ghost" data-act="lpMine">' + emo('🎧', 'ie') + ' ' + esc(mine > 0 ? T('lpMine', mine) : T('lpListenZero')) + '</button>';
+  if (mine < 10 || !st.UI.lvlTested) {
+    acts += '<button class="btn lvl-cta" data-act="lvlStart">' + emo('🎧', 'ie') + ' <span>' + esc(T('lvlBtn')) + '</span></button>';
+  }
   const topicRow = (t, i) => {
     const tc = counts(t.list), pl = 100 * tc.learned / tc.total, pg = 100 * tc.learning / tc.total, op = lvOpen(t.lv);
     return '<li><button class="topic' + (op ? '' : ' locked') + '" data-act="topic" data-arg="' + i + '"><span class="t-ic">' + emo(t.ic) + '</span><span class="t-body"><span class="t-name">' + esc(tn(t)) + '</span><span class="t-hy" lang="hy">' + esc(t.hy) + '</span><span class="bar"><i style="width:' + pl + '%"></i><i class="l" style="width:' + pg + '%"></i></span></span><span class="t-cnt">' + (op ? tc.learned + '/' + tc.total : '<span class="lock" role="img" aria-label="' + esc(T('locked')) + '">' + emo('🔒', 'ie') + '</span>') + '</span></button></li>';
@@ -337,7 +340,7 @@ export function homeHTML() {
     if (!ts.length) return '';
     const all = [].concat(...ts.map(x => x[0].list)), lc = counts(all), op = isOpen(lv), nn = all.filter(w => !st.S.w[w.a]).length, free = lvOpen(lv);
     let la = '';
-    if (op && !free) la = '<div class="lv-acts"><button class="btn primary sm" data-act="paywall" style="grid-column:1/-1">' + emo('🔒', 'ie') + ' ' + esc(T('unlockLevel', lv)) + '</button></div>';
+    if (op && !free) la = '<div class="lv-acts"><button class="btn primary sm" data-act="paywall" data-arg="level:' + lv + '" style="grid-column:1/-1">' + emo('🔒', 'ie') + ' ' + esc(T('unlockLevel', lv)) + '</button></div>';
     else if (op && nn) la = '<div class="lv-acts"><button class="btn primary sm" data-act="learnLevel" data-arg="' + lv + '">' + esc(T('lvLearn')) + '</button><button class="btn secondary sm" data-act="checkLevel" data-arg="' + lv + '">' + esc(T('lvCheck')) + '</button></div>';
     return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="' + lv + '" aria-expanded="' + op + '"><span class="lv">' + lv + (free ? '' : ' <span class="lock">' + emo('🔒', 'ie') + '</span>') + '</span><span class="lvc">' + esc(T('lvCount', lc.learned, lc.total)) + '</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">' + esc(T('lvd_' + lv)) + '</p>' + la + (op ? '<ul class="topics">' + ts.map(x => topicRow(x[0], x[1])).join('') + '</ul>' : '') + '</section>';
   }).join('');
@@ -545,7 +548,7 @@ export function teachHTML() {
 export function topicHTML(ti) {
   const t = TOPICS[ti], tc = counts(t.list), nn = tc.total - tc.seen, op = lvOpen(t.lv);
   let acts = '';
-  if (!op) acts = '<button class="btn primary" data-act="paywall">' + emo('🔒', 'ie') + ' ' + esc(T('unlockTopic')) + '</button>';
+  if (!op) acts = '<button class="btn primary" data-act="paywall" data-arg="level:' + t.lv + ':' + ti + '">' + emo('🔒', 'ie') + ' ' + esc(T('unlockTopic')) + '</button>';
   else {
     if (nn) acts += '<button class="btn primary" data-act="learnTopic" data-arg="' + ti + '">' + esc(T('learnTopic', Math.min(nn, st.S.set.size || 10))) + '</button>';
     if (tc.seen) acts += '<button class="btn secondary" data-act="practice" data-arg="' + ti + '">' + esc(T('practice')) + '</button>';
