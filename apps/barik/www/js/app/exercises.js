@@ -6,8 +6,10 @@ import {
 } from './state.js';
 import {
   WORDS, BY, tx, trn, normHy, exTr, LEXICAL_REVIEW, LEXICAL_NOTE, pic, picQ, emo,
-  letters, wordRow, counts, nextNew, rd, trL
+  letters, wordRow, counts, nextNew, rd, trL,
+  exampleCache, exampleErrors, exampleUrl, exLoadAsync
 } from './text.js';
+export { exampleCache, exampleUrl };
 import {
   audioOK, preloadAudio, speak, speakLetter, hasRealKey, recHTML, recReset
 } from './audio.js';
@@ -410,14 +412,6 @@ export function finish() {
 }
 
 /* ================= ПРИМЕРЫ К СЛОВАМ ================= */
-export const exampleCache = new Map();
-const exampleRequests = new Set(), exampleErrors = new Set();
-
-export function exampleUrl(word, lang) {
-  const version = window.BARIK_EX_VERSION;
-  return version ? 'ex/' + lang + '-' + TOPICS[word.t].lv + '.json?v=' + version : 'ex/' + lang + '.json';
-}
-
 export function exLoad(url, retry = false) {
   if (exampleCache.has(url)) {
     const entries = exampleCache.get(url);
@@ -425,18 +419,7 @@ export function exLoad(url, retry = false) {
     exampleCache.set(url, entries);
     return;
   }
-  if (exampleRequests.has(url) || (exampleErrors.has(url) && !retry)) return;
-  exampleErrors.delete(url);
-  exampleRequests.add(url);
-  fetch(url, { cache: 'no-cache' }).then(response => {
-    if (!response.ok || !/^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type') || '')) throw new Error('Invalid example response');
-    return response.json();
-  }).then(entries => {
-    if (!entries || typeof entries !== 'object' || Array.isArray(entries)) throw new Error('Invalid examples');
-    exampleCache.set(url, entries);
-    if (exampleCache.size > 4) exampleCache.delete(exampleCache.keys().next().value);
-  }).catch(() => exampleErrors.add(url)).finally(() => {
-    exampleRequests.delete(url);
+  exLoadAsync(url, retry).finally(() => {
     const item = st.view === 'session' && st.sess && !st.sess.ended && cur(), host = $('#exSlot');
     if (host && item && item.k === 'intro' && exampleUrl(item.w, st.L) === url) host.innerHTML = exSlotContent(item.w, url);
   });

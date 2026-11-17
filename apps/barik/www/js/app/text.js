@@ -435,6 +435,55 @@ export function exTr(hy) {
   }
 }
 
+
+export const exampleCache = new Map();
+const exampleInFlight = new Map();
+export const exampleErrors = new Set();
+
+export function levelExampleUrl(lv, lang) {
+  const version = window.BARIK_EX_VERSION;
+  return version ? 'ex/' + lang + '-' + lv + '.json?v=' + version : 'ex/' + lang + '.json';
+}
+
+export function exampleUrl(word, lang) {
+  return levelExampleUrl(TOPICS[word.t].lv, lang);
+}
+
+export function exLoadAsync(url, retry = false) {
+  if (exampleCache.has(url)) {
+    const entries = exampleCache.get(url);
+    exampleCache.delete(url);
+    exampleCache.set(url, entries);
+    return Promise.resolve(entries);
+  }
+  if (exampleInFlight.has(url)) return exampleInFlight.get(url);
+  if (exampleErrors.has(url) && !retry) return Promise.resolve(null);
+  exampleErrors.delete(url);
+  const p = fetch(url, { cache: 'no-cache' }).then(response => {
+    if (!response.ok || !/^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type') || '')) throw new Error('Invalid example response');
+    return response.json();
+  }).then(entries => {
+    if (!entries || typeof entries !== 'object' || Array.isArray(entries)) throw new Error('Invalid examples');
+    exampleCache.set(url, entries);
+    if (exampleCache.size > 8) exampleCache.delete(exampleCache.keys().next().value);
+    return entries;
+  }).catch(() => {
+    exampleErrors.add(url);
+    return null;
+  }).finally(() => {
+    exampleInFlight.delete(url);
+  });
+  exampleInFlight.set(url, p);
+  return p;
+}
+
+export function wordExample(word, lang) {
+  if (!word) return null;
+  const entries = exampleCache.get(exampleUrl(word, lang));
+  const row = entries && entries[word.a];
+  return Array.isArray(row) && typeof row[0] === 'string' && typeof row[1] === 'string' ? row : null;
+}
+
 export const LEXICAL_REVIEW = [
   'Ուշ լինի, նուշ լինի', 'Ռուսիա', 'անգիր', 'անկապակացություն', 'անհետ կորած',
   'անտոմս ուղեւոր', 'առանձնացում', 'ատմոսֆերա', 'արմավենու յուղյուղ', 'բանահյուսական',

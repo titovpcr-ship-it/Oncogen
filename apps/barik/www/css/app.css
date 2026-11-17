@@ -1216,3 +1216,21 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) body[data-view="onboard"]{background:#111228}
 }
+
+/* Barik Audio Immersion — плейлисты/станции, фаза, пример в карточке и переключатель */
+.lp-src{width:100%;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;margin:0 0 12px}
+.lp-src button{min-width:0;min-height:44px;padding:8px 10px;font-size:14px;line-height:1.25}
+.lp-src button:disabled{opacity:.48;cursor:not-allowed}
+.lp-stations{margin:0 0 14px;display:grid;gap:8px}
+.lp-lvls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+@media (min-width:520px){.lp-lvls{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.lp-lv{min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.lp-lv[aria-pressed="true"]{background:var(--lapis);border-color:var(--lapis);color:var(--on-lapis)}
+.lp-lv.locked{color:var(--ink-2)}
+.lp-sel{min-height:44px}
+.lp-phase{padding:4px 12px;border-radius:99px;background:var(--surface-2);color:var(--ink-2);font-size:12.5px;font-weight:700;letter-spacing:.02em;margin-bottom:4px}
+.lp-ex{width:100%;margin-top:10px;padding-top:12px;border-top:1px solid var(--line);text-align:center}
+.lp-ex-hy{margin:0;font-family:var(--hy,inherit);font-size:18px;line-height:1.35;color:var(--ink);overflow-wrap:anywhere}
+.lp-ex-tr{margin:3px 0 0;font-size:13.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.lp-ex-tx{margin:4px 0 0;font-size:15px;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.lp-tog{margin-top:8px;border-top:1px solid var(--line);border-bottom:0;padding:12px 0 4px}

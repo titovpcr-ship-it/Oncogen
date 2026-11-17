@@ -683,6 +683,50 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'«Слушать»: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // Barik Audio Immersion (холодный старт, поток A1..C2, Anahit + 2.5с + Hayk, mediaSession, Paywall)
+    const ctx=await br.newContext({viewport:{width:320,height:780},locale:'ru-RU'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    pg.on('console',m=>{if(m.type()==='error'&&!/404/.test(m.text())) errs.push(m.text());});
+    const got=[]; pg.on('response',r=>{ if(/\/(?:audio\/.+\.mp3|ex\/.+\.json)/.test(r.url())) got.push(r.status()+' '+r.url()); });
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
+    ok(await pg.locator('.today [data-act=lpMine]').count()===1,'главная (0 слов): кнопка «Слушать» видна сразу');
+    await pg.evaluate(()=>Object.assign(window.__bararan.LPT,{gap:40,think:60,pause:60,next:40}));
+    got.length=0; await pg.click('[data-act=lpMine]');
+    await pg.waitForSelector('.lp-ex',{timeout:8000}).catch(()=>{});
+    const st0=await pg.evaluate(()=>({
+      v:window.__bararan.view, src:window.__bararan.LP&&window.__bararan.LP.src,
+      lv:window.__bararan.LP&&window.__bararan.LP.stLv, br:window.__bararan.LP&&window.__bararan.LP.bridge,
+      ex:!!document.querySelector('.lp-ex'),
+      ms:navigator.mediaSession&&navigator.mediaSession.metadata?{t:navigator.mediaSession.metadata.title,a:navigator.mediaSession.metadata.artist}:null,
+      w:[document.documentElement.scrollWidth,innerWidth]
+    }));
+    ok(st0.v==='listen'&&st0.src==='stream'&&st0.lv==='A1'&&st0.br===true,'холодный старт (0 слов): открыт поток A1 с озвучкой перевода и примеров');
+    ok(st0.ex,'в карточке плеера показан живой пример');
+    ok(st0.w[0]<=st0.w[1]+1,'погружение 320px: без горизонтальной прокрутки ('+st0.w+')');
+    ok(st0.ms&&st0.ms.t.includes('[')&&st0.ms.a.length>4,'mediaSession: слово + транскрипция + перевод/пример');
+    await pg.waitForFunction(()=>window.__bararan.LP&&window.__bararan.LP.cycles>=1,null,{timeout:12000}).catch(()=>{});
+    ok(got.some(x=>x.includes('/anahit/'))&&got.some(x=>x.includes('/hayk/')),'в цикле звучат и слово (Anahit), и пример (Hayk)');
+    // Уровень A2 для бесплатного пользователя -> пауза и Paywall ($12, $59 / $4.92, $129)
+    await pg.click('[data-act=lpLevel][data-arg=A2]');
+    await pg.waitForSelector('.pw',{timeout:5000}).catch(()=>{});
+    const pwTxt=await pg.textContent('.pw').catch(()=>'');
+    ok(await pg.evaluate(()=>window.__bararan.view)==='paywall'&&pwTxt.includes('$12')&&pwTxt.includes('$59')&&pwTxt.includes('$4.92')&&pwTxt.includes('$129'),'поток A2 ставит на паузу и открывает Paywall с 3 тарифами');
+    await pg.click('[data-act=pwClose]');
+    ok(await pg.evaluate(()=>window.__bararan.view)==='listen'&&await pg.evaluate(()=>window.__bararan.LP&&!window.__bararan.LP.on),'закрытие Paywall возвращает к плеерам на паузе');
+    // Лимит 15 полных циклов подряд -> мягкая пауза и Paywall
+    await pg.evaluate(()=>{ const B=window.__bararan; if(B.LP) B.LP.cycles=14; });
+    await pg.click('[data-act=lpToggle]');
+    await pg.waitForSelector('.pw',{timeout:10000}).catch(()=>{});
+    ok(await pg.evaluate(()=>window.__bararan.view)==='paywall','после 15 полных диалоговых циклов подряд открывается Paywall');
+    // >= 10 слов у пользователя -> по умолчанию «Мои слова»
+    await pg.click('[data-act=pwClose]'); await pg.click('[data-act=lpQuit]');
+    await pg.evaluate(()=>{ const B=window.__bararan; for(const w of B.TOPICS[0].list.slice(0,12)) B.S.w[w.a]={r:1}; B.save(); B.go('home'); });
+    await pg.click('[data-act=lpMine]');
+    ok(await pg.evaluate(()=>window.__bararan.LP&&window.__bararan.LP.src==='mine'),'при >=10 слов в работе по умолчанию открываются «Мои слова»');
+    ok(errs.length===0,'Audio Immersion: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   { // O-171: «Возврат и отмена» — своя ссылка, прямая ссылка ?doc=, условия и ЧаВо под платный режим
     const ctx=await br.newContext({viewport:{width:390,height:800},locale:'en-US',timezoneId:'America/New_York'}); const pg=await ctx.newPage();
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));

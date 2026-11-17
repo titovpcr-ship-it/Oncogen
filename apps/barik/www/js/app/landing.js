@@ -326,8 +326,8 @@ export function homeHTML() {
   if (!c.seen) acts += '<button class="btn ghost" data-act="tab" data-arg="abc">' + esc(T('pGoAbcStart')) + '</button>';
   const hard = hardWords().length;
   if (hard) acts += '<button class="btn ghost" data-act="hard">' + esc(T('btnHard', hard)) + '</button>';
-  const mine = hasTr() ? WORDS.filter(w => st.S.w[w.a]).length : 0;
-  if (mine >= 5) acts += '<button class="btn ghost" data-act="lpMine">' + emo('🎧', 'ie') + ' ' + esc(T('lpMine', mine)) + '</button>';
+  const mine = WORDS.filter(w => st.S.w[w.a]).length;
+  acts += '<button class="btn ghost" data-act="lpMine">' + emo('🎧', 'ie') + ' ' + esc(mine > 0 ? T('lpMine', mine) : T('lpListenZero')) + '</button>';
   const topicRow = (t, i) => {
     const tc = counts(t.list), pl = 100 * tc.learned / tc.total, pg = 100 * tc.learning / tc.total, op = lvOpen(t.lv);
     return '<li><button class="topic' + (op ? '' : ' locked') + '" data-act="topic" data-arg="' + i + '"><span class="t-ic">' + emo(t.ic) + '</span><span class="t-body"><span class="t-name">' + esc(tn(t)) + '</span><span class="t-hy" lang="hy">' + esc(t.hy) + '</span><span class="bar"><i style="width:' + pl + '%"></i><i class="l" style="width:' + pg + '%"></i></span></span><span class="t-cnt">' + (op ? tc.learned + '/' + tc.total : '<span class="lock" role="img" aria-label="' + esc(T('locked')) + '">' + emo('🔒', 'ie') + '</span>') + '</span></button></li>';

@@ -13,7 +13,8 @@ import {
   hasWordTranslations, picsOn, pathOn, tn, normHy, fitWords, MARK
 } from './text.js';
 import {
-  SPEECH, aid, audioUrl, hasTr, trUrl, LPT, REC, listenStart, lpStop, lpRun, listenHTML,
+  SPEECH, aid, audioUrl, hasTr, trUrl, LPT, REC, listenStart, listenOpenHome,
+  listenSwitchSource, listenSelectStation, listenToggleBridge, lpStop, lpRun, listenHTML,
   loadVoices, loadManifest, preloadAudio, unlockAudio, speak, speakLetter,
   sayText, recReset, recStart, recPlay
 } from './audio.js';
@@ -50,7 +51,7 @@ export function go(v, arg) {
   if (REC.on || REC.url) recReset();
   if (v === 'name' || v === 'pen' || v === 'listen' || v === 'paywall' || v === 'account' || v === 'unit') hit('v_' + v);
   if (st.sess && !st.sess.ended && v !== 'session') clearTimeout(st.sess.timer);
-  if (st.LP && v !== 'listen') { lpStop(); st.LP = null; }
+  if (st.LP && v !== 'listen') { lpStop(); if (v !== 'paywall' && v !== 'account' && v !== 'doc') st.LP = null; }
   st.view = v;
   st.viewArg = arg;
   st.resetArm = 0;
@@ -408,8 +409,16 @@ export const H = {
   thint: () => thint(),
   tgive: () => tgive(),
   kbOwn: () => { st.UI.kb = 'own'; saveUI(); render(); },
-  lpTopic: a => { const t = TOPICS[+a]; listenStart(t.list, tn(t), { v: 'topic', a: +a }); },
-  lpMine: () => { listenStart(shuffle(WORDS.filter(w => st.S.w[w.a])), T('lpMineTitle'), { v: 'home' }); },
+  lpTopic: a => { const t = TOPICS[+a]; listenStart(t.list, tn(t), { v: 'topic', a: +a }, { src: 'stream', stLv: t.lv, stTi: +a, infinite: false, bridge: st.UI.lpb === true }); },
+  lpMine: () => listenOpenHome(),
+  lpSource: a => listenSwitchSource(a),
+  lpLevel: a => listenSelectStation({ lv: a }),
+  lpStation: (a, b) => {
+    const v = b && b.value ? b.value : (a || '');
+    if (v.indexOf('t:') === 0) listenSelectStation({ ti: +v.slice(2) });
+    else if (v.indexOf('lv:') === 0) listenSelectStation({ lv: v.slice(3) });
+  },
+  lpBridge: () => listenToggleBridge(),
   lpToggle: () => { if (!st.LP) return; if (st.LP.on) { lpStop(); render(); return; } if (st.LP.end) { st.LP.i = 0; st.LP.end = false; } st.LP.on = true; lpRun(); },
   lpNext: () => { if (!st.LP) return; lpStop(); st.LP.i = Math.min(st.LP.i + 1, st.LP.list.length - 1); st.LP.end = false; st.LP.on = true; lpRun(); },
   lpPrev: () => { if (!st.LP) return; lpStop(); st.LP.i = Math.max(st.LP.i - 1, 0); st.LP.end = false; st.LP.on = true; lpRun(); },
@@ -717,9 +726,15 @@ window.addEventListener('beforeinstallprompt', event => {
 
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
-  if (!b || b.disabled || b.tagName === 'FORM') return;
+  if (!b || b.disabled || b.tagName === 'FORM' || b.tagName === 'SELECT') return;
   const f = H[b.dataset.act];
   if (f) f(b.dataset.arg, b, e);
+});
+document.addEventListener('change', e => {
+  const b = e.target.closest('select[data-act]');
+  if (!b || b.disabled) return;
+  const f = H[b.dataset.act];
+  if (f) f(b.value, b, e);
 });
 document.addEventListener('submit', e => {
   const f = e.target.closest('form[data-act]');

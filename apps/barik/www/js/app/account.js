@@ -315,10 +315,33 @@ function annualEqPrice(yLabel) {
   return m ? m[1] + (parseFloat(m[2]) / 12).toFixed(2) : '';
 }
 
+function tierCardsHTML(P, interactive) {
+  const hasServerPlans = !!(P && (P.month || P.year || P.life));
+  const ks = hasServerPlans
+    ? ['monthly', 'yearly', 'lifetime'].filter(k => (k === 'monthly' && P.month) || (k === 'yearly' && P.year) || (k === 'lifetime' && P.life))
+    : ['monthly', 'yearly', 'lifetime'];
+  if (ks.indexOf(st.pwState.sel) < 0) st.pwState.sel = ks.indexOf('yearly') >= 0 ? 'yearly' : ks[0];
+  const mo = (P && P.mLabel) || '$12';
+  const yr = (P && P.yLabel) || '$59';
+  const lf = (P && P.lLabel) || '$129';
+  const eq = annualEqPrice(yr) || '$4.92';
+  const cards = ks.map(k => {
+    const sel = k === st.pwState.sel;
+    if (k === 'yearly') {
+      return '<button class="plan plan-pop" role="radio" data-act="plan" data-arg="yearly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proYear')) + '<span class="badge badge-pop">' + esc(T('mostPop')) + '</span><span class="badge badge-save">' + esc(T('save59')) + '</span></b><span class="pr-hero-mo">' + esc(T('proYearEq', eq)) + '</span><small>' + esc(T('billedAnnual', yr)) + '</small></span><span class="pr"><b>' + esc(yr) + '</b><small>' + esc(T('planYear')) + '</small></span></button>';
+    }
+    if (k === 'lifetime') {
+      return '<button class="plan plan-life" role="radio" data-act="plan" data-arg="lifetime" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proLife')) + '<span class="badge badge-life">' + esc(T('oneTimePay')) + '</span></b><small>' + esc(T('proLifeSub')) + '</small></span><span class="pr"><b>' + esc(lf) + '</b><small>' + esc(T('cryOnce')) + '</small></span></button>';
+    }
+    return '<button class="plan" role="radio" data-act="plan" data-arg="monthly" aria-pressed="' + sel + '" aria-checked="' + sel + '"><span class="rd" aria-hidden="true"></span><span><b>' + esc(T('proMonth')) + '</b><small>' + esc(T('proMonthSub')) + '</small></span><span class="pr"><b>' + esc(mo) + '</b><small>' + esc(T('planMonth')) + '</small></span></button>';
+  }).join('');
+  return '<div class="plans" role="radiogroup"' + (interactive ? '' : ' aria-label="Barik Premium"') + '>' + cards + '</div>';
+}
+
 export function webPlansHTML() {
-  if (ACC.srv === false) return '<p class="note" style="text-align:center">' + esc(T('accNoServer')) + '</p>';
-  if (!ACC.me) return '<p class="note" style="text-align:center">' + esc(T('accLoginToPay')) + '</p><div class="actions"><button class="btn primary" data-act="accGo" data-arg="paywall">' + esc(T('accEnter')) + '</button></div>';
   const P = ACC.pay || {};
+  if (ACC.srv === false) return tierCardsHTML(P, false) + '<p class="note" style="text-align:center">' + esc(T('accNoServer')) + '</p>';
+  if (!ACC.me) return tierCardsHTML(P, false) + '<p class="note" style="text-align:center">' + esc(T('accLoginToPay')) + '</p><div class="actions"><button class="btn primary" data-act="accGo" data-arg="paywall">' + esc(T('accEnter')) + '</button></div>';
   if (ACC.crypto && ACC.crypto.ready) return cryPlansHTML();
   if (!P.ready) return '<p class="note" style="text-align:center">' + esc(T('accPaySoon')) + '</p>';
   if (!P.card) {
