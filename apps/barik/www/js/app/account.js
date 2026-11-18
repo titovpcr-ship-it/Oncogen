@@ -110,8 +110,22 @@ export function trialText(iso) {
   return T('trial', days);
 }
 
+function formatFamilyLabel(raw) {
+  const s = String(raw || '').trim().replace(/[^\p{L}0-9\s-]/gu, '');
+  if (!s) return '';
+  return s.split(/([\s-])/).map(part => /^[\s-]$/.test(part) ? part : (part.charAt(0).toUpperCase() + part.slice(1))).join('');
+}
+
 function pwContextHTML(reason, payload) {
   const p = payload || {};
+  if (reason === 'family_gift' && p.family) {
+    const fam = formatFamilyLabel(p.family);
+    if (fam) {
+      return '<div class="pw-ctx pw-ctx-family" data-pw-reason="family_gift" data-family="' + esc(p.family) + '">' +
+        '<p class="pw-ctx-k">🏛️ ' + esc(T('snLink')) + '</p>' +
+        '<p class="pw-ctx-sub">' + esc(T('pwFamilyGift', fam)) + '</p></div>';
+    }
+  }
   if (reason === 'audio15' && p.word) {
     const w = p.word;
     return '<div class="pw-ctx pw-ctx-audio" data-pw-reason="audio15">' +

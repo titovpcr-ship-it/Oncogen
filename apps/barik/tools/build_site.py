@@ -594,7 +594,8 @@ def seo_pages(out, url):
     GD = {"en": "Guide", "ru": "Справочник"}            # статьи — только ru и en (O-194)
     AB = {"en": "Alphabet", "ru": "Алфавит", "fr": "Alphabet", "es": "Alfabeto", "de": "Alphabet", "pt": "Alfabeto"}
     PH = {"en": "Phrasebook", "ru": "Разговорник", "fr": "Guide de conversation", "es": "Guía de conversación", "de": "Sprachführer", "pt": "Guia de conversação"}
-    links = "".join(f'<li lang="{L}"><a href="{L}/">{d}</a> · <a href="{L}/n/">{n}</a> · <a href="{L}/p/">{PH[L]}</a> · <a href="{L}/a/">{AB[L]}</a>' + (f' · <a href="{L}/g/">{GD[L]}</a>' if L in GD else '') + '</li>' for L, d, n in D)
+    SN = {"en": "Armenian surnames", "ru": "Армянские фамилии", "fr": "Noms arméniens", "es": "Apellidos armenios", "de": "Armenische Nachnamen", "pt": "Sobrenomes armênios"}
+    links = "".join(f'<li lang="{L}"><a href="{L}/">{d}</a> · <a href="{L}/s/">{SN[L]}</a> · <a href="{L}/n/">{n}</a> · <a href="{L}/p/">{PH[L]}</a> · <a href="{L}/a/">{AB[L]}</a>' + (f' · <a href="{L}/g/">{GD[L]}</a>' if L in GD else '') + '</li>' for L, d, n in D)
     docs = " · ".join(f'<a href="?doc={k}">{t}</a>' for k, t in (("project", "About"), ("terms", "Terms"), ("privacy", "Privacy"), ("refund", "Refunds")))
     html = html.replace("</body>", f'<noscript><p><strong>Barik — Eastern Armenian word by word</strong></p><p>20,121 Armenian words with pictures, audio and '
                         f'transcription in six languages, handwriting for all 39 letters and a learning path up to reading Tumanyan.</p>'

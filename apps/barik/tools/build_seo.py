@@ -29,6 +29,9 @@ import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
+from build_surnames import SN_CSS, SN_TXT, build_surnames
 LANGS = ("ru", "en", "fr", "es", "de", "pt")
 LV = ("A1", "A2", "B1", "B2", "C1", "C2")
 NEIGHBOURS = 8
@@ -411,7 +414,7 @@ def crumbs_ld(items):
             "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(items)]}
 
 
-def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=None):
+def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=None, extra_js=()):
     up = "../" * depth
     alt = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{base}{p}">' for l, p in alts.items())
     alt += f'<link rel="alternate" hreflang="x-default" href="{base}{alts.get("en", alts[L])}">'
@@ -431,11 +434,11 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=No
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
             f'<link rel="icon" type="image/png" href="{up}favicon.png"><link rel="apple-touch-icon" href="{up}icons/apple-touch-icon.png">'
             f'<link rel="stylesheet" href="{up}seo.css"><meta name="theme-color" content="#FBF6F1">{ld}'
-            + (f'<script src="{up}seo.js" defer></script>' if 'data-src=' in body or 'data-mq' in body else '') + '</head>'
+            + ''.join(f'<script src="{up}{jsf}" defer></script>' for jsf in dict.fromkeys((('seo.js',) if ('data-src=' in body or 'data-mq' in body) else ()) + tuple(extra_js))) + '</head>'
             f'<body><header class="top"><div class="top-in"><a class="brand" href="{up}"><img class="mk" src="{up}mark.svg" alt="" width="32" height="35">'
             f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
             f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
-            f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a> · '
+            f'<footer>{TXT[L]["foot"]} · <a href="{up}{L}/s/">{SN_TXT[L]["nav"]}</a> · <a href="mailto:hello@barik.am">hello@barik.am</a> · '
             f'<a href="https://www.instagram.com/barik_armenian" rel="noopener">Instagram</a> · <a href="https://t.me/armenian_word_daily" rel="noopener">Telegram</a></footer></body></html>')
 
 
@@ -573,7 +576,7 @@ def build(site, base, words_path):
         return list(dict.fromkeys(out))[:12]
     thin = {L: 0 for L in LANGS}
     os.makedirs(site, exist_ok=True)
-    open(os.path.join(site, "seo.css"), "w", encoding="utf-8").write(CSS)
+    open(os.path.join(site, "seo.css"), "w", encoding="utf-8").write(CSS + SN_CSS)
     open(os.path.join(site, "seo.js"), "w", encoding="utf-8").write(SEO_JS)
     man_p = os.path.join(site, "audio", "manifest.json")
     vdir = (json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None)
@@ -823,7 +826,7 @@ def build(site, base, words_path):
         n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
         fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
-                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
+                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="s/index.html">{SN_TXT[L]["idx_h"]} →</a></p><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
         write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
                         alts, body, depth=1).replace('href="../../', 'href="../'))
         urls[L].insert(0, rel)
@@ -843,10 +846,11 @@ def build(site, base, words_path):
     files += build_phrases(site, base, d, wslug)
     files += build_alphabet(site, base, d, wslug)
     files += build_guides(site, base, d, wslug)
+    files += build_surnames(site, base, d, wslug, inw, audio_rel, page, crumbs_ld, SPK, family, TXT, APP)
     open(os.path.join(site, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
-        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap><sitemap><loc>{base}sitemap-guides.xml</loc></sitemap></sitemapindex>")
+        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap><sitemap><loc>{base}sitemap-guides.xml</loc></sitemap><sitemap><loc>{base}sitemap-surnames.xml</loc></sitemap></sitemapindex>")
     for f in os.listdir(site):                           # sitemap: оглавления адресом папки (O-201)
         if f.startswith("sitemap") and f.endswith(".xml"):
             p = os.path.join(site, f); x = open(p, encoding="utf-8").read(); y = folder_urls(base, x)

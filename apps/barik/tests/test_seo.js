@@ -184,6 +184,25 @@ const LANGS=['ru','en','fr','es','de','pt'];
   ok(nsay===nli&&nli>0,'тема: у каждого слова кнопка озвучки ('+nsay+' из '+nli+')');
   ok(await pg.locator('.pn a').count()===1,'тема: ссылка «Следующая тема»');
   ok((await pg.textContent('footer')).includes('hello@barik.am'),'подвал: почта для связи');
+  { // Barik Roots (Արմատներ): /ru/s/ поиск + динамический анализатор + /en/s/kardashian.html + <canvas> 1080x1350
+    await pg.goto(base+'ru/s/'); await pg.evaluate(()=>document.fonts.ready);
+    ok((await pg.locator('.sn-list li').count())===50,'фамилии /ru/s/: показаны 50 стартовых фамилий');
+    await pg.fill('#snSearch','Дарбинян');
+    ok((await pg.locator('.sn-list li:not([hidden])').count())===1,'фамилии /ru/s/: кириллический поиск «Дарбинян» находит карточку');
+    await pg.fill('#snSearch','Ter-Petrosyan');
+    ok(!(await pg.locator('#snDyn').isHidden())&&(await pg.textContent('#snDyn')).includes('պետրոս'),'анализатор: Ter-Petrosyan разбирает приставку и корень պետրոս');
+    await pg.fill('#snSearch','Hacikyan');
+    const dynTxt=await pg.textContent('#snDyn');
+    ok(dynTxt.includes('հաց')&&(await pg.locator('#snDyn .sn-wlink').count())===1,'анализатор: Hacikyan находит корень հաց и ссылку на словарь');
+    await pg.click('#snDyn [data-act=surnameCard]');
+    await pg.waitForFunction(()=>window.__BARIK_LAST_CARD&&window.__BARIK_LAST_CARD.width===1080&&window.__BARIK_LAST_CARD.height===1350,null,{timeout:5000});
+    ok(await pg.evaluate(()=>window.__BARIK_LAST_CARD.bytes>5000),'<canvas> на анализаторе рисует 1080x1350 PNG без ошибок');
+    await pg.goto(base+'en/s/kardashian.html'); await pg.evaluate(()=>document.fonts.ready);
+    await pg.click('[data-act=surnameCard]');
+    await pg.waitForFunction(()=>window.__BARIK_LAST_CARD&&window.__BARIK_LAST_CARD.slug==='kardashian'&&window.__BARIK_LAST_CARD.bytes>5000,null,{timeout:5000});
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Kardashian: без горизонтальной прокрутки на мобильном');
+    ok((await pg.locator('.surname-gift-cta a').count())===2,'Kardashian: блок Heritage CTA с радио и подарочным доступом');
+  }
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(bad.length===0,'все запросы 200 '+bad.join(' '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));
@@ -221,5 +240,31 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы букв: записи на месте ('+srcs.length+')');
     ok(nb.includes('Numbers in Armenian')&&(nb.match(/class="say"/g)||[]).length>=15,'числа: страница со звуком');
     ok(fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-abc.xml')&&fs.readFileSync(path.join(ROOT,'en','index.html'),'utf8').includes('href="a/"'),'sitemap-abc, ссылка из оглавления'); }
+  { // Barik Roots (Արմատներ): 306 страниц (6 языков x 51), canonical/hreflang/JSON-LD, sitemap-surnames, 0 битых ссылок
+    const L6=['ru','en','fr','es','de','pt'], counts=L6.map(l=>fs.readdirSync(path.join(ROOT,l,'s')).filter(f=>f.endsWith('.html')).length);
+    ok(counts.every(x=>x===51),'фамилии /s/: 51 страница на язык ('+counts.join('/')+')');
+    const bad=[], noh=[];
+    for(const L of L6){
+      const dir=path.join(ROOT,L,'s');
+      for(const f of fs.readdirSync(dir)){
+        if(!f.endsWith('.html')) continue;
+        const p=path.join(dir,f), s=fs.readFileSync(p,'utf8'), rel=path.relative(ROOT,p).split(path.sep).join('/');
+        const cr=rel.replace(/index\.html$/,'');
+        if(s.includes('noindex')||/href="[^"]*index\.html"/.test(s)||!s.includes(`<link rel="canonical" href="${BASE}${cr}">`)||!s.includes('hreflang="x-default"')) noh.push(rel);
+        for(const m of s.matchAll(/(?:href|src|data-src)="([^"#?]*)/g)){
+          const h=m[1]; if(!h||/^(https?|mailto):/.test(h)) continue;
+          let q=path.join(dir,h); if(h===''||h.endsWith('/')) q=path.join(q,'index.html');
+          if(!fs.existsSync(q)) bad.push(rel+' → '+h);
+        }
+      }
+      ok(fs.readFileSync(path.join(ROOT,L,'index.html'),'utf8').includes('href="s/"'),L+': ссылка на энциклопедию фамилий из оглавления словаря');
+    }
+    ok(noh.length===0,'фамилии /s/: нет noindex/index.html, есть canonical + x-default '+noh.slice(0,3).join(' '));
+    ok(bad.length===0,'фамилии /s/: битых ссылок и записей нет '+bad.slice(0,4).join('; '));
+    const kd=fs.readFileSync(path.join(ROOT,'en','s','kardashian.html'),'utf8');
+    ok(kd.includes('"@type": "DefinedTerm"')&&kd.includes('"@type": "Article"')&&kd.includes('"@type": "BreadcrumbList"')&&kd.includes('?lang=en&amp;listen=1')&&kd.includes('?lang=en&amp;paywall=gift&amp;family=kardashian')&&kd.includes('../w/'),'kardashian.html: JSON-LD (DefinedTerm + Article + BreadcrumbList), словарь и CTA ссылки');
+    const sm=fs.readFileSync(path.join(ROOT,'sitemap-surnames.xml'),'utf8');
+    ok((sm.match(/<loc>/g)||[]).length===306&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-surnames.xml'),'sitemap-surnames: все 306 адресов и ссылка в sitemap.xml');
+  }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();

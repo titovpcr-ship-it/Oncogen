@@ -1002,6 +1002,18 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'Путь граната upgrade: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // Deep-links из Barik Roots: ?paywall=gift&family=... и ?lang=ru&listen=1
+    const ctx=await br.newContext({viewport:{width:320,height:740},locale:'en-US',serviceWorkers:'block'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base+'?lang=en&paywall=gift&family=kardashian');
+    await pg.waitForSelector('.pw-ctx-family[data-family="kardashian"]',{timeout:5000});
+    ok(await pg.evaluate(()=>window.__bararan.pwState.sel==='lifetime'&&window.__bararan.pwState.gift129===true&&document.documentElement.scrollWidth<=innerWidth+1),'deep-link paywall=gift&family=kardashian: Heritage Lifetime + Gift Pass + баннер семьи без скролла 320px');
+    await pg.goto(base+'?lang=ru&listen=1');
+    await pg.waitForSelector('.listen',{timeout:5000});
+    ok(await pg.evaluate(()=>document.documentElement.lang==='ru'&&!!window.__bararan.LP),'deep-link ?lang=ru&listen=1: запускает режим Радио на русском');
+    ok(errs.length===0,'deep-links Barik Roots: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});

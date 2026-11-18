@@ -137,7 +137,7 @@ export function onboardHTML() {
     '<section class="ld-end"><div class="ld-wrap"><p class="end-hy"><span lang="hy">' + esc(D.endHy) + '</span> <i>' + esc(D.endTr) + '</i></p><h2>' + esc(D.endTitle) + '</h2>' + cta('xl inv') + '<ul class="ld-micro">' + micro + '</ul></div>' +
     '<svg class="end-hills" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 140V86c160-50 320-40 480-10s320 34 460-6c100-28 190-24 260-8v78z" fill="currentColor" opacity=".55"/><path d="M0 140v-30c200-40 380-10 560 4 180 14 380-26 640-10v36z" fill="currentColor"/></svg></section>' +
     '<footer class="ld-foot"><div class="ld-wrap">' + brand + '<p>' + esc(D.foot) + '</p>' +
-    '<p class="ld-links">' + (BILL.native ? '' : '<a href="' + st.L + '/">' + esc(D.topics) + '</a>') + '<button class="lnk" data-act="landDoc" data-arg="project">' + esc(T('project')) + '</button><button class="lnk" data-act="landDoc" data-arg="privacy">' + esc(D.privacy) + '</button><button class="lnk" data-act="landDoc" data-arg="terms">' + esc(T('terms')) + '</button><button class="lnk" data-act="landDoc" data-arg="refund">' + esc(T('refund')) + '</button><button class="lnk" data-act="tcOpen">' + esc(T('tcTitle')) + '</button><button class="lnk" data-act="landDoc" data-arg="credits">' + esc(T('credits')) + '</button></p>' +
+    '<p class="ld-links">' + (BILL.native ? '' : '<a href="' + st.L + '/">' + esc(D.topics) + '</a><a href="' + st.L + '/s/">' + esc(T('snLink')) + '</a>') + '<button class="lnk" data-act="landDoc" data-arg="project">' + esc(T('project')) + '</button><button class="lnk" data-act="landDoc" data-arg="privacy">' + esc(D.privacy) + '</button><button class="lnk" data-act="landDoc" data-arg="terms">' + esc(T('terms')) + '</button><button class="lnk" data-act="landDoc" data-arg="refund">' + esc(T('refund')) + '</button><button class="lnk" data-act="tcOpen">' + esc(T('tcTitle')) + '</button><button class="lnk" data-act="landDoc" data-arg="credits">' + esc(T('credits')) + '</button></p>' +
     socialHTML() + '<p class="ld-mail"><a href="mailto:' + esc(CFG.CONTACT || 'hello@barik.am') + '">' + esc(CFG.CONTACT || 'hello@barik.am') + '</a></p><p class="cr">© 2026 Barik</p></div></footer>' +
     '</div>';
 }
@@ -375,7 +375,7 @@ export function homeHTML() {
   }).join('');
   return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">' + MARK() + '<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">' + esc(T('tagline')) + '</p></header>' +
     '<section class="today"><div class="actions home-primary">' + acts + '</div><p class="summary">' + sum + '</p>' + todayPathHTML() + syncNudgeHTML(c) + premCTA() + streak + wotdHTML() +
-    '<div class="actions home-secondary"><button class="dg-go" data-act="dgOpen">🎯 <span>' + esc(T('dgBtn')) + '</span>' + (st.UI.dg && st.UI.dg.td === today() && st.UI.dg.done ? ' ✓' : '') + '</button><button class="dg-go" data-act="pbOpen">🧳 <span>' + esc(T('pbTitle')) + '</span></button></div></section></div>' +
+    '<div class="actions home-secondary"><button class="dg-go" data-act="dgOpen">🎯 <span>' + esc(T('dgBtn')) + '</span>' + (st.UI.dg && st.UI.dg.td === today() && st.UI.dg.done ? ' ✓' : '') + '</button><button class="dg-go" data-act="pbOpen">🧳 <span>' + esc(T('pbTitle')) + '</span></button>' + (BILL.native ? '' : '<a class="dg-go" href="' + st.L + '/s/">🛡 <span>' + esc(T('snLink')) + '</span></a>') + '</div></section></div>' +
     '<div class="home-main">' + rows + '</div></div>';
 }
 

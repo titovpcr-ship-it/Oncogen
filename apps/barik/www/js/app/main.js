@@ -912,6 +912,13 @@ function launch() {
       nmSet(nm, hy && /^[\u0531-\u0556\u0561-\u0587\s\-]{1,40}$/.test(hy) ? hy : null);
       st.view = 'name';
     }
+    if (sp.get('paywall') === 'gift') {
+      const famRaw = (sp.get('family') || '').trim().slice(0, 60);
+      if (QL) setLang(QL);
+      st.backTo = { v: st.UI.lang ? 'home' : 'onboard' };
+      st.pwState = { plans: null, sel: 'lifetime', busy: false, reason: famRaw ? 'family_gift' : 'default', payload: famRaw ? { family: famRaw } : null, gift129: true };
+      st.view = 'paywall';
+    }
   }
 
   const keepCover = st.view === 'onboard' && START_QUERY.get('start') !== 'lesson' &&
@@ -945,19 +952,24 @@ function launch() {
     translationNotice();
   }
   if (START_QUERY.get('start') === 'lesson') { setLang(st.L); startLearn(null); }
+  if (st.view === 'paywall' && START_QUERY.get('paywall') === 'gift') loadPlans();
   {
     const qt = (/[?&]t=(\d+)(?:&|$)/.exec(location.search || '') || [])[1];
-    if (QL && qt !== undefined && TOPICS[+qt] && START_QUERY.get('listen') === '1') {
-      const t = TOPICS[+qt];
+    if (QL && START_QUERY.get('listen') === '1') {
       setLang(QL);
-      if (lvOpen(t.lv)) {
-        exLoadAsync(levelExampleUrl(t.lv, st.L));
-        listenStart(t.list, tn(t), { v: 'topic', a: +qt }, {
-          src: 'stream', stLv: t.lv, stTi: +qt, infinite: true, bridge: st.UI.lpb !== undefined ? !!st.UI.lpb : true
-        });
+      if (qt !== undefined && TOPICS[+qt]) {
+        const t = TOPICS[+qt];
+        if (lvOpen(t.lv)) {
+          exLoadAsync(levelExampleUrl(t.lv, st.L));
+          listenStart(t.list, tn(t), { v: 'topic', a: +qt }, {
+            src: 'stream', stLv: t.lv, stTi: +qt, infinite: true, bridge: st.UI.lpb !== undefined ? !!st.UI.lpb : true
+          });
+        } else {
+          st.backTo = { v: 'topic', a: +qt };
+          openPaywall('level_lock', { level: t.lv, ti: +qt });
+        }
       } else {
-        st.backTo = { v: 'topic', a: +qt };
-        openPaywall('level_lock', { level: t.lv, ti: +qt });
+        listenOpenHome();
       }
     }
   }
