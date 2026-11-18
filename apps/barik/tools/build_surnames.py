@@ -60,6 +60,13 @@ SN_CSS = """
 .sn-part{padding:8px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--line);font-size:14.5px}
 .sn-part b{display:block;font-size:16px;color:var(--ink)}
 .sn-part small{color:var(--mut)}
+.sn-related{margin:22px 0 10px}
+.sn-related h2{margin:0 0 10px;font-size:19px}
+.sn-rel{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.sn-rel a{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--ink);height:100%;box-sizing:border-box}
+.sn-rel a:hover{border-color:var(--acc);text-decoration:none}
+.sn-rel-hy{font:700 18px/1.2 A,serif;color:var(--ink);overflow-wrap:anywhere}
+.sn-rel-lat{font:600 13.5px/1.25 G,sans-serif;color:var(--mut);overflow-wrap:anywhere}
 @media (prefers-color-scheme:dark){
   .btn-card{background:#18204B;color:#FBF6F1;border-color:#D4AF5E}
   .surname-gift-cta{background:#161C3B;border-color:rgba(212,175,94,.45)}
@@ -70,9 +77,9 @@ SN_TXT = {
     "ru": {
         "nav": "Армянские фамилии",
         "idx_t": "Barik Roots (Արմատներ) — энциклопедия и анализатор армянских фамилий | Barik",
-        "idx_d": "50 древних армянских фамилий и живой морфологический анализатор редких фамилий: корень слова, озвучка от Anahit и Hayk, семейный герб-карточка.",
+        "idx_d": "{total} армянских фамилий и живой морфологический анализатор редких фамилий: корень слова, озвучка от Anahit и Hayk, семейный герб-карточка.",
         "idx_h": "Энциклопедия армянских фамилий",
-        "idx_sub": "Barik Roots (Արմատներ): найдите свою фамилию среди 50 ключевых родов или введите любую редкую фамилию — анализатор разберёт приставку, корень и суффикс.",
+        "idx_sub": "Barik Roots (Արմատներ): найдите свою фамилию среди {total} исторических родов или введите любую редкую фамилию — анализатор разберёт приставку, корень и суффикс.",
         "search_lbl": "Поиск фамилии на русском, латинице или армянском",
         "search_ph": "Введите фамилию: Кардашьян, Ter-Petrosyan, Hacikyan, Դարբինյան…",
         "cats": {"all": "Все", "craft": "Ремёсла", "noble": "Княжеские", "nature": "Природа", "heritage": "Духовные", "trait": "Характер", "place": "Земли и города"},
@@ -130,14 +137,16 @@ SN_TXT = {
         "cta_h": "Фамилия {name} хранит многовековую историю. Сохрани родной язык в своей семье",
         "cta_radio": "🎧 Слушать слова предков в режиме Радио",
         "cta_gift": "🎁 Оформить именной семейный доступ Heritage Lifetime ($129) для семьи {name}",
-        "all_sn": "← Все 50 фамилий и анализатор Barik Roots",
+        "guilds": {"all": "Все роды", "craft": "⚒ Ремесла и Созидатели", "noble": "👑 Княжеские и Благородные роды", "nature": "🏔 Природа и Стихии", "place": "🗺 Древние города и Земли", "heritage_trait": "✝ Духовное наследие и Качества"},
+        "rel_h": "Родственные фамилии этой же гильдии / региона",
+        "all_sn": "← Все {total} фамилий и анализатор Barik Roots",
     },
     "en": {
         "nav": "Armenian surnames",
         "idx_t": "Barik Roots (Արմատներ) — Armenian Surname Encyclopedia & Analyzer | Barik",
-        "idx_d": "Explore 50 iconic Armenian surnames and analyze any rare surname dynamically: Armenian root audio by Anahit & Hayk, suffix anatomy, and family crest PNG.",
+        "idx_d": "Explore {total} iconic Armenian surnames and analyze any rare surname dynamically: Armenian root audio by Anahit & Hayk, suffix anatomy, and family crest PNG.",
         "idx_h": "Armenian Surname Encyclopedia",
-        "idx_sub": "Barik Roots (Արմատներ): search 50 heritage surnames or enter any rare Armenian surname to break down its prefix, ancestral root, and patronymic suffix.",
+        "idx_sub": "Barik Roots (Արմատներ): search {total} heritage surnames or enter any rare Armenian surname to break down its prefix, ancestral root, and patronymic suffix.",
         "search_lbl": "Search by surname in English, Russian Cyrillic, or Armenian",
         "search_ph": "Try: Kardashian, Ter-Petrosyan, Hacikyan, Դարբինյան…",
         "cats": {"all": "All", "craft": "Crafts", "noble": "Noble", "nature": "Nature", "heritage": "Heritage", "trait": "Virtues", "place": "Homelands"},
@@ -150,7 +159,7 @@ SN_TXT = {
         "dyn_sfx": "Suffix",
         "dyn_open_w": "Open root word “{a}” in dictionary →",
         "dyn_listen": "Listen to root",
-        "dyn_no_root": "No direct root match yet — check spelling variations (Western b/d/g vs Eastern p/t/k) or browse the 50 heritage houses below.",
+        "dyn_no_root": "No direct root match yet — check spelling variations (Western b/d/g vs Eastern p/t/k) or browse the {total} heritage houses below.",
         "pfx_map": {
             "ter": "Ter- (Տեր) — priestly lineage (“lord / parish father”)",
             "melik": "Melik- (Մելիք) — sovereign highland prince of Syunik or Artsakh",
@@ -195,14 +204,16 @@ SN_TXT = {
         "cta_h": "The {name} name carries centuries of history. Keep Armenian alive in your family",
         "cta_radio": "🎧 Listen to ancestral words in Radio mode",
         "cta_gift": "🎁 Gift Heritage Lifetime ($129) for the {name} family",
-        "all_sn": "← All 50 surnames & Barik Roots analyzer",
+        "guilds": {"all": "All lineages", "craft": "⚒ Crafts & Builders", "noble": "👑 Noble & Princely", "nature": "🏔 Nature & Elements", "place": "🗺 Historic Cities & Lands", "heritage_trait": "✝ Heritage & Virtues"},
+        "rel_h": "Related surnames of the same guild / region",
+        "all_sn": "← All {total} surnames & Barik Roots analyzer",
     },
     "fr": {
         "nav": "Noms arméniens",
         "idx_t": "Barik Roots (Արմատներ) — encyclopédie des noms arméniens | Barik",
-        "idx_d": "50 grands noms arméniens et analyseur dynamique : racine arménienne avec audio d’Anahit et Hayk, graphie orientale/occidentale et blason familial.",
+        "idx_d": "{total} grands noms arméniens et analyseur dynamique : racine arménienne avec audio d’Anahit et Hayk, graphie orientale/occidentale et blason familial.",
         "idx_h": "Encyclopédie des noms arméniens",
-        "idx_sub": "Barik Roots (Արմատներ) : explorez 50 lignées historiques ou saisissez n’importe quel nom rare pour analyser son préfixe, sa racine et son suffixe.",
+        "idx_sub": "Barik Roots (Արմատներ) : explorez {total} lignées historiques ou saisissez n’importe quel nom rare pour analyser son préfixe, sa racine et son suffixe.",
         "search_lbl": "Rechercher un nom en alphabet latin, cyrillique ou arménien",
         "search_ph": "Ex. : Aznavourian, Ter-Petrosyan, Hacikyan, Դարբինյան…",
         "cats": {"all": "Tous", "craft": "Métiers", "noble": "Noblesse", "nature": "Nature", "heritage": "Héritage", "trait": "Vertus", "place": "Terres"},
@@ -215,7 +226,7 @@ SN_TXT = {
         "dyn_sfx": "Suffixe",
         "dyn_open_w": "Voir le mot « {a} » dans le dictionnaire →",
         "dyn_listen": "Écouter la racine",
-        "dyn_no_root": "Aucune correspondance exacte trouvée — vérifiez les variantes d’orthographe ou parcourez les 50 lignées ci-dessous.",
+        "dyn_no_root": "Aucune correspondance exacte trouvée — vérifiez les variantes d’orthographe ou parcourez les {total} lignées ci-dessous.",
         "pfx_map": {
             "ter": "Ter- (Տեր) — lignée sacerdotale (« seigneur / prêtre »)",
             "melik": "Melik- (Մելիք) — prince souverain des hauts plateaux",
@@ -260,14 +271,16 @@ SN_TXT = {
         "cta_h": "Le nom {name} porte des siècles d’histoire. Gardez la langue vivante dans votre famille",
         "cta_radio": "🎧 Écouter les mots des ancêtres en mode Radio",
         "cta_gift": "🎁 Offrir Heritage À vie (129 $) pour la famille {name}",
-        "all_sn": "← Les 50 noms et l’analyseur Barik Roots",
+        "guilds": {"all": "Toutes les lignées", "craft": "⚒ Métiers & Bâtisseurs", "noble": "👑 Noblesse & Princes", "nature": "🏔 Nature & Éléments", "place": "🗺 Cités & Terres anciennes", "heritage_trait": "✝ Héritage spirituel & Vertus"},
+        "rel_h": "Noms apparentés de la même guilde / région",
+        "all_sn": "← Les {total} noms et l’analyseur Barik Roots",
     },
     "es": {
         "nav": "Apellidos armenios",
         "idx_t": "Barik Roots (Արմատներ) — enciclopedia de apellidos armenios | Barik",
-        "idx_d": "50 apellidos armenios y analizador morfológico en vivo: raíz armenia con audio de Anahit y Hayk, variantes oriental/occidental y escudo familiar.",
+        "idx_d": "{total} apellidos armenios y analizador morfológico en vivo: raíz armenia con audio de Anahit y Hayk, variantes oriental/occidental y escudo familiar.",
         "idx_h": "Enciclopedia de apellidos armenios",
-        "idx_sub": "Barik Roots (Արմատներ): explora 50 apellidos históricos o escribe cualquier apellido poco común para analizar su prefijo, raíz y sufijo.",
+        "idx_sub": "Barik Roots (Արմատներ): explora {total} apellidos históricos o escribe cualquier apellido poco común para analizar su prefijo, raíz y sufijo.",
         "search_lbl": "Buscar apellido en alfabeto latino, cirílico o armenio",
         "search_ph": "Ej.: Kardashian, Ter-Petrosyan, Hacikyan, Դարբինյան…",
         "cats": {"all": "Todos", "craft": "Oficios", "noble": "Nobleza", "nature": "Naturaleza", "heritage": "Legado", "trait": "Virtudes", "place": "Lugares"},
@@ -280,7 +293,7 @@ SN_TXT = {
         "dyn_sfx": "Sufijo",
         "dyn_open_w": "Abrir «{a}» en el diccionario →",
         "dyn_listen": "Escuchar raíz",
-        "dyn_no_root": "No hubo coincidencia directa — revisa variantes de escritura o explora los 50 apellidos abajo.",
+        "dyn_no_root": "No hubo coincidencia directa — revisa variantes de escritura o explora los {total} apellidos abajo.",
         "pfx_map": {
             "ter": "Ter- (Տեր) — linaje sacerdotal («señor / padre»)",
             "melik": "Melik- (Մելիք) — príncipe soberano armenio",
@@ -325,14 +338,16 @@ SN_TXT = {
         "cta_h": "El apellido {name} guarda siglos de historia. Mantén viva la lengua en tu familia",
         "cta_radio": "🎧 Escuchar palabras ancestrales en modo Radio",
         "cta_gift": "🎁 Regalar acceso Heritage De por vida ($129) para la familia {name}",
-        "all_sn": "← Todos los 50 apellidos y analizador Barik Roots",
+        "guilds": {"all": "Todos los linajes", "craft": "⚒ Oficios y Creadores", "noble": "👑 Nobleza y Príncipes", "nature": "🏔 Naturaleza y Elementos", "place": "🗺 Ciudades y Tierras", "heritage_trait": "✝ Legado espiritual y Virtudes"},
+        "rel_h": "Apellidos relacionados del mismo gremio / región",
+        "all_sn": "← Todos los {total} apellidos y analizador Barik Roots",
     },
     "de": {
         "nav": "Armenische Nachnamen",
         "idx_t": "Barik Roots (Արմատներ) — Enzyklopädie armenischer Nachnamen | Barik",
-        "idx_d": "50 berühmte armenische Nachnamen und Live-Analysator: Wortwurzel mit Audio von Anahit & Hayk, Schreibweisen und Familienwappen als PNG.",
+        "idx_d": "{total} berühmte armenische Nachnamen und Live-Analysator: Wortwurzel mit Audio von Anahit & Hayk, Schreibweisen und Familienwappen als PNG.",
         "idx_h": "Enzyklopädie armenischer Nachnamen",
-        "idx_sub": "Barik Roots (Արմատներ): durchsuchen Sie 50 Geschlechter oder geben Sie jeden seltenen Nachnamen ein, um Vorsilbe, Wurzel und Endung zu entschlüsseln.",
+        "idx_sub": "Barik Roots (Արմատներ): durchsuchen Sie {total} Geschlechter oder geben Sie jeden seltenen Nachnamen ein, um Vorsilbe, Wurzel und Endung zu entschlüsseln.",
         "search_lbl": "Nachnamen in Latein, Kyrillisch oder Armenisch suchen",
         "search_ph": "Z. B. Kardashian, Ter-Petrosyan, Hacikyan, Դարբինյան…",
         "cats": {"all": "Alle", "craft": "Handwerk", "noble": "Adel", "nature": "Natur", "heritage": "Erbe", "trait": "Tugend", "place": "Orte"},
@@ -345,7 +360,7 @@ SN_TXT = {
         "dyn_sfx": "Endung",
         "dyn_open_w": "Wort „{a}“ im Wörterbuch öffnen →",
         "dyn_listen": "Wurzel anhören",
-        "dyn_no_root": "Keine direkte Wurzel gefunden — prüfen Sie Schreibweisen oder entdecken Sie die 50 Stammhäuser unten.",
+        "dyn_no_root": "Keine direkte Wurzel gefunden — prüfen Sie Schreibweisen oder entdecken Sie die {total} Stammhäuser unten.",
         "pfx_map": {
             "ter": "Ter- (Տեր) — Priestergeschlecht („Herr / Gemeindepriester“)",
             "melik": "Melik- (Մելիք) — souveräner armenischer Hochlandfürst",
@@ -390,14 +405,16 @@ SN_TXT = {
         "cta_h": "Der Name {name} trägt jahrhundertealte Geschichte. Bewahre die Sprache in deiner Familie",
         "cta_radio": "🎧 Wörter der Vorfahren im Radio-Modus hören",
         "cta_gift": "🎁 Heritage Lebenslang (129 $) für Familie {name} sichern",
-        "all_sn": "← Alle 50 Nachnamen & Barik Roots Analysator",
+        "guilds": {"all": "Alle Geschlechter", "craft": "⚒ Handwerk & Erbauer", "noble": "👑 Adel & Fürstenhäuser", "nature": "🏔 Natur & Elemente", "place": "🗺 Historische Städte & Länder", "heritage_trait": "✝ Geistiges Erbe & Tugenden"},
+        "rel_h": "Verwandte Nachnamen derselben Gilde / Region",
+        "all_sn": "← Alle {total} Nachnamen & Barik Roots Analysator",
     },
     "pt": {
         "nav": "Sobrenomes armênios",
         "idx_t": "Barik Roots (Արմատներ) — enciclopédia de sobrenomes armênios | Barik",
-        "idx_d": "50 sobrenomes armênios e analisador ao vivo: raiz armênia com áudio de Anahit e Hayk, formas oriental/ocidental e brasão familiar PNG.",
+        "idx_d": "{total} sobrenomes armênios e analisador ao vivo: raiz armênia com áudio de Anahit e Hayk, formas oriental/ocidental e brasão familiar PNG.",
         "idx_h": "Enciclopédia de sobrenomes armênios",
-        "idx_sub": "Barik Roots (Արմատներ): explore 50 linhagens históricas ou digite qualquer sobrenome raro para analisar prefixo, raiz e sufixo.",
+        "idx_sub": "Barik Roots (Արմատներ): explore {total} linhagens históricas ou digite qualquer sobrenome raro para analisar prefixo, raiz e sufixo.",
         "search_lbl": "Buscar sobrenome em alfabeto latino, cirílico ou armênio",
         "search_ph": "Ex.: Kardashian, Ter-Petrosyan, Hacikyan, Դարբինյան…",
         "cats": {"all": "Todos", "craft": "Ofícios", "noble": "Nobreza", "nature": "Natureza", "heritage": "Legado", "trait": "Virtudes", "place": "Lugares"},
@@ -410,7 +427,7 @@ SN_TXT = {
         "dyn_sfx": "Sufixo",
         "dyn_open_w": "Abrir “{a}” no dicionário →",
         "dyn_listen": "Ouvir raiz",
-        "dyn_no_root": "Nenhuma correspondência direta — tente variantes ortográficas ou veja os 50 sobrenomes abaixo.",
+        "dyn_no_root": "Nenhuma correspondência direta — tente variantes ortográficas ou veja os {total} sobrenomes abaixo.",
         "pfx_map": {
             "ter": "Ter- (Տեր) — linhagem sacerdotal (“senhor / pároco”)",
             "melik": "Melik- (Մելիք) — príncipe soberano armênio",
@@ -455,7 +472,9 @@ SN_TXT = {
         "cta_h": "O sobrenome {name} guarda séculos de história. Mantenha o idioma vivo em sua família",
         "cta_radio": "🎧 Ouvir palavras ancestrais no modo Rádio",
         "cta_gift": "🎁 Presentear Heritage Vitalício ($129) para a família {name}",
-        "all_sn": "← Todos os 50 sobrenomes e analisador Barik Roots",
+        "guilds": {"all": "Todas as linhagens", "craft": "⚒ Ofícios e Construtores", "noble": "👑 Nobreza e Príncipes", "nature": "🏔 Natureza e Elementos", "place": "🗺 Cidades e Terras antigas", "heritage_trait": "✝ Legado espiritual e Virtudes"},
+        "rel_h": "Sobrenomes relacionados da mesma guilda / região",
+        "all_sn": "← Todos os {total} sobrenomes e analisador Barik Roots",
     },
 }
 
@@ -466,6 +485,14 @@ ROOT_ALIAS = {
     "մկրտիչ": "մկրտել",
     "վան": "վանք",
     "բեկ": "իշխան",
+    "արամ": "հայ",
+    "հայկ": "հայ",
+    "տիգրան": "թագավոր",
+    "արշակ": "Արշակունիներ",
+    "ռուբեն": "Ռուբինյաններ",
+    "գրիգոր": "եկեղեցի",
+    "միքայել": "հրեշտակ",
+    "սպենդիար": "երգ",
 }
 
 CAT_WORDS = {
@@ -548,8 +575,65 @@ def ru_display_name(lat):
         "Tumanyan": "Туманян", "Komitas": "Комитасян", "Paronyan": "Паронян",
         "Serobyan": "Серобян", "Haghtanakyan": "Ахтанакян", "Imastunyan": "Имастунян",
         "Bekyan": "Бекян", "Araratyan": "Араратян",
+        "Saroyan": "Сароян", "Tankyan": "Танкян", "Balakyan": "Балакян",
+        "Gulbenkyan": "Гульбенкян", "Mikoyan": "Микоян", "Spendiaryan": "Спендиарян",
+        "Saryan": "Сарьян", "Ayvazyan": "Айвазян", "Aramyan": "Арамян",
+        "Haykyan": "Айкян", "Tigranyan": "Тигранян", "Mashtotsyan": "Маштоцян",
+        "Shirazyan": "Ширазян", "Sevakyan": "Севакян", "Charentsyan": "Чаренцян",
+        "Ter-Petrosyan": "Тер-Петросян", "Ter-Grigoryan": "Тер-Григорян",
+        "Ter-Hakobyan": "Тер-Акопян", "Melik-Shahnazaryan": "Мелик-Шахназарян",
+        "Arshakuni": "Аршакуни", "Rubinyan": "Рубинян", "Hetumyan": "Хетумян",
+        "Gnuni": "Гнуни", "Rshtuni": "Рштуни", "Mokatsyan": "Мокацян",
+        "Loris-Melikyan": "Лорис-Меликян", "Syunetsyan": "Сюнецян",
+        "Artsakhtsyan": "Арцахцян", "Sevanetsyan": "Севанецян", "Anietsyan": "Аниецян",
+        "Dvinyan": "Двинян", "Gorgagortsyan": "Горгагорцян", "Brutyan": "Брутян",
+        "Zinvoryan": "Зинворян", "Dpiryan": "Дпирян", "Vardapetyan": "Вардапетян",
+        "Ashughyan": "Ашугян", "Nkarichyan": "Нкарчян", "Shinakanyan": "Шинаканян",
+        "Aygegortsyan": "Айгегорцян", "Tsiranyan": "Циранян", "Khndzoryan": "Хндзорян",
+        "Masisyan": "Масисян", "Aragatsyan": "Арагацян", "Astghikyan": "Астхикян",
+        "Erknyan": "Еркнян", "Barekamyan": "Барекамян", "Azatyan": "Азатян",
+        "Koryunyan": "Корюнян", "Shirakatsyan": "Ширакацян", "Narekatsyan": "Нарекацян",
+        "Aghasyan": "Агасян", "Cheronyan": "Черонян", "Malakyan": "Малакян",
+        "Kirkoryan": "Керкорян", "Davtyan": "Давтян", "Poghosyan": "Погосян",
+        "Sahakyan": "Саакян", "Gasparyan": "Гаспарян", "Minasyan": "Минасян",
+        "Voskanyan": "Восканян", "Babayan": "Бабаян", "Mirzoyan": "Мирзоян",
+        "Abrahanyan": "Абрамян", "Abrahamyan": "Абрамян", "Yesayan": "Есаян",
+        "Ghazaryan": "Казарян", "Hovsepyan": "Овсепян", "Ohanyan": "Оганян",
+        "Khachaturyan": "Хачатурян", "Hambardzumyan": "Амбарцумян",
+        "Baghdasaryan": "Багдасарян", "Arustamyan": "Арустамян", "Malkhasyan": "Малхасян",
+        "Echmiadznyan": "Эчмиадзинян", "Akhtamaryan": "Ахтамарян",
+        "Gharabaghtsyan": "Карабахцян", "Qajyan": "Каджян", "Qamyan": "Камян",
     }
-    return pairs.get(lat, lat)
+    if lat in pairs:
+        return pairs[lat]
+    def tr_part(p):
+        s = p.lower()
+        rules = [
+            ("shch", "щ"), ("khand", "ханд"), ("kh", "х"), ("sh", "ш"), ("ch", "ч"),
+            ("zh", "ж"), ("ts", "ц"), ("dz", "дз"), ("gh", "г"), ("ph", "п"),
+            ("th", "т"), ("ya", "я"), ("yu", "ю"), ("ye", "е"), ("yo", "ё"),
+            ("ay", "ай"), ("ey", "ей"), ("oy", "ой"), ("iy", "ий"), ("ou", "у"),
+            ("a", "а"), ("b", "б"), ("c", "к"), ("d", "д"), ("e", "е"),
+            ("f", "ф"), ("g", "г"), ("h", "х"), ("i", "и"), ("j", "дж"),
+            ("k", "к"), ("l", "л"), ("m", "м"), ("n", "н"), ("o", "о"),
+            ("p", "п"), ("q", "к"), ("r", "р"), ("s", "с"), ("t", "т"),
+            ("u", "у"), ("v", "в"), ("w", "в"), ("x", "кс"), ("y", "и"), ("z", "з"),
+        ]
+        out, i = [], 0
+        while i < len(s):
+            for k, v in rules:
+                if s.startswith(k, i):
+                    if k == "h" and i == 0:
+                        v = "" if s.startswith(("harut", "hakob", "hov")) else "г"
+                    out.append(v)
+                    i += len(k)
+                    break
+            else:
+                out.append(s[i])
+                i += 1
+        res = "".join(out).replace("ьи", "ьи")
+        return res[:1].upper() + res[1:] if res else p
+    return "-".join(tr_part(p) for p in lat.split("-"))
 
 
 SURNAME_JS = r"""(function(){
@@ -902,7 +986,7 @@ if(search){
       +' data-st-prep="'+escH(cfg.cardPrep||'')+'" data-st-dl="'+escH(cfg.cardDl||'')+'" data-st-sh="'+escH(cfg.cardSh||'')+'"'
       +' data-slug="'+escH(dynSlug)+'">'+escH(cfg.cardBtn||'Download Crest Card')+'</button><p class="sn-card-st" role="status" aria-live="polite"></p></div>'
       +'<div class="surname-gift-cta"><h2>'+escH((cfg.ctaH||'').replace(/\{name\}/g,dispLat))+'</h2>'
-      +'<div class="sn-cta-acts"><a class="sn-cta-radio" href="../../?lang='+escH(lang)+'&amp;listen=1">'+escH(cfg.ctaRadio||'Radio')+'</a>'
+      +'<div class="sn-cta-acts"><a class="sn-cta-radio" href="../../?lang='+escH(lang)+'&amp;listen=1&amp;family='+escH(dynSlug)+((rootMatch&&rootMatch.slug)?('&amp;root='+escH(rootMatch.slug)):'')+'">'+escH(cfg.ctaRadio||'Radio')+'</a>'
       +'<a class="sn-cta-gift" href="../../?lang='+escH(lang)+'&amp;paywall=gift&amp;family='+escH(dynSlug)+'">'+escH((cfg.ctaGift||'').replace(/\{name\}/g,dispLat))+'</a></div></div>';
   }
 
@@ -910,7 +994,7 @@ if(search){
     var qRaw=search.value.trim(),qLat=normLat(toLat(qRaw)),qLow=qRaw.toLowerCase(),shown=0;
     for(var i=0;i<items.length;i++){
       var li=items[i];
-      var catOk=(curCat==='all'||li.getAttribute('data-cat')===curCat);
+      var catOk=(curCat==='all'||curCat.split(',').indexOf(li.getAttribute('data-cat')||'')>=0);
       var k=li.getAttribute('data-k')||'';
       var qOk=!qRaw||k.indexOf(qLow)>=0||(qLat&&k.indexOf(qLat)>=0);
       var vis=catOk&&qOk;
@@ -1040,6 +1124,10 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
             out = [x for x in out if x != rw["a"]]
         return rw, out[:6]
 
+    by_cat = {}
+    for it in rows:
+        by_cat.setdefault(it["cat"], []).append(it)
+
     for L in LANGS:
         T = SN_TXT[L]
         BT = txt_dict[L]
@@ -1096,6 +1184,37 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
             west_disp = f'{it["west"]} ({it["hy"]})' if it["west"] else it["hy"]
             east_disp = f'{east}' + (f' · {disp}' if L == "ru" and disp.lower() != east.lower() else '')
 
+            cat_pool = by_cat[it["cat"]]
+            c_idx = cat_pool.index(it)
+            rel_n = min(7, len(cat_pool) - 1)
+            rel_items = [cat_pool[(c_idx + 1 + step * 3) % len(cat_pool)] for step in range(len(cat_pool) - 1)]
+            # Deduplicate while preserving deterministic spread across the guild, ensuring 6..8 items
+            seen_rel, rel_pick = {sl}, []
+            for r_it in rel_items:
+                if r_it["slug"] not in seen_rel:
+                    seen_rel.add(r_it["slug"])
+                    rel_pick.append(r_it)
+                if len(rel_pick) >= rel_n:
+                    break
+            if len(rel_pick) < rel_n:
+                for r_it in cat_pool[c_idx + 1:] + cat_pool[:c_idx]:
+                    if r_it["slug"] not in seen_rel:
+                        seen_rel.add(r_it["slug"])
+                        rel_pick.append(r_it)
+                    if len(rel_pick) >= rel_n:
+                        break
+            rel_li = "".join(
+                f'<li><a href="{esc(r_it["slug"])}.html">'
+                f'<span class="sn-rel-hy" lang="hy">{esc(r_it["hy"])}</span>'
+                f'<span class="sn-rel-lat">{esc(ru_display_name(eastern_lat(r_it)) if L == "ru" else eastern_lat(r_it))}</span>'
+                f'</a></li>'
+                for r_it in rel_pick
+            )
+            rel_sec = (
+                f'<section class="sn-related"><h2>{esc(T["rel_h"])}</h2>'
+                f'<ul class="sn-rel">{rel_li}</ul></section>'
+            ) if rel_pick else ""
+
             prev_it = rows[idx - 1] if idx > 0 else None
             next_it = rows[idx + 1] if idx + 1 < len(rows) else None
             pn = ('<p class="pn">'
@@ -1139,10 +1258,10 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
                 f'<section class="surname-gift-cta">'
                 f'<h2>{esc(T["cta_h"].format(name=disp))}</h2>'
                 f'<div class="sn-cta-acts">'
-                f'<a class="sn-cta-radio" href="../../?lang={L}&amp;listen=1">{esc(T["cta_radio"])}</a>'
+                f'<a class="sn-cta-radio" href="../../?lang={L}&amp;listen=1&amp;family={esc(sl)}&amp;root={esc(wslug[link_word["a"]])}">{esc(T["cta_radio"])}</a>'
                 f'<a class="sn-cta-gift" href="../../?lang={L}&amp;paywall=gift&amp;family={esc(sl)}">{esc(T["cta_gift"].format(name=disp))}</a>'
                 f'</div></section>'
-                + pn + f'<p class="pn"><a href="index.html">{esc(T["all_sn"])}</a></p>'
+                + rel_sec + pn + f'<p class="pn"><a href="index.html">{esc(T["all_sn"].format(total=len(rows)))}</a></p>'
             )
 
             ld = [
@@ -1186,15 +1305,23 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
             )
 
         # Index page /{L}/s/index.html
+        guilds = (
+            ("all", T["guilds"]["all"]),
+            ("craft", T["guilds"]["craft"]),
+            ("noble", T["guilds"]["noble"]),
+            ("nature", T["guilds"]["nature"]),
+            ("place", T["guilds"]["place"]),
+            ("heritage,trait", T["guilds"]["heritage_trait"]),
+        )
         cat_btns = "".join(
-            f'<button type="button" class="sn-cat" data-cat="{c}" aria-pressed="{"true" if c == "all" else "false"}">{esc(T["cats"][c])}</button>'
-            for c in ("all", "craft", "noble", "nature", "heritage", "trait", "place")
+            f'<button type="button" class="sn-cat" data-cat="{c}" aria-pressed="{"true" if c == "all" else "false"}">{esc(lbl)}</button>'
+            for c, lbl in guilds
         )
         idx_rel = f"{L}/s/index.html"
         ui_cfg = json.dumps({
             "k": T["dyn_k"], "h": T["dyn_h"], "pfx": T["pfx_map"], "sfx": T["sfx_map"],
             "rootLbl": T["dyn_root"], "openW": T["dyn_open_w"], "listen": T["dyn_listen"],
-            "noRoot": T["dyn_no_root"], "cardBtn": T["card_btn"], "cardRoot": T["card_root"],
+            "noRoot": T["dyn_no_root"].format(total=len(rows)), "cardBtn": T["card_btn"], "cardRoot": T["card_root"],
             "cardPrep": T["card_prep"], "cardDl": T["card_dl"], "cardSh": T["card_sh"],
             "ctaH": T["cta_h"], "ctaRadio": T["cta_radio"], "ctaGift": T["cta_gift"],
         }, ensure_ascii=False)
@@ -1202,7 +1329,7 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
             f'<p class="crumbs"><a href="../">{esc(BT["dict"])}</a></p>'
             f'<p class="eyebrow" lang="hy">Արմատներ · Barik Roots</p>'
             f'<h1 class="pg">{esc(T["idx_h"])}</h1><i class="orn" aria-hidden="true"></i>'
-            f'<p>{esc(T["idx_sub"])}</p>'
+            f'<p>{esc(T["idx_sub"].format(total=len(rows)))}</p>'
             f'<label class="sr" for="snSearch">{esc(T["search_lbl"])}</label>'
             f'<input id="snSearch" class="sn-search" type="search" autocomplete="off" placeholder="{esc(T["search_ph"])}" aria-label="{esc(T["search_lbl"])}">'
             f'<div class="sn-cats" role="group">{cat_btns}</div>'
@@ -1216,7 +1343,7 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
         p = os.path.join(site, idx_rel)
         os.makedirs(os.path.dirname(p), exist_ok=True)
         open(p, "w", encoding="utf-8").write(
-            page_fn(L, base, idx_rel, T["idx_t"], T["idx_d"], idx_alts, idx_body, idx_ld, extra_js=("seo.js", "surnames-roots.js", "surnames.js"))
+            page_fn(L, base, idx_rel, T["idx_t"], T["idx_d"].format(total=len(rows)), idx_alts, idx_body, idx_ld, extra_js=("seo.js", "surnames-roots.js", "surnames.js"))
         )
         files += 1
         sm.insert(0, (idx_rel, idx_alts))

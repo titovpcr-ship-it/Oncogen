@@ -14,7 +14,7 @@ import {
   levelExampleUrl, exLoadAsync
 } from './text.js';
 import {
-  SPEECH, aid, audioUrl, hasTr, trUrl, LPT, REC, listenStart, listenOpenHome,
+  SPEECH, aid, audioUrl, hasTr, trUrl, LPT, REC, listenStart, listenOpenHome, listenOpenFamily,
   listenSwitchSource, listenSelectStation, listenToggleBridge, lpStop, lpRun, listenHTML,
   loadVoices, loadManifest, preloadAudio, unlockAudio, speak, speakLetter,
   sayText, recReset, recStart, recPlay, recordListenWord
@@ -955,8 +955,10 @@ function launch() {
   if (st.view === 'paywall' && START_QUERY.get('paywall') === 'gift') loadPlans();
   {
     const qt = (/[?&]t=(\d+)(?:&|$)/.exec(location.search || '') || [])[1];
-    if (QL && START_QUERY.get('listen') === '1') {
-      setLang(QL);
+    const qFam = (START_QUERY.get('family') || '').trim().slice(0, 60);
+    const qRoot = (START_QUERY.get('root') || '').trim().slice(0, 60);
+    if ((QL || qFam) && START_QUERY.get('listen') === '1') {
+      if (QL) setLang(QL);
       if (qt !== undefined && TOPICS[+qt]) {
         const t = TOPICS[+qt];
         if (lvOpen(t.lv)) {
@@ -968,6 +970,8 @@ function launch() {
           st.backTo = { v: 'topic', a: +qt };
           openPaywall('level_lock', { level: t.lv, ti: +qt });
         }
+      } else if (qFam) {
+        listenOpenFamily(qFam, qRoot);
       } else {
         listenOpenHome();
       }

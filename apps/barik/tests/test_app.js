@@ -1008,9 +1008,13 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.goto(base+'?lang=en&paywall=gift&family=kardashian');
     await pg.waitForSelector('.pw-ctx-family[data-family="kardashian"]',{timeout:5000});
     ok(await pg.evaluate(()=>window.__bararan.pwState.sel==='lifetime'&&window.__bararan.pwState.gift129===true&&document.documentElement.scrollWidth<=innerWidth+1),'deep-link paywall=gift&family=kardashian: Heritage Lifetime + Gift Pass + баннер семьи без скролла 320px');
-    await pg.goto(base+'?lang=ru&listen=1');
+    await pg.goto(base+'?lang=ru&listen=1&family=kardashian&root=kar');
     await pg.waitForSelector('.lp-hy',{timeout:5000});
-    ok(await pg.evaluate(()=>document.documentElement.lang==='ru'&&!!window.__bararan.LP),'deep-link ?lang=ru&listen=1: запускает режим Радио на русском');
+    await pg.waitForSelector('.lp-fam',{timeout:5000});
+    ok(await pg.evaluate(()=>{ const B=window.__bararan, f=document.querySelector('.lp-fam'); return document.documentElement.lang==='ru'&&!!B.LP&&B.LP.list[0]&&B.LP.list[0].a==='քար'&&!!f&&f.textContent.includes('Эфир рода: Kardashian')&&document.documentElement.scrollWidth<=innerWidth+1; }),'deep-link ?lang=ru&listen=1&family=kardashian&root=kar: плашка рода, քար первым в очереди, без скролла 320px');
+    await pg.goto(base+'?lang=en&listen=1&family=voskanyan&root=voski');
+    await pg.waitForSelector('.lp-fam',{timeout:5000});
+    ok(await pg.evaluate(()=>{ const B=window.__bararan; return document.documentElement.lang==='en'&&!!B.LP&&B.LP.list[0]&&B.LP.list[0].a==='ոսկի'; }),'deep-link ?lang=en&listen=1&family=voskanyan&root=voski: корень B1 ոսկի первым в очереди');
     ok(errs.length===0,'deep-links Barik Roots: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }

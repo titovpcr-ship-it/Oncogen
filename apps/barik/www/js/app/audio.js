@@ -1,11 +1,11 @@
 /* Barik — озвучка (Azure MP3 / системный TTS), режим «Слушать» (Audio Immersion) и «Скажи и сравни». */
 
 import {
-  TOPICS, BILL, LEVELS, FREE_LV, st, cb, esc, T, toast, resFail, hit, canReview, lvOpen,
+  TOPICS, BILL, GR, LEVELS, FREE_LV, st, cb, esc, T, toast, resFail, hit, canReview, lvOpen,
   premium, saveUI, pgSave, shuffle, ICON
 } from './state.js';
 import {
-  WORDS, BY, tx, trn, tn, pic, exTr, exampleUrl, levelExampleUrl, exLoadAsync, wordExample
+  WORDS, BY, tx, trn, trLat, tn, pic, exTr, exampleUrl, levelExampleUrl, exLoadAsync, wordExample
 } from './text.js';
 
 export const SPEECH = ('speechSynthesis' in window) && (typeof window.SpeechSynthesisUtterance !== 'undefined');
@@ -389,12 +389,117 @@ export function listenStart(list, title, back, opts) {
     on: true,
     shown: false,
     title: title || T('lpMineTitle'),
+    family: o.family || '',
+    familySlug: o.familySlug || '',
     back: back || { v: 'home' },
     seq: 0,
     wd: null
   };
   cb.go('listen');
   lpRun();
+}
+
+function wordAsciiSlug(s) {
+  return String(s || '')
+    .replace(/[ʰʼ']/g, '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+    .replace(/-+$/g, '');
+}
+
+function formatFamilyTitle(raw) {
+  const s = String(raw || '').trim().replace(/[^\p{L}0-9\s-]/gu, '');
+  if (!s) return '';
+  return s.split(/([\s-])/).map(p => /^[\s-]$/.test(p) ? p : (p.charAt(0).toUpperCase() + p.slice(1))).join('');
+}
+
+function findFamilyRootWord(rootRaw, familyRaw) {
+  const lvRank = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 };
+  const tryMatch = q => {
+    const clean = String(q || '').trim();
+    if (!clean) return null;
+    if (BY[clean]) return BY[clean];
+    const norm = wordAsciiSlug(clean);
+    if (!norm) return null;
+    const base = norm.replace(/-[0-9a-f]{4}$/, '');
+    let exact = null, bestScore = 999;
+    for (let i = 0; i < WORDS.length; i++) {
+      const w = WORDS[i];
+      const ws = wordAsciiSlug(trLat(w.a));
+      if (ws === norm || ws === base) {
+        const sc = (ws === norm ? 0 : 10) + ((TOPICS[w.t] && lvRank[TOPICS[w.t].lv]) ?? 9);
+        if (sc < bestScore) { bestScore = sc; exact = w; }
+      }
+    }
+    return exact;
+  };
+  if (rootRaw) {
+    const hitRoot = tryMatch(rootRaw);
+    if (hitRoot) return hitRoot;
+  }
+  if (familyRaw) {
+    const fSlug = wordAsciiSlug(familyRaw)
+      .replace(/^(?:ter|der|melik|kara|mirza)-/, '')
+      .replace(/(?:yan|ian|uni|tsi|ents|onts)$/, '');
+    if (fSlug.length >= 2) {
+      const hitStem = tryMatch(fSlug);
+      if (hitStem) return hitStem;
+    }
+  }
+  return null;
+}
+
+export function listenOpenFamily(familyRaw, rootRaw) {
+  const famTitle = formatFamilyTitle(familyRaw);
+  const famSlug = String(familyRaw || '').trim().slice(0, 60);
+  const rootW = findFamilyRootWord(rootRaw, familyRaw);
+  const defaultBridge = st.UI.lpb !== undefined ? !!st.UI.lpb : true;
+  if (!rootW) {
+    listenOpenHome();
+    if (st.LP && famTitle) {
+      st.LP.family = famTitle;
+      st.LP.familySlug = famSlug;
+      if (st.view === 'listen') cb.render();
+    }
+    return;
+  }
+  const tp = TOPICS[rootW.t] || TOPICS[0];
+  const rawFam = (GR && typeof GR.family === 'function') ? GR.family(rootW.a) : [];
+  const cogSet = new Set();
+  const cognates = [];
+  const addCog = w => {
+    if (w && w.a !== rootW.a && !cogSet.has(w.a)) {
+      cogSet.add(w.a);
+      cognates.push(w);
+    }
+  };
+  rawFam.forEach(entry => addCog(BY[Array.isArray(entry) ? entry[0] : entry]));
+  if (rootW.a.length >= 3 && cognates.length < 6) {
+    for (let i = 0; i < WORDS.length && cognates.length < 8; i++) {
+      const w = WORDS[i];
+      if (w.a !== rootW.a && w.a.includes(rootW.a)) addCog(w);
+    }
+  }
+  const topicRest = (tp ? tp.list : []).filter(w => w && w.a !== rootW.a && !cogSet.has(w.a));
+  const used = new Set([rootW.a, ...cognates.map(w => w.a), ...topicRest.map(w => w.a)]);
+  const fallbackA1 = buildStationPool(FREE_LV, null).filter(w => w && !used.has(w.a));
+  const queue = [rootW, ...cognates.slice(0, 6), ...topicRest.slice(0, 12), ...shuffle(fallbackA1)];
+  exLoadAsync(levelExampleUrl(tp ? tp.lv : FREE_LV, st.L));
+  if (tp && tp.lv !== FREE_LV) exLoadAsync(levelExampleUrl(FREE_LV, st.L));
+  listenStart(queue, famTitle ? (famTitle + ' · ' + tn(tp)) : tn(tp), { v: 'home' }, {
+    src: 'stream',
+    stLv: lvOpen(tp.lv) ? tp.lv : FREE_LV,
+    stTi: lvOpen(tp.lv) ? rootW.t : null,
+    infinite: true,
+    bridge: defaultBridge,
+    bypassReview: true,
+    family: famTitle,
+    familySlug: famSlug
+  });
 }
 
 export function listenOpenHome() {
@@ -429,6 +534,8 @@ export function listenSwitchSource(src) {
     LP.end = false;
     LP.cycles = 0;
     LP.title = T('lpMineTitle');
+    LP.family = '';
+    LP.familySlug = '';
     LP.on = true;
     lpRun();
     return;
@@ -475,6 +582,8 @@ export function listenSelectStation({ lv, ti }) {
   LP.end = false;
   LP.cycles = 0;
   LP.title = title;
+  LP.family = '';
+  LP.familySlug = '';
   LP.on = true;
   exLoadAsync(levelExampleUrl(targetLv, st.L)).then(entries => {
     if (!entries || !st.LP || st.LP.src !== 'stream' || st.LP.stLv !== targetLv || st.LP.stTi !== targetTi) return;
@@ -773,8 +882,11 @@ export function listenHTML() {
     '<button data-act="lpMode" data-arg="' + m + '" aria-pressed="' + (LP.mode === m) + '">' + esc(T(m === 'learn' ? 'lpLearn' : 'lpRecall')) + '</button>'
   ).join('');
   const countTxt = LP.infinite ? ' · ∞' : ' · ' + esc(T('nWords', n));
+  const famBanner = LP.family
+    ? '<p class="lp-fam" data-family="' + esc(LP.familySlug || '') + '">🎧 ' + esc(T('lpFamilyStream', LP.family)) + '</p>'
+    : '';
   return '<button class="back" data-act="lpQuit">‹ ' + esc(T('back')) + '</button>' +
-    '<header class="head"><h1 class="pg">' + esc(T('lpTitle')) + '</h1><p class="t-hy2" lang="hy">Լսել</p><p class="tag">' + esc(LP.title) + countTxt + '</p></header>' +
+    '<header class="head"><h1 class="pg">' + esc(T('lpTitle')) + '</h1><p class="t-hy2" lang="hy">Լսել</p>' + famBanner + '<p class="tag">' + esc(LP.title) + countTxt + '</p></header>' +
     '<section class="lp">' + srcSeg + stationUI +
     '<div class="lp-card' + (LP.on ? ' on' : '') + '">' + phaseHtml + '<span class="lp-pic">' + pic(w) + '</span>' + hyv + '<div class="lp-tx">' + esc(tx(w)) + '</div>' + exHtml + '</div>' +
     '<div class="lp-prog"><span>' + (LP.i + 1) + ' / ' + n + (LP.infinite ? ' ∞' : '') + '</span><span class="bar"><i style="width:' + pct + '%"></i></span></div>' +

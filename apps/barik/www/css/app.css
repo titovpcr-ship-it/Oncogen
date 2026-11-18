@@ -1228,6 +1228,7 @@ button.ph-opt:focus-visible{outline:2px solid var(--accent,#C2410C);outline-offs
 .lp-lv[aria-pressed="true"]{background:var(--lapis);border-color:var(--lapis);color:var(--on-lapis)}
 .lp-lv.locked{color:var(--ink-2)}
 .lp-sel{min-height:44px}
+.lp-fam{display:inline-flex;align-items:center;justify-content:center;gap:6px;max-width:100%;margin:8px auto 4px;padding:7px 14px;border-radius:14px;background:var(--surface-2);border:1px solid var(--lapis);color:var(--ink);font:700 13.5px/1.35 var(--ui);overflow-wrap:anywhere;text-align:center}
 .lp-phase{padding:4px 12px;border-radius:99px;background:var(--surface-2);color:var(--ink-2);font-size:12.5px;font-weight:700;letter-spacing:.02em;margin-bottom:4px}
 .lp-ex{width:100%;margin-top:10px;padding-top:12px;border-top:1px solid var(--line);text-align:center}
 .lp-ex-hy{margin:0;font-family:var(--hy,inherit);font-size:18px;line-height:1.35;color:var(--ink);overflow-wrap:anywhere}
