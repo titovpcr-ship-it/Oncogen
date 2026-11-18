@@ -1009,7 +1009,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.waitForSelector('.pw-ctx-family[data-family="kardashian"]',{timeout:5000});
     ok(await pg.evaluate(()=>window.__bararan.pwState.sel==='lifetime'&&window.__bararan.pwState.gift129===true&&document.documentElement.scrollWidth<=innerWidth+1),'deep-link paywall=gift&family=kardashian: Heritage Lifetime + Gift Pass + баннер семьи без скролла 320px');
     await pg.goto(base+'?lang=ru&listen=1');
-    await pg.waitForSelector('.listen',{timeout:5000});
+    await pg.waitForSelector('.lp-hy',{timeout:5000});
     ok(await pg.evaluate(()=>document.documentElement.lang==='ru'&&!!window.__bararan.LP),'deep-link ?lang=ru&listen=1: запускает режим Радио на русском');
     ok(errs.length===0,'deep-links Barik Roots: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
