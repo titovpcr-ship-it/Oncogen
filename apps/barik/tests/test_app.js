@@ -946,6 +946,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   }
   { // Путь граната: Placement Sync (B1 -> Ступень 4), экстерн-статус, Audio Immersion прогресс, 100% округление, stage_lock превью и Fast-Track
     const ctx=await br.newContext({viewport:{width:320,height:740},locale:'ru-RU',serviceWorkers:'block'}); const pg=await ctx.newPage();
+    const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1]+1,'путь '+n+': без горизонтальной прокрутки ('+w+')'); };
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
     await pg.waitForSelector('.today-path',{timeout:5000});
@@ -981,7 +982,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok((await pg.textContent('.p-struct[data-stage-struct="4"]')).includes('Темы и формулы ступени'),'Pre-Paywall: структура Ступени 4 раскрывается на карте');
     await noH('путь синхронизированный 320px');
     await pg.click('[data-act=pStageLock][data-arg="4"]');
-    await pg.waitForSelector('[data-pw-reason=stage_lock]',{timeout:8000});
+    await pg.waitForSelector('[data-pw-reason=stage_lock] [data-act=pwExSay]',{timeout:8000});
     const pwStTxt=await pg.textContent('.pw');
     ok(pwStTxt.includes('Ступень 4')&&await pg.locator('.pw-stage-topics li').count()>=3&&await pg.locator('[data-act=pwExSay]').count()>=1,'stage_lock Paywall: тема ступени, уроки и живые аудио-примеры');
     await noH('paywall stage_lock 320px');
@@ -993,7 +994,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     // Fast-Track с подпиской открывает сразу первый урок Ступени 4 (s4u1)
     await pg.setViewportSize({width:375,height:780});
     await pg.evaluate(()=>{ window.BARARAN_CONFIG.FORCE_PREMIUM=true; window.__bararan.go('path'); });
-    await pg.click('[data-act=pGoStage][data-arg="4"]');
+    await pg.waitForSelector('.p-st[data-stage-id="4"] [data-act=pGoStage]',{timeout:5000});
+    await pg.click('.p-st[data-stage-id="4"] [data-act=pGoStage]');
     await pg.waitForSelector('.u-formula',{timeout:5000});
     ok(await pg.evaluate(()=>window.__bararan.PU&&window.__bararan.PU.u&&window.__bararan.PU.u.id==='s4u1'),'Fast-Track (B1 + Premium): сразу открывает s4u1 на Ступени 4');
     await noH('Fast-Track s4u1 375px');
