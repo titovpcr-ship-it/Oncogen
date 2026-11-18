@@ -55,11 +55,13 @@ const tzLang = window.BARIK_tzLang || (() => '');
 const NAVL = ['ru', 'fr', 'es', 'de', 'pt', 'en'].find(l => NAV.indexOf(l) === 0) || '';
 export const SUG = (TZ === 'Asia/Yerevan' ? 'ru' : '') || NAVL || '';
 
-let PG_INIT = { u: {}, tr: true };
+let PG_INIT = { u: {}, tr: true, lw: {}, lc: 0, lvl: null };
 try {
   const j = JSON.parse(localStorage.getItem(PGK) || 'null');
   if (j && j.u) PG_INIT = Object.assign(PG_INIT, j);
 } catch (e) {}
+if (!PG_INIT.lw || typeof PG_INIT.lw !== 'object' || Array.isArray(PG_INIT.lw)) PG_INIT.lw = {};
+PG_INIT.lc = PG_INIT.lc || 0;
 
 export const st = {
   UI: UI_INIT,
@@ -87,6 +89,8 @@ export const st = {
   GF: { m: 12, code: '', busy: false, err: '' },
   CT: { st: 0, name: '' },
   PU: null,
+  pgStruct: 0,
+  pendingStage: 0,
   seedFrom: null,
   ROOTS: null,
   aq: null,
@@ -214,6 +218,161 @@ export function lvOpen(lv) { return lv === FREE_LV || premium(); }
 export function canUse(w) { return lvOpen(TOPICS[w.t].lv); }
 export function canReview(w) { return canUse(w) || !!st.S.w[w.a]; }
 
+/* ================= ПРОГРЕСС ПУТИ ГРАНАТА И РАЗМЕЩЕНИЕ ================= */
+export const STAGE_UNIT_COUNTS = { 0: 1, 1: 9, 2: 8, 3: 8, 4: 8, 5: 12 };
+export const STAGE_CEFR = { 0: 'A0', 1: 'A1', 2: 'A1', 3: 'A2', 4: 'B1', 5: 'B2' };
+
+export function stageCefr(stageId) {
+  return STAGE_CEFR[+stageId] || 'A1';
+}
+
+export function lvlToStageId(lv) {
+  if (lv === 'A2') return 3;
+  if (lv === 'B1') return 4;
+  if (lv === 'B2' || lv === 'C1' || lv === 'C2') return 5;
+  return 1;
+}
+
+export function stage0Done() {
+  return !!st.PG.abc || Object.keys(st.S.pen || {}).length >= 20;
+}
+
+export function stageMetaById(id) {
+  const n = +id;
+  const crs = st.CRS && st.CRS.stages ? st.CRS.stages.find(s => s.id === n) : null;
+  if (crs) return crs;
+  return (PMETA && PMETA.stages ? PMETA.stages.find(s => s.id === n) : null) || null;
+}
+
+export function stageUnitStats(stageId) {
+  const id = +stageId;
+  if (id === 0) return { done: stage0Done() ? 1 : 0, total: 1 };
+  const units = st.CRS && st.CRS.units ? st.CRS.units : [];
+  if (units.length) {
+    const us = units.filter(u => u.stage === id);
+    return { done: us.filter(u => !!st.PG.u[u.id]).length, total: us.length };
+  }
+  const total = STAGE_UNIT_COUNTS[id] || 0;
+  const prefix = 's' + id + 'u';
+  const done = Object.keys(st.PG.u || {}).filter(k => k.indexOf(prefix) === 0 && st.PG.u[k]).length;
+  return { done: Math.min(total, done), total };
+}
+
+export function stageAudioCount(stageId) {
+  const id = +stageId;
+  const lw = (st.PG && st.PG.lw) || {};
+  const keys = Object.keys(lw);
+  if (!keys.length) return 0;
+  if (id === 1) return keys.filter(k => lw[k] === 'A1').length;
+  if (id === 2) {
+    const s1 = stageUnitStats(1);
+    return (s1.total > 0 && s1.done >= s1.total) ? keys.filter(k => lw[k] === 'A1').length : 0;
+  }
+  if (id === 3) return keys.filter(k => lw[k] === 'A2').length;
+  if (id === 4) return keys.filter(k => lw[k] === 'B1').length;
+  if (id === 5) return keys.filter(k => lw[k] === 'B2' || lw[k] === 'C1' || lw[k] === 'C2').length;
+  return 0;
+}
+
+export function stageProgress(stageId) {
+  const id = +stageId;
+  const { done, total } = stageUnitStats(id);
+  const audioSeen = stageAudioCount(id);
+  const complete = total > 0 && done >= total;
+  let pct = 0;
+  if (complete) {
+    pct = 100;
+  } else if (total > 0 && (done > 0 || audioSeen > 0)) {
+    const unitPct = (done / total) * 100;
+    const audioBonus = audioSeen > 0 ? Math.min(15, Math.max(1, Math.round(audioSeen * 1.5))) : 0;
+    const raw = Math.round(unitPct + audioBonus * (total - done) / total);
+    pct = Math.max(1, Math.min(99, raw));
+  }
+  return { stageId: id, done, total, audioSeen, pct, complete };
+}
+
+export function overallPathStats() {
+  let done = 0, total = 0;
+  for (const id of [1, 2, 3, 4, 5]) {
+    const s = stageUnitStats(id);
+    done += s.done;
+    total += s.total;
+  }
+  const audioSeen = Object.keys((st.PG && st.PG.lw) || {}).length;
+  const complete = total > 0 && done >= total;
+  let pct = 0;
+  if (complete) {
+    pct = 100;
+  } else if (total > 0 && (done > 0 || audioSeen > 0)) {
+    const unitPct = (done / total) * 100;
+    const audioBonus = audioSeen > 0 ? Math.min(10, Math.max(1, Math.round(audioSeen * 0.5))) : 0;
+    const raw = Math.round(unitPct + audioBonus * (total - done) / total);
+    pct = Math.max(1, Math.min(99, raw));
+  }
+  return { done, total, audioSeen, pct, complete };
+}
+
+export function testedLevel() {
+  return st.UI.lvlTested || (st.PG && st.PG.lvl && st.PG.lvl.lv) || '';
+}
+
+export function recommendedStageId() {
+  const lv = testedLevel();
+  return LEVELS.indexOf(lv) >= 1 ? lvlToStageId(lv) : null;
+}
+
+export function activePathStage() {
+  const rec = recommendedStageId();
+  const lv = testedLevel();
+  const order = rec ? [rec, ...[1, 2, 3, 4, 5].filter(x => x > rec), ...[1, 2, 3, 4, 5].filter(x => x < rec)] : [1, 2, 3, 4, 5];
+  let stageId = order.find(id => !stageProgress(id).complete);
+  if (stageId == null) stageId = rec || 5;
+  const stage = stageMetaById(stageId);
+  return {
+    stageId,
+    stage,
+    recStage: rec,
+    testedLv: lv,
+    locked: stageId >= 2 && !BILL.isPremium(),
+    prog: stageProgress(stageId)
+  };
+}
+
+const STAGE_LN_COL = { ru: 2, en: 3, fr: 4, es: 5, de: 6, pt: 7 };
+export function stagePayload(stageId, focusUnit = null) {
+  const id = Math.max(2, +stageId || 2);
+  const stage = stageMetaById(id);
+  const cefr = stageCefr(id);
+  const us = (st.CRS && st.CRS.units && st.CRS.units.length) ? st.CRS.units.filter(u => u.stage === id) : [];
+  let topics = [], wordsCount = 0, unitsCount = STAGE_UNIT_COUNTS[id] || 0;
+  const sampleLines = [];
+  if (us.length) {
+    unitsCount = us.length;
+    const seeds = new Set();
+    us.forEach(u => (u.seeds || []).forEach(w => seeds.add(w)));
+    wordsCount = seeds.size;
+    topics = us.map(u => ({ id: u.id, title: u.title, formula: u.formula, kind: u.kind || 'unit' }));
+    const col = STAGE_LN_COL[st.L] || 3;
+    const srcUnits = focusUnit ? [focusUnit, ...us.filter(u => u !== focusUnit)] : us;
+    for (const u of srcUnits) {
+      if (!u.scene || !Array.isArray(u.scene.lines)) continue;
+      for (const ln of u.scene.lines) {
+        if (!ln || !ln[1]) continue;
+        if (sampleLines.some(x => x.hy === ln[1])) continue;
+        const who = (u.scene.who && u.scene.who[ln[0]]) || {};
+        sampleLines.push({ hy: ln[1], tx: ln[col] || ln[3] || ln[2] || '', g: who.g === 'm' ? 'm' : 'f' });
+        if (sampleLines.length >= 2) break;
+      }
+      if (sampleLines.length >= 2) break;
+    }
+  } else {
+    const tList = TOPICS.filter(t => t.lv === cefr);
+    wordsCount = tList.reduce((acc, t) => acc + ((t.w && t.w.length) || (t.list && t.list.length) || 0), 0);
+    topics = tList.slice(0, 5).map((t, i) => ({ id: 't' + i, title: t, formula: t.hy || '', kind: 'topic' }));
+  }
+  return { stageId: id, stage, lv: (stage && stage.lv) || cefr, level: cefr, cefr, unitsCount, wordsCount, topics, sampleLines };
+}
+
 export function today() {
   const d = new Date();
   return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000);
@@ -300,7 +459,15 @@ export function syncPack() {
   return {
     v: 1,
     s: { w: st.S.w, st: st.S.st, reset: st.S.reset || 0, pen: st.S.pen || {} },
-    p: { u: st.PG.u || {}, abc: st.PG.abc ? 1 : 0, h: st.PG.h || null, placed: st.PG.placed || null }
+    p: {
+      u: st.PG.u || {},
+      abc: st.PG.abc ? 1 : 0,
+      h: st.PG.h || null,
+      placed: st.PG.placed || null,
+      lw: st.PG.lw || {},
+      lc: st.PG.lc || 0,
+      lvl: st.PG.lvl || null
+    }
   };
 }
 
@@ -330,6 +497,14 @@ export function syncMerge(R, replace) {
     st.PG.abc = rp.abc ? 1 : 0;
     st.PG.h = rp.h || null;
     st.PG.placed = rp.placed || null;
+    st.PG.lw = syObj(rp.lw);
+    st.PG.lc = rp.lc || 0;
+    st.PG.lvl = rp.lvl || null;
+    if (st.PG.lvl && st.PG.lvl.lv && !st.UI.lvlTested) {
+      st.UI.lvlTested = st.PG.lvl.lv;
+      if (st.PG.lvl.w) st.UI.lvlWords = st.PG.lvl.w;
+      saveUI();
+    }
     return;
   }
   const ru = syObj(rp.u);
@@ -341,6 +516,16 @@ export function syncMerge(R, replace) {
   if (rp.abc) st.PG.abc = 1;
   if (rp.h && (!st.PG.h || (rp.h.last || 0) > (st.PG.h.last || 0))) st.PG.h = rp.h;
   if (rp.placed && (!st.PG.placed || (rp.placed.d || 0) > (st.PG.placed.d || 0))) st.PG.placed = rp.placed;
+  if (!st.PG.lw || typeof st.PG.lw !== 'object' || Array.isArray(st.PG.lw)) st.PG.lw = {};
+  const rlw = syObj(rp.lw);
+  for (const k in rlw) if (rlw[k]) st.PG.lw[k] = rlw[k];
+  st.PG.lc = Math.max(st.PG.lc || 0, rp.lc || 0);
+  if (rp.lvl && (!st.PG.lvl || (rp.lvl.d || 0) > (st.PG.lvl.d || 0))) st.PG.lvl = rp.lvl;
+  if (st.PG.lvl && st.PG.lvl.lv && !st.UI.lvlTested) {
+    st.UI.lvlTested = st.PG.lvl.lv;
+    if (st.PG.lvl.w) st.UI.lvlWords = st.PG.lvl.w;
+    saveUI();
+  }
 }
 
 export async function syncNow() {

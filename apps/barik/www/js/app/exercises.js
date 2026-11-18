@@ -2,7 +2,7 @@
 
 import {
   TOPICS, ABC, BILL, EMO, LEVELS, INT, st, cb, $, esc, shuffle, buzz, toast, T, ICON,
-  lvOpen, premium, canUse, canReview, today, touchStreak, save, saveUI, hit, ACC, focusTarget
+  lvOpen, premium, canUse, canReview, today, touchStreak, save, saveUI, pgSave, lvlToStageId, stageMetaById, stagePayload, hit, ACC, focusTarget
 } from './state.js';
 import {
   WORDS, BY, tx, trn, normHy, exTr, LEXICAL_REVIEW, LEXICAL_NOTE, pic, picQ, emo,
@@ -888,7 +888,9 @@ function computeLvlResult(lq) {
   lq.vocab = LVL_VOCAB[ok] || 180;
   st.UI.lvlTested = lq.level;
   st.UI.lvlWords = lq.vocab;
+  st.PG.lvl = { lv: lq.level, w: lq.vocab, d: Date.now() };
   saveUI();
+  pgSave();
   hit('lvl_done_' + lq.level);
 }
 
@@ -914,7 +916,6 @@ export function lvlNext() {
   clearTimeout(st.lq.timer);
   st.lq.i++;
   if (st.lq.i >= st.lq.items.length && !st.lq.computed) {
-    st.lq.computed = true;
     computeLvlResult(st.lq);
   }
   cb.render();
@@ -934,16 +935,19 @@ export function lvlQuizHTML() {
     const minIdx = Math.max(0, LEVELS.indexOf(lv));
     const trackCount = WORDS.filter(w => TOPICS[w.t] && LEVELS.indexOf(TOPICS[w.t].lv) >= minIdx).length;
     const isUp = lv !== 'A1' && !premium();
+    const recSid = lv !== 'A1' ? lvlToStageId(lv) : 1;
+    const recSt = stageMetaById(recSid);
     const offer = isUp
       ? '<div class="lvl-offer"><p class="lvl-offer-tx">' + esc(T('lvlOffer', lv, fmtInt(trackCount))) + '</p></div>' +
         (!BILL.native ? webPlansHTML({ embed: 'quiz_result' }) : '<div class="actions"><button class="btn primary" data-act="paywall" data-arg="level:' + esc(lv) + '">' + esc(T('unlockLevel', lv)) + '</button></div>')
       : '<p class="note lvl-a1-note">' + esc(T('lvlReadyA1')) + '</p>' +
-        '<div class="actions"><button class="btn primary" data-act="lvlStartTrack" data-arg="' + esc(lv) + '">' + emo('🎧', 'ie') + ' ' + esc(T('lvlStartTrack', lv)) + '</button></div>';
+        '<div class="actions"><button class="btn primary" data-act="lvlStartTrack" data-arg="' + esc(lv) + '">' + emo('🎧', 'ie') + ' ' + esc(T('lvlStartTrack', lv)) + '</button>' +
+        '<button class="btn secondary" data-act="pGoStage" data-arg="' + recSid + '">' + esc(T('pGoStage', recSid, (recSt && recSt.lv) || lv)) + '</button></div>';
     return top + '<div class="result lvl-res"><div class="apres" lang="hy">Ապրե՛ս</div>' +
       '<h1 class="pg lvl-res-h">' + esc(T('lvlResTitle', lv)) + '</h1>' +
       '<p class="lvl-vocab">' + esc(T('lvlVocab', fmtInt(lq.vocab))) + '</p>' +
       offer +
-      '<div class="actions lvl-res-acts"><button class="btn ghost" data-act="lvlStart">' + esc(T('lvlRetake')) + '</button><button class="btn ghost" data-act="tab" data-arg="home">' + esc(T('toHome')) + '</button></div></div>';
+      '<div class="actions lvl-res-acts"><button class="btn ghost" data-act="tab" data-arg="path">' + esc(T('pOpenPath')) + '</button><button class="btn ghost" data-act="lvlStart">' + esc(T('lvlRetake')) + '</button><button class="btn ghost" data-act="tab" data-arg="home">' + esc(T('toHome')) + '</button></div></div>';
   }
   const it = lq.items[lq.i], w = it.w;
   const cls = (o, j) => !it.done ? '' : (o === w ? 'ok' : (j === it.pick ? 'bad' : 'dim'));

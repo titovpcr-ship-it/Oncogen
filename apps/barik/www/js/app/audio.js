@@ -2,7 +2,7 @@
 
 import {
   TOPICS, BILL, LEVELS, FREE_LV, st, cb, esc, T, toast, resFail, hit, canReview, lvOpen,
-  premium, saveUI, shuffle, ICON
+  premium, saveUI, pgSave, shuffle, ICON
 } from './state.js';
 import {
   WORDS, BY, tx, trn, tn, pic, exTr, exampleUrl, levelExampleUrl, exLoadAsync, wordExample
@@ -534,6 +534,23 @@ function lpSay(url, text, tr, then, voiceDir) {
   else { speakTTS(text, false, null, false); lpLater(go2, 1800); }
 }
 
+export function recordListenWord(w, countCycle = true) {
+  if (!w || !w.a) return false;
+  const lv = (TOPICS[w.t] && TOPICS[w.t].lv) || 'A1';
+  if (!st.PG.lw || typeof st.PG.lw !== 'object' || Array.isArray(st.PG.lw)) st.PG.lw = {};
+  let changed = false;
+  if (st.PG.lw[w.a] !== lv) {
+    st.PG.lw[w.a] = lv;
+    changed = true;
+  }
+  if (countCycle) {
+    st.PG.lc = (st.PG.lc || 0) + 1;
+    changed = true;
+  }
+  if (changed) pgSave();
+  return changed;
+}
+
 function lpAdvance() {
   const LP = st.LP;
   if (!LP || !LP.on) return;
@@ -598,7 +615,7 @@ export function lpRun() {
   if (!LP.bridge) {
     const hy = done => lpSay(audioUrl(w.a, 'f'), w.a, false, done, 'f');
     const tr = done => lpSay(trUrl(tx(w)), tx(w), true, done);
-    const next = () => lpLater(() => { LP.i++; lpRun(); }, LPT.next);
+    const next = () => { recordListenWord(w, true); lpLater(() => { LP.i++; lpRun(); }, LPT.next); };
     if (LP.mode === 'learn') hy(() => lpLater(() => tr(next), LPT.gap));
     else tr(() => lpLater(() => {
       if (!st.LP || st.LP.seq !== q) return;
@@ -632,6 +649,7 @@ export function lpRun() {
       if (!st.LP || !st.LP.on || st.LP.seq !== q) return;
       const doneCycle = () => {
         if (!st.LP || !st.LP.on || st.LP.seq !== q) return;
+        recordListenWord(w, true);
         LP.cycles = (LP.cycles || 0) + 1;
         lpLater(lpAdvance, LPT.next);
       };

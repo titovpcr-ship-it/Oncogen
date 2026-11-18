@@ -944,6 +944,62 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(errs.length===0,'CRO Upgrade: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
   }
+  { // Путь граната: Placement Sync (B1 -> Ступень 4), экстерн-статус, Audio Immersion прогресс, 100% округление, stage_lock превью и Fast-Track
+    const ctx=await br.newContext({viewport:{width:320,height:740},locale:'ru-RU',serviceWorkers:'block'}); const pg=await ctx.newPage();
+    const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.waitForSelector('.today-path',{timeout:5000});
+    ok(await pg.evaluate(()=>!window.BARIK_PATH),'Б4: главная с карточкой «Путь Гранат» не грузит path_data.js заранее');
+    await pg.click('[data-act=lvlStart]');
+    await pg.waitForSelector('.lvl-play',{timeout:5000});
+    for(let i=0;i<6;i++){
+      const ansIdx=i<3?await pg.evaluate(k=>{ const q=window.__bararan.lq.items[k]; return q.opts.indexOf(q.w); },i):-1;
+      await pg.click('[data-act=lvlOpt][data-arg="'+ansIdx+'"]');
+      await pg.waitForTimeout(80);
+      if(await pg.locator('[data-act=lvlNext]').count()) await pg.click('[data-act=lvlNext]');
+      await pg.waitForTimeout(80);
+    }
+    await pg.waitForSelector('.lvl-res-h',{timeout:5000});
+    ok(await pg.evaluate(()=>window.__bararan.PG.lvl&&window.__bararan.PG.lvl.lv==='B1'),'Placement Sync: уровень B1 сохранён в PG.lvl');
+    await pg.click('.lvl-res-acts [data-act=tab][data-arg=home]');
+    await pg.waitForSelector('.today-path',{timeout:5000});
+    const tdTxt=await pg.textContent('.today-path');
+    ok(tdTxt.includes('Ступень 4')&&tdTxt.includes('Рекомендовано для вашего уровня B1'),'главная .today: синхронизирована со Ступенью 4 (B1)');
+    // Audio Immersion: прослушивание слов уровня B1 даёт прогресс Ступени 4 на главной и на карте
+    await pg.evaluate(()=>{ const B=window.__bararan; const b1=B.WORDS.filter(w=>B.TOPICS[w.t].lv==='B1').slice(0,4); b1.forEach(w=>B.recordListenWord(w,true)); B.go('home'); });
+    await pg.waitForSelector('.today-path-pct',{timeout:5000});
+    ok(parseInt(await pg.textContent('.today-path-pct'),10)>0,'Audio Immersion: прогресс прослушивания обновился на главной');
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'главная .today-path 320px: без горизонтальной прокрутки');
+    // Переход на карту «Путь граната»
+    await pg.click('.today-path [data-act=tab][data-arg=path]');
+    await pg.waitForSelector('.p-st.rec[data-stage-id="4"]',{timeout:8000});
+    ok(await pg.locator('.p-st.extern').count()===3,'экстерн: ступени 1–3 отмечены как знакомая база');
+    ok((await pg.textContent('.p-st.rec[data-stage-id="4"]')).includes('Прослушано слов: 4'),'Audio Immersion: счётчик прослушанных слов отображается на Ступени 4');
+    // Pre-Paywall инспекция структуры ступени и stage_lock Paywall
+    await pg.click('[data-act=pStageStruct][data-arg="4"]');
+    await pg.waitForSelector('.p-struct[data-stage-struct="4"]',{timeout:5000});
+    ok((await pg.textContent('.p-struct[data-stage-struct="4"]')).includes('Темы и формулы ступени'),'Pre-Paywall: структура Ступени 4 раскрывается на карте');
+    await noH('путь синхронизированный 320px');
+    await pg.click('[data-act=pStageLock][data-arg="4"]');
+    await pg.waitForSelector('[data-pw-reason=stage_lock]',{timeout:8000});
+    const pwStTxt=await pg.textContent('.pw');
+    ok(pwStTxt.includes('Ступень 4')&&await pg.locator('.pw-stage-topics li').count()>=3&&await pg.locator('[data-act=pwExSay]').count()>=1,'stage_lock Paywall: тема ступени, уроки и живые аудио-примеры');
+    await noH('paywall stage_lock 320px');
+    // Проверка точного 100% прогресса ступени при завершении всех уроков (без 99%)
+    await pg.click('[data-act=pwClose]');
+    await pg.evaluate(()=>{ const B=window.__bararan; B.CRS.units.filter(u=>u.stage===1).forEach(u=>{ B.PG.u[u.id]={d:Date.now(),b:100}; }); B.pgSave(); B.go('path'); });
+    await pg.waitForSelector('.p-st[data-stage-id="1"] .p-st-pct',{timeout:5000});
+    ok((await pg.textContent('.p-st[data-stage-id="1"] .p-st-pct')).includes('100%'),'Ступень 1: завершение всех формул даёт ровно 100% без зависания на 99%');
+    // Fast-Track с подпиской открывает сразу первый урок Ступени 4 (s4u1)
+    await pg.setViewportSize({width:375,height:780});
+    await pg.evaluate(()=>{ window.BARARAN_CONFIG.FORCE_PREMIUM=true; window.__bararan.go('path'); });
+    await pg.click('[data-act=pGoStage][data-arg="4"]');
+    await pg.waitForSelector('.u-formula',{timeout:5000});
+    ok(await pg.evaluate(()=>window.__bararan.PU&&window.__bararan.PU.u&&window.__bararan.PU.u.id==='s4u1'),'Fast-Track (B1 + Premium): сразу открывает s4u1 на Ступени 4');
+    await noH('Fast-Track s4u1 375px');
+    ok(errs.length===0,'Путь граната upgrade: без ошибок страницы '+errs.join(' | '));
+    await ctx.close();
+  }
   await br.close(); srv.close();
   console.log(fails?('ПРОВАЛОВ: '+fails):'ВСЁ ХОРОШО'); process.exit(fails?1:0);
 })().catch(e=>{console.error(e); process.exit(2);});

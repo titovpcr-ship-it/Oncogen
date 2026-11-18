@@ -2,7 +2,8 @@
 
 import {
   TOPICS, ABC, GR, NAMES, st, cb, esc, shuffle, buzz, T, ICON,
-  premium, today, touchStreak, save, pgSave, hit, ACC
+  premium, today, touchStreak, save, pgSave, hit, ACC,
+  stage0Done, stageProgress, overallPathStats, testedLevel, recommendedStageId, stagePayload
 } from './state.js';
 import { WORDS, BY, tx, trn, trPhrase, trL, emo, picQ, counts } from './text.js';
 import { audioOK, getAudio, audioUrl, speak, sayText } from './audio.js';
@@ -50,11 +51,16 @@ export function pathStat() {
 }
 
 export const unitOpen = u => u.stage < 2 || premium();
-const nextUnit = () => st.CRS.units.find(u => !st.PG.u[u.id] && unitOpen(u)) || st.CRS.units.find(u => !st.PG.u[u.id]);
+const nextUnit = () => {
+  const rec = recommendedStageId();
+  if (rec && (rec < 2 || premium())) {
+    const fast = st.CRS.units.find(u => u.stage >= rec && !st.PG.u[u.id] && unitOpen(u));
+    if (fast) return fast;
+  }
+  return st.CRS.units.find(u => !st.PG.u[u.id] && unitOpen(u)) || st.CRS.units.find(u => !st.PG.u[u.id]);
+};
 
-export function stage0Done() {
-  return !!st.PG.abc || Object.keys(st.S.pen || {}).length >= 20;
-}
+export { stage0Done };
 
 function stageDone(id) {
   if (id === 0) return stage0Done();
@@ -182,7 +188,8 @@ function pomSVG() {
 }
 
 export function pathHTML() {
-  const stt = pathStat(), nu = nextUnit();
+  const stt = pathStat(), nu = nextUnit(), ov = overallPathStats();
+  const recStage = recommendedStageId(), testedLv = testedLevel();
   let gain = '';
   if (nu && nu.affix) {
     const d = openCount(nu) - stt.open;
@@ -190,7 +197,11 @@ export function pathHTML() {
   }
   const nuBtn = (cls, k) => nu ? '<button class="btn ' + cls + '" data-act="pUnit" data-arg="' + nu.id + '">' + esc(T(k)) + '<span class="cap">' + esc(rdx(nu.title)) + ' · ' + esc(nu.formula) + '</span></button>' : '';
   let go = '';
-  if (!stt.done && !st.PG.placed) {
+  if (recStage && (recStage < 2 || premium()) && !stageDone(recStage)) {
+    const recSt = st.CRS.stages.find(x => x.id === recStage);
+    go = '<button class="btn primary" data-act="pGoStage" data-arg="' + recStage + '">' + esc(T('pGoStage', recStage, (recSt && recSt.lv) || testedLv)) +
+      (nu ? '<span class="cap">' + esc(rdx(nu.title)) + ' · ' + esc(nu.formula) + '</span>' : '') + '</button>';
+  } else if (!stt.done && !st.PG.placed) {
     go = '<p class="p-sub">' + esc(T('pPlaceOffer')) + '</p>' + nuBtn('primary', 'pStart') + '<button class="btn secondary" data-act="pPlace">' + emo('🧭', 'ie') + ' ' + esc(T('pPlaceGo')) + '</button>';
   } else if (st.CRS.units.some(u => st.PG.u[u.id] && unitOpen(u)) && !harvestedToday()) {
     go = '<button class="btn primary" data-act="pHarvestGo">' + esc(T('pHarvest')) + '<span class="cap">' + esc(T('pHarvestCap', nu ? rdx(nu.title) : '')) + '</span></button>' + nuBtn('ghost', 'pNextUnit');
@@ -199,9 +210,44 @@ export function pathHTML() {
     if (harvestedToday()) go = '<p class="p-gain">✓ ' + esc(T('pHarvestToday')) + ((h.streak || 0) >= 2 ? ' · ' + emo('🔥', 'ie') + ' ' + esc(T('pStreakN', h.streak)) : '') + '</p>';
     go += nu ? nuBtn('primary', 'pNextUnit') : '<p class="summary">' + esc(T('pAllDone')) + '</p>';
   }
+  const ovHTML = '<div class="p-ov"><div class="p-ov-top"><span>' + esc(T('pOverallProg', ov.done, ov.total, ov.pct)) + '</span><b class="p-ov-pct">' + ov.pct + '%</b></div><div class="bar p-ov-bar"><i style="width:' + ov.pct + '%"></i></div></div>';
   const tile = (n, k) => '<div class="p-stat"><b>' + n + '</b><span>' + esc(T(k)) + '</span></div>';
   const stages = st.CRS.stages.map(s => {
     const us = st.CRS.units.filter(u => u.stage === s.id);
+    const sp = stageProgress(s.id);
+    const isRec = recStage === s.id;
+    const isExtern = !!(recStage && s.id >= 1 && s.id < recStage);
+    const isLockedStage = s.id >= 2 && !premium();
+    let badges = '';
+    if (isRec) badges += '<span class="p-badge rec">⭐ ' + esc(T('pRecForLvl', testedLv)) + '</span>';
+    if (isExtern) badges += '<span class="p-badge extern">✓ ' + esc(T('pBaseKnown')) + '</span>';
+    if (sp.audioSeen > 0) badges += '<span class="p-badge aud">🎧 ' + esc(T('pAudioSeen', sp.audioSeen)) + '</span>';
+    const badgeRow = badges ? '<div class="p-badges">' + badges + '</div>' : '';
+    const stProg = s.id >= 1
+      ? '<div class="p-st-prog"><div class="bar"><i style="width:' + sp.pct + '%"></i></div><span class="p-st-pct">' + esc(T('pStageStats', sp.done, sp.total, sp.pct)) + '</span></div>'
+      : '';
+    let stActs = '';
+    if (s.id >= 1) {
+      if (isLockedStage) {
+        const exp = st.pgStruct === s.id;
+        stActs = '<div class="p-st-acts">' +
+          '<button type="button" class="btn secondary sm" data-act="pStageStruct" data-arg="' + s.id + '" aria-expanded="' + exp + '">' + esc(T('pStageInside')) + '</button>' +
+          '<button type="button" class="btn primary sm" data-act="pStageLock" data-arg="' + s.id + '">' + emo('🔒', 'ie') + ' ' + esc(T('pStageUnlock', s.id, s.lv)) + '</button>' +
+          '</div>';
+      } else if (isRec && !sp.complete && us.length) {
+        stActs = '<div class="p-st-acts"><button type="button" class="btn primary sm" data-act="pGoStage" data-arg="' + s.id + '">' + esc(T('pGoStage', s.id, s.lv)) + '</button></div>';
+      }
+    }
+    let structBox = '';
+    if (isLockedStage && st.pgStruct === s.id && us.length) {
+      const spPayload = stagePayload(s.id);
+      structBox = '<div class="p-struct" data-stage-struct="' + s.id + '">' +
+        '<p class="p-struct-meta">' + esc(T('pwStageMeta', spPayload.unitsCount, spPayload.wordsCount)) + '</p>' +
+        '<p class="p-struct-h">' + esc(T('pStageThemes')) + '</p>' +
+        '<ul class="p-struct-list">' + us.slice(0, 6).map((u, i) =>
+          '<li><span>' + (i + 1) + '. ' + esc(rdx(u.title)) + '</span><span lang="hy">' + esc(u.formula) + '</span></li>'
+        ).join('') + (us.length > 6 ? '<li class="p-struct-more">+' + (us.length - 6) + '</li>' : '') + '</ul></div>';
+    }
     let body = '';
     if (s.id === 0) {
       const pen = Object.keys(st.S.pen || {}).length;
@@ -217,11 +263,13 @@ export function pathHTML() {
     } else {
       body = '<p class="p-sub p-soon">' + emo('🔒', 'ie') + ' ' + esc(T('pSoon')) + '</p>';
     }
-    return '<section class="p-st' + (us.length || s.id === 0 ? '' : ' off') + '"><header class="p-sth"><span class="p-lv">' + esc(s.lv) + '</span><span class="p-nm"><b>' + esc(T('pStageN', s.id)) + ' · ' + esc(rdx(s)) + '</b><span lang="hy">' + esc(s.hy) + '</span></span></header><p class="p-can">' + esc(T('pCan')) + ' ' + esc(rdx(s.can)) + '</p>' + body +
+    return '<section class="p-st' + (us.length || s.id === 0 ? '' : ' off') + (isRec ? ' rec' : '') + (isExtern ? ' extern' : '') + (sp.complete ? ' done' : '') + '" data-stage-id="' + s.id + '">' +
+      '<header class="p-sth"><span class="p-lv">' + esc(s.lv) + '</span><span class="p-nm"><b>' + esc(T('pStageN', s.id)) + ' · ' + esc(rdx(s)) + '</b><span lang="hy">' + esc(s.hy) + '</span></span></header>' +
+      badgeRow + stProg + '<p class="p-can">' + esc(T('pCan')) + ' ' + esc(rdx(s.can)) + '</p>' + stActs + structBox + body +
       (stageDone(s.id) ? '<button class="btn primary sm p-cert" data-act="ctOpen" data-arg="' + s.id + '">🏅 ' + esc(T('ctGet')) + '</button>' : '') + '</section>';
   }).join('');
   return '<div class="path"><header class="p-head">' + pomSVG() + '<div><h1 class="p-title">' + esc(T('pathTitle')) + '</h1><p class="p-lead">' + esc(T('pathLead')) + '</p></div></header>' +
-    '<div class="p-stats">' + tile(stt.roots, 'pcRoots') + tile(stt.aff, 'pcAff') + tile(stt.open, 'pcOpen') + tile(stt.done + '/' + stt.total, 'pcUnits') + '</div>' + gain +
+    '<div class="p-stats">' + tile(stt.roots, 'pcRoots') + tile(stt.aff, 'pcAff') + tile(stt.open, 'pcOpen') + tile(stt.done + '/' + stt.total, 'pcUnits') + '</div>' + ovHTML + gain +
     '<div class="actions">' + go + '</div>' + stages +
     ((st.PG.placed || stt.done) ? '<div class="actions page-actions"><button class="btn ghost sm" data-act="pPlace">' + emo('🧭', 'ie') + ' ' + esc(T('pPlaceAgain')) + '</button></div>' : '') + '</div>';
 }
@@ -232,7 +280,7 @@ export function openUnit(id, step) {
   const u = unitById(id);
   if (!u) return;
   const lk = !unitOpen(u);
-  if (lk && u.kind === 'read') { cb.openPaywall(); return; }
+  if (lk && u.kind === 'read') { cb.openPaywall('stage_lock', stagePayload(u.stage, u)); return; }
   st.PU = { kind: 'unit', u, lk, step: lk ? 0 : (step || 0), q: null, i: 0, ok: 0, end: false, chain: 0 };
   hit('unit_open_p' + u.stage);
   if (st.REAL_ANY) u.scene.lines.forEach(l => getAudio(audioUrl(l[1], (u.scene.who[l[0]] || {}).g || 'f')).catch(() => {}));
@@ -635,7 +683,7 @@ export const PH = {
   pStep: a => {
     const PU = st.PU;
     if (!PU) return;
-    if (PU.lk && +a > 0) { if (unitOpen(PU.u)) PU.lk = false; else { hit('v_paywall_unit'); cb.openPaywall(); return; } }
+    if (PU.lk && +a > 0) { if (unitOpen(PU.u)) PU.lk = false; else { hit('v_paywall_unit'); cb.openPaywall('stage_lock', stagePayload(PU.u.stage, PU.u)); return; } }
     PU.step = +a;
     if (PU.step === 2) { PU.q = null; }
     cb.render();
@@ -691,5 +739,23 @@ export const PH = {
   pPlace: () => startDrill('place'),
   pRead: () => startDrill('read'),
   pHarvestGo: () => startDrill('harvest'),
+  pGoStage: a => {
+    const id = Math.max(1, +a || 1);
+    if (id >= 2 && !premium()) { cb.openPaywall('stage_lock', stagePayload(id)); return; }
+    if (!cb.pathOn()) { st.pendingStage = id; cb.go('path'); return; }
+    const u = st.CRS.units.find(x => x.stage === id && !st.PG.u[x.id] && unitOpen(x)) ||
+      st.CRS.units.find(x => x.stage === id && unitOpen(x));
+    if (u) openUnit(u.id, 0);
+    else cb.go('path');
+  },
+  pStageLock: a => {
+    const id = Math.max(2, +a || 2);
+    cb.openPaywall('stage_lock', stagePayload(id));
+  },
+  pStageStruct: a => {
+    const id = +a || 0;
+    st.pgStruct = st.pgStruct === id ? 0 : id;
+    cb.render(false);
+  },
   pAgain: () => { if (!st.PU) return; if (st.PU.kind !== 'unit') { startDrill(st.PU.kind); return; } st.PU.q = null; st.PU.step = 2; cb.render(); window.scrollTo(0, 0); }
 };

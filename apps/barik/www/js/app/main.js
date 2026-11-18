@@ -5,7 +5,7 @@ import {
   st, cb, $, esc, shuffle, toast, ICON, T, saveUI, setLang, premium, lvOpen, canReview,
   today, touchStreak, loadLocal, save, pgSave, ACC, accFrom, api, accApply,
   accInit, accSet, flQ, flQSave, flFlush, SY, syncNow, hit, resFail, jsErr,
-  keyHandledByControl, focusTarget
+  keyHandledByControl, focusTarget, stageProgress, overallPathStats, activePathStage, stagePayload, lvlToStageId, recommendedStageId
 } from './state.js';
 import {
   WORDS, BY, trWord, trLat, trFr, trEs, trDe, trPt, trPhrase,
@@ -17,7 +17,7 @@ import {
   SPEECH, aid, audioUrl, hasTr, trUrl, LPT, REC, listenStart, listenOpenHome,
   listenSwitchSource, listenSelectStation, listenToggleBridge, lpStop, lpRun, listenHTML,
   loadVoices, loadManifest, preloadAudio, unlockAudio, speak, speakLetter,
-  sayText, recReset, recStart, recPlay
+  sayText, recReset, recStart, recPlay, recordListenWord
 } from './audio.js';
 import {
   settingsHTML, loadPlans, paywallHTML, accSendCode, openAccount, accountHTML,
@@ -53,6 +53,7 @@ export function go(v, arg) {
   if (v === 'name' || v === 'pen' || v === 'listen' || v === 'paywall' || v === 'account' || v === 'unit') hit('v_' + v);
   if (st.sess && !st.sess.ended && v !== 'session') clearTimeout(st.sess.timer);
   if (st.LP && v !== 'listen') { lpStop(); if (v !== 'paywall' && v !== 'account' && v !== 'doc') st.LP = null; }
+  if (v !== 'path') st.pgStruct = 0;
   st.view = v;
   st.viewArg = arg;
   st.resetArm = 0;
@@ -62,12 +63,13 @@ export function go(v, arg) {
 
 export function openPaywall(reason = 'default', payload = null) {
   if (st.view !== 'paywall') st.backTo = st.view === 'session' ? { v: 'home' } : { v: st.view, a: st.viewArg };
-  const lv = (payload && payload.level) || (payload && payload.ti != null && TOPICS[payload.ti] && TOPICS[payload.ti].lv) || null;
-  if (reason === 'level_lock' && lv) {
+  const lv = (payload && (payload.cefr || payload.level)) || (payload && payload.ti != null && TOPICS[payload.ti] && TOPICS[payload.ti].lv) || null;
+  if ((reason === 'level_lock' || reason === 'stage_lock') && lv) {
     exLoadAsync(levelExampleUrl(lv, st.L)).then(loaded => {
-      if (loaded && st.view === 'paywall' && st.pwState.reason === 'level_lock') render(false);
+      if (loaded && st.view === 'paywall' && st.pwState.reason === reason) render(false);
     });
   }
+  if (reason === 'stage_lock') { pgSave(); saveUI(); }
   st.pwState = { plans: null, sel: 'yearly', busy: false, reason: reason || 'default', payload: payload || null, gift129: false };
   go('paywall');
   loadPlans();
@@ -121,6 +123,12 @@ function needData(el) {
   lazyJs(src).then(() => {
     pathOn();
     picsOn();
+    if (st.view === 'path' && st.pendingStage && pathOn()) {
+      const sid = st.pendingStage;
+      st.pendingStage = 0;
+      PH.pGoStage(sid);
+      return;
+    }
     if (st.view === v) render();
   }).catch(() => {
     if (st.view === v) el.innerHTML = '<div class="lz-wait" role="alert">' + esc(T('lzFail')) + ' <button class="btn secondary sm" data-act="lzRetry">' + esc(T('lzRetry')) + '</button></div>';
@@ -1014,6 +1022,13 @@ function launch() {
     LPT,
     get PG() { return st.PG; },
     pathStat,
+    stageProgress,
+    overallPathStats,
+    activePathStage,
+    stagePayload,
+    lvlToStageId,
+    recommendedStageId,
+    recordListenWord,
     get CRS() { return st.CRS; },
     trWord,
     trLat,

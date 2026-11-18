@@ -2,7 +2,8 @@
 
 import {
   TOPICS, ABC, CFG, BILL, STR, CUR, NAMES, PMETA, LEVELS, TZ, SUG,
-  st, cb, $, esc, buzz, T, ICON, premium, lvOpen, canUse, today, save, saveUI, hit, ACC, tzCC
+  st, cb, $, esc, buzz, T, ICON, premium, lvOpen, canUse, today, save, saveUI, hit, ACC, tzCC,
+  activePathStage
 } from './state.js';
 import {
   WORDS, BY, tx, trn, tn, counts, nextNew, emo, pic, wordRow, fold, exTr,
@@ -300,6 +301,34 @@ function premCTA() {
   return '<button class="prem-cta" data-act="paywall"><span class="ic" aria-hidden="true">' + emo('✨') + '</span><span><b>' + esc(T('ctaTitle', WORDS.length)) + '</b><span>' + esc(T('ctaSub')) + '</span></span></button>';
 }
 
+function todayPathHTML() {
+  const aps = activePathStage();
+  if (!aps || !aps.stage) return '';
+  const p = aps.prog;
+  const stg = aps.stage;
+  const stgName = stg[st.L] || stg.en || stg.ru || '';
+  const recBadge = aps.testedLv && aps.recStage === aps.stageId
+    ? '<span class="today-path-rec">⭐ ' + esc(T('pRecForLvl', aps.testedLv)) + '</span>'
+    : '';
+  const audTxt = p.audioSeen > 0 ? ' · 🎧 ' + esc(T('pAudioSeen', p.audioSeen)) : '';
+  let actBtn = '';
+  if (aps.locked) {
+    actBtn = '<button type="button" class="btn primary sm" data-act="pStageLock" data-arg="' + aps.stageId + '">' + emo('🔒', 'ie') + ' ' + esc(T('pStageUnlock', aps.stageId, stg.lv)) + '</button>';
+  } else if (aps.recStage === aps.stageId && aps.stageId >= 2 && !p.complete) {
+    actBtn = '<button type="button" class="btn primary sm" data-act="pGoStage" data-arg="' + aps.stageId + '">' + esc(T('pGoStage', aps.stageId, stg.lv)) + '</button>';
+  }
+  return '<div class="today-path" data-stage-id="' + aps.stageId + '">' +
+    '<div class="today-path-top">' +
+    '<div class="today-path-title"><b>' + esc(T('pPathShort')) + '</b><span>' + esc(T('pStageN', aps.stageId)) + ' · ' + esc(stgName) + ' (' + esc(stg.lv) + ')</span></div>' +
+    '<span class="today-path-pct">' + p.pct + '%</span>' +
+    '</div>' +
+    recBadge +
+    '<div class="bar today-path-bar"><i style="width:' + p.pct + '%"></i></div>' +
+    '<p class="today-path-sub">' + esc(p.done + '/' + p.total) + audTxt + '</p>' +
+    '<div class="today-path-acts">' + actBtn + '<button type="button" class="btn ghost sm" data-act="tab" data-arg="path">' + esc(T('pOpenPath')) + '</button></div>' +
+    '</div>';
+}
+
 function syncNudgeHTML(c) {
   if (ACC.srv === true && ACC.me && !ACC.me.remind && !st.UI.rmX && c.seen >= 10) {
     return '<div class="sy-nudge"><div><b>' + esc(T('rmAsk')) + '</b><span>' + esc(T('rmAskT')) + '</span></div><button class="btn sm" data-act="rmTog">' + esc(T('rmOn')) + '</button><button class="sy-x" data-act="rmX" aria-label="' + esc(T('close')) + '">✕</button></div>';
@@ -345,7 +374,7 @@ export function homeHTML() {
     return '<section class="lvl"><button class="lvh" data-act="lvtog" data-arg="' + lv + '" aria-expanded="' + op + '"><span class="lv">' + lv + (free ? '' : ' <span class="lock">' + emo('🔒', 'ie') + '</span>') + '</span><span class="lvc">' + esc(T('lvCount', lc.learned, lc.total)) + '</span><span class="chev" aria-hidden="true">›</span></button><p class="lvd">' + esc(T('lvd_' + lv)) + '</p>' + la + (op ? '<ul class="topics">' + ts.map(x => topicRow(x[0], x[1])).join('') + '</ul>' : '') + '</section>';
   }).join('');
   return '<div class="home-grid"><div class="home-side"><header class="head"><div class="brand">' + MARK() + '<div><p class="nm">Barik</p><span class="nm-hy" lang="hy">Բառիկ</span></div></div><p class="tag">' + esc(T('tagline')) + '</p></header>' +
-    '<section class="today"><div class="actions home-primary">' + acts + '</div><p class="summary">' + sum + '</p>' + syncNudgeHTML(c) + premCTA() + streak + wotdHTML() +
+    '<section class="today"><div class="actions home-primary">' + acts + '</div><p class="summary">' + sum + '</p>' + todayPathHTML() + syncNudgeHTML(c) + premCTA() + streak + wotdHTML() +
     '<div class="actions home-secondary"><button class="dg-go" data-act="dgOpen">🎯 <span>' + esc(T('dgBtn')) + '</span>' + (st.UI.dg && st.UI.dg.td === today() && st.UI.dg.done ? ' ✓' : '') + '</button><button class="dg-go" data-act="pbOpen">🧳 <span>' + esc(T('pbTitle')) + '</span></button></div></section></div>' +
     '<div class="home-main">' + rows + '</div></div>';
 }

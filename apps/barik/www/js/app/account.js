@@ -2,7 +2,7 @@
 
 import {
   TOPICS, CFG, BILL, STR, LEVELS, FREE_LV, st, cb, $, esc, T, hit, toast, ICON,
-  TZ, tzCC, premium, ACC, accFrom, api, accApply, accInit, accSet
+  TZ, tzCC, premium, ACC, accFrom, api, accApply, accInit, accSet, save, pgSave, saveUI, stageCefr
 } from './state.js';
 import {
   WORDS, BY, tx, trn, exTr, emo, wordRow, ART,
@@ -120,21 +120,46 @@ function pwContextHTML(reason, payload) {
       '<span class="pw-prev-tr">[' + esc(trn(w)) + ']</span>' +
       '<span class="pw-prev-blur" aria-hidden="true">' + esc(tx(w)) + '</span></div></div>';
   }
+  const renderExList = exs => '<ul class="pw-ex-list">' + exs.map((e, i) => {
+    const g = e.g || (i % 2 === 0 ? 'f' : 'm');
+    return '<li class="pw-ex-row"><div class="pw-ex-txt"><span class="pw-ex-hy" lang="hy">' + esc(e.hy) + '</span>' +
+      (e.tr ? '<span class="pw-ex-tr">' + esc(e.tr) + '</span>' : '') +
+      '<span class="pw-ex-tx">' + esc(e.tx) + '</span></div>' +
+      '<button type="button" class="ex-say pw-ex-say" data-act="pwExSay" data-arg="' + esc(e.hy + '|' + g) + '" aria-label="' + esc(T('listen')) + '">' + ICON.spk + '</button></li>';
+  }).join('') + '</ul>';
+
+  if (reason === 'stage_lock' && p.stageId) {
+    const cefr = p.cefr || stageCefr(p.stageId), url = levelExampleUrl(cefr, st.L);
+    let exs = pickLevelExamples(cefr, st.L, 2);
+    if (!exs.length && !exampleCache.has(url) && !exampleErrors.has(url)) {
+      exLoadAsync(url).then(loaded => { if (loaded && st.view === 'paywall' && st.pwState.reason === 'stage_lock') cb.render(false); });
+    }
+    if (!exs.length && Array.isArray(p.sampleLines) && p.sampleLines.length) {
+      exs = p.sampleLines.map(ln => ({ hy: ln.hy, tx: ln.tx, tr: exTr(ln.hy), g: ln.g }));
+    }
+    const stg = p.stage || {};
+    const stgName = stg[st.L] || stg.en || stg.ru || '';
+    const canTxt = stg.can ? (stg.can[st.L] || stg.can.en || stg.can.ru || '') : '';
+    const tItems = Array.isArray(p.topics) ? p.topics : [];
+    const shownTopics = tItems.slice(0, 4).map(t => {
+      const nm = t.title ? (t.title[st.L] || t.title.en || t.title.ru || '') : '';
+      return '<li><span>' + esc(nm) + '</span>' + (t.formula ? '<span lang="hy">' + esc(t.formula) + '</span>' : '') + '</li>';
+    }).join('') + (tItems.length > 4 ? '<li class="pw-stage-more">+' + (tItems.length - 4) + '</li>' : '');
+    const list = exs.length ? renderExList(exs) : '<p class="note pw-ex-wait">' + esc(T('loading')) + '</p>';
+    return '<div class="pw-ctx pw-ctx-stage" data-pw-reason="stage_lock" data-stage-id="' + p.stageId + '">' +
+      '<p class="pw-ctx-k">🔒 ' + esc(T('pwStageTitle', p.stageId, stgName)) + ' · ' + esc(p.lv || cefr) + '</p>' +
+      (canTxt ? '<p class="pw-ctx-sub">' + esc(T('pCan')) + ' ' + esc(canTxt) + '</p>' : '') +
+      '<p class="pw-stage-meta">' + esc(T('pwStageMeta', p.unitsCount || 0, p.wordsCount || 0)) + '</p>' +
+      (shownTopics ? '<ul class="pw-stage-topics">' + shownTopics + '</ul>' : '') +
+      list + '</div>';
+  }
   if (reason === 'level_lock' && p.level) {
     const lv = p.level, url = levelExampleUrl(lv, st.L);
     const exs = pickLevelExamples(lv, st.L, 2);
     if (!exs.length && !exampleCache.has(url) && !exampleErrors.has(url)) {
       exLoadAsync(url).then(loaded => { if (loaded && st.view === 'paywall' && st.pwState.reason === 'level_lock') cb.render(false); });
     }
-    const list = exs.length
-      ? '<ul class="pw-ex-list">' + exs.map((e, i) => {
-          const g = i % 2 === 0 ? 'f' : 'm';
-          return '<li class="pw-ex-row"><div class="pw-ex-txt"><span class="pw-ex-hy" lang="hy">' + esc(e.hy) + '</span>' +
-            (e.tr ? '<span class="pw-ex-tr">' + esc(e.tr) + '</span>' : '') +
-            '<span class="pw-ex-tx">' + esc(e.tx) + '</span></div>' +
-            '<button type="button" class="ex-say pw-ex-say" data-act="pwExSay" data-arg="' + esc(e.hy + '|' + g) + '" aria-label="' + esc(T('listen')) + '">' + ICON.spk + '</button></li>';
-        }).join('') + '</ul>'
-      : '<p class="note pw-ex-wait">' + esc(T('loading')) + '</p>';
+    const list = exs.length ? renderExList(exs) : '<p class="note pw-ex-wait">' + esc(T('loading')) + '</p>';
     return '<div class="pw-ctx pw-ctx-lock" data-pw-reason="level_lock">' +
       '<p class="pw-ctx-k">🔒 ' + esc(T('pwLockTitle', lv)) + '</p>' +
       '<p class="pw-ctx-sub">' + esc(T('pwLockSub')) + '</p>' + list + '</div>';
@@ -147,7 +172,10 @@ export function paywallHTML() {
   const ben = [['📚', T('ben1', WORDS.length, TOPICS.length)], ['🔓', T('ben2', lvls)], ['🔊', T('ben3')], ['✈️', T('ben4')], ['🚫', T('ben5')]];
   if (!BILL.native) ben.splice(2, 3, ['🌱', T('benPath')], ['↩️', T('benRefund')]);
   const reason = st.pwState.reason || 'default', payload = st.pwState.payload || {};
-  const heroTitle = reason === 'audio15' ? T('pwAudio15Title') : T('pwTitle');
+  const stgHero = reason === 'stage_lock' && payload && payload.stage
+    ? (payload.stage[st.L] || payload.stage.en || payload.stage.ru || '')
+    : '';
+  const heroTitle = reason === 'audio15' ? T('pwAudio15Title') : (reason === 'stage_lock' && payload && payload.stageId ? T('pwStageTitle', payload.stageId, stgHero) : T('pwTitle'));
   const heroMark = reason === 'audio15' ? '<span class="pw-pause-ic" aria-hidden="true">⏸</span>' : (BILL.native ? '<span class="mark" aria-hidden="true" lang="hy">Ա</span>' : ART.mark('pw-mk'));
   let plans = '';
   const have = BILL.native ? premium() : !!(ACC.me && ACC.me.premium);
@@ -448,7 +476,14 @@ export async function cryBuy(plan) {
   st.pwState.busy = true;
   cb.render();
   const j = await api('crypto', { plan, lang: st.L });
-  if (j.ok && j.url) { location.assign(j.url); return; }
+  if (j.ok && j.url) {
+    if (st.pwState && st.pwState.reason === 'stage_lock' && st.pwState.payload && st.pwState.payload.stageId) {
+      st.UI.pendingStage = st.pwState.payload.stageId;
+    }
+    save(); pgSave(); saveUI();
+    location.assign(j.url);
+    return;
+  }
   st.pwState.busy = false;
   cb.render();
   toast(T('accErr_' + (j.err || 'server')));
@@ -541,7 +576,11 @@ export async function cardReturn() {
     if (!j.ok) return;
     accApply(j);
     cb.render();
-    if (j.user && j.user.premium) { hit('paid'); toast(T('thanks')); return; }
+    if (j.user && j.user.premium) {
+      hit('paid'); toast(T('thanks'));
+      if (st.UI.pendingStage) { const ps = st.UI.pendingStage; delete st.UI.pendingStage; saveUI(); st.pendingStage = ps; cb.go('path'); }
+      return;
+    }
     await new Promise(r => setTimeout(r, 4000));
   }
   toast(T('cardPending'));
