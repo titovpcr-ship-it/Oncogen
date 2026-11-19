@@ -10,7 +10,7 @@ if (PHP_SAPI !== 'cli' && ($mt = @filemtime(__FILE__)) !== false && time() - $mt
 
 function release_path(string $rel): void {
     if (!preg_match('~^[a-zA-Z0-9_.@/+-]+$~D', $rel) || str_contains($rel, '..') || $rel[0] === '/' ||
-        $rel === 'api/config.php' || !preg_match('~\.(html|json|js|css|php|txt|xml|webmanifest|mp3|webp|png|jpg|jpeg|svg|ico|woff2|pdf)$|^\.htaccess$~', $rel)) {
+        $rel === 'api/config.php' || !preg_match('~\.(html|json|js|css|php|txt|xml|webmanifest|mp3|webp|png|jpg|jpeg|svg|ico|woff2|pdf)$|^(?:api/)?\.htaccess$~', $rel)) {
         throw new RuntimeException('Invalid release path');
     }
 }

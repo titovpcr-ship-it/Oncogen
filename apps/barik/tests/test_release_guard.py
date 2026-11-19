@@ -97,6 +97,15 @@ class Guard(unittest.TestCase):
         self.assertEqual(len(list(self.base.glob('barik-release-*'))),3)
         self.assertFalse((self.root/'release.php').exists())
 
+    def test_api_htaccess_allowed(self):
+        (self.work/'stage/api').mkdir(parents=True, exist_ok=True)
+        (self.work/'stage/api/.htaccess').write_text('Options -Indexes\n')
+        m = json.loads((self.work/'manifest.json').read_text())
+        m['api/.htaccess'] = hashlib.sha256(b'Options -Indexes\n').hexdigest()
+        (self.work/'manifest.json').write_text(json.dumps(m))
+        self.assertEqual(self.action('activate').returncode, 0)
+        self.assertEqual((self.root/'api/.htaccess').read_text(), 'Options -Indexes\n')
+
     def test_config_rejected(self):
         (self.work/'manifest.json').write_text(json.dumps({'api/config.php':'x'}))
         self.assertNotEqual(self.action('activate').returncode,0)
