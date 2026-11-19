@@ -262,6 +262,10 @@ ErrorDocument 404 /404.html
 <FilesMatch "^cover-[a-z]+\.html$">
   Header set X-Robots-Tag "noindex"
 </FilesMatch>
+<FilesMatch "^ops-.*\.html$">
+  Header always set X-Robots-Tag "noindex, nofollow"
+  Header always set Cache-Control "no-store, private"
+</FilesMatch>
 <FilesMatch "(\.(zip|sqlite|db|log|bak|sh|py)|^\..+)$">
   Require all denied
 </FilesMatch>
@@ -483,7 +487,7 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
         for f in sorted(files):
             rel = os.path.relpath(os.path.join(root, f), out).replace(os.sep, "/")
             lazy_js = re.fullmatch(r"js/(?:tr-(?:ru|en|fr|es|de|pt)|i18n-(?:fr|es|de|pt)|path_data|pictures)\.js", rel) is not None
-            if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or lazy_js or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("cover-", "audio/", "pics/", "og/", "api/", "ex/"))
+            if ((re.fullmatch(r"[0-9a-f]{32}\.txt", rel) is not None) or lazy_js or rel in (".htaccess", "sw.js", "robots.txt", "seo.css", "seo.js", "404.html") or rel.startswith(("cover-", "ops-", "audio/", "pics/", "og/", "api/", "ex/"))
                     or rel.split("/")[0] in ("ru", "en", "fr", "es", "de", "pt") or rel.startswith("sitemap")):
                 continue
             shell.append("./" + rel + ("?v=" + ver[rel] if rel in ver else ""))

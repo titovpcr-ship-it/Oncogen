@@ -86,6 +86,19 @@ if ($r === 'tg') {
     out(['ok' => true]);
 }
 
+if ($r === 'live_stats') {
+    if ($method !== 'GET' || !live_stats_key_ok()) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=utf-8');
+        header('X-Robots-Tag: noindex, nofollow');
+        echo 'Not Found';
+        exit;
+    }
+    header('Cache-Control: no-store, private');
+    header('X-Robots-Tag: noindex, nofollow');
+    out(live_stats_data());
+}
+
 if ($r === 'stats') {
     // сводка для владельца: ключ — от PEPPER (tools/stats.py берёт его из config.php хостинга)
     if (!hash_equals(stats_key(), preg_replace('/^Bearer /', '', (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '')))) fail('auth', 401);

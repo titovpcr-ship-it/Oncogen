@@ -644,7 +644,6 @@ export const H = {
   },
   syncX: () => { st.UI.syX = 1; saveUI(); render(); },
   syncLogin: () => openAccount(),
-  returnTg: () => hit('rem_tg'),
   returnMail: () => { hit('rem_mail'); openAccount('remind'); },
   returnDismiss: () => { st.sess.returnOffer = false; render(); },
   returnInstall: async () => {

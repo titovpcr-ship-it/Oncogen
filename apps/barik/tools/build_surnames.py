@@ -875,7 +875,9 @@ document.addEventListener('click',function(e){
     e.preventDefault();
     try{
       if(location.protocol!=='file:'&&navigator.sendBeacon){
-        navigator.sendBeacon('../../api/?r=hit',JSON.stringify({e:'surname_card',v:2,l:document.documentElement.lang||'en',s:'family'}));
+        var _tz='';try{_tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(z){}
+        var _fm=(location.pathname.match(/\/s\/([^/.]+)\.html$/)||[])[1]||'';
+        navigator.sendBeacon('../../api/?r=hit',JSON.stringify({e:'surname_card',v:2,l:document.documentElement.lang||'en',tz:_tz,fam:_fm,s:'family'}));
       }
     }catch(x){}
     renderCard(b);

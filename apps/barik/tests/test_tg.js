@@ -81,8 +81,8 @@ const TOKEN='123:abc', SECRET='tg-secret-test', D0=20768;
   // кнопка на сайте
   const br=await chromium.launch(); const pg=await (await br.newContext({viewport:{width:390,height:844},locale:'ru-RU',serviceWorkers:'block'})).newPage();
   await pg.goto(base+'?daily&lang=ru'); await pg.waitForTimeout(1200);
-  const href=await pg.evaluate(()=>{ const a=document.querySelector('.dg-tg'); return a&&a.href; });
-  ok(href==='https://t.me/barik_word_bot?start=ru','экран игры: кнопка «Слово дня в Telegram» → t.me/barik_word_bot?start=ru');
+  const tgLinks=await pg.evaluate(()=>document.querySelectorAll('.dg-tg, a[href*="t.me/"], a[href*="instagram.com"]').length);
+  ok(tgLinks===0,'экран игры: ссылки на Telegram и Instagram убраны с сайта');
   await br.close();
   ok(!phpErr,'PHP без ошибок и предупреждений '+phpErr.slice(0,300));
   php.kill(); stub.close(); fs.rmSync(TMP,{recursive:true,force:true});

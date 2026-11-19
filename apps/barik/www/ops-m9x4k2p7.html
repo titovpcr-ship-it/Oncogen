@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Barik · Live Ops</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+@font-face{font-family:'Manrope';src:url('/fonts/manrope-cyrillic-wght-normal.woff2') format('woff2');font-weight:400 800;font-display:swap;unicode-range:U+0400-04FF}
+@font-face{font-family:'Manrope';src:url('/fonts/manrope-latin-wght-normal.woff2') format('woff2');font-weight:400 800;font-display:swap;unicode-range:U+0000-00FF}
+@font-face{font-family:'Golos Text';src:url('/fonts/golos-text-cyrillic-wght-normal.woff2') format('woff2');font-weight:400 700;font-display:swap;unicode-range:U+0400-04FF}
+@font-face{font-family:'Golos Text';src:url('/fonts/golos-text-latin-wght-normal.woff2') format('woff2');font-weight:400 700;font-display:swap;unicode-range:U+0000-00FF}
+:root{
+  --bg:#0B1120;
+  --surface:#111827;
+  --surface-2:#162033;
+  --line:#1F2A3F;
+  --line-2:#2C3B55;
+  --ink:#F8FAFC;
+  --ink-2:#94A3B8;
+  --ink-3:#64748B;
+  --amber:#F59E0B;
+  --green:#10B981;
+  --red:#EF4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  --sans:'Golos Text','Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+  --disp:'Manrope','Golos Text',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.topbar{
+  position:sticky;top:0;z-index:20;
+  background:rgba(11,17,32,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:10px max(14px,env(safe-area-inset-right)) 10px max(14px,env(safe-area-inset-left));
+}
+.topbar-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-title{font:700 15px/1.2 var(--disp);letter-spacing:-.01em;white-space:nowrap}
+.brand-sep{color:var(--ink-3)}
+.status{display:inline-flex;align-items:center;gap:6px;font:500 12px/1 var(--mono);color:var(--ink-2);white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ink-3);flex:0 0 auto}
+.dot.live{background:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,.18);animation:pulse 2s infinite}
+.dot.paused{background:var(--amber)}
+.dot.err{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.controls{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:6px;overflow:hidden;background:var(--surface)}
+.seg button{
+  appearance:none;border:0;background:transparent;color:var(--ink-2);
+  font:600 12px/1 var(--sans);padding:7px 11px;cursor:pointer;white-space:nowrap;
+}
+.seg button.on{background:var(--amber);color:#0B1120}
+.btn{
+  appearance:none;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);
+  color:var(--ink);font:600 12px/1 var(--sans);padding:7px 10px;cursor:pointer;white-space:nowrap;
+}
+.btn:hover{border-color:var(--ink-3)}
+.btn:active{transform:translateY(1px)}
+.wrap{max-width:1240px;margin:0 auto;padding:16px max(14px,env(safe-area-inset-right)) max(28px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+.err-banner{display:none;margin-bottom:14px;padding:10px 12px;border:1px solid rgba(239,68,68,.45);background:rgba(239,68,68,.1);color:#FCA5A5;border-radius:6px;font-size:13px}
+.err-banner.on{display:block}
+
+/* Auth gate */
+.gate{max-width:380px;margin:14vh auto 0;padding:24px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.gate h1{margin:0 0 6px;font:700 18px/1.25 var(--disp)}
+.gate p{margin:0 0 16px;color:var(--ink-2);font-size:13px}
+.gate form{display:flex;gap:8px}
+.gate input{
+  flex:1;min-width:0;padding:10px 12px;border:1px solid var(--line-2);border-radius:6px;
+  background:var(--bg);color:var(--ink);font:14px/1.2 var(--mono);
+}
+.gate input:focus{outline:1px solid var(--amber);border-color:var(--amber)}
+.gate button{padding:10px 14px;border:0;border-radius:6px;background:var(--amber);color:#0B1120;font:700 13px/1 var(--sans);cursor:pointer;white-space:nowrap}
+.gate .g-err{margin-top:10px;color:#FCA5A5;font-size:12px;min-height:16px}
+
+/* Hero online strip */
+.hero{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden;margin-bottom:16px;
+}
+.hero-cell{padding:14px 16px;border-right:1px solid var(--line)}
+.hero-cell:last-child{border-right:0}
+.k-lbl{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-val{font:700 30px/1.1 var(--disp);letter-spacing:-.02em}
+.hero-val.live-num{color:var(--green)}
+.hero-sub{margin-top:5px;font-size:12px;color:var(--ink-2)}
+
+/* KPI matrix */
+.section{margin-bottom:18px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.sec-title{margin:0;font:700 13px/1.2 var(--disp);letter-spacing:.03em;text-transform:uppercase;color:var(--ink-2)}
+.sec-meta{font:500 12px/1 var(--mono);color:var(--ink-3)}
+.kpi-grid{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden;
+}
+.kpi{padding:13px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}
+.kpi-v{font:700 22px/1.15 var(--disp);color:var(--ink)}
+.kpi-v.accent{color:var(--amber)}
+.kpi-v.good{color:var(--green)}
+.kpi-sub{margin-top:4px;font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Two-column main content */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:16px;margin-bottom:18px}
+.panel{border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.panel-head h2{margin:0;font:700 13px/1.2 var(--disp);letter-spacing:.03em;text-transform:uppercase;color:var(--ink-2)}
+.panel-body{padding:0}
+
+/* Countries list */
+.c-list{list-style:none;margin:0;padding:6px 0}
+.c-row{padding:8px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center}
+.c-row:hover{background:var(--surface-2)}
+.c-top{display:flex;align-items:center;gap:8px;min-width:0}
+.c-flag{font-size:16px;line-height:1;flex:0 0 auto}
+.c-name{font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-code{font:500 11px/1 var(--mono);color:var(--ink-3)}
+.c-stat{font:600 12px/1 var(--mono);color:var(--ink);white-space:nowrap;text-align:right}
+.c-stat span{color:var(--ink-2);font-weight:400;margin-right:8px}
+.c-bar-wrap{grid-column:1 / -1;height:5px;border-radius:2px;background:var(--bg);overflow:hidden}
+.c-bar{height:100%;background:var(--amber);border-radius:2px;transition:width .25s ease}
+.c-bar.xx{background:var(--ink-3)}
+.c-more{width:100%;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink-2);font:600 12px/1 var(--sans);padding:10px;cursor:pointer}
+.c-more:hover{color:var(--ink);background:var(--surface-2)}
+
+/* Tables */
+.tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font:600 11px/1.2 var(--sans);letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);background:var(--surface);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.r,th.r{text-align:right}
+.ev-tag{font-weight:600;color:var(--ink)}
+.ev-ctx{color:var(--ink-2);font:400 12px/1.2 var(--mono);max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.empty{padding:24px 16px;text-align:center;color:var(--ink-3);font-size:13px}
+
+/* History filters */
+.h-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.h-search{
+  padding:6px 10px;border:1px solid var(--line-2);border-radius:6px;background:var(--bg);
+  color:var(--ink);font:12px/1.2 var(--mono);width:132px;
+}
+.h-search:focus{outline:1px solid var(--amber);border-color:var(--amber)}
+.skel{height:18px;border-radius:4px;background:linear-gradient(90deg,var(--surface-2) 25%,var(--line) 50%,var(--surface-2) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+@media (max-width:960px){
+  .kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .split{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .topbar-in{gap:8px}
+  .brand{width:100%;justify-content:space-between}
+  .controls{width:100%;justify-content:space-between}
+  .hero{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero-cell:nth-child(2){border-right:0}
+  .hero-cell:nth-child(3){grid-column:1 / -1;border-right:0;border-top:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:11px 16px}
+  .hero-cell:nth-child(3) .k-lbl{margin-bottom:0}
+  .hero-cell:nth-child(3) .hero-val{font-size:20px}
+  .hero-cell:nth-child(3) .hero-sub{margin-top:0}
+  .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi{padding:11px 12px}
+  .kpi-v{font-size:20px}
+  th,td{padding:8px 9px;font-size:12px}
+  .ev-ctx{max-width:120px}
+}
+</style>
+</head>
+<body>
+<div id="gate" class="gate" style="display:none">
+  <h1>Barik · Live Ops</h1>
+  <p>Введите ключ доступа для просмотра статистики в реальном времени.</p>
+  <form id="gateForm">
+    <input id="gateKey" type="password" autocomplete="off" placeholder="Ключ доступа" required>
+    <button type="submit">Открыть</button>
+  </form>
+  <div id="gateErr" class="g-err"></div>
+</div>
+
+<div id="app" style="display:none">
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="brand">
+        <span class="brand-title">Barik <span class="brand-sep">/</span> Live Ops</span>
+        <span class="status"><span id="dot" class="dot"></span><span id="statusTxt">Загрузка…</span></span>
+      </div>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Период">
+          <button type="button" id="pToday" class="on">Сегодня</button>
+          <button type="button" id="pAll">Всё время</button>
+        </div>
+        <button type="button" id="btnPause" class="btn">Пауза</button>
+        <button type="button" id="btnRefresh" class="btn" title="Обновить сейчас">↻</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="errBanner" class="err-banner"></div>
+
+    <section class="hero" aria-label="Онлайн сейчас">
+      <div class="hero-cell">
+        <div class="k-lbl">Онлайн · 5 мин</div>
+        <div id="on5" class="hero-val live-num num">—</div>
+        <div class="hero-sub">активных уникальных</div>
+      </div>
+      <div class="hero-cell">
+        <div class="k-lbl">Активны · 15 мин</div>
+        <div id="on15" class="hero-val num">—</div>
+        <div class="hero-sub">за последние 15 мин</div>
+      </div>
+      <div class="hero-cell">
+        <div class="k-lbl">Аккаунты / Premium</div>
+        <div id="accVal" class="hero-val num">—</div>
+        <div id="accSub" class="hero-sub">напоминания: —</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sec-head">
+        <h2 id="kpiTitle" class="sec-title">Сводка · Сегодня</h2>
+        <span id="kpiDate" class="sec-meta"></span>
+      </div>
+      <div id="kpiGrid" class="kpi-grid"></div>
+    </section>
+
+    <div class="split">
+      <section class="panel">
+        <div class="panel-head">
+          <h2 id="cTitle">Страны · Сегодня</h2>
+          <span id="cMeta" class="sec-meta"></span>
+        </div>
+        <div id="cBody" class="panel-body"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Живая лента · последние 20</h2>
+          <span id="evMeta" class="sec-meta"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Время</th><th>Страна</th><th>Событие</th><th>Контекст</th></tr></thead>
+            <tbody id="evBody"><tr><td colspan="4"><div class="skel"></div></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>История по дням</h2>
+        <div class="h-tools">
+          <input id="hSearch" class="h-search" type="search" placeholder="2026-11…" aria-label="Поиск по дате">
+          <div class="seg" role="group" aria-label="Диапазон истории">
+            <button type="button" data-hr="7">7д</button>
+            <button type="button" data-hr="30" class="on">30д</button>
+            <button type="button" data-hr="0">Всё</button>
+          </div>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th class="r">Уник.</th>
+              <th class="r">Новички</th>
+              <th class="r">Вошли</th>
+              <th class="r">1-й отв.</th>
+              <th class="r">Уроки</th>
+              <th class="r">Roots</th>
+              <th class="r">Оплаты</th>
+            </tr>
+          </thead>
+          <tbody id="hBody"><tr><td colspan="8"><div class="skel"></div></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const STORAGE_KEY = 'barik_ops_key';
+  const POLL_MS = 10000;
+  const CC_NAME = {
+    AM:'Армения',RU:'Россия',US:'США',FR:'Франция',DE:'Германия',ES:'Испания',BR:'Бразилия',
+    GB:'Великобритания',CA:'Канада',AR:'Аргентина',UA:'Украина',GE:'Грузия',BY:'Беларусь',
+    KZ:'Казахстан',IL:'Израиль',IT:'Италия',NL:'Нидерланды',PL:'Польша',SE:'Швеция',
+    CH:'Швейцария',AT:'Австрия',BE:'Бельгия',GR:'Греция',PT:'Португалия',CY:'Кипр',
+    AE:'ОАЭ',TR:'Турция',IR:'Иран',LB:'Ливан',AU:'Австралия',MX:'Мексика',CO:'Колумбия',
+    CL:'Чили',UY:'Уругвай',CZ:'Чехия',RO:'Румыния',BG:'Болгария',HU:'Венгрия',FI:'Финляндия',
+    NO:'Норвегия',DK:'Дания',IE:'Ирландия',IN:'Индия',JP:'Япония',KR:'Ю. Корея',CN:'Китай',
+    SG:'Сингапур',UZ:'Узбекистан',AZ:'Азербайджан',MD:'Молдова',XX:'Архив / н/д'
+  };
+  const EV_NAME = {
+    open:'Визит',
+    start:'Вошёл в курс',
+    first_answer:'1-й ответ',
+    lesson_complete:'Урок завершён',
+    lesson_done:'Урок завершён',
+    lesson_exit:'Выход из урока',
+    unit_done:'Ступень пути',
+    family_visit:'Barik Roots',
+    family_listen:'Roots · радио',
+    family_gift:'Roots · подарок',
+    surname_card:'Герб семьи',
+    lvl_start:'Тест уровня (60с)',
+    v_paywall:'Paywall',
+    pw_audio15:'Paywall · аудио',
+    pw_level_lock:'Paywall · уровень',
+    pw_stage_lock:'Paywall · ступень',
+    pw_quiz_result:'Paywall · тест',
+    pw_gift:'Paywall · подарок',
+    pw_default:'Paywall',
+    checkout:'Оформить',
+    paid:'Оплата',
+    login:'Вход в кабинет',
+    land_try:'Телефон обложки',
+    land_start:'Старт с обложки',
+    land_open:'Открыть с обложки',
+    rem_mail:'Напоминания почта',
+    a2hs:'Экран «Домой»',
+    name_save:'Открытка имени',
+    name_share:'Шер имени',
+    res_fail:'Сбой загрузки'
+  };
+
+  let key = '';
+  let period = 'today';
+  let histRange = 30;
+  let showAllCountries = false;
+  let paused = false;
+  let timer = null;
+  let data = null;
+  let inflight = false;
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtN = n => Number(n || 0).toLocaleString('ru-RU');
+  function ccFlag(cc){
+    if(!cc || cc === 'XX' || !/^[A-Z]{2}$/.test(cc)) return '🌐';
+    return String.fromCodePoint(0x1F1E6 + cc.charCodeAt(0) - 65, 0x1F1E6 + cc.charCodeAt(1) - 65);
+  }
+  function ccLabel(cc){ return CC_NAME[cc] || (cc === 'XX' ? 'Архив / н/д' : cc); }
+  function evLabel(ev){ return EV_NAME[ev] || ev; }
+  function fmtTime(ts){
+    try { return new Date(ts * 1000).toLocaleTimeString('ru-RU', {hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
+    catch(e){ return ''; }
+  }
+  function pct(part, total){
+    if(!total) return '—';
+    return Math.round(100 * part / total) + '%';
+  }
+
+  function setStatus(state, txt){
+    const d = $('dot');
+    d.className = 'dot ' + state;
+    $('statusTxt').textContent = txt;
+  }
+
+  function showGate(msg){
+    $('app').style.display = 'none';
+    $('gate').style.display = 'block';
+    $('gateErr').textContent = msg || '';
+    if(timer){ clearInterval(timer); timer = null; }
+  }
+
+  function showApp(){
+    $('gate').style.display = 'none';
+    $('app').style.display = 'block';
+  }
+
+  function render(){
+    if(!data) return;
+    $('on5').textContent = fmtN(data.online && data.online.m5);
+    $('on15').textContent = fmtN(data.online && data.online.m15);
+    const acc = data.accounts || {};
+    $('accVal').textContent = fmtN(acc.users) + ' / ' + fmtN(acc.premium) + ' Pro';
+    $('accSub').textContent = 'напоминания: ' + fmtN(acc.remind);
+
+    const b = period === 'today' ? (data.today || {}) : (data.all || {});
+    $('kpiTitle').textContent = 'Сводка · ' + (period === 'today' ? 'Сегодня' : 'Всё время');
+    $('kpiDate').textContent = period === 'today' ? (data.day || '') : ((data.history || []).length + ' дн. в базе');
+
+    const pw = b.pw || {};
+    const pwParts = Object.entries(pw).filter(([,v]) => v > 0).sort((a,c) => c[1] - a[1]).map(([k,v]) => k + ' ' + v);
+    const rootsSub = 'радио ' + fmtN(b.family_listen) + ' · подар. ' + fmtN(b.family_gift) + ' · герб ' + fmtN(b.surname_card);
+
+    const cards = [
+      { lbl:'Уникальные (IP+UA)', val:fmtN(b.u), sub:'открытий: ' + fmtN(b.open) },
+      { lbl:'Новички (гости)', val:fmtN(b.guest), sub:pct(b.guest, b.u) + ' от уник.' },
+      { lbl:'Вошли в курс', val:fmtN(b.start), sub:pct(b.start, b.guest) + ' от новичков' },
+      { lbl:'1-й ответ', val:fmtN(b.first_answer), sub:pct(b.first_answer, b.start) + ' от вошедших' },
+      { lbl:'Завершённые уроки', val:fmtN(b.lesson_complete), sub:'успешно до финала', cls:'good' },
+      { lbl:'Barik Roots', val:fmtN(b.family_visit), sub:rootsSub, cls:'accent' },
+      { lbl:'Тест уровня (60с)', val:fmtN(b.lvl_start), sub:'запусков lvlStart' },
+      { lbl:'Paywall', val:fmtN(b.v_paywall), sub:pwParts.length ? pwParts.slice(0,3).join(' · ') : 'без открытий' },
+      { lbl:'Оформить (checkout)', val:fmtN(b.checkout), sub:pct(b.checkout, b.v_paywall) + ' от Paywall' },
+      { lbl:'Оплаты Dodo', val:fmtN(b.paid), sub:'подтверждено', cls:b.paid > 0 ? 'good' : '' }
+    ];
+    $('kpiGrid').innerHTML = cards.map(c =>
+      '<div class="kpi"><div class="k-lbl">' + esc(c.lbl) + '</div>' +
+      '<div class="kpi-v num ' + (c.cls || '') + '">' + esc(c.val) + '</div>' +
+      '<div class="kpi-sub num" title="' + esc(c.sub) + '">' + esc(c.sub) + '</div></div>'
+    ).join('');
+
+    // Countries
+    const cs = (data.countries && data.countries[period]) || [];
+    $('cTitle').textContent = 'Страны (%) · ' + (period === 'today' ? 'Сегодня' : 'Всё время');
+    $('cMeta').textContent = cs.length ? (cs.length + ' шт.') : '0';
+    if(!cs.length){
+      $('cBody').innerHTML = '<div class="empty">Нет данных по странам за выбранный период.</div>';
+    } else {
+      const limit = showAllCountries ? cs.length : 12;
+      const shown = cs.slice(0, limit);
+      const maxPct = Math.max(...cs.map(x => Number(x.pct) || 0), 1);
+      let html = '<ul class="c-list">' + shown.map(x => {
+        const w = Math.max(2, Math.round((Number(x.pct) || 0) / maxPct * 100));
+        return '<li class="c-row">' +
+          '<div class="c-top"><span class="c-flag">' + ccFlag(x.cc) + '</span>' +
+          '<span class="c-name">' + esc(ccLabel(x.cc)) + '</span>' +
+          '<span class="c-code">' + esc(x.cc) + '</span></div>' +
+          '<div class="c-stat"><span>' + fmtN(x.n) + '</span>' + Number(x.pct).toFixed(1) + '%</div>' +
+          '<div class="c-bar-wrap"><div class="c-bar' + (x.cc === 'XX' ? ' xx' : '') + '" style="width:' + w + '%"></div></div>' +
+          '</li>';
+      }).join('') + '</ul>';
+      if(cs.length > 12){
+        html += '<button type="button" id="cMore" class="c-more">' +
+          (showAllCountries ? 'Свернуть до топ-12' : 'Показать все ' + cs.length + ' стран') + '</button>';
+      }
+      $('cBody').innerHTML = html;
+      const mb = $('cMore');
+      if(mb) mb.onclick = () => { showAllCountries = !showAllCountries; render(); };
+    }
+
+    // Live events
+    const evs = data.events || [];
+    $('evMeta').textContent = evs.length ? ('обновлено ' + fmtTime(data.ts)) : 'пусто';
+    if(!evs.length){
+      $('evBody').innerHTML = '<tr><td colspan="4" class="empty">Живых событий пока нет. Появятся сразу после визитов.</td></tr>';
+    } else {
+      $('evBody').innerHTML = evs.map(e =>
+        '<tr>' +
+        '<td class="mono">' + esc(fmtTime(e.t)) + '</td>' +
+        '<td class="mono">' + ccFlag(e.cc) + ' ' + esc(e.cc || 'XX') + '</td>' +
+        '<td class="ev-tag">' + esc(evLabel(e.ev)) + '</td>' +
+        '<td class="ev-ctx" title="' + esc(e.ctx || '') + '">' + esc(e.ctx || '—') + '</td>' +
+        '</tr>'
+      ).join('');
+    }
+
+    // Daily history
+    const q = ($('hSearch').value || '').trim().toLowerCase();
+    let hist = (data.history || []).slice();
+    if(q) hist = hist.filter(r => r.date.toLowerCase().includes(q));
+    if(histRange > 0 && !q) hist = hist.slice(0, histRange);
+    if(!hist.length){
+      $('hBody').innerHTML = '<tr><td colspan="8" class="empty">Нет записей за выбранный диапазон.</td></tr>';
+    } else {
+      $('hBody').innerHTML = hist.map(r =>
+        '<tr>' +
+        '<td class="mono">' + esc(r.date) + '</td>' +
+        '<td class="r mono">' + fmtN(r.u) + '</td>' +
+        '<td class="r mono">' + fmtN(r.guest) + '</td>' +
+        '<td class="r mono">' + fmtN(r.start) + '</td>' +
+        '<td class="r mono">' + fmtN(r.first_answer) + '</td>' +
+        '<td class="r mono">' + fmtN(r.lessons) + '</td>' +
+        '<td class="r mono">' + fmtN(r.family) + '</td>' +
+        '<td class="r mono">' + fmtN(r.paid) + '</td>' +
+        '</tr>'
+      ).join('');
+    }
+  }
+
+  async function load(){
+    if(!key || inflight) return;
+    inflight = true;
+    try {
+      const res = await fetch('/api/?r=live_stats', {
+        headers: { 'X-Barik-Key': key },
+        cache: 'no-store'
+      });
+      if(res.status === 404 || res.status === 401 || res.status === 403){
+        try { sessionStorage.removeItem(STORAGE_KEY); } catch(e){}
+        key = '';
+        showGate('Доступ закрыт (404). Проверьте ключ.');
+        return;
+      }
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const j = await res.json();
+      if(!j || !j.ok) throw new Error('Некорректный ответ сервера');
+      data = j;
+      showApp();
+      $('errBanner').classList.remove('on');
+      setStatus(paused ? 'paused' : 'live', (paused ? 'Пауза · ' : 'Live · ') + fmtTime(j.ts));
+      render();
+    } catch(e){
+      setStatus('err', 'Ошибка связи');
+      const b = $('errBanner');
+      b.textContent = 'Не удалось обновить данные: ' + (e && e.message ? e.message : 'сеть');
+      b.classList.add('on');
+    } finally {
+      inflight = false;
+    }
+  }
+
+  function startPoll(){
+    if(timer) clearInterval(timer);
+    timer = setInterval(() => {
+      if(!paused && !document.hidden) load();
+    }, POLL_MS);
+  }
+
+  // Controls
+  $('pToday').onclick = () => { period = 'today'; $('pToday').classList.add('on'); $('pAll').classList.remove('on'); showAllCountries = false; render(); };
+  $('pAll').onclick = () => { period = 'all'; $('pAll').classList.add('on'); $('pToday').classList.remove('on'); showAllCountries = false; render(); };
+  $('btnPause').onclick = () => {
+    paused = !paused;
+    $('btnPause').textContent = paused ? 'Продолжить' : 'Пауза';
+    setStatus(paused ? 'paused' : 'live', (paused ? 'Пауза · ' : 'Live · ') + (data ? fmtTime(data.ts) : ''));
+    if(!paused) load();
+  };
+  $('btnRefresh').onclick = () => load();
+  $('hSearch').oninput = () => render();
+  document.querySelectorAll('[data-hr]').forEach(btn => {
+    btn.onclick = () => {
+      histRange = Number(btn.getAttribute('data-hr')) || 0;
+      document.querySelectorAll('[data-hr]').forEach(x => x.classList.toggle('on', x === btn));
+      render();
+    };
+  });
+  document.addEventListener('visibilitychange', () => {
+    if(!document.hidden && !paused && key) load();
+  });
+  $('gateForm').onsubmit = e => {
+    e.preventDefault();
+    const v = ($('gateKey').value || '').trim();
+    if(!v) return;
+    key = v;
+    try { sessionStorage.setItem(STORAGE_KEY, key); } catch(x){}
+    $('gateErr').textContent = 'Проверка…';
+    load().then(() => { if(key) startPoll(); });
+  };
+
+  // Bootstrap key from ?key= or sessionStorage
+  try {
+    const sp = new URLSearchParams(location.search || '');
+    const qk = (sp.get('key') || '').trim();
+    if(qk){
+      key = qk;
+      try { sessionStorage.setItem(STORAGE_KEY, key); } catch(x){}
+    } else {
+      key = (sessionStorage.getItem(STORAGE_KEY) || '').trim();
+    }
+  } catch(e){}
+
+  if(key){
+    showApp();
+    load();
+    startPoll();
+  } else {
+    showGate('');
+  }
+})();
+</script>
+</body>
+</html>

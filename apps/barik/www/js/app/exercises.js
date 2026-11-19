@@ -517,11 +517,10 @@ function returnOfferHTML() {
   const sess = st.sess;
   if (!sess.returnOffer || ACC.me) return '';
   const standalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
-  const telegram = ACC.tg ? '<a class="btn secondary" data-act="returnTg" href="https://t.me/' + ACC.tg + '?start=' + st.L + '" target="_blank" rel="noopener">' + esc(T('returnTg')) + '</a>' : '';
   const mail = ACC.srv === true ? '<button class="btn secondary" data-act="returnMail">' + esc(T('returnMail')) + '</button>' : '';
   const install = standalone ? '' : '<button class="btn secondary" data-act="returnInstall">' + esc(T('returnInstall')) + '</button>';
-  if (!telegram && !mail && !install) return '';
-  return '<section class="return-offer"><h2>' + esc(T('returnTitle')) + '</h2><div class="actions">' + telegram + mail + install +
+  if (!mail && !install) return '';
+  return '<section class="return-offer"><h2>' + esc(T('returnTitle')) + '</h2><div class="actions">' + mail + install +
     '<button class="btn ghost" data-act="returnDismiss">' + esc(T('close')) + '</button></div>' +
     (sess.installHelp ? '<p class="note" role="status">' + esc(T('returnInstallHelp')) + '</p>' : '') + '</section>';
 }

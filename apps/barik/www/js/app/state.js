@@ -650,9 +650,10 @@ export function hit(e) {
     const repeat = e === 'lesson_complete' || e === 'lesson_exit';
     if (e && !repeat && HITS.has(e)) return;
     if (e && !repeat) HITS.add(e);
+    const cc = tzCC(TZ) || '';
     navigator.sendBeacon('api/?r=hit', JSON.stringify(
-      e ? { e, v: 2, l: st.L, s: HSRC.s, g: HSRC.g }
-        : { l: st.L, c: tzCC(TZ) || '', r: HSRC.r, f: HSRC.f, fam: HSRC.fam, s: HSRC.s, g: HSRC.g }
+      e ? { e, v: 2, l: st.L, c: cc, tz: TZ || '', fam: HSRC.fam, s: HSRC.s, g: HSRC.g }
+        : { l: st.L, c: cc, tz: TZ || '', r: HSRC.r, f: HSRC.f, fam: HSRC.fam, s: HSRC.s, g: HSRC.g }
     ));
   } catch (x) {}
 }

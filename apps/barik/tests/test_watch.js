@@ -77,6 +77,43 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
   ok(st.status===401,'вебхук с неверной подписью — 401');
   const now=Math.floor(Date.now()/1000); const n0=msgs.length; await cron(now);
   ok(msgs.length===n0+1&&/неверная подпись/.test(last()),'неверная подпись вебхука — сигнал владельцу: '+last().replace(/\n/g,' | ').slice(0,160));
+  // Партитура №4: закрытый ?r=live_stats (404 без ключа / с неверным, 200 JSON с ключом), страны в %, история и ops-панель
+  { const rNo=await fetch(base+'api/?r=live_stats');
+    const rBad=await fetch(base+'api/?r=live_stats&key=wrong-key');
+    ok(rNo.status===404&&rBad.status===404,'live_stats без ключа и с неверным ключом возвращает 404 ('+rNo.status+'/'+rBad.status+')');
+    // Засеваем исторический день с c:US=4, c:??=3 и u=10 (3 без страны → XX=6)
+    const oldDay=Math.floor(Date.now()/86400000)-5;
+    require('child_process').execFileSync('python3.13',['-c','import sqlite3,sys,json;c=sqlite3.connect(sys.argv[1]);[c.execute("INSERT OR REPLACE INTO stats(day,k,n) VALUES(?,?,?)",(int(sys.argv[2]),k,n)) for k,n in json.loads(sys.argv[3])];c.commit()',path.join(DATA,'barik.sqlite'),String(oldDay),JSON.stringify([['u',10],['open',15],['g:guest',6],['e:lesson_complete',3],['c:US',4],['c:??',3]])]);
+    // 3 разных посетителя: 1) CF-IPCountry AM; 2) tz Europe/Paris → FR; 3) Accept-Language pt-BR → BR
+    await fetch(base+'api/?r=hit',{method:'POST',headers:{'User-Agent':UA+' AM','CF-IPCountry':'AM'},body:JSON.stringify({l:'ru',fam:'sargsyan',g:1,s:'family'})});
+    await fetch(base+'api/?r=hit',{method:'POST',headers:{'User-Agent':UA+' FR'},body:JSON.stringify({l:'fr',tz:'Europe/Paris',g:1,s:'seo'})});
+    await fetch(base+'api/?r=hit',{method:'POST',headers:{'User-Agent':UA+' BR','Accept-Language':'pt-BR,pt;q=0.9'},body:JSON.stringify({l:'pt',g:1,s:'-'})});
+    await fetch(base+'api/?r=hit',{method:'POST',headers:{'User-Agent':UA+' AM','CF-IPCountry':'AM'},body:JSON.stringify({e:'family_visit',v:2,l:'ru',fam:'sargsyan',g:1,s:'family'})});
+    const lr=await fetch(base+'api/?r=live_stats&key='+KEY);
+    const lj=await lr.json();
+    const cToday=Object.fromEntries((lj.countries&&lj.countries.today||[]).map(x=>[x.cc,x]));
+    const cAll=Object.fromEntries((lj.countries&&lj.countries.all||[]).map(x=>[x.cc,x]));
+    const pctSum=(lj.countries&&lj.countries.all||[]).reduce((s,x)=>s+x.pct,0);
+    ok(lr.status===200&&lj.ok===true&&lj.online.m5>=3&&lj.online.m15>=3,'live_stats с ключом: 200 OK, online 5m='+lj.online.m5+'/15m='+lj.online.m15);
+    ok(cToday.AM&&cToday.FR&&cToday.BR,'live_stats страны сегодня: CF-IPCountry(AM), tz(FR), Accept-Language(BR) → '+Object.keys(cToday).join(','));
+    ok(cAll.US&&cAll.US.n>=4&&cAll.XX&&cAll.XX.n>=6&&Math.abs(pctSum-100)<=1.5,'live_stats страны за всё время: архив c:?? и непомеченные → XX ('+(cAll.XX&&cAll.XX.n)+'), сумма % = '+pctSum.toFixed(1));
+    ok(Array.isArray(lj.events)&&lj.events.some(e=>e.ev==='family_visit'&&e.cc==='AM'&&e.ctx==='family:sargsyan'),'live_stats события: живое событие family_visit (AM, family:sargsyan)');
+    ok(Array.isArray(lj.history)&&lj.history.length>=2&&lj.history.some(h=>h.u===10&&h.lessons===3),'live_stats история по дням: загружена вся история ('+lj.history.length+' дн.)');
+    // Проверка закрытой страницы ops-m9x4k2p7.html на iPhone 375px
+    const opsCtx=await br.newContext({viewport:{width:375,height:812},serviceWorkers:'block'});
+    const opsPg=await opsCtx.newPage(); let opsErr=''; opsPg.on('pageerror',e=>opsErr+=e);
+    await opsPg.goto(base+'ops-m9x4k2p7.html?key='+KEY);
+    await opsPg.waitForFunction(()=>document.getElementById('on5')&&document.getElementById('on5').textContent!=='—',{timeout:5000});
+    const opsCheck=await opsPg.evaluate(()=>({
+      robots:(document.querySelector('meta[name="robots"]')||{}).content||'',
+      overflow:document.documentElement.scrollWidth-window.innerWidth,
+      countries:document.querySelectorAll('.c-row').length,
+      events:document.querySelectorAll('#evBody tr').length,
+      history:document.querySelectorAll('#hBody tr').length
+    }));
+    ok(!opsErr&&opsCheck.robots==='noindex, nofollow'&&opsCheck.overflow<=1&&opsCheck.countries>=3&&opsCheck.events>=3&&opsCheck.history>=2,
+       'ops-m9x4k2p7.html (375px): noindex, без переполнения ('+opsCheck.overflow+'px), страны '+opsCheck.countries+', события '+opsCheck.events+', история '+opsCheck.history);
+    await opsCtx.close(); }
   ok(!phpErr,'PHP без ошибок '+phpErr.slice(0,300));
   await br.close(); php.kill(); tg.close(); site.close(); fs.rmSync(TMP,{recursive:true,force:true});
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);

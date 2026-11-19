@@ -811,48 +811,294 @@ function stat_add(int $day, string $k, int $n = 1): void {
     q('INSERT INTO stats(day, k, n) VALUES(?, ?, ?) ON CONFLICT(day, k) DO UPDATE SET n = n + excluded.n', [$day, mb_substr($k, 0, 80), $n]);
 }
 
+const TZ_CC_MAP = [
+    'Asia/Yerevan' => 'AM',
+    'Europe/Moscow' => 'RU', 'Europe/Samara' => 'RU', 'Europe/Kaliningrad' => 'RU', 'Europe/Volgograd' => 'RU',
+    'Europe/Saratov' => 'RU', 'Europe/Astrakhan' => 'RU', 'Europe/Ulyanovsk' => 'RU', 'Europe/Kirov' => 'RU',
+    'Asia/Yekaterinburg' => 'RU', 'Asia/Omsk' => 'RU', 'Asia/Novosibirsk' => 'RU', 'Asia/Barnaul' => 'RU',
+    'Asia/Tomsk' => 'RU', 'Asia/Novokuznetsk' => 'RU', 'Asia/Krasnoyarsk' => 'RU', 'Asia/Irkutsk' => 'RU',
+    'Asia/Chita' => 'RU', 'Asia/Yakutsk' => 'RU', 'Asia/Vladivostok' => 'RU', 'Asia/Magadan' => 'RU',
+    'Asia/Sakhalin' => 'RU', 'Asia/Kamchatka' => 'RU', 'Asia/Anadyr' => 'RU',
+    'America/New_York' => 'US', 'America/Los_Angeles' => 'US', 'America/Chicago' => 'US', 'America/Denver' => 'US',
+    'America/Phoenix' => 'US', 'America/Detroit' => 'US', 'America/Anchorage' => 'US', 'Pacific/Honolulu' => 'US',
+    'America/Indiana/Indianapolis' => 'US', 'America/Kentucky/Louisville' => 'US', 'America/Boise' => 'US',
+    'America/Toronto' => 'CA', 'America/Vancouver' => 'CA', 'America/Montreal' => 'CA', 'America/Edmonton' => 'CA',
+    'America/Winnipeg' => 'CA', 'America/Halifax' => 'CA', 'America/St_Johns' => 'CA', 'America/Regina' => 'CA',
+    'Europe/Paris' => 'FR', 'Europe/Berlin' => 'DE', 'Europe/Madrid' => 'ES', 'Atlantic/Canary' => 'ES',
+    'Europe/London' => 'GB', 'Europe/Rome' => 'IT', 'Europe/Amsterdam' => 'NL', 'Europe/Brussels' => 'BE',
+    'Europe/Zurich' => 'CH', 'Europe/Vienna' => 'AT', 'Europe/Warsaw' => 'PL', 'Europe/Prague' => 'CZ',
+    'Europe/Stockholm' => 'SE', 'Europe/Athens' => 'GR', 'Europe/Lisbon' => 'PT', 'Atlantic/Madeira' => 'PT',
+    'Europe/Kyiv' => 'UA', 'Europe/Kiev' => 'UA', 'Europe/Minsk' => 'BY', 'Europe/Chisinau' => 'MD',
+    'Europe/Sofia' => 'BG', 'Europe/Bucharest' => 'RO', 'Europe/Budapest' => 'HU', 'Europe/Helsinki' => 'FI',
+    'Europe/Oslo' => 'NO', 'Europe/Copenhagen' => 'DK', 'Europe/Dublin' => 'IE', 'Europe/Belgrade' => 'RS',
+    'Europe/Zagreb' => 'HR', 'Europe/Ljubljana' => 'SI', 'Europe/Bratislava' => 'SK', 'Europe/Vilnius' => 'LT',
+    'Europe/Riga' => 'LV', 'Europe/Tallinn' => 'EE', 'Europe/Luxembourg' => 'LU', 'Europe/Istanbul' => 'TR',
+    'Asia/Istanbul' => 'TR', 'Asia/Tbilisi' => 'GE', 'Asia/Baku' => 'AZ', 'Asia/Almaty' => 'KZ',
+    'Asia/Qyzylorda' => 'KZ', 'Asia/Aqtau' => 'KZ', 'Asia/Tashkent' => 'UZ', 'Asia/Bishkek' => 'KG',
+    'Asia/Dushanbe' => 'TJ', 'Asia/Ashgabat' => 'TM', 'Asia/Dubai' => 'AE', 'Asia/Qatar' => 'QA',
+    'Asia/Riyadh' => 'SA', 'Asia/Kuwait' => 'KW', 'Asia/Jerusalem' => 'IL', 'Asia/Beirut' => 'LB',
+    'Asia/Damascus' => 'SY', 'Asia/Amman' => 'JO', 'Asia/Baghdad' => 'IQ', 'Asia/Tehran' => 'IR',
+    'Asia/Nicosia' => 'CY', 'Europe/Nicosia' => 'CY', 'Asia/Tokyo' => 'JP', 'Asia/Seoul' => 'KR',
+    'Asia/Shanghai' => 'CN', 'Asia/Hong_Kong' => 'HK', 'Asia/Taipei' => 'TW', 'Asia/Singapore' => 'SG',
+    'Asia/Bangkok' => 'TH', 'Asia/Ho_Chi_Minh' => 'VN', 'Asia/Saigon' => 'VN', 'Asia/Jakarta' => 'ID',
+    'Asia/Manila' => 'PH', 'Asia/Kuala_Lumpur' => 'MY', 'Asia/Kolkata' => 'IN', 'Asia/Calcutta' => 'IN',
+    'America/Sao_Paulo' => 'BR', 'America/Fortaleza' => 'BR', 'America/Recife' => 'BR', 'America/Bahia' => 'BR',
+    'America/Belem' => 'BR', 'America/Manaus' => 'BR', 'America/Cuiaba' => 'BR',
+    'America/Argentina/Buenos_Aires' => 'AR', 'America/Buenos_Aires' => 'AR',
+    'America/Argentina/Cordoba' => 'AR', 'America/Argentina/Mendoza' => 'AR',
+    'America/Mexico_City' => 'MX', 'America/Monterrey' => 'MX', 'America/Tijuana' => 'MX', 'America/Cancun' => 'MX',
+    'America/Bogota' => 'CO', 'America/Santiago' => 'CL', 'America/Lima' => 'PE', 'America/Montevideo' => 'UY',
+    'America/Caracas' => 'VE', 'America/Guayaquil' => 'EC',
+    'Australia/Sydney' => 'AU', 'Australia/Melbourne' => 'AU', 'Australia/Brisbane' => 'AU',
+    'Australia/Perth' => 'AU', 'Australia/Adelaide' => 'AU', 'Pacific/Auckland' => 'NZ',
+    'Africa/Cairo' => 'EG', 'Africa/Johannesburg' => 'ZA', 'Africa/Casablanca' => 'MA', 'Africa/Lagos' => 'NG',
+];
+
+function tz_to_cc(string $tz): string {
+    $tz = trim($tz);
+    if ($tz === '') return '';
+    if (isset(TZ_CC_MAP[$tz])) return TZ_CC_MAP[$tz];
+    if (str_starts_with($tz, 'America/Argentina/')) return 'AR';
+    if (str_starts_with($tz, 'America/Indiana/') || str_starts_with($tz, 'America/Kentucky/') || str_starts_with($tz, 'US/')) return 'US';
+    if (str_starts_with($tz, 'Canada/')) return 'CA';
+    if (str_starts_with($tz, 'Brazil/')) return 'BR';
+    if (str_starts_with($tz, 'Australia/')) return 'AU';
+    return '';
+}
+
+function lang_to_cc(string $hdr): string {
+    if ($hdr === '') return '';
+    foreach (explode(',', $hdr) as $part) {
+        $tag = trim(explode(';', $part, 2)[0]);
+        if (preg_match('/^[a-z]{2,3}(?:-[A-Za-z]{4})?[-_]([A-Za-z]{2})(?:$|[-_])/', $tag, $m)) {
+            $cc = strtoupper($m[1]);
+            if ($cc !== 'XX' && $cc !== 'ZZ') return $cc;
+        }
+    }
+    return '';
+}
+
+function detect_country(array $b): string {
+    // Приоритет 1: серверные заголовки Cloudflare / cPanel GeoIP
+    foreach (['HTTP_CF_IPCOUNTRY', 'GEOIP_COUNTRY_CODE'] as $hk) {
+        $v = strtoupper(trim((string)($_SERVER[$hk] ?? '')));
+        if (preg_match('/^[A-Z]{2}$/', $v) && !in_array($v, ['XX', 'T1', 'A1', 'A2'], true)) return $v;
+    }
+    // Приоритет 2: код страны с клиента (tzcc.js), часовой пояс (Intl), регион из Accept-Language
+    $c = strtoupper(trim((string)($b['c'] ?? '')));
+    if (preg_match('/^[A-Z]{2}$/', $c) && $c !== 'XX') return $c;
+    $tzc = tz_to_cc((string)($b['tz'] ?? ''));
+    if ($tzc !== '') return $tzc;
+    $lc = lang_to_cc((string)($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? ''));
+    if ($lc !== '') return $lc;
+    return 'XX';
+}
+
+function live_db(): void {
+    static $readyPdo = null;
+    $pdo = db();
+    if ($readyPdo === $pdo) return;
+    $pdo->exec("CREATE TABLE IF NOT EXISTS live_seen(h TEXT PRIMARY KEY, t INTEGER NOT NULL, cc TEXT NOT NULL DEFAULT 'XX', ctx TEXT NOT NULL DEFAULT '')");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS live_seen_t ON live_seen(t)");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS live_events(id INTEGER PRIMARY KEY AUTOINCREMENT, t INTEGER NOT NULL, cc TEXT NOT NULL DEFAULT 'XX', ev TEXT NOT NULL, ctx TEXT NOT NULL DEFAULT '')");
+    $readyPdo = $pdo;
+}
+
 function stat_hit(array $b): void {
     $ua = (string)($_SERVER['HTTP_USER_AGENT'] ?? '');
     if ($ua === '' || preg_match('/bot|crawl|spider|slurp|preview|headless|lighthouse|monitor|curl|wget|python|facebookexternalhit/i', $ua)) return;
-    $day = intdiv(time(), 86400);
+    $now = time();
+    $day = intdiv($now, 86400);
     $clean = fn($x, $re) => preg_match($re, (string)$x) ? (string)$x : '';
     $ev = $clean($b['e'] ?? '', '/^[a-z][a-z0-9_]{0,23}$/');
+    $cc = detect_country($b);
+    $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/');
+    $fam = strtolower($clean($b['fam'] ?? '', '/^[A-Za-z0-9._\-]{1,32}$/'));
+    $f = strtolower($clean($b['f'] ?? '', '/^[A-Za-z0-9._\-]{1,24}$/'));
+    $srcRaw = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/'));
+
+    // Живая активность (онлайн 5/15 мин и последние 20 событий)
+    live_db();
+    $vh = substr(hash_hmac('sha256', ip_key() . '|' . $ua, (string)cfg('PEPPER', 'barik')), 0, 20);
+    $ctx = $fam !== '' ? ('family:' . $fam) : ($f !== '' ? ('from=' . $f) : (($srcRaw !== '' && $srcRaw !== '-') ? $srcRaw : ($l !== '' ? ('lang:' . $l) : '')));
+    $ctx = substr($ctx, 0, 48);
+    q("INSERT INTO live_seen(h, t, cc, ctx) VALUES(?, ?, ?, ?) ON CONFLICT(h) DO UPDATE SET t = excluded.t, cc = CASE WHEN excluded.cc != 'XX' THEN excluded.cc ELSE live_seen.cc END, ctx = CASE WHEN excluded.ctx != '' THEN excluded.ctx ELSE live_seen.ctx END", [$vh, $now, $cc, $ctx]);
+    q('DELETE FROM live_seen WHERE t < ?', [$now - 86400]);
+    $liveEv = ($ev !== '' && $ev !== 'open') ? (($ev === 'lesson_done' && ($b['v'] ?? 0) === 2) ? 'lesson_complete' : $ev) : 'open';
+    q('INSERT INTO live_events(t, cc, ev, ctx) VALUES(?, ?, ?, ?)', [$now, $cc, $liveEv, $ctx]);
+    q('DELETE FROM live_events WHERE id NOT IN (SELECT id FROM live_events ORDER BY id DESC LIMIT 200)');
+
     if ($ev !== '' && $ev !== 'open') {
         stat_add($day, 'e:' . $ev);
         if ($ev === 'lesson_done' && ($b['v'] ?? 0) === 2) stat_add($day, 'e:lesson_complete');
         // воронка новичка (O-198): шаги из первого визита — всего, по языку и по источнику
         if (!empty($b['g']) && in_array($ev, FUNNEL, true)) {
             stat_add($day, 'g:' . $ev);
-            $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'gl:' . $l . ':' . $ev);
-            $src = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/')); stat_add($day, 'gs:' . ($src ?: '-') . ':' . $ev);
+            if ($l !== '') stat_add($day, 'gl:' . $l . ':' . $ev);
+            stat_add($day, 'gs:' . ($srcRaw ?: '-') . ':' . $ev);
         }
         return;
     }
-    // открытие сайта: посетитель за день, язык, страна по поясу, источник, телефон/компьютер
+    // открытие сайта: посетитель за день, язык, страна, источник, телефон/компьютер
     $h = substr(hash_hmac('sha256', ip_key() . '|' . $ua . '|' . $day, (string)cfg('PEPPER', 'barik')), 0, 20);
     q('DELETE FROM stat_v WHERE day < ?', [$day - 1]);
     $new = q('INSERT OR IGNORE INTO stat_v(day, h) VALUES(?, ?)', [$day, $h])->rowCount() > 0;
     stat_add($day, 'open');
-    $fam = strtolower($clean($b['fam'] ?? '', '/^[A-Za-z0-9._\-]{1,32}$/')); if ($fam !== '') stat_add($day, 'fam:' . $fam);
+    if ($fam !== '') stat_add($day, 'fam:' . $fam);
     if (!$new) return;
     stat_add($day, 'u');
-    $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'l:' . $l);
-    $c = $clean($b['c'] ?? '', '/^[A-Z]{2}$/'); stat_add($day, 'c:' . ($c ?: '??'));
+    if ($l !== '') stat_add($day, 'l:' . $l);
+    stat_add($day, 'c:' . $cc);
     $r = strtolower($clean($b['r'] ?? '', '/^[A-Za-z0-9.\-]{1,60}$/'));
     $r = preg_replace('/^(www\.|m\.|l\.|lm\.)/', '', $r);
     stat_add($day, 'r:' . ($r ?: '-'));
     stat_add($day, 'd:' . (preg_match('/Mobi|Android|iPhone|iPad/i', $ua) ? 'phone' : 'desk'));
-    $f = strtolower($clean($b['f'] ?? '', '/^[A-Za-z0-9._\-]{1,24}$/')); if ($f !== '') stat_add($day, 'f:' . $f);
+    if ($f !== '') stat_add($day, 'f:' . $f);
     if (!empty($b['g'])) {
         stat_add($day, 'e:guest_new');
         stat_add($day, 'g:guest');
-        $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'gl:' . $l . ':guest');
-        $sp = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/')); stat_add($day, 'gs:' . ($sp ?: '-') . ':guest');
+        if ($l !== '') stat_add($day, 'gl:' . $l . ':guest');
+        stat_add($day, 'gs:' . ($srcRaw ?: '-') . ':guest');
     }
 }
 
 function stats_key(): string {
     return substr(hash_hmac('sha256', 'stats', (string)cfg('PEPPER', 'barik')), 0, 32);
+}
+
+function live_stats_key_ok(): bool {
+    $provided = (string)($_GET['key'] ?? '');
+    if ($provided === '') {
+        $provided = (string)($_SERVER['HTTP_X_BARIK_KEY'] ?? '');
+    }
+    if ($provided === '') {
+        $auth = (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '');
+        if (str_starts_with($auth, 'Bearer ')) $provided = substr($auth, 7);
+    }
+    $provided = trim($provided);
+    if ($provided === '') return false;
+    $wk = trim((string)cfg('WATCH_KEY', ''));
+    if ($wk !== '' && hash_equals($wk, $provided)) return true;
+    return hash_equals(stats_key(), $provided);
+}
+
+function live_stats_countries(array $raw, int $uTotal): array {
+    $agg = [];
+    $knownSum = 0;
+    foreach ($raw as $cc => $n) {
+        $n = (int)$n;
+        if ($n <= 0) continue;
+        $code = strtoupper((string)$cc);
+        if (!preg_match('/^[A-Z]{2}$/', $code) || $code === 'XX') $code = 'XX';
+        $agg[$code] = ($agg[$code] ?? 0) + $n;
+        $knownSum += $n;
+    }
+    if ($uTotal > $knownSum) {
+        $agg['XX'] = ($agg['XX'] ?? 0) + ($uTotal - $knownSum);
+    }
+    $denom = array_sum($agg);
+    if ($denom <= 0) return [];
+    arsort($agg);
+    $out = [];
+    foreach ($agg as $cc => $n) {
+        $out[] = ['cc' => $cc, 'n' => $n, 'pct' => round(100 * $n / $denom, 1)];
+    }
+    return $out;
+}
+
+function live_stats_bucket(array $m): array {
+    $g = fn(string $k): int => (int)($m[$k] ?? 0);
+    $pw = [];
+    foreach (['audio15', 'level_lock', 'stage_lock', 'quiz_result', 'gift', 'default'] as $pk) {
+        $pw[$pk] = $g('e:pw_' . $pk);
+    }
+    return [
+        'u' => $g('u'),
+        'open' => $g('open'),
+        'guest' => $g('g:guest'),
+        'start' => $g('g:start'),
+        'first_answer' => $g('g:first_answer'),
+        'lesson_complete' => $g('e:lesson_complete'),
+        'family_visit' => $g('e:family_visit'),
+        'family_listen' => $g('e:family_listen'),
+        'family_gift' => $g('e:family_gift'),
+        'surname_card' => $g('e:surname_card'),
+        'lvl_start' => $g('e:lvl_start'),
+        'v_paywall' => $g('e:v_paywall'),
+        'checkout' => $g('e:checkout'),
+        'paid' => $g('p:paid'),
+        'pw' => $pw,
+    ];
+}
+
+function live_stats_data(): array {
+    live_db();
+    $now = time();
+    $todayDay = intdiv($now, 86400);
+    $m5 = (int)q('SELECT COUNT(*) FROM live_seen WHERE t >= ?', [$now - 300])->fetchColumn();
+    $m15 = (int)q('SELECT COUNT(*) FROM live_seen WHERE t >= ?', [$now - 900])->fetchColumn();
+    $events = q('SELECT id, t, cc, ev, ctx FROM live_events ORDER BY id DESC LIMIT 20')->fetchAll();
+
+    $rows = q('SELECT day, k, n FROM stats ORDER BY day ASC')->fetchAll();
+    $byDay = [];
+    $allMap = [];
+    $todayMap = [];
+    $cAll = [];
+    $cToday = [];
+    foreach ($rows as $r) {
+        $d = (int)$r['day'];
+        $k = (string)$r['k'];
+        $n = (int)$r['n'];
+        $byDay[$d][$k] = ($byDay[$d][$k] ?? 0) + $n;
+        $allMap[$k] = ($allMap[$k] ?? 0) + $n;
+        if ($d === $todayDay) $todayMap[$k] = ($todayMap[$k] ?? 0) + $n;
+        if (str_starts_with($k, 'c:')) {
+            $cc = substr($k, 2);
+            $cAll[$cc] = ($cAll[$cc] ?? 0) + $n;
+            if ($d === $todayDay) $cToday[$cc] = ($cToday[$cc] ?? 0) + $n;
+        }
+    }
+
+    $history = [];
+    $days = array_keys($byDay);
+    rsort($days);
+    foreach ($days as $d) {
+        $x = $byDay[$d];
+        $history[] = [
+            'date' => gmdate('Y-m-d', $d * 86400),
+            'u' => (int)($x['u'] ?? 0),
+            'open' => (int)($x['open'] ?? 0),
+            'guest' => (int)($x['g:guest'] ?? 0),
+            'start' => (int)($x['g:start'] ?? 0),
+            'first_answer' => (int)($x['g:first_answer'] ?? 0),
+            'lessons' => (int)($x['e:lesson_complete'] ?? 0),
+            'family' => (int)($x['e:family_visit'] ?? 0),
+            'paid' => (int)($x['p:paid'] ?? 0),
+        ];
+    }
+
+    $todayBucket = live_stats_bucket($todayMap);
+    $allBucket = live_stats_bucket($allMap);
+
+    return [
+        'ok' => true,
+        'ts' => $now,
+        'day' => gmdate('Y-m-d', $todayDay * 86400),
+        'online' => ['m5' => $m5, 'm15' => $m15],
+        'events' => $events,
+        'today' => $todayBucket,
+        'all' => $allBucket,
+        'accounts' => [
+            'users' => (int)q('SELECT COUNT(*) FROM users')->fetchColumn(),
+            'remind' => (int)q('SELECT COUNT(*) FROM remind WHERE on_ = 1')->fetchColumn(),
+            'premium' => premium_count(),
+        ],
+        'countries' => [
+            'today' => live_stats_countries($cToday, $todayBucket['u']),
+            'all' => live_stats_countries($cAll, $allBucket['u']),
+        ],
+        'history' => $history,
+    ];
 }
 
 
@@ -1376,7 +1622,7 @@ function watch_digest(array $p, int $yday): string {
 function watch_funnel(int $d): string {
     $g = fn($k) => day_sum($d, 'g:' . $k);
     $t = "\nНовички: гости " . $g('guest') . ' → телефон ' . $g('land_try') . ' → вошли ' . $g('start') . ' → 1-й ответ ' . $g('first_answer') . ' → урок ' . $g('lesson_complete');
-    $t .= "\nПосле урока: Telegram " . $g('rem_tg') . ', почта ' . $g('rem_mail') . ', на экран «Домой» ' . $g('a2hs');
+    $t .= "\nПосле урока: почта " . $g('rem_mail') . ', на экран «Домой» ' . $g('a2hs');
     $st = [];
     for ($n = 1; $n <= 5; $n++) {
         [$o, $ps, $f] = [day_sum($d, 'e:unit_open_p' . $n), day_sum($d, 'e:unit_pass_p' . $n), day_sum($d, 'e:unit_fail_p' . $n)];

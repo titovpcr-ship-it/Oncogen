@@ -267,5 +267,15 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));
   await br.close(); srv.close();
   ok(fs.existsSync(path.join(ROOT,'api','cron.php'))&&/cron/.test(fs.readFileSync(path.join(ROOT,'api','.htaccess'),'utf8')),'сервер: cron.php в сборке и закрыт снаружи (O-173)');
+  { const opsPath=path.join(ROOT,'ops-m9x4k2p7.html');
+    const opsHtml=fs.existsSync(opsPath)?fs.readFileSync(opsPath,'utf8'):'';
+    const swRaw=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8');
+    const robRaw=fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8');
+    const htRaw=fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8');
+    ok(opsHtml.includes('<meta name="robots" content="noindex, nofollow">')&&!swRaw.includes('ops-m9x4k2p7')&&!robRaw.includes('ops-m9x4k2p7')&&/ops-\.\*\\\.html[\s\S]{0,90}X-Robots-Tag "noindex, nofollow"/.test(htRaw),
+       'ops-m9x4k2p7.html: в сборке с noindex/nofollow, скрыт из sw.js и robots.txt, защищён в .htaccess');
+    const jsFiles=[path.join(ROOT,'index.html'),path.join(ROOT,'js','config.js'),...fs.readdirSync(path.join(ROOT,'js','app')).map(f=>path.join(ROOT,'js','app',f))];
+    const leaked=jsFiles.filter(f=>/instagram\.com|t\.me\//i.test(fs.readFileSync(f,'utf8')));
+    ok(leaked.length===0,'в приложении и index.html нет ссылок на Instagram и Telegram '+leaked.join(', ')); }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();

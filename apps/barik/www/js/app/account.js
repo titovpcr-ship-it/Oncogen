@@ -12,20 +12,6 @@ import { bothVoices, sayText } from './audio.js';
 
 const kbOwn = () => st.UI.kb === 'own';
 
-export const SOC_IC = {
-  ig: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg>',
-  tg: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.2 2.9 11.4c-1 .4-.9 1.2 0 1.5l4.6 1.4 1.8 5.5c.2.6.9.8 1.4.3l2.6-2.4 4.8 3.5c.6.4 1.3.1 1.5-.6l3.1-14.6c.2-.9-.4-1.3-1.2-1z" fill="currentColor"/></svg>'
-};
-
-export function socialHTML() {
-  const S = CFG.SOCIAL || {};
-  if (BILL.native || !(S.ig || S.tg)) return '';
-  return '<p class="ld-social">' +
-    (S.ig ? '<a href="' + esc(S.ig) + '" target="_blank" rel="noopener" aria-label="Instagram">' + SOC_IC.ig + '<span>Instagram</span></a>' : '') +
-    (S.tg ? '<a href="' + esc(S.tg) + '" target="_blank" rel="noopener" aria-label="Telegram">' + SOC_IC.tg + '<span>Telegram</span></a>' : '') +
-    '</p>';
-}
-
 export function flagHTML(w) {
   if (st.FLW !== w.a) {
     return '<button class="flag" data-act="flag" data-arg="' + esc(w.a) + '">' + esc(st.S.flag && st.S.flag[w.a] ? T('flagged') : T('flagAsk')) + '</button>';
@@ -86,7 +72,6 @@ export function settingsHTML() {
     '<section class="set-sec"><h2 class="sec">' + esc(T('setSub')) + '</h2>' + sub + '</section>' +
     flagsHTML() +
     '<section class="set-sec"><h2 class="sec">' + esc(T('setProgress')) + '</h2><p class="note">' + esc(!st.LSOK ? T('progNoSave') : ACC.me ? T('progSync') : T('progLocal')) + '</p><div class="actions" style="margin-top:14px">' + (ACC.srv === true && !ACC.me ? '<button class="btn secondary" data-act="syncLogin">' + esc(T('progLogin')) + '</button>' : '') + '<button class="btn danger" data-act="reset">' + esc(st.resetArm ? T('resetArm') : T('reset')) + '</button></div></section>' +
-    (socialHTML() ? '<section class="set-sec set-soc"><h2 class="sec">' + esc(T('follow')) + '</h2>' + socialHTML() + '</section>' : '') +
     '<section class="set-sec"><h2 class="sec">' + esc(T('about')) + '</h2><p class="note">' + esc(T('aboutText', CFG.VERSION || '1.0.0', WORDS.length)) + '</p><div class="linkrow"><button class="linkbtn" data-act="doc" data-arg="project">' + esc(T('project')) + '</button><button class="linkbtn" data-act="doc" data-arg="credits">' + esc(T('credits')) + '</button><button class="linkbtn" data-act="doc" data-arg="privacy">' + esc(T('privacy')) + '</button><button class="linkbtn" data-act="doc" data-arg="terms">' + esc(T('terms')) + '</button>' + (BILL.native ? '' : '<button class="linkbtn" data-act="doc" data-arg="refund">' + esc(T('refund')) + '</button><button class="linkbtn" data-act="tcOpen">' + esc(T('tcTitle')) + '</button>') + '</div></section>';
 }
 

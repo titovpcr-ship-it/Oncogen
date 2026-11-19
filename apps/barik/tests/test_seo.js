@@ -39,7 +39,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
         const need=[`<html lang="${L}">`,`<link rel="canonical" href="${BASE}${cr}">`,'hreflang="x-default"',
           ...LANGS.map(l=>`hreflang="${l}" href="${BASE}${cr.replace(L+'/',l+'/')}"`),'<meta name="description" content="'];
         if(/href="[^"]*index\.html"/.test(s)) nohead.push(rel+' (ссылка на index.html)');
-        if(!s.includes('https://t.me/armenian_word_daily')||!s.includes('https://www.instagram.com/barik_armenian')) nohead.push(rel+' (нет Instagram/Telegram в подвале)');
+        if(/instagram\.com|t\.me\//i.test(s)) nohead.push(rel+' (остались ссылки Instagram/Telegram)');
         if(need.some(x=>!s.includes(x))) nohead.push(rel);
         const t=(s.match(/<title>([^<]*)<\/title>/)||[])[1]||'';
         if(sub==='w') dupTitle.set(t,(dupTitle.get(t)||0)+1);
@@ -74,7 +74,10 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(v&&v.includes('Спряжение')&&v.includes('գրում եմ')&&v.includes('գրեցի')&&v.includes('Однокоренные'),'«գրել»: спряжение и однокоренные');
     ok(pick(s=>s.includes('<h2>Пример</h2>')&&s.includes('class="exs"'))!==undefined,'пример на странице слова'); }
   ok(locs/LANGS.length<=50000,'в одном sitemap не больше 50 000 адресов');
-  ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8')),'robots.txt знает sitemap');
+  const rob=fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8');
+  ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(rob)&&!rob.includes('ops-m9x4k2p7'),'robots.txt знает sitemap и не раскрывает ops-страницу');
+  { const smsAll=[idx,...fs.readdirSync(ROOT).filter(f=>/^sitemap-.*\.xml$/.test(f)).map(f=>fs.readFileSync(path.join(ROOT,f),'utf8'))];
+    ok(smsAll.every(x=>!x.includes('ops-m9x4k2p7')),'ops-m9x4k2p7.html отсутствует во всех sitemap*.xml'); }
   { // O-206: у каждого адреса sitemap — lastmod (дата настоящего изменения), у указателя — у каждого файла
     const sms=fs.readdirSync(ROOT).filter(f=>/^sitemap-.*\.xml$/.test(f)); let n=0, bad=0;
     for(const f of sms){ const x=fs.readFileSync(path.join(ROOT,f),'utf8'); for(const m of x.matchAll(/<url><loc>[^<]+<\/loc>(<lastmod>\d{4}-\d\d-\d\d<\/lastmod>)?/g)){ n++; if(!m[1]) bad++; } }
