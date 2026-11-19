@@ -140,8 +140,65 @@ function limited(string $key, int $n, int $window): bool {
     }
 }
 
+function client_ip(): string {
+    $cf = trim((string)($_SERVER['HTTP_CF_CONNECTING_IP'] ?? ''));
+    if ($cf !== '' && filter_var($cf, FILTER_VALIDATE_IP)) {
+        return $cf;
+    }
+    return trim((string)($_SERVER['REMOTE_ADDR'] ?? '')) ?: '0.0.0.0';
+}
+
 function ip_key(): string {
-    return 'ip:' . substr(hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . (string)cfg('PEPPER', '')), 0, 24);
+    return 'ip:' . substr(hash('sha256', client_ip() . (string)cfg('PEPPER', '')), 0, 24);
+}
+
+/* легковесный файловый лимит неудачных попыток по IP (без нагрузки на SQLite): не более $max за $window секунд */
+function ip_rate_file(string $bucket, bool $mkdir = false): string {
+    $dir = (string)cfg('DATA_DIR', dirname(__DIR__, 2) . '/barik-data') . '/rl';
+    if ($mkdir && !is_dir($dir)) @mkdir($dir, 0700, true);
+    $h = hash_hmac('sha256', $bucket . '|' . client_ip(), (string)cfg('PEPPER', 'barik'));
+    return $dir . '/' . substr($h, 0, 32) . '.rl';
+}
+
+function ip_rate_limited(string $bucket, int $max = 10, int $window = 60): bool {
+    $f = ip_rate_file($bucket, false);
+    if (!is_file($f)) return false;
+    $fp = @fopen($f, 'r');
+    if (!$fp) return false;
+    $cut = now() - $window;
+    $n = 0;
+    if (@flock($fp, LOCK_SH)) {
+        while (($line = fgets($fp)) !== false) {
+            if ((int)trim($line) > $cut) $n++;
+        }
+        @flock($fp, LOCK_UN);
+    }
+    fclose($fp);
+    return $n >= $max;
+}
+
+function ip_rate_fail(string $bucket, int $window = 60): int {
+    $f = ip_rate_file($bucket, true);
+    $fp = @fopen($f, 'c+');
+    if (!$fp) return 0;
+    $now = now();
+    $cut = $now - $window;
+    $kept = [];
+    if (@flock($fp, LOCK_EX)) {
+        rewind($fp);
+        while (($line = fgets($fp)) !== false) {
+            $ts = (int)trim($line);
+            if ($ts > $cut) $kept[] = $ts;
+        }
+        $kept[] = $now;
+        rewind($fp);
+        ftruncate($fp, 0);
+        fwrite($fp, implode("\n", $kept) . "\n");
+        fflush($fp);
+        @flock($fp, LOCK_UN);
+    }
+    fclose($fp);
+    return count($kept);
 }
 
 /* ---------- почта и никнейм ---------- */
@@ -734,7 +791,10 @@ function remind_run(?int $now = null): array {
 
 
 /* ---------- счётчик посещений (O-174) ---------- */
-const FUNNEL = ['land_try', 'start', 'first_answer', 'lesson_complete', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
+const FUNNEL = ['land_try', 'start', 'lesson_start', 'first_answer', 'lesson_complete', 'unit_done', 'lvl_start',
+                'family_visit', 'family_listen', 'family_gift', 'surname_card',
+                'v_paywall', 'pw_audio15', 'pw_level_lock', 'pw_stage_lock', 'pw_quiz_result', 'pw_gift', 'pw_default',
+                'checkout', 'profile', 'paid', 'gift_paid',
                 'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail', 'rem_tg', 'rem_mail', 'a2hs'];
 
 /* Premium сейчас: подписки текущего режима Dodo (O-195) и подарки */
@@ -773,6 +833,7 @@ function stat_hit(array $b): void {
     q('DELETE FROM stat_v WHERE day < ?', [$day - 1]);
     $new = q('INSERT OR IGNORE INTO stat_v(day, h) VALUES(?, ?)', [$day, $h])->rowCount() > 0;
     stat_add($day, 'open');
+    $fam = strtolower($clean($b['fam'] ?? '', '/^[A-Za-z0-9._\-]{1,32}$/')); if ($fam !== '') stat_add($day, 'fam:' . $fam);
     if (!$new) return;
     stat_add($day, 'u');
     $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'l:' . $l);
@@ -1322,6 +1383,18 @@ function watch_funnel(int $d): string {
         if ($o || $ps || $f) $st[] = 'p' . $n . ' ' . $o . '→' . $ps . '→' . $f;
     }
     if ($st) $t .= "\nПуть (открыли→прошли→не прошли): " . implode(', ', $st);
+    $fam = day_sum($d, 'e:family_visit'); $famL = day_sum($d, 'e:family_listen'); $famG = day_sum($d, 'e:family_gift'); $card = day_sum($d, 'e:surname_card');
+    if ($fam || $famL || $famG || $card) {
+        $t .= "\nBarik Roots (family): визиты " . $fam . ' (радио ' . $famL . ', подарок ' . $famG . '), герб ' . $card;
+    }
+    $lvl = day_sum($d, 'e:lvl_start');
+    if ($lvl) $t .= "\nТест уровня (lvlStart): " . $lvl;
+    $pw = [];
+    foreach (['audio15', 'level_lock', 'stage_lock', 'quiz_result', 'gift', 'default'] as $pk) {
+        $n = day_sum($d, 'e:pw_' . $pk);
+        if ($n) $pw[] = $pk . ' ' . $n;
+    }
+    if ($pw) $t .= "\nPaywall: " . implode(', ', $pw);
     $r = day_sum($d, 'f:reels'); if ($r) $t .= "\nИз роликов: " . $r . ' (из них вошли ' . day_sum($d, 'gs:from=reels:start') . ')';
     $c = day_sum($d, 'csp'); if ($c) $t .= "\nОтчёты CSP: " . $c;
     return $t;

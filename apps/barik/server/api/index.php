@@ -144,8 +144,10 @@ switch ($r) {
 
     case 'start':
         need_post($method);
+        if (ip_rate_limited('auth', 10, 60)) fail('wait', 429, ['retry' => 60]);
         $b = body();
-        $email = norm_email($b['email'] ?? null) ?? fail('email');
+        $email = norm_email($b['email'] ?? null);
+        if ($email === null) { ip_rate_fail('auth'); fail('email'); }
         $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
         if (limited(ip_key() . ':start', 20, 3600)) fail('wait', 429, ['retry' => 600]);
         $row = q('SELECT sent FROM codes WHERE email = ?', [$email])->fetch();
@@ -158,6 +160,7 @@ switch ($r) {
           [$email, code_hash($email, $code), now() + CODE_TTL, now()]);
         if (!send_code($email, $code, $lang)) {
             q('DELETE FROM codes WHERE email = ?', [$email]);
+            ip_rate_fail('auth');
             stat_add(intdiv(time(), 86400), 'w:mail_fail');     // сигнал владельцу (O-200)
             fail('mail', 502);
         }
@@ -165,19 +168,23 @@ switch ($r) {
 
     case 'verify':
         need_post($method);
+        if (ip_rate_limited('auth', 10, 60)) fail('wait', 429, ['retry' => 60]);
         $b = body();
-        $email = norm_email($b['email'] ?? null) ?? fail('email');
+        $email = norm_email($b['email'] ?? null);
+        if ($email === null) { ip_rate_fail('auth'); fail('email'); }
         $code = preg_replace('/\D/', '', (string)($b['code'] ?? ''));
         if (limited(ip_key() . ':verify', 60, 3600)) fail('wait', 429, ['retry' => 600]);
         $row = q('SELECT * FROM codes WHERE email = ?', [$email])->fetch();
-        if (!$row) fail('expired');
+        if (!$row) { ip_rate_fail('auth'); fail('expired'); }
         if ((int)$row['expires'] < now()) {
             q('DELETE FROM codes WHERE email = ?', [$email]);
+            ip_rate_fail('auth');
             fail('expired');
         }
-        if ((int)$row['tries'] >= CODE_TRIES) fail('locked', 429);
+        if ((int)$row['tries'] >= CODE_TRIES) { ip_rate_fail('auth'); fail('locked', 429); }
         if (strlen($code) !== 6 || !hash_equals($row['hash'], code_hash($email, $code))) {
             q('UPDATE codes SET tries = tries + 1 WHERE email = ?', [$email]);
+            ip_rate_fail('auth');
             $left = CODE_TRIES - (int)$row['tries'] - 1;
             fail($left <= 0 ? 'locked' : 'code', 400, ['left' => max(0, $left)]);
         }
@@ -350,18 +357,22 @@ switch ($r) {
 
     case 'gift_check':
         need_post($method);
-        $u = session_user() ?? fail('auth', 401);
+        if (ip_rate_limited('gift', 10, 60)) fail('wait', 429, ['retry' => 60]);
+        $u = session_user();
+        if (!$u) { ip_rate_fail('gift'); fail('auth', 401); }
         $b = body();
         $g = gift_settle((string)($b['payment_id'] ?? ''), in_array($b['lang'] ?? '', ['ru', 'en'], true) ? $b['lang'] : 'en');
-        if (!$g || (int)$g['buyer'] !== (int)$u['id']) fail('pending', 404);
+        if (!$g || (int)$g['buyer'] !== (int)$u['id']) { ip_rate_fail('gift'); fail('pending', 404); }
         out(['ok' => true, 'code' => $g['code'], 'months' => (int)$g['months']]);
 
     case 'gift_redeem':
         need_post($method);
-        $u = session_user() ?? fail('auth', 401);
+        if (ip_rate_limited('gift', 10, 60)) fail('wait', 429, ['retry' => 60]);
+        $u = session_user();
+        if (!$u) { ip_rate_fail('gift'); fail('auth', 401); }
         if (limited('u:' . $u['id'] . ':redeem', 20, 3600)) fail('wait', 429, ['retry' => 600]);
         $r = gift_redeem($u, (string)(body()['code'] ?? ''));
-        if ($r !== 'ok') fail($r, 400);
+        if ($r !== 'ok') { ip_rate_fail('gift'); fail($r, 400); }
         $u = q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
         out(['ok' => true, 'user' => user_out($u)]);
 

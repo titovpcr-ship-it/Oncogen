@@ -65,6 +65,13 @@ const KEY='dodo_test_key', SECRET='whsec_'+Buffer.from('barik-gift-secret-1').to
   ok(r.j.ok&&r.j.user.premium&&r.j.user.plan==='gift'&&days>355&&days<366,'код применён: Premium, план «подарок», ~360 дней');
   r=await call('gift_redeem',{code:gm[0].gift},ca); ok(r.status===400&&r.j.err==='used','чужой уже использованный код — used');
   r=await call('me',undefined,ca); ok(!r.j.user.premium,'покупатель подарка сам Premium не получает');
+  // файловый IP Rate Limiter (CF-Connecting-IP): >10 неудачных попыток gift_redeem за минуту → 429
+  { const callIp=(code,ip)=>fetch(base+'api/?r=gift_redeem',{method:'POST',headers:{'X-Barik':'1','Content-Type':'application/json',Cookie:ca,'CF-Connecting-IP':ip},body:JSON.stringify({code})}).then(async x=>({status:x.status,j:await x.json().catch(()=>({}))}));
+    let all400=true;
+    for(let i=0;i<10;i++){ const x=await callIp('BARIK-BAD0-000'+i,'203.0.113.77'); if(x.status!==400) all400=false; }
+    const x11=await callIp('BARIK-BAD0-9999','203.0.113.77');
+    const xOther=await callIp('BARIK-BAD0-9999','203.0.113.78');
+    ok(all400&&x11.status===429&&xOther.status===400,'IP rate limit gift_redeem (CF-Connecting-IP): 10×400 → 11-я 429, другой IP 400'); }
   // браузер: экран подарка
   const br=await chromium.launch(); const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU',serviceWorkers:'block'});
   await ctx.addCookies([{name:'barik_s',value:ca.split('=')[1],url:base}]);

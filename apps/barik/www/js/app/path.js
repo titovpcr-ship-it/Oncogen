@@ -724,6 +724,7 @@ export const PH = {
     it.done = true;
     it.ok = it.ans.map(id => it.bank[id].t).join(' ') === it.a.join(' ');
     if (it.ok) { if (!it.re) st.PU.ok++; } else pWrong(it);
+    hit('first_answer');
     cb.render();
     pSayIt(it);
   },

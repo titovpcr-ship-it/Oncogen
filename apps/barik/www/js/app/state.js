@@ -628,18 +628,19 @@ export const HSRC = (() => {
   try {
     const sp = new URLSearchParams(location.search || '');
     const f = (sp.get('from') || '').toLowerCase().replace(/[^a-z0-9_.-]/g, '').slice(0, 24);
+    const fam = (sp.get('family') || '').toLowerCase().replace(/[^a-z0-9_.-]/g, '').slice(0, 32);
     if (document.referrer) {
       const u = new URL(document.referrer);
       if (u.hostname === location.hostname) {
-        const m = u.pathname.match(/^\/(?:ru|en|fr|es|de|pt)\/(?:([wtpagn])\/)?/);
+        const m = u.pathname.match(/^\/(?:ru|en|fr|es|de|pt)\/(?:([wtpagsn])\/)?/);
         if (m) seo = m[1] || 'i';
       } else {
         r = u.hostname.replace(/^(www\.|m\.|l\.|lm\.)/, '');
       }
     }
-    return { f, r, seo, g: FIRST ? 1 : 0, s: f ? 'from=' + f : seo ? 'seo' : (r || '-') };
+    return { f, fam, r, seo, g: FIRST ? 1 : 0, s: f ? 'from=' + f : fam ? 'family' : seo ? 'seo' : (r || '-') };
   } catch (x) {
-    return { f: '', r: '', seo: '', g: FIRST ? 1 : 0, s: '-' };
+    return { f: '', fam: '', r: '', seo: '', g: FIRST ? 1 : 0, s: '-' };
   }
 })();
 
@@ -651,7 +652,7 @@ export function hit(e) {
     if (e && !repeat) HITS.add(e);
     navigator.sendBeacon('api/?r=hit', JSON.stringify(
       e ? { e, v: 2, l: st.L, s: HSRC.s, g: HSRC.g }
-        : { l: st.L, c: tzCC(TZ) || '', r: HSRC.r, f: HSRC.f, s: HSRC.s, g: HSRC.g }
+        : { l: st.L, c: tzCC(TZ) || '', r: HSRC.r, f: HSRC.f, fam: HSRC.fam, s: HSRC.s, g: HSRC.g }
     ));
   } catch (x) {}
 }

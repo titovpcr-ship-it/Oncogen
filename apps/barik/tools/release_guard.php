@@ -2,6 +2,11 @@
 /* Temporary authenticated deployment endpoint, uploaded with a fresh random token.
    Backups and staging stay outside public_html. Never include config.php or database files. */
 declare(strict_types=1);
+if (PHP_SAPI !== 'cli' && ($mt = @filemtime(__FILE__)) !== false && time() - $mt > 1200) {
+    @unlink(__FILE__);
+    http_response_code(410);
+    exit;
+}
 
 function release_path(string $rel): void {
     if (!preg_match('~^[a-zA-Z0-9_.@/+-]+$~D', $rel) || str_contains($rel, '..') || $rel[0] === '/' ||

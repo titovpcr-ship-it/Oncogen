@@ -215,6 +215,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ht=fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8');
     ok(/RewriteCond %\{REQUEST_URI\} \^\/\\\.well-known\/[^\n]*\n\s*RewriteRule \^ - \[L\]/.test(ht)&&ht.indexOf('well-known')<ht.indexOf('%{HTTPS}'),'.htaccess: /.well-known/ — до перенаправления на https');
     ok(/HTTP_HOST\} \^www\\\./.test(ht)&&/ErrorDocument 404 \/404\.html/.test(ht)&&/Options -Indexes/.test(ht),'.htaccess: www → домен, своя 404, без списков папок');
+    ok(/X-Content-Type-Options "nosniff"/.test(ht)&&/X-Frame-Options "SAMEORIGIN"/.test(ht)&&/Referrer-Policy "strict-origin-when-cross-origin"/.test(ht),'.htaccess: заголовки nosniff, SAMEORIGIN, Referrer-Policy');
     ok(/microphone=\(self\)/.test(ht)&&/cover-\[a-z\]\+\\.html[\s\S]{0,60}X-Robots-Tag "noindex"/.test(ht),'.htaccess: микрофон своему сайту, фрагменты обложки — noindex (TZ_AUDIT4 №1, №6)');
     ok(/media-src 'self' blob: data:;/.test(ht),'.htaccess: CSP media-src разрешает data: — разблокировка звука не шумит в отчётах (Б2)');
     ok(/Require all denied/.test(ht)&&/zip\|sqlite/.test(ht)&&/webp\|mp3\)\$"[^<]*immutable/.test(ht),'.htaccess: архивы и базы закрыты, записи и картинки — кэш навсегда');

@@ -70,6 +70,13 @@ export function openPaywall(reason = 'default', payload = null) {
     });
   }
   if (reason === 'stage_lock') { pgSave(); saveUI(); }
+  const pwReason = reason === 'audio15' ? 'pw_audio15'
+    : reason === 'level_lock' ? 'pw_level_lock'
+    : reason === 'stage_lock' ? 'pw_stage_lock'
+    : reason === 'quiz_result' ? 'pw_quiz_result'
+    : (reason === 'gift' || reason === 'family_gift') ? 'pw_gift'
+    : 'pw_default';
+  hit(pwReason);
   st.pwState = { plans: null, sel: 'yearly', busy: false, reason: reason || 'default', payload: payload || null, gift129: false };
   go('paywall');
   loadPlans();
@@ -366,6 +373,7 @@ export const H = {
   know: () => {
     const it = cur();
     if (!it || it.k !== 'intro') return;
+    hit('first_answer');
     const w = it.w;
     st.S.w[w.a] = { b: 5, d: today() + INT[5], t: Date.now(), n: 1, e: 0 };
     touchStreak();
@@ -988,6 +996,15 @@ function launch() {
   }
   BILL.hideSplash();
   hit();
+  if (START_QUERY.get('family')) {
+    hit('family_visit');
+    if (START_QUERY.get('listen') === '1') hit('family_listen');
+    if (START_QUERY.get('paywall') === 'gift') hit('family_gift');
+  }
+  if (st.view === 'paywall' && START_QUERY.get('paywall') === 'gift') {
+    hit('v_paywall');
+    hit('pw_gift');
+  }
   if (FIRST && st.view !== 'onboard') hit('start');
   Promise.all([loadManifest(), BILL.init(), accInit()]).then(() => {
     if (st.view === 'session') render(false);

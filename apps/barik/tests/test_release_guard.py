@@ -101,4 +101,129 @@ class Guard(unittest.TestCase):
         (self.work/'manifest.json').write_text(json.dumps({'api/config.php':'x'}))
         self.assertNotEqual(self.action('activate').returncode,0)
         self.assertEqual((self.root/'api/config.php').read_text(),'secret')
+
+    def test_batch_size_3000_and_split(self):
+        import sys
+        sys.path.insert(0, str(HELPER.parent))
+        import deploy_site as deploy
+        self.assertEqual(deploy.BATCH, 3000)
+        self.assertEqual(deploy.RETRY_DELAYS, (4, 8, 15))
+        todo = {f'en/w/w{i}.html': f'/tmp/w{i}.html' for i in range(6500)}
+        todo['index.html'] = '/tmp/index.html'
+        batches = deploy.split_batches(todo)
+        self.assertEqual(len(batches), 4)
+        self.assertTrue(all(len(b) <= 3000 for b in batches))
+        self.assertIn('index.html', batches[-1])
+
+    def test_retry_backoff_release_control_and_uapi(self):
+        import sys, requests
+        sys.path.insert(0, str(HELPER.parent))
+        import deploy_site as deploy
+        from unittest.mock import patch, MagicMock
+        sleeps = []
+        r503 = MagicMock(status_code=503)
+        r503.raise_for_status.side_effect = requests.HTTPError('503', response=r503)
+        r502 = MagicMock(status_code=502)
+        r502.raise_for_status.side_effect = requests.HTTPError('502', response=r502)
+        r200 = MagicMock(status_code=200)
+        r200.json.return_value = {'ok': True}
+        with patch.object(deploy.time, 'sleep', side_effect=sleeps.append), \
+             patch.object(deploy.requests, 'post', side_effect=[r503, requests.Timeout('t'), r502, r200]):
+            deploy.release_control('prepare', {'url': 'https://example.com/r.php', 'token': 'tok'})
+        self.assertEqual(sleeps, [4, 8, 15])
+        # CPanel.uapi also retries on 504 + Timeout with (4, 8, 15)
+        cp = deploy.CPanel('host.example', 'example.com', 'u', '', 'tok')
+        cp.token = ''
+        sleeps2 = []
+        r504 = MagicMock(status_code=504)
+        r504.raise_for_status.side_effect = requests.HTTPError('504', response=r504)
+        rok = MagicMock(status_code=200)
+        rok.json.return_value = {'status': 1, 'data': []}
+        with patch.object(deploy.time, 'sleep', side_effect=sleeps2.append), \
+             patch.object(cp.s, 'post', side_effect=[r504, requests.Timeout('t'), r503, rok]):
+            res = cp.uapi('Fileman', 'upload_files', files={'file-1': ('a.zip', b'PK', 'application/zip')}, dir='work')
+        self.assertEqual(res['status'], 1)
+        self.assertEqual(sleeps2, [4, 8, 15])
+
+    def test_guarded_release_finally_cleans_up_on_upload_error(self):
+        import os, sys
+        sys.path.insert(0, str(HELPER.parent))
+        import deploy_site as deploy
+        from unittest.mock import patch
+        unlinked = []
+        calls = []
+        class FakeCP:
+            def uapi(self, mod, fn, files=None, **kw):
+                if fn == 'upload_files' and kw.get('dir') != 'public_html':
+                    raise RuntimeError('chunk boom')
+                return {'status': 1, 'data': []}
+            def api2(self, mod, fn, **kw):
+                if kw.get('op') == 'unlink':
+                    unlinked.append(kw.get('sourcefiles'))
+                return {'cpanelresult': {'event': {'result': 1}}}
+            def ok(self, j, what): return j
+        def fake_ctrl(action, creds=None):
+            calls.append(action)
+            if action == 'finalize':
+                raise RuntimeError('endpoint gone')
+        rel_file = self.base / 'release-private.json'
+        stage_file = self.base / 'index.html'
+        stage_file.write_text('hi')
+        with patch.dict(os.environ, {'BARIK_HOST_TOKEN': 'sec', 'BARIK_HOST_DOMAIN': 'example.com'}), \
+             patch.object(deploy, 'RELEASE', str(rel_file)), \
+             patch.object(deploy, 'WORK', str(self.base / 'zips')), \
+             patch.object(deploy, 'release_control', side_effect=fake_ctrl):
+            with self.assertRaises(RuntimeError):
+                deploy.guarded_release(FakeCP(), '/home/u/public_html', {'index.html': str(stage_file)})
+        self.assertEqual(calls, ['prepare', 'finalize'])
+        self.assertEqual(len(unlinked), 1)
+        self.assertRegex(unlinked[0], r'^/home/u/public_html/barik-release-[0-9a-f]{24}\.php$')
+        self.assertFalse(rel_file.exists())
+
+    def test_recover_release_unlinks_expired_orphan(self):
+        import os, sys
+        sys.path.insert(0, str(HELPER.parent))
+        import deploy_site as deploy
+        from unittest.mock import patch
+        unlinked = []
+        class FakeCP:
+            def uapi(self, mod, fn, **kw):
+                return {'status': 1, 'data': [{'file': 'barik-release-' + ('b' * 24) + '.php', 'absdir': '/home/u/public_html'}]}
+            def api2(self, mod, fn, **kw):
+                if kw.get('op') == 'unlink':
+                    unlinked.append(kw.get('sourcefiles'))
+                return {'cpanelresult': {'event': {'result': 1}}}
+            def ok(self, j, what): return j
+        with patch.dict(os.environ, {'BARIK_HOST_TOKEN': 'sec', 'BARIK_HOST_DOMAIN': 'example.com'}), \
+             patch.object(deploy, 'RELEASE', str(self.base / 'absent')), \
+             patch.object(deploy, 'STATE', str(self.base / 'state.json')), \
+             patch.object(deploy, 'release_control', side_effect=RuntimeError('410 Gone')):
+            deploy.recover_release(FakeCP())
+        self.assertEqual(unlinked, ['/home/u/public_html/barik-release-' + ('b' * 24) + '.php'])
+
+    def test_ttl_self_destruct_410(self):
+        import os, socket, time, urllib.request, urllib.error
+        ep = self.root / 'barik-release-expired.php'
+        ep.write_text(HELPER.read_text().replace('__TOKEN__', 'tok').replace('__ID__', 'expired'))
+        old = time.time() - 1300
+        os.utime(ep, (old, old))
+        sock = socket.socket(); sock.bind(('127.0.0.1', 0)); port = sock.getsockname()[1]; sock.close()
+        srv = subprocess.Popen(['php', '-S', f'127.0.0.1:{port}', '-t', str(self.root)],
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        try:
+            code = None
+            for _ in range(30):
+                try:
+                    req = urllib.request.Request(f'http://127.0.0.1:{port}/barik-release-expired.php?action=prepare',
+                                                 method='POST', headers={'X-Release-Token': 'tok'})
+                    urllib.request.urlopen(req, timeout=2)
+                except urllib.error.HTTPError as e:
+                    code = e.code; break
+                except Exception:
+                    time.sleep(0.1)
+            self.assertEqual(code, 410)
+            self.assertFalse(ep.exists())
+        finally:
+            srv.terminate(); srv.wait(timeout=5)
+
 if __name__=='__main__': unittest.main()

@@ -33,6 +33,8 @@ SITE = os.path.join(APP, 'dist', 'site')
 STATE = os.path.join(os.path.dirname(os.path.dirname(APP)), 'out', 'deploy', 'state.json')
 WORK = os.path.join(os.path.dirname(STATE), 'zips')
 PART = 18 * 1024 * 1024                       # архив до ~18 МБ: 20 МБ cPanel принимает, 60 МБ — уже нет (O-150)
+RETRY_DELAYS = (4, 8, 15)                     # экспоненциальные паузы (3 повтора) при 502/503/504 или таймауте
+RETRY_STATUSES = (429, 502, 503, 504)
 STORE = ('.mp3', '.webp', '.png', '.jpg', '.woff2', '.zip', '.gz')   # уже сжатые — без сжатия
 
 
@@ -89,33 +91,60 @@ class CPanel:
 
     def uapi(self, module, func, files=None, **params):
         url = '%s%s/execute/%s/%s' % (self.base, self.token, module, func)
-        for attempt in range(4):
+        max_attempts = len(RETRY_DELAYS) + 1
+        for attempt in range(max_attempts):
             try:
                 r = (self.s.post(url, data=params, files=files, timeout=900) if files is not None
                      else self.s.get(url, params=params, timeout=120))
+                if r.status_code in RETRY_STATUSES:
+                    if attempt < len(RETRY_DELAYS):
+                        wait = RETRY_DELAYS[attempt]
+                        print('  cPanel %s/%s: HTTP %s — жду %d с' % (module, func, r.status_code, wait), flush=True)
+                        time.sleep(wait)
+                        continue
+                    r.raise_for_status()
                 return r.json()
             except (requests.RequestException, ValueError) as e:
-                if attempt == 3:
+                resp = getattr(e, 'response', None)
+                if resp is not None and resp.status_code not in RETRY_STATUSES:
+                    raise
+                if attempt >= len(RETRY_DELAYS):
                     raise
                 # вместо JSON — страница входа: сессия cPanel истекла (бывает посреди долгой выкладки) — войти снова
                 if isinstance(e, ValueError) and not self.api_token:
                     self.login()
                     url = '%s%s/execute/%s/%s' % (self.base, self.token, module, func)
-                time.sleep(5 * (attempt + 1))
+                wait = RETRY_DELAYS[attempt]
+                print('  cPanel %s/%s: сбой (%s) — жду %d с' % (module, func, e, wait), flush=True)
+                time.sleep(wait)
 
     def api2(self, module, func, **params):
         p = {'cpanel_jsonapi_user': self.user, 'cpanel_jsonapi_apiversion': 2,
              'cpanel_jsonapi_module': module, 'cpanel_jsonapi_func': func}
         p.update(params)
-        for attempt in range(4):
+        max_attempts = len(RETRY_DELAYS) + 1
+        for attempt in range(max_attempts):
             try:
-                return self.s.get('%s%s/json-api/cpanel' % (self.base, self.token), params=p, timeout=900).json()
+                r = self.s.get('%s%s/json-api/cpanel' % (self.base, self.token), params=p, timeout=900)
+                if r.status_code in RETRY_STATUSES:
+                    if attempt < len(RETRY_DELAYS):
+                        wait = RETRY_DELAYS[attempt]
+                        print('  cPanel api2 %s/%s: HTTP %s — жду %d с' % (module, func, r.status_code, wait), flush=True)
+                        time.sleep(wait)
+                        continue
+                    r.raise_for_status()
+                return r.json()
             except (requests.RequestException, ValueError) as e:
-                if attempt == 3:
+                resp = getattr(e, 'response', None)
+                if resp is not None and resp.status_code not in RETRY_STATUSES:
+                    raise
+                if attempt >= len(RETRY_DELAYS):
                     raise
                 if isinstance(e, ValueError) and not self.api_token:
                     self.login()
-                time.sleep(5 * (attempt + 1))
+                wait = RETRY_DELAYS[attempt]
+                print('  cPanel api2 %s/%s: сбой (%s) — жду %d с' % (module, func, e, wait), flush=True)
+                time.sleep(wait)
 
     def ok(self, j, what):
         if isinstance(j, dict) and j.get('status') == 1:
@@ -219,25 +248,26 @@ def release_control(action, credentials=None):
         if action == 'finalize': return
         raise RuntimeError('No release journal credentials')
     c = credentials or json.load(open(RELEASE, encoding='utf-8'))
-    max_att = 3 if action == 'activate' else 6
+    max_att = len(RETRY_DELAYS) + 1
     r = None
     for att in range(max_att):
         try:
             r = requests.post(c['url'] + '?action=' + action,
                               headers={'X-Release-Token': c['token']}, timeout=900)
-            if r.status_code in (429, 502, 503, 504) and att + 1 < max_att:
-                wait = min(30, 4 * (att + 1))
+            if r.status_code in RETRY_STATUSES and att < len(RETRY_DELAYS):
+                wait = RETRY_DELAYS[att]
                 print('  release %s: HTTP %s — жду %d с' % (action, r.status_code, wait), flush=True)
                 time.sleep(wait)
                 continue
             r.raise_for_status()
             break
         except requests.RequestException as e:
-            if action == 'activate' and getattr(e, 'response', None) is not None and e.response.status_code not in (429, 502, 503, 504):
+            resp = getattr(e, 'response', None)
+            if resp is not None and resp.status_code not in RETRY_STATUSES:
                 raise
-            if att + 1 >= max_att:
+            if att >= len(RETRY_DELAYS):
                 raise
-            wait = min(30, 4 * (att + 1))
+            wait = RETRY_DELAYS[att]
             print('  release %s: сбой (%s) — жду %d с' % (action, e, wait), flush=True)
             time.sleep(wait)
     if not r.json().get('ok'):
@@ -248,10 +278,24 @@ def release_control(action, credentials=None):
     if action == 'finalize' and os.path.exists(RELEASE): os.remove(RELEASE)
 
 
+def unlink_remote_endpoint(cp, target):
+    if not target or not hasattr(cp, 'api2'):
+        return
+    try:
+        cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=target, doubledecode='0')
+    except Exception:
+        pass
+
+
 def recover_release(cp):
     if os.path.exists(RELEASE):
-        release_control('rollback')
-        release_control('finalize')
+        try:
+            release_control('rollback')
+            release_control('finalize')
+        except Exception as e:
+            print('  recover_release: старый RELEASE недоступен (%s), очищаю локально' % e, flush=True)
+            if os.path.exists(STATE): os.remove(STATE)
+            if os.path.exists(RELEASE): os.remove(RELEASE)
     # Recover an interrupted runner using endpoint names and an HMAC derived from the existing host credential.
     host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
     def credentials_for(rid):
@@ -260,14 +304,28 @@ def recover_release(cp):
     remote = cp.uapi('Fileman', 'list_files', dir='public_html')
     cp.ok(remote, 'pending release discovery')
     for item in remote.get('data') or []:
-        match = re.fullmatch(r'barik-release-([0-9a-f]{24})\.php', item.get('file', ''))
+        fname = item.get('file', '')
+        if not re.fullmatch(r'barik-release-[A-Za-z0-9._-]+\.php', fname):
+            continue
+        fullpath = item.get('fullpath') or (
+            (item['absdir'].rstrip('/') + '/' + fname) if item.get('absdir') else ('public_html/' + fname)
+        )
+        match = re.fullmatch(r'barik-release-([0-9a-f]{24})\.php', fname)
+        finalized = False
         if match:
             previous = credentials_for(match.group(1))
-            release_control('rollback', previous)
-            release_control('finalize', previous)
+            try:
+                release_control('rollback', previous)
+                release_control('finalize', previous)
+                finalized = True
+            except Exception as e:
+                print('  recover_release: осиротевший %s (%s) — удаляю напрямую' % (fname, e), flush=True)
+                if os.path.exists(STATE): os.remove(STATE)
+        if not finalized:
+            unlink_remote_endpoint(cp, fullpath)
 
 
-def guarded_release(cp, root, todo):
+def guarded_release(cp, root, todo, finalize_now=False):
     host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
     def credentials_for(rid):
         return {'token': hmac.new(host_secret.encode(), ('barik-release:' + rid).encode(), hashlib.sha256).hexdigest()}
@@ -283,54 +341,64 @@ def guarded_release(cp, root, todo):
     os.makedirs(os.path.dirname(RELEASE), exist_ok=True)
     fd = os.open(RELEASE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(fd, 'w') as f: json.dump(credentials, f)
+    prepared = False
+    activate_attempted = False
+    completed = False
     try:
         release_control('prepare', credentials)
-    except Exception:
-        try:
-            cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=root + '/' + endpoint, doubledecode='0')
-        except Exception:
-            pass
-        if os.path.exists(RELEASE):
-            os.remove(RELEASE)
-        raise
-    # Preserve host-managed PHP directives in the staged .htaccess.
-    paths = dict(todo)
-    if '.htaccess' in paths:
-        srv = (cp.uapi('Fileman', 'get_file_content', dir=root, file='.htaccess', charset='utf-8').get('data') or {}).get('content', '')
-        block = re.search(r'# BEGIN cPanel-generated.*?# END cPanel-generated[^\n]*\n', srv, re.S)
-        merged = os.path.join(os.path.dirname(STATE), 'release.htaccess')
-        with open(merged, 'w', encoding='utf-8') as f:
-            f.write((block.group(0) if block else '') + open(paths['.htaccess'], encoding='utf-8').read())
-        paths['.htaccess'] = merged
-    manifest = _hash_many(paths, sha256_file)
-    for archive in make_zips(paths):
-        name = os.path.basename(archive)
-        with open(archive, 'rb') as f:
-            cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (name, f.read(), 'application/zip')},
-                          dir=work, overwrite='1'), 'staging upload')
-        cp.ok(cp.api2('Fileman', 'fileop', op='extract', sourcefiles=work + '/' + name,
-                      destfiles=work + '/stage', doubledecode='0'), 'staging extraction')
-        cp.ok(cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=work + '/' + name, doubledecode='0'), 'staging archive cleanup')
-    cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': ('manifest.json', json.dumps(manifest).encode(), 'application/json')},
-                  dir=work, overwrite='1'), 'staging manifest')
-    try:
+        prepared = True
+        # Preserve host-managed PHP directives in the staged .htaccess.
+        paths = dict(todo)
+        if '.htaccess' in paths:
+            srv = (cp.uapi('Fileman', 'get_file_content', dir=root, file='.htaccess', charset='utf-8').get('data') or {}).get('content', '')
+            block = re.search(r'# BEGIN cPanel-generated.*?# END cPanel-generated[^\n]*\n', srv, re.S)
+            merged = os.path.join(os.path.dirname(STATE), 'release.htaccess')
+            with open(merged, 'w', encoding='utf-8') as f:
+                f.write((block.group(0) if block else '') + open(paths['.htaccess'], encoding='utf-8').read())
+            paths['.htaccess'] = merged
+        manifest = _hash_many(paths, sha256_file)
+        for archive in make_zips(paths):
+            name = os.path.basename(archive)
+            with open(archive, 'rb') as f:
+                cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (name, f.read(), 'application/zip')},
+                              dir=work, overwrite='1'), 'staging upload')
+            cp.ok(cp.api2('Fileman', 'fileop', op='extract', sourcefiles=work + '/' + name,
+                          destfiles=work + '/stage', doubledecode='0'), 'staging extraction')
+            cp.ok(cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=work + '/' + name, doubledecode='0'), 'staging archive cleanup')
+        cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': ('manifest.json', json.dumps(manifest).encode(), 'application/json')},
+                      dir=work, overwrite='1'), 'staging manifest')
+        activate_attempted = True
         release_control('activate', credentials)
-    except Exception:
-        release_control('rollback', credentials)
-        try:
-            release_control('finalize', credentials)
-        except Exception:
-            pass
+        completed = True
+        return credentials
+    except BaseException:
+        if activate_attempted:
+            try:
+                release_control('rollback', credentials)
+            except Exception:
+                pass
         raise
-    return credentials
+    finally:
+        if not completed or finalize_now:
+            removed = False
+            if prepared:
+                try:
+                    release_control('finalize', credentials)
+                    removed = True
+                except Exception:
+                    pass
+            if not removed:
+                unlink_remote_endpoint(cp, root + '/' + endpoint)
+            if os.path.exists(RELEASE):
+                os.remove(RELEASE)
 
 
-BATCH = 10000
+BATCH = 3000
 CORE_TOP = ('api/', 'js/', 'css/', 'og/')
 
 
 def split_batches(todo, size=BATCH):
-    """Split large deployments into <=10000-file batches so activate() stays fast; core/app/sitemap/.htaccess go last."""
+    """Split large deployments into <=3000-file batches so activate() stays fast; core/app/sitemap/.htaccess go last."""
     if len(todo) <= size:
         return [dict(todo)]
     bulk, core = [], []
@@ -405,9 +473,7 @@ def main():
                 time.sleep(3)
             if total_b > 1:
                 print('пакет %d/%d (%d файлов)' % (bi, total_b, len(chunk)), flush=True)
-            creds = guarded_release(cp, root, chunk)
-            if bi < total_b:
-                release_control('finalize', creds)
+            guarded_release(cp, root, chunk, finalize_now=(bi < total_b))
             state.update({rel: now[rel] for rel in chunk})
             os.makedirs(os.path.dirname(STATE), exist_ok=True)
             json.dump(state, open(STATE, 'w', encoding='utf-8'))

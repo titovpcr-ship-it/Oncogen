@@ -871,7 +871,15 @@ function renderCard(btn){
 
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-act="surnameCard"]');
-  if(b){ e.preventDefault(); renderCard(b); }
+  if(b){
+    e.preventDefault();
+    try{
+      if(location.protocol!=='file:'&&navigator.sendBeacon){
+        navigator.sendBeacon('../../api/?r=hit',JSON.stringify({e:'surname_card',v:2,l:document.documentElement.lang||'en',s:'family'}));
+      }
+    }catch(x){}
+    renderCard(b);
+  }
 });
 
 // Explorer search & Dynamic Analyzer on /{lang}/s/

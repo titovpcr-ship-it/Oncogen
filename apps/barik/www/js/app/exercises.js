@@ -198,6 +198,7 @@ export function focusChangedScreen(oldState, newState, oldView) {
 function newSess(mode, items, meta) {
   st.sess = { mode, items, i: 0, first: new Map(), meta: meta || {}, timer: null, reps: {}, ended: false };
   st.view = 'session';
+  hit('lesson_start');
   preloadAudio(items.map(it => it.w));
   cb.render(true);
   window.scrollTo(0, 0);
@@ -282,6 +283,7 @@ export function introMark(w) {
 }
 
 function record(it, ok) {
+  hit('first_answer');
   const a = it.w.a, td = today(), sess = st.sess;
   if (sess.mode === 'check') {
     if (!sess.first.has(a)) {
@@ -400,6 +402,7 @@ export function finish() {
   const sess = st.sess;
   if (!sess || sess.ended) return;
   const completed = sess.items.length > 0 && sess.i >= sess.items.length;
+  if (completed) hit('first_answer');
   hit(completed ? 'lesson_complete' : 'lesson_exit');
   if (completed && !st.UI.l1) { st.UI.l1 = 1; saveUI(); }
   if (!BILL.native && !ACC.me && sess.mode === 'learn' && sess.i >= sess.items.length && sess.first.size) {
@@ -566,6 +569,7 @@ export function onAbcShow() {
 export function abcAnswer(idx) {
   const it = st.aq && st.aq.items[st.aq.i];
   if (!it || it.done) return;
+  hit('first_answer');
   it.done = true;
   it.pick = idx;
   it.ok = it.opts[idx] === it.x;
@@ -649,6 +653,7 @@ export function onPicShow() {
 export function picAnswer(idx) {
   const it = st.pq && st.pq.items[st.pq.i];
   if (!it || it.done) return;
+  hit('first_answer');
   it.done = true;
   it.pick = idx;
   it.ok = it.k === 'pl' ? it.opts[idx] === st.PICS[it.w.a].e : it.opts[idx] === it.w;
@@ -759,6 +764,7 @@ export function tcheck() {
   const it = tcur();
   if (!it || it.done) return;
   if (!normHy(it.val)) { toast(T('typeEmpty')); return; }
+  hit('first_answer');
   it.done = true;
   it.ok = normHy(it.val) === normHy(it.w.a);
   if (it.ok) { st.tq.ok++; if (it.hints) st.tq.hints++; } else buzz();
@@ -782,6 +788,7 @@ export function thint() {
 export function tgive() {
   const it = tcur();
   if (!it || it.done) return;
+  hit('first_answer');
   it.done = true;
   it.ok = false;
   buzz();
@@ -892,11 +899,16 @@ function computeLvlResult(lq) {
   saveUI();
   pgSave();
   hit('lvl_done_' + lq.level);
+  if (lq.level !== 'A1' && !premium()) {
+    hit('v_paywall');
+    hit('pw_quiz_result');
+  }
 }
 
 export function lvlAnswer(idx) {
   const it = st.lq && st.lq.items[st.lq.i];
   if (!it || it.done) return;
+  hit('first_answer');
   it.done = true;
   it.pick = idx;
   it.ok = idx >= 0 && it.opts[idx] === it.w;

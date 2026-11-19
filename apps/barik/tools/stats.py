@@ -77,6 +77,7 @@ def funnel(by, tot):
         for a, c in sorted(grp.items(), key=lambda t: -t[1].get('guest', 0))[:12]:
             print('  %-24s %s' % (a, '  '.join(str(c.get(k, 0)) for k, _ in STEPS[:7])))
     path_line(tot)
+    roots_line(tot)
     land = [(k[7:], n) for k, n in tot.items() if k.startswith('e:land_')]
     if land: print('\nкнопки обложки: ' + ', '.join('%s %d' % t for t in sorted(land, key=lambda t: -t[1])))
     if tot.get('open'): print('сбои загрузки (картинка, скрипт, запись): %d на %d открытий (%.1f%%)' % (tot.get('e:res_fail', 0), tot['open'], 100 * tot.get('e:res_fail', 0) / tot['open']))
@@ -93,6 +94,30 @@ def path_line(tot):
     line += '; входной тест %d, урожай %d' % (tot.get('e:place_done', 0), tot.get('e:harvest_done', 0))
     print('\n' + line)
     return line
+
+
+def roots_line(tot):
+    """Barik Roots (family), 60-сек тест уровня (lvlStart) и причины Paywall."""
+    lines = []
+    fam = tot.get('e:family_visit', 0)
+    fam_l = tot.get('e:family_listen', 0)
+    fam_g = tot.get('e:family_gift', 0)
+    card = tot.get('e:surname_card', 0)
+    if fam or fam_l or fam_g or card:
+        lines.append('Barik Roots (family): визиты %d (радио %d, подарок %d), герб %d' % (fam, fam_l, fam_g, card))
+    lvl = tot.get('e:lvl_start', 0)
+    if lvl:
+        lines.append('Тест уровня (lvlStart): %d' % lvl)
+    pw = [(pk, tot.get('e:pw_' + pk, 0)) for pk in ('audio15', 'level_lock', 'stage_lock', 'quiz_result', 'gift', 'default') if tot.get('e:pw_' + pk, 0)]
+    if pw:
+        lines.append('Paywall: ' + ', '.join('%s %d' % t for t in pw))
+    fams = [(k[4:], n) for k, n in tot.items() if k.startswith('fam:')]
+    if fams:
+        lines.append('фамилии (?family=): ' + ', '.join('%s %d' % t for t in sorted(fams, key=lambda t: -t[1])[:12]))
+    out = '\n'.join(lines)
+    if out:
+        print(out)
+    return out
 
 
 if __name__ == '__main__':

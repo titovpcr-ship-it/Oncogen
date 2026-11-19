@@ -104,6 +104,28 @@ c.commit()`,db,String(now)]);
     const st=await p4.evaluate(()=>{ const im=[...document.querySelectorAll('img.e3d')].filter(i=>i.complete); return {n:im.length,okN:im.filter(i=>i.naturalWidth>0).length,fall:document.querySelectorAll('span[data-fb]').length}; });   // ленивые за экраном ещё не грузились
     ok(stubbed>0&&st.n>0&&st.okN===st.n&&st.fall===0,'заглушка вместо картинки — повтор, все картинки на месте: '+st.okN+'/'+st.n+' (заглушек '+stubbed+')');
     ok(rf===0,'после удачного повтора сбой не считается'); await c4.close(); }
+  // 5. 60-секундный тест уровня (lvlStart) → 1-й ответ в тесте засчитывается в first_answer
+  { const c5=await br.newContext({viewport:{width:390,height:844},locale:'en-US',userAgent:UA+' E',serviceWorkers:'block'});
+    const p5=await c5.newPage(); p5.on('pageerror',e=>errs.push(String(e)));
+    await p5.goto(base+'?lang=en&family=kardashian&paywall=gift'); await p5.waitForTimeout(700);
+    S=await stats();
+    ok(S['e:family_visit']>=1&&S['e:family_gift']>=1&&S['fam:kardashian']>=1&&S['e:pw_gift']>=1,'Barik Roots (?family=kardashian&paywall=gift): family_visit, family_gift, fam:kardashian, pw_gift');
+    await p5.goto(base+'?lang=ru&listen=1&family=voskanyan'); await p5.waitForTimeout(700);
+    S=await stats();
+    ok(S['e:family_listen']>=1&&S['fam:voskanyan']>=1,'Barik Roots (?listen=1&family=voskanyan): family_listen, fam:voskanyan');
+    await c5.close(); }
+  { const c6=await br.newContext({viewport:{width:390,height:844},locale:'ru-RU',userAgent:UA+' F',serviceWorkers:'block'});
+    const p6=await c6.newPage(); p6.on('pageerror',e=>errs.push(String(e)));
+    const fa0=(await stats())['g:first_answer']||0;
+    await p6.goto(base); await p6.waitForSelector('[data-act=pickLang]',{timeout:5000});
+    await p6.click('[data-act=pickLang]'); await p6.waitForSelector('[data-act=lvlStart]',{timeout:5000});
+    await p6.click('[data-act=lvlStart]'); await p6.waitForSelector('[data-act=lvlOpt]',{timeout:5000});
+    await p6.click('[data-act=lvlOpt]'); await p6.waitForTimeout(600);
+    S=await stats();
+    ok(S['e:lvl_start']>=1&&S['g:first_answer']===fa0+1,'60-сек тест уровня (startLvlQuiz): lvl_start и 1-й ответ (g:first_answer)');
+    const rl=execFileSync('python3.13',['-c','import sys,collections;sys.path.insert(0,sys.argv[1]);import stats;print(stats.roots_line(collections.Counter({"e:family_visit":5,"e:family_listen":2,"e:family_gift":3,"e:surname_card":4,"e:lvl_start":6,"e:pw_audio15":1,"e:pw_gift":3,"fam:kardashian":2})))',path.join(ROOT,'tools')]).toString();
+    ok(rl.includes('Barik Roots (family): визиты 5 (радио 2, подарок 3), герб 4')&&rl.includes('Тест уровня (lvlStart): 6')&&rl.includes('Paywall: audio15 1, gift 3'),'stats.py roots_line: Barik Roots, lvlStart, Paywall');
+    await c6.close(); }
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(!phpErr,'PHP без ошибок '+phpErr.slice(0,300));
   await br.close(); php.kill(); fs.rmSync(TMP,{recursive:true,force:true});
