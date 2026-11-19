@@ -102,7 +102,7 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
     // Проверка закрытой страницы ops-m9x4k2p7.html на iPhone 375px
     const opsCtx=await br.newContext({viewport:{width:375,height:812},serviceWorkers:'block'});
     const opsPg=await opsCtx.newPage(); let opsErr=''; opsPg.on('pageerror',e=>opsErr+=e);
-    await opsPg.goto(base+'ops-m9x4k2p7.html?key='+KEY);
+    await opsPg.goto(base+'ops-m9x4k2p7.html');
     await opsPg.waitForFunction(()=>document.getElementById('on5')&&document.getElementById('on5').textContent!=='—',{timeout:5000});
     const opsCheck=await opsPg.evaluate(()=>({
       robots:(document.querySelector('meta[name="robots"]')||{}).content||'',

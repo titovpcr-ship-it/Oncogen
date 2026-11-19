@@ -551,25 +551,18 @@ td.r,th.r{text-align:right}
     load().then(() => { if(key) startPoll(); });
   };
 
-  // Bootstrap key from ?key= or sessionStorage
+  // Direct link access via hidden page token (optional ?key= override still supported)
+  const PAGE_TOKEN = 'm9x4k2p7-v9q3r8t5w2y6';
   try {
     const sp = new URLSearchParams(location.search || '');
     const qk = (sp.get('key') || '').trim();
-    if(qk){
-      key = qk;
-      try { sessionStorage.setItem(STORAGE_KEY, key); } catch(x){}
-    } else {
-      key = (sessionStorage.getItem(STORAGE_KEY) || '').trim();
-    }
-  } catch(e){}
-
-  if(key){
-    showApp();
-    load();
-    startPoll();
-  } else {
-    showGate('');
+    key = qk || PAGE_TOKEN;
+  } catch(e){
+    key = PAGE_TOKEN;
   }
+  showApp();
+  load();
+  startPoll();
 })();
 </script>
 </body>
