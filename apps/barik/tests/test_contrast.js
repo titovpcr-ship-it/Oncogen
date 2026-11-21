@@ -24,7 +24,7 @@ const sizes=await p.locator('.ld .lng').evaluateAll(es=>es.map(e=>({w:e.getBound
 const touch=await p.locator('.ph-opt').evaluateAll(es=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})));assert(touch.length===3&&touch.every(s=>s.w>=44&&s.h>=44),'Lesson preview choices >=44px');
 for(let i=0;i<3;i++){await p.locator('.ph-opt.right').click();if(i<2)await p.waitForFunction(()=>{const x=document.querySelector('.ph-opt.right');return !!x&&!x.disabled;});}
 await p.locator('.ph-opt.ph-go').waitFor({state:'visible',timeout:5000});await scan(p,'.ph-opt.ph-go');
-await p.evaluate(()=>{window.__bararan.H.pickLang('ru');});await p.locator('.flag').first().waitFor({state:'visible',timeout:15000});await scan(p,'.flag');
+await p.evaluate(()=>{window.__bararan.H.pickLang('ru');window.__bararan.startLearn();});await p.locator('.flag').first().waitFor({state:'visible',timeout:15000});await scan(p,'.flag');
 await gradients(p,'.btn.primary');
 await p.evaluate(()=>window.__bararan.H.paywall());await p.locator('.pw-legal').first().waitFor({state:'visible',timeout:15000});await scan(p,'.pw-legal');await c.close();}
 for(const width of [320,340,360,390]){const c=await b.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block',viewport:{width,height:780}}),p=await c.newPage();await p.goto('http://127.0.0.1:'+srv.address().port+'/');await p.waitForFunction(()=>window.__bararan);
