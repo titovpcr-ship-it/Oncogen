@@ -126,14 +126,6 @@ export function preloadAudio(list) {
 }
 
 export function unlockAudio() {
-  if (AUD.unlocked) return;
-  AUD.unlocked = true;
-  try {
-    AUD.el = AUD.el || new Audio();
-    AUD.el.src = SILENT_MP3;
-    const p = AUD.el.play();
-    if (p && p.catch) p.catch(() => {});
-  } catch (e) {}
   try {
     const C = window.AudioContext || window.webkitAudioContext;
     if (C) {
@@ -141,6 +133,16 @@ export function unlockAudio() {
       if (AUD.ctx.state === 'suspended') AUD.ctx.resume().catch(() => {});
     }
   } catch (e) {}
+  if (!AUD.unlocked) {
+    try {
+      const el = AUD.el || (AUD.el = new Audio());
+      el.playsInline = true;
+      if (!el.src || el.src === SILENT_MP3) el.src = SILENT_MP3;
+      const p = el.play();
+      if (p && p.then) p.then(() => { AUD.unlocked = true; }).catch(() => {});
+      else AUD.unlocked = true;
+    } catch (e) {}
+  }
 }
 
 let playTok = 0;
@@ -152,7 +154,7 @@ export function bumpPlayTok() {
 export function playUrl(url, text, slow, btn, loud, done, tr, voiceDir) {
   const tok = ++playTok;
   const el = AUD.el || (AUD.el = new Audio());
-  try { el.pause(); } catch (e) {}
+  if (el.src && el.src !== SILENT_MP3) { try { el.pause(); } catch (e) {} }
   el.loop = false;
   el.onended = null;
   el.onerror = null;

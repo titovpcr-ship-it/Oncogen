@@ -58,7 +58,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
       await pg.click('.ld-foot [data-act=landDoc][data-arg=project]'); const t=await pg.textContent('.doc');
       ok(t.includes('независимый проект из Еревана')&&t.includes('$12')&&t.includes('$59')&&t.includes('$129')&&t.includes('Dodo Payments')&&t.includes('hello@barik.am')&&!t.includes('Как это сделано'),'«О проекте»: что это, цена, продавец, почта; без раздела «Как это сделано»');
       await noHScroll('project'); await shot('project'); await pg.click('[data-act=docBack]'); }   // документ с обложки открывает приложение на выбранном языке
-    else await pg.click('[data-act=pickLang][data-arg=ru]');
+    else await pg.evaluate(() => window.__bararan.H.landGo());
     ok((await pg.textContent('.brand')).includes('Barik'),'главная: бренд Barik');
     ok((await pg.textContent('#tabs')).includes('Алфавит'),'вкладка «Алфавит»');
     await shot('home-ru'); await noHScroll('home');
@@ -84,6 +84,8 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     await pg.click('[data-act=learnNew]'); ok(await pg.locator('.sess-top').count()===1,'урок открылся'); await shot('lesson-intro'); await noHScroll('lesson');
     ok(await pg.getAttribute('.pbar','aria-label')==='Прогресс урока'&&await pg.getAttribute('.pbar','aria-valuenow')==='1'&&(await pg.getAttribute('.pbar','aria-valuetext')).startsWith('Шаг 1 из '),'урок: озвученный прогресс показывает первый шаг');
     ok(await pg.evaluate(()=>document.activeElement&&document.activeElement.classList.contains('q')),'урок: фокус поставлен на первый вопрос');
+    await pg.click('.foot [data-act=next]');
+    ok(await pg.locator('.opt:not([disabled])').count()>0,'первый урок: второй экран сразу содержит интерактивный вопрос');
     let keyboardAdvanceChecked=false;
     for(let i=0;i<14;i++){
       if(await pg.locator('[data-act=know]').count()) { await pg.click('.foot [data-act=next]'); continue; }
@@ -247,7 +249,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   }
   { // палец на телефоне: касания идут в штрих, страница не прокручивается
     const ctx=await br.newContext({viewport:{width:360,height:640},deviceScaleFactor:3,isMobile:true,hasTouch:true,locale:'ru-RU'});
-    const pg=await ctx.newPage(); await pg.goto(base); await pg.tap('[data-act=landLang][data-arg=ru]'); await pg.tap('[data-act=pickLang][data-arg=ru]');
+    const pg=await ctx.newPage(); await pg.goto(base); await pg.tap('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.evaluate(()=>window.__bararan.H.pen('1')); await pg.waitForTimeout(400);
     const P=await pg.evaluate(()=>{ const svg=document.getElementById('penSvg'), p=svg.querySelector('.pen-ghost path'), L=p.getTotalLength(), m=svg.getScreenCTM(), out=[];
       for(let i=0;i<=50;i++){ const q=p.getPointAtLength(L*i/50), s=svg.createSVGPoint(); s.x=q.x; s.y=q.y; const c=s.matrixTransform(m); out.push([c.x,c.y]); } return out; });
@@ -264,7 +266,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const pg=await ctx.newPage(), errs=[], got=[];
     pg.on('pageerror',e=>errs.push(String(e)));
     pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+r.url()); });
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'путь '+n+': без горизонтальной прокрутки ('+w+')'); };
     await pg.click('[data-act=tab][data-arg=path]'); await pg.waitForSelector('.p-units');   // Б4: путь грузится по требованию
@@ -391,7 +393,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), errs=[];
     pg.on('pageerror',e=>errs.push(String(e)));
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1],'этап C '+n+': без горизонтальной прокрутки ('+w+')'); };
     // right(i, kind) — отвечать ли верно
     const run=async right=>{ const kinds=[];
@@ -481,7 +483,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(firstFrame===0,'Б4: первый кадр обложки — без path_data.js и pictures.js ('+firstFrame+')');
     ok(!req.includes('path_data'),'Б4: обложка не грузит path_data.js');
     ok(await pg.locator('.ld-tile .pimg svg, .ld-tile .pimg img').count()>0,'Б4: картинки обложки дорисованы после загрузки pictures.js');
-    await pg.click('[data-act=pickLang]'); await pg.click('[data-act=tab][data-arg=path]'); await pg.waitForSelector('.p-units');
+    await pg.evaluate(() => window.__bararan.H.landGo()); await pg.click('[data-act=tab][data-arg=path]'); await pg.waitForSelector('.p-units');
     ok(req.includes('path_data'),'Б4: вкладка «Путь» загрузила path_data.js по требованию');
     ok(errs.length===0,'Б4: без ошибок страницы '+errs.join(' | '));
     await ctx.close();
@@ -519,7 +521,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   { // источники и лицензии (O-149): всё стороннее названо, ссылки на тексты лицензий ведут на настоящие файлы
     const ctx=await br.newContext({viewport:{width:360,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage();
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.click('[data-act=tab][data-arg=settings]'); await pg.click('[data-act=doc][data-arg=credits]');
     const txt=await pg.textContent('.doc');
     for(const k of ['Викисловар','CC BY-SA 4.0','с нашими изменениями','Fluent Emoji','MIT','Open Font License','Manrope','Туманяна','Терьяна','Чаренца','общественное достояние','Azure','hello@barik.am']) ok(txt.includes(k),'источники и лицензии: «'+k+'»');
@@ -533,7 +535,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:390,height:780},locale:'ru-RU'});
     const pg=await ctx.newPage(), got=[];
     pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+(r.headers()['content-type']||'')+' '+r.url()); });
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const A=await pg.evaluate(()=>{const B=window.__bararan; return {man:B.MAN, urls:[...new Set(B.WORDS.map(w=>B.audioUrl(w.a)).concat(B.ABC.map(x=>B.audioUrl(x.nm))))], hi:B.aid('բարև ձեզ')};});
     const miss=A.urls.filter(u=>!fs.existsSync(path.join(ROOT,u)));
@@ -653,7 +655,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const pg=await ctx.newPage(), got=[], errs=[];
     pg.on('pageerror',e=>errs.push(String(e)));
     pg.on('response',r=>{ if(/\/audio\/.+\.mp3$/.test(r.url())) got.push(r.status()+' '+r.url()); });
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     const man=await pg.evaluate(()=>window.__bararan.MAN);
     for(const l of ['ru','en','fr','es','de','pt']){
@@ -688,7 +690,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     pg.on('console',m=>{if(m.type()==='error'&&!/404/.test(m.text())) errs.push(m.text());});
     const got=[]; pg.on('response',r=>{ if(/\/(?:audio\/.+\.mp3|ex\/.+\.json)/.test(r.url())) got.push(r.status()+' '+r.url()); });
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.waitForFunction(()=>window.__bararan.MAN&&window.__bararan.MAN.count>0,null,{timeout:5000}).catch(()=>{});
     ok(await pg.locator('.today [data-act=lpMine]').count()===1,'главная (0 слов): кнопка «Слушать» видна сразу');
     await pg.evaluate(()=>Object.assign(window.__bararan.LPT,{gap:40,think:60,pause:60,next:40}));
@@ -749,7 +751,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU'}); const pg=await ctx.newPage();
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
     await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
-    await pg.click('[data-act=learnNew]'); await pg.waitForSelector('.ex',{timeout:8000}).catch(()=>{});
+    await pg.waitForSelector('.ex',{timeout:8000}).catch(()=>{});
     const t=await pg.textContent('.ex').catch(()=>'');
     ok(t.includes('Пример')&&t.includes('Բարև, Արամ։')&&t.includes('Привет, Арам!')&&/барев/i.test(t),'карточка нового слова: пример с транскрипцией и переводом ('+t.slice(0,60)+')');
     ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'пример: без прокрутки вбок');
@@ -903,7 +905,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
   { // CRO Upgrade (4 модуля): тест уровня (60с), контекстный Paywall (audio15 + level_lock), Gift Pass и Trust Bar, ?listen=1
     const ctx=await br.newContext({viewport:{width:320,height:740},locale:'ru-RU',serviceWorkers:'block'}); const pg=await ctx.newPage();
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.waitForSelector('[data-act=lvlStart]',{timeout:5000});
     await pg.click('[data-act=lvlStart]');
     await pg.waitForSelector('.lvl-play',{timeout:5000});
@@ -948,7 +950,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const ctx=await br.newContext({viewport:{width:320,height:740},locale:'ru-RU',serviceWorkers:'block'}); const pg=await ctx.newPage();
     const noH=async n=>{ const w=await pg.evaluate(()=>[document.documentElement.scrollWidth,innerWidth]); ok(w[0]<=w[1]+1,'путь '+n+': без горизонтальной прокрутки ('+w+')'); };
     const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
-    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+    await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
     await pg.waitForSelector('.today-path',{timeout:5000});
     ok(await pg.evaluate(()=>!window.BARIK_PATH),'Б4: главная с карточкой «Путь Гранат» не грузит path_data.js заранее');
     await pg.click('[data-act=lvlStart]');

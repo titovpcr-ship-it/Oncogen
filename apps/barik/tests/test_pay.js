@@ -83,7 +83,7 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   let r=await api('checkout',{plan:'year'}); ok(r.status===401,'без входа счёт не создаётся (401)');
 
   // человек A: окно подписки → страница Dodo
-  await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+  await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
   r=await login('anna@example.com','Анна'); ok(r.j.ok&&r.j.user&&!r.j.user.premium,'вход: Анна без подписки');
   await pg.reload(); await pg.waitForFunction(()=>window.__bararan.ACC.me,null,{timeout:5000}).catch(()=>{});
   await pg.evaluate(()=>window.__bararan.H.paywall());
@@ -208,7 +208,7 @@ const iso=d=>new Date(Date.now()+d*86400e3).toISOString();
   // словарь и произношение; A2–C2 и ступени 2+ — по подписке; начатые слова повторяются и без подписки
   { const c2=await br.newContext({viewport:{width:390,height:800},locale:'ru-RU',serviceWorkers:'block'}); const p2=await c2.newPage();
     p2.on('pageerror',e=>errs.push(String(e)));
-    await p2.goto(base); await p2.click('[data-act=landLang][data-arg=ru]'); await p2.click('[data-act=pickLang][data-arg=ru]');
+    await p2.goto(base); await p2.click('[data-act=landLang][data-arg=ru]'); await p2.evaluate(() => window.__bararan.H.landGo());
     const a2=await p2.evaluate(()=>{ const B=window.__bararan; const w=B.WORDS.find(x=>B.TOPICS[x.t].lv==='A2'); return w.a; });
     ok(await p2.evaluate(()=>!window.__bararan.ACC.me),'гость на сайте с оплатой');
     ok(await p2.locator('.lvh .lock').count()>=5,'уровни A2–C2 под замком');

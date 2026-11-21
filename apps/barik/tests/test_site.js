@@ -191,7 +191,7 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     ok(req.some(x=>/\/ex\/en-A1\.json$/.test(x))&&!req.some(x=>/\/ex\/en\.json$/.test(x)),'первый пример запрашивает только лёгкий пакет EN/A1 ('+req.join(', ')+')'); await cx.close(); }
   for(const L of ['ru','en','fr','es','de','pt']){ const r=await pg.request.get(base+'og/og-'+L+'.jpg'); ok(r.ok()&&(await r.body()).length>50000,'картинка превью og-'+L+'.jpg'); }
   ok(!(await pg.evaluate(()=>caches.keys().then(ks=>Promise.all(ks.map(k=>caches.open(k).then(c=>c.keys())))).then(a=>a.flat().some(q=>/\/og\//.test(q.url))))),'картинки превью не лежат в кэше приложения');
-  await pg.click('[data-act=pickLang][data-arg=ru]');
+  await pg.evaluate(() => window.__bararan.H.landGo());
   ok((await pg.textContent('.brand')).includes('Barik'),'главная: Barik');
   await pg.click('[data-act=lvtog][data-arg=A2]');
   { const free=await pg.evaluate(()=>!!(window.BARARAN_CONFIG||{}).WEB_ALL_FREE), n=await pg.locator('.topic.locked').count();   // замок — по сборке (O-165/O-195)

@@ -24,12 +24,12 @@ const sizes=await p.locator('.ld .lng').evaluateAll(es=>es.map(e=>({w:e.getBound
 const touch=await p.locator('.ph-opt').evaluateAll(es=>es.map(e=>({w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})));assert(touch.length===3&&touch.every(s=>s.w>=44&&s.h>=44),'Lesson preview choices >=44px');
 for(let i=0;i<3;i++){await p.locator('.ph-opt.right').click();if(i<2)await p.waitForFunction(()=>{const x=document.querySelector('.ph-opt.right');return !!x&&!x.disabled;});}
 await p.locator('.ph-opt.ph-go').waitFor({state:'visible',timeout:5000});await scan(p,'.ph-opt.ph-go');
-await p.evaluate(()=>{window.__bararan.H.pickLang('ru');window.__bararan.startLearn();});await p.locator('.flag').first().waitFor({state:'visible',timeout:15000});await scan(p,'.flag');
+await p.evaluate(()=>{window.__bararan.H.pickLang('ru');});await p.locator('.flag').first().waitFor({state:'visible',timeout:15000});await scan(p,'.flag');
 await gradients(p,'.btn.primary');
 await p.evaluate(()=>window.__bararan.H.paywall());await p.locator('.pw-legal').first().waitFor({state:'visible',timeout:15000});await scan(p,'.pw-legal');await c.close();}
 for(const width of [320,340,360,390]){const c=await b.newContext({timezoneId:'Europe/Moscow',serviceWorkers:'block',viewport:{width,height:780}}),p=await c.newPage();await p.goto('http://127.0.0.1:'+srv.address().port+'/');await p.waitForFunction(()=>window.__bararan);
 const start=await p.evaluate(()=>({doc:document.documentElement.scrollWidth,view:innerWidth,header:document.querySelector('.ld-nav .ld-wrap').scrollWidth,headerClient:document.querySelector('.ld-nav .ld-wrap').clientWidth,langs:[...document.querySelectorAll('.ld .lng')].map(e=>[e.getBoundingClientRect().width,e.getBoundingClientRect().height])}));
 assert(start.doc<=start.view+1&&start.header<=start.headerClient+1,'No horizontal overflow on landing at '+width+'px '+JSON.stringify(start));assert(start.langs.length===6&&start.langs.every(([w,h])=>w>=44&&h>=44),'Six 44px language targets at '+width+'px '+JSON.stringify(start.langs));
-await p.evaluate(()=>window.__bararan.H.pickLang('ru'));await p.locator('#tabs .tab').first().waitFor({state:'visible'});const tabs=await p.locator('#tabs .tab').evaluateAll(es=>es.map(e=>[e.getBoundingClientRect().width,e.getBoundingClientRect().height]));
+await p.evaluate(()=>{window.__bararan.setLang('ru');window.__bararan.H.landGo();});await p.locator('#tabs .tab').first().waitFor({state:'visible'});const tabs=await p.locator('#tabs .tab').evaluateAll(es=>es.map(e=>[e.getBoundingClientRect().width,e.getBoundingClientRect().height]));
 assert(tabs.length===6&&tabs.every(([w,h])=>w>=44&&h>=44),'Six 44px mobile tabs at '+width+'px '+JSON.stringify(tabs));assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow in app at '+width+'px');await c.close();}
 }finally{await b.close();srv.close();}})().catch(e=>{console.error(e);srv.close();process.exitCode=1;});

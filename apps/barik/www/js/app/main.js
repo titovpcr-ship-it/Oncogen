@@ -51,7 +51,6 @@ import {
 export function go(v, arg) {
   if((st.view==='paywall'&&v!=='paywall')||(st.view==='lvlquiz'&&v!=='lvlquiz'))salesPaywall(false);
   if(v==='paywall')salesPaywall(true,st.pwState.reason||'default');
-  if (st.view === 'onboard' && v !== 'onboard' && v !== 'doc') hit('start');
   if (REC.on || REC.url) recReset();
   if (v === 'name' || v === 'pen' || v === 'listen' || v === 'paywall' || v === 'account' || v === 'unit') hit('v_' + v);
   if (st.sess && !st.sess.ended && v !== 'session') clearTimeout(st.sess.timer);
@@ -149,6 +148,9 @@ function needData(el) {
 function onShow() {
   const it = cur();
   if (!it) return;
+  if ((it.k === 'intro' || it.k === 'a2r' || it.k === 'listen') && st.S.set.auto && !st.REAL_ANY) {
+    if (st.sess) st.sess.needAudio = true;
+  }
   if (it.k === 'intro') introMark(it.w);
   if ((it.k === 'intro' || it.k === 'a2r') && st.S.set.auto) speak(it.w, false, document.querySelector('.aud'));
   if (it.k === 'listen') speak(it.w, false, document.querySelector('.play-big'));
@@ -233,7 +235,13 @@ export const H = {
     if (st.view === 'lvlquiz' && st.lq) { clearTimeout(st.lq.timer); st.lq = null; }
     go(a);
   },
-  pickLang: a => { setLang(a); hit(st.view === 'onboard' ? 'land_start' : 'pick_lang'); hit('start'); go('home'); },
+  pickLang: a => {
+    unlockAudio();
+    setLang(a);
+    hit(st.view === 'onboard' ? 'land_start' : 'pick_lang');
+    if (!st.UI.l1 && Object.keys(st.S.w).length === 0) { startLearn(null); return; }
+    go('home');
+  },
   landSay: (a, b) => { const k = String(a || '').split('|'); sayText(k[0], b, false, null, k[1] === 'm' ? 'm' : 'f'); },
   geoX: () => { st.UI.geoX = 1; saveUI(); const g = document.querySelector('.ld-geo'); if (g) g.remove(); },
   landHow: (a, b, e) => { const t = document.getElementById('how'); if (t) { if (e) e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
@@ -365,7 +373,7 @@ export const H = {
   lzRetry: () => render(),
   landTry: a => landTry(a),
   trRetry: lang => trLoad(lang || st.L, true),
-  landTryGo: () => { setLang(st.L); hit('land_start'); hit('start'); startLearn(null); },
+  landTryGo: () => { unlockAudio(); setLang(st.L); hit('land_start'); startLearn(null); },
   learnTopic: a => startLearn(+a),
   learnAgain: () => { const m = st.sess ? st.sess.meta : {}; startLearn(m.ti != null ? m.ti : null, m.lv || null); },
   learnLevel: a => startLearn(null, a),
@@ -756,6 +764,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 document.addEventListener('pointerdown', unlockAudio, { capture: true });
+document.addEventListener('touchend', unlockAudio, { capture: true, passive: true });
 document.addEventListener('keydown', unlockAudio, { capture: true });
 
 document.addEventListener('input', e => {
@@ -1008,8 +1017,18 @@ function launch() {
     hit('v_paywall');
     hit('pw_gift');
   }
-  if (FIRST && st.view !== 'onboard') hit('start');
-  Promise.all([loadManifest(), BILL.init(), accInit()]).then(() => {
+  const manP = loadManifest();
+  manP.then(() => {
+    if (st.view === 'session' && st.sess && st.sess.needAudio && st.REAL_ANY) {
+      st.sess.needAudio = false;
+      preloadAudio(st.sess.items.map(it => it.w));
+      const it = cur();
+      if (it && (it.k === 'intro' || it.k === 'a2r' || it.k === 'listen') && st.S.set.auto) {
+        speak(it.w, false, document.querySelector(it.k === 'listen' ? '.play-big' : '.aud'));
+      }
+    }
+  });
+  Promise.all([manP, BILL.init(), accInit()]).then(() => {
     if (st.view === 'session') render(false);
     else if (st.view !== 'abcquiz' && st.view !== 'pquiz' && st.view !== 'tquiz' && st.view !== 'lvlquiz' && st.view !== 'pen') render();
     if (/[?&]pay=crypto(?:&|$)/.test(location.search || '')) cryReturn();

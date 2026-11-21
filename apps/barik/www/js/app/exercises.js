@@ -198,6 +198,7 @@ export function focusChangedScreen(oldState, newState, oldView) {
 function newSess(mode, items, meta) {
   st.sess = { mode, items, i: 0, first: new Map(), meta: meta || {}, timer: null, reps: {}, ended: false };
   st.view = 'session';
+  hit('start');
   hit('lesson_start');
   preloadAudio(items.map(it => it.w));
   cb.render(true);
@@ -214,17 +215,23 @@ export function startLearn(ti, lv) {
   const list = lv ? WORDS.filter(w => TOPICS[w.t].lv === lv && !st.S.w[w.a]).slice(0, firstN()) : nextNew(ti, firstN());
   if (!list.length) { toast(T('noNew')); return; }
   const items = [];
-  for (let i = 0; i < list.length; i += 4) {
-    const ch = list.slice(i, i + 4);
-    ch.forEach(w => items.push(mk('intro', w)));
-    const qs = [];
-    ch.forEach(w => {
-      qs.push(mk('a2r', w));
-      qs.push(mk(canSpell(w) && Math.random() < .5 ? 'spell' : 'r2a', w));
-    });
-    items.push(...spread(qs));
+  const firstLesson = !st.UI.l1 && Object.keys(st.S.w).length <= 3;
+  if (firstLesson) {
+    list.forEach(w => { items.push(mk('intro', w)); items.push(mk('a2r', w)); });
+    items.push(...spread(list.map(w => mk(canSpell(w) && Math.random() < .5 ? 'spell' : 'r2a', w))));
+  } else {
+    for (let i = 0; i < list.length; i += 4) {
+      const ch = list.slice(i, i + 4);
+      ch.forEach(w => items.push(mk('intro', w)));
+      const qs = [];
+      ch.forEach(w => {
+        qs.push(mk('a2r', w));
+        qs.push(mk(canSpell(w) && Math.random() < .5 ? 'spell' : 'r2a', w));
+      });
+      items.push(...spread(qs));
+    }
+    if (list.length > 4) items.push(...spread(list.map(w => mk(audioOK() && Math.random() < .6 ? 'listen' : 'r2a', w))));
   }
-  if (list.length > 4) items.push(...spread(list.map(w => mk(audioOK() && Math.random() < .6 ? 'listen' : 'r2a', w))));
   newSess('learn', items, { ti, lv });
 }
 

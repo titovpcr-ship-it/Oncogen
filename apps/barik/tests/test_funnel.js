@@ -40,26 +40,12 @@ c.commit()`,db,String(now)]);
   await ctx.route('**/pics/**',rt=>rt.abort());
   const pg=await ctx.newPage(); pg.on('pageerror',e=>errs.push(String(e)));
   await pg.goto(base+'?from=TG_Test'); await pg.waitForSelector('[data-act=pickLang]');
-  await pg.click('[data-act=pickLang]'); await pg.waitForTimeout(2200);   // картинки не пришли и после повтора (1,5 с)
-  await pg.click('[data-act=learnNew]'); await pg.waitForSelector('.sess-top [data-act=quit]');
+  await pg.click('[data-act=pickLang]'); await pg.waitForSelector('.sess-top [data-act=quit]');
+  await pg.waitForTimeout(2200); // картинки не пришли и после повтора (1,5 с)
+  ok(await pg.locator('.foot [data-act=next]').isVisible(),'первый экран — intro');
+  await pg.click('.foot [data-act=next]');
   const firstOption=pg.locator('.opt:not([disabled])').first();
-  for(let i=0;i<20&&!(await firstOption.isVisible().catch(()=>false));i++){
-    const giveup=pg.locator('.foot [data-act=giveup]').first();
-    if(await giveup.isVisible().catch(()=>false)){
-      await giveup.click();
-      const next=pg.locator('.foot [data-act=next]').first();
-      await next.waitFor({state:'visible',timeout:15000});
-      await next.click();
-      continue;
-    }
-    const next=pg.locator('.foot [data-act=next]').first();
-    if(await next.isVisible().catch(()=>false)){
-      await next.click();
-      continue;
-    }
-    throw new Error('Неожиданный шаг урока до первого ответа: '+(await pg.locator('.stage').innerText().catch(()=>'')));
-  }
-  await firstOption.waitFor({state:'visible',timeout:15000});
+  ok(await firstOption.isVisible(),'второй экран сразу содержит интерактивный вопрос');
   await firstOption.click(); await pg.waitForTimeout(600);
   S=await stats();
   ok(S['g:guest']===1&&S['g:start']===1&&S['g:land_start']===1&&S['g:first_answer']===1,'воронка: гость → нажал «Начать» → вошёл → первый ответ');
@@ -74,24 +60,26 @@ c.commit()`,db,String(now)]);
   const pl=execFileSync('python3.13',['-c','import sys,collections;sys.path.insert(0,sys.argv[1]);import stats;print(stats.path_line(collections.Counter({"e:unit_open_p1":1,"e:unit_pass_p1":1,"e:harvest_done":1})))',path.join(ROOT,'tools')]).toString();
   ok(pl.includes('p1 1→1→0')&&pl.includes('урожай 1'),'сводка: строка «Путь: открыли → прошли → не прошли»');
 
-  // 2. гость со страницы поиска: источник «seo»; вход кнопкой «Открыть» — тоже «вошли»
+  // 2. Источник seo и вход через «Открыть» не отправляют start до урока
   const c2=await br.newContext({viewport:{width:390,height:844},locale:'en-US',userAgent:UA+' B',serviceWorkers:'block'});
   const p2=await c2.newPage(); p2.on('pageerror',e=>errs.push(String(e)));
   await p2.goto(base+'?lang=en&t=0',{referer:base+'en/w/barev.html'}); await p2.waitForTimeout(800);
   S=await stats();
-  ok(S['g:guest']===2&&S['g:start']===2&&S['gs:seo:guest']===1&&S['gs:seo:start']===1&&S['gl:en:start']===1,'со страницы поиска (?lang=en, мимо обложки) — новичок, источник seo, сразу «вошли»');
-  // гость на обложке нажал «Открыть» — тоже «вошли»
+  ok(S['g:guest']===2&&S['g:start']===1&&S['gs:seo:guest']===1&&!S['gs:seo:start']&&!S['gl:en:start'],'GET-параметры без урока не отправляют start');
+  await p2.locator('[data-act=learnTopic]').first().click(); await p2.waitForTimeout(500);
+  S=await stats(); ok(S['g:start']===2&&S['gs:seo:start']===1&&S['gl:en:start']===1,'урок из темы отправляет start по языку и источнику');
+  // Гость на обложке нажал «Открыть» — без старта урока
   const c3=await br.newContext({viewport:{width:1280,height:800},locale:'de-DE',timezoneId:'Europe/Berlin',userAgent:UA+' C',serviceWorkers:'block'});
   const p3=await c3.newPage(); p3.on('pageerror',e=>errs.push(String(e)));
   await p3.goto(base); await p3.waitForSelector('[data-act=landGo]'); await p3.click('[data-act=landGo]'); await p3.waitForTimeout(500);
-  S=await stats(); ok(S['g:guest']===3&&S['g:start']===3&&S['g:land_open']===1&&S['gl:de:start']===1&&S['gs:-:start']===1,'«Открыть» на обложке — вход, язык de, источник «-»');
+  S=await stats(); ok(S['g:guest']===3&&S['g:start']===2&&S['g:land_open']===1&&!S['gl:de:start'],'«Открыть» на обложке не отправляет start');
 
   // человек за день — по адресу и браузеру: у второго и третьего гостя браузер другой (UA+' B'/' C')
   // 3. вернувшийся (язык уже выбран) — в воронку новичка не попадает; робот не считается вовсе
   await pg.goto(base); await pg.waitForTimeout(400);
   S=await stats(); ok(S['g:guest']===3&&S['u']===3,'вернувшийся в тот же день — не новичок и не новый человек');
   await fetch(base+'api/?r=hit',{method:'POST',headers:{'User-Agent':'Mozilla/5.0 (compatible; Googlebot/2.1)'},body:JSON.stringify({e:'start',g:1,l:'en'})});
-  S=await stats(); ok(S['g:start']===3,'робот не попадает в воронку');
+  S=await stats(); ok(S['g:start']===2,'робот не попадает в воронку');
 
   // 4. защита хостинга отдала вместо картинки страницу-заглушку (200, text/html) — повтор через 1,5 с, картинка на месте, сбоя нет
   { const c4=await br.newContext({viewport:{width:390,height:844},locale:'ru-RU',userAgent:UA+' D',serviceWorkers:'block'});
@@ -118,7 +106,7 @@ c.commit()`,db,String(now)]);
     const p6=await c6.newPage(); p6.on('pageerror',e=>errs.push(String(e)));
     const fa0=(await stats())['g:first_answer']||0;
     await p6.goto(base); await p6.waitForSelector('[data-act=pickLang]',{timeout:5000});
-    await p6.click('[data-act=pickLang]'); await p6.waitForSelector('[data-act=lvlStart]',{timeout:5000});
+    await p6.evaluate(() => window.__bararan.H.landGo()); await p6.waitForSelector('[data-act=lvlStart]',{timeout:5000});
     await p6.click('[data-act=lvlStart]'); await p6.waitForSelector('[data-act=lvlOpt]',{timeout:5000});
     await p6.click('[data-act=lvlOpt]'); await p6.waitForTimeout(600);
     S=await stats();
