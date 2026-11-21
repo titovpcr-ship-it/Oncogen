@@ -3,6 +3,7 @@
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
 const pals=n=>n===1?'palabra':'palabras';const apr=n=>n===1?'aprendida':'aprendidas';
 const es={
+  snLand:"Descubre la raíz armenia, la pronunciación y el escudo familiar de más de 280 apellidos.",
   returnTitle:"Mañana podrás repasar estas palabras", returnMail:"Recordatorios por correo", returnInstall:"Añadir a la pantalla de inicio", returnInstallHelp:"En iPhone, toca Compartir en Safari y luego Añadir a pantalla de inicio. En Android, abre el menú del navegador y selecciona Añadir a la pantalla de inicio.",
   nmEx:'Sofía', prPrem:'desde 4,92 $/mes', prPremT:'Armenio oriental vivo de Ereván actual: niveles A2–C2, diálogos y lectura de Tumanián con dos voces (Anahit y Hayk). Pro Mensual ($12), Pro Anual ($59/año · 59 % dto.) o Heritage De por vida ($129 pago único).',
   nmTitle:'Tu nombre en armenio', nmCap:'la pluma lo escribe a mano', nmLead:'Escribe un nombre y la pluma lo trazará con letras armenias. Puedes guardar la tarjeta y enviarla.', nmPh:'Tu nombre', nmBtn:'Escribir', nmShare:'Compartir', nmSave:'Guardar la tarjeta', nmLink:'Copiar el enlace', nmCopied:'Enlace copiado', nmLetters:'Las letras de tu nombre', nmNote:'Un nombre puede escribirse de varias formas. ¿Lo escribes de otra manera?', nmEdit:'Corregir las letras', nmFixBtn:'Listo', nmEmpty:'Escribe el nombre con letras: latinas, cirílicas o armenias.', nmCardFoot:'mi nombre en armenio', nmLearn:l=>'Aprender a escribir «'+l+'» por tu cuenta', nmShareText:(n,h)=>n+' en armenio es '+h+'. Escribe tu nombre:',

@@ -241,6 +241,9 @@ Options -Indexes
 ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteCond %{REQUEST_URI} ^/(?:index\.html)?$
+  RewriteCond %{QUERY_STRING} (?:^|&)(?:lang|t|letter|daily|phrases|name|pen|abc|listen|family|paywall|doc|gift|teach|start|switch|welcome|from|root)= [NC]
+  RewriteRule ^ - [E=NOINDEX_QS:1]
   # проверка домена для сертификата (AutoSSL / Let's Encrypt) идёт по http — её не перенаправлять
   RewriteCond %{REQUEST_URI} ^/\.well-known/ [NC]
   RewriteRule ^ - [L]
@@ -284,6 +287,8 @@ ErrorDocument 404 /404.html
   AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/manifest+json image/svg+xml application/xml text/xml text/plain
 </IfModule>
 <IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, follow" env=NOINDEX_QS
+  Header always set X-Robots-Tag "noindex, follow" env=REDIRECT_NOINDEX_QS
   # всё, что меняется между сборками, — с проверкой свежести (ответ 304 без тела); раньше js/css хранились неделю,
   # и офлайн-режим собирал новую версию из старых файлов (O-157). Шрифт меняется только с именем файла.
   <FilesMatch "\.(html|js|css|png|svg|json|jpg|webmanifest|xml|txt)$">
@@ -435,6 +440,8 @@ def build(out=OUT, url=SITE_URL, seo=True, paid=False):
     title, desc = land_meta()[ROOT_L]
     html = html.replace('<html lang="ru">', '<html lang="%s">' % ROOT_L, 1)
     html = re.sub(r'<meta\s+name="description"[^>]*>\s*', "", html, count=1)
+    if url:
+        html = re.sub(r'<link\s+rel="canonical"[^>]*>\s*', "", html)
     html = html.replace("<title>Barik</title>",
                         f"<title>{esc(title)}</title>\n" + HEAD % {"desc": esc(desc)}
                         + og_tags(ROOT_L, url, title, desc) + (CANON % {"url": url} if url else ""))

@@ -636,8 +636,38 @@ def ru_display_name(lat):
     return "-".join(tr_part(p) for p in lat.split("-"))
 
 
-SURNAME_JS = r"""(function(){
+SURNAME_JS = r"""// Shared opt-out across the app and standalone SEO/Roots pages.
+(function(){
+  var mode=new URLSearchParams(location.search).get('notrack');
+  if(mode==='1'||mode==='0')window.__barikNotrack=mode==='1';
+  try{if(mode==='1')localStorage.setItem('barik_notrack','1');else if(mode==='0')localStorage.removeItem('barik_notrack');}catch(e){/* Keep the explicit choice in memory if storage is blocked. */}
+  window.barikNotrack=function(){try{return localStorage.getItem('barik_notrack')==='1'||window.__barikNotrack===true;}catch(e){return window.__barikNotrack===true;}};
+  function badge(){
+    var b=document.getElementById('barik-nt');
+    if(!window.barikNotrack()){if(b)b.remove();return;}
+    if(!window.__barikNtLogged){console.info('[Barik] notrack active (barik_notrack=1)');window.__barikNtLogged=true;}
+    if(!b&&document.body){b=document.createElement('span');b.id='barik-nt';b.textContent='NT';b.style.cssText='position:fixed;bottom:6px;left:6px;z-index:9999;font:10px/1 monospace;padding:2px 5px;border-radius:4px;background:rgba(0,0,0,.55);color:#fff;pointer-events:none;opacity:.6';document.body.appendChild(b);}
+  }
+  badge();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',badge,{once:true});
+})();
+(function(){
 'use strict';
+var _tz='';try{_tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){/* Time zone is optional. */}
+var slugFromPath=(location.pathname.match(/\/s\/([^/.]+)\.html$/)||[])[1]||'';
+if(slugFromPath==='index')slugFromPath='';
+function snHit(ev,fam){
+  if(window.barikNotrack()||location.protocol==='file:')return;
+  var payload=JSON.stringify({e:ev,v:2,l:document.documentElement.lang||'en',tz:_tz,fam:fam||'',s:'family'});
+  try{if(navigator.sendBeacon&&navigator.sendBeacon('/api/?r=hit',payload))return;}catch(e){/* Retry with fetch. */}
+  if(typeof fetch==='function')fetch('/api/?r=hit',{method:'POST',body:payload,keepalive:true}).catch(function(){/* Best-effort telemetry. */});
+}
+snHit('family_visit',slugFromPath||'index');
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('.sn-cta-radio,.sn-cta-gift');if(!a)return;
+  var fam=new URL(a.href,location.href).searchParams.get('family')||slugFromPath;
+  snHit(a.classList.contains('sn-cta-radio')?'family_listen':'family_gift',fam);
+});
+
 function escH(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function normLat(s){
   return String(s||'').toLowerCase()
@@ -873,13 +903,7 @@ document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-act="surnameCard"]');
   if(b){
     e.preventDefault();
-    try{
-      if(location.protocol!=='file:'&&navigator.sendBeacon){
-        var _tz='';try{_tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(z){}
-        var _fm=(location.pathname.match(/\/s\/([^/.]+)\.html$/)||[])[1]||'';
-        navigator.sendBeacon('../../api/?r=hit',JSON.stringify({e:'surname_card',v:2,l:document.documentElement.lang||'en',tz:_tz,fam:_fm,s:'family'}));
-      }
-    }catch(x){}
+    snHit('surname_card',b.getAttribute('data-slug')||slugFromPath||'custom');
     renderCard(b);
   }
 });
@@ -996,8 +1020,8 @@ if(search){
       +' data-st-prep="'+escH(cfg.cardPrep||'')+'" data-st-dl="'+escH(cfg.cardDl||'')+'" data-st-sh="'+escH(cfg.cardSh||'')+'"'
       +' data-slug="'+escH(dynSlug)+'">'+escH(cfg.cardBtn||'Download Crest Card')+'</button><p class="sn-card-st" role="status" aria-live="polite"></p></div>'
       +'<div class="surname-gift-cta"><h2>'+escH((cfg.ctaH||'').replace(/\{name\}/g,dispLat))+'</h2>'
-      +'<div class="sn-cta-acts"><a class="sn-cta-radio" href="../../?lang='+escH(lang)+'&amp;listen=1&amp;family='+escH(dynSlug)+((rootMatch&&rootMatch.slug)?('&amp;root='+escH(rootMatch.slug)):'')+'">'+escH(cfg.ctaRadio||'Radio')+'</a>'
-      +'<a class="sn-cta-gift" href="../../?lang='+escH(lang)+'&amp;paywall=gift&amp;family='+escH(dynSlug)+'">'+escH((cfg.ctaGift||'').replace(/\{name\}/g,dispLat))+'</a></div></div>';
+      +'<div class="sn-cta-acts"><a class="sn-cta-radio" href="../../?lang='+escH(lang)+'&amp;ftrk=1&amp;listen=1&amp;family='+escH(dynSlug)+((rootMatch&&rootMatch.slug)?('&amp;root='+escH(rootMatch.slug)):'')+'">'+escH(cfg.ctaRadio||'Radio')+'</a>'
+      +'<a class="sn-cta-gift" href="../../?lang='+escH(lang)+'&amp;ftrk=1&amp;paywall=gift&amp;family='+escH(dynSlug)+'">'+escH((cfg.ctaGift||'').replace(/\{name\}/g,dispLat))+'</a></div></div>';
   }
 
   function applyFilter(){
@@ -1268,8 +1292,8 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
                 f'<section class="surname-gift-cta">'
                 f'<h2>{esc(T["cta_h"].format(name=disp))}</h2>'
                 f'<div class="sn-cta-acts">'
-                f'<a class="sn-cta-radio" href="../../?lang={L}&amp;listen=1&amp;family={esc(sl)}&amp;root={esc(wslug[link_word["a"]])}">{esc(T["cta_radio"])}</a>'
-                f'<a class="sn-cta-gift" href="../../?lang={L}&amp;paywall=gift&amp;family={esc(sl)}">{esc(T["cta_gift"].format(name=disp))}</a>'
+                f'<a class="sn-cta-radio" href="../../?lang={L}&amp;ftrk=1&amp;listen=1&amp;family={esc(sl)}&amp;root={esc(wslug[link_word["a"]])}">{esc(T["cta_radio"])}</a>'
+                f'<a class="sn-cta-gift" href="../../?lang={L}&amp;ftrk=1&amp;paywall=gift&amp;family={esc(sl)}">{esc(T["cta_gift"].format(name=disp))}</a>'
                 f'</div></section>'
                 + rel_sec + pn + f'<p class="pn"><a href="index.html">{esc(T["all_sn"].format(total=len(rows)))}</a></p>'
             )

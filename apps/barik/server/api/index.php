@@ -619,8 +619,7 @@ function dodo_webhook(): never {
                 if (preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
 
                     if (($payment['payment_id'] ?? '') === $pid && ($payment['status'] ?? '') === 'succeeded') {
-                        $added = q('INSERT OR IGNORE INTO events(id, t) VALUES(?, ?)', ['paid:' . $pid, now()])->rowCount();
-                        if ($added === 1) stat_add(intdiv(time(), 86400), 'p:paid');
+                        dodo_record_paid($pid, $sid ?: null);
                     }
                 }
             }

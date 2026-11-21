@@ -3,6 +3,7 @@
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
 const wort=n=>n===1?'Wort':'Wörter';
 const de={
+  snLand:"Entdecke die armenische Wurzel, die Aussprache und das Familienwappen von über 280 Nachnamen.",
   returnTitle:"Morgen kannst du diese Wörter wiederholen", returnMail:"Erinnerungen per E-Mail", returnInstall:"Zum Home-Bildschirm hinzufügen", returnInstallHelp:"Tippe auf dem iPhone in Safari auf Teilen und dann auf Zum Home-Bildschirm. Öffne unter Android das Browsermenü und wähle Zum Startbildschirm hinzufügen.",
   nmEx:'Lukas', prPrem:'ab 4,92 $/Monat', prPremT:'Lebendiges Ostarmenisch des heutigen Jerewan: Stufen A2–C2, Dialoge & Tumanjan im Original mit den Stimmen Anahit und Hayk. Pro Monatlich ($12), Pro Jährlich ($59/Jahr · 59 % sparen) oder Heritage Lebenslang ($129 einmalig).',
   nmTitle:'Dein Name auf Armenisch', nmCap:'die Feder schreibt ihn von Hand', nmLead:'Gib einen Namen ein, und die Feder schreibt ihn in armenischen Buchstaben. Die Karte kannst du speichern und verschicken.', nmPh:'Dein Name', nmBtn:'Schreiben', nmShare:'Teilen', nmSave:'Karte speichern', nmLink:'Link kopieren', nmCopied:'Link kopiert', nmLetters:'Die Buchstaben deines Namens', nmNote:'Namen lassen sich unterschiedlich schreiben. Schreibst du ihn anders?', nmEdit:'Buchstaben ändern', nmFixBtn:'Fertig', nmEmpty:'Gib den Namen in Buchstaben ein: lateinisch, kyrillisch oder armenisch.', nmCardFoot:'mein Name auf Armenisch', nmLearn:l=>'„'+l+'“ selbst schreiben lernen', nmShareText:(n,h)=>n+' auf Armenisch: '+h+'. Schreib deinen Namen:',

@@ -654,6 +654,17 @@ function dodo_signed(string $raw, string $id, string $ts, string $sig, string $s
     return false;
 }
 
+function dodo_record_paid(string $key, ?string $sid = null, ?int $ts = null): void {
+    $t = $ts ?: now();
+    if ($sid !== null && $sid !== '' && $key !== 'sub:' . $sid
+        && q('SELECT 1 FROM events WHERE id = ? AND t >= ?', ['paid:sub:' . $sid, $t - 3600])->fetchColumn()) {
+        q('INSERT OR IGNORE INTO events(id, t) VALUES(?, ?)', ['paid:' . $key, $t]);
+        return;
+    }
+    $added = q('INSERT OR IGNORE INTO events(id, t) VALUES(?, ?)', ['paid:' . $key, $t])->rowCount();
+    if ($added === 1) stat_add(intdiv($t, 86400), 'p:paid');
+}
+
 /* Состояние подписки Dodo → users. Чья подписка: подписанный uid из metadata окна оплаты, иначе id подписки
    или покупателя в базе, иначе почта покупателя (вход у нас по почте, окно оплаты получает ту же почту).
    $want — uid, которому подписка должна принадлежать (pay_check): чужую не привязываем. */
@@ -698,6 +709,7 @@ function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?ar
     }
     q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = ?, sub_at = ?, sub_mode = ? WHERE id = ?',
       [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, $plan, $until, now(), dodo_mode(), $u['id']]);
+    if ($st === 'active') dodo_record_paid('sub:' . $sid);
     return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
 }
 
@@ -726,6 +738,7 @@ function dodo_payment_sync(string $pid, ?int $want = null, ?array $verified = nu
     if (!$u || ($want !== null && (int)$u['id'] !== $want)) return null;
     q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = NULL, sub_at = ?, sub_mode = ? WHERE id = ?',
       [(string)($cust['customer_id'] ?? $u['pd_customer']), '', 'active', 'life', now(), dodo_mode(), $u['id']]);
+    dodo_record_paid($pid);
     return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
 }
 

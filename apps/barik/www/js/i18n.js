@@ -4,6 +4,7 @@ function pl(n,one,few,many){const n10=n%10,n100=n%100; if(n10===1&&n100!==11) re
 const slov=n=>pl(n,"слово","слова","слов");
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
 const ru={
+  snLand:"Узнайте армянский корень, произношение и семейный герб более 280 фамилий.",
   returnTitle:"Завтра эти слова вернутся на повторение", returnMail:"Напомнить на почту", returnInstall:"Добавить на экран «Домой»", returnInstallHelp:"На iPhone в Safari нажмите «Поделиться», затем «На экран Домой». На Android откройте меню браузера и выберите «Добавить на главный экран».",
   nmEx:'Мария', prPrem:'от 4,92 $/мес', prPremT:'Живой восточноармянский современного Еревана: уровни A2–C2, диалоги и чтение Ованнеса Туманяна с двумя голосами Anahit и Hayk. Пробуйте бесплатно — выбирайте месяц ($12), год ($59) или навсегда ($129).',
   nmTitle:'Ваше имя по-армянски', nmCap:'перо напишет его прописью', nmLead:'Введите имя — перо напишет его армянскими буквами. Открытку можно сохранить и отправить.', nmPh:'Ваше имя', nmBtn:'Написать', nmShare:'Поделиться', nmSave:'Сохранить открытку', nmLink:'Скопировать ссылку', nmCopied:'Ссылка скопирована', nmLetters:'Буквы вашего имени', nmNote:'Имена передают по-разному. Привыкли писать иначе?', nmEdit:'Поправить буквы', nmFixBtn:'Готово', nmEmpty:'Введите имя буквами — латиницей, кириллицей или по-армянски.', nmCardFoot:'моё имя по-армянски', nmLearn:l=>'Научиться писать «'+l+'» самому', nmShareText:(n,h)=>n+' по-армянски — '+h+'. Напишите своё имя:',
@@ -170,6 +171,7 @@ const ru={
 
 const words=n=>n===1?"word":"words";
 const en={
+  snLand:"Discover the Armenian root, pronunciation, and family crest behind 280+ surnames.",
   returnTitle:"These words will be ready to review tomorrow", returnMail:"Get email reminders", returnInstall:"Add to Home Screen", returnInstallHelp:"On iPhone, tap Share in Safari, then Add to Home Screen. On Android, open the browser menu and choose Add to Home screen.",
   nmEx:'Emma', prPrem:'from $4.92/mo', prPremT:'Living Eastern Armenian of modern Yerevan: levels A2–C2, dialogues & reading Hovhannes Tumanyan with two voices, Anahit & Hayk. Pro Monthly ($12), Pro Annual ($59 · 59% off), or Heritage Lifetime ($129 once).',
   nmTitle:'Your name in Armenian', nmCap:'the pen writes it by hand', nmLead:'Type a name and the pen will write it in Armenian letters. You can save the card and send it.', nmPh:'Your name', nmBtn:'Write it', nmShare:'Share', nmSave:'Save the card', nmLink:'Copy the link', nmCopied:'Link copied', nmLetters:'The letters of your name', nmNote:'Names can be spelled in more than one way. Used to a different spelling?', nmEdit:'Change the letters', nmFixBtn:'Done', nmEmpty:'Type the name in letters: Latin, Cyrillic or Armenian.', nmCardFoot:'my name in Armenian', nmLearn:l=>'Learn to write “'+l+'” yourself', nmShareText:(n,h)=>n+' in Armenian is '+h+'. Write your own name:',

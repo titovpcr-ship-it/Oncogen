@@ -32,7 +32,7 @@ APP = os.path.dirname(HERE)
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 from build_surnames import SN_CSS, SN_TXT, build_surnames
-LANGS = ("ru", "en", "fr", "es", "de", "pt")
+LANGS = ("en", "fr", "es", "de", "pt", "ru")
 LV = ("A1", "A2", "B1", "B2", "C1", "C2")
 NEIGHBOURS = 8
 
@@ -387,7 +387,21 @@ MQ = {
     "pt": {"hdr": "Teste de áudio em 5 segundos", "ok": "Certo!", "bad": "Resposta correta:", "radio": "Ouvir este tema no modo Rádio 🎧"},
 }
 
-SEO_JS = """document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');
+SEO_JS = """// Shared opt-out across the app and standalone SEO/Roots pages.
+(function(){
+  var mode=new URLSearchParams(location.search).get('notrack');
+  if(mode==='1'||mode==='0')window.__barikNotrack=mode==='1';
+  try{if(mode==='1')localStorage.setItem('barik_notrack','1');else if(mode==='0')localStorage.removeItem('barik_notrack');}catch(e){/* Keep the explicit choice in memory if storage is blocked. */}
+  window.barikNotrack=function(){try{return localStorage.getItem('barik_notrack')==='1'||window.__barikNotrack===true;}catch(e){return window.__barikNotrack===true;}};
+  function badge(){
+    var b=document.getElementById('barik-nt');
+    if(!window.barikNotrack()){if(b)b.remove();return;}
+    if(!window.__barikNtLogged){console.info('[Barik] notrack active (barik_notrack=1)');window.__barikNtLogged=true;}
+    if(!b&&document.body){b=document.createElement('span');b.id='barik-nt';b.textContent='NT';b.style.cssText='position:fixed;bottom:6px;left:6px;z-index:9999;font:10px/1 monospace;padding:2px 5px;border-radius:4px;background:rgba(0,0,0,.55);color:#fff;pointer-events:none;opacity:.6';document.body.appendChild(b);}
+  }
+  badge();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',badge,{once:true});
+})();
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');
 if(b){var a=b._a||(b._a=new Audio(b.getAttribute('data-src')));b.classList.add('on');a.onended=a.onerror=function(){b.classList.remove('on');};
 try{a.currentTime=0;}catch(x){}var p=a.play();if(p&&p.catch)p.catch(function(){b.classList.remove('on');});return;}
 var o=e.target.closest&&e.target.closest('[data-mq] .mq-opt');if(!o||o.disabled)return;
@@ -743,7 +757,7 @@ def build(site, base, words_path):
                                f'<div class="mq-row">{mq_play}<span class="mq-hy" lang="hy">{esc(mq_hy)}</span></div>'
                                f'<div class="mq-opts">{mq_opts}</div>'
                                f'<p class="mq-res" role="status" aria-live="polite"></p>'
-                               f'<a class="mq-radio" href="../../?lang={L}&amp;t={ti}&amp;listen=1">{esc(mq_meta["radio"])}</a>'
+                               f'<a class="mq-radio" rel="nofollow" href="../../?lang={L}&amp;t={ti}&amp;listen=1">{esc(mq_meta["radio"])}</a>'
                                f'</section>')
                 body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p>'
                         f'<div class="word"><div class="win" aria-hidden="true">{picture(w, "../../")}</div><div>'
@@ -751,7 +765,7 @@ def build(site, base, words_path):
                         f'<p class="tr"><span title="{T["h_tr"]}">[{esc(w[trk])}]</span>{say(w, "../../", T["listen"])}</p>'
                         f'<p class="tx">{esc(x)}</p>'
                         f'<p class="meta">{T["lv"]} {t["lv"]} · {T["topic"]}: <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p></div></div>'
-                        + xb + f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>' + mq_html
+                        + xb + f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>' + mq_html
                         + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(t=tname))}</h2><ul class="ws">{li}</ul>'
                            f'<p><a href="../t/{tslug[ti]}.html">{T["all_topic"].format(n=len(lst), w=nw(L, len(lst)))}</a></p>' if near else "")
                         + pn)
@@ -796,7 +810,7 @@ def build(site, base, words_path):
                     f'<div class="thead"><span class="tic">{icon(t["ic"], "../../", 54)}</span><div>'
                     f'<p class="eyebrow" lang="hy">{esc(t["hy"])}</p><h1 class="pg">{esc(T["h_t"].format(t=tname))}</h1></div></div>'
                     f'<p>{T["intro_t"].format(n=len(lst), w=nw(L, len(lst)), lv=t["lv"])}</p>'
-                    f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
             topic_ld = {"@context": "https://schema.org", "@type": "LearningResource",
                         "name": tname,
                         "description": T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]),
@@ -825,7 +839,7 @@ def build(site, base, words_path):
         n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
         fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
-                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="s/index.html">{SN_TXT[L]["idx_h"]} →</a></p><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
+                f'<a class="cta" rel="nofollow" href="../?lang={L}">{T["cta"]}</a><p><a href="s/index.html">{SN_TXT[L]["idx_h"]} →</a></p><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
         write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
                         alts, body, depth=1).replace('href="../../', 'href="../'))
         urls[L].insert(0, rel)
@@ -933,7 +947,7 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
                     f'<h1 class="pg">{esc(T["h1"].format(n=it["n"]))}</h1><i class="orn" aria-hidden="true"></i>'
                     f'<p>{esc(T["lead"].format(n=it["n"]))}</p><p class="nm-big" lang="hy">{esc(it["h"])}</p>'
                     f'<h2>{T["letters"]}</h2><ul class="nm-l">{letters}</ul>'
-                    f'<a class="cta" href="../../?lang={L}&amp;name={q}">{T["cta"]}</a><p class="note">{T["note"]}</p>')
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;name={q}">{T["cta"]}</a><p class="note">{T["note"]}</p>')
             ld = {"@context": "https://schema.org", "@type": "DefinedTerm", "name": it["h"], "alternateName": it["n"],
                   "inLanguage": "hy", "url": base + rel}
             ld = [ld, crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/n/index.html"), (it["n"], base + rel)])]
@@ -945,7 +959,7 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
         lst = "".join(f'<li><a href="{s_}.html"><span>{esc(n)}</span><span class="hy" lang="hy">{esc(h)}</span></a></li>' for n, h, s_ in rows)
         rel = f"{L}/n/index.html"
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Անուն</p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
-                f'<p>{T["idx_l"]}</p><a class="cta" href="../../?lang={L}&amp;name=">{T["other"]}</a><ul class="nm-i">{lst}</ul>')
+                f'<p>{T["idx_l"]}</p><a class="cta" rel="nofollow" href="../../?lang={L}&amp;name=">{T["other"]}</a><ul class="nm-i">{lst}</ul>')
         pg = page(L, base, rel, T["idx_t"].format(k=len(rows)), T["idx_d"].format(k=len(rows)), idx_alts, body)
         open(os.path.join(site, rel), "w", encoding="utf-8").write(pg); files += 1
         sm.insert(0, base + rel)
@@ -1241,7 +1255,7 @@ def build_alphabet(site, base, d, wslug):
         rel = f"{L}/a/index.html"
         body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><p class="eyebrow" lang="hy">Այբուբեն</p><h1 class="pg">{T["idx_h"]}</h1>'
                 f'<i class="orn" aria-hidden="true"></i><p>{T["idx_l"]}</p><ul class="abc-g">{grid}</ul>'
-                f'<a class="cta" href="../../?lang={L}&amp;letter=0">{T["cta_all"]}</a><p><a href="numbers.html">{T["num_h"]} →</a></p>')
+                f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;letter=0">{T["cta_all"]}</a><p><a href="numbers.html">{T["num_h"]} →</a></p>')
         put(rel, page(L, base, rel, T["idx_t"], T["idx_d"], {l: f"{l}/a/index.html" for l in LANGS}, body,
                       crumbs_ld([("Barik", base), (TXT[L]["dict"], f"{base}{L}/"), (T["idx_h"], base + rel)])))
         for k, x in enumerate(abc):
@@ -1256,7 +1270,7 @@ def build_alphabet(site, base, d, wslug):
                     f'<p class="lt-big" lang="hy">{esc(x["up"])} {esc(x["lo"])}</p><p class="tr">{say(x["nm"], T["listen"] + " — " + x["nm"])}</p>'
                     f'{facts}<p>{esc(x["t"][L])}</p>'
                     f'<h2>{T["cursive"]}</h2><div class="cbx">{x["svg"]}</div>'
-                    f'<a class="cta" href="../../?lang={L}&amp;letter={x["i"]}">{T["cta"]}</a>'
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;letter={x["i"]}">{T["cta"]}</a>'
                     + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["words"].format(up=x["up"]))}</h2><ul class="ws">{"".join(wrow(w, L) for w in ws)}</ul>' if ws else "")
                     + '<p class="pn">' + (f'<a href="{slug[prv["i"]]}.html">‹ <span lang="hy">{esc(prv["up"])}</span></a>' if prv else '<a href="index.html">' + T["all"] + '</a>')
                     + (f'<a href="{slug[nxt["i"]]}.html"><span lang="hy">{esc(nxt["up"])}</span> ›</a>' if nxt else '<a href="numbers.html">' + T["num_h"] + ' →</a>') + '</p>')
@@ -1270,7 +1284,7 @@ def build_alphabet(site, base, d, wslug):
         ti = next(i for i, t in enumerate(topics) if t["ru"] == "Числа")
         body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p><p class="eyebrow" lang="hy">Թվեր</p>'
                 f'<h1 class="pg">{T["num_h"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["num_l"]}</p><ul class="ws">{"".join(wrow(w, L) for w in num)}</ul>'
-                f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["num_cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+                f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;t={ti}">{T["num_cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
         put(rel, page(L, base, rel, T["num_t"], T["num_d"], {l: f"{l}/a/numbers.html" for l in LANGS}, body,
                       crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/a/index.html"), (T["num_h"], base + rel)])))
     open(os.path.join(site, "sitemap-abc.xml"), "w", encoding="utf-8").write(
@@ -1382,7 +1396,7 @@ def build_guides(site, base, d, wslug):
             alts = {l: f"{l}/g/{sl}.html" for l in langs if os.path.exists(os.path.join(root, l, sl + ".md"))}
             body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
                     f'<h1 class="pg">{esc(title)}</h1><i class="orn" aria-hidden="true"></i><div class="art">{html}</div>'
-                    f'<a class="cta" href="../../?lang={L}">{T["cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}">{T["cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
             ld = [{"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc, "inLanguage": L,
                    "url": base + rel, "publisher": {"@type": "Organization", "name": "Barik", "url": base}},
                   crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/g/index.html"), (title, base + rel)])]
@@ -1391,7 +1405,7 @@ def build_guides(site, base, d, wslug):
         lst = "".join(f'<li><a href="{sl}.html"><b>{esc(t)}</b><span>{esc(dd)}</span></a></li>' for sl, t, dd in items)
         rel = f"{L}/g/index.html"
         body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
-                f'<p>{T["idx_l"]}</p><ul class="gl">{lst}</ul><a class="cta" href="../../?lang={L}">{T["cta"]}</a>')
+                f'<p>{T["idx_l"]}</p><ul class="gl">{lst}</ul><a class="cta" rel="nofollow" href="../../?lang={L}">{T["cta"]}</a>')
         p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
         open(p, "w", encoding="utf-8").write(page(L, base, rel, T["idx_h"] + " — Barik", T["idx_d"], {l: f"{l}/g/index.html" for l in langs}, body,
                                                   crumbs_ld([("Barik", base), (T["idx_h"], base + rel)])))

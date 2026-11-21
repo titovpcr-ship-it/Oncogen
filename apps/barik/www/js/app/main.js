@@ -999,7 +999,7 @@ function launch() {
   }
   BILL.hideSplash();
   hit();
-  if (START_QUERY.get('family')) {
+  if (START_QUERY.get('family') && START_QUERY.get('ftrk') !== '1') {
     hit('family_visit');
     if (START_QUERY.get('listen') === '1') hit('family_listen');
     if (START_QUERY.get('paywall') === 'gift') hit('family_gift');

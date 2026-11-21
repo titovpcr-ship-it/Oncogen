@@ -1,3 +1,17 @@
+// Shared opt-out across the app and standalone SEO/Roots pages.
+(function(){
+  var mode=new URLSearchParams(location.search).get('notrack');
+  if(mode==='1'||mode==='0')window.__barikNotrack=mode==='1';
+  try{if(mode==='1')localStorage.setItem('barik_notrack','1');else if(mode==='0')localStorage.removeItem('barik_notrack');}catch(e){/* Keep the explicit choice in memory if storage is blocked. */}
+  window.barikNotrack=function(){try{return localStorage.getItem('barik_notrack')==='1'||window.__barikNotrack===true;}catch(e){return window.__barikNotrack===true;}};
+  function badge(){
+    var b=document.getElementById('barik-nt');
+    if(!window.barikNotrack()){if(b)b.remove();return;}
+    if(!window.__barikNtLogged){console.info('[Barik] notrack active (barik_notrack=1)');window.__barikNtLogged=true;}
+    if(!b&&document.body){b=document.createElement('span');b.id='barik-nt';b.textContent='NT';b.style.cssText='position:fixed;bottom:6px;left:6px;z-index:9999;font:10px/1 monospace;padding:2px 5px;border-radius:4px;background:rgba(0,0,0,.55);color:#fff;pointer-events:none;opacity:.6';document.body.appendChild(b);}
+  }
+  badge();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',badge,{once:true});
+})();
 import {salesEvent,salesPaywall} from './sales.js';
 /* Barik — общее изменяемое состояние, настройки, хранение, синхронизация и учёт ошибок. */
 
@@ -646,6 +660,7 @@ export const HSRC = (() => {
 })();
 
 export function hit(e) {
+  if (window.barikNotrack()) return;
   if(!BILL.native&&e==='v_paywall')salesPaywall(true,st.view==='lvlquiz'?'quiz_result':(st.pwState.reason||'default'));
   if(!BILL.native&&e==='first_answer')salesEvent('activation');
   try {
@@ -665,6 +680,7 @@ export function resFail() { hit('res_fail'); }
 
 const JSE = new Set();
 export function jsErr(m, src) {
+  if (window.barikNotrack()) return;
   try {
     if (BILL.native || location.protocol === 'file:' || !navigator.sendBeacon || JSE.size >= 5) return;
     m = String(m || '').slice(0, 300);

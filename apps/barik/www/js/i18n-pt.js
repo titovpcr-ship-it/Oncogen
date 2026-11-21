@@ -3,6 +3,7 @@
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
 const pal=n=>n===1?'palavra':'palavras';
 const pt={
+  snLand:"Descubra a raiz armênia, a pronúncia e o brasão familiar de mais de 280 sobrenomes.",
   returnTitle:"Amanhã você poderá revisar estas palavras", returnMail:"Lembretes por e-mail", returnInstall:"Adicionar à tela inicial", returnInstallHelp:"No iPhone, toque em Compartilhar no Safari e depois em Adicionar à Tela de Início. No Android, abra o menu do navegador e selecione Adicionar à tela inicial.",
   nmEx:'Gabriel', prPrem:'a partir de $4,92/mês', prPremT:'Armênio oriental vivo da Yerevan atual: níveis A2–C2, diálogos e leitura de Tumanyan com as vozes Anahit e Hayk. Pro Mensal ($12), Pro Anual ($59/ano · −59%) ou Heritage Vitalício ($129 pagamento único).',
   nmTitle:'Seu nome em armênio', nmCap:'a pena escreve à mão', nmLead:'Digite um nome e a pena vai escrevê-lo com letras armênias. Você pode salvar o cartão e enviar.', nmPh:'Seu nome', nmBtn:'Escrever', nmShare:'Compartilhar', nmSave:'Salvar o cartão', nmLink:'Copiar o link', nmCopied:'Link copiado', nmLetters:'As letras do seu nome', nmNote:'Um nome pode ser escrito de mais de um jeito. Você escreve diferente?', nmEdit:'Corrigir as letras', nmFixBtn:'Pronto', nmEmpty:'Digite o nome com letras: latinas, cirílicas ou armênias.', nmCardFoot:'meu nome em armênio', nmLearn:l=>'Aprender a escrever “'+l+'” sozinho', nmShareText:(n,h)=>n+' em armênio é '+h+'. Escreva o seu nome:',

@@ -3,6 +3,7 @@
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
 const mots=n=>n<2?'mot':'mots';
 const fr={
+  snLand:"Découvrez la racine arménienne, la prononciation et le blason familial de plus de 280 noms de famille.",
   returnTitle:"Ces mots seront à réviser demain", returnMail:"Rappels par e-mail", returnInstall:"Ajouter à l’écran d’accueil", returnInstallHelp:"Sur iPhone, touchez Partager dans Safari, puis Sur l’écran d’accueil. Sur Android, ouvrez le menu du navigateur et choisissez Ajouter à l’écran d’accueil.",
   nmEx:'Camille', prPrem:'dès 4,92 $/mois', prPremT:'L’arménien oriental vivant d’Erevan : niveaux A2 à C2, dialogues et lecture de Toumanian avec les deux voix Anahit et Hayk. Pro Mensuel (12 $), Pro Annuel (59 $/an · −59 %) ou Heritage À vie (129 $ une fois).',
   nmTitle:'Votre prénom en arménien', nmCap:'la plume l’écrit à la main', nmLead:'Tapez un prénom : la plume l’écrira en lettres arméniennes. Vous pouvez enregistrer la carte et l’envoyer.', nmPh:'Votre prénom', nmBtn:'Écrire', nmShare:'Partager', nmSave:'Enregistrer la carte', nmLink:'Copier le lien', nmCopied:'Lien copié', nmLetters:'Les lettres de votre prénom', nmNote:'Un prénom peut s’écrire de plusieurs façons. Vous l’écrivez autrement ?', nmEdit:'Corriger les lettres', nmFixBtn:'OK', nmEmpty:'Tapez le prénom en lettres : latines, cyrilliques ou arméniennes.', nmCardFoot:'mon prénom en arménien', nmLearn:l=>'Apprendre à écrire « '+l+' » soi-même', nmShareText:(n,h)=>n+' en arménien, c’est '+h+'. Écrivez votre prénom :',

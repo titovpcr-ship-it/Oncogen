@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<link rel="canonical" href="https://barik.am/">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -10,7 +11,9 @@
 <title>Barik</title>
 <link rel="preload" as="font" type="font/woff2" href="fonts/golos-text-latin-wght-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/noto-serif-armenian-armenian-wdth-normal.woff2" crossorigin>
-<script>/* O-205: защита хостинга иногда отдаёт страницу-заглушку вместо скрипта — тогда один раз перезагрузить страницу;
+<script>
+if ((location.pathname === '/' || location.pathname === '/index.html') && /(?:^|[?&])(lang|t|letter|daily|phrases|name|pen|abc|listen|family|paywall|doc|gift|teach|start|switch|welcome|from|root)=/i.test(location.search) && !document.querySelector('meta[name="robots"]')) {var robots=document.createElement('meta');robots.name='robots';robots.content='noindex, follow';document.head.appendChild(robots);}
+/* O-205: защита хостинга иногда отдаёт страницу-заглушку вместо скрипта — тогда один раз перезагрузить страницу;
    приложение так и не запустилось — через 8 с показать обложку, уже лежащую в HTML (иначе пустой экран). */
 (function(){var K='barik-rl';addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='SCRIPT'||t.hasAttribute('data-barik-retry')||!/\/js\//.test(t.src||''))return;
 try{if(sessionStorage.getItem(K))return;sessionStorage.setItem(K,'1');}catch(x){return;}setTimeout(function(){location.reload();},1200);},true);

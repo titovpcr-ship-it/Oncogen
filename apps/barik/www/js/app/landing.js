@@ -51,7 +51,7 @@ function geoHTML(D) {
   const cc = tzCC(TZ);
   if (st.UI.lang || st.UI.ll || st.UI.geoX || !SUG || SUG === st.L) return '';
   const G = (STR[SUG] && STR[SUG].land) || D;
-  const others = [SUG].concat(['ru', 'en', 'fr', 'es', 'de', 'pt'].filter(l => l !== st.L && l !== SUG)).map(l =>
+  const others = ['en', 'fr', 'es', 'de', 'pt', 'ru'].filter(l => l !== st.L).map(l =>
     '<button class="lnk" data-act="landLang" data-arg="' + l + '" lang="' + l + '">' +
     ({ ru: 'Русский', en: 'English', fr: 'Français', es: 'Español', de: 'Deutsch', pt: 'Português' }[l]) + '</button>'
   ).join('');
@@ -65,7 +65,7 @@ export function onboardHTML() {
   const D = LND(), a1 = WORDS.filter(w => TOPICS[w.t].lv === 'A1').length, chk = T('lvCheck'), I = ART.ic;
   const ck = '<span class="ck">' + I.check + '</span>';
   const cta = c => '<button class="btn primary ' + (c || '') + '" data-act="pickLang" data-arg="' + st.L + '">' + esc(D.cta) + '<span class="arr" aria-hidden="true">→</span></button>';
-  const langs = [['ru', 'RU'], ['en', 'EN'], ['fr', 'FR'], ['es', 'ES'], ['de', 'DE'], ['pt', 'PT']].map(x =>
+  const langs = [['en', 'EN'], ['fr', 'FR'], ['es', 'ES'], ['de', 'DE'], ['pt', 'PT'], ['ru', 'RU']].map(x =>
     '<button class="lng" data-act="landLang" data-arg="' + x[0] + '" aria-pressed="' + (x[0] === st.L) + '" lang="' + x[0] + '">' + x[1] + '</button>'
   ).join('');
   const brand = '<a class="ld-brand" href="./" aria-label="Barik">' + ART.mark('ld-mk') + '<b>Barik</b><span class="hyn" lang="hy">Բառիկ</span></a>';
@@ -117,7 +117,7 @@ export function onboardHTML() {
     '</div></div></section>' +
     '<section class="ld-proof"><div class="ld-wrap"><ul>' + proof + '</ul></div></section>' +
     nmLand +
-    '<section class="ld-sec ld-dg"><div class="ld-wrap"><div class="dg-land"><span class="dg-land-e" aria-hidden="true">🎯</span><div><h2 class="ld-h2">' + esc(T('dgBtn')) + '</h2><p class="ld-lead">' + esc(T('dgLand')) + '</p></div><button class="btn primary" data-act="dgOpen">' + esc(T('dgTitle')) + ' →</button></div><div class="dg-land" style="margin-top:14px"><span class="dg-land-e" aria-hidden="true">🧳</span><div><h2 class="ld-h2">' + esc(T('pbTitle')) + '</h2><p class="ld-lead">' + esc(T('pbLead')) + '</p></div><button class="btn secondary" data-act="pbOpen">' + esc(T('pbOpen')) + ' →</button></div></div></section>' +
+    '<section class="ld-sec ld-dg"><div class="ld-wrap"><div class="dg-land"><span class="dg-land-e" aria-hidden="true">🎯</span><div><h2 class="ld-h2">' + esc(T('dgBtn')) + '</h2><p class="ld-lead">' + esc(T('dgLand')) + '</p></div><button class="btn primary" data-act="dgOpen">' + esc(T('dgTitle')) + ' →</button></div><div class="dg-land" style="margin-top:14px"><span class="dg-land-e" aria-hidden="true">🧳</span><div><h2 class="ld-h2">' + esc(T('pbTitle')) + '</h2><p class="ld-lead">' + esc(T('pbLead')) + '</p></div><button class="btn secondary" data-act="pbOpen">' + esc(T('pbOpen')) + ' →</button></div>' + (BILL.native ? '' : '<div class="dg-land" style="margin-top:14px"><span class="dg-land-e" aria-hidden="true">🛡</span><div><h2 class="ld-h2">' + esc(T('snLink')) + '</h2><p class="ld-lead">' + esc(T('snLand')) + '</p></div><a class="btn secondary" href="' + st.L + '/s/">' + esc(T('snLink')) + ' →</a></div>') + '</div></section>' +
     '<section class="ld-sec ld-why"><div class="ld-wrap"><h2 class="ld-h2">' + esc(D.whyTitle) + '</h2><p class="ld-lead">' + esc(D.whyLead) + '</p><ul class="wy">' + why + '</ul></div></section>' +
     '<section class="ld-sec ld-hear"><div class="ld-wrap"><div class="hear"><div class="hear-hd"><h2 class="ld-h2">' + esc(D.hearTitle) + '</h2><p class="ld-lead">' + esc(D.hearLead) + '</p></div><ul class="hear-list">' + hear + '</ul><p class="hear-note">' + esc(D.hearNote) + '</p><div class="hear-cta">' + cta('xl inv') + '</div></div></div></section>' +
     '<section class="ld-sec" id="how"><div class="ld-wrap"><h2 class="ld-h2">' + esc(D.howTitle) + '</h2><p class="ld-lead">' + esc(D.howLead) + '</p><ol class="ld-steps">' +
