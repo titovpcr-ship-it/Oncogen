@@ -86,6 +86,26 @@ if ($r === 'tg') {
     out(['ok' => true]);
 }
 
+if ($r === 'sales_ev') {
+    if ($method !== 'POST') { http_response_code(405); exit; }
+    $ua=(string)($_SERVER['HTTP_USER_AGENT'] ?? '');
+    $origin=(string)($_SERVER['HTTP_ORIGIN'] ?? '');
+    $same=$origin==='' || parse_url($origin,PHP_URL_HOST)===parse_url('//' . ($_SERVER['HTTP_HOST'] ?? ''),PHP_URL_HOST);
+    if ($same && $ua!=='' && !preg_match('/bot|crawl|spider|headless|lighthouse|monitor|curl|wget|python/i',$ua)) {
+        if (limited(ip_key().':sales',300,3600)) { fail('wait',429); }
+        $raw=file_get_contents('php://input',false,null,0,32769);
+        if (strlen($raw)>32768) fail('big',413);
+        $events=json_decode($raw,true);
+        if (is_array($events) && array_is_list($events)) foreach (array_slice($events,0,20) as $event) if (is_array($event)) sales_record($event);
+    }
+    header('Cache-Control: no-store'); http_response_code(204); exit;
+}
+if ($r === 'sales_analysis') {
+    header('X-Robots-Tag: noindex, nofollow');
+    if ($method!=='GET' || !live_stats_key_ok()) { http_response_code(404); header('Cache-Control: no-store'); echo 'Not Found'; exit; }
+    out(sales_analysis($_GET));
+}
+
 if ($r === 'live_stats') {
     if ($method !== 'GET' || !live_stats_key_ok()) {
         http_response_code(404);
@@ -333,6 +353,8 @@ switch ($r) {
             $meta = $isGift
                 ? ['gift' => '1', 'plan' => 'life', 'months' => '0', 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]
                 : ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id']), 'plan' => $reqPlan];
+            $meta['sales_sid'] = sales_checkout($b);
+            $meta['lang'] = $lang;
             $retUrl = $isGift ? ($site . '/?lang=' . $lang . '&pay=gift') : ($site . '/?lang=' . $lang . '&pay=card&plan=' . $reqPlan);
             $j = dodo_checkout($u, [
                 'product_cart' => [['product_id' => $prodMap[$reqPlan], 'quantity' => 1]],
@@ -363,7 +385,7 @@ switch ($r) {
         $j = dodo_checkout($u, [
             'product_cart' => [['product_id' => $prod, 'quantity' => 1]],
             'return_url' => $site . '/?lang=' . $lang . '&pay=gift',
-            'metadata' => ['gift' => '1', 'months' => (string)$months, 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
+            'metadata' => ['sales_sid' => sales_checkout($b), 'gift' => '1', 'months' => (string)$months, 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
         $url = (string)($j['checkout_url'] ?? '');
         if (!preg_match('~^https://~', $url)) fail('pay', 502);
         out(['ok' => true, 'url' => $url]);
@@ -525,7 +547,7 @@ function dodo_webhook(): never {
     $d = is_array($ev['data'] ?? null) ? $ev['data'] : [];
     $sid = (string)($d['subscription_id'] ?? '');
     $meta = is_array($d['metadata'] ?? null) ? $d['metadata'] : [];
-    if (q('SELECT 1 FROM events WHERE id = ?', ['dodo:' . $id])->fetchColumn()) out(['ok' => true, 'dup' => true]);
+    // Duplicates still verify the payment so a failed post-COMMIT analytics write can be retried.
     $verified = null; $payment = null; $notifyGift = null;
     $eventStamp = 0;
     if (is_string($ev['timestamp'] ?? null)) {
@@ -545,7 +567,7 @@ function dodo_webhook(): never {
     $stateHttp = $code = (int)$GLOBALS['DODO_CODE'];
     $paymentHttp = $stateHttp;
     if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
-    if (($ev['type'] ?? '') === 'payment.succeeded' && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
+    if (in_array($ev['type'] ?? '', ['payment.succeeded','payment.failed'],true) && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
         $payment = ($giftPayment || $oneTimePayment) ? $verified : dodo('GET', '/payments/' . rawurlencode($pid));
         $paymentHttp = $code = (int)$GLOBALS['DODO_CODE'];
         if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
@@ -555,7 +577,7 @@ function dodo_webhook(): never {
         && (!empty($verified['customer']['customer_id']) || norm_email($verified['customer']['email'] ?? null))
         && is_string($verified['product_id'] ?? null) && $verified['product_id'] !== ''
         && in_array($verified['status'] ?? '', ['active','past_due','cancelled','expired','pending','on_hold','paused','failed'], true));
-    $needsPayment = $giftPayment || $oneTimePayment || (($ev['type'] ?? '') === 'payment.succeeded' && $pid !== '');
+    $needsPayment = $giftPayment || $oneTimePayment || (in_array($ev['type'] ?? '', ['payment.succeeded','payment.failed'],true) && $pid !== '');
     $paymentState = ($giftPayment || $oneTimePayment) ? $verified : $payment;
     $validPayment = !$needsPayment || $paymentHttp >= 400 || (is_array($paymentState) && ($paymentState['payment_id'] ?? '') === $pid
         && is_string($paymentState['status'] ?? null) && $paymentState['status'] !== '');
@@ -613,6 +635,7 @@ function dodo_webhook(): never {
         stat_add(intdiv(time(), 86400), 'w:dodo_retry');
         fail('retry', 503);
     }
+    sales_payment($payment);
     if ($notifyGift) gift_mail($notifyGift, $lang);
     out($result);
 }

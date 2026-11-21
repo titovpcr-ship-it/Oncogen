@@ -62,6 +62,7 @@ run barik-test_pay "$B" node tests/test_pay.js   # оплата картой Dod
 run barik-test_release_guard "$B" python3 tests/test_release_guard.py
 run barik-test_lesson_metrics "$B" node tests/test_lesson_metrics.js
 run barik-test_atomic "$B" python3 tests/test_atomic_api.py
+run barik-test_sales "$B" python3 tests/test_sales_analysis.py
 run barik-test_sync "$B" node tests/test_sync.js   # прогресс в аккаунте (O-171): www + server/api, сборка не нужна
 run barik-test_remind "$B" node tests/test_remind.js   # напоминания на почту (O-173): www + server/api + cron.php
 run barik-test_gift "$B" node tests/test_gift.js   # подарочная подписка (O-184): www + server/api, заглушка Dodo

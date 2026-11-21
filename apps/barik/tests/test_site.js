@@ -277,5 +277,9 @@ const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  
     const jsFiles=[path.join(ROOT,'index.html'),path.join(ROOT,'js','config.js'),...fs.readdirSync(path.join(ROOT,'js','app')).map(f=>path.join(ROOT,'js','app',f))];
     const leaked=jsFiles.filter(f=>/instagram\.com|t\.me\//i.test(fs.readFileSync(f,'utf8')));
     ok(leaked.length===0,'в приложении и index.html нет ссылок на Instagram и Telegram '+leaked.join(', ')); }
+  { const sales=fs.readFileSync(path.join(ROOT,'sales-analysis.html'),'utf8');
+    const sw=fs.readFileSync(path.join(ROOT,'sw.js'),'utf8'), ht=fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8');
+    ok(sales.includes('noindex, nofollow')&&!sw.includes('sales-analysis')&&ht.includes('RewriteRule ^sales-analysis/?$ sales-analysis.html [L]')&&ht.includes('^sales-analysis\\.html$'), 'sales-analysis: clean URL rewrite, separate FilesMatch, noindex and no SW cache');
+    ok(!fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('sales-analysis'), 'sales-analysis absent from public menu'); }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();

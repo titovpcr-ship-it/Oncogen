@@ -1,3 +1,4 @@
+import {salesEvent,salesPaywall} from './sales.js';
 /* Barik — общее изменяемое состояние, настройки, хранение, синхронизация и учёт ошибок. */
 
 export const TOPICS = window.BARARAN_DATA.topics;
@@ -645,6 +646,8 @@ export const HSRC = (() => {
 })();
 
 export function hit(e) {
+  if(!BILL.native&&e==='v_paywall')salesPaywall(true,st.view==='lvlquiz'?'quiz_result':(st.pwState.reason||'default'));
+  if(!BILL.native&&e==='first_answer')salesEvent('activation');
   try {
     if (BILL.native || location.protocol === 'file:' || !navigator.sendBeacon) return;
     const repeat = e === 'lesson_complete' || e === 'lesson_exit';

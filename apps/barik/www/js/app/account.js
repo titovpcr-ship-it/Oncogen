@@ -1,3 +1,4 @@
+import {salesSid,salesEvent,salesAuth} from './sales.js';
 /* Barik — настройки, сообщения об ошибках слов, оплата (Google Play / Dodo / Paddle / Crypto / Подарки) и кабинет. */
 
 import {
@@ -240,6 +241,7 @@ export async function accSendCode() {
 }
 
 export function openAccount(next) {
+  if(next==='paywall'||next==='gift'||next==='lvlquiz')salesAuth(true);
   ACC.next = next || null;
   ACC.err = '';
   ACC.del = 0;
@@ -527,7 +529,9 @@ export async function gfBuy() {
   st.GF.err = '';
   cb.render(false);
   hit('gift_checkout');
-  const j = await api('gift_checkout', { months: st.GF.m, lang: st.L });
+  salesEvent('checkout_start');
+  const j = await api('gift_checkout', { months: st.GF.m, lang: st.L, sales_sid:salesSid() });
+  if(!j.ok)salesEvent('payment_failed');
   if (j.ok && j.url) { location.assign(j.url); return; }
   st.GF.busy = false;
   if (j.err === 'profile') { pfNeed('gift'); return; }
@@ -547,7 +551,7 @@ export async function giftReturn() {
   toast(T('cardWait'));
   for (let i = 0; i < 8; i++) {
     const j = await api('gift_check', { payment_id: pid, lang: st.L });
-    if (j.ok && j.code) {
+    if (j.ok && j.code) { salesEvent('payment_success');
       hit('gift_paid');
       st.GF.code = j.code;
       if (st.view === 'gift') cb.render(false);
@@ -560,6 +564,7 @@ export async function giftReturn() {
 }
 
 export async function cardReturn() {
+  if(new URLSearchParams(location.search).get('status')==='failed')salesEvent('payment_failed');
   const sp = new URLSearchParams(location.search || ''),
         sub = sp.get('subscription_id') || '',
         pid = sp.get('payment_id') || '';
@@ -576,6 +581,7 @@ export async function cardReturn() {
     accApply(j);
     cb.render();
     if (j.user && j.user.premium) {
+        salesEvent('payment_success');
       hit('paid'); toast(T('thanks'));
       if (st.UI.pendingStage) { const ps = st.UI.pendingStage; delete st.UI.pendingStage; saveUI(); st.pendingStage = ps; cb.go('path'); }
       return;
@@ -605,9 +611,11 @@ export async function webBuy(plan) {
   if (ACC.pay && ACC.pay.card && !ACC.me.pf) { pfNeed(plan); return; }
   st.pwState.busy = true;
   cb.render();
-  const body = { plan, lang: st.L };
+  salesEvent('checkout_start');
+  const body = { plan, lang: st.L, sales_sid:salesSid() };
   if (plan === 'life' && st.pwState.gift129) body.gift = 1;
   const j = await api('checkout', body);
+  if(!j.ok)salesEvent('payment_failed');
   if (j.ok && j.url) { location.assign(j.url); return; }
   if (j.err === 'profile') { st.pwState.busy = false; pfNeed(plan); return; }
   if (!j.ok) {
@@ -642,6 +650,7 @@ export async function webPaid() {
     if (j.ok) {
       accApply(j);
       if (j.user && j.user.premium) {
+        salesEvent('payment_success');
         toast(T('thanks'));
         if (st.view === 'paywall') cb.go(st.backTo.v, st.backTo.a); else cb.render();
         return;

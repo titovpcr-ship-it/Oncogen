@@ -75,9 +75,9 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(pick(s=>s.includes('<h2>Пример</h2>')&&s.includes('class="exs"'))!==undefined,'пример на странице слова'); }
   ok(locs/LANGS.length<=50000,'в одном sitemap не больше 50 000 адресов');
   const rob=fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8');
-  ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(rob)&&!rob.includes('ops-m9x4k2p7'),'robots.txt знает sitemap и не раскрывает ops-страницу');
+  ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(rob)&&!rob.includes('ops-m9x4k2p7')&&!rob.includes('sales-analysis'),'robots.txt знает sitemap и не раскрывает ops-страницу');
   { const smsAll=[idx,...fs.readdirSync(ROOT).filter(f=>/^sitemap-.*\.xml$/.test(f)).map(f=>fs.readFileSync(path.join(ROOT,f),'utf8'))];
-    ok(smsAll.every(x=>!x.includes('ops-m9x4k2p7')),'ops-m9x4k2p7.html отсутствует во всех sitemap*.xml'); }
+    ok(smsAll.every(x=>!x.includes('ops-m9x4k2p7')&&!x.includes('sales-analysis')),'ops-m9x4k2p7.html отсутствует во всех sitemap*.xml'); }
   { // O-206: у каждого адреса sitemap — lastmod (дата настоящего изменения), у указателя — у каждого файла
     const sms=fs.readdirSync(ROOT).filter(f=>/^sitemap-.*\.xml$/.test(f)); let n=0, bad=0;
     for(const f of sms){ const x=fs.readFileSync(path.join(ROOT,f),'utf8'); for(const m of x.matchAll(/<url><loc>[^<]+<\/loc>(<lastmod>\d{4}-\d\d-\d\d<\/lastmod>)?/g)){ n++; if(!m[1]) bad++; } }

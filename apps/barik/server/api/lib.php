@@ -966,6 +966,130 @@ function stats_key(): string {
     return substr(hash_hmac('sha256', 'stats', (string)cfg('PEPPER', 'barik')), 0, 32);
 }
 
+/* Sales diagnostics: anonymous browser sessions, not people. No email/IP/customer IDs. */
+function sales_schema(): void {
+    static $ready = false;
+    if ($ready) return;
+    db()->exec("CREATE TABLE IF NOT EXISTS sales_sessions(
+        sid TEXT PRIMARY KEY,started INTEGER NOT NULL,last_seen INTEGER NOT NULL,
+        lang TEXT NOT NULL,device TEXT NOT NULL,source TEXT NOT NULL);
+        CREATE INDEX IF NOT EXISTS sales_sessions_started ON sales_sessions(started);
+        CREATE TABLE IF NOT EXISTS sales_events(
+        eid TEXT PRIMARY KEY,sid TEXT NOT NULL REFERENCES sales_sessions(sid) ON DELETE CASCADE,
+        event TEXT NOT NULL,t INTEGER NOT NULL,pw_sec INTEGER,reason TEXT NOT NULL DEFAULT '',verified INTEGER NOT NULL DEFAULT 0);
+        CREATE INDEX IF NOT EXISTS sales_events_sid ON sales_events(sid,event);");
+    $ready = true;
+}
+function sales_sid($sid): string {
+    return is_string($sid) && preg_match('/^[a-f0-9]{32}$/D',$sid) ? $sid : '';
+}
+function sales_record(array $e, bool $server = false): void {
+    $sid = sales_sid($e['sid'] ?? '');
+    $event = $e['event'] ?? '';
+    $allowed = ['session_start','activation','paywall_view','paywall_close','auth_before_pay_start','auth_before_pay_done','checkout_start','payment_success','payment_failed'];
+    if (!$sid || !is_string($event) || !in_array($event,$allowed,true)) return;
+    $eid = $e['eid'] ?? '';
+    if (!is_string($eid) || !preg_match($server ? '/^[a-zA-Z0-9_:.-]{8,120}$/D' : '/^[a-f0-9]{32}$/D',$eid)) return;
+    $lang = strtolower(is_string($e['lang'] ?? null) ? $e['lang'] : 'en');
+    if (!in_array($lang,['ru','en','fr','es','de','pt'],true)) $lang = 'en';
+    $device = ($e['device'] ?? '') === 'mobile' ? 'mobile' : 'desktop';
+    $source = in_array($e['source'] ?? '',['direct','search','social','referral','campaign','internal'],true) ? $e['source'] : 'direct';
+    $reason = in_array($e['reason'] ?? '',['default','audio15','level_lock','stage_lock','quiz_result','gift','family_gift'],true) ? $e['reason'] : '';
+    $t = $server ? now() : max(now()-7*86400,min(now(),(int)($e['t'] ?? now())));
+    $sec = $event === 'paywall_close' ? max(0,min(7200,(int)($e['pw_sec'] ?? 0))) : null;
+    sales_schema();
+    $pdo = db(); $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        q('INSERT INTO sales_sessions(sid,started,last_seen,lang,device,source) VALUES(?,?,?,?,?,?) ON CONFLICT(sid) DO UPDATE SET started=MIN(started,excluded.started),last_seen=MAX(last_seen,excluded.last_seen)',[$sid,$t,$t,$lang,$device,$source]);
+        if (!$server && $event === 'session_start') q('UPDATE sales_sessions SET lang=?,device=?,source=? WHERE sid=? AND started>=?',[$lang,$device,$source,$sid,$t]);
+        q('INSERT OR IGNORE INTO sales_events(eid,sid,event,t,pw_sec,reason,verified) VALUES(?,?,?,?,?,?,?)',[$eid,$sid,$event,$t,$sec,$reason,(int)$server]);
+        $pdo->exec('COMMIT');
+    } catch (Throwable $e) { $pdo->exec('ROLLBACK'); throw $e; }
+}
+function sales_checkout(array $b): string {
+    $sid = sales_sid($b['sales_sid'] ?? '');
+    if ($sid) sales_record(['sid'=>$sid,'eid'=>'checkout:'.bin2hex(random_bytes(16)),'event'=>'checkout_start',
+        'lang'=>$b['lang'] ?? 'en','device'=>preg_match('/Mobile|Android|iPhone|iPad/i',$_SERVER['HTTP_USER_AGENT'] ?? '')?'mobile':'desktop'],true);
+    return $sid;
+}
+/* Called only after the billing COMMIT; retries safely deduplicate by verified payment ID. */
+function sales_payment(?array $payment): void {
+    if (!$payment || !in_array($payment['status'] ?? '',['succeeded','failed'],true)) return;
+    $m = is_array($payment['metadata'] ?? null) ? $payment['metadata'] : [];
+    $sid = sales_sid($m['sales_sid'] ?? '');
+    $pid = (string)($payment['payment_id'] ?? '');
+    if (!$sid || !preg_match('/^[A-Za-z0-9_]{3,80}$/D',$pid)) return;
+    $uid = (int)($m['uid'] ?? 0);
+    if ($uid <= 0 || !hash_equals(uid_sig($uid),(string)($m['sig'] ?? ''))) return;
+    sales_record(['sid'=>$sid,'eid'=>'payment:'.$pid.':'.$payment['status'],
+        'event'=>$payment['status']==='succeeded'?'payment_success':'payment_failed','lang'=>$m['lang'] ?? 'en'],true);
+}
+function sales_median(array $hist): ?float {
+    $n = array_sum($hist); if (!$n) return null;
+    ksort($hist,SORT_NUMERIC); $sum=0; $lo=null; $hi=null;
+    foreach ($hist as $sec=>$count) {
+        $sum += $count;
+        if ($lo===null && $sum >= (int)floor(($n+1)/2)) $lo=(int)$sec;
+        if ($sum >= (int)ceil(($n+1)/2)) { $hi=(int)$sec; break; }
+    }
+    return ($lo+$hi)/2;
+}
+function sales_analysis(array $filter): array {
+    sales_schema();
+    $period = in_array($filter['period'] ?? '',['today','24h','7d','30d','all'],true) ? $filter['period'] : '7d';
+    $from = match($period) {'today'=>intdiv(now(),86400)*86400,'24h'=>now()-86400,'7d'=>now()-7*86400,'30d'=>now()-30*86400,default=>0};
+    $lang = strtolower(is_string($filter['lang'] ?? null) ? $filter['lang'] : '');
+    if (!in_array($lang,['ru','en','fr','es','de','pt'],true)) $lang='';
+    $device = in_array($filter['device'] ?? '',['mobile','desktop'],true) ? $filter['device'] : '';
+    $where = 's.started>=?'; $args=[$from];
+    if ($lang) { $where.=' AND s.lang=?'; $args[]=$lang; }
+    if ($device) { $where.=' AND s.device=?'; $args[]=$device; }
+    $sql = "SELECT s.*,MAX(e.event='activation') activated,MAX(e.event='paywall_view') pw,
+        MAX(e.event='paywall_close') closed,MAX(e.event='auth_before_pay_start') auth_start,
+        MAX(e.event='auth_before_pay_done') auth_done,MAX(e.event='checkout_start') checkout,
+        MAX(e.event='payment_success' AND e.verified=1) paid,
+        MAX(e.event='payment_failed') failed,MAX(e.reason) reason,
+        MAX(CASE WHEN e.event='paywall_close' THEN e.pw_sec END) pw_sec
+        FROM sales_sessions s LEFT JOIN sales_events e ON e.sid=s.sid WHERE $where
+        GROUP BY s.sid ORDER BY s.last_seen DESC";
+    $rows = q($sql,$args); $n=0; $act=0; $paid=0; $pw=0; $checkout=0; $active=0;
+    $funnel=array_fill(0,6,0); $recent=[]; $hist=[];
+    $names=['no_activation'=>'Не дошли до первого действия','no_paywall'=>'Не увидели Premium',
+        'paywall_no_checkout'=>'Пейволл без перехода к оплате','auth_abandoned'=>'Вход перед оплатой не завершён','unconfirmed'=>'Оплата не подтверждена'];
+    $reasons=[]; foreach ($names as $key=>$label) $reasons[$key]=['key'=>$key,'label'=>$label,'n'=>0,'hist'=>[]];
+    $cuts=['lang'=>[],'device'=>[],'source'=>[],'reason'=>[]];
+    while ($r=$rows->fetch()) {
+        $n++; $act+=(int)$r['activated']; $paid+=(int)$r['paid']; $pw+=(int)$r['pw']; $checkout+=(int)$r['checkout'];
+        $ongoing=(int)$r['last_seen']>now()-1800; $active+=(int)$ongoing;
+        // Reach funnel: later stages imply prior reach, including returning authenticated buyers.
+        $reach=[1, $r['activated']||$r['pw']||$r['auth_start']||$r['checkout']||$r['paid'],
+            $r['pw']||$r['auth_start']||$r['checkout']||$r['paid'], $r['auth_done']||$r['checkout']||$r['paid'],
+            $r['checkout']||$r['paid'],(bool)$r['paid']];
+        foreach ($reach as $i=>$v) $funnel[$i]+=(int)$v;
+        if ($r['pw_sec']!==null) $hist[(int)$r['pw_sec']]=($hist[(int)$r['pw_sec']] ?? 0)+1;
+        foreach ($cuts as $key=>$_) {
+            $value=(string)($r[$key] ?: 'unknown');
+            if (!isset($cuts[$key][$value])) $cuts[$key][$value]=['key'=>$value,'sessions'=>0,'paywall'=>0,'checkout'=>0,'paid'=>0];
+            $cuts[$key][$value]['sessions']++;$cuts[$key][$value]['paywall']+=(int)$r['pw'];
+            $cuts[$key][$value]['checkout']+=(int)$r['checkout'];$cuts[$key][$value]['paid']+=(int)$r['paid'];
+        }
+        if (!$r['paid']) {
+            $key=$r['checkout']||$r['auth_done']||$r['failed']?'unconfirmed':($r['auth_start']?'auth_abandoned':($r['pw']?'paywall_no_checkout':($r['activated']?'no_paywall':'no_activation')));
+            $reasons[$key]['n']++;
+            if ($r['pw_sec']!==null) $reasons[$key]['hist'][(int)$r['pw_sec']]=($reasons[$key]['hist'][(int)$r['pw_sec']] ?? 0)+1;
+            if (count($recent)<30) $recent[]=['at'=>(int)$r['last_seen'],'lang'=>$r['lang'],'device'=>$r['device'],'source'=>$r['source'],
+                'reason'=>$key,'pw_sec'=>$r['pw_sec']===null?null:(int)$r['pw_sec'],'active'=>$ongoing];
+        }
+    }
+    foreach ($reasons as &$r) {$r['median_pw_sec']=sales_median($r['hist']);unset($r['hist']);} unset($r);
+    foreach ($cuts as &$cut) {uasort($cut,fn($a,$b)=>$b['sessions']<=>$a['sessions']);$cut=array_values($cut);} unset($cut);
+    $steps=['Сессии','Вовлечение / далее','Premium / далее','Авторизация / далее','Checkout / далее','Подтверждённая оплата'];
+    $f=[]; foreach ($funnel as $i=>$count) $f[]=['label'=>$steps[$i],'n'=>$count,'lost'=>$i?max(0,$funnel[$i-1]-$count):0];
+    return ['ok'=>true,'generated_at'=>now(),'period'=>$period,'from'=>$from,'timezone'=>'UTC','lang'=>$lang,'device'=>$device,
+        'kpi'=>['sessions'=>$n,'activated'=>$act,'paywall'=>$pw,'checkout'=>$checkout,'paid'=>$paid,'conversion'=>$n?round(100*$paid/$n,2):0],
+        'active'=>$active,'median_pw_sec'=>sales_median($hist),'funnel'=>$f,'reasons'=>array_values($reasons),'cuts'=>$cuts,'recent'=>$recent];
+}
+
 const LIVE_OPS_TOKEN = 'm9x4k2p7-v9q3r8t5w2y6';
 
 function live_stats_key_ok(): bool {

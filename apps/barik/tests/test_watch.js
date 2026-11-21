@@ -114,6 +114,28 @@ const UA='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605
     ok(!opsErr&&opsCheck.robots==='noindex, nofollow'&&opsCheck.overflow<=1&&opsCheck.countries>=3&&opsCheck.events>=3&&opsCheck.history>=2,
        'ops-m9x4k2p7.html (375px): noindex, без переполнения ('+opsCheck.overflow+'px), страны '+opsCheck.countries+', события '+opsCheck.events+', история '+opsCheck.history);
     await opsCtx.close(); }
+  { // Sales API and live dashboard use the same capability as Live Ops; no manual password.
+    ok((await fetch(base+'api/?r=sales_analysis')).status===404,'sales_analysis: 404 without capability');
+    ok((await fetch(base+'api/?r=sales_analysis',{headers:{'X-Barik-Key':'wrong'}})).status===404,'sales_analysis: 404 with invalid capability');
+    await ctx.setOffline(true);
+    const queued=await pg.evaluate(async()=>{const s=await import('./js/app/sales.js');s.salesEvent('activation');s.salesPaywall(true,'level_lock');s.salesPaywall(false);return Object.keys(localStorage).filter(k=>k.startsWith('barik-sales-event:')).length;});
+    ok(queued>=3,'sales: offline events remain queued');
+    await ctx.setOffline(false);
+    await pg.waitForFunction(()=>Object.keys(localStorage).filter(k=>k.startsWith('barik-sales-event:')).length===0);
+    const sr=await fetch(base+'api/?r=sales_analysis&period=7d',{headers:{'X-Barik-Key':KEY}}),sd=await sr.json();
+    ok(sr.status===200&&sd.kpi.sessions>=1&&sd.kpi.paid===0&&sd.kpi.activated>=1&&sd.funnel.length===6&&sd.reasons.length===5,'sales: offline queue delivered; 6 steps, 5 reasons, no invented payment');
+    const salesCtx=await br.newContext({viewport:{width:1440,height:1000},serviceWorkers:'block'});
+    const salesPg=await salesCtx.newPage();let salesError='';salesPg.on('pageerror',e=>salesError+=e);
+    await salesPg.goto(base+'sales-analysis.html');await salesPg.waitForSelector('#kpis .card');
+    ok(await salesPg.locator('#kpis .card').count()===6&&await salesPg.locator('#cuts .card').count()===4,'sales page: 6 KPI, 4 segment tables');
+    await salesPg.selectOption('#lang','RU');await salesPg.waitForTimeout(300);
+    await salesPg.setViewportSize({width:375,height:812});
+    ok(await salesPg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'sales page: mobile layout without overflow');
+    await salesPg.route('**/api/?r=sales_analysis*',route=>route.fulfill({status:503,body:'unavailable'}));
+    await salesPg.click('#refresh');await salesPg.waitForSelector('#error',{state:'visible'});
+    ok(await salesPg.locator('#status').textContent()==='Нет свежих данных','sales page: real connection failure is visible');
+    await salesPg.unroute('**/api/?r=sales_analysis*');await salesPg.click('#refresh');await salesPg.waitForSelector('#error',{state:'hidden'});
+    ok(!salesError,'sales page: no JS errors '+salesError);await salesCtx.close(); }
   ok(!phpErr,'PHP без ошибок '+phpErr.slice(0,300));
   await br.close(); php.kill(); tg.close(); site.close(); fs.rmSync(TMP,{recursive:true,force:true});
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);

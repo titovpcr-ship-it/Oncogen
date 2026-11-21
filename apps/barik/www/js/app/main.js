@@ -1,3 +1,4 @@
+import {salesInit,salesPaywall,salesAuth} from './sales.js';
 /* Barik — маршрутизатор, ленивые данные, глобальные события, таблица действий и точка входа. */
 
 import {
@@ -48,6 +49,8 @@ import {
 
 /* ================= ROUTING & LAZY DATA ================= */
 export function go(v, arg) {
+  if((st.view==='paywall'&&v!=='paywall')||(st.view==='lvlquiz'&&v!=='lvlquiz'))salesPaywall(false);
+  if(v==='paywall')salesPaywall(true,st.pwState.reason||'default');
   if (st.view === 'onboard' && v !== 'onboard' && v !== 'doc') hit('start');
   if (REC.on || REC.url) recReset();
   if (v === 'name' || v === 'pen' || v === 'listen' || v === 'paywall' || v === 'account' || v === 'unit') hit('v_' + v);
@@ -525,6 +528,7 @@ export const H = {
     if (ACC.needNick) body.nick = ACC.nick;
     const j = await api('verify', body);
     if (j.ok) {
+      salesAuth(false);
       hit('login');
       accApply(j);
       Object.assign(ACC, { busy: false, step: 'email', code: '', needNick: false, nick: '' });
@@ -1075,3 +1079,5 @@ function launch() {
 
 if (window.BARIK_TRANSLATIONS_READY) window.BARIK_TRANSLATIONS_READY.then(launch);
 else launch();
+
+if(!BILL.native){salesInit(()=>st.L);if(st.view==='paywall')salesPaywall(true,st.pwState.reason||'default');}

@@ -27,6 +27,8 @@ class AtomicAPI(unittest.TestCase):
                 if self.path.startswith('/payments/'):
                     payload = {'payment_id':'pay_hook','status':'succeeded','metadata':{'gift':'1','uid':'1','months':'3',
                                'sig':hmac.new(b'atomic-tests',b'uid:1',hashlib.sha256).hexdigest()[:32]}}
+                if self.path.startswith('/payments/'):
+                    payload.update(cls.dodo_state.get('payment', {}))
                 try:
                     self.send_response(cls.dodo_state['status']); self.end_headers(); self.wfile.write(b'{broken' if cls.dodo_state.get('broken') else json.dumps(payload).encode())
                 except BrokenPipeError:
