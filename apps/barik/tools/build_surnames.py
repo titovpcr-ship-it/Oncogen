@@ -1020,8 +1020,8 @@ if(search){
       +' data-st-prep="'+escH(cfg.cardPrep||'')+'" data-st-dl="'+escH(cfg.cardDl||'')+'" data-st-sh="'+escH(cfg.cardSh||'')+'"'
       +' data-slug="'+escH(dynSlug)+'">'+escH(cfg.cardBtn||'Download Crest Card')+'</button><p class="sn-card-st" role="status" aria-live="polite"></p></div>'
       +'<div class="surname-gift-cta"><h2>'+escH((cfg.ctaH||'').replace(/\{name\}/g,dispLat))+'</h2>'
-      +'<div class="sn-cta-acts"><a class="sn-cta-radio" href="../../?lang='+escH(lang)+'&amp;ftrk=1&amp;listen=1&amp;family='+escH(dynSlug)+((rootMatch&&rootMatch.slug)?('&amp;root='+escH(rootMatch.slug)):'')+'">'+escH(cfg.ctaRadio||'Radio')+'</a>'
-      +'<a class="sn-cta-gift" href="../../?lang='+escH(lang)+'&amp;ftrk=1&amp;paywall=gift&amp;family='+escH(dynSlug)+'">'+escH((cfg.ctaGift||'').replace(/\{name\}/g,dispLat))+'</a></div></div>';
+      +'<div class="sn-cta-acts"><a class="sn-cta-radio" href="../../?lang='+escH(lang)+'&amp;listen=1&amp;family='+escH(dynSlug)+((rootMatch&&rootMatch.slug)?('&amp;root='+escH(rootMatch.slug)):'')+'&amp;ftrk=1">'+escH(cfg.ctaRadio||'Radio')+'</a>'
+      +'<a class="sn-cta-gift" href="../../?lang='+escH(lang)+'&amp;paywall=gift&amp;family='+escH(dynSlug)+'&amp;ftrk=1">'+escH((cfg.ctaGift||'').replace(/\{name\}/g,dispLat))+'</a></div></div>';
   }
 
   function applyFilter(){
@@ -1292,8 +1292,8 @@ def build_surnames(site, base, d, wslug, inw, audio_rel, page_fn, crumbs_ld_fn, 
                 f'<section class="surname-gift-cta">'
                 f'<h2>{esc(T["cta_h"].format(name=disp))}</h2>'
                 f'<div class="sn-cta-acts">'
-                f'<a class="sn-cta-radio" href="../../?lang={L}&amp;ftrk=1&amp;listen=1&amp;family={esc(sl)}&amp;root={esc(wslug[link_word["a"]])}">{esc(T["cta_radio"])}</a>'
-                f'<a class="sn-cta-gift" href="../../?lang={L}&amp;ftrk=1&amp;paywall=gift&amp;family={esc(sl)}">{esc(T["cta_gift"].format(name=disp))}</a>'
+                f'<a class="sn-cta-radio" href="../../?lang={L}&amp;listen=1&amp;family={esc(sl)}&amp;root={esc(wslug[link_word["a"]])}&amp;ftrk=1">{esc(T["cta_radio"])}</a>'
+                f'<a class="sn-cta-gift" href="../../?lang={L}&amp;paywall=gift&amp;family={esc(sl)}&amp;ftrk=1">{esc(T["cta_gift"].format(name=disp))}</a>'
                 f'</div></section>'
                 + rel_sec + pn + f'<p class="pn"><a href="index.html">{esc(T["all_sn"].format(total=len(rows)))}</a></p>'
             )

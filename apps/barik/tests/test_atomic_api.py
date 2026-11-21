@@ -179,11 +179,12 @@ class AtomicAPI(unittest.TestCase):
 
     def test_m1_verified_payment_idempotency(self):
         payload={'type':'payment.succeeded','data':{'payment_id':'pay_hook','metadata':{'gift':'1'}}}
+        before = self.sql.execute("SELECT COALESCE(SUM(n),0) FROM stats WHERE k='p:paid'").fetchone()[0]
         results=self.parallel([('dodo',payload,1,'evt_paid1'),('dodo',payload,1,'evt_paid2')])
         self.assertEqual([r[0] for r in results],[200,200])
-        self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='p:paid'").fetchone()[0],1)
+        self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='p:paid'").fetchone()[0],before + 1)
         self.assertEqual(self.call('dodo',payload,1,'evt_paid1')[0],200)
-        self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='p:paid'").fetchone()[0],1)
+        self.assertEqual(self.sql.execute("SELECT SUM(n) FROM stats WHERE k='p:paid'").fetchone()[0],before + 1)
 
     def test_h3_invalid_success_and_reordered_responses(self):
         payload={'data':{'subscription_id':'sub_atomic'}}
