@@ -1,0 +1,565 @@
+{
+  "date": "2026-11-14",
+  "new_examples": 3355,
+  "b2_total": 5950,
+  "native_reviewed": false,
+  "method": "Original Codex authoring in six disjoint parts; independent full crossreview, root review and evidence-based lexical adjudication before speech synthesis. Existing approved2595 reused.",
+  "source_identity": "Original dictionary word keys preserved so existing account progress is unchanged. Known malformed source keys occur only in explicit corrective/lookup contexts; dictionary issues recorded below.",
+  "style_exceptions": {
+    "Ով ուրիշի համար փոս է փորում, ինքն է մեջն ընկնում": "The dictionary headword already has ten words; preserve the full proverb with a concrete reporting context.",
+    "Ով շատ է խոսում, քիչ է անում": "The seven-word proverb needs a reporting context; eight words cannot naturally contain both."
+  },
+  "independent_reviews": [
+    {
+      "part": 1,
+      "reviewer": "b2_part5",
+      "reviewed_count": 559,
+      "corrections": 12,
+      "notes": [
+        {
+          "word": "Ուշ լինի, նուշ լինի",
+          "issue": "All supplied glosses give better late than never. Actual proverb more specifically conveys let it be late but good/sweet. Existing conventional gloss translation retained; dictionary equivalence should be reviewed separately."
+        },
+        {
+          "word": "անհետ կորած",
+          "issue": "English/Spanish/Portuguese translations specify missing in combat following supplied English gloss. Armenian sentence itself does not specify combat, but archival context and headword permit that sense. No invented historical identity."
+        },
+        {
+          "word": "որքին",
+          "issue": "Unresolved dictionary issue: modern Armenian որքին generally denotes lichen/lichen-like skin disease; all supplied glosses say herpes. Current title-only sentence avoids a medical claim but translations still inherit the possibly wrong disease equivalence. Do not add diagnosis/treatment claims; verify dictionary terminology before publication."
+        },
+        {
+          "word": "հայաստանցի",
+          "issue": "Source gloss specifies Armenian from Armenia, and translations follow it. Armenian headword itself describes origin/residence rather than necessarily ethnicity; retain current scoped dictionary interpretation but dictionary wording merits separate review."
+        },
+        {
+          "word": "կեղծ թիվ",
+          "issue": "Supplied imaginary-number term is unusual compared with երևակայական թիվ. Exercise context and six translations consistently use the assigned imaginary-number sense; no false numerical assertion introduced. Lexical terminology should be checked separately."
+        },
+        {
+          "word": "փոթոր",
+          "issue": "Uncommon supplied cone-shaped adjective; six glosses agree but independent lexical certainty is limited. Pottery example retained; dictionary verification recommended rather than asserting a newly invented definition."
+        },
+        {
+          "word": "հրանետ",
+          "issue": "Uncommon supplied flamethrower term; museum naming context retained, no operation or military action. Verify terminology in dictionary review."
+        },
+        {
+          "word": "կցաղետապ",
+          "issue": "Uncommon supplied appendicitis term. Article-comparison example retained; no diagnosis or treatment claim is added. Verify lexical spelling/sense separately."
+        },
+        {
+          "scope": "all559",
+          "issue": "Every Armenian sentence and all six translations were read; technical/legal/math/medical/botanical contexts checked against supplied senses. Names stay in reading/performance/exhibition/travel contexts; no biography or partisan claim added. No external model or native-speaker review used."
+        },
+        {
+          "scope": "article_review",
+          "issue": "Preserved original ը before initial ե/ո words such as երեկ, երեխա, երկու, երկինք, երեսպատել, որմ: these are pronounced with initial y/v. No blanket spelling-letter substitution was applied to proposed final corrections."
+        }
+      ],
+      "final_sha256": "c4dc3487d776b0f4cb677faf679e5b7dc26fcb947c3abeaf9ef9399c8ab3d444"
+    },
+    {
+      "part": 2,
+      "reviewer": "/root/b2_part6",
+      "reviewed_count": 559,
+      "corrections": 51,
+      "notes": [
+        {
+          "word": "վայրի գազար",
+          "issue": "Unresolved common-name mapping: literally wild carrot; supplied six-language glosses identify parsnip. Proposed neutral dictionary-checking example avoids culinary use but translations provisionally retain supplied sense. Dictionary-level taxonomy remains unresolved."
+        },
+        {
+          "word": "անգիր",
+          "issue": "Explicitly supplied unwritten-language sense reviewed and retained, rather than usual by-heart sense."
+        },
+        {
+          "word": "լրատու",
+          "issue": "Informant/news-desk ambiguity resolved by person’s account context; retained."
+        },
+        {
+          "word": "որբահավաք",
+          "issue": "Neutral letter context correctly translates orphan rescue; no invented event details added."
+        },
+        {
+          "word": "Ռուսիա",
+          "issue": "Potential source ambiguity: supplied Rus, while modern Ռուսիա can denote Russia; example explicitly says old/ancient, but lexical mapping merits review."
+        },
+        {
+          "word": "շահագործական",
+          "issue": "Supplied exploitative gloss used; Armenian adjective can also mean operational, so factory-conditions phrase remains ambiguous. Lexical review recommended."
+        },
+        "All559 rows independently reviewed in Armenian and six translations against supplied senses. No native-review claim."
+      ],
+      "final_sha256": "d1dda2d05e883b3228bbb7ec65e475fe3e126e3570054a573b1e341b3dc52e2c"
+    },
+    {
+      "part": 3,
+      "reviewer": "b2_part4",
+      "reviewed_count": 559,
+      "corrections": 12,
+      "notes": [
+        "Dictionary issue: բնիմաստ means original meaning; supplied etymon glosses confuse the meaning with its source word. Translations corrected; dictionary keys/glosses not edited.",
+        "Known source typo ժամակահատված is explicitly corrected within the Armenian sentence; retained. հեռագիր correctly means telegram throughout the example despite the misleading supplied telegraph gloss; retained.",
+        "Dictionary issue: ճուռակ denotes an Accipiter hawk, while kestrel is հողմավար բազե. Corrected translations of the concrete perched-bird sentence; dictionary untouched.",
+        "All 162 language-name rows checked for language identity, tense, actors, six-language fidelity and plausible text contexts. Unattested/poorly attested Cimmerian, Hayasan and reconstructed Proto-Armenian have classification discussion contexts; Milyan photo correction avoids overclaiming translation. Other extinct-language contexts use attested inscription/manuscript/lexical forms.",
+        "Independent assistant review only; no human or native-speaker review is claimed. Article forms were checked with pronunciation: initial ե/ո pronounced ye/vo do not automatically require ն."
+      ],
+      "final_sha256": "b397174bdbda3d6be3ac187529a433082ec4eae698c3041afa60b99a5ef0e017"
+    },
+    {
+      "part": 4,
+      "reviewer": "b2_part3",
+      "reviewed_count": 559,
+      "corrections": 21,
+      "notes": [
+        "Every assigned row and all six translations read against supplied glosses in batches; substantive corrections only. No target PSV or dictionary edits made. Not native reviewed.",
+        "Known ծավալային source-gloss conflict is already safely handled by the three-dimensional model example; retained.",
+        "վահանապտեր genus and կճղակավոր cloven-hoofed precision noted in correction reasons; supplied dictionary glosses were used critically.",
+        "Potential unresolved source-gloss issue for parent adjudication: բոռաճանճ is supplied as bee drone, but may denote a large/biting fly. Reviewer uncertain; no speculative species correction proposed. Original hive/drone scenario deserves independent dictionary check. Read-only hy.wiktionary API request returned403, so no external evidence obtained.",
+        "Historical, political, religious and sensitive terms occur in neutral archival, educational, artistic or literary scenarios; no invented factual biographies."
+      ],
+      "final_sha256": "b59f70e1f628ebc805dcd426d0f74fe5525be17206f70e0301a410979c0d252b"
+    },
+    {
+      "part": 5,
+      "reviewer": "b2_part1",
+      "reviewed_count": 559,
+      "corrections": 21,
+      "notes": [
+        "Reviewed rows0–49. հիվանդոտ sickly correctly avoids misleading English morbid gloss.",
+        "հողմահակառակ: supplied leeward direction remains lexically uncertain; author already flagged this. Independent review cannot confidently resolve windward/leeward from the corpus alone.",
+        "Reviewed rows50–229 across Armenian, supplied Russian/English glosses and all six translations. նախանձախնդիր is correctly translated zealous/assiduous rather than jealous; ջրաբաշխական, շչական and սաղարթավոր glossary distinctions noted in corrections.",
+        "Reviewed rows230–409 in full. տրանսցենդենտ correctly uses transcendent, not the philosophically distinct transcendental supplied in English.",
+        "Source English abbacy for աբբայություն is misleading in this context; the existing sentence and translations correctly refer to an abbey building.",
+        "Source Russian штрафной удар for ազատ հարված may conflate direct and indirect free kicks; Armenian football usage often distinguishes ազատ հարված from տուգանային հարված. Existing neutral rulebook context retained pending dictionary sport terminology review.",
+        "All559 source rows were read in consecutive manageable batches; Armenian plus all six sentence translations were reviewed against supplied senses. No native-speaker review claim; no external language model used.",
+        "Known source-gloss conflicts հիվանդոտ/morbid, նախանձախնդիր/jealous and տրանսցենդենտ/transcendental were already handled correctly in the original examples; retain those rows.",
+        "Preserve the original key անտոմս ուղեւոր. The եւ/և orthographic equivalent is handled by the builder; no semantic correction needed.",
+        "Proposed corrections do not modify dictionary keys or the frozen PSV. Direction of հողմահակառակ remains unresolved lexically; proposed sentence avoids asserting a direction. Exact intended source spelling of անկապակացություն also remains unresolved, with a spelling-check context proposed.",
+        "Potential additional source terminology review: ականակիր is an older naval term and may require a historical torpedo-boat/destroyer distinction; retained neutral maritime-museum example rather than asserting an unsupported modern taxonomy.",
+        "Every proposed corrected row passes review_rules.reasons_for using the unchanged gen_examples rejection checks; source SHA256 and exact before-lines verified."
+      ],
+      "final_sha256": "7374204daf7d20c02bc9a8e77070ef9c690293e0d5fb659230beaea1bf8cd0b3"
+    },
+    {
+      "part": 6,
+      "reviewer": "b2_part2",
+      "reviewed_count": 560,
+      "corrections": 16,
+      "notes": [
+        "Source gloss for արագախոսություն conflates rapid speech with fluency; translations corrected to actual Armenian meaning. Source key and sentence preserved.",
+        "արդյունաբերական նմուշ means industrial design itself; English supplied gloss adds right, while example correctly describes legal protection of the design.",
+        "Known malformed palm-oil key retained in explicitly editorial correction context.",
+        "Source dictionary issue: արտաքին ազդակ means external stimulus; economic externality normally արտաքին ազդեցություն or արտաքին էֆեկտ. Correction uses true Armenian meaning without editing key.",
+        "Known բացատրական դերանուն source terminology is corrected explicitly in editorial context; standard demonstrative pronoun is ցուցական դերանուն.",
+        "Source dictionary issue: գլյասե is coffee with ice cream, not merely iced coffee.",
+        "Source dictionary issue: գործադիր means executive; app is հավելված. Proposed row uses correct executive sense.",
+        "Known malformed rice-vinegar and blender keys correctly remain in explicitly editorial contexts; no key edits proposed.",
+        "Additional source spelling issue: դժվախտություն should be դժբախտություն. Proposed row explicitly corrects the spelling without changing the progress key.",
+        "Reviewed every assigned row and all six translations. No human/native review claim."
+      ],
+      "final_sha256": "5c250c582acffbcd0752800f36afd1c3d076269f235c3c5c063b22c2f626d050"
+    }
+  ],
+  "author_dictionary_notes": {
+    "1": {
+      "part": 1,
+      "completed": 559,
+      "coverage": "Exact assigned unique coverage; eight nonempty fields for every row.",
+      "review": "Armenian sentences and six translations authored and semantically checked by Codex. No native-speaker review has been performed.",
+      "validation": {
+        "shared_validator": "559/559 accepted",
+        "generic_gen_examples": [
+          {
+            "headword": "Ով ուրիշի համար փոս է փորում, ինքն է մեջն ընկնում",
+            "reasons": [
+              "word_count"
+            ],
+            "sentence": "Պապն ասաց՝ ով ուրիշի համար փոս է փորում, ինքն է մեջն ընկնում։"
+          }
+        ]
+      },
+      "style_exception": {
+        "headword": "Ով ուրիշի համար փոս է փորում, ինքն է մեջն ընկնում",
+        "reason": "The complete supplied proverb is already ten words. A two-word reporting context was added; preserving the headword exceeds the ordinary eight-word style maximum. All other checks pass."
+      },
+      "gloss_ambiguities": [
+        {
+          "headword": "որքին",
+          "issue": "Supplied six translations all specify herpes, while the Armenian word can denote lichen or other skin eruptions. Sentence only mentions an article title; no diagnosis or medical equivalence asserted beyond supplied glossary translation."
+        },
+        {
+          "headword": "կեղծ թիվ",
+          "issue": "Supplied sense is imaginary number; modern mathematical Armenian more commonly uses կեղծ as false/fake and կեղծ թիվ may be unusual. Preserved assigned headword and explicit imaginary-number sense in all six translations."
+        },
+        {
+          "headword": "փոթոր",
+          "issue": "Unusual cone-shaped adjective preserved exactly with a concrete pottery context, following all six supplied glosses."
+        },
+        {
+          "headword": "հրանետ",
+          "issue": "Preserved supplied flamethrower sense in neutral museum-bulletin context; terminology may be uncommon."
+        },
+        {
+          "headword": "կցաղետապ",
+          "issue": "Uncommon appendicitis term preserved according to supplied gloss, in article-comparison context."
+        }
+      ],
+      "unresolved_rows": []
+    },
+    "2": {
+      "count": 559,
+      "unique_coverage": 559,
+      "validator_rejections": 0,
+      "semantic_review": "All authored rows reviewed for sense, actors, tense and concrete details; no native-review claim.",
+      "notes": [
+        {
+          "word": "վայրի գազար",
+          "issue": "Botanical common-name ambiguity: literally wild carrot, but all supplied glosses identify parsnip. Current root example and translations follow supplied parsnip sense, as assignment requested. Review dictionary taxonomy separately if changing source senses is authorized."
+        },
+        {
+          "word": "անգիր",
+          "issue": "Used supplied unwritten-language sense in linguistic context, rather than common memorized/by-heart sense."
+        },
+        {
+          "word": "լրատու",
+          "issue": "Used supplied informant sense after review; avoided potentially ambiguous news-desk sense."
+        },
+        {
+          "word": "որբահավաք",
+          "issue": "Neutral museum-letter context. Translations use orphan rescue; post-Genocide specificity resides in dictionary sense, rather than adding details absent from Armenian sentence."
+        }
+      ],
+      "unresolved_rows": []
+    },
+    "3": {
+      "part": 3,
+      "count": 559,
+      "native_reviewed": false,
+      "method": "Author linguistic reasoning; natural language-learning and research contexts; structural validator plus independent semantic reading. No external language-model services.",
+      "source_issues": [
+        {
+          "word": "ժամակահատված",
+          "issue": "Assigned headword appears to omit ան from ժամանակահատված. Original key preserved; sentence explicitly corrects the misspelling and includes the standard spelling. Dictionary unchanged."
+        },
+        {
+          "word": "հեռագիր",
+          "issue": "Supplied six-language glosses refer to telegraph; ordinary Armenian հեռագիր means telegram. Sentence and six translations use archived telegram, as directed; original dictionary unchanged."
+        }
+      ],
+      "accuracy_notes": [
+        "Turkic-speaking (թուրքալեզու) distinguished from Turkish-speaking (թուրքախոս).",
+        "Cimmerian, Hayasan, Scythian, Proto-Armenian examples discuss classification without claiming surviving texts or modern speech.",
+        "Ancient language readings refer to study of originals, inscriptions, translations, or dictionary forms; Ladin distinguished from Judaeo-Spanish; Assyrian explicitly Akkadian dialect.",
+        "All 559 assigned keys present exactly once; examples not reviewed by a native speaker."
+      ]
+    },
+    "4": {
+      "assigned": 559,
+      "written": 559,
+      "native_review": false,
+      "review": "All Armenian sentences and six translations manually reviewed for dictionary sense, actors, details, tense, naturalness; article-before-vowel corrections applied individually. New sentence spelling normalized to և; dictionary keys unchanged.",
+      "dictionary_sense_notes": [
+        {
+          "headword": "ծավալային",
+          "english_gloss": "voluminous",
+          "issue": "Armenian normally means volumetric/spatial. Example uses architectural three-dimensional model and faithful translations. Dictionary gloss may need a separate correction."
+        }
+      ],
+      "unresolved_example_issues": [],
+      "sha256": "7e49e99dcbe8ebb6144a7287264b497dcd3be51ada2bea71691dd3728ee84111"
+    },
+    "5": {
+      "part": 5,
+      "assigned": 559,
+      "written": 559,
+      "native_review": false,
+      "review": "Independently reread Armenian sentences and their six translations for tense, actors, concrete sense and grammar; corrected definite articles, awkward adaptation phrasing and several translation/technical wording issues. All assigned headwords retained. No external AI services used.",
+      "source_gloss_notes": [
+        {
+          "headword": "հիվանդոտ",
+          "issue": "English morbid is misleading; Armenian and Russian indicate sickly. Example uses a frequently absent sickly child and translations follow that sense."
+        },
+        {
+          "headword": "նախանձախնդիր",
+          "issue": "English jealous and Russian ревнивый can mislead; Armenian also means zealous/assiduous. Example uses a zealous craftsman, matching Russian ревностный."
+        },
+        {
+          "headword": "տրանսցենդենտ",
+          "issue": "English transcendental differs philosophically from transcendent. Example uses transcendent, matching Armenian and Russian трансцендентный; dictionary untouched."
+        },
+        {
+          "headword": "սաղարթավոր",
+          "issue": "English deciduous is narrower than Armenian leafy and Russian лиственный. Example describes leafy trees shading a road, compatible with the intended context."
+        },
+        {
+          "headword": "հողմահակառակ",
+          "issue": "Potential dictionary directional ambiguity. Supplied Russian/English explicitly say leeward, followed in translations. Verify lexical direction in a later dictionary review."
+        },
+        {
+          "headword": "անկապակացություն",
+          "issue": "Supplied Armenian spelling appears unusual, possibly intended անկապակցություն. Required supplied headword retained; sentence follows supplied inconsistency meaning. Dictionary spelling needs review."
+        },
+        {
+          "headword": "անտոմս ուղեւոր",
+          "issue": "Supplied compound uses non-reformed ուղեւոր. Required spelling retained visibly in sentence as ուղեւորն; source orthography needs review."
+        },
+        {
+          "headword": "առանձնացում",
+          "issue": "Broad isolation/separation term supplied with English insulation. Example uses acoustic separation of rooms, translated naturally as acoustic insulation."
+        }
+      ],
+      "unresolved_example_coverage": [],
+      "validation": {
+        "assigned_unique": 559,
+        "rows": 559,
+        "missing": 0,
+        "all_eight_fields": true,
+        "rejection_reasons_passed": 559
+      }
+    },
+    "6": {
+      "part": 6,
+      "written": 560,
+      "native_review": false,
+      "source_notes": [
+        {
+          "headword": "արմավենու յուղյուղ",
+          "issue": "Clear duplicated-word typo; correct form արմավենու յուղ. Original key preserved; sentence explicitly replaces erroneous form with correct one. Dictionary repair needs progress-key migration."
+        },
+        {
+          "headword": "բրինձ քացախ",
+          "issue": "Malformed noun compound; natural phrase բրնձի քացախ. Original key retained only in explicit editorial correction showing correct phrase."
+        },
+        {
+          "headword": "գոյական խառնիչ",
+          "issue": "Extraneous գոյական means noun, not blender. Sentence explicitly removes extraneous word; original key retained. Correct generic appliance term խառնիչ; բլենդեր also occurs."
+        },
+        {
+          "headword": "բանահյուսական",
+          "issue": "Armenian headword is adjectival (folkloric), whereas glosses say folklore. Used grammatically as adjective modifying materials; translations likewise adjective."
+        },
+        {
+          "headword": "բացատրական դերանուն",
+          "issue": "Supplied demonstrative-pronoun sense is unusual with բացատրական; standard modern term ցուցական դերանուն. Kept supplied phrase in textbook context; no source edit."
+        },
+        {
+          "headword": "գործադիր",
+          "issue": "Supplied app sense questionable: գործադիր normally executive; standard app term հավելված. Kept dictionary sense, flagged for lexical review."
+        },
+        {
+          "headword": "գյուղ տեղ",
+          "issue": "Colloquial source phrase for countryside; used as supplied, rather than substituted գյուղական վայր."
+        },
+        {
+          "headword": "գրասալիկը",
+          "issue": "Source key already bears definite article; retained exact form naturally as object."
+        },
+        {
+          "headword": "ատմոսֆերա",
+          "issue": "Broad atmosphere gloss allows pressure-unit sense; sentence explicitly uses atmospheres as pressure units."
+        }
+      ]
+    }
+  },
+  "lexical_adjudication": {
+    "reviewer": "b2_part3",
+    "complete": true,
+    "scope": "four lexical terms only",
+    "native_reviewed": false,
+    "method": "Read-only accessible dictionary, academic and public-institution sources. Meanings paraphrased; all example sentences original. No accounts, access bypass, Nayiri examples, frozen PSV edits or frozen crossreport edits.",
+    "entries": [
+      {
+        "word": "բոռաճանճ",
+        "part": 4,
+        "before": "բոռաճանճ | Փեթակի մոտ բոռաճանճ էր պտտվում։ | Возле улья кружил трутень. | A drone bee was circling near the hive. | Un faux-bourdon tournait près de la ruche. | Un zángano revoloteaba cerca de la colmena. | Eine Drohne kreiste in der Nähe des Bienenstocks. | Um zangão voava em círculos perto da colmeia.",
+        "source_sha256": "7e49e99dcbe8ebb6144a7287264b497dcd3be51ada2bea71691dd3728ee84111",
+        "decision": "Replace hive/drone scenario. Scholarly etymological evidence supports a large fly associated with biting livestock; the inherited drone gloss appears to conflate compound բոռաճանճ with polysemous բոռ. Use a neutral fly observation, avoiding a guessed exact species or family.",
+        "confidence": {
+          "reject_bee_drone_scenario": "high",
+          "large_fly_sense": "medium-high",
+          "precise_modern_taxon": "unresolved; no taxon asserted"
+        },
+        "evidence": [
+          {
+            "url": "https://www.dico.calfa.fr/entries/%D4%B2%D5%88%D5%8C,%D5%B8%D5%B5,%D5%B8%D6%81",
+            "source": "Calfa enriched Armenian scholarly dictionary, Բոռ entry, dialect/etymology section",
+            "facts": "The dialect note explicitly mentions derived բոռաճանճ and describes a large black fly biting horses and cattle. The parent entry has multiple hornet/drone senses; those cannot automatically be transferred to the compound.",
+            "access": "direct page opened successfully; lines41-43"
+          }
+        ],
+        "proposal_limit": "Generic large-fly translation deliberately avoids overclaiming a modern taxonomic equivalent. No hive or bee reproduction claim.",
+        "after": "բոռաճանճ | Բոռաճանճը նստեց պատուհանի մոտի փայտե շրջանակին։ | Крупная муха села на деревянную раму возле окна. | The large fly settled on the wooden frame by the window. | La grosse mouche s'est posée sur le cadre en bois près de la fenêtre. | La mosca grande se posó en el marco de madera junto a la ventana. | Die große Fliege setzte sich auf den Holzrahmen am Fenster. | A mosca grande pousou na moldura de madeira perto da janela.",
+        "proposal_validated": true
+      },
+      {
+        "word": "որքին",
+        "part": 1,
+        "before": "որքին | Խմբագիրը ստուգեց որքինի մասին հոդվածի վերնագիրը։ | Редактор проверил заголовок статьи о герпесе. | The editor checked the title of the article about herpes. | Le rédacteur a vérifié le titre de l’article sur l’herpès. | El editor comprobó el título del artículo sobre el herpes. | Der Redakteur überprüfte den Titel des Artikels über Herpes. | O editor conferiu o título do artigo sobre herpes.",
+        "source_sha256": "ec1ab1d38cfe898402771c3886702b5807139b06452876758f0c7ecd37cc8029",
+        "decision": "Bare որքին is historically broad, not a unique one-to-one modern diagnosis. Herpes occurs in historical dictionary senses, so it is not categorically a nonexistent translation. Qualify the example as գոտևորող որքին and translate shingles consistently; this avoids silently equating bare որքին exclusively with either herpes simplex or lichen planus.",
+        "confidence": {
+          "bare_term_polysemy": "high",
+          "qualified_shingles_translation": "high"
+        },
+        "evidence": [
+          {
+            "url": "https://www.armdict.com/dictionary/armenian-russian/%D5%B8%D6%80%D6%84%D5%AB%D5%B6",
+            "source": "Armenian-Russian dictionary, Armenian SSR Academy of Sciences, Yerevan1985, reproduced by ArmDict",
+            "facts": "The unqualified medical noun is translated as Russian лишай.",
+            "access": "direct page opened successfully; lines23-27"
+          },
+          {
+            "url": "https://www.dico.calfa.fr/entries/%D5%88%D5%90%D5%94%D4%BB%D5%86,%D6%84%D5%A5%D5%A1%D5%B6",
+            "source": "Calfa historical Armenian dictionary, Որքին entry",
+            "facts": "Historical English glosses span herpes, tetter, ringworm and impetigo, demonstrating historical breadth rather than one exact modern diagnosis.",
+            "access": "direct page opened successfully; lines21-30"
+          },
+          {
+            "url": "https://www.medex.am/health-topics/shingles",
+            "source": "Medex Armenian medical reference, shingles article",
+            "facts": "Explicitly identifies գոտևորող որքին with herpes zoster; sufficient for the qualified term used in the proposed editorial example.",
+            "access": "direct page opened successfully; lines23 and35-38"
+          },
+          {
+            "url": "https://www.arlis.am/hy/acts/21552/print/act_changes",
+            "source": "Armenian government decision2121-N of2005, historical official terminology, not current medical guidance",
+            "facts": "Uses the qualified wording գոտևորող հերպետիկ որքին in its virus/disease terminology.",
+            "access": "direct page and indexed term accessible"
+          }
+        ],
+        "proposal_limit": "Only article-title proofreading is depicted; no symptoms, treatment or causation taught in the example.",
+        "after": "որքին | Խմբագիրը ստուգեց գոտևորող որքինի մասին հոդվածի վերնագիրը։ | Редактор проверил заголовок статьи об опоясывающем лишае. | The editor checked the title of the article about shingles. | Le rédacteur a vérifié le titre de l'article sur le zona. | El editor comprobó el título del artículo sobre el herpes zóster. | Der Redakteur überprüfte den Titel des Artikels über Gürtelrose. | O editor conferiu o título do artigo sobre herpes-zóster.",
+        "proposal_validated": true
+      },
+      {
+        "word": "գոնգեղ",
+        "part": 6,
+        "before": "գոնգեղ | Այգեպանը գոնգեղը հանեց խոնավ հողի միջից։ | Огородник вытащил брюкву из влажной земли. | The gardener pulled the rutabaga out of the damp soil. | Le jardinier a arraché le rutabaga de la terre humide. | El hortelano sacó el colinabo de la tierra húmeda. | Der Gärtner zog die Steckrübe aus der feuchten Erde. | O horticultor tirou a rutabaga da terra úmida.",
+        "source_sha256": "65c4ba48859c832d41c8c66eb53d869321a06f6483b6cdec41901bfa9497778f",
+        "decision": "Keep rutabaga/брюква sense; the modern official specialist dictionary supports it. Spanish nabo sueco is the unambiguous choice where colinabo can be interpreted as kohlrabi.",
+        "confidence": "high",
+        "evidence": [
+          {
+            "url": "https://snund.am/public/storage/uploads/BAR.Amboxj@1_1661933103.pdf",
+            "source": "Armenian State Food Safety Service, Phytosanitary Inspection: Armenian-Russian-Latin plant names and phytosanitary dictionary, Yerevan2015, entry115, printed page12/PDFpage12",
+            "facts": "Explicitly pairs Գոնգեղ / կաղամբ յուղաբեր with Russian Брюква and a Brassica napus root-crop name; this supports rutabaga, not kohlrabi.",
+            "access": "official PDF opened and entry115 located; lines453-459"
+          }
+        ],
+        "proposal_limit": "Keep all existing fields except clarify Spanish nabo sueco; no new botanical traits asserted.",
+        "after": "գոնգեղ | Այգեպանը գոնգեղը հանեց խոնավ հողի միջից։ | Огородник вытащил брюкву из влажной земли. | The gardener pulled the rutabaga out of the damp soil. | Le jardinier a arraché le rutabaga de la terre humide. | El hortelano sacó el nabo sueco de la tierra húmeda. | Der Gärtner zog die Steckrübe aus der feuchten Erde. | O horticultor tirou a rutabaga da terra úmida.",
+        "proposal_validated": true
+      },
+      {
+        "word": "վայրի գազար",
+        "part": 2,
+        "before": "վայրի գազար | Ապուրի համար վայրի գազարի արմատ կտրատեցի։ | Для супа я нарезал корень пастернака. | I chopped a parsnip root for the soup. | J'ai coupé une racine de panais pour la soupe. | Corté una raíz de chirivía para la sopa. | Ich schnitt eine Pastinakenwurzel für die Suppe. | Piquei uma raiz de pastinaca para a sopa.",
+        "source_sha256": "aed85736118e84fe6ae2d887c003d3abd801304ab0e132cec66f522773a7d2e8",
+        "decision": "Use wild carrot rather than parsnip; replace the food-preparation scenario with a botanical photograph observation.",
+        "confidence": "high",
+        "evidence": [
+          {
+            "url": "https://arar.sci.am/Content/369116/53-59.pdf",
+            "source": "Academic paper on edible plants and fungi, botanists at Yerevan State University and Artsakh State University, hosted by Armenian scientific repository",
+            "facts": "The botanical table pairs Daucus carota with Armenian Գազար վայրի and Russian Морковь дикая. This is wild carrot, not parsnip.",
+            "access": "direct PDF opened; table printed page56/PDFpage4, line169"
+          },
+          {
+            "url": "https://env.am/storage/files/sisian-23-05.pdf",
+            "source": "Armenian Ministry of Environment-hosted plant inventory",
+            "facts": "The indexed table associates Գազարուկ / գազար վայրի with Daucus carota, independently matching the scientific article.",
+            "access": "search-index evidence only; not needed for primary conclusion"
+          }
+        ],
+        "proposal_limit": "Photo observation only; no collection, ingestion or treatment claim. The taxon in evidence is explicitly sourced, not guessed; no Latin is placed in the learner sentence.",
+        "after": "վայրի գազար | Բուսաբանը լուսանկարեց արահետի եզրին աճող վայրի գազարը։ | Ботаник сфотографировал дикую морковь, растущую у края тропы. | The botanist photographed the wild carrot growing at the edge of the path. | Le botaniste a photographié la carotte sauvage qui poussait au bord du sentier. | El botánico fotografió la zanahoria silvestre que crecía al borde del sendero. | Der Botaniker fotografierte die wilde Möhre am Wegrand. | O botânico fotografou a cenoura-brava que crescia à beira da trilha.",
+        "proposal_validated": true
+      }
+    ],
+    "access_limits": [
+      "Earlier hy.wiktionary request returned403 and was not bypassed.",
+      "ArmDict direct բոռաճանճ entry unavailable; no repeated attempts at access restriction.",
+      "Some medical PDF links404/redirect-loop; relied on directly accessible dictionary, Medex and official lexical evidence instead."
+    ]
+  },
+  "final_corrections": {
+    "changes": [
+      {
+        "part": 4,
+        "word": "բոռաճանճ",
+        "kind": "evidence-based lexical adjudication",
+        "changed": true
+      },
+      {
+        "part": 1,
+        "word": "որքին",
+        "kind": "evidence-based lexical adjudication",
+        "changed": true
+      },
+      {
+        "part": 6,
+        "word": "գոնգեղ",
+        "kind": "evidence-based lexical adjudication",
+        "changed": false
+      },
+      {
+        "part": 2,
+        "word": "վայրի գազար",
+        "kind": "evidence-based lexical adjudication",
+        "changed": true
+      },
+      {
+        "part": 5,
+        "word": "ստեղծարար",
+        "kind": "phonetic article correction",
+        "before": "Ուսուցիչն երեխաների",
+        "after": "Ուսուցիչը երեխաների"
+      },
+      {
+        "part": 5,
+        "word": "Դդմից լապտեր",
+        "kind": "phonetic article correction",
+        "before": "լապտերն երեկոյան",
+        "after": "լապտերը երեկոյան"
+      },
+      {
+        "part": 5,
+        "word": "այլասիրություն",
+        "kind": "phonetic article correction",
+        "before": "այլասիրությունն ոգեշնչեց",
+        "after": "այլասիրությունը ոգեշնչեց"
+      },
+      {
+        "part": 5,
+        "word": "անառողջություն",
+        "kind": "phonetic article correction",
+        "before": "պապիկն երեկ",
+        "after": "պապիկը երեկ"
+      },
+      {
+        "part": 5,
+        "word": "անգուժատ",
+        "kind": "phonetic article correction",
+        "before": "Խոհարարն ոսպին",
+        "after": "Խոհարարը ոսպին"
+      },
+      {
+        "part": 5,
+        "word": "անտեսանելիություն",
+        "kind": "phonetic article correction",
+        "before": "հերոսն երազում",
+        "after": "հերոսը երազում"
+      }
+    ],
+    "final_sources": {
+      "1": "c4dc3487d776b0f4cb677faf679e5b7dc26fcb947c3abeaf9ef9399c8ab3d444",
+      "2": "d1dda2d05e883b3228bbb7ec65e475fe3e126e3570054a573b1e341b3dc52e2c",
+      "3": "b397174bdbda3d6be3ac187529a433082ec4eae698c3041afa60b99a5ef0e017",
+      "4": "b59f70e1f628ebc805dcd426d0f74fe5525be17206f70e0301a410979c0d252b",
+      "5": "7374204daf7d20c02bc9a8e77070ef9c690293e0d5fb659230beaea1bf8cd0b3",
+      "6": "5c250c582acffbcd0752800f36afd1c3d076269f235c3c5c063b22c2f626d050"
+    }
+  }
+}

@@ -57,7 +57,7 @@ function subEvent(id,type,status,custom,custId,days){
   pg.on('request',q=>{ const u=q.url(); if(!u.startsWith(base)&&!u.startsWith('data:')&&!u.startsWith('blob:')) ext.push(u); });
   const shot=async n=>{ if(SHOTS) await pg.screenshot({path:path.join(SHOTS,n+'.png')}); };
   const noH=async m=>ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'без прокрутки вбок: '+m);
-  await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.click('[data-act=pickLang][data-arg=ru]');
+  await pg.goto(base); await pg.click('[data-act=landLang][data-arg=ru]'); await pg.evaluate(() => window.__bararan.H.landGo());
   await pg.waitForFunction(()=>window.__bararan.ACC.srv===true,null,{timeout:5000}).catch(()=>{});
   await pg.click('[data-act=tab][data-arg=settings]');
   ok(await pg.locator('.acc-set [data-act=accGo]').count()===1,'настройки: раздел «Личный кабинет», кнопка входа');
@@ -145,6 +145,12 @@ function subEvent(id,type,status,custom,custId,days){
   const c3=mailOf('third@example.com')[0];
   ok(c3&&/^Barik: your sign-in code/.test(c3.subject),'письмо по-английски');
   r=await post(base+'api/?r=verify',{email:'third@example.com',code:c3.code,nick:'aram 2'},H); ok(r.status===409&&/taken/.test(r.body),'никнейм без учёта регистра занят — taken');
+  // файловый IP Rate Limiter (CF-Connecting-IP) на авторизацию: >10 неудачных попыток за минуту → 429
+  { let all400=true;
+    for(let i=0;i<10;i++){ const x=await post(base+'api/?r=verify',{email:'ghost'+i+'@example.com',code:'000000'},Object.assign({},H,{'CF-Connecting-IP':'198.51.100.42'})); if(x.status!==400) all400=false; }
+    const x11=await post(base+'api/?r=verify',{email:'ghost11@example.com',code:'000000'},Object.assign({},H,{'CF-Connecting-IP':'198.51.100.42'}));
+    const xOther=await post(base+'api/?r=verify',{email:'ghost11@example.com',code:'000000'},Object.assign({},H,{'CF-Connecting-IP':'198.51.100.43'}));
+    ok(all400&&x11.status===429&&xOther.status===400,'IP rate limit auth verify (CF-Connecting-IP): 10×400 → 11-я 429, другой IP 400'); }
   ok(errs.length===0,'ошибок JS нет '+errs.join(' | '));
   ok(ext.every(u=>u.startsWith('https://cdn.paddle.com/')),'внешние запросы — только окно оплаты Paddle '+ext.join(' '));
   ok(!phpErr,'PHP без предупреждений '+phpErr.slice(0,300));

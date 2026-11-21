@@ -1,0 +1,3368 @@
+[
+  {
+    "file": "a1_02.txt",
+    "line": 32,
+    "word": "երիտասարդ",
+    "sentence": "Նա երիտասարդ բժիշկ է։"
+  },
+  {
+    "file": "a1_02.txt",
+    "line": 54,
+    "word": "հարուստ",
+    "sentence": "Նա հարուստ մարդ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 26,
+    "word": "բարի",
+    "sentence": "Նա բարի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 27,
+    "word": "չար",
+    "sentence": "Նա չար է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 28,
+    "word": "խելացի",
+    "sentence": "Նա խելացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 29,
+    "word": "հիմար",
+    "sentence": "Նա հիմար է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 30,
+    "word": "ազնիվ",
+    "sentence": "Նա ազնիվ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 31,
+    "word": "ստախոս",
+    "sentence": "Նա ստախոս է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 32,
+    "word": "քաղաքավարի",
+    "sentence": "Նա քաղաքավարի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 33,
+    "word": "կոպիտ",
+    "sentence": "Նա կոպիտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 36,
+    "word": "նյարդային",
+    "sentence": "Նա նյարդային է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 38,
+    "word": "համարձակ",
+    "sentence": "Նա համարձակ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 40,
+    "word": "ծույլ",
+    "sentence": "Նա ծույլ աշակերտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 41,
+    "word": "աշխատասեր",
+    "sentence": "Նա աշխատասեր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 42,
+    "word": "լուրջ",
+    "sentence": "Նա լուրջ մարդ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 47,
+    "word": "բարեհամբույր",
+    "sentence": "Նա բարեհամբույր մարդ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 48,
+    "word": "եսասեր",
+    "sentence": "Նա եսասեր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 50,
+    "word": "ագահ",
+    "sentence": "Նա շատ ագահ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 53,
+    "word": "նիհար",
+    "sentence": "Նա նիհար է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 54,
+    "word": "բարձրահասակ",
+    "sentence": "Նա բարձրահասակ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 72,
+    "word": "զգույշ",
+    "sentence": "Նա շատ զգույշ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 73,
+    "word": "ուշադիր",
+    "sentence": "Նա ուշադիր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 74,
+    "word": "անփույթ",
+    "sentence": "Նա անփույթ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 76,
+    "word": "հավատարիմ",
+    "sentence": "Նա հավատարիմ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 84,
+    "word": "բարկանալ",
+    "sentence": "Նա հաճախ բարկանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 96,
+    "word": "դժբախտ",
+    "sentence": "Նա դժբախտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 130,
+    "word": "կնքահայր",
+    "sentence": "Նա իմ կնքահայրն է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 131,
+    "word": "կնքամայր",
+    "sentence": "Նա իմ կնքամայրն է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 185,
+    "word": "հավաքել",
+    "sentence": "Նա սենյակը հավաքում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 320,
+    "word": "զբոսաշրջիկ",
+    "sentence": "Նա զբոսաշրջիկ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 352,
+    "word": "վաղ",
+    "sentence": "Նա վաղ արթնանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 414,
+    "word": "կզակ",
+    "sentence": "Նա կզակը քորում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 423,
+    "word": "հազալ",
+    "sentence": "Նա հազում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 484,
+    "word": "գիտելիք",
+    "sentence": "Գիտելիքը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 486,
+    "word": "կրթություն",
+    "sentence": "Կրթությունը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 489,
+    "word": "տնօրեն",
+    "sentence": "Նա տնօրեն է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 490,
+    "word": "ղեկավար",
+    "sentence": "Նա ղեկավար է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 497,
+    "word": "աշխատող",
+    "sentence": "Նա լավ աշխատող է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 549,
+    "word": "տասնինը",
+    "sentence": "Նա տասնինը տարեկան է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 560,
+    "word": "երրորդ",
+    "sentence": "Նա երրորդ դասարանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 561,
+    "word": "չորրորդ",
+    "sentence": "Նա չորրորդ հարկում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 669,
+    "word": "կարևոր",
+    "sentence": "Սա կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 670,
+    "word": "անհրաժեշտ",
+    "sentence": "Ջուրը անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 674,
+    "word": "զբաղված",
+    "sentence": "Նա զբաղված է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 676,
+    "word": "հայտնի",
+    "sentence": "Նա հայտնի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 686,
+    "word": "վատագույն",
+    "sentence": "Նա վատագույն ուսուցիչն է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 694,
+    "word": "ուրիշ",
+    "sentence": "Նա ուրիշ քաղաքում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 696,
+    "word": "բախտավոր",
+    "sentence": "Նա բախտավոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 716,
+    "word": "նույնպես",
+    "sentence": "Նա նույնպես ուսանող է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 723,
+    "word": "իսկապես",
+    "sentence": "Նա իսկապես բարի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 739,
+    "word": "այնպես",
+    "sentence": "Նա այնպես սիրուն է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 741,
+    "word": "այնքան",
+    "sentence": "Նա այնքան բարի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 869,
+    "word": "տնտեսուհի",
+    "sentence": "Նա տնտեսուհի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 907,
+    "word": "ավտոսպասարկում",
+    "sentence": "Ավտոսպասարկումը անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 913,
+    "word": "ուղևորափոխադրում",
+    "sentence": "Ուղևորափոխադրումը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1016,
+    "word": "միշտ",
+    "sentence": "Նա միշտ ժպտում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1022,
+    "word": "դեռ",
+    "sentence": "Նա դեռ քնած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1238,
+    "word": "կիբեռանվտանգություն",
+    "sentence": "Կիբեռանվտանգությունը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1307,
+    "word": "ֆրանսիացի",
+    "sentence": "Նա ֆրանսիացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1308,
+    "word": "գերմանացի",
+    "sentence": "Նա գերմանացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1309,
+    "word": "իտալացի",
+    "sentence": "Նա իտալացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1311,
+    "word": "արաբ",
+    "sentence": "Նա արաբ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1322,
+    "word": "արաբերեն",
+    "sentence": "Արաբերենը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1325,
+    "word": "հայրենակից",
+    "sentence": "Նա իմ հայրենակիցն է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1355,
+    "word": "մորուքավոր",
+    "sentence": "Նա մորուքավոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1400,
+    "word": "մեկ-մեկ",
+    "sentence": "Նա մեկ-մեկ գալիս է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1409,
+    "word": "առողջանալ",
+    "sentence": "Նա առողջանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1416,
+    "word": "ուրախանալ",
+    "sentence": "Նա ուրախանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1417,
+    "word": "ստել",
+    "sentence": "Նա ստում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1440,
+    "word": "շարժվել",
+    "sentence": "Նա արագ շարժվում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1488,
+    "word": "արտադրամաս",
+    "sentence": "Նա արտադրամասում աշխատում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1508,
+    "word": "կրկնություն",
+    "sentence": "Կրկնությունը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1594,
+    "word": "քուրդ",
+    "sentence": "Նա քուրդ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1604,
+    "word": "խորվաթ",
+    "sentence": "Նա խորվաթ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1611,
+    "word": "շվեդ",
+    "sentence": "Նա շվեդ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1612,
+    "word": "նորվեգացի",
+    "sentence": "Նա նորվեգացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1613,
+    "word": "դանիացի",
+    "sentence": "Նա դանիացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1614,
+    "word": "հոլանդացի",
+    "sentence": "Նա հոլանդացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1615,
+    "word": "բելգիացի",
+    "sentence": "Նա բելգիացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1616,
+    "word": "շվեյցարացի",
+    "sentence": "Նա շվեյցարացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1617,
+    "word": "ավստրիացի",
+    "sentence": "Նա ավստրիացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1618,
+    "word": "իռլանդացի",
+    "sentence": "Նա իռլանդացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1627,
+    "word": "սիրիացի",
+    "sentence": "Նա սիրիացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1649,
+    "word": "անընդհատ",
+    "sentence": "Նա անընդհատ ծիծաղում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1650,
+    "word": "շարունակ",
+    "sentence": "Նա շարունակ ժպտում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1651,
+    "word": "անդադար",
+    "sentence": "Նա անդադար խոսում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1656,
+    "word": "կողքին",
+    "sentence": "Նա իմ կողքին է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1702,
+    "word": "տեսանկարահանել",
+    "sentence": "Նա տեսանկարահանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1735,
+    "word": "սնունդ",
+    "sentence": "Առողջ սնունդը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1876,
+    "word": "իսպանացի",
+    "sentence": "Նա իսպանացի է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1920,
+    "word": "Ուզբեկստան",
+    "sentence": "Նա Ուզբեկստանից է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1921,
+    "word": "էմիգրանտ",
+    "sentence": "Նա էմիգրանտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1981,
+    "word": "անհանգստացած",
+    "sentence": "Նա անհանգստացած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1992,
+    "word": "թշվառ",
+    "sentence": "Նա շատ թշվառ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1994,
+    "word": "ձանձրացած",
+    "sentence": "Նա տանը ձանձրացած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1997,
+    "word": "կենսուրախ",
+    "sentence": "Նա կենսուրախ աղջիկ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1998,
+    "word": "տրտում",
+    "sentence": "Նա տրտում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 1999,
+    "word": "մելամաղձոտ",
+    "sentence": "Նա մելամաղձոտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2000,
+    "word": "կատաղած",
+    "sentence": "Նա կատաղած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2001,
+    "word": "խելագար",
+    "sentence": "Նա խելագար է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2002,
+    "word": "վրդովված",
+    "sentence": "Նա վրդովված է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2025,
+    "word": "մեջտեղ",
+    "sentence": "Նա սենյակի մեջտեղում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2053,
+    "word": "պարեն",
+    "sentence": "Պարենը անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2073,
+    "word": "խռմփալ",
+    "sentence": "Նա խռմփում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2078,
+    "word": "քուն",
+    "sentence": "Քունը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2082,
+    "word": "սափրել",
+    "sentence": "Նա սափրվում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2166,
+    "word": "ժոնգլյոր",
+    "sentence": "Նա ժոնգլյոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2230,
+    "word": "կուրանալ",
+    "sentence": "Նա կուրանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2236,
+    "word": "խելոք",
+    "sentence": "Նա խելոք է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2237,
+    "word": "խմած",
+    "sentence": "Նա խմած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2244,
+    "word": "կարող",
+    "sentence": "Նա կարող մարդ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2245,
+    "word": "կույր",
+    "sentence": "Նա կույր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2247,
+    "word": "կրտսեր",
+    "sentence": "Նա կրտսեր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2249,
+    "word": "համակրելի",
+    "sentence": "Նա համակրելի մարդ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2250,
+    "word": "համր",
+    "sentence": "Նա համր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2253,
+    "word": "հարբած",
+    "sentence": "Նա հարբած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2269,
+    "word": "մտահոգ",
+    "sentence": "Նա մտահոգ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2285,
+    "word": "առավել",
+    "sentence": "Նա առավել հմուտ է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2291,
+    "word": "կամաց",
+    "sentence": "Նա կամաց քայլում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2314,
+    "word": "նամանավանդ",
+    "sentence": "Սա նամանավանդ կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2321,
+    "word": "հրապարակավ",
+    "sentence": "Նա հրապարակավ խոսում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2322,
+    "word": "հստակորեն",
+    "sentence": "Նա հստակորեն խոսում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2325,
+    "word": "վստահաբար",
+    "sentence": "Նա վստահաբար խոսում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2499,
+    "word": "լսողություն",
+    "sentence": "Նա լսողությունը կորցրել է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2623,
+    "word": "մաքրություն",
+    "sentence": "Մաքրությունը կարևոր է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2642,
+    "word": "նեցուկ",
+    "sentence": "Նա իմ նեցուկն է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2650,
+    "word": "շալակ",
+    "sentence": "Նա պայուսակը շալակին է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2732,
+    "word": "նեղացած",
+    "sentence": "Նա նեղացած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2733,
+    "word": "տխրած",
+    "sentence": "Նա տխրած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2736,
+    "word": "ապշած",
+    "sentence": "Նա ապշած է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2898,
+    "word": "ավլել",
+    "sentence": "Նա հատակը ավլում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2927,
+    "word": "խենթանալ",
+    "sentence": "Նա հաճախ խենթանում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2935,
+    "word": "կաղալ",
+    "sentence": "Նա կաղում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2963,
+    "word": "ճեմել",
+    "sentence": "Նա այգում ճեմում է։"
+  },
+  {
+    "file": "gen_a2.txt",
+    "line": 2998,
+    "word": "տրտնջալ",
+    "sentence": "Նա միշտ տրտնջում է։"
+  },
+  {
+    "file": "a1_00.txt",
+    "line": 17,
+    "word": "նա",
+    "sentence": "Նա իմ եղբայրն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2,
+    "word": "հասարակություն",
+    "sentence": "Հասարակությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 21,
+    "word": "ժողովրդավարություն",
+    "sentence": "Ժողովրդավարությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 35,
+    "word": "խաղաղություն",
+    "sentence": "Խաղաղությունն անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 53,
+    "word": "մասնագետ",
+    "sentence": "Նա համակարգիչների մասնագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 54,
+    "word": "փորձագետ",
+    "sentence": "Նա ճարտարապետության փորձագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 105,
+    "word": "պրոֆեսոր",
+    "sentence": "Նա հայտնի պրոֆեսոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 107,
+    "word": "ասպիրանտ",
+    "sentence": "Նա ասպիրանտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 108,
+    "word": "բակալավր",
+    "sentence": "Նա բակալավր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 109,
+    "word": "մագիստրոս",
+    "sentence": "Նա մագիստրոս է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 113,
+    "word": "ուսուցում",
+    "sentence": "Ուսուցումը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 122,
+    "word": "պատմություն",
+    "sentence": "Պատմությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 153,
+    "word": "գրիպ",
+    "sentence": "Նա գրիպով հիվանդացել է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 171,
+    "word": "հաջորդականություն",
+    "sentence": "Քայլերի հաջորդականությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 217,
+    "word": "տեխնոլոգիա",
+    "sentence": "Տեխնոլոգիան շատ կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 220,
+    "word": "էջ",
+    "sentence": "Այս էջը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 246,
+    "word": "արվեստ",
+    "sentence": "Արվեստը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 259,
+    "word": "դերասանուհի",
+    "sentence": "Նա հայտնի դերասանուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 277,
+    "word": "ժամանակակից",
+    "sentence": "Նա ժամանակակից նկարիչ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 288,
+    "word": "պահպանություն",
+    "sentence": "Կենդանիների պահպանությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 291,
+    "word": "էներգիա",
+    "sentence": "Էներգիան կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 300,
+    "word": "գյուղատնտեսություն",
+    "sentence": "Հայաստանում գյուղատնտեսությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 333,
+    "word": "երևակայություն",
+    "sentence": "Երևակայությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 379,
+    "word": "գործընթաց",
+    "sentence": "Այս գործընթացը շատ կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 381,
+    "word": "քայլ",
+    "sentence": "Յուրաքանչյուր քայլ կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 382,
+    "word": "նախապատրաստություն",
+    "sentence": "Նախապատրաստությունը շատ կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 403,
+    "word": "արժանապատվություն",
+    "sentence": "Արժանապատվությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 427,
+    "word": "սպառնալ",
+    "sentence": "Նա ինձ սպառնում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 431,
+    "word": "աջակցություն",
+    "sentence": "Ձեր աջակցությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 432,
+    "word": "հոգատարություն",
+    "sentence": "Հոգատարությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 433,
+    "word": "թշնամի",
+    "sentence": "Նա իմ թշնամին է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 448,
+    "word": "ներմուծում",
+    "sentence": "Ներմուծումն անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 480,
+    "word": "դժգոհել",
+    "sentence": "Նա միշտ դժգոհում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 561,
+    "word": "հոգնել",
+    "sentence": "Նա աշխատանքից հոգնել է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 582,
+    "word": "հաճախակի",
+    "sentence": "Նա հաճախակի ճանապարհորդում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 584,
+    "word": "նախկին",
+    "sentence": "Նա նախկին ուսուցիչ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 591,
+    "word": "սառնասիրտ",
+    "sentence": "Նա սառնասիրտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 592,
+    "word": "բարեսիրտ",
+    "sentence": "Նա բարեսիրտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 593,
+    "word": "դաժան",
+    "sentence": "Նա դաժան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 598,
+    "word": "կեղծավոր",
+    "sentence": "Նա շատ կեղծավոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 599,
+    "word": "վստահելի",
+    "sentence": "Նա վստահելի ընկեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 600,
+    "word": "անվստահելի",
+    "sentence": "Նա անվստահելի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 601,
+    "word": "պատասխանատու",
+    "sentence": "Նա պատասխանատու աշխատող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 605,
+    "word": "ակտիվ",
+    "sentence": "Նա շատ ակտիվ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 606,
+    "word": "պասիվ",
+    "sentence": "Նա պասիվ դիտորդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 608,
+    "word": "տաղանդավոր",
+    "sentence": "Նա շատ տաղանդավոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 610,
+    "word": "անփորձ",
+    "sentence": "Նա դեռ անփորձ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 611,
+    "word": "գրագետ",
+    "sentence": "Նա գրագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 612,
+    "word": "անգրագետ",
+    "sentence": "Նա անգրագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 616,
+    "word": "սոցիալական",
+    "sentence": "Սոցիալական ապահովությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 619,
+    "word": "գիտական",
+    "sentence": "Գիտական հետազոտությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 620,
+    "word": "բժշկական",
+    "sentence": "Բժշկական օգնություն անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 646,
+    "word": "գունատ",
+    "sentence": "Նա գունատ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 672,
+    "word": "իբր",
+    "sentence": "Նա իբր բժիշկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 677,
+    "word": "լիովին",
+    "sentence": "Նա լիովին պատրաստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 689,
+    "word": "հայ",
+    "sentence": "Նա հայ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 712,
+    "word": "հայրենադարձ",
+    "sentence": "Նա հայրենադարձ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 766,
+    "word": "մարաթոն",
+    "sentence": "Նա մարաթոն վազում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 768,
+    "word": "չեմպիոն",
+    "sentence": "Նա աշխարհի չեմպիոն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 781,
+    "word": "մարզասեր",
+    "sentence": "Նա մեծ մարզասեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 859,
+    "word": "խանգարել",
+    "sentence": "Նա ինձ խանգարում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 889,
+    "word": "գոռալ",
+    "sentence": "Նա բարձր գոռում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 951,
+    "word": "վերապատրաստում",
+    "sentence": "Վերապատրաստումը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1001,
+    "word": "անվտանգություն",
+    "sentence": "Անվտանգությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1054,
+    "word": "կրթված",
+    "sentence": "Նա շատ կրթված է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1061,
+    "word": "հոգեկան",
+    "sentence": "Հոգեկան առողջությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1066,
+    "word": "չեզոք",
+    "sentence": "Նա չեզոք է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1067,
+    "word": "լավատես",
+    "sentence": "Նա լավատես է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1068,
+    "word": "հոռետես",
+    "sentence": "Նա հոռետես է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1093,
+    "word": "ենթակա",
+    "sentence": "Նա իմ ենթական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1156,
+    "word": "թել",
+    "sentence": "Նա թելով կարում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1180,
+    "word": "միամիտ",
+    "sentence": "Նա չափազանց միամիտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1194,
+    "word": "գաղտնագրում",
+    "sentence": "Տվյալների գաղտնագրումը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1372,
+    "word": "խոզուկ",
+    "sentence": "Նա խոզուկով հիվանդացել է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1417,
+    "word": "շախմատիստ",
+    "sentence": "Նա լավ շախմատիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1421,
+    "word": "ձեռներեց",
+    "sentence": "Նա հաջողակ ձեռներեց է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1517,
+    "word": "պարալիմպիկ",
+    "sentence": "Նա պարալիմպիկ մարզիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1552,
+    "word": "սոպրանո",
+    "sentence": "Նա սոպրանո է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1554,
+    "word": "տենոր",
+    "sentence": "Նա հայտնի տենոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1590,
+    "word": "սցենարիստ",
+    "sentence": "Նա հայտնի սցենարիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1703,
+    "word": "անկարևոր",
+    "sentence": "Այդ հարցը անկարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1717,
+    "word": "խնայող",
+    "sentence": "Նա խնայող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1718,
+    "word": "շռայլ",
+    "sentence": "Նա շռայլ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1722,
+    "word": "պարտաճանաչ",
+    "sentence": "Նա պարտաճանաչ աշակերտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1728,
+    "word": "նշանավոր",
+    "sentence": "Նա նշանավոր գիտնական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1729,
+    "word": "հռչակավոր",
+    "sentence": "Նա հռչակավոր երգիչ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1777,
+    "word": "բնավորություն",
+    "sentence": "Բնավորությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1784,
+    "word": "խելք",
+    "sentence": "Խելքը կյանքում կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1811,
+    "word": "ապահովություն",
+    "sentence": "Ֆինանսական ապահովությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1859,
+    "word": "տնտեսագիտություն",
+    "sentence": "Տնտեսագիտությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1968,
+    "word": "սնոուբորդ",
+    "sentence": "Նա սնոուբորդով սահում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 1978,
+    "word": "կիսապաշտպան",
+    "sentence": "Նա հիանալի կիսապաշտպան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2011,
+    "word": "ընդունում",
+    "sentence": "Ընդունումը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2017,
+    "word": "պահպանում",
+    "sentence": "Պահպանումը անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2046,
+    "word": "սայլակ",
+    "sentence": "Նա սայլակը հրում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2083,
+    "word": "քաղհանել",
+    "sentence": "Նա պարտեզը քաղհանում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2106,
+    "word": "թամադա",
+    "sentence": "Նա հիանալի թամադա է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2124,
+    "word": "չափահաս",
+    "sentence": "Նա արդեն չափահաս է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2147,
+    "word": "ալեհեր",
+    "sentence": "Նա ալեհեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2148,
+    "word": "շեկ",
+    "sentence": "Նա շեկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2149,
+    "word": "սևահեր",
+    "sentence": "Նա սևահեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2150,
+    "word": "կարմրահեր",
+    "sentence": "Նա կարմրահեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2151,
+    "word": "սափրված",
+    "sentence": "Նա սափրված է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2157,
+    "word": "ցածրահասակ",
+    "sentence": "Նա ցածրահասակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2158,
+    "word": "միջահասակ",
+    "sentence": "Նա միջահասակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2159,
+    "word": "մարմնեղ",
+    "sentence": "Նա մարմնեղ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2181,
+    "word": "սպիտակամաշկ",
+    "sentence": "Նա սպիտակամաշկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2353,
+    "word": "լեռնագնաց",
+    "sentence": "Նա փորձառու լեռնագնաց է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2389,
+    "word": "ծաղկավաճառ",
+    "sentence": "Նա ծաղկավաճառ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2418,
+    "word": "էլեկտրոնիկա",
+    "sentence": "Նա էլեկտրոնիկայի մասնագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2427,
+    "word": "քենակալ",
+    "sentence": "Նա իմ քենակալն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2439,
+    "word": "համակուրսեցի",
+    "sentence": "Նա իմ համակուրսեցին է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2443,
+    "word": "համագյուղացի",
+    "sentence": "Նա իմ համագյուղացին է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2444,
+    "word": "համաքաղաքացի",
+    "sentence": "Նա իմ համաքաղաքացին է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2462,
+    "word": "բնակվել",
+    "sentence": "Նա Երևանում բնակվում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2484,
+    "word": "ցավեցնել",
+    "sentence": "Նա ինձ ցավեցնում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2500,
+    "word": "բարեկամություն",
+    "sentence": "Բարեկամությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2556,
+    "word": "ախտահանում",
+    "sentence": "Ախտահանումը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2566,
+    "word": "կադաստր",
+    "sentence": "Կադաստրը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2571,
+    "word": "հավաքորդ",
+    "sentence": "Նա գրքերի հավաքորդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2617,
+    "word": "թիմակից",
+    "sentence": "Նա իմ թիմակիցն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2624,
+    "word": "պրոֆեսիոնալ",
+    "sentence": "Նա իսկական պրոֆեսիոնալ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2625,
+    "word": "սկսնակ",
+    "sentence": "Նա շախմատում սկսնակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2628,
+    "word": "ինքնուս",
+    "sentence": "Նա ինքնուս երաժիշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2629,
+    "word": "շնորհալի",
+    "sentence": "Նա շնորհալի աշակերտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2632,
+    "word": "բթամիտ",
+    "sentence": "Նա բթամիտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2646,
+    "word": "պարծենկոտ",
+    "sentence": "Նա միշտ պարծենկոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2647,
+    "word": "խանդոտ",
+    "sentence": "Նա շատ խանդոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2671,
+    "word": "ողբերգակ",
+    "sentence": "Նա մեծ ողբերգակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2857,
+    "word": "Ուլյանովսկ",
+    "sentence": "Նա Ուլյանովսկից է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2971,
+    "word": "բասկետբոլիստ",
+    "sentence": "Նա հայտնի բասկետբոլիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2972,
+    "word": "բասկետբոլիստուհի",
+    "sentence": "Նա բասկետբոլիստուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2974,
+    "word": "թենիսիստ",
+    "sentence": "Նա պրոֆեսիոնալ թենիսիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2975,
+    "word": "թենիսիստուհի",
+    "sentence": "Նա հայտնի թենիսիստուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2977,
+    "word": "ջրադահուկորդ",
+    "sentence": "Նա ջրադահուկորդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2979,
+    "word": "վոլեյբոլիստ",
+    "sentence": "Նա պրոֆեսիոնալ վոլեյբոլիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2990,
+    "word": "երաժշտագետ",
+    "sentence": "Նա հայտնի երաժշտագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 2991,
+    "word": "երգահան",
+    "sentence": "Նա հայտնի երգահան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3008,
+    "word": "ճաշաման",
+    "sentence": "Նա ճաշամանը լվանում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3191,
+    "word": "ծանրորդ",
+    "sentence": "Նա հայտնի ծանրորդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3192,
+    "word": "հավակնորդ",
+    "sentence": "Նա տիտղոսի հավակնորդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3446,
+    "word": "գրոսմայստեր",
+    "sentence": "Նա գրոսմայստեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3447,
+    "word": "վերջնախաղ",
+    "sentence": "Վերջնախաղը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3448,
+    "word": "ցայտնոտ",
+    "sentence": "Նա ցայտնոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3562,
+    "word": "ավստրալիացի",
+    "sentence": "Նա ավստրալիացի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 3945,
+    "word": "ռուսաստանցի",
+    "sentence": "Նա ռուսաստանցի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4015,
+    "word": "ամբիցիոզ",
+    "sentence": "Նա ամբիցիոզ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4017,
+    "word": "ամրակազմ",
+    "sentence": "Նա ամրակազմ մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4018,
+    "word": "այլասիրական",
+    "sentence": "Նա այլասիրական մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4020,
+    "word": "անամուսին",
+    "sentence": "Նա անամուսին է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4040,
+    "word": "անմիտ",
+    "sentence": "Նա անմիտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4044,
+    "word": "անվանի",
+    "sentence": "Նա անվանի դերասան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4045,
+    "word": "անվրդով",
+    "sentence": "Նա անվրդով մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4049,
+    "word": "աշխարհահռչակ",
+    "sentence": "Նա աշխարհահռչակ երգիչ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4050,
+    "word": "աչալուրջ",
+    "sentence": "Նա աչալուրջ պահակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4052,
+    "word": "աչքածակ",
+    "sentence": "Նա շատ աչքածակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4054,
+    "word": "ապերջանիկ",
+    "sentence": "Նա շատ ապերջանիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4056,
+    "word": "բանական",
+    "sentence": "Նա բանական մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4060,
+    "word": "բարեսեր",
+    "sentence": "Նա բարեսեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4061,
+    "word": "բարյացակամ",
+    "sentence": "Նա միշտ բարյացակամ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4065,
+    "word": "գանգրագեղ",
+    "sentence": "Նա գանգրագեղ աղջիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4069,
+    "word": "գինով",
+    "sentence": "Նա գինով է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4070,
+    "word": "գիտակից",
+    "sentence": "Նա մաթեմատիկայի գիտակից է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4071,
+    "word": "գիտուն",
+    "sentence": "Նա շատ գիտուն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4075,
+    "word": "գորովագին",
+    "sentence": "Նա գորովագին մայր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4079,
+    "word": "դանդաղկոտ",
+    "sentence": "Նա դանդաղկոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4081,
+    "word": "դատարկագլուխ",
+    "sentence": "Նա դատարկագլուխ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4083,
+    "word": "դդմագլուխ",
+    "sentence": "Նա դդմագլուխ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4084,
+    "word": "դժխեմ",
+    "sentence": "Նա դժխեմ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4085,
+    "word": "դյուրաշարժ",
+    "sentence": "Նա դյուրաշարժ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4086,
+    "word": "եռանդագին",
+    "sentence": "Նա եռանդագին աշխատում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4087,
+    "word": "եսասիրական",
+    "sentence": "Նա եսասիրական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4088,
+    "word": "երախտամոռ",
+    "sentence": "Նա երախտամոռ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4090,
+    "word": "երկյուղած",
+    "sentence": "Նա երկյուղած է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4091,
+    "word": "զառամ",
+    "sentence": "Նա զառամ դարձել է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4093,
+    "word": "զարհուրկոտ",
+    "sentence": "Նա շատ զարհուրկոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4094,
+    "word": "զգաստամիտ",
+    "sentence": "Նա միշտ զգաստամիտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4099,
+    "word": "թլվատ",
+    "sentence": "Նա թլվատ խոսում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4103,
+    "word": "լաչառ",
+    "sentence": "Նա շատ լաչառ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4104,
+    "word": "լավատեսական",
+    "sentence": "Նա միշտ լավատեսական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4106,
+    "word": "լրջմիտ",
+    "sentence": "Նա լրջմիտ ուսանող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4110,
+    "word": "ծիծաղկոտ",
+    "sentence": "Նա ծիծաղկոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4111,
+    "word": "կակազ",
+    "sentence": "Նա կակազ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4116,
+    "word": "կենսախինդ",
+    "sentence": "Նա միշտ կենսախինդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4125,
+    "word": "կուլտուրական",
+    "sentence": "Նա շատ կուլտուրական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4126,
+    "word": "կրեատիվ",
+    "sentence": "Նա շատ կրեատիվ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4128,
+    "word": "հաղթ",
+    "sentence": "Նա հաղթ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4129,
+    "word": "հաղթամարմին",
+    "sentence": "Նա հաղթամարմին է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4132,
+    "word": "համբավավոր",
+    "sentence": "Նա համբավավոր գրող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4133,
+    "word": "հայազգի",
+    "sentence": "Նա հայազգի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4141,
+    "word": "հաստատակամ",
+    "sentence": "Նա հաստատակամ մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4142,
+    "word": "հարցասեր",
+    "sentence": "Նա շատ հարցասեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4143,
+    "word": "հեռատես",
+    "sentence": "Նա հեռատես ղեկավար է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4148,
+    "word": "հռետորաբան",
+    "sentence": "Նա հռետորաբան խոսնակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4149,
+    "word": "ձախլիկ",
+    "sentence": "Նա ձախլիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4150,
+    "word": "ձախող",
+    "sentence": "Նա շատ ձախող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4156,
+    "word": "ճարտար",
+    "sentence": "Նա շատ ճարտար է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4158,
+    "word": "մազաթափ",
+    "sentence": "Նա մազաթափ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4161,
+    "word": "մանկամարդ",
+    "sentence": "Նա դեռ մանկամարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4163,
+    "word": "մարդատյաց",
+    "sentence": "Նա մարդատյաց է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4164,
+    "word": "մեծաբազուկ",
+    "sentence": "Նա մեծաբազուկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4165,
+    "word": "մեծաբան",
+    "sentence": "Նա շատ մեծաբան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4166,
+    "word": "մեծանուն",
+    "sentence": "Նա մեծանուն գիտնական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4167,
+    "word": "մեծարգո",
+    "sentence": "Նա մեծարգո մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4169,
+    "word": "մենավոր",
+    "sentence": "Նա մենավոր մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4171,
+    "word": "մնջիկ",
+    "sentence": "Նա միշտ մնջիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4172,
+    "word": "մոլի",
+    "sentence": "Նա մոլի ընթերցող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4173,
+    "word": "մունջ",
+    "sentence": "Նա մունջ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4174,
+    "word": "մտածող",
+    "sentence": "Նա մտածող անձնավորություն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4175,
+    "word": "մտառու",
+    "sentence": "Նա շատ մտառու է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4177,
+    "word": "նախանձկոտ",
+    "sentence": "Նա նախանձկոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4178,
+    "word": "նենգավոր",
+    "sentence": "Նա նենգավոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4179,
+    "word": "նվաղկոտ",
+    "sentence": "Նա նվաղկոտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4180,
+    "word": "շիլ",
+    "sentence": "Նա շիլ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4181,
+    "word": "շրջահայաց",
+    "sentence": "Նա շրջահայաց մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4184,
+    "word": "որդեսեր",
+    "sentence": "Նա որդեսեր մայր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4193,
+    "word": "պնդակազմ",
+    "sentence": "Նա պնդակազմ մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4195,
+    "word": "պոռոտաբան",
+    "sentence": "Նա իսկական պոռոտաբան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4196,
+    "word": "ջղային",
+    "sentence": "Նա շատ ջղային է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4197,
+    "word": "սակավախոս",
+    "sentence": "Նա սակավախոս է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4199,
+    "word": "սապատավոր",
+    "sentence": "Նա սապատավոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4205,
+    "word": "սուտասան",
+    "sentence": "Նա սուտասան մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4206,
+    "word": "սրտյա",
+    "sentence": "Նա սրտյա զինվոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4207,
+    "word": "վայիս",
+    "sentence": "Նա վայիս երեխա է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4210,
+    "word": "վատասիրտ",
+    "sentence": "Նա վատասիրտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4211,
+    "word": "վարժ",
+    "sentence": "Նա վարժ վարորդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4212,
+    "word": "վարկաբեկ",
+    "sentence": "Նա վարկաբեկված է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4223,
+    "word": "փառամոլ",
+    "sentence": "Նա շատ փառամոլ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4227,
+    "word": "փութաջան",
+    "sentence": "Նա փութաջան աշխատող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4228,
+    "word": "քրտնաջան",
+    "sentence": "Նա քրտնաջան ուսանող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4265,
+    "word": "անհետ",
+    "sentence": "Նա անհետ կորել է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4270,
+    "word": "աննման",
+    "sentence": "Նա աննման երգչուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4306,
+    "word": "բարձրաստիճան",
+    "sentence": "Նա բարձրաստիճան պաշտոնյան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4312,
+    "word": "բեղմնավոր",
+    "sentence": "Նա բեղմնավոր գրող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4316,
+    "word": "բնիկ",
+    "sentence": "Նա բնիկ Երևանցի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4317,
+    "word": "բնովի",
+    "sentence": "Նա բնովի տաղանդավոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4336,
+    "word": "գեղանի",
+    "sentence": "Նա գեղանի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4359,
+    "word": "երևելի",
+    "sentence": "Նա երևելի գիտնական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4360,
+    "word": "զայիֆ",
+    "sentence": "Նա զայիֆ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4371,
+    "word": "ընտրյալ",
+    "sentence": "Նա ընտրյալ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4378,
+    "word": "թեթևաշարժ",
+    "sentence": "Նա թեթևաշարժ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4438,
+    "word": "հուսակտուր",
+    "sentence": "Նա հուսակտուր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4461,
+    "word": "մեծագույն",
+    "sentence": "Նա մեծագույն երաժիշտն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4466,
+    "word": "մեծավոր",
+    "sentence": "Նա գյուղի մեծավորն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4528,
+    "word": "աջլիկ",
+    "sentence": "Նա աջլիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4529,
+    "word": "առնական",
+    "sentence": "Նա շատ առնական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4530,
+    "word": "առույգ",
+    "sentence": "Նա միշտ առույգ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4532,
+    "word": "արամբի",
+    "sentence": "Նա արամբի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4539,
+    "word": "խեղանդամ",
+    "sentence": "Նա խեղանդամ մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4547,
+    "word": "խունջիկ-մունջիկ",
+    "sentence": "Նա խունջիկ-մունջիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4548,
+    "word": "խռով",
+    "sentence": "Նա ինձնից խռով է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4549,
+    "word": "խռավաթ",
+    "sentence": "Նա խռավաթ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4579,
+    "word": "դյուրաթեք",
+    "sentence": "Նա դյուրաթեք պարուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4583,
+    "word": "երբեմնի",
+    "sentence": "Նա երբեմնի ուսուցիչ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4610,
+    "word": "կողմնակի",
+    "sentence": "Նա կողմնակի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4664,
+    "word": "շրջիկ",
+    "sentence": "Նա շրջիկ վաճառական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4674,
+    "word": "չքնաղ",
+    "sentence": "Նա չքնաղ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4678,
+    "word": "պատկառելի",
+    "sentence": "Նա պատկառելի մարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4679,
+    "word": "պատվարժան",
+    "sentence": "Նա պատվարժան քաղաքացի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4824,
+    "word": "ակտիվորեն",
+    "sentence": "Նա ակտիվորեն աշխատում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4827,
+    "word": "անդուլ",
+    "sentence": "Նա անդուլ աշխատում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4850,
+    "word": "իրավամբ",
+    "sentence": "Նա իրավամբ հաղթող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4873,
+    "word": "հավատարմաբար",
+    "sentence": "Նա հավատարմաբար աշխատում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4876,
+    "word": "սահմանափակորեն",
+    "sentence": "Նա սահմանափակորեն խոսում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4882,
+    "word": "տակավին",
+    "sentence": "Նա տակավին աշխատում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4896,
+    "word": "ֆիզիկապես",
+    "sentence": "Նա ֆիզիկապես ուժեղ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4905,
+    "word": "ալկոհոլիկ",
+    "sentence": "Նա ալկոհոլիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4906,
+    "word": "ալպինիստ",
+    "sentence": "Նա փորձառու ալպինիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4910,
+    "word": "աղոթկեր",
+    "sentence": "Նա բարեպաշտ աղոթկեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4911,
+    "word": "այստեղացի",
+    "sentence": "Նա այստեղացի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4913,
+    "word": "անդամակից",
+    "sentence": "Նա իմ անդամակիցն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4915,
+    "word": "աշխարհաքաղաքացի",
+    "sentence": "Նա աշխարհաքաղաքացի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4916,
+    "word": "ապարանցի",
+    "sentence": "Նա ապարանցի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4917,
+    "word": "ապստամբ",
+    "sentence": "Նա ապստամբ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4919,
+    "word": "առաջնորդ",
+    "sentence": "Նա մեր առաջնորդն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4932,
+    "word": "աքսորակից",
+    "sentence": "Նա իմ աքսորակիցն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4934,
+    "word": "բանաստեղծուհի",
+    "sentence": "Նա հայտնի բանաստեղծուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4935,
+    "word": "բանբեր",
+    "sentence": "Նա արագաշարժ բանբեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4936,
+    "word": "բանսարկու",
+    "sentence": "Նա բանսարկու է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4954,
+    "word": "գրագիտուհի",
+    "sentence": "Նա գրագիտուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4957,
+    "word": "դավադրապաշտ",
+    "sentence": "Նա դավադրապաշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4960,
+    "word": "դեբիլ",
+    "sentence": "Նա դեբիլ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4961,
+    "word": "դեմոկրատ",
+    "sentence": "Նա դեմոկրատ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4971,
+    "word": "երգիծաբան",
+    "sentence": "Նա հիանալի երգիծաբան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 4977,
+    "word": "էթնոերաժշտագետ",
+    "sentence": "Նա հայտնի էթնոերաժշտագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5002,
+    "word": "ծառայող",
+    "sentence": "Նա նոր ծառայող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5003,
+    "word": "ծխող",
+    "sentence": "Նա ծխող է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5004,
+    "word": "ծույլիկ",
+    "sentence": "Նա ծույլիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5005,
+    "word": "կազակ",
+    "sentence": "Նա կազակ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5007,
+    "word": "կալվինական",
+    "sentence": "Նա կալվինական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5008,
+    "word": "կայսերապաշտ",
+    "sentence": "Նա կայսերապաշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5013,
+    "word": "կնամոլ",
+    "sentence": "Նա կնամոլ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5015,
+    "word": "կոսմոպոլիտ",
+    "sentence": "Նա իսկական կոսմոպոլիտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5029,
+    "word": "հետնորդ",
+    "sentence": "Նա թագավորների հետնորդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5044,
+    "word": "ձրիակեր",
+    "sentence": "Նա ճանաչված ձրիակեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5049,
+    "word": "մահմեդական",
+    "sentence": "Նա մահմեդական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5052,
+    "word": "մայրասպան",
+    "sentence": "Նա մայրասպան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5055,
+    "word": "մասոն",
+    "sentence": "Նա մասոն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5058,
+    "word": "մարդելույզ",
+    "sentence": "Նա հայտնի մարդելույզ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5059,
+    "word": "մարտիկ",
+    "sentence": "Նա պրոֆեսիոնալ մարտիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5062,
+    "word": "մաքրամոլ",
+    "sentence": "Նա լեզվի մաքրամոլ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5063,
+    "word": "մեծատուն",
+    "sentence": "Նա մեծատուն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5064,
+    "word": "յուղանկարիչ",
+    "sentence": "Նա հայտնի յուղանկարիչ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5073,
+    "word": "ներկայացուցիչ",
+    "sentence": "Նա մեր ներկայացուցիչն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5083,
+    "word": "շառլատան",
+    "sentence": "Նա շառլատան է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5093,
+    "word": "ունկնդիր",
+    "sentence": "Նա լավ ունկնդիր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5096,
+    "word": "պոպուլիստ",
+    "sentence": "Նա պոպուլիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5098,
+    "word": "պչրուհի",
+    "sentence": "Նա իսկական պչրուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5101,
+    "word": "ջենտլմեն",
+    "sentence": "Նա իսկական ջենտլմեն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5102,
+    "word": "ջիգիթ",
+    "sentence": "Նա հմուտ ջիգիթ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5103,
+    "word": "ռազմիկ",
+    "sentence": "Նա քաջ ռազմիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5108,
+    "word": "ռուսամոլ",
+    "sentence": "Նա հայտնի ռուսամոլ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5113,
+    "word": "սենյակակից",
+    "sentence": "Նա իմ սենյակակիցն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5204,
+    "word": "բացառաբար",
+    "sentence": "Նա բացառաբար տաղանդավոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5212,
+    "word": "կախարդ",
+    "sentence": "Նա հզոր կախարդ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5220,
+    "word": "համակարգող",
+    "sentence": "Նա նախագծի համակարգողն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5223,
+    "word": "միլիարդատեր",
+    "sentence": "Նա հայտնի միլիարդատեր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5228,
+    "word": "մտավորական",
+    "sentence": "Նա հայտնի մտավորական է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5230,
+    "word": "պանթուրքիստ",
+    "sentence": "Նա պանթուրքիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5247,
+    "word": "վարչապետացու",
+    "sentence": "Նա վարչապետացու է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5249,
+    "word": "վերջինեկ",
+    "sentence": "Նա ընտանիքի վերջինեկն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5262,
+    "word": "ցնորամիտ",
+    "sentence": "Նա ցնորամիտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5270,
+    "word": "փրկիչ",
+    "sentence": "Նա մեր փրկիչն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5271,
+    "word": "քաղաքապետացու",
+    "sentence": "Նա քաղաքապետացու է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5284,
+    "word": "ֆիլիպինուհի",
+    "sentence": "Նա ֆիլիպինուհի է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5388,
+    "word": "աներկյուղություն",
+    "sentence": "Աներկյուղությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5416,
+    "word": "արգավանդություն",
+    "sentence": "Հողի արգավանդությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5417,
+    "word": "արժանահավատություն",
+    "sentence": "Արժանահավատությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5435,
+    "word": "գոհացում",
+    "sentence": "Հաճախորդների գոհացումը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5446,
+    "word": "գտանք",
+    "sentence": "Այս գտանքը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5448,
+    "word": "դաստիարակում",
+    "sentence": "Դաստիարակումը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5494,
+    "word": "կախարդվածություն",
+    "sentence": "Նա կախարդվածությունից տառապում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5508,
+    "word": "կրկնողություն",
+    "sentence": "Կրկնողությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5516,
+    "word": "հանճար",
+    "sentence": "Նա հանճար է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5523,
+    "word": "հնազանդություն",
+    "sentence": "Հնազանդությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5547,
+    "word": "միասնականություն",
+    "sentence": "Միասնականությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5554,
+    "word": "մոտիկություն",
+    "sentence": "Մոտիկությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5612,
+    "word": "վարք",
+    "sentence": "Վարքը շատ կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5615,
+    "word": "վերջնամշակում",
+    "sentence": "Վերջնամշակումը շատ կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5631,
+    "word": "տոկունություն",
+    "sentence": "Տոկունությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5692,
+    "word": "ջանասիրաբար",
+    "sentence": "Նա ջանասիրաբար սովորում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5695,
+    "word": "թուրքագետ",
+    "sentence": "Նա հայտնի թուրքագետ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5696,
+    "word": "թրքահայ",
+    "sentence": "Նա թրքահայ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5698,
+    "word": "ժառանգորդ",
+    "sentence": "Նա միակ ժառանգորդն է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5699,
+    "word": "իմպերիալիստ",
+    "sentence": "Նա իմպերիալիստ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5716,
+    "word": "առկայություն",
+    "sentence": "Նրա առկայությունն անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5771,
+    "word": "ոխ",
+    "sentence": "Նա ոխ պահում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5773,
+    "word": "ողջախոհություն",
+    "sentence": "Ողջախոհությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5776,
+    "word": "պատրաստություն",
+    "sentence": "Պատրաստությունը անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5785,
+    "word": "սկզբունքայնություն",
+    "sentence": "Սկզբունքայնությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5812,
+    "word": "բարբաջել",
+    "sentence": "Նա անվերջ բարբաջում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5860,
+    "word": "զվարճախոսել",
+    "sentence": "Նա հաճախ զվարճախոսում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5866,
+    "word": "ընկճվել",
+    "sentence": "Նա շատ ընկճված է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5872,
+    "word": "թլվատել",
+    "sentence": "Նա հաճախ թլվատում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5883,
+    "word": "ինքնահավանել",
+    "sentence": "Նա միշտ ինքնահավանում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5895,
+    "word": "խանգարվել",
+    "sentence": "Նա բոլորովին խանգարվել է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5902,
+    "word": "խելագարել",
+    "sentence": "Նա աշխատանքից խելագարել է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 5961,
+    "word": "համառել",
+    "sentence": "Նա համառում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6022,
+    "word": "մրթմրթալ",
+    "sentence": "Նա անընդհատ մրթմրթում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6120,
+    "word": "ապշեցուցիչ",
+    "sentence": "Նա ապշեցուցիչ գեղեցիկ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6127,
+    "word": "դժվարությամբ",
+    "sentence": "Նա դժվարությամբ ընթերցում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6150,
+    "word": "քաղաքավարիորեն",
+    "sentence": "Նա քաղաքավարիորեն խոսում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6152,
+    "word": "ֆանտաստիկորեն",
+    "sentence": "Նա ֆանտաստիկորեն երգում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6155,
+    "word": "ամրանալ",
+    "sentence": "Նա օրեցօր ամրանում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6209,
+    "word": "հաճություն",
+    "sentence": "Նրա հաճությունը անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6227,
+    "word": "վարվելակարգ",
+    "sentence": "Լավ վարվելակարգ կարևոր է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6242,
+    "word": "խաղացնել",
+    "sentence": "Նա աղջկան խաղացնում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6245,
+    "word": "խռռացնել",
+    "sentence": "Նա խռռացնում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6246,
+    "word": "խտղտացնել",
+    "sentence": "Նա ինձ խտղտացնում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6271,
+    "word": "տաշել",
+    "sentence": "Նա քարը տաշում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6293,
+    "word": "գայթակղեցնել",
+    "sentence": "Նա ինձ գայթակղեցնում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6312,
+    "word": "խոժոռվել",
+    "sentence": "Նա հաճախ խոժոռվում է։"
+  },
+  {
+    "file": "gen_b1.txt",
+    "line": 6434,
+    "word": "մեղանչել",
+    "sentence": "Նա մեղանչել է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 14,
+    "word": "կամային",
+    "sentence": "Նա շատ կամային է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 23,
+    "word": "շփվող",
+    "sentence": "Նա շատ շփվող է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 25,
+    "word": "անկախ",
+    "sentence": "Նա շատ անկախ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 26,
+    "word": "անկախություն",
+    "sentence": "Անկախությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 27,
+    "word": "նախաձեռնող",
+    "sentence": "Նա միշտ նախաձեռնող է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 28,
+    "word": "հնարամիտ",
+    "sentence": "Նա շատ հնարամիտ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 29,
+    "word": "հնարամտություն",
+    "sentence": "Հնարամտությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 44,
+    "word": "սթափ",
+    "sentence": "Նա միշտ սթափ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 45,
+    "word": "սթափություն",
+    "sentence": "Սթափությունը ճգնաժամի ժամանակ կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 54,
+    "word": "անդամ",
+    "sentence": "Նա ակումբի անդամ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 105,
+    "word": "լիազորագիր",
+    "sentence": "Լիազորագիրը անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 132,
+    "word": "հայրենասեր",
+    "sentence": "Նա մեծ հայրենասեր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 191,
+    "word": "երազկոտ",
+    "sentence": "Նա շատ երազկոտ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 192,
+    "word": "հասարակական",
+    "sentence": "Հասարակական կարծիքը կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 196,
+    "word": "խնամք",
+    "sentence": "Խնամքը շատ կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 197,
+    "word": "խնամակալ",
+    "sentence": "Նա երեխայի խնամակալն է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 240,
+    "word": "մոդել",
+    "sentence": "Նա հայտնի մոդել է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 291,
+    "word": "տող",
+    "sentence": "Յուրաքանչյուր տող կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 301,
+    "word": "հիմնադիր",
+    "sentence": "Նա ընկերության հիմնադիրն է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 305,
+    "word": "գաղտնիություն",
+    "sentence": "Գաղտնիությունը կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 307,
+    "word": "դիվանագետ",
+    "sentence": "Նա փորձառու դիվանագետ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 355,
+    "word": "էկոհամակարգ",
+    "sentence": "Անտառային էկոհամակարգը կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 450,
+    "word": "ակնառու",
+    "sentence": "Նա ակնառու նվագարկչուհի է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 453,
+    "word": "բացառիկ",
+    "sentence": "Նա բացառիկ մարդ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 488,
+    "word": "հոգատար",
+    "sentence": "Նա հոգատար մայր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 491,
+    "word": "շահագրգիռ",
+    "sentence": "Նա շահագրգիռ կողմ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 514,
+    "word": "հանրահայտ",
+    "sentence": "Նա հանրահայտ երգիչ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 515,
+    "word": "ճանաչված",
+    "sentence": "Նա ճանաչված գիտնական է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 516,
+    "word": "հեղինակավոր",
+    "sentence": "Նա հեղինակավոր գիտնական է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 520,
+    "word": "մանավանդ",
+    "sentence": "Դա մանավանդ կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 524,
+    "word": "հետզհետե",
+    "sentence": "Նա հետզհետե վերականգնվում է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 568,
+    "word": "բանտ",
+    "sentence": "Նա դեռ բանտում է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 615,
+    "word": "չափազանցնել",
+    "sentence": "Նա միշտ չափազանցնում է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 811,
+    "word": "դիստրիբյուտոր",
+    "sentence": "Նա հայտնի դիստրիբյուտոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 812,
+    "word": "մեծածախ",
+    "sentence": "Նա մեծածախ վաճառող է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 831,
+    "word": "հանցակից",
+    "sentence": "Նա հանցագործության հանցակիցն է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 855,
+    "word": "քվե",
+    "sentence": "Ամեն մի քվե կարևոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 871,
+    "word": "իրավապաշտպան",
+    "sentence": "Նա հայտնի իրավապաշտպան է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 938,
+    "word": "արդարացի",
+    "sentence": "Նա արդարացի դատավոր է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 942,
+    "word": "գրավիչ",
+    "sentence": "Նա շատ գրավիչ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 951,
+    "word": "հուսալի",
+    "sentence": "Նա հուսալի աշխատակից է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 970,
+    "word": "հավատացյալ",
+    "sentence": "Նա իսկական հավատացյալ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 971,
+    "word": "աթեիստ",
+    "sentence": "Նա աթեիստ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 972,
+    "word": "աստվածապաշտ",
+    "sentence": "Նա աստվածապաշտ մարդ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 1023,
+    "word": "սահուն",
+    "sentence": "Նա սահուն վարում է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 1079,
+    "word": "ֆուտ",
+    "sentence": "Նա վեց ֆուտ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 1170,
+    "word": "կաթոլիկ",
+    "sentence": "Նա կաթոլիկ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 1183,
+    "word": "ապաշխարություն",
+    "sentence": "Ապաշխարությունն անհրաժեշտ է։"
+  },
+  {
+    "file": "gen_b2.txt",
+    "line": 1211,
+    "word": "համախմբում",
+    "sentence": "Համախմբումը կարևոր է։"
+  },
+  {
+    "file": "a1_01.txt",
+    "line": 18,
+    "word": "մարդ",
+    "sentence": "Նա լավ մարդ է։"
+  },
+  {
+    "file": "a1_03.txt",
+    "line": 46,
+    "word": "գեն",
+    "sentence": "Այս գենը կարևոր է։"
+  },
+  {
+    "file": "a1_03.txt",
+    "line": 117,
+    "word": "իրավաբան",
+    "sentence": "Նա լավ իրավաբան է։"
+  },
+  {
+    "file": "a1_03.txt",
+    "line": 120,
+    "word": "դերասան",
+    "sentence": "Նա հայտնի դերասան է։"
+  }
+]

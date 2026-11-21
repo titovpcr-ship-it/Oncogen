@@ -6,6 +6,9 @@ const ROOT=path.join(__dirname,'..');
 let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else console.log('ok  ',m); };
 (async()=>{
   const TMP=fs.mkdtempSync(path.join(os.tmpdir(),'barik-bk-')), DATA=path.join(TMP,'data'); fs.mkdirSync(DATA);
+  const API=path.join(TMP,'api'); fs.mkdirSync(API);
+  for(const name of ['lib.php','cron.php']) fs.copyFileSync(path.join(ROOT,'server/api',name),path.join(API,name));
+  fs.writeFileSync(path.join(API,'config.php'),'<?php return [];');
   const docs=[];
   const stub=http.createServer((q,r)=>{ const ch=[]; q.on('data',x=>ch.push(x)); q.on('end',()=>{ const b=Buffer.concat(ch);
     if(q.url.endsWith('/sendDocument')){ const i=b.indexOf(Buffer.from('PK\x03\x04')), bd=b.lastIndexOf(Buffer.from('\r\n--'));
@@ -16,7 +19,7 @@ let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else cons
   const PW='гранат-тест-1234';
   const env=Object.assign({},process.env,{BARIK_DATA_DIR:DATA,BARIK_PEPPER:'p',BARIK_TG_TOKEN:'1:x',BARIK_TG_API:'http://127.0.0.1:'+stub.address().port,
     BARIK_TG_WORDS:path.join(TMP,'none.json'),BARIK_TG_OWNER:'348',BARIK_BACKUP_PASSWORD:PW});
-  const cron=t=>new Promise(res=>{ const c=spawn('php',[path.join(ROOT,'server','api','cron.php'),String(t)],{env}); let o=''; c.stdout.on('data',d=>o+=d); c.stderr.on('data',d=>o+=d); c.on('close',()=>res(o)); });
+  const cron=t=>new Promise(res=>{ const c=spawn('php',[path.join(API,'cron.php'),String(t)],{env}); let o=''; c.stdout.on('data',d=>o+=d); c.stderr.on('data',d=>o+=d); c.on('close',()=>res(o)); });
   const D0=Date.UTC(2026,10,11)/1000, snaps=()=>fs.existsSync(path.join(DATA,'backups'))?fs.readdirSync(path.join(DATA,'backups')).filter(f=>/^barik-\d{4}-\d\d-\d\d\.sqlite$/.test(f)).sort():[];
   let o=await cron(D0+3600); ok(/backup: снимок дня offsite ok/.test(o)&&snaps().length===1&&docs.length===1,'первый запуск: снимок дня и копия владельцу ('+o.trim().split('\n').pop()+')');
   ok(docs[0].chat==='348'&&/еженедельная копия базы \(2026-11-11\)/.test(docs[0].cap||''),'копия — в чат владельца, с подписью');
@@ -31,11 +34,11 @@ let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else cons
   const py=(pw)=>{ try{ return execFileSync('python3.13',['-I','-c',`import pyzipper,sqlite3,sys,io,tempfile
 z=pyzipper.AESZipFile(sys.argv[1]); z.setpassword(sys.argv[2].encode()); b=z.read('barik.sqlite'); f=tempfile.NamedTemporaryFile(suffix='.sqlite',delete=False); f.write(b); f.close()
 c=sqlite3.connect(f.name); print(sorted(z.namelist()), c.execute("select count(*) from sqlite_master where name='users'").fetchone()[0], z.getinfo('barik.sqlite').flag_bits & 1, len(getattr(z.getinfo('barik.sqlite'),'wz_aes_vendor_id','') or '') or z.getinfo('barik.sqlite').extra.find(b'\\x01\\x99')>=0)`,zp,pw]).toString().trim(); }catch(e){ return 'ERR '+String(e.stderr||e).slice(0,80); } };
-  const got=py(PW); ok(/\['README.txt', 'barik.sqlite'\] 1 1 (True|2)/.test(got),'архив: пароль открывает, база рабочая, зашифрован AES: '+got);
+  const got=py(PW); ok(/\['README.txt', 'barik.sqlite', 'config.php'\] 1 1 (True|2)/.test(got),'архив: пароль открывает, база рабочая, зашифрован AES: '+got);
   ok(/ERR/.test(py('wrong')),'чужой пароль архив не открывает');
   // без пароля или без чата — только копии на хостинге
   const env2=Object.assign({},env,{BARIK_TG_OWNER:''}); const n=docs.length;
-  await new Promise(res=>{ const c=spawn('php',[path.join(ROOT,'server','api','cron.php'),String(D0+30*86400)],{env:env2}); c.on('close',res); });
+  await new Promise(res=>{ const c=spawn('php',[path.join(API,'cron.php'),String(D0+30*86400)],{env:env2}); c.on('close',res); });
   ok(docs.length===n&&snaps().includes('barik-2026-12-11.sqlite'),'без чата владельца — снимок есть, в Telegram ничего');
   stub.close(); fs.rmSync(TMP,{recursive:true,force:true});
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);

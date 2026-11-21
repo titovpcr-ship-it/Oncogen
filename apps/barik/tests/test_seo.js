@@ -39,7 +39,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
         const need=[`<html lang="${L}">`,`<link rel="canonical" href="${BASE}${cr}">`,'hreflang="x-default"',
           ...LANGS.map(l=>`hreflang="${l}" href="${BASE}${cr.replace(L+'/',l+'/')}"`),'<meta name="description" content="'];
         if(/href="[^"]*index\.html"/.test(s)) nohead.push(rel+' (ссылка на index.html)');
-        if(!s.includes('https://t.me/armenian_word_daily')||!s.includes('https://www.instagram.com/barik_armenian')) nohead.push(rel+' (нет Instagram/Telegram в подвале)');
+        if(/instagram\.com|t\.me\//i.test(s)) nohead.push(rel+' (остались ссылки Instagram/Telegram)');
         if(need.some(x=>!s.includes(x))) nohead.push(rel);
         const t=(s.match(/<title>([^<]*)<\/title>/)||[])[1]||'';
         if(sub==='w') dupTitle.set(t,(dupTitle.get(t)||0)+1);
@@ -66,7 +66,7 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(fs.statSync(path.join(ROOT,'sitemap-'+L+'.xml')).size<50e6,'sitemap-'+L+' меньше 50 МБ (предел поисковиков)');
   }
   ok(locs===pages-noidx.size&&miss.length===0&&inNo.length===0,'в sitemap все страницы, кроме закрытых noindex: '+locs+' из '+pages+' (noindex '+noidx.size+') '+miss.slice(0,3).join(' ')+inNo.slice(0,3).join(' '));
-  ok(noidx.size>0&&[...noidx].every(r=>/^[a-z]{2}\/w\//.test(r))&&noidx.size<pages*0.5,'noindex — только пустые страницы слов ('+noidx.size+')');
+  ok([...noidx].every(r=>/^[a-z]{2}\/w\//.test(r))&&noidx.size<pages*0.5,'noindex — только пустые страницы слов ('+noidx.size+')');
   { // O-193: богатая страница слова — пример, падежи, спряжение, однокоренные
     const pick=f=>fs.readdirSync(path.join(ROOT,'ru','w')).map(x=>fs.readFileSync(path.join(ROOT,'ru','w',x),'utf8')).find(f);
     const n=pick(s=>s.includes('<h1 lang="hy">տուն</h1>')), v=pick(s=>s.includes('<h1 lang="hy">գրել</h1>'));
@@ -74,7 +74,10 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(v&&v.includes('Спряжение')&&v.includes('գրում եմ')&&v.includes('գրեցի')&&v.includes('Однокоренные'),'«գրել»: спряжение и однокоренные');
     ok(pick(s=>s.includes('<h2>Пример</h2>')&&s.includes('class="exs"'))!==undefined,'пример на странице слова'); }
   ok(locs/LANGS.length<=50000,'в одном sitemap не больше 50 000 адресов');
-  ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8')),'robots.txt знает sitemap');
+  const rob=fs.readFileSync(path.join(ROOT,'robots.txt'),'utf8');
+  ok(/Sitemap: https:\/\/barik\.am\/sitemap\.xml/.test(rob)&&!rob.includes('ops-m9x4k2p7')&&!rob.includes('sales-analysis'),'robots.txt знает sitemap и не раскрывает ops-страницу');
+  { const smsAll=[idx,...fs.readdirSync(ROOT).filter(f=>/^sitemap-.*\.xml$/.test(f)).map(f=>fs.readFileSync(path.join(ROOT,f),'utf8'))];
+    ok(smsAll.every(x=>!x.includes('ops-m9x4k2p7')&&!x.includes('sales-analysis')),'ops-m9x4k2p7.html отсутствует во всех sitemap*.xml'); }
   { // O-206: у каждого адреса sitemap — lastmod (дата настоящего изменения), у указателя — у каждого файла
     const sms=fs.readdirSync(ROOT).filter(f=>/^sitemap-.*\.xml$/.test(f)); let n=0, bad=0;
     for(const f of sms){ const x=fs.readFileSync(path.join(ROOT,f),'utf8'); for(const m of x.matchAll(/<url><loc>[^<]+<\/loc>(<lastmod>\d{4}-\d\d-\d\d<\/lastmod>)?/g)){ n++; if(!m[1]) bad++; } }
@@ -91,6 +94,14 @@ const LANGS=['ru','en','fr','es','de','pt'];
        'обложка ×5 языков + английская главная: canonical, hreflang взаимные, ссылки целы, в sitemap '+bad.slice(0,4).join(' '));
     const ru=fs.readFileSync(path.join(ROOT,'ru','learn.html'),'utf8');
     ok(ru.includes('по-армянски')&&/<title>[^<]*армянск/i.test(ru),'русская обложка — по-русски: '+(ru.match(/<title>([^<]*)/)||[])[1]);
+    const route=q=>`href="../?lang=ru&from=learn&switch=1${q}"`;
+    ok(ru.includes(route('&start=lesson'))&&ru.includes(route('&pen=0'))&&ru.includes(route('&letter=38'))&&ru.includes(route('&daily=1'))&&ru.includes(route('&phrases=1'))&&ru.includes(route('&doc=project'))&&ru.includes(route('&teach=1')),
+       'SEO-обложка без JS: CTA ведут к уроку, конкретной букве, прописи, слову дня, разговорнику, документу и экрану для учителей');
+    ok(ru.includes('data-act="landLang"')&&ru.includes('href="../fr/learn.html"')&&ru.includes('id="phOpts"')&&ru.includes('Start your first lesson')===false&&ru.includes('Начать первый урок')
+       &&!/<button[^>]*data-act="landTry"/.test(ru),'SEO-обложка: переключение языка работает без JS, статичный демо-блок честно предлагает начать урок');
+    ok(/<form[^>]*action="\.\.\/" method="get"[^>]*>/.test(ru)&&/id="ldName"[^>]*name="name"/.test(ru)&&/<input type="hidden" name="lang" value="ru">/.test(ru),
+       'SEO-обложка: форма имени отправляет введённое имя на приложение без JS');
+    ok(/href="\.\.\/audio\/anahit\/[0-9a-f]{2}\/[0-9a-f]{16}\.mp3"/.test(ru),'SEO-обложка: ссылка прослушивания открывает прямую запись Azure');
     ok(!fs.readdirSync(ROOT).filter(f=>/^sitemap.*\.xml$/.test(f)).some(f=>fs.readFileSync(path.join(ROOT,f),'utf8').includes('index.html</loc>')),'в sitemap нет адресов с index.html');
     ok(/RewriteCond %\{THE_REQUEST\}.*index\\\.html/.test(fs.readFileSync(path.join(ROOT,'.htaccess'),'utf8')),'.htaccess: /ru/index.html → /ru/ (301)'); }
   // 3. Приложение
@@ -100,6 +111,22 @@ const LANGS=['ru','en','fr','es','de','pt'];
   // 4. В браузере
   await new Promise(r=>srv.listen(0,'127.0.0.1',r)); const base='http://127.0.0.1:'+srv.address().port+'/';
   const br=await chromium.launch();
+  { // Статическая SEO-обложка должна оставаться понятной и навигационной без JavaScript.
+    const nc=await br.newContext({javaScriptEnabled:false}), np=await nc.newPage();
+    await np.goto(base+'ru/learn.html');
+    const staticPage=await np.evaluate(()=>({h:document.querySelectorAll('h1').length,buttons:[...document.querySelectorAll('button')].map(b=>({type:b.type,form:!!b.form})),
+      cta:document.querySelector('#phOpts a')?.getAttribute('href')||'',language:document.querySelector('a[href="../fr/learn.html"]')?.href||''}));
+    ok(staticPage.h===1&&staticPage.buttons.every(b=>b.type==='submit'&&b.form)&&staticPage.cta==='../?lang=ru&from=learn&switch=1&start=lesson'
+      &&staticPage.language===base+'fr/learn.html','SEO-обложка без JS: одна H1, нет инертных кнопок, CTA и язык — ссылки '+JSON.stringify(staticPage));
+    await np.click('#phOpts a');
+    const route=new URL(np.url());
+    ok(route.pathname==='/'&&route.searchParams.get('lang')==='ru'&&route.searchParams.get('switch')==='1'&&route.searchParams.get('start')==='lesson',
+      'SEO-CTA без JS открывает приложение на русском прямо с первым уроком');
+    await np.goto(base+'ru/learn.html'); await np.fill('#ldName','Анна'); await np.locator('#ldName').press('Enter');
+    const nameRoute=new URL(np.url());
+    ok(nameRoute.pathname==='/'&&nameRoute.searchParams.get('name')==='Анна'&&nameRoute.searchParams.get('lang')==='ru',
+      'форма имени без JS отправляет имя в приложение');
+    await nc.close(); }
   const ctx=await br.newContext({viewport:{width:390,height:844},deviceScaleFactor:2});
   const pg=await ctx.newPage(); const errs=[], ext=[], bad=[];
   pg.on('pageerror',e=>errs.push(String(e)));
@@ -124,8 +151,14 @@ const LANGS=['ru','en','fr','es','de','pt'];
     await pg.click('.tr .say'); const r=await resp;
     ok(!!r&&r.status()<300&&/audio\/mpeg/.test(r.headers()['content-type']||''),'«Слушать» берёт mp3: '+(r?r.status()+' '+r.url():'нет запроса'));
   }
-  const ld=await pg.evaluate(()=>JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent));
+  const lds=await pg.evaluate(()=>[...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent)));
+  const ld=lds[0];
   ok(ld['@type']==='DefinedTerm'&&ld.inLanguage==='hy'&&ld.url===BASE+'ru/w/barev.html','schema.org DefinedTerm');
+  ok(ld.audio&&ld.audio['@type']==='AudioObject'&&/\/audio\/.+\.mp3$/.test(ld.audio.contentUrl),'schema.org DefinedTerm → AudioObject');
+  ok(lds[1]&&lds[1]['@type']==='BreadcrumbList'&&lds[1].itemListElement.length===4,'schema.org BreadcrumbList (слово)');
+  ok((await pg.textContent('.exs')).length>4&&(await pg.textContent('.ex-tx')).length>4,'слово: пример в статическом HTML до JS');
+  const nearCount=await pg.locator('ul.ws').last().locator('li a').count();
+  ok(nearCount>=6&&nearCount<=8,'слово: перелинковка на 6–8 соседних слов ('+nearCount+')');
   ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'без прокрутки вбок на телефоне');
   await pg.click('nav.langs a[hreflang=fr]');
   ok((await pg.title()).includes('en arménien')&&(await pg.textContent('.tx')).includes(W.f),'переключатель языка: FR — '+W.f);
@@ -147,10 +180,46 @@ const LANGS=['ru','en','fr','es','de','pt'];
   ok(await pg.evaluate(i=>window.__bararan.TOPICS[i].en,cti)==='Basics'&&await pg.locator('[data-act=learnTopic][data-arg="'+cti+'"]').count()===1,'кнопка темы открывает ту же тему (Basics)');
   // у слов темы — озвучка, внизу — следующая тема
   await pg.goto(base+'ru/t/basics.html');
+  const tlds=await pg.evaluate(()=>[...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent)));
+  ok(tlds[0]&&tlds[0]['@type']==='LearningResource'&&tlds[0].educationalLevel==='A1'&&Array.isArray(tlds[0].inLanguage)&&tlds[0].inLanguage.includes('hy')&&tlds[0].inLanguage.includes('ru'),'schema.org LearningResource (тема)');
+  ok(tlds[1]&&tlds[1]['@type']==='BreadcrumbList','schema.org BreadcrumbList (тема)');
   const nsay=await pg.locator('ul.ws .say').count(), nli=await pg.locator('ul.ws li').count();
   ok(nsay===nli&&nli>0,'тема: у каждого слова кнопка озвучки ('+nsay+' из '+nli+')');
   ok(await pg.locator('.pn a').count()===1,'тема: ссылка «Следующая тема»');
   ok((await pg.textContent('footer')).includes('hello@barik.am'),'подвал: почта для связи');
+  { // Barik Roots (Արմատներ): 250+ фамилий, 5 гильдий, поиск, динамический анализатор, перелинковка гильдий и <canvas> 1080x1350
+    await pg.goto(base+'ru/s/'); await pg.evaluate(()=>document.fonts.ready);
+    const totalSn=await pg.locator('.sn-list li').count();
+    ok(totalSn>=250,'фамилии /ru/s/: показаны 250+ родов ('+totalSn+')');
+    ok((await pg.locator('.sn-cats .sn-cat').count())===6,'фамилии /ru/s/: кнопка «Все» + 5 исторических гильдий');
+    await pg.click('.sn-cat[data-cat="craft"]');
+    const craftVis=await pg.locator('.sn-list li:not([hidden])').count();
+    const craftOnly=await pg.evaluate(()=>[...document.querySelectorAll('.sn-list li:not([hidden])')].every(x=>x.dataset.cat==='craft'));
+    ok(craftVis>=40&&craftOnly,'гильдия Ремёсла: фильтрует только ремесленные роды ('+craftVis+')');
+    await pg.click('.sn-cat[data-cat="heritage,trait"]');
+    const htStats=await pg.evaluate(()=>{ const v=[...document.querySelectorAll('.sn-list li:not([hidden])')]; return {n:v.length,h:v.filter(x=>x.dataset.cat==='heritage').length,t:v.filter(x=>x.dataset.cat==='trait').length}; });
+    ok(htStats.n===htStats.h+htStats.t&&htStats.h>=40&&htStats.t>=40,'гильдия Духовное наследие и Качества: объединяет heritage + trait ('+htStats.n+')');
+    await pg.click('.sn-cat[data-cat="all"]');
+    ok((await pg.locator('.sn-list li:not([hidden])').count())===totalSn,'кнопка «Все роды» возвращает полный список');
+    await pg.fill('#snSearch','Дарбинян');
+    ok((await pg.locator('.sn-list li:not([hidden])').count())===1,'фамилии /ru/s/: кириллический поиск «Дарбинян» находит карточку');
+    await pg.fill('#snSearch','Ter-Petrosyan');
+    ok(!(await pg.locator('#snDyn').isHidden())&&(await pg.textContent('#snDyn')).includes('պետրոս'),'анализатор: Ter-Petrosyan разбирает приставку и корень պետրոս');
+    await pg.fill('#snSearch','Hacikyan');
+    const dynTxt=await pg.textContent('#snDyn');
+    ok(dynTxt.includes('հաց')&&(await pg.locator('#snDyn .sn-wlink').count())===1,'анализатор: Hacikyan находит корень հաց и ссылку на словарь');
+    ok((await pg.getAttribute('#snDyn .sn-cta-radio','href')||'').includes('family=hacikyan&root=hats'),'анализатор: кнопка Радио ведёт на family=hacikyan&root=hats');
+    await pg.click('#snDyn [data-act=surnameCard]');
+    await pg.waitForFunction(()=>window.__BARIK_LAST_CARD&&window.__BARIK_LAST_CARD.width===1080&&window.__BARIK_LAST_CARD.height===1350,null,{timeout:5000});
+    ok(await pg.evaluate(()=>window.__BARIK_LAST_CARD.bytes>5000),'<canvas> на анализаторе рисует 1080x1350 PNG без ошибок');
+    await pg.goto(base+'en/s/kardashian.html'); await pg.evaluate(()=>document.fonts.ready);
+    await pg.click('[data-act=surnameCard]');
+    await pg.waitForFunction(()=>window.__BARIK_LAST_CARD&&window.__BARIK_LAST_CARD.slug==='kardashian'&&window.__BARIK_LAST_CARD.bytes>5000,null,{timeout:5000});
+    ok(await pg.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Kardashian: без горизонтальной прокрутки на мобильном');
+    ok((await pg.locator('.surname-gift-cta a').count())===2,'Kardashian: блок Heritage CTA с радио и подарочным доступом');
+    const relCnt=await pg.locator('.sn-rel a').count();
+    ok(relCnt>=6&&relCnt<=8,'Kardashian: перелинковка гильдии на 6–8 родственных фамилий ('+relCnt+')');
+  }
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(bad.length===0,'все запросы 200 '+bad.join(' '));
   ok(ext.length===0,'внешних запросов нет '+ext.join(' '));
@@ -188,5 +257,38 @@ const LANGS=['ru','en','fr','es','de','pt'];
     ok(srcs.length>=5&&srcs.every(u=>fs.existsSync(path.join(ROOT,u))),'страницы букв: записи на месте ('+srcs.length+')');
     ok(nb.includes('Numbers in Armenian')&&(nb.match(/class="say"/g)||[]).length>=15,'числа: страница со звуком');
     ok(fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-abc.xml')&&fs.readFileSync(path.join(ROOT,'en','index.html'),'utf8').includes('href="a/"'),'sitemap-abc, ссылка из оглавления'); }
+  { // Barik Roots (Արմատներ): 1 500+ страниц (6 языков x 251+), перелинковка гильдий, canonical/hreflang/JSON-LD, sitemap-surnames
+    const L6=['ru','en','fr','es','de','pt'], counts=L6.map(l=>fs.readdirSync(path.join(ROOT,l,'s')).filter(f=>f.endsWith('.html')).length);
+    const totalPages=counts.reduce((a,b)=>a+b,0);
+    ok(counts.every(x=>x===counts[0]&&x>=251),'фамилии /s/: 251+ страниц на язык ('+counts.join('/')+')');
+    const bad=[], noh=[], norel=[];
+    for(const L of L6){
+      const dir=path.join(ROOT,L,'s');
+      for(const f of fs.readdirSync(dir)){
+        if(!f.endsWith('.html')) continue;
+        const p=path.join(dir,f), s=fs.readFileSync(p,'utf8'), rel=path.relative(ROOT,p).split(path.sep).join('/');
+        const cr=rel.replace(/index\.html$/,'');
+        if(s.includes('noindex')||/href="[^"]*index\.html"/.test(s)||!s.includes(`<link rel="canonical" href="${BASE}${cr}">`)||!s.includes('hreflang="x-default"')) noh.push(rel);
+        if(f!=='index.html'){
+          const relBlock=s.match(/<ul class="sn-rel">(.*?)<\/ul>/s);
+          const rc=relBlock?(relBlock[1].match(/<a href="/g)||[]).length:0;
+          if(rc<6||rc>8) norel.push(rel+':'+rc);
+        }
+        for(const m of s.matchAll(/(?:href|src|data-src)="([^"#?]*)/g)){
+          const h=m[1]; if(!h||/^(https?|mailto):/.test(h)) continue;
+          let q=path.join(dir,h); if(h===''||h.endsWith('/')) q=path.join(q,'index.html');
+          if(!fs.existsSync(q)) bad.push(rel+' → '+h);
+        }
+      }
+      ok(fs.readFileSync(path.join(ROOT,L,'index.html'),'utf8').includes('href="s/"'),L+': ссылка на энциклопедию фамилий из оглавления словаря');
+    }
+    ok(noh.length===0,'фамилии /s/: нет noindex/index.html, есть canonical + x-default '+noh.slice(0,3).join(' '));
+    ok(norel.length===0,'фамилии /s/: у каждой фамилии 6–8 ссылок гильдии '+norel.slice(0,3).join(' '));
+    ok(bad.length===0,'фамилии /s/: битых ссылок и записей нет '+bad.slice(0,4).join('; '));
+    const kd=fs.readFileSync(path.join(ROOT,'en','s','kardashian.html'),'utf8');
+    ok(kd.includes('"@type": "DefinedTerm"')&&kd.includes('"@type": "Article"')&&kd.includes('"@type": "BreadcrumbList"')&&kd.includes('?lang=en&amp;listen=1&amp;family=kardashian&amp;root=kar')&&kd.includes('?lang=en&amp;paywall=gift&amp;family=kardashian')&&kd.includes('../w/'),'kardashian.html: JSON-LD, словарь и CTA ссылки c family+root');
+    const sm=fs.readFileSync(path.join(ROOT,'sitemap-surnames.xml'),'utf8');
+    ok((sm.match(/<loc>/g)||[]).length===totalPages&&totalPages>=1506&&fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8').includes('sitemap-surnames.xml'),'sitemap-surnames: все '+totalPages+' адресов и ссылка в sitemap.xml');
+  }
   console.log(fails?('ПРОВАЛЕНО: '+fails):'ВСЁ ЗЕЛЁНОЕ'); process.exit(fails?1:0);
 })();

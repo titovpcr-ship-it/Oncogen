@@ -22,7 +22,8 @@ server/config.example.php со случайным PEPPER и почтой хос�
   python3.13 tools/deploy_site.py --check     вход в cPanel, PHP, место на диске — без выкладки
   python3.13 tools/deploy_site.py --all       выложить всё заново
 """
-import argparse, hashlib, json, os, re, secrets, sys, time, zipfile
+import argparse, hashlib, hmac, json, os, re, secrets, sys, time, zipfile
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
@@ -32,6 +33,8 @@ SITE = os.path.join(APP, 'dist', 'site')
 STATE = os.path.join(os.path.dirname(os.path.dirname(APP)), 'out', 'deploy', 'state.json')
 WORK = os.path.join(os.path.dirname(STATE), 'zips')
 PART = 18 * 1024 * 1024                       # архив до ~18 МБ: 20 МБ cPanel принимает, 60 МБ — уже нет (O-150)
+RETRY_DELAYS = (4, 8, 15)                     # экспоненциальные паузы (3 повтора) при 502/503/504 или таймауте
+RETRY_STATUSES = (429, 502, 503, 504)
 STORE = ('.mp3', '.webp', '.png', '.jpg', '.woff2', '.zip', '.gz')   # уже сжатые — без сжатия
 
 
@@ -88,33 +91,60 @@ class CPanel:
 
     def uapi(self, module, func, files=None, **params):
         url = '%s%s/execute/%s/%s' % (self.base, self.token, module, func)
-        for attempt in range(4):
+        max_attempts = len(RETRY_DELAYS) + 1
+        for attempt in range(max_attempts):
             try:
                 r = (self.s.post(url, data=params, files=files, timeout=900) if files is not None
                      else self.s.get(url, params=params, timeout=120))
+                if r.status_code in RETRY_STATUSES:
+                    if attempt < len(RETRY_DELAYS):
+                        wait = RETRY_DELAYS[attempt]
+                        print('  cPanel %s/%s: HTTP %s — жду %d с' % (module, func, r.status_code, wait), flush=True)
+                        time.sleep(wait)
+                        continue
+                    r.raise_for_status()
                 return r.json()
             except (requests.RequestException, ValueError) as e:
-                if attempt == 3:
+                resp = getattr(e, 'response', None)
+                if resp is not None and resp.status_code not in RETRY_STATUSES:
+                    raise
+                if attempt >= len(RETRY_DELAYS):
                     raise
                 # вместо JSON — страница входа: сессия cPanel истекла (бывает посреди долгой выкладки) — войти снова
                 if isinstance(e, ValueError) and not self.api_token:
                     self.login()
                     url = '%s%s/execute/%s/%s' % (self.base, self.token, module, func)
-                time.sleep(5 * (attempt + 1))
+                wait = RETRY_DELAYS[attempt]
+                print('  cPanel %s/%s: сбой (%s) — жду %d с' % (module, func, e, wait), flush=True)
+                time.sleep(wait)
 
     def api2(self, module, func, **params):
         p = {'cpanel_jsonapi_user': self.user, 'cpanel_jsonapi_apiversion': 2,
              'cpanel_jsonapi_module': module, 'cpanel_jsonapi_func': func}
         p.update(params)
-        for attempt in range(4):
+        max_attempts = len(RETRY_DELAYS) + 1
+        for attempt in range(max_attempts):
             try:
-                return self.s.get('%s%s/json-api/cpanel' % (self.base, self.token), params=p, timeout=900).json()
+                r = self.s.get('%s%s/json-api/cpanel' % (self.base, self.token), params=p, timeout=900)
+                if r.status_code in RETRY_STATUSES:
+                    if attempt < len(RETRY_DELAYS):
+                        wait = RETRY_DELAYS[attempt]
+                        print('  cPanel api2 %s/%s: HTTP %s — жду %d с' % (module, func, r.status_code, wait), flush=True)
+                        time.sleep(wait)
+                        continue
+                    r.raise_for_status()
+                return r.json()
             except (requests.RequestException, ValueError) as e:
-                if attempt == 3:
+                resp = getattr(e, 'response', None)
+                if resp is not None and resp.status_code not in RETRY_STATUSES:
+                    raise
+                if attempt >= len(RETRY_DELAYS):
                     raise
                 if isinstance(e, ValueError) and not self.api_token:
                     self.login()
-                time.sleep(5 * (attempt + 1))
+                wait = RETRY_DELAYS[attempt]
+                print('  cPanel api2 %s/%s: сбой (%s) — жду %d с' % (module, func, e, wait), flush=True)
+                time.sleep(wait)
 
     def ok(self, j, what):
         if isinstance(j, dict) and j.get('status') == 1:
@@ -131,6 +161,24 @@ def sha(path):
         for b in iter(lambda: f.read(1 << 20), b''):
             h.update(b)
     return h.hexdigest()
+
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, 'rb') as f:
+        for b in iter(lambda: f.read(1 << 20), b''):
+            h.update(b)
+    return h.hexdigest()
+
+
+def _hash_many(paths, fn):
+    if len(paths) < 64:
+        return {rel: fn(p) for rel, p in paths.items()}
+    workers = min(16, max(4, (os.cpu_count() or 4) * 2))
+    keys = list(paths.keys())
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        vals = list(pool.map(fn, (paths[k] for k in keys), chunksize=128))
+    return dict(zip(keys, vals))
 
 
 def scan():
@@ -154,7 +202,7 @@ def make_zips(paths):
                 z.close()
             n += 1
             name = os.path.join(WORK, 'barik-deploy-%03d.zip' % n)
-            z = zipfile.ZipFile(name, 'w', allowZip64=True)
+            z = zipfile.ZipFile(name, 'w', compresslevel=3, allowZip64=True)
             zips.append(name)
         comp = zipfile.ZIP_STORED if rel.lower().endswith(STORE) else zipfile.ZIP_DEFLATED
         z.write(paths[rel], rel, compress_type=comp)
@@ -192,12 +240,198 @@ def config_php():
     return s
 
 
+RELEASE = os.path.join(os.path.dirname(STATE), 'release-private.json')
+
+
+def release_control(action, credentials=None):
+    if credentials is None and not os.path.exists(RELEASE):
+        if action == 'finalize': return
+        raise RuntimeError('No release journal credentials')
+    c = credentials or json.load(open(RELEASE, encoding='utf-8'))
+    max_att = len(RETRY_DELAYS) + 1
+    r = None
+    for att in range(max_att):
+        try:
+            r = requests.post(c['url'] + '?action=' + action,
+                              headers={'X-Release-Token': c['token']}, timeout=900)
+            if r.status_code in RETRY_STATUSES and att < len(RETRY_DELAYS):
+                wait = RETRY_DELAYS[att]
+                print('  release %s: HTTP %s — жду %d с' % (action, r.status_code, wait), flush=True)
+                time.sleep(wait)
+                continue
+            r.raise_for_status()
+            break
+        except requests.RequestException as e:
+            resp = getattr(e, 'response', None)
+            if resp is not None and resp.status_code not in RETRY_STATUSES:
+                raise
+            if att >= len(RETRY_DELAYS):
+                raise
+            wait = RETRY_DELAYS[att]
+            print('  release %s: сбой (%s) — жду %d с' % (action, e, wait), flush=True)
+            time.sleep(wait)
+    if not r.json().get('ok'):
+        raise RuntimeError('release control failed: ' + action)
+    if action == 'rollback':
+        # Force reconciliation after rollback; never reuse fingerprints of the rejected release.
+        if os.path.exists(STATE): os.remove(STATE)
+    if action == 'finalize' and os.path.exists(RELEASE): os.remove(RELEASE)
+
+
+def unlink_remote_endpoint(cp, target):
+    if not target or not hasattr(cp, 'api2'):
+        return
+    try:
+        cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=target, doubledecode='0')
+    except Exception:
+        pass
+
+
+def recover_release(cp):
+    if os.path.exists(RELEASE):
+        try:
+            release_control('rollback')
+            release_control('finalize')
+        except Exception as e:
+            print('  recover_release: старый RELEASE недоступен (%s), очищаю локально' % e, flush=True)
+            if os.path.exists(STATE): os.remove(STATE)
+            if os.path.exists(RELEASE): os.remove(RELEASE)
+    # Recover an interrupted runner using endpoint names and an HMAC derived from the existing host credential.
+    host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
+    def credentials_for(rid):
+        token = hmac.new(host_secret.encode(), ('barik-release:' + rid).encode(), hashlib.sha256).hexdigest()
+        return {'url': 'https://' + os.environ['BARIK_HOST_DOMAIN'] + '/barik-release-' + rid + '.php', 'token': token}
+    remote = cp.uapi('Fileman', 'list_files', dir='public_html')
+    cp.ok(remote, 'pending release discovery')
+    for item in remote.get('data') or []:
+        fname = item.get('file', '')
+        if not re.fullmatch(r'barik-release-[A-Za-z0-9._-]+\.php', fname):
+            continue
+        fullpath = item.get('fullpath') or (
+            (item['absdir'].rstrip('/') + '/' + fname) if item.get('absdir') else ('public_html/' + fname)
+        )
+        match = re.fullmatch(r'barik-release-([0-9a-f]{24})\.php', fname)
+        finalized = False
+        if match:
+            previous = credentials_for(match.group(1))
+            try:
+                release_control('rollback', previous)
+                release_control('finalize', previous)
+                finalized = True
+            except Exception as e:
+                print('  recover_release: осиротевший %s (%s) — удаляю напрямую' % (fname, e), flush=True)
+                if os.path.exists(STATE): os.remove(STATE)
+        if not finalized:
+            unlink_remote_endpoint(cp, fullpath)
+
+
+def guarded_release(cp, root, todo, finalize_now=False):
+    host_secret = os.environ.get('BARIK_HOST_TOKEN') or os.environ['BARIK_HOST_PASSWORD']
+    def credentials_for(rid):
+        return {'token': hmac.new(host_secret.encode(), ('barik-release:' + rid).encode(), hashlib.sha256).hexdigest()}
+    rid = secrets.token_hex(12)
+    token = credentials_for(rid)['token']
+    endpoint = 'barik-release-' + rid + '.php'
+    work = root.rsplit('/', 1)[0] + '/barik-release-' + rid
+    source = open(os.path.join(HERE, 'release_guard.php'), encoding='utf-8').read()
+    source = source.replace('__TOKEN__', token).replace('__ID__', rid)
+    cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (endpoint, source.encode(), 'text/plain')},
+                  dir='public_html', overwrite='0'), 'release endpoint')
+    credentials = {'url': 'https://' + os.environ['BARIK_HOST_DOMAIN'] + '/' + endpoint, 'token': token}
+    os.makedirs(os.path.dirname(RELEASE), exist_ok=True)
+    fd = os.open(RELEASE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, 'w') as f: json.dump(credentials, f)
+    prepared = False
+    activate_attempted = False
+    completed = False
+    try:
+        release_control('prepare', credentials)
+        prepared = True
+        # Preserve host-managed PHP directives in the staged .htaccess.
+        paths = dict(todo)
+        if '.htaccess' in paths:
+            srv = (cp.uapi('Fileman', 'get_file_content', dir=root, file='.htaccess', charset='utf-8').get('data') or {}).get('content', '')
+            block = re.search(r'# BEGIN cPanel-generated.*?# END cPanel-generated[^\n]*\n', srv, re.S)
+            merged = os.path.join(os.path.dirname(STATE), 'release.htaccess')
+            with open(merged, 'w', encoding='utf-8') as f:
+                f.write((block.group(0) if block else '') + open(paths['.htaccess'], encoding='utf-8').read())
+            paths['.htaccess'] = merged
+        manifest = _hash_many(paths, sha256_file)
+        for archive in make_zips(paths):
+            name = os.path.basename(archive)
+            with open(archive, 'rb') as f:
+                cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (name, f.read(), 'application/zip')},
+                              dir=work, overwrite='1'), 'staging upload')
+            cp.ok(cp.api2('Fileman', 'fileop', op='extract', sourcefiles=work + '/' + name,
+                          destfiles=work + '/stage', doubledecode='0'), 'staging extraction')
+            cp.ok(cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=work + '/' + name, doubledecode='0'), 'staging archive cleanup')
+        cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': ('manifest.json', json.dumps(manifest).encode(), 'application/json')},
+                      dir=work, overwrite='1'), 'staging manifest')
+        activate_attempted = True
+        release_control('activate', credentials)
+        completed = True
+        return credentials
+    except BaseException:
+        if activate_attempted:
+            try:
+                release_control('rollback', credentials)
+            except Exception:
+                pass
+        raise
+    finally:
+        if not completed or finalize_now:
+            removed = False
+            if prepared:
+                try:
+                    release_control('finalize', credentials)
+                    removed = True
+                except Exception:
+                    pass
+            if not removed:
+                unlink_remote_endpoint(cp, root + '/' + endpoint)
+            if os.path.exists(RELEASE):
+                os.remove(RELEASE)
+
+
+BATCH = 3000
+CORE_TOP = ('api/', 'js/', 'css/', 'og/')
+
+
+def split_batches(todo, size=BATCH):
+    """Split large deployments into <=3000-file batches so activate() stays fast; core/app/sitemap/.htaccess go last."""
+    if len(todo) <= size:
+        return [dict(todo)]
+    bulk, core = [], []
+    for rel in sorted(todo):
+        is_core = ('/' not in rel) or rel.startswith(CORE_TOP)
+        (core if is_core else bulk).append(rel)
+    batches = [{k: todo[k] for k in bulk[i:i + size]} for i in range(0, len(bulk), size)]
+    for i in range(0, len(core), size):
+        batches.append({k: todo[k] for k in core[i:i + size]})
+    return batches
+
+
+def release_plan(cp, all_files=False):
+    recover_release(cp)
+    files = scan()
+    state = {} if all_files or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
+    now = _hash_many(files, sha)
+    todo = {rel: files[rel] for rel in files if state.get(rel) != now[rel]}
+    gone = sorted(set(state) - set(files))
+    return files, state, now, todo, gone
+
+
 def main():
     ap = argparse.ArgumentParser(description='Выкладка dist/site на хостинг Name.am через cPanel (HTTPS)')
     ap.add_argument('--check', action='store_true', help='только вход, PHP и место на диске')
     ap.add_argument('--all', action='store_true', help='выложить все файлы, не только изменённые')
     ap.add_argument('--prune', action='store_true', help='удалить на хостинге файлы, которых нет в сборке')
+    ap.add_argument('--rollback', action='store_true')
+    ap.add_argument('--finalize', action='store_true')
     a = ap.parse_args()
+    if a.rollback or a.finalize:
+        release_control('rollback' if a.rollback else 'finalize')
+        return
     load_env()
     need = ['BARIK_HOST_SERVER', 'BARIK_HOST_DOMAIN', 'BARIK_HOST_USER'] + ([] if os.environ.get('BARIK_HOST_TOKEN') else ['BARIK_HOST_PASSWORD'])
     miss = [k for k in need if not os.environ.get(k)]
@@ -222,69 +456,29 @@ def main():
 
     if not os.path.exists(os.path.join(SITE, 'index.html')):
         sys.exit('Нет dist/site — сначала python3.13 tools/build_site.py')
-    files = scan()
-    state = {} if a.all or not os.path.exists(STATE) else json.load(open(STATE, encoding='utf-8'))
-    now = {rel: sha(p) for rel, p in files.items()}
-    todo = {rel: files[rel] for rel in files if state.get(rel) != now[rel]}
-    gone = sorted(set(state) - set(files))
+    files, state, now, todo, gone = release_plan(cp, a.all)
     print('файлов в сборке %d, к выкладке %d, исчезло из сборки %d' % (len(files), len(todo), len(gone)))
 
     # распаковка — по абсолютному пути: относительный cPanel считает от папки архива (public_html/public_html)
     root = next((f.get('absdir') for f in (cp.uapi('Fileman', 'list_files', dir='public_html').get('data') or [])), '')
     if not root.endswith('/public_html'):
         sys.exit('не нашёл public_html на хостинге: %r' % root)
+    if a.prune:
+        sys.exit('--prune is incompatible with guarded releases')
     if todo:
-        zips = make_zips(todo)
-        for i, z in enumerate(zips, 1):
-            name = os.path.basename(z)
-            size = os.path.getsize(z) / 1e6
-            t0 = time.time()
-            with open(z, 'rb') as f:
-                blob = f.read()                      # целиком в памяти: при повторе файл читается заново
-            if True:
-                cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': (name, blob, 'application/zip')},
-                              dir='public_html', overwrite='1'), 'загрузка ' + name)
-            cp.ok(cp.api2('Fileman', 'fileop', op='extract', sourcefiles='public_html/' + name,
-                          destfiles=root, doubledecode='0'), 'распаковка ' + name)
-            cp.api2('Fileman', 'fileop', op='unlink', sourcefiles='public_html/' + name, doubledecode='0')
-            # отпечатки выложенного — сразу: обрыв на следующем архиве не заставит слать этот заново
-            with zipfile.ZipFile(z) as zz:
-                for rel in zz.namelist():
-                    state[rel] = now[rel]
+        batches = split_batches(todo)
+        total_b = len(batches)
+        for bi, chunk in enumerate(batches, 1):
+            if bi > 1:
+                time.sleep(3)
+            if total_b > 1:
+                print('пакет %d/%d (%d файлов)' % (bi, total_b, len(chunk)), flush=True)
+            guarded_release(cp, root, chunk, finalize_now=(bi < total_b))
+            state.update({rel: now[rel] for rel in chunk})
             os.makedirs(os.path.dirname(STATE), exist_ok=True)
             json.dump(state, open(STATE, 'w', encoding='utf-8'))
-            print('  %d/%d %s: %.1f МБ, %.0f с' % (i, len(zips), name, size, time.time() - t0), flush=True)
-            os.remove(z)
-
-    # архивы, оставшиеся от прерванной выкладки, — убрать
-    left = [f.get('file') for f in (cp.uapi('Fileman', 'list_files', dir='public_html').get('data') or [])
-            if re.match(r'barik-deploy-\d+\.zip$', f.get('file') or '')]
-    for f in left:
-        cp.api2('Fileman', 'fileop', op='unlink', sourcefiles='public_html/' + f, doubledecode='0')
-    if left:
-        print('убраны остатки прошлой выкладки: %s' % ', '.join(left))
-
-    if gone and a.prune:
-        for k in range(0, len(gone), 200):
-            part = gone[k:k + 200]
-            cp.api2('Fileman', 'fileop', op='unlink', sourcefiles=','.join('public_html/' + g for g in part), doubledecode='0')
-        for g in gone:
-            state.pop(g, None)
-        json.dump(state, open(STATE, 'w', encoding='utf-8'))
-        print('удалено с хостинга: %d' % len(gone))
-    elif gone:
-        print('на хостинге остались %d файлов, которых нет в сборке (--prune — удалить)' % len(gone))
-
-    # .htaccess из сборки затирает блок, который пишет сам cPanel (журнал ошибок PHP), — вернуть его сверху
-    if '.htaccess' in todo:
-        fix_htaccess(cp, root)
-    # настройки кабинета: создать один раз, потом не трогать. Загрузкой файла: текст с «<?php» в адресе
-    # (save_file_content) сервер отсекает
-    got = cp.uapi('Fileman', 'get_file_content', dir='public_html/api', file='config.php')
-    if got.get('status') != 1:
-        cp.ok(cp.uapi('Fileman', 'upload_files', files={'file-1': ('config.php', config_php().encode(), 'text/plain')},
-                      dir='public_html/api', overwrite='0'), 'config.php')
-        print('api/config.php создан (PEPPER случайный, почта — хостинга). Paddle — вписать позже.')
+    if gone:
+        print('старые файлы сохранены: %d' % len(gone))
     print('готово: https://%s/' % os.environ['BARIK_HOST_DOMAIN'])
 
 

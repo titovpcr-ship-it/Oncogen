@@ -61,6 +61,10 @@ function db(): PDO {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
     $pdo->exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
+    if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 2) {
+        $pdo->exec('BEGIN IMMEDIATE');
+        try {
+            if ((int)$pdo->query('PRAGMA user_version')->fetchColumn() < 2) {
     $pdo->exec('CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
@@ -89,17 +93,28 @@ function db(): PDO {
     // подарочная подписка (O-184): код покупает один, вводит другой; доступ — users.gift_until, отдельно от подписки Dodo
     $pdo->exec('CREATE TABLE IF NOT EXISTS gifts(code TEXT PRIMARY KEY, pay_id TEXT NOT NULL UNIQUE, buyer INTEGER NOT NULL, months INTEGER NOT NULL,
         created INTEGER NOT NULL, used_by INTEGER, used_at INTEGER)');
-    try { $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER'); } catch (PDOException $e) { /* уже есть */ }
+    $columns = array_fill_keys($pdo->query('PRAGMA table_info(users)')->fetchAll(PDO::FETCH_COLUMN, 1), true);
+    if (!isset($columns['gift_until'])) $pdo->exec('ALTER TABLE users ADD COLUMN gift_until INTEGER');
     // режим Dodo, в котором оформлена подписка (O-195): test | live; NULL — заведена до O-195, значит тестовая
-    try { $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT'); } catch (PDOException $e) { /* уже есть */ }
+    if (!isset($columns['sub_mode'])) $pdo->exec('ALTER TABLE users ADD COLUMN sub_mode TEXT');
     // анкета покупателя (O-196): имя и фамилия для страницы оплаты, дата рождения, пол, страна — до оплаты обязательны
     foreach (['pf_first', 'pf_last', 'pf_birth', 'pf_gender', 'pf_country'] as $c) {
-        try { $pdo->exec('ALTER TABLE users ADD COLUMN ' . $c . ' TEXT'); } catch (PDOException $e) { /* уже есть */ }
+        if (!isset($columns[$c])) $pdo->exec('ALTER TABLE users ADD COLUMN ' . $c . ' TEXT');
     }
     // счета Paymento (O-162): token — от Paymento, status — их OrderStatus, done — когда доступ начислен
     $pdo->exec('CREATE TABLE IF NOT EXISTS crypto(token TEXT PRIMARY KEY, uid INTEGER NOT NULL, plan TEXT NOT NULL,
         usd TEXT NOT NULL, status INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, done INTEGER)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS crypto_uid ON crypto(uid, created)');
+    $pdo->exec('CREATE INDEX IF NOT EXISTS hits_t ON hits(t)');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS subscription_versions(sid TEXT PRIMARY KEY, issued INTEGER NOT NULL DEFAULT 0, applied INTEGER NOT NULL DEFAULT 0, event_stamp INTEGER NOT NULL DEFAULT 0)');
+    $pdo->exec('PRAGMA user_version=2');
+            }
+            $pdo->exec('COMMIT');
+        } catch (Throwable $e) {
+            $pdo->exec('ROLLBACK');
+            throw $e;
+        }
+    }
     return $pdo;
 }
 
@@ -112,15 +127,78 @@ function q(string $sql, array $args = []): PDOStatement {
 /* ---------- лимиты: ключ (почта или хэш адреса) — не больше n за окно ---------- */
 function limited(string $key, int $n, int $window): bool {
     $t = now();
-    q('DELETE FROM hits WHERE t < ?', [$t - 86400]);
-    $c = (int)q('SELECT COUNT(*) FROM hits WHERE k = ? AND t > ?', [$key, $t - $window])->fetchColumn();
-    if ($c >= $n) return true;
-    q('INSERT INTO hits(k, t) VALUES(?, ?)', [$key, $t]);
-    return false;
+    $pdo = db();
+    $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        $c = (int)q('SELECT COUNT(*) FROM hits WHERE k = ? AND t > ?', [$key, $t - $window])->fetchColumn();
+        if ($c < $n) q('INSERT INTO hits(k, t) VALUES(?, ?)', [$key, $t]);
+        $pdo->exec('COMMIT');
+        return $c >= $n;
+    } catch (Throwable $e) {
+        $pdo->exec('ROLLBACK');
+        throw $e;
+    }
+}
+
+function client_ip(): string {
+    $cf = trim((string)($_SERVER['HTTP_CF_CONNECTING_IP'] ?? ''));
+    if ($cf !== '' && filter_var($cf, FILTER_VALIDATE_IP)) {
+        return $cf;
+    }
+    return trim((string)($_SERVER['REMOTE_ADDR'] ?? '')) ?: '0.0.0.0';
 }
 
 function ip_key(): string {
-    return 'ip:' . substr(hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . (string)cfg('PEPPER', '')), 0, 24);
+    return 'ip:' . substr(hash('sha256', client_ip() . (string)cfg('PEPPER', '')), 0, 24);
+}
+
+/* легковесный файловый лимит неудачных попыток по IP (без нагрузки на SQLite): не более $max за $window секунд */
+function ip_rate_file(string $bucket, bool $mkdir = false): string {
+    $dir = (string)cfg('DATA_DIR', dirname(__DIR__, 2) . '/barik-data') . '/rl';
+    if ($mkdir && !is_dir($dir)) @mkdir($dir, 0700, true);
+    $h = hash_hmac('sha256', $bucket . '|' . client_ip(), (string)cfg('PEPPER', 'barik'));
+    return $dir . '/' . substr($h, 0, 32) . '.rl';
+}
+
+function ip_rate_limited(string $bucket, int $max = 10, int $window = 60): bool {
+    $f = ip_rate_file($bucket, false);
+    if (!is_file($f)) return false;
+    $fp = @fopen($f, 'r');
+    if (!$fp) return false;
+    $cut = now() - $window;
+    $n = 0;
+    if (@flock($fp, LOCK_SH)) {
+        while (($line = fgets($fp)) !== false) {
+            if ((int)trim($line) > $cut) $n++;
+        }
+        @flock($fp, LOCK_UN);
+    }
+    fclose($fp);
+    return $n >= $max;
+}
+
+function ip_rate_fail(string $bucket, int $window = 60): int {
+    $f = ip_rate_file($bucket, true);
+    $fp = @fopen($f, 'c+');
+    if (!$fp) return 0;
+    $now = now();
+    $cut = $now - $window;
+    $kept = [];
+    if (@flock($fp, LOCK_EX)) {
+        rewind($fp);
+        while (($line = fgets($fp)) !== false) {
+            $ts = (int)trim($line);
+            if ($ts > $cut) $kept[] = $ts;
+        }
+        $kept[] = $now;
+        rewind($fp);
+        ftruncate($fp, 0);
+        fwrite($fp, implode("\n", $kept) . "\n");
+        fflush($fp);
+        @flock($fp, LOCK_UN);
+    }
+    fclose($fp);
+    return count($kept);
 }
 
 /* ---------- почта и никнейм ---------- */
@@ -197,7 +275,8 @@ function premium(array $u): bool {
     if (!sub_here($u)) return false;
     if (!in_array((string)$u['sub_status'], PREMIUM_STATUSES, true)) return false;
     $until = (int)($u['sub_until'] ?? 0);
-    return $until === 0 || $until + 3 * 86400 > now();
+    return ($until === 0 && ($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub']))
+        || ($until > 0 && $until + 3 * 86400 > now());
 }
 
 function user_out(array $u): array {
@@ -251,10 +330,28 @@ function uid_sig(int $uid): string {
 }
 
 function pay_info(): array {
-    if (dodo_on()) return ['ready' => true, 'month' => true, 'year' => false, 'card' => true,
-                           'mLabel' => (string)cfg('PRICE_MONTH_LABEL', '$4.99'), 'yLabel' => '', 'gift' => gift_info()];
+    if (dodo_on()) {
+        $mProd = (string)cfg('DODO_PRODUCT_MONTH', '');
+        $yProd = (string)cfg('DODO_PRODUCT_YEAR', '');
+        $lProd = (string)cfg('DODO_PRODUCT_LIFE', '');
+        $mLab = (string)cfg('PRICE_MONTH_LABEL', '');
+        $yLab = (string)cfg('PRICE_YEAR_LABEL', '');
+        $lLab = (string)cfg('PRICE_LIFE_LABEL', '');
+        return [
+            'ready' => true,
+            'month' => $mProd !== '',
+            'year' => $yProd !== '',
+            'life' => $lProd !== '',
+            'card' => true,
+            'mLabel' => $mLab !== '' ? $mLab : ($mProd !== '' ? '$12' : ''),
+            'yLabel' => $yLab !== '' ? $yLab : ($yProd !== '' ? '$59' : ''),
+            'lLabel' => $lLab !== '' ? $lLab : ($lProd !== '' ? '$129' : ''),
+            'gift' => gift_info(),
+        ];
+    }
     return ['ready' => pay_ready(), 'month' => (bool)cfg('PADDLE_PRICE_MONTH'), 'year' => (bool)cfg('PADDLE_PRICE_YEAR'),
-            'mLabel' => (string)cfg('PRICE_MONTH_LABEL', ''), 'yLabel' => (string)cfg('PRICE_YEAR_LABEL', '')];
+            'life' => false,
+            'mLabel' => (string)cfg('PRICE_MONTH_LABEL', ''), 'yLabel' => (string)cfg('PRICE_YEAR_LABEL', ''), 'lLabel' => ''];
 }
 
 function pay_ready(): bool {
@@ -482,14 +579,41 @@ function paddle_post(string $path, array $payload): ?array {
     return ($code >= 200 && $code < 300 && is_array($j)) ? $j : null;
 }
 
-/* ---------- Dodo Payments (O-164): подписка по карте, $4.99 в месяц ----------
+/* ---------- Dodo Payments (O-164): подписки ($12/мес, $59/год) и разовый «Навсегда» ($129) ----------
    Продавец — Dodo (merchant of record): налоги и чеки на нём, выплаты владельцу на счёт. Окно оплаты — страница Dodo
-   (api checkout → checkout_url), после оплаты Dodo возвращает на сайт с ?subscription_id=…; доступ даёт только
-   состояние подписки, которое сервер сам спросил у Dodo по ключу (GET /subscriptions/{id}): по вебхуку
-   (api dodo) и по возвращении человека (api pay_check). Тело вебхука не доверяем — из него берётся только id.
-   Колонки users.pd_customer / pd_sub (были у Paddle) хранят id покупателя и подписки Dodo. */
+   (api checkout → checkout_url), после оплаты Dodo возвращает на сайт с ?subscription_id=… или ?payment_id=…;
+   доступ даёт только состояние, которое сервер сам спросил у Dodo по ключу (GET /subscriptions/{id} или GET /payments/{id}):
+   по вебхуку (api dodo) и по возвращении человека (api pay_check). Тело вебхука не доверяем — из него берётся только id.
+   Колонки users.pd_customer / pd_sub хранят id покупателя и подписки Dodo (для разового «Навсегда» pd_sub пустой). */
 function dodo_on(): bool {
-    return (string)cfg('DODO_API_KEY', '') !== '' && (string)cfg('DODO_PRODUCT_MONTH', '') !== '';
+    return (string)cfg('DODO_API_KEY', '') !== '' && (
+        (string)cfg('DODO_PRODUCT_MONTH', '') !== ''
+        || (string)cfg('DODO_PRODUCT_YEAR', '') !== ''
+        || (string)cfg('DODO_PRODUCT_LIFE', '') !== ''
+    );
+}
+
+function dodo_sub_plan(string $productId): string {
+    if ($productId === '') return '';
+    $yProd = (string)cfg('DODO_PRODUCT_YEAR', '');
+    $mProd = (string)cfg('DODO_PRODUCT_MONTH', '');
+    if ($yProd !== '' && $productId === $yProd) return 'year';
+    if ($mProd !== '' && $productId === $mProd) return 'month';
+    $yLeg = array_filter(array_map('trim', explode(',', (string)cfg('DODO_PRODUCT_YEAR_LEGACY', ''))));
+    if (in_array($productId, $yLeg, true)) return 'year';
+    $mLeg = array_filter(array_map('trim', explode(',', (string)cfg('DODO_PRODUCT_MONTH_LEGACY', ''))));
+    if (in_array($productId, $mLeg, true)) return 'month';
+    return '';
+}
+
+function dodo_payment_has_product(array $payment, string $productId): bool {
+    if ($productId === '') return false;
+    if ((string)($payment['product_id'] ?? '') === $productId) return true;
+    $cart = is_array($payment['product_cart'] ?? null) ? $payment['product_cart'] : [];
+    foreach ($cart as $item) {
+        if (is_array($item) && (string)($item['product_id'] ?? '') === $productId) return true;
+    }
+    return false;
 }
 
 function dodo_base(): string {
@@ -530,14 +654,26 @@ function dodo_signed(string $raw, string $id, string $ts, string $sig, string $s
     return false;
 }
 
+function dodo_record_paid(string $key, ?string $sid = null, ?int $ts = null): void {
+    $t = $ts ?: now();
+    if ($sid !== null && $sid !== '' && $key !== 'sub:' . $sid
+        && q('SELECT 1 FROM events WHERE id = ? AND t >= ?', ['paid:sub:' . $sid, $t - 3600])->fetchColumn()) {
+        q('INSERT OR IGNORE INTO events(id, t) VALUES(?, ?)', ['paid:' . $key, $t]);
+        return;
+    }
+    $added = q('INSERT OR IGNORE INTO events(id, t) VALUES(?, ?)', ['paid:' . $key, $t])->rowCount();
+    if ($added === 1) stat_add(intdiv($t, 86400), 'p:paid');
+}
+
 /* Состояние подписки Dodo → users. Чья подписка: подписанный uid из metadata окна оплаты, иначе id подписки
    или покупателя в базе, иначе почта покупателя (вход у нас по почте, окно оплаты получает ту же почту).
    $want — uid, которому подписка должна принадлежать (pay_check): чужую не привязываем. */
-function dodo_sync(string $sid, ?int $want = null): ?array {
+function dodo_sync(string $sid, ?int $want = null, ?array $verified = null): ?array {
     if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $sid)) return null;
-    $s = dodo('GET', '/subscriptions/' . rawurlencode($sid));
+    $s = $verified ?? dodo('GET', '/subscriptions/' . rawurlencode($sid));
     if (!$s || ($s['subscription_id'] ?? '') !== $sid) return null;
-    if ((string)($s['product_id'] ?? '') !== (string)cfg('DODO_PRODUCT_MONTH', '')) return null;
+    $plan = dodo_sub_plan((string)($s['product_id'] ?? ''));
+    if ($plan === '') return null;
     $md = is_array($s['metadata'] ?? null) ? $s['metadata'] : [];
     $cust = is_array($s['customer'] ?? null) ? $s['customer'] : [];
     $u = null;
@@ -547,17 +683,22 @@ function dodo_sync(string $sid, ?int $want = null): ?array {
     if (!$u && !empty($cust['customer_id'])) $u = q('SELECT * FROM users WHERE pd_customer = ?', [(string)$cust['customer_id']])->fetch() ?: null;
     if (!$u && ($e = norm_email($cust['email'] ?? null))) $u = q('SELECT * FROM users WHERE email = ?', [$e])->fetch() ?: null;
     if (!$u || ($want !== null && (int)$u['id'] !== $want)) return null;
+    // постоянный доступ «Навсегда» (Heritage Lifetime / Crypto Life) никогда не перетираем старой подпиской
+    if (($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub']) && premium($u)) return $u;
     // другая подписка того же человека уже идёт — эту (старую, отменённую) не даём ей затереть
     if ($u['pd_sub'] && $u['pd_sub'] !== $sid && premium($u) && ($s['status'] ?? '') !== 'active') return $u;
     $st = (string)($s['status'] ?? '');
     $next = strtotime((string)($s['next_billing_date'] ?? '')) ?: null;
     $status = $st;
     $until = $next;
+    $fallbackDays = $plan === 'year' ? 370 : 35;
     if ($st === 'active') {
         $status = 'active';                         // оплачено до next_billing_date (+3 дня запаса в premium())
-        if (!$until) $until = now() + 35 * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
+        if (!$until) $until = $u['pd_sub'] === $sid && (int)($u['sub_until'] ?? 0) > 0 ? min((int)$u['sub_until'], now() + $fallbackDays * 86400) : now() + $fallbackDays * 86400;   // без даты не даём доступ «навсегда» (sub_until NULL)
     } elseif ($st === 'past_due') {
-        $status = 'past_due';                       // льготный срок Dodo: доступ пока остаётся
+        $status = 'past_due';
+        // Missing dates must never slide the grace window on repeated checks.
+        if (!$until) $until = (int)($u['sub_until'] ?? 0) ?: ((int)($u['sub_at'] ?? 0) ?: now());
     } elseif ($st === 'cancelled' || $st === 'expired') {
         // отменена: оплаченный срок дослуживает, если он ещё не кончился
         $paid = $next && $next > now() ? $next : now();
@@ -567,7 +708,37 @@ function dodo_sync(string $sid, ?int $want = null): ?array {
         $until = now();
     }
     q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = ?, sub_at = ?, sub_mode = ? WHERE id = ?',
-      [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, 'month', $until, now(), dodo_mode(), $u['id']]);
+      [(string)($cust['customer_id'] ?? $u['pd_customer']), $sid, $status, $plan, $until, now(), dodo_mode(), $u['id']]);
+    if ($st === 'active') dodo_record_paid('sub:' . $sid);
+    return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
+}
+
+/* Разовый платёж Heritage Lifetime ($129) → users (бессрочный доступ: sub_plan = 'life', sub_until = NULL, pd_sub = ''). */
+function dodo_payment_sync(string $pid, ?int $want = null, ?array $verified = null): ?array {
+    if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) return null;
+    $lifeProd = (string)cfg('DODO_PRODUCT_LIFE', '');
+    if ($lifeProd === '') return null;
+    $p = $verified ?? dodo('GET', '/payments/' . rawurlencode($pid));
+    if (!is_array($p) || ($p['payment_id'] ?? '') !== $pid) return null;
+    if ((string)($p['status'] ?? '') !== 'succeeded') return null;
+    $md = is_array($p['metadata'] ?? null) ? $p['metadata'] : [];
+    if (($md['gift'] ?? '') === '1') return null;
+    $hasProductMeta = !empty($p['product_id']) || (!empty($p['product_cart']) && is_array($p['product_cart']));
+    if ($hasProductMeta) {
+        if (!dodo_payment_has_product($p, $lifeProd)) return null;
+    } elseif (($md['plan'] ?? '') !== 'life') {
+        return null;
+    }
+    $cust = is_array($p['customer'] ?? null) ? $p['customer'] : [];
+    $u = null;
+    $uid = (int)($md['uid'] ?? 0);
+    if ($uid > 0 && hash_equals(uid_sig($uid), (string)($md['sig'] ?? ''))) $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch() ?: null;
+    if (!$u && !empty($cust['customer_id'])) $u = q('SELECT * FROM users WHERE pd_customer = ?', [(string)$cust['customer_id']])->fetch() ?: null;
+    if (!$u && ($e = norm_email($cust['email'] ?? null))) $u = q('SELECT * FROM users WHERE email = ?', [$e])->fetch() ?: null;
+    if (!$u || ($want !== null && (int)$u['id'] !== $want)) return null;
+    q('UPDATE users SET pd_customer = ?, pd_sub = ?, sub_status = ?, sub_plan = ?, sub_until = NULL, sub_at = ?, sub_mode = ? WHERE id = ?',
+      [(string)($cust['customer_id'] ?? $u['pd_customer']), '', 'active', 'life', now(), dodo_mode(), $u['id']]);
+    dodo_record_paid($pid);
     return q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch() ?: null;
 }
 
@@ -633,59 +804,441 @@ function remind_run(?int $now = null): array {
 
 
 /* ---------- счётчик посещений (O-174) ---------- */
-const FUNNEL = ['land_try', 'start', 'first_answer', 'lesson_done', 'unit_done', 'v_paywall', 'checkout', 'profile', 'paid', 'gift_paid',
-                'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail'];
+const FUNNEL = ['land_try', 'start', 'lesson_start', 'first_answer', 'lesson_complete', 'unit_done', 'lvl_start',
+                'family_visit', 'family_listen', 'family_gift', 'surname_card',
+                'v_paywall', 'pw_audio15', 'pw_level_lock', 'pw_stage_lock', 'pw_quiz_result', 'pw_gift', 'pw_default',
+                'checkout', 'profile', 'paid', 'gift_paid',
+                'land_start', 'land_open', 'land_abc', 'land_pen', 'land_letter', 'land_name', 'res_fail', 'rem_tg', 'rem_mail', 'a2hs'];
 
 /* Premium сейчас: подписки текущего режима Dodo (O-195) и подарки */
 function premium_count(): int {
-    return (int)q("SELECT COUNT(*) FROM users WHERE (sub_status IN ('active','trialing','past_due') AND (COALESCE(pd_sub,'') = '' OR COALESCE(NULLIF(sub_mode,''),'test') = ?)) OR gift_until > ?",
-                  [dodo_mode(), now()])->fetchColumn();
+    $count = 0;
+    foreach (q('SELECT * FROM users')->fetchAll() as $u) {
+        if ((int)($u['gift_until'] ?? 0) > now() || (premium($u) && (empty($u['pd_sub']) || ((($u['sub_mode'] ?? '') ?: 'test') === dodo_mode())) &&
+            ((int)($u['sub_until'] ?? 0) > now() || (($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub']))))) $count++;
+    }
+    return $count;
 }
 
 function stat_add(int $day, string $k, int $n = 1): void {
     q('INSERT INTO stats(day, k, n) VALUES(?, ?, ?) ON CONFLICT(day, k) DO UPDATE SET n = n + excluded.n', [$day, mb_substr($k, 0, 80), $n]);
 }
 
+const TZ_CC_MAP = [
+    'Asia/Yerevan' => 'AM',
+    'Europe/Moscow' => 'RU', 'Europe/Samara' => 'RU', 'Europe/Kaliningrad' => 'RU', 'Europe/Volgograd' => 'RU',
+    'Europe/Saratov' => 'RU', 'Europe/Astrakhan' => 'RU', 'Europe/Ulyanovsk' => 'RU', 'Europe/Kirov' => 'RU',
+    'Asia/Yekaterinburg' => 'RU', 'Asia/Omsk' => 'RU', 'Asia/Novosibirsk' => 'RU', 'Asia/Barnaul' => 'RU',
+    'Asia/Tomsk' => 'RU', 'Asia/Novokuznetsk' => 'RU', 'Asia/Krasnoyarsk' => 'RU', 'Asia/Irkutsk' => 'RU',
+    'Asia/Chita' => 'RU', 'Asia/Yakutsk' => 'RU', 'Asia/Vladivostok' => 'RU', 'Asia/Magadan' => 'RU',
+    'Asia/Sakhalin' => 'RU', 'Asia/Kamchatka' => 'RU', 'Asia/Anadyr' => 'RU',
+    'America/New_York' => 'US', 'America/Los_Angeles' => 'US', 'America/Chicago' => 'US', 'America/Denver' => 'US',
+    'America/Phoenix' => 'US', 'America/Detroit' => 'US', 'America/Anchorage' => 'US', 'Pacific/Honolulu' => 'US',
+    'America/Indiana/Indianapolis' => 'US', 'America/Kentucky/Louisville' => 'US', 'America/Boise' => 'US',
+    'America/Toronto' => 'CA', 'America/Vancouver' => 'CA', 'America/Montreal' => 'CA', 'America/Edmonton' => 'CA',
+    'America/Winnipeg' => 'CA', 'America/Halifax' => 'CA', 'America/St_Johns' => 'CA', 'America/Regina' => 'CA',
+    'Europe/Paris' => 'FR', 'Europe/Berlin' => 'DE', 'Europe/Madrid' => 'ES', 'Atlantic/Canary' => 'ES',
+    'Europe/London' => 'GB', 'Europe/Rome' => 'IT', 'Europe/Amsterdam' => 'NL', 'Europe/Brussels' => 'BE',
+    'Europe/Zurich' => 'CH', 'Europe/Vienna' => 'AT', 'Europe/Warsaw' => 'PL', 'Europe/Prague' => 'CZ',
+    'Europe/Stockholm' => 'SE', 'Europe/Athens' => 'GR', 'Europe/Lisbon' => 'PT', 'Atlantic/Madeira' => 'PT',
+    'Europe/Kyiv' => 'UA', 'Europe/Kiev' => 'UA', 'Europe/Minsk' => 'BY', 'Europe/Chisinau' => 'MD',
+    'Europe/Sofia' => 'BG', 'Europe/Bucharest' => 'RO', 'Europe/Budapest' => 'HU', 'Europe/Helsinki' => 'FI',
+    'Europe/Oslo' => 'NO', 'Europe/Copenhagen' => 'DK', 'Europe/Dublin' => 'IE', 'Europe/Belgrade' => 'RS',
+    'Europe/Zagreb' => 'HR', 'Europe/Ljubljana' => 'SI', 'Europe/Bratislava' => 'SK', 'Europe/Vilnius' => 'LT',
+    'Europe/Riga' => 'LV', 'Europe/Tallinn' => 'EE', 'Europe/Luxembourg' => 'LU', 'Europe/Istanbul' => 'TR',
+    'Asia/Istanbul' => 'TR', 'Asia/Tbilisi' => 'GE', 'Asia/Baku' => 'AZ', 'Asia/Almaty' => 'KZ',
+    'Asia/Qyzylorda' => 'KZ', 'Asia/Aqtau' => 'KZ', 'Asia/Tashkent' => 'UZ', 'Asia/Bishkek' => 'KG',
+    'Asia/Dushanbe' => 'TJ', 'Asia/Ashgabat' => 'TM', 'Asia/Dubai' => 'AE', 'Asia/Qatar' => 'QA',
+    'Asia/Riyadh' => 'SA', 'Asia/Kuwait' => 'KW', 'Asia/Jerusalem' => 'IL', 'Asia/Beirut' => 'LB',
+    'Asia/Damascus' => 'SY', 'Asia/Amman' => 'JO', 'Asia/Baghdad' => 'IQ', 'Asia/Tehran' => 'IR',
+    'Asia/Nicosia' => 'CY', 'Europe/Nicosia' => 'CY', 'Asia/Tokyo' => 'JP', 'Asia/Seoul' => 'KR',
+    'Asia/Shanghai' => 'CN', 'Asia/Hong_Kong' => 'HK', 'Asia/Taipei' => 'TW', 'Asia/Singapore' => 'SG',
+    'Asia/Bangkok' => 'TH', 'Asia/Ho_Chi_Minh' => 'VN', 'Asia/Saigon' => 'VN', 'Asia/Jakarta' => 'ID',
+    'Asia/Manila' => 'PH', 'Asia/Kuala_Lumpur' => 'MY', 'Asia/Kolkata' => 'IN', 'Asia/Calcutta' => 'IN',
+    'America/Sao_Paulo' => 'BR', 'America/Fortaleza' => 'BR', 'America/Recife' => 'BR', 'America/Bahia' => 'BR',
+    'America/Belem' => 'BR', 'America/Manaus' => 'BR', 'America/Cuiaba' => 'BR',
+    'America/Argentina/Buenos_Aires' => 'AR', 'America/Buenos_Aires' => 'AR',
+    'America/Argentina/Cordoba' => 'AR', 'America/Argentina/Mendoza' => 'AR',
+    'America/Mexico_City' => 'MX', 'America/Monterrey' => 'MX', 'America/Tijuana' => 'MX', 'America/Cancun' => 'MX',
+    'America/Bogota' => 'CO', 'America/Santiago' => 'CL', 'America/Lima' => 'PE', 'America/Montevideo' => 'UY',
+    'America/Caracas' => 'VE', 'America/Guayaquil' => 'EC',
+    'Australia/Sydney' => 'AU', 'Australia/Melbourne' => 'AU', 'Australia/Brisbane' => 'AU',
+    'Australia/Perth' => 'AU', 'Australia/Adelaide' => 'AU', 'Pacific/Auckland' => 'NZ',
+    'Africa/Cairo' => 'EG', 'Africa/Johannesburg' => 'ZA', 'Africa/Casablanca' => 'MA', 'Africa/Lagos' => 'NG',
+];
+
+function tz_to_cc(string $tz): string {
+    $tz = trim($tz);
+    if ($tz === '') return '';
+    if (isset(TZ_CC_MAP[$tz])) return TZ_CC_MAP[$tz];
+    if (str_starts_with($tz, 'America/Argentina/')) return 'AR';
+    if (str_starts_with($tz, 'America/Indiana/') || str_starts_with($tz, 'America/Kentucky/') || str_starts_with($tz, 'US/')) return 'US';
+    if (str_starts_with($tz, 'Canada/')) return 'CA';
+    if (str_starts_with($tz, 'Brazil/')) return 'BR';
+    if (str_starts_with($tz, 'Australia/')) return 'AU';
+    return '';
+}
+
+function lang_to_cc(string $hdr): string {
+    if ($hdr === '') return '';
+    foreach (explode(',', $hdr) as $part) {
+        $tag = trim(explode(';', $part, 2)[0]);
+        if (preg_match('/^[a-z]{2,3}(?:-[A-Za-z]{4})?[-_]([A-Za-z]{2})(?:$|[-_])/', $tag, $m)) {
+            $cc = strtoupper($m[1]);
+            if ($cc !== 'XX' && $cc !== 'ZZ') return $cc;
+        }
+    }
+    return '';
+}
+
+function detect_country(array $b): string {
+    // Приоритет 1: серверные заголовки Cloudflare / cPanel GeoIP
+    foreach (['HTTP_CF_IPCOUNTRY', 'GEOIP_COUNTRY_CODE'] as $hk) {
+        $v = strtoupper(trim((string)($_SERVER[$hk] ?? '')));
+        if (preg_match('/^[A-Z]{2}$/', $v) && !in_array($v, ['XX', 'T1', 'A1', 'A2'], true)) return $v;
+    }
+    // Приоритет 2: код страны с клиента (tzcc.js), часовой пояс (Intl), регион из Accept-Language
+    $c = strtoupper(trim((string)($b['c'] ?? '')));
+    if (preg_match('/^[A-Z]{2}$/', $c) && $c !== 'XX') return $c;
+    $tzc = tz_to_cc((string)($b['tz'] ?? ''));
+    if ($tzc !== '') return $tzc;
+    $lc = lang_to_cc((string)($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? ''));
+    if ($lc !== '') return $lc;
+    return 'XX';
+}
+
+function live_db(): void {
+    static $readyPdo = null;
+    $pdo = db();
+    if ($readyPdo === $pdo) return;
+    $pdo->exec("CREATE TABLE IF NOT EXISTS live_seen(h TEXT PRIMARY KEY, t INTEGER NOT NULL, cc TEXT NOT NULL DEFAULT 'XX', ctx TEXT NOT NULL DEFAULT '')");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS live_seen_t ON live_seen(t)");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS live_events(id INTEGER PRIMARY KEY AUTOINCREMENT, t INTEGER NOT NULL, cc TEXT NOT NULL DEFAULT 'XX', ev TEXT NOT NULL, ctx TEXT NOT NULL DEFAULT '')");
+    $readyPdo = $pdo;
+}
+
 function stat_hit(array $b): void {
     $ua = (string)($_SERVER['HTTP_USER_AGENT'] ?? '');
     if ($ua === '' || preg_match('/bot|crawl|spider|slurp|preview|headless|lighthouse|monitor|curl|wget|python|facebookexternalhit/i', $ua)) return;
-    $day = intdiv(time(), 86400);
+    $now = time();
+    $day = intdiv($now, 86400);
     $clean = fn($x, $re) => preg_match($re, (string)$x) ? (string)$x : '';
     $ev = $clean($b['e'] ?? '', '/^[a-z][a-z0-9_]{0,23}$/');
+    $cc = detect_country($b);
+    $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/');
+    $fam = strtolower($clean($b['fam'] ?? '', '/^[A-Za-z0-9._\-]{1,32}$/'));
+    $f = strtolower($clean($b['f'] ?? '', '/^[A-Za-z0-9._\-]{1,24}$/'));
+    $srcRaw = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/'));
+
+    // Живая активность (онлайн 5/15 мин и последние 20 событий)
+    live_db();
+    $vh = substr(hash_hmac('sha256', ip_key() . '|' . $ua, (string)cfg('PEPPER', 'barik')), 0, 20);
+    $ctx = $fam !== '' ? ('family:' . $fam) : ($f !== '' ? ('from=' . $f) : (($srcRaw !== '' && $srcRaw !== '-') ? $srcRaw : ($l !== '' ? ('lang:' . $l) : '')));
+    $ctx = substr($ctx, 0, 48);
+    q("INSERT INTO live_seen(h, t, cc, ctx) VALUES(?, ?, ?, ?) ON CONFLICT(h) DO UPDATE SET t = excluded.t, cc = CASE WHEN excluded.cc != 'XX' THEN excluded.cc ELSE live_seen.cc END, ctx = CASE WHEN excluded.ctx != '' THEN excluded.ctx ELSE live_seen.ctx END", [$vh, $now, $cc, $ctx]);
+    q('DELETE FROM live_seen WHERE t < ?', [$now - 86400]);
+    $liveEv = ($ev !== '' && $ev !== 'open') ? (($ev === 'lesson_done' && ($b['v'] ?? 0) === 2) ? 'lesson_complete' : $ev) : 'open';
+    q('INSERT INTO live_events(t, cc, ev, ctx) VALUES(?, ?, ?, ?)', [$now, $cc, $liveEv, $ctx]);
+    q('DELETE FROM live_events WHERE id NOT IN (SELECT id FROM live_events ORDER BY id DESC LIMIT 200)');
+
     if ($ev !== '' && $ev !== 'open') {
         stat_add($day, 'e:' . $ev);
+        if ($ev === 'lesson_done' && ($b['v'] ?? 0) === 2) stat_add($day, 'e:lesson_complete');
         // воронка новичка (O-198): шаги из первого визита — всего, по языку и по источнику
         if (!empty($b['g']) && in_array($ev, FUNNEL, true)) {
             stat_add($day, 'g:' . $ev);
-            $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'gl:' . $l . ':' . $ev);
-            $src = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/')); stat_add($day, 'gs:' . ($src ?: '-') . ':' . $ev);
+            if ($l !== '') stat_add($day, 'gl:' . $l . ':' . $ev);
+            stat_add($day, 'gs:' . ($srcRaw ?: '-') . ':' . $ev);
         }
         return;
     }
-    // открытие сайта: посетитель за день, язык, страна по поясу, источник, телефон/компьютер
+    // открытие сайта: посетитель за день, язык, страна, источник, телефон/компьютер
     $h = substr(hash_hmac('sha256', ip_key() . '|' . $ua . '|' . $day, (string)cfg('PEPPER', 'barik')), 0, 20);
     q('DELETE FROM stat_v WHERE day < ?', [$day - 1]);
     $new = q('INSERT OR IGNORE INTO stat_v(day, h) VALUES(?, ?)', [$day, $h])->rowCount() > 0;
     stat_add($day, 'open');
+    if ($fam !== '') stat_add($day, 'fam:' . $fam);
     if (!$new) return;
     stat_add($day, 'u');
-    $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'l:' . $l);
-    $c = $clean($b['c'] ?? '', '/^[A-Z]{2}$/'); stat_add($day, 'c:' . ($c ?: '??'));
+    if ($l !== '') stat_add($day, 'l:' . $l);
+    stat_add($day, 'c:' . $cc);
     $r = strtolower($clean($b['r'] ?? '', '/^[A-Za-z0-9.\-]{1,60}$/'));
     $r = preg_replace('/^(www\.|m\.|l\.|lm\.)/', '', $r);
     stat_add($day, 'r:' . ($r ?: '-'));
     stat_add($day, 'd:' . (preg_match('/Mobi|Android|iPhone|iPad/i', $ua) ? 'phone' : 'desk'));
-    $f = strtolower($clean($b['f'] ?? '', '/^[A-Za-z0-9._\-]{1,24}$/')); if ($f !== '') stat_add($day, 'f:' . $f);
+    if ($f !== '') stat_add($day, 'f:' . $f);
     if (!empty($b['g'])) {
         stat_add($day, 'e:guest_new');
         stat_add($day, 'g:guest');
-        $l = $clean($b['l'] ?? '', '/^(ru|en|fr|es|de|pt)$/'); if ($l !== '') stat_add($day, 'gl:' . $l . ':guest');
-        $sp = strtolower($clean($b['s'] ?? '', '/^[A-Za-z0-9.=_\-]{1,40}$/')); stat_add($day, 'gs:' . ($sp ?: '-') . ':guest');
+        if ($l !== '') stat_add($day, 'gl:' . $l . ':guest');
+        stat_add($day, 'gs:' . ($srcRaw ?: '-') . ':guest');
     }
 }
 
 function stats_key(): string {
     return substr(hash_hmac('sha256', 'stats', (string)cfg('PEPPER', 'barik')), 0, 32);
+}
+
+/* Sales diagnostics: anonymous browser sessions, not people. No email/IP/customer IDs. */
+function sales_schema(): void {
+    static $ready = false;
+    if ($ready) return;
+    db()->exec("CREATE TABLE IF NOT EXISTS sales_sessions(
+        sid TEXT PRIMARY KEY,started INTEGER NOT NULL,last_seen INTEGER NOT NULL,
+        lang TEXT NOT NULL,device TEXT NOT NULL,source TEXT NOT NULL);
+        CREATE INDEX IF NOT EXISTS sales_sessions_started ON sales_sessions(started);
+        CREATE TABLE IF NOT EXISTS sales_events(
+        eid TEXT PRIMARY KEY,sid TEXT NOT NULL REFERENCES sales_sessions(sid) ON DELETE CASCADE,
+        event TEXT NOT NULL,t INTEGER NOT NULL,pw_sec INTEGER,reason TEXT NOT NULL DEFAULT '',verified INTEGER NOT NULL DEFAULT 0);
+        CREATE INDEX IF NOT EXISTS sales_events_sid ON sales_events(sid,event);");
+    $ready = true;
+}
+function sales_sid($sid): string {
+    return is_string($sid) && preg_match('/^[a-f0-9]{32}$/D',$sid) ? $sid : '';
+}
+function sales_record(array $e, bool $server = false): void {
+    $sid = sales_sid($e['sid'] ?? '');
+    $event = $e['event'] ?? '';
+    $allowed = ['session_start','activation','paywall_view','paywall_close','auth_before_pay_start','auth_before_pay_done','checkout_start','payment_success','payment_failed'];
+    if (!$sid || !is_string($event) || !in_array($event,$allowed,true)) return;
+    $eid = $e['eid'] ?? '';
+    if (!is_string($eid) || !preg_match($server ? '/^[a-zA-Z0-9_:.-]{8,120}$/D' : '/^[a-f0-9]{32}$/D',$eid)) return;
+    $lang = strtolower(is_string($e['lang'] ?? null) ? $e['lang'] : 'en');
+    if (!in_array($lang,['ru','en','fr','es','de','pt'],true)) $lang = 'en';
+    $device = ($e['device'] ?? '') === 'mobile' ? 'mobile' : 'desktop';
+    $source = in_array($e['source'] ?? '',['direct','search','social','referral','campaign','internal'],true) ? $e['source'] : 'direct';
+    $reason = in_array($e['reason'] ?? '',['default','audio15','level_lock','stage_lock','quiz_result','gift','family_gift'],true) ? $e['reason'] : '';
+    $t = $server ? now() : max(now()-7*86400,min(now(),(int)($e['t'] ?? now())));
+    $sec = $event === 'paywall_close' ? max(0,min(7200,(int)($e['pw_sec'] ?? 0))) : null;
+    sales_schema();
+    $pdo = db(); $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        q('INSERT INTO sales_sessions(sid,started,last_seen,lang,device,source) VALUES(?,?,?,?,?,?) ON CONFLICT(sid) DO UPDATE SET started=MIN(started,excluded.started),last_seen=MAX(last_seen,excluded.last_seen)',[$sid,$t,$t,$lang,$device,$source]);
+        if (!$server && $event === 'session_start') q('UPDATE sales_sessions SET lang=?,device=?,source=? WHERE sid=? AND started>=?',[$lang,$device,$source,$sid,$t]);
+        q('INSERT OR IGNORE INTO sales_events(eid,sid,event,t,pw_sec,reason,verified) VALUES(?,?,?,?,?,?,?)',[$eid,$sid,$event,$t,$sec,$reason,(int)$server]);
+        $pdo->exec('COMMIT');
+    } catch (Throwable $e) { $pdo->exec('ROLLBACK'); throw $e; }
+}
+function sales_checkout(array $b): string {
+    $sid = sales_sid($b['sales_sid'] ?? '');
+    if ($sid) sales_record(['sid'=>$sid,'eid'=>'checkout:'.bin2hex(random_bytes(16)),'event'=>'checkout_start',
+        'lang'=>$b['lang'] ?? 'en','device'=>preg_match('/Mobile|Android|iPhone|iPad/i',$_SERVER['HTTP_USER_AGENT'] ?? '')?'mobile':'desktop'],true);
+    return $sid;
+}
+/* Called only after the billing COMMIT; retries safely deduplicate by verified payment ID. */
+function sales_payment(?array $payment): void {
+    if (!$payment || !in_array($payment['status'] ?? '',['succeeded','failed'],true)) return;
+    $m = is_array($payment['metadata'] ?? null) ? $payment['metadata'] : [];
+    $sid = sales_sid($m['sales_sid'] ?? '');
+    $pid = (string)($payment['payment_id'] ?? '');
+    if (!$sid || !preg_match('/^[A-Za-z0-9_]{3,80}$/D',$pid)) return;
+    $uid = (int)($m['uid'] ?? 0);
+    if ($uid <= 0 || !hash_equals(uid_sig($uid),(string)($m['sig'] ?? ''))) return;
+    sales_record(['sid'=>$sid,'eid'=>'payment:'.$pid.':'.$payment['status'],
+        'event'=>$payment['status']==='succeeded'?'payment_success':'payment_failed','lang'=>$m['lang'] ?? 'en'],true);
+}
+function sales_median(array $hist): ?float {
+    $n = array_sum($hist); if (!$n) return null;
+    ksort($hist,SORT_NUMERIC); $sum=0; $lo=null; $hi=null;
+    foreach ($hist as $sec=>$count) {
+        $sum += $count;
+        if ($lo===null && $sum >= (int)floor(($n+1)/2)) $lo=(int)$sec;
+        if ($sum >= (int)ceil(($n+1)/2)) { $hi=(int)$sec; break; }
+    }
+    return ($lo+$hi)/2;
+}
+function sales_analysis(array $filter): array {
+    sales_schema();
+    $period = in_array($filter['period'] ?? '',['today','24h','7d','30d','all'],true) ? $filter['period'] : '7d';
+    $from = match($period) {'today'=>intdiv(now(),86400)*86400,'24h'=>now()-86400,'7d'=>now()-7*86400,'30d'=>now()-30*86400,default=>0};
+    $lang = strtolower(is_string($filter['lang'] ?? null) ? $filter['lang'] : '');
+    if (!in_array($lang,['ru','en','fr','es','de','pt'],true)) $lang='';
+    $device = in_array($filter['device'] ?? '',['mobile','desktop'],true) ? $filter['device'] : '';
+    $where = 's.started>=?'; $args=[$from];
+    if ($lang) { $where.=' AND s.lang=?'; $args[]=$lang; }
+    if ($device) { $where.=' AND s.device=?'; $args[]=$device; }
+    $sql = "SELECT s.*,MAX(e.event='activation') activated,MAX(e.event='paywall_view') pw,
+        MAX(e.event='paywall_close') closed,MAX(e.event='auth_before_pay_start') auth_start,
+        MAX(e.event='auth_before_pay_done') auth_done,MAX(e.event='checkout_start') checkout,
+        MAX(e.event='payment_success' AND e.verified=1) paid,
+        MAX(e.event='payment_failed') failed,MAX(e.reason) reason,
+        MAX(CASE WHEN e.event='paywall_close' THEN e.pw_sec END) pw_sec
+        FROM sales_sessions s LEFT JOIN sales_events e ON e.sid=s.sid WHERE $where
+        GROUP BY s.sid ORDER BY s.last_seen DESC";
+    $rows = q($sql,$args); $n=0; $act=0; $paid=0; $pw=0; $checkout=0; $active=0;
+    $funnel=array_fill(0,6,0); $recent=[]; $hist=[];
+    $names=['no_activation'=>'Не дошли до первого действия','no_paywall'=>'Не увидели Premium',
+        'paywall_no_checkout'=>'Пейволл без перехода к оплате','auth_abandoned'=>'Вход перед оплатой не завершён','unconfirmed'=>'Оплата не подтверждена'];
+    $reasons=[]; foreach ($names as $key=>$label) $reasons[$key]=['key'=>$key,'label'=>$label,'n'=>0,'hist'=>[]];
+    $cuts=['lang'=>[],'device'=>[],'source'=>[],'reason'=>[]];
+    while ($r=$rows->fetch()) {
+        $n++; $act+=(int)$r['activated']; $paid+=(int)$r['paid']; $pw+=(int)$r['pw']; $checkout+=(int)$r['checkout'];
+        $ongoing=(int)$r['last_seen']>now()-1800; $active+=(int)$ongoing;
+        // Reach funnel: later stages imply prior reach, including returning authenticated buyers.
+        $reach=[1, $r['activated']||$r['pw']||$r['auth_start']||$r['checkout']||$r['paid'],
+            $r['pw']||$r['auth_start']||$r['checkout']||$r['paid'], $r['auth_done']||$r['checkout']||$r['paid'],
+            $r['checkout']||$r['paid'],(bool)$r['paid']];
+        foreach ($reach as $i=>$v) $funnel[$i]+=(int)$v;
+        if ($r['pw_sec']!==null) $hist[(int)$r['pw_sec']]=($hist[(int)$r['pw_sec']] ?? 0)+1;
+        foreach ($cuts as $key=>$_) {
+            $value=(string)($r[$key] ?: 'unknown');
+            if (!isset($cuts[$key][$value])) $cuts[$key][$value]=['key'=>$value,'sessions'=>0,'paywall'=>0,'checkout'=>0,'paid'=>0];
+            $cuts[$key][$value]['sessions']++;$cuts[$key][$value]['paywall']+=(int)$r['pw'];
+            $cuts[$key][$value]['checkout']+=(int)$r['checkout'];$cuts[$key][$value]['paid']+=(int)$r['paid'];
+        }
+        if (!$r['paid']) {
+            $key=$r['checkout']||$r['auth_done']||$r['failed']?'unconfirmed':($r['auth_start']?'auth_abandoned':($r['pw']?'paywall_no_checkout':($r['activated']?'no_paywall':'no_activation')));
+            $reasons[$key]['n']++;
+            if ($r['pw_sec']!==null) $reasons[$key]['hist'][(int)$r['pw_sec']]=($reasons[$key]['hist'][(int)$r['pw_sec']] ?? 0)+1;
+            if (count($recent)<30) $recent[]=['at'=>(int)$r['last_seen'],'lang'=>$r['lang'],'device'=>$r['device'],'source'=>$r['source'],
+                'reason'=>$key,'pw_sec'=>$r['pw_sec']===null?null:(int)$r['pw_sec'],'active'=>$ongoing];
+        }
+    }
+    foreach ($reasons as &$r) {$r['median_pw_sec']=sales_median($r['hist']);unset($r['hist']);} unset($r);
+    foreach ($cuts as &$cut) {uasort($cut,fn($a,$b)=>$b['sessions']<=>$a['sessions']);$cut=array_values($cut);} unset($cut);
+    $steps=['Сессии','Вовлечение / далее','Premium / далее','Авторизация / далее','Checkout / далее','Подтверждённая оплата'];
+    $f=[]; foreach ($funnel as $i=>$count) $f[]=['label'=>$steps[$i],'n'=>$count,'lost'=>$i?max(0,$funnel[$i-1]-$count):0];
+    return ['ok'=>true,'generated_at'=>now(),'period'=>$period,'from'=>$from,'timezone'=>'UTC','lang'=>$lang,'device'=>$device,
+        'kpi'=>['sessions'=>$n,'activated'=>$act,'paywall'=>$pw,'checkout'=>$checkout,'paid'=>$paid,'conversion'=>$n?round(100*$paid/$n,2):0],
+        'active'=>$active,'median_pw_sec'=>sales_median($hist),'funnel'=>$f,'reasons'=>array_values($reasons),'cuts'=>$cuts,'recent'=>$recent];
+}
+
+const LIVE_OPS_TOKEN = 'm9x4k2p7-v9q3r8t5w2y6';
+
+function live_stats_key_ok(): bool {
+    $provided = (string)($_GET['key'] ?? '');
+    if ($provided === '') {
+        $provided = (string)($_SERVER['HTTP_X_BARIK_KEY'] ?? '');
+    }
+    if ($provided === '') {
+        $auth = (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '');
+        if (str_starts_with($auth, 'Bearer ')) $provided = substr($auth, 7);
+    }
+    $provided = trim($provided);
+    if ($provided === '') return false;
+    if (hash_equals(LIVE_OPS_TOKEN, $provided)) return true;
+    $wk = trim((string)cfg('WATCH_KEY', ''));
+    if ($wk !== '' && hash_equals($wk, $provided)) return true;
+    return hash_equals(stats_key(), $provided);
+}
+
+function live_stats_countries(array $raw, int $uTotal): array {
+    $agg = [];
+    $knownSum = 0;
+    foreach ($raw as $cc => $n) {
+        $n = (int)$n;
+        if ($n <= 0) continue;
+        $code = strtoupper((string)$cc);
+        if (!preg_match('/^[A-Z]{2}$/', $code) || $code === 'XX') $code = 'XX';
+        $agg[$code] = ($agg[$code] ?? 0) + $n;
+        $knownSum += $n;
+    }
+    if ($uTotal > $knownSum) {
+        $agg['XX'] = ($agg['XX'] ?? 0) + ($uTotal - $knownSum);
+    }
+    $denom = array_sum($agg);
+    if ($denom <= 0) return [];
+    arsort($agg);
+    $out = [];
+    foreach ($agg as $cc => $n) {
+        $out[] = ['cc' => $cc, 'n' => $n, 'pct' => round(100 * $n / $denom, 1)];
+    }
+    return $out;
+}
+
+function live_stats_bucket(array $m): array {
+    $g = fn(string $k): int => (int)($m[$k] ?? 0);
+    $pw = [];
+    foreach (['audio15', 'level_lock', 'stage_lock', 'quiz_result', 'gift', 'default'] as $pk) {
+        $pw[$pk] = $g('e:pw_' . $pk);
+    }
+    return [
+        'u' => $g('u'),
+        'open' => $g('open'),
+        'guest' => $g('g:guest'),
+        'start' => $g('g:start'),
+        'first_answer' => $g('g:first_answer'),
+        'lesson_complete' => $g('e:lesson_complete'),
+        'family_visit' => $g('e:family_visit'),
+        'family_listen' => $g('e:family_listen'),
+        'family_gift' => $g('e:family_gift'),
+        'surname_card' => $g('e:surname_card'),
+        'lvl_start' => $g('e:lvl_start'),
+        'v_paywall' => $g('e:v_paywall'),
+        'checkout' => $g('e:checkout'),
+        'paid' => $g('p:paid'),
+        'pw' => $pw,
+    ];
+}
+
+function live_stats_data(): array {
+    live_db();
+    $now = time();
+    $todayDay = intdiv($now, 86400);
+    $m5 = (int)q('SELECT COUNT(*) FROM live_seen WHERE t >= ?', [$now - 300])->fetchColumn();
+    $m15 = (int)q('SELECT COUNT(*) FROM live_seen WHERE t >= ?', [$now - 900])->fetchColumn();
+    $events = q('SELECT id, t, cc, ev, ctx FROM live_events ORDER BY id DESC LIMIT 20')->fetchAll();
+
+    $rows = q('SELECT day, k, n FROM stats ORDER BY day ASC')->fetchAll();
+    $byDay = [];
+    $allMap = [];
+    $todayMap = [];
+    $cAll = [];
+    $cToday = [];
+    foreach ($rows as $r) {
+        $d = (int)$r['day'];
+        $k = (string)$r['k'];
+        $n = (int)$r['n'];
+        $byDay[$d][$k] = ($byDay[$d][$k] ?? 0) + $n;
+        $allMap[$k] = ($allMap[$k] ?? 0) + $n;
+        if ($d === $todayDay) $todayMap[$k] = ($todayMap[$k] ?? 0) + $n;
+        if (str_starts_with($k, 'c:')) {
+            $cc = substr($k, 2);
+            $cAll[$cc] = ($cAll[$cc] ?? 0) + $n;
+            if ($d === $todayDay) $cToday[$cc] = ($cToday[$cc] ?? 0) + $n;
+        }
+    }
+
+    $history = [];
+    $days = array_keys($byDay);
+    rsort($days);
+    foreach ($days as $d) {
+        $x = $byDay[$d];
+        $history[] = [
+            'date' => gmdate('Y-m-d', $d * 86400),
+            'u' => (int)($x['u'] ?? 0),
+            'open' => (int)($x['open'] ?? 0),
+            'guest' => (int)($x['g:guest'] ?? 0),
+            'start' => (int)($x['g:start'] ?? 0),
+            'first_answer' => (int)($x['g:first_answer'] ?? 0),
+            'lessons' => (int)($x['e:lesson_complete'] ?? 0),
+            'family' => (int)($x['e:family_visit'] ?? 0),
+            'paid' => (int)($x['p:paid'] ?? 0),
+        ];
+    }
+
+    $todayBucket = live_stats_bucket($todayMap);
+    $allBucket = live_stats_bucket($allMap);
+
+    return [
+        'ok' => true,
+        'ts' => $now,
+        'day' => gmdate('Y-m-d', $todayDay * 86400),
+        'online' => ['m5' => $m5, 'm15' => $m15],
+        'events' => $events,
+        'today' => $todayBucket,
+        'all' => $allBucket,
+        'accounts' => [
+            'users' => (int)q('SELECT COUNT(*) FROM users')->fetchColumn(),
+            'remind' => (int)q('SELECT COUNT(*) FROM remind WHERE on_ = 1')->fetchColumn(),
+            'premium' => premium_count(),
+        ],
+        'countries' => [
+            'today' => live_stats_countries($cToday, $todayBucket['u']),
+            'all' => live_stats_countries($cAll, $allBucket['u']),
+        ],
+        'history' => $history,
+    ];
 }
 
 
@@ -709,35 +1262,67 @@ function gift_code(): string {
 }
 
 /* спросить Dodo о платеже и, если он оплачен и это наш подарок, выпустить код — ровно один раз; вернуть строку gifts */
-function gift_settle(string $pid, string $lang = 'en'): ?array {
+function gift_settle(string $pid, string $lang = 'en', ?array $verified = null, bool $notify = true): ?array {
     if (!preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) return null;
     $row = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch();
     if ($row) return $row;
-    $p = dodo('GET', '/payments/' . rawurlencode($pid));
+    $p = $verified ?? dodo('GET', '/payments/' . rawurlencode($pid));
     if (!is_array($p) || (string)($p['status'] ?? '') !== 'succeeded') return null;
     $m = is_array($p['metadata'] ?? null) ? $p['metadata'] : [];
     $uid = (int)($m['uid'] ?? 0); $months = (int)($m['months'] ?? 0);
-    if (($m['gift'] ?? '') !== '1' || !in_array($months, [3, 12], true) || !hash_equals(uid_sig($uid), (string)($m['sig'] ?? ''))) return null;
+    $lifeGift = $months === 0 && ($m['plan'] ?? '') === 'life' && ((!empty($p['product_id']) || !empty($p['product_cart'])) ? dodo_payment_has_product($p, (string)cfg('DODO_PRODUCT_LIFE', '')) : true);
+    if (($m['gift'] ?? '') !== '1' || (!in_array($months, [3, 12], true) && !$lifeGift) || !hash_equals(uid_sig($uid), (string)($m['sig'] ?? ''))) return null;
     $code = gift_code();
     try { q('INSERT INTO gifts(code, pay_id, buyer, months, created) VALUES(?, ?, ?, ?, ?)', [$code, $pid, $uid, $months, now()]); }
-    catch (PDOException $e) { return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null; }
-    $u = q('SELECT * FROM users WHERE id = ?', [$uid])->fetch();
+    catch (PDOException $e) {
+        if (($e->errorInfo[1] ?? 0) !== 19 || !str_contains($e->getMessage(), 'UNIQUE constraint failed: gifts.')) throw $e;
+        $existing = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch();
+        if (!$existing) throw $e;
+        return $existing;
+    }
+    $row = q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null;
+    if ($notify && $row) gift_mail($row, $lang);
+    return $row;
+}
+
+function gift_mail(array $row, string $lang): void {
+    $u = q('SELECT * FROM users WHERE id = ?', [$row['buyer']])->fetch();
     if ($u) {
         $t = GIFT_TEXT[$lang] ?? GIFT_TEXT['en'];
-        mail_out($u['email'], $t[0], sprintf($t[1], $code, $months, (string)cfg('SITE_URL', 'https://barik.am/')), ['gift' => $code]);
+        $bodyText = (int)$row['months'] === 0
+            ? str_replace(["0 мес. Barik Premium", "0 months of Barik Premium"], ["Barik Heritage Lifetime", "Barik Heritage Lifetime"], sprintf($t[1], $row['code'], 0, (string)cfg('SITE_URL', 'https://barik.am/')))
+            : sprintf($t[1], $row['code'], $row['months'], (string)cfg('SITE_URL', 'https://barik.am/'));
+        if (!mail_out($u['email'], $t[0], $bodyText, ['gift' => $row['code']])) {
+            error_log('barik gift mail delivery failed');
+        }
     }
-    return q('SELECT * FROM gifts WHERE pay_id = ?', [$pid])->fetch() ?: null;
 }
+
 
 function gift_redeem(array $u, string $code): string {
     $code = strtoupper(preg_replace('/[^A-Za-z0-9-]/', '', $code));
-    $g = q('SELECT * FROM gifts WHERE code = ?', [$code])->fetch();
-    if (!$g) return 'nocode';
-    if ($g['used_by']) return (int)$g['used_by'] === (int)$u['id'] ? 'ok' : 'used';
-    $from = max(now(), (int)($u['gift_until'] ?? 0));
-    q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
-    q('UPDATE users SET gift_until = ? WHERE id = ?', [$from + (int)$g['months'] * 30 * 86400, $u['id']]);
-    return 'ok';
+    $pdo = db();
+    $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        $g = q('SELECT * FROM gifts WHERE code = ?', [$code])->fetch();
+        $result = !$g ? 'nocode' : ($g['used_by'] ? ((int)$g['used_by'] === (int)$u['id'] ? 'ok' : 'used') : '');
+        if ($result === '') {
+            $claimed = q('UPDATE gifts SET used_by = ?, used_at = ? WHERE code = ? AND used_by IS NULL', [$u['id'], now(), $code]);
+            if ($claimed->rowCount() !== 1) throw new RuntimeException('Gift claim conflict');
+            $changed = (int)$g['months'] === 0
+                ? q('UPDATE users SET sub_status = ?, sub_plan = ?, sub_until = NULL, sub_at = ?, pd_sub = ? WHERE id = ?',
+                    ['active', 'life', now(), '', $u['id']])
+                : q('UPDATE users SET gift_until = MAX(CAST(? AS INTEGER), COALESCE(gift_until, 0)) + ? WHERE id = ?',
+                    [now(), (int)$g['months'] * 30 * 86400, $u['id']]);
+            if ($changed->rowCount() !== 1) throw new RuntimeException('Gift recipient missing');
+            $result = 'ok';
+        }
+        $pdo->exec('COMMIT');
+        return $result;
+    } catch (Throwable $e) {
+        $pdo->exec('ROLLBACK');
+        throw $e;
+    }
 }
 
 
@@ -1001,16 +1586,47 @@ function backup_offsite(string $snap, string $pw, string $owner, string $day): b
     $zip = backup_dir() . '/barik-db-' . $day . '.zip';
     $z = new ZipArchive();
     if ($z->open($zip, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) return false;
-    $z->setPassword($pw);
-    $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
-    foreach ($files as $name => $path) {
-        if (!is_file($path)) continue;
-        $z->addFile($path, $name);
-        $z->setEncryptionName($name, ZipArchive::EM_AES_256);
+    $zOpen = true; $verifyOpen = false; $verify = null;
+    try {
+        if (!$z->setPassword($pw)) throw new RuntimeException('backup password failed');
+        $files = ['barik.sqlite' => $snap, 'config.php' => __DIR__ . '/config.php'];
+        foreach ($files as $name => $path) {
+            if (!is_file($path) || !$z->addFile($path, $name) || !$z->setEncryptionName($name, ZipArchive::EM_AES_256)) {
+                throw new RuntimeException('backup encryption/add failed');
+            }
+        }
+        if (!$z->addFromString('README.txt', "Barik encrypted backup $day. Database and config.php.\n")) throw new RuntimeException('backup README failed');
+        if (!$z->close()) throw new RuntimeException('backup close failed');
+        $zOpen = false;
+        $verify = new ZipArchive();
+        if ($verify->open($zip) !== true) throw new RuntimeException('backup verification open failed');
+        $verifyOpen = true;
+        foreach ($files as $name => $path) {
+            $stat = $verify->statName($name);
+            if (($stat['encryption_method'] ?? 0) !== ZipArchive::EM_AES_256) throw new RuntimeException('backup is not AES-256');
+        }
+        if (!$verify->setPassword($pw)) throw new RuntimeException('backup verification password failed');
+        foreach ($files as $name => $path) {
+            $bytes = $verify->getFromName($name);
+            if (!is_string($bytes) || hash('sha256', $bytes) !== hash_file('sha256', $path)) throw new RuntimeException('backup content mismatch');
+        }
+        if (!$verify->close()) throw new RuntimeException('backup verification close failed');
+        $verifyOpen = false;
+    } catch (Throwable $e) {
+        error_log('barik backup verification: ' . $e->getMessage());
+        $backupFailed = true;
+    } finally {
+        foreach ([[$z, $zOpen], [$verify, $verifyOpen]] as [$archive, $opened]) {
+            if ($opened && $archive) {
+                try { if (!$archive->close()) { $backupFailed = true; error_log('barik backup final close failed'); } }
+                catch (Throwable $closeError) { $backupFailed = true; error_log('barik backup close: ' . $closeError->getMessage()); }
+            }
+        }
     }
-    $z->addFromString('README.txt', "Barik: копия базы и config.php с хостинга, $day (O-189).\nПароль — как у «Барик бэкапа». "
-        . "База — public_html/../barik-data/barik.sqlite, config.php — public_html/api/config.php. Подробно — START_HERE.md в бэкапе.\n");
-    $z->close();
+    if (!empty($backupFailed)) {
+        if (is_file($zip)) unlink($zip);
+        return false;
+    }
     @chmod($zip, 0600);
     $users = (int)q('SELECT COUNT(*) FROM users')->fetchColumn();
     $tok = (string)cfg('TG_TOKEN', '');
@@ -1108,7 +1724,12 @@ function watch_urgent(int $now): array {
 function watch_daily(int $now): array {
     $p = [];
     if (dodo_on()) {
-        $prod = (string)cfg('DODO_PRODUCT_MONTH', '');
+        $prods = array_values(array_filter([
+            (string)cfg('DODO_PRODUCT_YEAR', ''),
+            (string)cfg('DODO_PRODUCT_MONTH', ''),
+            (string)cfg('DODO_PRODUCT_LIFE', ''),
+        ], fn($x) => $x !== ''));
+        $prod = $prods[0] ?? '';
         if ($prod === '' || !dodo('GET', '/products/' . rawurlencode($prod))) $p['dodo'] = 'Dodo не принимает ключ или тариф не найден (HTTP ' . (int)($GLOBALS['DODO_CODE'] ?? 0) . ')';
     }
     $host = (string)parse_url((string)cfg('SITE_URL', ''), PHP_URL_HOST);
@@ -1131,22 +1752,35 @@ function watch_digest(array $p, int $yday): string {
     watch_db();
     $js = (int)q('SELECT COUNT(*) FROM js_err WHERE t >= ? AND t < ?', [$yday * 86400, ($yday + 1) * 86400])->fetchColumn();
     $head = $p ? "⚠️ Barik: есть проблемы\n• " . implode("\n• ", $p) : '✅ Barik: всё в порядке';
-    return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): людей ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
-        . ', вошли ' . day_sum($yday, 'g:start') . ', уроков ' . day_sum($yday, 'e:lesson_done') . ', оформляли ' . day_sum($yday, 'e:checkout')
-        . ', оплат ' . day_sum($yday, 'e:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
+    return $head . "\n\nВчера (" . gmdate('d.m', $yday * 86400) . '): IP+браузер ' . day_sum($yday, 'u') . ', новичков ' . day_sum($yday, 'g:guest')
+        . ', вошли ' . day_sum($yday, 'g:start') . ', завершено уроков ' . day_sum($yday, 'e:lesson_complete') . ', оформляли ' . day_sum($yday, 'e:checkout')
+        . ', платежей Dodo ' . day_sum($yday, 'p:paid') . "\nPremium сейчас: " . premium_count() . ', аккаунтов: ' . (int)q('SELECT COUNT(*) FROM users')->fetchColumn()
         . "\nОшибок JS у посетителей: " . $js . ', сбоев загрузки: ' . day_sum($yday, 'e:res_fail') . watch_funnel($yday);
 }
 
 /* TZ_AUDIT3 №5: воронка новичка, Путь по ступеням, ролики и отчёты CSP — в утренней сводке (раньше только в stats.py) */
 function watch_funnel(int $d): string {
     $g = fn($k) => day_sum($d, 'g:' . $k);
-    $t = "\nНовички: гости " . $g('guest') . ' → телефон ' . $g('land_try') . ' → вошли ' . $g('start') . ' → 1-й ответ ' . $g('first_answer') . ' → урок ' . $g('lesson_done');
+    $t = "\nНовички: гости " . $g('guest') . ' → телефон ' . $g('land_try') . ' → вошли ' . $g('start') . ' → 1-й ответ ' . $g('first_answer') . ' → урок ' . $g('lesson_complete');
+    $t .= "\nПосле урока: почта " . $g('rem_mail') . ', на экран «Домой» ' . $g('a2hs');
     $st = [];
     for ($n = 1; $n <= 5; $n++) {
         [$o, $ps, $f] = [day_sum($d, 'e:unit_open_p' . $n), day_sum($d, 'e:unit_pass_p' . $n), day_sum($d, 'e:unit_fail_p' . $n)];
         if ($o || $ps || $f) $st[] = 'p' . $n . ' ' . $o . '→' . $ps . '→' . $f;
     }
     if ($st) $t .= "\nПуть (открыли→прошли→не прошли): " . implode(', ', $st);
+    $fam = day_sum($d, 'e:family_visit'); $famL = day_sum($d, 'e:family_listen'); $famG = day_sum($d, 'e:family_gift'); $card = day_sum($d, 'e:surname_card');
+    if ($fam || $famL || $famG || $card) {
+        $t .= "\nBarik Roots (family): визиты " . $fam . ' (радио ' . $famL . ', подарок ' . $famG . '), герб ' . $card;
+    }
+    $lvl = day_sum($d, 'e:lvl_start');
+    if ($lvl) $t .= "\nТест уровня (lvlStart): " . $lvl;
+    $pw = [];
+    foreach (['audio15', 'level_lock', 'stage_lock', 'quiz_result', 'gift', 'default'] as $pk) {
+        $n = day_sum($d, 'e:pw_' . $pk);
+        if ($n) $pw[] = $pk . ' ' . $n;
+    }
+    if ($pw) $t .= "\nPaywall: " . implode(', ', $pw);
     $r = day_sum($d, 'f:reels'); if ($r) $t .= "\nИз роликов: " . $r . ' (из них вошли ' . day_sum($d, 'gs:from=reels:start') . ')';
     $c = day_sum($d, 'csp'); if ($c) $t .= "\nОтчёты CSP: " . $c;
     return $t;

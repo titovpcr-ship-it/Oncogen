@@ -70,7 +70,7 @@ let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else cons
   await pg.click('.rm [data-act=rmTog]');
   // счётчик посещений (O-174): открытие сайта — один посетитель в день, события, боты не считаются, сводка по ключу
   { const pepKey=require('crypto').createHmac('sha256','test-pepper').update('stats').digest('hex').slice(0,32);
-    const st=async()=>{ const r=await fetch(base+'api/?r=stats&key='+pepKey); const j=await r.json(); const m={}; (j.rows||[]).forEach(x=>{ m[x.k]=(m[x.k]||0)+x.n; }); return m; };
+    const st=async()=>{ const r=await fetch(base+'api/?r=stats',{headers:{Authorization:'Bearer '+pepKey}}); const j=await r.json(); const m={}; (j.rows||[]).forEach(x=>{ m[x.k]=(m[x.k]||0)+x.n; }); return m; };
     ok((await fetch(base+'api/?r=stats&key=00')).status===401,'сводка без ключа — 401');
     const g=await br.newContext({viewport:{width:390,height:800},locale:'fr-FR',timezoneId:'Europe/Paris',serviceWorkers:'block',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'}); const gp=await g.newPage();
     await gp.goto(base); await gp.waitForTimeout(800); await gp.reload(); await gp.waitForTimeout(800);

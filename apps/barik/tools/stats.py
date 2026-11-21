@@ -14,21 +14,25 @@ def main():
     cp = D.CPanel(os.environ['BARIK_HOST_SERVER'], os.environ['BARIK_HOST_DOMAIN'], os.environ['BARIK_HOST_USER'],
                   os.environ.get('BARIK_HOST_PASSWORD', ''), os.environ.get('BARIK_HOST_TOKEN', ''))
     cp.login()
-    cfg = (cp.uapi('Fileman', 'get_file_content', dir='public_html/api', file='config.php').get('data') or {}).get('content') or ''
+    cfg = (cp.uapi('Fileman', 'get_file_content', dir='/home/' + cp.user + '/public_html/api', file='config.php', charset='utf-8').get('data') or {}).get('content') or ''
     m = re.search(r"'PEPPER'\s*=>\s*'([^']+)'", cfg)
     if not m: sys.exit('в config.php нет PEPPER')
     key = hmac.new(m.group(1).encode(), b'stats', hashlib.sha256).hexdigest()[:32]
-    j = requests.get('https://%s/api/' % os.environ['BARIK_HOST_DOMAIN'], params={'r': 'stats', 'key': key, 'days': a.days}, timeout=60).json()
+    j = requests.get('https://%s/api/' % os.environ['BARIK_HOST_DOMAIN'], params={'r': 'stats', 'days': a.days}, headers={'Authorization': 'Bearer ' + key}, timeout=60).json()
     if not j.get('ok'): sys.exit('ошибка: %s' % j)
     by = collections.defaultdict(dict); tot = collections.Counter()
     for r in j['rows']:
         by[r['day']][r['k']] = r['n']; tot[r['k']] += r['n']
     print('аккаунтов: %d, с напоминаниями: %d, Premium: %d' % (j['users'], j['remind'], j['premium']))
-    print('\nдень        люди  открытий  начали  вход  открытка  оплата')
+    print('\nдень        IP+UA открытий  начали  вход  открытка checkout')
     for d in sorted(by):
         x = by[d]; day = datetime.date(1970, 1, 1) + datetime.timedelta(days=d)
         print('%s  %5d  %8d  %6d  %4d  %8d  %6d' % (day, x.get('u', 0), x.get('open', 0), x.get('e:start', 0), x.get('e:login', 0),
               x.get('e:name_save', 0) + x.get('e:name_share', 0), x.get('e:checkout', 0)))
+    print('Посещения: суточные IP+браузер, включая владельца; сумма дней не равна числу людей.')
+    print('Завершено уроков (новый счётчик): %d' % tot.get('e:lesson_complete', 0))
+    print('Старые lesson_done могут включать досрочные выходы; клиентский paid не является продажей.')
+    print('Подтверждённые платежи Dodo: %d' % tot.get('p:paid', 0))
     funnel(by, tot)
     if j.get('js'):
         print('\nошибки JS у посетителей (последние): ')
@@ -44,8 +48,9 @@ def main():
         if it: print('\n%s: %s' % (title, ', '.join('%s %d' % t for t in it)))
 
 
-STEPS = [('guest', 'гости'), ('land_try', 'телефон'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_done', 'урок'), ('unit_done', 'путь'),
-         ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'оплата')]
+STEPS = [('guest', 'гости'), ('land_try', 'телефон'), ('start', 'вошли'), ('first_answer', '1-й ответ'), ('lesson_complete', 'урок'), ('unit_done', 'путь'),
+         ('rem_tg', 'Telegram'), ('rem_mail', 'почта'), ('a2hs', 'на экран Домой'),
+         ('v_paywall', 'замок'), ('checkout', 'оформить'), ('profile', 'анкета'), ('paid', 'возврат Premium')]
 
 
 def funnel(by, tot):
@@ -72,6 +77,7 @@ def funnel(by, tot):
         for a, c in sorted(grp.items(), key=lambda t: -t[1].get('guest', 0))[:12]:
             print('  %-24s %s' % (a, '  '.join(str(c.get(k, 0)) for k, _ in STEPS[:7])))
     path_line(tot)
+    roots_line(tot)
     land = [(k[7:], n) for k, n in tot.items() if k.startswith('e:land_')]
     if land: print('\nкнопки обложки: ' + ', '.join('%s %d' % t for t in sorted(land, key=lambda t: -t[1])))
     if tot.get('open'): print('сбои загрузки (картинка, скрипт, запись): %d на %d открытий (%.1f%%)' % (tot.get('e:res_fail', 0), tot['open'], 100 * tot.get('e:res_fail', 0) / tot['open']))
@@ -88,6 +94,30 @@ def path_line(tot):
     line += '; входной тест %d, урожай %d' % (tot.get('e:place_done', 0), tot.get('e:harvest_done', 0))
     print('\n' + line)
     return line
+
+
+def roots_line(tot):
+    """Barik Roots (family), 60-сек тест уровня (lvlStart) и причины Paywall."""
+    lines = []
+    fam = tot.get('e:family_visit', 0)
+    fam_l = tot.get('e:family_listen', 0)
+    fam_g = tot.get('e:family_gift', 0)
+    card = tot.get('e:surname_card', 0)
+    if fam or fam_l or fam_g or card:
+        lines.append('Barik Roots (family): визиты %d (радио %d, подарок %d), герб %d' % (fam, fam_l, fam_g, card))
+    lvl = tot.get('e:lvl_start', 0)
+    if lvl:
+        lines.append('Тест уровня (lvlStart): %d' % lvl)
+    pw = [(pk, tot.get('e:pw_' + pk, 0)) for pk in ('audio15', 'level_lock', 'stage_lock', 'quiz_result', 'gift', 'default') if tot.get('e:pw_' + pk, 0)]
+    if pw:
+        lines.append('Paywall: ' + ', '.join('%s %d' % t for t in pw))
+    fams = [(k[4:], n) for k, n in tot.items() if k.startswith('fam:')]
+    if fams:
+        lines.append('фамилии (?family=): ' + ', '.join('%s %d' % t for t in sorted(fams, key=lambda t: -t[1])[:12]))
+    out = '\n'.join(lines)
+    if out:
+        print(out)
+    return out
 
 
 if __name__ == '__main__':

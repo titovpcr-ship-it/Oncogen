@@ -1,0 +1,261 @@
+{
+  "date": "2026-11-15",
+  "policy": "No dictionary correction is claimed without evidence. Original identity and progress keys are preserved. Example adjudication does not close the source dictionary issue.",
+  "messages": {
+    "ru": "Написание или значение этой словарной статьи уточняется. Не используйте её как единственный образец.",
+    "en": "The spelling or meaning of this dictionary entry is under review. Do not use it as your only reference.",
+    "fr": "L’orthographe ou le sens de cette entrée est en cours de vérification. Ne l’utilisez pas comme seule référence.",
+    "es": "La escritura o el significado de esta entrada está en revisión. No la uses como única referencia.",
+    "de": "Schreibweise oder Bedeutung dieses Eintrags wird geprüft. Verwende ihn nicht als einzige Referenz.",
+    "pt": "A grafia ou o significado deste verbete está em revisão. Não o use como única referência."
+  },
+  "entries": {
+    "Ուշ լինի, նուշ լինի": {
+      "status": "uncertain",
+      "issues": [
+        "All supplied glosses give better late than never. Actual proverb more specifically conveys let it be late but good/sweet. Existing conventional gloss translation retained; dictionary equivalence should be reviewed separately."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "Ռուսիա": {
+      "status": "uncertain",
+      "issues": [
+        "Potential source ambiguity: supplied Rus, while modern Ռուսիա can denote Russia; example explicitly says old/ancient, but lexical mapping merits review."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "անգիր": {
+      "status": "uncertain",
+      "issues": [
+        "Explicitly supplied unwritten-language sense reviewed and retained, rather than usual by-heart sense.",
+        "Used supplied unwritten-language sense in linguistic context, rather than common memorized/by-heart sense."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "անկապակացություն": {
+      "status": "uncertain",
+      "issues": [
+        "Supplied Armenian spelling appears unusual, possibly intended անկապակցություն. Required supplied headword retained; sentence follows supplied inconsistency meaning. Dictionary spelling needs review."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "անհետ կորած": {
+      "status": "uncertain",
+      "issues": [
+        "English/Spanish/Portuguese translations specify missing in combat following supplied English gloss. Armenian sentence itself does not specify combat, but archival context and headword permit that sense. No invented historical identity."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "անտոմս ուղեւոր": {
+      "status": "uncertain",
+      "issues": [
+        "Supplied compound uses non-reformed ուղեւոր. Required spelling retained visibly in sentence as ուղեւորն; source orthography needs review."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "առանձնացում": {
+      "status": "uncertain",
+      "issues": [
+        "Broad isolation/separation term supplied with English insulation. Example uses acoustic separation of rooms, translated naturally as acoustic insulation."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "ատմոսֆերա": {
+      "status": "uncertain",
+      "issues": [
+        "Broad atmosphere gloss allows pressure-unit sense; sentence explicitly uses atmospheres as pressure units."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "արմավենու յուղյուղ": {
+      "status": "uncertain",
+      "issues": [
+        "Clear duplicated-word typo; correct form արմավենու յուղ. Original key preserved; sentence explicitly replaces erroneous form with correct one. Dictionary repair needs progress-key migration."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "բանահյուսական": {
+      "status": "uncertain",
+      "issues": [
+        "Armenian headword is adjectival (folkloric), whereas glosses say folklore. Used grammatically as adjective modifying materials; translations likewise adjective."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "բացատրական դերանուն": {
+      "status": "uncertain",
+      "issues": [
+        "Supplied demonstrative-pronoun sense is unusual with բացատրական; standard modern term ցուցական դերանուն. Kept supplied phrase in textbook context; no source edit."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "բրինձ քացախ": {
+      "status": "uncertain",
+      "issues": [
+        "Malformed noun compound; natural phrase բրնձի քացախ. Original key retained only in explicit editorial correction showing correct phrase."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "գյուղ տեղ": {
+      "status": "uncertain",
+      "issues": [
+        "Colloquial source phrase for countryside; used as supplied, rather than substituted գյուղական վայր."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "գոյական խառնիչ": {
+      "status": "uncertain",
+      "issues": [
+        "Extraneous գոյական means noun, not blender. Sentence explicitly removes extraneous word; original key retained. Correct generic appliance term խառնիչ; բլենդեր also occurs."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "գործադիր": {
+      "status": "uncertain",
+      "issues": [
+        "Supplied app sense questionable: գործադիր normally executive; standard app term հավելված. Kept dictionary sense, flagged for lexical review."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "գրասալիկը": {
+      "status": "uncertain",
+      "issues": [
+        "Source key already bears definite article; retained exact form naturally as object."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "ժամակահատված": {
+      "status": "uncertain",
+      "issues": [
+        "Assigned headword appears to omit ան from ժամանակահատված. Original key preserved; sentence explicitly corrects the misspelling and includes the standard spelling. Dictionary unchanged."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "լրատու": {
+      "status": "uncertain",
+      "issues": [
+        "Informant/news-desk ambiguity resolved by person’s account context; retained.",
+        "Used supplied informant sense after review; avoided potentially ambiguous news-desk sense."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "ծավալային": {
+      "status": "uncertain",
+      "issues": [
+        "Armenian normally means volumetric/spatial. Example uses architectural three-dimensional model and faithful translations. Dictionary gloss may need a separate correction."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "կեղծ թիվ": {
+      "status": "uncertain",
+      "issues": [
+        "Supplied imaginary-number term is unusual compared with երևակայական թիվ. Exercise context and six translations consistently use the assigned imaginary-number sense; no false numerical assertion introduced. Lexical terminology should be checked separately.",
+        "Supplied sense is imaginary number; modern mathematical Armenian more commonly uses կեղծ as false/fake and կեղծ թիվ may be unusual. Preserved assigned headword and explicit imaginary-number sense in all six translations."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "կցաղետապ": {
+      "status": "uncertain",
+      "issues": [
+        "Uncommon supplied appendicitis term. Article-comparison example retained; no diagnosis or treatment claim is added. Verify lexical spelling/sense separately.",
+        "Uncommon appendicitis term preserved according to supplied gloss, in article-comparison context."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "հայաստանցի": {
+      "status": "uncertain",
+      "issues": [
+        "Source gloss specifies Armenian from Armenia, and translations follow it. Armenian headword itself describes origin/residence rather than necessarily ethnicity; retain current scoped dictionary interpretation but dictionary wording merits separate review."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "հեռագիր": {
+      "status": "uncertain",
+      "issues": [
+        "Supplied six-language glosses refer to telegraph; ordinary Armenian հեռագիր means telegram. Sentence and six translations use archived telegram, as directed; original dictionary unchanged."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "հիվանդոտ": {
+      "status": "uncertain",
+      "issues": [
+        "English morbid is misleading; Armenian and Russian indicate sickly. Example uses a frequently absent sickly child and translations follow that sense."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "հողմահակառակ": {
+      "status": "uncertain",
+      "issues": [
+        "Potential dictionary directional ambiguity. Supplied Russian/English explicitly say leeward, followed in translations. Verify lexical direction in a later dictionary review."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "հրանետ": {
+      "status": "uncertain",
+      "issues": [
+        "Uncommon supplied flamethrower term; museum naming context retained, no operation or military action. Verify terminology in dictionary review.",
+        "Preserved supplied flamethrower sense in neutral museum-bulletin context; terminology may be uncommon."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "նախանձախնդիր": {
+      "status": "uncertain",
+      "issues": [
+        "English jealous and Russian ревнивый can mislead; Armenian also means zealous/assiduous. Example uses a zealous craftsman, matching Russian ревностный."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "շահագործական": {
+      "status": "uncertain",
+      "issues": [
+        "Supplied exploitative gloss used; Armenian adjective can also mean operational, so factory-conditions phrase remains ambiguous. Lexical review recommended."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "որբահավաք": {
+      "status": "uncertain",
+      "issues": [
+        "Neutral letter context correctly translates orphan rescue; no invented event details added.",
+        "Neutral museum-letter context. Translations use orphan rescue; post-Genocide specificity resides in dictionary sense, rather than adding details absent from Armenian sentence."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "որքին": {
+      "status": "uncertain",
+      "issues": [
+        "Unresolved dictionary issue: modern Armenian որքին generally denotes lichen/lichen-like skin disease; all supplied glosses say herpes. Current title-only sentence avoids a medical claim but translations still inherit the possibly wrong disease equivalence. Do not add diagnosis/treatment claims; verify dictionary terminology before publication.",
+        "Supplied six translations all specify herpes, while the Armenian word can denote lichen or other skin eruptions. Sentence only mentions an article title; no diagnosis or medical equivalence asserted beyond supplied glossary translation."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "սաղարթավոր": {
+      "status": "uncertain",
+      "issues": [
+        "English deciduous is narrower than Armenian leafy and Russian лиственный. Example describes leafy trees shading a road, compatible with the intended context."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "վայրի գազար": {
+      "status": "uncertain",
+      "issues": [
+        "Unresolved common-name mapping: literally wild carrot; supplied six-language glosses identify parsnip. Proposed neutral dictionary-checking example avoids culinary use but translations provisionally retain supplied sense. Dictionary-level taxonomy remains unresolved.",
+        "Botanical common-name ambiguity: literally wild carrot, but all supplied glosses identify parsnip. Current root example and translations follow supplied parsnip sense, as assignment requested. Review dictionary taxonomy separately if changing source senses is authorized."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "տրանսցենդենտ": {
+      "status": "uncertain",
+      "issues": [
+        "English transcendental differs philosophically from transcendent. Example uses transcendent, matching Armenian and Russian трансцендентный; dictionary untouched."
+      ],
+      "source": "b2_full_review.json"
+    },
+    "փոթոր": {
+      "status": "uncertain",
+      "issues": [
+        "Uncommon supplied cone-shaped adjective; six glosses agree but independent lexical certainty is limited. Pottery example retained; dictionary verification recommended rather than asserting a newly invented definition.",
+        "Unusual cone-shaped adjective preserved exactly with a concrete pottery context, following all six supplied glosses."
+      ],
+      "source": "b2_full_review.json"
+    }
+  }
+}

@@ -9,7 +9,7 @@
   python3.13 tools/dodo_setup.py --off     выключить оплату картой: ключ из config.php убрать
 
 Из apps/barik/.env (в git не попадает): DODO_API_KEY (dodo_test_… / боевой), DODO_MODE (test | live),
-DODO_PRODUCT_MONTH (pdt_…, тариф $4.99 в месяц), DODO_WEBHOOK_SECRET (whsec_…), PRICE_MONTH_LABEL (по умолчанию $4.99).
+DODO_PRODUCT_MONTH ($12), DODO_PRODUCT_YEAR ($59), DODO_PRODUCT_LIFE ($129), DODO_WEBHOOK_SECRET (whsec_…), PRICE_*_LABEL.
 Боевой режим: в .env новый ключ live-режима, DODO_MODE=live, тариф и вебхук, созданные в live, — и снова этот скрипт.
 Доступ к cPanel — как у deploy_site.py.
 """
@@ -75,7 +75,7 @@ def main():
     a = ap.parse_args()
     D.load_env()
     if a.live:   # боевые значения хранятся рядом с тестовыми под своими именами (живой вебхук создан через API)
-        for k in ('API_KEY', 'PRODUCT_MONTH', 'WEBHOOK_SECRET', 'PRODUCT_GIFT3', 'PRODUCT_GIFT12'):
+        for k in ('API_KEY', 'PRODUCT_MONTH', 'PRODUCT_YEAR', 'PRODUCT_LIFE', 'WEBHOOK_SECRET', 'PRODUCT_GIFT3', 'PRODUCT_GIFT12'):
             os.environ['DODO_' + k] = os.environ.get('DODO_LIVE_' + k, '')
         os.environ['DODO_MODE'] = 'live'
     if a.off:
@@ -85,17 +85,21 @@ def main():
         return
     key = os.environ.get('DODO_API_KEY', '').strip()
     mode = os.environ.get('DODO_MODE', 'test').strip() or 'test'
-    prod = os.environ.get('DODO_PRODUCT_MONTH', '').strip()
-    if not key or not prod:
-        sys.exit('В apps/barik/.env нужны DODO_API_KEY и DODO_PRODUCT_MONTH')
+    prod_m = os.environ.get('DODO_PRODUCT_MONTH', '').strip()
+    prod_y = os.environ.get('DODO_PRODUCT_YEAR', '').strip()
+    prod_l = os.environ.get('DODO_PRODUCT_LIFE', '').strip()
+    if not key or not (prod_m or prod_y or prod_l):
+        sys.exit('В apps/barik/.env нужны DODO_API_KEY и хотя бы один из DODO_PRODUCT_MONTH / DODO_PRODUCT_YEAR / DODO_PRODUCT_LIFE')
     if mode not in ('test', 'live'):
         sys.exit('DODO_MODE — test или live')
-    code, j = dodo('GET', '/products/' + prod, key, mode)
-    if code != 200:
-        sys.exit('Dodo (%s): ключ или тариф не приняты — HTTP %s %s' % (mode, code, j))
-    price = (j.get('price') or {})
-    print('Dodo (%s): ключ принят; тариф «%s» — %s %.2f, раз в %s %s' % (mode, j.get('name'), price.get('currency'),
-          (price.get('price') or 0) / 100, price.get('payment_frequency_count'), price.get('payment_frequency_interval')))
+    for pname, pid in (('month', prod_m), ('year', prod_y), ('life', prod_l)):
+        if not pid:
+            continue
+        code, j = dodo('GET', '/products/' + pid, key, mode)
+        if code != 200:
+            sys.exit('Dodo (%s): ключ или тариф %s (%s) не приняты — HTTP %s %s' % (mode, pname, pid, code, j))
+        price = (j.get('price') or {})
+        print('Dodo (%s): тариф %s «%s» — %s %.2f' % (mode, pname, j.get('name'), price.get('currency'), (price.get('price') or 0) / 100))
     code, w = dodo('GET', '/webhooks', key, mode)
     hooks = [h.get('url') for h in (w.get('data') or w.get('items') or [])] if code == 200 else []
     want = 'https://%s/api/?r=dodo' % os.environ.get('BARIK_HOST_DOMAIN', 'barik.am')
@@ -105,10 +109,14 @@ def main():
     cp, text = cpanel()
     text = set_key(text, 'DODO_API_KEY', key)
     text = set_key(text, 'DODO_MODE', mode)
-    text = set_key(text, 'DODO_PRODUCT_MONTH', prod)
+    text = set_key(text, 'DODO_PRODUCT_MONTH', prod_m)
+    text = set_key(text, 'DODO_PRODUCT_YEAR', prod_y)
+    text = set_key(text, 'DODO_PRODUCT_LIFE', prod_l)
     if os.environ.get('DODO_WEBHOOK_SECRET', '').strip():
         text = set_key(text, 'DODO_WEBHOOK_SECRET', os.environ['DODO_WEBHOOK_SECRET'].strip())
-    text = set_key(text, 'PRICE_MONTH_LABEL', os.environ.get('PRICE_MONTH_LABEL', '$4.99').strip())
+    text = set_key(text, 'PRICE_MONTH_LABEL', os.environ.get('PRICE_MONTH_LABEL', '$12').strip())
+    text = set_key(text, 'PRICE_YEAR_LABEL', os.environ.get('PRICE_YEAR_LABEL', '$59').strip())
+    text = set_key(text, 'PRICE_LIFE_LABEL', os.environ.get('PRICE_LIFE_LABEL', '$129').strip())
     gifts = []
     for m in (3, 12):                      # подарочные коды (O-184): разовые товары; нет в .env — подарка этого срока нет
         g = os.environ.get('DODO_PRODUCT_GIFT%d' % m, '').strip()
@@ -120,8 +128,8 @@ def main():
         text = set_key(text, 'DODO_PRODUCT_GIFT%d' % m, g)
         text = set_key(text, 'GIFT%d_LABEL' % m, os.environ.get('GIFT%d_LABEL' % m, '').strip() if g else '')
     save(cp, text)
-    print('config.php: Dodo (%s), тариф %s, подпись цены %s, подарки: %s' % (mode, prod, os.environ.get('PRICE_MONTH_LABEL', '$4.99'),
-                                                                        ', '.join(gifts) or 'нет'))
+    print('config.php: Dodo (%s), тарифы M=%s Y=%s L=%s, подарки: %s' % (
+        mode, prod_m or '-', prod_y or '-', prod_l or '-', ', '.join(gifts) or 'нет'))
 
 
 if __name__ == '__main__':

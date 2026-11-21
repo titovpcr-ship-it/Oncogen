@@ -6,7 +6,7 @@
    POST nick    {nick}         — сменить никнейм
    POST profile {first, last, birth, gender, country} — анкета покупателя (O-196), без неё оплата не открывается
    POST logout / delete        — выйти / удалить аккаунт
-   POST checkout {plan, lang}  — Dodo: адрес страницы оплаты ($4.99/мес, O-164); без Dodo — окно Paddle (month | year)
+   POST checkout {plan, lang}  — Dodo: адрес страницы оплаты (month $12 | year $59 | life $129); без Dodo — окно Paddle (month | year)
    POST pay_check {sub}        — вернулись со страницы Dodo (?subscription_id=…): сверить подписку по API
    POST portal                 — ссылка на кабинет покупателя Dodo / Paddle (отмена, карта)
    POST dodo                   — вебхук Dodo (подпись Standard Webhooks; статус — своим запросом по id)
@@ -86,9 +86,42 @@ if ($r === 'tg') {
     out(['ok' => true]);
 }
 
+if ($r === 'sales_ev') {
+    if ($method !== 'POST') { http_response_code(405); exit; }
+    $ua=(string)($_SERVER['HTTP_USER_AGENT'] ?? '');
+    $origin=(string)($_SERVER['HTTP_ORIGIN'] ?? '');
+    $same=$origin==='' || parse_url($origin,PHP_URL_HOST)===parse_url('//' . ($_SERVER['HTTP_HOST'] ?? ''),PHP_URL_HOST);
+    if ($same && $ua!=='' && !preg_match('/bot|crawl|spider|headless|lighthouse|monitor|curl|wget|python/i',$ua)) {
+        if (limited(ip_key().':sales',300,3600)) { fail('wait',429); }
+        $raw=file_get_contents('php://input',false,null,0,32769);
+        if (strlen($raw)>32768) fail('big',413);
+        $events=json_decode($raw,true);
+        if (is_array($events) && array_is_list($events)) foreach (array_slice($events,0,20) as $event) if (is_array($event)) sales_record($event);
+    }
+    header('Cache-Control: no-store'); http_response_code(204); exit;
+}
+if ($r === 'sales_analysis') {
+    header('X-Robots-Tag: noindex, nofollow');
+    if ($method!=='GET' || !live_stats_key_ok()) { http_response_code(404); header('Cache-Control: no-store'); echo 'Not Found'; exit; }
+    out(sales_analysis($_GET));
+}
+
+if ($r === 'live_stats') {
+    if ($method !== 'GET' || !live_stats_key_ok()) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=utf-8');
+        header('X-Robots-Tag: noindex, nofollow');
+        echo 'Not Found';
+        exit;
+    }
+    header('Cache-Control: no-store, private');
+    header('X-Robots-Tag: noindex, nofollow');
+    out(live_stats_data());
+}
+
 if ($r === 'stats') {
     // сводка для владельца: ключ — от PEPPER (tools/stats.py берёт его из config.php хостинга)
-    if (!hash_equals(stats_key(), (string)($_GET['key'] ?? ''))) fail('auth', 401);
+    if (!hash_equals(stats_key(), preg_replace('/^Bearer /', '', (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '')))) fail('auth', 401);
     $days = max(1, min(400, (int)($_GET['days'] ?? 30)));
     $from = intdiv(time(), 86400) - $days + 1;
     out(['ok' => true, 'from' => $from, 'rows' => q('SELECT day, k, n FROM stats WHERE day >= ? ORDER BY day, k', [$from])->fetchAll(),
@@ -98,7 +131,7 @@ if ($r === 'stats') {
 
 if ($r === 'reports') {
     // отметки «Ошибка в слове?» для владельца (O-187): ключ — как у сводки; done=1 — отметить разобранные до id
-    if (!hash_equals(stats_key(), (string)($_GET['key'] ?? ''))) fail('auth', 401);
+    if (!hash_equals(stats_key(), preg_replace('/^Bearer /', '', (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '')))) fail('auth', 401);
     db()->exec('CREATE TABLE IF NOT EXISTS reports(id INTEGER PRIMARY KEY AUTOINCREMENT, a TEXT NOT NULL, lang TEXT NOT NULL, kind TEXT NOT NULL,
         note TEXT NOT NULL DEFAULT \'\', topic INTEGER NOT NULL DEFAULT -1, uid INTEGER, t INTEGER NOT NULL, done INTEGER NOT NULL DEFAULT 0)');
     if ($method === 'POST' && isset($_GET['done'])) q('UPDATE reports SET done = 1 WHERE id <= ?', [(int)$_GET['done']]);
@@ -144,8 +177,10 @@ switch ($r) {
 
     case 'start':
         need_post($method);
+        if (ip_rate_limited('auth', 10, 60)) fail('wait', 429, ['retry' => 60]);
         $b = body();
-        $email = norm_email($b['email'] ?? null) ?? fail('email');
+        $email = norm_email($b['email'] ?? null);
+        if ($email === null) { ip_rate_fail('auth'); fail('email'); }
         $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
         if (limited(ip_key() . ':start', 20, 3600)) fail('wait', 429, ['retry' => 600]);
         $row = q('SELECT sent FROM codes WHERE email = ?', [$email])->fetch();
@@ -158,6 +193,7 @@ switch ($r) {
           [$email, code_hash($email, $code), now() + CODE_TTL, now()]);
         if (!send_code($email, $code, $lang)) {
             q('DELETE FROM codes WHERE email = ?', [$email]);
+            ip_rate_fail('auth');
             stat_add(intdiv(time(), 86400), 'w:mail_fail');     // сигнал владельцу (O-200)
             fail('mail', 502);
         }
@@ -165,19 +201,23 @@ switch ($r) {
 
     case 'verify':
         need_post($method);
+        if (ip_rate_limited('auth', 10, 60)) fail('wait', 429, ['retry' => 60]);
         $b = body();
-        $email = norm_email($b['email'] ?? null) ?? fail('email');
+        $email = norm_email($b['email'] ?? null);
+        if ($email === null) { ip_rate_fail('auth'); fail('email'); }
         $code = preg_replace('/\D/', '', (string)($b['code'] ?? ''));
         if (limited(ip_key() . ':verify', 60, 3600)) fail('wait', 429, ['retry' => 600]);
         $row = q('SELECT * FROM codes WHERE email = ?', [$email])->fetch();
-        if (!$row) fail('expired');
+        if (!$row) { ip_rate_fail('auth'); fail('expired'); }
         if ((int)$row['expires'] < now()) {
             q('DELETE FROM codes WHERE email = ?', [$email]);
+            ip_rate_fail('auth');
             fail('expired');
         }
-        if ((int)$row['tries'] >= CODE_TRIES) fail('locked', 429);
+        if ((int)$row['tries'] >= CODE_TRIES) { ip_rate_fail('auth'); fail('locked', 429); }
         if (strlen($code) !== 6 || !hash_equals($row['hash'], code_hash($email, $code))) {
             q('UPDATE codes SET tries = tries + 1 WHERE email = ?', [$email]);
+            ip_rate_fail('auth');
             $left = CODE_TRIES - (int)$row['tries'] - 1;
             fail($left <= 0 ? 'locked' : 'code', 400, ['left' => max(0, $left)]);
         }
@@ -258,10 +298,24 @@ switch ($r) {
         if (!is_string($data) || strlen($data) > 3000000) fail('big', 413);
         $chk = json_decode($data, true);
         if (!is_array($chk) || !array_key_exists('s', $chk)) fail('data');
-        if ((int)($b['rev'] ?? -1) !== $rev) fail('rev', 409, ['u' => (int)$u['id'], 'rev' => $rev, 'data' => $cur]);
-        q('INSERT INTO progress(uid, rev, data, t) VALUES(?, ?, ?, ?)
-           ON CONFLICT(uid) DO UPDATE SET rev = excluded.rev, data = excluded.data, t = excluded.t',
-            [$u['id'], $rev + 1, $data, time()]);
+        $pdo = db();
+        $pdo->exec('BEGIN IMMEDIATE');
+        try {
+            $row = q('SELECT rev, data FROM progress WHERE uid = ?', [$u['id']])->fetch();
+            $rev = $row ? (int)$row['rev'] : 0;
+            $cur = $row ? (string)$row['data'] : null;
+            $conflict = (int)($b['rev'] ?? -1) !== $rev;
+            if (!$conflict) {
+                q('INSERT INTO progress(uid, rev, data, t) VALUES(?, ?, ?, ?)
+                   ON CONFLICT(uid) DO UPDATE SET rev = excluded.rev, data = excluded.data, t = excluded.t',
+                    [$u['id'], $rev + 1, $data, time()]);
+            }
+            $pdo->exec('COMMIT');
+        } catch (Throwable $e) {
+            $pdo->exec('ROLLBACK');
+            throw $e;
+        }
+        if ($conflict) fail('rev', 409, ['u' => (int)$u['id'], 'rev' => $rev, 'data' => $cur]);
         out(['ok' => true, 'u' => (int)$u['id'], 'rev' => $rev + 1]);
 
     case 'remind':
@@ -281,15 +335,31 @@ switch ($r) {
         $u = session_user() ?? fail('auth', 401);
         if (!pay_ready()) fail('pay', 503);
         if (dodo_on()) {
-            if (premium($u) && sub_here($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
+            $b = body();
+            $reqPlan = (string)($b['plan'] ?? 'year');
+            $isGift = $reqPlan === 'life' && !empty($b['gift']);
+            if (!$isGift && premium($u) && (string)($u['sub_plan'] ?? '') === 'life' && empty($u['pd_sub'])) fail('have', 409);
+            if (!$isGift && premium($u) && sub_here($u) && (string)$u['sub_status'] === 'active') fail('active', 409);
             if (!pf_ok($u)) fail('profile', 409);
+            $prodMap = [
+                'month' => (string)cfg('DODO_PRODUCT_MONTH', ''),
+                'year' => (string)cfg('DODO_PRODUCT_YEAR', ''),
+                'life' => (string)cfg('DODO_PRODUCT_LIFE', ''),
+            ];
+            if (!isset($prodMap[$reqPlan]) || $prodMap[$reqPlan] === '') fail('pay', 503);
             if (limited('u:' . $u['id'] . ':checkout', 10, 3600)) fail('wait', 429, ['retry' => 600]);
-            $lang = in_array(body()['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? body()['lang'] : 'en';
+            $lang = in_array($b['lang'] ?? '', ['ru', 'en', 'fr', 'es', 'de', 'pt'], true) ? $b['lang'] : 'en';
             $site = rtrim((string)cfg('SITE_URL', 'https://barik.am'), '/');
+            $meta = $isGift
+                ? ['gift' => '1', 'plan' => 'life', 'months' => '0', 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]
+                : ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id']), 'plan' => $reqPlan];
+            $meta['sales_sid'] = sales_checkout($b);
+            $meta['lang'] = $lang;
+            $retUrl = $isGift ? ($site . '/?lang=' . $lang . '&pay=gift') : ($site . '/?lang=' . $lang . '&pay=card&plan=' . $reqPlan);
             $j = dodo_checkout($u, [
-                'product_cart' => [['product_id' => (string)cfg('DODO_PRODUCT_MONTH'), 'quantity' => 1]],
-                'return_url' => $site . '/?lang=' . $lang . '&pay=card',
-                'metadata' => ['uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
+                'product_cart' => [['product_id' => $prodMap[$reqPlan], 'quantity' => 1]],
+                'return_url' => $retUrl,
+                'metadata' => $meta], $lang);
             $url = (string)($j['checkout_url'] ?? '');
             if (!preg_match('~^https://~', $url)) fail('pay', 502);
             out(['ok' => true, 'url' => $url]);
@@ -315,25 +385,29 @@ switch ($r) {
         $j = dodo_checkout($u, [
             'product_cart' => [['product_id' => $prod, 'quantity' => 1]],
             'return_url' => $site . '/?lang=' . $lang . '&pay=gift',
-            'metadata' => ['gift' => '1', 'months' => (string)$months, 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
+            'metadata' => ['sales_sid' => sales_checkout($b), 'gift' => '1', 'months' => (string)$months, 'lang' => $lang, 'uid' => (string)$u['id'], 'sig' => uid_sig((int)$u['id'])]], $lang);
         $url = (string)($j['checkout_url'] ?? '');
         if (!preg_match('~^https://~', $url)) fail('pay', 502);
         out(['ok' => true, 'url' => $url]);
 
     case 'gift_check':
         need_post($method);
-        $u = session_user() ?? fail('auth', 401);
+        if (ip_rate_limited('gift', 10, 60)) fail('wait', 429, ['retry' => 60]);
+        $u = session_user();
+        if (!$u) { ip_rate_fail('gift'); fail('auth', 401); }
         $b = body();
         $g = gift_settle((string)($b['payment_id'] ?? ''), in_array($b['lang'] ?? '', ['ru', 'en'], true) ? $b['lang'] : 'en');
-        if (!$g || (int)$g['buyer'] !== (int)$u['id']) fail('pending', 404);
+        if (!$g || (int)$g['buyer'] !== (int)$u['id']) { ip_rate_fail('gift'); fail('pending', 404); }
         out(['ok' => true, 'code' => $g['code'], 'months' => (int)$g['months']]);
 
     case 'gift_redeem':
         need_post($method);
-        $u = session_user() ?? fail('auth', 401);
+        if (ip_rate_limited('gift', 10, 60)) fail('wait', 429, ['retry' => 60]);
+        $u = session_user();
+        if (!$u) { ip_rate_fail('gift'); fail('auth', 401); }
         if (limited('u:' . $u['id'] . ':redeem', 20, 3600)) fail('wait', 429, ['retry' => 600]);
         $r = gift_redeem($u, (string)(body()['code'] ?? ''));
-        if ($r !== 'ok') fail($r, 400);
+        if ($r !== 'ok') { ip_rate_fail('gift'); fail($r, 400); }
         $u = q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
         out(['ok' => true, 'user' => user_out($u)]);
 
@@ -360,9 +434,15 @@ switch ($r) {
         $u = session_user() ?? fail('auth', 401);
         if (!dodo_on()) fail('pay', 503);
         if (limited('u:' . $u['id'] . ':pcheck', 60, 3600)) fail('wait', 429, ['retry' => 60]);
-        $sid = (string)(body()['sub'] ?? '');
-        if ($sid === '' && $u['pd_sub']) $sid = (string)$u['pd_sub'];
-        if ($sid !== '') $u = dodo_sync($sid, (int)$u['id']) ?? q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        $b = body();
+        $sid = (string)($b['sub'] ?? '');
+        $pid = (string)($b['payment_id'] ?? '');
+        if ($sid === '' && $pid !== '') {
+            $u = dodo_payment_sync($pid, (int)$u['id']) ?? q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        } else {
+            if ($sid === '' && $u['pd_sub']) $sid = (string)$u['pd_sub'];
+            if ($sid !== '') $u = dodo_sync($sid, (int)$u['id']) ?? q('SELECT * FROM users WHERE id = ?', [$u['id']])->fetch();
+        }
         out(['ok' => true, 'user' => user_out($u), 'pay' => pay_info()]);
 
     case 'crypto':
@@ -457,9 +537,9 @@ function dodo_webhook(): never {
     $raw = file_get_contents('php://input') ?: '';
     $id = (string)($_SERVER['HTTP_WEBHOOK_ID'] ?? '');
     $secret = (string)cfg('DODO_WEBHOOK_SECRET', '');
-    if ($secret !== '' && !dodo_signed($raw, $id, (string)($_SERVER['HTTP_WEBHOOK_TIMESTAMP'] ?? ''),
+    if ($secret === '' || !dodo_signed($raw, $id, (string)($_SERVER['HTTP_WEBHOOK_TIMESTAMP'] ?? ''),
                                        (string)($_SERVER['HTTP_WEBHOOK_SIGNATURE'] ?? ''), $secret)) {
-        stat_add(intdiv(time(), 86400), 'w:dodo_sig');      // сигнал владельцу (O-200): неверный секрет — оплаты не доходят
+        stat_add(intdiv(time(), 86400), 'w:dodo_sig');
         fail('sig', 401);
     }
     $ev = json_decode($raw, true);
@@ -467,24 +547,96 @@ function dodo_webhook(): never {
     $d = is_array($ev['data'] ?? null) ? $ev['data'] : [];
     $sid = (string)($d['subscription_id'] ?? '');
     $meta = is_array($d['metadata'] ?? null) ? $d['metadata'] : [];
-    if ($sid === '' && dodo_on() && ($meta['gift'] ?? '') === '1' && (string)($d['payment_id'] ?? '') !== '') {   // подарок (O-184)
-        $g = gift_settle((string)$d['payment_id'], in_array($meta['lang'] ?? '', ['ru', 'en'], true) ? $meta['lang'] : 'en');
-        out(['ok' => true, 'gift' => (bool)$g]);
+    // Duplicates still verify the payment so a failed post-COMMIT analytics write can be retried.
+    $verified = null; $payment = null; $notifyGift = null;
+    $eventStamp = 0;
+    if (is_string($ev['timestamp'] ?? null)) {
+        try { $eventStamp = (int)(new DateTimeImmutable($ev['timestamp']))->format('Uu'); }
+        catch (Exception $dateError) { fail('retry', 503); }
     }
-    if ($sid === '' || !dodo_on()) out(['ok' => true, 'skip' => true]);   // платежи без подписки, возвраты и пр.
-    if ($id !== '') {
-        try { q('INSERT INTO events(id, t) VALUES(?, ?)', ['dodo:' . $id, now()]); }
-        catch (PDOException $e) { out(['ok' => true, 'dup' => true]); }
-    }
+    $fetchRev = $sid !== '' ? (int)q('INSERT INTO subscription_versions(sid,issued) VALUES(?,1) ON CONFLICT(sid) DO UPDATE SET issued=issued+1 RETURNING issued', [$sid])->fetchColumn() : 0;
+    $lang = in_array($meta['lang'] ?? '', ['ru', 'en'], true) ? $meta['lang'] : 'en';
+    // Network I/O must not hold SQLite's single writer lock.
     $GLOBALS['DODO_CODE'] = -1;
-    $u = dodo_sync($sid);
-    $code = (int)$GLOBALS['DODO_CODE'];
-    if (!$u && ($code === 0 || $code === 429 || $code >= 500)) {   // Dodo не ответил — событие не помним, отвечаем 503: Dodo повторит (O-195)
-        if ($id !== '') q('DELETE FROM events WHERE id = ?', ['dodo:' . $id]);
+    $pid = (string)($d['payment_id'] ?? '');
+    $giftPayment = $sid === '' && ($meta['gift'] ?? '') === '1';
+    $oneTimePayment = $sid === '' && !$giftPayment && $pid !== '' && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid);
+    if (dodo_on() && preg_match('/^[A-Za-z0-9_]{3,80}$/', ($giftPayment || $oneTimePayment) ? $pid : $sid)) {
+        $verified = dodo('GET', (($giftPayment || $oneTimePayment) ? '/payments/' : '/subscriptions/') . rawurlencode(($giftPayment || $oneTimePayment) ? $pid : $sid));
+    }
+    $stateHttp = $code = (int)$GLOBALS['DODO_CODE'];
+    $paymentHttp = $stateHttp;
+    if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
+    if (in_array($ev['type'] ?? '', ['payment.succeeded','payment.failed'],true) && preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
+        $payment = ($giftPayment || $oneTimePayment) ? $verified : dodo('GET', '/payments/' . rawurlencode($pid));
+        $paymentHttp = $code = (int)$GLOBALS['DODO_CODE'];
+        if ($code === 0 || $code === 429 || $code >= 500) fail('retry', 503);
+    }
+    $validSubscription = $sid === '' || $stateHttp >= 400 || (is_array($verified) && ($verified['subscription_id'] ?? '') === $sid
+        && is_array($verified['customer'] ?? null)
+        && (!empty($verified['customer']['customer_id']) || norm_email($verified['customer']['email'] ?? null))
+        && is_string($verified['product_id'] ?? null) && $verified['product_id'] !== ''
+        && in_array($verified['status'] ?? '', ['active','past_due','cancelled','expired','pending','on_hold','paused','failed'], true));
+    $needsPayment = $giftPayment || $oneTimePayment || (in_array($ev['type'] ?? '', ['payment.succeeded','payment.failed'],true) && $pid !== '');
+    $paymentState = ($giftPayment || $oneTimePayment) ? $verified : $payment;
+    $validPayment = !$needsPayment || $paymentHttp >= 400 || (is_array($paymentState) && ($paymentState['payment_id'] ?? '') === $pid
+        && is_string($paymentState['status'] ?? null) && $paymentState['status'] !== '');
+    if (!$validSubscription || !$validPayment) fail('retry', 503);
+    $pdo = db();
+    // Serialize duplicates; persist acknowledgement only with the completed business update.
+    $pdo->exec('BEGIN IMMEDIATE');
+    try {
+        $retry = false;
+        if (q('SELECT 1 FROM events WHERE id = ?', ['dodo:' . $id])->fetchColumn()) {
+            $result = ['ok' => true, 'dup' => true];
+        } else {
+            $GLOBALS['DODO_CODE'] = -1;
+            if ($sid === '' && dodo_on() && ($meta['gift'] ?? '') === '1' && $pid !== '') {
+                $existed = q('SELECT 1 FROM gifts WHERE pay_id = ?', [$pid])->fetchColumn();
+                $g = $verified ? gift_settle($pid, $lang, $verified, false) : null;
+                if ($g && !$existed) $notifyGift = $g;
+                $result = ['ok' => true, 'gift' => (bool)$g];
+            } elseif ($sid === '' && dodo_on() && $oneTimePayment && $verified) {
+                $u = dodo_payment_sync($pid, null, $verified);
+                $result = $u ? ['ok' => true, 'user' => true, 'plan' => 'life'] : ['ok' => true, 'skip' => true];
+            } elseif ($sid !== '' && dodo_on()) {
+                $applied = (int)q('SELECT applied FROM subscription_versions WHERE sid=?', [$sid])->fetchColumn();
+                $appliedStamp = (int)q('SELECT event_stamp FROM subscription_versions WHERE sid=?', [$sid])->fetchColumn();
+                $fresh = $eventStamp > 0 && $appliedStamp > 0 ? ($eventStamp > $appliedStamp || ($eventStamp === $appliedStamp && $fetchRev >= $applied)) : $fetchRev >= $applied;
+                $u = $fresh && $verified ? dodo_sync($sid, null, $verified) : null;
+                if ($u) {
+                    q('UPDATE subscription_versions SET applied=MAX(applied,CAST(? AS INTEGER)) WHERE sid=?', [$fetchRev, $sid]);
+                    if ($eventStamp > 0) q('UPDATE subscription_versions SET event_stamp=? WHERE sid=?', [$eventStamp, $sid]);
+                }
+                $result = ['ok' => true, 'user' => (bool)$u];
+            } else {
+                $result = ['ok' => true, 'skip' => true];
+            }
+            $code = (int)$GLOBALS['DODO_CODE'];
+            $retry = $code === 0 || $code === 429 || $code >= 500;
+            if (!$retry && ($ev['type'] ?? '') === 'payment.succeeded' && !empty($d['payment_id'])) {
+                $pid = (string)$d['payment_id'];
+                if (preg_match('/^[A-Za-z0-9_]{3,80}$/', $pid)) {
+
+                    if (($payment['payment_id'] ?? '') === $pid && ($payment['status'] ?? '') === 'succeeded') {
+                        dodo_record_paid($pid, $sid ?: null);
+                    }
+                }
+            }
+            if (!$retry) q('INSERT INTO events(id, t) VALUES(?, ?)', ['dodo:' . $id, now()]);
+        }
+        $pdo->exec($retry ? 'ROLLBACK' : 'COMMIT');
+    } catch (Throwable $e) {
+        $pdo->exec('ROLLBACK');
+        throw $e;
+    }
+    if ($retry) {
         stat_add(intdiv(time(), 86400), 'w:dodo_retry');
         fail('retry', 503);
     }
-    out(['ok' => true, 'user' => (bool)$u]);
+    sales_payment($payment);
+    if ($notifyGift) gift_mail($notifyGift, $lang);
+    out($result);
 }
 
 /* Уведомление Paymento: подпись X-HMAC-SHA256-Signature проверяется, если задан PAYMENTO_SECRET (LiteSpeed может

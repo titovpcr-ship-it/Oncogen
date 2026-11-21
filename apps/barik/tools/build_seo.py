@@ -29,9 +29,12 @@ import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
-LANGS = ("ru", "en", "fr", "es", "de", "pt")
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
+from build_surnames import SN_CSS, SN_TXT, build_surnames
+LANGS = ("en", "fr", "es", "de", "pt", "ru")
 LV = ("A1", "A2", "B1", "B2", "C1", "C2")
-NEIGHBOURS = 12
+NEIGHBOURS = 8
 
 TXT = {
     "ru": {
@@ -292,6 +295,19 @@ ul.ws .hy{font:600 21px A,serif}ul.ws .t{color:var(--mut);font-size:15px}ul.ws .
 .pn{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-size:15px}
 footer{max-width:820px;margin:0 auto;padding:22px 16px 44px;font-size:13px;color:var(--mut)}
 @media (max-width:540px){.word{grid-template-columns:1fr;justify-items:center;text-align:center}.tr{justify-content:center}}
+.mq{margin:18px 0 8px;padding:18px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.mq-k{margin:0 0 10px;font:700 13px/1.3 G,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--pom)}
+.mq-row{display:flex;align-items:center;gap:12px;margin:0 0 12px;flex-wrap:wrap}
+.mq-hy{font:700 24px/1.25 A,serif;color:var(--ink);overflow-wrap:anywhere}
+.mq-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.mq-opts{grid-template-columns:1fr}}
+.mq-opt{min-height:46px;padding:10px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:600 15px/1.3 G,sans-serif;text-align:left;cursor:pointer}
+.mq-opt:hover:not(:disabled){border-color:var(--acc)}
+.mq-opt.ok{border-color:#157A42;background:rgba(21,122,66,.14);color:var(--ink)}
+.mq-opt.bad{border-color:#B4232E;background:rgba(180,35,46,.12);color:var(--ink);text-decoration:line-through}
+.mq-res{margin:10px 0 0;font-size:14.5px;font-weight:700}
+.mq-res:empty{display:none}
+.mq-radio{display:inline-flex;align-items:center;gap:6px;margin:12px 0 0;padding:10px 16px;border-radius:99px;background:var(--card2);border:1px solid var(--line);color:var(--ink);font:700 14px/1.2 G,sans-serif;text-decoration:none}
 """
 
 
@@ -362,9 +378,37 @@ SPK = ('<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="curr
        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/>'
        '<path d="M16.5 8.8a4.8 4.8 0 0 1 0 6.4"/><path d="M19.2 6.2a8.6 8.6 0 0 1 0 11.6"/></svg>')
 # «Слушать» на странице слова (O-135): запись та же, что в приложении; плеер — простой <audio>
-SEO_JS = """document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');if(!b)return;
-var a=b._a||(b._a=new Audio(b.getAttribute('data-src')));b.classList.add('on');a.onended=a.onerror=function(){b.classList.remove('on');};
-try{a.currentTime=0;}catch(x){}var p=a.play();if(p&&p.catch)p.catch(function(){b.classList.remove('on');});});
+MQ = {
+    "ru": {"hdr": "Проверь себя на слух за 5 секунд", "ok": "Верно!", "bad": "Правильный ответ:", "radio": "Слушать эту тему в режиме Радио 🎧"},
+    "en": {"hdr": "5-second listening check", "ok": "Correct!", "bad": "Correct answer:", "radio": "Listen to this topic in Radio mode 🎧"},
+    "fr": {"hdr": "Test audio de 5 secondes", "ok": "Exact !", "bad": "Bonne réponse :", "radio": "Écouter ce thème en mode Radio 🎧"},
+    "es": {"hdr": "Ponte a prueba en 5 segundos", "ok": "¡Correcto!", "bad": "Respuesta correcta:", "radio": "Escuchar este tema en modo Radio 🎧"},
+    "de": {"hdr": "5-Sekunden-Hörtest", "ok": "Richtig!", "bad": "Richtige Antwort:", "radio": "Dieses Thema im Radio-Modus hören 🎧"},
+    "pt": {"hdr": "Teste de áudio em 5 segundos", "ok": "Certo!", "bad": "Resposta correta:", "radio": "Ouvir este tema no modo Rádio 🎧"},
+}
+
+SEO_JS = """// Shared opt-out across the app and standalone SEO/Roots pages.
+(function(){
+  var mode=new URLSearchParams(location.search).get('notrack');
+  if(mode==='1'||mode==='0')window.__barikNotrack=mode==='1';
+  try{if(mode==='1')localStorage.setItem('barik_notrack','1');else if(mode==='0')localStorage.removeItem('barik_notrack');}catch(e){/* Keep the explicit choice in memory if storage is blocked. */}
+  window.barikNotrack=function(){try{return localStorage.getItem('barik_notrack')==='1'||window.__barikNotrack===true;}catch(e){return window.__barikNotrack===true;}};
+  function badge(){
+    var b=document.getElementById('barik-nt');
+    if(!window.barikNotrack()){if(b)b.remove();return;}
+    if(!window.__barikNtLogged){console.info('[Barik] notrack active (barik_notrack=1)');window.__barikNtLogged=true;}
+    if(!b&&document.body){b=document.createElement('span');b.id='barik-nt';b.textContent='NT';b.style.cssText='position:fixed;bottom:6px;left:6px;z-index:9999;font:10px/1 monospace;padding:2px 5px;border-radius:4px;background:rgba(0,0,0,.55);color:#fff;pointer-events:none;opacity:.6';document.body.appendChild(b);}
+  }
+  badge();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',badge,{once:true});
+})();
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-src]');
+if(b){var a=b._a||(b._a=new Audio(b.getAttribute('data-src')));b.classList.add('on');a.onended=a.onerror=function(){b.classList.remove('on');};
+try{a.currentTime=0;}catch(x){}var p=a.play();if(p&&p.catch)p.catch(function(){b.classList.remove('on');});return;}
+var o=e.target.closest&&e.target.closest('[data-mq] .mq-opt');if(!o||o.disabled)return;
+var box=o.closest('[data-mq]'),opts=box.querySelectorAll('.mq-opt'),res=box.querySelector('.mq-res'),right=null;
+for(var i=0;i<opts.length;i++){opts[i].disabled=true;if(opts[i].getAttribute('data-ok')==='1'){right=opts[i];opts[i].classList.add('ok');}}
+var ok=o.getAttribute('data-ok')==='1';if(!ok)o.classList.add('bad');
+if(res)res.textContent=ok?('✓ '+box.getAttribute('data-ok')):('✕ '+box.getAttribute('data-bad')+' '+(right?right.textContent:''));});
 """
 
 
@@ -384,7 +428,7 @@ def crumbs_ld(items):
             "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(items)]}
 
 
-def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=None):
+def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=None, extra_js=()):
     up = "../" * depth
     alt = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{base}{p}">' for l, p in alts.items())
     alt += f'<link rel="alternate" hreflang="x-default" href="{base}{alts.get("en", alts[L])}">'
@@ -404,12 +448,11 @@ def page(L, base, path, title, desc, alts, body, jsonld=None, depth=2, robots=No
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
             f'<link rel="icon" type="image/png" href="{up}favicon.png"><link rel="apple-touch-icon" href="{up}icons/apple-touch-icon.png">'
             f'<link rel="stylesheet" href="{up}seo.css"><meta name="theme-color" content="#FBF6F1">{ld}'
-            + (f'<script src="{up}seo.js" defer></script>' if 'data-src=' in body else '') + '</head>'
+            + ''.join(f'<script src="{up}{jsf}" defer></script>' for jsf in dict.fromkeys((('seo.js',) if ('data-src=' in body or 'data-mq' in body) else ()) + tuple(extra_js))) + '</head>'
             f'<body><header class="top"><div class="top-in"><a class="brand" href="{up}"><img class="mk" src="{up}mark.svg" alt="" width="32" height="35">'
             f'<b>Barik</b><span class="hy" lang="hy">Բառիկ</span></a>'
             f'<nav class="langs">{langs}</nav></div></header><main>{body}</main>'
-            f'<footer>{TXT[L]["foot"]} <a href="mailto:hello@barik.am">hello@barik.am</a> · '
-            f'<a href="https://www.instagram.com/barik_armenian" rel="noopener">Instagram</a> · <a href="https://t.me/armenian_word_daily" rel="noopener">Telegram</a></footer></body></html>')
+            f'<footer>{TXT[L]["foot"]} · <a href="{up}{L}/s/">{SN_TXT[L]["nav"]}</a> · <a href="mailto:hello@barik.am">hello@barik.am</a></footer></body></html>')
 
 
 def folder_urls(base, h):
@@ -423,22 +466,61 @@ LEARN = ("ru", "fr", "es", "de", "pt")      # английская обложк�
 
 
 def build_covers(site, base, covers, meta):
-    """Обложка на языке для поиска (O-201): /<язык>/learn.html — та же разметка, что гость видит в приложении (dump_words.js,
-    без движения), свой title и description (раздел land в i18n.js), hreflang с главной. Кнопки ведут в приложение на этом языке
-    (?lang=..&from=learn), «Как это устроено» — якорь на странице."""
+    """Статические SEO-обложки с рабочими ссылками и fallback без JavaScript."""
     alts = {"en": base, **{l: f"{base}{l}/learn.html" for l in LEARN if l in covers}}
     hl = "".join(f'<link rel="alternate" hreflang="{HL[l]}" href="{u}">' for l, u in alts.items()) + f'<link rel="alternate" hreflang="x-default" href="{base}">'
+    labels = {
+        "ru": ("Начать первый урок", "Демонстрация урока"),
+        "en": ("Start your first lesson", "Lesson preview"),
+        "fr": ("Commencer la première leçon", "Aperçu de la leçon"),
+        "es": ("Empezar la primera lección", "Vista previa de la lección"),
+        "de": ("Erste Lektion starten", "Lektionsvorschau"),
+        "pt": ("Começar a primeira lição", "Prévia da lição"),
+    }
+    voice_dirs = {"f": "anahit", "m": "hayk"}
     sm = []
     for L in LEARN:
         if L not in covers: continue
         t, d = meta[L]
         frag = re.sub(r'(\s(?:src|href)=")(?!https?:|/|#|data:|mailto:|\.\./)', r'\1../', covers[L]["html"])
-        js = ("(function(){var L='%s';document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;"
-              "var a=b.getAttribute('data-act'),g=b.getAttribute('data-arg')||'';if(a==='landHow'||a==='geoX')return;e.preventDefault();"
-              "if(a==='landLang'){location.href=g==='en'?'../':(%s.indexOf(g)>=0?'../'+g+'/learn.html':'../?lang='+g);return;}"
-              "var q='../?lang='+L+'&from=learn';if(a==='landDoc')q+='&doc='+encodeURIComponent(g);"
-              "else if(a==='landAbc'||a==='landPen'||a==='landLetter')q+='&letter=0';else if(a==='nmOpen')q+='&name=';"
-              "location.href=q;});})();") % (L, json.dumps(list(LEARN)))
+        root = f"../?lang={L}&from=learn&switch=1"
+        routes = {"pickLang": "&start=lesson", "landGo": "", "landAbc": "&abc=1", "landPen": "&pen=0",
+                  "dgOpen": "&daily=1", "pbOpen": "&phrases=1", "nmOpen": "&name=", "tcOpen": "&teach=1"}
+
+        def action_link(m):
+            attrs, action, inner = m.group(1), m.group(2), m.group(3)
+            ma = re.search(r'\bdata-arg="([^"]*)"', attrs)
+            arg = html.unescape(ma.group(1)) if ma else ""
+            if action == "landLang":
+                href = "../?lang=en&switch=1&welcome" if arg == "en" else f"../{arg}/learn.html"
+                attrs = re.sub(r'\saria-pressed="[^"]*"', "", attrs)
+                current = ' aria-current="true"' if arg == L else ''
+                return f'<a{attrs}{current} href="{href}">{inner}</a>'
+            if action == "landSay":
+                word, _, gender = arg.partition("|")
+                voice = voice_dirs.get(gender, voice_dirs["f"])
+                sound = aid(word)
+                href = f"../audio/{voice}/{sound[:2]}/{sound}.mp3"
+                return f'<a{attrs} href="{href}">{inner}</a>'
+            if action == "landLetter": path = "&letter=" + str(int(arg))
+            elif action == "landDoc": path = "&doc=" + urllib.parse.quote(arg, safe="")
+            elif action in routes: path = routes[action]
+            else: raise ValueError(f"Missing static route for {action}")
+            attrs = re.sub(r'\sdata-act="[^"]*"|\sdata-arg="[^"]*"|\saria-pressed="[^"]*"|\stype="[^"]*"', "", attrs)
+            return f'<a{attrs} href="{root}{path}">{inner}</a>'
+
+        preview = ('<a class="btn primary ph-opt ph-go" href="' + root + '&start=lesson">' +
+                   html.escape(labels[L][0]) + ' →</a>')
+        frag = re.sub(r'(<div\b[^>]*\bid="phOpts"[^>]*>).*?(</div>)',
+                      lambda m: m.group(1) + preview + m.group(2), frag, count=1, flags=re.S)
+        frag = re.sub(r'<button\b([^>]*\bdata-act="([^"]+)"[^>]*)>(.*?)</button>', action_link, frag, flags=re.S)
+        frag = re.sub(r'(<div\b[^>]*class="ph"[^>]*role="group"[^>]*aria-label=")[^"]*(")',
+                      lambda m: m.group(1) + html.escape(labels[L][1], quote=True) + m.group(2), frag, count=1)
+        frag = re.sub(r'<form\b([^>]*\bdata-act="nmLand"[^>]*)>',
+                      lambda m: '<form' + re.sub(r'\sdata-act="nmLand"', '', m.group(1)) + ' action="../" method="get">', frag)
+        frag = re.sub(r'(<input\b[^>]*\bid="ldName"[^>]*)(>)', lambda m: m.group(1) + ' name="name" required' + m.group(2), frag)
+        if 'id="ldName"' in frag:
+            frag = frag.replace('</form>', f'<input type="hidden" name="lang" value="{L}"><input type="hidden" name="from" value="learn"><input type="hidden" name="switch" value="1">\n</form>', 1)
         h = (f'<!doctype html><html lang="{L}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
              f'<title>{esc(t)}</title><meta name="description" content="{esc(d)}"><link rel="canonical" href="{alts[L]}">{hl}'
              f'<meta property="og:title" content="{esc(t)}"><meta property="og:description" content="{esc(d)}"><meta property="og:url" content="{alts[L]}">'
@@ -447,7 +529,7 @@ def build_covers(site, base, covers, meta):
              f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{base}og/og-{L}.jpg">'
              f'<link rel="icon" type="image/png" href="../favicon.png"><link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">'
              f'<link rel="stylesheet" href="../css/app.css"><meta name="theme-color" content="#FBF6F1"></head>'
-             f'<body><main id="view">{frag}</main><script>{js}</script></body></html>')
+             f'<body><main id="view">{frag}</main></body></html>')
         open(os.path.join(site, L, "learn.html"), "w", encoding="utf-8").write(h)
         sm.append(f"<url><loc>{alts[L]}</loc></url>")
     open(os.path.join(site, "sitemap-learn.xml"), "w", encoding="utf-8").write(
@@ -487,10 +569,13 @@ def build(site, base, words_path):
         tused.add(s)
         tslug[i] = s
     by_topic = {}
+    by_level = {}
     for w in words:
         by_topic.setdefault(w["t"], []).append(w)
+        by_level.setdefault(topics[w["t"]]["lv"], []).append(w)
     files, urls = 0, {l: [] for l in LANGS}
     # обогащение страницы слова (O-193): пример, формы (эталон Викисловаря), однокоренные; без них — noindex и не в sitemap
+    lexical_review = json.load(open(os.path.join(APP, "data", "examples", "dictionary_review.json"), encoding="utf-8"))
     EXL = {l: json.load(open(os.path.join(APP, "www", "ex", l + ".json"), encoding="utf-8")) for l in LANGS}
     GOLD = json.load(open(os.path.join(APP, "data", "path", "gold.json"), encoding="utf-8"))
     RT = json.load(open(os.path.join(APP, "data", "path", "roots.json"), encoding="utf-8"))
@@ -504,17 +589,39 @@ def build(site, base, words_path):
         return list(dict.fromkeys(out))[:12]
     thin = {L: 0 for L in LANGS}
     os.makedirs(site, exist_ok=True)
-    open(os.path.join(site, "seo.css"), "w", encoding="utf-8").write(CSS)
+    open(os.path.join(site, "seo.css"), "w", encoding="utf-8").write(CSS + SN_CSS)
     open(os.path.join(site, "seo.js"), "w", encoding="utf-8").write(SEO_JS)
     man_p = os.path.join(site, "audio", "manifest.json")
     vdir = (json.load(open(man_p, encoding="utf-8")).get("dir") if os.path.exists(man_p) else None)
+    audio_hashes = set()
+    if vdir:
+        vpath = os.path.join(site, "audio", vdir)
+        if os.path.isdir(vpath):
+            for _dp, _dns, _fns in os.walk(vpath):
+                for _fn in _fns:
+                    if _fn.endswith(".mp3"):
+                        audio_hashes.add(_fn[:-4])
+    hayk_hashes = set()
+    hpath = os.path.join(site, "audio", "hayk")
+    if os.path.isdir(hpath):
+        for _dp, _dns, _fns in os.walk(hpath):
+            for _fn in _fns:
+                if _fn.endswith(".mp3"):
+                    hayk_hashes.add(_fn[:-4])
 
-    def say(w, up, label):
+    def audio_rel(text, voice=None):
+        h = aid(text)
+        if voice == "hayk" and h in hayk_hashes:
+            return f"audio/hayk/{h[:2]}/{h}.mp3"
         if not vdir:
             return ""
-        h = aid(w["a"])
-        rel = f"audio/{vdir}/{h[:2]}/{h}.mp3"
-        if not os.path.exists(os.path.join(site, rel)):
+        if h not in audio_hashes:
+            return ""
+        return f"audio/{vdir}/{h[:2]}/{h}.mp3"
+
+    def say(w, up, label):
+        rel = audio_rel(w["a"])
+        if not rel:
             return ""
         return (f'<button class="say" type="button" data-src="{up}{rel}" aria-label="{esc(label)}" '
                 f'title="{esc(label)}">{SPK}</button>')
@@ -542,6 +649,18 @@ def build(site, base, words_path):
                 # на разные слова темы (а не на одни и те же первые двенадцать)
                 lo = max(0, min(k - NEIGHBOURS // 2, len(lst) - NEIGHBOURS - 1))
                 near = [v for v in lst[lo:lo + NEIGHBOURS + 1] if v is not w][:NEIGHBOURS]
+                if len(near) < 6:
+                    lv_pool = by_level.get(t["lv"], [])
+                    seen_near = {w["a"]} | {v["a"] for v in near}
+                    if lv_pool:
+                        start = (ti * 7 + k) % len(lv_pool)
+                        for off in range(len(lv_pool)):
+                            cand = lv_pool[(start + off) % len(lv_pool)]
+                            if cand["a"] not in seen_near:
+                                near.append(cand)
+                                seen_near.add(cand["a"])
+                                if len(near) >= NEIGHBOURS:
+                                    break
                 li = "".join(f'<li><a href="{wslug[v["a"]]}.html">{mini(v, "../../")}<span class="hy" lang="hy">{esc(v["a"])}</span>'
                              f'<span class="t">{esc(v[trk])}</span><span class="x">{esc(v[tx])}</span></a></li>'
                              for v in near)
@@ -552,6 +671,8 @@ def build(site, base, words_path):
                       + (f'<a href="{wslug[nxt["a"]]}.html"><span lang="hy">{esc(nxt["a"])}</span> — {T["next"]}</a>' if nxt else "")
                       + "</p>")
                 F = FT[L]; xb = ""
+                if w["a"] in lexical_review["entries"]:
+                    xb += '<p role="note">' + esc(lexical_review["messages"][L]) + "</p>"
                 e = EXL[L].get(w["a"])
                 if e:
                     xb += (f'<h2>{F["ex"]}</h2><p class="exs"><span lang="hy">{esc(e[0])}</span>{say({"a": e[0]}, "../../", T["listen"])}</p>'
@@ -576,13 +697,75 @@ def build(site, base, words_path):
                         f'<li><a href="{wslug[v]}.html"><span class="hy" lang="hy">{esc(v)}</span><span class="t">{esc(inw[v][trk])}</span>'
                         f'<span class="x">{esc(inw[v][tx])}</span></a></li>' for v in fam) + '</ul>')
                 rich = bool(xb)
+                mq_html = ""
+                mq_meta = MQ[L]
+                mq_hy = w["a"]
+                mq_ok = x
+                mq_bad = ""
+                mq_src = ""
+                if e:
+                    e_src = audio_rel(e[0], "hayk") or audio_rel(e[0])
+                    if e_src:
+                        cand_pool = near or lst
+                        for cand in cand_pool:
+                            if cand["a"] != w["a"]:
+                                ce = EXL[L].get(cand["a"])
+                                if ce and ce[1] and ce[1] != e[1]:
+                                    mq_src = e_src
+                                    mq_hy = e[0]
+                                    mq_ok = e[1]
+                                    mq_bad = ce[1]
+                                    break
+                        if not mq_bad:
+                            n_words = len(words)
+                            base_idx = (k * 13 + ti * 7) % n_words
+                            for off in range(min(400, n_words)):
+                                cand = words[(base_idx + off) % n_words]
+                                if cand["a"] != w["a"]:
+                                    ce = EXL[L].get(cand["a"])
+                                    if ce and ce[1] and ce[1] != e[1]:
+                                        mq_src = e_src
+                                        mq_hy = e[0]
+                                        mq_ok = e[1]
+                                        mq_bad = ce[1]
+                                        break
+                if not mq_bad:
+                    mq_src = audio_rel(w["a"])
+                    for cand in (near or lst):
+                        if cand["a"] != w["a"] and cand.get(tx) and cand[tx] != x:
+                            mq_bad = cand[tx]
+                            break
+                    if not mq_bad:
+                        n_words = len(words)
+                        base_idx = (k * 13 + ti * 7) % n_words
+                        for off in range(min(200, n_words)):
+                            cand = words[(base_idx + off) % n_words]
+                            if cand["a"] != w["a"] and cand.get(tx) and cand[tx] != x:
+                                mq_bad = cand[tx]
+                                break
+                if mq_bad:
+                    pair = [(mq_ok, "1"), (mq_bad, "0")]
+                    if (ti + k) % 2:
+                        pair.reverse()
+                    mq_play = (f'<button type="button" class="say mq-play" data-src="../../{mq_src}" aria-label="{esc(T["listen"])}">{SPK}</button>' if mq_src else "")
+                    mq_opts = "".join(
+                        f'<button type="button" class="mq-opt" data-ok="{okf}">{esc(txt)}</button>'
+                        for txt, okf in pair
+                    )
+                    mq_html = (f'<section class="mq" data-mq data-ok="{esc(mq_meta["ok"])}" data-bad="{esc(mq_meta["bad"])}">'
+                               f'<p class="mq-k">{esc(mq_meta["hdr"])}</p>'
+                               f'<div class="mq-row">{mq_play}<span class="mq-hy" lang="hy">{esc(mq_hy)}</span></div>'
+                               f'<div class="mq-opts">{mq_opts}</div>'
+                               f'<p class="mq-res" role="status" aria-live="polite"></p>'
+                               f'<a class="mq-radio" rel="nofollow" href="../../?lang={L}&amp;t={ti}&amp;listen=1">{esc(mq_meta["radio"])}</a>'
+                               f'</section>')
                 body = (f'<p class="crumbs"><a href="../">{T["dict"]}</a> › <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p>'
                         f'<div class="word"><div class="win" aria-hidden="true">{picture(w, "../../")}</div><div>'
                         f'<p class="eyebrow">{esc(tname)} · {t["lv"]}</p><h1 lang="hy">{esc(w["a"])}</h1>'
                         f'<p class="tr"><span title="{T["h_tr"]}">[{esc(w[trk])}]</span>{say(w, "../../", T["listen"])}</p>'
                         f'<p class="tx">{esc(x)}</p>'
                         f'<p class="meta">{T["lv"]} {t["lv"]} · {T["topic"]}: <a href="../t/{tslug[ti]}.html">{esc(tname)}</a></p></div></div>'
-                        + xb + f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>'
+                        + xb + f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a>' + mq_html
                         + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["more"].format(t=tname))}</h2><ul class="ws">{li}</ul>'
                            f'<p><a href="../t/{tslug[ti]}.html">{T["all_topic"].format(n=len(lst), w=nw(L, len(lst)))}</a></p>' if near else "")
                         + pn)
@@ -591,6 +774,13 @@ def build(site, base, words_path):
                       "termCode": w[trk], "url": base + rel,
                       "inDefinedTermSet": {"@type": "DefinedTermSet", "name": f"Barik — {tname}",
                                            "url": f"{base}{L}/t/{tslug[ti]}.html"}}
+                word_audio = audio_rel(w["a"])
+                if word_audio:
+                    ld["audio"] = {"@type": "AudioObject",
+                                   "contentUrl": base + word_audio,
+                                   "encodingFormat": "audio/mpeg",
+                                   "inLanguage": "hy",
+                                   "name": w["a"]}
                 if w.get("p") in EMO:
                     ld["image"] = f"{base}pics/{EMO[w['p']]}.webp"
                 ld = [ld, crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, f"{base}{L}/t/{tslug[ti]}.html"), (w["a"], base + rel)])]
@@ -620,11 +810,19 @@ def build(site, base, words_path):
                     f'<div class="thead"><span class="tic">{icon(t["ic"], "../../", 54)}</span><div>'
                     f'<p class="eyebrow" lang="hy">{esc(t["hy"])}</p><h1 class="pg">{esc(T["h_t"].format(t=tname))}</h1></div></div>'
                     f'<p>{T["intro_t"].format(n=len(lst), w=nw(L, len(lst)), lv=t["lv"])}</p>'
-                    f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;t={ti}">{T["cta_t"]}</a><i class="orn" aria-hidden="true"></i><ul class="ws">{li}</ul>{ntl}')
+            topic_ld = {"@context": "https://schema.org", "@type": "LearningResource",
+                        "name": tname,
+                        "description": T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]),
+                        "url": base + rel,
+                        "educationalLevel": t["lv"],
+                        "inLanguage": ["hy", L],
+                        "learningResourceType": "Vocabulary",
+                        "isAccessibleForFree": t["lv"] == "A1",
+                        "provider": {"@type": "Organization", "name": "Barik", "url": base}}
             write(rel, page(L, base, rel, T["title_t"].format(t=tname, n=len(lst), w=nw(L, len(lst))),
                             T["desc_t"].format(t=tname, n=len(lst), w=nw(L, len(lst)), lv=t["lv"]), alts, body,
-                            [{"@context": "https://schema.org", "@type": "DefinedTermSet", "name": tname, "url": base + rel, "inLanguage": "hy"},
-                             crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, base + rel)])]))
+                            [topic_ld, crumbs_ld([("Barik", base), (T["dict"], f"{base}{L}/"), (tname, base + rel)])]))
             urls[L].append(rel)
         # оглавление
         rel = f"{L}/index.html"
@@ -641,7 +839,7 @@ def build(site, base, words_path):
         n, k = len(words), sum(1 for ti in range(len(topics)) if by_topic.get(ti))
         fmt = f"{n:,}".replace(",", " " if L != "en" else ",")
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Բառարան</p><h1 class="pg">{T["h_i"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["intro_i"].format(n=fmt, w=nw(L, n), k=k)}</p>'
-                f'<a class="cta" href="../?lang={L}">{T["cta"]}</a><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
+                f'<a class="cta" rel="nofollow" href="../?lang={L}">{T["cta"]}</a><p><a href="s/index.html">{SN_TXT[L]["idx_h"]} →</a></p><p><a href="n/index.html">{NM_TXT[L]["idx_h"]} →</a></p><p><a href="p/index.html">{PB_TXT[L]["idx_h"]} →</a></p><p><a href="a/index.html">{AB_TXT[L]["idx_h"]} →</a> · <a href="a/numbers.html">{AB_TXT[L]["num_h"]} →</a></p>' + (f'<p><a href="g/index.html">{GD_TXT[L]["idx_h"]} →</a></p>' if os.path.isdir(os.path.join(APP, "data", "guides", L)) else "") + f'{secs}')
         write(rel, page(L, base, rel, T["title_i"].format(n=fmt, w=nw(L, n)), T["desc_i"].format(n=fmt, w=nw(L, n), k=k),
                         alts, body, depth=1).replace('href="../../', 'href="../'))
         urls[L].insert(0, rel)
@@ -661,10 +859,11 @@ def build(site, base, words_path):
     files += build_phrases(site, base, d, wslug)
     files += build_alphabet(site, base, d, wslug)
     files += build_guides(site, base, d, wslug)
+    files += build_surnames(site, base, d, wslug, inw, audio_rel, page, crumbs_ld, SPK, family, TXT, APP)
     open(os.path.join(site, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{base}sitemap-{L}.xml</loc></sitemap>" for L in LANGS)
-        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap><sitemap><loc>{base}sitemap-guides.xml</loc></sitemap></sitemapindex>")
+        + f"<sitemap><loc>{base}sitemap-names.xml</loc></sitemap><sitemap><loc>{base}sitemap-phrases.xml</loc></sitemap><sitemap><loc>{base}sitemap-abc.xml</loc></sitemap><sitemap><loc>{base}sitemap-guides.xml</loc></sitemap><sitemap><loc>{base}sitemap-surnames.xml</loc></sitemap></sitemapindex>")
     for f in os.listdir(site):                           # sitemap: оглавления адресом папки (O-201)
         if f.startswith("sitemap") and f.endswith(".xml"):
             p = os.path.join(site, f); x = open(p, encoding="utf-8").read(); y = folder_urls(base, x)
@@ -748,7 +947,7 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
                     f'<h1 class="pg">{esc(T["h1"].format(n=it["n"]))}</h1><i class="orn" aria-hidden="true"></i>'
                     f'<p>{esc(T["lead"].format(n=it["n"]))}</p><p class="nm-big" lang="hy">{esc(it["h"])}</p>'
                     f'<h2>{T["letters"]}</h2><ul class="nm-l">{letters}</ul>'
-                    f'<a class="cta" href="../../?lang={L}&amp;name={q}">{T["cta"]}</a><p class="note">{T["note"]}</p>')
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;name={q}">{T["cta"]}</a><p class="note">{T["note"]}</p>')
             ld = {"@context": "https://schema.org", "@type": "DefinedTerm", "name": it["h"], "alternateName": it["n"],
                   "inLanguage": "hy", "url": base + rel}
             ld = [ld, crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/n/index.html"), (it["n"], base + rel)])]
@@ -760,7 +959,7 @@ process.stdout.write(JSON.stringify(r));""", js], capture_output=True, text=True
         lst = "".join(f'<li><a href="{s_}.html"><span>{esc(n)}</span><span class="hy" lang="hy">{esc(h)}</span></a></li>' for n, h, s_ in rows)
         rel = f"{L}/n/index.html"
         body = (f'<p class="eyebrow" lang="hy" style="margin-top:22px">Անուն</p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
-                f'<p>{T["idx_l"]}</p><a class="cta" href="../../?lang={L}&amp;name=">{T["other"]}</a><ul class="nm-i">{lst}</ul>')
+                f'<p>{T["idx_l"]}</p><a class="cta" rel="nofollow" href="../../?lang={L}&amp;name=">{T["other"]}</a><ul class="nm-i">{lst}</ul>')
         pg = page(L, base, rel, T["idx_t"].format(k=len(rows)), T["idx_d"].format(k=len(rows)), idx_alts, body)
         open(os.path.join(site, rel), "w", encoding="utf-8").write(pg); files += 1
         sm.insert(0, base + rel)
@@ -1056,7 +1255,7 @@ def build_alphabet(site, base, d, wslug):
         rel = f"{L}/a/index.html"
         body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><p class="eyebrow" lang="hy">Այբուբեն</p><h1 class="pg">{T["idx_h"]}</h1>'
                 f'<i class="orn" aria-hidden="true"></i><p>{T["idx_l"]}</p><ul class="abc-g">{grid}</ul>'
-                f'<a class="cta" href="../../?lang={L}&amp;letter=0">{T["cta_all"]}</a><p><a href="numbers.html">{T["num_h"]} →</a></p>')
+                f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;letter=0">{T["cta_all"]}</a><p><a href="numbers.html">{T["num_h"]} →</a></p>')
         put(rel, page(L, base, rel, T["idx_t"], T["idx_d"], {l: f"{l}/a/index.html" for l in LANGS}, body,
                       crumbs_ld([("Barik", base), (TXT[L]["dict"], f"{base}{L}/"), (T["idx_h"], base + rel)])))
         for k, x in enumerate(abc):
@@ -1071,7 +1270,7 @@ def build_alphabet(site, base, d, wslug):
                     f'<p class="lt-big" lang="hy">{esc(x["up"])} {esc(x["lo"])}</p><p class="tr">{say(x["nm"], T["listen"] + " — " + x["nm"])}</p>'
                     f'{facts}<p>{esc(x["t"][L])}</p>'
                     f'<h2>{T["cursive"]}</h2><div class="cbx">{x["svg"]}</div>'
-                    f'<a class="cta" href="../../?lang={L}&amp;letter={x["i"]}">{T["cta"]}</a>'
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;letter={x["i"]}">{T["cta"]}</a>'
                     + (f'<i class="orn" aria-hidden="true"></i><h2>{esc(T["words"].format(up=x["up"]))}</h2><ul class="ws">{"".join(wrow(w, L) for w in ws)}</ul>' if ws else "")
                     + '<p class="pn">' + (f'<a href="{slug[prv["i"]]}.html">‹ <span lang="hy">{esc(prv["up"])}</span></a>' if prv else '<a href="index.html">' + T["all"] + '</a>')
                     + (f'<a href="{slug[nxt["i"]]}.html"><span lang="hy">{esc(nxt["up"])}</span> ›</a>' if nxt else '<a href="numbers.html">' + T["num_h"] + ' →</a>') + '</p>')
@@ -1085,7 +1284,7 @@ def build_alphabet(site, base, d, wslug):
         ti = next(i for i, t in enumerate(topics) if t["ru"] == "Числа")
         body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p><p class="eyebrow" lang="hy">Թվեր</p>'
                 f'<h1 class="pg">{T["num_h"]}</h1><i class="orn" aria-hidden="true"></i><p>{T["num_l"]}</p><ul class="ws">{"".join(wrow(w, L) for w in num)}</ul>'
-                f'<a class="cta" href="../../?lang={L}&amp;t={ti}">{T["num_cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+                f'<a class="cta" rel="nofollow" href="../../?lang={L}&amp;t={ti}">{T["num_cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
         put(rel, page(L, base, rel, T["num_t"], T["num_d"], {l: f"{l}/a/numbers.html" for l in LANGS}, body,
                       crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/a/index.html"), (T["num_h"], base + rel)])))
     open(os.path.join(site, "sitemap-abc.xml"), "w", encoding="utf-8").write(
@@ -1197,7 +1396,7 @@ def build_guides(site, base, d, wslug):
             alts = {l: f"{l}/g/{sl}.html" for l in langs if os.path.exists(os.path.join(root, l, sl + ".md"))}
             body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a> › <a href="index.html">{T["idx_h"]}</a></p>'
                     f'<h1 class="pg">{esc(title)}</h1><i class="orn" aria-hidden="true"></i><div class="art">{html}</div>'
-                    f'<a class="cta" href="../../?lang={L}">{T["cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
+                    f'<a class="cta" rel="nofollow" href="../../?lang={L}">{T["cta"]}</a><p class="pn"><a href="index.html">{T["all"]}</a></p>')
             ld = [{"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc, "inLanguage": L,
                    "url": base + rel, "publisher": {"@type": "Organization", "name": "Barik", "url": base}},
                   crumbs_ld([("Barik", base), (T["idx_h"], f"{base}{L}/g/index.html"), (title, base + rel)])]
@@ -1206,7 +1405,7 @@ def build_guides(site, base, d, wslug):
         lst = "".join(f'<li><a href="{sl}.html"><b>{esc(t)}</b><span>{esc(dd)}</span></a></li>' for sl, t, dd in items)
         rel = f"{L}/g/index.html"
         body = (f'<p class="crumbs"><a href="../">{TXT[L]["dict"]}</a></p><h1 class="pg">{T["idx_h"]}</h1><i class="orn" aria-hidden="true"></i>'
-                f'<p>{T["idx_l"]}</p><ul class="gl">{lst}</ul><a class="cta" href="../../?lang={L}">{T["cta"]}</a>')
+                f'<p>{T["idx_l"]}</p><ul class="gl">{lst}</ul><a class="cta" rel="nofollow" href="../../?lang={L}">{T["cta"]}</a>')
         p = os.path.join(site, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
         open(p, "w", encoding="utf-8").write(page(L, base, rel, T["idx_h"] + " — Barik", T["idx_d"], {l: f"{l}/g/index.html" for l in langs}, body,
                                                   crumbs_ld([("Barik", base), (T["idx_h"], base + rel)])))
@@ -1247,25 +1446,47 @@ def sitemap_lastmod(site, base, store, today=None):
     действительно изменилась. Отпечатки страниц и даты — в data/seo/lastmod.json.gz (в git): новая или изменённая страница
     получает дату сборки, неизменная — прежнюю. Указатель sitemap.xml — самая свежая дата своего файла."""
     import datetime, gzip, hashlib
+    from concurrent.futures import ThreadPoolExecutor
     today = today or datetime.date.today().isoformat()
     old = json.load(gzip.open(store, "rt", encoding="utf-8")) if os.path.exists(store) else {}
     new, files = {}, {}
-    for f in sorted(os.listdir(site)):
-        if not (f.startswith("sitemap-") and f.endswith(".xml")): continue
-        x = open(os.path.join(site, f), encoding="utf-8").read()
+    sm_names = [f for f in sorted(os.listdir(site)) if f.startswith("sitemap-") and f.endswith(".xml")]
+    sm_texts = {f: open(os.path.join(site, f), encoding="utf-8").read() for f in sm_names}
+    loc_re = re.compile(r"<loc>([^<]+)</loc>(?!<lastmod>)")
+    rels = []
+    for f in sm_names:
+        for u in loc_re.findall(sm_texts[f]):
+            rel = u[len(base):] if u.startswith(base) else ""
+            rels.append(rel)
+
+    def _hash_rel(rel):
+        p = os.path.join(site, rel + ("index.html" if rel == "" or rel.endswith("/") else ""))
+        if not os.path.exists(p):
+            return ""
+        with open(p, "rb") as fh:
+            return hashlib.sha1(fh.read()).hexdigest()[:10]
+
+    uniq_rels = list(dict.fromkeys(rels))
+    if len(uniq_rels) >= 64:
+        workers = min(16, max(4, (os.cpu_count() or 4) * 2))
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            rel_hashes = dict(zip(uniq_rels, pool.map(_hash_rel, uniq_rels, chunksize=256)))
+    else:
+        rel_hashes = {rel: _hash_rel(rel) for rel in uniq_rels}
+
+    for f in sm_names:
         last = ""
 
         def put(m):
             nonlocal last
             u = m.group(1)
             rel = u[len(base):] if u.startswith(base) else ""
-            p = os.path.join(site, rel + ("index.html" if rel == "" or rel.endswith("/") else ""))
-            h = hashlib.sha1(open(p, "rb").read()).hexdigest()[:10] if os.path.exists(p) else ""
+            h = rel_hashes.get(rel, "")
             o = old.get(rel)
             d = o[1] if o and o[0] == h else today
             new[rel] = [h, d]; last = max(last, d)
             return f"<loc>{u}</loc><lastmod>{d}</lastmod>"
-        x = re.sub(r"<loc>([^<]+)</loc>(?!<lastmod>)", put, x)
+        x = loc_re.sub(put, sm_texts[f])
         open(os.path.join(site, f), "w", encoding="utf-8").write(x)
         files[f] = last
     ix = os.path.join(site, "sitemap.xml"); x = open(ix, encoding="utf-8").read()

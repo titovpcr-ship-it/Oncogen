@@ -5473,3 +5473,30 @@ microphone=()` (заголовок с 08.11, запись голоса с 10.11;
   шлёт `land_early`. Тест `test_site.js`: `app.js` задержан на 2,5 с, клик «Start» сразу — кнопка ждёт, после загрузки — главная.
 - **№5** `?lang=en` в скрипте обложки = английский: русский фрагмент не подгружается. Тест: Москва + `?lang=en` — `lang=en`.
 - **№6** `.htaccess`: `cover-*.html` — `X-Robots-Tag: noindex`; проверка в `check_live.py`. Выложено ship.sh.
+
+## O-230. Barik: продолжение TZ_AUDIT4 (12.11.2026)
+
+Ветка codex/audit4. На результате 1-го и 3-го завершённых гостевых уроков показывается приглашение вернуться к повторению, максимум один раз в день. Есть переход в Telegram, включение почтовых напоминаний через вход в аккаунт и добавление сайта на домашний экран. Клики идут в воронку и сводку. У новичков с менее чем 20 просмотренными словами Premium расположен после учебных кнопок. Повышен контраст и увеличены кнопки языков. В ship.sh добавлена браузерная проверка гостевого урока и микрофона. Подготовлен запуск полной проверки Barik в GitHub Actions.
+
+Локально прошли 8 сценариев показа блока и проверки синтаксиса. Браузерный и серверный прогон ещё не выполнены. GitHub вернул 403 на создание ветки через подключение, отдельный вход CLI не завершён. Выкладки не было. По ТЗ остаются сжатие памяти, замер раздельной загрузки локализаций, B2 и шаблонные примеры, боевой CSP.
+
+
+## O-231. Audit 4: memory and rendered contrast (13.11.2026)
+
+Previous O-230 status superseded: deployment 43299032040 succeeded, full tests and live guest/microphone checks passed.
+Working rules reduced from 108220 to 12182 UTF-8 bytes; full original preserved in docs/HISTORY.md, restrictive paragraphs inventoried in docs/AUDIT4_RULES_REVIEW.md.
+Rendered browser checks cover landing secondary text, language target size, lesson flag link and subscription legal copy in light/dark themes, and primary gradient contrast. Fixed late CSS override of button gradient plus phone transcription.
+Language loading benchmark compares five paired cold Moscow visits, gzip, 1.6 Mbit/s, 150ms latency and CPU x4; production i18n unchanged until measured gain meets 500ms threshold.
+Generator now requires 5–8 words and rejects pronoun/definition templates; unit tests added. 561 existing candidate templates listed in docs/template_examples.json; replacement follows completion and verification of B2, not marked complete.
+Azure access confirmed; B2 resumed from 1225 stored examples, 3958 remaining initially. Generated examples are not published until checked and voiced. CSP remains report-only until approximately 19 November and review of reports.
+Release workflow saves deployment fingerprints only after successful ship/live verification for incremental subsequent uploads.
+
+## O-232. Финал аудита 4, озвучка, PR #3 и выкладка (14.11.2026)
+
+- Озвучены и опубликованы все **33 789/33 789** слов обоими голосами Anahit и Hayk; дополнительно созданы 1 191 MP3 на голос. Live `audio/manifest.json` подтверждает полный счёт, по одному MP3 каждого голоса проверены HTTP 200. Коммит озвучки `cb3f149b53ac582bb93f0770b2cb6a78715ac76f`; Azure Standard S0, North Europe, счётчик 3 637 185 символов. Ключ хранится только локально в игнорируемом `.env`/секрете Actions, в память не копировать.
+- cPanel token проверен read-only: run 43303181682, job 131479458440 — токен принят, `public_html` прочитан. Финальный production attempt подтвердил вход под barik и загрузку архивов; предыдущие сбои были в smoke-test и временном пустом ответе UAPI.
+- PR #3 слит в `codex/audit4`, merge `dc10144e27bead2a6d5c7b618c83cc21370e05ca`; параллельный пользовательский коммит `42ee986c4ba012d129d529037db5b63259774cfc` сохранён как родитель merge. Кандидатный CI 43526062944 и полный аудит после слияния 43527508466 — success. Измерения: готовность приложения 5 055→4 650 мс (−8,0%), урока 5 658→5 075 мс (−10,3%), первый пример 9 464→5 864 мс (−38,0%), байты до первого примера −33,5%.
+- Причина повторного падения выкладки — гонки гостевого smoke-test. Run 43529771141: suite прошёл (360 с, 0 упавших), cPanel загрузил файлы и live-содержимое совпало, но проверка нажала во время стартовой перерисовки и увидела 3/10 вместо 1/3. В `check_guest.js` добавлено ожидание `.ph-n` после каждого шага, видимости кнопки продолжения и завершения стартовых API/манифеста (`9ef52e68c0c81f070a185e252546c64fbe620b36`, затем 142da7a41aa8c2caa478896659f639c1e8d83b29).
+- Параллельный коммит владельца `be281fd0619e424ca1db1fdb21cf2bc9224604dc` исправил поздний `pictures.js`: она повторно запускала демо и могла сбросить ответ. Добавлены `landPicsReady()` и браузерный тест. Первый workflow на этом коде (43531871648) остановился до загрузки: новая проверка держала `pictures.js` до снятия заглушки, а `goto()` ждал `load` — test_site timeout 30 с (suite: 439 с, 1 упавший тест). В `bae1ffc6546f5891c4b6ef8152d8983ab33d8781` переход заменён на `DOMContentLoaded`. Run 43532007171 отменён как устаревший тестовый вариант.
+- Первый deployment attempt run 43533054710 завершился пустым ответом cPanel на `Quota/get_quota_info` (до загрузки архивов). Повторная попытка 2 прошла: production suite 439 с, 0 ошибок; вход в cPanel, загрузка архивов, `check_live.py` («всё на месте»), гостевой урок и микрофон — success. Live JS `app.js?v=9237bc61` содержит `landPicsReady()`; manifest и контрольные MP3 обоих голосов — HTTP 200. Полный audit run 43533054585 — success на commit bae1ffc6546f5891c4b6ef8152d8983ab33d8781.
+- B2 не завершён: 2 427/5 950 примеров, не хватает 3 523. Отдельно остаются проверка на iOS/Android, реальная покупка и Search Console.

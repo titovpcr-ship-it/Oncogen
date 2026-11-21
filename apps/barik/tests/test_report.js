@@ -17,7 +17,7 @@ let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else cons
   let phpErr=''; php.stderr.on('data',d=>{ const s=String(d); if(/PHP (Fatal|Warning|Parse|Notice|Deprecated)/.test(s)) phpErr+=s; });
   for(let i=0;i<50;i++){ try{ if((await fetch(base+'api/?r=me')).ok) break; }catch(e){} await new Promise(r=>setTimeout(r,100)); }
   const KEY=crypto.createHmac('sha256','test-pepper').update('stats').digest('hex').slice(0,32);
-  const rows=async q=>(await (await fetch(base+'api/?r=reports&key='+KEY+(q||''))).json()).rows;
+  const rows=async q=>(await (await fetch(base+'api/?r=reports'+(q||''),{headers:{Authorization:'Bearer '+KEY}})).json()).rows;
   ok((await fetch(base+'api/?r=reports&key=wrong')).status===401,'сводка без ключа — 401');
   const post=b=>fetch(base+'api/?r=report',{method:'POST',headers:{'X-Barik':'1','Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.status);
   ok(await post({a:'hello',l:'ru',k:'tr'})===400&&await post({a:'բարև',l:'xx',k:'tr'})===400&&await post({a:'բարև',l:'ru',k:'zzz'})===400,'не армянское слово, чужой язык или вид — 400');
@@ -47,7 +47,7 @@ let fails=0; const ok=(c,m)=>{ if(!c){fails++; console.log('FAIL',m);} else cons
   ok(await pg.evaluate(()=>(JSON.parse(localStorage.getItem('barik-flq-v1')||'[]')).length)===1&&(await pg.textContent('.toast,body')).includes('когда будет интернет'),'без сети — отметка ждёт в очереди');
   await ctx.setOffline(false); await pg.reload(); await pg.waitForTimeout(1200);
   R=await rows(); ok(R.length===2&&R[1].kind==='snd'&&await pg.evaluate(()=>(JSON.parse(localStorage.getItem('barik-flq-v1')||'[]')).length)===0,'сеть вернулась — дослано («произношение»)');
-  await fetch(base+'api/?r=reports&key='+KEY+'&done='+R[0].id,{method:'POST'});
+  await fetch(base+'api/?r=reports&done='+R[0].id,{method:'POST',headers:{Authorization:'Bearer '+KEY}});
   ok((await rows()).length===1&&(await rows('&all=1')).length===2,'«разобрано» прячет отметку из сводки, --all показывает всё');
   ok(errs.length===0,'ошибок JS нет '+errs.join('; '));
   ok(!phpErr,'PHP без ошибок '+phpErr.slice(0,300));

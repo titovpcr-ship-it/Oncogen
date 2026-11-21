@@ -6,16 +6,34 @@
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"; B="$ROOT/apps/barik"
 CHECK="${SHIP_CHECK:-bash $ROOT/tools/check_all.sh}"
-OUT=$(eval "$CHECK" 2>&1); RC=$?
-echo "$OUT" | tail -3
-if [ $RC -ne 0 ] || ! echo "$OUT" | grep -q "упало: 0"; then echo "ship: тесты не зелёные — выкладки нет"; exit 1; fi
+TEST_LOG=$(mktemp) || exit 1
+trap 'rm -f "$TEST_LOG"' EXIT
+bash -c "$CHECK" 2>&1 | tee "$TEST_LOG"
+RC=${PIPESTATUS[0]}
+if [ "$RC" -ne 0 ] || ! grep -q "упало: 0" "$TEST_LOG"; then echo "ship: тесты не зелёные — выкладки нет"; exit 1; fi
 [ -n "${SHIP_DRY:-}" ] && { echo "ship: dry — тесты зелёные, выкладка пропущена"; exit 0; }
 cd "$B" || exit 1
-python3.13 tools/build_site.py > /dev/null || { echo "ship: сборка упала"; exit 2; }
-python3.13 tools/deploy_site.py 2>&1 | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || { echo "ship: выкладка упала"; exit 3; }
+REUSE_OK=0
+if [ "${SHIP_REUSE_DIST:-0}" = "1" ] && [ -f "$B/dist/site/index.html" ] && [ -f "$B/dist/site/sitemap.xml" ]; then
+  if [ "${BARIK_WEB_PAID:-0}" != "1" ] || grep -q "WEB_ALL_FREE:false" "$B/dist/site/js/config.js"; then
+    REUSE_OK=1
+  fi
+fi
+if [ "$REUSE_OK" = "1" ]; then
+  echo "ship: переиспользую проверенную сборку dist/site (SHIP_REUSE_DIST=1)"
+else
+  python3.13 -u tools/build_site.py || { echo "ship: сборка упала"; exit 2; }
+fi
+python3.13 -u tools/deploy_site.py || { echo "ship: выкладка упала"; exit 3; }
 for i in 1 2 3; do
   R=$(python3.13 tools/check_live.py 2>&1 | tail -1); echo "$R"
-  echo "$R" | grep -q "всё на месте" && { echo "ship: выложено"; exit 0; }
+  if echo "$R" | grep -q "всё на месте" && node tools/check_guest.js; then
+    python3.13 tools/deploy_site.py --finalize || exit 5
+    echo "ship: выложено"
+    exit 0
+  fi
   sleep 30
 done
-echo "ship: живой сайт не прошёл проверку"; exit 4
+python3.13 tools/deploy_site.py --rollback || { echo "ship: rollback failed; maintenance may remain"; exit 6; }
+python3.13 tools/deploy_site.py --finalize || exit 5
+echo "ship: живой сайт не прошёл проверку; выполнен откат"; exit 4

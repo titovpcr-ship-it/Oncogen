@@ -8,6 +8,8 @@ return [
     'DATA_DIR' => dirname(__DIR__, 2) . '/barik-data',
     // секрет для хэшей кодов и подписи uid: длинная случайная строка, после запуска не менять
     'PEPPER' => 'замените-на-случайные-64-символа',
+    // отдельный ключ для закрытой панели статистики (?r=live_stats); если пуст — используется stats_key() от PEPPER
+    'WATCH_KEY' => '',
 
     // письма с кодом: 'mail' — почта хостинга (PHP mail), 'smtp' — свой ящик, 'log' — только проверка
     'MAIL_DRIVER' => 'smtp',
@@ -18,11 +20,15 @@ return [
     'SMTP_USER' => 'no-reply@barik.am',
     'SMTP_PASS' => '',
 
-    // Dodo Payments (O-164) — оплата картой, подписка $4.99 в месяц; включена, когда заданы ключ и тариф (тогда Paddle
-    // не используется). Ставит tools/dodo_setup.py из apps/barik/.env. Вебхук в Dodo: https://barik.am/api/?r=dodo
+    // Dodo Payments (O-164) — оплата картой, 3-уровневая сетка ($12/мес, $59/год, $129 навсегда); включена,
+    // когда заданы ключ и хотя бы один тариф (тогда Paddle не используется). Ставит tools/dodo_setup.py.
+    // Вебхук в Dodo: https://barik.am/api/?r=dodo
     'DODO_API_KEY' => '',            // ключ API (test- или live-режима — тот же, что DODO_MODE)
     'DODO_MODE' => 'test',           // 'live' — после одобрения магазина и нового ключа live-режима
-    'DODO_PRODUCT_MONTH' => '',      // pdt_… — тариф «Barik Premium», $4.99 в месяц
+    'DODO_PRODUCT_MONTH' => '',      // pdt_… — тариф «Pro Monthly», $12 / month
+    'DODO_PRODUCT_YEAR' => '',       // pdt_… — тариф «Pro Annual», $59 / year ($4.92/mo, Most Popular)
+    'DODO_PRODUCT_LIFE' => '',       // pdt_… — тариф «Heritage Lifetime», $129 one-time payment
+    'DODO_PRODUCT_MONTH_LEGACY' => '', // старые pdt_… (через запятую) для продления прежних подписок
     'DODO_WEBHOOK_SECRET' => '',     // whsec_… — подпись вебхуков (без него статус всё равно берётся запросом к Dodo)
 
     // Paddle Billing: Developer tools → Authentication (client-side token, API key), Catalog → Prices,
@@ -33,8 +39,9 @@ return [
     'PADDLE_PRICE_YEAR' => '',       // pri_…
     'PADDLE_WEBHOOK_SECRET' => '',   // pdl_ntfset_…
     'PADDLE_API_KEY' => '',          // для «Управлять подпиской» (кабинет покупателя Paddle)
-    'PRICE_MONTH_LABEL' => '',       // подпись цены в окне подписки, например '€3.99'
-    'PRICE_YEAR_LABEL' => '',        // например '€29.99'
+    'PRICE_MONTH_LABEL' => '',       // подпись цены месяца, например '$12' (по умолчанию при Dodo) или '€3.99'
+    'PRICE_YEAR_LABEL' => '',        // подпись цены года, например '$59' или '€29.99'
+    'PRICE_LIFE_LABEL' => '',        // подпись цены «навсегда», например '$129'
 
     // оплата криптой (O-162): Paymento — магазин в app.paymento.io, «API Key» и «Secret Key» (подпись уведомлений).
     // Адрес уведомлений (https://barik.am/api/?r=paymento) ставит tools/paymento_setup.py. Пока магазин в Testnet —
