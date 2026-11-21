@@ -51,7 +51,7 @@ function geoHTML(D) {
   const cc = tzCC(TZ);
   if (st.UI.lang || st.UI.ll || st.UI.geoX || !SUG || SUG === st.L) return '';
   const G = (STR[SUG] && STR[SUG].land) || D;
-  const others = ['en', 'fr', 'es', 'de', 'pt', 'ru'].filter(l => l !== st.L).map(l =>
+  const others = [SUG].concat(['en', 'fr', 'es', 'de', 'pt', 'ru'].filter(l => l !== st.L && l !== SUG)).map(l =>
     '<button class="lnk" data-act="landLang" data-arg="' + l + '" lang="' + l + '">' +
     ({ ru: 'Русский', en: 'English', fr: 'Français', es: 'Español', de: 'Deutsch', pt: 'Português' }[l]) + '</button>'
   ).join('');
